@@ -1,0 +1,8 @@
+Exception: STATUS_ACCESS_VIOLATION at eip=610DBFAB
+eax=00000001 ebx=00000000 ecx=00000000 edx=028FABB0 esi=00000210 edi=028FAC44
+ebp=028FAB7C esp=028FAA64 program=\\?\F:\Project\itu-t\bin\nb_gcc_db_WIN32\session_test.exe, pid 6628, thread unknown (0x29E8)
+cs=0023 ds=002B es=002B fs=0053 gs=002B ss=002B
+Stack trace:
+Frame     Function  Args
+028FAB7C  610DBFAB  (00000000, 00000000, 00000000, 00000000)
+028FAC4C  610DCD67  (FFFFFFFF, FFFFFFFF, 00000000, 00000000
