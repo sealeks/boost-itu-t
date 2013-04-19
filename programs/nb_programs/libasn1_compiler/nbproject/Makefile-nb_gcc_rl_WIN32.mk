@@ -70,22 +70,22 @@ LDLIBSOPTIONS=
 ${OBJECTDIR}/_ext/787997029/asn1module.o: ../../../include/boost/itu/x68X/asn1module.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/asn1module.o ../../../include/boost/itu/x68X/asn1module.cpp
+	$(COMPILE.cc) -O2 -Wall -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/asn1module.o ../../../include/boost/itu/x68X/asn1module.cpp
 
 ${OBJECTDIR}/_ext/787997029/parser.o: ../../../include/boost/itu/x68X/parser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/parser.o ../../../include/boost/itu/x68X/parser.cpp
+	$(COMPILE.cc) -O2 -Wall -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/parser.o ../../../include/boost/itu/x68X/parser.cpp
 
 ${OBJECTDIR}/_ext/787997029/type.o: ../../../include/boost/itu/x68X/type.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/type.o ../../../include/boost/itu/x68X/type.cpp
+	$(COMPILE.cc) -O2 -Wall -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/type.o ../../../include/boost/itu/x68X/type.cpp
 
 ${OBJECTDIR}/_ext/787997029/x680.o: ../../../include/boost/itu/x68X/x680.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/x680.o ../../../include/boost/itu/x68X/x680.cpp
+	$(COMPILE.cc) -O2 -Wall -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/x680.o ../../../include/boost/itu/x68X/x680.cpp
 
 # Subprojects
 .build-subprojects:

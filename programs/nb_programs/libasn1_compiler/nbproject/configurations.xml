@@ -50,6 +50,7 @@
           <preprocessorList>
             <Elem>DEBUG</Elem>
             <Elem>ITUX200_DEBUG</Elem>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
           </preprocessorList>
         </ccTool>
         <archiverTool>
@@ -111,6 +112,9 @@
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
           <commandLine>-mthreads -fno-strict-aliasing</commandLine>
+          <preprocessorList>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
+          </preprocessorList>
           <warningLevel>2</warningLevel>
         </ccTool>
         <archiverTool>
