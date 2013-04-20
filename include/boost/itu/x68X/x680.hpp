@@ -405,6 +405,7 @@ namespace x680 {
          */
 
 
+        //objNameId
 
         template <typename Iterator>
         struct objNameId_grammar : public qi::grammar<Iterator, string_pair()> {
@@ -438,9 +439,16 @@ namespace x680 {
         };
 
         extern objNameId_grammar<std::string::iterator> ObjIdComponents_;
+        
+        
+        
+        
+        
+        //ObjectIdentifierValue
 
         template <typename Iterator>
-        struct ObjectIdentifierValue_grammar : public qi::grammar<Iterator, string_pair_vector() > {
+        struct ObjectIdentifierValue_grammar : 
+        public qi::grammar<Iterator, string_pair_vector() > {
             
             typedef ObjectIdentifierValue_grammar self_type;
             typedef string_pair_vector holder_type;
@@ -463,11 +471,14 @@ namespace x680 {
             objNameId_grammar<Iterator> components;
         };
 
-
         extern ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
+        
+        
+        
+        
+        
+        //SymbolsFromModule
 
-        
-        
         template <typename Iterator>
         struct SymbolsFromModule_grammar
         : qi::grammar<Iterator, import(), skip_cmt_type> {

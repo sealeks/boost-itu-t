@@ -13,59 +13,46 @@ namespace x680 {
     namespace bnf {
 
         template <typename Iterator>
-        struct Type : qi::grammar<Iterator, syntax_element() > {
+        struct Type : qi::grammar<Iterator, syntax_element() , skip_cmt_type> {
 
-            struct check_type_s : qi::symbols<std::string::value_type, defined_type > {
+            struct check_type_simple : qi::symbols<std::string::value_type, defined_type > {
 
-                check_type_s() {
+                check_type_simple() {
                     add
                             ("BOOLEAN", t_BOOLEAN)
                             ("INTEGER", t_INTEGER)
-                            ("BIT STRING", t_BIT_STRING)
-                            ("OCTET STRING", t_OCTET_STRING)
                             ("NULL", t_NULL)
-                            ("OBJECT IDENTIFIER", t_OBJECT_IDENTIFIER)
-                            ("Object Descriptor", t_Object_Descriptor)
                             ("EXTERNAL", t_EXTERNAL)
                             ("REAL", t_REAL)
                             ("ENUMERATED", t_ENUMERATED)
-                            ("EMBEDDED PDV", t_EMBEDDED_PDV)
-                            ("RELATIVE OID", t_RELATIVE_OID)
                             ("UTCTime", t_UTCTime)
                             ("GeneralizedTime", t_GeneralizedTime)
                             ("TIME", t_TIME)
-                            ("TIME OF DAY", t_TIME_OF_DAY)
                             ("DATE", t_DATE)
-                            ("DATE TIME", t_DATE_TIME)
                             ("CHOICE", t_CHOICE)
                             ;
                 }
             };
-
-            struct check_type_st : qi::symbols<std::string::value_type, defined_type > {
-
-                check_type_st() {
+            
+            
+             struct check_type_simple2 : qi::symbols<std::string::value_type, defined_type > {           
+                 check_type_simple2() {
                     add
-
-                            ("SEQUENCE", t_SEQUENCE)
-                            ("SET", t_SET)
+                            ("BIT", t_BIT_STRING)
+                            ("OCTET", t_OCTET_STRING)
+                            ("OBJECT IDENTIFIER", t_OBJECT_IDENTIFIER)
+                            ("Object Descriptor", t_Object_Descriptor)
+                            ("EMBEDDED PDV", t_EMBEDDED_PDV)
+                            ("RELATIVE OID", t_RELATIVE_OID)
+                            ("TIME OF DAY", t_TIME_OF_DAY)
+                            ("DATE TIME", t_DATE_TIME)
                             ;
                 }
-            };
+            };           
+            
+            struct check_type_string : qi::symbols<std::string::value_type, defined_type > {
 
-            struct check_type_st_of : qi::symbols<std::string::value_type, defined_type > {
-
-                check_type_st_of() {
-                    add
-                            ("SEQUENCE OF", t_SEQUENCE_OF)
-                            ("SET OF", t_SET_OF)
-                            ;
-                }
-            };
-
-            struct check_type_str : qi::symbols<std::string::value_type, defined_type > {
-
-                check_type_str() {
+                check_type_string() {
                     add
 
                             ("UTF8String", t_UTF8String)
@@ -83,6 +70,21 @@ namespace x680 {
                             ;
                 }
             };
+
+            struct check_type_struct : qi::symbols<std::string::value_type, defined_type > {
+
+                check_type_struct() {
+                    add
+
+                            ("SEQUENCE", t_SEQUENCE)
+                            ("SET", t_SET)
+                            ;
+                }
+            };
+
+
+
+
 
             /*              struct check_type1 : qi::symbols<std::string::value_type, defined_type > {
              * check_type1() {
@@ -130,7 +132,7 @@ namespace x680 {
 
 
                 start_rule = *qi::space >> typereference_[bind(&Type::identificator, *this, qi::_val, qi::_1)]
-                        >> *qi::space >> "::=" >> *qi::space >> simple_type[bind(&Type::type, *this, qi::_val, qi::_1)];
+                        >> *qi::space >> "::=" >> *qi::space >> simple_typer[bind(&Type::type, *this, qi::_val, qi::_1)];
 
 
             }
@@ -145,10 +147,10 @@ namespace x680 {
 
 
             qi::rule<Iterator, syntax_element() > start_rule;
-            check_type_st_of set_seq_of;
-            check_type_s simple_type;
-            check_type_str string_type;
-            check_type_st set_seq;
+            check_type_struct struct_typer;
+            check_type_simple simple_typer;
+            check_type_simple2 simple_typer2;            
+            check_type_string string_typer;
 
 
         };

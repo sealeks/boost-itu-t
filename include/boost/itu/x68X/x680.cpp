@@ -10,9 +10,16 @@ namespace x680 {
 
 
         str_rule comment_beg = qi::char_("-") >> qi::char_("-");
+        
         str_rule comment_end = comment_beg | qi::eol;
-        str_rule pos_number_str = qi::char_("0")[ qi::_val = qi::_1 ] | (qi::char_("1-9")[ qi::_val = qi::_1] >> *(qi::char_("0-9")[ qi::_val += qi::_1]));
-        str_rule curly_barket_pair =qi::char_("{")[ qi::_val = qi::_1 ] >> *qi::blank >> qi::char_("}")[ qi::_val += qi::_1];
+        
+        str_rule pos_number_str = qi::char_("0")[ qi::_val = qi::_1 ]
+                | (qi::char_("1-9")[ qi::_val = qi::_1] 
+                >> *(qi::char_("0-9")[ qi::_val += qi::_1]));
+        
+        str_rule curly_barket_pair =qi::char_("{")[ qi::_val = qi::_1 ] 
+                >> *qi::blank 
+                >> qi::char_("}")[ qi::_val += qi::_1];
         
         skip_comment_grammar<std::string::iterator>  comment_skip;   
 
@@ -110,39 +117,97 @@ namespace x680 {
 
 
 
-        str_rule typereference_ = qi::lexeme[qi::upper[ _val = qi::_1 ] >> *( ( (qi::char_("-")[ _val += qi::_1] >> qi::alnum[ _val += qi::_1]) | ( qi::alnum[ _val += qi::_1]  >> -qi::alnum[ _val += qi::_1])) - (qi::char_("-") >> ((qi::char_("-") | !qi::alnum ) )))];
-        str_rule identifier_ =  qi::lexeme[qi::lower[ _val = qi::_1 ] >> *( ( (qi::char_("-")[ _val += qi::_1] >> qi::alnum[ _val += qi::_1]) | ( qi::alnum[ _val += qi::_1]  >> -qi::alnum[ _val += qi::_1])) - (qi::char_("-") >> ((qi::char_("-") | !qi::alnum ) )))];
-        str_rule valuereference_ = identifier_;
-        str_rule modulereference_ = typereference_;
-        str_rule objectreference_=typereference_;
-        str_rule objectsetreference_=valuereference_;
-        str_rule objectclassreference_= qi::lexeme[qi::upper[ _val = qi::_1 ] >>*( ( (qi::char_("-")[ _val += qi::_1] >> qi::char_("A-Z0-9")[ _val += qi::_1]) | ( qi::char_("A-Z0-9")[ _val += qi::_1]  >> -qi::char_("A-Z0-9")[ _val += qi::_1])) - (qi::char_("-") >> ((qi::char_("-") | !qi::char_("A-Z0-9") ) )))];//(~typereference_)          
+        str_rule typereference_ = qi::lexeme[qi::upper[ _val = qi::_1 ]
+                >> *( ( (qi::char_("-")[ _val += qi::_1] 
+                >> qi::alnum[ _val += qi::_1]) 
+                        | ( qi::alnum[ _val += qi::_1]  
+                >> -qi::alnum[ _val += qi::_1])) - (qi::char_("-") 
+                        >> ((qi::char_("-") | !qi::alnum ) )))];
         
-        str_rule comment_ = comment_beg >> *((qi::print)[ _val += qi::_1] - comment_end) >> comment_end;
-        str_rule Externalvaluereference_ = modulereference_ >> qi::lit(".") >> valuereference_;
+        str_rule identifier_ =  qi::lexeme[qi::lower[ _val = qi::_1 ] 
+                >> *( ( (qi::char_("-")[ _val += qi::_1] 
+                >> qi::alnum[ _val += qi::_1]) 
+                        | ( qi::alnum[ _val += qi::_1]  
+                >> -qi::alnum[ _val += qi::_1])) - (qi::char_("-") 
+                        >> ((qi::char_("-") | !qi::alnum ) )))];
+        
+        str_rule valuereference_ = identifier_;
+        
+        str_rule modulereference_ = typereference_;
+        
+        str_rule objectreference_=typereference_;
+        
+        str_rule objectsetreference_=valuereference_;
+        
+        str_rule objectclassreference_= qi::lexeme[qi::upper[ _val = qi::_1 ] 
+                >>*( ( (qi::char_("-")[ _val += qi::_1] 
+                >> qi::char_("A-Z0-9")[ _val += qi::_1]) 
+                        | ( qi::char_("A-Z0-9")[ _val += qi::_1]  
+                >> -qi::char_("A-Z0-9")[ _val += qi::_1])) - (qi::char_("-") 
+                        >> ((qi::char_("-") | !qi::char_("A-Z0-9") ) )))];//(~typereference_)          
+        
+        str_rule comment_ = comment_beg 
+                >> *((qi::print)[ _val += qi::_1] - comment_end) 
+                        >> comment_end;
+        
+        str_rule Externalvaluereference_ = modulereference_ 
+                >> qi::lit(".") 
+                >> valuereference_;
+        
         str_rule DefinedValue_ = Externalvaluereference_ | valuereference_; //| ParameterizedValue
 
 
         unum_rule  number = qi::uint_;
-        unum_rule  bstring = qi::char_("'") >> qi::bin[ qi::_val = qi::_1] >> qi::char_("'") >> qi::char_("H");
-        unum_rule  hstring = qi::char_("'") >> qi::hex[qi::_val = qi::_1] >> qi::char_("'") >> qi::char_("H");
-        str_rule cstring = qi::char_("\"") >> *((qi::print)[ qi::_val += qi::_1] - qi::char_("\"")) >> qi::char_("\"");
+        
+        unum_rule  bstring = qi::char_("'") 
+                >> qi::bin[ qi::_val = qi::_1] 
+                >> qi::char_("'") 
+                >> qi::char_("H");
+        
+        unum_rule  hstring = qi::char_("'") 
+                >> qi::hex[qi::_val = qi::_1] 
+                >> qi::char_("'") 
+                >> qi::char_("H");
+        
+        str_rule cstring = qi::char_("\"") 
+                >> *((qi::print)[ qi::_val += qi::_1] - qi::char_("\"")) 
+                        >> qi::char_("\"");
         
         str_rule Reference_ =typereference_[ qi::_val = qi::_1] | valuereference_[ qi::_val = qi::_1];
-        str_rule ParameterizedReference_=Reference_[ qi::_val = qi::_1]>> qi::omit[*qi::space]  >> curly_barket_pair[ qi::_val += qi::_1];
+        
+        str_rule ParameterizedReference_=Reference_[ qi::_val = qi::_1]
+                >> qi::omit[*qi::space]  
+                >> curly_barket_pair[ qi::_val += qi::_1];
+        
         str_rule Symbol_ =ParameterizedReference_[ qi::_val = qi::_1] |  Reference_[ qi::_val = qi::_1] ;
+        
         strvect_sk_rule SymbolList_ = qi::lexeme[Symbol_] % qi::omit[qi::lexeme[ lit(",")]];
         
-        strvect_sk_rule Exports_ = qi::lexeme[  qi::omit[EXPORTS_ >> +qi::space]  ]>>  - (!qi::lit(";") >> ( qi::omit[ALL_]| SymbolList_))  >>  qi::omit[qi::lit(";")] ;
+        strvect_sk_rule Exports_ = qi::lexeme[  qi::omit[EXPORTS_ >> +qi::space]  ]
+                >>  - (!qi::lit(";") 
+                >> ( qi::omit[ALL_]| SymbolList_))  
+                >>  qi::omit[qi::lit(";")] ;
 
         
        SymbolsFromModule_grammar<std::string::iterator> SymbolsFromModule_;
-       imports_sk_rule SymbolsFromModules_ = *SymbolsFromModule_;     
-       imports_sk_rule Imports_ =qi::lexeme[ qi::omit[IMPORTS_ >> +qi::space] ] >>  - (!qi::lit(";") >> (SymbolsFromModules_))  >>  qi::omit[qi::lit(";")] ;
        
-        str_rule ObjIdComponent = (identifier_ >> *qi::space>> "(" >> pos_number_str[qi::_val = qi::_1] >> *qi::space >> ")") | identifier_[qi::_val = qi::_1] | pos_number_str[qi::_val = qi::_1];
+       imports_sk_rule SymbolsFromModules_ = *SymbolsFromModule_;     
+       
+       imports_sk_rule Imports_ =qi::lexeme[ qi::omit[IMPORTS_ >> +qi::space] ] 
+               >>  - (!qi::lit(";") 
+               >> (SymbolsFromModules_))  
+               >>  qi::omit[qi::lit(";")] ;
+       
+        str_rule ObjIdComponent = (identifier_
+                >> *qi::space
+                >> "(" 
+                >> pos_number_str[qi::_val = qi::_1] 
+                >> *qi::space >> ")") 
+                | identifier_[qi::_val = qi::_1] 
+                | pos_number_str[qi::_val = qi::_1];
         
        objNameId_grammar<std::string::iterator> ObjIdComponents_;
+       
        ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
 
 
