@@ -12,10 +12,15 @@
 
 namespace x680 {
     namespace bnf {
+        
+        
+        
+        // ModuleDefinition
 
         template <typename Iterator>
         struct ModuleDefinition_grammar
         : qi::grammar<Iterator, module(), skip_cmt_type> {
+            
             typedef ModuleDefinition_grammar self_type;
             typedef module holder_type;
 
@@ -45,56 +50,30 @@ namespace x680 {
             : ModuleDefinition_grammar::base_type(start_rule) {
 
 
-                start_rule = qi::lexeme[ modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ] >> +qi::space]
+                start_rule = qi::lexeme[ modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ]
+                        >> +qi::space]
                         >> qi::lexeme[ -ObjectIdentifierValue_[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ]]
-                        >> qi::lexeme[DEFINITIONS_ >> +qi::space]
+                        >> qi::lexeme[DEFINITIONS_ 
+                        >> +qi::space]
 
                         >> qi::lexeme[ -(encodingreference[bind(&self_type::encoding, *this, qi::_val, qi::_1)]
-                        >> +qi::blank >> INSTRUCTIONS_ >> +qi::space)]
+                        >> +qi::blank 
+                        >> INSTRUCTIONS_ 
+                        >> +qi::space)]
 
                         >> qi::lexeme[ -(tagdefault[bind(&self_type::default_tags, *this, qi::_val, qi::_1)]
                         >> +qi::blank >> TAGS_ >> +qi::space)]
 
                         >> qi::lexeme[ -(EXTENSIBILITY_
-                        >> +qi::blank >> IMPLIED_[ bind(&self_type::extesibility_implied, *this, qi::_val) ])]
+                        >> +qi::blank 
+                        >> IMPLIED_[ bind(&self_type::extesibility_implied, *this, qi::_val) ])]
 
-                        >> qi::lit("::=") >> BEGIN_
+                        >> qi::lit("::=") 
+                        >> BEGIN_
                         >>  -(Exports_[bind(&self_type::exports, *this, qi::_val, qi::_1)]) 
                         >>  -(Imports_[bind(&self_type::add_imports, *this, qi::_val, qi::_1)]) 
-                        >> *qi::space >> END_;
-
-                /*
-
-                                ModuleBody = -Exports_ >>/*-Imports >> -AssignmentList >>*/ // +qi::space;
-
-
-
-
-
-
-
-
-
-                //GlobalModuleReference = modulereference_[bind(&ModuleDefinition::import_add, *this, qi::_1)] >> -(*qi::space >> AssignedIdentifier);
-                //AssignedIdentifier = ObjectIdentifierValue | DefinedValue_;
-
-
-
-
-
-                // AssignmentList = *(!(+qi::space >> END_) >> Assignment);
-
-
-                //TypeAssignment = +qi::space >> Type_[bind(&ModuleDefinition::idenificator_add, *this, qi::_1)];
-
-                /*Assignment = TypeAssignment;  |
-                        ValueAssignment |
-                        ValueSetTypeAssignment |
-                        ObjectClassAssignment |
-                        ObjectAssignment |
-                        ObjectSetAssignment |
-                        ParameterizedAssignment;*/
-
+                        >> *qi::space 
+                        >> END_;
 
 
             }
@@ -132,9 +111,6 @@ namespace x680 {
             qi::rule<Iterator, module(), skip_cmt_type > start_rule;
             tag_default tagdefault;
             encoding_references encodingreference;
-
-
-
 
         };
 

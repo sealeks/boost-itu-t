@@ -103,12 +103,12 @@ namespace x680 {
         typedef std::pair<std::string, std::string> string_pair;
         typedef std::vector<string_pair> string_pair_vector;
 
-        struct syntax_element;
-        typedef std::vector<syntax_element> syntax_element_vector;
+        struct type_element;
+        typedef std::vector<type_element> type_element_vector;
 
-        struct syntax_element {
+        struct type_element {
 
-            syntax_element() :
+            type_element() :
             builtin_t(t_NODEF),
             syntactic_t(s_NODEF) {
             }
@@ -117,8 +117,10 @@ namespace x680 {
             std::string reference;
             defined_type builtin_t;
             syntactic_type syntactic_t;
-            syntax_element_vector elements;
+            type_element_vector elements;
         };
+        
+        
 
         typedef std::vector<std::string> exports;
 
@@ -145,7 +147,7 @@ namespace x680 {
             bool extesibility_implied;
             exports exports_;
             imports imports_;
-            syntax_element_vector elements;
+            type_element_vector elements;
         };
 
     }
@@ -161,12 +163,12 @@ BOOST_FUSION_ADAPT_STRUCT(
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
-        x680::bnf::syntax_element,
+        x680::bnf::type_element,
         (std::string, identifier)
         (std::string, reference)
         (x680::defined_type, builtin_t)
         (x680::syntactic_type, syntactic_t)
-        (x680::bnf::syntax_element_vector, elements)
+        (x680::bnf::type_element_vector, elements)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -185,7 +187,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (bool, extesibility_implied)
         (x680::bnf::exports, exports_)
         (x680::bnf::imports, imports_)
-        (x680::bnf::syntax_element_vector, elements)
+        (x680::bnf::type_element_vector, elements)
         )
 
 
@@ -223,22 +225,32 @@ namespace x680 {
         extern skip_cmt_type comment_skip;        
 
         typedef qi::rule<std::string::iterator> term_rule;
+        
         typedef qi::rule<std::string::iterator, std::string() > str_rule;
         typedef qi::rule<std::string::iterator, std::string(), skip_cmt_type > str_sk_rule;
+        
         typedef qi::rule<std::string::iterator, string_vector() > strvect_rule;
         typedef qi::rule<std::string::iterator, string_vector() , skip_cmt_type > strvect_sk_rule;        
+        
         typedef qi::rule<std::string::iterator, string_pair() > strpair_rule;
-        typedef qi::rule<std::string::iterator, string_pair(), skip_cmt_type > strpair_sk_rule;        
+        typedef qi::rule<std::string::iterator, string_pair(), skip_cmt_type > strpair_sk_rule;     
+        
         typedef qi::rule<std::string::iterator, string_pair_vector() > strpairs_rule;
         typedef qi::rule<std::string::iterator, string_pair_vector(), skip_cmt_type > strpairs_sk_rule;     
+        
         typedef qi::rule<std::string::iterator, imports() > imports_rule; 
         typedef qi::rule<std::string::iterator, imports(), skip_cmt_type > imports_sk_rule; 
+        
+        typedef qi::rule<std::string::iterator, type_element_vector() > syn_elements_rule;         
+        typedef qi::rule<std::string::iterator, type_element_vector(), skip_cmt_type > syn_elements_sk_rule; 
+        
         typedef qi::rule<std::string::iterator, unsigned() > unum_rule;
         
 
         extern str_rule comment_beg;
         extern str_rule comment_end;
         extern str_rule pos_number_str;
+        extern str_rule number_str;
         extern str_rule curly_barket_pair;
 
         extern term_rule ECODED_;
@@ -511,7 +523,9 @@ namespace x680 {
         };
         
         extern SymbolsFromModule_grammar<std::string::iterator> SymbolsFromModule_;
+        
         extern imports_sk_rule SymbolsFromModules_;     
+        
         extern imports_sk_rule Imports_;        
         
 

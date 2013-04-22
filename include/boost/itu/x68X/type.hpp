@@ -12,8 +12,145 @@
 namespace x680 {
     namespace bnf {
 
+        /*("BOOLEAN", t_BOOLEAN)
+        ("INTEGER", t_INTEGER)
+        ("BIT STRING", t_BIT_STRING)
+        ("OCTET STRING", t_OCTET_STRING)
+        ("NULL", t_NULL)
+        ("OBJECT IDENTIFIER", t_OBJECT_IDENTIFIER)
+        ("Object Descriptor", t_Object_Descriptor)
+        ("EXTERNAL", t_EXTERNAL)
+        ("REAL", t_REAL)
+        ("ENUMERATED", t_ENUMERATED)
+        ("EMBEDDED_PDV", t_EMBEDDED_PDV)
+        ("UTF8String", t_UTF8String)
+        ("RELATIVE OID", t_RELATIVE_OID)
+        ("SEQUENCE", t_SEQUENCE)
+        ("SEQUENCE OF", t_SEQUENCE_OF)
+        ("SET", t_SET)
+        ("SET OF", t_SET_OF)
+        ("NumericString", t_NumericString)
+        ("PrintableString", t_PrintableString)
+        ("T61String", t_T61String)
+        ("VideotexString", t_VideotexString)
+        ("IA5String", t_IA5String)
+        ("UTCTime", t_UTCTime)
+        ("GeneralizedTime", t_GeneralizedTime)
+        ("GraphicString", t_GraphicString)
+        ("VisibleString", t_VisibleString)
+        ("GeneralString", t_GeneralString)
+        ("UniversalString", t_UniversalString)
+        ("CHARACTER STRING", t_CHARACTER_STRING)
+        ("BMPString", t_BMPString)
+        ("TIME", t_TIME)
+        ("TIME OF DAY", t_TIME_OF_DAY)
+        ("DATE", t_DATE)
+        ("DATE TIME", t_DATE_TIME)
+        ("CHOICE", t_CHOICE)*/
+        
+        
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        // INTEGER
+       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // NamedNumber_grammar
+        
         template <typename Iterator>
-        struct Type : qi::grammar<Iterator, syntax_element() , skip_cmt_type> {
+        struct NamedNumber_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+            
+            typedef NamedNumber_grammar self_type;
+            typedef type_element holder_type;
+
+            NamedNumber_grammar() :
+            NamedNumber_grammar::base_type(pair) {
+
+                pair = (identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
+                        >> qi::lit("(")
+                        >> number_str[bind(&self_type::second, *this, qi::_val, qi::_1)]
+                        >> qi::lit(")"))
+                        | number_str[bind(&self_type::second, *this, qi::_val, qi::_1)];
+            }
+
+            void first(holder_type& holder, const std::string & val) {
+                holder.identifier = val;
+            }
+
+            void second(holder_type& holder, const std::string & val) {
+                holder. = val;
+            }
+
+
+            qi::rule<Iterator, holder_type() , skip_cmt_type> pair;
+
+        };
+        
+        //NamedNumberList        
+         
+        template <typename Iterator>
+        struct NamedNumberList_grammar : qi::grammar<Iterator, string_pair_vector(), skip_cmt_type> {
+            
+            typedef NamedNumberList_grammar self_type;
+            typedef string_pair_vector holder_type;
+
+            NamedNumberList_grammar() :
+            NamedNumberList_grammar::base_type(vect) {
+
+                vect = qi::lit("{")
+                        >>- ( components[bind(&self_type::operator (), *this, qi::_val, qi::_1)] % qi::omit[","] )
+                        >> qi::lit("}");
+            }
+
+            void operator()(holder_type& holder, const string_pair & val) {
+                holder.push_back(val);
+            }
+
+            qi::rule<Iterator, holder_type(), skip_cmt_type > vect;
+            NamedNumber_grammar<Iterator> components;
+
+        };       
+        
+        // IntegerType
+
+        template <typename Iterator>
+        struct IntegerType_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+            
+            typedef IntegerType_grammar self_type;
+            typedef type_element holder_type;
+
+            IntegerType_grammar() :
+            IntegerType_grammar::base_type(start_rule) {
+
+                start_rule = typereference_[bind(&self_type::identificator, *this, qi::_val, qi::_1)]
+                        >> "::="
+                        >> INTEGER_[bind(&self_type::type, *this, qi::_val)];
+
+            }
+
+            void identificator(type_element& holder, const std::string & val) {
+                holder.identifier = val;
+            }
+
+            void type(type_element& holder, const defined_type & tp) {
+                holder.builtin_t = t_INTEGER;
+            }
+
+            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
+
+        };
+        
+        
+        
+        
+
+        //Type
+
+        template <typename Iterator>
+        struct Type_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+            
+            typedef Type_grammar self_type;
+            typedef type_element holder_type;
 
             struct check_type_simple : qi::symbols<std::string::value_type, defined_type > {
 
@@ -33,10 +170,10 @@ namespace x680 {
                             ;
                 }
             };
-            
-            
-             struct check_type_simple2 : qi::symbols<std::string::value_type, defined_type > {           
-                 check_type_simple2() {
+
+            struct check_type_simple2 : qi::symbols<std::string::value_type, defined_type > {
+
+                check_type_simple2() {
                     add
                             ("BIT", t_BIT_STRING)
                             ("OCTET", t_OCTET_STRING)
@@ -48,8 +185,8 @@ namespace x680 {
                             ("DATE TIME", t_DATE_TIME)
                             ;
                 }
-            };           
-            
+            };
+
             struct check_type_string : qi::symbols<std::string::value_type, defined_type > {
 
                 check_type_string() {
@@ -82,77 +219,52 @@ namespace x680 {
                 }
             };
 
+            Type_grammar() : 
+            Type_grammar::base_type(start_rule) {
 
-
-
-
-            /*              struct check_type1 : qi::symbols<std::string::value_type, defined_type > {
-             * check_type1() {
-          add
-                              ("BOOLEAN", t_BOOLEAN)
-                              ("INTEGER", t_INTEGER)
-                              ("BIT STRING", t_BIT_STRING)
-                              ("OCTET STRING", t_OCTET_STRING)
-                              ("NULL", t_NULL)
-                              ("OBJECT IDENTIFIER", t_OBJECT_IDENTIFIER)
-                              ("Object Descriptor", t_Object_Descriptor)
-                              ("EXTERNAL", t_EXTERNAL)
-                              ("REAL", t_REAL)
-                              ("ENUMERATED", t_ENUMERATED)
-                              ("EMBEDDED_PDV", t_EMBEDDED_PDV)
-                              ("UTF8String", t_UTF8String)
-                              ("RELATIVE OID", t_RELATIVE_OID)
-                              ("SEQUENCE", t_SEQUENCE)
-                              ("SEQUENCE OF", t_SEQUENCE_OF)
-                              ("SET", t_SET)
-                              ("SET OF", t_SET_OF)
-                              ("NumericString", t_NumericString)
-                              ("PrintableString", t_PrintableString)
-                              ("T61String", t_T61String)
-                              ("VideotexString", t_VideotexString)
-                              ("IA5String", t_IA5String)
-                              ("UTCTime", t_UTCTime)
-                              ("GeneralizedTime", t_GeneralizedTime)
-                              ("GraphicString", t_GraphicString)
-                              ("VisibleString", t_VisibleString)
-                              ("GeneralString", t_GeneralString)
-                              ("UniversalString", t_UniversalString)
-                              ("CHARACTER STRING", t_CHARACTER_STRING)
-                              ("BMPString", t_BMPString)
-                              ("TIME", t_TIME)
-                              ("TIME OF DAY", t_TIME_OF_DAY)
-                              ("DATE", t_DATE)
-                              ("DATE TIME", t_DATE_TIME)
-                              ("CHOICE", t_CHOICE)
-                  ;
-      }
-  };*/
-
-            Type() : Type::base_type(start_rule) {
-
-
-                start_rule = *qi::space >> typereference_[bind(&Type::identificator, *this, qi::_val, qi::_1)]
-                        >> *qi::space >> "::=" >> *qi::space >> simple_typer[bind(&Type::type, *this, qi::_val, qi::_1)];
-
+                start_rule =  typereference_[bind(&self_type::identificator, *this, qi::_val, qi::_1)] 
+                         >> "::="
+                        >> simple_typer[bind(&self_type::type, *this, qi::_val, qi::_1)] ;
 
             }
 
-            void identificator(syntax_element& holder, const std::string & val) {
+            void identificator(type_element& holder, const std::string & val) {
                 holder.identifier = val;
             }
 
-            void type(syntax_element& holder, const defined_type & tp) {
+            void type(type_element& holder, const defined_type & tp) {
                 holder.builtin_t = tp;
             }
 
 
-            qi::rule<Iterator, syntax_element() > start_rule;
+            qi::rule<Iterator, holder_type() , skip_cmt_type> start_rule;
             check_type_struct struct_typer;
             check_type_simple simple_typer;
-            check_type_simple2 simple_typer2;            
+            check_type_simple2 simple_typer2;
             check_type_string string_typer;
+        };
 
+        //extern Type_grammar<std::string::iterator> Type_;
+        
+        
+        
+        //extern syn_elements_sk_rule Types_;
 
+        template <typename Iterator>
+        struct Types_grammar : qi::grammar<Iterator, type_element_vector(), skip_cmt_type> {
+            
+            typedef Types_grammar self_type;
+            typedef type_element_vector holder_type;        
+            
+            Types_grammar() : 
+            Types_grammar::base_type(start_rule) {
+
+                start_rule = *Type_;
+
+            }
+            
+            qi::rule<Iterator, holder_type() , skip_cmt_type> start_rule;
+            Type_grammar<std::string::iterator> Type_;
         };
 
     }

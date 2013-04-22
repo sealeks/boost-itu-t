@@ -17,6 +17,12 @@ namespace x680 {
                 | (qi::char_("1-9")[ qi::_val = qi::_1] 
                 >> *(qi::char_("0-9")[ qi::_val += qi::_1]));
         
+        
+        str_rule number_str = (qi::string("-")[ qi::_val = qi::_1 ] 
+                >> qi::omit[*qi::blank]
+                >> pos_number_str[ qi::_val += qi::_1 ] )
+                | pos_number_str[ qi::_val = qi::_1 ];        
+        
         str_rule curly_barket_pair =qi::char_("{")[ qi::_val = qi::_1 ] 
                 >> *qi::blank 
                 >> qi::char_("}")[ qi::_val += qi::_1];
