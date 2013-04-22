@@ -105,6 +105,30 @@ namespace x680 {
 
         struct type_element;
         typedef std::vector<type_element> type_element_vector;
+        
+        struct value_element;
+        typedef std::vector<value_element> value_element_vector;         
+        
+        struct value_element {
+
+            value_element() :
+            builtin_t(t_NODEF),
+            syntactic_t(s_NODEF) {
+            }
+
+            std::string identifier;
+            std::string value;
+            std::string reference;            
+            defined_type builtin_t;
+            syntactic_type syntactic_t;
+            value_element_vector values;
+        };
+        
+        
+        
+   
+
+        
 
         struct type_element {
 
@@ -117,8 +141,14 @@ namespace x680 {
             std::string reference;
             defined_type builtin_t;
             syntactic_type syntactic_t;
+            value_element_vector predefined;
             type_element_vector elements;
         };
+        
+
+      
+        
+
         
         
 
@@ -163,12 +193,24 @@ BOOST_FUSION_ADAPT_STRUCT(
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::value_element,
+        (std::string, identifier)
+        (std::string, value)
+        (std::string, reference)
+        (x680::defined_type, builtin_t)
+        (x680::syntactic_type, syntactic_t)
+        (x680::bnf::value_element_vector, values)
+        )
+
+
+BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_element,
         (std::string, identifier)
         (std::string, reference)
         (x680::defined_type, builtin_t)
         (x680::syntactic_type, syntactic_t)
         (x680::bnf::type_element_vector, elements)
+        (x680::bnf::value_element_vector, predefined)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -500,6 +542,7 @@ namespace x680 {
 
             SymbolsFromModule_grammar()
             : SymbolsFromModule_grammar::base_type(start_rule) {
+                
                 start_rule =  SymbolList_[ bind(&self_type:: imports_add, *this, qi::_val, qi::_1) ]
                         >> qi::lexeme[FROM_ >> +qi::space]
                         >> qi::lexeme[ modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ] >> +qi::space]

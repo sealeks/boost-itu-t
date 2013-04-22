@@ -58,27 +58,28 @@ namespace x680 {
         // NamedNumber_grammar
         
         template <typename Iterator>
-        struct NamedNumber_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+        struct NamedNumber_grammar : qi::grammar<Iterator, value_element(), skip_cmt_type> {
             
             typedef NamedNumber_grammar self_type;
-            typedef type_element holder_type;
+            typedef value_element holder_type;
 
             NamedNumber_grammar() :
             NamedNumber_grammar::base_type(pair) {
 
                 pair = (identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
                         >> qi::lit("(")
-                        >> number_str[bind(&self_type::second, *this, qi::_val, qi::_1)]
-                        >> qi::lit(")"))
-                        | number_str[bind(&self_type::second, *this, qi::_val, qi::_1)];
+                        >> (number_str | identifier_)[bind(&self_type::second, *this, qi::_val, qi::_1)]
+                        >> qi::lit(")"));
             }
 
             void first(holder_type& holder, const std::string & val) {
-                holder.identifier = val;
+                holder.identifier =val;
+                holder.builtin_t = t_INTEGER;
+                holder.syntactic_t = s_BuiltinValue;
             }
 
             void second(holder_type& holder, const std::string & val) {
-                holder. = val;
+                holder.value = val;
             }
 
 
@@ -89,10 +90,10 @@ namespace x680 {
         //NamedNumberList        
          
         template <typename Iterator>
-        struct NamedNumberList_grammar : qi::grammar<Iterator, string_pair_vector(), skip_cmt_type> {
+        struct NamedNumberList_grammar : qi::grammar<Iterator, value_element_vector(), skip_cmt_type> {
             
             typedef NamedNumberList_grammar self_type;
-            typedef string_pair_vector holder_type;
+            typedef value_element_vector holder_type;
 
             NamedNumberList_grammar() :
             NamedNumberList_grammar::base_type(vect) {
@@ -102,8 +103,8 @@ namespace x680 {
                         >> qi::lit("}");
             }
 
-            void operator()(holder_type& holder, const string_pair & val) {
-                holder.push_back(val);
+            void operator()(holder_type& holder, const value_element & val) {
+                 holder.push_back(val);
             }
 
             qi::rule<Iterator, holder_type(), skip_cmt_type > vect;
@@ -124,7 +125,8 @@ namespace x680 {
 
                 start_rule = typereference_[bind(&self_type::identificator, *this, qi::_val, qi::_1)]
                         >> "::="
-                        >> INTEGER_[bind(&self_type::type, *this, qi::_val)];
+                        >> INTEGER_[bind(&self_type::type, *this, qi::_val)]
+                        >> -NamedNumberList[bind(&self_type::predefined, *this, qi::_val, qi::_1)];
 
             }
 
@@ -132,15 +134,119 @@ namespace x680 {
                 holder.identifier = val;
             }
 
-            void type(type_element& holder, const defined_type & tp) {
+            void type(type_element& holder) {
                 holder.builtin_t = t_INTEGER;
+                holder.syntactic_t = s_BuiltinType;               
             }
+            
+            void predefined(type_element& holder, const value_element_vector & val) {
+                holder.predefined = val;
+            }            
 
             qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
+            NamedNumberList_grammar<Iterator> NamedNumberList;
 
         };
         
         
+       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        // ENUMERATED
+       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // Enumeration_grammar
+        
+        template <typename Iterator>
+        struct Enumeration_grammar : qi::grammar<Iterator, value_element(), skip_cmt_type> {
+            
+            typedef Enumeration_grammar self_type;
+            typedef value_element holder_type;
+
+            Enumeration_grammar() :
+            Enumeration_grammar::base_type(pair) {
+
+                pair = component[ qi::_val = qi::_1 ]  
+                        |  identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
+                        | qi::lit("...")[bind(&self_type::extention, *this, qi::_val)] ;
+            }
+
+            void first(holder_type& holder, const std::string & val) {
+                holder.identifier =val;
+                holder.builtin_t = t_INTEGER;//t_ENUMERATED;
+                holder.syntactic_t = s_BuiltinValue;
+            }
+            
+           void extention(holder_type& holder) {
+                holder.identifier ="...";
+                holder.builtin_t = t_INTEGER;//t_ENUMERATED;
+                holder.syntactic_t = s_BuiltinValue;
+            }
+
+
+            qi::rule<Iterator, holder_type() , skip_cmt_type> pair;
+            NamedNumber_grammar<Iterator> component;
+
+        };
+        
+        //Enumerations       
+         
+        template <typename Iterator>
+        struct Enumerations_grammar : qi::grammar<Iterator, value_element_vector(), skip_cmt_type> {
+            
+            typedef Enumerations_grammar self_type;
+            typedef value_element_vector holder_type;
+
+            Enumerations_grammar() :
+            Enumerations_grammar::base_type(vect) {
+
+                vect = qi::lit("{")
+                        >>- ( components[bind(&self_type::operator (), *this, qi::_val, qi::_1)] % qi::omit[","] )
+                        >> qi::lit("}");
+            }
+
+            void operator()(holder_type& holder, const value_element & val) {
+                 holder.push_back(val);
+            }
+
+            qi::rule<Iterator, holder_type(), skip_cmt_type > vect;
+            Enumeration_grammar<Iterator> components;
+
+        };       
+        
+        // EnumeratedType
+
+        template <typename Iterator>
+        struct EnumeratedType_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+            
+            typedef EnumeratedType_grammar self_type;
+            typedef type_element holder_type;
+
+            EnumeratedType_grammar() :
+            EnumeratedType_grammar::base_type(start_rule) {
+
+                start_rule = typereference_[bind(&self_type::identificator, *this, qi::_val, qi::_1)]
+                        >> "::="
+                        >> ENUMERATED_[bind(&self_type::type, *this, qi::_val)]
+                        >> -Enumerations[bind(&self_type::predefined, *this, qi::_val, qi::_1)];
+
+            }
+
+            void identificator(type_element& holder, const std::string & val) {
+                holder.identifier = val;
+            }
+
+            void type(type_element& holder) {
+                holder.builtin_t = t_ENUMERATED;
+                holder.syntactic_t = s_BuiltinType;
+            }
+            
+            void predefined(type_element& holder, const value_element_vector & val) {
+                holder.predefined = val;
+            }            
+
+            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
+            Enumerations_grammar<Iterator> Enumerations;
+
+        };
         
         
 
