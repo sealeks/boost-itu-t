@@ -7,8 +7,16 @@
 
 namespace x680 {
     namespace bnf {
+        
+         SympleTypeDecl_grammar<std::string::iterator> SympleTypeDecl_;
+         
+         IntegerType_grammar<std::string::iterator> IntegerType_;
+         
+         EnumeratedType_grammar<std::string::iterator> EnumeratedType_;
 
         objNameId_grammar<std::string::iterator> ObjIdComponents_;
+        
+        BitStringType_grammar<std::string::iterator> BitStringType_;              
 
         ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
 

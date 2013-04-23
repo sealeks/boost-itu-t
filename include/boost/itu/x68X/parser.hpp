@@ -111,7 +111,7 @@ namespace x680 {
                         >> qi::lexeme[BEGIN_]
                         >> -(Exports_[bind(&self_type::exports, *this, qi::_val, qi::_1)])
                         >> -(Imports_[bind(&self_type::add_imports, *this, qi::_val, qi::_1)])
-                        >> *qi::space
+                        >> -(Types[bind(&self_type::add_types, *this, qi::_val, qi::_1)])
                         >> END_;
 
 
@@ -144,12 +144,17 @@ namespace x680 {
             void add_imports(holder_type& holder, const imports & val) {
                 holder.imports_ = val;
             }
+            
+            void add_types(holder_type& holder, const type_element_vector & val) {
+                holder.elements = val;
+            }
 
             // declaring rules
 
             qi::rule<Iterator, module(), skip_cmt_type > start_rule;
             tag_default tagdefault;
             encoding_references encodingreference;
+            Types_grammar<Iterator> Types;
 
         };
 

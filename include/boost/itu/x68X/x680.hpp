@@ -73,6 +73,21 @@ namespace x680 {
         t_DATE_TIME,
         t_CHOICE
     };
+    
+        enum value_type {
+
+        v_nodef,
+        v_identifier,
+        v_boolean,
+        v_number,
+        v_real,
+        v_binary,
+        v_hexnum,
+        v_octnum,        
+        v_array,
+        v_struct,
+        v_extention
+    };
 
     enum syntactic_type {
 
@@ -116,15 +131,12 @@ namespace x680 {
         struct value_element {
 
             value_element() :
-            builtin_t(t_NODEF),
-            syntactic_t(s_NODEF) {
+            type(v_nodef) {
             }
 
             std::string identifier;
             std::string value;
-            std::string reference;
-            defined_type builtin_t;
-            syntactic_type syntactic_t;
+            value_type type;
             value_element_vector values;
         };
 
@@ -195,9 +207,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::value_element,
         (std::string, identifier)
         (std::string, value)
-        (std::string, reference)
-        (x680::defined_type, builtin_t)
-        (x680::syntactic_type, syntactic_t)
+        (x680::value_type, type)
         (x680::bnf::value_element_vector, values)
         )
 
