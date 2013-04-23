@@ -48,37 +48,78 @@ namespace x680 {
         ("DATE TIME", t_DATE_TIME)
         ("CHOICE", t_CHOICE)*/
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        // Cimple declareted type
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        template <typename Iterator>
+        struct SympleTypeDecl_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
 
-        struct check_type_simple : qi::symbols<std::string::value_type, defined_type > {
+            typedef SympleTypeDecl_grammar self_type;
+            typedef type_element holder_type;
 
-            check_type_simple() {
+            struct check_type_simple : qi::symbols<std::string::value_type, defined_type > {
 
-                add
-                        ("BOOLEAN", t_BOOLEAN)
-                        ("NULL", t_NULL)
-                        ("EXTERNAL", t_EXTERNAL)
-                        ("REAL", t_REAL)
-                        ("UTCTime", t_UTCTime)
-                        ("GeneralizedTime", t_GeneralizedTime)
-                        ("TIME", t_TIME)
-                        ("DATE", t_DATE)
-                        ("UTF8String", t_UTF8String)
-                        ("NumericString", t_NumericString)
-                        ("PrintableString", t_PrintableString)
-                        ("T61String", t_T61String)
-                        ("VideotexString", t_VideotexString)
-                        ("IA5String", t_IA5String)
-                        ("GraphicString", t_GraphicString)
-                        ("VisibleString", t_VisibleString)
-                        ("GeneralString", t_GeneralString)
-                        ("UniversalString", t_UniversalString)
-                        ("BMPString", t_BMPString)
-                        ;
+                check_type_simple() {
+
+                    add
+                            ("BOOLEAN", t_BOOLEAN)
+                            ("NULL", t_NULL)
+                            ("ObjectDescriptor" , t_ObjectDescriptor)
+                            ("EXTERNAL", t_EXTERNAL)
+                            ("REAL",  t_REAL)
+                            ("UTCTime", t_UTCTime)
+                            ("GeneralizedTime", t_GeneralizedTime)
+                            ("TIME", t_TIME)
+                            ("DATE", t_DATE)
+                            ("DURATION", t_TIME)
+                            ("UTF8String", t_UTF8String)
+                            ("NumericString", t_NumericString)
+                            ("PrintableString", t_PrintableString)
+                            ("T61String", t_T61String)
+                            ("VideotexString", t_VideotexString)
+                            ("IA5String", t_IA5String)
+                            ("GraphicString", t_GraphicString)
+                            ("VisibleString", t_VisibleString)
+                            ("GeneralString", t_GeneralString)
+                            ("UniversalString", t_UniversalString)
+                            ("BMPString", t_BMPString)
+                            ("TIME-OF-DAY",t_TIME_OF_DAY)
+                            ;
+                }
+            };
+
+            SympleTypeDecl_grammar() :
+            SympleTypeDecl_grammar::base_type(start_rule) {
+
+                start_rule = typereference_[bind(&self_type::identificator, *this, qi::_val, qi::_1)]
+                        >> "::="
+                        >> ((qi::lexeme[OCTET_ >> +qi::blank >> STRING_])[bind(&self_type::type, *this, qi::_val, t_OCTET_STRING)]
+                        | (qi::lexeme[CHARACTER_>> +qi::blank >> STRING_])[bind(&self_type::type, *this, qi::_val, t_CHARACTER_STRING)]                        
+                        | (qi::lexeme[EMBEDDED_ >> +qi::blank >> PDV_])[bind(&self_type::type, *this, qi::_val, t_EMBEDDED_PDV)]
+                        | (qi::lexeme[DATE_ >> +qi::blank >> TIME_])[bind(&self_type::type, *this, qi::_val, t_DATE_TIME)]                 
+                        | simple_typer[bind(&self_type::type, *this, qi::_val, qi::_1)]
+                        );                        
+
+                
             }
+
+            void identificator(type_element& holder, const std::string & val) {
+
+                holder.identifier = val;
+            }
+
+            void type(type_element& holder, const defined_type & tp) {
+                holder.builtin_t = tp;
+            }
+
+
+
+            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
+            check_type_simple simple_typer;
+
         };
-
-
+        
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         // INTEGER
@@ -220,7 +261,7 @@ namespace x680 {
             void extention(holder_type & holder) {
 
                 holder.identifier = "...";
-                holder.builtin_t = dtp_; //t_ENUMERATED;
+                holder.builtin_t = t_INTEGER; //t_ENUMERATED;
                 holder.syntactic_t = s_BuiltinValue;
             }
 
@@ -339,6 +380,78 @@ namespace x680 {
             NamedNumberList_grammar<Iterator> NameBitList;
 
         };
+        
+        
+        
+        
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        // OBJECT IDENTIFIER
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+         //objNameId
+
+        template <typename Iterator>
+        struct objNameId_grammar : public qi::grammar<Iterator, value_element(), skip_cmt_type> {
+
+            typedef objNameId_grammar self_type;
+            typedef value_element holder_type;
+
+            objNameId_grammar()
+            : objNameId_grammar::base_type(pair) {
+
+                pair = (identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
+                        >> qi::lit("(")
+                        >> pos_number_str[bind(&self_type::second, *this, qi::_val, qi::_1)]
+                        >> qi::lit(")"))
+                        | identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
+                        | pos_number_str[bind(&self_type::second, *this, qi::_val, qi::_1)];
+            }
+
+            void first(holder_type& holder, const std::string & val) {
+                holder.identifier = val;
+            }
+
+            void second(holder_type& holder, const std::string & val) {
+                holder.value = val;
+            }
+
+            qi::rule<Iterator, holder_type(), skip_cmt_type > pair;
+        };
+
+        extern objNameId_grammar<std::string::iterator> ObjIdComponents_;
+
+
+
+
+
+        //ObjectIdentifierValue
+
+        template <typename Iterator>
+        struct ObjectIdentifierValue_grammar :
+        public qi::grammar<Iterator, value_element_vector(), skip_cmt_type > {
+
+            typedef ObjectIdentifierValue_grammar self_type;
+            typedef value_element_vector holder_type;
+
+            ObjectIdentifierValue_grammar()
+            : ObjectIdentifierValue_grammar::base_type(vect) {
+
+                vect = qi::lit("{")
+                        >> *(components[bind(&self_type::operator (), *this, qi::_val, qi::_1)])
+                        >> qi::lit("}");
+            }
+
+            void operator()(holder_type& holder, value_element & val) {
+                holder.push_back(val);
+            }
+
+            qi::rule<Iterator, holder_type(), skip_cmt_type> vect;
+            objNameId_grammar<Iterator> components;
+        };
+
+        extern ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
 
 
 
@@ -378,7 +491,7 @@ namespace x680 {
                             ("BIT", t_BIT_STRING)
                             ("OCTET", t_OCTET_STRING)
                             ("OBJECT IDENTIFIER", t_OBJECT_IDENTIFIER)
-                            ("Object Descriptor", t_Object_Descriptor)
+                            ("Object Descriptor", t_ObjectDescriptor)
                             ("EMBEDDED PDV", t_EMBEDDED_PDV)
                             ("RELATIVE OID", t_RELATIVE_OID)
                             ("TIME OF DAY", t_TIME_OF_DAY)

@@ -8,6 +8,10 @@
 namespace x680 {
     namespace bnf {
 
+        objNameId_grammar<std::string::iterator> ObjIdComponents_;
+
+        ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
+
         Type_grammar<std::string::iterator> Type_;
 
         //syn_elements_sk_rule Types_ = Type_ % qi::omit[*qi::space];

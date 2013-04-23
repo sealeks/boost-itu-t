@@ -35,6 +35,7 @@
 namespace x680 {
 
     enum defined_type {
+
         t_NODEF,
         t_BOOLEAN,
         t_INTEGER,
@@ -42,7 +43,7 @@ namespace x680 {
         t_OCTET_STRING,
         t_NULL,
         t_OBJECT_IDENTIFIER,
-        t_Object_Descriptor,
+        t_ObjectDescriptor,
         t_EXTERNAL,
         t_REAL,
         t_ENUMERATED,
@@ -74,18 +75,21 @@ namespace x680 {
     };
 
     enum syntactic_type {
+
         s_NODEF,
         s_BuiltinType,
         s_BuiltinValue
     };
 
     enum default_tags_type {
+
         explicit_tags,
         implicit_tags,
         automatic_tags
     };
 
     enum encoding_references_type {
+
         encoding_no,
         encoding_tag,
         encoding_xer,
@@ -149,6 +153,7 @@ namespace x680 {
         typedef std::vector<std::string> exports;
 
         struct import {
+
             std::string name;
             value_element_vector oid;
             string_vector names;
@@ -407,7 +412,6 @@ namespace x680 {
         extern str_rule Symbol_;
         extern strvect_sk_rule SymbolList_;
 
-        extern strvect_sk_rule Exports_;
 
 
         //extern strpair_rule ObjNameValComponent;
@@ -452,112 +456,7 @@ namespace x680 {
          */
 
 
-        //objNameId
 
-        template <typename Iterator>
-        struct objNameId_grammar : public qi::grammar<Iterator, value_element(), skip_cmt_type> {
-            
-            typedef objNameId_grammar self_type;
-            typedef value_element holder_type;
-
-            objNameId_grammar()
-            : objNameId_grammar::base_type(pair) {
-
-                pair = (identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
-                        >> qi::lit("(")
-                        >> pos_number_str[bind(&self_type::second, *this, qi::_val, qi::_1)]
-                        >> qi::lit(")"))
-                        | identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
-                        | pos_number_str[bind(&self_type::second, *this, qi::_val, qi::_1)];
-            }
-
-            void first(holder_type& holder, const std::string & val) {
-                holder.identifier= val;
-            }
-
-            void second(holder_type& holder, const std::string & val) {
-                holder.value = val;
-            }
-
-            qi::rule<Iterator, holder_type(), skip_cmt_type > pair;
-        };
-
-        extern objNameId_grammar<std::string::iterator> ObjIdComponents_;
-
-
-
-
-
-        //ObjectIdentifierValue
-
-        template <typename Iterator>
-        struct ObjectIdentifierValue_grammar :
-        public qi::grammar<Iterator, value_element_vector(), skip_cmt_type > {
-            
-            typedef ObjectIdentifierValue_grammar self_type;
-            typedef value_element_vector holder_type;
-
-            ObjectIdentifierValue_grammar()
-            : ObjectIdentifierValue_grammar::base_type(vect) {
-
-                vect = qi::lit("{")
-                        >> *(components[bind(&self_type::operator (), *this, qi::_val, qi::_1)])
-                        >> qi::lit("}");
-            }
-
-            void operator()(holder_type& holder, value_element & val) {
-                holder.push_back(val);
-            }
-
-            qi::rule<Iterator, holder_type(), skip_cmt_type> vect;
-            objNameId_grammar<Iterator> components;
-        };
-
-        extern ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
-
-
-
-
-
-        //SymbolsFromModule
-
-        template <typename Iterator>
-        struct SymbolsFromModule_grammar
-        : qi::grammar<Iterator, import(), skip_cmt_type> {
-            
-            typedef SymbolsFromModule_grammar self_type;
-            typedef import holder_type;
-
-            SymbolsFromModule_grammar()
-            : SymbolsFromModule_grammar::base_type(start_rule) {
-
-                start_rule = SymbolList_[ bind(&self_type::imports_add, *this, qi::_val, qi::_1) ]
-                        >> FROM_
-                        >> modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ]
-                        >> -ObjectIdentifierValue_[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ];
-            }
-
-            void module_name(holder_type& holder, const std::string & val) {
-                holder.name = val;
-            }
-
-            void module_oid(holder_type& holder, const value_element_vector & val) {
-                holder.oid = val;
-            }
-
-            void imports_add(holder_type& holder, const string_vector & val) {
-                holder.names = val;
-            }
-
-            qi::rule<Iterator, import(), skip_cmt_type > start_rule;
-            ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
-        };
-
-        extern SymbolsFromModule_grammar<std::string::iterator> SymbolsFromModule_;
-
-        extern imports_sk_rule SymbolsFromModules_;
-
-        extern imports_sk_rule Imports_;
 
 
     }
