@@ -22,6 +22,9 @@ namespace x680 {
                 >> qi::omit[*qi::blank]
                 >> pos_number_str[ qi::_val += qi::_1 ])
         | pos_number_str[ qi::_val = qi::_1 ];
+        
+        str_rule realnumber_str=number_str[ qi::_val = qi::_1 ] 
+                >> -(qi::string(".")[ qi::_val += qi::_1 ] >>number_str[ qi::_val += qi::_1 ]);   
 
         str_rule curly_barket_pair = qi::char_("{")[ qi::_val = qi::_1 ]
                 >> *qi::blank

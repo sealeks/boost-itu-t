@@ -81,6 +81,7 @@ namespace x680 {
         v_boolean,
         v_number,
         v_real,
+        v_null,        
         v_binary,
         v_hexnum,
         v_octnum,        
@@ -291,7 +292,19 @@ namespace x680 {
 
         typedef qi::rule<std::string::iterator, imports() > imports_rule;
         typedef qi::rule<std::string::iterator, imports(), skip_cmt_type > imports_sk_rule;
-
+        
+        typedef qi::rule<std::string::iterator, type_element() > type_element_rule;
+        typedef qi::rule<std::string::iterator, type_element(), skip_cmt_type > type_element_sk_rule;            
+        
+        typedef qi::rule<std::string::iterator, type_element_vector() > type_elements_rule;
+        typedef qi::rule<std::string::iterator, type_element_vector(), skip_cmt_type > type_elements_sk_rule;        
+       
+        typedef qi::rule<std::string::iterator, value_element() > value_element_rule;
+        typedef qi::rule<std::string::iterator, value_element(), skip_cmt_type > value_element_sk_rule;            
+        
+        typedef qi::rule<std::string::iterator, value_element_vector() > value_elements_rule;
+        typedef qi::rule<std::string::iterator, value_element_vector(), skip_cmt_type > value_elements_sk_rule;      
+        
         typedef qi::rule<std::string::iterator, type_element_vector() > syn_elements_rule;
         typedef qi::rule<std::string::iterator, type_element_vector(), skip_cmt_type > syn_elements_sk_rule;
 
@@ -302,6 +315,7 @@ namespace x680 {
         extern str_rule comment_end;
         extern str_rule pos_number_str;
         extern str_rule number_str;
+        extern str_rule realnumber_str;        
         extern str_rule curly_barket_pair;
 
         extern term_rule ECODED_;
