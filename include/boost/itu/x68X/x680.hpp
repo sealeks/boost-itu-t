@@ -98,17 +98,17 @@ namespace x680 {
 namespace x680 {
 
     namespace bnf {
-        
-        typedef std::vector<std::string> string_vector;   
+
+        typedef std::vector<std::string> string_vector;
         typedef std::pair<std::string, std::string> string_pair;
         typedef std::vector<string_pair> string_pair_vector;
 
         struct type_element;
         typedef std::vector<type_element> type_element_vector;
-        
+
         struct value_element;
-        typedef std::vector<value_element> value_element_vector;         
-        
+        typedef std::vector<value_element> value_element_vector;
+
         struct value_element {
 
             value_element() :
@@ -118,17 +118,11 @@ namespace x680 {
 
             std::string identifier;
             std::string value;
-            std::string reference;            
+            std::string reference;
             defined_type builtin_t;
             syntactic_type syntactic_t;
             value_element_vector values;
         };
-        
-        
-        
-   
-
-        
 
         struct type_element {
 
@@ -144,19 +138,19 @@ namespace x680 {
             value_element_vector predefined;
             type_element_vector elements;
         };
-        
 
-      
-        
 
-        
-        
+
+
+
+
+
 
         typedef std::vector<std::string> exports;
 
         struct import {
             std::string name;
-            string_pair_vector oid;
+            value_element_vector oid;
             string_vector names;
         };
 
@@ -171,7 +165,7 @@ namespace x680 {
             }
 
             std::string name;
-            string_pair_vector oid;
+            value_element_vector oid;
             encoding_references_type encoding_references_t;
             default_tags_type default_tags_t;
             bool extesibility_implied;
@@ -216,14 +210,14 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::import,
         (std::string, name)
-        (x680::bnf::string_pair_vector, oid)
+        (x680::bnf::value_element_vector, oid)
         (x680::bnf::string_vector, names)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::module,
         (std::string, name)
-        (x680::bnf::string_pair_vector, oid)
+        (x680::bnf::value_element_vector, oid)
         (x680::encoding_references_type, encoding_references_t)
         (x680::default_tags_type, default_tags_t)
         (bool, extesibility_implied)
@@ -246,48 +240,48 @@ namespace x680 {
 
         namespace ascii = boost::spirit::ascii;
         namespace repository = boost::spirit::repository;
-        
+
         template <typename Iterator>
         struct skip_comment_grammar : public qi::grammar<Iterator> {
 
             skip_comment_grammar()
             : skip_comment_grammar::base_type(skip) {
                 skip
-                        =  qi::space |
-                            repository::confix("/*", "*/")[*(qi::char_ - "*/")] | 
-                            repository::confix("--",qi::eol )[*(qi::char_ - qi::eol)] |
-                            repository::confix("--", "--")[*(qi::char_ - "--")];        
-                             ;
+                        = qi::space |
+                        repository::confix("/*", "*/")[*(qi::char_ - "*/")] |
+                        repository::confix("--", qi::eol)[*(qi::char_ - qi::eol)] |
+                        repository::confix("--", "--")[*(qi::char_ - "--")];
+                ;
             }
             qi::rule<Iterator> skip;
         };
-        
+
         typedef skip_comment_grammar<std::string::iterator>skip_cmt_type;
-        
-        extern skip_cmt_type comment_skip;        
+
+        extern skip_cmt_type comment_skip;
 
         typedef qi::rule<std::string::iterator> term_rule;
-        
+
         typedef qi::rule<std::string::iterator, std::string() > str_rule;
         typedef qi::rule<std::string::iterator, std::string(), skip_cmt_type > str_sk_rule;
-        
+
         typedef qi::rule<std::string::iterator, string_vector() > strvect_rule;
-        typedef qi::rule<std::string::iterator, string_vector() , skip_cmt_type > strvect_sk_rule;        
-        
+        typedef qi::rule<std::string::iterator, string_vector(), skip_cmt_type > strvect_sk_rule;
+
         typedef qi::rule<std::string::iterator, string_pair() > strpair_rule;
-        typedef qi::rule<std::string::iterator, string_pair(), skip_cmt_type > strpair_sk_rule;     
-        
+        typedef qi::rule<std::string::iterator, string_pair(), skip_cmt_type > strpair_sk_rule;
+
         typedef qi::rule<std::string::iterator, string_pair_vector() > strpairs_rule;
-        typedef qi::rule<std::string::iterator, string_pair_vector(), skip_cmt_type > strpairs_sk_rule;     
-        
-        typedef qi::rule<std::string::iterator, imports() > imports_rule; 
-        typedef qi::rule<std::string::iterator, imports(), skip_cmt_type > imports_sk_rule; 
-        
-        typedef qi::rule<std::string::iterator, type_element_vector() > syn_elements_rule;         
-        typedef qi::rule<std::string::iterator, type_element_vector(), skip_cmt_type > syn_elements_sk_rule; 
-        
+        typedef qi::rule<std::string::iterator, string_pair_vector(), skip_cmt_type > strpairs_sk_rule;
+
+        typedef qi::rule<std::string::iterator, imports() > imports_rule;
+        typedef qi::rule<std::string::iterator, imports(), skip_cmt_type > imports_sk_rule;
+
+        typedef qi::rule<std::string::iterator, type_element_vector() > syn_elements_rule;
+        typedef qi::rule<std::string::iterator, type_element_vector(), skip_cmt_type > syn_elements_sk_rule;
+
         typedef qi::rule<std::string::iterator, unsigned() > unum_rule;
-        
+
 
         extern str_rule comment_beg;
         extern str_rule comment_end;
@@ -389,13 +383,13 @@ namespace x680 {
 
 
 
-        extern str_rule typereference_;//(=objectreference_, modulereference_ )
-        extern str_rule identifier_;//(=objectsetreference,valuereference_ )
-        extern str_rule valuereference_;//(=objectsetreference,identifier_ )
-        extern str_rule modulereference_;//(=typereference_,objectreference)
-        extern str_rule objectreference_;//(=typereference_,modulereference_)
-        extern str_rule objectsetreference_;//(=valuereference_,identifier_)
-        extern str_rule objectclassreference_;//(~typereference_)        
+        extern str_rule typereference_; //(=objectreference_, modulereference_ )
+        extern str_rule identifier_; //(=objectsetreference,valuereference_ )
+        extern str_rule valuereference_; //(=objectsetreference,identifier_ )
+        extern str_rule modulereference_; //(=typereference_,objectreference)
+        extern str_rule objectreference_; //(=typereference_,modulereference_)
+        extern str_rule objectsetreference_; //(=valuereference_,identifier_)
+        extern str_rule objectclassreference_; //(~typereference_)        
         extern str_rule comment_;
         extern str_rule Externalvaluereference_;
         extern str_rule DefinedValue_;
@@ -406,55 +400,54 @@ namespace x680 {
         extern unum_rule hstring;
 
         extern str_rule cstring;
-        
-        
+
+
         extern str_rule Reference_;
         extern str_rule ParameterizedReference_; // x.683
         extern str_rule Symbol_;
         extern strvect_sk_rule SymbolList_;
-        
+
         extern strvect_sk_rule Exports_;
-        
-        
-        extern str_rule ObjIdComponent;
+
+
         //extern strpair_rule ObjNameValComponent;
 
-/*      DefinedType ::=
-      ExternalTypeReference
-      | typereference
-      | ParameterizedType
-      | ParameterizedValueSetType
+        /*      DefinedType ::=
+              ExternalTypeReference
+              | typereference
+              | ParameterizedType
+              | ParameterizedValueSetType
    
-      ExternalTypereference : : =
-      modulereference
-      "."
-      typereference
+              ExternalTypereference : : =
+              modulereference
+              "."
+              typereference
    
-      ParameterizedType ::=
-      !!!!SimpleDefinedType
-      ActualParameterList
+              ParameterizedType ::=
+              !!!!SimpleDefinedType
+              ActualParameterList
   
-       !!!!SimpleDefinedType ::=
-      ExternalTypeReference |
-      typereference
+               !!!!SimpleDefinedType ::=
+              ExternalTypeReference |
+              typereference
    
    
-       ParameterizedValueSetType ::=
-      !!!SimpleDefinedType
-      !!!ActualParameterList
+               ParameterizedValueSetType ::=
+              !!!SimpleDefinedType
+              !!!ActualParameterList
 
    
    
-      ActualParameterList ::=
-      "{" ActualParameter "," + "}"
+              ActualParameterList ::=
+              "{" ActualParameter "," + "}"
   
-      ActualParameter ::=
-      Type
-      | Value
-      | ValueSet
-      | DefinedObjectClass
-      | Object
-      | ObjectSet
+              ActualParameter ::=
+              Type
+              | Value
+              | ValueSet
+              | DefinedObjectClass
+              | Object
+              | ObjectSet
    
          */
 
@@ -462,75 +455,70 @@ namespace x680 {
         //objNameId
 
         template <typename Iterator>
-        struct objNameId_grammar : public qi::grammar<Iterator, string_pair()> {
+        struct objNameId_grammar : public qi::grammar<Iterator, value_element(), skip_cmt_type> {
             
             typedef objNameId_grammar self_type;
-            typedef string_pair  holder_type;
+            typedef value_element holder_type;
 
             objNameId_grammar()
             : objNameId_grammar::base_type(pair) {
 
                 pair = (identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
-                        >> *qi::space
                         >> qi::lit("(")
-                        >> *qi::space
                         >> pos_number_str[bind(&self_type::second, *this, qi::_val, qi::_1)]
-                        >> *qi::space
                         >> qi::lit(")"))
                         | identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
                         | pos_number_str[bind(&self_type::second, *this, qi::_val, qi::_1)];
             }
 
             void first(holder_type& holder, const std::string & val) {
-                holder.first = val;
+                holder.identifier= val;
             }
 
             void second(holder_type& holder, const std::string & val) {
-                holder.second = val;
+                holder.value = val;
             }
 
-            qi::rule<Iterator, holder_type() > pair;
+            qi::rule<Iterator, holder_type(), skip_cmt_type > pair;
         };
 
         extern objNameId_grammar<std::string::iterator> ObjIdComponents_;
-        
-        
-        
-        
-        
+
+
+
+
+
         //ObjectIdentifierValue
 
         template <typename Iterator>
-        struct ObjectIdentifierValue_grammar : 
-        public qi::grammar<Iterator, string_pair_vector() > {
+        struct ObjectIdentifierValue_grammar :
+        public qi::grammar<Iterator, value_element_vector(), skip_cmt_type > {
             
             typedef ObjectIdentifierValue_grammar self_type;
-            typedef string_pair_vector holder_type;
+            typedef value_element_vector holder_type;
 
             ObjectIdentifierValue_grammar()
             : ObjectIdentifierValue_grammar::base_type(vect) {
 
                 vect = qi::lit("{")
-                        >> *(*qi::blank
-                        >> components[bind(&self_type::operator (), *this, qi::_val, qi::_1)])
-                        >> *qi::blank
+                        >> *(components[bind(&self_type::operator (), *this, qi::_val, qi::_1)])
                         >> qi::lit("}");
             }
 
-            void operator()(holder_type& holder, const string_pair & val) {
+            void operator()(holder_type& holder, value_element & val) {
                 holder.push_back(val);
             }
 
-            qi::rule<Iterator, holder_type() > vect;
+            qi::rule<Iterator, holder_type(), skip_cmt_type> vect;
             objNameId_grammar<Iterator> components;
         };
 
         extern ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
-        
-        
-        
-        
-        
+
+
+
+
+
         //SymbolsFromModule
 
         template <typename Iterator>
@@ -542,18 +530,18 @@ namespace x680 {
 
             SymbolsFromModule_grammar()
             : SymbolsFromModule_grammar::base_type(start_rule) {
-                
-                start_rule =  SymbolList_[ bind(&self_type:: imports_add, *this, qi::_val, qi::_1) ]
-                        >> qi::lexeme[FROM_ >> +qi::space]
-                        >> qi::lexeme[ modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ] >> +qi::space]
-                        >> qi::lexeme[ -ObjectIdentifierValue_[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ]];
+
+                start_rule = SymbolList_[ bind(&self_type::imports_add, *this, qi::_val, qi::_1) ]
+                        >> FROM_
+                        >> modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ]
+                        >> -ObjectIdentifierValue_[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ];
             }
 
             void module_name(holder_type& holder, const std::string & val) {
                 holder.name = val;
             }
 
-            void module_oid(holder_type& holder, const string_pair_vector & val) {
+            void module_oid(holder_type& holder, const value_element_vector & val) {
                 holder.oid = val;
             }
 
@@ -564,13 +552,13 @@ namespace x680 {
             qi::rule<Iterator, import(), skip_cmt_type > start_rule;
             ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
         };
-        
+
         extern SymbolsFromModule_grammar<std::string::iterator> SymbolsFromModule_;
-        
-        extern imports_sk_rule SymbolsFromModules_;     
-        
-        extern imports_sk_rule Imports_;        
-        
+
+        extern imports_sk_rule SymbolsFromModules_;
+
+        extern imports_sk_rule Imports_;
+
 
     }
 }

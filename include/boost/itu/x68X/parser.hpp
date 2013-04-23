@@ -50,26 +50,22 @@ namespace x680 {
             : ModuleDefinition_grammar::base_type(start_rule) {
 
 
-                start_rule = qi::lexeme[ modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ]
-                        >> +qi::space]
-                        >> qi::lexeme[ -ObjectIdentifierValue_[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ]]
-                        >> qi::lexeme[DEFINITIONS_ 
-                        >> +qi::space]
+                start_rule = qi::lexeme[ modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ]]
+                        >>  -ObjectIdentifierValue_[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ]
+                        >> qi::lexeme[DEFINITIONS_ ]
 
-                        >> qi::lexeme[ -(encodingreference[bind(&self_type::encoding, *this, qi::_val, qi::_1)]
+                        >>  -(qi::lexeme[encodingreference[bind(&self_type::encoding, *this, qi::_val, qi::_1)]]
+                        >> qi::lexeme[INSTRUCTIONS_])
+
+                        >> -(qi::lexeme[ tagdefault[bind(&self_type::default_tags, *this, qi::_val, qi::_1)]
+                        >> +qi::blank >> TAGS_])
+
+                        >>  -(qi::lexeme[EXTENSIBILITY_
                         >> +qi::blank 
-                        >> INSTRUCTIONS_ 
-                        >> +qi::space)]
+                        >> IMPLIED_[ bind(&self_type::extesibility_implied, *this, qi::_val) ]])
 
-                        >> qi::lexeme[ -(tagdefault[bind(&self_type::default_tags, *this, qi::_val, qi::_1)]
-                        >> +qi::blank >> TAGS_ >> +qi::space)]
-
-                        >> qi::lexeme[ -(EXTENSIBILITY_
-                        >> +qi::blank 
-                        >> IMPLIED_[ bind(&self_type::extesibility_implied, *this, qi::_val) ])]
-
-                        >> qi::lit("::=") 
-                        >> BEGIN_
+                        >> qi::lexeme[qi::lit("::=")]
+                        >> qi::lexeme[BEGIN_]
                         >>  -(Exports_[bind(&self_type::exports, *this, qi::_val, qi::_1)]) 
                         >>  -(Imports_[bind(&self_type::add_imports, *this, qi::_val, qi::_1)]) 
                         >> *qi::space 
@@ -82,7 +78,7 @@ namespace x680 {
                 holder.name = val;
             }
 
-            void module_oid(holder_type& holder, const string_pair_vector & val) {
+            void module_oid(holder_type& holder, const value_element_vector & val) {
                 holder.oid = val;
             }
 
