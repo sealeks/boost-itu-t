@@ -97,6 +97,7 @@ namespace x680 {
                         >> ((qi::lexeme[OCTET_ >> +qi::blank >> STRING_])[bind(&self_type::type, *this, qi::_val, t_OCTET_STRING)]
                         | (qi::lexeme[CHARACTER_>> +qi::blank >> STRING_])[bind(&self_type::type, *this, qi::_val, t_CHARACTER_STRING)]                        
                         | (qi::lexeme[EMBEDDED_ >> +qi::blank >> PDV_])[bind(&self_type::type, *this, qi::_val, t_EMBEDDED_PDV)]
+                        | (qi::lexeme[OBJECT_ >> +qi::blank >> IDENTIFIER_])[bind(&self_type::type, *this, qi::_val, t_OBJECT_IDENTIFIER)]
                         | (qi::lexeme[DATE_ >> +qi::blank >> TIME_])[bind(&self_type::type, *this, qi::_val, t_DATE_TIME)]                 
                         | simple_typer[bind(&self_type::type, *this, qi::_val, qi::_1)]
                         );                        
@@ -120,6 +121,8 @@ namespace x680 {
 
         };
         
+        extern SympleTypeDecl_grammar<std::string::iterator> SympleTypeDecl_;
+        
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         // INTEGER
@@ -133,34 +136,34 @@ namespace x680 {
             typedef NamedNumber_grammar self_type;
             typedef value_element holder_type;
 
-            NamedNumber_grammar(defined_type dtp = t_NODEF, bool allownegativ = true) :
-            NamedNumber_grammar::base_type(pair), dtp_(dtp) {
+            NamedNumber_grammar() :
+            NamedNumber_grammar::base_type(pair) {
 
-                pair = allownegativ ? (identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
+                pair = (identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
                         >> qi::lit("(")
-                        >> (number_str | identifier_)[bind(&self_type::second, *this, qi::_val, qi::_1)]
-                        >> qi::lit(")")) :
-                        (identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
-                        >> qi::lit("(")
-                        >> (number_str | identifier_)[bind(&self_type::second, *this, qi::_val, qi::_1)]
+                        >> (number_str[bind(&self_type::second_n, *this, qi::_val, qi::_1)]  
+                        | identifier_[bind(&self_type::second_i , *this, qi::_val, qi::_1)] )
                         >> qi::lit(")"));
             }
 
             void first(holder_type& holder, const std::string & val) {
 
                 holder.identifier = val;
-                holder.builtin_t = dtp_;
-                holder.syntactic_t = s_BuiltinValue;
+                
             }
 
-            void second(holder_type& holder, const std::string & val) {
-
+            void second_n(holder_type& holder, const std::string & val) {
+                holder.type =v_number;
                 holder.value = val;
             }
+            
+            void second_i(holder_type& holder, const std::string & val) {
+                holder.type =v_identifier;
+                holder.value = val;
+            }            
 
 
             qi::rule<Iterator, holder_type(), skip_cmt_type> pair;
-            defined_type dtp_;
 
 
         };
@@ -173,8 +176,8 @@ namespace x680 {
             typedef NamedNumberList_grammar self_type;
             typedef value_element_vector holder_type;
 
-            NamedNumberList_grammar(defined_type dtp = t_NODEF, bool allownegativ = true) :
-            NamedNumberList_grammar::base_type(vect), components(dtp, allownegativ) {
+            NamedNumberList_grammar() :
+            NamedNumberList_grammar::base_type(vect)  {
 
                 vect = qi::lit("{")
                         >> -(components[bind(&self_type::operator (), *this, qi::_val, qi::_1)] % qi::omit[","])
@@ -182,7 +185,6 @@ namespace x680 {
             }
 
             void operator()(holder_type& holder, const value_element & val) {
-
                 holder.push_back(val);
             }
 
@@ -200,7 +202,7 @@ namespace x680 {
             typedef type_element holder_type;
 
             IntegerType_grammar() :
-            IntegerType_grammar::base_type(start_rule), NamedNumberList(t_INTEGER) {
+            IntegerType_grammar::base_type(start_rule) {
 
                 start_rule = typereference_[bind(&self_type::identificator, *this, qi::_val, qi::_1)]
                         >> "::="
@@ -230,6 +232,8 @@ namespace x680 {
 
         };
 
+        extern IntegerType_grammar<std::string::iterator> IntegerType_;
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         // ENUMERATED
@@ -243,32 +247,28 @@ namespace x680 {
             typedef Enumeration_grammar self_type;
             typedef value_element holder_type;
 
-            Enumeration_grammar(defined_type dtp = t_NODEF) :
-            Enumeration_grammar::base_type(pair), dtp_(dtp) {
+            Enumeration_grammar() :
+            Enumeration_grammar::base_type(pair) {
 
-                pair = component[ qi::_val = qi::_1 ]
-                        | identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
+                     pair = component[ qi::_val = qi::_1 ] |
+                       identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
                         | qi::lit("...")[bind(&self_type::extention, *this, qi::_val)];
             }
 
             void first(holder_type& holder, const std::string & val) {
-
                 holder.identifier = val;
-                holder.builtin_t = t_INTEGER; //t_ENUMERATED;
-                holder.syntactic_t = s_BuiltinValue;
+                holder.type= v_identifier;
+                
             }
 
             void extention(holder_type & holder) {
+                holder.type= v_extention;
+            }       
 
-                holder.identifier = "...";
-                holder.builtin_t = t_INTEGER; //t_ENUMERATED;
-                holder.syntactic_t = s_BuiltinValue;
-            }
 
 
             qi::rule<Iterator, holder_type(), skip_cmt_type> pair;
             NamedNumber_grammar<Iterator> component;
-            defined_type dtp_;
 
         };
 
@@ -280,8 +280,8 @@ namespace x680 {
             typedef Enumerations_grammar self_type;
             typedef value_element_vector holder_type;
 
-            Enumerations_grammar(defined_type dtp = t_NODEF) :
-            Enumerations_grammar::base_type(vect), components(dtp) {
+            Enumerations_grammar() :
+            Enumerations_grammar::base_type(vect) {
 
                 vect = qi::lit("{")
                         >> -(components[bind(&self_type::operator (), *this, qi::_val, qi::_1)] % qi::omit[","])
@@ -307,7 +307,7 @@ namespace x680 {
             typedef type_element holder_type;
 
             EnumeratedType_grammar() :
-            EnumeratedType_grammar::base_type(start_rule), Enumerations(t_ENUMERATED) {
+            EnumeratedType_grammar::base_type(start_rule) {
 
                 start_rule = typereference_[bind(&self_type::identificator, *this, qi::_val, qi::_1)]
                         >> "::="
@@ -335,7 +335,9 @@ namespace x680 {
             qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
             Enumerations_grammar<Iterator> Enumerations;
 
-        };
+        };    
+                
+        extern EnumeratedType_grammar<std::string::iterator> EnumeratedType_;
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
@@ -345,13 +347,13 @@ namespace x680 {
         // BitStringTypeType
 
         template <typename Iterator>
-        struct BitStringTypeType_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+        struct BitStringType_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
 
-            typedef BitStringTypeType_grammar self_type;
+            typedef BitStringType_grammar self_type;
             typedef type_element holder_type;
 
-            BitStringTypeType_grammar() :
-            BitStringTypeType_grammar::base_type(start_rule), NameBitList(t_BIT_STRING, false) {
+            BitStringType_grammar() :
+            BitStringType_grammar::base_type(start_rule) {
 
                 start_rule = typereference_[bind(&self_type::identificator, *this, qi::_val, qi::_1)]
                         >> "::="
@@ -380,6 +382,8 @@ namespace x680 {
             NamedNumberList_grammar<Iterator> NameBitList;
 
         };
+        
+        extern BitStringType_grammar<std::string::iterator> BitStringType_;        
         
         
         
@@ -411,10 +415,12 @@ namespace x680 {
 
             void first(holder_type& holder, const std::string & val) {
                 holder.identifier = val;
+                holder.type = v_identifier;
             }
 
             void second(holder_type& holder, const std::string & val) {
                 holder.value = val;
+                holder.type = v_number;                
             }
 
             qi::rule<Iterator, holder_type(), skip_cmt_type > pair;
@@ -444,7 +450,7 @@ namespace x680 {
             }
 
             void operator()(holder_type& holder, value_element & val) {
-                holder.push_back(val);
+                holder.push_back(val);               
             }
 
             qi::rule<Iterator, holder_type(), skip_cmt_type> vect;
@@ -463,102 +469,15 @@ namespace x680 {
             typedef Type_grammar self_type;
             typedef type_element holder_type;
 
-            struct check_type_simple : qi::symbols<std::string::value_type, defined_type > {
-
-                check_type_simple() {
-
-                    add
-                            ("BOOLEAN", t_BOOLEAN)
-                            ("INTEGER", t_INTEGER)
-                            ("NULL", t_NULL)
-                            ("EXTERNAL", t_EXTERNAL)
-                            ("REAL", t_REAL)
-                            ("ENUMERATED", t_ENUMERATED)
-                            ("UTCTime", t_UTCTime)
-                            ("GeneralizedTime", t_GeneralizedTime)
-                            ("TIME", t_TIME)
-                            ("DATE", t_DATE)
-                            ("CHOICE", t_CHOICE)
-                            ;
-                }
-            };
-
-            struct check_type_simple2 : qi::symbols<std::string::value_type, defined_type > {
-
-                check_type_simple2() {
-
-                    add
-                            ("BIT", t_BIT_STRING)
-                            ("OCTET", t_OCTET_STRING)
-                            ("OBJECT IDENTIFIER", t_OBJECT_IDENTIFIER)
-                            ("Object Descriptor", t_ObjectDescriptor)
-                            ("EMBEDDED PDV", t_EMBEDDED_PDV)
-                            ("RELATIVE OID", t_RELATIVE_OID)
-                            ("TIME OF DAY", t_TIME_OF_DAY)
-                            ("DATE TIME", t_DATE_TIME)
-                            ;
-                }
-            };
-
-            struct check_type_string : qi::symbols<std::string::value_type, defined_type > {
-
-                check_type_string() {
-
-                    add
-
-                            ("UTF8String", t_UTF8String)
-                            ("NumericString", t_NumericString)
-                            ("PrintableString", t_PrintableString)
-                            ("T61String", t_T61String)
-                            ("VideotexString", t_VideotexString)
-                            ("IA5String", t_IA5String)
-                            ("GraphicString", t_GraphicString)
-                            ("VisibleString", t_VisibleString)
-                            ("GeneralString", t_GeneralString)
-                            ("UniversalString", t_UniversalString)
-                            ("CHARACTER STRING", t_CHARACTER_STRING)
-                            ("BMPString", t_BMPString)
-                            ;
-                }
-            };
-
-            struct check_type_struct : qi::symbols<std::string::value_type, defined_type > {
-
-                check_type_struct() {
-
-                    add
-
-                            ("SEQUENCE", t_SEQUENCE)
-                            ("SET", t_SET)
-                            ;
-                }
-            };
-
             Type_grammar() :
             Type_grammar::base_type(start_rule) {
 
-                start_rule = typereference_[bind(&self_type::identificator, *this, qi::_val, qi::_1)]
-                        >> "::="
-                        >> simple_typer[bind(&self_type::type, *this, qi::_val, qi::_1)];
+                start_rule = IntegerType_ | EnumeratedType_ | BitStringType_ | SympleTypeDecl_;
 
             }
-
-            void identificator(type_element& holder, const std::string & val) {
-
-                holder.identifier = val;
-            }
-
-            void type(type_element& holder, const defined_type & tp) {
-
-                holder.builtin_t = tp;
-            }
-
 
             qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
-            check_type_struct struct_typer;
-            check_type_simple simple_typer;
-            check_type_simple2 simple_typer2;
-            check_type_string string_typer;
+
         };
 
         //extern Type_grammar<std::string::iterator> Type_;
