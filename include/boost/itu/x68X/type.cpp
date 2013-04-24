@@ -23,6 +23,8 @@ namespace x680 {
         ReferencedType_grammar<std::string::iterator> ReferencedType_;      
         
         Type_grammar<std::string::iterator> Type_;   
+        
+        TypeAssignment_grammar<std::string::iterator> TypeAssignment_;
 
         //syn_elements_sk_rule Types_ = Type_ % qi::omit[*qi::space];
 

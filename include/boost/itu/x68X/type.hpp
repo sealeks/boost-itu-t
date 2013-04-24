@@ -316,7 +316,9 @@ namespace x680 {
             TypeAssignment_grammar() :
             TypeAssignment_grammar::base_type(start_rule) {
 
-                start_rule = IntegerType_ | EnumeratedType_ | BitStringType_ | SympleTypeDecl_;
+                start_rule = typereference_[bind(&self_type::operator(), *this, qi::_val, qi::_1)] 
+                        >> qi::lexeme[qi::lit("::=")] 
+                        >>Type_[bind(&self_type::element, *this, qi::_val, qi::_1)];
 
             }
             
@@ -324,21 +326,21 @@ namespace x680 {
                 holder.identifier=val;
             }            
 
-            void operator()(holder_type& holder, const builtin_type_element& val) {
-               // holder.push_back(val);
+            void element(holder_type& holder, const type_element& val) {
+                holder.from(val);
             }
 
             qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
 
         };
 
-        //extern Type_grammar<std::string::iterator> Type_;
+        extern TypeAssignment_grammar<std::string::iterator> TypeAssignment_;
 
 
 
         //extern syn_elements_sk_rule Types_;
 
-        /*template <typename Iterator>
+        template <typename Iterator>
         struct Types_grammar : qi::grammar<Iterator, type_assigment_vector(), skip_cmt_type> {
 
             typedef Types_grammar self_type;
@@ -347,13 +349,13 @@ namespace x680 {
             Types_grammar() :
             Types_grammar::base_type(start_rule) {
 
-                start_rule = *Type_;
+                start_rule = *TypeAssignment_;
 
             }
 
             qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
             Type_grammar<std::string::iterator> Type_;
-        };*/
+        };
 
     }
 }

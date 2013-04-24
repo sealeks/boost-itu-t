@@ -111,7 +111,7 @@ namespace x680 {
                         >> qi::lexeme[BEGIN_]
                         >> -(Exports_[bind(&self_type::exports, *this, qi::_val, qi::_1)])
                         >> -(Imports_[bind(&self_type::add_imports, *this, qi::_val, qi::_1)])
-                        //>> -(Types[bind(&self_type::add_types, *this, qi::_val, qi::_1)])
+                        >> -(Types[bind(&self_type::add_types, *this, qi::_val, qi::_1)])
                         >> END_;
 
 
@@ -137,24 +137,24 @@ namespace x680 {
                 holder.extesibility_implied = true;
             }
 
-            void exports(holder_type& holder, const string_vector & val) {
+            void exports(holder_type& holder, const string_vector& val) {
                 holder.exports_ = val;
             }
 
-            void add_imports(holder_type& holder, const imports & val) {
+            void add_imports(holder_type& holder, const imports& val) {
                 holder.imports_ = val;
             }
             
-            /*void add_types(holder_type& holder, const builtin_type_element_vector & val) {
+            void add_types(holder_type& holder, const type_assigment_vector& val) {
                 holder.elements = val;
-            }*/
+            }
 
             // declaring rules
 
             qi::rule<Iterator, module(), skip_cmt_type > start_rule;
             tag_default tagdefault;
             encoding_references encodingreference;
-            //Types_grammar<Iterator> Types;
+            Types_grammar<Iterator> Types;
 
         };
 
