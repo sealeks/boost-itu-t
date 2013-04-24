@@ -145,7 +145,7 @@ namespace x680 {
                 holder.imports_ = val;
             }
             
-            void add_types(holder_type& holder, const type_element_vector & val) {
+            void add_types(holder_type& holder, const builtin_type_element_vector & val) {
                 holder.elements = val;
             }
 

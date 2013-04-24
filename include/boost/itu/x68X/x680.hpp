@@ -73,18 +73,28 @@ namespace x680 {
         t_DATE_TIME,
         t_CHOICE
     };
-    
-        enum value_type {
+
+    enum tagclass_type {
+
+        tcl_null,
+        tcl_universal,
+        tcl_application,
+        tcl_private,
+        tcl_context
+
+    };
+
+    enum value_type {
 
         v_nodef,
         v_identifier,
         v_boolean,
         v_number,
         v_real,
-        v_null,        
+        v_null,
         v_binary,
         v_hexnum,
-        v_octnum,        
+        v_octnum,
         v_array,
         v_struct,
         v_extention
@@ -123,11 +133,27 @@ namespace x680 {
         typedef std::pair<std::string, std::string> string_pair;
         typedef std::vector<string_pair> string_pair_vector;
 
-        struct type_element;
-        typedef std::vector<type_element> type_element_vector;
+        struct builtin_type_element;
+        typedef std::vector<builtin_type_element> builtin_type_element_vector;
 
         struct value_element;
         typedef std::vector<value_element> value_element_vector;
+        
+        
+        
+
+        struct tag_type {
+
+            value_element() :
+            type(tcl_null) {
+            }
+
+            std::string number;
+            tagclass_type class_;
+        };
+        
+        
+        
 
         struct value_element {
 
@@ -140,6 +166,24 @@ namespace x680 {
             value_type type;
             value_element_vector values;
         };
+        
+        
+        
+
+        struct builtin_type_element {
+
+            builtin_type_element() :
+            builtin_t(t_NODEF) {
+            }
+
+            defined_type builtin_t;
+            value_element_vector predefined;
+            builtin_type_element_vector elements;
+        };
+        
+        
+        
+        
 
         struct type_element {
 
@@ -153,7 +197,7 @@ namespace x680 {
             defined_type builtin_t;
             syntactic_type syntactic_t;
             value_element_vector predefined;
-            type_element_vector elements;
+            builtin_type_element_vector elements;
         };
 
 
@@ -189,7 +233,7 @@ namespace x680 {
             bool extesibility_implied;
             exports exports_;
             imports imports_;
-            type_element_vector elements;
+            builtin_type_element_vector elements;
         };
 
     }
@@ -198,11 +242,17 @@ namespace x680 {
 
 
 
-
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::string_pair_vector,
         (std::vector<x680::bnf::string_pair>, first)
         )
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::tag_type,
+        (std::string, number)
+        (tagclass_type, class_)
+        )
+
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::value_element,
@@ -214,12 +264,18 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 
 BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::builtin_type_element,
+        (x680::defined_type, builtin_t)
+        (x680::bnf::builtin_type_element_vector, elements)
+        (x680::bnf::value_element_vector, predefined)
+        )
+
+BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_element,
-        (std::string, identifier)
         (std::string, reference)
         (x680::defined_type, builtin_t)
         (x680::syntactic_type, syntactic_t)
-        (x680::bnf::type_element_vector, elements)
+        (x680::bnf::builtin_type_element_vector, elements)
         (x680::bnf::value_element_vector, predefined)
         )
 
@@ -239,7 +295,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (bool, extesibility_implied)
         (x680::bnf::exports, exports_)
         (x680::bnf::imports, imports_)
-        (x680::bnf::type_element_vector, elements)
+        (x680::bnf::builtin_type_element_vector, elements)
         )
 
 
@@ -292,21 +348,21 @@ namespace x680 {
 
         typedef qi::rule<std::string::iterator, imports() > imports_rule;
         typedef qi::rule<std::string::iterator, imports(), skip_cmt_type > imports_sk_rule;
-        
-        typedef qi::rule<std::string::iterator, type_element() > type_element_rule;
-        typedef qi::rule<std::string::iterator, type_element(), skip_cmt_type > type_element_sk_rule;            
-        
-        typedef qi::rule<std::string::iterator, type_element_vector() > type_elements_rule;
-        typedef qi::rule<std::string::iterator, type_element_vector(), skip_cmt_type > type_elements_sk_rule;        
-       
+
+        typedef qi::rule<std::string::iterator, builtin_type_element() > builtin_type_element_rule;
+        typedef qi::rule<std::string::iterator, builtin_type_element(), skip_cmt_type > builtin_type_element_sk_rule;
+
+        typedef qi::rule<std::string::iterator, builtin_type_element_vector() > builtin_type_elements_rule;
+        typedef qi::rule<std::string::iterator, builtin_type_element_vector(), skip_cmt_type > builtin_type_elements_sk_rule;
+
         typedef qi::rule<std::string::iterator, value_element() > value_element_rule;
-        typedef qi::rule<std::string::iterator, value_element(), skip_cmt_type > value_element_sk_rule;            
-        
+        typedef qi::rule<std::string::iterator, value_element(), skip_cmt_type > value_element_sk_rule;
+
         typedef qi::rule<std::string::iterator, value_element_vector() > value_elements_rule;
-        typedef qi::rule<std::string::iterator, value_element_vector(), skip_cmt_type > value_elements_sk_rule;      
-        
-        typedef qi::rule<std::string::iterator, type_element_vector() > syn_elements_rule;
-        typedef qi::rule<std::string::iterator, type_element_vector(), skip_cmt_type > syn_elements_sk_rule;
+        typedef qi::rule<std::string::iterator, value_element_vector(), skip_cmt_type > value_elements_sk_rule;
+
+        typedef qi::rule<std::string::iterator, builtin_type_element_vector() > syn_elements_rule;
+        typedef qi::rule<std::string::iterator, builtin_type_element_vector(), skip_cmt_type > syn_elements_sk_rule;
 
         typedef qi::rule<std::string::iterator, unsigned() > unum_rule;
 
@@ -315,7 +371,7 @@ namespace x680 {
         extern str_rule comment_end;
         extern str_rule pos_number_str;
         extern str_rule number_str;
-        extern str_rule realnumber_str;        
+        extern str_rule realnumber_str;
         extern str_rule curly_barket_pair;
 
         extern term_rule ECODED_;

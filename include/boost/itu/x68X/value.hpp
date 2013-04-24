@@ -110,7 +110,8 @@ namespace x680 {
             NullValue_grammar() :
             NullValue_grammar::base_type(pair) {
 
-                pair = NULL_[bind(&self_type::operator(), *this, qi::_val];
+                pair = NULL_[bind(&self_type::operator(), *this, qi::_val) ];
+                
             }
 
             void operator()(holder_type & holder) {
