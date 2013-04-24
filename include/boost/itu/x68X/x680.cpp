@@ -158,6 +158,14 @@ namespace x680 {
         str_rule comment_ = comment_beg
                 >> *((qi::print)[ _val += qi::_1] - comment_end)
         >> comment_end;
+        
+        
+        str_rule ExternalTypeReference_ = modulereference_
+                >> qi::lit(".")
+        >> typereference_;
+
+        str_rule DefinedType_ = ExternalTypeReference_ | typereference_; //| ParameterizedType | ParameterizedValueSetType
+        
 
         str_rule Externalvaluereference_ = modulereference_
                 >> qi::lit(".")

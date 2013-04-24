@@ -133,27 +133,21 @@ namespace x680 {
         typedef std::pair<std::string, std::string> string_pair;
         typedef std::vector<string_pair> string_pair_vector;
 
-        struct builtin_type_element;
-        typedef std::vector<builtin_type_element> builtin_type_element_vector;
+        struct type_assigment;
+        typedef std::vector<type_assigment> type_assigment_vector;
 
         struct value_element;
         typedef std::vector<value_element> value_element_vector;
-        
-        
-        
 
         struct tag_type {
 
-            value_element() :
-            type(tcl_null) {
+            tag_type() :
+            class_(tcl_null) {
             }
 
             std::string number;
             tagclass_type class_;
         };
-        
-        
-        
 
         struct value_element {
 
@@ -166,9 +160,10 @@ namespace x680 {
             value_type type;
             value_element_vector values;
         };
-        
-        
-        
+
+
+
+        // BuiltinType
 
         struct builtin_type_element {
 
@@ -178,30 +173,78 @@ namespace x680 {
 
             defined_type builtin_t;
             value_element_vector predefined;
-            builtin_type_element_vector elements;
+            type_assigment_vector elements;
         };
-        
-        
-        
-        
+
+
+        // DefinedType
+
+        struct defined_type_element {
+
+            defined_type_element() {
+            }
+
+            std::string reference;
+            value_element_vector predefined;
+        };
+
+
+        // Type
 
         struct type_element {
 
             type_element() :
-            builtin_t(t_NODEF),
-            syntactic_t(s_NODEF) {
+            builtin_t(t_NODEF) {
+            }
+
+            void from(const builtin_type_element& val) {
+                builtin_t = val.builtin_t;
+                predefined = val.predefined;
+                elements = val.elements;
+            }
+
+            void from(const defined_type_element & val) {
+                reference = val.reference;
+            }
+
+            tag_type tag;
+            std::string reference;
+            defined_type builtin_t;
+            value_element_vector predefined;
+            type_assigment_vector elements;
+        };
+
+        struct type_assigment {
+
+            type_assigment() :
+            builtin_t(t_NODEF) {
+            }
+
+            void from(const builtin_type_element& val) {
+                builtin_t = val.builtin_t;
+                predefined = val.predefined;
+                elements = val.elements;
+            }
+
+            void from(const defined_type_element & val) {
+                reference = val.reference;
+            }
+
+            void from(const type_element & val) {
+                tag = val.tag;
+                reference = val.reference;
+                builtin_t = val.builtin_t;
+                predefined = val.predefined;
+                elements = val.elements;
             }
 
             std::string identifier;
+            tag_type tag;
             std::string reference;
             defined_type builtin_t;
-            syntactic_type syntactic_t;
             value_element_vector predefined;
-            builtin_type_element_vector elements;
+            type_assigment_vector elements;
         };
-
-
-
 
 
 
@@ -233,7 +276,7 @@ namespace x680 {
             bool extesibility_implied;
             exports exports_;
             imports imports_;
-            builtin_type_element_vector elements;
+            type_assigment_vector elements;
         };
 
     }
@@ -247,10 +290,11 @@ BOOST_FUSION_ADAPT_STRUCT(
         (std::vector<x680::bnf::string_pair>, first)
         )
 
+
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::tag_type,
         (std::string, number)
-        (tagclass_type, class_)
+        (x680::tagclass_type, class_)
         )
 
 
@@ -266,7 +310,14 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::builtin_type_element,
         (x680::defined_type, builtin_t)
-        (x680::bnf::builtin_type_element_vector, elements)
+        (x680::bnf::type_assigment_vector , elements)
+        (x680::bnf::value_element_vector, predefined)
+        )
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::defined_type_element,
+        (std::string, reference)
         (x680::bnf::value_element_vector, predefined)
         )
 
@@ -274,8 +325,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_element,
         (std::string, reference)
         (x680::defined_type, builtin_t)
-        (x680::syntactic_type, syntactic_t)
-        (x680::bnf::builtin_type_element_vector, elements)
+        (x680::bnf::type_assigment_vector, elements)
         (x680::bnf::value_element_vector, predefined)
         )
 
@@ -295,7 +345,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (bool, extesibility_implied)
         (x680::bnf::exports, exports_)
         (x680::bnf::imports, imports_)
-        (x680::bnf::builtin_type_element_vector, elements)
+        (x680::bnf::type_assigment_vector , elements)
         )
 
 
@@ -352,8 +402,8 @@ namespace x680 {
         typedef qi::rule<std::string::iterator, builtin_type_element() > builtin_type_element_rule;
         typedef qi::rule<std::string::iterator, builtin_type_element(), skip_cmt_type > builtin_type_element_sk_rule;
 
-        typedef qi::rule<std::string::iterator, builtin_type_element_vector() > builtin_type_elements_rule;
-        typedef qi::rule<std::string::iterator, builtin_type_element_vector(), skip_cmt_type > builtin_type_elements_sk_rule;
+        typedef qi::rule<std::string::iterator, type_assigment_vector() > builtin_type_elements_rule;
+        typedef qi::rule<std::string::iterator, type_assigment_vector(), skip_cmt_type > builtin_type_elements_sk_rule;
 
         typedef qi::rule<std::string::iterator, value_element() > value_element_rule;
         typedef qi::rule<std::string::iterator, value_element(), skip_cmt_type > value_element_sk_rule;
@@ -361,8 +411,8 @@ namespace x680 {
         typedef qi::rule<std::string::iterator, value_element_vector() > value_elements_rule;
         typedef qi::rule<std::string::iterator, value_element_vector(), skip_cmt_type > value_elements_sk_rule;
 
-        typedef qi::rule<std::string::iterator, builtin_type_element_vector() > syn_elements_rule;
-        typedef qi::rule<std::string::iterator, builtin_type_element_vector(), skip_cmt_type > syn_elements_sk_rule;
+       //typedef qi::rule<std::string::iterator, type_assigment_vector() > syn_elements_rule;
+        //typedef qi::rule<std::string::iterator, type_assigment_vector(), skip_cmt_type > syn_elements_sk_rule;
 
         typedef qi::rule<std::string::iterator, unsigned() > unum_rule;
 
@@ -476,6 +526,8 @@ namespace x680 {
         extern str_rule objectsetreference_; //(=valuereference_,identifier_)
         extern str_rule objectclassreference_; //(~typereference_)        
         extern str_rule comment_;
+        extern str_rule ExternalTypeReference_;
+        extern str_rule DefinedType_; 
         extern str_rule Externalvaluereference_;
         extern str_rule DefinedValue_;
 

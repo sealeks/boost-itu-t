@@ -13,14 +13,16 @@ namespace x680 {
          IntegerType_grammar<std::string::iterator> IntegerType_;
          
          EnumeratedType_grammar<std::string::iterator> EnumeratedType_;
-
-        objNameId_grammar<std::string::iterator> ObjIdComponents_;
         
         BitStringType_grammar<std::string::iterator> BitStringType_;              
 
-        ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
-
-        Type_grammar<std::string::iterator> Type_;
+        BuiltinType_grammar<std::string::iterator> BuiltinType_;   
+        
+        DefinedType_grammar<std::string::iterator> DefinedType;  
+        
+        ReferencedType_grammar<std::string::iterator> ReferencedType_;      
+        
+        Type_grammar<std::string::iterator> Type_;   
 
         //syn_elements_sk_rule Types_ = Type_ % qi::omit[*qi::space];
 
