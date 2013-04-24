@@ -32,7 +32,7 @@ namespace x680 {
                 start_rule = SymbolList_[ bind(&self_type::imports_add, *this, qi::_val, qi::_1) ]
                         >> FROM_
                         >> modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ]
-                        >> -ObjectIdentifierValue_[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ];
+                        >> -ObjectIdentifierValue[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ];
             }
 
             void module_name(holder_type& holder, const std::string & val) {
@@ -48,7 +48,7 @@ namespace x680 {
             }
 
             qi::rule<Iterator, import(), skip_cmt_type > start_rule;
-            ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
+            ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue;
         };
 
         extern SymbolsFromModule_grammar<std::string::iterator> SymbolsFromModule_;
@@ -67,7 +67,7 @@ namespace x680 {
             typedef ModuleDefinition_grammar self_type;
             typedef module holder_type;
 
-            struct tag_default : qi::symbols<std::string::value_type, default_tags_type > {
+            struct tag_default : qi::symbols<std::string::value_type, tagrule_type > {
 
                 tag_default() {
                     add
@@ -94,7 +94,7 @@ namespace x680 {
 
 
                 start_rule = qi::lexeme[ modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ]]
-                        >> -ObjectIdentifierValue_[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ]
+                        >> -ObjectIdentifierValue[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ]
                         >> qi::lexeme[DEFINITIONS_ ]
 
                         >> -(qi::lexeme[encodingreference[bind(&self_type::encoding, *this, qi::_val, qi::_1)]]
@@ -125,7 +125,7 @@ namespace x680 {
                 holder.oid = val;
             }
 
-            void default_tags(holder_type& holder, const default_tags_type & val) {
+            void default_tags(holder_type& holder, const tagrule_type & val) {
                 holder.default_tags_t = val;
             }
 
@@ -155,6 +155,7 @@ namespace x680 {
             tag_default tagdefault;
             encoding_references encodingreference;
             Types_grammar<Iterator> Types;
+            ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue;
 
         };
 

@@ -128,7 +128,7 @@ namespace x680 {
     public:
 
         
-        typedef x680::default_tags_type default_tags_type;
+        typedef x680::tagrule_type tagrule_type;
         typedef x680::encoding_references_type encoding_references_type;
 
         asn1module(const std::string& name , entities_ptr ents) :
@@ -174,11 +174,11 @@ namespace x680 {
             return definitive_identifier_;
         }
 
-        default_tags_type default_tags() const {
+        tagrule_type default_tags() const {
             return default_tags_;
         }
 
-        void default_tags(default_tags_type val) {
+        void default_tags(tagrule_type val) {
             default_tags_ = val;
         }
 
@@ -210,7 +210,7 @@ namespace x680 {
 
         std::string name_;
         object_identificator_type definitive_identifier_;
-        default_tags_type default_tags_;
+        tagrule_type default_tags_;
         encoding_references_type encoding_references_;
         bool extesibility_implied_;
         entities_type exports_;

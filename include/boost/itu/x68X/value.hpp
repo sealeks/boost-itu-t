@@ -50,8 +50,6 @@ namespace x680 {
 
 
             qi::rule<Iterator, holder_type(), skip_cmt_type> pair;
-
-
         };
 
         
@@ -113,8 +111,6 @@ namespace x680 {
             void extention(holder_type & holder) {
                 holder.type= v_extention;
             }       
-
-
 
             qi::rule<Iterator, holder_type(), skip_cmt_type> pair;
             NamedNumber_grammar<Iterator> component;
@@ -192,7 +188,6 @@ namespace x680 {
             qi::rule<Iterator, holder_type(), skip_cmt_type > pair;
         };
 
-        extern objNameId_grammar<std::string::iterator> ObjIdComponents_;
 
 
 
@@ -223,7 +218,6 @@ namespace x680 {
             objNameId_grammar<Iterator> components;
         };
 
-        extern ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
 
 
         

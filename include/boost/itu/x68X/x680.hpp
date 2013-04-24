@@ -76,7 +76,6 @@ namespace x680 {
 
     enum tagclass_type {
 
-        tcl_null,
         tcl_universal,
         tcl_application,
         tcl_private,
@@ -107,8 +106,8 @@ namespace x680 {
         s_BuiltinValue
     };
 
-    enum default_tags_type {
-
+    enum tagrule_type {
+        noset_tags,
         explicit_tags,
         implicit_tags,
         automatic_tags
@@ -120,6 +119,18 @@ namespace x680 {
         encoding_tag,
         encoding_xer,
         encoding_per
+    };
+
+    struct tag_type {
+
+        tag_type() :
+        class_(tcl_context),
+        rule(noset_tags){
+        }
+
+        std::string number;
+        tagclass_type class_;
+        tagrule_type rule;
     };
 
 }
@@ -139,15 +150,7 @@ namespace x680 {
         struct value_element;
         typedef std::vector<value_element> value_element_vector;
 
-        struct tag_type {
 
-            tag_type() :
-            class_(tcl_null) {
-            }
-
-            std::string number;
-            tagclass_type class_;
-        };
 
         struct value_element {
 
@@ -163,20 +166,6 @@ namespace x680 {
 
 
 
-        // BuiltinType
-
-        struct builtin_type_element {
-
-            builtin_type_element() :
-            builtin_t(t_NODEF) {
-            }
-
-            defined_type builtin_t;
-            value_element_vector predefined;
-            type_assigment_vector elements;
-        };
-
-
         // DefinedType
 
         struct defined_type_element {
@@ -184,6 +173,7 @@ namespace x680 {
             defined_type_element() {
             }
 
+            tag_type tag;
             std::string reference;
             value_element_vector predefined;
         };
@@ -196,15 +186,30 @@ namespace x680 {
             type_element() :
             builtin_t(t_NODEF) {
             }
+            
+            bool tagged() const {
+                return !tag.number.empty();
+            }
 
-            void from(const builtin_type_element& val) {
+            void from(const type_element& val) {
+                tag = val.tag;
+                reference = val.reference;
                 builtin_t = val.builtin_t;
                 predefined = val.predefined;
                 elements = val.elements;
             }
+            
+            void from_tagged(const type_element& val) {
+                reference = val.reference;
+                builtin_t = val.builtin_t;
+                predefined = val.predefined;
+                elements = val.elements;
+            }            
 
             void from(const defined_type_element & val) {
+                tag = val.tag;                
                 reference = val.reference;
+                predefined = val.predefined;
             }
 
             tag_type tag;
@@ -220,11 +225,7 @@ namespace x680 {
             builtin_t(t_NODEF) {
             }
 
-            void from(const builtin_type_element& val) {
-                builtin_t = val.builtin_t;
-                predefined = val.predefined;
-                elements = val.elements;
-            }
+
 
             void from(const defined_type_element & val) {
                 reference = val.reference;
@@ -272,7 +273,7 @@ namespace x680 {
             std::string name;
             value_element_vector oid;
             encoding_references_type encoding_references_t;
-            default_tags_type default_tags_t;
+            tagrule_type default_tags_t;
             bool extesibility_implied;
             exports exports_;
             imports imports_;
@@ -292,9 +293,10 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 
 BOOST_FUSION_ADAPT_STRUCT(
-        x680::bnf::tag_type,
+        x680::tag_type,
         (std::string, number)
         (x680::tagclass_type, class_)
+        (x680::tagrule_type,  rule)
         )
 
 
@@ -308,21 +310,15 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 
 BOOST_FUSION_ADAPT_STRUCT(
-        x680::bnf::builtin_type_element,
-        (x680::defined_type, builtin_t)
-        (x680::bnf::type_assigment_vector , elements)
-        (x680::bnf::value_element_vector, predefined)
-        )
-
-
-BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::defined_type_element,
+        (x680::tag_type, tag)
         (std::string, reference)
         (x680::bnf::value_element_vector, predefined)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_element,
+        (x680::tag_type, tag)
         (std::string, reference)
         (x680::defined_type, builtin_t)
         (x680::bnf::type_assigment_vector, elements)
@@ -341,7 +337,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (std::string, name)
         (x680::bnf::value_element_vector, oid)
         (x680::encoding_references_type, encoding_references_t)
-        (x680::default_tags_type, default_tags_t)
+        (x680::tagrule_type, default_tags_t)
         (bool, extesibility_implied)
         (x680::bnf::exports, exports_)
         (x680::bnf::imports, imports_)
@@ -399,11 +395,11 @@ namespace x680 {
         typedef qi::rule<std::string::iterator, imports() > imports_rule;
         typedef qi::rule<std::string::iterator, imports(), skip_cmt_type > imports_sk_rule;
 
-        typedef qi::rule<std::string::iterator, builtin_type_element() > builtin_type_element_rule;
-        typedef qi::rule<std::string::iterator, builtin_type_element(), skip_cmt_type > builtin_type_element_sk_rule;
+        typedef qi::rule<std::string::iterator, type_element() > type_element_rule;
+        typedef qi::rule<std::string::iterator, type_element(), skip_cmt_type > type_element_sk_rule;
 
-        typedef qi::rule<std::string::iterator, type_assigment_vector() > builtin_type_elements_rule;
-        typedef qi::rule<std::string::iterator, type_assigment_vector(), skip_cmt_type > builtin_type_elements_sk_rule;
+        typedef qi::rule<std::string::iterator, type_assigment_vector() > type_elements_rule;
+        typedef qi::rule<std::string::iterator, type_assigment_vector(), skip_cmt_type > type_elements_sk_rule;
 
         typedef qi::rule<std::string::iterator, value_element() > value_element_rule;
         typedef qi::rule<std::string::iterator, value_element(), skip_cmt_type > value_element_sk_rule;

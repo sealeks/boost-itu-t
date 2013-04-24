@@ -7,26 +7,27 @@
 
 namespace x680 {
     namespace bnf {
-        
-         SympleTypeDecl_grammar<std::string::iterator> SympleTypeDecl_;
-         
-         IntegerType_grammar<std::string::iterator> IntegerType_;
-         
-         EnumeratedType_grammar<std::string::iterator> EnumeratedType_;
-        
-        BitStringType_grammar<std::string::iterator> BitStringType_;              
 
-        BuiltinType_grammar<std::string::iterator> BuiltinType_;   
-        
-        DefinedType_grammar<std::string::iterator> DefinedType;  
-        
-        ReferencedType_grammar<std::string::iterator> ReferencedType_;      
-        
-        Type_grammar<std::string::iterator> Type_;   
-        
-        TypeAssignment_grammar<std::string::iterator> TypeAssignment_;
 
-        //syn_elements_sk_rule Types_ = Type_ % qi::omit[*qi::space];
+        /*SympleTypeDecl_grammar<std::string::iterator> SympleTypeDecl_;
+
+        IntegerType_grammar<std::string::iterator> IntegerType_;
+
+        EnumeratedType_grammar<std::string::iterator> EnumeratedType_;
+
+        BitStringType_grammar<std::string::iterator> BitStringType_;
+
+        BuiltinType_grammar<std::string::iterator> BuiltinType_;
+
+        DefinedType_grammar<std::string::iterator> DefinedType;
+
+        ReferencedType_grammar<std::string::iterator> ReferencedType_;
+
+        Type_grammar<std::string::iterator> Type_;
+
+        TaggedType_grammar<std::string::iterator> TaggedType_;
+
+        TypeAssignment_grammar<std::string::iterator> TypeAssignment_;*/
 
 
     }
