@@ -12,8 +12,66 @@
 
 namespace x680 {
     namespace bnf {
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        // ReferencedType
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+        
+        //DefindeType
+
+        struct DefinedType_grammar : qi::grammar<str_iterator, defined_type_element(), skip_cmt_type> {
+
+            typedef DefinedType_grammar self_type;
+            typedef defined_type_element holder_type;
+
+            DefinedType_grammar() :
+            DefinedType_grammar::base_type(start_rule) {
+
+                start_rule = DefinedType_[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
+
+            }
+
+            void operator()(holder_type& holder, const std::string& val) {
+                holder.reference = val;
+            }
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+
+        };
 
 
+
+        //ReferencedType
+
+        struct ReferencedType_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
+
+            typedef ReferencedType_grammar self_type;
+            typedef type_element holder_type;
+
+            ReferencedType_grammar() :
+            ReferencedType_grammar::base_type(start_rule) {
+
+                start_rule = DefinedType[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
+
+            }
+
+            void operator()(holder_type& holder, const defined_type_element& val) {
+                holder.from(val);
+            }
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            DefinedType_grammar DefinedType;
+
+        };     
+        
+        
+        
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        // BuiltinType
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         // Simple declareted type
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,8 +253,10 @@ namespace x680 {
 
             BuiltinType_grammar() :
             BuiltinType_grammar::base_type(start_rule) {
-                start_rule = (IntegerType | EnumeratedType | BitStringType | SympleTypeDecl)[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
+                init();
             }
+
+            void init();
 
             void operator()(holder_type& holder, const type_element& val) {
                 holder.from(val);
@@ -209,57 +269,6 @@ namespace x680 {
             BitStringType_grammar BitStringType;
 
         };
-
-
-
-
-        //DefindeType
-
-        struct DefinedType_grammar : qi::grammar<str_iterator, defined_type_element(), skip_cmt_type> {
-
-            typedef DefinedType_grammar self_type;
-            typedef defined_type_element holder_type;
-
-            DefinedType_grammar() :
-            DefinedType_grammar::base_type(start_rule) {
-
-                start_rule = DefinedType_[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
-
-            }
-
-            void operator()(holder_type& holder, const std::string& val) {
-                holder.reference = val;
-            }
-
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
-
-        };
-
-
-
-        //ReferencedType
-
-        struct ReferencedType_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
-
-            typedef ReferencedType_grammar self_type;
-            typedef type_element holder_type;
-
-            ReferencedType_grammar() :
-            ReferencedType_grammar::base_type(start_rule) {
-
-                start_rule = DefinedType[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
-
-            }
-
-            void operator()(holder_type& holder, const defined_type_element& val) {
-                holder.from(val);
-            }
-
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
-            DefinedType_grammar DefinedType;
-
-        };
-
 
 
 
@@ -352,12 +361,11 @@ namespace x680 {
 
             TaggedType_grammar() :
             TaggedType_grammar::base_type(start_rule) {
-
-                start_rule = Tag[bind(&self_type::tagset, *this, qi::_val, qi::_1)]
-                        >> Type[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
-
+                init();
             }
 
+            void init();
+            
             void tagset(holder_type& holder, const tag_type& val) {
                 holder.tag = val;
             }
