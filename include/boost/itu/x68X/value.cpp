@@ -8,10 +8,6 @@
 namespace x680 {
     namespace bnf {
 
-        //objNameId_grammar<std::string::iterator> ObjIdComponents_;
-
-        //ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue_;
-
 
     }
 }

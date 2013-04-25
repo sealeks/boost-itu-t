@@ -16,8 +16,8 @@ namespace x680 {
         
         // NamedNumber_grammar
 
-        template <typename Iterator>
-        struct NamedNumber_grammar : qi::grammar<Iterator, value_element(), skip_cmt_type> {
+
+        struct NamedNumber_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
             typedef NamedNumber_grammar self_type;
             typedef value_element holder_type;
@@ -49,7 +49,7 @@ namespace x680 {
             }            
 
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> pair;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
         };
 
         
@@ -59,8 +59,8 @@ namespace x680 {
         
         //NamedNumberList        
 
-        template <typename Iterator>
-        struct NamedNumberList_grammar : qi::grammar<Iterator, value_element_vector(), skip_cmt_type> {
+
+        struct NamedNumberList_grammar : qi::grammar<str_iterator, value_element_vector(), skip_cmt_type> {
 
             typedef NamedNumberList_grammar self_type;
             typedef value_element_vector holder_type;
@@ -77,8 +77,8 @@ namespace x680 {
                 holder.push_back(val);
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type > vect;
-            NamedNumber_grammar<Iterator> components;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type > vect;
+            NamedNumber_grammar components;
 
         };        
         
@@ -88,8 +88,8 @@ namespace x680 {
 
         // Enumeration_grammar
 
-        template <typename Iterator>
-        struct Enumeration_grammar : qi::grammar<Iterator, value_element(), skip_cmt_type> {
+
+        struct Enumeration_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
             typedef Enumeration_grammar self_type;
             typedef value_element holder_type;
@@ -112,8 +112,8 @@ namespace x680 {
                 holder.type= v_extention;
             }       
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> pair;
-            NamedNumber_grammar<Iterator> component;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
+            NamedNumber_grammar component;
 
         };
         
@@ -124,8 +124,8 @@ namespace x680 {
 
         //Enumerations       
 
-        template <typename Iterator>
-        struct Enumerations_grammar : qi::grammar<Iterator, value_element_vector(), skip_cmt_type> {
+
+        struct Enumerations_grammar : qi::grammar<str_iterator, value_element_vector(), skip_cmt_type> {
 
             typedef Enumerations_grammar self_type;
             typedef value_element_vector holder_type;
@@ -143,8 +143,8 @@ namespace x680 {
                 holder.push_back(val);
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type > vect;
-            Enumeration_grammar<Iterator> components;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type > vect;
+            Enumeration_grammar components;
 
         };
 
@@ -158,8 +158,8 @@ namespace x680 {
         
          //objNameId
 
-        template <typename Iterator>
-        struct objNameId_grammar : public qi::grammar<Iterator, value_element(), skip_cmt_type> {
+ 
+        struct objNameId_grammar : public qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
             typedef objNameId_grammar self_type;
             typedef value_element holder_type;
@@ -185,7 +185,7 @@ namespace x680 {
                 holder.type = v_number;                
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type > pair;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type > pair;
         };
 
 
@@ -195,9 +195,9 @@ namespace x680 {
 
         //ObjectIdentifierValue
 
-        template <typename Iterator>
+
         struct ObjectIdentifierValue_grammar :
-        public qi::grammar<Iterator, value_element_vector(), skip_cmt_type > {
+        public qi::grammar<str_iterator, value_element_vector(), skip_cmt_type > {
 
             typedef ObjectIdentifierValue_grammar self_type;
             typedef value_element_vector holder_type;
@@ -214,8 +214,8 @@ namespace x680 {
                 holder.push_back(val);               
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> vect;
-            objNameId_grammar<Iterator> components;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> vect;
+            objNameId_grammar components;
         };
 
 
@@ -226,8 +226,8 @@ namespace x680 {
 
         // BooleanValue
 
-        template <typename Iterator>
-        struct BooleanValue_grammar : qi::grammar<Iterator, value_element(), skip_cmt_type> {
+
+        struct BooleanValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
             typedef BooleanValue_grammar self_type;
             typedef value_element holder_type;
@@ -245,7 +245,7 @@ namespace x680 {
             }
 
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> pair;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
 
 
         };
@@ -253,8 +253,8 @@ namespace x680 {
 
         // IntegerValue
 
-        template <typename Iterator>
-        struct IntegerValue_grammar : qi::grammar<Iterator, value_element(), skip_cmt_type> {
+
+        struct IntegerValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
             typedef IntegerValue_grammar self_type;
             typedef value_element holder_type;
@@ -270,7 +270,7 @@ namespace x680 {
                 holder.value = val;
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> pair;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
 
         };
 
@@ -279,8 +279,8 @@ namespace x680 {
 
         // IntegerValue
 
-        template <typename Iterator>
-        struct RealValue_grammar : qi::grammar<Iterator, value_element(), skip_cmt_type> {
+
+        struct RealValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
             typedef RealValue_grammar self_type;
             typedef value_element holder_type;
@@ -288,7 +288,7 @@ namespace x680 {
             RealValue_grammar() :
             RealValue_grammar::base_type(pair) {
 
-                pair = realnumber_str[bind(&self_type::second_n, *this, qi::_val, qi::_1)]
+                pair = realnumber_str[bind(&self_type::operator(), *this, qi::_val, qi::_1)]
                         | PLUS_INFINITY_[bind(&self_type::operator(), *this, qi::_val, std::string("PLUS-INFINITY"))]
                         | MINUS_INFINITY_[bind(&self_type::operator(), *this, qi::_val, std::string("MINUS-INFINITY"))]
                         | NOT_A_NUMBER_[bind(&self_type::operator(), *this, qi::_val, std::string("NOT-A-NUMBER"))];
@@ -300,7 +300,7 @@ namespace x680 {
             }
 
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> pair;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
 
 
         };
@@ -311,8 +311,8 @@ namespace x680 {
 
         // NullValue
 
-        template <typename Iterator>
-        struct NullValue_grammar : qi::grammar<Iterator, value_element(), skip_cmt_type> {
+
+        struct NullValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
             typedef NullValue_grammar self_type;
             typedef value_element holder_type;
@@ -330,7 +330,7 @@ namespace x680 {
             }
 
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> pair;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
 
 
         };

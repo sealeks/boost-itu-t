@@ -19,9 +19,9 @@ namespace x680 {
 
         //SymbolsFromModule
 
-        template <typename Iterator>
+
         struct SymbolsFromModule_grammar
-        : qi::grammar<Iterator, import(), skip_cmt_type> {
+        : qi::grammar<str_iterator, import(), skip_cmt_type> {
 
             typedef SymbolsFromModule_grammar self_type;
             typedef import holder_type;
@@ -47,22 +47,15 @@ namespace x680 {
                 holder.names = val;
             }
 
-            qi::rule<Iterator, import(), skip_cmt_type > start_rule;
-            ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue;
-        };
-
-        extern SymbolsFromModule_grammar<std::string::iterator> SymbolsFromModule_;
-
-        extern imports_sk_rule SymbolsFromModules_;
-
-        extern imports_sk_rule Imports_;        
+            qi::rule<str_iterator, import(), skip_cmt_type > start_rule;
+            ObjectIdentifierValue_grammar  ObjectIdentifierValue;
+        };       
         
 
         // ModuleDefinition
 
-        template <typename Iterator>
         struct ModuleDefinition_grammar
-        : qi::grammar<Iterator, module(), skip_cmt_type> {
+        : qi::grammar< str_iterator, module(), skip_cmt_type> {
 
             typedef ModuleDefinition_grammar self_type;
             typedef module holder_type;
@@ -109,11 +102,22 @@ namespace x680 {
 
                         >> qi::lexeme[qi::lit("::=")]
                         >> qi::lexeme[BEGIN_]
-                        >> -(Exports_[bind(&self_type::exports, *this, qi::_val, qi::_1)])
-                        >> -(Imports_[bind(&self_type::add_imports, *this, qi::_val, qi::_1)])
+                        >> -(Exports[bind(&self_type::exports, *this, qi::_val, qi::_1)])
+                        >> -(Imports[bind(&self_type::add_imports, *this, qi::_val, qi::_1)])
                         >> -(Types[bind(&self_type::add_types, *this, qi::_val, qi::_1)])
                         >> END_;
 
+                Exports = qi::lexeme[ qi::omit[EXPORTS_ >> +qi::space] ]
+                        >> -(!qi::lit(";")
+                        >> (qi::omit[ALL_] | SymbolList_))
+                        >> qi::omit[qi::lit(";")];
+
+                SymbolsFromModules = *SymbolsFromModule;
+
+                Imports= qi::lexeme[ qi::omit[IMPORTS_ >> +qi::space] ]
+                        >> -(!qi::lit(";")
+                        >> (SymbolsFromModules))
+                        >> qi::omit[qi::lit(";")];
 
             }
 
@@ -151,15 +155,19 @@ namespace x680 {
 
             // declaring rules
 
-            qi::rule<Iterator, module(), skip_cmt_type > start_rule;
+            qi::rule< str_iterator, module(), skip_cmt_type > start_rule;
             tag_default tagdefault;
             encoding_references encodingreference;
-            Types_grammar<Iterator> Types;
-            ObjectIdentifierValue_grammar< std::string::iterator> ObjectIdentifierValue;
+             strvect_sk_rule Exports;
+            SymbolsFromModule_grammar SymbolsFromModule;
+            imports_sk_rule SymbolsFromModules;
+            imports_sk_rule Imports;  
+            Types_grammar Types;
+            ObjectIdentifierValue_grammar ObjectIdentifierValue;
 
         };
 
-        extern ModuleDefinition_grammar<std::string::iterator> ModuleDefinition_;
+        //extern ModuleDefinition_grammar ModuleDefinition_;
 
     }
 }

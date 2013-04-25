@@ -7,27 +7,28 @@
 
 namespace x680 {
     namespace bnf {
+        
+        static SequenceType_grammar SequenceType;
 
+        void Type_grammar::init(){
+        start_rule = (BuiltinType | ReferencedType)/* | ConstrainedType_[bind(&self_type::operator(), *this, qi::_val, qi::_1)];*/;
+    }
 
-        /*SympleTypeDecl_grammar<std::string::iterator> SympleTypeDecl_;
-
-        IntegerType_grammar<std::string::iterator> IntegerType_;
-
-        EnumeratedType_grammar<std::string::iterator> EnumeratedType_;
-
-        BitStringType_grammar<std::string::iterator> BitStringType_;
-
-        BuiltinType_grammar<std::string::iterator> BuiltinType_;
-
-        DefinedType_grammar<std::string::iterator> DefinedType;
-
-        ReferencedType_grammar<std::string::iterator> ReferencedType_;
-
-        Type_grammar<std::string::iterator> Type_;
-
-        TaggedType_grammar<std::string::iterator> TaggedType_;
-
-        TypeAssignment_grammar<std::string::iterator> TypeAssignment_;*/
+        void ComponentType_grammar::init() {
+           /* start_rule = identifier_[bind(&self_type::operator(), *this, qi::_val, qi::_1)]
+                    >> Type[bind(&self_type::element, *this, qi::_val, qi::_1)]
+                    >> -(OPTIONAL_[bind(&self_type::element, *this, qi::_val, mk_optional)]
+                    | DEFAULT_[bind(&self_type::element, *this, qi::_val, mk_default)]);*/
+        }
+        
+        
+         void SequenceType_grammar::init() {       
+                   /*    start_rule = qi::lexeme[SEQUENCE_[bind(&self_type::operator(), *this, qi::_val)]] 
+                        >> qi::lit("{") 
+                        >> *(Component[bind(&self_type::operator(), *this, qi::_val, qi::_1)])
+                        >> qi::lit("}");*/
+                       
+         }
 
 
     }

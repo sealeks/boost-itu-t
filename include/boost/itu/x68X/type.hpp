@@ -18,8 +18,7 @@ namespace x680 {
         // Simple declareted type
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        template <typename Iterator>
-        struct SympleTypeDecl_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+        struct SympleTypeDecl_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
 
             typedef SympleTypeDecl_grammar self_type;
             typedef type_element holder_type;
@@ -69,11 +68,11 @@ namespace x680 {
 
             }
 
-            void operator()(type_element& holder, const defined_type & tp) {
+            void operator()(holder_type& holder, const defined_type & tp) {
                 holder.builtin_t = tp;
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
             check_type_simple simple_typer;
 
         };
@@ -86,8 +85,7 @@ namespace x680 {
 
         // IntegerType
 
-        template <typename Iterator>
-        struct IntegerType_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+        struct IntegerType_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
 
             typedef IntegerType_grammar self_type;
             typedef type_element holder_type;
@@ -100,16 +98,16 @@ namespace x680 {
 
             }
 
-            void operator()(type_element & holder) {
+            void operator()(holder_type & holder) {
                 holder.builtin_t = t_INTEGER;
             }
 
-            void operator()(type_element& holder, const value_element_vector & val) {
+            void operator()(holder_type& holder, const value_element_vector & val) {
                 holder.predefined = val;
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
-            NamedNumberList_grammar<Iterator> NamedNumberList;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            NamedNumberList_grammar NamedNumberList;
 
         };
 
@@ -122,8 +120,7 @@ namespace x680 {
 
         // EnumeratedType
 
-        template <typename Iterator>
-        struct EnumeratedType_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+        struct EnumeratedType_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
 
             typedef EnumeratedType_grammar self_type;
             typedef type_element holder_type;
@@ -136,16 +133,16 @@ namespace x680 {
 
             }
 
-            void operator()(type_element & holder) {
+            void operator()(holder_type& holder) {
                 holder.builtin_t = t_ENUMERATED;
             }
 
-            void operator()(type_element& holder, const value_element_vector & val) {
+            void operator()(holder_type& holder, const value_element_vector & val) {
                 holder.predefined = val;
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
-            Enumerations_grammar<Iterator> Enumerations;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            Enumerations_grammar Enumerations;
 
         };
 
@@ -157,8 +154,7 @@ namespace x680 {
 
         // BitStringTypeType
 
-        template <typename Iterator>
-        struct BitStringType_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+        struct BitStringType_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
 
             typedef BitStringType_grammar self_type;
             typedef type_element holder_type;
@@ -171,16 +167,16 @@ namespace x680 {
 
             }
 
-            void operator()(type_element & holder) {
+            void operator()(holder_type & holder) {
                 holder.builtin_t = t_BIT_STRING;
             }
 
-            void operator()(type_element& holder, const value_element_vector & val) {
+            void operator()(holder_type& holder, const value_element_vector & val) {
                 holder.predefined = val;
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
-            NamedNumberList_grammar<Iterator> NameBitList;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            NamedNumberList_grammar NameBitList;
 
         };
 
@@ -192,8 +188,7 @@ namespace x680 {
 
         //BuiltinType
 
-        template <typename Iterator>
-        struct BuiltinType_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+        struct BuiltinType_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
 
             typedef BuiltinType_grammar self_type;
             typedef type_element holder_type;
@@ -207,11 +202,11 @@ namespace x680 {
                 holder.from(val);
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
-            SympleTypeDecl_grammar<Iterator> SympleTypeDecl;
-            IntegerType_grammar<Iterator> IntegerType;
-            EnumeratedType_grammar<Iterator> EnumeratedType;
-            BitStringType_grammar<Iterator> BitStringType;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            SympleTypeDecl_grammar SympleTypeDecl;
+            IntegerType_grammar IntegerType;
+            EnumeratedType_grammar EnumeratedType;
+            BitStringType_grammar BitStringType;
 
         };
 
@@ -220,8 +215,7 @@ namespace x680 {
 
         //DefindeType
 
-        template <typename Iterator>
-        struct DefinedType_grammar : qi::grammar<Iterator, defined_type_element(), skip_cmt_type> {
+        struct DefinedType_grammar : qi::grammar<str_iterator, defined_type_element(), skip_cmt_type> {
 
             typedef DefinedType_grammar self_type;
             typedef defined_type_element holder_type;
@@ -237,7 +231,7 @@ namespace x680 {
                 holder.reference = val;
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
 
         };
 
@@ -245,8 +239,7 @@ namespace x680 {
 
         //ReferencedType
 
-        template <typename Iterator>
-        struct ReferencedType_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+        struct ReferencedType_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
 
             typedef ReferencedType_grammar self_type;
             typedef type_element holder_type;
@@ -255,7 +248,6 @@ namespace x680 {
             ReferencedType_grammar::base_type(start_rule) {
 
                 start_rule = DefinedType[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
-                ;
 
             }
 
@@ -263,8 +255,8 @@ namespace x680 {
                 holder.from(val);
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
-            DefinedType_grammar<Iterator> DefinedType;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            DefinedType_grammar DefinedType;
 
         };
 
@@ -274,29 +266,27 @@ namespace x680 {
 
         //Type
 
-        template <typename Iterator>
-        struct Type_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+        struct Type_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
 
             typedef Type_grammar self_type;
             typedef type_element holder_type;
 
             Type_grammar() :
             Type_grammar::base_type(start_rule) {
-
-                start_rule = (BuiltinType | ReferencedType)/* | ConstrainedType_[bind(&self_type::operator(), *this, qi::_val, qi::_1)];*/;
+                init();
             }
 
+            void init();
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
-            BuiltinType_grammar<Iterator> BuiltinType;
-            ReferencedType_grammar<Iterator> ReferencedType;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            BuiltinType_grammar BuiltinType;
+            ReferencedType_grammar ReferencedType;
         };
 
 
         //Tag
 
-        template <typename Iterator>
-        struct Tag_grammar : qi::grammar<Iterator, tag_type(), skip_cmt_type> {
+        struct Tag_grammar : qi::grammar<str_iterator, tag_type(), skip_cmt_type> {
 
             typedef Tag_grammar self_type;
             typedef tag_type holder_type;
@@ -349,14 +339,13 @@ namespace x680 {
 
             check_class Class;
             check_rule Rule;
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
         };
 
 
         //TaggedType
 
-        template <typename Iterator>
-        struct TaggedType_grammar : qi::grammar<Iterator, type_element(), skip_cmt_type> {
+        struct TaggedType_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
 
             typedef TaggedType_grammar self_type;
             typedef type_element holder_type;
@@ -377,17 +366,105 @@ namespace x680 {
                 holder.from_tagged(val);
             }
 
-            Tag_grammar<Iterator> Tag;
-            Type_grammar<std::string::iterator> Type;
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
+            Tag_grammar Tag;
+            Type_grammar Type;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
 
         };
 
 
+        //TypeA
+
+        struct TypeA_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
+
+            typedef TypeA_grammar self_type;
+            typedef type_element holder_type;
+
+            TypeA_grammar() :
+            TypeA_grammar::base_type(start_rule) {
+
+                start_rule = TaggedType | Type;
+
+            }
+
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            TaggedType_grammar TaggedType;
+            Type_grammar Type;
+
+        };
+
+
+
+
+        //ComponentType
+
+        struct ComponentType_grammar : qi::grammar<str_iterator, named_type_element(), skip_cmt_type> {
+
+            typedef ComponentType_grammar self_type;
+            typedef named_type_element holder_type;
+
+            ComponentType_grammar() :
+            ComponentType_grammar::base_type(start_rule) {
+                init();
+            }
+
+            void init();
+
+            void operator()(holder_type& holder, const std::string& val) {
+                holder.identifier = val;
+            }
+
+            void element(holder_type& holder, const type_element& val) {
+                holder.type = val;
+            }
+
+            void marker(holder_type& holder, const tagmarker_type& val) {
+                holder.marker = val;
+            }
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            TypeA_grammar Type;
+
+
+        };
+
+
+
+        //SequenceType
+
+        struct SequenceType_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
+
+            typedef SequenceType_grammar self_type;
+            typedef type_element holder_type;
+
+            SequenceType_grammar() :
+            SequenceType_grammar::base_type(start_rule) {
+                init();
+            }
+
+            void init();
+
+            void operator()(holder_type& holder) {
+                holder.builtin_t = t_SEQUENCE;
+            }
+
+            void operator()(holder_type& holder, const named_type_element& val) {
+                holder.elements.push_back(val);
+            }
+
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            //ComponentType_grammar Component;
+
+        };
+
+
+
+
         //TypeAssignment
 
-        template <typename Iterator>
-        struct TypeAssignment_grammar : qi::grammar<Iterator, type_assigment(), skip_cmt_type> {
+        struct TypeAssignment_grammar : qi::grammar<str_iterator, type_assigment(), skip_cmt_type> {
 
             typedef TypeAssignment_grammar self_type;
             typedef type_assigment holder_type;
@@ -397,7 +474,7 @@ namespace x680 {
 
                 start_rule = typereference_[bind(&self_type::operator(), *this, qi::_val, qi::_1)]
                         >> qi::lexeme[qi::lit("::=")]
-                        >> (TaggedType | Type)[bind(&self_type::element, *this, qi::_val, qi::_1)];
+                        >> Type[bind(&self_type::element, *this, qi::_val, qi::_1)];
 
             }
 
@@ -409,9 +486,8 @@ namespace x680 {
                 holder.from(val);
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;
-            TaggedType_grammar<std::string::iterator> TaggedType;
-            Type_grammar<std::string::iterator> Type;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            TypeA_grammar Type;
 
         };
 
@@ -419,8 +495,7 @@ namespace x680 {
 
         //extern syn_elements_sk_rule Types_;
 
-        template <typename Iterator>
-        struct Types_grammar : qi::grammar<Iterator, type_assigment_vector(), skip_cmt_type> {
+        struct Types_grammar : qi::grammar<str_iterator, type_assigment_vector(), skip_cmt_type> {
 
             typedef Types_grammar self_type;
             typedef type_assigment_vector holder_type;
@@ -432,8 +507,9 @@ namespace x680 {
 
             }
 
-            qi::rule<Iterator, holder_type(), skip_cmt_type> start_rule;;
-            TypeAssignment_grammar<Iterator> TypeAssignment;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            ;
+            TypeAssignment_grammar TypeAssignment;
         };
 
     }

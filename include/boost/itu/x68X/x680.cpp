@@ -30,7 +30,7 @@ namespace x680 {
                 >> *qi::blank
                 >> qi::char_("}")[ qi::_val += qi::_1];
 
-        skip_comment_grammar<std::string::iterator> comment_skip;
+        skip_comment_grammar comment_skip;
 
         term_rule ECODED_ = qi::lit("ECODED");
         term_rule INTERSECTION_ = qi::lit("ECODED");

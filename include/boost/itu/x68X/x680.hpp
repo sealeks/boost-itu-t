@@ -83,6 +83,21 @@ namespace x680 {
 
     };
 
+    enum tagrule_type {
+
+        noset_tags,
+        explicit_tags,
+        implicit_tags,
+        automatic_tags
+    };
+
+    enum tagmarker_type {
+
+        mk_none,
+        mk_default,
+        mk_optional
+    };
+
     enum value_type {
 
         v_nodef,
@@ -106,13 +121,6 @@ namespace x680 {
         s_BuiltinValue
     };
 
-    enum tagrule_type {
-        noset_tags,
-        explicit_tags,
-        implicit_tags,
-        automatic_tags
-    };
-
     enum encoding_references_type {
 
         encoding_no,
@@ -125,7 +133,7 @@ namespace x680 {
 
         tag_type() :
         class_(tcl_context),
-        rule(noset_tags){
+        rule(noset_tags) {
         }
 
         std::string number;
@@ -147,10 +155,11 @@ namespace x680 {
         struct type_assigment;
         typedef std::vector<type_assigment> type_assigment_vector;
 
+        struct named_type_element;
+        typedef std::vector<named_type_element > named_type_element_vector;
+
         struct value_element;
         typedef std::vector<value_element> value_element_vector;
-
-
 
         struct value_element {
 
@@ -186,7 +195,7 @@ namespace x680 {
             type_element() :
             builtin_t(t_NODEF) {
             }
-            
+
             bool tagged() const {
                 return !tag.number.empty();
             }
@@ -198,16 +207,16 @@ namespace x680 {
                 predefined = val.predefined;
                 elements = val.elements;
             }
-            
+
             void from_tagged(const type_element& val) {
                 reference = val.reference;
                 builtin_t = val.builtin_t;
                 predefined = val.predefined;
                 elements = val.elements;
-            }            
+            }
 
             void from(const defined_type_element & val) {
-                tag = val.tag;                
+                tag = val.tag;
                 reference = val.reference;
                 predefined = val.predefined;
             }
@@ -216,35 +225,45 @@ namespace x680 {
             std::string reference;
             defined_type builtin_t;
             value_element_vector predefined;
-            type_assigment_vector elements;
+            named_type_element_vector elements;
         };
+        
+        
+        
+        
+        struct named_type_element {
 
-        struct type_assigment {
-
-            type_assigment() :
-            builtin_t(t_NODEF) {
-            }
-
-
-
-            void from(const defined_type_element & val) {
-                reference = val.reference;
+            named_type_element() :
+            marker(mk_none) {
             }
 
             void from(const type_element & val) {
-                tag = val.tag;
-                reference = val.reference;
-                builtin_t = val.builtin_t;
-                predefined = val.predefined;
-                elements = val.elements;
+                type = val;
             }
 
             std::string identifier;
-            tag_type tag;
-            std::string reference;
-            defined_type builtin_t;
-            value_element_vector predefined;
-            type_assigment_vector elements;
+            tagmarker_type marker;
+            type_element type;
+        };
+        
+        
+        
+
+        struct type_assigment {
+
+            type_assigment() {
+            }
+
+            void from(const defined_type_element & val) {
+                 type.from(val);
+            }
+
+            void from(const type_element & val) {
+                type = val;
+            }
+
+            std::string identifier;
+            type_element type;
         };
 
 
@@ -296,7 +315,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         x680::tag_type,
         (std::string, number)
         (x680::tagclass_type, class_)
-        (x680::tagrule_type,  rule)
+        (x680::tagrule_type, rule)
         )
 
 
@@ -321,8 +340,22 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::tag_type, tag)
         (std::string, reference)
         (x680::defined_type, builtin_t)
-        (x680::bnf::type_assigment_vector, elements)
+        (x680::bnf::named_type_element_vector, elements)
         (x680::bnf::value_element_vector, predefined)
+        )
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::named_type_element,
+        (std::string, identifier)
+        (x680::tagmarker_type, marker)
+        (x680::bnf::type_element, type)
+        )
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::type_assigment,
+        (std::string, identifier)
+        (x680::bnf::type_element, type)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -341,7 +374,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (bool, extesibility_implied)
         (x680::bnf::exports, exports_)
         (x680::bnf::imports, imports_)
-        (x680::bnf::type_assigment_vector , elements)
+        (x680::bnf::type_assigment_vector, elements)
         )
 
 
@@ -351,7 +384,11 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 namespace x680 {
     namespace bnf {
-
+        
+        typedef  std::string basic_character_type;
+        typedef  basic_character_type::iterator str_iterator;
+        typedef  basic_character_type::value_type str_value_type;
+        
         using namespace boost::spirit;
 
         using boost::phoenix::bind;
@@ -359,8 +396,7 @@ namespace x680 {
         namespace ascii = boost::spirit::ascii;
         namespace repository = boost::spirit::repository;
 
-        template <typename Iterator>
-        struct skip_comment_grammar : public qi::grammar<Iterator> {
+        struct skip_comment_grammar : public qi::grammar<str_iterator> {
 
             skip_comment_grammar()
             : skip_comment_grammar::base_type(skip) {
@@ -371,46 +407,46 @@ namespace x680 {
                         repository::confix("--", "--")[*(qi::char_ - "--")];
                 ;
             }
-            qi::rule<Iterator> skip;
+            qi::rule<str_iterator> skip;
         };
 
-        typedef skip_comment_grammar<std::string::iterator>skip_cmt_type;
+        typedef skip_comment_grammar skip_cmt_type;
 
         extern skip_cmt_type comment_skip;
 
-        typedef qi::rule<std::string::iterator> term_rule;
+        typedef qi::rule<str_iterator> term_rule;
 
-        typedef qi::rule<std::string::iterator, std::string() > str_rule;
-        typedef qi::rule<std::string::iterator, std::string(), skip_cmt_type > str_sk_rule;
+        typedef qi::rule<str_iterator, std::string() > str_rule;
+        typedef qi::rule<str_iterator, std::string(), skip_cmt_type > str_sk_rule;
 
-        typedef qi::rule<std::string::iterator, string_vector() > strvect_rule;
-        typedef qi::rule<std::string::iterator, string_vector(), skip_cmt_type > strvect_sk_rule;
+        typedef qi::rule<str_iterator, string_vector() > strvect_rule;
+        typedef qi::rule<str_iterator, string_vector(), skip_cmt_type > strvect_sk_rule;
 
-        typedef qi::rule<std::string::iterator, string_pair() > strpair_rule;
-        typedef qi::rule<std::string::iterator, string_pair(), skip_cmt_type > strpair_sk_rule;
+        typedef qi::rule<str_iterator, string_pair() > strpair_rule;
+        typedef qi::rule<str_iterator, string_pair(), skip_cmt_type > strpair_sk_rule;
 
-        typedef qi::rule<std::string::iterator, string_pair_vector() > strpairs_rule;
-        typedef qi::rule<std::string::iterator, string_pair_vector(), skip_cmt_type > strpairs_sk_rule;
+        typedef qi::rule<str_iterator, string_pair_vector() > strpairs_rule;
+        typedef qi::rule<str_iterator, string_pair_vector(), skip_cmt_type > strpairs_sk_rule;
 
-        typedef qi::rule<std::string::iterator, imports() > imports_rule;
-        typedef qi::rule<std::string::iterator, imports(), skip_cmt_type > imports_sk_rule;
+        typedef qi::rule<str_iterator, imports() > imports_rule;
+        typedef qi::rule<str_iterator, imports(), skip_cmt_type > imports_sk_rule;
 
-        typedef qi::rule<std::string::iterator, type_element() > type_element_rule;
-        typedef qi::rule<std::string::iterator, type_element(), skip_cmt_type > type_element_sk_rule;
+        typedef qi::rule<str_iterator, type_element() > type_element_rule;
+        typedef qi::rule<str_iterator, type_element(), skip_cmt_type > type_element_sk_rule;
 
-        typedef qi::rule<std::string::iterator, type_assigment_vector() > type_elements_rule;
-        typedef qi::rule<std::string::iterator, type_assigment_vector(), skip_cmt_type > type_elements_sk_rule;
+        typedef qi::rule<str_iterator, type_assigment_vector() > type_elements_rule;
+        typedef qi::rule<str_iterator, type_assigment_vector(), skip_cmt_type > type_elements_sk_rule;
 
-        typedef qi::rule<std::string::iterator, value_element() > value_element_rule;
-        typedef qi::rule<std::string::iterator, value_element(), skip_cmt_type > value_element_sk_rule;
+        typedef qi::rule<str_iterator, value_element() > value_element_rule;
+        typedef qi::rule<str_iterator, value_element(), skip_cmt_type > value_element_sk_rule;
 
-        typedef qi::rule<std::string::iterator, value_element_vector() > value_elements_rule;
-        typedef qi::rule<std::string::iterator, value_element_vector(), skip_cmt_type > value_elements_sk_rule;
+        typedef qi::rule<str_iterator, value_element_vector() > value_elements_rule;
+        typedef qi::rule<str_iterator, value_element_vector(), skip_cmt_type > value_elements_sk_rule;
 
-       //typedef qi::rule<std::string::iterator, type_assigment_vector() > syn_elements_rule;
-        //typedef qi::rule<std::string::iterator, type_assigment_vector(), skip_cmt_type > syn_elements_sk_rule;
+        //typedef qi::rule<str_iterator, type_assigment_vector() > syn_elements_rule;
+        //typedef qi::rule<str_iterator, type_assigment_vector(), skip_cmt_type > syn_elements_sk_rule;
 
-        typedef qi::rule<std::string::iterator, unsigned() > unum_rule;
+        typedef qi::rule<str_iterator, unsigned() > unum_rule;
 
 
         extern str_rule comment_beg;
@@ -523,7 +559,7 @@ namespace x680 {
         extern str_rule objectclassreference_; //(~typereference_)        
         extern str_rule comment_;
         extern str_rule ExternalTypeReference_;
-        extern str_rule DefinedType_; 
+        extern str_rule DefinedType_;
         extern str_rule Externalvaluereference_;
         extern str_rule DefinedValue_;
 
