@@ -271,28 +271,6 @@ namespace x680 {
         };
 
 
-
-
-        //Type
-
-        struct Type_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
-
-            typedef Type_grammar self_type;
-            typedef type_element holder_type;
-
-            Type_grammar() :
-            Type_grammar::base_type(start_rule) {
-                init();
-            }
-
-            void init();
-
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
-            BuiltinType_grammar BuiltinType;
-            ReferencedType_grammar ReferencedType;
-        };
-
-
         //Tag
 
         struct Tag_grammar : qi::grammar<str_iterator, tag_type(), skip_cmt_type> {
@@ -375,37 +353,38 @@ namespace x680 {
             }
 
             Tag_grammar Tag;
-            Type_grammar Type;
+            BuiltinType_grammar BuiltinType;
+            ReferencedType_grammar ReferencedType;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
 
         };
+        
+ 
+        
 
+        //Type
 
-        //TypeA
+        struct Type_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
 
-        struct TypeA_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
-
-            typedef TypeA_grammar self_type;
+            typedef Type_grammar self_type;
             typedef type_element holder_type;
 
-            TypeA_grammar() :
-            TypeA_grammar::base_type(start_rule) {
-
-                start_rule = TaggedType | Type;
-
+            Type_grammar() :
+            Type_grammar::base_type(start_rule) {
+                init();
             }
 
+            void init();
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            BuiltinType_grammar BuiltinType;
+            ReferencedType_grammar ReferencedType;       
             TaggedType_grammar TaggedType;
-            Type_grammar Type;
-
         };
-
-
-
-
-        //ComponentType
+        
+     
+        
+         //ComponentType
 
         struct ComponentType_grammar : qi::grammar<str_iterator, named_type_element(), skip_cmt_type> {
 
@@ -432,10 +411,40 @@ namespace x680 {
             }
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
-            TypeA_grammar Type;
+            Type_grammar Type;
 
+
+        };       
+
+
+
+
+
+        //TypeA
+
+        struct TypeA_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
+
+            typedef TypeA_grammar self_type;
+            typedef type_element holder_type;
+
+            TypeA_grammar() :
+            TypeA_grammar::base_type(start_rule) {
+
+                start_rule = TaggedType | Type;
+
+            }
+
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            TaggedType_grammar TaggedType;
+            Type_grammar Type;
 
         };
+
+
+
+
+
 
 
 
@@ -495,7 +504,7 @@ namespace x680 {
             }
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
-            TypeA_grammar Type;
+            Type_grammar Type;
 
         };
 
