@@ -8,43 +8,40 @@
 namespace x680 {
     namespace bnf {
 
-
-        static ReferencedType_grammar ReferencedType_s;
-        static BuiltinType_grammar BuiltinType_s;
-        static TaggedType_grammar TaggedType_s;
-        static SequenceType_grammar SequenceType_s;        
-
-        void BuiltinType_grammar::init() {
-            start_rule = ( IntegerType | EnumeratedType | BitStringType | SympleTypeDecl  )[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
-        }
-        
-        void TaggedType_grammar::init() {          
-                start_rule = Tag[bind(&self_type::tagset, *this, qi::_val, qi::_1)]
-                        >> (BuiltinType | ReferencedType)[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
-        }               
-
         void Type_grammar::init() {
-            start_rule = (TaggedType_s | BuiltinType | ReferencedType )/* | ConstrainedType_[bind(&self_type::operator(), *this, qi::_val, qi::_1)];*/;
+            
+            start_rule =TaggedType  | Type;
+
+            DefinedType = DefinedType_[bind(&self_type::refference, *this, qi::_val, qi::_1)];
+
+            ReferencedType = DefinedType;
+
+            SimpleType = ((qi::lexeme[OCTET_ >> +qi::blank >> STRING_])[bind(&self_type::defftype, *this, qi::_val, t_OCTET_STRING)]
+                    | (qi::lexeme[CHARACTER_ >> +qi::blank >> STRING_])[bind(&self_type::defftype, *this, qi::_val, t_CHARACTER_STRING)]
+                    | (qi::lexeme[EMBEDDED_ >> +qi::blank >> PDV_])[bind(&self_type::defftype, *this, qi::_val, t_EMBEDDED_PDV)]
+                    | (qi::lexeme[OBJECT_ >> +qi::blank >> IDENTIFIER_])[bind(&self_type::defftype, *this, qi::_val, t_OBJECT_IDENTIFIER)]
+                    | (qi::lexeme[DATE_ >> +qi::blank >> TIME_])[bind(&self_type::defftype, *this, qi::_val, t_DATE_TIME)]
+                    | simple_typer[bind(&self_type::defftype, *this, qi::_val, qi::_1)]
+                    );
+
+            IntegerType = INTEGER_[bind(&self_type::defftype, *this, qi::_val, t_INTEGER)]
+                    >> -NamedNumberList[bind(&self_type::deffinit, *this, qi::_val, qi::_1)];
+
+            EnumeratedType = ENUMERATED_[bind(&self_type::defftype, *this, qi::_val, t_ENUMERATED)]
+                    >> -Enumerations[bind(&self_type::deffinit, *this, qi::_val, qi::_1)];
+
+            BitStringType = qi::lexeme[BIT_ >> +qi::blank >> STRING_[bind(&self_type::defftype, *this, qi::_val, t_BIT_STRING)]]
+                    >> -NameBitList[bind(&self_type::deffinit, *this, qi::_val, qi::_1)];
+            
+            
+
+            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType;
+
+            Type = BuitinType | DefinedType;
+            
+            TaggedType = Tag[bind(&self_type::tagset, *this, qi::_val, qi::_1)]
+                    >> Type;
+
         }
-        
-
-        void ComponentType_grammar::init() {
-           start_rule = identifier_[bind(&self_type::operator(), *this, qi::_val, qi::_1)]
-                     >> Type[bind(&self_type::element, *this, qi::_val, qi::_1)]
-                     >> -(OPTIONAL_[bind(&self_type::element, *this, qi::_val, mk_optional)]
-                     | DEFAULT_[bind(&self_type::element, *this, qi::_val, mk_default)]);
-        }
-
-        void SequenceType_grammar::init() {
-            /*    start_rule = qi::lexeme[SEQUENCE_[bind(&self_type::operator(), *this, qi::_val)]] 
-                 >> qi::lit("{") 
-                 >> *(Component[bind(&self_type::operator(), *this, qi::_val, qi::_1)])
-                 >> qi::lit("}");*/
-
-        }
-
-
-
-
     }
 }

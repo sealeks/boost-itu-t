@@ -174,20 +174,6 @@ namespace x680 {
         };
 
 
-
-        // DefinedType
-
-        struct defined_type_element {
-
-            defined_type_element() {
-            }
-
-            tag_type tag;
-            std::string reference;
-            value_element_vector predefined;
-        };
-
-
         // Type
 
         struct type_element {
@@ -213,12 +199,6 @@ namespace x680 {
                 builtin_t = val.builtin_t;
                 predefined = val.predefined;
                 elements = val.elements;
-            }
-
-            void from(const defined_type_element & val) {
-                tag = val.tag;
-                reference = val.reference;
-                predefined = val.predefined;
             }
 
             tag_type tag;
@@ -252,10 +232,6 @@ namespace x680 {
         struct type_assigment {
 
             type_assigment() {
-            }
-
-            void from(const defined_type_element & val) {
-                 type.from(val);
             }
 
             void from(const type_element & val) {
@@ -327,13 +303,6 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::value_element_vector, values)
         )
 
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::bnf::defined_type_element,
-        (x680::tag_type, tag)
-        (std::string, reference)
-        (x680::bnf::value_element_vector, predefined)
-        )
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_element,
