@@ -10,7 +10,11 @@ namespace x680 {
 
         void Type_grammar::init() {
             
-            start_rule =TaggedType  | Type;
+             start_rule = typereference_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
+                        >> qi::lexeme[qi::lit("::=")]
+                        >> FullType[bind(&self_type::type, *this, qi::_val, qi::_1)];          
+            
+             FullType =TaggedType  | Type;
 
             DefinedType = DefinedType_[bind(&self_type::refference, *this, qi::_val, qi::_1)];
 

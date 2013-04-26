@@ -154,9 +154,7 @@ namespace x680 {
 
         struct type_assigment;
         typedef std::vector<type_assigment> type_assigment_vector;
-
-        struct named_type_element;
-        typedef std::vector<named_type_element > named_type_element_vector;
+        typedef type_assigment_vector  named_type_element_vector;
 
         struct value_element;
         typedef std::vector<value_element> value_element_vector;
@@ -186,20 +184,7 @@ namespace x680 {
                 return !tag.number.empty();
             }
 
-            void from(const type_element& val) {
-                tag = val.tag;
-                reference = val.reference;
-                builtin_t = val.builtin_t;
-                predefined = val.predefined;
-                elements = val.elements;
-            }
 
-            void from_tagged(const type_element& val) {
-                reference = val.reference;
-                builtin_t = val.builtin_t;
-                predefined = val.predefined;
-                elements = val.elements;
-            }
 
             tag_type tag;
             std::string reference;
@@ -210,36 +195,17 @@ namespace x680 {
         
         
         
-        
-        struct named_type_element {
 
-            named_type_element() :
-            marker(mk_none) {
-            }
-
-            void from(const type_element & val) {
-                type = val;
-            }
-
-            std::string identifier;
-            tagmarker_type marker;
-            type_element type;
-        };
-        
-        
-        
 
         struct type_assigment {
 
-            type_assigment() {
+            type_assigment() : marker(mk_none) {
             }
 
-            void from(const type_element & val) {
-                type = val;
-            }
 
             std::string identifier;
             type_element type;
+            tagmarker_type marker;
         };
 
 
@@ -313,18 +279,12 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::value_element_vector, predefined)
         )
 
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::bnf::named_type_element,
-        (std::string, identifier)
-        (x680::tagmarker_type, marker)
-        (x680::bnf::type_element, type)
-        )
-
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_assigment,
         (std::string, identifier)
         (x680::bnf::type_element, type)
+        (x680::tagmarker_type, marker)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
