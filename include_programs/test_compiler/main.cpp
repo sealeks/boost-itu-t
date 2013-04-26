@@ -46,16 +46,17 @@ int main(int argc, char* argv[]) {
     bool success = false;
     std::string::iterator beg = src.begin();
 
-x680::bnf::skip_comment_grammar<std::string::iterator> skipper;
+x680::bnf::skip_comment_grammar skipper;
 
 #ifdef DEBUGT   
-    
-    DEBUG_SUBTYPE(x680::bnf::imports, x680::bnf::Imports_)
+
+    x680::bnf::EnumeratedType_grammar tstTps;
+    DEBUG_SUBTYPE(x680::bnf::type_element , tstTps)
     out = out;
     
 #else
    
-    x680::bnf::ModuleDefinition_grammar<std::string::iterator> ModuleDef;
+    x680::bnf::ModuleDefinition_grammar ModuleDef;
     x680::bnf::module modul ;
     success = phrase_parse(beg, src.end(), ModuleDef, x680::bnf::comment_skip, modul );
     
