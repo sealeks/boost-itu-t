@@ -169,7 +169,6 @@ namespace x680 {
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
             
             qi::rule<str_iterator, holder_type(), skip_cmt_type> TypeAssignment; 
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> FullType;   
             qi::rule<str_iterator, holder_type(), skip_cmt_type> NamedType;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> ComponentType;            
             qi::rule<str_iterator, holder_type(), skip_cmt_type> Type;
@@ -185,7 +184,8 @@ namespace x680 {
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SequenceOfType;               
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SetOfType;  
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SequenceType;               
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> SetType;             
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> SetType;         
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> ChoiceType;               
             Enumerations_grammar Enumerations;
             NamedNumberList_grammar NamedNumberList;
             NamedNumberList_grammar NameBitList;

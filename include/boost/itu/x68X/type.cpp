@@ -18,8 +18,6 @@ namespace x680 {
                     >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)];
 
             ComponentType =  (NamedType >> OPTIONAL_) | (NamedType >> DEFAULT_)  /*Value | COMPONENTS OF Type        */    | NamedType;
-            
-             //FullType =TaggedType  | Type ;
 
             DefinedType = DefinedType_[bind(&self_type::refference, *this, qi::_val, qi::_1)];
 
@@ -58,9 +56,14 @@ namespace x680 {
             SetType = SET_[bind(&self_type::defftype, *this, qi::_val, t_SET)] 
                     >>  qi::lit("{")
                     >> -(ComponentType[bind(&self_type::push_component,*this, qi::_val, qi::_1) ] % qi::lit(","))      
-                    >>  qi::lit("}");           
+                    >>  qi::lit("}");   
+            
+            ChoiceType = CHOICE_[bind(&self_type::defftype, *this, qi::_val, t_CHOICE)] 
+                    >>  qi::lit("{")
+                    >> -(ComponentType[bind(&self_type::push_component,*this, qi::_val, qi::_1) ] % qi::lit(","))      
+                    >>  qi::lit("}");   
 
-            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SequenceOfType | SetOfType  | SequenceType | SetType  ;
+            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SequenceOfType | SetOfType  | SequenceType | ChoiceType | SetType  ;
 
             Type = BuitinType | TaggedType | DefinedType;
             
