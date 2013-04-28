@@ -128,9 +128,19 @@ namespace x680 {
                 holder.identifier = val;
             }
             
+            void typereffrence(holder_type& holder, const std::string& val) {
+                holder.identifier = val;
+            }            
+            
             void type(holder_type& holder, const type_assigment& val) {
                 holder.type= val.type;
             }
+            
+            void for_taggedtype(holder_type& holder, const type_assigment& val) {
+                tag_type tmp = holder.type.tag;
+                holder.type= val.type;
+                holder.type.tag = tmp;
+            }            
  
 
             void defftype(holder_type& holder, const defined_type& type) {
