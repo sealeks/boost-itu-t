@@ -12,9 +12,14 @@ namespace x680 {
             
              start_rule = typereference_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
                         >> qi::lexeme[qi::lit("::=")]
-                        >> FullType[bind(&self_type::type, *this, qi::_val, qi::_1)];          
+                        >> FullType[bind(&self_type::type, *this, qi::_val, qi::_1)];  
+
+            NamedType = identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
+                    >> Type;
+
+            ComponentType =  (NamedType >> OPTIONAL_) | (NamedType >> DEFAULT_)  /*Value | COMPONENTS OF Type        */    | NamedType;
             
-             FullType =TaggedType  | Type;
+             FullType =TaggedType  | Type ;
 
             DefinedType = DefinedType_[bind(&self_type::refference, *this, qi::_val, qi::_1)];
 
@@ -37,11 +42,27 @@ namespace x680 {
             BitStringType = qi::lexeme[BIT_ >> +qi::blank >> STRING_[bind(&self_type::defftype, *this, qi::_val, t_BIT_STRING)]]
                     >> -NameBitList[bind(&self_type::deffinit, *this, qi::_val, qi::_1)];
             
+                       
+            SequenceOfType = (qi::lexeme[SEQUENCE_ >> +qi::blank >> OF_])[bind(&self_type::defftype, *this, qi::_val, t_SEQUENCE_OF)]
+                    >> (NamedType | FullType)[bind(&self_type::push_component,*this, qi::_val, qi::_1) ];                   
+
+            SetOfType = (qi::lexeme[SET_ >> +qi::blank >> OF_])[bind(&self_type::defftype, *this, qi::_val, t_SET_OF)]
+                    >> (NamedType | FullType)[bind(&self_type::push_component,*this, qi::_val, qi::_1) ];    
             
+            SequenceType = SEQUENCE_[bind(&self_type::defftype, *this, qi::_val, t_SEQUENCE)]
+                    >>  qi::lit("{")
+                    >> -(ComponentType[bind(&self_type::push_component,*this, qi::_val, qi::_1) ] % qi::lit(","))      
+                    >>  qi::lit("}");            
 
-            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType;
+            
+            SetType = SET_[bind(&self_type::defftype, *this, qi::_val, t_SET)] 
+                    >>  qi::lit("{")
+                    >> -(ComponentType[bind(&self_type::push_component,*this, qi::_val, qi::_1) ] % qi::lit(","))      
+                    >>  qi::lit("}");           
 
-            Type = BuitinType | DefinedType;
+            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SequenceOfType | SetOfType ;
+
+            Type = BuitinType  | SequenceType | SetType | TaggedType | DefinedType;
             
             TaggedType = Tag[bind(&self_type::tagset, *this, qi::_val, qi::_1)]
                     >> Type;

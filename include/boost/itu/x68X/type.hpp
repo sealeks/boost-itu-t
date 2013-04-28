@@ -46,11 +46,11 @@ namespace x680 {
             Tag_grammar() :
             Tag_grammar::base_type(start_rule) {
 
-                start_rule = -(Rule[bind(&self_type::ruleset, *this, qi::_val, qi::_1)])
-                        >> qi::lit("[")
+                start_rule = qi::lit("[")
                         >> -(Class[bind(&self_type::classset, *this, qi::_val, qi::_1)])
                         >> (pos_number_str | DefinedValue_)[bind(&self_type::operator(), *this, qi::_val, qi::_1)]
-                        >> qi::lit("]");
+                        >> qi::lit("]")
+                        >> -(Rule[bind(&self_type::ruleset, *this, qi::_val, qi::_1)]);
 
             }
 
@@ -151,13 +151,17 @@ namespace x680 {
                 holder.type.tag = val;
             }
             
-
+            void push_component(holder_type& holder, const type_assigment& val) {
+                holder.type.elements.push_back(val);
+            }
 
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
             
             qi::rule<str_iterator, holder_type(), skip_cmt_type> TypeAssignment; 
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> FullType;                
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> FullType;   
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> NamedType;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> ComponentType;            
             qi::rule<str_iterator, holder_type(), skip_cmt_type> Type;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> BuitinType;            
             qi::rule<str_iterator, holder_type(), skip_cmt_type> DefinedType;    
@@ -168,6 +172,10 @@ namespace x680 {
             qi::rule<str_iterator, holder_type(), skip_cmt_type> IntegerType;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> EnumeratedType;            
             qi::rule<str_iterator, holder_type(), skip_cmt_type> BitStringType;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> SequenceOfType;               
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> SetOfType;  
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> SequenceType;               
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> SetType;             
             Enumerations_grammar Enumerations;
             NamedNumberList_grammar NamedNumberList;
             NamedNumberList_grammar NameBitList;
