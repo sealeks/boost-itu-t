@@ -82,7 +82,7 @@ namespace x680 {
 
             typedef Type_grammar self_type;
             typedef type_assigment holder_type;
-            
+            typedef type_assigment_vector holders_type; 
             
             struct check_type_simple : qi::symbols<std::string::value_type, defined_type > {
 
@@ -152,6 +152,10 @@ namespace x680 {
                 holder.type.reference = val;
             }
             
+            void markerset(holder_type& holder, const tagmarker_type& val){
+                holder.marker = val;
+            }
+            
 
             void deffinit(holder_type& holder, const value_element_vector & val) {
                 holder.type.predefined = val;
@@ -161,16 +165,18 @@ namespace x680 {
                 holder.type.tag = val;
             }
             
-            void push_component(holder_type& holder, const type_assigment& val) {
+            void push_component(holder_type& holder, const holder_type& val) {
                 holder.type.elements.push_back(val);
             }
 
+            void push_components(holder_type& holder, const holders_type& val) {
+                holder.type.elements.insert(holder.type.elements.end(), val.begin(), val.end());
+            }            
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
             
             qi::rule<str_iterator, holder_type(), skip_cmt_type> TypeAssignment; 
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> NamedType;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> ComponentType;            
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> NamedType;           
             qi::rule<str_iterator, holder_type(), skip_cmt_type> Type;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> BuitinType;            
             qi::rule<str_iterator, holder_type(), skip_cmt_type> DefinedType;    
@@ -183,6 +189,20 @@ namespace x680 {
             qi::rule<str_iterator, holder_type(), skip_cmt_type> BitStringType;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SequenceOfType;               
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SetOfType;  
+            
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> ComponentType;             
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeList;
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> RootComponentTypeList;
+            qi::rule<str_iterator, holders_type(), skip_cmt_type>ExtensionAdditions;            
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionList;
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAddition;            
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionGroup;
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeLists;
+            str_sk_rule ExceptionSpec;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> ExtensionAndException;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> ExtensionEndMarker;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> OptionalExtensionMarker;
+            
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SequenceType;               
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SetType;         
             qi::rule<str_iterator, holder_type(), skip_cmt_type> ChoiceType;               

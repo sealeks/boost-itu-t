@@ -95,7 +95,10 @@ namespace x680 {
 
         mk_none,
         mk_default,
-        mk_optional
+        mk_optional,
+        mk_components_of,      
+        mk_extention, 
+        mk_exception                
     };
 
     enum value_type {
@@ -202,15 +205,20 @@ namespace x680 {
             type_assigment() : marker(mk_none) {
             }
 
-
+            type_assigment(tagmarker_type mrkr) : marker(mrkr) {
+            }
+            
+            void operator()(const tagmarker_type& val){
+                marker = val;
+            }
+            
             std::string identifier;
             type_element type;
             tagmarker_type marker;
         };
 
-
-
-
+        const type_assigment extention_type_assigment(mk_extention);
+        const type_assigment exception_type_assigment(mk_exception);                
 
         typedef std::vector<std::string> exports;
 
