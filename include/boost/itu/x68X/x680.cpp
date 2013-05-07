@@ -27,12 +27,12 @@ namespace x680 {
                 >> (qi::string(".")[ qi::_val += qi::_1 ] >>number_str[ qi::_val += qi::_1 ]);   
         
         str_rule bstring_str = qi::omit[qi::char_("'")]
-        >> qi::skip[ *(qi::char_("0-1")[ qi::_val += qi::_1])]
+        >> *(qi::char_("0-1")[ qi::_val += qi::_1] | qi::omit[qi::blank])
                 >>qi::omit[ qi::char_("'")
         >> qi::char_("B")];
 
         str_rule hstring_str = qi::omit[qi::char_("'")]
-        >> qi::skip[ *(qi::char_("0-9ABCDEF")[ qi::_val += qi::_1])]
+        >> *(qi::char_("0-9ABCDEF")[ qi::_val += qi::_1] | qi::omit[qi::blank])
                 >>qi::omit[ qi::char_("'")
         >> qi::char_("H")];
 
