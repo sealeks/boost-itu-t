@@ -109,9 +109,9 @@ namespace x680 {
         v_number,
         v_real,
         v_null,
-        v_binary,
-        v_hexnum,
-        v_octnum,
+        v_bstring,
+        v_hstring,
+        v_cstring,
         v_array,
         v_struct,
         v_extention
@@ -391,6 +391,9 @@ namespace x680 {
         extern str_rule pos_number_str;
         extern str_rule number_str;
         extern str_rule realnumber_str;
+        extern str_rule bstring_str;
+        extern str_rule hstring_str;
+        extern str_rule cstring_str;        
         extern str_rule curly_barket_pair;
 
         extern term_rule ECODED_;
@@ -500,12 +503,6 @@ namespace x680 {
         extern str_rule Externalvaluereference_;
         extern str_rule DefinedValue_;
 
-
-        extern unum_rule number;
-        extern unum_rule bstring;
-        extern unum_rule hstring;
-
-        extern str_rule cstring;
 
 
         extern str_rule Reference_;

@@ -12,10 +12,9 @@
 
 namespace x680 {
     namespace bnf {
-        
-        
-        // NamedNumber_grammar
 
+
+        // NamedNumber_grammar
 
         struct NamedNumber_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
@@ -24,41 +23,35 @@ namespace x680 {
 
             NamedNumber_grammar() :
             NamedNumber_grammar::base_type(pair) {
-
-                pair = (identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
-                        >> qi::lit("(")
-                        >> (number_str[bind(&self_type::second_n, *this, qi::_val, qi::_1)]  
-                        | identifier_[bind(&self_type::second_i , *this, qi::_val, qi::_1)] )
-                        >> qi::lit(")"));
+                init();
             }
 
-            void first(holder_type& holder, const std::string & val) {
+            void init();
 
+            void first(holder_type& holder, const std::string & val) {
                 holder.identifier = val;
-                
             }
 
             void second_n(holder_type& holder, const std::string & val) {
-                holder.type =v_number;
+                holder.type = v_number;
                 holder.value = val;
             }
-            
+
             void second_i(holder_type& holder, const std::string & val) {
-                holder.type =v_identifier;
+                holder.type = v_identifier;
                 holder.value = val;
-            }            
+            }
 
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
         };
 
-        
-        
-        
-        
-        
-        //NamedNumberList        
 
+
+
+
+
+        //NamedNumberList        
 
         struct NamedNumberList_grammar : qi::grammar<str_iterator, value_element_vector(), skip_cmt_type> {
 
@@ -66,12 +59,11 @@ namespace x680 {
             typedef value_element_vector holder_type;
 
             NamedNumberList_grammar() :
-            NamedNumberList_grammar::base_type(vect)  {
-
-                vect = qi::lit("{")
-                        >> -(components[bind(&self_type::operator (), *this, qi::_val, qi::_1)] % qi::omit[","])
-                        >> qi::lit("}");
+            NamedNumberList_grammar::base_type(vect) {
+                init();
             }
+
+            void init();
 
             void operator()(holder_type& holder, const value_element & val) {
                 holder.push_back(val);
@@ -80,14 +72,13 @@ namespace x680 {
             qi::rule<str_iterator, holder_type(), skip_cmt_type > vect;
             NamedNumber_grammar components;
 
-        };        
-        
-        
+        };
 
-        
+
+
+
 
         // Enumeration_grammar
-
 
         struct Enumeration_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
@@ -96,34 +87,32 @@ namespace x680 {
 
             Enumeration_grammar() :
             Enumeration_grammar::base_type(pair) {
-
-                     pair = component[ qi::_val = qi::_1 ] |
-                       identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
-                        | qi::lit("...")[bind(&self_type::extention, *this, qi::_val)];
+                init();
             }
+
+            void init();
 
             void first(holder_type& holder, const std::string & val) {
                 holder.identifier = val;
-                holder.type= v_identifier;
-                
+                holder.type = v_identifier;
+
             }
 
             void extention(holder_type & holder) {
-                holder.type= v_extention;
-            }       
+                holder.type = v_extention;
+            }
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
             NamedNumber_grammar component;
 
         };
-        
-        
-        
-        
-        
+
+
+
+
+
 
         //Enumerations       
-
 
         struct Enumerations_grammar : qi::grammar<str_iterator, value_element_vector(), skip_cmt_type> {
 
@@ -132,11 +121,10 @@ namespace x680 {
 
             Enumerations_grammar() :
             Enumerations_grammar::base_type(vect) {
-
-                vect = qi::lit("{")
-                        >> -(components[bind(&self_type::operator (), *this, qi::_val, qi::_1)] % qi::omit[","])
-                        >> qi::lit("}");
+                init();
             }
+
+            void init();
 
             void operator()(holder_type& holder, const value_element & val) {
 
@@ -149,16 +137,10 @@ namespace x680 {
         };
 
 
-        
-        
-        
-        
-        
 
-        
-         //objNameId
 
- 
+        //objNameId
+
         struct objNameId_grammar : public qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
             typedef objNameId_grammar self_type;
@@ -166,14 +148,10 @@ namespace x680 {
 
             objNameId_grammar()
             : objNameId_grammar::base_type(pair) {
-
-                pair = (identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
-                        >> qi::lit("(")
-                        >> pos_number_str[bind(&self_type::second, *this, qi::_val, qi::_1)]
-                        >> qi::lit(")"))
-                        | identifier_[bind(&self_type::first, *this, qi::_val, qi::_1)]
-                        | pos_number_str[bind(&self_type::second, *this, qi::_val, qi::_1)];
+                init();
             }
+
+            void init();
 
             void first(holder_type& holder, const std::string & val) {
                 holder.identifier = val;
@@ -182,7 +160,7 @@ namespace x680 {
 
             void second(holder_type& holder, const std::string & val) {
                 holder.value = val;
-                holder.type = v_number;                
+                holder.type = v_number;
             }
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type > pair;
@@ -195,7 +173,6 @@ namespace x680 {
 
         //ObjectIdentifierValue
 
-
         struct ObjectIdentifierValue_grammar :
         public qi::grammar<str_iterator, value_element_vector(), skip_cmt_type > {
 
@@ -204,14 +181,13 @@ namespace x680 {
 
             ObjectIdentifierValue_grammar()
             : ObjectIdentifierValue_grammar::base_type(vect) {
-
-                vect = qi::lit("{")
-                        >> *(components[bind(&self_type::operator (), *this, qi::_val, qi::_1)])
-                        >> qi::lit("}");
+                init();
             }
 
+            void init();
+
             void operator()(holder_type& holder, value_element & val) {
-                holder.push_back(val);               
+                holder.push_back(val);
             }
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> vect;
@@ -220,12 +196,12 @@ namespace x680 {
 
 
 
-        
 
-        
+
+        // value grammar
+
 
         // BooleanValue
-
 
         struct BooleanValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
@@ -233,11 +209,11 @@ namespace x680 {
             typedef value_element holder_type;
 
             BooleanValue_grammar() :
-            BooleanValue_grammar::base_type(pair) {
-
-                pair = TRUE_[bind(&self_type::operator(), *this, qi::_val, std::string("TRUE"))]
-                        | FALSE_[bind(&self_type::operator(), *this, qi::_val, std::string("FALSE"))];
+            BooleanValue_grammar::base_type(startrule) {
+                init();
             }
+
+            void init();
 
             void operator()(holder_type& holder, const std::string & val) {
                 holder.type = v_boolean;
@@ -245,14 +221,13 @@ namespace x680 {
             }
 
 
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
 
 
         };
 
 
         // IntegerValue
-
 
         struct IntegerValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
@@ -260,25 +235,27 @@ namespace x680 {
             typedef value_element holder_type;
 
             IntegerValue_grammar() :
-            IntegerValue_grammar::base_type(pair) {
-
-                pair = number_str[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
+            IntegerValue_grammar::base_type(startrule) {
+                init();
             }
 
-            void operator()(holder_type& holder, const std::string & val) {
+            void init();
+
+            void number(holder_type& holder, const std::string & val) {
                 holder.type = v_number;
                 holder.value = val;
             }
 
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
+            void identifier(holder_type& holder, const std::string & val) {
+                holder.type = v_identifier;
+                holder.identifier = val;
+            }
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
 
         };
 
         //EnumeratedValue  = identifier
-
-
-        // IntegerValue
-
 
         struct RealValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
@@ -286,13 +263,11 @@ namespace x680 {
             typedef value_element holder_type;
 
             RealValue_grammar() :
-            RealValue_grammar::base_type(pair) {
-
-                pair = realnumber_str[bind(&self_type::operator(), *this, qi::_val, qi::_1)]
-                        | PLUS_INFINITY_[bind(&self_type::operator(), *this, qi::_val, std::string("PLUS-INFINITY"))]
-                        | MINUS_INFINITY_[bind(&self_type::operator(), *this, qi::_val, std::string("MINUS-INFINITY"))]
-                        | NOT_A_NUMBER_[bind(&self_type::operator(), *this, qi::_val, std::string("NOT-A-NUMBER"))];
+            RealValue_grammar::base_type(startrule) {
+                init();
             }
+
+            void init();
 
             void operator()(holder_type& holder, const std::string & val) {
                 holder.type = v_real;
@@ -300,17 +275,63 @@ namespace x680 {
             }
 
 
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
 
 
         };
+        
+        
+        //HStringValue_grammar
 
+        struct HStringValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef HStringValue_grammar self_type;
+            typedef value_element holder_type;
+
+            HStringValue_grammar() :
+            HStringValue_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+            void operator()(holder_type& holder, const std::string & val) {
+                holder.value = val;
+                holder.type = v_hstring;
+            }
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+        };
+        
+        
+        //BStringValue_grammar
+
+        struct BStringValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef BStringValue_grammar self_type;
+            typedef value_element holder_type;
+
+            BStringValue_grammar() :
+            BStringValue_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+            void operator()(holder_type& holder, const std::string & val) {
+                holder.value = val;
+                holder.type = v_bstring;
+            }
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+        };        
 
 
 
 
         // NullValue
-
 
         struct NullValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
@@ -318,19 +339,51 @@ namespace x680 {
             typedef value_element holder_type;
 
             NullValue_grammar() :
-            NullValue_grammar::base_type(pair) {
-
-                pair = NULL_[bind(&self_type::operator(), *this, qi::_val) ];
-                
+            NullValue_grammar::base_type(startrule) {
+                init();
             }
+
+            void init();
 
             void operator()(holder_type & holder) {
                 holder.type = v_null;
-                        holder.value = "NULL";
+                holder.value = "NULL";
             }
 
 
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> pair;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+
+        };
+
+
+
+
+        // BuiltinValue        
+
+        struct BuiltinValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef BuiltinValue_grammar self_type;
+            typedef value_element holder_type;
+
+            BuiltinValue_grammar() :
+            BuiltinValue_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+            NullValue_grammar NullValue;
+            BooleanValue_grammar BooleanValue;
+            IntegerValue_grammar IntegerValue;
+            RealValue_grammar RealValue;
+            ObjectIdentifierValue_grammar ObjectIdentifierValue;
+            HStringValue_grammar HStringValue;
+            BStringValue_grammar BStringValue;
+
+
 
 
         };

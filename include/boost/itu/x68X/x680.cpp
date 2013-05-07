@@ -24,7 +24,23 @@ namespace x680 {
         | pos_number_str[ qi::_val = qi::_1 ];
         
         str_rule realnumber_str=number_str[ qi::_val = qi::_1 ] 
-                >> -(qi::string(".")[ qi::_val += qi::_1 ] >>number_str[ qi::_val += qi::_1 ]);   
+                >> (qi::string(".")[ qi::_val += qi::_1 ] >>number_str[ qi::_val += qi::_1 ]);   
+        
+        str_rule bstring_str = qi::omit[qi::char_("'")]
+        >> qi::skip[ *(qi::char_("0-1")[ qi::_val += qi::_1])]
+                >>qi::omit[ qi::char_("'")
+        >> qi::char_("B")];
+
+        str_rule hstring_str = qi::omit[qi::char_("'")]
+        >> qi::skip[ *(qi::char_("0-9ABCDEF")[ qi::_val += qi::_1])]
+                >>qi::omit[ qi::char_("'")
+        >> qi::char_("H")];
+
+        str_rule cstring_str = qi::char_("\"")
+        >> *((qi::print)[ qi::_val += qi::_1] - qi::char_("\""))
+        >> qi::char_("\"");
+        
+        
 
         str_rule curly_barket_pair = qi::char_("{")[ qi::_val = qi::_1 ]
                 >> *qi::blank
@@ -173,22 +189,6 @@ namespace x680 {
 
         str_rule DefinedValue_ = Externalvaluereference_ | valuereference_; //| ParameterizedValue
 
-
-        unum_rule number = qi::uint_;
-
-        unum_rule bstring = qi::char_("'")
-        >> qi::bin[ qi::_val = qi::_1]
-                >> qi::char_("'")
-        >> qi::char_("H");
-
-        unum_rule hstring = qi::char_("'")
-        >> qi::hex[qi::_val = qi::_1]
-                >> qi::char_("'")
-        >> qi::char_("H");
-
-        str_rule cstring = qi::char_("\"")
-        >> *((qi::print)[ qi::_val += qi::_1] - qi::char_("\""))
-        >> qi::char_("\"");
 
         str_rule Reference_ = typereference_[ qi::_val = qi::_1] | valuereference_[ qi::_val = qi::_1];
 
