@@ -32,7 +32,7 @@ namespace x680 {
                 start_rule = SymbolList_[ bind(&self_type::imports_add, *this, qi::_val, qi::_1) ]
                         >> FROM_
                         >> modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ]
-                        >> -ObjectIdentifierValue[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ];
+                        >> -ObjectIdentifierSet[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ];
             }
 
             void module_name(holder_type& holder, const std::string & val) {
@@ -48,7 +48,7 @@ namespace x680 {
             }
 
             qi::rule<str_iterator, import(), skip_cmt_type > start_rule;
-            ObjectIdentifierValue_grammar  ObjectIdentifierValue;
+            ObjectIdentifierSet_grammar  ObjectIdentifierSet;
         };       
         
 
@@ -87,7 +87,7 @@ namespace x680 {
 
 
                 start_rule = qi::lexeme[ modulereference_[ bind(&self_type::module_name, *this, qi::_val, qi::_1) ]]
-                        >> -ObjectIdentifierValue[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ]
+                        >> -ObjectIdentifierSet[ bind(&self_type::module_oid, *this, qi::_val, qi::_1) ]
                         >> qi::lexeme[DEFINITIONS_ ]
 
                         >> -(qi::lexeme[encodingreference[bind(&self_type::encoding, *this, qi::_val, qi::_1)]]
@@ -163,7 +163,7 @@ namespace x680 {
             imports_sk_rule SymbolsFromModules;
             imports_sk_rule Imports;  
             Types_grammar Types;
-            ObjectIdentifierValue_grammar ObjectIdentifierValue;
+            ObjectIdentifierSet_grammar ObjectIdentifierSet;
 
         };
 

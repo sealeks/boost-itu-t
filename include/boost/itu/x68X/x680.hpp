@@ -104,13 +104,17 @@ namespace x680 {
     enum value_type {
 
         v_nodef,
-        v_identifier,
-        v_boolean,
+        v_empty_set,  // { }      
+        v_identifier,  // x
+        v_identifier_assign,   // x(n)     
+        v_boolean, // TRUE, FALSE  /
         v_number,
         v_real,
         v_null,
-        v_bstring,
-        v_hstring,
+        v_bstring, // BitStringValue, OctetStringValue
+        v_hstring,  // BitStringValue, OctetStringValue
+        v_identifier_list,  // BitStringValue  { x, y ,....}  
+        v_named_list,  // ObjectIdentifierSet  { x y(n1) n2....}         
         v_cstring,
         v_array,
         v_struct,

@@ -171,16 +171,16 @@ namespace x680 {
 
 
 
-        //ObjectIdentifierValue
+        //ObjectIdentifierSet
 
-        struct ObjectIdentifierValue_grammar :
+        struct ObjectIdentifierSet_grammar :
         public qi::grammar<str_iterator, value_element_vector(), skip_cmt_type > {
 
-            typedef ObjectIdentifierValue_grammar self_type;
+            typedef ObjectIdentifierSet_grammar self_type;
             typedef value_element_vector holder_type;
 
-            ObjectIdentifierValue_grammar()
-            : ObjectIdentifierValue_grammar::base_type(vect) {
+            ObjectIdentifierSet_grammar()
+            : ObjectIdentifierSet_grammar::base_type(vect) {
                 init();
             }
 
@@ -355,9 +355,66 @@ namespace x680 {
 
 
         };
+        
+        
+        // IdentifierList_grammar
+
+        struct IdentifierList_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef IdentifierList_grammar self_type;
+            typedef value_element holder_type;
+
+            IdentifierList_grammar() :
+            IdentifierList_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+            void operator()(holder_type & holder, const std::string& val) {
+                holder.type = v_identifier_list;
+                value_element tmp;
+                tmp.type = v_identifier;
+                tmp.identifier = val;
+                holder.values.push_back(tmp);
+            }
+
+            void operator()(holder_type & holder) {
+                holder.type = v_empty_set;
+            }
+            
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
 
 
+        };        
 
+
+        //ObjectIdentifierValue
+
+        struct ObjectIdentifierValue_grammar :
+        public qi::grammar<str_iterator, value_element(), skip_cmt_type > {
+
+            typedef ObjectIdentifierValue_grammar self_type;
+            typedef value_element holder_type;
+
+            ObjectIdentifierValue_grammar()
+            : ObjectIdentifierValue_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+            void operator()(holder_type& holder, value_element_vector & val) {
+                holder.type = v_named_list;
+                holder.values = val;
+            }
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+            ObjectIdentifierSet_grammar ObjectIdentifierSet;
+        };
+        
+        
+        
 
         // BuiltinValue        
 
@@ -382,6 +439,7 @@ namespace x680 {
             ObjectIdentifierValue_grammar ObjectIdentifierValue;
             HStringValue_grammar HStringValue;
             BStringValue_grammar BStringValue;
+            IdentifierList_grammar IdentifierList;
 
 
 

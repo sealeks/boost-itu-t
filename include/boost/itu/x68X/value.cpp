@@ -62,9 +62,9 @@ namespace x680 {
         }
 
 
-        //ObjectIdentifierValue_grammar
+        //ObjectIdentifierSet_grammar
 
-        void ObjectIdentifierValue_grammar::init() {
+        void ObjectIdentifierSet_grammar::init() {
 
             vect = qi::lit("{")
                     >> *(components[bind(&self_type::operator (), *this, qi::_val, qi::_1)])
@@ -100,16 +100,16 @@ namespace x680 {
                     | MINUS_INFINITY_[bind(&self_type::operator(), *this, qi::_val, std::string("MINUS-INFINITY"))]
                     | NOT_A_NUMBER_[bind(&self_type::operator(), *this, qi::_val, std::string("NOT-A-NUMBER"))];
         }
-        
-        
+
+
         //HStringValue_grammar
 
         void HStringValue_grammar::init() {
 
             startrule = hstring_str[bind(&self_type::operator(), *this, qi::_val, qi::_1)];
         }
-        
-        
+
+
         //BStringValue_grammar
 
         void BStringValue_grammar::init() {
@@ -123,11 +123,28 @@ namespace x680 {
             startrule = NULL_[bind(&self_type::operator(), *this, qi::_val) ];
         }
 
+        //IdentifierList_grammar
 
+        void IdentifierList_grammar::init() {
+            startrule = (qi::lit("{")
+                    >> qi::lit("}"))[bind(&self_type::operator (), *this, qi::_val)]
+                    | (qi::lit("{")
+                    >> (identifier_[bind(&self_type::operator (), *this, qi::_val, qi::_1)] % qi::lit(","))
+                    >> qi::lit("}"));
+        }
+        
+        
+        //ObjectIdentifierValue
+
+        void ObjectIdentifierValue_grammar::init() {
+            startrule = ObjectIdentifierSet[bind(&self_type::operator (), *this, qi::_val, qi::_1)];
+        }        
+
+        
         //BuiltinValue_grammar
 
         void BuiltinValue_grammar::init() {
-            startrule = NullValue | BooleanValue | RealValue | IntegerValue | HStringValue | BStringValue; // | ObjectIdentifierValue ;
+            startrule = NullValue | BooleanValue | RealValue | IntegerValue | HStringValue | BStringValue | IdentifierList | ObjectIdentifierValue ;
 
         }
 
