@@ -163,9 +163,9 @@ namespace x680 {
         typedef std::pair<std::string, std::string> string_pair;
         typedef std::vector<string_pair> string_pair_vector;
 
-        struct type_assigment;
-        typedef std::vector<type_assigment> type_assigment_vector;
-        typedef type_assigment_vector named_type_element_vector;
+        struct type_assignment;
+        typedef std::vector<type_assignment> type_assignment_vector;
+        typedef type_assignment_vector named_type_element_vector;
 
         struct value_element;
         typedef std::vector<value_element> value_element_vector;
@@ -210,15 +210,15 @@ namespace x680 {
             tag_type tag;
             std::string reference;
             tagmarker_type marker;
-            value_element defltval;
+            value_element value;
             defined_type builtin_t;
             value_element_vector predefined;
             named_type_element_vector elements;
         };
 
-        struct value_assigment {
+        struct value_assignment {
 
-            value_assigment() {
+            value_assignment() {
             }
 
             void operator()(const value_element& val) {
@@ -231,12 +231,12 @@ namespace x680 {
 
         };
 
-        struct type_assigment {
+        struct type_assignment {
 
-            type_assigment() {
+            type_assignment() {
             }
 
-            type_assigment(tagmarker_type mrkr) {
+            type_assignment(tagmarker_type mrkr) {
                 type.marker = mrkr;
             }
 
@@ -246,15 +246,34 @@ namespace x680 {
 
             void defaultvalue(const value_element& val) {
                 type.marker = mk_default;
-                type.defltval = val;
+                type.value = val;
+            }
+
+            void exceptnumber(const std::string& val) {
+                type.value.type = v_number;
+                type.value.value = val;
+                type.builtin_t = t_INTEGER;
+                type.marker = mk_exception;
+            }
+
+            void exceptidetifier(const std::string& val) {
+                type.value.type = v_identifier;
+                type.value.identifier = val;
+                type.builtin_t = t_INTEGER;
+                type.marker = mk_exception;
+            }
+
+            void exceptvalue(const value_element& val) {
+                type.value = val;
+                type.marker = mk_exception;
             }
 
             std::string identifier;
             type_element type;
         };
 
-        const type_assigment extention_type_assigment(mk_extention);
-        const type_assigment exception_type_assigment(mk_exception);
+        const type_assignment extention_type_assignment(mk_extention);
+        const type_assignment exception_type_assignment(mk_exception);
 
 
 
@@ -262,8 +281,8 @@ namespace x680 {
         // Assigment       
 
         typedef boost::variant<
-        type_assigment,
-        value_assigment >
+        type_assignment,
+        value_assignment >
         assignment;
 
         typedef std::vector<assignment> assignment_vector;
@@ -327,7 +346,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
-        x680::bnf::value_assigment,
+        x680::bnf::value_assignment,
         (std::string, identifier)
         (x680::bnf::type_element, type)
         (x680::bnf::value_element, value)
@@ -338,7 +357,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_element,
         (x680::tag_type, tag)
         (x680::tagmarker_type, marker)
-        (x680::bnf::value_element, defltval)
+        (x680::bnf::value_element, value)
         (std::string, reference)
         (x680::defined_type, builtin_t)
         (x680::bnf::named_type_element_vector, elements)
@@ -347,7 +366,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 
 BOOST_FUSION_ADAPT_STRUCT(
-        x680::bnf::type_assigment,
+        x680::bnf::type_assignment,
         (std::string, identifier)
         (x680::bnf::type_element, type)
         )
@@ -428,8 +447,8 @@ namespace x680 {
         typedef qi::rule<str_iterator, type_element() > type_element_rule;
         typedef qi::rule<str_iterator, type_element(), skip_cmt_type > type_element_sk_rule;
 
-        typedef qi::rule<str_iterator, type_assigment_vector() > type_elements_rule;
-        typedef qi::rule<str_iterator, type_assigment_vector(), skip_cmt_type > type_elements_sk_rule;
+        typedef qi::rule<str_iterator, type_assignment_vector() > type_elements_rule;
+        typedef qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type > type_elements_sk_rule;
 
         typedef qi::rule<str_iterator, value_element() > value_element_rule;
         typedef qi::rule<str_iterator, value_element(), skip_cmt_type > value_element_sk_rule;
@@ -437,8 +456,8 @@ namespace x680 {
         typedef qi::rule<str_iterator, value_element_vector() > value_elements_rule;
         typedef qi::rule<str_iterator, value_element_vector(), skip_cmt_type > value_elements_sk_rule;
 
-        //typedef qi::rule<str_iterator, type_assigment_vector() > syn_elements_rule;
-        //typedef qi::rule<str_iterator, type_assigment_vector(), skip_cmt_type > syn_elements_sk_rule;
+        //typedef qi::rule<str_iterator, type_assignment_vector() > syn_elements_rule;
+        //typedef qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type > syn_elements_sk_rule;
 
         typedef qi::rule<str_iterator, unsigned() > unum_rule;
 

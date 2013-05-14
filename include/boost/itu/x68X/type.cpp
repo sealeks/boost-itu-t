@@ -7,13 +7,13 @@
 
 namespace x680 {
     namespace bnf {
-        
-        
+
+
         // Type_grammar
 
         void Type_grammar::init() {
-            
-             start_rule = Type[bind(&self_type::typeset, *this, qi::_val, qi::_1)];  
+
+            start_rule = Type[bind(&self_type::typeset, *this, qi::_val, qi::_1)];
 
             NamedType = identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
                     >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)];
@@ -38,125 +38,140 @@ namespace x680 {
 
             BitStringType = qi::lexeme[BIT_ >> +qi::blank >> STRING_[bind(&self_type::defftype, *this, qi::_val, t_BIT_STRING)]]
                     >> -NameBitList[bind(&self_type::deffinit, *this, qi::_val, qi::_1)];
-            
-                       
+
+
             SequenceOfType = (qi::lexeme[SEQUENCE_ >> +qi::blank >> OF_])[bind(&self_type::defftype, *this, qi::_val, t_SEQUENCE_OF)]
-                    >> (Type | NamedType)[bind(&self_type::push_component,*this, qi::_val, qi::_1) ];                   
+                    >> (Type | NamedType)[bind(&self_type::push_component, *this, qi::_val, qi::_1) ];
 
             SetOfType = (qi::lexeme[SET_ >> +qi::blank >> OF_])[bind(&self_type::defftype, *this, qi::_val, t_SET_OF)]
-                    >> (Type | NamedType)[bind(&self_type::push_component,*this, qi::_val, qi::_1) ];    
-                   
-                    
-                    
-                    
-                    
+                    >> (Type | NamedType)[bind(&self_type::push_component, *this, qi::_val, qi::_1) ];
 
-           
-         //    
-            
 
-            ComponentType%=((qi::omit[qi::lexeme[COMPONENTS_ >> +qi::blank >> OF_]] >> Type)[bind(&type_assigment::operator(), qi::_val, mk_components_of )]                        
-                    | (NamedType >> qi::omit[OPTIONAL_])[bind(&type_assigment::operator(), qi::_val, mk_optional )]                          
-                    | ((NamedType >> qi::omit[DEFAULT_])[bind(&type_assigment::operator(), qi::_val, mk_default )] >> qi::omit[Value[bind(&type_assigment::defaultvalue , qi::_val,  qi::_1)]])    
-                    | NamedType); 
-            
-           ComponentTypeList = (ComponentType % qi::omit[qi::lit(",")]); 
-           
-           RootComponentTypeList = ComponentTypeList;
-           
-           ExtensionAdditionGroup = qi::omit[qi::lit("[[") >> -(pos_number_str >> qi::lit(":"))] >> ComponentTypeList  >> qi::omit[qi::lit("]]")];
-           
-           ExtensionAddition = qi::omit[qi::lit(",")] >> (ExtensionAdditionGroup | ComponentType);
-           
-           ExtensionAdditions =  ExtensionAddition >>  - (  ExtensionAddition) ;
-             
-            ExceptionSpec = qi::lit("!") >> (pos_number_str | DefinedValue_);// (| SignedNumber |Type ":" Value);                
-                    
-            ExtensionAndException =  (qi::lit("...")[qi::_val =  exception_type_assigment ]   >> qi::omit[ExceptionSpec]) |   qi::lit("...")[qi::_val =  extention_type_assigment ] ;
-            
-            ExtensionEndMarker = qi::omit[qi::lit(",")] >> qi::lit("...")[qi::_val =  extention_type_assigment ];
-            
-            OptionalExtensionMarker = - ( qi::omit[qi::lit(",")] >> qi::lit("...")[qi::_val =  extention_type_assigment ]);
-            
-            
-            ComponentTypeLists = (RootComponentTypeList 
-                   >>  qi::lit(",") 
-                   >>  ExtensionAndException 
-                   >>  ExtensionAdditions 
-                   >> OptionalExtensionMarker)
-                   | (RootComponentTypeList  
-                   >> qi::lit(",") 
-                   >> ExtensionAndException 
-                   >> ExtensionAdditions  
-                   >>  ExtensionEndMarker
-                   >> qi::lit(",")  
-                   >> RootComponentTypeList)
-                   | (ExtensionAndException 
-                   >> ExtensionAdditions  
-                   >>  ExtensionEndMarker
-                   >> qi::lit(",")  
-                   >>  RootComponentTypeList) 
-                   | (ExtensionAndException 
-                   >> ExtensionAdditions 
-                   >> OptionalExtensionMarker)
-                  | RootComponentTypeList;        
-            
-           
-            
-            
-            SelectionType =identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
+
+
+
+
+
+            //    
+
+
+            ComponentType %= ((qi::omit[qi::lexeme[COMPONENTS_ >> +qi::blank >> OF_]] >> Type)[bind(&type_assignment::operator(), qi::_val, mk_components_of)]
+                    | (NamedType >> qi::omit[OPTIONAL_])[bind(&type_assignment::operator(), qi::_val, mk_optional)]
+                    | ((NamedType >> qi::omit[DEFAULT_])[bind(&type_assignment::operator(), qi::_val, mk_default)] >> qi::omit[Value[bind(&type_assignment::defaultvalue, qi::_val, qi::_1)]])
+                    | NamedType);
+
+            ComponentTypeList = (ComponentType % qi::omit[qi::lit(",")]);
+
+            RootComponentTypeList = ComponentTypeList;
+
+            ExtensionAdditionGroup = qi::omit[qi::lit("[[") >> -(pos_number_str >> qi::lit(":"))] >> ComponentTypeList >> qi::omit[qi::lit("]]")];
+
+            ExtensionAddition = qi::omit[qi::lit(",")] >> (ExtensionAdditionGroup | ComponentType);
+
+            ExtensionAdditions = ExtensionAddition >> -(ExtensionAddition);
+
+            ExceptionSpec = qi::omit[qi::lit("!")] >> (pos_number_str[bind(&type_assignment::exceptnumber, qi::_val, qi::_1) ]
+                    | DefinedValue_[bind(&type_assignment::exceptidetifier, qi::_val, qi::_1) ]
+                    | (Type[qi::_val = qi::_1 ] >> qi::omit[ qi::lit(":")] >> Value[bind(&type_assignment::exceptvalue, qi::_val, qi::_1) ])
+                    );
+
+            Extension = qi::lit("...")[qi::_val = exception_type_assignment ];
+
+            ExtensionAndException = (Extension >> ExceptionSpec) | Extension;
+
+            ExtensionEndMarker = qi::omit[qi::lit(",")] >> Extension;
+
+            OptionalExtensionMarker = -(qi::omit[qi::lit(",")] >> Extension);
+
+
+            ComponentTypeLists = (RootComponentTypeList
+                    >> qi::lit(",")
+                    >> ExtensionAndException
+                    >> ExtensionAdditions
+                    >> OptionalExtensionMarker)
+                    | (RootComponentTypeList
+                    >> qi::lit(",")
+                    >> ExtensionAndException
+                    >> ExtensionAdditions
+                    >> ExtensionEndMarker
+                    >> qi::lit(",")
+                    >> RootComponentTypeList)
+                    | (ExtensionAndException
+                    >> ExtensionAdditions
+                    >> ExtensionEndMarker
+                    >> qi::lit(",")
+                    >> RootComponentTypeList)
+                    | (ExtensionAndException
+                    >> ExtensionAdditions
+                    >> OptionalExtensionMarker)
+                    | RootComponentTypeList;
+
+
+
+
+            SelectionType = identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
                     >> qi::lit("<")
                     >> Type[bind(&self_type::type_select, *this, qi::_val, qi::_1)];
-            
-            
+
+
             SequenceType = SEQUENCE_[bind(&self_type::defftype, *this, qi::_val, t_SEQUENCE)]
-                    >>  qi::lit("{")
-                    >> -(ComponentTypeLists [bind(&self_type::push_components,*this, qi::_val, qi::_1) ])    
-                    >>  qi::lit("}");            
+                    >> qi::lit("{")
+                    >> -(ComponentTypeLists [bind(&self_type::push_components, *this, qi::_val, qi::_1) ])
+                    >> qi::lit("}");
 
-            
-            SetType = SET_[bind(&self_type::defftype, *this, qi::_val, t_SET)] 
-                    >>  qi::lit("{")
-                    >> -(ComponentTypeLists [bind(&self_type::push_components,*this, qi::_val, qi::_1) ])
-                    >>  qi::lit("}");   
-            
-            ChoiceType = CHOICE_[bind(&self_type::defftype, *this, qi::_val, t_CHOICE)] 
-                    >>  qi::lit("{")
-                    >> -(ComponentTypeLists[bind(&self_type::push_components,*this, qi::_val, qi::_1) ])   
-                    >>  qi::lit("}");   
 
-            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SelectionType | SequenceOfType | SetOfType  | SequenceType | ChoiceType | SetType  ;
+            SetType = SET_[bind(&self_type::defftype, *this, qi::_val, t_SET)]
+                    >> qi::lit("{")
+                    >> -(ComponentTypeLists [bind(&self_type::push_components, *this, qi::_val, qi::_1) ])
+                    >> qi::lit("}");
+
+            ChoiceType = CHOICE_[bind(&self_type::defftype, *this, qi::_val, t_CHOICE)]
+                    >> qi::lit("{")
+                    >> -(ComponentTypeLists[bind(&self_type::push_components, *this, qi::_val, qi::_1) ])
+                    >> qi::lit("}");
+
+            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SelectionType | SequenceOfType | SetOfType | SequenceType | ChoiceType | SetType;
 
             Type = BuitinType | TaggedType | DefinedType;
-            
+
             TaggedType = Tag[bind(&self_type::tagset, *this, qi::_val, qi::_1)]
                     >> Type[bind(&self_type::for_taggedtype, *this, qi::_val, qi::_1)];
 
         }
-        
-        
-    
+
+
+
 
         // TypeAssignment_grammar
 
         void TypeAssignment_grammar::init() {
-            
-           start_rule = typereference_[bind(&self_type::typereffrence, *this, qi::_val, qi::_1)]
+
+            start_rule = typereference_[bind(&self_type::typereffrence, *this, qi::_val, qi::_1)]
                     >> qi::lexeme[qi::lit("::=")]
-                    >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)];  
+                    >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)];
         }
-        
-        
-        
+
+
+
         // ValueAssignment_grammar
 
         void ValueAssignment_grammar::init() {
-            
-           start_rule = valuereference_[bind(&self_type::valuereference, *this, qi::_val, qi::_1)]
-                   >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)]
+
+            start_rule = valuereference_[bind(&self_type::valuereference, *this, qi::_val, qi::_1)]
+                    >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)]
                     >> qi::lexeme[qi::lit("::=")]
-                    >> Value[bind(&self_type::value, *this, qi::_val, qi::_1)];  
+                    >> Value[bind(&self_type::value, *this, qi::_val, qi::_1)];
         }
-        
+
+
+        // Assignment_grammar
+
+        void Assignments_grammar::init() {
+            start_rule = *(TypeAssignment | ValueAssignment);
+
+        }
+
+
+
     }
 }
