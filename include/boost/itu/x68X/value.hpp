@@ -248,7 +248,7 @@ namespace x680 {
 
             void identifier(holder_type& holder, const std::string & val) {
                 holder.type = v_identifier;
-                holder.identifier = val;
+                holder.value = val;
             }
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
@@ -279,8 +279,8 @@ namespace x680 {
 
 
         };
-        
-        
+
+
         //HStringValue_grammar
 
         struct HStringValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
@@ -303,8 +303,8 @@ namespace x680 {
             qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
 
         };
-        
-        
+
+
         //BStringValue_grammar
 
         struct BStringValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
@@ -322,6 +322,30 @@ namespace x680 {
             void operator()(holder_type& holder, const std::string & val) {
                 holder.value = val;
                 holder.type = v_bstring;
+            }
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+        };
+        
+        
+        //CStringValue_grammar
+
+        struct CStringValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef CStringValue_grammar self_type;
+            typedef value_element holder_type;
+
+            CStringValue_grammar() :
+            CStringValue_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+            void operator()(holder_type& holder, const std::string & val) {
+                holder.value = val;
+                holder.type = v_cstring;
             }
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
@@ -355,8 +379,8 @@ namespace x680 {
 
 
         };
-        
-        
+
+
         // IdentifierList_grammar
 
         struct IdentifierList_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
@@ -382,11 +406,11 @@ namespace x680 {
             void operator()(holder_type & holder) {
                 holder.type = v_empty_set;
             }
-            
+
             qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
 
 
-        };        
+        };
 
 
         //ObjectIdentifierValue
@@ -404,7 +428,7 @@ namespace x680 {
 
             void init();
 
-            void operator()(holder_type& holder, value_element_vector & val) {
+            void operator()(holder_type& holder, const value_element_vector & val) {
                 holder.type = v_named_list;
                 holder.values = val;
             }
@@ -412,19 +436,19 @@ namespace x680 {
             qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
             ObjectIdentifierSet_grammar ObjectIdentifierSet;
         };
-        
-        
-        
 
-        // BuiltinValue        
 
-        struct BuiltinValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
 
-            typedef BuiltinValue_grammar self_type;
+
+        // SimpleValue        
+
+        struct SimpleValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef SimpleValue_grammar self_type;
             typedef value_element holder_type;
 
-            BuiltinValue_grammar() :
-            BuiltinValue_grammar::base_type(startrule) {
+            SimpleValue_grammar() :
+            SimpleValue_grammar::base_type(startrule) {
                 init();
             }
 
@@ -436,17 +460,152 @@ namespace x680 {
             BooleanValue_grammar BooleanValue;
             IntegerValue_grammar IntegerValue;
             RealValue_grammar RealValue;
+            CStringValue_grammar  CStringValue;
             ObjectIdentifierValue_grammar ObjectIdentifierValue;
             HStringValue_grammar HStringValue;
             BStringValue_grammar BStringValue;
             IdentifierList_grammar IdentifierList;
-
-
-
+ 
 
         };
 
 
+        // NamedValue        
+
+        struct NamedValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef NamedValue_grammar self_type;
+            typedef value_element holder_type;
+
+            NamedValue_grammar() :
+            NamedValue_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+            void idetifier(holder_type& holder, const std::string& val) {
+                holder.identifier = val;
+            }
+
+            void value(holder_type& holder, const value_element & val) {
+                std::string tmp = holder.identifier;
+                holder = val;
+                holder.identifier = tmp;
+                holder.type = v_named_value;
+            }
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+            SimpleValue_grammar SimpleValue;
+
+        };
+
+
+        // StructValue        
+
+        struct StructValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef StructValue_grammar self_type;
+            typedef value_element holder_type;
+
+            StructValue_grammar() :
+            StructValue_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+            
+            void idetifier(holder_type& holder, const std::string& val) {
+                holder.identifier = val;
+            }           
+
+            void named_value(holder_type& holder, value_element & val) {
+                std::string tmp = holder.identifier;
+                holder = val;
+                holder.identifier = tmp;              
+            }
+            
+             void choice_value(holder_type& holder, value_element & val) {
+                std::string tmp = holder.identifier;
+                holder = val;
+                holder.identifier = tmp;
+                holder.type = v_choice;
+            }          
+            
+            void value(holder_type& holder, value_element & val) {
+                holder = val;
+            }            
+            
+            void values(holder_type& holder, value_element_vector& val) {
+                holder.type = v_variable_list;
+                holder.values = val ;
+            }        
+            
+            void named_values(holder_type& holder, const value_element_vector& val) {
+                holder.type = v_named_value;
+                holder.values = val ;
+            }                 
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> NamedValue;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> Value;
+             qi::rule<str_iterator, holder_type(), skip_cmt_type> ChoiceValue;           
+             qi::rule<str_iterator, holder_type(), skip_cmt_type> ComplexValue;   
+            qi::rule<str_iterator, value_element_vector(), skip_cmt_type> ComponentValueList;
+            
+            SimpleValue_grammar SimpleValue;
+
+        };
+        
+        
+        // ReferencedValue        
+
+        struct ReferencedValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef ReferencedValue_grammar self_type;
+            typedef value_element holder_type;
+
+            ReferencedValue_grammar() :
+            ReferencedValue_grammar::base_type(startrule) {
+                init();
+            }                       
+
+            void init();
+            
+            void defined(holder_type& holder, const std::string& val) {
+                holder.type = v_defined;
+                holder.identifier = val ;
+            }                 
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+        };            
+        
+        
+        // Value        
+
+        struct Value_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef Value_grammar self_type;
+            typedef value_element holder_type;
+
+            Value_grammar() :
+            Value_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+            SimpleValue_grammar SimpleValue;
+            StructValue_grammar StructValue;
+            ReferencedValue_grammar  ReferencedValue;
+
+        };        
 
     }
 }

@@ -104,7 +104,7 @@ namespace x680 {
                         >> qi::lexeme[BEGIN_]
                         >> -(Exports[bind(&self_type::exports, *this, qi::_val, qi::_1)])
                         >> -(Imports[bind(&self_type::add_imports, *this, qi::_val, qi::_1)])
-                        >> -(Types[bind(&self_type::add_types, *this, qi::_val, qi::_1)])
+                        >> -(Assignments[bind(&self_type::add_types, *this, qi::_val, qi::_1)])
                         >> END_;
 
                 Exports = qi::lexeme[ qi::omit[EXPORTS_ >> +qi::space] ]
@@ -149,7 +149,7 @@ namespace x680 {
                 holder.imports_ = val;
             }
             
-            void add_types(holder_type& holder, const type_assigment_vector& val) {
+            void add_types(holder_type& holder, const assignment_vector& val) {
                 holder.elements = val;
             }
 
@@ -162,7 +162,7 @@ namespace x680 {
             SymbolsFromModule_grammar SymbolsFromModule;
             imports_sk_rule SymbolsFromModules;
             imports_sk_rule Imports;  
-            Types_grammar Types;
+            Assignments_grammar Assignments;
             ObjectIdentifierSet_grammar ObjectIdentifierSet;
 
         };

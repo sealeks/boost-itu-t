@@ -27,7 +27,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/repository/include/qi_confix.hpp>
-
+#include <boost/variant.hpp>
 
 
 
@@ -71,7 +71,8 @@ namespace x680 {
         t_TIME_OF_DAY,
         t_DATE,
         t_DATE_TIME,
-        t_CHOICE
+        t_CHOICE,
+        t_Selection
     };
 
     enum tagclass_type {
@@ -96,28 +97,31 @@ namespace x680 {
         mk_none,
         mk_default,
         mk_optional,
-        mk_components_of,      
-        mk_extention, 
-        mk_exception                
+        mk_components_of,
+        mk_extention,
+        mk_exception
     };
 
     enum value_type {
 
         v_nodef,
-        v_empty_set,  // { }      
-        v_identifier,  // x
-        v_identifier_assign,   // x(n)     
+        v_empty_set, // { }      
+        v_identifier, // x
+        v_identifier_assign, // x(n)     
         v_boolean, // TRUE, FALSE  /
-        v_number,
-        v_real,
-        v_null,
+        v_number, // n  /
+        v_real, // n.n  /
+        v_null, // NULL /
         v_bstring, // BitStringValue, OctetStringValue
-        v_hstring,  // BitStringValue, OctetStringValue
-        v_identifier_list,  // BitStringValue  { x, y ,....}  
-        v_named_list,  // ObjectIdentifierSet  { x y(n1) n2....}         
-        v_cstring,
-        v_array,
-        v_struct,
+        v_hstring, // BitStringValue, OctetStringValue
+        v_cstring, // StringValue        
+        v_identifier_list, // BitStringValue  { x, y ,....}  
+        v_named_list, // ObjectIdentifierSet  { x y(n1) n2....}     
+        v_named_value, // name1 val1     
+        v_variable_list, // SetValue, SequenceValue,  { name1 val1, name2 val2 ....}   
+        v_variables_list, // SetOfValue, SequenceOfValue,  { {...} , {...}....}       
+        v_choice, // SetOfValue, SequenceOfValue,  { {...} , {...}....}      
+        v_defined, // DefinedValue
         v_extention
     };
 
@@ -125,7 +129,7 @@ namespace x680 {
 
         s_NODEF,
         s_BuiltinType,
-        s_BuiltinValue
+        s_SimpleValue
     };
 
     enum encoding_references_type {
@@ -161,10 +165,15 @@ namespace x680 {
 
         struct type_assigment;
         typedef std::vector<type_assigment> type_assigment_vector;
-        typedef type_assigment_vector  named_type_element_vector;
+        typedef type_assigment_vector named_type_element_vector;
 
         struct value_element;
         typedef std::vector<value_element> value_element_vector;
+
+
+
+
+        // Value       
 
         struct value_element {
 
@@ -179,12 +188,17 @@ namespace x680 {
         };
 
 
+
+
+
+
+
         // Type
 
         struct type_element {
 
             type_element() :
-            builtin_t(t_NODEF) {
+            builtin_t(t_NODEF), marker(mk_none) {
             }
 
             bool tagged() const {
@@ -195,34 +209,65 @@ namespace x680 {
 
             tag_type tag;
             std::string reference;
+            tagmarker_type marker;
+            value_element defltval;
             defined_type builtin_t;
             value_element_vector predefined;
             named_type_element_vector elements;
         };
-        
-        
-        
 
+        struct value_assigment {
+
+            value_assigment() {
+            }
+
+            void operator()(const value_element& val) {
+                value = val;
+            }
+
+            std::string identifier;
+            type_element type;
+            value_element value;
+
+        };
 
         struct type_assigment {
 
-            type_assigment() : marker(mk_none) {
+            type_assigment() {
             }
 
-            type_assigment(tagmarker_type mrkr) : marker(mrkr) {
+            type_assigment(tagmarker_type mrkr) {
+                type.marker = mrkr;
             }
-            
-            void operator()(const tagmarker_type& val){
-                marker = val;
+
+            void operator()(const tagmarker_type& val) {
+                type.marker = val;
             }
-            
+
+            void defaultvalue(const value_element& val) {
+                type.marker = mk_default;
+                type.defltval = val;
+            }
+
             std::string identifier;
             type_element type;
-            tagmarker_type marker;
         };
 
         const type_assigment extention_type_assigment(mk_extention);
-        const type_assigment exception_type_assigment(mk_exception);                
+        const type_assigment exception_type_assigment(mk_exception);
+
+
+
+
+        // Assigment       
+
+        typedef boost::variant<
+        type_assigment,
+        value_assigment >
+        assignment;
+
+        typedef std::vector<assignment> assignment_vector;
+
 
         typedef std::vector<std::string> exports;
 
@@ -250,7 +295,7 @@ namespace x680 {
             bool extesibility_implied;
             exports exports_;
             imports imports_;
-            type_assigment_vector elements;
+            assignment_vector elements;
         };
 
     }
@@ -281,10 +326,19 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::value_element_vector, values)
         )
 
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::value_assigment,
+        (std::string, identifier)
+        (x680::bnf::type_element, type)
+        (x680::bnf::value_element, value)
+        )
+
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_element,
         (x680::tag_type, tag)
+        (x680::tagmarker_type, marker)
+        (x680::bnf::value_element, defltval)
         (std::string, reference)
         (x680::defined_type, builtin_t)
         (x680::bnf::named_type_element_vector, elements)
@@ -296,7 +350,6 @@ BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_assigment,
         (std::string, identifier)
         (x680::bnf::type_element, type)
-        (x680::tagmarker_type, marker)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -315,7 +368,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (bool, extesibility_implied)
         (x680::bnf::exports, exports_)
         (x680::bnf::imports, imports_)
-        (x680::bnf::type_assigment_vector, elements)
+        (x680::bnf::assignment_vector, elements)
         )
 
 
@@ -325,11 +378,11 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 namespace x680 {
     namespace bnf {
-        
-        typedef  std::string basic_character_type;
-        typedef  basic_character_type::iterator str_iterator;
-        typedef  basic_character_type::value_type str_value_type;
-        
+
+        typedef std::string basic_character_type;
+        typedef basic_character_type::iterator str_iterator;
+        typedef basic_character_type::value_type str_value_type;
+
         using namespace boost::spirit;
 
         using boost::phoenix::bind;
@@ -397,7 +450,7 @@ namespace x680 {
         extern str_rule realnumber_str;
         extern str_rule bstring_str;
         extern str_rule hstring_str;
-        extern str_rule cstring_str;        
+        extern str_rule cstring_str;
         extern str_rule curly_barket_pair;
 
         extern term_rule ECODED_;

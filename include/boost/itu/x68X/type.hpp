@@ -75,10 +75,10 @@ namespace x680 {
         
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        // ReferencedType
+        // Type_grammar
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
         
-        struct Type_grammar : qi::grammar<str_iterator, type_assigment(), skip_cmt_type> {
+        struct Type_grammar : qi::grammar<str_iterator, type_element(), skip_cmt_type> {
 
             typedef Type_grammar self_type;
             typedef type_assigment holder_type;
@@ -130,12 +130,22 @@ namespace x680 {
             
             void typereffrence(holder_type& holder, const std::string& val) {
                 holder.identifier = val;
+            }    
+            
+            void typeset(type_element& holder, const type_assigment& val) {
+                holder= val.type;
             }            
             
             void type(holder_type& holder, const type_assigment& val) {
                 holder.type= val.type;
             }
             
+            void type_select(holder_type& holder, const type_assigment& val) {
+                holder.type= val.type;
+                holder.type.builtin_t =t_Selection;
+            }
+            
+             
             void for_taggedtype(holder_type& holder, const type_assigment& val) {
                 tag_type tmp = holder.type.tag;
                 holder.type= val.type;
@@ -153,7 +163,7 @@ namespace x680 {
             }
             
             void markerset(holder_type& holder, const tagmarker_type& val){
-                holder.marker = val;
+                holder.type.marker = val;
             }
             
 
@@ -165,6 +175,10 @@ namespace x680 {
                 holder.type.tag = val;
             }
             
+            //void defaultvalue(holder_type& holder, const value_element& val) {
+            //    holder.defltval= val;
+            //}            
+            
             void push_component(holder_type& holder, const holder_type& val) {
                 holder.type.elements.push_back(val);
             }
@@ -173,7 +187,7 @@ namespace x680 {
                 holder.type.elements.insert(holder.type.elements.end(), val.begin(), val.end());
             }            
 
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> start_rule;
             
             qi::rule<str_iterator, holder_type(), skip_cmt_type> TypeAssignment; 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> NamedType;           
@@ -205,27 +219,90 @@ namespace x680 {
             
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SequenceType;               
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SetType;         
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> SelectionType;            
             qi::rule<str_iterator, holder_type(), skip_cmt_type> ChoiceType;               
             Enumerations_grammar Enumerations;
             NamedNumberList_grammar NamedNumberList;
             NamedNumberList_grammar NameBitList;
             Tag_grammar Tag;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> TaggedType;           
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> TaggedType;       
+            Value_grammar Value;
 
-        }; 
+        };
 
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        // TypeAssignment_grammar
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
+        struct TypeAssignment_grammar : qi::grammar<str_iterator, type_assigment(), skip_cmt_type> {
 
+            typedef TypeAssignment_grammar self_type;
+            typedef type_assigment holder_type;
+
+            TypeAssignment_grammar() :
+            TypeAssignment_grammar::base_type(start_rule) {
+                init();
+            }
+            
+            void typereffrence(holder_type& holder, const std::string& val) {
+                holder.identifier = val;
+            }            
+            
+            void type(holder_type& holder, const type_element& val) {
+                holder.type= val;
+            }            
+
+            void init();
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            Type_grammar Type;
+        };
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        // TypeAssignment_grammar
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+
+        struct ValueAssignment_grammar : qi::grammar<str_iterator, value_assigment(), skip_cmt_type> {
+
+            typedef ValueAssignment_grammar self_type;
+            typedef value_assigment holder_type;
+
+            ValueAssignment_grammar() :
+            ValueAssignment_grammar::base_type(start_rule) {
+                init();
+            }
+            
+            void valuereference(holder_type& holder, const std::string& val) {
+                holder.identifier = val;
+            }            
+            
+            void type(holder_type& holder, const type_element& val) {
+                holder.type= val;
+            }            
+
+            void value(holder_type& holder, const value_element& val) {
+                holder.value= val;
+            }     
+            
+            void init();
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            Type_grammar Type;
+            Value_grammar Value;
+        };        
+            
+            
         //extern syn_elements_sk_rule Types_;
 
-        struct Types_grammar : qi::grammar<str_iterator, type_assigment_vector(), skip_cmt_type> {
+        struct Assignments_grammar : qi::grammar<str_iterator, assignment_vector(), skip_cmt_type> {
 
-            typedef Types_grammar self_type;
-            typedef type_assigment_vector holder_type;
+            typedef Assignments_grammar self_type;
+            typedef assignment_vector holder_type;
 
-            Types_grammar() :
-            Types_grammar::base_type(start_rule) {
+            Assignments_grammar() :
+            Assignments_grammar::base_type(start_rule) {
 
                 start_rule = *TypeAssignment;
 
@@ -233,7 +310,7 @@ namespace x680 {
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
             ;
-            Type_grammar TypeAssignment;
+            TypeAssignment_grammar TypeAssignment;
         };
 
     }

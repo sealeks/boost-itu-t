@@ -7,17 +7,16 @@
 
 namespace x680 {
     namespace bnf {
+        
+        
+        // Type_grammar
 
         void Type_grammar::init() {
             
-             start_rule = typereference_[bind(&self_type::typereffrence, *this, qi::_val, qi::_1)]
-                        >> qi::lexeme[qi::lit("::=")]
-                        >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)];  
+             start_rule = Type[bind(&self_type::typeset, *this, qi::_val, qi::_1)];  
 
             NamedType = identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
                     >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)];
-
-            //ComponentType =  (NamedType >> OPTIONAL_) | (NamedType >> DEFAULT_)  Value | COMPONENTS OF Type        */    | NamedType;
 
             DefinedType = DefinedType_[bind(&self_type::refference, *this, qi::_val, qi::_1)];
 
@@ -58,7 +57,7 @@ namespace x680 {
 
             ComponentType%=((qi::omit[qi::lexeme[COMPONENTS_ >> +qi::blank >> OF_]] >> Type)[bind(&type_assigment::operator(), qi::_val, mk_components_of )]                        
                     | (NamedType >> qi::omit[OPTIONAL_])[bind(&type_assigment::operator(), qi::_val, mk_optional )]                          
-                    | (NamedType >> qi::omit[DEFAULT_])[bind(&type_assigment::operator(), qi::_val, mk_default )]     
+                    | ((NamedType >> qi::omit[DEFAULT_])[bind(&type_assigment::operator(), qi::_val, mk_default )] >> qi::omit[Value[bind(&type_assigment::defaultvalue , qi::_val,  qi::_1)]])    
                     | NamedType); 
             
            ComponentTypeList = (ComponentType % qi::omit[qi::lit(",")]); 
@@ -105,7 +104,9 @@ namespace x680 {
            
             
             
-            
+            SelectionType =identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
+                    >> qi::lit("<")
+                    >> Type[bind(&self_type::type_select, *this, qi::_val, qi::_1)];
             
             
             SequenceType = SEQUENCE_[bind(&self_type::defftype, *this, qi::_val, t_SEQUENCE)]
@@ -124,7 +125,7 @@ namespace x680 {
                     >> -(ComponentTypeLists[bind(&self_type::push_components,*this, qi::_val, qi::_1) ])   
                     >>  qi::lit("}");   
 
-            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SequenceOfType | SetOfType  | SequenceType | ChoiceType | SetType  ;
+            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SelectionType | SequenceOfType | SetOfType  | SequenceType | ChoiceType | SetType  ;
 
             Type = BuitinType | TaggedType | DefinedType;
             
@@ -132,5 +133,30 @@ namespace x680 {
                     >> Type[bind(&self_type::for_taggedtype, *this, qi::_val, qi::_1)];
 
         }
+        
+        
+    
+
+        // TypeAssignment_grammar
+
+        void TypeAssignment_grammar::init() {
+            
+           start_rule = typereference_[bind(&self_type::typereffrence, *this, qi::_val, qi::_1)]
+                    >> qi::lexeme[qi::lit("::=")]
+                    >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)];  
+        }
+        
+        
+        
+        // ValueAssignment_grammar
+
+        void ValueAssignment_grammar::init() {
+            
+           start_rule = valuereference_[bind(&self_type::valuereference, *this, qi::_val, qi::_1)]
+                   >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)]
+                    >> qi::lexeme[qi::lit("::=")]
+                    >> Value[bind(&self_type::value, *this, qi::_val, qi::_1)];  
+        }
+        
     }
 }
