@@ -196,12 +196,16 @@ namespace x680 {
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type>  ComponentType;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeList;
-            qi::rule<str_iterator, holders_type(), skip_cmt_type> RootComponentTypeList;
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> RootComponentTypeLists;
             qi::rule<str_iterator, holders_type(), skip_cmt_type>ExtensionAdditions;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionList;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAddition;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionGroup;
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeListsEx1;    
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeListsEx2;  
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeListsEx3;              
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeLists;
+            
             
             qi::rule<str_iterator, holders_type(), skip_cmt_type> AlternativeTypeList;            
             qi::rule<str_iterator, holders_type(), skip_cmt_type> RootAlternativeTypeList;            

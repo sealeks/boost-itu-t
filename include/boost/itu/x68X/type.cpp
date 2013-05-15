@@ -66,8 +66,6 @@ namespace x680 {
 
             ComponentTypeList = (ComponentType % qi::omit[qi::lit(",")]);
 
-            RootComponentTypeList = ComponentTypeList;
-
             ExtensionAdditionGroup = qi::omit[qi::lit("[[") 
                     >> -(pos_number_str 
                     >> qi::lit(":"))] 
@@ -76,39 +74,40 @@ namespace x680 {
 
             ExtensionAddition = qi::omit[qi::lit(",")] >> (ExtensionAdditionGroup | ComponentType);
 
-            ExtensionAdditions = ExtensionAddition >> -(ExtensionAddition);
+            ExtensionAdditions = qi::omit[qi::lit(",")] >> ExtensionAdditionGroup >> -(ExtensionAddition);
 
-            Extension = qi::lit("...")[qi::_val = exception_type_assignment ];
+            Extension = qi::lit("...")[qi::_val = extention_type_assignment ];
 
-            ExtensionAndException = (Extension >> ExceptionSpec) | Extension;
+            ExtensionAndException = Extension >> -ExceptionSpec;
 
             ExtensionEndMarker = qi::omit[qi::lit(",")] >> Extension;
 
             OptionalExtensionMarker = -(qi::omit[qi::lit(",")] >> Extension);
                     
-            
-            ComponentTypeLists = (RootComponentTypeList
-                    >> qi::lit(",")
-                    >> ExtensionAndException
+            ComponentTypeListsEx1 =    ExtensionAndException
                     >> ExtensionAdditions
-                    >> OptionalExtensionMarker)
-                    | (RootComponentTypeList
-                    >> qi::lit(",")
-                    >> ExtensionAndException
+                    >> OptionalExtensionMarker;
+            
+            ComponentTypeListsEx2  = ExtensionAndException
                     >> ExtensionAdditions
                     >> ExtensionEndMarker
                     >> qi::lit(",")
-                    >> RootComponentTypeList)
-                    | (ExtensionAndException
-                    >> ExtensionAdditions
-                    >> ExtensionEndMarker
-                    >> qi::lit(",")
-                    >> RootComponentTypeList)
-                    | (ExtensionAndException
-                    >> ExtensionAdditions
-                    >> OptionalExtensionMarker)
-                    | RootComponentTypeList;
+                    >> ComponentTypeList;  
             
+            ComponentTypeListsEx3 = ExtensionAndException >> OptionalExtensionMarker;                    
+            
+            ComponentTypeLists = -(ComponentTypeList   >> -(qi::lit(",")) >> -(ComponentTypeListsEx1 | ComponentTypeListsEx2));
+            
+            RootComponentTypeLists =  ComponentTypeLists |   ComponentTypeListsEx3  ;  
+            
+      
+            
+        /*ComponentTypeLists ::= RootComponentTypeList
+         | RootComponentTypeList ","  ExtensionAndException ExtensionAdditions OptionalExtensionMarker
+        |                                                     ExtensionAndException ExtensionAdditions OptionalExtensionMarker  
+         | RootComponentTypeList "," ExtensionAndException ExtensionAdditions ExtensionEndMarker "," RootComponentTypeList
+         |                                                   ExtensionAndException ExtensionAdditions ExtensionEndMarker "," RootComponentTypeList*/
+          
             
             
             
@@ -125,14 +124,13 @@ namespace x680 {
             
             ExtensionAdditionAlternative = qi::omit[qi::lit(",")] >> (ExtensionAdditionGroup | NamedType);
 
-            ExtensionAdditionAlternatives = ExtensionAdditionAlternative >> -(ExtensionAdditionAlternative);     
+            ExtensionAdditionAlternatives = qi::omit[qi::lit(",")] >> ExtensionAdditionGroup >> -(ExtensionAdditionAlternative);     
             
-            AlternativeTypeLists =(RootAlternativeTypeList 
-                    >> qi::lit(",") 
+            AlternativeTypeLists =RootAlternativeTypeList 
+                    >> -(qi::lit(",") 
                     >> ExtensionAndException
                     >> ExtensionAdditionAlternatives
-                    >> OptionalExtensionMarker)
-                     | RootAlternativeTypeList;
+                    >> OptionalExtensionMarker);
             
 
 
@@ -143,13 +141,13 @@ namespace x680 {
 
             SequenceType = SEQUENCE_[bind(&self_type::defftype, *this, qi::_val, t_SEQUENCE)]
                     >> qi::lit("{")
-                    >> -(ComponentTypeLists [bind(&self_type::push_components, *this, qi::_val, qi::_1) ])
+                    >> RootComponentTypeLists [bind(&self_type::push_components, *this, qi::_val, qi::_1) ]
                     >> qi::lit("}");
 
 
             SetType = SET_[bind(&self_type::defftype, *this, qi::_val, t_SET)]
                     >> qi::lit("{")
-                    >> -(ComponentTypeLists [bind(&self_type::push_components, *this, qi::_val, qi::_1) ])
+                    >> RootComponentTypeLists[bind(&self_type::push_components, *this, qi::_val, qi::_1) ]
                     >> qi::lit("}");
 
             ChoiceType = CHOICE_[bind(&self_type::defftype, *this, qi::_val, t_CHOICE)]
