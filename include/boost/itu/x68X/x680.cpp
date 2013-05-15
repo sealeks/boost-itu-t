@@ -65,7 +65,7 @@ namespace x680 {
         term_rule SIZE_ = qi::lit("SIZE");
         term_rule AUTOMATIC_ = qi::lit("AUTOMATIC");
         term_rule EXCEPT_ = qi::lit("EXCEPT");
-        term_rule MINUS_INFINITY_ = qi::lit("MINUS-INFINITY ");
+        term_rule MINUS_INFINITY_ = qi::lit("MINUS-INFINITY");
         term_rule STRING_ = qi::lit("STRING");
         term_rule BEGIN_ = qi::lit("BEGIN");
         term_rule EXPLICIT_ = qi::lit("EXPLICIT");

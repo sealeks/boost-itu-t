@@ -194,7 +194,7 @@ namespace x680 {
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SequenceOfType;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SetOfType;
 
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> ComponentType;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type>  ComponentType;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeList;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> RootComponentTypeList;
             qi::rule<str_iterator, holders_type(), skip_cmt_type>ExtensionAdditions;
@@ -202,6 +202,14 @@ namespace x680 {
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAddition;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionGroup;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeLists;
+            
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> AlternativeTypeList;            
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> RootAlternativeTypeList;            
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionAlternativesGroup;
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionAlternatives;
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionAlternative;            
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> AlternativeTypeLists;
+            
             qi::rule<str_iterator, holder_type(), skip_cmt_type> ExceptionSpec;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> Extension;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAndException;

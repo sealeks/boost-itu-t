@@ -50,6 +50,10 @@ namespace x680 {
 
 
 
+            ExceptionSpec = qi::omit[qi::lit("!")] >> (pos_number_str[bind(&type_assignment::exceptnumber, qi::_val, qi::_1) ]
+                    | DefinedValue_[bind(&type_assignment::exceptidetifier, qi::_val, qi::_1) ]
+                    | (Type[qi::_val = qi::_1 ] >> qi::omit[ qi::lit(":")] >> Value[bind(&type_assignment::exceptvalue, qi::_val, qi::_1) ])
+                    );
 
 
             //    
@@ -64,16 +68,15 @@ namespace x680 {
 
             RootComponentTypeList = ComponentTypeList;
 
-            ExtensionAdditionGroup = qi::omit[qi::lit("[[") >> -(pos_number_str >> qi::lit(":"))] >> ComponentTypeList >> qi::omit[qi::lit("]]")];
+            ExtensionAdditionGroup = qi::omit[qi::lit("[[") 
+                    >> -(pos_number_str 
+                    >> qi::lit(":"))] 
+                    >> ComponentTypeList 
+                    >> qi::omit[qi::lit("]]")];
 
             ExtensionAddition = qi::omit[qi::lit(",")] >> (ExtensionAdditionGroup | ComponentType);
 
             ExtensionAdditions = ExtensionAddition >> -(ExtensionAddition);
-
-            ExceptionSpec = qi::omit[qi::lit("!")] >> (pos_number_str[bind(&type_assignment::exceptnumber, qi::_val, qi::_1) ]
-                    | DefinedValue_[bind(&type_assignment::exceptidetifier, qi::_val, qi::_1) ]
-                    | (Type[qi::_val = qi::_1 ] >> qi::omit[ qi::lit(":")] >> Value[bind(&type_assignment::exceptvalue, qi::_val, qi::_1) ])
-                    );
 
             Extension = qi::lit("...")[qi::_val = exception_type_assignment ];
 
@@ -82,8 +85,8 @@ namespace x680 {
             ExtensionEndMarker = qi::omit[qi::lit(",")] >> Extension;
 
             OptionalExtensionMarker = -(qi::omit[qi::lit(",")] >> Extension);
-
-
+                    
+            
             ComponentTypeLists = (RootComponentTypeList
                     >> qi::lit(",")
                     >> ExtensionAndException
@@ -105,8 +108,32 @@ namespace x680 {
                     >> ExtensionAdditions
                     >> OptionalExtensionMarker)
                     | RootComponentTypeList;
+            
+            
+            
+            
+            
+            AlternativeTypeList = (NamedType % qi::omit[qi::lit(",")]);
+            
+            RootAlternativeTypeList = AlternativeTypeList;  
+            
+            ExtensionAdditionAlternativesGroup =qi::omit[qi::lit("[[") 
+                    >> -(pos_number_str 
+                    >> qi::lit(":"))] 
+                    >> AlternativeTypeList 
+                    >> qi::omit[qi::lit("]]")];
+            
+            ExtensionAdditionAlternative = qi::omit[qi::lit(",")] >> (ExtensionAdditionGroup | NamedType);
 
-
+            ExtensionAdditionAlternatives = ExtensionAdditionAlternative >> -(ExtensionAdditionAlternative);     
+            
+            AlternativeTypeLists =(RootAlternativeTypeList 
+                    >> qi::lit(",") 
+                    >> ExtensionAndException
+                    >> ExtensionAdditionAlternatives
+                    >> OptionalExtensionMarker)
+                     | RootAlternativeTypeList;
+            
 
 
             SelectionType = identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
@@ -127,7 +154,7 @@ namespace x680 {
 
             ChoiceType = CHOICE_[bind(&self_type::defftype, *this, qi::_val, t_CHOICE)]
                     >> qi::lit("{")
-                    >> -(ComponentTypeLists[bind(&self_type::push_components, *this, qi::_val, qi::_1) ])
+                    >> -(AlternativeTypeLists[bind(&self_type::push_components, *this, qi::_val, qi::_1) ])
                     >> qi::lit("}");
 
             BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SelectionType | SequenceOfType | SetOfType | SequenceType | ChoiceType | SetType;
