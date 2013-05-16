@@ -22,25 +22,25 @@ namespace x680 {
                 >> qi::omit[*qi::blank]
                 >> pos_number_str[ qi::_val += qi::_1 ])
         | pos_number_str[ qi::_val = qi::_1 ];
-        
-        str_rule realnumber_str=number_str[ qi::_val = qi::_1 ] 
-                >> (qi::string(".")[ qi::_val += qi::_1 ] >>number_str[ qi::_val += qi::_1 ]);   
-        
+
+        str_rule realnumber_str = number_str[ qi::_val = qi::_1 ]
+                >> (qi::string(".")[ qi::_val += qi::_1 ] >> number_str[ qi::_val += qi::_1 ]);
+
         str_rule bstring_str = qi::omit[qi::char_("'")]
         >> *(qi::char_("0-1")[ qi::_val += qi::_1] | qi::omit[qi::space])
-                >>qi::omit[ qi::char_("'")
+        >> qi::omit[ qi::char_("'")
         >> qi::char_("B")];
 
         str_rule hstring_str = qi::omit[qi::char_("'")]
         >> *(qi::char_("0-9ABCDEF")[ qi::_val += qi::_1] | qi::omit[qi::space])
-                >>qi::omit[ qi::char_("'")
+        >> qi::omit[ qi::char_("'")
         >> qi::char_("H")];
 
         str_rule cstring_str = qi::char_("\"")
         >> *((qi::print)[ qi::_val += qi::_1] - qi::char_("\""))
         >> qi::char_("\"");
-        
-        
+
+
 
         str_rule curly_barket_pair = qi::char_("{")[ qi::_val = qi::_1 ]
                 >> *qi::blank
@@ -174,18 +174,27 @@ namespace x680 {
         str_rule comment_ = comment_beg
                 >> *((qi::print)[ _val += qi::_1] - comment_end)
         >> comment_end;
-        
-        
+
+
         str_rule ExternalTypeReference_ = modulereference_
                 >> qi::lit(".")
         >> typereference_;
 
         str_rule DefinedType_ = ExternalTypeReference_ | typereference_; //| ParameterizedType | ParameterizedValueSetType
-        
+
 
         str_rule Externalvaluereference_ = modulereference_
                 >> qi::lit(".")
         >> valuereference_;
+
+        str_rule ExternalObjectClassReference_ = modulereference_
+                >> qi::lit(".")
+        >> objectclassreference_;
+
+        str_rule DefinedObjectClass_ = TYPE_IDENTIFIER_
+                | ABSTRACT_SYNTAX_
+                | ExternalObjectClassReference_
+                | objectclassreference_;
 
         str_rule DefinedValue_ = Externalvaluereference_ | valuereference_; //| ParameterizedValue
 

@@ -71,8 +71,11 @@ namespace x680 {
         t_TIME_OF_DAY,
         t_DATE,
         t_DATE_TIME,
+        t_DURATION,
         t_CHOICE,
-        t_Selection
+        t_Selection,
+        t_Instance_Of,
+        t_Reference
     };
 
     enum tagclass_type {
@@ -144,12 +147,14 @@ namespace x680 {
 
         tag_type() :
         class_(tcl_context),
-        rule(noset_tags) {
+        rule(noset_tags),
+        encoding(encoding_no) {
         }
 
         std::string number;
         tagclass_type class_;
         tagrule_type rule;
+        encoding_references_type encoding;
     };
 
 }
@@ -334,6 +339,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (std::string, number)
         (x680::tagclass_type, class_)
         (x680::tagrule_type, rule)
+        (x680::encoding_references_type, encoding)
         )
 
 
@@ -578,6 +584,8 @@ namespace x680 {
         extern str_rule DefinedType_;
         extern str_rule Externalvaluereference_;
         extern str_rule DefinedValue_;
+        extern str_rule ExternalObjectClassReference_;
+        extern str_rule DefinedObjectClass_;
 
 
 

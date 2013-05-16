@@ -43,10 +43,22 @@ namespace x680 {
                 }
             };
 
+            struct encoding_references : qi::symbols<std::string::value_type, encoding_references_type > {
+
+                encoding_references() {
+                    add
+                            ("TAG", encoding_tag)
+                            ("XER", encoding_xer)
+                            ("PER", encoding_per)
+                            ;
+                }
+            };
+
             Tag_grammar() :
             Tag_grammar::base_type(start_rule) {
 
                 start_rule = qi::lit("[")
+                        >> -(encoding[bind(&self_type::encodingset, *this, qi::_val, qi::_1)] >> qi::lit(":"))
                         >> -(Class[bind(&self_type::classset, *this, qi::_val, qi::_1)])
                         >> (pos_number_str | DefinedValue_)[bind(&self_type::operator(), *this, qi::_val, qi::_1)]
                         >> qi::lit("]")
@@ -62,12 +74,17 @@ namespace x680 {
                 holder.class_ = val;
             }
 
+            void encodingset(holder_type& holder, const encoding_references_type& val) {
+                holder.encoding = val;
+            }
+
             void operator()(holder_type& holder, const std::string& val) {
                 holder.number = val;
             }
 
             check_class Class;
             check_rule Rule;
+            encoding_references encoding;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
         };
 
@@ -98,7 +115,7 @@ namespace x680 {
                             ("GeneralizedTime", t_GeneralizedTime)
                             ("TIME", t_TIME)
                             ("DATE", t_DATE)
-                            ("DURATION", t_TIME)
+                            ("DURATION", t_DURATION)
                             ("UTF8String", t_UTF8String)
                             ("NumericString", t_NumericString)
                             ("PrintableString", t_PrintableString)
@@ -111,6 +128,7 @@ namespace x680 {
                             ("UniversalString", t_UniversalString)
                             ("BMPString", t_BMPString)
                             ("TIME-OF-DAY", t_TIME_OF_DAY)
+                            ("RELATIVE-OID", t_RELATIVE_OID)
                             ;
                 }
             };
@@ -155,6 +173,12 @@ namespace x680 {
 
             void refference(holder_type& holder, const std::string& val) {
                 holder.type.reference = val;
+                holder.type.builtin_t = t_Reference;
+            }
+
+            void instancetype(holder_type& holder, const std::string& val) {
+                holder.type.reference = val;
+                holder.type.builtin_t = t_Instance_Of;
             }
 
             void markerset(holder_type& holder, const tagmarker_type& val) {
@@ -184,6 +208,7 @@ namespace x680 {
             qi::rule<str_iterator, holder_type(), skip_cmt_type> Type;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> BuitinType;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> DefinedType;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> InstanceOfType;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> ReferencedType;
             check_type_simple simple_typer;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SimpleType;
@@ -194,32 +219,29 @@ namespace x680 {
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SequenceOfType;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SetOfType;
 
-            qi::rule<str_iterator, holder_type(), skip_cmt_type>  ComponentType;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> ComponentType;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeList;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> RootComponentTypeLists;
             qi::rule<str_iterator, holders_type(), skip_cmt_type>ExtensionAdditions;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionList;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAddition;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionGroup;
-            qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeListsEx1;    
-            qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeListsEx2;  
-            qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeListsEx3;              
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeListsKrn;
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeListsEx;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ComponentTypeLists;
-            
-            
-            qi::rule<str_iterator, holders_type(), skip_cmt_type> AlternativeTypeList;            
-            qi::rule<str_iterator, holders_type(), skip_cmt_type> RootAlternativeTypeList;            
+
+
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> AlternativeTypeList;
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> RootAlternativeTypeList;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionAlternativesGroup;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionAlternatives;
-            qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionAlternative;            
+            qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAdditionAlternative;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> AlternativeTypeLists;
-            
+
             qi::rule<str_iterator, holder_type(), skip_cmt_type> ExceptionSpec;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> Extension;
             qi::rule<str_iterator, holders_type(), skip_cmt_type> ExtensionAndException;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> ExtensionEndMarker;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> OptionalExtensionMarker;
-
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SequenceType;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SetType;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> SelectionType;

@@ -14,11 +14,10 @@ namespace x680 {
     namespace bnf {
 
         // Exports
-        
+
         extern strvect_sk_rule Exports_;
 
         //SymbolsFromModule
-
 
         struct SymbolsFromModule_grammar
         : qi::grammar<str_iterator, import(), skip_cmt_type> {
@@ -48,9 +47,9 @@ namespace x680 {
             }
 
             qi::rule<str_iterator, import(), skip_cmt_type > start_rule;
-            ObjectIdentifierSet_grammar  ObjectIdentifierSet;
-        };       
-        
+            ObjectIdentifierSet_grammar ObjectIdentifierSet;
+        };
+
 
         // ModuleDefinition
 
@@ -76,8 +75,8 @@ namespace x680 {
                 encoding_references() {
                     add
                             ("TAG", encoding_tag)
-                            ("XER", encoding_tag)
-                            ("PER", encoding_tag)
+                            ("XER", encoding_xer)
+                            ("PER", encoding_per)
                             ;
                 }
             };
@@ -114,7 +113,7 @@ namespace x680 {
 
                 SymbolsFromModules = *SymbolsFromModule;
 
-                Imports= qi::lexeme[ qi::omit[IMPORTS_ >> +qi::space] ]
+                Imports = qi::lexeme[ qi::omit[IMPORTS_ >> +qi::space] ]
                         >> -(!qi::lit(";")
                         >> (SymbolsFromModules))
                         >> qi::omit[qi::lit(";")];
@@ -148,7 +147,7 @@ namespace x680 {
             void add_imports(holder_type& holder, const imports& val) {
                 holder.imports_ = val;
             }
-            
+
             void add_types(holder_type& holder, const assignment_vector& val) {
                 holder.elements = val;
             }
@@ -158,10 +157,10 @@ namespace x680 {
             qi::rule< str_iterator, module(), skip_cmt_type > start_rule;
             tag_default tagdefault;
             encoding_references encodingreference;
-             strvect_sk_rule Exports;
+            strvect_sk_rule Exports;
             SymbolsFromModule_grammar SymbolsFromModule;
             imports_sk_rule SymbolsFromModules;
-            imports_sk_rule Imports;  
+            imports_sk_rule Imports;
             Assignments_grammar Assignments;
             ObjectIdentifierSet_grammar ObjectIdentifierSet;
 
