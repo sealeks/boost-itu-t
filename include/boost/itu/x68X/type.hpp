@@ -254,6 +254,112 @@ namespace x680 {
             Value_grammar Value;
 
         };
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        // Element_grammar
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+
+        struct Element_grammar : qi::grammar<str_iterator, constraint_element(), skip_cmt_type> {
+
+            typedef Element_grammar self_type;
+            typedef constraint_element holder_type;
+
+            Element_grammar() :
+            Element_grammar::base_type(start_rule) {
+                init();
+            }
+
+           /* void tpset(holder_type& holder, const constraint_type& val) {
+                holder.tp = val;
+            }
+
+            void type(holder_type& holder, const type_element& val) {
+                holder.type = val;
+            }
+            
+            void singleset(holder_type& holder, const value_element& val) {
+                holder.value = val;
+                holder.tp = cns_SingleValue;
+            }                 
+            
+            void subtypeset(holder_type& holder, const value_element& val) {
+                holder.value = val;
+                holder.tp = cns_ContainedSubtype;
+            }     
+            
+            void patterntypeset(holder_type& holder, const value_element& val) {
+                holder.value = val;
+                holder.tp = cns_PatternConstraint;
+            }                
+            
+            void fromset(holder_type& holder, const value_element& val) {
+                holder.from_ = val;
+            }     
+            
+
+            void fromtype(holder_type& holder, const range_type& val) {
+                holder.fromtype_ = val;
+            }                   
+            
+            void toset(holder_type& holder, const value_element& val) {
+                holder.to_ = val;
+            }   
+            
+            void totype(holder_type& holder, const range_type& val) {
+                holder.totype_ = val;
+            }        */            
+
+            void init();  
+            
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
+            
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> SingleValue;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> ContainedSubtype;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type>  ValueRange;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type>  PermittedAlphabet;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> SizeConstraint;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> TypeConstraint;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> InnerTypeConstraints;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> PatternConstraint;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> PropertySettings;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> DurationRange;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> TimePointRange;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> RecurrenceRange;          
+            Type_grammar Type;
+            Value_grammar Value;
+            IntegerValue_grammar IntegerValue;
+            HStringValue_grammar CStringValue;
+            RealValue_grammar RealValue;
+
+            
+        };
+        
+        
+        struct Elements_grammar : qi::grammar<str_iterator, constraint_element_vector(), skip_cmt_type> {
+
+            typedef Elements_grammar self_type;
+            typedef constraint_element_vector holder_type;       
+            
+            Elements_grammar() :
+            Elements_grammar::base_type(expression) {
+                init();
+            }
+
+            void init();  
+                  
+            void push(holder_type& holder,  const constraint_element& val){
+                holder.push_back(val);
+            }         
+            
+             void pushs(holder_type& holder,  const holder_type& val){
+                holder.insert(holder.end(), val.begin(), val.end());
+            }                
+            
+            qi::rule<std::string::iterator, holder_type(), skip_cmt_type> expression, termi, terme, factor;
+            Element_grammar Element;
+            
+        };
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     

@@ -102,7 +102,9 @@ namespace x680 {
         mk_optional,
         mk_components_of,
         mk_extention,
-        mk_exception
+        mk_exception,
+        mk_absent,
+        mk_present
     };
 
     enum value_type {
@@ -126,6 +128,37 @@ namespace x680 {
         v_choice, // SetOfValue, SequenceOfValue,  { {...} , {...}....}      
         v_defined, // DefinedValue
         v_extention
+    };
+
+    enum constraint_type {
+
+        cns_nodef,
+        cns_SingleValue,
+        cns_ContainedSubtype,
+        cns_ValueRange,
+        cns_PermittedAlphabet,
+        cns_SizeConstraint,
+        cns_TypeConstraint,
+        cns_InnerTypeConstraints,
+        cns_PatternConstraint,
+        cns_PropertySettings,
+        cns_DurationRange,
+        cns_TimePointRange,
+        cns_RecurrenceRange,
+        cns_UserDefinedConstraint,
+        cns_TableConstraint,
+        cns_UNION,
+        cns_INTERSECTION,
+        cns_EXCEPT,
+        cns_ALLEXCEPT,
+    };
+
+    enum range_type {
+
+        close_range,
+        open_range,
+        min_range,
+        max_range
     };
 
     enum syntactic_type {
@@ -175,6 +208,8 @@ namespace x680 {
         struct value_element;
         typedef std::vector<value_element> value_element_vector;
 
+        struct constraint_element;
+        typedef std::vector<constraint_element> constraint_element_vector;
 
 
 
@@ -220,6 +255,74 @@ namespace x680 {
             value_element_vector predefined;
             named_type_element_vector elements;
         };
+
+
+
+
+
+        //Constraint Type
+
+        struct constraint_element {
+
+            constraint_element() : tp(cns_nodef), fromtype_(close_range), totype_(close_range) {
+            }
+
+            constraint_element(constraint_type t) : tp(t), fromtype_(close_range), totype_(close_range) {
+            }
+
+            void tpset(const constraint_type& val) {
+                tp = val;
+            }
+
+
+            void singleset(const value_element& val) {
+                value = val;
+                tp = cns_SingleValue;
+            }
+
+            void subtypeset(const type_element& val) {
+                type = val;
+                tp = cns_ContainedSubtype;
+            }
+
+            void patterntypeset(const value_element& val) {
+                value = val;
+                tp = cns_PatternConstraint;
+            }
+
+            void fromset(const value_element& val) {
+                from_ = val;
+            }
+
+            void fromtype(const range_type& val) {
+                fromtype_ = val;
+            }
+
+            void toset(const value_element& val) {
+                to_ = val;
+                tp = cns_ValueRange;
+            }
+
+            void totype(const range_type& val) {
+                totype_ = val;
+                tp = cns_ValueRange;
+            }
+
+            constraint_type tp;
+            value_element value;
+            value_element from_;
+            range_type fromtype_;
+            value_element to_;
+            range_type totype_;
+            type_element type;
+            named_type_element_vector elements;
+        };
+
+
+        const constraint_element CONSTRAINT_UNION = constraint_element(cns_UNION);
+        const constraint_element CONSTRAINT_INTERSECTION = constraint_element(cns_INTERSECTION);
+        const constraint_element CONSTRAINT_EXCEPT = constraint_element(cns_EXCEPT);
+        const constraint_element CONSTRAINT_ALLEXCEPT = constraint_element(cns_ALLEXCEPT);
 
         struct value_assignment {
 
@@ -275,6 +378,7 @@ namespace x680 {
 
             std::string identifier;
             type_element type;
+            constraint_element_vector constraints;
         };
 
         const type_assignment extention_type_assignment(mk_extention);
@@ -342,6 +446,19 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::encoding_references_type, encoding)
         )
 
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::constraint_element,
+        (x680::constraint_type, tp)
+        (x680::bnf::value_element, value)
+        (x680::bnf::value_element, from_)
+        (x680::range_type, fromtype_)
+        (x680::bnf::value_element, to_)
+        (x680::range_type, totype_)
+        (x680::bnf::type_element, type)
+        (x680::bnf::named_type_element_vector, elements)
+        )
+
+
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::value_element,
@@ -375,6 +492,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_assignment,
         (std::string, identifier)
         (x680::bnf::type_element, type)
+        (x680::bnf::constraint_element_vector, constraints)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
