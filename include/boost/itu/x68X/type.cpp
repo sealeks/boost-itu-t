@@ -157,73 +157,73 @@ namespace x680 {
 
         void Element_grammar::init() {
 
-            start_rule = ContainedSubtype | PatternConstraint | ValueRange | SingleValue ;
-            
+            start_rule = ContainedSubtype | PatternConstraint | ValueRange | SingleValue;
+
             ContainedSubtype = INCLUDES_ >> Type[bind(&constraint_element::subtypeset, qi::_val, qi::_1)];
-            
-            PatternConstraint =PATTERN_ >> CStringValue[bind(&constraint_element::patterntypeset,  qi::_val, qi::_1)];            
 
-            SingleValue = Value[bind(&constraint_element::singleset,  qi::_val, qi::_1)];
+            PatternConstraint = PATTERN_ >> CStringValue[bind(&constraint_element::patterntypeset, qi::_val, qi::_1)];
 
-            ValueRange = ((MIN_[bind(&constraint_element::fromtype,  qi::_val, min_range)]
-                    | IntegerValue[bind(&constraint_element::fromset,  qi::_val, qi::_1)])
-                    >> -(qi::lit("<")[bind(&constraint_element::fromtype,  qi::_val, open_range)])
+            SingleValue = Value[bind(&constraint_element::singleset, qi::_val, qi::_1)];
+
+            ValueRange = ((MIN_[bind(&constraint_element::fromtype, qi::_val, min_range)]
+                    | IntegerValue[bind(&constraint_element::fromset, qi::_val, qi::_1)])
+                    >> -(qi::lit("<")[bind(&constraint_element::fromtype, qi::_val, open_range)])
                     >> qi::lit("..")
-                    >> -(qi::lit("<")[bind(&constraint_element::totype,  qi::_val, open_range)])
-                    >> (MAX_[bind(&constraint_element::totype,  qi::_val, max_range)]
-                    | IntegerValue[bind(&constraint_element::toset,  qi::_val, qi::_1)]))
+                    >> -(qi::lit("<")[bind(&constraint_element::totype, qi::_val, open_range)])
+                    >> (MAX_[bind(&constraint_element::totype, qi::_val, max_range)]
+                    | IntegerValue[bind(&constraint_element::toset, qi::_val, qi::_1)]))
                     |
-                    ((MIN_[bind(&constraint_element::fromtype,  qi::_val, min_range)]
-                    | RealValue[bind(&constraint_element::fromset,  qi::_val, qi::_1)])
-                    >> -(qi::lit("<")[bind(&constraint_element::fromtype,  qi::_val, open_range)])
+                    ((MIN_[bind(&constraint_element::fromtype, qi::_val, min_range)]
+                    | RealValue[bind(&constraint_element::fromset, qi::_val, qi::_1)])
+                    >> -(qi::lit("<")[bind(&constraint_element::fromtype, qi::_val, open_range)])
                     >> qi::lit("..")
-                    >> -(qi::lit("<")[bind(&constraint_element::totype,  qi::_val, open_range)])
-                    >> (MAX_[bind(&constraint_element::totype,  qi::_val, max_range)]
-                    | RealValue[bind(&constraint_element::toset,  qi::_val, qi::_1)]))
+                    >> -(qi::lit("<")[bind(&constraint_element::totype, qi::_val, open_range)])
+                    >> (MAX_[bind(&constraint_element::totype, qi::_val, max_range)]
+                    | RealValue[bind(&constraint_element::toset, qi::_val, qi::_1)]))
                     |
-                    ((MIN_[bind(&constraint_element::fromtype,  qi::_val, min_range)]
-                    | CStringValue[bind(&constraint_element::fromset,  qi::_val, qi::_1)])
-                    >> -(qi::lit("<")[bind(&constraint_element::fromtype,  qi::_val, open_range)])
+                    ((MIN_[bind(&constraint_element::fromtype, qi::_val, min_range)]
+                    | CStringValue[bind(&constraint_element::fromset, qi::_val, qi::_1)])
+                    >> -(qi::lit("<")[bind(&constraint_element::fromtype, qi::_val, open_range)])
                     >> qi::lit("..")
-                    >> -(qi::lit("<")[bind(&constraint_element::totype,  qi::_val, open_range)])
-                    >> (MAX_[bind(&constraint_element::totype,  qi::_val, max_range)]
-                    | CStringValue[bind(&constraint_element::toset,  qi::_val, qi::_1)]));
-            
+                    >> -(qi::lit("<")[bind(&constraint_element::totype, qi::_val, open_range)])
+                    >> (MAX_[bind(&constraint_element::totype, qi::_val, max_range)]
+                    | CStringValue[bind(&constraint_element::toset, qi::_val, qi::_1)]));
 
-                    
-        }       
-        
-        
+
+
+        }
+
+
         // Elements_grammar
 
         void Elements_grammar::init() {
-            
+
             expression
                     = termi[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
-                    >> *(((qi::lit("|") | qi::lit("UNION")) 
-                    >> termi[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this , qi::_val, CONSTRAINT_UNION)]
-                   )
+                    >> *(((qi::lit("|") | qi::lit("UNION"))
+                    >> termi[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_UNION)]
+                    )
                     ;
 
             termi =
                     terme[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
-                    >> *(((qi::lit("^") | qi::lit("INTERSECTION")) 
+                    >> *(((qi::lit("^") | qi::lit("INTERSECTION"))
                     >> terme[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_INTERSECTION)]
                     )
                     ;
 
             terme =
                     factor[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
-                    >> *((qi::lit("EXCEPT") 
+                    >> *((qi::lit("EXCEPT")
                     >> factor[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_EXCEPT)]
                     )
                     ;
 
             factor
                     = Element[bind(&self_type::push, *this, qi::_val, qi::_1)]
-                    | qi::lit("(") 
+                    | qi::lit("(")
                     >> expression[bind(&self_type::pushs, *this, qi::_val, qi::_1)] >> qi::lit(")")
-                    | (qi::lit("ALL EXCEPT") 
+                    | (qi::lit("ALL EXCEPT")
                     >> factor[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_ALLEXCEPT)]
                     ;
         }
