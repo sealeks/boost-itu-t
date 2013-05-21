@@ -197,29 +197,34 @@ namespace x680 {
         // Elements_grammar
 
         void Elements_grammar::init() {
-
+            
             expression
                     = termi[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
-                    >> *(((qi::lit("|") | qi::lit("UNION")) >> termi)[bind(&self_type::push, *this , qi::_val, CONSTRAINT_UNION)]
+                    >> *(((qi::lit("|") | qi::lit("UNION")) 
+                    >> termi[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this , qi::_val, CONSTRAINT_UNION)]
                    )
                     ;
 
             termi =
                     terme[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
-                    >> *(((qi::lit("^") | qi::lit("INTERSECTION")) >> terme)[bind(&self_type::push, *this, qi::_val, CONSTRAINT_INTERSECTION)]
+                    >> *(((qi::lit("^") | qi::lit("INTERSECTION")) 
+                    >> terme[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_INTERSECTION)]
                     )
                     ;
 
             terme =
                     factor[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
-                    >> *((qi::lit("EXCEPT") >> factor)[bind(&self_type::push, *this, qi::_val, CONSTRAINT_EXCEPT)]
+                    >> *((qi::lit("EXCEPT") 
+                    >> factor[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_EXCEPT)]
                     )
                     ;
 
             factor
                     = Element[bind(&self_type::push, *this, qi::_val, qi::_1)]
-                    | qi::lit("(") >> expression >> qi::lit(")")
-                    | (qi::lit("ALL EXCEPT") >> factor)[bind(&self_type::push, *this, qi::_val, CONSTRAINT_ALLEXCEPT)]
+                    | qi::lit("(") 
+                    >> expression[bind(&self_type::pushs, *this, qi::_val, qi::_1)] >> qi::lit(")")
+                    | (qi::lit("ALL EXCEPT") 
+                    >> factor[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_ALLEXCEPT)]
                     ;
         }
 
