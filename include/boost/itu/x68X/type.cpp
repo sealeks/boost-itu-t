@@ -153,46 +153,6 @@ namespace x680 {
         }
 
 
-        // Element_grammar
-
-        void Element_grammar::init() {
-
-            start_rule = ContainedSubtype | PatternConstraint | ValueRange | SingleValue;
-
-            ContainedSubtype = INCLUDES_ >> Type[bind(&constraint_element::subtypeset, qi::_val, qi::_1)];
-
-            PatternConstraint = PATTERN_ >> CStringValue[bind(&constraint_element::patterntypeset, qi::_val, qi::_1)];
-
-            SingleValue = Value[bind(&constraint_element::singleset, qi::_val, qi::_1)];
-
-            ValueRange = ((MIN_[bind(&constraint_element::fromtype, qi::_val, min_range)]
-                    | IntegerValue[bind(&constraint_element::fromset, qi::_val, qi::_1)])
-                    >> -(qi::lit("<")[bind(&constraint_element::fromtype, qi::_val, open_range)])
-                    >> qi::lit("..")
-                    >> -(qi::lit("<")[bind(&constraint_element::totype, qi::_val, open_range)])
-                    >> (MAX_[bind(&constraint_element::totype, qi::_val, max_range)]
-                    | IntegerValue[bind(&constraint_element::toset, qi::_val, qi::_1)]))
-                    |
-                    ((MIN_[bind(&constraint_element::fromtype, qi::_val, min_range)]
-                    | RealValue[bind(&constraint_element::fromset, qi::_val, qi::_1)])
-                    >> -(qi::lit("<")[bind(&constraint_element::fromtype, qi::_val, open_range)])
-                    >> qi::lit("..")
-                    >> -(qi::lit("<")[bind(&constraint_element::totype, qi::_val, open_range)])
-                    >> (MAX_[bind(&constraint_element::totype, qi::_val, max_range)]
-                    | RealValue[bind(&constraint_element::toset, qi::_val, qi::_1)]))
-                    |
-                    ((MIN_[bind(&constraint_element::fromtype, qi::_val, min_range)]
-                    | CStringValue[bind(&constraint_element::fromset, qi::_val, qi::_1)])
-                    >> -(qi::lit("<")[bind(&constraint_element::fromtype, qi::_val, open_range)])
-                    >> qi::lit("..")
-                    >> -(qi::lit("<")[bind(&constraint_element::totype, qi::_val, open_range)])
-                    >> (MAX_[bind(&constraint_element::totype, qi::_val, max_range)]
-                    | CStringValue[bind(&constraint_element::toset, qi::_val, qi::_1)]));
-
-
-
-        }
-
 
         // Elements_grammar
 
@@ -222,10 +182,59 @@ namespace x680 {
             factor
                     = Element[bind(&self_type::push, *this, qi::_val, qi::_1)]
                     | qi::lit("(")
-                    >> expression[bind(&self_type::pushs, *this, qi::_val, qi::_1)] >> qi::lit(")")
+                    >> expression[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
+                    >> qi::lit(")")
                     | (qi::lit("ALL EXCEPT")
                     >> factor[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_ALLEXCEPT)]
                     ;
+
+            Extention = qi::lit("...")[qi::_val = CONSTRAINT_EXTENTION];
+
+            ContainedSubtype = INCLUDES_ >> Type[bind(&constraint_element::subtypeset, qi::_val, qi::_1)];
+
+            PatternConstraint = PATTERN_ >> CStringValue[bind(&constraint_element::patterntypeset, qi::_val, qi::_1)];
+
+            SingleValue = Value[bind(&constraint_element::singleset, qi::_val, qi::_1)];
+
+            PropertySettings = SETTINGS_ >> (CStringValue | IdentifierValue)[bind(&constraint_element::propertyset, qi::_val, qi::_1)];
+
+            ValueRange = (MIN_[bind(&constraint_element::fromtype, qi::_val, min_range)]
+                    | (IntegerValue | RealValue | CStringValue)[bind(&constraint_element::fromset, qi::_val, qi::_1)])
+                    >> -(qi::lit("<")[bind(&constraint_element::fromtype, qi::_val, open_range)])
+                    >> qi::lit("..")
+                    >> -(qi::lit("<")[bind(&constraint_element::totype, qi::_val, open_range)])
+                    >> (MAX_[bind(&constraint_element::totype, qi::_val, max_range)]
+                    | (IntegerValue | RealValue | CStringValue)[bind(&constraint_element::toset, qi::_val, qi::_1)]);
+
+            TypeConstraint = Type[bind(&constraint_element::typeset, qi::_val, qi::_1)];
+
+            SimpleElement = ContainedSubtype | PatternConstraint | PropertySettings | ValueRange | SingleValue | TypeConstraint;
+
+            SizeConstraint = qi::omit[SIZE_]
+                    >> expression[bind(&constraint_element::constraintsize, qi::_val, qi::_1)];
+
+            PermittedAlphabet = qi::omit[FROM_]
+                    >> expression[bind(&constraint_element::constraintalphabet, qi::_val, qi::_1)];
+
+            SingleTypeConstraint = qi::omit[qi::lexeme[WITH_ >> +qi::blank >> COMPONENT_]]
+                    >> expression[bind(&constraint_element::constraintsingletype, qi::_val, qi::_1)];
+
+            NamedConstraint = identifier_[bind(&constraint_element::identifierset, qi::_val, qi::_1)]
+                    >> expression[bind(&constraint_element::constraintnamedtype, qi::_val, qi::_1)]
+                    >> -(PRESENT_[bind(&constraint_element::markerset, qi::_val, cmk_present)]
+                    | ABSENT_[bind(&constraint_element::markerset, qi::_val, cmk_absent)]
+                    | OPTIONAL_[bind(&constraint_element::markerset, qi::_val, cmk_optional)]);
+
+            FullSpecification = qi::omit[qi::lit("{")]
+                    >> -(Extention >> qi::omit[qi::lit(",")])
+                    >> (NamedConstraint % qi::omit[qi::lit(",")])
+                    >> qi::omit[qi::lit("}")];
+
+            MultipleTypeConstraints = qi::omit[qi::lexeme[WITH_ >> +qi::blank >> COMPONENTS_]]
+                    >> FullSpecification[bind(&constraint_element::constraintmultitype, qi::_val, qi::_1)];
+
+            Element = SizeConstraint | PermittedAlphabet | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement;
+
         }
 
 

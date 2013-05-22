@@ -257,43 +257,8 @@ namespace x680 {
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        // Element_grammar
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
-
-        struct Element_grammar : qi::grammar<str_iterator, constraint_element(), skip_cmt_type> {
-
-            typedef Element_grammar self_type;
-            typedef constraint_element holder_type;
-
-            Element_grammar() :
-            Element_grammar::base_type(start_rule) {
-                init();
-            }
-
-            void init();
-
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
-
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> SingleValue;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> ContainedSubtype;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> ValueRange;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> PermittedAlphabet;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> SizeConstraint;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> TypeConstraint;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> InnerTypeConstraints;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> PatternConstraint;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> PropertySettings;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> DurationRange;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> TimePointRange;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> RecurrenceRange;
-            Type_grammar Type;
-            Value_grammar Value;
-            IntegerValue_grammar IntegerValue;
-            HStringValue_grammar CStringValue;
-            RealValue_grammar RealValue;
-
-
-        };
+        // Elements_grammar
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
 
         struct Elements_grammar : qi::grammar<str_iterator, constraint_element_vector(), skip_cmt_type> {
 
@@ -315,8 +280,34 @@ namespace x680 {
                 holder.insert(holder.end(), val.begin(), val.end());
             }
 
+
             qi::rule < std::string::iterator, holder_type(), skip_cmt_type> expression, termi, terme, factor;
-            Element_grammar Element;
+
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> Element;
+
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> SingleValue;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContainedSubtype;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ValueRange;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> TypeConstraint;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> PatternConstraint;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> PropertySettings;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> Extention;
+
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> SizeConstraint;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> PermittedAlphabet;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> SingleTypeConstraint;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> SimpleElement;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> NamedConstraint;
+            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> FullSpecification;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> MultipleTypeConstraints;
+
+            Type_grammar Type;
+            Value_grammar Value;
+            IntegerValue_grammar IntegerValue;
+            HStringValue_grammar CStringValue;
+            RealValue_grammar RealValue;
+            IdentifierValue_grammar IdentifierValue;
+
 
         };
 

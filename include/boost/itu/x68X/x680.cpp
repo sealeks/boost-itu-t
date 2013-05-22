@@ -52,6 +52,7 @@ namespace x680 {
         term_rule INTERSECTION_ = qi::lit("ECODED");
         term_rule SEQUENCE_ = qi::lit("SEQUENCE");
         term_rule ABSTRACT_SYNTAX_ = qi::lit("ABSTRACT-SYNTAX");
+        term_rule ABSENT_ = qi::lit("ABSENT");
         term_rule ENCODING_CONTROL_ = qi::lit("ENCODING-CONTROL");
         term_rule ISO646String_ = qi::lit("ISO646String");
         term_rule SET_ = qi::lit("SET");

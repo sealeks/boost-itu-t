@@ -103,8 +103,16 @@ namespace x680 {
         mk_components_of,
         mk_extention,
         mk_exception,
-        mk_absent,
-        mk_present
+    };
+
+    enum constraintmarker_type {
+
+        cmk_none,
+        cmk_optional,
+        cmk_absent,
+        cmk_present,
+        cmk_extention,
+        cmk_exception
     };
 
     enum value_type {
@@ -139,7 +147,9 @@ namespace x680 {
         cns_PermittedAlphabet,
         cns_SizeConstraint,
         cns_TypeConstraint,
-        cns_InnerTypeConstraints,
+        cns_SingleTypeConstraint,
+        cns_MultipleTypeConstraints,
+        cns_NamedConstraint,
         cns_PatternConstraint,
         cns_PropertySettings,
         cns_DurationRange,
@@ -151,6 +161,7 @@ namespace x680 {
         cns_INTERSECTION,
         cns_EXCEPT,
         cns_ALLEXCEPT,
+        cns_EXTENTION
     };
 
     enum range_type {
@@ -264,16 +275,26 @@ namespace x680 {
 
         struct constraint_element {
 
-            constraint_element() : tp(cns_nodef), fromtype_(close_range), totype_(close_range) {
+            constraint_element() :
+            tp(cns_nodef), marker(cmk_none),
+            fromtype_(close_range), totype_(close_range) {
             }
 
-            constraint_element(constraint_type t) : tp(t), fromtype_(close_range), totype_(close_range) {
+            constraint_element(constraint_type t, constraintmarker_type m = cmk_none) :
+            tp(t), marker(m),
+            fromtype_(close_range),
+            totype_(close_range) {
             }
 
             void tpset(const constraint_type& val) {
                 tp = val;
+                tp = cns_ContainedSubtype;
             }
 
+            void identifierset(const std::string& val) {
+                identifier = val;
+                tp = cns_NamedConstraint;
+            }
 
             void singleset(const value_element& val) {
                 value = val;
@@ -285,9 +306,19 @@ namespace x680 {
                 tp = cns_ContainedSubtype;
             }
 
+            void typeset(const type_element& val) {
+                type = val;
+                tp = cns_TypeConstraint;
+            }
+
             void patterntypeset(const value_element& val) {
                 value = val;
                 tp = cns_PatternConstraint;
+            }
+
+            void propertyset(const value_element& val) {
+                value = val;
+                tp = cns_PropertySettings;
             }
 
             void fromset(const value_element& val) {
@@ -308,6 +339,36 @@ namespace x680 {
                 tp = cns_ValueRange;
             }
 
+            void constraintsize(const constraint_element_vector& val) {
+                constraint = val;
+                tp = cns_SizeConstraint;
+            }
+
+            void constraintalphabet(const constraint_element_vector& val) {
+                constraint = val;
+                tp = cns_PermittedAlphabet;
+            }
+
+            void constraintsingletype(const constraint_element_vector& val) {
+                constraint = val;
+                tp = cns_SingleTypeConstraint;
+            }
+
+            void constraintnamedtype(const constraint_element_vector& val) {
+                constraint = val;
+                tp = cns_NamedConstraint;
+            }
+
+            void markerset(const constraintmarker_type& val) {
+                marker = val;
+            }
+
+            void constraintmultitype(const constraint_element_vector& val) {
+                constraint = val;
+                tp = cns_MultipleTypeConstraints;
+            }
+
+            std::string identifier;
             constraint_type tp;
             value_element value;
             value_element from_;
@@ -315,7 +376,8 @@ namespace x680 {
             value_element to_;
             range_type totype_;
             type_element type;
-            named_type_element_vector elements;
+            constraintmarker_type marker;
+            constraint_element_vector constraint;
         };
 
 
@@ -323,6 +385,7 @@ namespace x680 {
         const constraint_element CONSTRAINT_INTERSECTION = constraint_element(cns_INTERSECTION);
         const constraint_element CONSTRAINT_EXCEPT = constraint_element(cns_EXCEPT);
         const constraint_element CONSTRAINT_ALLEXCEPT = constraint_element(cns_ALLEXCEPT);
+        const constraint_element CONSTRAINT_EXTENTION = constraint_element(cns_EXTENTION, cmk_extention);
 
         struct value_assignment {
 
@@ -448,6 +511,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::constraint_element,
+        (std::string, identifier)
         (x680::constraint_type, tp)
         (x680::bnf::value_element, value)
         (x680::bnf::value_element, from_)
@@ -455,7 +519,8 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::value_element, to_)
         (x680::range_type, totype_)
         (x680::bnf::type_element, type)
-        (x680::bnf::named_type_element_vector, elements)
+        (x680::constraintmarker_type, marker)
+        (x680::bnf::constraint_element_vector, constraint)
         )
 
 
@@ -600,6 +665,7 @@ namespace x680 {
         extern term_rule INTERSECTION_;
         extern term_rule SEQUENCE_;
         extern term_rule ABSTRACT_SYNTAX_;
+        extern term_rule ABSENT_;
         extern term_rule ENCODING_CONTROL_;
         extern term_rule ISO646String_;
         extern term_rule SET_;
