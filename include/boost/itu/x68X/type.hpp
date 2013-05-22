@@ -266,7 +266,7 @@ namespace x680 {
             typedef constraint_element_vector holder_type;
 
             Elements_grammar() :
-            Elements_grammar::base_type(expression) {
+            Elements_grammar::base_type(ElementSetSpec) {
                 init();
             }
 
@@ -281,7 +281,15 @@ namespace x680 {
             }
 
 
-            qi::rule < std::string::iterator, holder_type(), skip_cmt_type> expression, termi, terme, factor;
+            qi::rule < std::string::iterator, holder_type(), skip_cmt_type> ElementSetSpec;
+            qi::rule < std::string::iterator, holder_type(), skip_cmt_type>Intersections;
+            qi::rule < std::string::iterator, holder_type(), skip_cmt_type> Unions;
+            qi::rule < std::string::iterator, holder_type(), skip_cmt_type> Exclusions;
+            
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> UElems;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> IElems;  
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> EElems;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> AElems;            
 
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> Element;
 

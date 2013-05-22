@@ -157,35 +157,57 @@ namespace x680 {
         // Elements_grammar
 
         void Elements_grammar::init() {
+            
+            
 
-            expression
-                    = termi[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
+                    
+
+                    
+
+
+                    
+            UElems %= ( qi::omit[(UNION_ | qi::lit("|"))]
+                    >> Unions)[ bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_UNION) ];             
+
+            ElementSetSpec
+                    = Unions[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
                     >> *(((qi::lit("|") | qi::lit("UNION"))
-                    >> termi[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_UNION)]
+                    >> Unions[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_UNION)]
                     )
                     ;
+            
+            IElems  %= ( qi::omit[(INTERSECTION_ | qi::lit("^"))]
+                    >> Intersections)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_INTERSECTION)];              
 
-            termi =
-                    terme[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
+            Unions =
+                    Intersections[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
                     >> *(((qi::lit("^") | qi::lit("INTERSECTION"))
-                    >> terme[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_INTERSECTION)]
+                    >> Intersections[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_INTERSECTION)]
                     )
                     ;
+            
+            EElems  %= ( qi::omit[EXCEPT_ ]
+                    >> Exclusions)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_EXCEPT)];           
 
-            terme =
-                    factor[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
+            Intersections =
+                    Exclusions[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
                     >> *((qi::lit("EXCEPT")
-                    >> factor[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_EXCEPT)]
+                    >> Exclusions[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_EXCEPT)]
                     )
                     ;
+            
+                    
+            AElems %=
+                    ( qi::omit[qi::lit("ALL EXCEPT")]
+                    >> Exclusions)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_ALLEXCEPT)];            
 
-            factor
+            Exclusions
                     = Element[bind(&self_type::push, *this, qi::_val, qi::_1)]
                     | qi::lit("(")
-                    >> expression[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
+                    >> ElementSetSpec[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
                     >> qi::lit(")")
                     | (qi::lit("ALL EXCEPT")
-                    >> factor[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_ALLEXCEPT)]
+                    >> Exclusions[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_ALLEXCEPT)]
                     ;
 
             Extention = qi::lit("...")[qi::_val = CONSTRAINT_EXTENTION];
@@ -211,16 +233,16 @@ namespace x680 {
             SimpleElement = ContainedSubtype | PatternConstraint | PropertySettings | ValueRange | SingleValue | TypeConstraint;
 
             SizeConstraint = qi::omit[SIZE_]
-                    >> expression[bind(&constraint_element::constraintsize, qi::_val, qi::_1)];
+                    >> ElementSetSpec[bind(&constraint_element::constraintsize, qi::_val, qi::_1)];
 
             PermittedAlphabet = qi::omit[FROM_]
-                    >> expression[bind(&constraint_element::constraintalphabet, qi::_val, qi::_1)];
+                    >> ElementSetSpec[bind(&constraint_element::constraintalphabet, qi::_val, qi::_1)];
 
             SingleTypeConstraint = qi::omit[qi::lexeme[WITH_ >> +qi::blank >> COMPONENT_]]
-                    >> expression[bind(&constraint_element::constraintsingletype, qi::_val, qi::_1)];
+                    >> ElementSetSpec[bind(&constraint_element::constraintsingletype, qi::_val, qi::_1)];
 
             NamedConstraint = identifier_[bind(&constraint_element::identifierset, qi::_val, qi::_1)]
-                    >> expression[bind(&constraint_element::constraintnamedtype, qi::_val, qi::_1)]
+                    >> ElementSetSpec[bind(&constraint_element::constraintnamedtype, qi::_val, qi::_1)]
                     >> -(PRESENT_[bind(&constraint_element::markerset, qi::_val, cmk_present)]
                     | ABSENT_[bind(&constraint_element::markerset, qi::_val, cmk_absent)]
                     | OPTIONAL_[bind(&constraint_element::markerset, qi::_val, cmk_optional)]);

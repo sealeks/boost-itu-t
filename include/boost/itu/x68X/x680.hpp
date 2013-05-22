@@ -17,6 +17,8 @@
 
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/std_pair.hpp>
+#include <boost/fusion/include/sequence.hpp>
+#include <boost/fusion/include/push_back.hpp>
 
 #include <boost/lambda/lambda.hpp>
 
