@@ -17,7 +17,9 @@
 
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/std_pair.hpp>
-#include <boost/fusion/include/sequence.hpp>
+#include <boost/fusion/include/insert_range.hpp>
+#include <boost/fusion/include/begin.hpp>
+#include <boost/fusion/include/end.hpp>
 #include <boost/fusion/include/push_back.hpp>
 
 #include <boost/lambda/lambda.hpp>
@@ -203,6 +205,22 @@ namespace x680 {
         encoding_references_type encoding;
     };
 
+    inline void tag_rule(tag_type& holder, const tagrule_type& val) {
+        holder.rule = val;
+    }
+
+    inline void tag_class(tag_type& holder, const tagclass_type& val) {
+        holder.class_ = val;
+    }
+
+    inline void tag_encoding(tag_type& holder, const encoding_references_type& val) {
+        holder.encoding = val;
+    }
+
+    inline void tag_number(tag_type& holder, const std::string& val) {
+        holder.number = val;
+    }
+
 }
 
 
@@ -288,88 +306,6 @@ namespace x680 {
             totype_(close_range) {
             }
 
-            void tpset(const constraint_type& val) {
-                tp = val;
-                tp = cns_ContainedSubtype;
-            }
-
-            void identifierset(const std::string& val) {
-                identifier = val;
-                tp = cns_NamedConstraint;
-            }
-
-            void singleset(const value_element& val) {
-                value = val;
-                tp = cns_SingleValue;
-            }
-
-            void subtypeset(const type_element& val) {
-                type = val;
-                tp = cns_ContainedSubtype;
-            }
-
-            void typeset(const type_element& val) {
-                type = val;
-                tp = cns_TypeConstraint;
-            }
-
-            void patterntypeset(const value_element& val) {
-                value = val;
-                tp = cns_PatternConstraint;
-            }
-
-            void propertyset(const value_element& val) {
-                value = val;
-                tp = cns_PropertySettings;
-            }
-
-            void fromset(const value_element& val) {
-                from_ = val;
-            }
-
-            void fromtype(const range_type& val) {
-                fromtype_ = val;
-            }
-
-            void toset(const value_element& val) {
-                to_ = val;
-                tp = cns_ValueRange;
-            }
-
-            void totype(const range_type& val) {
-                totype_ = val;
-                tp = cns_ValueRange;
-            }
-
-            void constraintsize(const constraint_element_vector& val) {
-                constraint = val;
-                tp = cns_SizeConstraint;
-            }
-
-            void constraintalphabet(const constraint_element_vector& val) {
-                constraint = val;
-                tp = cns_PermittedAlphabet;
-            }
-
-            void constraintsingletype(const constraint_element_vector& val) {
-                constraint = val;
-                tp = cns_SingleTypeConstraint;
-            }
-
-            void constraintnamedtype(const constraint_element_vector& val) {
-                constraint = val;
-                tp = cns_NamedConstraint;
-            }
-
-            void markerset(const constraintmarker_type& val) {
-                marker = val;
-            }
-
-            void constraintmultitype(const constraint_element_vector& val) {
-                constraint = val;
-                tp = cns_MultipleTypeConstraints;
-            }
-
             std::string identifier;
             constraint_type tp;
             value_element value;
@@ -381,6 +317,96 @@ namespace x680 {
             constraintmarker_type marker;
             constraint_element_vector constraint;
         };
+
+        inline void constraint_tp(constraint_element& holder, const constraint_type& val) {
+            holder.tp = val;
+            holder.tp = cns_ContainedSubtype;
+        }
+
+        inline void constraint_identifier(constraint_element& holder, const std::string& val) {
+            holder.identifier = val;
+            holder.tp = cns_NamedConstraint;
+        }
+
+        inline void constraint_singlevalue(constraint_element& holder, const value_element& val) {
+            holder.value = val;
+            holder.tp = cns_SingleValue;
+        }
+
+        inline void constraint_subtype(constraint_element& holder, const type_element& val) {
+            holder.type = val;
+            holder.tp = cns_ContainedSubtype;
+        }
+
+        inline void constraint_type(constraint_element& holder, const type_element& val) {
+            holder.type = val;
+            holder.tp = cns_TypeConstraint;
+        }
+
+        inline void constraint_patterntype(constraint_element& holder, const value_element& val) {
+            holder.value = val;
+            holder.tp = cns_PatternConstraint;
+        }
+
+        inline void constraint_property(constraint_element& holder, const value_element& val) {
+            holder.value = val;
+            holder.tp = cns_PropertySettings;
+        }
+
+        inline void constraint_from(constraint_element& holder, const value_element& val) {
+            holder.from_ = val;
+        }
+
+        inline void constraint_fromtype(constraint_element& holder, const range_type& val) {
+            holder.fromtype_ = val;
+        }
+
+        inline void constraint_to(constraint_element& holder, const value_element& val) {
+            holder.to_ = val;
+            holder.tp = cns_ValueRange;
+        }
+
+        inline void constraint_totype(constraint_element& holder, const range_type& val) {
+            holder.totype_ = val;
+            holder.tp = cns_ValueRange;
+        }
+
+        inline void constraint_size(constraint_element& holder, const constraint_element_vector& val) {
+            holder.constraint = val;
+            holder.tp = cns_SizeConstraint;
+        }
+
+        inline void constraint_alphabet(constraint_element& holder, const constraint_element_vector& val) {
+            holder.constraint = val;
+            holder.tp = cns_PermittedAlphabet;
+        }
+
+        inline void constraint_singletype(constraint_element& holder, const constraint_element_vector& val) {
+            holder.constraint = val;
+            holder.tp = cns_SingleTypeConstraint;
+        }
+
+        inline void constraint_namedtype(constraint_element& holder, const constraint_element_vector& val) {
+            holder.constraint = val;
+            holder.tp = cns_NamedConstraint;
+        }
+
+        inline void constraint_marker(constraint_element& holder, const constraintmarker_type& val) {
+            holder.marker = val;
+        }
+
+        inline void constraint_multitype(constraint_element& holder, const constraint_element_vector& val) {
+            holder.constraint = val;
+            holder.tp = cns_MultipleTypeConstraints;
+        }
+
+        inline void push_constraint(constraint_element_vector& holder, const constraint_element& val) {
+            holder.push_back(val);
+        }
+
+        inline void push_constraints(constraint_element_vector& holder, const constraint_element_vector& val) {
+            holder.insert(holder.end(), val.begin(), val.end());
+        }
 
 
         const constraint_element CONSTRAINT_UNION = constraint_element(cns_UNION);
@@ -404,6 +430,18 @@ namespace x680 {
 
         };
 
+        inline void valuea_reference(value_assignment& holder, const std::string& val) {
+            holder.identifier = val;
+        }
+
+        inline void valuea_type(value_assignment& holder, const type_element& val) {
+            holder.type = val;
+        }
+
+        inline void valuea_value(value_assignment& holder, const value_element& val) {
+            holder.value = val;
+        }
+
         struct type_assignment {
 
             type_assignment() {
@@ -413,38 +451,100 @@ namespace x680 {
                 type.marker = mrkr;
             }
 
-            void operator()(const tagmarker_type& val) {
-                type.marker = val;
-            }
-
-            void defaultvalue(const value_element& val) {
-                type.marker = mk_default;
-                type.value = val;
-            }
-
-            void exceptnumber(const std::string& val) {
-                type.value.type = v_number;
-                type.value.value = val;
-                type.builtin_t = t_INTEGER;
-                type.marker = mk_exception;
-            }
-
-            void exceptidetifier(const std::string& val) {
-                type.value.type = v_identifier;
-                type.value.identifier = val;
-                type.builtin_t = t_INTEGER;
-                type.marker = mk_exception;
-            }
-
-            void exceptvalue(const value_element& val) {
-                type.value = val;
-                type.marker = mk_exception;
-            }
-
             std::string identifier;
             type_element type;
             constraint_element_vector constraints;
         };
+
+        inline void type_identifier(type_assignment& holder, const std::string& val) {
+            holder.identifier = val;
+        }
+
+        inline void type_typereffrence(type_assignment& holder, const std::string& val) {
+            holder.identifier = val;
+        }
+
+        inline void type_typea(type_element& holder, const type_assignment& val) {
+            holder = val.type;
+        }
+
+        inline void type_type(type_assignment& holder, const type_assignment& val) {
+            holder.type = val.type;
+        }
+
+        inline void typea_type(type_assignment& holder, const type_element& val) {
+            holder.type = val;
+        }
+
+        inline void type_select(type_assignment& holder, const type_assignment& val) {
+            holder.type = val.type;
+            holder.type.builtin_t = t_Selection;
+        }
+
+        inline void type_tagged(type_assignment& holder, const type_assignment& val) {
+            tag_type tmp = holder.type.tag;
+            holder.type = val.type;
+            holder.type.tag = tmp;
+        }
+
+        inline void type_deff(type_assignment& holder, const defined_type& type) {
+            holder.type.builtin_t = type;
+        }
+
+        inline void type_refference(type_assignment& holder, const std::string& val) {
+            holder.type.reference = val;
+            holder.type.builtin_t = t_Reference;
+        }
+
+        inline void type_instance(type_assignment& holder, const std::string& val) {
+            holder.type.reference = val;
+            holder.type.builtin_t = t_Instance_Of;
+        }
+
+        inline void type_marker(type_assignment& holder, const tagmarker_type& val) {
+            holder.type.marker = val;
+        }
+
+        inline void type_deffinit(type_assignment& holder, const value_element_vector & val) {
+            holder.type.predefined = val;
+        }
+
+        inline void type_tag(type_assignment& holder, const tag_type& val) {
+            holder.type.tag = val;
+        }
+
+        inline void type_push(type_assignment& holder, const type_assignment& val) {
+            holder.type.elements.push_back(val);
+        }
+
+        inline void type_pushs(type_assignment& holder, const type_assignment_vector& val) {
+            holder.type.elements.insert(holder.type.elements.end(), val.begin(), val.end());
+        }
+
+        inline void type_defaultvalue(type_assignment& holder, const value_element& val) {
+            holder.type.marker = mk_default;
+            holder.type.value = val;
+        }
+
+        inline void type_exceptnumber(type_assignment& holder, const std::string& val) {
+            holder.type.value.type = v_number;
+            holder.type.value.value = val;
+            holder.type.builtin_t = t_INTEGER;
+            holder.type.marker = mk_exception;
+        }
+
+        inline void type_exceptidetifier(type_assignment& holder, const std::string& val) {
+            holder.type.value.type = v_identifier;
+            holder.type.value.identifier = val;
+            holder.type.builtin_t = t_INTEGER;
+            holder.type.marker = mk_exception;
+        }
+
+        inline void type_exceptvalue(type_assignment& holder, const value_element& val) {
+            holder.type.value = val;
+            holder.type.marker = mk_exception;
+        }
+
 
         const type_assignment extention_type_assignment(mk_extention);
         const type_assignment exception_type_assignment(mk_exception);

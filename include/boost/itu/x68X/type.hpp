@@ -56,31 +56,10 @@ namespace x680 {
 
             Tag_grammar() :
             Tag_grammar::base_type(start_rule) {
-
-                start_rule = qi::lit("[")
-                        >> -(encoding[bind(&self_type::encodingset, *this, qi::_val, qi::_1)] >> qi::lit(":"))
-                        >> -(Class[bind(&self_type::classset, *this, qi::_val, qi::_1)])
-                        >> (pos_number_str | DefinedValue_)[bind(&self_type::operator(), *this, qi::_val, qi::_1)]
-                        >> qi::lit("]")
-                        >> -(Rule[bind(&self_type::ruleset, *this, qi::_val, qi::_1)]);
-
+                init();
             }
 
-            void ruleset(holder_type& holder, const tagrule_type& val) {
-                holder.rule = val;
-            }
-
-            void classset(holder_type& holder, const tagclass_type& val) {
-                holder.class_ = val;
-            }
-
-            void encodingset(holder_type& holder, const encoding_references_type& val) {
-                holder.encoding = val;
-            }
-
-            void operator()(holder_type& holder, const std::string& val) {
-                holder.number = val;
-            }
+            void init();
 
             check_class Class;
             check_rule Rule;
@@ -140,66 +119,7 @@ namespace x680 {
 
             void init();
 
-            void identifier(holder_type& holder, const std::string& val) {
-                holder.identifier = val;
-            }
 
-            void typereffrence(holder_type& holder, const std::string& val) {
-                holder.identifier = val;
-            }
-
-            void typeset(type_element& holder, const type_assignment& val) {
-                holder = val.type;
-            }
-
-            void type(holder_type& holder, const type_assignment& val) {
-                holder.type = val.type;
-            }
-
-            void type_select(holder_type& holder, const type_assignment& val) {
-                holder.type = val.type;
-                holder.type.builtin_t = t_Selection;
-            }
-
-            void for_taggedtype(holder_type& holder, const type_assignment& val) {
-                tag_type tmp = holder.type.tag;
-                holder.type = val.type;
-                holder.type.tag = tmp;
-            }
-
-            void defftype(holder_type& holder, const defined_type& type) {
-                holder.type.builtin_t = type;
-            }
-
-            void refference(holder_type& holder, const std::string& val) {
-                holder.type.reference = val;
-                holder.type.builtin_t = t_Reference;
-            }
-
-            void instancetype(holder_type& holder, const std::string& val) {
-                holder.type.reference = val;
-                holder.type.builtin_t = t_Instance_Of;
-            }
-
-            void markerset(holder_type& holder, const tagmarker_type& val) {
-                holder.type.marker = val;
-            }
-
-            void deffinit(holder_type& holder, const value_element_vector & val) {
-                holder.type.predefined = val;
-            }
-
-            void tagset(holder_type& holder, const tag_type& val) {
-                holder.type.tag = val;
-            }
-
-            void push_component(holder_type& holder, const holder_type& val) {
-                holder.type.elements.push_back(val);
-            }
-
-            void push_components(holder_type& holder, const holders_type& val) {
-                holder.type.elements.insert(holder.type.elements.end(), val.begin(), val.end());
-            }
 
             qi::rule<str_iterator, type_element(), skip_cmt_type> start_rule;
 
@@ -272,24 +192,15 @@ namespace x680 {
 
             void init();
 
-            void push(holder_type& holder, const constraint_element& val) {
-                holder.push_back(val);
-            }
-
-            void pushs(holder_type& holder, const holder_type& val) {
-                holder.insert(holder.end(), val.begin(), val.end());
-            }
-
-
             qi::rule < std::string::iterator, holder_type(), skip_cmt_type> ElementSetSpec;
             qi::rule < std::string::iterator, holder_type(), skip_cmt_type>Intersections;
             qi::rule < std::string::iterator, holder_type(), skip_cmt_type> Unions;
             qi::rule < std::string::iterator, holder_type(), skip_cmt_type> Exclusions;
-            
+
             qi::rule<str_iterator, holder_type(), skip_cmt_type> UElems;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> IElems;  
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> IElems;
             qi::rule<str_iterator, holder_type(), skip_cmt_type> EElems;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> AElems;            
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> AElems;
 
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> Element;
 
@@ -334,14 +245,6 @@ namespace x680 {
                 init();
             }
 
-            void typereffrence(holder_type& holder, const std::string& val) {
-                holder.identifier = val;
-            }
-
-            void type(holder_type& holder, const type_element& val) {
-                holder.type = val;
-            }
-
             void init();
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
@@ -364,18 +267,6 @@ namespace x680 {
             }
 
             void init();
-
-            void valuereference(holder_type& holder, const std::string& val) {
-                holder.identifier = val;
-            }
-
-            void type(holder_type& holder, const type_element& val) {
-                holder.type = val;
-            }
-
-            void value(holder_type& holder, const value_element& val) {
-                holder.value = val;
-            }
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
             Type_grammar Type;

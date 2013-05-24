@@ -8,62 +8,73 @@
 namespace x680 {
     namespace bnf {
 
+        void Tag_grammar::init() {
+
+            start_rule = qi::lit("[")
+                    >> -(encoding[bind(&tag_encoding, qi::_val, qi::_1)] >> qi::lit(":"))
+                    >> -(Class[bind(&tag_class, qi::_val, qi::_1)])
+                    >> (pos_number_str | DefinedValue_)[bind(&tag_number, qi::_val, qi::_1)]
+                    >> qi::lit("]")
+                    >> -(Rule[bind(&tag_rule, qi::_val, qi::_1)]);
+
+        }
+
 
         // Type_grammar
 
         void Type_grammar::init() {
 
-            start_rule = Type[bind(&self_type::typeset, *this, qi::_val, qi::_1)];
+            start_rule = Type[bind(&type_typea, qi::_val, qi::_1)];
 
-            NamedType = identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
-                    >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)];
+            NamedType = identifier_[bind(&type_identifier, qi::_val, qi::_1)]
+                    >> Type[bind(&type_type, qi::_val, qi::_1)];
 
-            DefinedType = DefinedType_[bind(&self_type::refference, *this, qi::_val, qi::_1)];
+            DefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)];
 
-            InstanceOfType = qi::omit[qi::lexeme[INSTANCE_ >> +qi::blank >> OF_]] >> DefinedObjectClass_[bind(&self_type::instancetype, *this, qi::_val, qi::_1)];
+            InstanceOfType = qi::omit[qi::lexeme[INSTANCE_ >> +qi::blank >> OF_]] >> DefinedObjectClass_[bind(&type_instance, qi::_val, qi::_1)];
 
             ReferencedType = DefinedType;
 
-            SimpleType = ((qi::lexeme[OCTET_ >> +qi::blank >> STRING_])[bind(&self_type::defftype, *this, qi::_val, t_OCTET_STRING)]
-                    | (qi::lexeme[CHARACTER_ >> +qi::blank >> STRING_])[bind(&self_type::defftype, *this, qi::_val, t_CHARACTER_STRING)]
-                    | (qi::lexeme[EMBEDDED_ >> +qi::blank >> PDV_])[bind(&self_type::defftype, *this, qi::_val, t_EMBEDDED_PDV)]
-                    | (qi::lexeme[OBJECT_ >> +qi::blank >> IDENTIFIER_])[bind(&self_type::defftype, *this, qi::_val, t_OBJECT_IDENTIFIER)]
-                    | (qi::lexeme[DATE_ >> +qi::blank >> TIME_])[bind(&self_type::defftype, *this, qi::_val, t_DATE_TIME)]
-                    | simple_typer[bind(&self_type::defftype, *this, qi::_val, qi::_1)]
+            SimpleType = ((qi::lexeme[OCTET_ >> +qi::blank >> STRING_])[bind(&type_deff, qi::_val, t_OCTET_STRING)]
+                    | (qi::lexeme[CHARACTER_ >> +qi::blank >> STRING_])[bind(&type_deff, qi::_val, t_CHARACTER_STRING)]
+                    | (qi::lexeme[EMBEDDED_ >> +qi::blank >> PDV_])[bind(&type_deff, qi::_val, t_EMBEDDED_PDV)]
+                    | (qi::lexeme[OBJECT_ >> +qi::blank >> IDENTIFIER_])[bind(&type_deff, qi::_val, t_OBJECT_IDENTIFIER)]
+                    | (qi::lexeme[DATE_ >> +qi::blank >> TIME_])[bind(&type_deff, qi::_val, t_DATE_TIME)]
+                    | simple_typer[bind(&type_deff, qi::_val, qi::_1)]
                     );
 
-            IntegerType = INTEGER_[bind(&self_type::defftype, *this, qi::_val, t_INTEGER)]
-                    >> -NamedNumberList[bind(&self_type::deffinit, *this, qi::_val, qi::_1)];
+            IntegerType = INTEGER_[bind(&type_deff, qi::_val, t_INTEGER)]
+                    >> -NamedNumberList[bind(&type_deffinit, qi::_val, qi::_1)];
 
-            EnumeratedType = ENUMERATED_[bind(&self_type::defftype, *this, qi::_val, t_ENUMERATED)]
-                    >> -Enumerations[bind(&self_type::deffinit, *this, qi::_val, qi::_1)];
+            EnumeratedType = ENUMERATED_[bind(&type_deff, qi::_val, t_ENUMERATED)]
+                    >> -Enumerations[bind(&type_deffinit, qi::_val, qi::_1)];
 
-            BitStringType = qi::lexeme[BIT_ >> +qi::blank >> STRING_[bind(&self_type::defftype, *this, qi::_val, t_BIT_STRING)]]
-                    >> -NameBitList[bind(&self_type::deffinit, *this, qi::_val, qi::_1)];
-
-
-            SequenceOfType = (qi::lexeme[SEQUENCE_ >> +qi::blank >> OF_])[bind(&self_type::defftype, *this, qi::_val, t_SEQUENCE_OF)]
-                    >> (Type | NamedType)[bind(&self_type::push_component, *this, qi::_val, qi::_1) ];
-
-            SetOfType = (qi::lexeme[SET_ >> +qi::blank >> OF_])[bind(&self_type::defftype, *this, qi::_val, t_SET_OF)]
-                    >> (Type | NamedType)[bind(&self_type::push_component, *this, qi::_val, qi::_1) ];
+            BitStringType = qi::lexeme[BIT_ >> +qi::blank >> STRING_[bind(&type_deff, qi::_val, t_BIT_STRING)]]
+                    >> -NameBitList[bind(&type_deffinit, qi::_val, qi::_1)];
 
 
+            SequenceOfType = (qi::lexeme[SEQUENCE_ >> +qi::blank >> OF_])[bind(&type_deff, qi::_val, t_SEQUENCE_OF)]
+                    >> (Type | NamedType)[bind(&type_push, qi::_val, qi::_1) ];
+
+            SetOfType = (qi::lexeme[SET_ >> +qi::blank >> OF_])[bind(&type_deff, qi::_val, t_SET_OF)]
+                    >> (Type | NamedType)[bind(&type_push, qi::_val, qi::_1) ];
 
 
 
-            ExceptionSpec = qi::omit[qi::lit("!")] >> (pos_number_str[bind(&type_assignment::exceptnumber, qi::_val, qi::_1) ]
-                    | DefinedValue_[bind(&type_assignment::exceptidetifier, qi::_val, qi::_1) ]
-                    | (Type[qi::_val = qi::_1 ] >> qi::omit[ qi::lit(":")] >> Value[bind(&type_assignment::exceptvalue, qi::_val, qi::_1) ])
+
+
+            ExceptionSpec = qi::omit[qi::lit("!")] >> (pos_number_str[bind(&type_exceptnumber, qi::_val, qi::_1) ]
+                    | DefinedValue_[bind(&type_exceptidetifier, qi::_val, qi::_1) ]
+                    | (Type[qi::_val = qi::_1 ] >> qi::omit[ qi::lit(":")] >> Value[bind(&type_exceptvalue, qi::_val, qi::_1) ])
                     );
 
 
             //    
 
 
-            ComponentType %= ((qi::omit[qi::lexeme[COMPONENTS_ >> +qi::blank >> OF_]] >> Type)[bind(&type_assignment::operator(), qi::_val, mk_components_of)]
-                    | (NamedType >> qi::omit[OPTIONAL_])[bind(&type_assignment::operator(), qi::_val, mk_optional)]
-                    | ((NamedType >> qi::omit[DEFAULT_])[bind(&type_assignment::operator(), qi::_val, mk_default)] >> qi::omit[Value[bind(&type_assignment::defaultvalue, qi::_val, qi::_1)]])
+            ComponentType %= ((qi::omit[qi::lexeme[COMPONENTS_ >> +qi::blank >> OF_]] >> Type)[bind(&type_marker, qi::_val, mk_components_of)]
+                    | (NamedType >> qi::omit[OPTIONAL_])[bind(&type_marker, qi::_val, mk_optional)]
+                    | ((NamedType >> qi::omit[DEFAULT_])[bind(&type_marker, qi::_val, mk_default)] >> qi::omit[Value[bind(&type_defaultvalue, qi::_val, qi::_1)]])
                     | NamedType);
 
             ComponentTypeList = (ComponentType % qi::omit[qi::lit(",")]);
@@ -93,13 +104,6 @@ namespace x680 {
             RootComponentTypeLists = ComponentTypeListsEx | ComponentTypeLists;
 
 
-
-            /*ComponentTypeLists ::= RootComponentTypeList
-             | RootComponentTypeList ","  ExtensionAndException ExtensionAdditions -ExtensionEndMarker
-            |                                                     ExtensionAndException ExtensionAdditions -ExtensionEndMarker  
-             | RootComponentTypeList "," ExtensionAndException ExtensionAdditions ExtensionEndMarker "," RootComponentTypeList
-             |                                                   ExtensionAndException ExtensionAdditions ExtensionEndMarker "," RootComponentTypeList*/
-
             AlternativeTypeList = (NamedType % qi::omit[qi::lit(",")]);
 
             RootAlternativeTypeList = AlternativeTypeList;
@@ -122,33 +126,33 @@ namespace x680 {
 
 
 
-            SelectionType = identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]
+            SelectionType = identifier_[bind(&type_identifier, qi::_val, qi::_1)]
                     >> qi::lit("<")
-                    >> Type[bind(&self_type::type_select, *this, qi::_val, qi::_1)];
+                    >> Type[bind(&type_select, qi::_val, qi::_1)];
 
 
-            SequenceType = SEQUENCE_[bind(&self_type::defftype, *this, qi::_val, t_SEQUENCE)]
+            SequenceType = SEQUENCE_[bind(&type_deff, qi::_val, t_SEQUENCE)]
                     >> qi::lit("{")
-                    >> -RootComponentTypeLists [bind(&self_type::push_components, *this, qi::_val, qi::_1) ]
+                    >> -RootComponentTypeLists [bind(&type_pushs, qi::_val, qi::_1) ]
                     >> qi::lit("}");
 
 
-            SetType = SET_[bind(&self_type::defftype, *this, qi::_val, t_SET)]
+            SetType = SET_[bind(&type_deff, qi::_val, t_SET)]
                     >> qi::lit("{")
-                    >> -RootComponentTypeLists[bind(&self_type::push_components, *this, qi::_val, qi::_1) ]
+                    >> -RootComponentTypeLists[bind(&type_pushs, qi::_val, qi::_1) ]
                     >> qi::lit("}");
 
-            ChoiceType = CHOICE_[bind(&self_type::defftype, *this, qi::_val, t_CHOICE)]
+            ChoiceType = CHOICE_[bind(&type_deff, qi::_val, t_CHOICE)]
                     >> qi::lit("{")
-                    >> -(AlternativeTypeLists[bind(&self_type::push_components, *this, qi::_val, qi::_1) ])
+                    >> -(AlternativeTypeLists[bind(&type_pushs, qi::_val, qi::_1) ])
                     >> qi::lit("}");
 
             BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SelectionType | SequenceOfType | SetOfType | SequenceType | ChoiceType | SetType | InstanceOfType;
 
             Type = BuitinType | TaggedType | DefinedType;
 
-            TaggedType = Tag[bind(&self_type::tagset, *this, qi::_val, qi::_1)]
-                    >> Type[bind(&self_type::for_taggedtype, *this, qi::_val, qi::_1)];
+            TaggedType = Tag[bind(&type_tag, qi::_val, qi::_1)]
+                    >> Type[bind(&type_tagged, qi::_val, qi::_1)];
 
         }
 
@@ -157,95 +161,76 @@ namespace x680 {
         // Elements_grammar
 
         void Elements_grammar::init() {
-            
-            
-
-                    
-
-                    
 
 
-                    
-            UElems %= ( qi::omit[(UNION_ | qi::lit("|"))]
-                    >> Unions)[ bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_UNION) ];             
+            UElems %= ((qi::omit[(UNION_ | qi::lit("|"))]
+                    >> Unions)[ bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_UNION) ]);
 
             ElementSetSpec
-                    = Unions[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
-                    >> *(((qi::lit("|") | qi::lit("UNION"))
-                    >> Unions[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_UNION)]
-                    )
-                    ;
-            
-            IElems  %= ( qi::omit[(INTERSECTION_ | qi::lit("^"))]
-                    >> Intersections)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_INTERSECTION)];              
+                    = Unions[bind(&push_constraints, qi::_val, qi::_1)] >> *(UElems[bind(&push_constraints, qi::_val, qi::_1)]);
+
+            IElems %= (qi::omit[(INTERSECTION_ | qi::lit("^"))]
+                    >> Intersections)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_INTERSECTION)];
 
             Unions =
-                    Intersections[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
-                    >> *(((qi::lit("^") | qi::lit("INTERSECTION"))
-                    >> Intersections[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_INTERSECTION)]
-                    )
-                    ;
-            
-            EElems  %= ( qi::omit[EXCEPT_ ]
-                    >> Exclusions)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_EXCEPT)];           
+                    Intersections[bind(&push_constraints, qi::_val, qi::_1)] >> *(IElems[bind(&push_constraints, qi::_val, qi::_1)]);
+
+
+            EElems %= (qi::omit[EXCEPT_ ]
+                    >> Exclusions)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_EXCEPT)];
 
             Intersections =
-                    Exclusions[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
-                    >> *((qi::lit("EXCEPT")
-                    >> Exclusions[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_EXCEPT)]
-                    )
-                    ;
-            
-                    
+                    Exclusions[bind(&push_constraints, qi::_val, qi::_1)] >> *(EElems[bind(&push_constraints, qi::_val, qi::_1)]);
+
+
             AElems %=
-                    ( qi::omit[qi::lit("ALL EXCEPT")]
-                    >> Exclusions)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_ALLEXCEPT)];            
+                    (qi::omit[qi::lit("ALL EXCEPT")]
+                    >> Exclusions)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_ALLEXCEPT)];
 
             Exclusions
-                    = Element[bind(&self_type::push, *this, qi::_val, qi::_1)]
-                    | qi::lit("(")
-                    >> ElementSetSpec[bind(&self_type::pushs, *this, qi::_val, qi::_1)]
-                    >> qi::lit(")")
-                    | (qi::lit("ALL EXCEPT")
-                    >> Exclusions[bind(&self_type::pushs, *this, qi::_val, qi::_1)])[bind(&self_type::push, *this, qi::_val, CONSTRAINT_ALLEXCEPT)]
+                    = Element
+                    | qi::omit[qi::lit("(")]
+                    >> ElementSetSpec
+                    >> qi::omit[ qi::lit(")")]
+                    | AElems
                     ;
 
             Extention = qi::lit("...")[qi::_val = CONSTRAINT_EXTENTION];
 
-            ContainedSubtype = INCLUDES_ >> Type[bind(&constraint_element::subtypeset, qi::_val, qi::_1)];
+            ContainedSubtype = INCLUDES_ >> Type[bind(&constraint_subtype, qi::_val, qi::_1)];
 
-            PatternConstraint = PATTERN_ >> CStringValue[bind(&constraint_element::patterntypeset, qi::_val, qi::_1)];
+            PatternConstraint = PATTERN_ >> CStringValue[bind(&constraint_patterntype, qi::_val, qi::_1)];
 
-            SingleValue = Value[bind(&constraint_element::singleset, qi::_val, qi::_1)];
+            SingleValue = Value[bind(&constraint_singlevalue, qi::_val, qi::_1)];
 
-            PropertySettings = SETTINGS_ >> (CStringValue | IdentifierValue)[bind(&constraint_element::propertyset, qi::_val, qi::_1)];
+            PropertySettings = SETTINGS_ >> (CStringValue | IdentifierValue)[bind(&constraint_property, qi::_val, qi::_1)];
 
-            ValueRange = (MIN_[bind(&constraint_element::fromtype, qi::_val, min_range)]
-                    | (IntegerValue | RealValue | CStringValue)[bind(&constraint_element::fromset, qi::_val, qi::_1)])
-                    >> -(qi::lit("<")[bind(&constraint_element::fromtype, qi::_val, open_range)])
+            ValueRange = (MIN_[bind(&constraint_fromtype, qi::_val, min_range)]
+                    | (IntegerValue | RealValue | CStringValue)[bind(&constraint_from, qi::_val, qi::_1)])
+                    >> -(qi::lit("<")[bind(&constraint_fromtype, qi::_val, open_range)])
                     >> qi::lit("..")
-                    >> -(qi::lit("<")[bind(&constraint_element::totype, qi::_val, open_range)])
-                    >> (MAX_[bind(&constraint_element::totype, qi::_val, max_range)]
-                    | (IntegerValue | RealValue | CStringValue)[bind(&constraint_element::toset, qi::_val, qi::_1)]);
+                    >> -(qi::lit("<")[bind(&constraint_totype, qi::_val, open_range)])
+                    >> (MAX_[bind(&constraint_totype, qi::_val, max_range)]
+                    | (IntegerValue | RealValue | CStringValue)[bind(&constraint_to, qi::_val, qi::_1)]);
 
-            TypeConstraint = Type[bind(&constraint_element::typeset, qi::_val, qi::_1)];
+            TypeConstraint = Type[bind(&constraint_type, qi::_val, qi::_1)];
 
             SimpleElement = ContainedSubtype | PatternConstraint | PropertySettings | ValueRange | SingleValue | TypeConstraint;
 
             SizeConstraint = qi::omit[SIZE_]
-                    >> ElementSetSpec[bind(&constraint_element::constraintsize, qi::_val, qi::_1)];
+                    >> ElementSetSpec[bind(&constraint_size, qi::_val, qi::_1)];
 
             PermittedAlphabet = qi::omit[FROM_]
-                    >> ElementSetSpec[bind(&constraint_element::constraintalphabet, qi::_val, qi::_1)];
+                    >> ElementSetSpec[bind(&constraint_alphabet, qi::_val, qi::_1)];
 
             SingleTypeConstraint = qi::omit[qi::lexeme[WITH_ >> +qi::blank >> COMPONENT_]]
-                    >> ElementSetSpec[bind(&constraint_element::constraintsingletype, qi::_val, qi::_1)];
+                    >> ElementSetSpec[bind(&constraint_singletype, qi::_val, qi::_1)];
 
-            NamedConstraint = identifier_[bind(&constraint_element::identifierset, qi::_val, qi::_1)]
-                    >> ElementSetSpec[bind(&constraint_element::constraintnamedtype, qi::_val, qi::_1)]
-                    >> -(PRESENT_[bind(&constraint_element::markerset, qi::_val, cmk_present)]
-                    | ABSENT_[bind(&constraint_element::markerset, qi::_val, cmk_absent)]
-                    | OPTIONAL_[bind(&constraint_element::markerset, qi::_val, cmk_optional)]);
+            NamedConstraint = identifier_[bind(&constraint_identifier, qi::_val, qi::_1)]
+                    >> ElementSetSpec[bind(&constraint_namedtype, qi::_val, qi::_1)]
+                    >> -(PRESENT_[bind(&constraint_marker, qi::_val, cmk_present)]
+                    | ABSENT_[bind(&constraint_marker, qi::_val, cmk_absent)]
+                    | OPTIONAL_[bind(&constraint_marker, qi::_val, cmk_optional)]);
 
             FullSpecification = qi::omit[qi::lit("{")]
                     >> -(Extention >> qi::omit[qi::lit(",")])
@@ -253,7 +238,7 @@ namespace x680 {
                     >> qi::omit[qi::lit("}")];
 
             MultipleTypeConstraints = qi::omit[qi::lexeme[WITH_ >> +qi::blank >> COMPONENTS_]]
-                    >> FullSpecification[bind(&constraint_element::constraintmultitype, qi::_val, qi::_1)];
+                    >> FullSpecification[bind(&constraint_multitype, qi::_val, qi::_1)];
 
             Element = SizeConstraint | PermittedAlphabet | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement;
 
@@ -264,9 +249,9 @@ namespace x680 {
 
         void TypeAssignment_grammar::init() {
 
-            start_rule = typereference_[bind(&self_type::typereffrence, *this, qi::_val, qi::_1)]
-                    >> qi::lexeme[qi::lit("::=")]
-                    >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)];
+            start_rule = typereference_[bind(&type_identifier, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> Type[bind(&typea_type, qi::_val, qi::_1)];
         }
 
 
@@ -275,10 +260,10 @@ namespace x680 {
 
         void ValueAssignment_grammar::init() {
 
-            start_rule = valuereference_[bind(&self_type::valuereference, *this, qi::_val, qi::_1)]
-                    >> Type[bind(&self_type::type, *this, qi::_val, qi::_1)]
-                    >> qi::lexeme[qi::lit("::=")]
-                    >> Value[bind(&self_type::value, *this, qi::_val, qi::_1)];
+            start_rule = valuereference_[bind(&valuea_reference, qi::_val, qi::_1)]
+                    >> Type[bind(&valuea_type, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> Value[bind(&valuea_value, qi::_val, qi::_1)];
         }
 
 
