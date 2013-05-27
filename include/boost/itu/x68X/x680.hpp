@@ -160,12 +160,17 @@ namespace x680 {
         cns_TimePointRange,
         cns_RecurrenceRange,
         cns_UserDefinedConstraint,
-        cns_TableConstraint,
+        cns_SimpleTableConstraint,
+        cns_ComponentRelation,
+        cns_ContentsType,
+        cns_ContentsValue,
+        cns_ContentsTypeValue,
         cns_UNION,
         cns_INTERSECTION,
         cns_EXCEPT,
         cns_ALLEXCEPT,
-        cns_EXTENTION
+        cns_EXTENTION,
+        cns_EXCEPTION
     };
 
     enum range_type {
@@ -315,12 +320,13 @@ namespace x680 {
             range_type totype_;
             type_element type;
             constraintmarker_type marker;
+            x680::bnf::string_vector parameters;
+            std::string objsetref;
             constraint_element_vector constraint;
         };
 
         inline void constraint_tp(constraint_element& holder, const constraint_type& val) {
             holder.tp = val;
-            holder.tp = cns_ContainedSubtype;
         }
 
         inline void constraint_identifier(constraint_element& holder, const std::string& val) {
@@ -398,6 +404,55 @@ namespace x680 {
         inline void constraint_multitype(constraint_element& holder, const constraint_element_vector& val) {
             holder.constraint = val;
             holder.tp = cns_MultipleTypeConstraints;
+        }
+
+        inline void constraint_userdef(constraint_element& holder, const string_vector& val) {
+            holder.parameters = val;
+            //holder.tp = cns_UserDefinedConstraint;
+        }
+
+        inline void constraint_relation(constraint_element& holder, const std::string& valr, const string_vector& valp) {
+            holder.objsetref = valr;
+            holder.parameters = valp;
+            holder.tp = cns_ComponentRelation;
+        }
+
+        inline void constraint_content_t(constraint_element& holder, const type_element& val) {
+            holder.type = val;
+            holder.tp = cns_ContentsType;
+        }
+
+        inline void constraint_content_v(constraint_element& holder, const value_element& val) {
+            holder.value = val;
+            holder.tp = cns_ContentsValue;
+        }
+
+        inline void constraint_content_tv(constraint_element& holder, const type_element& valt, const value_element& valv) {
+            holder.type = valt;
+            holder.value = valv;
+            holder.tp = cns_ContentsTypeValue;
+        }
+
+        inline void constraint_exceptnumber(constraint_element& holder, const std::string& val) {
+            holder.type.value.type = v_number;
+            holder.type.value.value = val;
+            holder.type.builtin_t = t_INTEGER;
+            holder.type.marker = mk_exception;
+            holder.tp = cns_EXCEPTION;
+        }
+
+        inline void constraint_exceptidentifier(constraint_element& holder, const std::string& val) {
+            holder.type.value.type = v_identifier;
+            holder.type.value.identifier = val;
+            holder.type.marker = mk_exception;
+            holder.tp = cns_EXCEPTION;
+        }
+
+        inline void constraint_excepttypevalue(constraint_element& holder, const type_element& valt, const value_element& valv) {
+            holder.type = valt;
+            holder.type.value = valv;
+            holder.type.marker = mk_exception;
+            holder.tp = cns_EXCEPTION;
         }
 
         inline void push_constraint(constraint_element_vector& holder, const constraint_element& val) {
@@ -536,7 +591,7 @@ namespace x680 {
         inline void type_exceptidetifier(type_assignment& holder, const std::string& val) {
             holder.type.value.type = v_identifier;
             holder.type.value.identifier = val;
-            holder.type.builtin_t = t_INTEGER;
+            //holder.type.builtin_t = t_INTEGER;
             holder.type.marker = mk_exception;
         }
 
@@ -622,6 +677,8 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::range_type, totype_)
         (x680::bnf::type_element, type)
         (x680::constraintmarker_type, marker)
+        (x680::bnf::string_vector, parameters)
+        (std::string, objsetref)
         (x680::bnf::constraint_element_vector, constraint)
         )
 
@@ -781,6 +838,7 @@ namespace x680 {
         extern term_rule SIZE_;
         extern term_rule AUTOMATIC_;
         extern term_rule EXCEPT_;
+        extern term_rule ENCODED_;
         extern term_rule MINUS_INFINITY_;
         extern term_rule STRING_;
         extern term_rule BEGIN_;
@@ -872,7 +930,10 @@ namespace x680 {
         extern str_rule DefinedValue_;
         extern str_rule ExternalObjectClassReference_;
         extern str_rule DefinedObjectClass_;
-
+        extern str_rule ExternalObjectSetReference;
+        extern str_rule DefinedObjectSet_;
+        /*??*/ extern str_rule UserDefinedConstraintParameter_;
+        /*??*/ extern str_rule AtNotation_;
 
 
         extern str_rule Reference_;

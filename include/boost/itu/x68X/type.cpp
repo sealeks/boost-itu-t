@@ -161,8 +161,27 @@ namespace x680 {
         // Elements_grammar
 
         void Elements_grammar::init() {
+            
+            
+            Constraint %= qi::omit[qi::lit("(")] >> ConstraintSpec 
+                    >> -ExceptionSpecConstraints 
+                    >> qi::omit[qi::lit(")")];
+            
+            ConstraintSpec = GeneralConstraint | ElementSetSpecs;
+            
+            ElementSetSpecs %= ElementSetSpec >>
+                    - (qi::omit[qi::lit(",")]  >> Extention >>
+                            - (qi::omit[qi::lit(",")]  >>ElementSetSpec));
+            
+            GeneralConstraint = (UserDefinedConstraint 
+                    | ContentsConstraintTypeValue 
+                    | ContentsConstraintValue 
+                    | ContentsConstraintType 
+                    | ComponentRelationConstraint/* | SimpleTableConstraint*/)[ bind(&constraint_element_vector::push_back, qi::_val, qi::_1) ];            
 
 
+              
+                    
             UElems %= ((qi::omit[(UNION_ | qi::lit("|"))]
                     >> Unions)[ bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_UNION) ]);
 
@@ -212,22 +231,25 @@ namespace x680 {
                     >> -(qi::lit("<")[bind(&constraint_totype, qi::_val, open_range)])
                     >> (MAX_[bind(&constraint_totype, qi::_val, max_range)]
                     | (IntegerValue | RealValue | CStringValue)[bind(&constraint_to, qi::_val, qi::_1)]);
+            
+            
+         
 
             TypeConstraint = Type[bind(&constraint_type, qi::_val, qi::_1)];
 
             SimpleElement = ContainedSubtype | PatternConstraint | PropertySettings | ValueRange | SingleValue | TypeConstraint;
 
             SizeConstraint = qi::omit[SIZE_]
-                    >> ElementSetSpec[bind(&constraint_size, qi::_val, qi::_1)];
+                    >> Constraint[bind(&constraint_size, qi::_val, qi::_1)];
 
             PermittedAlphabet = qi::omit[FROM_]
-                    >> ElementSetSpec[bind(&constraint_alphabet, qi::_val, qi::_1)];
+                    >> Constraint[bind(&constraint_alphabet, qi::_val, qi::_1)];
 
             SingleTypeConstraint = qi::omit[qi::lexeme[WITH_ >> +qi::blank >> COMPONENT_]]
-                    >> ElementSetSpec[bind(&constraint_singletype, qi::_val, qi::_1)];
+                    >> Constraint[bind(&constraint_singletype, qi::_val, qi::_1)];
 
             NamedConstraint = identifier_[bind(&constraint_identifier, qi::_val, qi::_1)]
-                    >> ElementSetSpec[bind(&constraint_namedtype, qi::_val, qi::_1)]
+                    >> Constraint[bind(&constraint_namedtype, qi::_val, qi::_1)]
                     >> -(PRESENT_[bind(&constraint_marker, qi::_val, cmk_present)]
                     | ABSENT_[bind(&constraint_marker, qi::_val, cmk_absent)]
                     | OPTIONAL_[bind(&constraint_marker, qi::_val, cmk_optional)]);
@@ -241,6 +263,42 @@ namespace x680 {
                     >> FullSpecification[bind(&constraint_multitype, qi::_val, qi::_1)];
 
             Element = SizeConstraint | PermittedAlphabet | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement;
+            
+            
+        
+            
+            ExceptionSpecConstraint = qi::omit[qi::lit("!")] >> (pos_number_str[bind(&constraint_exceptnumber, qi::_val, qi::_1) ]
+                    | DefinedValue_[bind(&constraint_exceptidentifier, qi::_val, qi::_1) ]
+                    | (Type >> qi::omit[ qi::lit(":")] >> Value)[bind(&constraint_excepttypevalue, qi::_val, qi::_1,  qi::_2) ]
+                    );    
+            
+            ExceptionSpecConstraints = ExceptionSpecConstraint[ bind(&constraint_element_vector::push_back, qi::_val, qi::_1) ];
+            
+            UserDefinedConstraint =
+                   (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::blank >>  BY_]])[bind(&constraint_tp, qi::_val,  cns_UserDefinedConstraint)] >> qi::lit("{") 
+                    >> -((UserDefinedConstraintParameter_ % qi::omit[qi::lit(",")] )[bind(&constraint_userdef, qi::_val, qi::_1)])  >> qi::lit("}");      
+            
+            //qi::rule<str_iterator, constraint_element(), skip_cmt_type> SimpleTableConstraint;
+            
+            ComponentRelationConstraint = (qi::omit[qi::lit("{")] 
+                    >> DefinedObjectSet_
+                    >>  qi::omit[qi::lit("}")]  
+                    >> qi::omit[qi::lit("{")]   
+                    >> *AtNotation_ 
+                    >> qi::omit[qi::lit("}")])[bind(&constraint_relation, qi::_val, qi::_1, qi::_2)];
+            
+            ContentsConstraintType = qi::omit[CONTAINING_]
+                    >> Type[bind(&constraint_content_t, qi::_val, qi::_1)];
+            
+            ContentsConstraintValue = qi::omit[qi::lexeme[ENCODED_ >> +qi::blank >>   BY_]] 
+                    >> (IdentifierValue | ObjectIdentifierValue)[bind(&constraint_content_v, qi::_val, qi::_1)];  
+            
+            ContentsConstraintTypeValue = (qi::omit[CONTAINING_] 
+                    >> Type 
+                    >> qi::omit[qi::lexeme[ENCODED_ >> +qi::blank >>   BY_]] 
+                    >> (IdentifierValue | ObjectIdentifierValue))[bind(&constraint_content_tv, qi::_val, qi::_1, qi::_2)];   
+                    
+                              
 
         }
 

@@ -186,12 +186,16 @@ namespace x680 {
             typedef constraint_element_vector holder_type;
 
             Elements_grammar() :
-            Elements_grammar::base_type(ElementSetSpec) {
+            Elements_grammar::base_type(Constraint) {
                 init();
             }
 
             void init();
-
+            
+            qi::rule < std::string::iterator, holder_type(), skip_cmt_type> Constraint;
+            qi::rule < std::string::iterator, holder_type(), skip_cmt_type> ConstraintSpec;
+            qi::rule < std::string::iterator, holder_type(), skip_cmt_type> ElementSetSpecs;   
+            qi::rule < std::string::iterator, holder_type(), skip_cmt_type> GeneralConstraint;            
             qi::rule < std::string::iterator, holder_type(), skip_cmt_type> ElementSetSpec;
             qi::rule < std::string::iterator, holder_type(), skip_cmt_type>Intersections;
             qi::rule < std::string::iterator, holder_type(), skip_cmt_type> Unions;
@@ -219,6 +223,16 @@ namespace x680 {
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> NamedConstraint;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> FullSpecification;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> MultipleTypeConstraints;
+            
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ExceptionSpecConstraint;
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> ExceptionSpecConstraints;            
+            
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> UserDefinedConstraint;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> SimpleTableConstraint;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ComponentRelationConstraint;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintType;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintValue;            
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintTypeValue;             
 
             Type_grammar Type;
             Value_grammar Value;
@@ -226,6 +240,7 @@ namespace x680 {
             HStringValue_grammar CStringValue;
             RealValue_grammar RealValue;
             IdentifierValue_grammar IdentifierValue;
+            ObjectIdentifierValue_grammar ObjectIdentifierValue;
 
 
         };

@@ -66,6 +66,7 @@ namespace x680 {
         term_rule SIZE_ = qi::lit("SIZE");
         term_rule AUTOMATIC_ = qi::lit("AUTOMATIC");
         term_rule EXCEPT_ = qi::lit("EXCEPT");
+        term_rule ENCODED_ = qi::lit("ENCODED");;  
         term_rule MINUS_INFINITY_ = qi::lit("MINUS-INFINITY");
         term_rule STRING_ = qi::lit("STRING");
         term_rule BEGIN_ = qi::lit("BEGIN");
@@ -112,7 +113,7 @@ namespace x680 {
         term_rule IDENTIFIER_ = qi::lit("IDENTIFIER");
         term_rule PDV_ = qi::lit("PDV");
         term_rule UNIVERSAL_ = qi::lit("UNIVERSAL");
-        term_rule CONTAINING_ = qi::lit("");
+        term_rule CONTAINING_ = qi::lit("CONTAINING");
         term_rule IMPLICIT_ = qi::lit("IMPLICIT");
         term_rule PLUS_INFINITY_ = qi::lit("PLUS-INFINITY");
         term_rule UniversalString_ = qi::lit("UniversalString");
@@ -191,14 +192,23 @@ namespace x680 {
         str_rule ExternalObjectClassReference_ = modulereference_
                 >> qi::lit(".")
         >> objectclassreference_;
+        
+        str_rule ExternalObjectSetReference =  modulereference_
+                >> qi::lit(".")
+        >> objectsetreference_;
 
         str_rule DefinedObjectClass_ = TYPE_IDENTIFIER_
                 | ABSTRACT_SYNTAX_
                 | ExternalObjectClassReference_
                 | objectclassreference_;
+        
+        str_rule DefinedObjectSet_ = ExternalObjectSetReference | objectsetreference_;
 
         str_rule DefinedValue_ = Externalvaluereference_ | valuereference_; //| ParameterizedValue
+        
+        str_rule UserDefinedConstraintParameter_ = (DefinedType_ | DefinedObjectClass_) >> - ( qi::lit(".")  >> DefinedValue_);           
 
+       str_rule AtNotation_=  qi::lit("@") >> *qi::lit(".")  >> (identifier_ % qi::lit("."));     
 
         str_rule Reference_ = typereference_[ qi::_val = qi::_1] | valuereference_[ qi::_val = qi::_1];
 
