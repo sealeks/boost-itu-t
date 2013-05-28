@@ -246,10 +246,15 @@ namespace x680 {
 
         struct constraint_element;
         typedef std::vector<constraint_element> constraint_element_vector;
+        typedef std::vector<constraint_element_vector> constraints_vector;
 
 
 
-        // Value       
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  value_element
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
         struct value_element {
 
@@ -269,7 +274,11 @@ namespace x680 {
 
 
 
-        // Type
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  type_element
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         struct type_element {
 
@@ -290,13 +299,53 @@ namespace x680 {
             defined_type builtin_t;
             value_element_vector predefined;
             named_type_element_vector elements;
+            constraints_vector constraints;
         };
 
 
+        //  type_element setter        
+
+        inline void type_deff(type_element& holder, const defined_type& type) {
+            holder.builtin_t = type;
+        }
+
+        inline void type_refference(type_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.builtin_t = t_Reference;
+        }
+
+        inline void type_instance(type_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.builtin_t = t_Instance_Of;
+        }
+
+        inline void type_deffinit(type_element& holder, const value_element_vector & val) {
+            holder.predefined = val;
+        }
+
+        inline void type_tag(type_element& holder, const tag_type& val) {
+            holder.tag = val;
+        }
+
+        inline void type_tagged(type_element& holder, const tag_type& tg, const type_element& val) {
+            holder = val;
+            holder.tag = tg;
+        }
+
+        inline void type_pushs(type_element& holder, const type_assignment_vector& val) {
+            holder.elements.insert(holder.elements.end(), val.begin(), val.end());
+        }
+
+        inline void type_constraints(type_element& holder, const constraints_vector& val) {
+            holder.constraints= val;
+        }
 
 
 
-        //Constraint Type
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  constraint_element
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         struct constraint_element {
 
@@ -324,6 +373,10 @@ namespace x680 {
             std::string objsetref;
             constraint_element_vector constraint;
         };
+
+
+
+        //  constraint_element setter
 
         inline void constraint_tp(constraint_element& holder, const constraint_type& val) {
             holder.tp = val;
@@ -470,13 +523,19 @@ namespace x680 {
         const constraint_element CONSTRAINT_ALLEXCEPT = constraint_element(cns_ALLEXCEPT);
         const constraint_element CONSTRAINT_EXTENTION = constraint_element(cns_EXTENTION, cmk_extention);
 
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  value_assignment
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         struct value_assignment {
 
             value_assignment() {
-            }
-
-            void operator()(const value_element& val) {
-                value = val;
             }
 
             std::string identifier;
@@ -484,6 +543,9 @@ namespace x680 {
             value_element value;
 
         };
+
+
+        //  value_assignment setter        
 
         inline void valuea_reference(value_assignment& holder, const std::string& val) {
             holder.identifier = val;
@@ -496,6 +558,49 @@ namespace x680 {
         inline void valuea_value(value_assignment& holder, const value_element& val) {
             holder.value = val;
         }
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  valueset_assignment
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        struct valueset_assignment {
+
+            valueset_assignment() {
+            }
+
+            std::string identifier;
+            type_element type;
+            constraint_element_vector set;
+
+        };
+        
+        
+        
+        //  valueset_assignment setter        
+        
+        inline void valueset_reference(valueset_assignment& holder, const std::string& val) {
+            holder.identifier = val;
+        }
+        
+        inline void valueset_type(valueset_assignment& holder, const type_element& val) {
+            holder.type = val;
+        }
+
+        inline void valueset_set(valueset_assignment& holder, const constraint_element_vector& val) {
+            holder.set = val;
+        }
+
+
+        
+        
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  type_assignment
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
         struct type_assignment {
 
@@ -511,69 +616,24 @@ namespace x680 {
             constraint_element_vector constraints;
         };
 
+
+        //  type_assignment setter        
+
         inline void type_identifier(type_assignment& holder, const std::string& val) {
             holder.identifier = val;
         }
 
-        inline void type_typereffrence(type_assignment& holder, const std::string& val) {
-            holder.identifier = val;
-        }
-
-        inline void type_typea(type_element& holder, const type_assignment& val) {
-            holder = val.type;
-        }
-
-        inline void type_type(type_assignment& holder, const type_assignment& val) {
-            holder.type = val.type;
+        inline void type_named(type_assignment& holder, const std::string& ind, const type_element& type) {
+            holder.identifier = ind;
+            holder.type = type;
         }
 
         inline void typea_type(type_assignment& holder, const type_element& val) {
             holder.type = val;
         }
 
-        inline void type_select(type_assignment& holder, const type_assignment& val) {
-            holder.type = val.type;
-            holder.type.builtin_t = t_Selection;
-        }
-
-        inline void type_tagged(type_assignment& holder, const type_assignment& val) {
-            tag_type tmp = holder.type.tag;
-            holder.type = val.type;
-            holder.type.tag = tmp;
-        }
-
-        inline void type_deff(type_assignment& holder, const defined_type& type) {
-            holder.type.builtin_t = type;
-        }
-
-        inline void type_refference(type_assignment& holder, const std::string& val) {
-            holder.type.reference = val;
-            holder.type.builtin_t = t_Reference;
-        }
-
-        inline void type_instance(type_assignment& holder, const std::string& val) {
-            holder.type.reference = val;
-            holder.type.builtin_t = t_Instance_Of;
-        }
-
         inline void type_marker(type_assignment& holder, const tagmarker_type& val) {
             holder.type.marker = val;
-        }
-
-        inline void type_deffinit(type_assignment& holder, const value_element_vector & val) {
-            holder.type.predefined = val;
-        }
-
-        inline void type_tag(type_assignment& holder, const tag_type& val) {
-            holder.type.tag = val;
-        }
-
-        inline void type_push(type_assignment& holder, const type_assignment& val) {
-            holder.type.elements.push_back(val);
-        }
-
-        inline void type_pushs(type_assignment& holder, const type_assignment_vector& val) {
-            holder.type.elements.insert(holder.type.elements.end(), val.begin(), val.end());
         }
 
         inline void type_defaultvalue(type_assignment& holder, const value_element& val) {
@@ -600,6 +660,18 @@ namespace x680 {
             holder.type.marker = mk_exception;
         }
 
+        inline void type_push(type_element& holder, const type_assignment& val) {
+            holder.elements.push_back(val);
+        }
+        
+        inline void type_select(type_element& holder, const std::string& ind, const type_element& type) {
+            type_assignment tmp;
+            tmp.identifier = ind;
+            tmp.type = type;
+            holder.elements.push_back(tmp);
+            holder.builtin_t = t_Selection;
+        }        
+
 
         const type_assignment extention_type_assignment(mk_extention);
         const type_assignment exception_type_assignment(mk_exception);
@@ -611,7 +683,8 @@ namespace x680 {
 
         typedef boost::variant<
         type_assignment,
-        value_assignment >
+        value_assignment,
+        valueset_assignment>
         assignment;
 
         typedef std::vector<assignment> assignment_vector;
@@ -701,6 +774,14 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 
 BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::valueset_assignment,
+        (std::string, identifier)
+        (x680::bnf::type_element, type)
+        (x680::bnf::constraint_element_vector, set)
+        )
+
+
+BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_element,
         (x680::tag_type, tag)
         (x680::tagmarker_type, marker)
@@ -709,6 +790,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::defined_type, builtin_t)
         (x680::bnf::named_type_element_vector, elements)
         (x680::bnf::value_element_vector, predefined)
+        (x680::bnf::constraints_vector,  constraints)
         )
 
 

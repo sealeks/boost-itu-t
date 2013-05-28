@@ -24,7 +24,7 @@ namespace x680 {
 
         void Assignments_grammar::init() {
 
-            start_rule = *(TypeAssignment | ValueAssignment);
+            start_rule = *(TypeAssignment | ValueAssignment | ValueSetTypeAssignment);
 
             TypeAssignment = typereference_[bind(&type_identifier, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
@@ -34,6 +34,13 @@ namespace x680 {
                     >> Type[bind(&valuea_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> Value[bind(&valuea_value, qi::_val, qi::_1)];
+            
+            ValueSetTypeAssignment = typereference_[bind(&valueset_reference, qi::_val, qi::_1)]
+                    >> Type[bind(&valueset_type, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> qi::omit[qi::lit("{")]
+                    >> ElementSetSpecs[bind(&valueset_set, qi::_val, qi::_1)]                   
+                    >> qi::omit[qi::lit("}")];
 
 
 
@@ -47,10 +54,17 @@ namespace x680 {
             //  TypeAssigment grammar
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
 
-            Type = TypeA[bind(&type_typea, qi::_val, qi::_1)];
+            Type = BuitinType | TaggedType | DefinedType;
 
-            NamedType = identifier_[bind(&type_identifier, qi::_val, qi::_1)]
-                    >> TypeA[bind(&type_type, qi::_val, qi::_1)];
+            NamedType = (identifier_ >> Type)[bind(&type_named, qi::_val, qi::_1, qi::_2)];
+
+            TypeA = Type[bind(&typea_type, qi::_val, qi::_1) ];
+
+
+            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SelectionType | SequenceOfType | SetOfType | SequenceType | ChoiceType | SetType | InstanceOfType;
+
+            TaggedType = (Tag
+                    >> Type)[bind(&type_tagged, qi::_val, qi::_1, qi::_2)];
 
             DefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)];
 
@@ -74,6 +88,8 @@ namespace x680 {
 
             BitStringType = qi::lexeme[BIT_ >> +qi::blank >> STRING_[bind(&type_deff, qi::_val, t_BIT_STRING)]]
                     >> -NameBitList[bind(&type_deffinit, qi::_val, qi::_1)];
+
+
 
 
             SequenceOfType = (qi::lexeme[SEQUENCE_ >> +qi::blank >> OF_])[bind(&type_deff, qi::_val, t_SEQUENCE_OF)]
@@ -149,9 +165,9 @@ namespace x680 {
 
 
 
-            SelectionType = identifier_[bind(&type_identifier, qi::_val, qi::_1)]
-                    >> qi::lit("<")
-                    >> TypeA[bind(&type_select, qi::_val, qi::_1)];
+            SelectionType = (identifier_
+                    >> qi::omit[qi::lit("<")]
+                    >> Type)[bind(&type_select, qi::_val, qi::_1, qi::_2)];
 
 
             SequenceType = SEQUENCE_[bind(&type_deff, qi::_val, t_SEQUENCE)]
@@ -170,12 +186,7 @@ namespace x680 {
                     >> -(AlternativeTypeLists[bind(&type_pushs, qi::_val, qi::_1) ])
                     >> qi::lit("}");
 
-            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SelectionType | SequenceOfType | SetOfType | SequenceType | ChoiceType | SetType | InstanceOfType;
 
-            TypeA = BuitinType | TaggedType | DefinedType;
-
-            TaggedType = Tag[bind(&type_tag, qi::_val, qi::_1)]
-                    >> TypeA[bind(&type_tagged, qi::_val, qi::_1)];
 
 
 
@@ -186,7 +197,9 @@ namespace x680 {
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  Constraint grammar
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+            
+            Constraints = + Constraint;
 
             Constraint %= qi::omit[qi::lit("(")] >> ConstraintSpec
                     >> -ExceptionSpecConstraints
@@ -326,49 +339,7 @@ namespace x680 {
         }
 
 
-        /*
-                // Elements_grammar
 
-                void Elements_grammar::init() {
-            
-            
-
-                    
-                              
-
-                }
-
-
-                // TypeAssignment_grammar
-
-                void TypeAssignment_grammar::init() {
-
-                    start_rule = typereference_[bind(&type_identifier, qi::_val, qi::_1)]
-                            >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                            >> Type[bind(&typea_type, qi::_val, qi::_1)];
-                }
-
-
-
-                // ValueAssignment_grammar
-
-                void ValueAssignment_grammar::init() {
-
-                    start_rule = valuereference_[bind(&valuea_reference, qi::_val, qi::_1)]
-                            >> Type[bind(&valuea_type, qi::_val, qi::_1)]
-                            >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                            >> Value[bind(&valuea_value, qi::_val, qi::_1)];
-                }
-
-
-                // Assignment_grammar
-
-                void Assignments_grammar::init() {
-                    start_rule = *(TypeAssignment | ValueAssignment);
-
-                }
-
-         */
 
     }
 }

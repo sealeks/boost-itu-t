@@ -79,7 +79,6 @@ namespace x680 {
             typedef Assignments_grammar self_type;
             typedef assignment_vector holder_type;
 
-
             struct check_type_simple : qi::symbols<std::string::value_type, defined_type > {
 
                 check_type_simple() {
@@ -120,37 +119,44 @@ namespace x680 {
             void init();
 
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        //  Assigment grammar
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  Assigment grammar
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
             qi::rule<str_iterator, assignment_vector(), skip_cmt_type> start_rule;
-            
+
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeAssignment;
             qi::rule<str_iterator, value_assignment(), skip_cmt_type> ValueAssignment;
-            
-            
-          ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        //  TypeAssigment grammar
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
+            qi::rule<str_iterator, valueset_assignment(), skip_cmt_type> ValueSetTypeAssignment;
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  TypeAssigment grammar
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
 
             qi::rule<str_iterator, type_element(), skip_cmt_type> Type;
-            
-             check_type_simple simple_typer;           
-            
+
+            check_type_simple simple_typer;
+
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> NamedType;
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeA;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> BuitinType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> DefinedType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> InstanceOfType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> ReferencedType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> SimpleType;
 
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> IntegerType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> EnumeratedType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> BitStringType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> SequenceOfType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> SetOfType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> BuitinType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> DefinedType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> InstanceOfType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> ReferencedType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> SimpleType;
+
+            qi::rule<str_iterator, type_element(), skip_cmt_type> IntegerType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> EnumeratedType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> BitStringType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> SequenceOfType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> SetOfType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> TaggedType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> SequenceType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> SetType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> SelectionType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> ChoiceType;
 
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> ComponentType;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ComponentTypeList;
@@ -175,13 +181,10 @@ namespace x680 {
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> Extension;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAndException;
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> ExtensionEndMarker;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> SequenceType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> SetType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> SelectionType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> ChoiceType;
-            qi::rule<str_iterator, type_assignment(), skip_cmt_type> TaggedType;
-            
-            
+
+
+
+
             Enumerations_grammar Enumerations;
             NamedNumberList_grammar NamedNumberList;
             NamedNumberList_grammar NameBitList;
@@ -193,20 +196,22 @@ namespace x680 {
             RealValue_grammar RealValue;
             IdentifierValue_grammar IdentifierValue;
             ObjectIdentifierValue_grammar ObjectIdentifierValue;
+
+
+
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  Constraint grammar
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             
             
-            
-            
-            
- 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        //  Constraint grammar
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////           
-                       
+            qi::rule < std::string::iterator, constraints_vector(), skip_cmt_type> Constraints;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> Constraint;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ConstraintSpec;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpecs;   
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraint;            
+            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpecs;
+            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraint;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpec;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type>Intersections;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> Unions;
@@ -234,104 +239,20 @@ namespace x680 {
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> NamedConstraint;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> FullSpecification;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> MultipleTypeConstraints;
-            
+
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ExceptionSpecConstraint;
-            qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> ExceptionSpecConstraints;            
-            
+            qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> ExceptionSpecConstraints;
+
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> UserDefinedConstraint;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> SimpleTableConstraint;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ComponentRelationConstraint;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintType;
-            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintValue;            
-            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintTypeValue;  
-
-        };
-
-     /* 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        // Elements_grammar
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
-
-        struct Elements_grammar : qi::grammar<str_iterator, constraint_element_vector(), skip_cmt_type> {
-
-            typedef Elements_grammar self_type;
-
-            Elements_grammar() :
-            Elements_grammar::base_type(Constraint) {
-                init();
-            }
-
-            void init();
-            
-
-            Type_grammar Type;
-
-
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintValue;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintTypeValue;
 
         };
 
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        // TypeAssignment_grammar
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
-
-  struct TypeAssignment_grammar : qi::grammar<str_iterator, type_assignment(), skip_cmt_type> {
-
-            typedef TypeAssignment_grammar self_type;
-            typedef type_assignment holder_type;
-
-            TypeAssignment_grammar() :
-            TypeAssignment_grammar::base_type(start_rule) {
-                init();
-            }
-
-            void init();
-
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
-            Type_grammar Type;
-        };
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        // TypeAssignment_grammar
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
-
-        struct ValueAssignment_grammar : qi::grammar<str_iterator, value_assignment(), skip_cmt_type> {
-
-            typedef ValueAssignment_grammar self_type;
-            typedef value_assignment holder_type;
-
-            ValueAssignment_grammar() :
-            ValueAssignment_grammar::base_type(start_rule) {
-                init();
-            }
-
-            void init();
-
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
-            Type_grammar Type;
-            Value_grammar Value;
-        };
-
-
-        //extern syn_elements_sk_rule Types_;
-
-           struct Assignments_grammar : qi::grammar<str_iterator, assignment_vector(), skip_cmt_type> {
-
-            typedef Assignments_grammar self_type;
-            typedef assignment_vector holder_type;
-
-           Assignments_grammar() :
-            Assignments_grammar::base_type(start_rule) {
-                init();
-           }
-
-            void init();
-
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
-            TypeAssignment_grammar TypeAssignment;
-            ValueAssignment_grammar ValueAssignment;
-        };*/
 
     }
 }
