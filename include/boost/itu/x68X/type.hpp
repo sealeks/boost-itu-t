@@ -128,7 +128,7 @@ namespace x680 {
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeAssignment;
             qi::rule<str_iterator, value_assignment(), skip_cmt_type> ValueAssignment;
             qi::rule<str_iterator, valueset_assignment(), skip_cmt_type> ValueSetTypeAssignment;
-
+            qi::rule<str_iterator, class_assignment(), skip_cmt_type> ObjectClassAssignment;
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  TypeAssigment grammar
@@ -205,8 +205,9 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  Constraint grammar
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-            
-            
+
+            qi::rule < std::string::iterator, valueset_element(), skip_cmt_type> ValueSet;
+
             qi::rule < std::string::iterator, constraints_vector(), skip_cmt_type> Constraints;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> Constraint;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ConstraintSpec;
@@ -243,12 +244,51 @@ namespace x680 {
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ExceptionSpecConstraint;
             qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> ExceptionSpecConstraints;
 
+            qi::rule<str_iterator, string_vector(), skip_cmt_type> UserDefinedConstraintParameters;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> UserDefinedConstraint;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> SimpleTableConstraint;
+            qi::rule<str_iterator, string_vector(), skip_cmt_type> AtNotations;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ComponentRelationConstraint;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintType;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintValue;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintTypeValue;
+
+
+
+
+
+
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  ObjectClassAssignment grammar
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
+
+            qi::rule<str_iterator, class_element(), skip_cmt_type> ObjectClass;
+            qi::rule<str_iterator, class_element(), skip_cmt_type> ObjectClassDefn;
+
+            qi::rule<str_iterator, classfield_vector(), skip_cmt_type> FieldSpecs;
+
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> FieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> TypeFieldSpecS;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> TypeFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> VariableTypeValueFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueSetFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> VariableTypeValueSetFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> ObjectFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> ObjectSetFieldSpec;
+
+            qi::rule<str_iterator, classsyntax_vector(), skip_cmt_type> WithSyntaxSpec;
+            qi::rule<str_iterator, classsyntax_vector(), skip_cmt_type> SyntaxList;
+            qi::rule<str_iterator, classsyntax_vector(), skip_cmt_type> OptionalGroup;
+            qi::rule<str_iterator, classsyntax_vector(), skip_cmt_type> TokenOrGroupSpec;
+            qi::rule<str_iterator, classsyntax_type(), skip_cmt_type> RequiredToken;
+            qi::rule<str_iterator, classsyntax_type(), skip_cmt_type> OptionalToken;
+            qi::rule<str_iterator, classsyntax_type(), skip_cmt_type> AiasTokenOToken;
+            qi::rule<str_iterator, classsyntax_type(), skip_cmt_type> TokenOToken;
+            ;
 
         };
 

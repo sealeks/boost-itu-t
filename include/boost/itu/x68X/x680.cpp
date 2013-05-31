@@ -9,9 +9,6 @@ namespace x680 {
     namespace bnf {
 
 
-        str_rule comment_beg = qi::char_("-") >> qi::char_("-");
-
-        str_rule comment_end = comment_beg | qi::eol;
 
         str_rule pos_number_str = qi::char_("0")[ qi::_val = qi::_1 ]
                 | (qi::char_("1-9")[ qi::_val = qi::_1]
@@ -141,10 +138,52 @@ namespace x680 {
         term_rule INTEGER_ = qi::lit("INTEGER");
         term_rule RELATIVE_OID_IRI_ = qi::lit("RELATIVE-OID-IRI");
         term_rule EXTENSIBILITY_IMPLIED_ = qi::lit("EXTENSIBILITY IMPLIED");
+        
+        
+        str_rule literal_except_token = qi::string("BIT") 
+                | qi::string("BOOLEAN")
+                | qi::string("CHARACTER")
+                | qi::string("CHOICE")
+                | qi::string("DATE")
+                | qi::string("DATE-TIME")
+                | qi::string("DURATION")
+                | qi::string("EMBEDDED")
+                | qi::string("END")
+                | qi::string("ENUMERATED")
+                | qi::string("EXTERNAL")
+                | qi::string("FALSE")
+                | qi::string("INSTANCE")
+                | qi::string("INTEGER")
+                | qi::string("INTERSECTION")
+                | qi::string("MINUS-INFINITY")
+                | qi::string("NULL")
+                | qi::string("OBJECT")
+                | qi::string("OCTET")
+                | qi::string("PLUS-INFINITY")
+                | qi::string("REAL")
+                | qi::string("RELATIVE-OID")
+                | qi::string("SEQUENCE")
+                | qi::string("SET")
+                | qi::string("TIME")
+                | qi::string("TIME-OF-DAY")
+                | qi::string("TRUE")
+                | qi::string("UNION");
 
 
+        str_rule word_ =  qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
+                >> *(((qi::char_("-")[ _val += qi::_1]
+                >> qi::upper[ _val += qi::_1])
+                | (qi::upper[ _val += qi::_1]
+                >> -qi::upper[ _val += qi::_1])) - (qi::char_("-")
+                >> ((qi::char_("-") | !qi::upper))))];
+        
+        str_rule spaces_ = qi::space[ qi::_val = qi::_1 ]  >> *(qi::space[qi::_val += qi::_1 ]);
+        
+        str_rule Literal_ = (word_ - literal_except_token) | qi::string(",");
 
-        str_rule typereference_ = qi::lexeme[qi::upper[ _val = qi::_1 ]
+        str_rule SyntaxField_ = Literal_[qi::_val = qi::_1 ]  >> *(spaces_[ qi::_val += qi::_1 ] >> Literal_[ qi::_val += qi::_1 ]);
+
+        str_rule typereference_ = qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
                 >> *(((qi::char_("-")[ _val += qi::_1]
                 >> qi::alnum[ _val += qi::_1])
                 | (qi::alnum[ _val += qi::_1]
@@ -162,40 +201,54 @@ namespace x680 {
 
         str_rule modulereference_ = typereference_;
 
-        str_rule objectreference_ = typereference_;
+        str_rule objectreference_ = valuereference_;
 
-        str_rule objectsetreference_ = valuereference_;
+        str_rule objectsetreference_ = typereference_;
 
         str_rule objectclassreference_ = qi::lexeme[qi::upper[ _val = qi::_1 ]
                 >> *(((qi::char_("-")[ _val += qi::_1]
                 >> qi::char_("A-Z0-9")[ _val += qi::_1])
                 | (qi::char_("A-Z0-9")[ _val += qi::_1]
                 >> -qi::char_("A-Z0-9")[ _val += qi::_1])) - (qi::char_("-")
-                >> ((qi::char_("-") | !qi::char_("A-Z0-9")))))]; //(~typereference_)          
+                >> ((qi::char_("-") | !qi::char_("A-Z0-9")))))]; //(~typereference_)        
+        
+        str_rule typefieldreference_ = qi::lexeme[qi::string("&")[qi:: _val = qi::_1 ] >> typereference_[qi:: _val += qi::_1]]; //(&typereference_)   
+        
+        str_rule valuefieldreference_ = qi::lexeme[qi::string("&")[qi:: _val = qi::_1 ] >> valuereference_[qi:: _val += qi::_1]]; //(&valuereference_)  
+        
+        str_rule valuesetfieldreference_ = qi::lexeme[qi::string("&")[qi:: _val = qi::_1 ] >> typereference_[qi:: _val += qi::_1]]; //(&typereference_)   
+        
+        str_rule objectfieldreference_=qi::lexeme[qi::string("&")[qi:: _val = qi::_1 ] >> objectreference_[qi:: _val += qi::_1]];//(&objectreference_)
+        
+        str_rule objectsetfieldreference_= qi::lexeme[qi::string("&")[qi:: _val = qi::_1 ] >> objectsetreference_[qi:: _val += qi::_1]]; //(&objectsetreference_)  
+        
+  
+        str_rule bigfieldreference_ = typefieldreference_;
+        
+        str_rule littlefieldreference_ =  valuefieldreference_;
+        
+        str_rule PrimitiveFieldName_ = bigfieldreference_ | littlefieldreference_;
 
-        str_rule comment_ = comment_beg
-                >> *((qi::print)[ _val += qi::_1] - comment_end)
-        >> comment_end;
+        str_rule FieldName_ = PrimitiveFieldName_[qi:: _val = qi::_1]  >> -(qi::string(".")[qi:: _val += qi::_1] >> (PrimitiveFieldName_[qi:: _val += qi::_1] %  qi::string(".")[qi:: _val += qi::_1]));
 
-
-        str_rule ExternalTypeReference_ = modulereference_
-                >> qi::lit(".")
-        >> typereference_;
+        str_rule ExternalTypeReference_ = modulereference_[qi:: _val = qi::_1 ]
+                >> qi::string(".")[qi:: _val += qi::_1]
+        >> typereference_[qi:: _val += qi::_1];
 
         str_rule DefinedType_ = ExternalTypeReference_ | typereference_; //| ParameterizedType | ParameterizedValueSetType
 
 
-        str_rule Externalvaluereference_ = modulereference_
-                >> qi::lit(".")
-        >> valuereference_;
+        str_rule Externalvaluereference_ = modulereference_[qi:: _val = qi::_1 ]
+                >> qi::string(".")[qi:: _val += qi::_1]
+        >> valuereference_[qi:: _val += qi::_1];
 
-        str_rule ExternalObjectClassReference_ = modulereference_
-                >> qi::lit(".")
-        >> objectclassreference_;
+        str_rule ExternalObjectClassReference_ = modulereference_[qi:: _val = qi::_1 ]
+                >> qi::string(".")[qi:: _val += qi::_1]
+        >> objectclassreference_[qi:: _val += qi::_1];
         
-        str_rule ExternalObjectSetReference =  modulereference_
-                >> qi::lit(".")
-        >> objectsetreference_;
+        str_rule ExternalObjectSetReference =  modulereference_[qi:: _val = qi::_1 ]
+                >> qi::string(".")[qi:: _val += qi::_1]
+        >> objectsetreference_[qi:: _val += qi::_1];
 
         str_rule DefinedObjectClass_ = TYPE_IDENTIFIER_
                 | ABSTRACT_SYNTAX_
@@ -206,11 +259,11 @@ namespace x680 {
 
         str_rule DefinedValue_ = Externalvaluereference_ | valuereference_; //| ParameterizedValue
         
-        str_rule UserDefinedConstraintParameter_ = (DefinedType_ | DefinedObjectClass_) >> - ( qi::lit(".")  >> DefinedValue_);           
+        str_rule UserDefinedConstraintParameter_ = (DefinedType_[qi:: _val = qi::_1 ] | DefinedObjectClass_[qi:: _val = qi::_1 ]) >> - ( qi::string(".")[qi:: _val += qi::_1]  >> DefinedValue_[qi:: _val += qi::_1] );           
 
-       str_rule AtNotation_=  qi::lit("@") >> *qi::lit(".")  >> (identifier_ % qi::lit("."));     
+       str_rule AtNotation_=  qi::string("@")[qi:: _val = qi::_1 ] >> *(qi::string(".")[qi:: _val += qi::_1])  >> (identifier_[qi:: _val += qi::_1] %  qi::string(".")[qi:: _val += qi::_1]);     
 
-        str_rule Reference_ = typereference_[ qi::_val = qi::_1] | valuereference_[ qi::_val = qi::_1];
+        str_rule Reference_ = typereference_ | valuereference_;
 
         str_rule ParameterizedReference_ = Reference_[ qi::_val = qi::_1]
                 >> qi::omit[*qi::space]

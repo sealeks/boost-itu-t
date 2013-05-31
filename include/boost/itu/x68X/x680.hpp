@@ -32,6 +32,7 @@
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/repository/include/qi_confix.hpp>
 #include <boost/variant.hpp>
+#include <boost/spirit/repository/include/qi_distinct.hpp>
 
 
 
@@ -196,6 +197,32 @@ namespace x680 {
         encoding_per
     };
 
+    enum fieldmarker_type {
+
+        field_no,
+        field_optional,
+        field_defaulttype,
+        field_defaultvalue,
+        field_defaultset,
+        field_defaultref
+    };
+    
+    
+
+    enum fieldkind_type {
+
+        fkind_NoDef,
+        fkind_TypeFieldSpec,
+        fkind_FixedTypeValueFieldSpec,
+        fkind_VariableTypeValueFieldSpec,
+        fkind_FixedTypeValueSetFieldSpec,
+        fkind_VariableTypeValueSetFieldSpec,
+        fkind_ObjectFieldSpec,
+        fkind_ObjectSetFieldSpec,
+        fkind_FixedType_or_Object,
+        fkind_FixedTypeSet_or_ObjectSet
+    };
+
     struct tag_type {
 
         tag_type() :
@@ -248,7 +275,15 @@ namespace x680 {
         typedef std::vector<constraint_element> constraint_element_vector;
         typedef std::vector<constraint_element_vector> constraints_vector;
 
+        typedef constraint_element_vector valueset_element;
 
+        struct classfield_type;
+        typedef std::vector<classfield_type> classfield_vector;
+
+        struct classsyntax_type;
+        typedef std::vector<classsyntax_type> classsyntax_vector;
+        
+        using boost::spirit::repository::distinct;
 
 
 
@@ -337,8 +372,14 @@ namespace x680 {
         }
 
         inline void type_constraints(type_element& holder, const constraints_vector& val) {
-            holder.constraints= val;
+            holder.constraints = val;
         }
+              
+        inline void type_constraint(type_element& holder, const constraint_element& val) {
+            constraint_element_vector tmp;
+            tmp.push_back(val);
+            holder.constraints.push_back(tmp);
+        }        
 
 
 
@@ -489,6 +530,8 @@ namespace x680 {
         inline void constraint_exceptnumber(constraint_element& holder, const std::string& val) {
             holder.type.value.type = v_number;
             holder.type.value.value = val;
+            holder.value.type = v_number;
+            holder.value.value = val;
             holder.type.builtin_t = t_INTEGER;
             holder.type.marker = mk_exception;
             holder.tp = cns_EXCEPTION;
@@ -497,6 +540,8 @@ namespace x680 {
         inline void constraint_exceptidentifier(constraint_element& holder, const std::string& val) {
             holder.type.value.type = v_identifier;
             holder.type.value.identifier = val;
+            holder.value.type = v_identifier;
+            holder.value.identifier = val;
             holder.type.marker = mk_exception;
             holder.tp = cns_EXCEPTION;
         }
@@ -504,6 +549,7 @@ namespace x680 {
         inline void constraint_excepttypevalue(constraint_element& holder, const type_element& valt, const value_element& valv) {
             holder.type = valt;
             holder.type.value = valv;
+            holder.value = valv;
             holder.type.marker = mk_exception;
             holder.tp = cns_EXCEPTION;
         }
@@ -572,29 +618,29 @@ namespace x680 {
 
             std::string identifier;
             type_element type;
-            constraint_element_vector set;
+            valueset_element set;
 
         };
-        
-        
-        
+
+
+
         //  valueset_assignment setter        
-        
+
         inline void valueset_reference(valueset_assignment& holder, const std::string& val) {
             holder.identifier = val;
         }
-        
+
         inline void valueset_type(valueset_assignment& holder, const type_element& val) {
             holder.type = val;
         }
 
-        inline void valueset_set(valueset_assignment& holder, const constraint_element_vector& val) {
+        inline void valueset_set(valueset_assignment& holder, const valueset_element& val) {
             holder.set = val;
         }
 
 
-        
-        
+
+
 
 
 
@@ -613,7 +659,7 @@ namespace x680 {
 
             std::string identifier;
             type_element type;
-            constraint_element_vector constraints;
+
         };
 
 
@@ -663,18 +709,159 @@ namespace x680 {
         inline void type_push(type_element& holder, const type_assignment& val) {
             holder.elements.push_back(val);
         }
-        
+
         inline void type_select(type_element& holder, const std::string& ind, const type_element& type) {
             type_assignment tmp;
             tmp.identifier = ind;
             tmp.type = type;
             holder.elements.push_back(tmp);
             holder.builtin_t = t_Selection;
-        }        
+        }
 
 
         const type_assignment extention_type_assignment(mk_extention);
         const type_assignment exception_type_assignment(mk_exception);
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  class_element
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+
+        struct classfield_type {
+
+            classfield_type() : marker(field_no), tp(fkind_NoDef), unique(false) {
+            }
+
+            std::string field;
+            std::string holder;
+            type_element holdertype;
+            fieldmarker_type marker;
+            fieldkind_type tp;
+            bool unique;
+            type_element defaulttype;
+            value_element defaultvalue;
+            valueset_element defaultset;
+            std::string defaultreff;
+        };
+
+        inline void classfield_field(classfield_type& holder, const std::string& val) {
+            holder.field = val;
+        }
+
+        inline void classfield_holder_ft(classfield_type& holder, const type_element& val, bool type) {
+            if (val.builtin_t == t_Reference) {
+                holder.holder = val.reference;
+                holder.tp = type ? fkind_FixedType_or_Object : fkind_FixedTypeSet_or_ObjectSet;
+            } else {
+                holder.tp = type ? fkind_FixedTypeValueFieldSpec : fkind_FixedTypeValueSetFieldSpec;
+            }
+            holder.holdertype = val;
+        }
+
+        inline void classfield_holder(classfield_type& holder, const std::string& val) {
+            holder.holder = val;
+        }
+
+        inline void classfield_unique(classfield_type& holder) {
+            holder.unique = true;
+            holder.tp = fkind_FixedTypeValueFieldSpec;
+        }
+
+        inline void classfield_optional(classfield_type& holder) {
+            holder.marker = field_optional;
+        }
+
+        inline void classfield_tp(classfield_type& holder, const fieldkind_type& val) {
+            holder.tp = val;
+        }
+
+        inline void classfield_defaulttype(classfield_type& holder, const type_element& val) {
+            holder.marker = field_defaulttype;
+            holder.defaulttype = val;
+        }
+
+        inline void classfield_defaultvalue(classfield_type& holder, const value_element& val) {
+            holder.marker = field_defaultvalue;
+            holder.defaultvalue = val;
+        }
+
+        inline void classfield_defaultset(classfield_type& holder, const valueset_element& val) {
+            holder.marker = field_defaultset;
+            holder.defaultset = val;
+        }
+
+        inline void classfield_defaultref(classfield_type& holder, const std::string& val) {
+            holder.marker = field_defaultref;
+            holder.defaultreff = val;
+        }
+
+        struct classsyntax_type {
+
+            classsyntax_type() : optional(false) {
+            }
+
+            std::string alias;
+            std::string field;
+            bool optional;
+            classsyntax_vector group;
+        };
+
+        inline void classsyntax_alias(classsyntax_type& holder, const std::string& val) {
+            holder.alias = val;
+        }
+
+        inline void classsyntax_field(classsyntax_type& holder, const std::string& val) {
+            holder.field = val;
+        }
+        
+        inline void classsyntax_agroup(classsyntax_type& holder, const std::string& alias, const classsyntax_vector& group ) {
+            holder.alias =  alias;
+            holder.group = group;
+            holder.optional =true;
+        }      
+        
+        inline void classsyntax_group(classsyntax_type& holder, const classsyntax_vector& group ) {
+            holder.group = group;
+            holder.optional =true;
+        }                
+        
+        inline void classsyntax_optional(classsyntax_type& holder) {
+            holder.optional =true;
+        }                
+
+        struct class_element {
+
+            classfield_vector fields;
+            classsyntax_vector syntaxes;
+        };
+
+        inline void class_fields(class_element& holder, const classfield_vector& val) {
+            holder.fields = val;
+        }
+
+        inline void class_syntaxes(class_element& holder, const classsyntax_vector& val) {
+            holder.syntaxes = val;
+        }
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  class_assignment
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+
+        struct class_assignment {
+
+            std::string identifier;
+            class_element class_;
+        };
+
+        inline void classa_set(class_assignment& holder, const std::string& ind, const class_element& cl) {
+            holder.identifier = ind;
+            holder.class_ = cl;
+        }
 
 
 
@@ -684,7 +871,8 @@ namespace x680 {
         typedef boost::variant<
         type_assignment,
         value_assignment,
-        valueset_assignment>
+        valueset_assignment,
+        class_assignment>
         assignment;
 
         typedef std::vector<assignment> assignment_vector;
@@ -777,7 +965,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::valueset_assignment,
         (std::string, identifier)
         (x680::bnf::type_element, type)
-        (x680::bnf::constraint_element_vector, set)
+        (x680::bnf::valueset_element, set)
         )
 
 
@@ -790,7 +978,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::defined_type, builtin_t)
         (x680::bnf::named_type_element_vector, elements)
         (x680::bnf::value_element_vector, predefined)
-        (x680::bnf::constraints_vector,  constraints)
+        (x680::bnf::constraints_vector, constraints)
         )
 
 
@@ -800,6 +988,45 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::type_element, type)
         (x680::bnf::constraint_element_vector, constraints)
         )
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::classfield_type,
+        (std::string, field)
+        (std::string, holder)
+        (x680::bnf::type_element, holdertype)
+        (x680::fieldmarker_type, marker)
+        (x680::fieldkind_type, tp)
+        (bool, unique)
+        (x680::bnf::type_element, defaulttype)
+        (x680::bnf::value_element, defaultvalue)
+        (x680::bnf::valueset_element, defaultset)
+        (std::string, defaultreff)
+        )
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::classsyntax_type,
+        (std::string, alias)
+        (std::string, field)
+        (bool, optional)
+        (x680::bnf::classsyntax_vector, group)
+        )
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::class_element,
+        (x680::bnf::classfield_vector, fields)
+        (x680::bnf::classsyntax_vector, syntaxes)
+        )
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::class_assignment,
+        (std::string, identifier)
+        (x680::bnf::class_element, class_)
+        )
+
+
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::import,
@@ -819,7 +1046,6 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::imports, imports_)
         (x680::bnf::assignment_vector, elements)
         )
-
 
 
 
@@ -846,8 +1072,9 @@ namespace x680 {
                 skip
                         = qi::space |
                         repository::confix("/*", "*/")[*(qi::char_ - "*/")] |
-                        repository::confix("--", qi::eol)[*(qi::char_ - qi::eol)] |
-                        repository::confix("--", "--")[*(qi::char_ - "--")];
+                        repository::confix("--", "--")[*(qi::char_ - ("--" | qi::eol))] |
+                        repository::confix("--", qi::eol)[*(qi::char_ - qi::eol)]
+                        ;
                 ;
             }
             qi::rule<str_iterator> skip;
@@ -892,8 +1119,6 @@ namespace x680 {
         typedef qi::rule<str_iterator, unsigned() > unum_rule;
 
 
-        extern str_rule comment_beg;
-        extern str_rule comment_end;
         extern str_rule pos_number_str;
         extern str_rule number_str;
         extern str_rule realnumber_str;
@@ -901,6 +1126,8 @@ namespace x680 {
         extern str_rule hstring_str;
         extern str_rule cstring_str;
         extern str_rule curly_barket_pair;
+        
+    
 
         extern term_rule ECODED_;
         extern term_rule INTERSECTION_;
@@ -997,7 +1224,11 @@ namespace x680 {
         extern term_rule EXTENSIBILITY_IMPLIED_;
 
 
-
+        extern str_rule literal_except_token; 
+        extern str_rule word_;   
+        extern str_rule spaces_;         
+        extern str_rule Literal_;
+        extern str_rule SyntaxField_;        
         extern str_rule typereference_; //(=objectreference_, modulereference_ )
         extern str_rule identifier_; //(=objectsetreference,valuereference_ )
         extern str_rule valuereference_; //(=objectsetreference,identifier_ )
@@ -1005,7 +1236,17 @@ namespace x680 {
         extern str_rule objectreference_; //(=typereference_,modulereference_)
         extern str_rule objectsetreference_; //(=valuereference_,identifier_)
         extern str_rule objectclassreference_; //(~typereference_)        
-        extern str_rule comment_;
+        extern str_rule typefieldreference_; //(&typereference_)   
+        extern str_rule valuefieldreference_; //(&valuereference)        
+        extern str_rule valuesetfieldreference_; //(&typereference_)               
+        extern str_rule objectfieldreference_; //(&objectreference_)
+        extern str_rule objectsetfieldreference_; //(&objectsetreference_)  
+        extern str_rule bigfieldreference_; //(typereference_ | objectfieldreference_)
+        extern str_rule littlefieldreference_; //(valuefieldreference_ | valuesetfieldreference_ |objectsetfieldreference_ )    
+        extern str_rule PrimitiveFieldName_;
+        extern str_rule FieldName_;
+
+
         extern str_rule ExternalTypeReference_;
         extern str_rule DefinedType_;
         extern str_rule Externalvaluereference_;

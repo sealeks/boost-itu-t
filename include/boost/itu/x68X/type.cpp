@@ -24,7 +24,9 @@ namespace x680 {
 
         void Assignments_grammar::init() {
 
-            start_rule = *(TypeAssignment | ValueAssignment | ValueSetTypeAssignment);
+            start_rule = *(ObjectClassAssignment | TypeAssignment | ValueAssignment | ValueSetTypeAssignment);
+
+
 
             TypeAssignment = typereference_[bind(&type_identifier, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
@@ -34,15 +36,15 @@ namespace x680 {
                     >> Type[bind(&valuea_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> Value[bind(&valuea_value, qi::_val, qi::_1)];
-            
+
             ValueSetTypeAssignment = typereference_[bind(&valueset_reference, qi::_val, qi::_1)]
                     >> Type[bind(&valueset_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> qi::omit[qi::lit("{")]
-                    >> ElementSetSpecs[bind(&valueset_set, qi::_val, qi::_1)]                   
-                    >> qi::omit[qi::lit("}")];
+                    >> ValueSet[bind(&valueset_set, qi::_val, qi::_1)];
 
-
+            ObjectClassAssignment = (objectclassreference_
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> ObjectClassDefn)[bind(&classa_set, qi::_val, qi::_1, qi::_2)];
 
 
 
@@ -68,7 +70,9 @@ namespace x680 {
 
             DefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)];
 
-            InstanceOfType = qi::omit[qi::lexeme[INSTANCE_ >> +qi::blank >> OF_]] >> DefinedObjectClass_[bind(&type_instance, qi::_val, qi::_1)];
+            InstanceOfType = qi::omit[qi::lexeme[INSTANCE_ >> +qi::blank >> OF_]]
+                    >> DefinedObjectClass_[bind(&type_instance, qi::_val, qi::_1)]
+                    >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
             ReferencedType = DefinedType;
 
@@ -77,25 +81,33 @@ namespace x680 {
                     | (qi::lexeme[EMBEDDED_ >> +qi::blank >> PDV_])[bind(&type_deff, qi::_val, t_EMBEDDED_PDV)]
                     | (qi::lexeme[OBJECT_ >> +qi::blank >> IDENTIFIER_])[bind(&type_deff, qi::_val, t_OBJECT_IDENTIFIER)]
                     | (qi::lexeme[DATE_ >> +qi::blank >> TIME_])[bind(&type_deff, qi::_val, t_DATE_TIME)]
-                    | simple_typer[bind(&type_deff, qi::_val, qi::_1)]
-                    );
+                    | (distinct(qi::alnum | '-' )[simple_typer[bind(&type_deff, qi::_val, qi::_1)]])
+                    )
+                    >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
             IntegerType = INTEGER_[bind(&type_deff, qi::_val, t_INTEGER)]
-                    >> -NamedNumberList[bind(&type_deffinit, qi::_val, qi::_1)];
+                    >> -NamedNumberList[bind(&type_deffinit, qi::_val, qi::_1)]
+                    >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
             EnumeratedType = ENUMERATED_[bind(&type_deff, qi::_val, t_ENUMERATED)]
-                    >> -Enumerations[bind(&type_deffinit, qi::_val, qi::_1)];
+                    >> -Enumerations[bind(&type_deffinit, qi::_val, qi::_1)]
+                    >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
             BitStringType = qi::lexeme[BIT_ >> +qi::blank >> STRING_[bind(&type_deff, qi::_val, t_BIT_STRING)]]
-                    >> -NameBitList[bind(&type_deffinit, qi::_val, qi::_1)];
+                    >> -NameBitList[bind(&type_deffinit, qi::_val, qi::_1)]
+                    >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
 
 
 
-            SequenceOfType = (qi::lexeme[SEQUENCE_ >> +qi::blank >> OF_])[bind(&type_deff, qi::_val, t_SEQUENCE_OF)]
+            SequenceOfType = (qi::omit[SEQUENCE_]
+                    >> -(/*SizeConstraint[bind(&type_constraint, qi::_val, qi::_1)] | */Constraints[bind(&type_constraints, qi::_val, qi::_1)])
+                    >> qi::omit[OF_])[bind(&type_deff, qi::_val, t_SEQUENCE_OF)]
                     >> (TypeA | NamedType)[bind(&type_push, qi::_val, qi::_1) ];
 
-            SetOfType = (qi::lexeme[SET_ >> +qi::blank >> OF_])[bind(&type_deff, qi::_val, t_SET_OF)]
+            SetOfType = (qi::omit[SET_]
+                    >> -(/*SizeConstraint[bind(&type_constraint, qi::_val, qi::_1)] | */Constraints[bind(&type_constraints, qi::_val, qi::_1)])
+                    >> qi::omit[OF_])[bind(&type_deff, qi::_val, t_SET_OF)]
                     >> (TypeA | NamedType)[bind(&type_push, qi::_val, qi::_1) ];
 
 
@@ -167,24 +179,28 @@ namespace x680 {
 
             SelectionType = (identifier_
                     >> qi::omit[qi::lit("<")]
-                    >> Type)[bind(&type_select, qi::_val, qi::_1, qi::_2)];
+                    >> Type)[bind(&type_select, qi::_val, qi::_1, qi::_2)]
+                    >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
 
             SequenceType = SEQUENCE_[bind(&type_deff, qi::_val, t_SEQUENCE)]
                     >> qi::lit("{")
                     >> -RootComponentTypeLists [bind(&type_pushs, qi::_val, qi::_1) ]
-                    >> qi::lit("}");
+                    >> qi::lit("}")
+                    >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
 
             SetType = SET_[bind(&type_deff, qi::_val, t_SET)]
                     >> qi::lit("{")
                     >> -RootComponentTypeLists[bind(&type_pushs, qi::_val, qi::_1) ]
-                    >> qi::lit("}");
+                    >> qi::lit("}")
+                    >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
             ChoiceType = CHOICE_[bind(&type_deff, qi::_val, t_CHOICE)]
                     >> qi::lit("{")
                     >> -(AlternativeTypeLists[bind(&type_pushs, qi::_val, qi::_1) ])
-                    >> qi::lit("}");
+                    >> qi::lit("}")
+                    >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
 
 
@@ -198,8 +214,12 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  Constraint grammar
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-            
-            Constraints = + Constraint;
+
+            ValueSet = qi::omit[qi::lit("{")]
+                    >> ElementSetSpecs
+                    >> qi::omit[qi::lit("}")];
+
+            Constraints = +Constraint;
 
             Constraint %= qi::omit[qi::lit("(")] >> ConstraintSpec
                     >> -ExceptionSpecConstraints
@@ -287,7 +307,7 @@ namespace x680 {
                     >> Constraint[bind(&constraint_singletype, qi::_val, qi::_1)];
 
             NamedConstraint = identifier_[bind(&constraint_identifier, qi::_val, qi::_1)]
-                    >> Constraint[bind(&constraint_namedtype, qi::_val, qi::_1)]
+                    >> -Constraint[bind(&constraint_namedtype, qi::_val, qi::_1)]
                     >> -(PRESENT_[bind(&constraint_marker, qi::_val, cmk_present)]
                     | ABSENT_[bind(&constraint_marker, qi::_val, cmk_absent)]
                     | OPTIONAL_[bind(&constraint_marker, qi::_val, cmk_optional)]);
@@ -312,17 +332,23 @@ namespace x680 {
 
             ExceptionSpecConstraints = ExceptionSpecConstraint[ bind(&constraint_element_vector::push_back, qi::_val, qi::_1) ];
 
+            UserDefinedConstraintParameters = UserDefinedConstraintParameter_ % qi::omit[qi::lit(",")];
+
             UserDefinedConstraint =
-                    (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::blank >> BY_]])[bind(&constraint_tp, qi::_val, cns_UserDefinedConstraint)] >> qi::lit("{")
-                    >> -((UserDefinedConstraintParameter_ % qi::omit[qi::lit(",")])[bind(&constraint_userdef, qi::_val, qi::_1)]) >> qi::lit("}");
+                    (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::blank >> BY_]])[bind(&constraint_tp, qi::_val, cns_UserDefinedConstraint)]
+                    >> qi::omit[qi::lit("{")]
+                    >> -(UserDefinedConstraintParameters[bind(&constraint_userdef, qi::_val, qi::_1)])
+                    >> qi::omit[qi::lit("}")];
 
             //qi::rule<str_iterator, constraint_element(), skip_cmt_type> SimpleTableConstraint;
+
+            AtNotations = *AtNotation_;
 
             ComponentRelationConstraint = (qi::omit[qi::lit("{")]
                     >> DefinedObjectSet_
                     >> qi::omit[qi::lit("}")]
                     >> qi::omit[qi::lit("{")]
-                    >> *AtNotation_
+                    >> AtNotations
                     >> qi::omit[qi::lit("}")])[bind(&constraint_relation, qi::_val, qi::_1, qi::_2)];
 
             ContentsConstraintType = qi::omit[CONTAINING_]
@@ -335,6 +361,93 @@ namespace x680 {
                     >> Type
                     >> qi::omit[qi::lexeme[ENCODED_ >> +qi::blank >> BY_]]
                     >> (IdentifierValue | ObjectIdentifierValue))[bind(&constraint_content_tv, qi::_val, qi::_1, qi::_2)];
+
+
+
+
+
+
+
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  ObjectClassAssignment grammar
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+
+            /*enum fieldkind_type {
+                fkind_NoDef,
+                fkind_TypeFieldSpec,
+                fkind_FixedTypeValueFieldSpec,
+                fkind_VariableTypeValueFieldSpec,
+                fkind_FixedTypeValueSetFieldSpec,
+                fkind_VariableTypeValueSetFieldSpec,
+                fkind_ObjectFieldSpec,
+                fkind_ObjectSetFieldSpec    
+            };*/
+
+
+            //ObjectClass = ObjectClassDefn;
+
+            ObjectClassDefn = qi::omit[CLASS_ >> qi::lit("{")] >> FieldSpecs[bind(&class_fields, qi::_val, qi::_1)] >> qi::omit[qi::lit("}")]
+                    >> -(WithSyntaxSpec[bind(&class_syntaxes, qi::_val, qi::_1)]);
+
+            FieldSpecs = FieldSpec % qi::omit[qi::lit(",")];
+
+            FieldSpec = TypeFieldSpecS | FixedTypeValueFieldSpec | FixedTypeValueSetFieldSpec | VariableTypeValueSetFieldSpec | VariableTypeValueFieldSpec | TypeFieldSpec; //ObjectFieldSpec | ObjectSetFieldSpec;     
+
+            TypeFieldSpecS = (typefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> (OPTIONAL_[bind(&classfield_optional, qi::_val)] | (qi::omit[DEFAULT_]
+                    >> Type[bind(&classfield_defaulttype, qi::_val, qi::_1)])))[bind(&classfield_tp, qi::_val, fkind_TypeFieldSpec)];
+
+            TypeFieldSpec = (typefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] | (qi::omit[DEFAULT_]
+                    >> Type[bind(&classfield_defaulttype, qi::_val, qi::_1)])))[bind(&classfield_tp, qi::_val, fkind_TypeFieldSpec)];
+
+            FixedTypeValueFieldSpec = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> Type[bind(&classfield_holder_ft, qi::_val, qi::_1, true)]
+                    >> -(((UNIQUE_[bind(&classfield_unique, qi::_val)])
+                    || OPTIONAL_[bind(&classfield_optional, qi::_val)])
+                    | (OPTIONAL_[bind(&classfield_optional, qi::_val)])
+                    | (qi::omit[DEFAULT_]
+                    >> (DefinedValue_[bind(&classfield_defaultref, qi::_val, qi::_1)] | Value[bind(&classfield_defaultvalue, qi::_val, qi::_1)])));
+
+
+            VariableTypeValueFieldSpec = (valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> FieldName_[bind(&classfield_holder, qi::_val, qi::_1)]
+                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
+                    (qi::omit[DEFAULT_]
+                    >> (DefinedValue_[bind(&classfield_defaultref, qi::_val, qi::_1)]
+                    | Value[bind(&classfield_defaultvalue, qi::_val, qi::_1)]))))[bind(&classfield_tp, qi::_val, fkind_VariableTypeValueFieldSpec)];
+
+
+            FixedTypeValueSetFieldSpec = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> Type[bind(&classfield_holder_ft, qi::_val, qi::_1, false)]
+                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
+                    (qi::omit[DEFAULT_]
+                    >> (DefinedType_[bind(&classfield_defaultref, qi::_val, qi::_1)] | ValueSet[bind(&classfield_defaultset, qi::_val, qi::_1)]))));
+
+
+            VariableTypeValueSetFieldSpec = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> FieldName_[bind(&classfield_holder, qi::_val, qi::_1)]
+                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
+                    (qi::omit[DEFAULT_]
+                    >> (DefinedType_[bind(&classfield_defaultref, qi::_val, qi::_1)]
+                    | ValueSet[bind(&classfield_defaultset, qi::_val, qi::_1)]))))[bind(&classfield_tp, qi::_val, fkind_VariableTypeValueSetFieldSpec)];
+
+
+            /*qi::rule<str_iterator, classfield_type(), skip_cmt_type> ObjectFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> ObjectSetFieldSpec;*/
+
+
+            WithSyntaxSpec = qi::omit[ qi::lexeme[WITH_ >> +qi::blank >> SYNTAX_]] >> SyntaxList;
+            SyntaxList = qi::omit[qi::lit("{")] >> TokenOrGroupSpec >> qi::omit[qi::lit("}")];
+            TokenOrGroupSpec = +(AiasTokenOToken | RequiredToken | OptionalToken | TokenOToken);
+            OptionalGroup = qi::omit[qi::lit("[")] >> TokenOrGroupSpec >> qi::omit[qi::lit("]")];
+            TokenOToken = OptionalGroup[bind(&classsyntax_group, qi::_val, qi::_1)];
+            AiasTokenOToken = (SyntaxField_ >> OptionalGroup)[bind(&classsyntax_agroup, qi::_val, qi::_1, qi::_2)];
+            RequiredToken = -(SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)]) >> PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)];
+            OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")])[bind(&classsyntax_optional, qi::_val)];
 
         }
 
