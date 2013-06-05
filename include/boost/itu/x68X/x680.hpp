@@ -206,8 +206,6 @@ namespace x680 {
         field_defaultset,
         field_defaultref
     };
-    
-    
 
     enum fieldkind_type {
 
@@ -221,6 +219,54 @@ namespace x680 {
         fkind_ObjectSetFieldSpec,
         fkind_FixedType_or_Object,
         fkind_FixedTypeSet_or_ObjectSet
+    };
+
+    enum objectfieldkind_type {
+
+        ofk_NoDef,
+        ofk_Type,
+        ofk_Value,
+        ofk_ValueSet,
+        ofk_Object,
+        ofk_ObjectSet,
+        ofk_Value_or_ObjectSet,
+        ofk_Value_or_Object
+    };
+
+    enum object_type {
+
+        ot_Nodef,
+        ot_Object,
+        ot_Refference,
+        ot_Raw,
+        ot_UNION,
+        ot_INTERSECTION,
+        ot_EXCEPT,
+        ot_ALLEXCEPT,
+        ot_EXTENTION
+
+    };
+
+    enum governor_type {
+
+        gvr_No,
+        gvr_Type,
+        gvr_Class,
+        gvr_Type_or_Class
+    };
+
+    enum parameter_type {
+
+        prm_NoDef,
+        prm_Type,
+        prm_Class,
+        prm_ValueSet,
+        prm_ObjectSet,
+        prm_Type_or_Class_or_Set,
+        prm_Value,
+        prm_Object,
+        prm_Value_or_Object,
+        prm_Reff
     };
 
     struct tag_type {
@@ -282,7 +328,20 @@ namespace x680 {
 
         struct classsyntax_type;
         typedef std::vector<classsyntax_type> classsyntax_vector;
-        
+
+        struct objectfield_type;
+        typedef std::vector<objectfield_type> objectfield_vector;
+
+        struct object_element;
+        typedef std::vector<object_element> object_element_vector;
+        typedef object_element_vector objectset_element;
+
+        struct argument_type;
+        typedef std::vector<argument_type> argument_vector;
+
+        struct parameter_element;
+        typedef std::vector<parameter_element> parameter_vector;
+
         using boost::spirit::repository::distinct;
 
 
@@ -374,12 +433,8 @@ namespace x680 {
         inline void type_constraints(type_element& holder, const constraints_vector& val) {
             holder.constraints = val;
         }
-              
-        inline void type_constraint(type_element& holder, const constraint_element& val) {
-            constraint_element_vector tmp;
-            tmp.push_back(val);
-            holder.constraints.push_back(tmp);
-        }        
+
+
 
 
 
@@ -560,6 +615,12 @@ namespace x680 {
 
         inline void push_constraints(constraint_element_vector& holder, const constraint_element_vector& val) {
             holder.insert(holder.end(), val.begin(), val.end());
+        }
+
+        inline void pushs_constraint(constraints_vector& holder, const constraint_element& val) {
+            constraint_element_vector tmp;
+            tmp.push_back(val);
+            holder.push_back(tmp);
         }
 
 
@@ -817,21 +878,21 @@ namespace x680 {
         inline void classsyntax_field(classsyntax_type& holder, const std::string& val) {
             holder.field = val;
         }
-        
-        inline void classsyntax_agroup(classsyntax_type& holder, const std::string& alias, const classsyntax_vector& group ) {
-            holder.alias =  alias;
+
+        inline void classsyntax_agroup(classsyntax_type& holder, const std::string& alias, const classsyntax_vector& group) {
+            holder.alias = alias;
             holder.group = group;
-            holder.optional =true;
-        }      
-        
-        inline void classsyntax_group(classsyntax_type& holder, const classsyntax_vector& group ) {
+            holder.optional = true;
+        }
+
+        inline void classsyntax_group(classsyntax_type& holder, const classsyntax_vector& group) {
             holder.group = group;
-            holder.optional =true;
-        }                
-        
+            holder.optional = true;
+        }
+
         inline void classsyntax_optional(classsyntax_type& holder) {
-            holder.optional =true;
-        }                
+            holder.optional = true;
+        }
 
         struct class_element {
 
@@ -866,17 +927,189 @@ namespace x680 {
 
 
 
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  object_element
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+
+        struct objectfield_type {
+
+            objectfield_type() : tp(ofk_NoDef) {
+            }
+
+            std::string field;
+            objectfieldkind_type tp;
+            type_element holdertype;
+            value_element holdervalue;
+            valueset_element holdervalueset;
+            std::string holderreff;
+        };
+
+        inline void objectfield_field(objectfield_type& holder, const std::string& val) {
+            holder.field = val;
+        }
+
+        inline void objectfield_typeset(objectfield_type& holder, const type_element& val) {
+            holder.holdertype = val;
+            holder.tp = ofk_Type;
+        }
+
+        inline void objectfield_value(objectfield_type& holder, const value_element& val) {
+            holder.holdervalue = val;
+            holder.tp = ofk_Value;
+        }
+
+        inline void objectfield_valueset(objectfield_type& holder, const valueset_element& val) {
+            holder.holdervalueset = val;
+            holder.tp = ofk_ValueSet;
+        }
+
+        struct object_element {
+
+            object_element() : tp(ot_Nodef) {
+            }
+
+            object_element(object_type t) : tp(t) {
+            }
+
+            object_type tp;
+            objectfield_vector fields;
+            std::string reff;
+            std::string raw;
+
+        };
+
+        const object_element OBJECT_UNION = object_element(ot_UNION);
+        const object_element OBJECT_INTERSECTION = object_element(ot_INTERSECTION);
+        const object_element OBJECT_EXCEPT = object_element(ot_EXCEPT);
+        const object_element OBJECT_ALLEXCEPT = object_element(ot_ALLEXCEPT);
+        const object_element OBJECT_EXTENTION = object_element(ot_EXTENTION);
+
+        inline void object_fields(object_element& holder, const objectfield_vector& val) {
+            holder.fields = val;
+            holder.tp = ot_Object;
+        }
+
+        inline void object_reff(object_element& holder, const std::string& val) {
+            holder.reff = val;
+            holder.tp = ot_Refference;
+        }
+
+        inline void object_raw(object_element& holder, const std::string& val) {
+            holder.raw = val;
+            holder.tp = ot_Raw;
+        }
+
+        struct object_assignment {
+
+            std::string identifier;
+            std::string classref;
+            object_element object;
+        };
+
+        inline void objecta_set(object_assignment& holder, const std::string& ind, const std::string& cl, const object_element& obj) {
+            holder.identifier = ind;
+            holder.classref = cl;
+            holder.object = obj;
+        }
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  objectset_element
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+
+        struct objectset_assignment {
+
+            std::string identifier;
+            std::string classref;
+            objectset_element set;
+        };
+
+        inline void objectseta_set(objectset_assignment& holder, const std::string& ind, const std::string& cl, const objectset_element& objset) {
+            holder.identifier = ind;
+            holder.classref = cl;
+            holder.set = objset;
+        }
+
+        inline void push_objects(object_element_vector& holder, const object_element_vector& val) {
+            holder.insert(holder.end(), val.begin(), val.end());
+        }
+
+
+
+
+
+        //Parameter
+
+        struct argument_type {
+
+            argument_type() : tp(gvr_No) {
+            }
+
+            std::string governorreff;
+            type_element governortype;
+            governor_type tp;
+            std::string argument;
+        };
+
+        inline void argument_governor_tp(argument_type& holder, const type_element& val) {
+            if (val.builtin_t == t_Reference) {
+                holder.governorreff = val.reference;
+                holder.tp = gvr_Type_or_Class;
+            } else {
+                holder.governortype = val;
+                holder.tp = gvr_Type;
+            }
+        }
+
+        inline void argument_governor_reff(argument_type& holder, const std::string& val) {
+            holder.governorreff = val;
+            holder.tp = gvr_Type_or_Class;
+        }
+
+        inline void argument_argument(argument_type& holder, const std::string& val) {
+            holder.argument = val;
+        }
+
+        struct parameter_element {
+
+            parameter_element() : tp(prm_NoDef) {
+            }
+
+            parameter_type tp;
+            type_element type;
+            class_element class_;
+            value_element value;
+            object_element object;
+            valueset_element valueset;
+            objectset_element objectset;
+            std::string reff;
+        };
+
+        inline void parameter_reff(parameter_element& holder, const std::string& val) {
+            holder.reff = val;
+            holder.tp = prm_Reff;
+        }
+
+        inline void parameter_type(parameter_element& holder, const type_element& val) {
+            holder.type = val;
+            holder.tp = prm_Type;
+        }
+
         // Assigment       
 
         typedef boost::variant<
         type_assignment,
         value_assignment,
         valueset_assignment,
-        class_assignment>
+        class_assignment,
+        object_assignment,
+        objectset_assignment>
         assignment;
 
         typedef std::vector<assignment> assignment_vector;
-
 
         typedef std::vector<std::string> exports;
 
@@ -1027,6 +1260,63 @@ BOOST_FUSION_ADAPT_STRUCT(
         )
 
 
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::objectfield_type,
+        (std::string, field)
+        (x680::objectfieldkind_type, tp)
+        (x680::bnf::type_element, holdertype)
+        (x680::bnf::value_element, holdervalue)
+        (x680::bnf::valueset_element, holdervalueset)
+        (std::string, holderreff)
+        )
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::object_element,
+        (x680::bnf::objectfield_vector, fields)
+        (x680::object_type, tp)
+        (std::string, reff)
+        (std::string, raw)
+        )
+
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::object_assignment,
+        (std::string, identifier)
+        (std::string, classref)
+        (x680::bnf::object_element, object)
+        )
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::objectset_assignment,
+        (std::string, identifier)
+        (std::string, classref)
+        (x680::bnf::objectset_element, set)
+        )
+
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::argument_type,
+        (std::string, governorreff)
+        (x680::bnf::type_element, governortype)
+        (x680::governor_type, tp)
+        (std::string, argument)
+        )
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::parameter_element,
+        (x680::parameter_type, tp)
+        (x680::bnf::type_element, type)
+        (x680::bnf::class_element, class_)
+        (x680::bnf::value_element, value)
+        (x680::bnf::object_element, object)
+        (x680::bnf::valueset_element, valueset)
+        (x680::bnf::objectset_element, objectset)
+        (std::string, reff)
+        )
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::import,
@@ -1046,6 +1336,8 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::imports, imports_)
         (x680::bnf::assignment_vector, elements)
         )
+
+
 
 
 
@@ -1113,9 +1405,6 @@ namespace x680 {
         typedef qi::rule<str_iterator, value_element_vector() > value_elements_rule;
         typedef qi::rule<str_iterator, value_element_vector(), skip_cmt_type > value_elements_sk_rule;
 
-        //typedef qi::rule<str_iterator, type_assignment_vector() > syn_elements_rule;
-        //typedef qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type > syn_elements_sk_rule;
-
         typedef qi::rule<str_iterator, unsigned() > unum_rule;
 
 
@@ -1126,8 +1415,8 @@ namespace x680 {
         extern str_rule hstring_str;
         extern str_rule cstring_str;
         extern str_rule curly_barket_pair;
-        
-    
+
+
 
         extern term_rule ECODED_;
         extern term_rule INTERSECTION_;
@@ -1221,17 +1510,17 @@ namespace x680 {
         extern term_rule EMBEDDED_;
         extern term_rule INTEGER_;
         extern term_rule RELATIVE_OID_IRI_;
-        extern term_rule EXTENSIBILITY_IMPLIED_;
 
 
-        extern str_rule literal_except_token; 
-        extern str_rule word_;   
-        extern str_rule spaces_;         
+        extern str_rule literal_except_token;
+        extern str_rule word_;
+        extern str_rule spaces_;
         extern str_rule Literal_;
-        extern str_rule SyntaxField_;        
+        extern str_rule SyntaxField_;
         extern str_rule typereference_; //(=objectreference_, modulereference_ )
         extern str_rule identifier_; //(=objectsetreference,valuereference_ )
         extern str_rule valuereference_; //(=objectsetreference,identifier_ )
+        extern str_rule valuesetreference_; //(=typereference_ )        
         extern str_rule modulereference_; //(=typereference_,objectreference)
         extern str_rule objectreference_; //(=typereference_,modulereference_)
         extern str_rule objectsetreference_; //(=valuereference_,identifier_)
@@ -1249,11 +1538,15 @@ namespace x680 {
 
         extern str_rule ExternalTypeReference_;
         extern str_rule DefinedType_;
-        extern str_rule Externalvaluereference_;
+        extern str_rule ExternalValueReference_;
         extern str_rule DefinedValue_;
+        extern str_rule ExternalValueSetReference_;
+        extern str_rule DefinedValueSet_;
         extern str_rule ExternalObjectClassReference_;
         extern str_rule DefinedObjectClass_;
-        extern str_rule ExternalObjectSetReference;
+        extern str_rule ExternalObjectReference_;
+        extern str_rule DefinedObject_;
+        extern str_rule ExternalObjectSetReference_;
         extern str_rule DefinedObjectSet_;
         /*??*/ extern str_rule UserDefinedConstraintParameter_;
         /*??*/ extern str_rule AtNotation_;
@@ -1263,51 +1556,6 @@ namespace x680 {
         extern str_rule ParameterizedReference_; // x.683
         extern str_rule Symbol_;
         extern strvect_sk_rule SymbolList_;
-
-
-
-        //extern strpair_rule ObjNameValComponent;
-
-        /*      DefinedType ::=
-              ExternalTypeReference
-              | typereference
-              | ParameterizedType
-              | ParameterizedValueSetType
-   
-              ExternalTypereference : : =
-              modulereference
-              "."
-              typereference
-   
-              ParameterizedType ::=
-              !!!!SimpleDefinedType
-              ActualParameterList
-  
-               !!!!SimpleDefinedType ::=
-              ExternalTypeReference |
-              typereference
-   
-   
-               ParameterizedValueSetType ::=
-              !!!SimpleDefinedType
-              !!!ActualParameterList
-
-   
-   
-              ActualParameterList ::=
-              "{" ActualParameter "," + "}"
-  
-              ActualParameter ::=
-              Type
-              | Value
-              | ValueSet
-              | DefinedObjectClass
-              | Object
-              | ObjectSet
-   
-         */
-
-
 
 
 

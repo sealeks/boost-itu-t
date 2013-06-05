@@ -24,7 +24,7 @@ namespace x680 {
 
         void Assignments_grammar::init() {
 
-            start_rule = *(ObjectClassAssignment | TypeAssignment | ValueAssignment | ValueSetTypeAssignment);
+            start_rule = *(ObjectClassAssignment | TypeAssignment | ObjectAssignment | ObjectSetAssignment | ValueAssignment | ValueSetTypeAssignment);
 
 
 
@@ -46,8 +46,16 @@ namespace x680 {
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> ObjectClassDefn)[bind(&classa_set, qi::_val, qi::_1, qi::_2)];
 
+            ObjectAssignment = (objectreference_
+                    >> DefinedObjectClass_
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> DefaultSyntax)[bind(&objecta_set, qi::_val, qi::_1, qi::_2, qi::_3)];
 
 
+            ObjectSetAssignment = (objectsetreference_
+                    >> DefinedObjectClass_
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> ObjectSet)[bind(&objectseta_set, qi::_val, qi::_1, qi::_2, qi::_3)];
 
 
 
@@ -81,7 +89,7 @@ namespace x680 {
                     | (qi::lexeme[EMBEDDED_ >> +qi::blank >> PDV_])[bind(&type_deff, qi::_val, t_EMBEDDED_PDV)]
                     | (qi::lexeme[OBJECT_ >> +qi::blank >> IDENTIFIER_])[bind(&type_deff, qi::_val, t_OBJECT_IDENTIFIER)]
                     | (qi::lexeme[DATE_ >> +qi::blank >> TIME_])[bind(&type_deff, qi::_val, t_DATE_TIME)]
-                    | (distinct(qi::alnum | '-' )[simple_typer[bind(&type_deff, qi::_val, qi::_1)]])
+                    | (distinct(qi::alnum | '-')[simple_typer[bind(&type_deff, qi::_val, qi::_1)]])
                     )
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
@@ -93,21 +101,21 @@ namespace x680 {
                     >> -Enumerations[bind(&type_deffinit, qi::_val, qi::_1)]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
-            BitStringType = qi::lexeme[BIT_ >> +qi::blank >> STRING_[bind(&type_deff, qi::_val, t_BIT_STRING)]]
+            BitStringType = BIT_ >> +qi::blank >> STRING_[bind(&type_deff, qi::_val, t_BIT_STRING)]
                     >> -NameBitList[bind(&type_deffinit, qi::_val, qi::_1)]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
 
 
 
-            SequenceOfType = (qi::omit[SEQUENCE_]
-                    >> -(/*SizeConstraint[bind(&type_constraint, qi::_val, qi::_1)] | */Constraints[bind(&type_constraints, qi::_val, qi::_1)])
-                    >> qi::omit[OF_])[bind(&type_deff, qi::_val, t_SEQUENCE_OF)]
+            SequenceOfType = (SEQUENCE_
+                    >> -((SizeConstraints[bind(&type_constraints, qi::_val, qi::_1)]) | (Constraints[bind(&type_constraints, qi::_val, qi::_1)]))
+                    >> OF_)[bind(&type_deff, qi::_val, t_SEQUENCE_OF)]
                     >> (TypeA | NamedType)[bind(&type_push, qi::_val, qi::_1) ];
 
-            SetOfType = (qi::omit[SET_]
-                    >> -(/*SizeConstraint[bind(&type_constraint, qi::_val, qi::_1)] | */Constraints[bind(&type_constraints, qi::_val, qi::_1)])
-                    >> qi::omit[OF_])[bind(&type_deff, qi::_val, t_SET_OF)]
+            SetOfType = (SET_
+                    >> -((SizeConstraints[bind(&type_constraints, qi::_val, qi::_1)]) | (Constraints[bind(&type_constraints, qi::_val, qi::_1)]))
+                    >> OF_)[bind(&type_deff, qi::_val, t_SET_OF)]
                     >> (TypeA | NamedType)[bind(&type_push, qi::_val, qi::_1) ];
 
 
@@ -220,6 +228,8 @@ namespace x680 {
                     >> qi::omit[qi::lit("}")];
 
             Constraints = +Constraint;
+
+            SizeConstraints = SizeConstraint[bind(&pushs_constraint, qi::_val, qi::_1)];
 
             Constraint %= qi::omit[qi::lit("(")] >> ConstraintSpec
                     >> -ExceptionSpecConstraints
@@ -375,16 +385,6 @@ namespace x680 {
             //  ObjectClassAssignment grammar
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 
-            /*enum fieldkind_type {
-                fkind_NoDef,
-                fkind_TypeFieldSpec,
-                fkind_FixedTypeValueFieldSpec,
-                fkind_VariableTypeValueFieldSpec,
-                fkind_FixedTypeValueSetFieldSpec,
-                fkind_VariableTypeValueSetFieldSpec,
-                fkind_ObjectFieldSpec,
-                fkind_ObjectSetFieldSpec    
-            };*/
 
 
             //ObjectClass = ObjectClassDefn;
@@ -449,10 +449,91 @@ namespace x680 {
             RequiredToken = -(SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)]) >> PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)];
             OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")])[bind(&classsyntax_optional, qi::_val)];
 
+
+
+
+
+
+
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  ObjectAssignment grammar
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////              
+
+            ObjectDefn = DefaultSyntax | DefinedSyntax;
+
+
+            DefaultSyntax = qi::omit[qi::lit("{")] >> FieldSettings[bind(&object_fields, qi::_val, qi::_1)] >> qi::omit[qi::lit("}")];
+
+            FieldSettings = FieldSetting % qi::omit[qi::lit(",")];
+
+            FieldSetting = PrimitiveFieldName_[bind(&objectfield_field, qi::_val, qi::_1)] >> (Type[bind(&objectfield_typeset, qi::_val, qi::_1)] | Value[bind(&objectfield_value, qi::_val, qi::_1)] | ValueSet[bind(&objectfield_valueset, qi::_val, qi::_1)]);
+
+
+
+
+
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  ObjectSetAssignment grammar
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+            ObjectSet = qi::omit[qi::lit("{")]
+                    >> oElementSetSpecs
+                    >> qi::omit[qi::lit("}")];
+
+
+
+
+            oElementSetSpecs %= oElementSetSpec >>
+                    -(qi::omit[qi::lit(",")] >> oExtention >>
+                    -(qi::omit[qi::lit(",")] >> oElementSetSpec));
+
+
+            oUElems %= ((qi::omit[(UNION_ | qi::lit("|"))]
+                    >> oUnions)[ bind(&object_element_vector::push_back, qi::_val, OBJECT_UNION) ]);
+
+            oElementSetSpec
+                    = oUnions[bind(&push_objects, qi::_val, qi::_1)] >> *(oUElems[bind(&push_objects, qi::_val, qi::_1)]);
+
+            oIElems %= (qi::omit[(INTERSECTION_ | qi::lit("^"))]
+                    >> oIntersections)[bind(&object_element_vector::push_back, qi::_val, OBJECT_INTERSECTION)];
+
+            oUnions =
+                    oIntersections[bind(&push_objects, qi::_val, qi::_1)] >> *(oIElems[bind(&push_objects, qi::_val, qi::_1)]);
+
+
+            oEElems %= (qi::omit[EXCEPT_ ]
+                    >> oExclusions)[bind(&object_element_vector::push_back, qi::_val, OBJECT_EXCEPT)];
+
+            oIntersections =
+                    oExclusions[bind(&push_objects, qi::_val, qi::_1)] >> *(oEElems[bind(&push_objects, qi::_val, qi::_1)]);
+
+
+            oAElems %=
+                    (qi::omit[qi::lit("ALL EXCEPT")]
+                    >> oExclusions)[bind(&object_element_vector::push_back, qi::_val, OBJECT_ALLEXCEPT)];
+
+            oExclusions
+                    = oElement
+                    | qi::omit[qi::lit("(")]
+                    >> oElementSetSpec
+                    >> qi::omit[ qi::lit(")")]
+                    | oAElems
+                    ;
+
+            oExtention = qi::lit("...")[qi::_val = OBJECT_EXTENTION];
+
+            oElement = DefaultSyntax[qi::_val = qi::_1 ] | DefinedObject_[bind(&object_reff, qi::_val, qi::_1)];
+
+
+
+
         }
-
-
-
 
     }
 }

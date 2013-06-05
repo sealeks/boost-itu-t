@@ -129,6 +129,8 @@ namespace x680 {
             qi::rule<str_iterator, value_assignment(), skip_cmt_type> ValueAssignment;
             qi::rule<str_iterator, valueset_assignment(), skip_cmt_type> ValueSetTypeAssignment;
             qi::rule<str_iterator, class_assignment(), skip_cmt_type> ObjectClassAssignment;
+            qi::rule<str_iterator, object_assignment(), skip_cmt_type> ObjectAssignment;
+            qi::rule<str_iterator, objectset_assignment(), skip_cmt_type> ObjectSetAssignment;
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  TypeAssigment grammar
@@ -209,6 +211,7 @@ namespace x680 {
             qi::rule < std::string::iterator, valueset_element(), skip_cmt_type> ValueSet;
 
             qi::rule < std::string::iterator, constraints_vector(), skip_cmt_type> Constraints;
+            qi::rule < std::string::iterator, constraints_vector(), skip_cmt_type> SizeConstraints;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> Constraint;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ConstraintSpec;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpecs;
@@ -288,10 +291,50 @@ namespace x680 {
             qi::rule<str_iterator, classsyntax_type(), skip_cmt_type> OptionalToken;
             qi::rule<str_iterator, classsyntax_type(), skip_cmt_type> AiasTokenOToken;
             qi::rule<str_iterator, classsyntax_type(), skip_cmt_type> TokenOToken;
-            ;
+
+
+
+
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  ObjectAssignment grammar
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+
+            qi::rule<str_iterator, object_element(), skip_cmt_type> ObjectDefn;
+            qi::rule<str_iterator, object_element(), skip_cmt_type> DefaultSyntax;
+            qi::rule<str_iterator, object_element(), skip_cmt_type> DefinedSyntax;
+
+            qi::rule<str_iterator, objectfield_vector(), skip_cmt_type> FieldSettings;
+            qi::rule<str_iterator, objectfield_type(), skip_cmt_type> FieldSetting;
+
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  ObjectSetAssignment grammar
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+
+            qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> ObjectSet;
+
+
+            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs;
+            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpec;
+            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oIntersections;
+            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oUnions;
+            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oExclusions;
+
+            qi::rule<str_iterator, object_element_vector(), skip_cmt_type> oUElems;
+            qi::rule<str_iterator, object_element_vector(), skip_cmt_type> oIElems;
+            qi::rule<str_iterator, object_element_vector(), skip_cmt_type> oEElems;
+            qi::rule<str_iterator, object_element_vector(), skip_cmt_type> oAElems;
+
+            qi::rule<str_iterator, object_element(), skip_cmt_type> oExtention;
+
+            qi::rule<str_iterator, object_element(), skip_cmt_type> oElement;
 
         };
-
 
 
     }
