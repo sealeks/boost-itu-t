@@ -85,6 +85,13 @@ namespace x680 {
         t_ValueSetFromObjects,        
         t_Reference
     };
+    
+
+    enum definedclass_type {
+        cl_SpecDef,
+        cl_TYPE_IDENTIFIER, 
+        cl_ABSTRACT_SYNTAX        
+    };    
 
     enum tagclass_type {
 
@@ -933,10 +940,21 @@ namespace x680 {
         }
 
         struct class_element {
+            
+             class_element() : tp(cl_SpecDef) { }    
+             
+             class_element(definedclass_type t) : tp(t) { }             
 
+            definedclass_type tp;
             classfield_vector fields;
             classsyntax_vector syntaxes;
         };
+        
+        inline void class_type(class_element& holder, const definedclass_type& val) {
+            holder.tp = val;
+            //cl_TYPE_IDENTIFIER, 
+            //cl_ABSTRACT_SYNTAX                  
+        }        
 
         inline void class_fields(class_element& holder, const classfield_vector& val) {
             holder.fields = val;
@@ -946,6 +964,11 @@ namespace x680 {
             holder.syntaxes = val;
         }
 
+        
+
+        const class_element CLASS_TYPE_IDENTIFIER =  class_element(cl_TYPE_IDENTIFIER);
+        const class_element CLASS_ABSTRACT_SYNTAX =  class_element(cl_ABSTRACT_SYNTAX);        
+  
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         //  class_assignment

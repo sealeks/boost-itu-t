@@ -83,7 +83,7 @@ namespace x680 {
         term_rule EXTERNAL_ = distinct(qi::alnum | '-')["EXTERNAL "];
         term_rule OBJECT_ = distinct(qi::alnum | '-')["OBJECT"];
         term_rule TeletexString_ = distinct(qi::alnum | '-')["TeletexString"];
-        term_rule BY_ = distinct(qi::alnum | '-')["BY "];
+        term_rule BY_ = distinct(qi::alnum | '-')["BY"];
         term_rule FALSE_ = distinct(qi::alnum | '-')["FALSE"];
         term_rule ObjectDescriptor_ = distinct(qi::alnum | '-')["ObjectDescriptor"];
         term_rule TIME_ = distinct(qi::alnum | '-')["TIME"];
@@ -171,10 +171,10 @@ namespace x680 {
 
 
         str_rule word_ = qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
-                >> *(((qi::char_("-")[ _val += qi::_1]
-                >> qi::upper[ _val += qi::_1])
-                | (qi::upper[ _val += qi::_1]
-                >> -qi::upper[ _val += qi::_1])) - (qi::char_("-")
+                >> *(((qi::char_("-")[qi::_val += qi::_1]
+                >> qi::upper[qi::_val += qi::_1])
+                | (qi::upper[qi::_val += qi::_1]
+                >> -qi::upper[qi::_val += qi::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::upper))))];
 
         str_rule spaces_ = qi::space[ qi::_val = qi::_1 ] >> *(qi::space[qi::_val += qi::_1 ]);
@@ -184,17 +184,17 @@ namespace x680 {
         str_rule SyntaxField_ = Literal_[qi::_val = qi::_1 ] >> *(spaces_[ qi::_val += qi::_1 ] >> Literal_[ qi::_val += qi::_1 ]);
 
         str_rule typereference_ = qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
-                >> *(((qi::char_("-")[ _val += qi::_1]
-                >> qi::alnum[ _val += qi::_1])
-                | (qi::alnum[ _val += qi::_1]
-                >> -qi::alnum[ _val += qi::_1])) - (qi::char_("-")
+                >> *(((qi::char_("-")[qi::_val += qi::_1]
+                >> qi::alnum[qi::_val += qi::_1])
+                | (qi::alnum[qi::_val += qi::_1]
+                >> -qi::alnum[qi::_val += qi::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::alnum))))];
 
-        str_rule identifier_ = qi::lexeme[qi::lower[ _val = qi::_1 ]
-                >> *(((qi::char_("-")[ _val += qi::_1]
-                >> qi::alnum[ _val += qi::_1])
-                | (qi::alnum[ _val += qi::_1]
-                >> -qi::alnum[ _val += qi::_1])) - (qi::char_("-")
+        str_rule identifier_ = qi::lexeme[qi::lower[qi::_val = qi::_1 ]
+                >> *(((qi::char_("-")[qi::_val += qi::_1]
+                >> qi::alnum[qi::_val += qi::_1])
+                | (qi::alnum[qi::_val += qi::_1]
+                >> -qi::alnum[qi::_val += qi::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::alnum))))];
 
         str_rule valuereference_ = identifier_;
@@ -207,11 +207,11 @@ namespace x680 {
 
         str_rule objectsetreference_ = typereference_;
 
-        str_rule objectclassreference_ = qi::lexeme[qi::upper[ _val = qi::_1 ]
-                >> *(((qi::char_("-")[ _val += qi::_1]
-                >> qi::char_("A-Z0-9")[ _val += qi::_1])
-                | (qi::char_("A-Z0-9")[ _val += qi::_1]
-                >> -qi::char_("A-Z0-9")[ _val += qi::_1])) - (qi::char_("-")
+        str_rule objectclassreference_ = qi::lexeme[qi::upper[qi::_val = qi::_1 ]
+                >> *(((qi::char_("-")[qi::_val += qi::_1]
+                >> qi::char_("A-Z0-9")[qi::_val += qi::_1])
+                | (qi::char_("A-Z0-9")[qi::_val += qi::_1]
+                >> -qi::char_("A-Z0-9")[qi::_val += qi::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::char_("A-Z0-9")))))]; //(~typereference_)        
 
         str_rule typefieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> typereference_[qi::_val += qi::_1]]; //(&typereference_)   
@@ -228,7 +228,7 @@ namespace x680 {
         str_rule bigreference_ = typereference_;
 
         str_rule littlereference_ = valuereference_;
-        
+
         str_rule bothreference_ = bigreference_ | littlereference_;
 
         str_rule bigfieldreference_ = typefieldreference_;
@@ -272,7 +272,7 @@ namespace x680 {
                 | TYPE_IDENTIFIER_
                 | ABSTRACT_SYNTAX_
                 | objectclassreference_;
-        
+
 
         str_rule DefinedValue_ = ExternalValueReference_ | valuereference_; //| ParameterizedValue        
 
@@ -287,12 +287,12 @@ namespace x680 {
         str_rule AtNotation_ = qi::string("@")[qi::_val = qi::_1 ] >> *(qi::string(".")[qi::_val += qi::_1]) >> (identifier_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1]);
 
         str_rule Reference_ = typereference_ | valuereference_;
-        
-        str_rule ObjectClassFieldType_ = DefinedObjectClass_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1];     
-        
-        str_rule SimpleTypeFromObject_ = DefinedObject_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1];;
-        
-        str_rule SimpleValueSetFromObjects_ = DefinedObjectSet_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1];;         
+
+        str_rule ObjectClassFieldType_ = DefinedObjectClass_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1];
+
+        str_rule SimpleTypeFromObject_ = DefinedObject_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1];
+
+        str_rule SimpleValueSetFromObjects_ = DefinedObjectSet_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1];
 
         str_rule ParameterizedReference_ = Reference_[ qi::_val = qi::_1]
                 >> qi::omit[*qi::space]

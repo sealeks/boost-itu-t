@@ -48,7 +48,7 @@ namespace x680 {
             ObjectClassAssignment = objectclassreference_[bind(&classa_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&classa_arguments, qi::_val, qi::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ObjectClassDefn[bind(&classa_class, qi::_val, qi::_1)];
+                    >> ObjectClass[bind(&classa_class, qi::_val, qi::_1)];
 
             ObjectAssignment = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])

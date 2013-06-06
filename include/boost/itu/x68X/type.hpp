@@ -298,6 +298,7 @@ namespace x680 {
 
             qi::rule<str_iterator, class_element(), skip_cmt_type> ObjectClass;
             qi::rule<str_iterator, class_element(), skip_cmt_type> ObjectClassDefn;
+            qi::rule<str_iterator, class_element(), skip_cmt_type> UsefulObjectClass;
 
             qi::rule<str_iterator, classfield_vector(), skip_cmt_type> FieldSpecs;
 
