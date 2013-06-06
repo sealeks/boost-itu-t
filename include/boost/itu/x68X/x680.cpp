@@ -225,6 +225,12 @@ namespace x680 {
         str_rule objectsetfieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> objectsetreference_[qi::_val += qi::_1]]; //(&objectsetreference_)  
 
 
+        str_rule bigreference_ = typereference_;
+
+        str_rule littlereference_ = valuereference_;
+        
+        str_rule bothreference_ = bigreference_ | littlereference_;
+
         str_rule bigfieldreference_ = typefieldreference_;
 
         str_rule littlefieldreference_ = valuefieldreference_;
@@ -262,10 +268,11 @@ namespace x680 {
 
 
 
-        str_rule DefinedObjectClass_ = TYPE_IDENTIFIER_
+        str_rule DefinedObjectClass_ = ExternalObjectClassReference_
+                | TYPE_IDENTIFIER_
                 | ABSTRACT_SYNTAX_
-                | ExternalObjectClassReference_
                 | objectclassreference_;
+        
 
         str_rule DefinedValue_ = ExternalValueReference_ | valuereference_; //| ParameterizedValue        
 
@@ -280,6 +287,12 @@ namespace x680 {
         str_rule AtNotation_ = qi::string("@")[qi::_val = qi::_1 ] >> *(qi::string(".")[qi::_val += qi::_1]) >> (identifier_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1]);
 
         str_rule Reference_ = typereference_ | valuereference_;
+        
+        str_rule ObjectClassFieldType_ = DefinedObjectClass_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1];     
+        
+        str_rule SimpleTypeFromObject_ = DefinedObject_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1];;
+        
+        str_rule SimpleValueSetFromObjects_ = DefinedObjectSet_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1];;         
 
         str_rule ParameterizedReference_ = Reference_[ qi::_val = qi::_1]
                 >> qi::omit[*qi::space]

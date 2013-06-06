@@ -80,6 +80,9 @@ namespace x680 {
         t_CHOICE,
         t_Selection,
         t_Instance_Of,
+        t_ClassField,
+        t_TypeFromObject,
+        t_ValueSetFromObjects,        
         t_Reference
     };
 
@@ -387,6 +390,7 @@ namespace x680 {
 
 
             tag_type tag;
+            parameter_vector parameters;
             std::string reference;
             tagmarker_type marker;
             value_element value;
@@ -407,6 +411,25 @@ namespace x680 {
             holder.reference = val;
             holder.builtin_t = t_Reference;
         }
+        
+        inline void type_objectfield(type_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.builtin_t = t_ClassField;
+        }     
+        
+        inline void type_fromobject(type_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.builtin_t = t_TypeFromObject;
+        } 
+
+        inline void type_fromobjectset(type_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.builtin_t = t_ValueSetFromObjects;
+        }         
+        
+        inline void type_parameters(type_element& holder, const parameter_vector& val) {
+            holder.parameters = val;
+        }        
 
         inline void type_instance(type_element& holder, const std::string& val) {
             holder.reference = val;
@@ -646,6 +669,7 @@ namespace x680 {
             }
 
             std::string identifier;
+            argument_vector arguments;
             type_element type;
             value_element value;
 
@@ -660,6 +684,10 @@ namespace x680 {
 
         inline void valuea_type(value_assignment& holder, const type_element& val) {
             holder.type = val;
+        }
+
+        inline void valuea_arguments(value_assignment& holder, const argument_vector& val) {
+            holder.arguments = val;
         }
 
         inline void valuea_value(value_assignment& holder, const value_element& val) {
@@ -678,6 +706,7 @@ namespace x680 {
             }
 
             std::string identifier;
+            argument_vector arguments;
             type_element type;
             valueset_element set;
 
@@ -691,8 +720,12 @@ namespace x680 {
             holder.identifier = val;
         }
 
-        inline void valueset_type(valueset_assignment& holder, const type_element& val) {
+        inline void valueseta_type(valueset_assignment& holder, const type_element& val) {
             holder.type = val;
+        }
+
+        inline void valueseta_arguments(valueset_assignment& holder, const argument_vector& val) {
+            holder.arguments = val;
         }
 
         inline void valueset_set(valueset_assignment& holder, const valueset_element& val) {
@@ -719,6 +752,7 @@ namespace x680 {
             }
 
             std::string identifier;
+            argument_vector arguments;
             type_element type;
 
         };
@@ -737,6 +771,10 @@ namespace x680 {
 
         inline void typea_type(type_assignment& holder, const type_element& val) {
             holder.type = val;
+        }
+
+        inline void typea_arguments(type_assignment& holder, const argument_vector& val) {
+            holder.arguments = val;
         }
 
         inline void type_marker(type_assignment& holder, const tagmarker_type& val) {
@@ -916,12 +954,25 @@ namespace x680 {
         struct class_assignment {
 
             std::string identifier;
+            argument_vector arguments;
             class_element class_;
         };
+
+        inline void classa_reference(class_assignment& holder, const std::string& val) {
+            holder.identifier = val;
+        }
+
+        inline void classa_class(class_assignment& holder, const class_element& val) {
+            holder.class_ = val;
+        }
 
         inline void classa_set(class_assignment& holder, const std::string& ind, const class_element& cl) {
             holder.identifier = ind;
             holder.class_ = cl;
+        }
+
+        inline void classa_arguments(class_assignment& holder, const argument_vector& val) {
+            holder.arguments = val;
         }
 
 
@@ -1005,14 +1056,27 @@ namespace x680 {
         struct object_assignment {
 
             std::string identifier;
+            argument_vector arguments;
             std::string classref;
             object_element object;
         };
+
+        inline void objecta_reference(object_assignment& holder, const std::string& val) {
+            holder.identifier = val;
+        }
+
+        inline void objecta_object(object_assignment& holder, const object_element& val) {
+            holder.object = val;
+        }
 
         inline void objecta_set(object_assignment& holder, const std::string& ind, const std::string& cl, const object_element& obj) {
             holder.identifier = ind;
             holder.classref = cl;
             holder.object = obj;
+        }
+
+        inline void objecta_arguments(object_assignment& holder, const argument_vector& val) {
+            holder.arguments = val;
         }
 
 
@@ -1023,14 +1087,27 @@ namespace x680 {
         struct objectset_assignment {
 
             std::string identifier;
+            argument_vector arguments;
             std::string classref;
             objectset_element set;
         };
+
+        inline void objectseta_reference(objectset_assignment& holder, const std::string& val) {
+            holder.identifier = val;
+        }
+
+        inline void objectseta_objectset(objectset_assignment& holder, const objectset_element& val) {
+            holder.set = val;
+        }
 
         inline void objectseta_set(objectset_assignment& holder, const std::string& ind, const std::string& cl, const objectset_element& objset) {
             holder.identifier = ind;
             holder.classref = cl;
             holder.set = objset;
+        }
+
+        inline void objectseta_arguments(objectset_assignment& holder, const argument_vector& val) {
+            holder.arguments = val;
         }
 
         inline void push_objects(object_element_vector& holder, const object_element_vector& val) {
@@ -1054,7 +1131,7 @@ namespace x680 {
             std::string argument;
         };
 
-        inline void argument_governor_tp(argument_type& holder, const type_element& val) {
+        inline void argument_governor_tp(argument_type& holder, const type_element& val,  const std::string& par) {
             if (val.builtin_t == t_Reference) {
                 holder.governorreff = val.reference;
                 holder.tp = gvr_Type_or_Class;
@@ -1062,6 +1139,7 @@ namespace x680 {
                 holder.governortype = val;
                 holder.tp = gvr_Type;
             }
+            holder.argument = par;
         }
 
         inline void argument_governor_reff(argument_type& holder, const std::string& val) {
@@ -1097,6 +1175,31 @@ namespace x680 {
             holder.type = val;
             holder.tp = prm_Type;
         }
+        
+        inline void parameter_class(parameter_element& holder, const std::string& val) {
+            holder.reff = val;
+            holder.tp = prm_Class;
+        }        
+        
+        inline void parameter_value(parameter_element& holder, const value_element& val) {
+            holder.value = val;
+            holder.tp = prm_Value;
+        }
+        
+        inline void parameter_object(parameter_element& holder, const object_element& val) {
+            holder.object = val;
+            holder.tp = prm_Object;
+        }         
+        
+        inline void parameter_valueset(parameter_element& holder, const valueset_element& val) {
+            holder.valueset = val;
+            holder.tp = prm_ValueSet;
+        }
+        
+        inline void parameter_objectset(parameter_element& holder, const objectset_element& val) {
+            holder.objectset = val;
+            holder.tp = prm_ObjectSet;
+        }              
 
         // Assigment       
 
@@ -1189,6 +1292,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::value_assignment,
         (std::string, identifier)
+        (x680::bnf::argument_vector, arguments)
         (x680::bnf::type_element, type)
         (x680::bnf::value_element, value)
         )
@@ -1197,6 +1301,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::valueset_assignment,
         (std::string, identifier)
+        (x680::bnf::argument_vector, arguments)
         (x680::bnf::type_element, type)
         (x680::bnf::valueset_element, set)
         )
@@ -1205,6 +1310,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_element,
         (x680::tag_type, tag)
+        (x680::bnf::parameter_vector ,parameters)
         (x680::tagmarker_type, marker)
         (x680::bnf::value_element, value)
         (std::string, reference)
@@ -1218,6 +1324,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::type_assignment,
         (std::string, identifier)
+        (x680::bnf::argument_vector, arguments)
         (x680::bnf::type_element, type)
         (x680::bnf::constraint_element_vector, constraints)
         )
@@ -1256,6 +1363,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::class_assignment,
         (std::string, identifier)
+        (x680::bnf::argument_vector, arguments)
         (x680::bnf::class_element, class_)
         )
 
@@ -1284,6 +1392,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::object_assignment,
         (std::string, identifier)
+        (x680::bnf::argument_vector, arguments)
         (std::string, classref)
         (x680::bnf::object_element, object)
         )
@@ -1291,6 +1400,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::objectset_assignment,
         (std::string, identifier)
+        (x680::bnf::argument_vector, arguments)
         (std::string, classref)
         (x680::bnf::objectset_element, set)
         )
@@ -1530,7 +1640,10 @@ namespace x680 {
         extern str_rule valuesetfieldreference_; //(&typereference_)               
         extern str_rule objectfieldreference_; //(&objectreference_)
         extern str_rule objectsetfieldreference_; //(&objectsetreference_)  
-        extern str_rule bigfieldreference_; //(typereference_ | objectfieldreference_)
+        extern str_rule bigreference_; //(typereference_ | objectfieldreference_)
+        extern str_rule littlereference_; //(valuefieldreference_ | valuesetfieldreference_ |objectsetfieldreference_ )     
+        extern str_rule bothreference_; //(valuefieldreference_ | valuesetfieldreference_ |objectsetfieldreference_ )        
+        extern str_rule bigfieldreference_; //(typefieldreference_ | objectfieldreference_)
         extern str_rule littlefieldreference_; //(valuefieldreference_ | valuesetfieldreference_ |objectsetfieldreference_ )    
         extern str_rule PrimitiveFieldName_;
         extern str_rule FieldName_;
@@ -1548,6 +1661,10 @@ namespace x680 {
         extern str_rule DefinedObject_;
         extern str_rule ExternalObjectSetReference_;
         extern str_rule DefinedObjectSet_;
+        extern str_rule ObjectClassFieldType_;
+        extern str_rule SimpleTypeFromObject_;
+        extern str_rule SimpleValueSetFromObjects_;        
+     
         /*??*/ extern str_rule UserDefinedConstraintParameter_;
         /*??*/ extern str_rule AtNotation_;
 
