@@ -1207,6 +1207,7 @@ namespace x680 {
 
             std::string governorreff;
             type_element governortype;
+            class_element governorclass;            
             governor_type tp;
             std::string argument;
         };
@@ -1221,6 +1222,12 @@ namespace x680 {
             }
             holder.argument = par;
         }
+
+        inline void argument_governor_cl(argument_type& holder, const class_element& val, const std::string& par) {
+            holder.governorclass = val;
+            holder.tp = gvr_Class;
+            holder.argument = par;
+        }        
 
         inline void argument_governor_reff(argument_type& holder, const std::string& val) {
             holder.governorreff = val;
@@ -1511,6 +1518,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::argument_type,
         (std::string, governorreff)
         (x680::bnf::type_element, governortype)
+        (x680::bnf::class_element, governorclass)
         (x680::governor_type, tp)
         (std::string, argument)
         )

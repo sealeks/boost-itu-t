@@ -68,22 +68,22 @@ namespace x680 {
                     >> Type[bind(&valuea_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> Value[bind(&valuea_value, qi::_val, qi::_1, false)];
-
-            ObjectAssignmentRS = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
-                    >> DefinedObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
-                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> DefaultSyntax[bind(&objecta_object, qi::_val, qi::_1)];
-
+            
             ObjectAssignmentLS = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
                     >> UsefulObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ObjectDefn[bind(&objecta_object, qi::_val, qi::_1)];
+                    >> ObjectDefn[bind(&objecta_object, qi::_val, qi::_1)];            
+
+            ObjectAssignmentRS = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
+                    >> SimpleDefinedObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> DefaultSyntax[bind(&objecta_object, qi::_val, qi::_1)];
 
             ObjectAssignment = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
-                    >> DefinedObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
+                    >> SimpleDefinedObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> ObjectDefn[bind(&objecta_object, qi::_val, qi::_1)];
 
@@ -108,7 +108,7 @@ namespace x680 {
 
             ObjectSetAssignment = objectsetreference_[bind(&objectseta_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&objectseta_arguments, qi::_val, qi::_1)])
-                    >> DefinedObjectClass[bind(&objectseta_class, qi::_val, qi::_1)]
+                    >> SimpleDefinedObjectClass[bind(&objectseta_class, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> ObjectSet[bind(&objectseta_objectset, qi::_val, qi::_1)];
 
@@ -117,12 +117,15 @@ namespace x680 {
 
             Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
-            Parameter = ParameterA | ParameterB;
+            Parameter = ParameterA | ParameterB | ParameterC;
+            
+            ParameterA = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> Reference_)[bind(&argument_governor_cl, qi::_val, qi::_1, qi::_2)];            
 
-            ParameterA = (Type >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> bothreference_)[bind(&argument_governor_tp, qi::_val, qi::_1, qi::_2)];
+            ParameterB = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> Reference_)[bind(&argument_governor_tp, qi::_val, qi::_1, qi::_2)];
 
-            ParameterB = bothreference_[bind(&argument_argument, qi::_val, qi::_1)];
+            ParameterC = Reference_[bind(&argument_argument, qi::_val, qi::_1)];
 
 
 

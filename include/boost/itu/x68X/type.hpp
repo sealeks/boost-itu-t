@@ -147,9 +147,11 @@ namespace x680 {
             qi::rule<str_iterator, unknown_tc_assignment(), skip_cmt_type> UnknownTCAssignment;
 
 
+          
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> Parameter;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterA;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterB;
-            qi::rule<str_iterator, argument_type(), skip_cmt_type> Parameter;
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterC;              
             qi::rule<str_iterator, argument_vector(), skip_cmt_type> Parameters;
 
 
@@ -178,6 +180,7 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
 
             qi::rule<str_iterator, type_element(), skip_cmt_type> Type;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> GovernorType;            
             qi::rule<str_iterator, type_element(), skip_cmt_type> StrictType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> ConstraintReferencedType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> ObjectClassFieldType;
@@ -192,6 +195,7 @@ namespace x680 {
 
             qi::rule<str_iterator, type_element(), skip_cmt_type> BuitinType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> DefinedType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> SimpleDefinedType;            
             qi::rule<str_iterator, type_element(), skip_cmt_type> StrictDefinedType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> InstanceOfType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> SimpleReferencedType;
@@ -204,6 +208,7 @@ namespace x680 {
             qi::rule<str_iterator, type_element(), skip_cmt_type> SequenceOfType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> SetOfType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> TaggedType;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> SimpleTaggedType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> SequenceType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> SetType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> SelectionType;
@@ -326,6 +331,7 @@ namespace x680 {
             qi::rule<str_iterator, class_element(), skip_cmt_type> ObjectClassDefn;
             qi::rule<str_iterator, class_element(), skip_cmt_type> UsefulObjectClass;
             qi::rule<str_iterator, class_element(), skip_cmt_type> DefinedObjectClass;
+            qi::rule<str_iterator, class_element(), skip_cmt_type> SimpleDefinedObjectClass;            
             qi::rule<str_iterator, class_element(), skip_cmt_type> ParameterizedObjectClass;
 
             qi::rule<str_iterator, classfield_vector(), skip_cmt_type> FieldSpecs;

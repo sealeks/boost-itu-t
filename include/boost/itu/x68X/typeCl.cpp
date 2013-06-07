@@ -24,14 +24,16 @@ namespace x680 {
 
             StrictObjectClass = UsefulObjectClass | ObjectClassDefn;
 
-            DefinedObjectClass = DefinedObjectClass_[bind(&class_reference, qi::_val, qi::_1)];
-
-            ParameterizedObjectClass = DefinedObjectClass[qi::_val, qi::_1] >> -(ActualParameters[bind(&class_parameters, qi::_val, qi::_1)]);
+            SimpleDefinedObjectClass = DefinedObjectClass_[bind(&class_reference, qi::_val, qi::_1)];           
 
             ObjectClassDefn = qi::omit[CLASS_ >> qi::lit("{")] >> FieldSpecs[bind(&class_fields, qi::_val, qi::_1)] >> qi::omit[qi::lit("}")]
                     >> -(WithSyntaxSpec[bind(&class_syntaxes, qi::_val, qi::_1)]);
 
             UsefulObjectClass = TYPE_IDENTIFIER_[qi::_val = CLASS_TYPE_IDENTIFIER] | ABSTRACT_SYNTAX_[qi::_val = CLASS_ABSTRACT_SYNTAX];
+            
+            DefinedObjectClass = UsefulObjectClass | SimpleDefinedObjectClass;     
+            
+            ParameterizedObjectClass = DefinedObjectClass[qi::_val = qi::_1] >> -(ActualParameters[bind(&class_parameters, qi::_val, qi::_1)]);            
 
             FieldSpecs = FieldSpec % qi::omit[qi::lit(",")];
 

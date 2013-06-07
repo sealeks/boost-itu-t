@@ -27,6 +27,8 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
 
             Type = BuitinType | TaggedType | ReferencedType;
+            
+            GovernorType = BuitinType | SimpleDefinedType;
 
             NamedType = (identifier_ >> Type)[bind(&type_named, qi::_val, qi::_1, qi::_2)];
 
@@ -40,12 +42,17 @@ namespace x680 {
 
             TaggedType = (Tag
                     >> Type)[bind(&type_tagged, qi::_val, qi::_1, qi::_2)];
+                    
+            SimpleTaggedType = (Tag
+                    >> SimpleType)[bind(&type_tagged, qi::_val, qi::_1, qi::_2)];                    
 
             ObjectClassFieldType = ObjectClassFieldType_[bind(&type_objectfield, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
             SimpleTypeFromObject = SimpleTypeFromObject_[bind(&type_fromobject, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
-            SimpleValueSetFromObjects = SimpleValueSetFromObjects_[bind(&type_fromobjectset, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);            
+            SimpleValueSetFromObjects = SimpleValueSetFromObjects_[bind(&type_fromobjectset, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);           
+            
+            SimpleDefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)];            
 
             DefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
