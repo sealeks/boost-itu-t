@@ -242,18 +242,25 @@ namespace x680 {
             void init();
 
             void number(holder_type& holder, const std::string & val) {
-                holder.type = v_number;
-                holder.value = val;
+                holder.type = v_identifier_list;
+                value_element tmp;
+                tmp.type = v_identifier;
+                tmp.identifier = val;
+                holder.values.push_back(tmp);
             }
 
-            void identifier(holder_type& holder, const std::string & val) {
+            /*void identifier(holder_type& holder, const std::string & val) {
                 holder.type = v_identifier;
                 holder.value = val;
-            }
+            }*/
 
             qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
 
         };
+
+
+
+
 
 
         // IdentifierValue_grammar
@@ -438,6 +445,33 @@ namespace x680 {
 
         };
 
+        // NumberListValue        
+
+        struct NumberList_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef NumberList_grammar self_type;
+            typedef value_element holder_type;
+
+            NumberList_grammar() :
+            NumberList_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+            void operator()(holder_type& holder, const std::string & val) {
+                holder.type = v_number_list;
+                value_element tmp;
+                tmp.type = v_number;
+                tmp.value = val;
+                holder.values.push_back(tmp);
+            }
+
+
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+        };
 
         //ObjectIdentifierValue
 
@@ -485,13 +519,68 @@ namespace x680 {
             NullValue_grammar NullValue;
             BooleanValue_grammar BooleanValue;
             IntegerValue_grammar IntegerValue;
+            IdentifierValue_grammar IdentifierValue;
             RealValue_grammar RealValue;
             CStringValue_grammar CStringValue;
             ObjectIdentifierValue_grammar ObjectIdentifierValue;
             HStringValue_grammar HStringValue;
             BStringValue_grammar BStringValue;
             IdentifierList_grammar IdentifierList;
+            NumberList_grammar NumberList;
 
+
+        };
+
+
+        // StrictValue        
+
+        struct StrictValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef StrictValue_grammar self_type;
+            typedef value_element holder_type;
+
+            StrictValue_grammar() :
+            StrictValue_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+            NullValue_grammar NullValue;
+            BooleanValue_grammar BooleanValue;
+            IntegerValue_grammar IntegerValue;
+            RealValue_grammar RealValue;
+            CStringValue_grammar CStringValue;
+            HStringValue_grammar HStringValue;
+            BStringValue_grammar BStringValue;
+
+
+        };
+
+
+        // RangeValue        
+
+        struct RangeValue_grammar : qi::grammar<str_iterator, value_element(), skip_cmt_type> {
+
+            typedef RangeValue_grammar self_type;
+            typedef value_element holder_type;
+
+            RangeValue_grammar() :
+            RangeValue_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+            qi::rule<str_iterator, holder_type(), skip_cmt_type> startrule;
+
+            IntegerValue_grammar IntegerValue;
+            RealValue_grammar RealValue;
+            CStringValue_grammar CStringValue;
+            NumberList_grammar NumberList;
+            IdentifierValue_grammar IdentifierValue;
 
         };
 

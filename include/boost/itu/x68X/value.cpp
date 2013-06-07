@@ -87,7 +87,7 @@ namespace x680 {
         void IntegerValue_grammar::init() {
 
             startrule = number_str[bind(&self_type::number, *this, qi::_val, qi::_1)]
-                    | identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)];
+                    /* | identifier_[bind(&self_type::identifier, *this, qi::_val, qi::_1)]*/;
         }
 
 
@@ -149,6 +149,13 @@ namespace x680 {
                     >> qi::lit("}"));
         }
 
+        //NumberList_grammar
+
+        void NumberList_grammar::init() {
+            startrule = (qi::lit("{")
+                    >> (identifier_[bind(&self_type::operator (), *this, qi::_val, qi::_1)] % qi::lit(","))
+                    >> qi::lit("}"));
+        }
 
         //ObjectIdentifierValue
 
@@ -160,7 +167,22 @@ namespace x680 {
         //SimpleValue_grammar
 
         void SimpleValue_grammar::init() {
-            startrule = NullValue | BooleanValue | RealValue | IntegerValue | HStringValue | BStringValue | CStringValue | IdentifierList | ObjectIdentifierValue;
+            startrule = NullValue | BooleanValue | RealValue | IntegerValue | NumberList | IdentifierValue | HStringValue | BStringValue | CStringValue | IdentifierList | ObjectIdentifierValue;
+
+        }
+
+        //StrictValue_grammar
+
+        void StrictValue_grammar::init() {
+            startrule = NullValue | BooleanValue | RealValue | IntegerValue | HStringValue | BStringValue | CStringValue;
+
+        }
+
+
+        //RangeValue_grammar
+
+        void RangeValue_grammar::init() {
+            startrule = RealValue | IntegerValue | IdentifierValue | NumberList | CStringValue;
 
         }
 

@@ -20,14 +20,19 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 
 
+            ObjectClass = UsefulObjectClass | ObjectClassDefn | ParameterizedObjectClass;
 
-            ObjectClass = UsefulObjectClass | ObjectClassDefn;
+            StrictObjectClass = UsefulObjectClass | ObjectClassDefn;
+
+            DefinedObjectClass = DefinedObjectClass_[bind(&class_reference, qi::_val, qi::_1)];
+
+            ParameterizedObjectClass = DefinedObjectClass[qi::_val, qi::_1] >> -(ActualParameters[bind(&class_parameters, qi::_val, qi::_1)]);
 
             ObjectClassDefn = qi::omit[CLASS_ >> qi::lit("{")] >> FieldSpecs[bind(&class_fields, qi::_val, qi::_1)] >> qi::omit[qi::lit("}")]
                     >> -(WithSyntaxSpec[bind(&class_syntaxes, qi::_val, qi::_1)]);
-            
-            UsefulObjectClass = TYPE_IDENTIFIER_[qi::_val=CLASS_TYPE_IDENTIFIER] | ABSTRACT_SYNTAX_[qi::_val=CLASS_ABSTRACT_SYNTAX];
-            
+
+            UsefulObjectClass = TYPE_IDENTIFIER_[qi::_val = CLASS_TYPE_IDENTIFIER] | ABSTRACT_SYNTAX_[qi::_val = CLASS_ABSTRACT_SYNTAX];
+
             FieldSpecs = FieldSpec % qi::omit[qi::lit(",")];
 
             FieldSpec = TypeFieldSpecS | FixedTypeValueFieldSpec | FixedTypeValueSetFieldSpec | VariableTypeValueSetFieldSpec | VariableTypeValueFieldSpec | TypeFieldSpec; //ObjectFieldSpec | ObjectSetFieldSpec;     
@@ -94,7 +99,7 @@ namespace x680 {
 
 
 
-      
+
 
 
 

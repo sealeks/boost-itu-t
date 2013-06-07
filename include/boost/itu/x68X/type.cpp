@@ -24,69 +24,120 @@ namespace x680 {
 
         void Assignments_grammar::init() {
 
-            start_rule = *(ObjectClassAssignment | TypeAssignment | ObjectAssignment | ObjectSetAssignment | ValueAssignment | ValueSetTypeAssignment);
+            start_rule = *(ObjectClassAssignment | TypeAssignment | TypeAssignmentSS | UnknownTCAssignment
+                    | ValueAssignmentLS | ValueAssignmentRS | ObjectAssignmentLS | ObjectAssignmentRS | ValueAssignment | ObjectAssignment
+                    | ValueSetTypeAssignmentLS | ObjectSetAssignmentLS | ValueSetTypeAssignment | ObjectSetAssignment);
 
-
+            ObjectClassAssignment = objectclassreference_[bind(&classa_reference, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&classa_arguments, qi::_val, qi::_1)])
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> StrictObjectClass[bind(&classa_class, qi::_val, qi::_1)];
 
             TypeAssignment = typereference_[bind(&type_identifier, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&typea_arguments, qi::_val, qi::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> /*Type*/StrictType[bind(&typea_type, qi::_val, qi::_1)];
 
+            TypeAssignmentSS = typereference_strict[bind(&type_identifier, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&typea_arguments, qi::_val, qi::_1)])
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> Type[bind(&typea_type, qi::_val, qi::_1)];
+
+            UnknownTCAssignment = objectclassreference_[bind(&unknown_tca_identifier, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&unknown_tca_arguments, qi::_val, qi::_1)])
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> UnknownReferencedTC[bind(&unknown_tca, qi::_val, qi::_1)];
+
+
+
+
+            ValueAssignmentLS = valuereference_[bind(&valuea_reference, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&valuea_arguments, qi::_val, qi::_1)])
+                    >> StrictType[bind(&valuea_type, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> Value[bind(&valuea_value, qi::_val, qi::_1, true)];
+
+            ValueAssignmentRS = valuereference_[bind(&valuea_reference, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&valuea_arguments, qi::_val, qi::_1)])
+                    >> Type[bind(&valuea_type, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> StrictValue[bind(&valuea_value, qi::_val, qi::_1, true)];
+
             ValueAssignment = valuereference_[bind(&valuea_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&valuea_arguments, qi::_val, qi::_1)])
                     >> Type[bind(&valuea_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> Value[bind(&valuea_value, qi::_val, qi::_1)];
+                    >> Value[bind(&valuea_value, qi::_val, qi::_1, false)];
+
+            ObjectAssignmentRS = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
+                    >> DefinedObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> DefaultSyntax[bind(&objecta_object, qi::_val, qi::_1)];
+
+            ObjectAssignmentLS = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
+                    >> UsefulObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> ObjectDefn[bind(&objecta_object, qi::_val, qi::_1)];
+
+            ObjectAssignment = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
+                    >> DefinedObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> ObjectDefn[bind(&objecta_object, qi::_val, qi::_1)];
+
+
+            ValueSetTypeAssignmentLS = valuesetreference_[bind(&valueset_reference, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&valueseta_arguments, qi::_val, qi::_1)])
+                    >> StrictType[bind(&valueseta_type, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> ValueSet[bind(&valueset_set, qi::_val, qi::_1, true)];
 
             ValueSetTypeAssignment = valuesetreference_[bind(&valueset_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&valueseta_arguments, qi::_val, qi::_1)])
                     >> Type[bind(&valueseta_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ValueSet[bind(&valueset_set, qi::_val, qi::_1)];
+                    >> ValueSet[bind(&valueset_set, qi::_val, qi::_1, false)];
 
-            ObjectClassAssignment = objectclassreference_[bind(&classa_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&classa_arguments, qi::_val, qi::_1)])
+            ObjectSetAssignmentLS = objectsetreference_[bind(&objectseta_reference, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&objectseta_arguments, qi::_val, qi::_1)])
+                    >> UsefulObjectClass[bind(&objectseta_class, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ObjectClass[bind(&classa_class, qi::_val, qi::_1)];
-
-            ObjectAssignment = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
-                    >> DefinedObjectClass_
-                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> DefaultSyntax[bind(&objecta_object, qi::_val, qi::_1)];
-
+                    >> ObjectSet[bind(&objectseta_objectset, qi::_val, qi::_1)];
 
             ObjectSetAssignment = objectsetreference_[bind(&objectseta_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&objectseta_arguments, qi::_val, qi::_1)])
-                    >> DefinedObjectClass_
+                    >> DefinedObjectClass[bind(&objectseta_class, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> ObjectSet[bind(&objectseta_objectset, qi::_val, qi::_1)];
 
 
 
+
             Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
-            
+
             Parameter = ParameterA | ParameterB;
 
             ParameterA = (Type >> qi::omit[qi::lexeme[qi::lit(":")]]
                     >> bothreference_)[bind(&argument_governor_tp, qi::_val, qi::_1, qi::_2)];
-                    
-            ParameterB = bothreference_[bind(&argument_argument, qi::_val, qi::_1)];     
-            
-            
-            
-            ActualParameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (ActualParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];            
-            
-            ActualParameter = ActualParameterT | ActualParameterV | ActualParameterVS |ActualParameterC | ActualParameterO | ActualParameterOS; 
-            
+
+            ParameterB = bothreference_[bind(&argument_argument, qi::_val, qi::_1)];
+
+
+
+            ActualParameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (ActualParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
+
+            ActualParameter = ActualParameterT | ActualParameterV | ActualParameterVS | ActualParameterC | ActualParameterO | ActualParameterOS;
+
             ActualParameterT = Type[bind(&parameter_type, qi::_val, qi::_1)];
-            ActualParameterV = Value[bind(&parameter_value, qi::_val, qi::_1)];        
-            ActualParameterVS = ValueSet[bind(&parameter_valueset, qi::_val, qi::_1)]; ;
-            ActualParameterC = DefinedObjectClass_[bind(&parameter_class, qi::_val, qi::_1)]; 
-            ActualParameterO = DefaultSyntax[bind(&parameter_object, qi::_val, qi::_1)]; 
-            ActualParameterOS = ObjectSet[bind(&parameter_objectset, qi::_val, qi::_1)]; 
-              
+            ActualParameterV = Value[bind(&parameter_value, qi::_val, qi::_1)];
+            ActualParameterVS = ValueSet[bind(&parameter_valueset, qi::_val, qi::_1)];
+            ;
+            ActualParameterC = DefinedObjectClass_[bind(&parameter_class, qi::_val, qi::_1)];
+            ActualParameterO = DefaultSyntax[bind(&parameter_object, qi::_val, qi::_1)];
+            ActualParameterOS = ObjectSet[bind(&parameter_objectset, qi::_val, qi::_1)];
+
 
             initT();
             initVS();

@@ -89,12 +89,12 @@ namespace x680 {
             PropertySettings = SETTINGS_ >> (CStringValue | IdentifierValue)[bind(&constraint_property, qi::_val, qi::_1)];
 
             ValueRange = (MIN_[bind(&constraint_fromtype, qi::_val, min_range)]
-                    | (IntegerValue | RealValue | CStringValue)[bind(&constraint_from, qi::_val, qi::_1)])
+                    | (RangeValue)[bind(&constraint_from, qi::_val, qi::_1)])
                     >> -(qi::lit("<")[bind(&constraint_fromtype, qi::_val, open_range)])
                     >> qi::lit("..")
                     >> -(qi::lit("<")[bind(&constraint_totype, qi::_val, open_range)])
                     >> (MAX_[bind(&constraint_totype, qi::_val, max_range)]
-                    | (IntegerValue | RealValue | CStringValue)[bind(&constraint_to, qi::_val, qi::_1)]);
+                    | (RangeValue)[bind(&constraint_to, qi::_val, qi::_1)]);
 
 
 
@@ -138,7 +138,7 @@ namespace x680 {
 
             ExceptionSpecConstraints = ExceptionSpecConstraint[ bind(&constraint_element_vector::push_back, qi::_val, qi::_1) ];
 
-            UserDefinedConstraintParameters = qi::omit[qi::lit("{")] >> -(UserDefinedConstraintParameter_ % qi::omit[qi::lit(",")]) >>  qi::omit[qi::lit("}")];
+            UserDefinedConstraintParameters = qi::omit[qi::lit("{")] >> -(UserDefinedConstraintParameter_ % qi::omit[qi::lit(",")]) >> qi::omit[qi::lit("}")];
 
             UserDefinedConstraint =
                     (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::blank >> BY_]])[bind(&constraint_tp, qi::_val, cns_UserDefinedConstraint)]

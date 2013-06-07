@@ -10,32 +10,32 @@ namespace x680 {
 
 
 
-        str_rule pos_number_str = qi::char_("0")[ qi::_val = qi::_1 ]
+        str_rule pos_number_str = distinct(qi::alnum | '-')[qi::char_("0")[ qi::_val = qi::_1 ]
                 | (qi::char_("1-9")[ qi::_val = qi::_1]
-                >> *(qi::char_("0-9")[ qi::_val += qi::_1]));
+                >> *(qi::char_("0-9")[ qi::_val += qi::_1]))];
 
 
-        str_rule number_str = (qi::string("-")[ qi::_val = qi::_1 ]
+        str_rule number_str = distinct(qi::alnum | '-')[(qi::string("-")[ qi::_val = qi::_1 ]
                 >> qi::omit[*qi::blank]
                 >> pos_number_str[ qi::_val += qi::_1 ])
-        | pos_number_str[ qi::_val = qi::_1 ];
+        | pos_number_str[ qi::_val = qi::_1 ]];
 
-        str_rule realnumber_str = number_str[ qi::_val = qi::_1 ]
-                >> (qi::string(".")[ qi::_val += qi::_1 ] >> number_str[ qi::_val += qi::_1 ]);
+        str_rule realnumber_str = distinct(qi::alnum | '-')[number_str[ qi::_val = qi::_1 ]
+                >> (qi::string(".")[ qi::_val += qi::_1 ] >> number_str[ qi::_val += qi::_1 ])];
 
-        str_rule bstring_str = qi::omit[qi::char_("'")]
+        str_rule bstring_str = distinct(qi::alnum | '-')[ qi::omit[qi::char_("'")]
         >> *(qi::char_("0-1")[ qi::_val += qi::_1] | qi::omit[qi::space])
         >> qi::omit[ qi::char_("'")
-        >> qi::char_("B")];
+        >> qi::char_("B")]];
 
-        str_rule hstring_str = qi::omit[qi::char_("'")]
+        str_rule hstring_str = distinct(qi::alnum | '-')[ qi::omit[qi::char_("'")]
         >> *(qi::char_("0-9ABCDEF")[ qi::_val += qi::_1] | qi::omit[qi::space])
         >> qi::omit[ qi::char_("'")
-        >> qi::char_("H")];
+        >> qi::char_("H")]];
 
-        str_rule cstring_str = qi::char_("\"")
+        str_rule cstring_str = distinct(qi::alnum | '-')[ qi::char_("\"")
         >> *((qi::print)[ qi::_val += qi::_1] - qi::char_("\""))
-        >> qi::char_("\"");
+        >> qi::char_("\"")];
 
 
 
@@ -170,12 +170,12 @@ namespace x680 {
         | distinct(qi::alnum | '-')[qi::string("UNION")];
 
 
-        str_rule word_ = qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
+        str_rule word_ = distinct(qi::alnum | '-')[ qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
                 >> *(((qi::char_("-")[qi::_val += qi::_1]
                 >> qi::upper[qi::_val += qi::_1])
                 | (qi::upper[qi::_val += qi::_1]
                 >> -qi::upper[qi::_val += qi::_1])) - (qi::char_("-")
-                >> ((qi::char_("-") | !qi::upper))))];
+                >> ((qi::char_("-") | !qi::upper))))]];
 
         str_rule spaces_ = qi::space[ qi::_val = qi::_1 ] >> *(qi::space[qi::_val += qi::_1 ]);
 
@@ -183,19 +183,19 @@ namespace x680 {
 
         str_rule SyntaxField_ = Literal_[qi::_val = qi::_1 ] >> *(spaces_[ qi::_val += qi::_1 ] >> Literal_[ qi::_val += qi::_1 ]);
 
-        str_rule typereference_ = qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
+        str_rule typereference_ = distinct(qi::alnum | '-')[qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
                 >> *(((qi::char_("-")[qi::_val += qi::_1]
                 >> qi::alnum[qi::_val += qi::_1])
                 | (qi::alnum[qi::_val += qi::_1]
                 >> -qi::alnum[qi::_val += qi::_1])) - (qi::char_("-")
-                >> ((qi::char_("-") | !qi::alnum))))];
+                >> ((qi::char_("-") | !qi::alnum))))]];
 
-        str_rule identifier_ = qi::lexeme[qi::lower[qi::_val = qi::_1 ]
+        str_rule identifier_ = distinct(qi::alnum | '-')[qi::lexeme[qi::lower[qi::_val = qi::_1 ]
                 >> *(((qi::char_("-")[qi::_val += qi::_1]
                 >> qi::alnum[qi::_val += qi::_1])
                 | (qi::alnum[qi::_val += qi::_1]
                 >> -qi::alnum[qi::_val += qi::_1])) - (qi::char_("-")
-                >> ((qi::char_("-") | !qi::alnum))))];
+                >> ((qi::char_("-") | !qi::alnum))))]];
 
         str_rule valuereference_ = identifier_;
 
@@ -207,12 +207,14 @@ namespace x680 {
 
         str_rule objectsetreference_ = typereference_;
 
-        str_rule objectclassreference_ = qi::lexeme[qi::upper[qi::_val = qi::_1 ]
+        str_rule objectclassreference_ = distinct(qi::alnum | '-')[qi::lexeme[qi::upper[qi::_val = qi::_1 ]
                 >> *(((qi::char_("-")[qi::_val += qi::_1]
                 >> qi::char_("A-Z0-9")[qi::_val += qi::_1])
                 | (qi::char_("A-Z0-9")[qi::_val += qi::_1]
                 >> -qi::char_("A-Z0-9")[qi::_val += qi::_1])) - (qi::char_("-")
-                >> ((qi::char_("-") | !qi::char_("A-Z0-9")))))]; //(~typereference_)        
+                >> ((qi::char_("-") | !qi::char_("A-Z0-9")))))]]; //(~typereference_)      
+
+        str_rule typereference_strict = distinct(qi::alnum | '-')[typereference_ - objectclassreference_];
 
         str_rule typefieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> typereference_[qi::_val += qi::_1]]; //(&typereference_)   
 
@@ -239,11 +241,15 @@ namespace x680 {
 
         str_rule FieldName_ = PrimitiveFieldName_[qi::_val = qi::_1] >> -(qi::string(".")[qi::_val += qi::_1] >> (PrimitiveFieldName_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1]));
 
+
+
         str_rule ExternalTypeReference_ = modulereference_[qi::_val = qi::_1 ]
                 >> qi::string(".")[qi::_val += qi::_1]
                 >> typereference_[qi::_val += qi::_1];
 
-        str_rule DefinedType_ = ExternalTypeReference_ | typereference_; //| ParameterizedType | ParameterizedValueSetType
+        str_rule ExternalTypeReference_strict = modulereference_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1]
+                >> typereference_strict[qi::_val += qi::_1];
 
 
         str_rule ExternalValueReference_ = modulereference_[qi::_val = qi::_1 ]
@@ -266,13 +272,19 @@ namespace x680 {
                 >> qi::string(".")[qi::_val += qi::_1]
                 >> objectsetreference_[qi::_val += qi::_1];
 
-
+        str_rule UsefulObjectClass_ = TYPE_IDENTIFIER_
+                | ABSTRACT_SYNTAX_;
 
         str_rule DefinedObjectClass_ = ExternalObjectClassReference_
                 | TYPE_IDENTIFIER_
                 | ABSTRACT_SYNTAX_
                 | objectclassreference_;
 
+
+
+        str_rule DefinedType_ = ExternalTypeReference_ | typereference_; //| ParameterizedType | ParameterizedValueSetType
+
+        str_rule DefinedType_strict = ExternalTypeReference_strict | typereference_strict; //| ParameterizedType | ParameterizedValueSetType        
 
         str_rule DefinedValue_ = ExternalValueReference_ | valuereference_; //| ParameterizedValue        
 

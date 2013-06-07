@@ -8,12 +8,19 @@
 namespace x680 {
     namespace bnf {
 
-
-
         void Assignments_grammar::initT() {
 
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  UnknownTCAssigment grammar (Type or Class)
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
 
+            UnknownReferencedTC = UnknownTCValueSetFromObjects | UnknownTCFromObject | UnknownTC;
 
+            UnknownTC = DefinedType_[bind(&unknown_tc_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&unknown_tc_parameters, qi::_val, qi::_1)]);
+
+            UnknownTCFromObject = SimpleTypeFromObject_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+
+            UnknownTCValueSetFromObjects = SimpleValueSetFromObjects_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]); 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  TypeAssigment grammar
@@ -24,31 +31,33 @@ namespace x680 {
             NamedType = (identifier_ >> Type)[bind(&type_named, qi::_val, qi::_1, qi::_2)];
 
             TypeA = Type[bind(&typea_type, qi::_val, qi::_1) ];
-                       
-            StrictType = BuitinType | TaggedType | ConstraintReferencedType;
-            
-            ConstraintReferencedType = SimpleReferencedType[ qi::_val= qi::_1 ] >>  Constraints[bind(&type_constraints, qi::_val, qi::_1)];
+
+            StrictType = BuitinType | TaggedType | ConstraintReferencedType | StrictDefinedType;
+
+            ConstraintReferencedType = SimpleReferencedType[ qi::_val = qi::_1 ] >> Constraints[bind(&type_constraints, qi::_val, qi::_1)];
 
             BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SelectionType | SequenceOfType | SetOfType | SequenceType | ChoiceType | SetType | InstanceOfType;
 
             TaggedType = (Tag
                     >> Type)[bind(&type_tagged, qi::_val, qi::_1, qi::_2)];
-                                       
-            ObjectClassFieldType = ObjectClassFieldType_[bind(&type_objectfield, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);                  
 
-            SimpleTypeFromObject = SimpleTypeFromObject_[bind(&type_fromobject, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
-                    
-            SimpleValueSetFromObjects =   SimpleValueSetFromObjects_[bind(&type_fromobjectset, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);            
-         
+            ObjectClassFieldType = ObjectClassFieldType_[bind(&type_objectfield, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+
+            SimpleTypeFromObject = SimpleTypeFromObject_[bind(&type_fromobject, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+
+            SimpleValueSetFromObjects = SimpleValueSetFromObjects_[bind(&type_fromobjectset, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);            
+
             DefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+
+            StrictDefinedType = DefinedType_strict[bind(&type_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
             InstanceOfType = qi::omit[qi::lexeme[INSTANCE_ >> +qi::blank >> OF_]]
                     >> DefinedObjectClass_[bind(&type_instance, qi::_val, qi::_1)]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
             SimpleReferencedType = ObjectClassFieldType | SimpleTypeFromObject | SimpleValueSetFromObjects | DefinedType;
-            
-            ReferencedType = SimpleReferencedType[ qi::_val= qi::_1 ] >>  -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
+
+            ReferencedType = SimpleReferencedType[ qi::_val = qi::_1 ] >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
             SimpleType = ((qi::lexeme[OCTET_ >> +qi::blank >> STRING_])[bind(&type_deff, qi::_val, t_OCTET_STRING)]
                     | (qi::lexeme[CHARACTER_ >> +qi::blank >> STRING_])[bind(&type_deff, qi::_val, t_CHARACTER_STRING)]
