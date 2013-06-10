@@ -86,7 +86,7 @@ namespace x680 {
 
             SingleValue = Value[bind(&constraint_singlevalue, qi::_val, qi::_1)];
 
-            PropertySettings = SETTINGS_ >> (CStringValue | IdentifierValue)[bind(&constraint_property, qi::_val, qi::_1)];
+            PropertySettings = SETTINGS_ >> (CStringValue | DefinedValue)[bind(&constraint_property, qi::_val, qi::_1)];
 
             ValueRange = (MIN_[bind(&constraint_fromtype, qi::_val, min_range)]
                     | (RangeValue)[bind(&constraint_from, qi::_val, qi::_1)])
@@ -159,12 +159,12 @@ namespace x680 {
                     >> Type[bind(&constraint_content_t, qi::_val, qi::_1)];
 
             ContentsConstraintValue = qi::omit[qi::lexeme[ENCODED_ >> +qi::blank >> BY_]]
-                    >> (IdentifierValue | ObjectIdentifierValue)[bind(&constraint_content_v, qi::_val, qi::_1)];
+                    >> (DefinedValue | ObjectIdentifierValue)[bind(&constraint_content_v, qi::_val, qi::_1)];
 
             ContentsConstraintTypeValue = (qi::omit[CONTAINING_]
                     >> Type
                     >> qi::omit[qi::lexeme[ENCODED_ >> +qi::blank >> BY_]]
-                    >> (IdentifierValue | ObjectIdentifierValue))[bind(&constraint_content_tv, qi::_val, qi::_1, qi::_2)];
+                    >> (DefinedValue | ObjectIdentifierValue))[bind(&constraint_content_tv, qi::_val, qi::_1, qi::_2)];
 
 
 

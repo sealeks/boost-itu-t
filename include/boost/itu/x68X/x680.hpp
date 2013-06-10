@@ -148,10 +148,12 @@ namespace x680 {
         v_number_list, // Tuple, Quadruple  { x, y ,....}        
         v_named_list, // ObjectIdentifierSet  { x y(n1) n2....}     
         v_named_value, // name1 val1     
-        v_variable_list, // SetValue, SequenceValue,  { name1 val1, name2 val2 ....}   
-        v_variables_list, // SetOfValue, SequenceOfValue,  { {...} , {...}....}       
+        v_namedvalue_list, // SetValue, SequenceValue,  { name1 val1, name2 val2 ....}   
+        v_value_list, // SetOfValue, SequenceOfValue,  { {...} , {...}....}       
         v_choice, // SetOfValue, SequenceOfValue,  { {...} , {...}....}      
-        v_defined, // DefinedValue
+        v_open, // Type : Value        
+        v_defined, // DefinedValue   
+        v_TypeFromObject,    
         v_extention
     };
 
@@ -354,6 +356,9 @@ namespace x680 {
         struct parameter_element;
         typedef std::vector<parameter_element> parameter_vector;
 
+        struct typevalue_element;
+        typedef std::vector<typevalue_element> typevalue_element_vector;
+
         using boost::spirit::repository::distinct;
 
 
@@ -417,11 +422,103 @@ namespace x680 {
             type(v_nodef) {
             }
 
+            value_element(bool v)
+            : type(v_boolean), value(v ? "TRUE" : "FALSE") {
+            }
+
+            parameter_vector parameters;
             std::string identifier;
             std::string value;
             value_type type;
             value_element_vector values;
+            typevalue_element_vector typevalue;
+            std::string fromreff;
         };
+
+
+        const value_element VALUE_BOOL_TRUE = value_element(true);
+        const value_element VALUE_BOOL_FALSE = value_element(false);
+
+        inline void value_parameters(value_element& holder, const parameter_vector& val) {
+            holder.parameters = val;
+        }
+
+        inline void value_setdefined(value_element& holder, const std::string& val) {
+            holder.type = v_defined;
+            holder.identifier = val;
+        }
+
+        inline void value_emptyset(value_element& holder) {
+            holder.type = v_empty_set;
+        }
+
+        inline void value_setnumber(value_element& holder, const std::string& val) {
+            holder.type = v_number;
+            holder.value = val;
+        }
+
+        inline void value_setreal(value_element& holder, const std::string& val) {
+            holder.type = v_real;
+            holder.value = val;
+        }
+
+        inline void value_setnull(value_element& holder) {
+            holder.type = v_null;
+            holder.value = "NULL";
+        }
+
+        inline void value_setbstring(value_element& holder, const std::string& val) {
+            holder.type = v_bstring;
+            holder.value = val;
+        }
+
+        inline void value_sethstring(value_element& holder, const std::string& val) {
+            holder.type = v_hstring;
+            holder.value = val;
+        }
+
+        inline void value_setcstring(value_element& holder, const std::string& val) {
+            holder.type = v_cstring;
+            holder.value = val;
+        }
+
+        inline void value_setvalues(value_element& holder, const value_element_vector& values, const value_type& tp) {
+            holder.type = tp;
+            holder.values = values;
+        }
+
+        inline void value_setvalue(value_element& holder, const std::string& id, const value_element& val, const value_type& tp) {
+            holder.identifier = id;
+            holder.type = tp;
+            holder.values.push_back(val);
+            ;
+        }
+
+        inline void value_namedval(value_element& holder, const std::string& id, const value_element& val) {
+            holder.identifier = id;
+            holder.type = v_named_value;
+            holder.values.push_back(val);
+        }
+
+        inline void value_choiceval(value_element& holder, const std::string& id, const value_element& val) {
+            holder.identifier = id;
+            holder.type = v_choice;
+            holder.values.push_back(val);
+        }
+
+        inline void value_typevalue(value_element& holder, const typevalue_element_vector& val) {
+            holder.type = v_open;
+            holder.typevalue = val;
+        }
+        
+        inline void value_fromobject(value_element& holder, const std::string& val) {
+            holder.fromreff = val;
+            holder.type = v_TypeFromObject;
+        }
+
+
+
+
 
 
 
@@ -1196,6 +1293,26 @@ namespace x680 {
 
 
 
+        //Type : Value
+
+        struct typevalue_element {
+
+            type_element type;
+            value_element value;
+        };
+
+        inline void typevalue_set(typevalue_element& holder, const type_element& tp, const value_element& val) {
+            holder.type = tp;
+            holder.value = val;
+        }
+
+        inline void typevalues_set(typevalue_element_vector& holder, const type_element& tp, const value_element& val) {
+            typevalue_element tmp;
+            tmp.type = tp;
+            tmp.value = val;
+            holder.push_back(tmp);
+        }
+
 
 
         //Parameter
@@ -1207,7 +1324,7 @@ namespace x680 {
 
             std::string governorreff;
             type_element governortype;
-            class_element governorclass;            
+            class_element governorclass;
             governor_type tp;
             std::string argument;
         };
@@ -1227,7 +1344,7 @@ namespace x680 {
             holder.governorclass = val;
             holder.tp = gvr_Class;
             holder.argument = par;
-        }        
+        }
 
         inline void argument_governor_reff(argument_type& holder, const std::string& val) {
             holder.governorreff = val;
@@ -1385,10 +1502,13 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::value_element,
+        (x680::bnf::parameter_vector, parameters)
         (std::string, identifier)
         (std::string, value)
         (x680::value_type, type)
         (x680::bnf::value_element_vector, values)
+        (x680::bnf::typevalue_element_vector, typevalue)
+        (std::string, fromreff)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -1534,6 +1654,13 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::valueset_element, valueset)
         (x680::bnf::objectset_element, objectset)
         (std::string, reff)
+        )
+
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::typevalue_element,
+        (x680::bnf::type_element, type)
+        (x680::bnf::value_element, value)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(

@@ -68,12 +68,12 @@ namespace x680 {
                     >> Type[bind(&valuea_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> Value[bind(&valuea_value, qi::_val, qi::_1, false)];
-            
+
             ObjectAssignmentLS = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
                     >> UsefulObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ObjectDefn[bind(&objecta_object, qi::_val, qi::_1)];            
+                    >> ObjectDefn[bind(&objecta_object, qi::_val, qi::_1)];
 
             ObjectAssignmentRS = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
@@ -118,9 +118,9 @@ namespace x680 {
             Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
             Parameter = ParameterA | ParameterB | ParameterC;
-            
+
             ParameterA = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> Reference_)[bind(&argument_governor_cl, qi::_val, qi::_1, qi::_2)];            
+                    >> Reference_)[bind(&argument_governor_cl, qi::_val, qi::_1, qi::_2)];
 
             ParameterB = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
                     >> Reference_)[bind(&argument_governor_tp, qi::_val, qi::_1, qi::_2)];
@@ -142,6 +142,7 @@ namespace x680 {
             ActualParameterOS = ObjectSet[bind(&parameter_objectset, qi::_val, qi::_1)];
 
 
+            initV();
             initT();
             initVS();
             initCl();
