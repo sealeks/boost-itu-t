@@ -137,6 +137,7 @@ namespace x680 {
         v_empty_set, // { }      
         v_identifier, // x
         v_identifier_assign, // x(n)     
+        v_identifier_assignval, // x(y)             
         v_boolean, // TRUE, FALSE  /
         v_number, // n  /
         v_real, // n.n  /
@@ -146,15 +147,16 @@ namespace x680 {
         v_cstring, // StringValue        
         v_identifier_list, // BitStringValue  { x, y ,....}  
         v_number_list, // Tuple, Quadruple  { x, y ,....}        
-        v_named_list, // ObjectIdentifierSet  { x y(n1) n2....}     
+        v_named_list, // ObjectIdentifierSet  { x y(n1) n2....}             
         v_named_value, // name1 val1     
         v_namedvalue_list, // SetValue, SequenceValue,  { name1 val1, name2 val2 ....}   
         v_value_list, // SetOfValue, SequenceOfValue,  { {...} , {...}....}       
         v_choice, // SetOfValue, SequenceOfValue,  { {...} , {...}....}      
         v_open, // Type : Value        
         v_defined, // DefinedValue   
-        v_TypeFromObject,    
-        v_extention
+        v_TypeFromObject,
+        v_extention,
+        v_exception
     };
 
     enum constraint_type {
@@ -426,6 +428,9 @@ namespace x680 {
             : type(v_boolean), value(v ? "TRUE" : "FALSE") {
             }
 
+            value_element(value_type t) : type(t) {
+            }
+
             parameter_vector parameters;
             std::string identifier;
             std::string value;
@@ -438,6 +443,7 @@ namespace x680 {
 
         const value_element VALUE_BOOL_TRUE = value_element(true);
         const value_element VALUE_BOOL_FALSE = value_element(false);
+        const value_element VALUE_EXTENTION = value_element(v_extention);
 
         inline void value_parameters(value_element& holder, const parameter_vector& val) {
             holder.parameters = val;
@@ -446,6 +452,18 @@ namespace x680 {
         inline void value_setdefined(value_element& holder, const std::string& val) {
             holder.type = v_defined;
             holder.identifier = val;
+        }
+
+        inline void value_setassigned(value_element& holder, const std::string& id, const std::string& val) {
+            holder.type = v_identifier_assign;
+            holder.identifier = id;
+            holder.value = val;
+        }
+
+        inline void value_setassignedval(value_element& holder, const std::string& id, const value_element& val) {
+            holder.type = v_identifier_assignval;
+            holder.identifier = id;
+            holder.values.push_back(val);
         }
 
         inline void value_emptyset(value_element& holder) {
@@ -510,11 +528,26 @@ namespace x680 {
             holder.type = v_open;
             holder.typevalue = val;
         }
-        
+
         inline void value_fromobject(value_element& holder, const std::string& val) {
             holder.fromreff = val;
             holder.type = v_TypeFromObject;
         }
+
+        inline void value_exception(value_element& holder, const std::string& val) {
+            holder.type = v_exception;
+            holder.value = val;
+        }
+
+        inline void values_enum_pushs(value_element_vector& holder, const value_element_vector& val) {
+            holder.insert(holder.end(), val.begin(), val.end());
+        }
+
+        inline void values_enum_push(value_element_vector& holder, const value_element& val) {
+            holder.push_back(val);
+        }
+
+
 
 
 
@@ -1424,7 +1457,7 @@ namespace x680 {
         struct import {
 
             std::string name;
-            value_element_vector oid;
+            value_element oid;
             string_vector names;
         };
 
@@ -1439,7 +1472,7 @@ namespace x680 {
             }
 
             std::string name;
-            value_element_vector oid;
+            value_element oid;
             encoding_references_type encoding_references_t;
             tagrule_type default_tags_t;
             bool extesibility_implied;
@@ -1666,14 +1699,14 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::import,
         (std::string, name)
-        (x680::bnf::value_element_vector, oid)
+        (x680::bnf::value_element, oid)
         (x680::bnf::string_vector, names)
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::module,
         (std::string, name)
-        (x680::bnf::value_element_vector, oid)
+        (x680::bnf::value_element, oid)
         (x680::encoding_references_type, encoding_references_t)
         (x680::tagrule_type, default_tags_t)
         (bool, extesibility_implied)

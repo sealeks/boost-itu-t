@@ -8,6 +8,10 @@
 namespace x680 {
     namespace bnf {
 
+
+
+        //Tag_grammar        
+
         void Tag_grammar::init() {
 
             start_rule = qi::lit("[")
@@ -20,7 +24,28 @@ namespace x680 {
         }
 
 
-        // Type_grammar
+
+        //ObjectIdentifierValue_grammar
+
+        void ObjectIdentifierValue_grammar::init() {
+
+
+
+            startrule = qi::omit[qi::lexeme[qi::lit("{")]] >> Values[bind(&value_setvalues, qi::_val, qi::_1, v_named_list)] >> qi::omit[qi::lexeme[qi::lit("}")]];
+            ;
+
+            NumberForm = pos_number_str[bind(&value_setnumber, qi::_val, qi::_1)];
+            NameForm = identifier_[bind(&value_setdefined, qi::_val, qi::_1)];
+            NameAndNumberForm = (identifier_
+                    >> qi::omit[qi::lit("(")]
+                    >> number_str
+                    >> qi::omit[qi::lit(")")])[bind(&value_setassigned, qi::_val, qi::_1, qi::_2)];
+            ObjIdComponents = NumberForm | NameAndNumberForm | NameForm;
+            Values = +ObjIdComponents;
+        }
+
+
+        //Assignments_grammar
 
         void Assignments_grammar::init() {
 
@@ -136,7 +161,6 @@ namespace x680 {
             ActualParameterT = Type[bind(&parameter_type, qi::_val, qi::_1)];
             ActualParameterV = Value[bind(&parameter_value, qi::_val, qi::_1)];
             ActualParameterVS = ValueSet[bind(&parameter_valueset, qi::_val, qi::_1)];
-            ;
             ActualParameterC = DefinedObjectClass_[bind(&parameter_class, qi::_val, qi::_1)];
             ActualParameterO = DefaultSyntax[bind(&parameter_object, qi::_val, qi::_1)];
             ActualParameterOS = ObjectSet[bind(&parameter_objectset, qi::_val, qi::_1)];

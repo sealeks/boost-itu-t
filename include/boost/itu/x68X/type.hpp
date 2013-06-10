@@ -69,6 +69,34 @@ namespace x680 {
 
 
 
+        //ObjectIdentifierValue
+
+        struct ObjectIdentifierValue_grammar :
+        public qi::grammar<str_iterator, value_element(), skip_cmt_type > {
+
+            typedef ObjectIdentifierValue_grammar self_type;
+            typedef value_element holder_type;
+
+            ObjectIdentifierValue_grammar()
+            : ObjectIdentifierValue_grammar::base_type(startrule) {
+                init();
+            }
+
+            void init();
+
+
+
+            qi::rule<str_iterator, value_element(), skip_cmt_type> startrule;
+            qi::rule<str_iterator, value_element(), skip_cmt_type>NumberForm;
+            qi::rule<str_iterator, value_element(), skip_cmt_type>NameForm;
+            qi::rule<str_iterator, value_element(), skip_cmt_type>NameAndNumberForm;
+            qi::rule<str_iterator, value_element(), skip_cmt_type> ObjIdComponents;
+            qi::rule<str_iterator, value_element_vector(), skip_cmt_type> Values;
+
+        };
+
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         // Type_grammar
@@ -183,7 +211,6 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-            ObjectIdentifierValue_grammar ObjectIdentifierValue;
 
 
             qi::rule<str_iterator, value_element(), skip_cmt_type> Value;
@@ -209,6 +236,31 @@ namespace x680 {
             qi::rule<str_iterator, value_element(), skip_cmt_type> NamedValueList;
             qi::rule<str_iterator, value_element(), skip_cmt_type> ChoiceValue;
             qi::rule<str_iterator, value_element(), skip_cmt_type> EmptySetValue;
+
+
+            qi::rule<str_iterator, value_element(), skip_cmt_type> ObjectIdentifierValue;
+            qi::rule<str_iterator, value_element(), skip_cmt_type>NumberFormN;
+            qi::rule<str_iterator, value_element(), skip_cmt_type>NumberForm;
+            qi::rule<str_iterator, value_element(), skip_cmt_type>NameForm;
+            qi::rule<str_iterator, value_element(), skip_cmt_type>NameAndNumberForm1;
+            qi::rule<str_iterator, value_element(), skip_cmt_type>NameAndNumberForm2;
+            qi::rule<str_iterator, value_element(), skip_cmt_type>NameAndNumberForm3;
+            qi::rule<str_iterator, value_element(), skip_cmt_type>NameAndNumberForm;
+            qi::rule<str_iterator, value_element(), skip_cmt_type> ObjIdComponent;
+            qi::rule<str_iterator, value_element_vector(), skip_cmt_type> ObjIdComponents;
+
+            qi::rule<str_iterator, value_element_vector(), skip_cmt_type> NameBitList;
+            qi::rule<str_iterator, value_element_vector(), skip_cmt_type> NamedNumberList;
+
+            qi::rule<str_iterator, value_element(), skip_cmt_type> ValueExtention;
+            qi::rule<str_iterator, value_element(), skip_cmt_type> ValueException1;
+            qi::rule<str_iterator, value_element(), skip_cmt_type> ValueException2;
+            qi::rule<str_iterator, value_element(), skip_cmt_type> ValueException;
+            qi::rule<str_iterator, value_element(), skip_cmt_type> EnumerationItem;
+            qi::rule<str_iterator, value_element_vector(), skip_cmt_type> RootEnumerations;
+            qi::rule<str_iterator, value_element_vector(), skip_cmt_type> Enumerations;
+
+
             qi::rule<str_iterator, value_element(), skip_cmt_type> ObjectClassFieldValue;
             qi::rule<str_iterator, value_element(), skip_cmt_type> ValueFromObject;
 
@@ -223,9 +275,7 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
 
             Tag_grammar Tag;
-            Enumerations_grammar Enumerations;
-            NamedNumberList_grammar NameBitList;
-            NamedNumberList_grammar NamedNumberList;
+
 
             qi::rule<str_iterator, type_element(), skip_cmt_type> Type;
             qi::rule<str_iterator, type_element(), skip_cmt_type> GovernorType;
