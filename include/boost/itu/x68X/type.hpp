@@ -8,7 +8,7 @@
 
 #include <boost/itu/x68X/asn1module.hpp>
 #include <boost/itu/x68X/x680.hpp>
-#include <boost/itu/x68X/value.hpp>
+#include <boost/itu/x68X/setters.hpp>
 
 namespace x680 {
     namespace bnf {
