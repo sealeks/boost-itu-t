@@ -106,9 +106,13 @@ namespace x680 {
 
             ObjIdComponents = +ObjIdComponent;
 
-            NameBitList = (NameAndNumberForm2 | NameAndNumberForm3) % qi::omit[qi::lit(",")];
+            NameBitList = qi::omit[qi::lexeme[qi::lit("{")]] >> 
+                    (NameAndNumberForm2 | NameAndNumberForm3) % qi::omit[qi::lit(",")]>>
+                    qi::omit[qi::lexeme[qi::lit("}")]];
 
-            NamedNumberList = (NameAndNumberForm1 | NameAndNumberForm3) % qi::omit[qi::lit(",")];
+            NamedNumberList =qi::omit[qi::lexeme[qi::lit("{")]] >>
+                    (NameAndNumberForm1 | NameAndNumberForm3) % qi::omit[qi::lit(",")] >>
+                    qi::omit[qi::lexeme[qi::lit("}")]];
 
             EnumerationItem = NameAndNumberForm2 | DefinedValue;
 

@@ -266,17 +266,6 @@ namespace x680 {
         fkind_FixedTypeSet_or_ObjectSet
     };
 
-    enum objectfieldkind_type {
-
-        ofk_NoDef,
-        ofk_Type,
-        ofk_Value,
-        ofk_ValueSet,
-        ofk_Object,
-        ofk_ObjectSet,
-        ofk_Value_or_ObjectSet,
-        ofk_Value_or_Object
-    };
 
     enum object_type {
 
@@ -509,6 +498,7 @@ namespace x680 {
             }
 
             std::string identifier;
+            x680::bnf::string_vector parameters;            
             constraint_type tp;
             value_element value;
             value_element from_;
@@ -517,8 +507,8 @@ namespace x680 {
             range_type totype_;
             type_element type;
             constraintmarker_type marker;
-            x680::bnf::string_vector parameters;
             std::string objsetref;
+            objectset_element_ptr setelement;
             constraint_element_vector constraint;
         };
 

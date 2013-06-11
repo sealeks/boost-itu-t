@@ -360,7 +360,8 @@ namespace x680 {
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> Constraint;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ConstraintSpec;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpecs;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraint;
+            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraintdecl;             
+            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraint;            
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpec;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type>Intersections;
             qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> Unions;
@@ -478,6 +479,7 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
 
             qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> ObjectSet;
+            qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> SimpleDefinedObjectSet;
             qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> ParameterizedObjectSet;
             qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> ObjectSetFromObjects;
             qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> StrictObjectSet;

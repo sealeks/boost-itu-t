@@ -44,16 +44,18 @@ namespace x680 {
             ElementSetSpecs %= ElementSetSpec >>
                     -(qi::omit[qi::lit(",")] >> Extention >>
                     -(qi::omit[qi::lit(",")] >> ElementSetSpec));
-
-            GeneralConstraint = (UserDefinedConstraint
+            
+            GeneralConstraintdecl = (UserDefinedConstraint
                     | ContentsConstraintTypeValue
                     | ContentsConstraintValue
                     | ContentsConstraintType
-                    | ComponentRelationConstraint/* | SimpleTableConstraint*/)[ bind(&constraint_element_vector::push_back, qi::_val, qi::_1) ];
+                    | ComponentRelationConstraint | SimpleTableConstraint);
 
+            GeneralConstraint = GeneralConstraintdecl[ bind(&push_constraints, qi::_val, qi::_1) ];
+            
+                    
 
-
-
+            
             UElems %= ((qi::omit[(UNION_ | qi::lit("|"))]
                     >> Unions)[ bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_UNION) ]);
 
@@ -152,12 +154,12 @@ namespace x680 {
                     (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::blank >> BY_]])[bind(&constraint_tp, qi::_val, cns_UserDefinedConstraint)]
                     >> UserDefinedConstraintParameters[bind(&constraint_userdef, qi::_val, qi::_1)];
 
-            //qi::rule<str_iterator, constraint_element(), skip_cmt_type> SimpleTableConstraint;
+            SimpleTableConstraint = StrictObjectSet[bind(&constraint_setelement, qi::_val, qi::_1)];
 
             AtNotations = *AtNotation_;
 
             ComponentRelationConstraint = (qi::omit[qi::lit("{")]
-                    >> DefinedObjectSet_
+                    >> SimpleDefinedObjectSet
                     >> qi::omit[qi::lit("}")]
                     >> qi::omit[qi::lit("{")]
                     >> AtNotations

@@ -227,6 +227,12 @@ namespace x680 {
         inline void constraint_tp(constraint_element& holder, const constraint_type& val) {
             holder.tp = val;
         }
+        
+        
+        inline void constraint_setelement(constraint_element& holder, const objectset_element& val) {
+           holder.setelement = objectset_element_ptr( new objectset_element( val ));
+           holder.tp =  cns_SimpleTableConstraint;
+        }             
 
         inline void constraint_identifier(constraint_element& holder, const std::string& val) {
             holder.identifier = val;
@@ -310,8 +316,8 @@ namespace x680 {
             //holder.tp = cns_UserDefinedConstraint;
         }
 
-        inline void constraint_relation(constraint_element& holder, const std::string& valr, const string_vector& valp) {
-            holder.objsetref = valr;
+        inline void constraint_relation(constraint_element& holder, const objectset_element& valr, const string_vector& valp) {
+            holder.setelement = objectset_element_ptr( new objectset_element( valr ));
             holder.parameters = valp;
             holder.tp = cns_ComponentRelation;
         }
@@ -372,6 +378,10 @@ namespace x680 {
             tmp.push_back(val);
             holder.push_back(tmp);
         }
+        
+  
+   
+       
 
 
         const constraint_element CONSTRAINT_UNION = constraint_element(cns_UNION);

@@ -22,6 +22,8 @@ namespace x680 {
 
             
              ObjectSet = ObjectSetFromObjects | StrictObjectSet | ParameterizedObjectSet; 
+             
+             SimpleDefinedObjectSet= DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)];
             
             ParameterizedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)] >> -(ActualParameters[bind(&objectset_parameters, qi::_val, qi::_1)]);           
             
