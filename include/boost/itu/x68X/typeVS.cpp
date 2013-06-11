@@ -19,7 +19,15 @@ namespace x680 {
             //  Constraint grammar
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
-            ValueSet = qi::omit[qi::lit("{")]
+            ValueSet = ValueSetFromObjects | StrictValueSet | ParameterizedValueSet;
+
+            ParameterizedValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)] >> -(ActualParameters[bind(&valueset_parameters, qi::_val, qi::_1)]);
+
+            ValueSetFromObjects = SimpleTypeFromObject_[bind(&valueset_fromobject, qi::_val, qi::_1)];
+
+            StrictValueSet = ValueSetdecl[bind(&valueset_set, qi::_val, qi::_1)];
+
+            ValueSetdecl = qi::omit[qi::lit("{")]
                     >> ElementSetSpecs
                     >> qi::omit[qi::lit("}")];
 

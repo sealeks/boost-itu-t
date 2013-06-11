@@ -34,6 +34,8 @@
 #include <boost/variant.hpp>
 #include <boost/spirit/repository/include/qi_distinct.hpp>
 
+#include <boost/shared_ptr.hpp>
+
 
 
 
@@ -154,7 +156,7 @@ namespace x680 {
         v_choice, // SetOfValue, SequenceOfValue,  { {...} , {...}....}      
         v_open, // Type : Value        
         v_defined, // DefinedValue   
-        v_TypeFromObject,
+        v_ValueFromObject,
         v_extention,
         v_exception
     };
@@ -190,6 +192,20 @@ namespace x680 {
         cns_EXCEPTION
     };
 
+    enum valueset_type {
+
+        vs_Strait,
+        vs_defined,
+        vs_ValueSetFromObject
+    };
+
+    enum objectset_type {
+
+        os_Strait,
+        os_defined,
+        os_ObjectSetFromObject
+    };
+
     enum range_type {
 
         close_range,
@@ -220,7 +236,20 @@ namespace x680 {
         field_defaulttype,
         field_defaultvalue,
         field_defaultset,
-        field_defaultref
+        field_defaultref,
+        field_defaultoset,
+        field_defaultovalue
+    };
+
+    enum setting_type {
+
+        sett_NoDef,
+        sett_Type,
+        sett_Value,
+        sett_ValueSet,
+        sett_DefineClass,
+        sett_Object,
+        sett_ObjectSet
     };
 
     enum fieldkind_type {
@@ -254,7 +283,9 @@ namespace x680 {
         ot_Nodef,
         ot_Object,
         ot_Refference,
-        ot_Raw,
+        ot_FromObject,
+        ot_DefinedObjectSet,
+        ot_ObjectSetFromObjects,
         ot_UNION,
         ot_INTERSECTION,
         ot_EXCEPT,
@@ -337,8 +368,6 @@ namespace x680 {
         typedef std::vector<constraint_element> constraint_element_vector;
         typedef std::vector<constraint_element_vector> constraints_vector;
 
-        typedef constraint_element_vector valueset_element;
-
         struct classfield_type;
         typedef std::vector<classfield_type> classfield_vector;
 
@@ -350,18 +379,23 @@ namespace x680 {
 
         struct object_element;
         typedef std::vector<object_element> object_element_vector;
-        typedef object_element_vector objectset_element;
+        typedef boost::shared_ptr<object_element> object_element_ptr;
+
+        struct objectset_element;
+        typedef boost::shared_ptr<objectset_element> objectset_element_ptr;
 
         struct argument_type;
         typedef std::vector<argument_type> argument_vector;
 
-        struct parameter_element;
-        typedef std::vector<parameter_element> parameter_vector;
-
         struct typevalue_element;
-        typedef std::vector<typevalue_element> typevalue_element_vector;
+        typedef boost::shared_ptr<typevalue_element> typevalue_element_ptr;
+
+        struct setting_element;
+        typedef std::vector<setting_element> parameter_vector;
 
         using boost::spirit::repository::distinct;
+
+
 
 
 
@@ -417,7 +451,7 @@ namespace x680 {
             std::string value;
             value_type type;
             value_element_vector values;
-            typevalue_element_vector typevalue;
+            typevalue_element_ptr typevalue;
             std::string fromreff;
         };
 
@@ -451,7 +485,6 @@ namespace x680 {
             named_type_element_vector elements;
             constraints_vector constraints;
         };
-
 
 
 
@@ -511,6 +544,21 @@ namespace x680 {
 
 
 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  valueset_element
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        struct valueset_element {
+
+            valueset_element() : tp(vs_Strait) {
+            }
+
+            parameter_vector parameters;
+            valueset_type tp;
+            std::string reference;
+            constraint_element_vector set;
+        };
 
 
 
@@ -578,6 +626,8 @@ namespace x680 {
             type_element defaulttype;
             value_element defaultvalue;
             valueset_element defaultset;
+            object_element_ptr defaultovalue;
+            objectset_element_ptr defaultoset;
             std::string defaultreff;
         };
 
@@ -625,6 +675,26 @@ namespace x680 {
 
 
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  setting_element
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        struct setting_element {
+
+            setting_element() : tp(sett_NoDef) {
+            }
+
+            setting_type tp;
+            value_element value;
+            type_element type;
+            valueset_element valueset;
+            class_element class_;
+            object_element_ptr object;
+            objectset_element_ptr objectset;
+        };
+
+
+
 
 
 
@@ -634,15 +704,11 @@ namespace x680 {
 
         struct objectfield_type {
 
-            objectfield_type() : tp(ofk_NoDef) {
+            objectfield_type() {
             }
 
             std::string field;
-            objectfieldkind_type tp;
-            type_element holdertype;
-            value_element holdervalue;
-            valueset_element holdervalueset;
-            std::string holderreff;
+            setting_element setting;
         };
 
         struct object_element {
@@ -654,6 +720,7 @@ namespace x680 {
             }
 
             object_type tp;
+            parameter_vector parameters;
             objectfield_vector fields;
             std::string reff;
             std::string raw;
@@ -674,6 +741,24 @@ namespace x680 {
             object_element object;
         };
 
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  objectset_element
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////         
+
+        struct objectset_element {
+
+            objectset_element() : tp(os_Strait) {
+            }
+
+            parameter_vector parameters;
+            objectset_type tp;
+            std::string reference;
+            object_element_vector set;
+        };
 
 
 
@@ -724,24 +809,6 @@ namespace x680 {
 
 
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        //  parameter_element
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-
-        struct parameter_element {
-
-            parameter_element() : tp(prm_NoDef) {
-            }
-
-            parameter_type tp;
-            type_element type;
-            class_element class_;
-            value_element value;
-            object_element object;
-            valueset_element valueset;
-            objectset_element objectset;
-            std::string reff;
-        };
 
 
 

@@ -20,11 +20,23 @@ namespace x680 {
             //  ObjectSetAssignment grammar
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
-            ObjectSet = qi::omit[qi::lit("{")]
+            
+             ObjectSet = ObjectSetFromObjects | StrictObjectSet | ParameterizedObjectSet; 
+            
+            ParameterizedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)] >> -(ActualParameters[bind(&objectset_parameters, qi::_val, qi::_1)]);           
+            
+            ObjectSetFromObjects = SimpleTypeFromObject_[bind(&objectset_fromobject, qi::_val, qi::_1)];            
+
+            StrictObjectSet   =   ObjectSetdecl[bind(&objectset_set, qi::_val, qi::_1)];
+            
+            oDefinedObjectSet  =  DefinedObjectSet_[bind(&object_objectsetdef, qi::_val, qi::_1)] >> -(ActualParameters[bind(&object_parameters, qi::_val, qi::_1)]);
+            
+            oObjectSetFromObjects =  SimpleTypeFromObject_[bind(&object_objectsetfromobject, qi::_val, qi::_1)];       
+            
+
+            ObjectSetdecl = qi::omit[qi::lit("{")]
                     >> oElementSetSpecs
                     >> qi::omit[qi::lit("}")];
-
-
 
 
             oElementSetSpecs %= oElementSetSpec >>
@@ -66,7 +78,7 @@ namespace x680 {
 
             oExtention = qi::lit("...")[qi::_val = OBJECT_EXTENTION];
 
-            oElement = DefaultSyntax[qi::_val = qi::_1 ] | DefinedObject_[bind(&object_reff, qi::_val, qi::_1)];
+            oElement = oDefinedObjectSet| Object | oObjectSetFromObjects;
 
 
 

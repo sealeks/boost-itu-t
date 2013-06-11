@@ -129,14 +129,14 @@ namespace x680 {
             holder.values.push_back(val);
         }
 
-        inline void value_typevalue(value_element& holder, const typevalue_element_vector& val) {
+        inline void value_typevalue(value_element& holder, const typevalue_element& val) {
             holder.type = v_open;
-            holder.typevalue = val;
+            holder.typevalue = typevalue_element_ptr(new typevalue_element(val));
         }
 
         inline void value_fromobject(value_element& holder, const std::string& val) {
             holder.fromreff = val;
-            holder.type = v_TypeFromObject;
+            holder.type = v_ValueFromObject;
         }
 
         inline void value_exception(value_element& holder, const std::string& val) {
@@ -405,7 +405,26 @@ namespace x680 {
         }
 
 
+        //  valueset_element setter   
 
+        inline void valueset_parameters(valueset_element& holder, const parameter_vector& val) {
+            holder.parameters = val;
+        }
+
+        inline void valueset_set(valueset_element& holder, const constraint_element_vector& val) {
+            holder.set = val;
+            holder.tp = vs_Strait;
+        }
+
+        inline void valueset_defined(valueset_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.tp = vs_defined;
+        }
+
+        inline void valueset_fromobject(valueset_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.tp = vs_ValueSetFromObject;
+        }
 
 
 
@@ -523,6 +542,16 @@ namespace x680 {
             holder.holder = val;
         }
 
+        inline void classfield_holder_ov(classfield_type& holder, const std::string& val) {
+            holder.holder = val;
+            holder.tp = fkind_ObjectFieldSpec;
+        }
+
+        inline void classfield_holder_os(classfield_type& holder, const std::string& val) {
+            holder.holder = val;
+            holder.tp = fkind_ObjectSetFieldSpec;
+        }
+
         inline void classfield_unique(classfield_type& holder) {
             holder.unique = true;
             holder.tp = fkind_FixedTypeValueFieldSpec;
@@ -554,6 +583,16 @@ namespace x680 {
         inline void classfield_defaultref(classfield_type& holder, const std::string& val) {
             holder.marker = field_defaultref;
             holder.defaultreff = val;
+        }
+
+        inline void classfield_defaultovalue(classfield_type& holder, const object_element& val) {
+            holder.marker = field_defaultovalue;
+            holder.defaultovalue = object_element_ptr(new object_element(val));
+        }
+
+        inline void classfield_defaultoset(classfield_type& holder, const objectset_element& val) {
+            holder.marker = field_defaultoset;
+            holder.defaultoset = objectset_element_ptr(new objectset_element(val));
         }
 
 
@@ -647,30 +686,60 @@ namespace x680 {
 
 
 
+
+        // setting setter        
+
+        inline void setting_settype(setting_element& holder, const type_element& val) {
+            holder.tp = sett_Type;
+            holder.type = val;
+        }
+
+        inline void setting_value(setting_element& holder, const value_element& val) {
+            holder.tp = sett_Value;
+            holder.value = val;
+        }
+
+        inline void setting_valueset(setting_element& holder, const valueset_element& val) {
+            holder.tp = sett_ValueSet;
+            holder.valueset = val;
+        }
+
+        inline void setting_class(setting_element& holder, const class_element& val) {
+            holder.tp = sett_DefineClass;
+            holder.class_ = val;
+        }
+
+        inline void setting_object(setting_element& holder, const object_element& val) {
+            holder.tp = sett_Object;
+            holder.object = object_element_ptr(new object_element(val));
+        }
+
+        inline void setting_objectset(setting_element& holder, const objectset_element& val) {
+            holder.tp = sett_ObjectSet;
+            holder.objectset = objectset_element_ptr(new objectset_element(val));
+        }
+
+
+
+
+
+
+
         // objectfield setter
 
         inline void objectfield_field(objectfield_type& holder, const std::string& val) {
             holder.field = val;
         }
 
-        inline void objectfield_typeset(objectfield_type& holder, const type_element& val) {
-            holder.holdertype = val;
-            holder.tp = ofk_Type;
-        }
-
-        inline void objectfield_value(objectfield_type& holder, const value_element& val) {
-            holder.holdervalue = val;
-            holder.tp = ofk_Value;
-        }
-
-        inline void objectfield_valueset(objectfield_type& holder, const valueset_element& val) {
-            holder.holdervalueset = val;
-            holder.tp = ofk_ValueSet;
+        inline void objectfield_setting(objectfield_type& holder, const setting_element& val) {
+            holder.setting = val;
         }
 
 
 
-        // objectelement setter
+
+
+        // object_element setter
 
         const object_element OBJECT_UNION = object_element(ot_UNION);
         const object_element OBJECT_INTERSECTION = object_element(ot_INTERSECTION);
@@ -678,20 +747,36 @@ namespace x680 {
         const object_element OBJECT_ALLEXCEPT = object_element(ot_ALLEXCEPT);
         const object_element OBJECT_EXTENTION = object_element(ot_EXTENTION);
 
+        inline void object_parameters(object_element& holder, const parameter_vector& val) {
+            holder.parameters = val;
+        }
+
         inline void object_fields(object_element& holder, const objectfield_vector& val) {
             holder.fields = val;
             holder.tp = ot_Object;
         }
 
-        inline void object_reff(object_element& holder, const std::string& val) {
+        inline void object_refference(object_element& holder, const std::string& val) {
             holder.reff = val;
             holder.tp = ot_Refference;
         }
 
-        inline void object_raw(object_element& holder, const std::string& val) {
-            holder.raw = val;
-            holder.tp = ot_Raw;
+        inline void object_fromobject(object_element& holder, const std::string& val) {
+            holder.reff = val;
+            holder.tp = ot_FromObject;
         }
+
+        inline void object_objectsetdef(object_element& holder, const std::string& val) {
+            holder.reff = val;
+            holder.tp = ot_DefinedObjectSet;
+        }
+
+        inline void object_objectsetfromobject(object_element& holder, const std::string& val) {
+            holder.reff = val;
+            holder.tp = ot_ObjectSetFromObjects;
+        }
+
+
 
 
 
@@ -718,6 +803,29 @@ namespace x680 {
 
 
 
+
+
+
+        //  objectset_element setter   
+
+        inline void objectset_parameters(objectset_element& holder, const parameter_vector& val) {
+            holder.parameters = val;
+        }
+
+        inline void objectset_set(objectset_element& holder, const object_element_vector& val) {
+            holder.set = val;
+            holder.tp = os_Strait;
+        }
+
+        inline void objectset_defined(objectset_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.tp = os_defined;
+        }
+
+        inline void objectset_fromobject(objectset_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.tp = os_ObjectSetFromObject;
+        }
 
 
 
@@ -756,11 +864,9 @@ namespace x680 {
             holder.value = val;
         }
 
-        inline void typevalues_set(typevalue_element_vector& holder, const type_element& tp, const value_element& val) {
-            typevalue_element tmp;
-            tmp.type = tp;
-            tmp.value = val;
-            holder.push_back(tmp);
+        inline void typevalues_set(typevalue_element& holder, const type_element& tp, const value_element& val) {
+            holder.type = tp;
+            holder.value = val;
         }
 
 
@@ -797,47 +903,6 @@ namespace x680 {
 
 
 
-        // Parameter setter
-
-        inline void parameter_reff(parameter_element& holder, const std::string& val) {
-            holder.reff = val;
-            holder.tp = prm_Reff;
-        }
-
-        inline void parameter_type(parameter_element& holder, const type_element& val) {
-            holder.type = val;
-            holder.tp = prm_Type;
-        }
-
-        inline void parameter_class(parameter_element& holder, const std::string& val) {
-            holder.reff = val;
-            holder.tp = prm_Class;
-        }
-
-        inline void parameter_value(parameter_element& holder, const value_element& val) {
-            holder.value = val;
-            holder.tp = prm_Value;
-        }
-
-        inline void parameter_object(parameter_element& holder, const object_element& val) {
-            holder.object = val;
-            holder.tp = prm_Object;
-        }
-
-        inline void parameter_valueset(parameter_element& holder, const valueset_element& val) {
-            holder.valueset = val;
-            holder.tp = prm_ValueSet;
-        }
-
-        inline void parameter_objectset(parameter_element& holder, const objectset_element& val) {
-            holder.objectset = val;
-            holder.tp = prm_ObjectSet;
-        }
-
-
-
-
-
 
     }
 }
@@ -845,7 +910,7 @@ namespace x680 {
 
 // FUSION
 
-BOOST_FUSION_ADAPT_STRUCT(
+/*BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::unknown_tc_element,
         (std::string, reff)
         (x680::bnf::parameter_vector, parameters)
@@ -894,7 +959,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (std::string, value)
         (x680::value_type, type)
         (x680::bnf::value_element_vector, values)
-        (x680::bnf::typevalue_element_vector, typevalue)
+        (x680::bnf::typevalue_element_ptr, typevalue)
         (std::string, fromreff)
         )
 
@@ -906,6 +971,15 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::value_element, value)
         (bool, exact)
         )
+
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::valueset_element,
+        (x680::bnf::parameter_vector, parameters)
+        (x680::valueset_type, tp)
+        (std::string, reference)
+        (x680::bnf::constraint_element_vector, set)
+        )
+
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::valueset_assignment,
@@ -987,10 +1061,11 @@ BOOST_FUSION_ADAPT_STRUCT(
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::object_element,
-        (x680::bnf::objectfield_vector, fields)
         (x680::object_type, tp)
+        (x680::bnf::parameter_vector, parameters)
+        (x680::bnf::objectfield_vector, fields)           
         (std::string, reff)
-        (std::string, raw)
+        (std::string, raw)     
         )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -1000,6 +1075,15 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::class_element, class_)
         (x680::bnf::object_element, object)
         )
+        
+BOOST_FUSION_ADAPT_STRUCT(
+        x680::bnf::objectset_element,
+        (x680::bnf::parameter_vector, parameters)           
+        (x680::objectset_type, tp)
+        (std::string, reference)
+        (x680::bnf::object_element_vector, set)
+        ) 
+        
 
 BOOST_FUSION_ADAPT_STRUCT(
         x680::bnf::objectset_assignment,
@@ -1054,7 +1138,7 @@ BOOST_FUSION_ADAPT_STRUCT(
         (x680::bnf::exports, exports_)
         (x680::bnf::imports, imports_)
         (x680::bnf::assignment_vector, elements)
-        )
+        )*/
 
 #endif	
 

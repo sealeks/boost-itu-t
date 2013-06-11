@@ -139,6 +139,20 @@ namespace x680 {
 
 
 
+            Setting = SettingType | SettingValue | SettingValueSet | /*SettingClass |*/ SettingObject | SettingObjectSet;
+
+            SettingType = Type[bind(&setting_settype, qi::_val, qi::_1)];
+
+            SettingValue = Value[bind(&setting_value, qi::_val, qi::_1)];
+
+            SettingValueSet = ValueSet[bind(&setting_valueset, qi::_val, qi::_1)];
+
+            SettingClass = DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)];
+
+            SettingObject = Object[bind(&setting_object, qi::_val, qi::_1)];
+
+            SettingObjectSet = ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)];
+
 
             Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
@@ -156,14 +170,9 @@ namespace x680 {
 
             ActualParameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (ActualParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
-            ActualParameter = ActualParameterT | ActualParameterV | ActualParameterVS | ActualParameterC | ActualParameterO | ActualParameterOS;
+            ActualParameter = SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet;
 
-            ActualParameterT = Type[bind(&parameter_type, qi::_val, qi::_1)];
-            ActualParameterV = Value[bind(&parameter_value, qi::_val, qi::_1)];
-            ActualParameterVS = ValueSet[bind(&parameter_valueset, qi::_val, qi::_1)];
-            ActualParameterC = DefinedObjectClass_[bind(&parameter_class, qi::_val, qi::_1)];
-            ActualParameterO = DefaultSyntax[bind(&parameter_object, qi::_val, qi::_1)];
-            ActualParameterOS = ObjectSet[bind(&parameter_objectset, qi::_val, qi::_1)];
+
 
 
             initV();

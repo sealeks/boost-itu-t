@@ -176,6 +176,18 @@ namespace x680 {
             qi::rule<str_iterator, unknown_tc_assignment(), skip_cmt_type> UnknownTCAssignment;
 
 
+            qi::rule<str_iterator, parameter_vector(), skip_cmt_type> ActualParameters;
+
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> ActualParameter;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> Setting;
+
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingType;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingValue;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingValueSet;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingClass;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObject;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObjectSet;
+
 
             qi::rule<str_iterator, argument_type(), skip_cmt_type> Parameter;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterA;
@@ -184,15 +196,8 @@ namespace x680 {
             qi::rule<str_iterator, argument_vector(), skip_cmt_type> Parameters;
 
 
-            qi::rule<str_iterator, parameter_element(), skip_cmt_type> ActualParameterT;
-            qi::rule<str_iterator, parameter_element(), skip_cmt_type> ActualParameterV;
-            qi::rule<str_iterator, parameter_element(), skip_cmt_type> ActualParameterVS;
-            qi::rule<str_iterator, parameter_element(), skip_cmt_type> ActualParameterC;
-            qi::rule<str_iterator, parameter_element(), skip_cmt_type> ActualParameterO;
-            qi::rule<str_iterator, parameter_element(), skip_cmt_type> ActualParameterOS;
 
-            qi::rule<str_iterator, parameter_element(), skip_cmt_type> ActualParameter;
-            qi::rule<str_iterator, parameter_vector(), skip_cmt_type> ActualParameters;
+
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  UnknownTCAssigment grammar (Type or Class)
@@ -265,7 +270,7 @@ namespace x680 {
             qi::rule<str_iterator, value_element(), skip_cmt_type> ValueFromObject;
 
             qi::rule<str_iterator, typevalue_element(), skip_cmt_type> OpenTypeFieldVal;
-            qi::rule<str_iterator, typevalue_element_vector(), skip_cmt_type> OpenTypeFieldValv;
+            qi::rule<str_iterator, typevalue_element(), skip_cmt_type> OpenTypeFieldValv;
 
 
 
@@ -345,6 +350,10 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
 
             qi::rule < std::string::iterator, valueset_element(), skip_cmt_type> ValueSet;
+            qi::rule < std::string::iterator, valueset_element(), skip_cmt_type> ParameterizedValueSet;
+            qi::rule < std::string::iterator, valueset_element(), skip_cmt_type> StrictValueSet;
+            qi::rule < std::string::iterator, valueset_element(), skip_cmt_type> ValueSetFromObjects;
+            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ValueSetdecl;
 
             qi::rule < std::string::iterator, constraints_vector(), skip_cmt_type> Constraints;
             qi::rule < std::string::iterator, constraints_vector(), skip_cmt_type> SizeConstraints;
@@ -444,6 +453,11 @@ namespace x680 {
             //  ObjectAssignment grammar
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 
+
+            qi::rule<str_iterator, object_element(), skip_cmt_type> Object;
+            qi::rule<str_iterator, object_element(), skip_cmt_type> DefinedObject;
+            qi::rule<str_iterator, object_element(), skip_cmt_type> ObjectFromObject;
+
             qi::rule<str_iterator, object_element(), skip_cmt_type> ObjectDefn;
             qi::rule<str_iterator, object_element(), skip_cmt_type> DefaultSyntax;
             qi::rule<str_iterator, object_element(), skip_cmt_type> DefinedSyntax;
@@ -464,6 +478,13 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
 
             qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> ObjectSet;
+            qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> ParameterizedObjectSet;
+            qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> ObjectSetFromObjects;
+            qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> StrictObjectSet;
+            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> ObjectSetdecl;
+
+            qi::rule<str_iterator, object_element(), skip_cmt_type> oDefinedObjectSet;
+            qi::rule<str_iterator, object_element(), skip_cmt_type> oObjectSetFromObjects;
 
 
             qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs;

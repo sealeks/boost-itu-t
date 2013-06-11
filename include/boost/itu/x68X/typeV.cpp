@@ -19,7 +19,7 @@ namespace x680 {
 
             Value = NullValue | BooleanValue | RealValue | IntegerValue | HStringValue
                     | BStringValue | CStringValue | NumberList | ObjectIdentifierValue
-                    | NamedValueList | ChoiceValue | EmptySetValue
+                    | NamedValueList | ValueList | ChoiceValue | EmptySetValue
                     | ValueFromObject | ObjectClassFieldValue | DefinedValue;
 
             SimpleDefinedValue = DefinedValue_[bind(&value_setdefined, qi::_val, qi::_1)];
@@ -102,7 +102,7 @@ namespace x680 {
 
             NameAndNumberForm = NameAndNumberForm2 | NameAndNumberForm3;
 
-            ObjIdComponent = NumberForm | NameAndNumberForm | NameForm | DefinedValue;
+            ObjIdComponent = NameAndNumberForm | NumberForm | NameForm;
 
             ObjIdComponents = +ObjIdComponent;
 
