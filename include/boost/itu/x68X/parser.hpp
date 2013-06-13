@@ -7,7 +7,7 @@
 #define          _ITU_X680ROOTPARSER_H_
 
 #include <boost/itu/x68X/asn1module.hpp>
-#include <boost/itu/x68X/type.hpp>
+#include <boost/itu/x68X/modules.hpp>
 
 
 namespace x680 {
