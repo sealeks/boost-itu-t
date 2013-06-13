@@ -23,7 +23,7 @@ namespace x680 {
 
             ParameterizedValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)] >> -(ActualParameters[bind(&valueset_parameters, qi::_val, qi::_1)]);
 
-            ValueSetFromObjects = SimpleTypeFromObject_[bind(&valueset_fromobject, qi::_val, qi::_1)];
+            ValueSetFromObjects = BigFromObjects_[bind(&valueset_fromobject, qi::_val, qi::_1)];
 
             StrictValueSet = ValueSetdecl[bind(&valueset_set, qi::_val, qi::_1)];
 
@@ -156,7 +156,7 @@ namespace x680 {
 
             SimpleTableConstraint = StrictObjectSet[bind(&constraint_setelement, qi::_val, qi::_1)];
 
-            AtNotations = *AtNotation_;
+            AtNotations = AtNotation_  % qi::omit[qi::lit(",")];
 
             ComponentRelationConstraint = (qi::omit[qi::lit("{")]
                     >> SimpleDefinedObjectSet

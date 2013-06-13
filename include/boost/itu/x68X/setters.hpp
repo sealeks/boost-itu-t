@@ -919,30 +919,30 @@ namespace x680 {
 
         // Argument setter
 
-        inline void argument_governor_tp(argument_type& holder, const type_element& val, const std::string& par) {
-            if (val.builtin_t == t_Reference) {
-                holder.governorreff = val.reference;
-                holder.tp = gvr_Type_or_Class;
-            } else {
-                holder.governortype = val;
-                holder.tp = gvr_Type;
-            }
+        inline void argument_governor_tp(argument_type& holder, const type_element& val, const std::string& par,  bool big) {
+            holder.governortype = val;
+            holder.tp = gvr_Type;
             holder.argument = par;
+            holder.atp = big ? argm_Big : argm_Little;            
         }
 
-        inline void argument_governor_cl(argument_type& holder, const class_element& val, const std::string& par) {
+        inline void argument_governor_cl(argument_type& holder, const class_element& val, const std::string& par, bool big) {
             holder.governorclass = val;
             holder.tp = gvr_Class;
             holder.argument = par;
+            holder.atp = big ? argm_Big : argm_Little;    
         }
 
-        inline void argument_governor_reff(argument_type& holder, const std::string& val) {
+        inline void argument_governor_reff(argument_type& holder, const unknown_tc_element& val, const std::string& par, bool big) {
             holder.governorreff = val;
             holder.tp = gvr_Type_or_Class;
+            holder.argument = par;
+            holder.atp = big ? argm_Big : argm_Little;            
         }
 
-        inline void argument_argument(argument_type& holder, const std::string& val) {
+        inline void argument_argument(argument_type& holder, const std::string& val, bool big) {
             holder.argument = val;
+            holder.atp = big ? argm_Big : argm_Little;
         }
 
 
@@ -1001,6 +1001,10 @@ namespace x680 {
         inline void import_oid(import& holder, const value_element & val) {
             holder.oid = val;
         }
+        
+        inline void import_defined(import& holder, const value_element & val) {
+            holder.defined= val;
+        }        
 
         inline void import_add(import& holder, const string_vector & val) {
             holder.names = val;

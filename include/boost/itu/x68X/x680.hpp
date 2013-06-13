@@ -84,6 +84,7 @@ namespace x680 {
         t_Instance_Of,
         t_RELATIVE_OID_IRI,
         t_OID_IRI,        
+        t_ANY,        
         t_ClassField,
         t_TypeFromObject,
         t_ValueSetFromObjects,
@@ -294,6 +295,13 @@ namespace x680 {
         gvr_Class,
         gvr_Type_or_Class
     };
+    
+    enum argumentsize_type {
+
+        argm_No,
+        argm_Big,
+        argm_Little
+    };    
 
     enum parameter_type {
 
@@ -822,14 +830,16 @@ namespace x680 {
 
         struct argument_type {
 
-            argument_type() : tp(gvr_No) {
+            argument_type() : tp(gvr_No), atp(argm_No) {
             }
 
-            std::string governorreff;
+            unknown_tc_element governorreff;
             type_element governortype;
             class_element governorclass;
             governor_type tp;
+            argumentsize_type atp;            
             std::string argument;
+
         };
 
 
@@ -861,6 +871,7 @@ namespace x680 {
 
             std::string name;
             value_element oid;
+            value_element defined;
             string_vector names;
         };
 
@@ -1087,8 +1098,8 @@ namespace x680 {
         extern str_rule ExternalObjectSetReference_;
         extern str_rule DefinedObjectSet_;
         extern str_rule ObjectClassFieldType_;
-        extern str_rule SimpleTypeFromObject_;
-        extern str_rule SimpleValueSetFromObjects_;
+        extern str_rule LittleFromObject_;
+        extern str_rule BigFromObjects_;
 
         /*??*/ extern str_rule UserDefinedConstraintParameter_;
         /*??*/ extern str_rule AtNotation_;

@@ -10,30 +10,30 @@ namespace x680 {
 
 
 
-        str_rule pos_number_str = distinct(qi::alnum | '-')[qi::char_("0")[ qi::_val = qi::_1 ]
+        str_rule pos_number_str = distinct(qi::alnum | ('-' >> qi::alnum))[qi::char_("0")[ qi::_val = qi::_1 ]
                 | (qi::char_("1-9")[ qi::_val = qi::_1]
                 >> *(qi::char_("0-9")[ qi::_val += qi::_1]))];
 
 
-        str_rule number_str = distinct(qi::alnum | '-')[(qi::string("-")[ qi::_val = qi::_1 ]
+        str_rule number_str = distinct(qi::alnum | ('-' >> qi::alnum))[(qi::string("-")[ qi::_val = qi::_1 ]
                 >> qi::omit[*qi::blank]
                 >> pos_number_str[ qi::_val += qi::_1 ])
         | pos_number_str[ qi::_val = qi::_1 ]];
 
-        str_rule realnumber_str = distinct(qi::alnum | '-')[number_str[ qi::_val = qi::_1 ]
+        str_rule realnumber_str = distinct(qi::alnum | ('-' >> qi::alnum))[number_str[ qi::_val = qi::_1 ]
                 >> (qi::string(".")[ qi::_val += qi::_1 ] >> number_str[ qi::_val += qi::_1 ])];
 
-        str_rule bstring_str = distinct(qi::alnum | '-')[ qi::omit[qi::char_("'")]
+        str_rule bstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::omit[qi::char_("'")]
         >> *(qi::char_("0-1")[ qi::_val += qi::_1] | qi::omit[qi::space])
         >> qi::omit[ qi::char_("'")
         >> qi::char_("B")]];
 
-        str_rule hstring_str = distinct(qi::alnum | '-')[ qi::omit[qi::char_("'")]
+        str_rule hstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::omit[qi::char_("'")]
         >> *(qi::char_("0-9ABCDEF")[ qi::_val += qi::_1] | qi::omit[qi::space])
         >> qi::omit[ qi::char_("'")
         >> qi::char_("H")]];
 
-        str_rule cstring_str = distinct(qi::alnum | '-')[ qi::char_("\"")
+        str_rule cstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::char_("\"")
         >> *((qi::print)[ qi::_val += qi::_1] - qi::char_("\""))
         >> qi::char_("\"")];
         
@@ -47,131 +47,131 @@ namespace x680 {
 
         skip_comment_grammar comment_skip;
 
-        term_rule ECODED_ = distinct(qi::alnum | '-')["ECODED"];
-        term_rule INTERSECTION_ = distinct(qi::alnum | '-')["ECODED"];
-        term_rule SEQUENCE_ = distinct(qi::alnum | '-')["SEQUENCE"];
-        term_rule ABSTRACT_SYNTAX_ = distinct(qi::alnum | '-')["ABSTRACT-SYNTAX"];
-        term_rule ABSENT_ = distinct(qi::alnum | '-')["ABSENT"];
-        term_rule ENCODING_CONTROL_ = distinct(qi::alnum | '-')["ENCODING-CONTROL"];
-        term_rule ISO646String_ = distinct(qi::alnum | '-')["ISO646String"];
-        term_rule SET_ = distinct(qi::alnum | '-')["SET"];
-        term_rule ALL_ = distinct(qi::alnum | '-')["ALL"];
-        term_rule END_ = distinct(qi::alnum | '-')["END"];
-        term_rule MAX_ = distinct(qi::alnum | '-')["MAX"];
-        term_rule SETTINGS_ = distinct(qi::alnum | '-')["SETTINGS"];
-        term_rule APPLICATION_ = distinct(qi::alnum | '-')["APPLICATION"];
-        term_rule ENUMERATED_ = distinct(qi::alnum | '-')["ENUMERATED"];
-        term_rule MIN_ = distinct(qi::alnum | '-')["MIN"];
-        term_rule SIZE_ = distinct(qi::alnum | '-')["SIZE"];
-        term_rule AUTOMATIC_ = distinct(qi::alnum | '-')["AUTOMATIC"];
-        term_rule EXCEPT_ = distinct(qi::alnum | '-')["EXCEPT"];
-        term_rule ENCODED_ = distinct(qi::alnum | '-')["ENCODED"];
-        term_rule MINUS_INFINITY_ = distinct(qi::alnum | '-')["MINUS-INFINITY"];
-        term_rule STRING_ = distinct(qi::alnum | '-')["STRING"];
-        term_rule BEGIN_ = distinct(qi::alnum | '-')["BEGIN"];
-        term_rule EXPLICIT_ = distinct(qi::alnum | '-')["EXPLICIT"];
-        term_rule NOT_A_NUMBER_ = distinct(qi::alnum | '-')["NOT-A-NUMBER"];
-        term_rule SYNTAX_ = distinct(qi::alnum | '-')["SYNTAX"];
-        term_rule BIT_ = distinct(qi::alnum | '-')["BIT"];
-        term_rule EXPORTS_ = distinct(qi::alnum | '-')["EXPORTS"];
-        term_rule NULL_ = distinct(qi::alnum | '-')["NULL"];
-        term_rule T61String_ = distinct(qi::alnum | '-')["T61String"];
-        term_rule BMPString_ = distinct(qi::alnum | '-')["BMPString"];
-        term_rule EXTENSIBILITY_ = distinct(qi::alnum | '-')["EXTENSIBILITY"];
-        term_rule NumericString_ = distinct(qi::alnum | '-')["NumericString"];
-        term_rule TAGS_ = distinct(qi::alnum | '-')["TAGS"];
-        term_rule BOOLEAN_ = distinct(qi::alnum | '-')["BOOLEAN"];
-        term_rule EXTERNAL_ = distinct(qi::alnum | '-')["EXTERNAL "];
-        term_rule OBJECT_ = distinct(qi::alnum | '-')["OBJECT"];
-        term_rule TeletexString_ = distinct(qi::alnum | '-')["TeletexString"];
-        term_rule BY_ = distinct(qi::alnum | '-')["BY"];
-        term_rule FALSE_ = distinct(qi::alnum | '-')["FALSE"];
-        term_rule ObjectDescriptor_ = distinct(qi::alnum | '-')["ObjectDescriptor"];
-        term_rule TIME_ = distinct(qi::alnum | '-')["TIME"];
-        term_rule CHARACTER_ = distinct(qi::alnum | '-')["CHARACTER"];
-        term_rule FROM_ = distinct(qi::alnum | '-')["FROM"];
-        term_rule OCTET_ = distinct(qi::alnum | '-')["OCTET"];
-        term_rule TIME_OF_DAY_ = distinct(qi::alnum | '-')["TIME-OF-DAY"];
-        term_rule CHOICE_ = distinct(qi::alnum | '-')["CHOICE"];
-        term_rule GeneralizedTime_ = distinct(qi::alnum | '-')["GeneralizedTime"];
-        term_rule OF_ = distinct(qi::alnum | '-')["OF"];
-        term_rule TRUE_ = distinct(qi::alnum | '-')["TRUE"];
-        term_rule CLASS_ = distinct(qi::alnum | '-')["CLASS"];
-        term_rule GeneralString_ = distinct(qi::alnum | '-')["GeneralString"];
-        term_rule OID_IRI_ = distinct(qi::alnum | '-')["OID-IRI"];
-        term_rule TYPE_IDENTIFIER_ = distinct(qi::alnum | '-')["TYPE-IDENTIFIER"];
-        term_rule COMPONENT_ = distinct(qi::alnum | '-')["COMPONENT"];
-        term_rule GraphicString_ = distinct(qi::alnum | '-')["GraphicString"];
-        term_rule OPTIONAL_ = distinct(qi::alnum | '-')["OPTIONAL"];
-        term_rule UNION_ = distinct(qi::alnum | '-')["UNION"];
-        term_rule COMPONENTS_ = distinct(qi::alnum | '-')["COMPONENTS"];
-        term_rule IA5String_ = distinct(qi::alnum | '-')["IA5String"];
-        term_rule PATTERN_ = distinct(qi::alnum | '-')["PATTERN"];
-        term_rule UNIQUE_ = distinct(qi::alnum | '-')["UNIQUE"];
-        term_rule CONSTRAINED_ = distinct(qi::alnum | '-')["CONSTRAINED"];
-        term_rule IDENTIFIER_ = distinct(qi::alnum | '-')["IDENTIFIER"];
-        term_rule PDV_ = distinct(qi::alnum | '-')["PDV"];
-        term_rule UNIVERSAL_ = distinct(qi::alnum | '-')["UNIVERSAL"];
-        term_rule CONTAINING_ = distinct(qi::alnum | '-')["CONTAINING"];
-        term_rule IMPLICIT_ = distinct(qi::alnum | '-')["IMPLICIT"];
-        term_rule PLUS_INFINITY_ = distinct(qi::alnum | '-')["PLUS-INFINITY"];
-        term_rule UniversalString_ = distinct(qi::alnum | '-')["UniversalString"];
-        term_rule DATE_ = distinct(qi::alnum | '-')["DATE"];
-        term_rule IMPLIED_ = distinct(qi::alnum | '-')["IMPLIED"];
-        term_rule PRESENT_ = distinct(qi::alnum | '-')["PRESENT"];
-        term_rule UTCTime_ = distinct(qi::alnum | '-')["UTCTime"];
-        term_rule DATE_TIME_ = distinct(qi::alnum | '-')["DATE-TIME"];
-        term_rule IMPORTS_ = distinct(qi::alnum | '-')["IMPORTS"];
-        term_rule PrintableString_ = distinct(qi::alnum | '-')["PrintableString"];
-        term_rule UTF8String_ = distinct(qi::alnum | '-')["UTF8String"];
-        term_rule DEFAULT_ = distinct(qi::alnum | '-')["DEFAULT"];
-        term_rule INCLUDES_ = distinct(qi::alnum | '-')["INCLUDES"];
-        term_rule PRIVATE_ = distinct(qi::alnum | '-')["PRIVATE"];
-        term_rule VideotexString_ = distinct(qi::alnum | '-')["VideotexString"];
-        term_rule DEFINITIONS_ = distinct(qi::alnum | '-')["DEFINITIONS"];
-        term_rule INSTANCE_ = distinct(qi::alnum | '-')["INSTANCE"];
-        term_rule REAL_ = distinct(qi::alnum | '-')["REAL"];
-        term_rule VisibleString_ = distinct(qi::alnum | '-')["VisibleString"];
-        term_rule DURATION_ = distinct(qi::alnum | '-')["DURATION"];
-        term_rule INSTRUCTIONS_ = distinct(qi::alnum | '-')["INSTRUCTIONS"];
-        term_rule RELATIVE_OID_ = distinct(qi::alnum | '-')["RELATIVE-OID"];
-        term_rule WITH_ = distinct(qi::alnum | '-')["WITH"];
-        term_rule EMBEDDED_ = distinct(qi::alnum | '-')["EMBEDDED"];
-        term_rule INTEGER_ = distinct(qi::alnum | '-')["INTEGER"];
-        term_rule RELATIVE_OID_IRI_ = distinct(qi::alnum | '-')["RELATIVE-OID-IRI"];
+        term_rule ECODED_ = distinct(qi::alnum | ('-' >> qi::alnum))["ECODED"];
+        term_rule INTERSECTION_ = distinct(qi::alnum | ('-' >> qi::alnum))["ECODED"];
+        term_rule SEQUENCE_ = distinct(qi::alnum | ('-' >> qi::alnum))["SEQUENCE"];
+        term_rule ABSTRACT_SYNTAX_ = distinct(qi::alnum | ('-' >> qi::alnum))["ABSTRACT-SYNTAX"];
+        term_rule ABSENT_ = distinct(qi::alnum | ('-' >> qi::alnum))["ABSENT"];
+        term_rule ENCODING_CONTROL_ = distinct(qi::alnum | ('-' >> qi::alnum))["ENCODING-CONTROL"];
+        term_rule ISO646String_ = distinct(qi::alnum | ('-' >> qi::alnum))["ISO646String"];
+        term_rule SET_ = distinct(qi::alnum | ('-' >> qi::alnum))["SET"];
+        term_rule ALL_ = distinct(qi::alnum | ('-' >> qi::alnum))["ALL"];
+        term_rule END_ = distinct(qi::alnum | ('-' >> qi::alnum))["END"];
+        term_rule MAX_ = distinct(qi::alnum | ('-' >> qi::alnum))["MAX"];
+        term_rule SETTINGS_ = distinct(qi::alnum | ('-' >> qi::alnum))["SETTINGS"];
+        term_rule APPLICATION_ = distinct(qi::alnum | ('-' >> qi::alnum))["APPLICATION"];
+        term_rule ENUMERATED_ = distinct(qi::alnum | ('-' >> qi::alnum))["ENUMERATED"];
+        term_rule MIN_ = distinct(qi::alnum | ('-' >> qi::alnum))["MIN"];
+        term_rule SIZE_ = distinct(qi::alnum | ('-' >> qi::alnum))["SIZE"];
+        term_rule AUTOMATIC_ = distinct(qi::alnum | ('-' >> qi::alnum))["AUTOMATIC"];
+        term_rule EXCEPT_ = distinct(qi::alnum | ('-' >> qi::alnum))["EXCEPT"];
+        term_rule ENCODED_ = distinct(qi::alnum | ('-' >> qi::alnum))["ENCODED"];
+        term_rule MINUS_INFINITY_ = distinct(qi::alnum | ('-' >> qi::alnum))["MINUS-INFINITY"];
+        term_rule STRING_ = distinct(qi::alnum | ('-' >> qi::alnum))["STRING"];
+        term_rule BEGIN_ = distinct(qi::alnum | ('-' >> qi::alnum))["BEGIN"];
+        term_rule EXPLICIT_ = distinct(qi::alnum | ('-' >> qi::alnum))["EXPLICIT"];
+        term_rule NOT_A_NUMBER_ = distinct(qi::alnum | ('-' >> qi::alnum))["NOT-A-NUMBER"];
+        term_rule SYNTAX_ = distinct(qi::alnum | ('-' >> qi::alnum))["SYNTAX"];
+        term_rule BIT_ = distinct(qi::alnum | ('-' >> qi::alnum))["BIT"];
+        term_rule EXPORTS_ = distinct(qi::alnum | ('-' >> qi::alnum))["EXPORTS"];
+        term_rule NULL_ = distinct(qi::alnum | ('-' >> qi::alnum))["NULL"];
+        term_rule T61String_ = distinct(qi::alnum | ('-' >> qi::alnum))["T61String"];
+        term_rule BMPString_ = distinct(qi::alnum | ('-' >> qi::alnum))["BMPString"];
+        term_rule EXTENSIBILITY_ = distinct(qi::alnum | ('-' >> qi::alnum))["EXTENSIBILITY"];
+        term_rule NumericString_ = distinct(qi::alnum | ('-' >> qi::alnum))["NumericString"];
+        term_rule TAGS_ = distinct(qi::alnum | ('-' >> qi::alnum))["TAGS"];
+        term_rule BOOLEAN_ = distinct(qi::alnum | ('-' >> qi::alnum))["BOOLEAN"];
+        term_rule EXTERNAL_ = distinct(qi::alnum | ('-' >> qi::alnum))["EXTERNAL "];
+        term_rule OBJECT_ = distinct(qi::alnum | ('-' >> qi::alnum))["OBJECT"];
+        term_rule TeletexString_ = distinct(qi::alnum | ('-' >> qi::alnum))["TeletexString"];
+        term_rule BY_ = distinct(qi::alnum | ('-' >> qi::alnum))["BY"];
+        term_rule FALSE_ = distinct(qi::alnum | ('-' >> qi::alnum))["FALSE"];
+        term_rule ObjectDescriptor_ = distinct(qi::alnum | ('-' >> qi::alnum))["ObjectDescriptor"];
+        term_rule TIME_ = distinct(qi::alnum | ('-' >> qi::alnum))["TIME"];
+        term_rule CHARACTER_ = distinct(qi::alnum | ('-' >> qi::alnum))["CHARACTER"];
+        term_rule FROM_ = distinct(qi::alnum | ('-' >> qi::alnum))["FROM"];
+        term_rule OCTET_ = distinct(qi::alnum | ('-' >> qi::alnum))["OCTET"];
+        term_rule TIME_OF_DAY_ = distinct(qi::alnum | ('-' >> qi::alnum))["TIME-OF-DAY"];
+        term_rule CHOICE_ = distinct(qi::alnum | ('-' >> qi::alnum))["CHOICE"];
+        term_rule GeneralizedTime_ = distinct(qi::alnum | ('-' >> qi::alnum))["GeneralizedTime"];
+        term_rule OF_ = distinct(qi::alnum | ('-' >> qi::alnum))["OF"];
+        term_rule TRUE_ = distinct(qi::alnum | ('-' >> qi::alnum))["TRUE"];
+        term_rule CLASS_ = distinct(qi::alnum | ('-' >> qi::alnum))["CLASS"];
+        term_rule GeneralString_ = distinct(qi::alnum | ('-' >> qi::alnum))["GeneralString"];
+        term_rule OID_IRI_ = distinct(qi::alnum | ('-' >> qi::alnum))["OID-IRI"];
+        term_rule TYPE_IDENTIFIER_ = distinct(qi::alnum | ('-' >> qi::alnum))["TYPE-IDENTIFIER"];
+        term_rule COMPONENT_ = distinct(qi::alnum | ('-' >> qi::alnum))["COMPONENT"];
+        term_rule GraphicString_ = distinct(qi::alnum | ('-' >> qi::alnum))["GraphicString"];
+        term_rule OPTIONAL_ = distinct(qi::alnum | ('-' >> qi::alnum))["OPTIONAL"];
+        term_rule UNION_ = distinct(qi::alnum | ('-' >> qi::alnum))["UNION"];
+        term_rule COMPONENTS_ = distinct(qi::alnum | ('-' >> qi::alnum))["COMPONENTS"];
+        term_rule IA5String_ = distinct(qi::alnum | ('-' >> qi::alnum))["IA5String"];
+        term_rule PATTERN_ = distinct(qi::alnum | ('-' >> qi::alnum))["PATTERN"];
+        term_rule UNIQUE_ = distinct(qi::alnum | ('-' >> qi::alnum))["UNIQUE"];
+        term_rule CONSTRAINED_ = distinct(qi::alnum | ('-' >> qi::alnum))["CONSTRAINED"];
+        term_rule IDENTIFIER_ = distinct(qi::alnum | ('-' >> qi::alnum))["IDENTIFIER"];
+        term_rule PDV_ = distinct(qi::alnum | ('-' >> qi::alnum))["PDV"];
+        term_rule UNIVERSAL_ = distinct(qi::alnum | ('-' >> qi::alnum))["UNIVERSAL"];
+        term_rule CONTAINING_ = distinct(qi::alnum | ('-' >> qi::alnum))["CONTAINING"];
+        term_rule IMPLICIT_ = distinct(qi::alnum | ('-' >> qi::alnum))["IMPLICIT"];
+        term_rule PLUS_INFINITY_ = distinct(qi::alnum | ('-' >> qi::alnum))["PLUS-INFINITY"];
+        term_rule UniversalString_ = distinct(qi::alnum | ('-' >> qi::alnum))["UniversalString"];
+        term_rule DATE_ = distinct(qi::alnum | ('-' >> qi::alnum))["DATE"];
+        term_rule IMPLIED_ = distinct(qi::alnum | ('-' >> qi::alnum))["IMPLIED"];
+        term_rule PRESENT_ = distinct(qi::alnum | ('-' >> qi::alnum))["PRESENT"];
+        term_rule UTCTime_ = distinct(qi::alnum | ('-' >> qi::alnum))["UTCTime"];
+        term_rule DATE_TIME_ = distinct(qi::alnum | ('-' >> qi::alnum))["DATE-TIME"];
+        term_rule IMPORTS_ = distinct(qi::alnum | ('-' >> qi::alnum))["IMPORTS"];
+        term_rule PrintableString_ = distinct(qi::alnum | ('-' >> qi::alnum))["PrintableString"];
+        term_rule UTF8String_ = distinct(qi::alnum | ('-' >> qi::alnum))["UTF8String"];
+        term_rule DEFAULT_ = distinct(qi::alnum | ('-' >> qi::alnum))["DEFAULT"];
+        term_rule INCLUDES_ = distinct(qi::alnum | ('-' >> qi::alnum))["INCLUDES"];
+        term_rule PRIVATE_ = distinct(qi::alnum | ('-' >> qi::alnum))["PRIVATE"];
+        term_rule VideotexString_ = distinct(qi::alnum | ('-' >> qi::alnum))["VideotexString"];
+        term_rule DEFINITIONS_ = distinct(qi::alnum | ('-' >> qi::alnum))["DEFINITIONS"];
+        term_rule INSTANCE_ = distinct(qi::alnum | ('-' >> qi::alnum))["INSTANCE"];
+        term_rule REAL_ = distinct(qi::alnum | ('-' >> qi::alnum))["REAL"];
+        term_rule VisibleString_ = distinct(qi::alnum | ('-' >> qi::alnum))["VisibleString"];
+        term_rule DURATION_ = distinct(qi::alnum | ('-' >> qi::alnum))["DURATION"];
+        term_rule INSTRUCTIONS_ = distinct(qi::alnum | ('-' >> qi::alnum))["INSTRUCTIONS"];
+        term_rule RELATIVE_OID_ = distinct(qi::alnum | ('-' >> qi::alnum))["RELATIVE-OID"];
+        term_rule WITH_ = distinct(qi::alnum | ('-' >> qi::alnum))["WITH"];
+        term_rule EMBEDDED_ = distinct(qi::alnum | ('-' >> qi::alnum))["EMBEDDED"];
+        term_rule INTEGER_ = distinct(qi::alnum | ('-' >> qi::alnum))["INTEGER"];
+        term_rule RELATIVE_OID_IRI_ = distinct(qi::alnum | ('-' >> qi::alnum))["RELATIVE-OID-IRI"];
 
 
-        str_rule literal_except_token = distinct(qi::alnum | '-')[qi::string("BIT")]
-        | distinct(qi::alnum | '-')[qi::string("BOOLEAN")]
-        | distinct(qi::alnum | '-')[qi::string("CHARACTER")]
-        | distinct(qi::alnum | '-')[qi::string("CHOICE")]
-        | distinct(qi::alnum | '-')[qi::string("DATE")]
-        | distinct(qi::alnum | '-')[qi::string("DATE-TIME")]
-        | distinct(qi::alnum | '-')[qi::string("DURATION")]
-        | distinct(qi::alnum | '-')[qi::string("EMBEDDED")]
-        | distinct(qi::alnum | '-')[qi::string("END")]
-        | distinct(qi::alnum | '-')[qi::string("ENUMERATED")]
-        | distinct(qi::alnum | '-')[qi::string("EXTERNAL")]
-        | distinct(qi::alnum | '-')[qi::string("FALSE")]
-        | distinct(qi::alnum | '-')[qi::string("INSTANCE")]
-        | distinct(qi::alnum | '-')[qi::string("INTEGER")]
-        | distinct(qi::alnum | '-')[qi::string("INTERSECTION")]
-        | distinct(qi::alnum | '-')[qi::string("MINUS-INFINITY")]
-        | distinct(qi::alnum | '-')[qi::string("NULL")]
-        | distinct(qi::alnum | '-')[qi::string("OBJECT")]
-        | distinct(qi::alnum | '-')[qi::string("OCTET")]
-        | distinct(qi::alnum | '-')[qi::string("PLUS-INFINITY")]
-        | distinct(qi::alnum | '-')[qi::string("REAL")]
-        | distinct(qi::alnum | '-')[qi::string("RELATIVE-OID")]
-        | distinct(qi::alnum | '-')[qi::string("SEQUENCE")]
-        | distinct(qi::alnum | '-')[qi::string("SET")]
-        | distinct(qi::alnum | '-')[qi::string("TIME")]
-        | distinct(qi::alnum | '-')[qi::string("TIME-OF-DAY")]
-        | distinct(qi::alnum | '-')[qi::string("TRUE")]
-        | distinct(qi::alnum | '-')[qi::string("UNION")];
+        str_rule literal_except_token = distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("BIT")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("BOOLEAN")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("CHARACTER")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("CHOICE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("DATE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("DATE-TIME")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("DURATION")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("EMBEDDED")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("END")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("ENUMERATED")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("EXTERNAL")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("FALSE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("INSTANCE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("INTEGER")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("INTERSECTION")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("MINUS-INFINITY")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("NULL")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("OBJECT")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("OCTET")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("PLUS-INFINITY")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("REAL")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("RELATIVE-OID")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("SEQUENCE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("SET")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("TIME")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("TIME-OF-DAY")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("TRUE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("UNION")];
 
 
-        str_rule word_ = distinct(qi::alnum | '-')[ qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
+        str_rule word_ = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
                 >> *(((qi::char_("-")[qi::_val += qi::_1]
                 >> qi::upper[qi::_val += qi::_1])
                 | (qi::upper[qi::_val += qi::_1]
@@ -184,14 +184,14 @@ namespace x680 {
 
         str_rule SyntaxField_ = Literal_[qi::_val = qi::_1 ] >> *(spaces_[ qi::_val += qi::_1 ] >> Literal_[ qi::_val += qi::_1 ]);
 
-        str_rule typereference_ = distinct(qi::alnum | '-')[qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
+        str_rule typereference_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
                 >> *(((qi::char_("-")[qi::_val += qi::_1]
                 >> qi::alnum[qi::_val += qi::_1])
                 | (qi::alnum[qi::_val += qi::_1]
                 >> -qi::alnum[qi::_val += qi::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::alnum))))]];
 
-        str_rule identifier_ = distinct(qi::alnum | '-')[qi::lexeme[qi::lower[qi::_val = qi::_1 ]
+        str_rule identifier_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::lower[qi::_val = qi::_1 ]
                 >> *(((qi::char_("-")[qi::_val += qi::_1]
                 >> qi::alnum[qi::_val += qi::_1])
                 | (qi::alnum[qi::_val += qi::_1]
@@ -208,14 +208,14 @@ namespace x680 {
 
         str_rule objectsetreference_ = typereference_;
 
-        str_rule objectclassreference_ = distinct(qi::alnum | '-')[qi::lexeme[qi::upper[qi::_val = qi::_1 ]
+        str_rule objectclassreference_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::upper[qi::_val = qi::_1 ]
                 >> *(((qi::char_("-")[qi::_val += qi::_1]
                 >> qi::char_("A-Z0-9")[qi::_val += qi::_1])
                 | (qi::char_("A-Z0-9")[qi::_val += qi::_1]
                 >> -qi::char_("A-Z0-9")[qi::_val += qi::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::char_("A-Z0-9")))))]]; //(~typereference_)      
 
-        str_rule typereference_strict = distinct(qi::alnum | '-')[typereference_ - objectclassreference_];
+        str_rule typereference_strict = distinct(qi::alnum | ('-' >> qi::alnum))[typereference_ - objectclassreference_];
 
         str_rule typefieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> typereference_[qi::_val += qi::_1]]; //(&typereference_)   
 
@@ -303,9 +303,9 @@ namespace x680 {
 
         str_rule ObjectClassFieldType_ = distinct(qi::alnum | '-' | '.')[DefinedObjectClass_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
 
-        str_rule SimpleTypeFromObject_ = distinct(qi::alnum | '-' | '.')[DefinedObject_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
+        str_rule LittleFromObject_ = distinct(qi::alnum | '-' | '.')[DefinedObject_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
 
-        str_rule SimpleValueSetFromObjects_ = distinct(qi::alnum | '-' | '.')[DefinedObjectSet_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
+        str_rule BigFromObjects_ = distinct(qi::alnum | '-' | '.')[DefinedObjectSet_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
 
         str_rule ParameterizedReference_ = Reference_[ qi::_val = qi::_1]
                 >> qi::omit[*qi::space]

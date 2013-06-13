@@ -18,9 +18,9 @@ namespace x680 {
 
             UnknownTC = DefinedType_[bind(&unknown_tc_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&unknown_tc_parameters, qi::_val, qi::_1)]);
 
-            UnknownTCFromObject = SimpleTypeFromObject_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+            UnknownTCFromObject = LittleFromObject_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
-            UnknownTCValueSetFromObjects = SimpleValueSetFromObjects_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]); 
+            UnknownTCValueSetFromObjects = BigFromObjects_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]); 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  TypeAssigment grammar
@@ -28,7 +28,7 @@ namespace x680 {
 
             Type = BuitinType | TaggedType | ReferencedType;
             
-            GovernorType = BuitinType | SimpleDefinedType;
+            GovernorType = BuitinType | StrictDefinedType;
 
             NamedType = (identifier_ >> Type)[bind(&type_named, qi::_val, qi::_1, qi::_2)];
 
@@ -48,9 +48,9 @@ namespace x680 {
 
             ObjectClassFieldType = ObjectClassFieldType_[bind(&type_objectfield, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
-            SimpleTypeFromObject = SimpleTypeFromObject_[bind(&type_fromobject, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+            SimpleTypeFromObject = LittleFromObject_[bind(&type_fromobject, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
-            SimpleValueSetFromObjects = SimpleValueSetFromObjects_[bind(&type_fromobjectset, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);           
+            SimpleValueSetFromObjects = BigFromObjects_[bind(&type_fromobjectset, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);           
             
             SimpleDefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)];            
 

@@ -24,9 +24,9 @@ namespace x680 {
 
             UnknownVO = DefinedValue_[bind(&unknown_vo_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&unknown_vo_parameters, qi::_val, qi::_1)]);
 
-            UnknownVOFromObject = SimpleTypeFromObject_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+            UnknownVOFromObject = LittleFromObject_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
-            UnknownVOValueSetFromObjects = SimpleValueSetFromObjects_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);             
+            UnknownVOValueSetFromObjects = BigFromObjects_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);             
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
@@ -164,7 +164,7 @@ namespace x680 {
 
             ObjectClassFieldValue = OpenTypeFieldValv[bind(&value_typevalue, qi::_val, qi::_1)];
 
-            ValueFromObject = SimpleTypeFromObject_[bind(&value_fromobject, qi::_val, qi::_1)];
+            ValueFromObject = LittleFromObject_[bind(&value_fromobject, qi::_val, qi::_1)];
 
 
         }

@@ -130,6 +130,7 @@ namespace x680 {
                             ("TIME-OF-DAY", t_TIME_OF_DAY)
                             ("RELATIVE-OID-IRI", t_RELATIVE_OID_IRI)
                             ("RELATIVE-OID", t_RELATIVE_OID)
+                            ("ANY", t_ANY)                            
                             ;
                 }
             };
@@ -201,9 +202,14 @@ namespace x680 {
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingUnknownVO;
 
             qi::rule<str_iterator, argument_type(), skip_cmt_type> Parameter;
-            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterA;
-            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterB;
-            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterC;
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterA1;
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterA2;
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterB1;
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterB2;         
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterC1;
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterC2;
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD1;
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD2;            
             qi::rule<str_iterator, argument_vector(), skip_cmt_type> Parameters;
 
 
@@ -512,7 +518,9 @@ namespace x680 {
             qi::rule<str_iterator, object_element(), skip_cmt_type> oObjectSetFromObjects;
 
 
-            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs;
+            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs1;
+            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs2;
+            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs;            
             qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpec;
             qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oIntersections;
             qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oUnions;

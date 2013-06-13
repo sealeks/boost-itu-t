@@ -60,7 +60,7 @@ namespace x680 {
             Import =SymbolList_[ bind(&import_add, qi::_val, qi::_1) ]
                         >> FROM_
                         >> modulereference_[ bind(&import_name, qi::_val, qi::_1) ]
-                        >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ]);
+                        >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ] | DefinedValue[ bind(&import_defined,  qi::_val, qi::_1) ]);
             
             Importsdecl = *Import;
             
@@ -164,7 +164,7 @@ namespace x680 {
 
 
 
-            Setting = SettingStrictType | SettingStrictValue | SettingStrictClass | SettingUnknownTC | SettingUnknownVO | 
+            Setting = SettingStrictType | SettingStrictValue | SettingStrictClass | SettingUnknownTC | /*SettingUnknownVO | */
                     SettingType | SettingValue | SettingValueSet | /*SettingClass |*/ SettingObject | SettingObjectSet;
 
             SettingType = Type[bind(&setting_settype, qi::_val, qi::_1)];
@@ -192,21 +192,35 @@ namespace x680 {
 
             Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
-            Parameter = ParameterA | ParameterB | ParameterC;
+            Parameter = ParameterA1 | ParameterA1 |ParameterB1 |  ParameterB2 | ParameterC1  | ParameterC2 | ParameterD1  | ParameterD2;
 
-            ParameterA = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> Reference_)[bind(&argument_governor_cl, qi::_val, qi::_1, qi::_2)];
+            ParameterA1 = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> typereference_)[bind(&argument_governor_cl, qi::_val, qi::_1, qi::_2, true)];
+                    
+            ParameterA2 = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> valuereference_)[bind(&argument_governor_cl, qi::_val, qi::_1, qi::_2, false)];                    
 
-            ParameterB = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> Reference_)[bind(&argument_governor_tp, qi::_val, qi::_1, qi::_2)];
+            ParameterB1 = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> typereference_)[bind(&argument_governor_tp, qi::_val, qi::_1, qi::_2, true)];
+                    
+            ParameterB2 = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> valuereference_)[bind(&argument_governor_tp, qi::_val, qi::_1, qi::_2, false)];      
+                    
+            ParameterC1 = (UnknownTC >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> typereference_)[bind(&argument_governor_reff, qi::_val, qi::_1, qi::_2, true)];
+                    
+            ParameterC2 = (UnknownTC >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> valuereference_)[bind(&argument_governor_reff, qi::_val, qi::_1, qi::_2, false)];                          
 
-            ParameterC = Reference_[bind(&argument_argument, qi::_val, qi::_1)];
+            ParameterD1 = typereference_[bind(&argument_argument, qi::_val, qi::_1, true)];
+            
+            ParameterD2 = valuereference_[bind(&argument_argument, qi::_val, qi::_1, false)];            
 
 
 
             ActualParameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (ActualParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
-            ActualParameter = SettingStrictType | SettingStrictValue | SettingStrictClass | SettingUnknownTC | SettingUnknownVO | 
+            ActualParameter = SettingStrictType | SettingStrictValue | SettingStrictClass | SettingUnknownTC | /*SettingUnknownVO | */
                     SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet;
 
 

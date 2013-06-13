@@ -25,7 +25,7 @@ namespace x680 {
             DefinedObject = DefinedObject_[bind(&object_refference, qi::_val, qi::_1)] >>
                     -(ActualParameters[bind(&object_parameters, qi::_val, qi::_1)]);
 
-            ObjectFromObject = SimpleTypeFromObject_[bind(&object_fromobject, qi::_val, qi::_1)];
+            ObjectFromObject = LittleFromObject_[bind(&object_fromobject, qi::_val, qi::_1)];
 
             ObjectDefn = DefaultSyntax | DefinedSyntax;
 
