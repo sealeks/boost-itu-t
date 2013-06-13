@@ -13,7 +13,7 @@
 namespace x680 {
     namespace syntactic {
 
-
+        
         //  unknown_tc_element setter            
 
         inline void unknown_tc_refference(unknown_tc_element& holder, const std::string& val) {
@@ -37,6 +37,33 @@ namespace x680 {
         }
 
         inline void unknown_tca_arguments(unknown_tc_assignment& holder, const argument_vector& val) {
+            holder.arguments = val;
+        }        
+        
+
+        //  unknown_vo_element setter            
+
+        inline void unknown_vo_refference(unknown_vo_element& holder, const std::string& val) {
+            holder.reff = val;
+        }
+
+        inline void unknown_vo_parameters(unknown_vo_element& holder, const parameter_vector& val) {
+            holder.parameters = val;
+        }
+
+
+
+        //  unknown_vo_assignment setter        
+
+        inline void unknown_voa_identifier(unknown_vo_assignment& holder, const std::string& val) {
+            holder.identifier = val;
+        }
+
+        inline void unknown_voa(unknown_vo_assignment& holder, const unknown_vo_element& val) {
+            holder.unknown_vo = val;
+        }
+
+        inline void unknown_voa_arguments(unknown_vo_assignment& holder, const argument_vector& val) {
             holder.arguments = val;
         }
 
@@ -728,6 +755,15 @@ namespace x680 {
             holder.objectset = objectset_element_ptr(new objectset_element(val));
         }
 
+        inline void setting_tc(setting_element& holder, const unknown_tc_element& val) {
+            holder.tp = sett_UnknownTC;
+            holder.unknown_tc = val;
+        }
+
+        inline void setting_vo(setting_element& holder, const unknown_vo_element& val) {
+            holder.tp = sett_UnknownVO;
+            holder.unknown_vo = val;
+        }     
 
 
 
@@ -912,13 +948,17 @@ namespace x680 {
 
         // Module setter       
 
-        inline void module_name(module& holder, const std::string & val) {
+        inline void module_name(module& holder, const std::string& val) {
             holder.name = val;
         }
 
-        inline void module_oid(module& holder, const value_element & val) {
+        inline void module_oid(module& holder, const value_element& val) {
             holder.oid = val;
         }
+        
+        inline void module_iri(module& holder, const std::string& val) {
+            holder.iri = val;
+        }        
 
         inline void module_tags(module& holder, const tagrule_type & val) {
             holder.default_tags_t = val;
@@ -931,6 +971,10 @@ namespace x680 {
         inline void module_extesibility(module & holder) {
             holder.extesibility_implied = true;
         }
+        
+        inline void module_allexport(module & holder) {
+            holder.allexport = true;
+        }        
 
         inline void module_exports(module& holder, const string_vector& val) {
             holder.exports_ = val;
@@ -943,6 +987,8 @@ namespace x680 {
         inline void module_assignments(module& holder, const assignment_vector& val) {
             holder.elements = val;
         }
+        
+        
 
 
 

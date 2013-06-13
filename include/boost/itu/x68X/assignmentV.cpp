@@ -14,9 +14,26 @@ namespace x680 {
         // Type_grammar
 
         void Modules_grammar::initV() {
+            
+            
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  UnknownTCAssigment grammar (Value or Object)
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
+
+            UnknownReferencedVO = UnknownVOValueSetFromObjects | UnknownVOFromObject | UnknownVO;
+
+            UnknownVO = DefinedValue_[bind(&unknown_vo_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&unknown_vo_parameters, qi::_val, qi::_1)]);
+
+            UnknownVOFromObject = SimpleTypeFromObject_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+
+            UnknownVOValueSetFromObjects = SimpleValueSetFromObjects_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);             
 
 
-
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  ValueAssigment grammar 
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+            
+            
             Value = NullValue | BooleanValue | RealValue | IntegerValue | HStringValue
                     | BStringValue | CStringValue | NumberList | ObjectIdentifierValue
                     | NamedValueList | ValueList | ChoiceValue | EmptySetValue

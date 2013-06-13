@@ -36,6 +36,8 @@ namespace x680 {
         str_rule cstring_str = distinct(qi::alnum | '-')[ qi::char_("\"")
         >> *((qi::print)[ qi::_val += qi::_1] - qi::char_("\""))
         >> qi::char_("\"")];
+        
+        str_rule IRIValue = cstring_str;
 
 
 
@@ -64,7 +66,6 @@ namespace x680 {
         term_rule AUTOMATIC_ = distinct(qi::alnum | '-')["AUTOMATIC"];
         term_rule EXCEPT_ = distinct(qi::alnum | '-')["EXCEPT"];
         term_rule ENCODED_ = distinct(qi::alnum | '-')["ENCODED"];
-        ;
         term_rule MINUS_INFINITY_ = distinct(qi::alnum | '-')["MINUS-INFINITY"];
         term_rule STRING_ = distinct(qi::alnum | '-')["STRING"];
         term_rule BEGIN_ = distinct(qi::alnum | '-')["BEGIN"];

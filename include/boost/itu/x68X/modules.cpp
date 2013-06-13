@@ -25,57 +25,24 @@ namespace x680 {
 
 
 
-        //ObjectIdentifierValue_grammar
-
-        void ObjectIdentifierValue_grammar::init() {
-
-
-
-            startrule = qi::omit[qi::lexeme[qi::lit("{")]] >> Values[bind(&value_setvalues, qi::_val, qi::_1, v_named_list)] >> qi::omit[qi::lexeme[qi::lit("}")]];
-            ;
-
-            NumberForm = pos_number_str[bind(&value_setnumber, qi::_val, qi::_1)];
-            NameForm = identifier_[bind(&value_setdefined, qi::_val, qi::_1)];
-            NameAndNumberForm = (identifier_
-                    >> qi::omit[qi::lit("(")]
-                    >> number_str
-                    >> qi::omit[qi::lit(")")])[bind(&value_setassigned, qi::_val, qi::_1, qi::_2)];
-            ObjIdComponents = NumberForm | NameAndNumberForm | NameForm;
-            Values = +ObjIdComponents;
-        }
 
 
         //Modules_grammar
 
         void Modules_grammar::init() {
             
-            start_rule = +Module;
+            start_rule = +ModuleDefinition;
             
-            Import =SymbolList_[ bind(&import_add, qi::_val, qi::_1) ]
-                        >> FROM_
-                        >> modulereference_[ bind(&import_name, qi::_val, qi::_1) ]
-                        >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ]);
+
             
-            Importsdecl = +Import;
-            
-            Imports = qi::lexeme[ qi::omit[IMPORTS_ >> +qi::space] ]
-                        >> -(!qi::lit(";")
-                        >> (Importsdecl))
-                        >> qi::omit[qi::lit(";")];        
-            
-            Exports =qi::lexeme[ qi::omit[EXPORTS_ >> +qi::space] ]
-                        >> -(!qi::lit(";")
-                        >> (qi::omit[ALL_] | SymbolList_))
-                        >> qi::omit[qi::lit(";")];
-            
-            Module = qi::lexeme[ modulereference_[ bind(&module_name, qi::_val, qi::_1) ]]
-                        >> -ObjectIdentifierValue[ bind(&module_oid,  qi::_val, qi::_1) ]
+            ModuleDefinition = qi::lexeme[ modulereference_[ bind(&module_name, qi::_val, qi::_1) ]]
+                        >> -(ObjectIdentifierValue[ bind(&module_oid,  qi::_val, qi::_1) ] >> -(IRIValue[ bind(&module_iri,  qi::_val, qi::_1) ]))
                         >> qi::lexeme[DEFINITIONS_ ]
 
-                        >> -(qi::lexeme[encodingreference[bind(&module_encoding, qi::_val, qi::_1)]]
+                        >> -(qi::lexeme[EncodingReferenceDefault[bind(&module_encoding, qi::_val, qi::_1)]]
                         >> qi::lexeme[INSTRUCTIONS_])
 
-                        >> -(qi::lexeme[ tagdefault[bind(&module_tags, qi::_val, qi::_1)]
+                        >> -(qi::lexeme[ TagDefault[bind(&module_tags, qi::_val, qi::_1)]
                         >> +qi::blank >> TAGS_])
 
                         >> -(qi::lexeme[EXTENSIBILITY_
@@ -84,21 +51,32 @@ namespace x680 {
 
                         >> qi::lexeme[qi::lit("::=")]
                         >> qi::lexeme[BEGIN_]
-                        >> -(Exports[bind(&module_exports, qi::_val, qi::_1)])
+                        >> -( (qi::lexeme[qi::omit[EXPORTS_>> +qi::blank >> ALL_ >> *qi::space  >> qi::lit(";") ]])[bind(&module_allexport, qi::_val)] 
+                    | Exports[bind(&module_exports, qi::_val, qi::_1)])
                         >> -(Imports[bind(&module_imports,  qi::_val, qi::_1)])
                         >> -(Assignments[bind(&module_assignments, qi::_val, qi::_1)])
                         >> END_;
             
-            //Modules = +Module;
+            Import =SymbolList_[ bind(&import_add, qi::_val, qi::_1) ]
+                        >> FROM_
+                        >> modulereference_[ bind(&import_name, qi::_val, qi::_1) ]
+                        >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ]);
+            
+            Importsdecl = *Import;
+            
+            Imports =  qi::omit[IMPORTS_]
+                        >> Importsdecl
+                        >> qi::omit[qi::lit(";")];    
+            
+            Exports = qi::omit[EXPORTS_]
+                        >> SymbolList_
+                        >> qi::omit[qi::lit(";")];
             
             Assignments = *(ObjectClassAssignment | TypeAssignment | TypeAssignmentSS | UnknownTCAssignment
                     | ValueAssignmentLS | ValueAssignmentRS | ObjectAssignmentLS | ObjectAssignmentRS | ValueAssignment | ObjectAssignment
                     | ValueSetTypeAssignmentLS | ObjectSetAssignmentLS | ValueSetTypeAssignment | ObjectSetAssignment);
                     
 
-         //   start_rule = *(ObjectClassAssignment | TypeAssignment | TypeAssignmentSS | UnknownTCAssignment
-         //           | ValueAssignmentLS | ValueAssignmentRS | ObjectAssignmentLS | ObjectAssignmentRS | ValueAssignment | ObjectAssignment
-            //        | ValueSetTypeAssignmentLS | ObjectSetAssignmentLS | ValueSetTypeAssignment | ObjectSetAssignment);
 
             ObjectClassAssignment = objectclassreference_[bind(&classa_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&classa_arguments, qi::_val, qi::_1)])
@@ -186,19 +164,30 @@ namespace x680 {
 
 
 
-            Setting = SettingType | SettingValue | SettingValueSet | /*SettingClass |*/ SettingObject | SettingObjectSet;
+            Setting = SettingStrictType | SettingStrictValue | SettingStrictClass | SettingUnknownTC | SettingUnknownVO | 
+                    SettingType | SettingValue | SettingValueSet | /*SettingClass |*/ SettingObject | SettingObjectSet;
 
             SettingType = Type[bind(&setting_settype, qi::_val, qi::_1)];
+            
+            SettingStrictType = StrictType[bind(&setting_settype, qi::_val, qi::_1)];
 
             SettingValue = Value[bind(&setting_value, qi::_val, qi::_1)];
+            
+            SettingStrictValue = StrictValue[bind(&setting_value, qi::_val, qi::_1)];            
 
             SettingValueSet = ValueSet[bind(&setting_valueset, qi::_val, qi::_1)];
 
             SettingClass = DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)];
+            
+            SettingStrictClass = UsefulObjectClass[bind(&setting_class, qi::_val, qi::_1)];            
 
             SettingObject = Object[bind(&setting_object, qi::_val, qi::_1)];
 
             SettingObjectSet = ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)];
+            
+            SettingUnknownTC = UnknownTC[bind(&setting_tc, qi::_val, qi::_1)];
+
+            SettingUnknownVO= UnknownVO[bind(&setting_vo, qi::_val, qi::_1)];            
 
 
             Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
@@ -217,7 +206,8 @@ namespace x680 {
 
             ActualParameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (ActualParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
-            ActualParameter = SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet;
+            ActualParameter = SettingStrictType | SettingStrictValue | SettingStrictClass | SettingUnknownTC | SettingUnknownVO | 
+                    SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet;
 
 
 

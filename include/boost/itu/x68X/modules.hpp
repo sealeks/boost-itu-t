@@ -68,38 +68,10 @@ namespace x680 {
         };
 
 
-
-        //ObjectIdentifierValue
-
-        struct ObjectIdentifierValue_grammar :
-        public qi::grammar<str_iterator, value_element(), skip_cmt_type > {
-
-            typedef ObjectIdentifierValue_grammar self_type;
-            typedef value_element holder_type;
-
-            ObjectIdentifierValue_grammar()
-            : ObjectIdentifierValue_grammar::base_type(startrule) {
-                init();
-            }
-
-            void init();
-
-
-
-            qi::rule<str_iterator, value_element(), skip_cmt_type> startrule;
-            qi::rule<str_iterator, value_element(), skip_cmt_type>NumberForm;
-            qi::rule<str_iterator, value_element(), skip_cmt_type>NameForm;
-            qi::rule<str_iterator, value_element(), skip_cmt_type>NameAndNumberForm;
-            qi::rule<str_iterator, value_element(), skip_cmt_type> ObjIdComponents;
-            qi::rule<str_iterator, value_element_vector(), skip_cmt_type> Values;
-
-        };
-
-
-
+        
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-        // Type_grammar
+        // Modules_grammar
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
         struct Modules_grammar : qi::grammar<str_iterator, modules(), skip_cmt_type> {
@@ -154,7 +126,9 @@ namespace x680 {
                             ("GeneralString", t_GeneralString)
                             ("UniversalString", t_UniversalString)
                             ("BMPString", t_BMPString)
+                            ("OID-IRI", t_OID_IRI)
                             ("TIME-OF-DAY", t_TIME_OF_DAY)
+                            ("RELATIVE-OID-IRI", t_RELATIVE_OID_IRI)
                             ("RELATIVE-OID", t_RELATIVE_OID)
                             ;
                 }
@@ -180,14 +154,17 @@ namespace x680 {
 
             qi::rule<str_iterator, modules(), skip_cmt_type> start_rule;
             
-            qi::rule<str_iterator, assignment_vector(), skip_cmt_type> Assignments;
-            
-            //qi::rule<str_iterator, modules(), skip_cmt_type> Modules;                       
-            qi::rule<str_iterator, module(), skip_cmt_type> Module;            
+
+                                   
+            qi::rule<str_iterator, module(), skip_cmt_type> ModuleDefinition;
+            tag_default TagDefault;
+            encoding_references EncodingReferenceDefault;            
             qi::rule<str_iterator, import(), skip_cmt_type> Import;
             qi::rule<str_iterator, imports(), skip_cmt_type> Importsdecl; 
             qi::rule<str_iterator, imports(), skip_cmt_type> Imports;              
             qi::rule<str_iterator, string_vector(), skip_cmt_type>  Exports;
+            qi::rule<str_iterator, assignment_vector(), skip_cmt_type> Assignments;            
+            
 
             qi::rule<str_iterator, class_assignment(), skip_cmt_type> ObjectClassAssignment;
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeAssignment; // strict
@@ -212,12 +189,16 @@ namespace x680 {
             qi::rule<str_iterator, setting_element(), skip_cmt_type> Setting;
 
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingType;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictType;            
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingValue;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictValue;             
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingValueSet;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingClass;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictClass;             
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObject;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObjectSet;
-
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingUnknownTC;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingUnknownVO;
 
             qi::rule<str_iterator, argument_type(), skip_cmt_type> Parameter;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterA;
@@ -239,7 +220,16 @@ namespace x680 {
             qi::rule<str_iterator, unknown_tc_element(), skip_cmt_type> UnknownTCFromObject;
             qi::rule<str_iterator, unknown_tc_element(), skip_cmt_type> UnknownTCValueSetFromObjects;
 
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  UnknownVOAssigment grammar (Value or Object)
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
 
+
+            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownReferencedVO;
+            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVO;
+            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVOFromObject;
+            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVOValueSetFromObjects;
+            
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  ValueAssigment grammar
@@ -310,6 +300,7 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
 
             Tag_grammar Tag;
+            check_type_simple simple_typer;
 
 
             qi::rule<str_iterator, type_element(), skip_cmt_type> Type;
@@ -321,9 +312,7 @@ namespace x680 {
             qi::rule<str_iterator, type_element(), skip_cmt_type> SimpleValueSetFromObjects;
 
 
-            check_type_simple simple_typer;
-            tag_default tagdefault;
-            encoding_references encodingreference;
+
 
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> NamedType;
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeA;

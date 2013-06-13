@@ -82,6 +82,8 @@ namespace x680 {
         t_CHOICE,
         t_Selection,
         t_Instance_Of,
+        t_RELATIVE_OID_IRI,
+        t_OID_IRI,        
         t_ClassField,
         t_TypeFromObject,
         t_ValueSetFromObjects,
@@ -249,7 +251,9 @@ namespace x680 {
         sett_ValueSet,
         sett_DefineClass,
         sett_Object,
-        sett_ObjectSet
+        sett_ObjectSet,
+        sett_UnknownTC,
+        sett_UnknownVO
     };
 
     enum fieldkind_type {
@@ -417,6 +421,33 @@ namespace x680 {
             unknown_tc_element unknown_tc;
 
         };
+        
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  unknown_vo_element (Value or Object)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        struct unknown_vo_element {
+
+            std::string reff;
+            parameter_vector parameters;
+        };
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  unknown_tc_assignment
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+
+        struct unknown_vo_assignment {
+
+            std::string identifier;
+            argument_vector arguments;
+            unknown_vo_element unknown_vo;
+
+        };        
 
 
 
@@ -684,6 +715,8 @@ namespace x680 {
             class_element class_;
             object_element_ptr object;
             objectset_element_ptr objectset;
+            unknown_tc_element unknown_tc;
+            unknown_vo_element unknown_vo;         
         };
 
 
@@ -816,7 +849,8 @@ namespace x680 {
         class_assignment,
         object_assignment,
         objectset_assignment,
-        unknown_tc_assignment>
+        unknown_tc_assignment,
+        unknown_vo_assignment>
         assignment;
 
         typedef std::vector<assignment> assignment_vector;
@@ -837,17 +871,20 @@ namespace x680 {
             module() :
             encoding_references_t(encoding_no),
             default_tags_t(explicit_tags),
-            extesibility_implied(false) {
+            extesibility_implied(false),
+            allexport(false){
             }
 
             std::string name;
             value_element oid;
+            std::string iri;
             encoding_references_type encoding_references_t;
             tagrule_type default_tags_t;
             bool extesibility_implied;
             exports exports_;
             imports imports_;
             assignment_vector elements;
+            bool allexport;
         };
 
     }
@@ -899,29 +936,6 @@ namespace x680 {
         typedef qi::rule<str_iterator, string_vector() > strvect_rule;
         typedef qi::rule<str_iterator, string_vector(), skip_cmt_type > strvect_sk_rule;
 
-        typedef qi::rule<str_iterator, string_pair() > strpair_rule;
-        typedef qi::rule<str_iterator, string_pair(), skip_cmt_type > strpair_sk_rule;
-
-        typedef qi::rule<str_iterator, string_pair_vector() > strpairs_rule;
-        typedef qi::rule<str_iterator, string_pair_vector(), skip_cmt_type > strpairs_sk_rule;
-
-        typedef qi::rule<str_iterator, imports() > imports_rule;
-        typedef qi::rule<str_iterator, imports(), skip_cmt_type > imports_sk_rule;
-
-        typedef qi::rule<str_iterator, type_element() > type_element_rule;
-        typedef qi::rule<str_iterator, type_element(), skip_cmt_type > type_element_sk_rule;
-
-        typedef qi::rule<str_iterator, type_assignment_vector() > type_elements_rule;
-        typedef qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type > type_elements_sk_rule;
-
-        typedef qi::rule<str_iterator, value_element() > value_element_rule;
-        typedef qi::rule<str_iterator, value_element(), skip_cmt_type > value_element_sk_rule;
-
-        typedef qi::rule<str_iterator, value_element_vector() > value_elements_rule;
-        typedef qi::rule<str_iterator, value_element_vector(), skip_cmt_type > value_elements_sk_rule;
-
-        typedef qi::rule<str_iterator, unsigned() > unum_rule;
-
 
 
         extern str_rule pos_number_str;
@@ -930,6 +944,7 @@ namespace x680 {
         extern str_rule bstring_str;
         extern str_rule hstring_str;
         extern str_rule cstring_str;
+        extern str_rule IRIValue;
         extern str_rule curly_barket_pair;
 
 
