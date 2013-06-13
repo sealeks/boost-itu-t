@@ -45,13 +45,60 @@ namespace x680 {
         }
 
 
-        //Assignments_grammar
+        //Modules_grammar
 
-        void Assignments_grammar::init() {
+        void Modules_grammar::init() {
+            
+            start_rule = +Module;
+            
+            Import =SymbolList_[ bind(&import_add, qi::_val, qi::_1) ]
+                        >> FROM_
+                        >> modulereference_[ bind(&import_name, qi::_val, qi::_1) ]
+                        >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ]);
+            
+            Importsdecl = +Import;
+            
+            Imports = qi::lexeme[ qi::omit[IMPORTS_ >> +qi::space] ]
+                        >> -(!qi::lit(";")
+                        >> (Importsdecl))
+                        >> qi::omit[qi::lit(";")];        
+            
+            Exports =qi::lexeme[ qi::omit[EXPORTS_ >> +qi::space] ]
+                        >> -(!qi::lit(";")
+                        >> (qi::omit[ALL_] | SymbolList_))
+                        >> qi::omit[qi::lit(";")];
+            
+            Module = qi::lexeme[ modulereference_[ bind(&module_name, qi::_val, qi::_1) ]]
+                        >> -ObjectIdentifierValue[ bind(&module_oid,  qi::_val, qi::_1) ]
+                        >> qi::lexeme[DEFINITIONS_ ]
 
-            start_rule = *(ObjectClassAssignment | TypeAssignment | TypeAssignmentSS | UnknownTCAssignment
+                        >> -(qi::lexeme[encodingreference[bind(&module_encoding, qi::_val, qi::_1)]]
+                        >> qi::lexeme[INSTRUCTIONS_])
+
+                        >> -(qi::lexeme[ tagdefault[bind(&module_tags, qi::_val, qi::_1)]
+                        >> +qi::blank >> TAGS_])
+
+                        >> -(qi::lexeme[EXTENSIBILITY_
+                        >> +qi::blank
+                        >> IMPLIED_[ bind(&module_extesibility, qi::_val) ]])
+
+                        >> qi::lexeme[qi::lit("::=")]
+                        >> qi::lexeme[BEGIN_]
+                        >> -(Exports[bind(&module_exports, qi::_val, qi::_1)])
+                        >> -(Imports[bind(&module_imports,  qi::_val, qi::_1)])
+                        >> -(Assignments[bind(&module_assignments, qi::_val, qi::_1)])
+                        >> END_;
+            
+            //Modules = +Module;
+            
+            Assignments = *(ObjectClassAssignment | TypeAssignment | TypeAssignmentSS | UnknownTCAssignment
                     | ValueAssignmentLS | ValueAssignmentRS | ObjectAssignmentLS | ObjectAssignmentRS | ValueAssignment | ObjectAssignment
                     | ValueSetTypeAssignmentLS | ObjectSetAssignmentLS | ValueSetTypeAssignment | ObjectSetAssignment);
+                    
+
+         //   start_rule = *(ObjectClassAssignment | TypeAssignment | TypeAssignmentSS | UnknownTCAssignment
+         //           | ValueAssignmentLS | ValueAssignmentRS | ObjectAssignmentLS | ObjectAssignmentRS | ValueAssignment | ObjectAssignment
+            //        | ValueSetTypeAssignmentLS | ObjectSetAssignmentLS | ValueSetTypeAssignment | ObjectSetAssignment);
 
             ObjectClassAssignment = objectclassreference_[bind(&classa_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&classa_arguments, qi::_val, qi::_1)])

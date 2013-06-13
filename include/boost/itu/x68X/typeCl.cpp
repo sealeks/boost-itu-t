@@ -11,7 +11,7 @@ namespace x680 {
 
         // Type_grammar
 
-        void Assignments_grammar::initCl() {
+        void Modules_grammar::initCl() {
 
 
 

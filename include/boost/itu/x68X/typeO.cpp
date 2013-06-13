@@ -12,7 +12,7 @@ namespace x680 {
 
         // Type_grammar
 
-        void Assignments_grammar::initO() {
+        void Modules_grammar::initO() {
 
 
 

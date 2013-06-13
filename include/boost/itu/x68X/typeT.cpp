@@ -8,7 +8,7 @@
 namespace x680 {
     namespace bnf {
 
-        void Assignments_grammar::initT() {
+        void Modules_grammar::initT() {
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  UnknownTCAssigment grammar (Type or Class)
@@ -120,11 +120,13 @@ namespace x680 {
 
             ComponentTypeList = (ComponentType % qi::omit[qi::lit(",")]);
 
-            ExtensionAdditionGroup = qi::omit[qi::lit("[[")
+            ExtensionAdditionGroup1 = qi::omit[qi::lit("[[")
                     >> -(pos_number_str
                     >> qi::lit(":"))]
                     >> ComponentTypeList
                     >> qi::omit[qi::lit("]]")];
+            
+            ExtensionAdditionGroup = ExtensionAdditionGroup1 | ComponentTypeList;
 
             ExtensionAddition = qi::omit[qi::lit(",")] >> (ExtensionAdditionGroup | ComponentType);
 
@@ -149,15 +151,17 @@ namespace x680 {
 
             RootAlternativeTypeList = AlternativeTypeList;
 
-            ExtensionAdditionAlternativesGroup = qi::omit[qi::lit("[[")
+            ExtensionAdditionAlternativesGroup1 = qi::omit[qi::lit("[[")
                     >> -(pos_number_str
                     >> qi::lit(":"))]
                     >> AlternativeTypeList
                     >> qi::omit[qi::lit("]]")];
+            
+            ExtensionAdditionAlternativesGroup = ExtensionAdditionAlternativesGroup1 | AlternativeTypeList;
 
-            ExtensionAdditionAlternative = qi::omit[qi::lit(",")] >> (ExtensionAdditionGroup | NamedType);
+            ExtensionAdditionAlternative = qi::omit[qi::lit(",")] >> (ExtensionAdditionAlternativesGroup | NamedType);
 
-            ExtensionAdditionAlternatives = qi::omit[qi::lit(",")] >> ExtensionAdditionGroup >> -(ExtensionAdditionAlternative);
+            ExtensionAdditionAlternatives = qi::omit[qi::lit(",")] >> ExtensionAdditionAlternativesGroup>> -(ExtensionAdditionAlternative);
 
             AlternativeTypeLists = RootAlternativeTypeList
                     >> -(qi::lit(",")

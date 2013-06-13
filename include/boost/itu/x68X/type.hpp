@@ -102,10 +102,31 @@ namespace x680 {
         // Type_grammar
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
-        struct Assignments_grammar : qi::grammar<str_iterator, assignment_vector(), skip_cmt_type> {
+        struct Modules_grammar : qi::grammar<str_iterator, modules(), skip_cmt_type> {
 
-            typedef Assignments_grammar self_type;
-            typedef assignment_vector holder_type;
+
+            
+            struct tag_default : qi::symbols<std::string::value_type, tagrule_type > {
+
+                tag_default() {
+                    add
+                            ("EXPLICIT", explicit_tags)
+                            ("IMPLICIT", implicit_tags)
+                            ("AUTOMATIC", automatic_tags)
+                            ;
+                }
+            };
+
+            struct encoding_references : qi::symbols<std::string::value_type, encoding_references_type > {
+
+                encoding_references() {
+                    add
+                            ("TAG", encoding_tag)
+                            ("XER", encoding_xer)
+                            ("PER", encoding_per)
+                            ;
+                }
+            };            
 
             struct check_type_simple : qi::symbols<std::string::value_type, defined_type > {
 
@@ -139,8 +160,8 @@ namespace x680 {
                 }
             };
 
-            Assignments_grammar() :
-            Assignments_grammar::base_type(start_rule) {
+            Modules_grammar() :
+            Modules_grammar::base_type(start_rule) {
                 init();
             }
 
@@ -157,7 +178,16 @@ namespace x680 {
             //  Assigment grammar
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
-            qi::rule<str_iterator, assignment_vector(), skip_cmt_type> start_rule;
+            qi::rule<str_iterator, modules(), skip_cmt_type> start_rule;
+            
+            qi::rule<str_iterator, assignment_vector(), skip_cmt_type> Assignments;
+            
+            //qi::rule<str_iterator, modules(), skip_cmt_type> Modules;                       
+            qi::rule<str_iterator, module(), skip_cmt_type> Module;            
+            qi::rule<str_iterator, import(), skip_cmt_type> Import;
+            qi::rule<str_iterator, imports(), skip_cmt_type> Importsdecl; 
+            qi::rule<str_iterator, imports(), skip_cmt_type> Imports;              
+            qi::rule<str_iterator, string_vector(), skip_cmt_type>  Exports;
 
             qi::rule<str_iterator, class_assignment(), skip_cmt_type> ObjectClassAssignment;
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeAssignment; // strict
@@ -292,6 +322,8 @@ namespace x680 {
 
 
             check_type_simple simple_typer;
+            tag_default tagdefault;
+            encoding_references encodingreference;
 
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> NamedType;
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeA;
@@ -323,7 +355,8 @@ namespace x680 {
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type>ExtensionAdditions;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionList;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAddition;
-            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionGroup;
+            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionGroup1;
+            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionGroup;            
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ComponentTypeListsKrn;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ComponentTypeListsEx;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ComponentTypeLists;
@@ -331,7 +364,8 @@ namespace x680 {
 
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeList;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> RootAlternativeTypeList;
-            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternativesGroup;
+            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternativesGroup1;
+            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternativesGroup;            
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternatives;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternative;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeLists;

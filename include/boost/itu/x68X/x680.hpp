@@ -381,6 +381,9 @@ namespace x680 {
 
         struct setting_element;
         typedef std::vector<setting_element> parameter_vector;
+        
+        struct module;
+        typedef std::vector<module> modules;        
 
         using boost::spirit::repository::distinct;
 
@@ -918,6 +921,7 @@ namespace x680 {
         typedef qi::rule<str_iterator, value_element_vector(), skip_cmt_type > value_elements_sk_rule;
 
         typedef qi::rule<str_iterator, unsigned() > unum_rule;
+
 
 
         extern str_rule pos_number_str;

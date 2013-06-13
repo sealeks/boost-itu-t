@@ -227,12 +227,11 @@ namespace x680 {
         inline void constraint_tp(constraint_element& holder, const constraint_type& val) {
             holder.tp = val;
         }
-        
-        
+
         inline void constraint_setelement(constraint_element& holder, const objectset_element& val) {
-           holder.setelement = objectset_element_ptr( new objectset_element( val ));
-           holder.tp =  cns_SimpleTableConstraint;
-        }             
+            holder.setelement = objectset_element_ptr(new objectset_element(val));
+            holder.tp = cns_SimpleTableConstraint;
+        }
 
         inline void constraint_identifier(constraint_element& holder, const std::string& val) {
             holder.identifier = val;
@@ -317,7 +316,7 @@ namespace x680 {
         }
 
         inline void constraint_relation(constraint_element& holder, const objectset_element& valr, const string_vector& valp) {
-            holder.setelement = objectset_element_ptr( new objectset_element( valr ));
+            holder.setelement = objectset_element_ptr(new objectset_element(valr));
             holder.parameters = valp;
             holder.tp = cns_ComponentRelation;
         }
@@ -378,10 +377,10 @@ namespace x680 {
             tmp.push_back(val);
             holder.push_back(tmp);
         }
-        
-  
-   
-       
+
+
+
+
 
 
         const constraint_element CONSTRAINT_UNION = constraint_element(cns_UNION);
@@ -911,7 +910,55 @@ namespace x680 {
         }
 
 
+        // Module setter       
 
+        inline void module_name(module& holder, const std::string & val) {
+            holder.name = val;
+        }
+
+        inline void module_oid(module& holder, const value_element & val) {
+            holder.oid = val;
+        }
+
+        inline void module_tags(module& holder, const tagrule_type & val) {
+            holder.default_tags_t = val;
+        }
+
+        inline void module_encoding(module& holder, const encoding_references_type & val) {
+            holder.encoding_references_t = val;
+        }
+
+        inline void module_extesibility(module & holder) {
+            holder.extesibility_implied = true;
+        }
+
+        inline void module_exports(module& holder, const string_vector& val) {
+            holder.exports_ = val;
+        }
+
+        inline void module_imports(module& holder, const imports& val) {
+            holder.imports_ = val;
+        }
+
+        inline void module_assignments(module& holder, const assignment_vector& val) {
+            holder.elements = val;
+        }
+
+
+
+        // Import setter            
+
+        inline void import_name(import& holder, const std::string & val) {
+            holder.name = val;
+        }
+
+        inline void import_oid(import& holder, const value_element & val) {
+            holder.oid = val;
+        }
+
+        inline void import_add(import& holder, const string_vector & val) {
+            holder.names = val;
+        }
 
 
     }
