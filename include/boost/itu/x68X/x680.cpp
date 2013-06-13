@@ -6,7 +6,7 @@
 #include <boost/itu/x68X/x680.hpp>
 
 namespace x680 {
-    namespace bnf {
+    namespace syntactic {
 
 
 

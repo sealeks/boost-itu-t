@@ -11,7 +11,7 @@
 
 
 namespace x680 {
-    namespace bnf {
+    namespace syntactic {
 
       
 

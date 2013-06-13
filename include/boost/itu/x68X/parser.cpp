@@ -6,7 +6,7 @@
 #include <boost/itu/x68X/parser.hpp>
 
 namespace x680 {
-    namespace bnf {
+    namespace syntactic {
 
 
 

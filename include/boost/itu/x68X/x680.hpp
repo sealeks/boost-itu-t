@@ -340,7 +340,7 @@ namespace x680 {
 
 namespace x680 {
 
-    namespace bnf {
+    namespace syntactic {
 
         typedef std::vector<std::string> string_vector;
         typedef std::pair<std::string, std::string> string_pair;
@@ -501,7 +501,7 @@ namespace x680 {
             }
 
             std::string identifier;
-            x680::bnf::string_vector parameters;            
+            x680::syntactic::string_vector parameters;            
             constraint_type tp;
             value_element value;
             value_element from_;
@@ -859,7 +859,7 @@ namespace x680 {
 
 
 namespace x680 {
-    namespace bnf {
+    namespace syntactic {
 
         typedef std::string basic_character_type;
         typedef basic_character_type::iterator str_iterator;

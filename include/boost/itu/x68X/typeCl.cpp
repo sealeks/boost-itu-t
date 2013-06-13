@@ -6,7 +6,7 @@
 #include <boost/itu/x68X/type.hpp>
 
 namespace x680 {
-    namespace bnf {
+    namespace syntactic {
 
 
         // Type_grammar
