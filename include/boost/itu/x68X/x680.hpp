@@ -8,6 +8,7 @@
 
 
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <vector>
 #include <string>
@@ -33,6 +34,9 @@
 #include <boost/spirit/repository/include/qi_confix.hpp>
 #include <boost/variant.hpp>
 #include <boost/spirit/repository/include/qi_distinct.hpp>
+
+#include <boost/spirit/include/support_multi_pass.hpp>
+#include <boost/spirit/include/classic_position_iterator.hpp>
 
 #include <boost/shared_ptr.hpp>
 
@@ -908,10 +912,12 @@ namespace x680 {
 
 namespace x680 {
     namespace syntactic {
+   
+        const int PARSE_SUCCESS = 0;
+        const int PARSE_EFILESTREAM = 1;      
+        const int PARSE_ESYNXTAS = 3;            
 
-        typedef std::string basic_character_type;
-        typedef basic_character_type::iterator str_iterator;
-        typedef basic_character_type::value_type str_value_type;
+        typedef std::string::iterator  str_iterator;
 
         using namespace boost::spirit;
 
@@ -942,10 +948,9 @@ namespace x680 {
         typedef qi::rule<str_iterator> term_rule;
 
         typedef qi::rule<str_iterator, std::string() > str_rule;
-        typedef qi::rule<str_iterator, std::string(), skip_cmt_type > str_sk_rule;
 
         typedef qi::rule<str_iterator, string_vector() > strvect_rule;
-        typedef qi::rule<str_iterator, string_vector(), skip_cmt_type > strvect_sk_rule;
+        //typedef qi::rule<str_iterator, string_vector(), skip_cmt_type > strvect_sk_rule;
 
 
 
@@ -1110,7 +1115,7 @@ namespace x680 {
         extern str_rule Reference_;
         extern str_rule ParameterizedReference_; // x.683
         extern str_rule Symbol_;
-        extern strvect_sk_rule SymbolList_;
+
 
 
 

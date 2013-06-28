@@ -13,62 +13,7 @@
 namespace x680 {
     namespace syntactic {
 
-        //Tag
 
-        struct Tag_grammar : qi::grammar<str_iterator, tag_type(), skip_cmt_type> {
-
-            typedef Tag_grammar self_type;
-            typedef tag_type holder_type;
-
-            struct check_class : qi::symbols<std::string::value_type, tagclass_type > {
-
-                check_class() {
-
-                    add
-                            ("UNIVERSAL", tcl_universal)
-                            ("APPLICATION", tcl_application)
-                            ("PRIVATE", tcl_private)
-                            ;
-                }
-            };
-
-            struct check_rule : qi::symbols<std::string::value_type, tagrule_type > {
-
-                check_rule() {
-
-                    add
-                            ("IMPLICIT", implicit_tags)
-                            ("EXPLICIT", explicit_tags)
-                            ;
-                }
-            };
-
-            struct encoding_references : qi::symbols<std::string::value_type, encoding_references_type > {
-
-                encoding_references() {
-                    add
-                            ("TAG", encoding_tag)
-                            ("XER", encoding_xer)
-                            ("PER", encoding_per)
-                            ;
-                }
-            };
-
-            Tag_grammar() :
-            Tag_grammar::base_type(start_rule) {
-                init();
-            }
-
-            void init();
-
-            check_class Class;
-            check_rule Rule;
-            encoding_references encoding;
-            qi::rule<str_iterator, holder_type(), skip_cmt_type> start_rule;
-        };
-
-
-        
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         // Modules_grammar
@@ -98,7 +43,9 @@ namespace x680 {
                             ("PER", encoding_per)
                             ;
                 }
-            };            
+            };         
+            
+            
 
             struct check_type_simple : qi::symbols<std::string::value_type, defined_type > {
 
@@ -134,6 +81,29 @@ namespace x680 {
                             ;
                 }
             };
+            
+            struct check_class : qi::symbols<std::string::value_type, tagclass_type > {
+
+                check_class() {
+
+                    add
+                            ("UNIVERSAL", tcl_universal)
+                            ("APPLICATION", tcl_application)
+                            ("PRIVATE", tcl_private)
+                            ;
+                }
+            };
+
+            struct check_rule : qi::symbols<std::string::value_type, tagrule_type > {
+
+                check_rule() {
+
+                    add
+                            ("IMPLICIT", implicit_tags)
+                            ("EXPLICIT", explicit_tags)
+                            ;
+                }
+            };            
 
             Modules_grammar() :
             Modules_grammar::base_type(start_rule) {
@@ -305,8 +275,12 @@ namespace x680 {
             //  TypeAssigment grammar
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
 
-            Tag_grammar Tag;
+
+            check_class Class;
+            check_rule Rule;            
             check_type_simple simple_typer;
+            
+            qi::rule<str_iterator, tag_type(), skip_cmt_type> Tag;            
 
 
             qi::rule<str_iterator, type_element(), skip_cmt_type> Type;
@@ -378,23 +352,23 @@ namespace x680 {
             //  Constraint grammar
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
 
-            qi::rule < std::string::iterator, valueset_element(), skip_cmt_type> ValueSet;
-            qi::rule < std::string::iterator, valueset_element(), skip_cmt_type> ParameterizedValueSet;
-            qi::rule < std::string::iterator, valueset_element(), skip_cmt_type> StrictValueSet;
-            qi::rule < std::string::iterator, valueset_element(), skip_cmt_type> ValueSetFromObjects;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ValueSetdecl;
+            qi::rule < str_iterator, valueset_element(), skip_cmt_type> ValueSet;
+            qi::rule < str_iterator, valueset_element(), skip_cmt_type> ParameterizedValueSet;
+            qi::rule < str_iterator, valueset_element(), skip_cmt_type> StrictValueSet;
+            qi::rule < str_iterator, valueset_element(), skip_cmt_type> ValueSetFromObjects;
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> ValueSetdecl;
 
-            qi::rule < std::string::iterator, constraints_vector(), skip_cmt_type> Constraints;
-            qi::rule < std::string::iterator, constraints_vector(), skip_cmt_type> SizeConstraints;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> Constraint;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ConstraintSpec;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpecs;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraintdecl;             
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraint;            
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpec;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type>Intersections;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> Unions;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> Exclusions;
+            qi::rule < str_iterator, constraints_vector(), skip_cmt_type> Constraints;
+            qi::rule < str_iterator, constraints_vector(), skip_cmt_type> SizeConstraints;
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> Constraint;
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> ConstraintSpec;
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpecs;
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraintdecl;             
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraint;            
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpec;
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type>Intersections;
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> Unions;
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> Exclusions;
 
             qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> UElems;
             qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> IElems;
@@ -416,7 +390,7 @@ namespace x680 {
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> SingleTypeConstraint;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> SimpleElement;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> NamedConstraint;
-            qi::rule < std::string::iterator, constraint_element_vector(), skip_cmt_type> FullSpecification;
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> FullSpecification;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> MultipleTypeConstraints;
 
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ExceptionSpecConstraint;
@@ -507,24 +481,24 @@ namespace x680 {
             //  ObjectSetAssignment grammar
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
 
-            qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> ObjectSet;
-            qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> SimpleDefinedObjectSet;
-            qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> ParameterizedObjectSet;
-            qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> ObjectSetFromObjects;
-            qi::rule < std::string::iterator, objectset_element(), skip_cmt_type> StrictObjectSet;
-            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> ObjectSetdecl;
+            qi::rule < str_iterator, objectset_element(), skip_cmt_type> ObjectSet;
+            qi::rule < str_iterator, objectset_element(), skip_cmt_type> SimpleDefinedObjectSet;
+            qi::rule < str_iterator, objectset_element(), skip_cmt_type> ParameterizedObjectSet;
+            qi::rule < str_iterator, objectset_element(), skip_cmt_type> ObjectSetFromObjects;
+            qi::rule < str_iterator, objectset_element(), skip_cmt_type> StrictObjectSet;
+            qi::rule < str_iterator, object_element_vector(), skip_cmt_type> ObjectSetdecl;
 
             qi::rule<str_iterator, object_element(), skip_cmt_type> oDefinedObjectSet;
             qi::rule<str_iterator, object_element(), skip_cmt_type> oObjectSetFromObjects;
 
 
-            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs1;
-            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs2;
-            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs;            
-            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oElementSetSpec;
-            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oIntersections;
-            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oUnions;
-            qi::rule < std::string::iterator, object_element_vector(), skip_cmt_type> oExclusions;
+            qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs1;
+            qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs2;
+            qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs;            
+            qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oElementSetSpec;
+            qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oIntersections;
+            qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oUnions;
+            qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oExclusions;
 
             qi::rule<str_iterator, object_element_vector(), skip_cmt_type> oUElems;
             qi::rule<str_iterator, object_element_vector(), skip_cmt_type> oIElems;
@@ -534,10 +508,14 @@ namespace x680 {
             qi::rule<str_iterator, object_element(), skip_cmt_type> oExtention;
 
             qi::rule<str_iterator, object_element(), skip_cmt_type> oElement;
-
+            
+            qi::rule<str_iterator, string_vector(), skip_cmt_type > SymbolList_;
+            
         };
 
-
+        
+        int parse_module(const std::string& filename, modules& result, std::string& msg);
+        
     }
 }
 

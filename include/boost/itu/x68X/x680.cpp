@@ -313,11 +313,6 @@ namespace x680 {
 
         str_rule Symbol_ = ParameterizedReference_[ qi::_val = qi::_1] | Reference_[ qi::_val = qi::_1];
 
-        strvect_sk_rule SymbolList_ = qi::lexeme[Symbol_] % qi::omit[qi::lexeme[ lit(",")]];
-
-
-
-
 
 
 

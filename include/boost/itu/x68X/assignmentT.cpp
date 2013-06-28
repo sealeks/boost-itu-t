@@ -9,6 +9,13 @@ namespace x680 {
     namespace syntactic {
 
         void Modules_grammar::initT() {
+            
+             Tag = qi::omit[qi::lit("[")]
+                    >> -(EncodingReferenceDefault[bind(&tag_encoding, qi::_val, qi::_1)] >>  qi::omit[qi::lit(":")])
+                    >> -(Class[bind(&tag_class, qi::_val, qi::_1)])
+                    >> (pos_number_str | DefinedValue_)[bind(&tag_number, qi::_val, qi::_1)]
+                    >>  qi::omit[qi::lit("]")]
+                    >> -(Rule[bind(&tag_rule, qi::_val, qi::_1)]);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  UnknownTCAssigment grammar (Type or Class)
