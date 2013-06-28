@@ -17,8 +17,8 @@ namespace x680 {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         // Modules_grammar
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+        
         struct Modules_grammar : qi::grammar<str_iterator, modules(), skip_cmt_type> {
 
 
@@ -124,7 +124,6 @@ namespace x680 {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
             qi::rule<str_iterator, modules(), skip_cmt_type> start_rule;
-            
 
                                    
             qi::rule<str_iterator, module(), skip_cmt_type> ModuleDefinition;
@@ -133,7 +132,8 @@ namespace x680 {
             qi::rule<str_iterator, import(), skip_cmt_type> Import;
             qi::rule<str_iterator, imports(), skip_cmt_type> Importsdecl; 
             qi::rule<str_iterator, imports(), skip_cmt_type> Imports;              
-            qi::rule<str_iterator, string_vector(), skip_cmt_type>  Exports;
+            qi::rule<str_iterator, string_vector(), skip_cmt_type>  Exports;     
+            qi::rule<str_iterator, string_vector(), skip_cmt_type > SymbolList;
             qi::rule<str_iterator, assignment_vector(), skip_cmt_type> Assignments;            
             
 
@@ -508,8 +508,6 @@ namespace x680 {
             qi::rule<str_iterator, object_element(), skip_cmt_type> oExtention;
 
             qi::rule<str_iterator, object_element(), skip_cmt_type> oElement;
-            
-            qi::rule<str_iterator, string_vector(), skip_cmt_type > SymbolList_;
             
         };
 

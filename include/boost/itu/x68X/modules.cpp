@@ -44,7 +44,7 @@ namespace x680 {
                     >> -(Assignments[bind(&module_assignments, qi::_val, qi::_1)])
                     >> END_;
 
-            Import = SymbolList_[ bind(&import_add, qi::_val, qi::_1) ]
+            Import = SymbolList[ bind(&import_add, qi::_val, qi::_1) ]
                     >> FROM_
                     >> modulereference_[ bind(&import_name, qi::_val, qi::_1) ]
                     >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ] | DefinedValue[ bind(&import_defined, qi::_val, qi::_1) ]);
@@ -56,8 +56,11 @@ namespace x680 {
                     >> qi::omit[qi::lit(";")];
 
             Exports = qi::omit[EXPORTS_]
-                    >> SymbolList_
+                    >> SymbolList
                     >> qi::omit[qi::lit(";")];
+                   
+            SymbolList = qi::lexeme[Symbol_] % qi::omit[qi::lexeme[ lit(",")]];            
+            
 
             Assignments = *(ObjectClassAssignment | TypeAssignment | TypeAssignmentSS | UnknownTCAssignment
                     | ValueAssignmentLS | ValueAssignmentRS | ObjectAssignmentLS | ObjectAssignmentRS | ValueAssignment | ObjectAssignment
@@ -219,9 +222,6 @@ namespace x680 {
             initCl();
             initO();
             initOS();
-            
-            SymbolList_ = qi::lexeme[Symbol_] % qi::omit[qi::lexeme[ lit(",")]];            
-
             //qi::on_error<qi::fail>(ModuleDefinition,
             // bind(&module_message_handler, qi::_1,  qi::_2, qi::_3)) ;            
 
@@ -283,7 +283,7 @@ namespace x680 {
             
 
             //begin = src.begin();            
-          //  qi::phrase_parse<std::string::iterator, Modules_grammar, skip_comment_grammar >(begin1, end1, ModulesDef, comment_skip);
+            //qi::info<std::string::iterator, Modules_grammar, skip_comment_grammar >(begin1, end1, ModulesDef, comment_skip);
 
             //     const file_position_base& pos = position_begin.get_position();
             //   msg =" line " +  pto_str(pos.line) +  " column " +  pto_str(pos.column) ;//<< std::endl <<
