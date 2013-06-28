@@ -269,7 +269,8 @@ namespace x680 {
             Modules_grammar ModulesDef;
 
             std::string::iterator  begin = src.begin();
-            std::string::iterator begin1 = src.begin();            
+            std::string::iterator begin1 = src.begin();     
+            std::string::size_type sz = src.size();
             std::string::iterator  end = src.end();
             std::string::iterator end1 = src.end();  
 
@@ -281,7 +282,8 @@ namespace x680 {
                     result))
                 return PARSE_SUCCESS;
             
-
+            std::string::size_type sz1 = src.size();
+            
             //begin = src.begin();            
             //qi::info<std::string::iterator, Modules_grammar, skip_comment_grammar >(begin1, end1, ModulesDef, comment_skip);
 
@@ -292,6 +294,7 @@ namespace x680 {
             std::cout << "B=B1" << (bool) (begin == begin1) << std::endl;
             std::cout << "B=E" << (bool) (begin == end) << std::endl;
             std::cout << "E=E1" << (bool) (end1 == end) << std::endl;            
+            std::cout << "sz" <<sz <<  " sz1: "<<  sz1<<std::endl;
             return PARSE_ESYNXTAS;
         }
 
