@@ -37,6 +37,7 @@
 
 #include <boost/spirit/include/support_multi_pass.hpp>
 #include <boost/spirit/include/classic_position_iterator.hpp>
+#include  <iterator>
 
 #include <boost/shared_ptr.hpp>
 
@@ -87,8 +88,8 @@ namespace x680 {
         t_Selection,
         t_Instance_Of,
         t_RELATIVE_OID_IRI,
-        t_OID_IRI,        
-        t_ANY,        
+        t_OID_IRI,
+        t_ANY,
         t_ClassField,
         t_TypeFromObject,
         t_ValueSetFromObjects,
@@ -275,7 +276,6 @@ namespace x680 {
         fkind_FixedTypeSet_or_ObjectSet
     };
 
-
     enum object_type {
 
         ot_Nodef,
@@ -299,13 +299,13 @@ namespace x680 {
         gvr_Class,
         gvr_Type_or_Class
     };
-    
+
     enum argumentsize_type {
 
         argm_No,
         argm_Big,
         argm_Little
-    };    
+    };
 
     enum parameter_type {
 
@@ -397,9 +397,9 @@ namespace x680 {
 
         struct setting_element;
         typedef std::vector<setting_element> parameter_vector;
-        
+
         struct module;
-        typedef std::vector<module> modules;        
+        typedef std::vector<module> modules;
 
         using boost::spirit::repository::distinct;
 
@@ -433,9 +433,9 @@ namespace x680 {
             unknown_tc_element unknown_tc;
 
         };
-        
-        
-        
+
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         //  unknown_vo_element (Value or Object)
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -459,7 +459,7 @@ namespace x680 {
             argument_vector arguments;
             unknown_vo_element unknown_vo;
 
-        };        
+        };
 
 
 
@@ -544,7 +544,7 @@ namespace x680 {
             }
 
             std::string identifier;
-            x680::syntactic::string_vector parameters;            
+            x680::syntactic::string_vector parameters;
             constraint_type tp;
             value_element value;
             value_element from_;
@@ -728,7 +728,7 @@ namespace x680 {
             object_element_ptr object;
             objectset_element_ptr objectset;
             unknown_tc_element unknown_tc;
-            unknown_vo_element unknown_vo;         
+            unknown_vo_element unknown_vo;
         };
 
 
@@ -841,7 +841,7 @@ namespace x680 {
             type_element governortype;
             class_element governorclass;
             governor_type tp;
-            argumentsize_type atp;            
+            argumentsize_type atp;
             std::string argument;
 
         };
@@ -887,7 +887,7 @@ namespace x680 {
             encoding_references_t(encoding_no),
             default_tags_t(explicit_tags),
             extesibility_implied(false),
-            allexport(false){
+            allexport(false) {
             }
 
             std::string name;
@@ -900,6 +900,7 @@ namespace x680 {
             imports imports_;
             assignment_vector elements;
             bool allexport;
+            std::string file;
         };
 
     }
@@ -912,12 +913,104 @@ namespace x680 {
 
 namespace x680 {
     namespace syntactic {
-   
-        const int PARSE_SUCCESS = 0;
-        const int PARSE_EFILESTREAM = 1;      
-        const int PARSE_ESYNXTAS = 3;            
 
-        typedef std::string::iterator  str_iterator;
+        const int PARSE_SUCCESS = 0;
+        const int PARSE_EFILESTREAM = 1;
+        const int PARSE_ESYNXTAS = 3;
+
+        class position_iterator : public std::string::iterator {
+
+        public:
+
+            typedef std::string::iterator supertype;
+            typedef boost::shared_ptr<supertype> supertypeptr;
+            typedef boost::shared_ptr<difference_type> differenceptr;
+
+            position_iterator(const supertype& s);
+
+            position_iterator&
+            operator++();
+
+            position_iterator
+            operator++(int);
+
+            position_iterator&
+            operator--();
+
+            position_iterator
+            operator--(int);
+
+            position_iterator&
+                    operator+=(const difference_type& n);
+
+            position_iterator
+            operator+(const difference_type& n) const;
+
+            position_iterator&
+                    operator-=(const difference_type& n);
+
+            position_iterator
+            operator-(const difference_type& n) const;
+
+            difference_type pos() const;
+
+            supertype& super() const;
+
+            supertype& base() const;
+
+        private:
+
+            void checkpos() const;
+
+            position_iterator private_ctr(const supertype& s, supertypeptr b, differenceptr p) const;
+
+            mutable supertypeptr base_;
+            mutable differenceptr pos_;
+        };
+
+        class synxtas_error {
+
+        public:
+
+
+            synxtas_error(const std::string& file, const std::string& src, std::size_t pos);
+
+            std::size_t filepos() const {
+                return filepos_;
+            };
+
+            std::size_t linepos() const {
+                return linepos_;
+            };
+
+            std::size_t linenum() const {
+                return linenum_;
+            };
+
+            std::string line() const {
+                return line_;
+            };
+
+            std::string file() const {
+                return file_;
+            };
+
+
+        private:
+
+            std::size_t build(const std::string& src, std::size_t pos, std::size_t& symb, std::string& line);
+
+            std::size_t filepos_;
+            std::size_t linepos_;
+            std::size_t linenum_;
+            std::string line_;
+            std::string file_;
+        };
+
+        std::ostream& operator<<(std::ostream& stream, const synxtas_error& self);
+
+
+        typedef position_iterator str_iterator;
 
         using namespace boost::spirit;
 

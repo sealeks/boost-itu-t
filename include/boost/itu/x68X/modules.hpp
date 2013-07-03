@@ -9,6 +9,7 @@
 #include <boost/itu/x68X/asn1module.hpp>
 #include <boost/itu/x68X/x680.hpp>
 #include <boost/itu/x68X/setters.hpp>
+#include <boost/filesystem.hpp>
 
 namespace x680 {
     namespace syntactic {
@@ -18,11 +19,9 @@ namespace x680 {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         // Modules_grammar
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
-        
+
         struct Modules_grammar : qi::grammar<str_iterator, modules(), skip_cmt_type> {
 
-
-            
             struct tag_default : qi::symbols<std::string::value_type, tagrule_type > {
 
                 tag_default() {
@@ -43,9 +42,7 @@ namespace x680 {
                             ("PER", encoding_per)
                             ;
                 }
-            };         
-            
-            
+            };
 
             struct check_type_simple : qi::symbols<std::string::value_type, defined_type > {
 
@@ -77,11 +74,11 @@ namespace x680 {
                             ("TIME-OF-DAY", t_TIME_OF_DAY)
                             ("RELATIVE-OID-IRI", t_RELATIVE_OID_IRI)
                             ("RELATIVE-OID", t_RELATIVE_OID)
-                            ("ANY", t_ANY)                            
+                            ("ANY", t_ANY)
                             ;
                 }
             };
-            
+
             struct check_class : qi::symbols<std::string::value_type, tagclass_type > {
 
                 check_class() {
@@ -103,7 +100,7 @@ namespace x680 {
                             ("EXPLICIT", explicit_tags)
                             ;
                 }
-            };            
+            };
 
             Modules_grammar() :
             Modules_grammar::base_type(start_rule) {
@@ -125,17 +122,17 @@ namespace x680 {
 
             qi::rule<str_iterator, modules(), skip_cmt_type> start_rule;
 
-                                   
+
             qi::rule<str_iterator, module(), skip_cmt_type> ModuleDefinition;
             tag_default TagDefault;
-            encoding_references EncodingReferenceDefault;            
+            encoding_references EncodingReferenceDefault;
             qi::rule<str_iterator, import(), skip_cmt_type> Import;
-            qi::rule<str_iterator, imports(), skip_cmt_type> Importsdecl; 
-            qi::rule<str_iterator, imports(), skip_cmt_type> Imports;              
-            qi::rule<str_iterator, string_vector(), skip_cmt_type>  Exports;     
+            qi::rule<str_iterator, imports(), skip_cmt_type> Importsdecl;
+            qi::rule<str_iterator, imports(), skip_cmt_type> Imports;
+            qi::rule<str_iterator, string_vector(), skip_cmt_type> Exports;
             qi::rule<str_iterator, string_vector(), skip_cmt_type > SymbolList;
-            qi::rule<str_iterator, assignment_vector(), skip_cmt_type> Assignments;            
-            
+            qi::rule<str_iterator, assignment_vector(), skip_cmt_type> Assignments;
+
 
             qi::rule<str_iterator, class_assignment(), skip_cmt_type> ObjectClassAssignment;
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeAssignment; // strict
@@ -160,12 +157,12 @@ namespace x680 {
             qi::rule<str_iterator, setting_element(), skip_cmt_type> Setting;
 
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingType;
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictType;            
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictType;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingValue;
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictValue;             
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictValue;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingValueSet;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingClass;
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictClass;             
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictClass;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObject;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObjectSet;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingUnknownTC;
@@ -175,11 +172,11 @@ namespace x680 {
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterA1;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterA2;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterB1;
-            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterB2;         
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterB2;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterC1;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterC2;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD1;
-            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD2;            
+            qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD2;
             qi::rule<str_iterator, argument_vector(), skip_cmt_type> Parameters;
 
 
@@ -205,7 +202,7 @@ namespace x680 {
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVO;
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVOFromObject;
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVOValueSetFromObjects;
-            
+
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  ValueAssigment grammar
@@ -277,10 +274,10 @@ namespace x680 {
 
 
             check_class Class;
-            check_rule Rule;            
+            check_rule Rule;
             check_type_simple simple_typer;
-            
-            qi::rule<str_iterator, tag_type(), skip_cmt_type> Tag;            
+
+            qi::rule<str_iterator, tag_type(), skip_cmt_type> Tag;
 
 
             qi::rule<str_iterator, type_element(), skip_cmt_type> Type;
@@ -325,7 +322,7 @@ namespace x680 {
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionList;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAddition;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionGroup1;
-            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionGroup;            
+            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionGroup;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ComponentTypeListsKrn;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ComponentTypeListsEx;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ComponentTypeLists;
@@ -334,7 +331,7 @@ namespace x680 {
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeList;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> RootAlternativeTypeList;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternativesGroup1;
-            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternativesGroup;            
+            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternativesGroup;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternatives;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternative;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeLists;
@@ -363,8 +360,8 @@ namespace x680 {
             qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> Constraint;
             qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> ConstraintSpec;
             qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpecs;
-            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraintdecl;             
-            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraint;            
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraintdecl;
+            qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> GeneralConstraint;
             qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> ElementSetSpec;
             qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type>Intersections;
             qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> Unions;
@@ -494,7 +491,7 @@ namespace x680 {
 
             qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs1;
             qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs2;
-            qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs;            
+            qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs;
             qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oElementSetSpec;
             qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oIntersections;
             qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oUnions;
@@ -508,12 +505,17 @@ namespace x680 {
             qi::rule<str_iterator, object_element(), skip_cmt_type> oExtention;
 
             qi::rule<str_iterator, object_element(), skip_cmt_type> oElement;
-            
+
         };
 
+
+        int parse_fs(const std::string& path, modules& result, const std::string& ext = "asn");     
         
-        int parse_module(const std::string& filename, modules& result, std::string& msg);
+        int parse_directory(const std::string& directory, modules& result, const std::string& ext = "asn");        
         
+        int parse_file(const std::string& filename, modules& result);
+
+
     }
 }
 

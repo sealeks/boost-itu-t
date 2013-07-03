@@ -58,9 +58,9 @@ namespace x680 {
             Exports = qi::omit[EXPORTS_]
                     >> SymbolList
                     >> qi::omit[qi::lit(";")];
-                   
-            SymbolList = qi::lexeme[Symbol_] % qi::omit[qi::lexeme[ lit(",")]];            
-            
+
+            SymbolList = qi::lexeme[Symbol_] % qi::omit[qi::lexeme[ lit(",")]];
+
 
             Assignments = *(ObjectClassAssignment | TypeAssignment | TypeAssignmentSS | UnknownTCAssignment
                     | ValueAssignmentLS | ValueAssignmentRS | ObjectAssignmentLS | ObjectAssignmentRS | ValueAssignment | ObjectAssignment
@@ -221,17 +221,11 @@ namespace x680 {
             initVS();
             initCl();
             initO();
-            initOS();
-            //qi::on_error<qi::fail>(ModuleDefinition,
-            // bind(&module_message_handler, qi::_1,  qi::_2, qi::_3)) ;            
+            initOS();        
 
         }
-        
-        
-        
 
         template <typename T> inline static std::string pto_str(const T& val) {
-
             std::string result = "";
             try {
                 result = boost::lexical_cast<std::string > (val);
@@ -257,46 +251,69 @@ namespace x680 {
             return src.size();
         }
 
-        int parse_module(const std::string& filename, modules& result, std::string& msg) {
+        Modules_grammar ModulesDefGrammar;
+        
+        
+        
+        
+        namespace fsnsp =  boost::filesystem;
+        
+        const fsnsp::filesystem_error  FILE_OR_DIRECTORY_ERROR("File or directory error", 
+                boost::system::error_code(boost::system::errc::io_error , boost::system::system_category()));
+        
+        int parse_fs(const std::string& path, modules& result, const std::string& ext){
+            fsnsp::path p(path.c_str());
+            if (fsnsp::exists(p)){
+                if (fsnsp::is_directory(p)){
+                    return parse_directory(path, result, ext);
+                }
+                if (fsnsp::is_regular_file(p)){
+                    return parse_file(path.c_str(), result);
+                }                
+            }
+             throw  FILE_OR_DIRECTORY_ERROR;
+             return PARSE_EFILESTREAM;
+        }        
+        
+        int parse_directory(const std::string& directory, modules& result, const std::string& ext) {
+            result.clear();
+            fsnsp::path p(directory.c_str());
+            for ( fsnsp::directory_iterator it=fsnsp::directory_iterator(p);it!=fsnsp::directory_iterator();++it){
+                if (fsnsp::is_regular_file(it->path())){         
+                    if ((ext.empty()) || (it->path().extension()==fsnsp::path("."+ext))){
+                        modules resulttmp;
+                        parse_file(it->path().generic_string(), resulttmp);
+                        result.insert(result.end(),resulttmp.begin(),resulttmp.end());
+                    }              
+                }
+            }  
+            return PARSE_SUCCESS;
+        }        
 
+        int parse_file(const std::string& filename, modules& result) {
+
+            result.clear();
             std::string src;
-
-
+            std::cout << "compile file:"  << filename << std::endl;
             if (!read_module_file(filename, src)) {
-                return PARSE_EFILESTREAM;
+                throw  FILE_OR_DIRECTORY_ERROR;
             }
 
-            Modules_grammar ModulesDef;
+            str_iterator begin = str_iterator(src.begin());
+            str_iterator end = str_iterator(src.end());
 
-            std::string::iterator  begin = src.begin();
-            std::string::iterator begin1 = src.begin();     
-            std::string::size_type sz = src.size();
-            std::string::iterator  end = src.end();
-            std::string::iterator end1 = src.end();  
-
-
-            if (qi::phrase_parse(
-                    begin, end,
-                    ModulesDef,
-                    comment_skip,
-                    result))
+            bool rslt = qi::phrase_parse(begin, end, ModulesDefGrammar, comment_skip, result);
+            if (rslt && begin == end) {
+                for (modules::iterator it = result.begin(); it != result.end(); ++it)
+                    it->file = filename;
                 return PARSE_SUCCESS;
-            
-            std::string::size_type sz1 = src.size();
-            
-            //begin = src.begin();            
-            //qi::info<std::string::iterator, Modules_grammar, skip_comment_grammar >(begin1, end1, ModulesDef, comment_skip);
+            }
 
-            //     const file_position_base& pos = position_begin.get_position();
-            //   msg =" line " +  pto_str(pos.line) +  " column " +  pto_str(pos.column) ;//<< std::endl <<
-            //   std::setw(pos.column) << " " << "^- here";
-
-            std::cout << "B=B1" << (bool) (begin == begin1) << std::endl;
-            std::cout << "B=E" << (bool) (begin == end) << std::endl;
-            std::cout << "E=E1" << (bool) (end1 == end) << std::endl;            
-            std::cout << "sz" <<sz <<  " sz1: "<<  sz1<<std::endl;
+            throw synxtas_error(filename, src, begin.pos());
             return PARSE_ESYNXTAS;
         }
+
+
 
 
     }
