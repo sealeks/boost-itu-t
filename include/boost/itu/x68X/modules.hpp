@@ -126,7 +126,7 @@ namespace x680 {
             qi::rule<str_iterator, module(), skip_cmt_type> ModuleDefinition;
             tag_default TagDefault;
             encoding_references EncodingReferenceDefault;
-            qi::rule<str_iterator, import(), skip_cmt_type> Import;
+            qi::rule<str_iterator, import(), skip_cmt_type> Import;          
             qi::rule<str_iterator, imports(), skip_cmt_type> Importsdecl;
             qi::rule<str_iterator, imports(), skip_cmt_type> Imports;
             qi::rule<str_iterator, string_vector(), skip_cmt_type> Exports;

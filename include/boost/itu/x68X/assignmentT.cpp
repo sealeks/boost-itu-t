@@ -65,7 +65,7 @@ namespace x680 {
 
             StrictDefinedType = DefinedType_strict[bind(&type_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
-            InstanceOfType = qi::omit[qi::lexeme[INSTANCE_ >> +qi::blank >> OF_]]
+            InstanceOfType = qi::omit[qi::lexeme[INSTANCE_ >> +qi::space >> OF_]]
                     >> DefinedObjectClass_[bind(&type_instance, qi::_val, qi::_1)]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
@@ -73,11 +73,11 @@ namespace x680 {
 
             ReferencedType = SimpleReferencedType[ qi::_val = qi::_1 ] >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
-            SimpleType = ((qi::lexeme[OCTET_ >> +qi::blank >> STRING_])[bind(&type_deff, qi::_val, t_OCTET_STRING)]
-                    | (qi::lexeme[CHARACTER_ >> +qi::blank >> STRING_])[bind(&type_deff, qi::_val, t_CHARACTER_STRING)]
-                    | (qi::lexeme[EMBEDDED_ >> +qi::blank >> PDV_])[bind(&type_deff, qi::_val, t_EMBEDDED_PDV)]
-                    | (qi::lexeme[OBJECT_ >> +qi::blank >> IDENTIFIER_])[bind(&type_deff, qi::_val, t_OBJECT_IDENTIFIER)]
-                    | (qi::lexeme[DATE_ >> +qi::blank >> TIME_])[bind(&type_deff, qi::_val, t_DATE_TIME)]
+            SimpleType = ((qi::lexeme[OCTET_ >> +qi::space >> STRING_])[bind(&type_deff, qi::_val, t_OCTET_STRING)]
+                    | (qi::lexeme[CHARACTER_ >> +qi::space >> STRING_])[bind(&type_deff, qi::_val, t_CHARACTER_STRING)]
+                    | (qi::lexeme[EMBEDDED_ >> +qi::space >> PDV_])[bind(&type_deff, qi::_val, t_EMBEDDED_PDV)]
+                    | (qi::lexeme[OBJECT_ >> +qi::space >> IDENTIFIER_])[bind(&type_deff, qi::_val, t_OBJECT_IDENTIFIER)]
+                    | (qi::lexeme[DATE_ >> +qi::space >> TIME_])[bind(&type_deff, qi::_val, t_DATE_TIME)]
                     | (distinct(qi::alnum | '-')[simple_typer[bind(&type_deff, qi::_val, qi::_1)]])
                     )
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
@@ -90,7 +90,7 @@ namespace x680 {
                     >> -Enumerations[bind(&type_deffinit, qi::_val, qi::_1)]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
-            BitStringType = (qi::lexeme[BIT_ >> +qi::blank >> STRING_])[bind(&type_deff, qi::_val, t_BIT_STRING)]
+            BitStringType = (qi::lexeme[BIT_ >> +qi::space >> STRING_])[bind(&type_deff, qi::_val, t_BIT_STRING)]
                     >> -NameBitList[bind(&type_deffinit, qi::_val, qi::_1)]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
@@ -120,7 +120,7 @@ namespace x680 {
             //    
 
 
-            ComponentType %= ((qi::omit[qi::lexeme[COMPONENTS_ >> +qi::blank >> OF_]] >> TypeA)[bind(&type_marker, qi::_val, mk_components_of)]
+            ComponentType %= ((qi::omit[qi::lexeme[COMPONENTS_ >> +qi::space >> OF_]] >> TypeA)[bind(&type_marker, qi::_val, mk_components_of)]
                     | (NamedType >> qi::omit[OPTIONAL_])[bind(&type_marker, qi::_val, mk_optional)]
                     | ((NamedType >> qi::omit[DEFAULT_])[bind(&type_marker, qi::_val, mk_default)] >> qi::omit[Value[bind(&type_defaultvalue, qi::_val, qi::_1)]])
                     | NamedType);

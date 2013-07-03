@@ -30,25 +30,26 @@ namespace x680 {
                     >> qi::lexeme[INSTRUCTIONS_])
 
                     >> -(qi::lexeme[ TagDefault[bind(&module_tags, qi::_val, qi::_1)]
-                    >> +qi::blank >> TAGS_])
+                    >> +qi::space >> TAGS_])
 
                     >> -(qi::lexeme[EXTENSIBILITY_
-                    >> +qi::blank
+                    >> +qi::space
                     >> IMPLIED_[ bind(&module_extesibility, qi::_val) ]])
 
                     >> qi::lexeme[qi::lit("::=")]
                     >> qi::lexeme[BEGIN_]
-                    >> -((qi::lexeme[qi::omit[EXPORTS_ >> +qi::blank >> ALL_ >> *qi::space >> qi::lit(";") ]])[bind(&module_allexport, qi::_val)]
+                    >> -((qi::lexeme[qi::omit[EXPORTS_ >> +qi::space >> ALL_ >> *qi::space >> qi::lit(";") ]])[bind(&module_allexport, qi::_val)]
                     | Exports[bind(&module_exports, qi::_val, qi::_1)])
                     >> -(Imports[bind(&module_imports, qi::_val, qi::_1)])
                     >> -(Assignments[bind(&module_assignments, qi::_val, qi::_1)])
                     >> END_;
-
+            
             Import = SymbolList[ bind(&import_add, qi::_val, qi::_1) ]
                     >> FROM_
                     >> modulereference_[ bind(&import_name, qi::_val, qi::_1) ]
-                    >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ] | DefinedValue[ bind(&import_defined, qi::_val, qi::_1) ]);
+                    >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ] | (DefinedValue - qi::omit[(DefinedValue  >> (FROM_ | qi::lit(",")))] )[ bind(&import_defined, qi::_val, qi::_1) ] );            
 
+          
             Importsdecl = *Import;
 
             Imports = qi::omit[IMPORTS_]

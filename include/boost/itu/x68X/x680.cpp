@@ -420,15 +420,15 @@ namespace x680 {
 
         str_rule UserDefinedConstraintParameter_ = (DefinedType_[qi::_val = qi::_1 ] | DefinedObjectClass_[qi::_val = qi::_1 ]) >> -(qi::string(".")[qi::_val += qi::_1] >> DefinedValue_[qi::_val += qi::_1]);
 
-        str_rule AtNotation_ = distinct(qi::alnum | '-' | '.' | '@')[qi::string("@")[qi::_val = qi::_1 ] >> *(qi::string(".")[qi::_val += qi::_1]) >> (identifier_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1])];
+        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.' | '@')[qi::string("@")[qi::_val = qi::_1 ] >> *(qi::string(".")[qi::_val += qi::_1]) >> (identifier_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1])];
 
         str_rule Reference_ = typereference_ | valuereference_;
 
-        str_rule ObjectClassFieldType_ = distinct(qi::alnum | '-' | '.')[DefinedObjectClass_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
+        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
 
-        str_rule LittleFromObject_ = distinct(qi::alnum | '-' | '.')[DefinedObject_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
+        str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObject_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
 
-        str_rule BigFromObjects_ = distinct(qi::alnum | '-' | '.')[DefinedObjectSet_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
+        str_rule BigFromObjects_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObjectSet_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
 
         str_rule ParameterizedReference_ = Reference_[ qi::_val = qi::_1]
                 >> qi::omit[*qi::space]
