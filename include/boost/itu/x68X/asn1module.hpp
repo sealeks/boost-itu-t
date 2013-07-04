@@ -19,7 +19,7 @@
 
 namespace x680 {
 
-    std::size_t read_module_file(const std::string path, std::string& src);
+ /*   std::size_t read_module_file(const std::string path, std::string& src);
 
     template <typename T> std::string to_str(const T& val) {
 
@@ -228,7 +228,7 @@ namespace x680 {
     typedef boost::shared_ptr<asn1modules> asn1modules_ptr;
 
 
-
+*/
 
 }
 
