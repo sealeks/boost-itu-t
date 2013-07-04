@@ -363,7 +363,8 @@ namespace x680 {
 
         str_rule PrimitiveFieldName_ = bigfieldreference_ | littlefieldreference_;
 
-        str_rule FieldName_ = PrimitiveFieldName_[qi::_val = qi::_1] >> -(qi::string(".")[qi::_val += qi::_1] >> (PrimitiveFieldName_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1]));
+        str_rule FieldName_ = PrimitiveFieldName_[qi::_val = qi::_1] >> -(qi::string(".")[qi::_val += qi::_1] 
+                >>  qi::omit[(*qi::space)] >> (PrimitiveFieldName_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1]));
 
 
 
@@ -424,11 +425,14 @@ namespace x680 {
 
         str_rule Reference_ = typereference_ | valuereference_;
 
-        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
+        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_[qi::_val = qi::_1 ] 
+                >> qi::string(".")[qi::_val += qi::_1] >> qi::omit[(*qi::space)]  >> FieldName_[qi::_val += qi::_1]];
 
-        str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObject_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
+        str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObject_[qi::_val = qi::_1 ] 
+                >> qi::string(".")[qi::_val += qi::_1] >>qi::omit[(*qi::space)]  >> FieldName_[qi::_val += qi::_1]];
 
-        str_rule BigFromObjects_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObjectSet_[qi::_val = qi::_1 ] >> qi::string(".")[qi::_val += qi::_1] >> FieldName_[qi::_val += qi::_1]];
+        str_rule BigFromObjects_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObjectSet_[qi::_val = qi::_1 ] 
+                >> qi::string(".")[qi::_val += qi::_1] >> qi::omit[(*qi::space)]  >> FieldName_[qi::_val += qi::_1]];
 
         str_rule ParameterizedReference_ = Reference_[ qi::_val = qi::_1]
                 >> qi::omit[*qi::space]

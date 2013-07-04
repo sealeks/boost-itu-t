@@ -337,9 +337,9 @@ namespace x680 {
             holder.tp = cns_MultipleTypeConstraints;
         }
 
-        inline void constraint_userdef(constraint_element& holder, const string_vector& val) {
-            holder.parameters = val;
-            //holder.tp = cns_UserDefinedConstraint;
+        inline void constraint_userdef(constraint_element& holder, const userdefconstraint_vector& val) {
+            holder.uparameters = val;
+            holder.tp = cns_UserDefinedConstraint;
         }
 
         inline void constraint_relation(constraint_element& holder, const objectset_element& valr, const string_vector& valp) {
@@ -417,7 +417,29 @@ namespace x680 {
         const constraint_element CONSTRAINT_EXTENTION = constraint_element(cns_EXTENTION, cmk_extention);
 
 
+        // Userconstraint setter
 
+        inline void userdefconstraint_governor_tp(userdefconstraint_type& holder, const type_element& val, const setting_element& par) {
+            holder.governortype = val;
+            holder.tp = gvr_Type;
+            holder.argument = par;            
+        }
+
+        inline void userdefconstraint_governor_cl(userdefconstraint_type& holder, const class_element& val, const setting_element& par) {
+            holder.governorclass = val;
+            holder.tp = gvr_Class;
+            holder.argument = par; 
+        }
+
+        inline void userdefconstraint_governor_reff(userdefconstraint_type& holder, const unknown_tc_element& val, const setting_element& par) {
+            holder.governorreff = val;
+            holder.tp = gvr_Type_or_Class;
+            holder.argument = par;           
+        }
+
+        inline void userdefconstraint_argument(userdefconstraint_type& holder, const setting_element& val) {
+            holder.argument = val;
+        }
 
 
 

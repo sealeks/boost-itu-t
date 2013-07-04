@@ -34,10 +34,10 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
             
             
-            Value = ObjectClassFieldValue |  NullValue | BooleanValue | RealValue | IntegerValue | HStringValue
+            Value = ObjectClassFieldValue |  ValueFromObject  |  NullValue | BooleanValue | RealValue | IntegerValue | HStringValue
                     | BStringValue | CStringValue | NumberList | ObjectIdentifierValue
                     | NamedValueList | ValueList | ChoiceValue | EmptySetValue
-                    |  ValueFromObject  | DefinedValue;
+                    | DefinedValue;
 
             SimpleDefinedValue = DefinedValue_[bind(&value_setdefined, qi::_val, qi::_1)];
 

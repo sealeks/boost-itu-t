@@ -119,7 +119,7 @@ namespace x680 {
             PermittedAlphabet = qi::omit[FROM_]
                     >> Constraint[bind(&constraint_alphabet, qi::_val, qi::_1)];
 
-            SingleTypeConstraint = qi::omit[qi::lexeme[WITH_ >> +qi::blank >> COMPONENT_]]
+            SingleTypeConstraint = qi::omit[qi::lexeme[WITH_ >> +qi::space >> COMPONENT_]]
                     >> Constraint[bind(&constraint_singletype, qi::_val, qi::_1)];
 
             NamedConstraint = identifier_[bind(&constraint_identifier, qi::_val, qi::_1)]
@@ -133,7 +133,7 @@ namespace x680 {
                     >> (NamedConstraint % qi::omit[qi::lit(",")])
                     >> qi::omit[qi::lit("}")];
 
-            MultipleTypeConstraints = qi::omit[qi::lexeme[WITH_ >> +qi::blank >> COMPONENTS_]]
+            MultipleTypeConstraints = qi::omit[qi::lexeme[WITH_ >> +qi::space >> COMPONENTS_]]
                     >> FullSpecification[bind(&constraint_multitype, qi::_val, qi::_1)];
 
             Element = SizeConstraint | PermittedAlphabet | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement;
@@ -147,12 +147,30 @@ namespace x680 {
                     );
 
             ExceptionSpecConstraints = ExceptionSpecConstraint[ bind(&constraint_element_vector::push_back, qi::_val, qi::_1) ];
+            
+            
+            
+            UserDefinedConstraintParameters = qi::omit[qi::lexeme[qi::lit("{")]] >> -(UserDefinedConstraintParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];                  
 
-            UserDefinedConstraintParameters = qi::omit[qi::lit("{")] >> -(UserDefinedConstraintParameter_ % qi::omit[qi::lit(",")]) >> qi::omit[qi::lit("}")];
+            UserDefinedConstraintParameter = UserDefinedConstraintParameterA | UserDefinedConstraintParameterB |
+                    UserDefinedConstraintParameterC | UserDefinedConstraintParameterD;
+
+            UserDefinedConstraintParameterA = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> SettingType)[bind(&userdefconstraint_governor_cl, qi::_val, qi::_1, qi::_2)];
+
+            UserDefinedConstraintParameterB = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> SettingType)[bind(&userdefconstraint_governor_tp, qi::_val, qi::_1, qi::_2)];
+
+            UserDefinedConstraintParameterC = (UnknownTC >> qi::omit[qi::lexeme[qi::lit(":")]]
+                    >> SettingType)[bind(&userdefconstraint_governor_reff, qi::_val, qi::_1, qi::_2)];
+
+            UserDefinedConstraintParameterD = SettingType[bind(&userdefconstraint_argument, qi::_val, qi::_1)];      
+            
+            
 
             UserDefinedConstraint =
-                    (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::blank >> BY_]])[bind(&constraint_tp, qi::_val, cns_UserDefinedConstraint)]
-                    >> UserDefinedConstraintParameters[bind(&constraint_userdef, qi::_val, qi::_1)];
+                    (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::space >> BY_]]//[bind(&constraint_tp, qi::_val, cns_UserDefinedConstraint)]
+                    >> UserDefinedConstraintParameters)[bind(&constraint_userdef, qi::_val, qi::_1)];
 
             SimpleTableConstraint = StrictObjectSet[bind(&constraint_setelement, qi::_val, qi::_1)];
 
@@ -168,12 +186,12 @@ namespace x680 {
             ContentsConstraintType = qi::omit[CONTAINING_]
                     >> Type[bind(&constraint_content_t, qi::_val, qi::_1)];
 
-            ContentsConstraintValue = qi::omit[qi::lexeme[ENCODED_ >> +qi::blank >> BY_]]
+            ContentsConstraintValue = qi::omit[qi::lexeme[ENCODED_ >> +qi::space >> BY_]]
                     >> (DefinedValue | ObjectIdentifierValue)[bind(&constraint_content_v, qi::_val, qi::_1)];
 
             ContentsConstraintTypeValue = (qi::omit[CONTAINING_]
                     >> Type
-                    >> qi::omit[qi::lexeme[ENCODED_ >> +qi::blank >> BY_]]
+                    >> qi::omit[qi::lexeme[ENCODED_ >> +qi::space >> BY_]]
                     >> (DefinedValue | ObjectIdentifierValue))[bind(&constraint_content_tv, qi::_val, qi::_1, qi::_2)];
 
 

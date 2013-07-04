@@ -397,6 +397,9 @@ namespace x680 {
 
         struct setting_element;
         typedef std::vector<setting_element> parameter_vector;
+        
+        struct userdefconstraint_type;
+        typedef std::vector<userdefconstraint_type> userdefconstraint_vector;        
 
         struct module;
         typedef std::vector<module> modules;
@@ -544,7 +547,8 @@ namespace x680 {
             }
 
             std::string identifier;
-            x680::syntactic::string_vector parameters;
+            string_vector parameters;
+            userdefconstraint_vector uparameters;
             constraint_type tp;
             value_element value;
             value_element from_;
@@ -847,7 +851,18 @@ namespace x680 {
         };
 
 
+        struct userdefconstraint_type {
 
+            userdefconstraint_type() : tp(gvr_No) {
+            }
+
+            unknown_tc_element governorreff;
+            type_element governortype;
+            class_element governorclass;
+            governor_type tp;
+            setting_element argument;
+
+        };
 
 
 

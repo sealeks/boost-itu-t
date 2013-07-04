@@ -181,7 +181,7 @@ namespace x680 {
             SettingUnknownVO = UnknownVO[bind(&setting_vo, qi::_val, qi::_1)];
 
 
-            Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
+            Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];                  
 
             Parameter = ParameterA1 | ParameterA1 | ParameterB1 | ParameterB2 | ParameterC1 | ParameterC2 | ParameterD1 | ParameterD2;
 
