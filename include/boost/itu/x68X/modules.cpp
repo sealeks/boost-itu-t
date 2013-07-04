@@ -4,7 +4,6 @@
 //  See http://www.boost.org/LICENSE_1_0.txt
 
 #include <boost/itu/x68X/modules.hpp>
-#include <boost/lexical_cast.hpp>
 
 
 namespace x680 {

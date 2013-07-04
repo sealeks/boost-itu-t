@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include  <iterator>
 
 #include <boost/config/warning_disable.hpp>
 
@@ -32,16 +33,15 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/repository/include/qi_confix.hpp>
-#include <boost/variant.hpp>
 #include <boost/spirit/repository/include/qi_distinct.hpp>
 
 #include <boost/spirit/include/support_multi_pass.hpp>
 #include <boost/spirit/include/classic_position_iterator.hpp>
-#include  <iterator>
 
+#include <boost/variant.hpp>
 #include <boost/shared_ptr.hpp>
-
-
+#include <boost/lexical_cast.hpp>
+#include <boost/filesystem.hpp>
 
 
 namespace x680 {
