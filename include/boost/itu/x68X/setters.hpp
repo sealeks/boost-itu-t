@@ -11,6 +11,24 @@
 
 namespace x680 {
     namespace syntactic {
+        
+        //  tag_rule
+        
+    inline void tag_rule(tag_type& holder, const tagrule_type& val) {
+        holder.rule = val;
+    }
+
+    inline void tag_class(tag_type& holder, const tagclass_type& val) {
+        holder.class_ = val;
+    }
+
+    inline void tag_encoding(tag_type& holder, const encoding_references_type& val) {
+        holder.encoding = val;
+    }
+
+    inline void tag_number(tag_type& holder, const std::string& val) {
+        holder.number = val;
+    }        
 
         
         //  unknown_tc_element setter            
@@ -1036,237 +1054,7 @@ namespace x680 {
 }
 
 
-// FUSION
 
-/*BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::unknown_tc_element,
-        (std::string, reff)
-        (x680::syntactic::parameter_vector, parameters)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::unknown_tc_assignment,
-        (std::string, identifier)
-        (x680::syntactic::argument_vector, arguments)
-        (x680::syntactic::unknown_tc_element, unknown_tc)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::string_pair_vector,
-        (std::vector<x680::syntactic::string_pair>, first)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::tag_type,
-        (std::string, number)
-        (x680::tagclass_type, class_)
-        (x680::tagrule_type, rule)
-        (x680::encoding_references_type, encoding)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::constraint_element,
-        (std::string, identifier)
-        (x680::constraint_type, tp)
-        (x680::syntactic::value_element, value)
-        (x680::syntactic::value_element, from_)
-        (x680::range_type, fromtype_)
-        (x680::syntactic::value_element, to_)
-        (x680::range_type, totype_)
-        (x680::syntactic::type_element, type)
-        (x680::constraintmarker_type, marker)
-        (x680::syntactic::string_vector, parameters)
-        (std::string, objsetref)
-        (x680::syntactic::constraint_element_vector, constraint)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::value_element,
-        (x680::syntactic::parameter_vector, parameters)
-        (std::string, identifier)
-        (std::string, value)
-        (x680::value_type, type)
-        (x680::syntactic::value_element_vector, values)
-        (x680::syntactic::typevalue_element_ptr, typevalue)
-        (std::string, fromreff)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::value_assignment,
-        (std::string, identifier)
-        (x680::syntactic::argument_vector, arguments)
-        (x680::syntactic::type_element, type)
-        (x680::syntactic::value_element, value)
-        (bool, exact)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::valueset_element,
-        (x680::syntactic::parameter_vector, parameters)
-        (x680::valueset_type, tp)
-        (std::string, reference)
-        (x680::syntactic::constraint_element_vector, set)
-        )
-
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::valueset_assignment,
-        (std::string, identifier)
-        (x680::syntactic::argument_vector, arguments)
-        (x680::syntactic::type_element, type)
-        (x680::syntactic::valueset_element, set)
-        (bool, exact)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::type_element,
-        (x680::tag_type, tag)
-        (x680::syntactic::parameter_vector, parameters)
-        (x680::tagmarker_type, marker)
-        (x680::syntactic::value_element, value)
-        (std::string, reference)
-        (x680::defined_type, builtin_t)
-        (x680::syntactic::named_type_element_vector, elements)
-        (x680::syntactic::value_element_vector, predefined)
-        (x680::syntactic::constraints_vector, constraints)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::type_assignment,
-        (std::string, identifier)
-        (x680::syntactic::argument_vector, arguments)
-        (x680::syntactic::type_element, type)
-        (x680::syntactic::constraint_element_vector, constraints)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::classfield_type,
-        (std::string, field)
-        (std::string, holder)
-        (x680::syntactic::type_element, holdertype)
-        (x680::fieldmarker_type, marker)
-        (x680::fieldkind_type, tp)
-        (bool, unique)
-        (x680::syntactic::type_element, defaulttype)
-        (x680::syntactic::value_element, defaultvalue)
-        (x680::syntactic::valueset_element, defaultset)
-        (std::string, defaultreff)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::classsyntax_type,
-        (std::string, alias)
-        (std::string, field)
-        (bool, optional)
-        (x680::syntactic::classsyntax_vector, group)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::class_element,
-        (x680::definedclass_type, tp)
-        (x680::syntactic::parameter_vector, parameters)
-        (std::string, reference)
-        (x680::syntactic::classfield_vector, fields)
-        (x680::syntactic::classsyntax_vector, syntaxes)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::class_assignment,
-        (std::string, identifier)
-        (x680::syntactic::argument_vector, arguments)
-        (x680::syntactic::class_element, class_)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::objectfield_type,
-        (std::string, field)
-        (x680::objectfieldkind_type, tp)
-        (x680::syntactic::type_element, holdertype)
-        (x680::syntactic::value_element, holdervalue)
-        (x680::syntactic::valueset_element, holdervalueset)
-        (std::string, holderreff)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::object_element,
-        (x680::object_type, tp)
-        (x680::syntactic::parameter_vector, parameters)
-        (x680::syntactic::objectfield_vector, fields)           
-        (std::string, reff)
-        (std::string, raw)     
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::object_assignment,
-        (std::string, identifier)
-        (x680::syntactic::argument_vector, arguments)
-        (x680::syntactic::class_element, class_)
-        (x680::syntactic::object_element, object)
-        )
-        
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::objectset_element,
-        (x680::syntactic::parameter_vector, parameters)           
-        (x680::objectset_type, tp)
-        (std::string, reference)
-        (x680::syntactic::object_element_vector, set)
-        ) 
-        
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::objectset_assignment,
-        (std::string, identifier)
-        (x680::syntactic::argument_vector, arguments)
-        (x680::syntactic::class_element, class_)
-        (x680::syntactic::objectset_element, set)
-        )
-
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::argument_type,
-        (std::string, governorreff)
-        (x680::syntactic::type_element, governortype)
-        (x680::syntactic::class_element, governorclass)
-        (x680::governor_type, tp)
-        (std::string, argument)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::parameter_element,
-        (x680::parameter_type, tp)
-        (x680::syntactic::type_element, type)
-        (x680::syntactic::class_element, class_)
-        (x680::syntactic::value_element, value)
-        (x680::syntactic::object_element, object)
-        (x680::syntactic::valueset_element, valueset)
-        (x680::syntactic::objectset_element, objectset)
-        (std::string, reff)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::typevalue_element,
-        (x680::syntactic::type_element, type)
-        (x680::syntactic::value_element, value)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::import,
-        (std::string, name)
-        (x680::syntactic::value_element, oid)
-        (x680::syntactic::string_vector, names)
-        )
-
-BOOST_FUSION_ADAPT_STRUCT(
-        x680::syntactic::module,
-        (std::string, name)
-        (x680::syntactic::value_element, oid)
-        (x680::encoding_references_type, encoding_references_t)
-        (x680::tagrule_type, default_tags_t)
-        (bool, extesibility_implied)
-        (x680::syntactic::exports, exports_)
-        (x680::syntactic::imports, imports_)
-        (x680::syntactic::assignment_vector, elements)
-        )*/
 
 #endif	
 

@@ -321,42 +321,10 @@ namespace x680 {
         prm_Reff
     };
 
-    struct tag_type {
-
-        tag_type() :
-        class_(tcl_context),
-        rule(noset_tags),
-        encoding(encoding_no) {
-        }
-
-        std::string number;
-        tagclass_type class_;
-        tagrule_type rule;
-        encoding_references_type encoding;
-    };
-
-    inline void tag_rule(tag_type& holder, const tagrule_type& val) {
-        holder.rule = val;
-    }
-
-    inline void tag_class(tag_type& holder, const tagclass_type& val) {
-        holder.class_ = val;
-    }
-
-    inline void tag_encoding(tag_type& holder, const encoding_references_type& val) {
-        holder.encoding = val;
-    }
-
-    inline void tag_number(tag_type& holder, const std::string& val) {
-        holder.number = val;
-    }
-
-}
-
-
-namespace x680 {
 
     namespace syntactic {
+
+
 
         typedef std::vector<std::string> string_vector;
         typedef std::pair<std::string, std::string> string_pair;
@@ -397,9 +365,9 @@ namespace x680 {
 
         struct setting_element;
         typedef std::vector<setting_element> parameter_vector;
-        
+
         struct userdefconstraint_type;
-        typedef std::vector<userdefconstraint_type> userdefconstraint_vector;        
+        typedef std::vector<userdefconstraint_type> userdefconstraint_vector;
 
         struct module;
         typedef std::vector<module> modules;
@@ -409,6 +377,23 @@ namespace x680 {
 
 
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  tag_type
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        struct tag_type {
+
+            tag_type() :
+            class_(tcl_context),
+            rule(noset_tags),
+            encoding(encoding_no) {
+            }
+
+            std::string number;
+            tagclass_type class_;
+            tagrule_type rule;
+            encoding_references_type encoding;
+        };
 
 
 
@@ -849,7 +834,6 @@ namespace x680 {
             std::string argument;
 
         };
-
 
         struct userdefconstraint_type {
 
