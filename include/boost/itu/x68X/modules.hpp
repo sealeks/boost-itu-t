@@ -6,7 +6,7 @@
 #ifndef         _ITU_X680TYPEPARSER_H_
 #define         _ITU_X680TYPEPARSER_H_
 
-#include <boost/itu/x68X/asn1module.hpp>
+#include <boost/itu/x68X/semantics.hpp>
 #include <boost/itu/x68X/x680.hpp>
 #include <boost/itu/x68X/setters.hpp>
 #include <boost/filesystem.hpp>

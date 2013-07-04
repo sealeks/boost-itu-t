@@ -6,7 +6,6 @@
 #ifndef         _ITU_X680VALUEPARSER_H_
 #define         _ITU_X680VALUEPARSER_H_
 
-#include <boost/itu/x68X/asn1module.hpp>
 #include <boost/itu/x68X/x680.hpp>
 
 
