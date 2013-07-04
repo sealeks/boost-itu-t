@@ -126,7 +126,7 @@ namespace x680 {
             qi::rule<str_iterator, module(), skip_cmt_type> ModuleDefinition;
             tag_default TagDefault;
             encoding_references EncodingReferenceDefault;
-            qi::rule<str_iterator, import(), skip_cmt_type> Import;          
+            qi::rule<str_iterator, import(), skip_cmt_type> Import;
             qi::rule<str_iterator, imports(), skip_cmt_type> Importsdecl;
             qi::rule<str_iterator, imports(), skip_cmt_type> Imports;
             qi::rule<str_iterator, string_vector(), skip_cmt_type> Exports;
@@ -155,6 +155,8 @@ namespace x680 {
 
             qi::rule<str_iterator, setting_element(), skip_cmt_type> ActualParameter;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> Setting;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingU1;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingU2;
 
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingType;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictType;
@@ -177,8 +179,8 @@ namespace x680 {
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterC2;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD1;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD2;
-            qi::rule<str_iterator, argument_vector(), skip_cmt_type> Parameters;        
-        
+            qi::rule<str_iterator, argument_vector(), skip_cmt_type> Parameters;
+
 
 
 
@@ -392,14 +394,14 @@ namespace x680 {
 
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ExceptionSpecConstraint;
             qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> ExceptionSpecConstraints;
-            
-            
+
+
             qi::rule<str_iterator, userdefconstraint_type(), skip_cmt_type> UserDefinedConstraintParameter;
             qi::rule<str_iterator, userdefconstraint_type(), skip_cmt_type> UserDefinedConstraintParameterA;
             qi::rule<str_iterator, userdefconstraint_type(), skip_cmt_type> UserDefinedConstraintParameterB;
             qi::rule<str_iterator, userdefconstraint_type(), skip_cmt_type> UserDefinedConstraintParameterC;
             qi::rule<str_iterator, userdefconstraint_type(), skip_cmt_type> UserDefinedConstraintParameterD;
-            qi::rule<str_iterator, userdefconstraint_vector(), skip_cmt_type> UserDefinedConstraintParameters;             
+            qi::rule<str_iterator, userdefconstraint_vector(), skip_cmt_type> UserDefinedConstraintParameters;
 
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> UserDefinedConstraint;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> SimpleTableConstraint;
@@ -516,10 +518,10 @@ namespace x680 {
         };
 
 
-        int parse_fs(const std::string& path, modules& result, const std::string& ext = "asn");     
-        
-        int parse_directory(const std::string& directory, modules& result, const std::string& ext = "asn");        
-        
+        int parse_fs(const std::string& path, modules& result, const std::string& ext = "asn");
+
+        int parse_directory(const std::string& directory, modules& result, const std::string& ext = "asn");
+
         int parse_file(const std::string& filename, modules& result);
 
 

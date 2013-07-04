@@ -44,7 +44,7 @@ namespace x680 {
             ElementSetSpecs %= ElementSetSpec >>
                     -(qi::omit[qi::lit(",")] >> Extention >>
                     -(qi::omit[qi::lit(",")] >> ElementSetSpec));
-            
+
             GeneralConstraintdecl = (UserDefinedConstraint
                     | ContentsConstraintTypeValue
                     | ContentsConstraintValue
@@ -52,10 +52,10 @@ namespace x680 {
                     | ComponentRelationConstraint | SimpleTableConstraint);
 
             GeneralConstraint = GeneralConstraintdecl[ bind(&push_constraints, qi::_val, qi::_1) ];
-            
-                    
 
-            
+
+
+
             UElems %= ((qi::omit[(UNION_ | qi::lit("|"))]
                     >> Unions)[ bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_UNION) ]);
 
@@ -147,26 +147,26 @@ namespace x680 {
                     );
 
             ExceptionSpecConstraints = ExceptionSpecConstraint[ bind(&constraint_element_vector::push_back, qi::_val, qi::_1) ];
-            
-            
-            
-            UserDefinedConstraintParameters = qi::omit[qi::lexeme[qi::lit("{")]] >> -(UserDefinedConstraintParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];                  
+
+
+
+            UserDefinedConstraintParameters = qi::omit[qi::lexeme[qi::lit("{")]] >> -(UserDefinedConstraintParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
             UserDefinedConstraintParameter = UserDefinedConstraintParameterA | UserDefinedConstraintParameterB |
                     UserDefinedConstraintParameterC | UserDefinedConstraintParameterD;
 
             UserDefinedConstraintParameterA = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> SettingType)[bind(&userdefconstraint_governor_cl, qi::_val, qi::_1, qi::_2)];
+                    >> SettingU1)[bind(&userdefconstraint_governor_cl, qi::_val, qi::_1, qi::_2)];
 
             UserDefinedConstraintParameterB = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> SettingType)[bind(&userdefconstraint_governor_tp, qi::_val, qi::_1, qi::_2)];
+                    >> SettingU1)[bind(&userdefconstraint_governor_tp, qi::_val, qi::_1, qi::_2)];
 
             UserDefinedConstraintParameterC = (UnknownTC >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> SettingType)[bind(&userdefconstraint_governor_reff, qi::_val, qi::_1, qi::_2)];
+                    >> SettingU1)[bind(&userdefconstraint_governor_reff, qi::_val, qi::_1, qi::_2)];
 
-            UserDefinedConstraintParameterD = SettingType[bind(&userdefconstraint_argument, qi::_val, qi::_1)];      
-            
-            
+            UserDefinedConstraintParameterD = SettingU2[bind(&userdefconstraint_argument, qi::_val, qi::_1)];
+
+
 
             UserDefinedConstraint =
                     (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::space >> BY_]]//[bind(&constraint_tp, qi::_val, cns_UserDefinedConstraint)]
@@ -174,7 +174,7 @@ namespace x680 {
 
             SimpleTableConstraint = StrictObjectSet[bind(&constraint_setelement, qi::_val, qi::_1)];
 
-            AtNotations = AtNotation_  % qi::omit[qi::lit(",")];
+            AtNotations = AtNotation_ % qi::omit[qi::lit(",")];
 
             ComponentRelationConstraint = (qi::omit[qi::lit("{")]
                     >> SimpleDefinedObjectSet

@@ -43,13 +43,13 @@ namespace x680 {
                     >> -(Imports[bind(&module_imports, qi::_val, qi::_1)])
                     >> -(Assignments[bind(&module_assignments, qi::_val, qi::_1)])
                     >> END_;
-            
+
             Import = SymbolList[ bind(&import_add, qi::_val, qi::_1) ]
                     >> FROM_
                     >> modulereference_[ bind(&import_name, qi::_val, qi::_1) ]
-                    >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ] | (DefinedValue - qi::omit[(DefinedValue  >> (FROM_ | qi::lit(",")))] )[ bind(&import_defined, qi::_val, qi::_1) ] );            
+                    >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ] | (DefinedValue - qi::omit[(DefinedValue >> (FROM_ | qi::lit(",")))])[ bind(&import_defined, qi::_val, qi::_1) ]);
 
-          
+
             Importsdecl = *Import;
 
             Imports = qi::omit[IMPORTS_]
@@ -158,6 +158,12 @@ namespace x680 {
             Setting = SettingStrictType | SettingStrictValue | SettingStrictClass | SettingUnknownTC | /*SettingUnknownVO | */
                     SettingType | SettingValue | SettingValueSet | /*SettingClass |*/ SettingObject | SettingObjectSet;
 
+            SettingU1 = SettingValue | SettingObject;
+
+            SettingU2 = SettingStrictType | SettingStrictClass | SettingUnknownTC |
+                    SettingType | SettingObjectSet;
+
+
             SettingType = Type[bind(&setting_settype, qi::_val, qi::_1)];
 
             SettingStrictType = StrictType[bind(&setting_settype, qi::_val, qi::_1)];
@@ -181,7 +187,7 @@ namespace x680 {
             SettingUnknownVO = UnknownVO[bind(&setting_vo, qi::_val, qi::_1)];
 
 
-            Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];                  
+            Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
             Parameter = ParameterA1 | ParameterA1 | ParameterB1 | ParameterB2 | ParameterC1 | ParameterC2 | ParameterD1 | ParameterD2;
 
@@ -222,7 +228,7 @@ namespace x680 {
             initVS();
             initCl();
             initO();
-            initOS();        
+            initOS();
 
         }
 
@@ -253,51 +259,51 @@ namespace x680 {
         }
 
         Modules_grammar ModulesDefGrammar;
-        
-        
-        
-        
-        namespace fsnsp =  boost::filesystem;
-        
-        const fsnsp::filesystem_error  FILE_OR_DIRECTORY_ERROR("File or directory error", 
-                boost::system::error_code(boost::system::errc::io_error , boost::system::system_category()));
-        
-        int parse_fs(const std::string& path, modules& result, const std::string& ext){
+
+
+
+
+        namespace fsnsp = boost::filesystem;
+
+        const fsnsp::filesystem_error FILE_OR_DIRECTORY_ERROR("File or directory error",
+                boost::system::error_code(boost::system::errc::io_error, boost::system::system_category()));
+
+        int parse_fs(const std::string& path, modules& result, const std::string& ext) {
             fsnsp::path p(path.c_str());
-            if (fsnsp::exists(p)){
-                if (fsnsp::is_directory(p)){
+            if (fsnsp::exists(p)) {
+                if (fsnsp::is_directory(p)) {
                     return parse_directory(path, result, ext);
                 }
-                if (fsnsp::is_regular_file(p)){
+                if (fsnsp::is_regular_file(p)) {
                     return parse_file(path.c_str(), result);
-                }                
+                }
             }
-             throw  FILE_OR_DIRECTORY_ERROR;
-             return PARSE_EFILESTREAM;
-        }        
-        
+            throw FILE_OR_DIRECTORY_ERROR;
+            return PARSE_EFILESTREAM;
+        }
+
         int parse_directory(const std::string& directory, modules& result, const std::string& ext) {
             result.clear();
             fsnsp::path p(directory.c_str());
-            for ( fsnsp::directory_iterator it=fsnsp::directory_iterator(p);it!=fsnsp::directory_iterator();++it){
-                if (fsnsp::is_regular_file(it->path())){         
-                    if ((ext.empty()) || (it->path().extension()==fsnsp::path("."+ext))){
+            for (fsnsp::directory_iterator it = fsnsp::directory_iterator(p); it != fsnsp::directory_iterator(); ++it) {
+                if (fsnsp::is_regular_file(it->path())) {
+                    if ((ext.empty()) || (it->path().extension() == fsnsp::path("." + ext))) {
                         modules resulttmp;
                         parse_file(it->path().generic_string(), resulttmp);
-                        result.insert(result.end(),resulttmp.begin(),resulttmp.end());
-                    }              
+                        result.insert(result.end(), resulttmp.begin(), resulttmp.end());
+                    }
                 }
-            }  
+            }
             return PARSE_SUCCESS;
-        }        
+        }
 
         int parse_file(const std::string& filename, modules& result) {
 
             result.clear();
             std::string src;
-            std::cout << "compile file:"  << filename << std::endl;
+            std::cout << "compile file:" << filename << std::endl;
             if (!read_module_file(filename, src)) {
-                throw  FILE_OR_DIRECTORY_ERROR;
+                throw FILE_OR_DIRECTORY_ERROR;
             }
 
             str_iterator begin = str_iterator(src.begin());

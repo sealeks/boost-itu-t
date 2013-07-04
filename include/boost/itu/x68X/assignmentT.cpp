@@ -9,12 +9,12 @@ namespace x680 {
     namespace syntactic {
 
         void Modules_grammar::initT() {
-            
-             Tag = qi::omit[qi::lit("[")]
-                    >> -(EncodingReferenceDefault[bind(&tag_encoding, qi::_val, qi::_1)] >>  qi::omit[qi::lit(":")])
+
+            Tag = qi::omit[qi::lit("[")]
+                    >> -(EncodingReferenceDefault[bind(&tag_encoding, qi::_val, qi::_1)] >> qi::omit[qi::lit(":")])
                     >> -(Class[bind(&tag_class, qi::_val, qi::_1)])
                     >> (pos_number_str | DefinedValue_)[bind(&tag_number, qi::_val, qi::_1)]
-                    >>  qi::omit[qi::lit("]")]
+                    >> qi::omit[qi::lit("]")]
                     >> -(Rule[bind(&tag_rule, qi::_val, qi::_1)]);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
@@ -34,8 +34,8 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
 
             Type = BuitinType | TaggedType | ReferencedType;
-            
-            GovernorType = BuitinType | StrictDefinedType;
+
+            GovernorType = SimpleValueSetFromObjects | SimpleTypeFromObject | BuitinType | StrictDefinedType;
 
             NamedType = (identifier_ >> Type)[bind(&type_named, qi::_val, qi::_1, qi::_2)];
 
@@ -49,17 +49,17 @@ namespace x680 {
 
             TaggedType = (Tag
                     >> Type)[bind(&type_tagged, qi::_val, qi::_1, qi::_2)];
-                    
+
             SimpleTaggedType = (Tag
-                    >> SimpleType)[bind(&type_tagged, qi::_val, qi::_1, qi::_2)];                    
+                    >> SimpleType)[bind(&type_tagged, qi::_val, qi::_1, qi::_2)];
 
             ObjectClassFieldType = ObjectClassFieldType_[bind(&type_objectfield, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
             SimpleTypeFromObject = LittleFromObject_[bind(&type_fromobject, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
             SimpleValueSetFromObjects = BigFromObjects_[bind(&type_fromobjectset, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);           
-            
-            SimpleDefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)];            
+
+            SimpleDefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)];
 
             DefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
@@ -132,7 +132,7 @@ namespace x680 {
                     >> qi::lit(":"))]
                     >> ComponentTypeList
                     >> qi::omit[qi::lit("]]")];
-            
+
             ExtensionAdditionGroup = ExtensionAdditionGroup1 | ComponentTypeList;
 
             ExtensionAddition = qi::omit[qi::lit(",")] >> (ExtensionAdditionGroup | ComponentType);
@@ -163,12 +163,12 @@ namespace x680 {
                     >> qi::lit(":"))]
                     >> AlternativeTypeList
                     >> qi::omit[qi::lit("]]")];
-            
+
             ExtensionAdditionAlternativesGroup = ExtensionAdditionAlternativesGroup1 | AlternativeTypeList;
 
             ExtensionAdditionAlternative = qi::omit[qi::lit(",")] >> (ExtensionAdditionAlternativesGroup | NamedType);
 
-            ExtensionAdditionAlternatives = qi::omit[qi::lit(",")] >> ExtensionAdditionAlternativesGroup>> -(ExtensionAdditionAlternative);
+            ExtensionAdditionAlternatives = qi::omit[qi::lit(",")] >> ExtensionAdditionAlternativesGroup >> -(ExtensionAdditionAlternative);
 
             AlternativeTypeLists = RootAlternativeTypeList
                     >> -(qi::lit(",")
