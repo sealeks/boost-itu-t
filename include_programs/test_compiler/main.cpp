@@ -20,14 +20,16 @@ std::string IN_FILE ="F:\\sourceasn\\"; // "test.asn";
 
 
 int main(int argc, char* argv[]) {
-    std::string src;
-
 
     try {
-        x680::syntactic::modules moduls;
-        success = x680::syntactic::parse_fs(IN_FILE, moduls);
- 
-        switch (success) {
+        
+        
+       // int success = 0;
+       // x680::syntactic::modules moduls;
+        x680::global_entity_ptr rslt =  x680::semantics::compile_fs(IN_FILE);
+        if (rslt)
+            std::cout  << (*rslt) << std::endl;
+     /*  switch (success) {
             case 0:
             {
                 for (x680::syntactic::modules::const_iterator mod = moduls.begin(); mod != moduls.end(); ++mod) {
@@ -100,7 +102,7 @@ int main(int argc, char* argv[]) {
                 std::cout << "File read error: " << std::endl;
                 break;
             }
-        }
+        }*/
     }    catch (x680::syntactic::synxtas_error& e) {
         std::cout << e << std::endl;
     }
@@ -109,6 +111,7 @@ int main(int argc, char* argv[]) {
     }
 
 
+    
 
 }
 
