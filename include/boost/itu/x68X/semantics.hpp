@@ -16,6 +16,7 @@ namespace x680 {
         et_Nodef,
         et_Global,       
         et_Module,
+        et_Import,        
         et_Type,
         et_Value,
         et_ValueSet,
@@ -37,11 +38,24 @@ namespace x680 {
     class global_entity;
     typedef boost::shared_ptr<global_entity> global_entity_ptr;
     
+    class import_entity;
+    typedef boost::shared_ptr<import_entity> import_entity_ptr;    
+    
     class module_entity;
     typedef boost::shared_ptr<module_entity> module_entity_ptr;    
 
+    class assignment_entity;    
+    typedef boost::shared_ptr<assignment_entity> assignment_entity_ptr;      
+    
+    class type_entity;    
+    typedef boost::shared_ptr<type_entity> type_entity_ptr;    
+      
+    
+     /////////////////////////////////////////////////////////////////////////   
     // root_entity
-
+    /////////////////////////////////////////////////////////////////////////  
+    
+    
     class root_entity {
 
     public:
@@ -73,6 +87,10 @@ namespace x680 {
             return !scope_._empty() ? scope_.lock() : root_entity_ptr();
         }        
         
+        void scope(root_entity_ptr vl)  {
+            scope_=root_entity_wptr(vl);
+        }                
+        
         root_entity_vector& childs()  {
             return childs_;
         }   
@@ -84,6 +102,22 @@ namespace x680 {
         module_entity* as_module(){
             return type_==et_Module  ? reinterpret_cast<module_entity* >(this) : 0;
         }        
+        
+        expectdef_entity* as_expectdef(){
+            return type_==et_Nodef  ? reinterpret_cast<expectdef_entity* >(this) : 0;
+        }    
+        
+        import_entity* as_import(){
+            return type_==et_Import  ? reinterpret_cast<import_entity* >(this) : 0;
+        }      
+        
+        type_entity* as_type(){
+            return type_==et_Type  ? reinterpret_cast<type_entity* >(this) : 0;
+        }              
+        
+        assignment_entity* as_assignment(){
+            return reinterpret_cast<assignment_entity* >(this);
+        }                       
 
     private:
         std::string name_;
@@ -93,7 +127,12 @@ namespace x680 {
     };
     
     
+    
+
+      /////////////////////////////////////////////////////////////////////////   
     // global_entity
+    /////////////////////////////////////////////////////////////////////////  
+    
     
     class global_entity : public root_entity {   
  
@@ -108,10 +147,13 @@ namespace x680 {
     
      std::ostream& operator<<(std::ostream& stream, global_entity& self);   
     
-    //const global_entity_ptr GLOBALSCOPE = global_entity_ptr( new global_entity());
+
     
     
+     /////////////////////////////////////////////////////////////////////////   
     // expectdef_entity
+    /////////////////////////////////////////////////////////////////////////  
+    
      
     class expectdef_entity : public root_entity {   
  
@@ -124,24 +166,112 @@ namespace x680 {
     
     
     
+     /////////////////////////////////////////////////////////////////////////   
+    // import_entity
+    /////////////////////////////////////////////////////////////////////////  
+    
+     class import_entity : public root_entity {   
+ 
+    public:
+        
+        import_entity(const std::string& nm);
+ 
+        
+    };   
+    
+    std::ostream& operator<<(std::ostream& stream, expectdef_entity& self); 
+    
+    
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
     // module_entity
+    /////////////////////////////////////////////////////////////////////////  
     
     class module_entity : public root_entity {      
     public:      
-        module_entity(root_entity_ptr scope, const std::string& nm);
- 
+        module_entity(root_entity_ptr scope, const std::string& nm, const std::string& fl);
         
+        root_entity_vector& exports()  {
+            return exports_;
+        }   
+        
+        root_entity_vector& imports()  {
+            return imports_;
+        }           
+        
+        std::string file() const {
+            return file_;
+        }       
+        
+    private:
+        
+        root_entity_vector exports_;
+        root_entity_vector imports_;        
+         std::string file_;        
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, const module_entity& self);  
+    std::ostream& operator<<(std::ostream& stream, module_entity& self);  
+    
+    
+      /////////////////////////////////////////////////////////////////////////   
+    // assignment_entity
+    /////////////////////////////////////////////////////////////////////////  
+    
+    class assignment_entity : public root_entity {      
+    public:      
+        assignment_entity(root_entity_ptr scope, const std::string& nm, entity_enum tp, const std::string& rf="");
+       
+        root_entity_ptr reff() const {
+            return reff_ ? reff_ : root_entity_ptr();
+        }        
+        
+        void reff(root_entity_ptr vl)  {
+            reff_=vl;
+        }      
+        
+    private:
+              
+       root_entity_ptr reff_;
+    };
+
+
+    std::ostream& operator<<(std::ostream& stream, assignment_entity& self);     
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // type_entity
+    /////////////////////////////////////////////////////////////////////////  
+    
+    class type_entity : public assignment_entity {      
+    public:      
+         type_entity(root_entity_ptr scope, const std::string& nm, defined_type tp,  const std::string& reff="");    
+         defined_type builtin() const {
+            return builtin_;
+        }            
+        
+    private:
+              
+       defined_type builtin_;
+       
+    };
+
+
+    std::ostream& operator<<(std::ostream& stream, type_entity& self);     
+    
+    std::ostream& operator<<(std::ostream& stream, defined_type self);
 
     namespace semantics {
 
         global_entity_ptr compile_fs(const std::string& path, const std::string& ext = "asn");
         
-        void compile_module(const x680::syntactic::module& mod, global_entity_ptr global);        
-
+        void compile_module(const x680::syntactic::module& mod, global_entity_ptr global);  
+        void compile_export(const x680::syntactic::module& mod, module_entity_ptr mdl);
+        void compile_imports(const x680::syntactic::module& mod, module_entity_ptr mdl);        
+        root_entity_ptr compile_import(const x680::syntactic::import& imp);
+        void compile_assignments(const x680::syntactic::module& mod, module_entity_ptr mdl);          
+        root_entity_ptr compile_assignment(root_entity_ptr scope, const x680::syntactic::assignment& ent);
 
 
 

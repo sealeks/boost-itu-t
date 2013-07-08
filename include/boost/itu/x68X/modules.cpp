@@ -16,8 +16,7 @@ namespace x680 {
         void Modules_grammar::init() {
 
 
-
-            start_rule = +ModuleDefinition;
+            start_rule = +ModuleDefinition >>qi::omit[ qi::eoi];
 
 
 
@@ -257,8 +256,12 @@ namespace x680 {
             return src.size();
         }
 
-        Modules_grammar ModulesDefGrammar;
-
+        
+        Modules_grammar& MainGrammar(){
+            static Modules_grammar Grammar;
+            return Grammar;
+        }
+       
 
 
 
@@ -297,6 +300,8 @@ namespace x680 {
         }
 
         int parse_file(const std::string& filename, modules& result) {
+            
+           // Modules_grammar ModulesDefGrammar;
 
             result.clear();
             std::string src;
@@ -308,7 +313,7 @@ namespace x680 {
             str_iterator begin = str_iterator(src.begin());
             str_iterator end = str_iterator(src.end());
 
-            bool rslt = qi::phrase_parse(begin, end, ModulesDefGrammar, comment_skip, result);
+            bool rslt = qi::phrase_parse(begin, end, MainGrammar(), comment_skip, result);
             if (rslt && begin == end) {
                 for (modules::iterator it = result.begin(); it != result.end(); ++it)
                     it->file = filename;
