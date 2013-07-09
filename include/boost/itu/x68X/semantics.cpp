@@ -7,6 +7,20 @@
 
 
 namespace x680 {
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // root_entity
+    ///////////////////////////////////////////////////////////////////////// 
+
+    root_entity_ptr root_entity::find_in_scope(root_entity_ptr scp, const std::string& nm) {
+        if (scp) {
+            for (root_entity_vector::const_iterator it = scp->childs().begin(); it != scp->childs().end(); ++it) {
+                if ((*it)->name() == nm)
+                    return *it;
+            }
+        }
+        return root_entity_ptr();
+    }         
 
     /////////////////////////////////////////////////////////////////////////   
     // global_entity
@@ -66,20 +80,24 @@ namespace x680 {
     // module_entity
     /////////////////////////////////////////////////////////////////////////   
 
-    module_entity::module_entity(root_entity_ptr scope, const std::string& nm, const std::string& fl)
-    : root_entity(scope, nm, et_Module), file_(fl) {
+    module_entity::module_entity(root_entity_ptr scope, const std::string& nm, const std::string& fl,bool allexp)
+    : root_entity(scope, nm, et_Module), file_(fl), allexport_(allexp)  {
     }
 
     std::ostream& operator<<(std::ostream& stream, module_entity& self) {
         stream << "\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
         stream << "module: " << self.name() << "\nfile:" << self.file() << "\n";
         stream << "----------------------------------------------------------\n";
-        stream << "      export: ";
-        for (root_entity_vector::iterator it = self.exports().begin(); it != self.exports().end(); ++it) {
-            if ((*it)->as_expectdef())
-                stream << *((*it)->as_expectdef()) << ", ";
-            else
-                stream << (*it)->name() << ", ";
+        if (self.allexport()) {
+            stream << "      export ALL ";
+        } else {
+            stream << "      export: ";
+            for (root_entity_vector::iterator it = self.exports().begin(); it != self.exports().end(); ++it) {
+                if ((*it)->as_expectdef())
+                    stream << *((*it)->as_expectdef()) << ", ";
+                else
+                    stream << (*it)->name() << ", ";
+            }
         }
         stream << "\n----------------------------------------------------------\n";
         stream << "      IMPORTS: ";
@@ -226,6 +244,11 @@ namespace x680 {
 
     namespace semantics {
 
+        std::ostream& operator<<(std::ostream& stream, const error& self) {
+            stream << "Semantic error: " << self.message()  << "\n";
+            return stream;
+        }
+
         global_entity_ptr compile_fs(const std::string& path, const std::string& ext) {
             x680::syntactic::modules synxtasresult;
             int success = x680::syntactic::parse_fs(path, synxtasresult);
@@ -234,12 +257,12 @@ namespace x680 {
 
             for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it)
                 compile_module(*it, global);
-
+            check_modules_ref(global);
             return global;
         }
 
         void compile_module(const x680::syntactic::module& mod, global_entity_ptr global) {
-            module_entity_ptr modul = module_entity_ptr(new module_entity(global, mod.name, mod.file));
+            module_entity_ptr modul = module_entity_ptr(new module_entity(global, mod.name, mod.file, mod.allexport));
             compile_export(mod, modul);
             compile_imports(mod, modul);
             compile_assignments(mod, modul);            
@@ -324,5 +347,50 @@ namespace x680 {
         }
 
 
+        
+        void check_modules_ref(global_entity_ptr global) {
+            for (root_entity_vector::iterator it = global->childs().begin(); it != global->childs().end(); ++it) {
+                module_entity* modl = (*it)->as_module();
+                if (modl){           
+                    resolve_local_ref(modl);
+                    for (root_entity_vector::iterator im = modl->imports().begin(); im != modl->imports().end(); ++im) {
+                        import_entity* importmod = (*im)->as_import();
+                        if (importmod) {
+                               root_entity_ptr finded=modl->find(importmod->name());
+                               if (finded){
+                                   importmod->scope(finded);
+                               }
+                               else
+                               {
+                                   throw error("Not find imported module: "  + importmod->name() + 
+                                           " in module: " + modl->name()  + " in file: " + modl->file());
+                               }    
+                        }
+                    }
+                }
+            }
+        }        
+        
+        void resolve_local_ref(module_entity* mod) {
+            for (root_entity_vector::iterator it = mod->childs().begin(); it != mod->childs().end(); ++it) {
+                switch ((*it)->type()){
+                    case et_Type:{
+                        type_entity* tmp=(*it)->as_type();
+                        if (tmp){
+                            if ((tmp->builtin()==t_Reference) && (tmp->reff()->as_expectdef())){
+                                root_entity_ptr fnd = tmp->find(tmp->reff()->name());
+                                if (fnd){
+                                    std::cout << "FINDED TYPREF: "  << tmp->reff()->name() << std::endl;
+                                    tmp->reff(fnd);
+                                    std::cout << "FINDED TYPREF POST"  << std::endl;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        
     }
 }

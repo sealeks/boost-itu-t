@@ -85,7 +85,11 @@ namespace x680 {
         
         root_entity_ptr scope() const {
             return !scope_._empty() ? scope_.lock() : root_entity_ptr();
-        }        
+        }      
+        
+        virtual root_entity_ptr find(const std::string& nm){
+            return find_in_scope(scope(), nm);
+        }
         
         void scope(root_entity_ptr vl)  {
             scope_=root_entity_wptr(vl);
@@ -117,9 +121,16 @@ namespace x680 {
         
         assignment_entity* as_assignment(){
             return reinterpret_cast<assignment_entity* >(this);
-        }                       
+        }     
+        
+    protected:        
+        
+        root_entity_ptr find_in_scope(root_entity_ptr scp, const std::string& nm);         
 
     private:
+
+    
+        
         std::string name_;
         entity_enum type_;
         root_entity_wptr scope_;
@@ -190,7 +201,7 @@ namespace x680 {
     
     class module_entity : public root_entity {      
     public:      
-        module_entity(root_entity_ptr scope, const std::string& nm, const std::string& fl);
+        module_entity(root_entity_ptr scope, const std::string& nm, const std::string& fl, bool allexp);
         
         root_entity_vector& exports()  {
             return exports_;
@@ -202,13 +213,20 @@ namespace x680 {
         
         std::string file() const {
             return file_;
-        }       
+        }
+        
+        bool allexport() const {
+            return allexport_;
+        }        
+        
+        
         
     private:
         
         root_entity_vector exports_;
         root_entity_vector imports_;        
-         std::string file_;        
+         std::string file_;
+         bool allexport_;
     };
 
 
@@ -263,6 +281,19 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, defined_type self);
 
     namespace semantics {
+        
+        
+        class error{
+        public:
+            error(const std::string& ms) : msg_(ms) {}
+            std::string message() const{
+                return msg_;}
+            
+        private:
+            std::string msg_;
+        };
+        
+        std::ostream& operator<<(std::ostream& stream, const error& self); 
 
         global_entity_ptr compile_fs(const std::string& path, const std::string& ext = "asn");
         
@@ -272,6 +303,12 @@ namespace x680 {
         root_entity_ptr compile_import(const x680::syntactic::import& imp);
         void compile_assignments(const x680::syntactic::module& mod, module_entity_ptr mdl);          
         root_entity_ptr compile_assignment(root_entity_ptr scope, const x680::syntactic::assignment& ent);
+        
+        
+        
+        
+        void check_modules_ref(global_entity_ptr global);
+        void resolve_local_ref(module_entity* mod);       
 
 
 

@@ -32,6 +32,8 @@ namespace x680 {
             return private_ctr(super()--, base_, pos_);
         }
 
+#ifdef __GNUC__    
+        
         position_iterator&
                 position_iterator::operator+=(const difference_type& n) {
             return *this = private_ctr(super() + n, base_, pos_);
@@ -52,6 +54,8 @@ namespace x680 {
             return private_ctr(super(), base_, pos_);
         }
 
+#endif
+        
         position_iterator::supertype&
         position_iterator::super() const {
             return (supertype&) (*this);

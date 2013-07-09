@@ -939,6 +939,8 @@ namespace x680 {
             position_iterator
             operator--(int);
 
+#ifdef __GNUC__                
+            
             position_iterator&
                     operator+=(const difference_type& n);
 
@@ -950,6 +952,8 @@ namespace x680 {
 
             position_iterator
             operator-(const difference_type& n) const;
+            
+#endif            
 
             difference_type pos() const;
 
