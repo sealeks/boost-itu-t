@@ -183,8 +183,11 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, type_entity& self) {
         stream << "TP: " << self.builtin();
-        if (self.builtin()==t_Reference)
-            stream << " reff_to: [" << *(self.reff()->as_expectdef()) <<  "] ";
+        if (self.builtin()==t_Reference){
+            if (self.reff()->as_expectdef())
+                  stream << " reff_to: [" << *(self.reff()->as_expectdef()) <<  "] ";
+            else
+                 stream << " reff_to: [" << self.reff()->name() <<  "] "; }
         stream << " id: "  << self.name();
         return stream;
     }
@@ -236,7 +239,7 @@ namespace x680 {
           case t_ClassField: return stream << "ClassField";
           case t_TypeFromObject: return stream << "TypeFromObject";
           case t_ValueSetFromObjects: return stream << "ValueSetFromObjects";
-          case t_Reference: return stream << "Reference";   
+          case t_Reference: return stream << "";   
             default:{};
         }
         return stream;
@@ -352,7 +355,6 @@ namespace x680 {
             for (root_entity_vector::iterator it = global->childs().begin(); it != global->childs().end(); ++it) {
                 module_entity* modl = (*it)->as_module();
                 if (modl){           
-                    resolve_local_ref(modl);
                     for (root_entity_vector::iterator im = modl->imports().begin(); im != modl->imports().end(); ++im) {
                         import_entity* importmod = (*im)->as_import();
                         if (importmod) {
@@ -369,9 +371,21 @@ namespace x680 {
                     }
                 }
             }
+            for (root_entity_vector::iterator it = global->childs().begin(); it != global->childs().end(); ++it) {
+                module_entity* modl = (*it)->as_module();
+                if (modl) {
+                    resolve_local_refs(modl);
+                }
+            }           
         }        
         
-        void resolve_local_ref(module_entity* mod) {
+        
+     void resolve_local_refs(module_entity* mod) {
+         while(resolve_local_ref(mod)) {};
+         
+        }        
+        
+        bool resolve_local_ref(module_entity* mod) {
             for (root_entity_vector::iterator it = mod->childs().begin(); it != mod->childs().end(); ++it) {
                 switch ((*it)->type()){
                     case et_Type:{
@@ -379,10 +393,9 @@ namespace x680 {
                         if (tmp){
                             if ((tmp->builtin()==t_Reference) && (tmp->reff()->as_expectdef())){
                                 root_entity_ptr fnd = tmp->find(tmp->reff()->name());
-                                if (fnd){
-                                    std::cout << "FINDED TYPREF: "  << tmp->reff()->name() << std::endl;
+                                if (fnd && fnd->as_type()){
                                     tmp->reff(fnd);
-                                    std::cout << "FINDED TYPREF POST"  << std::endl;
+                                    return true;
                                 }
                             }
                         }
@@ -390,6 +403,7 @@ namespace x680 {
                     }
                 }
             }
+            return false;
         }
         
     }

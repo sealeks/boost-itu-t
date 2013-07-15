@@ -308,7 +308,8 @@ namespace x680 {
         
         
         void check_modules_ref(global_entity_ptr global);
-        void resolve_local_ref(module_entity* mod);       
+        void resolve_local_refs(module_entity* mod);         
+        bool resolve_local_ref(module_entity* mod);       
 
 
 
