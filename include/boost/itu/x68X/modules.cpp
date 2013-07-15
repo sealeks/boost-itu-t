@@ -16,7 +16,7 @@ namespace x680 {
         void Modules_grammar::init() {
 
 
-            start_rule = +ModuleDefinition >>qi::omit[ qi::eoi];
+            start_rule = +ModuleDefinition >> qi::omit[ qi::eoi];
 
 
 
@@ -36,8 +36,8 @@ namespace x680 {
 
                     >> qi::lexeme[qi::lit("::=")]
                     >> qi::lexeme[BEGIN_]
-                    >> -((qi::lexeme[qi::omit[EXPORTS_ >> +qi::space >> ALL_ >> *qi::space >> qi::lit(";") ]])[bind(&module_allexport, qi::_val)]
-                    | Exports[bind(&module_exports, qi::_val, qi::_1)])
+                    >> (Exports[bind(&module_exports, qi::_val, qi::_1)]
+                    | (-(qi::lexeme[qi::omit[EXPORTS_ >> +qi::space >> ALL_ >> *qi::space >> qi::lit(";") ]]))[bind(&module_allexport, qi::_val)])
                     >> -(Imports[bind(&module_imports, qi::_val, qi::_1)])
                     >> -(Assignments[bind(&module_assignments, qi::_val, qi::_1)])
                     >> END_;
@@ -256,12 +256,11 @@ namespace x680 {
             return src.size();
         }
 
-        
-        Modules_grammar& MainGrammar(){
+        Modules_grammar& MainGrammar() {
             static Modules_grammar Grammar;
             return Grammar;
         }
-       
+
 
 
 
@@ -300,8 +299,8 @@ namespace x680 {
         }
 
         int parse_file(const std::string& filename, modules& result) {
-            
-           // Modules_grammar ModulesDefGrammar;
+
+            // Modules_grammar ModulesDefGrammar;
 
             result.clear();
             std::string src;
