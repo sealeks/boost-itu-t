@@ -169,7 +169,7 @@ namespace x680 {
 
 
         str_rule curly_barket_pair = qi::char_("{")[ qi::_val = qi::_1 ]
-                >> *qi::blank
+                >> *qi::space
                 >> qi::char_("}")[ qi::_val += qi::_1];
 
         skip_comment_grammar comment_skip;
@@ -423,9 +423,11 @@ namespace x680 {
 
         str_rule DefinedObjectSet_ = ExternalObjectSetReference_ | objectsetreference_;
 
-        str_rule UserDefinedConstraintParameter_ = (DefinedType_[qi::_val = qi::_1 ] | DefinedObjectClass_[qi::_val = qi::_1 ]) >> -(qi::string(".")[qi::_val += qi::_1] >> DefinedValue_[qi::_val += qi::_1]);
+        str_rule UserDefinedConstraintParameter_ = (DefinedType_[qi::_val = qi::_1 ] | DefinedObjectClass_[qi::_val = qi::_1 ])
+                >> -(qi::string(".")[qi::_val += qi::_1] >> DefinedValue_[qi::_val += qi::_1]);
 
-        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.' | '@')[qi::string("@")[qi::_val = qi::_1 ] >> *(qi::string(".")[qi::_val += qi::_1]) >> (identifier_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1])];
+        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.' | '@')[qi::string("@")[qi::_val = qi::_1 ] 
+                >> *(qi::string(".")[qi::_val += qi::_1]) >> (identifier_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1])];
 
         str_rule Reference_ = typereference_ | valuereference_;
 
@@ -439,8 +441,8 @@ namespace x680 {
                 >> qi::string(".")[qi::_val += qi::_1] >> qi::omit[(*qi::space)]  >> FieldName_[qi::_val += qi::_1]];
 
         str_rule ParameterizedReference_ = Reference_[ qi::_val = qi::_1]
-                >> qi::omit[*qi::space]
-                >> curly_barket_pair[ qi::_val += qi::_1];
+                >> qi::omit[*qi::space
+                >> curly_barket_pair];
 
         str_rule Symbol_ = ParameterizedReference_[ qi::_val = qi::_1] | Reference_[ qi::_val = qi::_1];
 
