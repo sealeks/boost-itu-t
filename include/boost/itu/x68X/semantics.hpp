@@ -125,7 +125,8 @@ namespace x680 {
         
     protected:        
         
-        root_entity_ptr find_in_scope(root_entity_ptr scp, const std::string& nm);         
+        root_entity_ptr find_in_scope(root_entity_ptr scp, const std::string& nm);     
+        root_entity_ptr find_in_scope (const std::string& nm);         
 
     private:
 
@@ -217,9 +218,21 @@ namespace x680 {
         
         bool allexport() const {
             return allexport_;
+        }      
+        
+        virtual root_entity_ptr find(const std::string& nm){
+            root_entity_ptr rslt = find_in_scope(scope(), nm);
+            if (rslt)
+                return rslt;            
+            rslt = find_in_scope(nm);
+            if (rslt)
+                return rslt;
+            return find_in_import(nm);
         }        
         
-        
+    protected:
+
+        root_entity_ptr find_in_import(const std::string& nm);           
         
     private:
         
@@ -247,7 +260,9 @@ namespace x680 {
         
         void reff(root_entity_ptr vl)  {
             reff_=vl;
-        }      
+        }   
+        
+      
         
     private:
               
@@ -308,8 +323,8 @@ namespace x680 {
         
         
         void check_modules_ref(global_entity_ptr global);
-        void resolve_local_refs(module_entity* mod);         
-        bool resolve_local_ref(module_entity* mod);       
+        void resolve_local_refs(global_entity_ptr global);    
+        bool resolve_local_ref(module_entity* mod, bool all);          
 
 
 
