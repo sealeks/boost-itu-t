@@ -85,11 +85,9 @@ namespace x680 {
         
         root_entity_ptr scope() const {
             return !scope_._empty() ? scope_.lock() : root_entity_ptr();
-        }      
-        
-        virtual root_entity_ptr find(const std::string& nm){
-            return find_in_scope(scope(), nm);
         }
+        
+        virtual root_entity_ptr find(const std::string& nm);
         
         void scope(root_entity_ptr vl)  {
             scope_=root_entity_wptr(vl);
@@ -99,29 +97,17 @@ namespace x680 {
             return childs_;
         }   
         
-        global_entity* as_global(){
-            return type_==et_Global  ? reinterpret_cast<global_entity* >(this) : 0;
-        }
+        global_entity* as_global() ;
         
-        module_entity* as_module(){
-            return type_==et_Module  ? reinterpret_cast<module_entity* >(this) : 0;
-        }        
+        module_entity* as_module();      
         
-        expectdef_entity* as_expectdef(){
-            return type_==et_Nodef  ? reinterpret_cast<expectdef_entity* >(this) : 0;
-        }    
+        expectdef_entity* as_expectdef();   
         
-        import_entity* as_import(){
-            return type_==et_Import  ? reinterpret_cast<import_entity* >(this) : 0;
-        }      
+        import_entity* as_import();  
         
-        type_entity* as_type(){
-            return type_==et_Type  ? reinterpret_cast<type_entity* >(this) : 0;
-        }              
+        type_entity* as_type();        
         
-        assignment_entity* as_assignment(){
-            return reinterpret_cast<assignment_entity* >(this);
-        }     
+        assignment_entity *  as_assignment();  
         
     protected:        
         
@@ -220,15 +206,7 @@ namespace x680 {
             return allexport_;
         }      
         
-        virtual root_entity_ptr find(const std::string& nm){
-            root_entity_ptr rslt = find_in_scope(scope(), nm);
-            if (rslt)
-                return rslt;            
-            rslt = find_in_scope(nm);
-            if (rslt)
-                return rslt;
-            return find_in_import(nm);
-        }        
+        virtual root_entity_ptr find(const std::string& nm);    
         
     protected:
 
@@ -260,8 +238,9 @@ namespace x680 {
         
         void reff(root_entity_ptr vl)  {
             reff_=vl;
-        }   
+        }                 
         
+        entity_enum find_roottype() const;      
       
         
     private:
