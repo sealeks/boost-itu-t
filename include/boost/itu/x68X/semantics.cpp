@@ -16,7 +16,7 @@ namespace x680 {
         root_entity_ptr fnd = find_in_scope(scope(), nm);
         if (fnd)
             return fnd;
-        if (scope()->scope())
+        if ((scope()) && (scope()->scope()))
             return scope()->scope()->find(nm);
         return root_entity_ptr();
     }
@@ -85,9 +85,13 @@ namespace x680 {
     // expectdef_entity
     /////////////////////////////////////////////////////////////////////////
 
-    expectdef_entity::expectdef_entity(const std::string& nm)
-    : root_entity(nm, et_Nodef) {
+    expectdef_entity::expectdef_entity(root_entity_ptr scope, const std::string& nm)
+    : root_entity(scope, nm, et_Nodef) {
     }
+    
+    expectdef_entity::expectdef_entity(const std::string& nm)
+    : root_entity( nm, et_Nodef) {
+    }    
 
     std::ostream& operator<<(std::ostream& stream, expectdef_entity& self) {
         stream << self.name() << "(?)";
@@ -188,11 +192,11 @@ namespace x680 {
     assignment_entity::assignment_entity(root_entity_ptr scope, const std::string& nm, entity_enum tp, const std::string& rf)
     : root_entity(scope, nm, tp) {
         if (!rf.empty())
-            reff(root_entity_ptr(new expectdef_entity(rf)));
+            reff(root_entity_ptr(new expectdef_entity(scope,rf)));
     }
 
      entity_enum assignment_entity::find_roottype() const {
-         return et_Nodef;
+         //return et_Nodef;
          root_entity_ptr fnd=reff();
          while(fnd && (fnd->as_expectdef())){
              fnd=fnd->find(fnd->name());
@@ -523,7 +527,8 @@ namespace x680 {
                                 case et_Type:{
                                     root_entity_ptr rnew = root_entity_ptr(
                                             new type_entity((*it)->scope(), (*it)->name(), t_Reference , (*it)->as_assignment()->reff()->name()));
-                                    
+                                    std::cout << "Find Root"  << std::endl;
+                                    it->swap(rnew);
                                     return true;
                                 }
                                 

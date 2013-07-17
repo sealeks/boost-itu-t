@@ -157,8 +157,8 @@ namespace x680 {
  
     public:
         
-        expectdef_entity(const std::string& nm);
- 
+        expectdef_entity(root_entity_ptr scope, const std::string& nm);
+        expectdef_entity(const std::string& nm); 
         
     };
     
