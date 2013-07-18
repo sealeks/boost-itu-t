@@ -59,6 +59,10 @@ namespace x680 {
     type_entity* root_entity::as_type()  {
         return type_ == et_Type ? dynamic_cast<type_entity*> (this) : 0;
     }             
+    
+    value_entity* root_entity::as_value()  {
+        return type_ == et_Value ? dynamic_cast<value_entity*> (this) : 0;
+    }        
 
     assignment_entity * root_entity::as_assignment()  {
         return dynamic_cast<assignment_entity*> (this);
@@ -222,7 +226,7 @@ namespace x680 {
             }
             case et_Value:
             {
-                stream << "VL: ";
+                return stream << *(self.as_value());
                 break;
             }
             case et_ValueSet:
@@ -264,7 +268,7 @@ namespace x680 {
     // type_entity
     /////////////////////////////////////////////////////////////////////////   
 
-    type_entity::type_entity(root_entity_ptr scope, const std::string& nm, defined_type tp, const std::string& reff)
+    type_entity::type_entity(root_entity_ptr scope, defined_type tp, const std::string& nm, const std::string& reff)
     : assignment_entity(scope, nm, et_Type, reff), builtin_(tp) {
     }       
 
@@ -272,13 +276,37 @@ namespace x680 {
         stream << "TP: " << self.builtin();
         if (self.builtin() == t_Reference) {
             if (self.reff()->as_expectdef())
-                stream << " reff_to: [" << *(self.reff()->as_expectdef()) << "] ";
+                stream << "*->[" << *(self.reff()->as_expectdef()) << "] ";
             else
-                stream << " reff_to: [" << self.reff()->name() << "] ";
+                stream << "*->[" << self.reff()->name() << "] ";
         }
         stream << " id: " << self.name();
         return stream;
     }
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // value_entity
+    /////////////////////////////////////////////////////////////////////////       
+    
+    value_entity::value_entity(root_entity_ptr scope,  value_type tpv,  const std::string& nm, const std::string& reff)
+    : assignment_entity(scope, nm, et_Value, reff), valtype_(tpv) {
+    }      
+    
+    value_entity::value_entity(root_entity_ptr scope,  value_type tpv, type_entity_ptr t, const std::string& nm, const std::string& reff)
+    : assignment_entity(scope, nm, et_Value, reff), valtype_(tpv), tp_(t) {
+    }    
+
+    std::ostream& operator<<(std::ostream& stream, value_entity& self) {
+        stream << "VL: " << (int)self.valtype();
+        /*if (self.builtin() == t_Reference) {
+            if (self.reff()->as_expectdef())
+                stream << " reff_to: [" << *(self.reff()->as_expectdef()) << "] ";
+            else
+                stream << " reff_to: [" << self.reff()->name() << "] ";
+        }*/
+        stream << " id: " << self.name();
+        return stream;
+    }    
 
     std::ostream& operator<<(std::ostream& stream, defined_type self) {
         switch (self) {
@@ -341,6 +369,11 @@ namespace x680 {
             stream << "Semantic error: " << self.message() << "\n";
             return stream;
         }
+        
+        
+        
+        
+        //  compile_fs          
 
         global_entity_ptr compile_fs(const std::string& path, const std::string& ext) {
             x680::syntactic::modules synxtasresult;
@@ -350,9 +383,15 @@ namespace x680 {
 
             for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it)
                 compile_module(*it, global);
+            
+            
             check_modules_ref(global);
             return global;
         }
+        
+        
+        
+        //  compile_module        
 
         void compile_module(const x680::syntactic::module& mod, global_entity_ptr global) {
             module_entity_ptr modul = module_entity_ptr(new module_entity(global, mod.name, mod.file, mod.allexport));
@@ -361,49 +400,64 @@ namespace x680 {
             compile_assignments(mod, modul);
             global->childs().push_back(modul);
         }
+        
+        
+       
+        //  compile_export
 
         void compile_export(const x680::syntactic::module& mod, module_entity_ptr mdl) {
             for (x680::syntactic::exports::const_iterator it = mod.exports_.begin(); it != mod.exports_.end(); ++it)
                 mdl->exports().push_back(root_entity_ptr(new expectdef_entity(*it)));
         }
+         
+        
+       
+        //  compile_imports      
 
         void compile_imports(const x680::syntactic::module& mod, module_entity_ptr mdl) {
             for (x680::syntactic::imports::const_iterator it = mod.imports_.begin(); it != mod.imports_.end(); ++it) {
                 mdl->imports().push_back(compile_import(*it));
             }
         }
-
+        
+        
+        
+       
+        //  compile_import         
+        
         root_entity_ptr compile_import(const x680::syntactic::import& imp) {
             import_entity_ptr rslt = import_entity_ptr(new import_entity(imp.name));
             for (x680::syntactic::string_vector::const_iterator it = imp.names.begin(); it != imp.names.end(); ++it)
                 rslt->childs().push_back(root_entity_ptr(new expectdef_entity(*it)));
             return rslt;
         }
-
+        
+        
+        
+       
+        //  compile_assignments
+        
         void compile_assignments(const x680::syntactic::module& mod, module_entity_ptr mdl) {
             for (x680::syntactic::assignment_vector::const_iterator it = mod.elements.begin(); it != mod.elements.end(); ++it) {
                 mdl->childs().push_back(compile_assignment(mdl, *it));
             }
         }
+        
+       
+        //  compile_assignment        
 
         root_entity_ptr compile_assignment(root_entity_ptr scope, const x680::syntactic::assignment& ent) {
             entity_enum tp = et_Nodef;
             assignment_entity_ptr rslt;
             switch (ent.which()) {
-                case 0:
-                {
-                    tp = et_Type;
-                    x680::syntactic::type_assignment tmp = boost::get<x680::syntactic::type_assignment>(ent);
-                    rslt = type_entity_ptr(new type_entity(scope, tmp.identifier, tmp.type.builtin_t, tmp.type.reference));
-                    break;
-                }
-                case 1:
-                {
+                case 0: return compile_typeassignment(scope, ent);
+                case 1: return compile_valueassignment(scope, ent);
+                /*{
                     tp = et_Value;
                     x680::syntactic::value_assignment tmp = boost::get<x680::syntactic::value_assignment>(ent);
-                    rslt = assignment_entity_ptr(new assignment_entity(scope, tmp.identifier, tp));
+                    rslt = value_entity_ptr(new value_entity(scope,  tmp.value.type, tmp.identifier, tmp.value.type==v_identifier ? tmp.value.identifier : ""));
                     break;
-                }
+                }*/
                 case 2:
                 {
                     tp = et_ValueSet;
@@ -448,6 +502,28 @@ namespace x680 {
             }
             return rslt;
         }
+        
+        
+        type_entity_ptr compile_typeassignment(root_entity_ptr scope, const x680::syntactic::assignment& ent){
+               x680::syntactic::type_assignment tmp = boost::get<x680::syntactic::type_assignment>(ent);
+               return compile_type(scope, tmp.type, tmp.identifier);
+        }  
+        
+        type_entity_ptr compile_type(root_entity_ptr scope, const x680::syntactic::type_element& ent, const std::string id){
+               return type_entity_ptr(new type_entity(scope, ent.builtin_t, id, ent.reference));
+        }      
+        
+        
+        value_entity_ptr compile_valueassignment(root_entity_ptr scope, const x680::syntactic::assignment& ent){
+               x680::syntactic::value_assignment tmp = boost::get<x680::syntactic::value_assignment>(ent);
+               return  value_entity_ptr(new value_entity(scope,  tmp.value.type,
+                       compile_type(scope, tmp.type), tmp.identifier, tmp.value.type==v_identifier ? tmp.value.identifier : ""));
+        }  
+        
+        value_entity_ptr compile_value(root_entity_ptr scope, const x680::syntactic::value_element& ent, const std::string id){
+               return value_entity_ptr(new value_entity(scope,  ent.type, id, ent.type==v_identifier ? ent.identifier : ""));
+        }             
+        
 
         void check_modules_ref(global_entity_ptr global) {
             for (root_entity_vector::iterator it = global->childs().begin(); it != global->childs().end(); ++it) {
@@ -526,7 +602,7 @@ namespace x680 {
                             switch(tp){
                                 case et_Type:{
                                     root_entity_ptr rnew = root_entity_ptr(
-                                            new type_entity((*it)->scope(), (*it)->name(), t_Reference , (*it)->as_assignment()->reff()->name()));
+                                            new type_entity((*it)->scope(), t_Reference , (*it)->name(), (*it)->as_assignment()->reff()->name()));
                                     std::cout << "Find Root"  << std::endl;
                                     it->swap(rnew);
                                     return true;
@@ -550,6 +626,20 @@ namespace x680 {
                         }
                         break;
                     }
+                    case et_Value:
+                    {
+                        value_entity* tmp = (*it)->as_value();
+                        if (tmp) {
+                            if ((tmp->valtype() == v_identifier) && (tmp->reff()->as_expectdef())) {
+                                root_entity_ptr fnd = mod->find(tmp->reff()->name());
+                                if (fnd && fnd->as_value()) {
+                                    tmp->reff(fnd);
+                                    return true;
+                                }
+                            }
+                        }
+                        break;
+                    }                    
                 }
                 //  }
             }

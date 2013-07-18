@@ -49,6 +49,9 @@ namespace x680 {
     
     class type_entity;    
     typedef boost::shared_ptr<type_entity> type_entity_ptr;    
+    
+    class value_entity;    
+    typedef boost::shared_ptr<value_entity> value_entity_ptr;       
       
     
      /////////////////////////////////////////////////////////////////////////   
@@ -105,7 +108,9 @@ namespace x680 {
         
         import_entity* as_import();  
         
-        type_entity* as_type();        
+        type_entity* as_type();   
+        
+        value_entity* as_value();         
         
         assignment_entity *  as_assignment();  
         
@@ -258,21 +263,50 @@ namespace x680 {
     
     class type_entity : public assignment_entity {      
     public:      
-         type_entity(root_entity_ptr scope, const std::string& nm, defined_type tp,  const std::string& reff="");    
+         type_entity(root_entity_ptr scope, defined_type tp, const std::string& nm = "" ,  const std::string& reff="");    
          defined_type builtin() const {
             return builtin_;
-        }            
-        
+        }   
+         
     private:
               
        defined_type builtin_;
-       
+
     };
 
 
     std::ostream& operator<<(std::ostream& stream, type_entity& self);     
     
     std::ostream& operator<<(std::ostream& stream, defined_type self);
+    
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // type_entity
+    /////////////////////////////////////////////////////////////////////////  
+    
+    class value_entity : public assignment_entity {      
+    public:      
+         value_entity(root_entity_ptr scope,  value_type tpv,  const std::string& nm="", const std::string& reff="");    
+         value_entity(root_entity_ptr scope,  value_type tpv, type_entity_ptr t,  const std::string& nm="", const std::string& reff="");    
+         
+         value_type valtype() const {
+            return valtype_;
+        }
+         
+         type_entity_ptr tp() const {
+            return tp_;
+        }         
+        
+    private:
+              
+       value_type valtype_;
+       type_entity_ptr tp_;
+       
+    };
+
+
+    std::ostream& operator<<(std::ostream& stream, value_entity& self);      
 
     namespace semantics {
         
@@ -297,7 +331,10 @@ namespace x680 {
         root_entity_ptr compile_import(const x680::syntactic::import& imp);
         void compile_assignments(const x680::syntactic::module& mod, module_entity_ptr mdl);          
         root_entity_ptr compile_assignment(root_entity_ptr scope, const x680::syntactic::assignment& ent);
-        
+        type_entity_ptr compile_typeassignment(root_entity_ptr scope, const x680::syntactic::assignment& ent);  
+        type_entity_ptr compile_type(root_entity_ptr scope, const x680::syntactic::type_element& ent, const std::string id="");         
+        value_entity_ptr compile_valueassignment(root_entity_ptr scope, const x680::syntactic::assignment& ent);  
+        value_entity_ptr compile_value(root_entity_ptr scope, const x680::syntactic::value_element& ent, const std::string id="");         
         
         
         
