@@ -114,6 +114,8 @@ namespace x680 {
         value_entity* as_value();
 
         assignment_entity * as_assignment();
+        
+        root_entity_ptr self() const;
 
     protected:
 
@@ -225,7 +227,7 @@ namespace x680 {
     protected:
 
         void resolve_imports();
-        void resolve_assigments();
+        void resolve_moduleassigments();
 
 
         root_entity_ptr find_in_import(const std::string& nm);
@@ -325,10 +327,12 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, value_entity& self);
 
-
-    void resolve_nodef_assigment(root_entity_ptr elm);
-    void resolve_type_assigment(root_entity_ptr elm);
-    void resolve_value_assigment(root_entity_ptr elm);
+    void check_resolve_ciclic(root_entity_ptr elm, root_entity_ptr start);     
+    void resolve_assigments(root_entity* elm); 
+    void resolve_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());     
+    void resolve_nodef_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());
+    void resolve_type_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());
+    void resolve_value_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());
 
     namespace semantics {
 

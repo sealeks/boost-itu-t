@@ -16,8 +16,8 @@ namespace x680 {
         root_entity_ptr fnd = find_in_scope(scope(), nm);
         if (fnd)
             return fnd;
-        if ((scope()) && (scope()->scope()))
-            return scope()->scope()->find(nm);
+        if (scope())
+            return scope()->find(nm);
         return root_entity_ptr();
     }
 
@@ -76,6 +76,16 @@ namespace x680 {
 
     assignment_entity * root_entity::as_assignment() {
         return dynamic_cast<assignment_entity*> (this);
+    }
+
+    root_entity_ptr root_entity::self() const {
+        if (scope()) {
+            for (root_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if ((*it).get() == this)
+                    return *it;
+            }
+        }
+        return root_entity_ptr();
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -200,7 +210,7 @@ namespace x680 {
 
     void module_entity::resolve() {
         resolve_imports();
-        resolve_assigments();
+        resolve_moduleassigments();
     }
 
     void module_entity::resolve_imports() {
@@ -218,26 +228,8 @@ namespace x680 {
         }
     }
 
-    void module_entity::resolve_assigments() {
-        for (root_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-            switch ((*it)->type()) {
-                case et_Nodef:
-                {
-                    resolve_nodef_assigment(*it);
-                    break;
-                }
-                case et_Type:
-                {
-                    resolve_type_assigment(*it);
-                    break;
-                }
-                case et_Value:
-                {
-                    resolve_value_assigment(*it);
-                    break;
-                }
-            }
-        }
+    void module_entity::resolve_moduleassigments() {
+        resolve_assigments(this);
     }
 
     root_entity_ptr module_entity::find(const std::string& nm) {
@@ -473,37 +465,94 @@ namespace x680 {
         return stream;
     }
 
-    void resolve_nodef_assigment(root_entity_ptr elm) {
+    void resolve_assigments(root_entity* elm) {
+        for (root_entity_vector::iterator it = elm->childs().begin(); it != elm->childs().end(); ++it) {
+            resolve_assigment(*it);
+        }
+    }
+
+    void resolve_assigment(root_entity_ptr elm, root_entity_ptr start) {
+        switch (elm->type()) {
+            case et_Nodef:
+            {
+                resolve_nodef_assigment(elm, start);
+                break;
+            }
+            case et_Type:
+            {
+                resolve_type_assigment(elm, start);
+                break;
+            }
+            case et_Value:
+            {
+                resolve_value_assigment(elm, start);
+                break;
+            }
+        }
+    }
+
+    void check_resolve_ciclic(root_entity_ptr elm, root_entity_ptr start) {
+        if (elm && start && elm == start) {
+            if (elm->scope() && elm->scope()->as_module()) {
+                throw semantics::error("Ciclic refference : " + elm->name() +
+                        " in module: " + elm->scope()->as_module()->name() +
+                        " in file: " + elm->scope()->as_module()->file());
+            } else {
+                throw semantics::error("Ciclic refference : " + elm->name());
+            }
+        }
+    }
+
+    void resolve_nodef_assigment(root_entity_ptr elm, root_entity_ptr start) {
+        if (!start)
+            start = elm;
+        else
+            check_resolve_ciclic(elm, start);
         assignment_entity* tmp = elm->as_assignment();
         if (tmp) {
-            entity_enum tp = tmp->find_roottype();
+            entity_enum tp = tmp->find_roottype();           
             switch (tp) {
                 case et_Type:
                 {
+                    root_entity_ptr fnd = elm->find(tmp->reff()->name());
+                    if (fnd)
+                        resolve_assigment(fnd);
                     root_entity_ptr rnew = root_entity_ptr(
                             new type_entity(elm->scope(), t_Reference, elm->name(), elm->as_assignment()->reff()->name()));
                     std::cout << "Find Root" << std::endl;
                     elm.swap(rnew);
+                    //resolve_assigment(elm);
                 }
             }
         }
     }
 
-    void resolve_type_assigment(root_entity_ptr elm) {
-        type_entity* tmp =  elm->as_type();
+    void resolve_type_assigment(root_entity_ptr elm, root_entity_ptr start) {
+        if (!start)
+            start = elm;
+        else
+            check_resolve_ciclic(elm, start);
+        type_entity* tmp = elm->as_type();
         if (tmp) {
             if ((tmp->builtin() == t_Reference) && (tmp->reff()->as_expectdef())) {
                 root_entity_ptr fnd = elm->find(tmp->reff()->name());
                 if (fnd && fnd->as_type()) {
+                    resolve_assigment(fnd, start);
                     tmp->reff(fnd);
                 }
             }
         }
     }
 
-    void resolve_value_assigment(root_entity_ptr elm) {
-        value_entity* tmp =  elm->as_value();
+    void resolve_value_assigment(root_entity_ptr elm, root_entity_ptr start) {
+        if (!start)
+            start = elm;
+        else
+            check_resolve_ciclic(elm, start);
+        value_entity* tmp = elm->as_value();
         if (tmp) {
+            if (tmp->tp())
+                resolve_assigment(tmp->tp());
             if ((tmp->valtype() == v_identifier) && (tmp->reff()->as_expectdef())) {
                 root_entity_ptr fnd = elm->find(tmp->reff()->name());
                 if (fnd && fnd->as_value()) {
