@@ -52,6 +52,9 @@ namespace x680 {
 
     class value_entity;
     typedef boost::shared_ptr<value_entity> value_entity_ptr;
+    
+    typedef std::vector<std::string> export_vector;
+    typedef std::vector<std::string> import_vector;   
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -76,6 +79,7 @@ namespace x680 {
 
         virtual ~root_entity() {
         }
+
 
         std::string name() const {
             return name_;
@@ -119,8 +123,6 @@ namespace x680 {
 
     protected:
 
-        root_entity_ptr find_in_scope(root_entity_ptr scp, const std::string& nm);
-        root_entity_ptr find_in_scope(const std::string& nm);
         void resolve_child();
 
     private:
@@ -146,6 +148,7 @@ namespace x680 {
 
         global_entity();
         virtual void resolve();
+        virtual root_entity_ptr find(const std::string& nm);
 
     private:
 
@@ -184,6 +187,14 @@ namespace x680 {
 
         import_entity(const std::string& nm);
         virtual void resolve();
+        
+        import_vector& import() {
+            return import_;
+        }        
+        
+    private:
+
+        import_vector import_;       
 
     };
 
@@ -201,7 +212,7 @@ namespace x680 {
     public:
         module_entity(root_entity_ptr scope, const std::string& nm, const std::string& fl, bool allexp);
 
-        root_entity_vector& exports() {
+        export_vector& exports() {
             return exports_;
         }
 
@@ -219,22 +230,15 @@ namespace x680 {
 
         virtual root_entity_ptr find(const std::string& nm);
 
-        virtual void resolve();
-        void resolve_export();
-        void resolve_externalmodule();
-
-
-    protected:
-
-        void resolve_imports();
-        void resolve_moduleassigments();
-
-
-        root_entity_ptr find_in_import(const std::string& nm);
+        virtual void resolve();       
 
     private:
+        
+        void resolve_export();
+        void resolve_externalmodule();
+        root_entity_ptr findmodule(const std::string& nm);         
 
-        root_entity_vector exports_;
+        export_vector exports_;
         root_entity_vector imports_;
         std::string file_;
         bool allexport_;
@@ -260,6 +264,8 @@ namespace x680 {
         void reff(root_entity_ptr vl) {
             reff_ = vl;
         }
+        
+        virtual root_entity_ptr find(const std::string& nm);
 
         entity_enum find_roottype() const;
 
@@ -285,6 +291,8 @@ namespace x680 {
         defined_type builtin() const {
             return builtin_;
         }
+        
+        virtual root_entity_ptr find(const std::string& nm);
 
     private:
 
@@ -316,6 +324,11 @@ namespace x680 {
         type_entity_ptr tp() const {
             return tp_;
         }
+        
+        void tp( root_entity_ptr vl)  {
+            tp_=boost::dynamic_pointer_cast<type_entity>(vl);
+        }        
+             
 
     private:
 
@@ -327,12 +340,12 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, value_entity& self);
 
-    void check_resolve_ciclic(root_entity_ptr elm, root_entity_ptr start);     
+    //void check_resolve_ciclic(root_entity_ptr elm, root_entity_ptr start);     
     void resolve_assigments(root_entity* elm); 
-    void resolve_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());     
-    void resolve_nodef_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());
-    void resolve_type_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());
-    void resolve_value_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());
+    root_entity_ptr resolve_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());     
+    root_entity_ptr resolve_nodef_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());
+    root_entity_ptr resolve_type_assigment(root_entity_ptr  elm, root_entity_ptr start=root_entity_ptr());
+    root_entity_ptr resolve_value_assigment(root_entity_ptr  elm, root_entity_ptr start=root_entity_ptr());
 
     namespace semantics {
 

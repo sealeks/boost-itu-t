@@ -13,11 +13,6 @@ namespace x680 {
     ///////////////////////////////////////////////////////////////////////// 
 
     root_entity_ptr root_entity::find(const std::string& nm) {
-        root_entity_ptr fnd = find_in_scope(scope(), nm);
-        if (fnd)
-            return fnd;
-        if (scope())
-            return scope()->find(nm);
         return root_entity_ptr();
     }
 
@@ -31,24 +26,6 @@ namespace x680 {
         }
     }
 
-    root_entity_ptr root_entity::find_in_scope(root_entity_ptr scp, const std::string& nm) {
-        if (scp) {
-            for (root_entity_vector::const_iterator it = scp->childs().begin(); it != scp->childs().end(); ++it) {
-                if ((*it)->name() == nm)
-                    return *it;
-            }
-        }
-        return root_entity_ptr();
-    }
-
-    root_entity_ptr root_entity::find_in_scope(const std::string& nm) {
-
-        for (root_entity_vector::const_iterator it = childs().begin(); it != childs().end(); ++it) {
-            if ((*it)->name() == nm)
-                return *it;
-        }
-        return root_entity_ptr();
-    }
 
     global_entity* root_entity::as_global() {
         return type_ == et_Global ? dynamic_cast<global_entity*> (this) : 0;
@@ -97,14 +74,15 @@ namespace x680 {
     }
 
     void global_entity::resolve() {
-        for (root_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-            if ((*it)->as_module()) {
-                (*it)->as_module()->resolve_export();
-                (*it)->as_module()->resolve_externalmodule();
-            }
-        }
         resolve_child();
     }
+    
+    root_entity_ptr global_entity::find(const std::string& nm) {
+         for (root_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+             if (nm==(*it)->name())
+                 return *it;
+        return root_entity_ptr();
+    }    
 
     std::ostream& operator<<(std::ostream& stream, global_entity& self) {
         stream << "GLOBAL SCOPE:" << "\n";
@@ -141,14 +119,14 @@ namespace x680 {
     }
 
     void import_entity::resolve() {
-        if (scope()) {
+        /*if (scope()) {
             for (root_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                 root_entity_ptr fnd = find((*it)->name());
                 if (fnd) {
                     *it = fnd;
                 }
             }
-        }
+        }*/
     }
 
     std::ostream& operator<<(std::ostream& stream, import_entity& self) {
@@ -157,11 +135,8 @@ namespace x680 {
         else
             stream << "      from module: " << self.name() << "(?)";
         stream << "\n      symbol: ";
-        for (root_entity_vector::iterator it = self.childs().begin(); it != self.childs().end(); ++it) {
-            if ((*it)->as_expectdef())
-                stream << *((*it)->as_expectdef()) << ", ";
-            else
-                stream << (*it)->name() << ", ";
+        for (import_vector::iterator it = self.import().begin(); it != self.import().end(); ++it) {
+                stream << *it << ", ";
         }
         stream << "\n";
         return stream;
@@ -177,16 +152,34 @@ namespace x680 {
     : root_entity(scope, nm, et_Module), file_(fl), allexport_(allexp) {
     }
 
+    root_entity_ptr module_entity::find(const std::string& nm) {
+        for (root_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
+            import_entity* importmod = (*it)->as_import();
+            if (importmod->scope() && (!importmod->scope()->childs().empty())) {
+                root_entity_ptr fnd = importmod->scope()->childs().front()->find(nm);
+                if (fnd)
+                    return fnd;
+            }
+        }
+    }   
+    
+    void module_entity::resolve() {
+        resolve_export();
+        resolve_externalmodule();
+        resolve_assigments(this);
+    }
+    
     void module_entity::resolve_export() {
-        if (allexport())
-            exports().insert(exports().begin(), childs().begin(), childs().end());
+        if (allexport()){
+            for (root_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+            exports().push_back((*it)->name());}}
         else {
-            for (root_entity_vector::iterator it = exports().begin(); it != exports().end(); ++it) {
-                root_entity_ptr fnd = find((*it)->name());
+            for (export_vector::iterator it = exports().begin(); it != exports().end(); ++it) {
+                root_entity_ptr fnd = find(*it);
                 if (fnd) {
-                    *it = fnd;
+                    //*it = fnd;
                 } else {
-                    throw semantics::error("Not find exported symbol: " + (*it)->name() +
+                    throw semantics::error("Not find exported symbol: " + *it +
                             " in module: " + name() + " in file: " + file());
                 }
             }
@@ -197,7 +190,7 @@ namespace x680 {
         for (root_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
             import_entity* importmod = (*it)->as_import();
             if (importmod) {
-                root_entity_ptr finded = find(importmod->name());
+                root_entity_ptr finded = findmodule(importmod->name());
                 if (finded && (finded->as_module())) {
                     importmod->scope(finded);
                 } else {
@@ -206,52 +199,22 @@ namespace x680 {
                 }
             }
         }
-    }
-
-    void module_entity::resolve() {
-        resolve_imports();
-        resolve_moduleassigments();
-    }
-
-    void module_entity::resolve_imports() {
-        for (root_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
-            import_entity* importmod = (*it)->as_import();
-            for (root_entity_vector::iterator is = importmod->childs().begin(); is != importmod->childs().end(); ++is) {
-                root_entity_ptr fnd = importmod->find((*is)->name());
-                if (fnd) {
-                    *is = fnd;
-                } else {
-                    throw semantics::error("Not find imported symbol: " + (*is)->name() +
-                            " in module: " + name() + " in file: " + file());
-                }
+    }    
+    
+ 
+    root_entity_ptr module_entity::findmodule(const std::string& nm){
+        if (scope() && scope()->as_global()){
+            for (root_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if (nm==(*it)->name())
+                    return *it;
             }
         }
-    }
-
-    void module_entity::resolve_moduleassigments() {
-        resolve_assigments(this);
-    }
-
-    root_entity_ptr module_entity::find(const std::string& nm) {
-        root_entity_ptr rslt = find_in_scope(scope(), nm);
-        if (rslt)
-            return rslt;
-        rslt = find_in_scope(nm);
-        if (rslt)
-            return rslt;
-        return find_in_import(nm);
-    }
-
-    root_entity_ptr module_entity::find_in_import(const std::string& nm) {
-
-        for (root_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
-            import_entity* importmod = (*it)->as_import();
-            for (root_entity_vector::iterator im = importmod->childs().begin(); im != importmod->childs().end(); ++im)
-                if ((*im)->name() == nm)
-                    return *im;
-        }
         return root_entity_ptr();
-    }
+    }    
+
+
+
+
 
     std::ostream& operator<<(std::ostream& stream, module_entity& self) {
         stream << "\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
@@ -261,11 +224,8 @@ namespace x680 {
             stream << "      export ALL\n ";
 
         stream << "      export: ";
-        for (root_entity_vector::iterator it = self.exports().begin(); it != self.exports().end(); ++it) {
-            if ((*it)->as_expectdef())
-                stream << *((*it)->as_expectdef()) << ", ";
-            else
-                stream << (*it)->name() << ", ";
+        for (export_vector::iterator it = self.exports().begin(); it != self.exports().end(); ++it) {
+                stream << *it << ", ";
         }
 
         stream << "\n----------------------------------------------------------\n";
@@ -296,6 +256,11 @@ namespace x680 {
         if (!rf.empty())
             reff(root_entity_ptr(new expectdef_entity(scope, rf)));
     }
+    
+     root_entity_ptr assignment_entity::find(const std::string& nm) {
+         if (scope())
+             return scope()->find(nm);
+    }   
 
     entity_enum assignment_entity::find_roottype() const {
         //return et_Nodef;
@@ -369,6 +334,18 @@ namespace x680 {
     type_entity::type_entity(root_entity_ptr scope, defined_type tp, const std::string& nm, const std::string& reff)
     : assignment_entity(scope, nm, et_Type, reff), builtin_(tp) {
     }
+
+    root_entity_ptr type_entity::find(const std::string& nm) {
+        if (scope())
+            for (root_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if (nm == (*it)->name()) {
+                       *it=resolve_assigment(*it);
+                }
+                if (scope())
+                    return scope()->find(nm);                
+            }
+    }   
+    
 
     std::ostream& operator<<(std::ostream& stream, type_entity& self) {
         stream << "TP: " << self.builtin();
@@ -471,27 +448,29 @@ namespace x680 {
         }
     }
 
-    void resolve_assigment(root_entity_ptr elm, root_entity_ptr start) {
+    root_entity_ptr resolve_assigment(root_entity_ptr elm, root_entity_ptr start) {
+        std::cout << " resolve: " << elm->name() << std::endl;
         switch (elm->type()) {
             case et_Nodef:
             {
-                resolve_nodef_assigment(elm, start);
+                return resolve_nodef_assigment(elm, start);
                 break;
             }
             case et_Type:
             {
-                resolve_type_assigment(elm, start);
+                return resolve_type_assigment(elm, start);
                 break;
             }
             case et_Value:
             {
-                resolve_value_assigment(elm, start);
+                return resolve_value_assigment(elm, start);
                 break;
             }
         }
+        return elm;
     }
 
-    void check_resolve_ciclic(root_entity_ptr elm, root_entity_ptr start) {
+    /*root_entity_ptr check_resolve_ciclic(root_entity_ptr elm) {
         if (elm && start && elm == start) {
             if (elm->scope() && elm->scope()->as_module()) {
                 throw semantics::error("Ciclic refference : " + elm->name() +
@@ -501,58 +480,53 @@ namespace x680 {
                 throw semantics::error("Ciclic refference : " + elm->name());
             }
         }
-    }
+    }*/
 
-    void resolve_nodef_assigment(root_entity_ptr elm, root_entity_ptr start) {
-        if (!start)
+    root_entity_ptr resolve_nodef_assigment(root_entity_ptr elm, root_entity_ptr start) {
+        /*if (!start)
             start = elm;
         else
-            check_resolve_ciclic(elm, start);
+            check_resolve_ciclic(elm, start);*/
         assignment_entity* tmp = elm->as_assignment();
         if (tmp) {
             entity_enum tp = tmp->find_roottype();           
             switch (tp) {
                 case et_Type:
                 {
-                    root_entity_ptr fnd = elm->find(tmp->reff()->name());
-                    if (fnd)
-                        resolve_assigment(fnd);
-                    root_entity_ptr rnew = root_entity_ptr(
-                            new type_entity(elm->scope(), t_Reference, elm->name(), elm->as_assignment()->reff()->name()));
-                    std::cout << "Find Root" << std::endl;
-                    elm.swap(rnew);
-                    //resolve_assigment(elm);
+                    return elm->find(tmp->reff()->name());
                 }
             }
         }
+        return elm;
     }
 
-    void resolve_type_assigment(root_entity_ptr elm, root_entity_ptr start) {
-        if (!start)
+    root_entity_ptr resolve_type_assigment(root_entity_ptr  elm, root_entity_ptr start) {
+       /* if (!start)
             start = elm;
         else
-            check_resolve_ciclic(elm, start);
+            check_resolve_ciclic(elm, start);*/
         type_entity* tmp = elm->as_type();
         if (tmp) {
             if ((tmp->builtin() == t_Reference) && (tmp->reff()->as_expectdef())) {
                 root_entity_ptr fnd = elm->find(tmp->reff()->name());
                 if (fnd && fnd->as_type()) {
-                    resolve_assigment(fnd, start);
-                    tmp->reff(fnd);
+                    tmp->reff(fnd);                    
                 }
+                
             }
         }
+        return elm;
     }
 
-    void resolve_value_assigment(root_entity_ptr elm, root_entity_ptr start) {
-        if (!start)
+    root_entity_ptr resolve_value_assigment(root_entity_ptr  elm, root_entity_ptr start) {
+       /* if (!start)
             start = elm;
         else
-            check_resolve_ciclic(elm, start);
+            check_resolve_ciclic(elm, start);*/
         value_entity* tmp = elm->as_value();
         if (tmp) {
-            if (tmp->tp())
-                resolve_assigment(tmp->tp());
+            if (tmp->tp()){         
+                tmp->tp(resolve_assigment(tmp->tp()));}
             if ((tmp->valtype() == v_identifier) && (tmp->reff()->as_expectdef())) {
                 root_entity_ptr fnd = elm->find(tmp->reff()->name());
                 if (fnd && fnd->as_value()) {
@@ -560,6 +534,7 @@ namespace x680 {
                 }
             }
         }
+        return elm;
     }
 
     namespace semantics {
@@ -583,7 +558,7 @@ namespace x680 {
             for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it)
                 compile_module(*it, global);
 
-            global->resolve();
+            global->resolve();        
             return global;
         }
 
@@ -605,7 +580,7 @@ namespace x680 {
 
         void compile_export(const x680::syntactic::module& mod, module_entity_ptr mdl) {
             for (x680::syntactic::exports::const_iterator it = mod.exports_.begin(); it != mod.exports_.end(); ++it)
-                mdl->exports().push_back(root_entity_ptr(new expectdef_entity(*it)));
+                mdl->exports().push_back(*it);
         }
 
 
@@ -626,7 +601,7 @@ namespace x680 {
         root_entity_ptr compile_import(const x680::syntactic::import& imp) {
             import_entity_ptr rslt = import_entity_ptr(new import_entity(imp.name));
             for (x680::syntactic::string_vector::const_iterator it = imp.names.begin(); it != imp.names.end(); ++it)
-                rslt->childs().push_back(root_entity_ptr(new expectdef_entity(*it)));
+                rslt->import().push_back(*it);
             return rslt;
         }
 
