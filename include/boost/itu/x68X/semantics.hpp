@@ -124,6 +124,12 @@ namespace x680 {
     protected:
 
         void resolve_child();
+        
+        static void resolve_assigments(root_entity* elm); 
+        static root_entity_ptr resolve_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());     
+        static root_entity_ptr resolve_nodef_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());
+        static root_entity_ptr resolve_type_assigment(root_entity_ptr  elm, root_entity_ptr start=root_entity_ptr());
+        static root_entity_ptr resolve_value_assigment(root_entity_ptr  elm, root_entity_ptr start=root_entity_ptr());
 
     private:
 
@@ -267,8 +273,6 @@ namespace x680 {
         
         virtual root_entity_ptr find(const std::string& nm);
 
-        entity_enum find_roottype() const;
-
 
     private:
 
@@ -292,7 +296,7 @@ namespace x680 {
             return builtin_;
         }
         
-        virtual root_entity_ptr find(const std::string& nm);
+        //virtual root_entity_ptr find(const std::string& nm);
 
     private:
 
@@ -341,11 +345,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, value_entity& self);
 
     //void check_resolve_ciclic(root_entity_ptr elm, root_entity_ptr start);     
-    void resolve_assigments(root_entity* elm); 
-    root_entity_ptr resolve_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());     
-    root_entity_ptr resolve_nodef_assigment(root_entity_ptr elm, root_entity_ptr start=root_entity_ptr());
-    root_entity_ptr resolve_type_assigment(root_entity_ptr  elm, root_entity_ptr start=root_entity_ptr());
-    root_entity_ptr resolve_value_assigment(root_entity_ptr  elm, root_entity_ptr start=root_entity_ptr());
+
 
     namespace semantics {
 
