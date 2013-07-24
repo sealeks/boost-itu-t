@@ -139,6 +139,7 @@ namespace x680 {
         value_entity* tmp = elm->as_value();
         if (tmp) {
             if (tmp->tp()) {
+                std::cout << " set type vor value: " << tmp->tp()->name() << std::endl;
                 tmp->tp(resolve_assigment(tmp->tp()));
             }
             if ((tmp->valtype() == v_identifier) && (tmp->reff()->as_expectdef())) {
