@@ -28,7 +28,7 @@ namespace x680 {
 
 
 
-     
+
     class basic_entity;
     typedef boost::shared_ptr<basic_entity> basic_entity_ptr;
     typedef boost::weak_ptr<basic_entity> basic_entity_wptr;
@@ -45,11 +45,19 @@ namespace x680 {
 
     class module_entity;
     typedef boost::shared_ptr<module_entity> module_entity_ptr;
-    
-    
+
+    class bigassigment_entity;
+    typedef boost::shared_ptr<bigassigment_entity> bigassigment_entity_ptr;
+
+    class littleassigment_entity;
+    typedef boost::shared_ptr<littleassigment_entity> littleassigment_entity_ptr;
+
     class typeassigment_entity;
-    typedef boost::shared_ptr<typeassigment_entity> typeassigment_entity_ptr;    
-    
+    typedef boost::shared_ptr<typeassigment_entity> typeassigment_entity_ptr;
+
+    class valueassigment_entity;
+    typedef boost::shared_ptr<valueassigment_entity> valueassigment_entity_ptr;
+
     class defined_entity;
     typedef boost::shared_ptr<defined_entity> defined_entity_ptr;
 
@@ -58,9 +66,9 @@ namespace x680 {
 
     class value_entity;
     typedef boost::shared_ptr<value_entity> value_entity_ptr;
-    
+
     typedef std::vector<std::string> export_vector;
-    typedef std::vector<std::string> import_vector;   
+    typedef std::vector<std::string> import_vector;
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -72,27 +80,26 @@ namespace x680 {
     public:
 
         basic_entity(basic_entity_ptr scope, const std::string& nm, entity_enum tp)
-        : scope_(scope), name_(nm), type_(tp) {
+        : scope_(scope), name_(nm), kind_(tp) {
         }
 
         basic_entity(const std::string& nm, entity_enum tp)
-        : name_(nm), type_(tp) {
+        : name_(nm), kind_(tp) {
         }
 
         basic_entity(entity_enum tp)
-        : type_(tp) {
+        : kind_(tp) {
         }
 
         virtual ~basic_entity() {
         }
 
-
         std::string name() const {
             return name_;
         }
 
-        entity_enum type() const {
-            return type_;
+        entity_enum kind() const {
+            return kind_;
         }
 
         basic_entity_ptr scope() const {
@@ -118,38 +125,44 @@ namespace x680 {
         expectdef_entity* as_expectdef();
 
         import_entity* as_import();
-        
-        typeassigment_entity*  as_declare();
+
+        bigassigment_entity* as_bigassigment();
+
+        littleassigment_entity* as_littleassigment();
+
+        typeassigment_entity* as_typeassigment();
+
+        valueassigment_entity* as_valueassigment();
 
         //type_entity* as_type();
 
         //value_entity* as_value();
 
         //defined_entity * as_assignment();
-        
+
         basic_entity_ptr self() const;
 
     protected:
 
         void resolve_child();
-        
-        static void resolve_assigments(basic_entity* elm); 
-        static basic_entity_ptr resolve_assigment(basic_entity_ptr elm, basic_entity_ptr start=basic_entity_ptr());     
-        static basic_entity_ptr resolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start=basic_entity_ptr());
-        static basic_entity_ptr resolve_type_assigment(basic_entity_ptr  elm, basic_entity_ptr start=basic_entity_ptr());
-        static basic_entity_ptr resolve_value_assigment(basic_entity_ptr  elm, basic_entity_ptr start=basic_entity_ptr());
+
+        static void resolve_assigments(basic_entity* elm);
+        static basic_entity_ptr resolve_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static basic_entity_ptr resolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static basic_entity_ptr resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static basic_entity_ptr resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
 
     private:
 
 
 
         std::string name_;
-        entity_enum type_;
+        entity_enum kind_;
         basic_entity_wptr scope_;
         basic_entity_vector childs_;
     };
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////   
     // assigment_entity
 
@@ -191,14 +204,14 @@ namespace x680 {
 
         import_entity(const std::string& nm);
         virtual void resolve();
-        
+
         import_vector& import() {
             return import_;
-        }        
-        
+        }
+
     private:
 
-        import_vector import_;       
+        import_vector import_;
 
     };
 
@@ -234,13 +247,13 @@ namespace x680 {
 
         virtual basic_entity_ptr find(const std::string& nm);
 
-        virtual void resolve();       
+        virtual void resolve();
 
     private:
-        
+
         void resolve_export();
         void resolve_externalmodule();
-        basic_entity_ptr findmodule(const std::string& nm);         
+        basic_entity_ptr findmodule(const std::string& nm);
 
         export_vector exports_;
         basic_entity_vector imports_;
@@ -250,9 +263,9 @@ namespace x680 {
 
 
     std::ostream& operator<<(std::ostream& stream, module_entity& self);
-    
-    
-        /////////////////////////////////////////////////////////////////////////   
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // expectdef_entity
     /////////////////////////////////////////////////////////////////////////  
 
@@ -264,21 +277,21 @@ namespace x680 {
 
 
 
-    };    
-    
-    
-   
+    };
+
+
+
     /////////////////////////////////////////////////////////////////////////   
     // defined_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class defined_entity  {
+    class defined_entity {
 
     public:
         defined_entity();
         defined_entity(const std::string& reff);
-        
-         basic_entity_ptr reff() const {
+
+        basic_entity_ptr reff() const {
             return reff_;
         }
 
@@ -287,12 +300,12 @@ namespace x680 {
         }
 
     private:
-        basic_entity_ptr  reff_;
+        basic_entity_ptr reff_;
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, defined_entity& self);    
-    
+    std::ostream& operator<<(std::ostream& stream, defined_entity& self);
+
     /////////////////////////////////////////////////////////////////////////   
     // type_entity
     /////////////////////////////////////////////////////////////////////////  
@@ -306,30 +319,30 @@ namespace x680 {
         defined_type builtin() const {
             return builtin_;
         }
-        
+
         //virtual basic_entity_ptr find(const std::string& nm);
 
     private:
 
         defined_type builtin_;
 
-    };    
-    
+    };
+
 
     std::ostream& operator<<(std::ostream& stream, type_entity& self);
 
     std::ostream& operator<<(std::ostream& stream, defined_type self);
-    
+
 
     /////////////////////////////////////////////////////////////////////////   
-    // type_entity
+    // value_entity
     /////////////////////////////////////////////////////////////////////////  
 
     class value_entity : public defined_entity {
 
     public:
         value_entity(value_type tpv);
-        value_entity(const std::string& reff,value_type tpv);
+        value_entity(const std::string& reff, value_type tpv);
 
         value_type valtype() const {
             return valtype_;
@@ -342,8 +355,74 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, value_entity& self);    
-    
+    std::ostream& operator<<(std::ostream& stream, value_entity& self);
+
+    /////////////////////////////////////////////////////////////////////////   
+    // bigassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class bigassigment_entity : public basic_entity {
+
+    public:
+        bigassigment_entity(basic_entity_ptr scope, const std::string& nm, defined_entity_ptr bg);
+
+        defined_entity_ptr big() const {
+            return big_;
+        }
+
+        void big(defined_entity_ptr vl) {
+            big_ = vl;
+        }
+
+        virtual basic_entity_ptr find(const std::string& nm);
+
+
+    private:
+
+        defined_entity_ptr big_;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, bigassigment_entity& self);
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // littleassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class littleassigment_entity : public basic_entity {
+
+    public:
+        littleassigment_entity(basic_entity_ptr scope, const std::string& nm, defined_entity_ptr bg, defined_entity_ptr lt);
+
+        defined_entity_ptr big() const {
+            return big_;
+        }
+
+        void big(type_entity_ptr vl) {
+            big_ = vl;
+        }
+
+        defined_entity_ptr little() const {
+            return little_;
+        }
+
+        void little(defined_entity_ptr vl) {
+            little_ = vl;
+        }
+
+        virtual basic_entity_ptr find(const std::string& nm);
+
+
+    private:
+
+        defined_entity_ptr big_;
+        defined_entity_ptr little_;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, littleassigment_entity& self);
+
+
+
     /////////////////////////////////////////////////////////////////////////   
     // typeassigment_entity
     /////////////////////////////////////////////////////////////////////////  
@@ -351,25 +430,62 @@ namespace x680 {
     class typeassigment_entity : public basic_entity {
 
     public:
-        typeassigment_entity(basic_entity_ptr scope, const std::string& nm, type_entity_ptr atm);
+        typeassigment_entity(basic_entity_ptr scope, const std::string& nm, type_entity_ptr tp);
 
-        defined_entity_ptr atom() const {
-            return atom_;
+        type_entity_ptr type() const {
+            return type_;
         }
 
-        void atom(defined_entity_ptr vl) {
-            atom_ = vl;
+        void type(type_entity_ptr vl) {
+            type_ = vl;
         }
-        
+
         virtual basic_entity_ptr find(const std::string& nm);
 
 
     private:
-        
-        type_entity_ptr atom_;
-    };    
 
-    std::ostream& operator<<(std::ostream& stream, typeassigment_entity& self);    
+        type_entity_ptr type_;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, typeassigment_entity& self);
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // valueassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class valueassigment_entity : public basic_entity {
+
+    public:
+        valueassigment_entity(basic_entity_ptr scope, const std::string& nm, type_entity_ptr tp, value_entity_ptr vl);
+
+        type_entity_ptr type() const {
+            return type_;
+        }
+
+        void type(type_entity_ptr vl) {
+            type_ = vl;
+        }
+
+        value_entity_ptr value() const {
+            return value_;
+        }
+
+        void value(value_entity_ptr vl) {
+            value_ = vl;
+        }
+
+        virtual basic_entity_ptr find(const std::string& nm);
+
+
+    private:
+
+        type_entity_ptr type_;
+        value_entity_ptr value_;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, valueassigment_entity& self);
 
 
 
@@ -407,9 +523,9 @@ namespace x680 {
         void compile_assignments(const x680::syntactic::module& mod, module_entity_ptr mdl);
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         typeassigment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-        defined_entity_ptr compile_type(const x680::syntactic::type_element& ent);
-        typeassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-        defined_entity_ptr compile_value(const x680::syntactic::value_element& ent);
+        type_entity_ptr compile_type(const x680::syntactic::type_element& ent);
+        valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        value_entity_ptr compile_value(const x680::syntactic::value_element& ent);
         defined_entity_ptr compile_test(entity_enum tp);
 
 
