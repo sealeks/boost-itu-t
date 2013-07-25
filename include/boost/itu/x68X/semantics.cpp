@@ -42,7 +42,7 @@ namespace x680 {
         return type_ == et_Import ? dynamic_cast<import_entity*> (this) : 0;
     }
 
-    type_entity* basic_entity::as_type() {
+   /* type_entity* basic_entity::as_type() {
         return type_ == et_Type ? dynamic_cast<type_entity*> (this) : 0;
     }
 
@@ -52,7 +52,11 @@ namespace x680 {
 
     defined_entity * basic_entity::as_assignment() {
         return dynamic_cast<defined_entity*> (this);
-    }
+    }*/
+    
+    typeassigment_entity * basic_entity::as_declare() {
+        return dynamic_cast<typeassigment_entity*> (this);
+    }    
 
     basic_entity_ptr basic_entity::self() const {
         if (scope()) {
@@ -98,7 +102,7 @@ namespace x680 {
             start = elm;
         else
             check_resolve_ciclic(elm, start);*/
-        defined_entity* tmp = elm->as_assignment();
+      /*  typeassigment_entity* tmp = elm->as_declare();
         if (tmp) {
             basic_entity_ptr fnd = elm->find(tmp->reff()->name());
             if (fnd) {
@@ -109,7 +113,7 @@ namespace x680 {
 
             }
 
-        }
+        }*/
         return elm;
     }
 
@@ -118,7 +122,7 @@ namespace x680 {
              start = elm;
          else
              check_resolve_ciclic(elm, start);*/
-        type_entity* tmp = elm->as_type();
+        /*typeassigment_entity* tmp = elm->as_declare();
         if (tmp) {
             if ((tmp->builtin() == t_Reference) && (tmp->reff()->as_expectdef())) {
                 basic_entity_ptr fnd = elm->find(tmp->reff()->name());
@@ -127,7 +131,7 @@ namespace x680 {
                 }
 
             }
-        }
+        }*/
         return elm;
     }
 
@@ -136,7 +140,7 @@ namespace x680 {
              start = elm;
          else
              check_resolve_ciclic(elm, start);*/
-        value_entity* tmp = elm->as_value();
+        /*value_entity* tmp = elm->as_value();
         if (tmp) {
             if (tmp->tp()) {
                 std::cout << " set type vor value: " << tmp->tp()->name() << std::endl;
@@ -148,7 +152,7 @@ namespace x680 {
                     tmp->reff(fnd);
                 }
             }
-        }
+        }*/
         return elm;
     }
 
@@ -308,8 +312,8 @@ namespace x680 {
         for (basic_entity_vector::iterator it = self.childs().begin(); it != self.childs().end(); ++it) {
             ;
             //stream << "      components: ";
-            if ((*it)->as_assignment())
-                stream << *((*it)->as_assignment());
+            if ((*it)->as_declare())
+                stream << *((*it)->as_declare());
         }
         return stream;
     }
@@ -320,8 +324,8 @@ namespace x680 {
     // expectdef_entity
     /////////////////////////////////////////////////////////////////////////
 
-    expectdef_entity::expectdef_entity(basic_entity_ptr scope, const std::string& nm)
-    : basic_entity(scope, nm, et_Nodef) {
+    expectdef_entity::expectdef_entity(const std::string& nm)
+    : basic_entity(nm, et_Nodef) {
     }
 
     std::ostream& operator<<(std::ostream& stream, expectdef_entity& self) {
@@ -329,52 +333,21 @@ namespace x680 {
         return stream;
     }
 
-
-    /////////////////////////////////////////////////////////////////////////   
-    // declare_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    declare_entity::declare_entity(basic_entity_ptr scope, const std::string& nm, defined_entity_ptr atm) :
-    basic_entity(scope, nm, atm ? atm->type() : et_Nodef), atom_(atm) {
-    };
-
-    basic_entity_ptr declare_entity::find(const std::string& nm) {
-        if (scope())
-            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
-                if (nm == (*it)->name()) {
-                    *it = resolve_assigment(*it);
-                    return *it;
-                }
-            }
-        if (scope())
-            return scope()->find(nm);
-    }
-
     /////////////////////////////////////////////////////////////////////////   
     // defined_entity
     /////////////////////////////////////////////////////////////////////////   
 
-    defined_entity::defined_entity(basic_entity_ptr scope, const std::string& nm, entity_enum tp, const std::string& rf)
-    : {
-        if (!rf.empty())
-            reff(basic_entity_ptr(new expectdef_entity(scope, rf)));
+    defined_entity::defined_entity() {  };
+    
+    defined_entity::defined_entity(const std::string& reff)  {
+        reff_=basic_entity_ptr( new expectdef_entity(reff));
     }
 
-    basic_entity_ptr defined_entity::find(const std::string& nm) {
-        if (scope())
-            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
-                if (nm == (*it)->name()) {
-                    *it = resolve_assigment(*it);
-                    return *it;
-                }
-            }
-        if (scope())
-            return scope()->find(nm);
-    }
+
 
     std::ostream& operator<<(std::ostream& stream, defined_entity& self) {
         stream << "\n        ";
-        switch (self.type()) {
+         /*     switch (self.type()) {
             case et_Type:
             {
                 return stream << *(self.as_type());
@@ -410,12 +383,12 @@ namespace x680 {
                 stream << "ND:";
             }
         }
-        if (self.as_expectdef())
+  if (self.as_expectdef())
             stream << self.name() << "(?)";
         else
             stream << self.name();
         if (self.reff() && (self.type() == et_Nodef))
-            stream << " reff to " << self.reff()->name();
+            stream << " reff to " << self.reff()->name();*/
         return stream;
     }
 
@@ -424,8 +397,12 @@ namespace x680 {
     // type_entity
     /////////////////////////////////////////////////////////////////////////   
 
-    type_entity::type_entity(basic_entity_ptr scope, defined_type tp, const std::string& nm, const std::string& reff)
-    : defined_entity(scope, nm, et_Type, reff), builtin_(tp) {
+    type_entity::type_entity(defined_type tp)
+    : defined_entity(), builtin_(tp) {
+    }
+    
+    type_entity::type_entity(const std::string& reff, defined_type tp)
+     : defined_entity(reff), builtin_(tp) {       
     }
 
     //   basic_entity_ptr type_entity::find(const std::string& nm) {
@@ -440,20 +417,47 @@ namespace x680 {
             else
                 stream << "*->[" << self.reff()->name() << "] ";
         }
-        stream << " id: " << self.name();
+        //stream << " id: " << self.name();
         return stream;
     }
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // typeassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    typeassigment_entity::typeassigment_entity(basic_entity_ptr scope, const std::string& nm, defined_entity_ptr atm) :
+    basic_entity(scope, nm, atm ? atm->type() : et_Nodef), atom_(atm) {
+    };
+
+    basic_entity_ptr typeassigment_entity::find(const std::string& nm) {
+        if (scope())
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if (nm == (*it)->name()) {
+                    *it = resolve_assigment(*it);
+                    return *it;
+                }
+            }
+        if (scope())
+            return scope()->find(nm);
+    }
+    
+    std::ostream& operator<<(std::ostream& stream, typeassigment_entity& self){
+        return stream;
+    }    
+
+
 
     /////////////////////////////////////////////////////////////////////////   
     // value_entity
     /////////////////////////////////////////////////////////////////////////       
 
-    value_entity::value_entity(basic_entity_ptr scope, value_type tpv, const std::string& nm, const std::string& reff)
-    : defined_entity(scope, nm, et_Value, reff), valtype_(tpv) {
+    value_entity::value_entity(value_type tpv)
+    : defined_entity( et_Value) , valtype_(tpv) {
     }
 
-    value_entity::value_entity(basic_entity_ptr scope, value_type tpv, type_entity_ptr t, const std::string& nm, const std::string& reff)
-    : defined_entity(scope, nm, et_Value, reff), valtype_(tpv), tp_(t) {
+    value_entity::value_entity(const std::string& reff,value_type tpv)
+    : defined_entity(et_Value), valtype_(tpv) {
     }
 
     std::ostream& operator<<(std::ostream& stream, defined_type self) {
@@ -523,7 +527,7 @@ namespace x680 {
             else
                 stream << " reff_to: [" << self.reff()->name() << "] ";
         }*/
-        stream << " id: " << self.name();
+        //stream << " id: " << self.name();
         return stream;
     }
 
@@ -627,7 +631,7 @@ namespace x680 {
 
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             entity_enum tp = et_Nodef;
-            defined_entity_ptr rslt;
+            basic_entity_ptr rslt;
             switch (ent.which()) {
                 case 0: return compile_typeassignment(scope, ent);
                 case 1: return compile_valueassignment(scope, ent);
@@ -641,28 +645,28 @@ namespace x680 {
                 {
                     tp = et_ValueSet;
                     x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);
-                    rslt = defined_entity_ptr(new defined_entity(scope, tmp.identifier, tp));
+                    rslt = typeassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_test((tp))));
                     break;
                 }
                 case 3:
                 {
                     tp = et_Class;
                     x680::syntactic::class_assignment tmp = boost::get<x680::syntactic::class_assignment>(ent);
-                    rslt = defined_entity_ptr(new defined_entity(scope, tmp.identifier, tp));
+                    rslt = typeassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_test((tp))));
                     break;
                 }
                 case 4:
                 {
                     tp = et_Object;
                     x680::syntactic::object_assignment tmp = boost::get<x680::syntactic::object_assignment>(ent);
-                    rslt = defined_entity_ptr(new defined_entity(scope, tmp.identifier, tp));
+                    rslt = typeassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_test((tp))));
                     break;
                 }
                 case 5:
                 {
                     tp = et_ObjectSet;
                     x680::syntactic::objectset_assignment tmp = boost::get<x680::syntactic::objectset_assignment>(ent);
-                    rslt = defined_entity_ptr(new defined_entity(scope, tmp.identifier, tp));
+                    rslt =typeassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_test((tp))));
                     break;
                 }
                 case 6:
@@ -670,38 +674,39 @@ namespace x680 {
                 {
                     tp = et_Nodef;
                     x680::syntactic::unknown_tc_assignment tmp = boost::get<x680::syntactic::unknown_tc_assignment>(ent);
-                    rslt = defined_entity_ptr(new defined_entity(scope, tmp.identifier, tp, tmp.unknown_tc.reff));
+                    rslt = typeassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_test((tp))));
                     break;
                 }
 
                 default:
                 {
-                    rslt = defined_entity_ptr(new defined_entity(scope, "NDF", tp));
+                    rslt = typeassigment_entity_ptr ( new typeassigment_entity(scope, "NDF",compile_test((tp))));
                 }
             }
             return rslt;
         }
 
-        type_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
+        typeassigment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::type_assignment tmp = boost::get<x680::syntactic::type_assignment>(ent);
-            return compile_type(scope, tmp.type, tmp.identifier);
+            return typeassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_type(tmp.type)));
         }
 
-        type_entity_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent, const std::string id) {
-            return type_entity_ptr(new type_entity(scope, ent.builtin_t, id, ent.reference));
+        defined_entity_ptr compile_type(const x680::syntactic::type_element& ent) {         
+            return ent.reference.empty() ? defined_entity_ptr(new type_entity(ent.builtin_t)) : defined_entity_ptr(new type_entity(ent.reference, ent.builtin_t));
         }
 
-        value_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
+        typeassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::value_assignment tmp = boost::get<x680::syntactic::value_assignment>(ent);
-            return value_entity_ptr(new value_entity(scope, tmp.value.type,
-                    compile_type(scope, tmp.type), tmp.identifier, tmp.value.type == v_identifier ? tmp.value.identifier : ""));
+            return typeassigment_entity_ptr ( new  typeassigment_entity(scope, tmp.identifier,compile_value(tmp.value)));
         }
 
-        value_entity_ptr compile_value(basic_entity_ptr scope, const x680::syntactic::value_element& ent, const std::string id) {
-            return value_entity_ptr(new value_entity(scope, ent.type, id, ent.type == v_identifier ? ent.identifier : ""));
+        defined_entity_ptr compile_value(const x680::syntactic::value_element& ent) {
+            return (ent.type != v_identifier) ? value_entity_ptr(new value_entity(ent.type)) : value_entity_ptr(new value_entity(ent.identifier,ent.type));
         }
 
-
+        defined_entity_ptr compile_test(entity_enum tp) {
+            return  defined_entity_ptr(new defined_entity(tp));
+        }
 
 
 
