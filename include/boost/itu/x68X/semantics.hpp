@@ -50,8 +50,8 @@ namespace x680 {
     
     
 
-    class defineed_entity;
-    typedef boost::shared_ptr<defineed_entity> defineed_entity_ptr;
+    class defined_entity;
+    typedef boost::shared_ptr<defined_entity> defined_entity_ptr;
 
     class type_entity;
     typedef boost::shared_ptr<type_entity> type_entity_ptr;
@@ -91,7 +91,7 @@ namespace x680 {
             return name_;
         }
 
-        entity_enum type() const {
+        virtual entity_enum type() const {
             return type_;
         }
 
@@ -123,7 +123,7 @@ namespace x680 {
 
         value_entity* as_value();
 
-        defineed_entity * as_assignment();
+        defined_entity * as_assignment();
         
         basic_entity_ptr self() const;
 
@@ -250,6 +250,20 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, module_entity& self);
     
     
+        /////////////////////////////////////////////////////////////////////////   
+    // expectdef_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class expectdef_entity : public basic_entity {
+
+    public:
+
+        expectdef_entity(basic_entity_ptr scope, const std::string& nm);
+
+
+
+    };    
+    
     /////////////////////////////////////////////////////////////////////////   
     // declare_entity
     /////////////////////////////////////////////////////////////////////////  
@@ -257,13 +271,17 @@ namespace x680 {
     class declare_entity : public basic_entity {
 
     public:
-        declare_entity(basic_entity_ptr scope, const std::string& nm, defineed_entity_ptr atm);
+        declare_entity(basic_entity_ptr scope, const std::string& nm, defined_entity_ptr atm);
+        
+        virtual entity_enum type() const {
+            return atom_ ? atom_->type() : et_Nodef;
+        }
 
         basic_entity_ptr atom() const {
             return atom_;
         }
 
-        void atom(defineed_entity_ptr vl) {
+        void atom(defined_entity_ptr vl) {
             atom_ = vl;
         }
         
@@ -271,53 +289,48 @@ namespace x680 {
 
 
     private:
-
-        defineed_entity_ptr atom_;
+        
+        defined_entity_ptr atom_;
     };    
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // defineed_entity
+    // defined_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class defineed_entity  {
+    class defined_entity  {
 
     public:
-        defineed_entity(basic_entity_ptr scope, const std::string& nm, defineed_entity_ptr);
+        defined_entity(entity_enum tp): type_(tp) {};
 
-
+        entity_enum type() const {
+            return type_;
+        }
         
-        virtual basic_entity_ptr find(const std::string& nm);
+         basic_entity_ptr reff() const {
+            return reff_;
+        }
 
+        void reff(basic_entity_ptr vl) {
+            reff_ = vl;
+        }
 
     private:
-        defineed_entity_ptr  reff_;
+        basic_entity_ptr  reff_;
+        entity_enum type_;
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, defineed_entity& self);
+    std::ostream& operator<<(std::ostream& stream, defined_entity& self);
     
-        /////////////////////////////////////////////////////////////////////////   
-    // expectdef_entity
-    /////////////////////////////////////////////////////////////////////////  
 
-    class expectdef_entity : public defineed_entity {
-
-    public:
-
-        expectdef_entity(basic_entity_ptr scope, const std::string& nm);
-        expectdef_entity(const std::string& nm);
-
-
-
-    };
 
 
     /////////////////////////////////////////////////////////////////////////   
     // type_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class type_entity : public defineed_entity {
+    class type_entity : public defined_entity {
 
     public:
         type_entity(basic_entity_ptr scope, defined_type tp, const std::string& nm = "", const std::string& reff = "");
@@ -345,7 +358,7 @@ namespace x680 {
     // type_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class value_entity : public defineed_entity {
+    class value_entity : public defined_entity {
 
     public:
         value_entity(basic_entity_ptr scope, value_type tpv, const std::string& nm = "", const std::string& reff = "");
