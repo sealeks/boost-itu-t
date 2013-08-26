@@ -57,6 +57,9 @@ namespace x680 {
 
     class valueassigment_entity;
     typedef boost::shared_ptr<valueassigment_entity> valueassigment_entity_ptr;
+    
+    class valuesetassigment_entity;
+    typedef boost::shared_ptr<valuesetassigment_entity> valuesetassigment_entity_ptr;    
 
     class defined_entity;
     typedef boost::shared_ptr<defined_entity> defined_entity_ptr;
@@ -133,14 +136,8 @@ namespace x680 {
         typeassigment_entity* as_typeassigment();
 
         valueassigment_entity* as_valueassigment();
-
-        //type_entity* as_type();
-
-        //value_entity* as_value();
-
-        //defined_entity * as_assignment();
-
-        basic_entity_ptr self() const;
+        
+        valuesetassigment_entity* as_valuesetassigment();
 
     protected:
 
@@ -441,6 +438,7 @@ namespace x680 {
         }
 
         virtual basic_entity_ptr find(const std::string& nm);
+        
 
 
     private:
@@ -488,7 +486,41 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, valueassigment_entity& self);
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // valueassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
 
+    class valuesetassigment_entity : public basic_entity {
+
+    public:
+        valuesetassigment_entity(basic_entity_ptr scope, const std::string& nm, type_entity_ptr tp, defined_entity_ptr vl);
+
+        type_entity_ptr type() const {
+            return type_;
+        }
+
+        void type(type_entity_ptr vl) {
+            type_ = vl;
+        }
+
+        defined_entity_ptr valueset() const {
+            return valueset_;
+        }
+
+        void valueset(defined_entity_ptr vl) {
+            valueset_ = vl;
+        }
+
+        virtual basic_entity_ptr find(const std::string& nm);
+
+
+    private:
+
+        type_entity_ptr type_;
+        defined_entity_ptr valueset_;
+    };
+
+    std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity& self);
 
 
 
@@ -526,6 +558,8 @@ namespace x680 {
         type_entity_ptr compile_type(const x680::syntactic::type_element& ent);
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         value_entity_ptr compile_value(const x680::syntactic::value_element& ent);
+        valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent); 
+        bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         defined_entity_ptr compile_test(entity_enum tp);
 
 
