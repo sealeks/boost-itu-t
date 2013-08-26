@@ -560,7 +560,7 @@ namespace x680 {
         value_entity_ptr compile_value(const x680::syntactic::value_element& ent);
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent); 
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-        defined_entity_ptr compile_test(entity_enum tp);
+        defined_entity_ptr compile_test(const std::string& rf);
 
 
 

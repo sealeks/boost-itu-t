@@ -70,7 +70,7 @@ namespace x680 {
     }
 
     basic_entity_ptr basic_entity::resolve_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
-        if (elm->name().empty())
+         if (elm->name().empty())
             return elm;
         switch (elm->kind()) {
             case et_Nodef:
@@ -97,18 +97,15 @@ namespace x680 {
             start = elm;
         else
             check_resolve_ciclic(elm, start);*/
-        /*  typeassigment_entity* tmp = elm->as_declare();
-          if (tmp) {
-              basic_entity_ptr fnd = elm->find(tmp->reff()->name());
+         bigassigment_entity* tmp = elm->as_bigassigment();
+         if (tmp && (tmp->big()) && (tmp->big()->reff())) {
+              basic_entity_ptr fnd = elm->find(tmp->big()->reff()->name());
               if (fnd) {
-                  type_entity_ptr rslt(new type_entity(elm->scope(), t_Reference, elm->name()));
-                  std::cout << " rresolve_nodef_assigment find: " << tmp->reff()->name() << std::endl;
-                  rslt->reff(fnd);
-                  return rslt;
-
+                 basic_entity_ptr rslt(new typeassigment_entity(elm->scope(), tmp->name(), type_entity_ptr(new type_entity(tmp->big()->reff()->name(),t_Reference))));
+                 std::cout << " rresolve_nodef_assigment find: " << tmp->big()->reff()->name() << std::endl;
+                 return resolve_type_assigment(rslt);
               }
-
-          }*/
+          }
         return elm;
     }
 
@@ -120,7 +117,6 @@ namespace x680 {
         typeassigment_entity* tmp = elm->as_typeassigment();
         if (tmp) {
             if ((tmp->type()) && (tmp->type()->reff()) && (tmp->type()->reff()->as_expectdef())) {
-                std::cout << "!!!!!!!!!!!!!!!!!!!!! find:"  <<  tmp->type()->reff()->name() << std::endl;
                 basic_entity_ptr fnd = elm->find(tmp->type()->reff()->name());
                 if (fnd) {
                     tmp->type()->reff(fnd);
@@ -135,19 +131,15 @@ namespace x680 {
              start = elm;
          else
              check_resolve_ciclic(elm, start);*/
-        /*value_entity* tmp = elm->as_value();
+        valueassigment_entity* tmp = elm->as_valueassigment();
         if (tmp) {
-            if (tmp->tp()) {
-                std::cout << " set type vor value: " << tmp->tp()->name() << std::endl;
-                tmp->tp(resolve_assigment(tmp->tp()));
-            }
-            if ((tmp->valtype() == v_identifier) && (tmp->reff()->as_expectdef())) {
-                basic_entity_ptr fnd = elm->find(tmp->reff()->name());
-                if (fnd && fnd->as_value()) {
-                    tmp->reff(fnd);
+            if ((tmp->type()) && (tmp->type()->reff()) && (tmp->type()->reff()->as_expectdef())) {
+                basic_entity_ptr fnd = elm->find(tmp->type()->reff()->name());
+                if (fnd) {
+                    tmp->type()->reff(fnd);
                 }
             }
-        }*/
+        }
         return elm;
     }
 
@@ -534,7 +526,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     bigassigment_entity::bigassigment_entity(basic_entity_ptr scope, const std::string& nm, defined_entity_ptr bg) :
-    basic_entity(scope, nm, et_Type), big_(bg) {
+    basic_entity(scope, nm, et_Nodef), big_(bg) {
     };
 
     basic_entity_ptr bigassigment_entity::find(const std::string& nm) {
@@ -819,17 +811,18 @@ namespace x680 {
         
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);
-            return valuesetassigment_entity_ptr(new valuesetassigment_entity(scope, tmp.identifier, compile_type(tmp.type), compile_test(et_ValueSet)));
+            return valuesetassigment_entity_ptr(new valuesetassigment_entity(scope, tmp.identifier, compile_type(tmp.type), defined_entity_ptr()));
         }
 
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::unknown_tc_assignment tmp = boost::get<x680::syntactic::unknown_tc_assignment>(ent);
-            return bigassigment_entity_ptr(new bigassigment_entity(scope, tmp.identifier, compile_test(et_Nodef)));
+            return bigassigment_entity_ptr(new bigassigment_entity(scope, tmp.identifier, compile_test(tmp.unknown_tc.reff)));
         }
 
-        defined_entity_ptr compile_test(entity_enum tp) {
-            return defined_entity_ptr();
+        defined_entity_ptr compile_test( const std::string& rf) {
+            return  defined_entity_ptr( new defined_entity(rf));
         }
+
 
 
 
