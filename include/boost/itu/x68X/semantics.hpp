@@ -66,6 +66,9 @@ namespace x680 {
 
     class basic_atom;
     typedef boost::shared_ptr<basic_atom> basic_atom_ptr;
+    
+    class tagged; 
+    typedef boost::shared_ptr<tagged> tagged_ptr;    
 
     class type_atom;
     typedef boost::shared_ptr<type_atom> type_atom_ptr;
@@ -84,6 +87,9 @@ namespace x680 {
     
     class strvalue_atom;
     typedef boost::shared_ptr<strvalue_atom> strvalue_atom_ptr;   
+   
+    class nullvalue_atom;
+    typedef boost::shared_ptr<nullvalue_atom> nullvalue_atom_ptr;       
     
     class class_atom;
     typedef boost::shared_ptr<class_atom> class_atom_ptr;    
@@ -325,6 +331,46 @@ namespace x680 {
 
 
     std::ostream& operator<<(std::ostream& stream, basic_atom& self);
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // tagged
+    /////////////////////////////////////////////////////////////////////////      
+    
+    class tagged {
+
+    public:
+        tagged(value_atom_ptr vl, tagclass_type cl = tcl_context,  tagrule_type rl = noset_tags) 
+        : number_(vl), class_(cl), rule_(rl) {}
+        
+        virtual  ~tagged(){}
+        
+        value_atom_ptr number() const{
+            return number_;
+        }
+        
+        tagclass_type _class() const{
+            return class_;            
+        }
+        
+        tagrule_type rule() const{
+            return rule_;            
+        }        
+        
+    private:
+        
+        value_atom_ptr number_;
+        tagclass_type class_;
+        tagrule_type rule_;
+        
+    };    
+    
+    
+    std::ostream& operator<<(std::ostream& stream, tagclass_type self);  
+    
+    std::ostream& operator<<(std::ostream& stream, tagrule_type self);     
+    
+    std::ostream& operator<<(std::ostream& stream, tagged& self);       
 
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
@@ -333,18 +379,21 @@ namespace x680 {
     class type_atom : public basic_atom {
 
     public:
-        type_atom(defined_type tp);
-        type_atom(const std::string& reff, defined_type tp);
+        type_atom(defined_type tp,  tagged_ptr tg = tagged_ptr());
+        type_atom(const std::string& reff, defined_type tp, tagged_ptr tg = tagged_ptr());
 
         defined_type builtin() const {
             return builtin_;
         }
-
-        //virtual basic_entity_ptr find(const std::string& nm);
+        
+         tagged_ptr tag() const {
+              return tag_;
+         }       
 
     private:
 
         defined_type builtin_;
+        tagged_ptr tag_;
 
     };
 
@@ -352,6 +401,9 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, type_atom& self);
 
     std::ostream& operator<<(std::ostream& stream, defined_type self);
+    
+    
+ 
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -374,7 +426,9 @@ namespace x680 {
         
         boolvalue_atom* as_bool();
      
-        strvalue_atom* as_cstr();              
+        strvalue_atom* as_cstr();     
+        
+        nullvalue_atom* as_null();           
 
     private:
 
@@ -452,7 +506,7 @@ namespace x680 {
     
     
     /////////////////////////////////////////////////////////////////////////   
-    // realvalue_atom
+    // strvalue_atom
     /////////////////////////////////////////////////////////////////////////  
 
     class strvalue_atom : public value_atom {
@@ -472,6 +526,23 @@ namespace x680 {
     
    
     std::ostream& operator<<(std::ostream& stream, strvalue_atom& self);      
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // nullvalue_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class nullvalue_atom : public value_atom {
+
+    public:
+        nullvalue_atom() : value_atom(v_null){};
+
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, nullvalue_atom& self);    
+
+    
     
     /////////////////////////////////////////////////////////////////////////   
     // class_atom
@@ -727,6 +798,7 @@ namespace x680 {
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         typeassigment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         type_atom_ptr compile_type(const x680::syntactic::type_element& ent);
+        tagged_ptr compile_tag(const x680::syntactic::tag_type& ent);      
         classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         class_atom_ptr compile_class(const x680::syntactic::class_element& ent);        
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);

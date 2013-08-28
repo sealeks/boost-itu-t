@@ -429,18 +429,51 @@ namespace x680 {
            stream << " reff to " << self.reff()->name();*/
         return stream;
     }
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // tagged
+    /////////////////////////////////////////////////////////////////////////     
 
-
+    std::ostream& operator<<(std::ostream& stream, tagclass_type self){
+        switch (self) {
+            case tcl_universal:  return stream << "UNIVERSAL ";
+            case tcl_application:  return stream << "APPLICATION ";
+            case tcl_private:  return stream << "PRIVATE ";
+            case tcl_context:  return stream << "CONTEXT ";
+        }        
+         return stream;
+    }
+     
+    std::ostream& operator<<(std::ostream& stream, tagrule_type self){
+        switch (self) {
+            case explicit_tags:  return stream << "EXPLICIT ";
+            case implicit_tags:  return stream << "IMPLICIT ";
+            case automatic_tags:  return stream << "AUTOMATIC ";
+            default:  return stream;
+        }        
+         return stream;        
+    }    
+    
+    std::ostream& operator<<(std::ostream& stream, tagged& self){
+        if (self.number()) {
+            if (self.rule() == noset_tags)
+                return stream << " [" << *(self.number()) << " " << self._class() << "] ";
+            else
+                return stream << " [ " << self.rule() << *(self.number()) << " " << self._class() << "] ";                
+        }
+        return stream;
+    }  
+    
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
     /////////////////////////////////////////////////////////////////////////   
 
-    type_atom::type_atom(defined_type tp)
-    : basic_atom(), builtin_(tp) {
+    type_atom::type_atom(defined_type tp, tagged_ptr tg)
+    : basic_atom(), builtin_(tp), tag_(tg) {
     }
 
-    type_atom::type_atom(const std::string& reff, defined_type tp)
-    : basic_atom(reff), builtin_(tp) {
+    type_atom::type_atom(const std::string& reff, defined_type tp, tagged_ptr tg)
+    : basic_atom(reff), builtin_(tp), tag_(tg) {
     }
 
     //   basic_entity_ptr type_atom::find(const std::string& nm) {
@@ -448,6 +481,9 @@ namespace x680 {
     //            }
 
     std::ostream& operator<<(std::ostream& stream, type_atom& self) {
+        if (self.tag()) {
+            stream << *(self.tag());
+        }
         if (self.builtin() == t_Reference) {
             if (self.reff()->as_expectdef())
                 stream << "??? *" << self.reff()->name();
@@ -542,13 +578,17 @@ namespace x680 {
     strvalue_atom* value_atom::as_cstr() {
         return dynamic_cast<strvalue_atom*> (this);
     }   
+    
+    nullvalue_atom* value_atom::as_null() {
+        return dynamic_cast<nullvalue_atom*> (this);
+    }       
 
     std::ostream& operator<<(std::ostream& stream, value_atom& self) {
         switch(self.valtype()){
             case v_boolean: return (stream << *(self.as_bool()));
             case v_number: return (stream << *(self.as_number()));
             case v_real: return (stream << *(self.as_real()));
-       // v_null, // NULL /
+            case v_null: return (stream << *(self.as_null()));
         //v_bstring, // BitStringValue, OctetStringValue
        // v_hstring, // BitStringValue, OctetStringValue
             case v_cstring: return (stream << *(self.as_cstr()));   
@@ -583,7 +623,12 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, strvalue_atom& self) {
         stream << "(c) '" <<  self.value() << "'";
         return stream;
-    }        
+    }       
+    
+    std::ostream& operator<<(std::ostream& stream, nullvalue_atom& self) {
+        stream << "(NULL)";
+        return stream;
+    }       
 
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
@@ -790,11 +835,11 @@ namespace x680 {
             x680::syntactic::modules synxtasresult;
             int success = x680::syntactic::parse_fs(path, synxtasresult);
 
-            global_entity_ptr global = global_entity_ptr(new global_entity());
+            global_entity_ptr global = global_entity_ptr(new global_entity());            
 
             for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it)
                 compile_module(*it, global);
-
+            
             global->resolve();
             return global;
         }
@@ -806,7 +851,7 @@ namespace x680 {
         void compile_module(const x680::syntactic::module& mod, global_entity_ptr global) {
             module_entity_ptr modul = module_entity_ptr(new module_entity(global, mod.name, mod.file, mod.allexport));
             compile_export(mod, modul);
-            compile_imports(mod, modul);
+            compile_imports(mod, modul);       
             compile_assignments(mod, modul);
             global->childs().push_back(modul);
         }
@@ -866,53 +911,6 @@ namespace x680 {
                 case 2: return compile_valuesetassignment(scope, ent);
                 case 3: return compile_classassignment(scope, ent);
                 case 6: return compile_bigassignment(scope, ent);
-                    /*{
-                        tp = et_Value;
-                        x680::syntactic::value_assignment tmp = boost::get<x680::syntactic::value_assignment>(ent);
-                        rslt = value_atom_ptr(new value_atom(scope,  tmp.value.type, tmp.identifier, tmp.value.type==v_defined ? tmp.value.identifier : ""));
-                        break;
-                    }*/
-                    /* case 2:
-                     {
-                         tp = et_ValueSet;
-                         x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);
-                         rslt = littleassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_test((tp))));
-                         break;
-                     }
-                     case 3:
-                     {
-                         tp = et_Class;
-                         x680::syntactic::class_assignment tmp = boost::get<x680::syntactic::class_assignment>(ent);
-                         rslt = typeassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_test((tp))));
-                         break;
-                     }
-                     case 4:
-                     {
-                         tp = et_Object;
-                         x680::syntactic::object_assignment tmp = boost::get<x680::syntactic::object_assignment>(ent);
-                         rslt = typeassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_test((tp))));
-                         break;
-                     }
-                     case 5:
-                     {
-                         tp = et_ObjectSet;
-                         x680::syntactic::objectset_assignment tmp = boost::get<x680::syntactic::objectset_assignment>(ent);
-                         rslt =typeassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_test((tp))));
-                         break;
-                     }
-                     case 6:
-                     case 7:
-                     {
-                         tp = et_Nodef;
-                         x680::syntactic::unknown_tc_assignment tmp = boost::get<x680::syntactic::unknown_tc_assignment>(ent);
-                         rslt = typeassigment_entity_ptr ( new typeassigment_entity(scope, tmp.identifier,compile_test((tp))));
-                         break;
-                     }
-
-                     default:
-                     {
-                         rslt = typeassigment_entity_ptr ( new typeassigment_entity(scope, "NDF",compile_test((tp))));
-                     }*/
             }
             return rslt;
         }
@@ -922,9 +920,22 @@ namespace x680 {
             return typeassigment_entity_ptr(new typeassigment_entity(scope, tmp.identifier, compile_type(tmp.type)));
         }
 
-        type_atom_ptr compile_type(const x680::syntactic::type_element& ent) {
-            return ent.reference.empty() ? type_atom_ptr(new type_atom(ent.builtin_t)) : type_atom_ptr(new type_atom(ent.reference, ent.builtin_t));
+        type_atom_ptr compile_type(const x680::syntactic::type_element& ent) {     
+            return ent.reference.empty() ?   type_atom_ptr(new type_atom(ent.builtin_t, compile_tag(ent.tag))) : 
+                type_atom_ptr(new type_atom(ent.reference, ent.builtin_t, compile_tag(ent.tag)));
         }
+        
+        tagged_ptr compile_tag(const x680::syntactic::tag_type& ent) { 
+           if (ent.number.empty())
+               return tagged_ptr();
+            try {
+                  value_atom_ptr nm(new numvalue_atom(boost::lexical_cast<int > (ent.number)));
+                  return tagged_ptr( new tagged(nm, ent.class_, ent.rule));}
+            catch(...){               
+            }
+            value_atom_ptr nm(new value_atom(ent.number, v_defined));  
+            return tagged_ptr( new tagged(nm, ent.class_, ent.rule));
+        }       
 
         classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::class_assignment tmp = boost::get<x680::syntactic::class_assignment>(ent);
@@ -946,7 +957,7 @@ namespace x680 {
                     case v_boolean: return value_atom_ptr(new boolvalue_atom(ent.value == "TRUE"));
                     case v_number: return value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (ent.value)));
                     case v_real: return value_atom_ptr(new realvalue_atom(boost::lexical_cast<double > (ent.value)));
-                        // v_null, // NULL /
+                    case v_null: return value_atom_ptr(new nullvalue_atom());
                         //v_bstring, // BitStringValue, OctetStringValue
                         // v_hstring, // BitStringValue, OctetStringValue
                     case v_cstring: return value_atom_ptr(new strvalue_atom(ent.value));
