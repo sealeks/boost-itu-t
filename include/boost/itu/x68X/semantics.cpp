@@ -150,8 +150,14 @@ namespace x680 {
                 basic_entity_ptr fnd = elm->find(tmp->type()->reff()->name());
                 if (fnd) {
                     tmp->type()->reff(fnd);
-                }
+                }              
             }
+            if ((tmp->value()) && (tmp->value()->reff()) && (tmp->value()->reff()->as_expectdef())) {
+                basic_entity_ptr fnd = elm->find(tmp->value()->reff()->name());
+                if (fnd) {
+                    tmp->value()->reff(fnd);
+                }              
+            }            
         }
         return elm;
     }
@@ -444,9 +450,9 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, type_atom& self) {
         if (self.builtin() == t_Reference) {
             if (self.reff()->as_expectdef())
-                stream << "???" << self.reff()->name();
+                stream << "??? *" << self.reff()->name();
             else
-                stream << self.reff()->name();
+                stream <<  " *" << self.reff()->name();
         } else {
             stream << self.builtin();
         }
@@ -520,37 +526,64 @@ namespace x680 {
     value_atom::value_atom(const std::string& reff, value_type tpv)
     : basic_atom(reff), valtype_(tpv) {
     }
+    
+    numvalue_atom* value_atom::as_number() {
+        return dynamic_cast<numvalue_atom*> (this);
+    }
+
+    realvalue_atom* value_atom::as_real() {
+        return dynamic_cast<realvalue_atom*> (this);
+    }
+
+    boolvalue_atom* value_atom::as_bool() {
+        return dynamic_cast<boolvalue_atom*> (this);
+    }
+
+    strvalue_atom* value_atom::as_cstr() {
+        return dynamic_cast<strvalue_atom*> (this);
+    }   
 
     std::ostream& operator<<(std::ostream& stream, value_atom& self) {
-        stream << "VL: " << (int) self.valtype();
-        /*  if (self.tp())
-            stream << " ||" << *self.tp() << " || ";
-        else
-            stream << " || ?  || ";
-        if (self.builtin() == t_Reference) {
+        switch(self.valtype()){
+            case v_boolean: return (stream << *(self.as_bool()));
+            case v_number: return (stream << *(self.as_number()));
+            case v_real: return (stream << *(self.as_real()));
+       // v_null, // NULL /
+        //v_bstring, // BitStringValue, OctetStringValue
+       // v_hstring, // BitStringValue, OctetStringValue
+            case v_cstring: return (stream << *(self.as_cstr()));   
+            default:{}
+        }
+        if (self.valtype()==v_defined){
             if (self.reff()->as_expectdef())
-                stream << " reff_to: [" << *(self.reff()->as_expectdef()) << "] ";
+                return stream << "??? *" << self.reff()->name();
             else
-                stream << " reff_to: [" << self.reff()->name() << "] ";
-        }*/
-        //stream << " id: " << self.name();
-        return stream;
+                return stream <<  " *" << self.reff()->name();
+        }
+       return  stream << "?: " << (int) self.valtype();
     }
 
 
 
-    /*basic_entity_ptr check_resolve_ciclic(basic_entity_ptr elm) {
-        if (elm && start && elm == start) {
-            if (elm->scope() && elm->scope()->as_module()) {
-                throw semantics::error("Ciclic refference : " + elm->name() +
-                        " in module: " + elm->scope()->as_module()->name() +
-                        " in file: " + elm->scope()->as_module()->file());
-            } else {
-                throw semantics::error("Ciclic refference : " + elm->name());
-            }
-        }
-    }*/
-
+    std::ostream& operator<<(std::ostream& stream, numvalue_atom& self) {
+        stream << "(n)" <<  self.value();
+        return stream;
+    }
+    
+    std::ostream& operator<<(std::ostream& stream, realvalue_atom& self) {
+        stream << "(r)" <<  self.value();
+        return stream;
+    }    
+    
+    std::ostream& operator<<(std::ostream& stream, boolvalue_atom& self) {
+        stream << "(b)" <<  self.value();
+        return stream;
+    }
+    
+    std::ostream& operator<<(std::ostream& stream, strvalue_atom& self) {
+        stream << "(c) '" <<  self.value() << "'";
+        return stream;
+    }        
 
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
@@ -661,7 +694,7 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, valueassigment_entity& self) {
-        return stream << "(v) " << self.name() << " [" << *(self.type()) << "] :: = " << "\n";
+        return stream << "(v) " << self.name() << " [" << *(self.type()) << "] :: = "  << *(self.value()) << "\n";
     }
 
 
@@ -836,7 +869,7 @@ namespace x680 {
                     /*{
                         tp = et_Value;
                         x680::syntactic::value_assignment tmp = boost::get<x680::syntactic::value_assignment>(ent);
-                        rslt = value_atom_ptr(new value_atom(scope,  tmp.value.type, tmp.identifier, tmp.value.type==v_identifier ? tmp.value.identifier : ""));
+                        rslt = value_atom_ptr(new value_atom(scope,  tmp.value.type, tmp.identifier, tmp.value.type==v_defined ? tmp.value.identifier : ""));
                         break;
                     }*/
                     /* case 2:
@@ -908,8 +941,23 @@ namespace x680 {
         }
 
         value_atom_ptr compile_value(const x680::syntactic::value_element& ent) {
-            return (ent.type != v_identifier) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));
-        }
+            try {
+                switch (ent.type) {
+                    case v_boolean: return value_atom_ptr(new boolvalue_atom(ent.value == "TRUE"));
+                    case v_number: return value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (ent.value)));
+                    case v_real: return value_atom_ptr(new realvalue_atom(boost::lexical_cast<double > (ent.value)));
+                        // v_null, // NULL /
+                        //v_bstring, // BitStringValue, OctetStringValue
+                        // v_hstring, // BitStringValue, OctetStringValue
+                    case v_cstring: return value_atom_ptr(new strvalue_atom(ent.value));
+                    default:
+                    {
+                    }
+                }
+            } catch (boost::bad_lexical_cast) {
+            }
+            return (ent.type != v_defined) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));           
+        }       
 
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);

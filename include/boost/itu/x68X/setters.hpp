@@ -104,13 +104,13 @@ namespace x680 {
         }
 
         inline void value_setassigned(value_element& holder, const std::string& id, const std::string& val) {
-            holder.type = v_identifier_assign;
+            holder.type = v_defined_assign;
             holder.identifier = id;
             holder.value = val;
         }
 
         inline void value_setassignedval(value_element& holder, const std::string& id, const value_element& val) {
-            holder.type = v_identifier_assignval;
+            holder.type = v_defined_assignval;
             holder.identifier = id;
             holder.values.push_back(val);
         }
@@ -392,9 +392,9 @@ namespace x680 {
         }
 
         inline void constraint_exceptidentifier(constraint_element& holder, const std::string& val) {
-            holder.type.value.type = v_identifier;
+            holder.type.value.type = v_defined;
             holder.type.value.identifier = val;
-            holder.value.type = v_identifier;
+            holder.value.type = v_defined;
             holder.value.identifier = val;
             holder.type.marker = mk_exception;
             holder.tp = cns_EXCEPTION;
@@ -565,7 +565,7 @@ namespace x680 {
         }
 
         inline void type_exceptidetifier(type_assignment& holder, const std::string& val) {
-            holder.type.value.type = v_identifier;
+            holder.type.value.type = v_defined;
             holder.type.value.identifier = val;
             //holder.type.builtin_t = t_INTEGER;
             holder.type.marker = mk_exception;

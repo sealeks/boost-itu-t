@@ -145,9 +145,9 @@ namespace x680 {
 
         v_nodef,
         v_empty_set, // { }      
-        v_identifier, // x
-        v_identifier_assign, // x(n)     
-        v_identifier_assignval, // x(y)             
+        v_defined, // x  // DefinedValue
+        v_defined_assign, // x(n)     
+        v_defined_assignval, // x(y)             
         v_boolean, // TRUE, FALSE  /
         v_number, // n  /
         v_real, // n.n  /
@@ -155,15 +155,14 @@ namespace x680 {
         v_bstring, // BitStringValue, OctetStringValue
         v_hstring, // BitStringValue, OctetStringValue
         v_cstring, // StringValue        
-        v_identifier_list, // BitStringValue  { x, y ,....}  
+        v_defined_list, // BitStringValue  { x, y ,....}  
         v_number_list, // Tuple, Quadruple  { x, y ,....}        
         v_named_list, // ObjectIdentifierSet  { x y(n1) n2....}             
         v_named_value, // name1 val1     
         v_namedvalue_list, // SetValue, SequenceValue,  { name1 val1, name2 val2 ....}   
         v_value_list, // SetOfValue, SequenceOfValue,  { {...} , {...}....}       
         v_choice, // SetOfValue, SequenceOfValue,  { {...} , {...}....}      
-        v_open, // Type : Value        
-        v_defined, // DefinedValue   
+        v_open, // Type : Value     
         v_ValueFromObject,
         v_extention,
         v_exception

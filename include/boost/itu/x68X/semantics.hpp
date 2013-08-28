@@ -73,6 +73,18 @@ namespace x680 {
     class value_atom;
     typedef boost::shared_ptr<value_atom> value_atom_ptr;
     
+    class numvalue_atom;
+    typedef boost::shared_ptr<numvalue_atom> numvalue_atom_ptr;    
+    
+    class realvalue_atom;
+    typedef boost::shared_ptr<realvalue_atom> realvalue_atom_ptr;   
+    
+     class boolvalue_atom;
+    typedef boost::shared_ptr<boolvalue_atom> boolvalue_atom_ptr;    
+    
+    class strvalue_atom;
+    typedef boost::shared_ptr<strvalue_atom> strvalue_atom_ptr;   
+    
     class class_atom;
     typedef boost::shared_ptr<class_atom> class_atom_ptr;    
 
@@ -296,6 +308,8 @@ namespace x680 {
     public:
         basic_atom();
         basic_atom(const std::string& reff);
+        
+        virtual ~basic_atom(){}
 
         basic_entity_ptr reff() const {
             return reff_;
@@ -353,6 +367,14 @@ namespace x680 {
         value_type valtype() const {
             return valtype_;
         }
+        
+        numvalue_atom* as_number();
+     
+        realvalue_atom* as_real();    
+        
+        boolvalue_atom* as_bool();
+     
+        strvalue_atom* as_cstr();              
 
     private:
 
@@ -363,6 +385,93 @@ namespace x680 {
    
     std::ostream& operator<<(std::ostream& stream, value_atom& self);
     
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // numvalue_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class numvalue_atom : public value_atom {
+
+    public:
+        numvalue_atom(int vl) : value_atom(v_number), value_(vl){};
+
+        int value() const {
+            return value_;
+        }
+
+    private:
+
+        int value_;
+
+    };
+    
+   
+    std::ostream& operator<<(std::ostream& stream, numvalue_atom& self);    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // realvalue_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class realvalue_atom : public value_atom {
+
+    public:
+        realvalue_atom(double vl) : value_atom(v_real), value_(vl){};
+
+        double value() const {
+            return value_;
+        }
+
+    private:
+
+        double value_;
+
+    };
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // realvalue_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class boolvalue_atom : public value_atom {
+
+    public:
+        boolvalue_atom(bool vl) : value_atom(v_real), value_(vl){};
+
+        bool value() const {
+            return value_;
+        }
+
+    private:
+
+        bool value_;
+
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, boolvalue_atom& self);      
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // realvalue_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class strvalue_atom : public value_atom {
+
+    public:
+        strvalue_atom(const std::string& vl) : value_atom(v_cstring), value_(vl){};
+
+        std::string value() const {
+            return value_;
+        }
+
+    private:
+
+        std::string value_;
+
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, strvalue_atom& self);      
     
     /////////////////////////////////////////////////////////////////////////   
     // class_atom
