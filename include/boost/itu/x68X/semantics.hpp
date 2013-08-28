@@ -324,6 +324,15 @@ namespace x680 {
         void reff(basic_entity_ptr vl) {
             reff_ = vl;
         }
+        
+        virtual basic_atom* root() ;
+        
+        bool rooted() ;        
+        
+        value_atom* as_value();
+     
+        type_atom* as_type();           
+        
 
     private:
         basic_entity_ptr reff_;
@@ -388,7 +397,7 @@ namespace x680 {
         
          tagged_ptr tag() const {
               return tag_;
-         }       
+         }          
 
     private:
 

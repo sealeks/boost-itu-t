@@ -150,14 +150,14 @@ namespace x680 {
                 basic_entity_ptr fnd = elm->find(tmp->type()->reff()->name());
                 if (fnd) {
                     tmp->type()->reff(fnd);
-                }              
+                }
             }
             if ((tmp->value()) && (tmp->value()->reff()) && (tmp->value()->reff()->as_expectdef())) {
                 basic_entity_ptr fnd = elm->find(tmp->value()->reff()->name());
                 if (fnd) {
                     tmp->value()->reff(fnd);
-                }              
-            }            
+                }
+            }
         }
         return elm;
     }
@@ -383,87 +383,70 @@ namespace x680 {
         reff_ = basic_entity_ptr(new expectdef_entity(reff));
     }
 
+    basic_atom* basic_atom::root() {
+        if (!reff())
+            return this;
+        if (reff()->as_typeassigment())
+            return reff()->as_typeassigment()->type()->root();
+        if (reff()->as_valueassigment())
+            return reff()->as_valueassigment()->value()->root();
+        return 0;
+    }
+
+    bool basic_atom::rooted() {
+        return ((root()) && (root() != this));
+    }
+
+    value_atom* basic_atom::as_value() {
+        return dynamic_cast<value_atom*> (this);
+    }
+
+    type_atom* basic_atom::as_type() {
+        return dynamic_cast<type_atom*> (this);
+    }
+
     std::ostream& operator<<(std::ostream& stream, basic_atom& self) {
-        stream << "\n        ";
-        /*     switch (self.kind()) {
-           case et_Type:
-           {
-               return stream << *(self.as_type());
-               break;
-           }
-           case et_Value:
-           {
-               return stream << *(self.as_value());
-               break;
-           }
-           case et_ValueSet:
-           {
-               stream << "VS: ";
-               break;
-           }
-           case et_Class:
-           {
-               stream << "OC: ";
-               break;
-           }
-           case et_Object:
-           {
-               stream << "OO: ";
-               break;
-           }
-           case et_ObjectSet:
-           {
-               stream << "OS: ";
-               break;
-           }
-           default:
-           {
-               stream << "ND:";
-           }
-       }
- if (self.as_expectdef())
-           stream << self.name() << "(?)";
-       else
-           stream << self.name();
-       if (self.reff() && (self.kind() == et_Nodef))
-           stream << " reff to " << self.reff()->name();*/
+        if (self.as_type())
+            return stream << self.as_type()->builtin();
+        if (self.as_value())
+            return stream << *(self.as_value());
         return stream;
     }
-    
+
     /////////////////////////////////////////////////////////////////////////   
     // tagged
     /////////////////////////////////////////////////////////////////////////     
 
-    std::ostream& operator<<(std::ostream& stream, tagclass_type self){
+    std::ostream& operator<<(std::ostream& stream, tagclass_type self) {
         switch (self) {
-            case tcl_universal:  return stream << "UNIVERSAL ";
-            case tcl_application:  return stream << "APPLICATION ";
-            case tcl_private:  return stream << "PRIVATE ";
-            case tcl_context:  return stream << "CONTEXT ";
-        }        
-         return stream;
+            case tcl_universal: return stream << "UNIVERSAL ";
+            case tcl_application: return stream << "APPLICATION ";
+            case tcl_private: return stream << "PRIVATE ";
+            case tcl_context: return stream << "CONTEXT ";
+        }
+        return stream;
     }
-     
-    std::ostream& operator<<(std::ostream& stream, tagrule_type self){
+
+    std::ostream& operator<<(std::ostream& stream, tagrule_type self) {
         switch (self) {
-            case explicit_tags:  return stream << "EXPLICIT ";
-            case implicit_tags:  return stream << "IMPLICIT ";
-            case automatic_tags:  return stream << "AUTOMATIC ";
-            default:  return stream;
-        }        
-         return stream;        
-    }    
-    
-    std::ostream& operator<<(std::ostream& stream, tagged& self){
+            case explicit_tags: return stream << "EXPLICIT ";
+            case implicit_tags: return stream << "IMPLICIT ";
+            case automatic_tags: return stream << "AUTOMATIC ";
+            default: return stream;
+        }
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, tagged& self) {
         if (self.number()) {
             if (self.rule() == noset_tags)
                 return stream << " [" << *(self.number()) << " " << self._class() << "] ";
             else
-                return stream << " [ " << self.rule() << *(self.number()) << " " << self._class() << "] ";                
+                return stream << " [ " << self.rule() << *(self.number()) << " " << self._class() << "] ";
         }
         return stream;
-    }  
-    
+    }
+
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
     /////////////////////////////////////////////////////////////////////////   
@@ -487,8 +470,11 @@ namespace x680 {
         if (self.builtin() == t_Reference) {
             if (self.reff()->as_expectdef())
                 stream << "??? *" << self.reff()->name();
-            else
-                stream <<  " *" << self.reff()->name();
+            else {
+                stream << " *" << self.reff()->name();
+                if (self.rooted())
+                    stream << "(@" << *(self.root()) << ")";
+            }
         } else {
             stream << self.builtin();
         }
@@ -562,7 +548,7 @@ namespace x680 {
     value_atom::value_atom(const std::string& reff, value_type tpv)
     : basic_atom(reff), valtype_(tpv) {
     }
-    
+
     numvalue_atom* value_atom::as_number() {
         return dynamic_cast<numvalue_atom*> (this);
     }
@@ -577,58 +563,65 @@ namespace x680 {
 
     strvalue_atom* value_atom::as_cstr() {
         return dynamic_cast<strvalue_atom*> (this);
-    }   
-    
+    }
+
     nullvalue_atom* value_atom::as_null() {
         return dynamic_cast<nullvalue_atom*> (this);
-    }       
+    }
 
     std::ostream& operator<<(std::ostream& stream, value_atom& self) {
-        switch(self.valtype()){
+        switch (self.valtype()) {
             case v_boolean: return (stream << *(self.as_bool()));
             case v_number: return (stream << *(self.as_number()));
             case v_real: return (stream << *(self.as_real()));
             case v_null: return (stream << *(self.as_null()));
-        //v_bstring, // BitStringValue, OctetStringValue
-       // v_hstring, // BitStringValue, OctetStringValue
-            case v_cstring: return (stream << *(self.as_cstr()));   
-            default:{}
+                //v_bstring, // BitStringValue, OctetStringValue
+                // v_hstring, // BitStringValue, OctetStringValue
+            case v_cstring: return (stream << *(self.as_cstr()));
+            default:
+            {
+            }
         }
-        if (self.valtype()==v_defined){
+        if (self.valtype() == v_defined) {
             if (self.reff()->as_expectdef())
                 return stream << "??? *" << self.reff()->name();
-            else
-                return stream <<  " *" << self.reff()->name();
+            else {
+                stream << " *" << self.reff()->name();
+                if (self.rooted())
+                    stream << "(@" << *(self.root()) << ")";
+                return stream;
+            }
         }
-       return  stream << "?: " << (int) self.valtype();
+        return stream << "?: " << (int) self.valtype();
     }
-
-
 
     std::ostream& operator<<(std::ostream& stream, numvalue_atom& self) {
-        stream << "(n)" <<  self.value();
+        stream << "(" << self.value() << ")";
         return stream;
     }
-    
+
     std::ostream& operator<<(std::ostream& stream, realvalue_atom& self) {
-        stream << "(r)" <<  self.value();
-        return stream;
-    }    
-    
-    std::ostream& operator<<(std::ostream& stream, boolvalue_atom& self) {
-        stream << "(b)" <<  self.value();
+        stream << "(" << self.value() << ")";
         return stream;
     }
-    
-    std::ostream& operator<<(std::ostream& stream, strvalue_atom& self) {
-        stream << "(c) '" <<  self.value() << "'";
+
+    std::ostream& operator<<(std::ostream& stream, boolvalue_atom& self) {
+        if (self.value())
+           stream << "(TRUE)";
+        else
+           stream << "(FALSE)";            
         return stream;
-    }       
-    
+    }
+
+    std::ostream& operator<<(std::ostream& stream, strvalue_atom& self) {
+        stream << "( '" << self.value() << "')";
+        return stream;
+    }
+
     std::ostream& operator<<(std::ostream& stream, nullvalue_atom& self) {
         stream << "(NULL)";
         return stream;
-    }       
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
@@ -739,7 +732,7 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, valueassigment_entity& self) {
-        return stream << "(v) " << self.name() << " [" << *(self.type()) << "] :: = "  << *(self.value()) << "\n";
+        return stream << "(v) " << self.name() << " [" << *(self.type()) << "] :: = " << *(self.value()) << "\n";
     }
 
 
@@ -835,11 +828,11 @@ namespace x680 {
             x680::syntactic::modules synxtasresult;
             int success = x680::syntactic::parse_fs(path, synxtasresult);
 
-            global_entity_ptr global = global_entity_ptr(new global_entity());            
+            global_entity_ptr global = global_entity_ptr(new global_entity());
 
             for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it)
                 compile_module(*it, global);
-            
+
             global->resolve();
             return global;
         }
@@ -851,7 +844,7 @@ namespace x680 {
         void compile_module(const x680::syntactic::module& mod, global_entity_ptr global) {
             module_entity_ptr modul = module_entity_ptr(new module_entity(global, mod.name, mod.file, mod.allexport));
             compile_export(mod, modul);
-            compile_imports(mod, modul);       
+            compile_imports(mod, modul);
             compile_assignments(mod, modul);
             global->childs().push_back(modul);
         }
@@ -920,22 +913,22 @@ namespace x680 {
             return typeassigment_entity_ptr(new typeassigment_entity(scope, tmp.identifier, compile_type(tmp.type)));
         }
 
-        type_atom_ptr compile_type(const x680::syntactic::type_element& ent) {     
-            return ent.reference.empty() ?   type_atom_ptr(new type_atom(ent.builtin_t, compile_tag(ent.tag))) : 
-                type_atom_ptr(new type_atom(ent.reference, ent.builtin_t, compile_tag(ent.tag)));
+        type_atom_ptr compile_type(const x680::syntactic::type_element& ent) {
+            return ent.reference.empty() ? type_atom_ptr(new type_atom(ent.builtin_t, compile_tag(ent.tag))) :
+                    type_atom_ptr(new type_atom(ent.reference, ent.builtin_t, compile_tag(ent.tag)));
         }
-        
-        tagged_ptr compile_tag(const x680::syntactic::tag_type& ent) { 
-           if (ent.number.empty())
-               return tagged_ptr();
+
+        tagged_ptr compile_tag(const x680::syntactic::tag_type& ent) {
+            if (ent.number.empty())
+                return tagged_ptr();
             try {
-                  value_atom_ptr nm(new numvalue_atom(boost::lexical_cast<int > (ent.number)));
-                  return tagged_ptr( new tagged(nm, ent.class_, ent.rule));}
-            catch(...){               
+                value_atom_ptr nm(new numvalue_atom(boost::lexical_cast<int > (ent.number)));
+                return tagged_ptr(new tagged(nm, ent.class_, ent.rule));
+            } catch (...) {
             }
-            value_atom_ptr nm(new value_atom(ent.number, v_defined));  
-            return tagged_ptr( new tagged(nm, ent.class_, ent.rule));
-        }       
+            value_atom_ptr nm(new value_atom(ent.number, v_defined));
+            return tagged_ptr(new tagged(nm, ent.class_, ent.rule));
+        }
 
         classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::class_assignment tmp = boost::get<x680::syntactic::class_assignment>(ent);
@@ -967,8 +960,8 @@ namespace x680 {
                 }
             } catch (boost::bad_lexical_cast) {
             }
-            return (ent.type != v_defined) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));           
-        }       
+            return (ent.type != v_defined) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));
+        }
 
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);
