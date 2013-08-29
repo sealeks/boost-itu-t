@@ -564,10 +564,22 @@ namespace x680 {
     strvalue_atom* value_atom::as_cstr() {
         return dynamic_cast<strvalue_atom*> (this);
     }
+    
+    namedvalue_atom* value_atom::as_named() {
+        return dynamic_cast<namedvalue_atom*> (this);
+    }    
+    
+    structvalue_atom* value_atom::as_struct() {
+        return dynamic_cast<structvalue_atom*> (this);
+    }       
 
     nullvalue_atom* value_atom::as_null() {
         return dynamic_cast<nullvalue_atom*> (this);
     }
+    
+    emptyvalue_atom* value_atom::as_empty() {
+        return dynamic_cast<emptyvalue_atom*> (this);
+    }    
 
     std::ostream& operator<<(std::ostream& stream, value_atom& self) {
         switch (self.valtype()) {
@@ -575,9 +587,12 @@ namespace x680 {
             case v_number: return (stream << *(self.as_number()));
             case v_real: return (stream << *(self.as_real()));
             case v_null: return (stream << *(self.as_null()));
-                //v_bstring, // BitStringValue, OctetStringValue
-                // v_hstring, // BitStringValue, OctetStringValue
+            case v_empty: return (stream << *(self.as_empty()));            
+            case v_named_value: return (stream << *(self.as_named()));
+            case v_hstring:
+            case v_bstring:                
             case v_cstring: return (stream << *(self.as_cstr()));
+            case v_struct: return (stream << *(self.as_struct()));            
             default:
             {
             }
@@ -596,32 +611,56 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, numvalue_atom& self) {
-        stream << "(" << self.value() << ")";
-        return stream;
+        return stream << "(" << self.value() << ")";
     }
 
     std::ostream& operator<<(std::ostream& stream, realvalue_atom& self) {
-        stream << "(" << self.value() << ")";
-        return stream;
+        return stream << "(" << self.value() << ")";
     }
 
     std::ostream& operator<<(std::ostream& stream, boolvalue_atom& self) {
         if (self.value())
-           stream << "(TRUE)";
+           return stream << "(TRUE)";
         else
-           stream << "(FALSE)";            
-        return stream;
+           return stream << "(FALSE)";
     }
 
     std::ostream& operator<<(std::ostream& stream, strvalue_atom& self) {
-        stream << "( '" << self.value() << "')";
-        return stream;
+        stream << "( '";
+        switch (self.valtype()) {
+            case v_hstring: stream << "&H "; break;
+            case v_bstring: stream << "&B "; break;
+            default:
+            {
+            }
+        } 
+        return stream << self.value() << "')";
     }
+    
+    std::ostream& operator<<(std::ostream& stream, namedvalue_atom& self) {
+       // return stream << "llll";
+        return stream << self.name() <<  " : " << *self.value();
+    }
+    
+    std::ostream& operator<<(std::ostream& stream, structvalue_atom& self){
+        stream << " { " ;
+        for (namedvalue_vct::iterator it=self.values().begin();it!=self.values().end();++it){
+            if ((it+1)!=self.values().end())  
+                stream <<  *(*it) <<  ",  ";
+            else
+                stream <<  *(*it) ;
+        }
+        return stream << "}" ;
+    }    
+    
 
     std::ostream& operator<<(std::ostream& stream, nullvalue_atom& self) {
-        stream << "(NULL)";
-        return stream;
+        return stream << "(NULL)";
     }
+    
+    std::ostream& operator<<(std::ostream& stream, emptyvalue_atom& self) {
+        return stream << "({})";
+    }    
 
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
@@ -945,15 +984,20 @@ namespace x680 {
         }
 
         value_atom_ptr compile_value(const x680::syntactic::value_element& ent) {
+            std::cout << "Value!!!"  <<  (int)ent.type <<  std::endl;
             try {
                 switch (ent.type) {
                     case v_boolean: return value_atom_ptr(new boolvalue_atom(ent.value == "TRUE"));
                     case v_number: return value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (ent.value)));
                     case v_real: return value_atom_ptr(new realvalue_atom(boost::lexical_cast<double > (ent.value)));
                     case v_null: return value_atom_ptr(new nullvalue_atom());
-                        //v_bstring, // BitStringValue, OctetStringValue
-                        // v_hstring, // BitStringValue, OctetStringValue
-                    case v_cstring: return value_atom_ptr(new strvalue_atom(ent.value));
+                    case v_empty: return value_atom_ptr(new emptyvalue_atom());                  
+                    //case v_named_value: return value_atom_ptr(new v_named_value(ent.identifier,ent.));                    
+                    case v_bstring:
+                    case v_hstring:
+                    case v_cstring: return value_atom_ptr(new strvalue_atom(ent.value, ent.type));
+                    case v_struct: return value_atom_ptr(new structvalue_atom( compile_structvalue(ent)));        
+                    //case v_value_list: return value_atom_ptr(new structvalue_atom( compile_structvalue(ent)));                        
                     default:
                     {
                     }
@@ -962,6 +1006,20 @@ namespace x680 {
             }
             return (ent.type != v_defined) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));
         }
+        
+        namedvalue_vct compile_structvalue(const x680::syntactic::value_element& ent) {   
+            std::cout << "STRUCT!!!"  << std::endl;
+            namedvalue_vct rslt;
+            if ((ent.type==v_struct)){
+                for(x680::syntactic::value_element_vector::const_iterator it = ent.values.begin(); it!=ent.values.end();++it){    
+                    if (!it->values.empty()){
+                    namedvalue_atom_ptr tmp( new namedvalue_atom(it->identifier, compile_value(*(it->values.begin()))));
+                    std::cout <<  "*test"  << *tmp  << std::endl;
+                    rslt.push_back(tmp);}
+                }
+            }
+            return rslt;
+        }  
 
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);

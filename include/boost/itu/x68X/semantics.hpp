@@ -86,10 +86,20 @@ namespace x680 {
     typedef boost::shared_ptr<boolvalue_atom> boolvalue_atom_ptr;    
     
     class strvalue_atom;
-    typedef boost::shared_ptr<strvalue_atom> strvalue_atom_ptr;   
-   
+    typedef boost::shared_ptr<strvalue_atom> strvalue_atom_ptr;    
+    
+    class namedvalue_atom;    
+    typedef boost::shared_ptr<namedvalue_atom> namedvalue_atom_ptr; 
+    typedef std::vector<namedvalue_atom_ptr> namedvalue_vct;    
+    
+    class structvalue_atom;    
+    typedef boost::shared_ptr<structvalue_atom> structvalue_atom_ptr;    
+    
     class nullvalue_atom;
-    typedef boost::shared_ptr<nullvalue_atom> nullvalue_atom_ptr;       
+    typedef boost::shared_ptr<nullvalue_atom> nullvalue_atom_ptr;      
+    
+    class emptyvalue_atom;
+    typedef boost::shared_ptr<emptyvalue_atom> emptyvalue_atom_ptr;         
     
     class class_atom;
     typedef boost::shared_ptr<class_atom> class_atom_ptr;    
@@ -435,9 +445,15 @@ namespace x680 {
         
         boolvalue_atom* as_bool();
      
-        strvalue_atom* as_cstr();     
+        strvalue_atom* as_cstr();   
         
-        nullvalue_atom* as_null();           
+        namedvalue_atom* as_named();      
+            
+        structvalue_atom* as_struct();            
+        
+        nullvalue_atom* as_null();      
+        
+        emptyvalue_atom* as_empty();          
 
     private:
 
@@ -521,7 +537,7 @@ namespace x680 {
     class strvalue_atom : public value_atom {
 
     public:
-        strvalue_atom(const std::string& vl) : value_atom(v_cstring), value_(vl){};
+        strvalue_atom(const std::string& vl, value_type tpv) : value_atom(tpv), value_(vl){};
 
         std::string value() const {
             return value_;
@@ -534,7 +550,61 @@ namespace x680 {
     };    
     
    
-    std::ostream& operator<<(std::ostream& stream, strvalue_atom& self);      
+    std::ostream& operator<<(std::ostream& stream, strvalue_atom& self);    
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // namedvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+    
+    class namedvalue_atom : public value_atom {
+
+    public:
+        
+        namedvalue_atom(const std::string& nm, value_atom_ptr vl) 
+        : value_atom(v_named_value), name_(nm),  value_(vl){};
+        
+        std::string name() const {
+            return name_;
+        }        
+
+        value_atom_ptr value() const {
+            return value_;
+        }
+
+    private:
+
+        std::string name_;        
+        value_atom_ptr value_;
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, namedvalue_atom& self);      
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // structvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+    
+    class structvalue_atom : public value_atom {
+
+    public:
+        
+        structvalue_atom(namedvalue_vct vls) 
+        : value_atom(v_struct), values_(vls){};
+        
+
+        namedvalue_vct values() const {
+            return values_;
+        }
+
+    private:
+
+        namedvalue_vct values_;
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, structvalue_atom& self);    
     
     
     /////////////////////////////////////////////////////////////////////////   
@@ -551,6 +621,20 @@ namespace x680 {
    
     std::ostream& operator<<(std::ostream& stream, nullvalue_atom& self);    
 
+     /////////////////////////////////////////////////////////////////////////   
+    // emptyvalue_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class emptyvalue_atom : public value_atom {
+
+    public:
+        emptyvalue_atom() : value_atom(v_empty){};
+
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, emptyvalue_atom& self);
+    
     
     
     /////////////////////////////////////////////////////////////////////////   
@@ -812,6 +896,7 @@ namespace x680 {
         class_atom_ptr compile_class(const x680::syntactic::class_element& ent);        
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         value_atom_ptr compile_value(const x680::syntactic::value_element& ent);
+        namedvalue_vct compile_structvalue(const x680::syntactic::value_element& ent);        
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent); 
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         basic_atom_ptr compile_test(const std::string& rf);

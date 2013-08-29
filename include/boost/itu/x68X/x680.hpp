@@ -144,10 +144,10 @@ namespace x680 {
     enum value_type {
 
         v_nodef,
-        v_empty_set, // { }      
+        v_empty, // { }      
         v_defined, // x  // DefinedValue
         v_defined_assign, // x(n)     
-        v_defined_assignval, // x(y)             
+        //v_defined_assignval, // x(y)             
         v_boolean, // TRUE, FALSE  /
         v_number, // n  /
         v_real, // n.n  /
@@ -157,9 +157,9 @@ namespace x680 {
         v_cstring, // StringValue        
         v_defined_list, // BitStringValue  { x, y ,....}  
         v_number_list, // Tuple, Quadruple  { x, y ,....}        
-        v_named_list, // ObjectIdentifierSet  { x y(n1) n2....}             
+        v_objectid, // ObjectIdentifierSet  { x y(n1) n2....}             
         v_named_value, // name1 val1     
-        v_namedvalue_list, // SetValue, SequenceValue,  { name1 val1, name2 val2 ....}   
+        v_struct, // SetValue, SequenceValue,  { name1 val1, name2 val2 ....}   
         v_value_list, // SetOfValue, SequenceOfValue,  { {...} , {...}....}       
         v_choice, // SetOfValue, SequenceOfValue,  { {...} , {...}....}      
         v_open, // Type : Value     

@@ -78,7 +78,7 @@ namespace x680 {
             NamedValues = NamedValue % qi::omit[qi::lit(",")];
 
             NamedValueList = qi::omit[qi::lexeme[qi::lit("{")]]
-                    >> NamedValues[bind(&value_setvalues, qi::_val, qi::_1, v_namedvalue_list)]
+                    >> NamedValues[bind(&value_setvalues, qi::_val, qi::_1, v_struct)]
                     >> qi::omit[qi::lexeme[qi::lit("}")]];
 
             Values = Value % qi::omit[qi::lit(",")];
@@ -93,7 +93,7 @@ namespace x680 {
 
 
             ObjectIdentifierValue = qi::omit[qi::lexeme[qi::lit("{")]]
-                    >> ObjIdComponents[bind(&value_setvalues, qi::_val, qi::_1, v_named_list)]
+                    >> ObjIdComponents[bind(&value_setvalues, qi::_val, qi::_1, v_objectid)]
                     >> qi::omit[qi::lexeme[qi::lit("}")]];
 
             NumberFormN = pos_number_str[bind(&value_setnumber, qi::_val, qi::_1)];

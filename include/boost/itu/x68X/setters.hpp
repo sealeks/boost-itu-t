@@ -110,13 +110,13 @@ namespace x680 {
         }
 
         inline void value_setassignedval(value_element& holder, const std::string& id, const value_element& val) {
-            holder.type = v_defined_assignval;
+            holder.type = v_defined_assign;//val;
             holder.identifier = id;
             holder.values.push_back(val);
         }
 
         inline void value_emptyset(value_element& holder) {
-            holder.type = v_empty_set;
+            holder.type = v_empty;
         }
 
         inline void value_setnumber(value_element& holder, const std::string& val) {
