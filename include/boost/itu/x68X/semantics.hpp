@@ -75,6 +75,7 @@ namespace x680 {
 
     class value_atom;
     typedef boost::shared_ptr<value_atom> value_atom_ptr;
+    typedef std::vector<value_atom_ptr> value_vct;    
     
     class numvalue_atom;
     typedef boost::shared_ptr<numvalue_atom> numvalue_atom_ptr;    
@@ -591,17 +592,17 @@ namespace x680 {
 
     public:
         
-        structvalue_atom(namedvalue_vct vls) 
+        structvalue_atom(value_vct vls) 
         : value_atom(v_struct), values_(vls){};
         
 
-        namedvalue_vct values() const {
+        value_vct values() const {
             return values_;
         }
 
     private:
 
-        namedvalue_vct values_;
+        value_vct values_;
     };    
     
    
@@ -897,7 +898,7 @@ namespace x680 {
         class_atom_ptr compile_class(const x680::syntactic::class_element& ent);        
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         value_atom_ptr compile_value(const x680::syntactic::value_element& ent);
-        namedvalue_vct compile_structvalue(const x680::syntactic::value_element& ent);     
+        value_vct compile_structvalue(const x680::syntactic::value_element& ent);     
         value_atom_ptr compile_namedvalue(const x680::syntactic::value_element& ent);         
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent); 
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);

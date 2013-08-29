@@ -638,16 +638,16 @@ namespace x680 {
     }
     
     std::ostream& operator<<(std::ostream& stream, namedvalue_atom& self) {
-        return stream << self.name() <<  " : " << *self.value();
+        return stream <</* self.name() */ "id" <<  " : " << " vl";//*self.value();
     }
     
     std::ostream& operator<<(std::ostream& stream, structvalue_atom& self){
         stream << " { " ;
-        for (namedvalue_vct::iterator it=self.values().begin();it!=self.values().end();++it){
+        for (value_vct::iterator it=self.values().begin();it!=self.values().end();++it){
             if ((it+1)!=self.values().end())  
-                stream <<  *(*it) <<  ",  ";
+                stream <<  (*it) <<  ",  ";
             else
-                stream <<  *(*it) ;
+                stream <<  (*it);
         }
         return stream << "}" ;
     }    
@@ -983,7 +983,6 @@ namespace x680 {
         }
 
         value_atom_ptr compile_value(const x680::syntactic::value_element& ent) {
-            std::cout << "Value!!!"  <<  (int)ent.type <<  std::endl;
             try {
                 switch (ent.type) {
                     case v_boolean: return value_atom_ptr(new boolvalue_atom(ent.value == "TRUE"));
@@ -1012,14 +1011,12 @@ namespace x680 {
             return (ent.type != v_defined) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));
         }        
         
-        namedvalue_vct compile_structvalue(const x680::syntactic::value_element& ent) {   
-            std::cout << "STRUCT!!!"  << std::endl;
-            namedvalue_vct rslt;
+        value_vct compile_structvalue(const x680::syntactic::value_element& ent) {   
+            value_vct rslt;
             if ((ent.type==v_struct)){
                 for(x680::syntactic::value_element_vector::const_iterator it = ent.values.begin(); it!=ent.values.end();++it){    
                     if (!it->values.empty()){
-                    namedvalue_atom_ptr tmp( new namedvalue_atom(it->identifier, compile_value(*(it->values.begin()))));
-                    std::cout <<  "*test"  << *tmp  << std::endl;
+                    value_atom_ptr tmp( new namedvalue_atom(it->identifier, compile_value(*(it->values.begin()))));
                     rslt.push_back(tmp);}
                 }
             }
