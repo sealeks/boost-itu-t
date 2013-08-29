@@ -638,7 +638,6 @@ namespace x680 {
     }
     
     std::ostream& operator<<(std::ostream& stream, namedvalue_atom& self) {
-       // return stream << "llll";
         return stream << self.name() <<  " : " << *self.value();
     }
     
@@ -992,7 +991,7 @@ namespace x680 {
                     case v_real: return value_atom_ptr(new realvalue_atom(boost::lexical_cast<double > (ent.value)));
                     case v_null: return value_atom_ptr(new nullvalue_atom());
                     case v_empty: return value_atom_ptr(new emptyvalue_atom());                  
-                    //case v_named_value: return value_atom_ptr(new v_named_value(ent.identifier,ent.));                    
+                    case v_named_value: return compile_namedvalue(ent);                    
                     case v_bstring:
                     case v_hstring:
                     case v_cstring: return value_atom_ptr(new strvalue_atom(ent.value, ent.type));
@@ -1006,6 +1005,12 @@ namespace x680 {
             }
             return (ent.type != v_defined) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));
         }
+        
+        value_atom_ptr compile_namedvalue(const x680::syntactic::value_element& ent){
+             if (!ent.values.empty())
+                    return value_atom_ptr( new namedvalue_atom(ent.identifier, compile_value(*(ent.values.begin()))));            
+            return (ent.type != v_defined) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));
+        }        
         
         namedvalue_vct compile_structvalue(const x680::syntactic::value_element& ent) {   
             std::cout << "STRUCT!!!"  << std::endl;

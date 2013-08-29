@@ -505,7 +505,8 @@ namespace x680 {
         double value_;
 
     };
-    
+   
+    std::ostream& operator<<(std::ostream& stream, realvalue_atom&self);     
     
     /////////////////////////////////////////////////////////////////////////   
     // realvalue_atom
@@ -896,7 +897,8 @@ namespace x680 {
         class_atom_ptr compile_class(const x680::syntactic::class_element& ent);        
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         value_atom_ptr compile_value(const x680::syntactic::value_element& ent);
-        namedvalue_vct compile_structvalue(const x680::syntactic::value_element& ent);        
+        namedvalue_vct compile_structvalue(const x680::syntactic::value_element& ent);     
+        value_atom_ptr compile_namedvalue(const x680::syntactic::value_element& ent);         
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent); 
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         basic_atom_ptr compile_test(const std::string& rf);
