@@ -638,16 +638,15 @@ namespace x680 {
     }
     
     std::ostream& operator<<(std::ostream& stream, namedvalue_atom& self) {
-        return stream <</* self.name() */ "id" <<  " : " << " vl";//*self.value();
+        return stream <<  self.name() <<  " : " << * self.value();
     }
     
     std::ostream& operator<<(std::ostream& stream, structvalue_atom& self){
         stream << " { " ;
         for (value_vct::iterator it=self.values().begin();it!=self.values().end();++it){
-            if ((it+1)!=self.values().end())  
-                stream <<  (*it) <<  ",  ";
-            else
-                stream <<  (*it);
+            if (it!=self.values().begin())
+                stream <<   ",  ";
+             stream << *(*it);
         }
         return stream << "}" ;
     }    
@@ -1016,8 +1015,10 @@ namespace x680 {
             if ((ent.type==v_struct)){
                 for(x680::syntactic::value_element_vector::const_iterator it = ent.values.begin(); it!=ent.values.end();++it){    
                     if (!it->values.empty()){
-                    value_atom_ptr tmp( new namedvalue_atom(it->identifier, compile_value(*(it->values.begin()))));
-                    rslt.push_back(tmp);}
+                   std::cout << it->identifier << std::endl;           
+                   std::cout << (int)(it->values.begin()->type) << std::endl;  
+                   std::cout << it->values.begin()->value << std::endl;  
+                    rslt.push_back(value_atom_ptr( new namedvalue_atom(it->identifier, compile_value(*(it->values.begin())))));}
                 }
             }
             return rslt;
