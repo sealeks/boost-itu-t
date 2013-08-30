@@ -96,6 +96,9 @@ namespace x680 {
     class structvalue_atom;    
     typedef boost::shared_ptr<structvalue_atom> structvalue_atom_ptr;    
     
+    class objidvalue_atom;    
+    typedef boost::shared_ptr<objidvalue_atom> objidvalue_atom_ptr;    
+    
     class nullvalue_atom;
     typedef boost::shared_ptr<nullvalue_atom> nullvalue_atom_ptr;      
     
@@ -450,7 +453,9 @@ namespace x680 {
         
         namedvalue_atom* as_named();      
             
-        structvalue_atom* as_struct();            
+        structvalue_atom* as_struct();   
+        
+        objidvalue_atom* as_objid();            
         
         nullvalue_atom* as_null();      
         
@@ -607,6 +612,31 @@ namespace x680 {
     
    
     std::ostream& operator<<(std::ostream& stream, structvalue_atom* self);    
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // structvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+    
+    class objidvalue_atom : public value_atom {
+
+    public:
+        
+        objidvalue_atom(value_vct vls) 
+        : value_atom(v_objectid), values_(vls){};
+        
+
+        const value_vct& values() const {
+            return values_;
+        }
+
+    private:
+
+        value_vct values_;
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, objidvalue_atom* self);        
     
     
     /////////////////////////////////////////////////////////////////////////   
@@ -899,6 +929,7 @@ namespace x680 {
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         value_atom_ptr compile_value(const x680::syntactic::value_element& ent);
         value_vct compile_structvalue(const x680::syntactic::value_element& ent);     
+        value_vct compile_objidvalue(const x680::syntactic::value_element& ent);         
         value_atom_ptr compile_namedvalue(const x680::syntactic::value_element& ent);         
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent); 
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);

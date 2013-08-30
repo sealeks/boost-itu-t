@@ -572,6 +572,10 @@ namespace x680 {
     structvalue_atom* value_atom::as_struct() {
         return dynamic_cast<structvalue_atom*> (this);
     }       
+    
+    objidvalue_atom* value_atom::as_objid() {
+        return dynamic_cast<objidvalue_atom*> (this);
+    }          
 
     nullvalue_atom* value_atom::as_null() {
         return dynamic_cast<nullvalue_atom*> (this);
@@ -592,7 +596,8 @@ namespace x680 {
             case v_hstring:
             case v_bstring:                
             case v_cstring: return (stream << self->as_cstr());
-            case v_struct: return (stream << self->as_struct());            
+            case v_struct: return (stream << self->as_struct()); 
+            case v_objectid: return (stream << self->as_objid());             
             default:
             {
             }
@@ -649,6 +654,16 @@ namespace x680 {
              stream << (*it).get();
         }
         return stream << "}" ;
+    }    
+    
+    std::ostream& operator<<(std::ostream& stream, objidvalue_atom* self){
+         stream << " { " ;
+        for (value_vct::const_iterator it=self->values().begin();it!=self->values().end();++it){
+            if (it!=self->values().begin())
+                stream <<   "  ";
+             stream << (*it).get();
+        }
+        return stream << "}" ;       
     }    
     
 
@@ -993,7 +1008,8 @@ namespace x680 {
                     case v_bstring:
                     case v_hstring:
                     case v_cstring: return value_atom_ptr(new strvalue_atom(ent.value, ent.type));
-                    case v_struct: return value_atom_ptr(new structvalue_atom( compile_structvalue(ent)));        
+                    case v_struct: return value_atom_ptr(new structvalue_atom( compile_structvalue(ent)));   
+                    case v_objectid: return  value_atom_ptr(new objidvalue_atom( compile_objidvalue(ent)));                     
                     //case v_value_list: return value_atom_ptr(new structvalue_atom( compile_structvalue(ent)));                        
                     default:
                     {
@@ -1014,15 +1030,21 @@ namespace x680 {
             value_vct rslt;
             if ((ent.type==v_struct)){
                 for(x680::syntactic::value_element_vector::const_iterator it = ent.values.begin(); it!=ent.values.end();++it){    
-                    if (!it->values.empty()){
-                   std::cout << it->identifier << std::endl;           
-                   std::cout << (int)(it->values.begin()->type) << std::endl;  
-                   std::cout << it->values.begin()->value << std::endl;  
+                    if (!it->values.empty()){ 
                     rslt.push_back(value_atom_ptr( new namedvalue_atom(it->identifier, compile_value(*(it->values.begin())))));}
                 }
             }
             return rslt;
         }  
+        
+        value_vct compile_objidvalue(const x680::syntactic::value_element& ent) {   
+            value_vct rslt;
+            if ((ent.type==v_objectid)){
+                for(x680::syntactic::value_element_vector::const_iterator it = ent.values.begin(); it!=ent.values.end();++it){    
+                    rslt.push_back(value_atom_ptr(  compile_value(*it)));}
+                }
+            return rslt;
+        }          
 
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);
