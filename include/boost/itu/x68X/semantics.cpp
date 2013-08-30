@@ -589,6 +589,10 @@ namespace x680 {
         return dynamic_cast<choicevalue_atom*> (this);
     }      
     
+    openvalue_atom* value_atom::as_open() {
+        return dynamic_cast<openvalue_atom*> (this);
+    }      
+    
     assignvalue_atom* value_atom::as_assign() {
         return dynamic_cast<assignvalue_atom*> (this);
     }  
@@ -618,7 +622,8 @@ namespace x680 {
             case v_value_list:  return (stream << self->as_list());       
             case v_defined: return (stream << self->as_defined());
             case v_defined_assign: return (stream << self->as_assign());       
-            case  v_choice: return (stream << self->as_choice());            
+            case  v_choice: return (stream << self->as_choice());  
+            case  v_open: return (stream << self->as_open());            
             default:
             {
             }
@@ -642,7 +647,7 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, strvalue_atom* self) {
-        stream << "( '";
+        stream << "('";
         switch (self->valtype()) {
             case v_hstring: stream << "&H "; break;
             case v_bstring: stream << "&B "; break;
@@ -700,11 +705,15 @@ namespace x680 {
     }        
     
     std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self){
-        return stream << self->name() << "("  << self->value().get() <<  ")";        
+        return stream << "(" << self->name() << "("  << self->value().get() <<  ") )";        
     }    
     
     std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self){
-        return stream << self->name() << " : "  << self->value().get(); 
+        return stream << "(" << self->name() << " : "  << self->value().get()  <<  ")"; 
+    }
+    
+    std::ostream& operator<<(std::ostream& stream, openvalue_atom* self){
+        return stream << "(" << self->type().get() << " : "  << self->value().get()   <<  ")";; 
     }
     
 
@@ -1056,7 +1065,8 @@ namespace x680 {
                     case v_value_list: return value_atom_ptr(new listvalue_atom(ent.type, compile_listvalue(scope, ent)));                           
                     case v_defined: return  value_atom_ptr(new definedvalue_atom( ent.identifier,scope)); 
                     case v_defined_assign: return  compile_assignvalue(scope, ent);   
-                    case v_choice: return  compile_choicevalue(scope, ent);                      
+                    case v_choice: return  compile_choicevalue(scope, ent); 
+                    case v_open: return  compile_openvalue(scope, ent);                          
                     default:
                     {
                     }
@@ -1089,12 +1099,19 @@ namespace x680 {
                 return value_atom_ptr(new choicevalue_atom(ent.identifier, tmp));
             }
             return value_atom_ptr(new value_atom(v_nodef));
-        }           
+        }  
+        
+       value_atom_ptr compile_openvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
+            if (ent.typevalue) {   
+                return value_atom_ptr(new openvalue_atom( compile_type(ent.typevalue->type) , compile_value(scope, ent.typevalue->value)));
+            }                
+           return value_atom_ptr(new value_atom(v_nodef));
+       } 
         
         value_atom_ptr compile_namedvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent){
              if (!ent.values.empty())
                     return value_atom_ptr( new namedvalue_atom(ent.identifier, compile_value(scope, *(ent.values.begin()))));            
-            return (ent.type != v_defined) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));
+            return value_atom_ptr(new value_atom(v_nodef));
         }        
         
         value_vct compile_structvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {   
@@ -1121,7 +1138,6 @@ namespace x680 {
             value_vct rslt;
             for(x680::syntactic::value_element_vector::const_iterator it = ent.values.begin(); it!=ent.values.end();++it){    
                     rslt.push_back(value_atom_ptr(  compile_value(scope, *it)));}
-
             return rslt;
         }                  
 

@@ -111,6 +111,9 @@ namespace x680 {
     class choicevalue_atom;
     typedef boost::shared_ptr<choicevalue_atom> choicevalue_atom_ptr;    
     
+    class openvalue_atom;
+    typedef boost::shared_ptr<openvalue_atom> openvalue_atom_ptr;     
+    
     class nullvalue_atom;
     typedef boost::shared_ptr<nullvalue_atom> nullvalue_atom_ptr;      
     
@@ -477,6 +480,8 @@ namespace x680 {
         
         choicevalue_atom* as_choice();
         
+        openvalue_atom* as_open();
+        
         nullvalue_atom* as_null();      
         
         emptyvalue_atom* as_empty();          
@@ -779,6 +784,47 @@ namespace x680 {
    
     std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self);          
     
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // openvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+    
+    class openvalue_atom : public value_atom {
+
+    public:
+        
+        openvalue_atom(type_atom_ptr tp , value_atom_ptr vl) 
+        : value_atom(v_open), type_(tp), value_(vl) {};
+        
+
+        type_atom_ptr type() const {
+            return type_;
+        }
+        
+      
+        void type(type_atom_ptr vl)  {
+            type_=vl;
+        }          
+        
+        value_atom_ptr value() const {
+            return value_;
+        }
+      
+         void value(value_atom_ptr vl)  {
+            value_=vl;
+        }       
+                  
+        
+
+    private:
+
+        type_atom_ptr type_;
+        value_atom_ptr value_;
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, openvalue_atom* self);     
+    
     /////////////////////////////////////////////////////////////////////////   
     // nullvalue_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -1076,6 +1122,7 @@ namespace x680 {
         value_vct compile_listvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);         
         value_atom_ptr compile_assignvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);       
         value_atom_ptr compile_choicevalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);           
+        value_atom_ptr compile_openvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);         
         value_atom_ptr compile_namedvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);     
         
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent); 
