@@ -198,11 +198,11 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    std::ostream& operator<<(std::ostream& stream, global_entity& self) {
+    std::ostream& operator<<(std::ostream& stream, global_entity* self) {
         stream << "GLOBAL SCOPE:" << "\n";
-        for (basic_entity_vector::iterator it = self.childs().begin(); it != self.childs().end(); ++it) {
+        for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
             if ((*it)->as_module())
-                stream << *((*it)->as_module());
+                stream << (*it)->as_module();
         }
         return stream;
     }
@@ -228,13 +228,13 @@ namespace x680 {
         }*/
     }
 
-    std::ostream& operator<<(std::ostream& stream, import_entity& self) {
-        if (self.scope())
-            stream << "      from module: " << self.name();
+    std::ostream& operator<<(std::ostream& stream, import_entity* self) {
+        if (self->scope())
+            stream << "      from module: " << self->name();
         else
-            stream << "      from module: " << self.name() << "(?)";
+            stream << "      from module: " << self->name() << "(?)";
         stream << "\n      symbol: ";
-        for (import_vector::iterator it = self.import().begin(); it != self.import().end(); ++it) {
+        for (import_vector::iterator it = self->import().begin(); it != self->import().end(); ++it) {
             stream << *it << ", ";
         }
         stream << "\n";
@@ -311,46 +311,46 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    std::ostream& operator<<(std::ostream& stream, module_entity& self) {
+    std::ostream& operator<<(std::ostream& stream, module_entity* self) {
         stream << "\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
-        stream << "module: " << self.name() << "\nfile:" << self.file() << "\n";
+        stream << "module: " << self->name() << "\nfile:" << self->file() << "\n";
         stream << "----------------------------------------------------------\n";
-        if (self.allexport())
+        if (self->allexport())
             stream << "      export ALL\n ";
 
         stream << "      export: ";
-        for (export_vector::iterator it = self.exports().begin(); it != self.exports().end(); ++it) {
+        for (export_vector::iterator it = self->exports().begin(); it != self->exports().end(); ++it) {
             stream << *it << ", ";
         }
 
         stream << "\n----------------------------------------------------------\n";
         stream << "      IMPORTS: ";
-        for (basic_entity_vector::iterator it = self.imports().begin(); it != self.imports().end(); ++it) {
+        for (basic_entity_vector::iterator it = self->imports().begin(); it != self->imports().end(); ++it) {
             stream << "\n.............................................................................................\n";
             stream << "      import: \n";
             if ((*it)->as_import())
-                stream << *((*it)->as_import());
+                stream << (*it)->as_import();
         }
         stream << "     \n";
-        for (basic_entity_vector::iterator it = self.childs().begin(); it != self.childs().end(); ++it) {
+        for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
             if ((*it)->as_bigassigment()) {
-                stream << *((*it)->as_bigassigment());
+                stream << (*it)->as_bigassigment();
                 continue;
             }
             if ((*it)->as_littleassigment()) {
-                stream << *((*it)->as_littleassigment());
+                stream << (*it)->as_littleassigment();
                 continue;
             }
             if ((*it)->as_typeassigment()) {
-                stream << *((*it)->as_typeassigment());
+                stream << (*it)->as_typeassigment();
                 continue;
             }
             if ((*it)->as_valueassigment()) {
-                stream << *((*it)->as_valueassigment());
+                stream << (*it)->as_valueassigment();
                 continue;
             }
             if ((*it)->as_classassigment()) {
-                stream << *((*it)->as_classassigment());
+                stream << (*it)->as_classassigment();
                 continue;
             }
         }
@@ -367,8 +367,8 @@ namespace x680 {
     : basic_entity(nm, et_Nodef) {
     }
 
-    std::ostream& operator<<(std::ostream& stream, expectdef_entity& self) {
-        stream << self.name() << "(?)";
+    std::ostream& operator<<(std::ostream& stream, expectdef_entity* self) {
+        stream << self->name() << "(?)";
         return stream;
     }
 
@@ -405,11 +405,11 @@ namespace x680 {
         return dynamic_cast<type_atom*> (this);
     }
 
-    std::ostream& operator<<(std::ostream& stream, basic_atom& self) {
-        if (self.as_type())
-            return stream << self.as_type()->builtin();
-        if (self.as_value())
-            return stream << *(self.as_value());
+    std::ostream& operator<<(std::ostream& stream, basic_atom* self) {
+        if (self->as_type())
+            return stream << self->as_type()->builtin();
+        if (self->as_value())
+            return stream << self->as_value();
         return stream;
     }
 
@@ -440,9 +440,9 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, tagged& self) {
         if (self.number()) {
             if (self.rule() == noset_tags)
-                return stream << " [" << *(self.number()) << " " << self._class() << "] ";
+                return stream << " [" << self.number().get() << " " << self._class() << "] ";
             else
-                return stream << " [ " << self.rule() << *(self.number()) << " " << self._class() << "] ";
+                return stream << " [ " << self.rule() << self.number().get() << " " << self._class() << "] ";
         }
         return stream;
     }
@@ -463,22 +463,22 @@ namespace x680 {
 
     //            }
 
-    std::ostream& operator<<(std::ostream& stream, type_atom& self) {
-        if (self.tag()) {
-            stream << *(self.tag());
+    std::ostream& operator<<(std::ostream& stream, type_atom* self) {
+        if (self->tag()) {
+            stream << *(self->tag());
         }
-        if (self.builtin() == t_Reference) {
-            if (self.reff()->as_expectdef())
-                stream << "??? *" << self.reff()->name();
+        if (self->builtin() == t_Reference) {
+            if (self->reff()->as_expectdef())
+                stream << "??? *" << self->reff()->name();
             else {
-                stream << " *" << self.reff()->name();
-                if (self.rooted())
-                    stream << "(@" << *(self.root()) << ")";
+                stream << " *" << self->reff()->name();
+                if (self->rooted())
+                    stream << "(@" << self->root() << ")";
             }
         } else {
-            stream << self.builtin();
+            stream << self->builtin();
         }
-        //stream << " id: " << self.name();
+        //stream << " id: " << self->name();
         return stream;
     }
 
@@ -581,82 +581,82 @@ namespace x680 {
         return dynamic_cast<emptyvalue_atom*> (this);
     }    
 
-    std::ostream& operator<<(std::ostream& stream, value_atom& self) {
-        switch (self.valtype()) {
-            case v_boolean: return (stream << *(self.as_bool()));
-            case v_number: return (stream << *(self.as_number()));
-            case v_real: return (stream << *(self.as_real()));
-            case v_null: return (stream << *(self.as_null()));
-            case v_empty: return (stream << *(self.as_empty()));            
-            case v_named_value: return (stream << *(self.as_named()));
+    std::ostream& operator<<(std::ostream& stream, value_atom* self) {
+        switch (self->valtype()) {
+            case v_boolean: return (stream << self->as_bool());
+            case v_number: return (stream << self->as_number());
+            case v_real: return (stream << self->as_real());
+            case v_null: return (stream << self->as_null());
+            case v_empty: return (stream << self->as_empty());            
+            case v_named_value: return (stream << self->as_named());
             case v_hstring:
             case v_bstring:                
-            case v_cstring: return (stream << *(self.as_cstr()));
-            case v_struct: return (stream << *(self.as_struct()));            
+            case v_cstring: return (stream << self->as_cstr());
+            case v_struct: return (stream << self->as_struct());            
             default:
             {
             }
         }
-        if (self.valtype() == v_defined) {
-            if (self.reff()->as_expectdef())
-                return stream << "??? *" << self.reff()->name();
+        if (self->valtype() == v_defined) {
+            if (self->reff()->as_expectdef())
+                return stream << "??? *" << self->reff()->name();
             else {
-                stream << " *" << self.reff()->name();
-                if (self.rooted())
-                    stream << "(@" << *(self.root()) << ")";
+                stream << " *" << self->reff()->name();
+                if (self->rooted())
+                    stream << "(@" << self->root() << ")";
                 return stream;
             }
         }
-        return stream << "?: " << (int) self.valtype();
+        return stream << "?: " << (int) self->valtype();
     }
 
-    std::ostream& operator<<(std::ostream& stream, numvalue_atom& self) {
-        return stream << "(" << self.value() << ")";
+    std::ostream& operator<<(std::ostream& stream, numvalue_atom* self) {
+        return stream << "(" << self->value() << ")";
     }
 
-    std::ostream& operator<<(std::ostream& stream, realvalue_atom& self) {
-        return stream << "(" << self.value() << ")";
+    std::ostream& operator<<(std::ostream& stream, realvalue_atom* self) {
+        return stream << "(" << self->value() << ")";
     }
 
-    std::ostream& operator<<(std::ostream& stream, boolvalue_atom& self) {
-        if (self.value())
+    std::ostream& operator<<(std::ostream& stream, boolvalue_atom* self) {
+        if (self->value())
            return stream << "(TRUE)";
         else
            return stream << "(FALSE)";
     }
 
-    std::ostream& operator<<(std::ostream& stream, strvalue_atom& self) {
+    std::ostream& operator<<(std::ostream& stream, strvalue_atom* self) {
         stream << "( '";
-        switch (self.valtype()) {
+        switch (self->valtype()) {
             case v_hstring: stream << "&H "; break;
             case v_bstring: stream << "&B "; break;
             default:
             {
             }
         } 
-        return stream << self.value() << "')";
+        return stream << self->value() << "')";
     }
     
-    std::ostream& operator<<(std::ostream& stream, namedvalue_atom& self) {
-        return stream <<  self.name() <<  " : " << * self.value();
+    std::ostream& operator<<(std::ostream& stream, namedvalue_atom* self) {
+        return stream <<  self->name() <<  " : " <<  self->value();
     }
     
-    std::ostream& operator<<(std::ostream& stream, structvalue_atom& self){
+    std::ostream& operator<<(std::ostream& stream, structvalue_atom* self){
         stream << " { " ;
-        for (value_vct::iterator it=self.values().begin();it!=self.values().end();++it){
-            if (it!=self.values().begin())
+        for (value_vct::const_iterator it=self->values().begin();it!=self->values().end();++it){
+            if (it!=self->values().begin())
                 stream <<   ",  ";
-             stream << *(*it);
+             stream << (*it).get();
         }
         return stream << "}" ;
     }    
     
 
-    std::ostream& operator<<(std::ostream& stream, nullvalue_atom& self) {
+    std::ostream& operator<<(std::ostream& stream, nullvalue_atom* self) {
         return stream << "(NULL)";
     }
     
-    std::ostream& operator<<(std::ostream& stream, emptyvalue_atom& self) {
+    std::ostream& operator<<(std::ostream& stream, emptyvalue_atom* self) {
         return stream << "({})";
     }    
 
@@ -693,8 +693,8 @@ namespace x680 {
             return scope()->find(nm);
     }
 
-    std::ostream& operator<<(std::ostream& stream, bigassigment_entity& self) {
-        return stream << "(?B)" << self.name() << " :: = " << "\n";
+    std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self) {
+        return stream << "(?B)" << self->name() << " :: = " << "\n";
     }
 
 
@@ -718,8 +718,8 @@ namespace x680 {
             return scope()->find(nm);
     }
 
-    std::ostream& operator<<(std::ostream& stream, littleassigment_entity& self) {
-        return stream << "(?l)" << self.name() << " [" << "] :: = " << "\n";
+    std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self) {
+        return stream << "(?l)" << self->name() << " [" << "] :: = " << "\n";
     }
 
 
@@ -743,8 +743,8 @@ namespace x680 {
             return scope()->find(nm);
     }
 
-    std::ostream& operator<<(std::ostream& stream, typeassigment_entity& self) {
-        return stream << "(T) " << self.name() << " :: = " << *(self.type()) << "\n";
+    std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self) {
+        return stream << "(T) " << self->name() << " :: = " << self->type().get() << "\n";
     }
 
 
@@ -768,8 +768,8 @@ namespace x680 {
             return scope()->find(nm);
     }
 
-    std::ostream& operator<<(std::ostream& stream, valueassigment_entity& self) {
-        return stream << "(v) " << self.name() << " [" << *(self.type()) << "] :: = " << *(self.value()) << "\n";
+    std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self) {
+        return stream << "(v) " << self->name() << " [" << self->type().get() << "] :: = " << self->value().get() << "\n";
     }
 
 
@@ -793,8 +793,8 @@ namespace x680 {
             return scope()->find(nm);
     }
 
-    std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity& self) {
-        return stream << "(vS) " << self.name() << " [" << *(self.type()) << "] :: = " << "\n";
+    std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self) {
+        return stream << "(vS) " << self->name() << " [" << self->type().get() << "] :: = " << "\n";
     }
 
 
@@ -818,20 +818,20 @@ namespace x680 {
             return scope()->find(nm);
     }
 
-    std::ostream& operator<<(std::ostream& stream, classassigment_entity& self) {
-        return stream << "(C) " << self.name() << " :: = " << *(self._class()) << "\n";
+    std::ostream& operator<<(std::ostream& stream, classassigment_entity* self) {
+        return stream << "(C) " << self->name() << " :: = " << self->_class().get() << "\n";
     }
 
-    std::ostream& operator<<(std::ostream& stream, class_atom& self) {
-        if (self.builtin() == cl_Reference) {
-            if (self.reff()->as_expectdef())
-                stream << "???" << self.reff()->name();
+    std::ostream& operator<<(std::ostream& stream, class_atom* self) {
+        if (self->builtin() == cl_Reference) {
+            if (self->reff()->as_expectdef())
+                stream << "???" << self->reff()->name();
             else
-                stream << self.reff()->name();
+                stream << self->reff()->name();
         } else {
-            stream << self.builtin();
+            stream << self->builtin();
         }
-        //stream << " id: " << self.name();
+        //stream << " id: " << self->name();
         return stream;
     }
 

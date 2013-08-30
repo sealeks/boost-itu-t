@@ -220,7 +220,7 @@ namespace x680 {
 
     };
 
-    std::ostream& operator<<(std::ostream& stream, global_entity& self);
+    std::ostream& operator<<(std::ostream& stream, global_entity* self);
 
 
 
@@ -250,7 +250,7 @@ namespace x680 {
 
     };
 
-    std::ostream& operator<<(std::ostream& stream, expectdef_entity& self);
+    std::ostream& operator<<(std::ostream& stream, expectdef_entity* self);
 
 
 
@@ -297,7 +297,7 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, module_entity& self);
+    std::ostream& operator<<(std::ostream& stream, module_entity* self);
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -350,7 +350,7 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, basic_atom& self);
+    std::ostream& operator<<(std::ostream& stream, basic_atom* self);
     
     
     /////////////////////////////////////////////////////////////////////////   
@@ -418,7 +418,7 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, type_atom& self);
+    std::ostream& operator<<(std::ostream& stream, type_atom* self);
 
     std::ostream& operator<<(std::ostream& stream, defined_type self);
     
@@ -463,7 +463,7 @@ namespace x680 {
     };
     
    
-    std::ostream& operator<<(std::ostream& stream, value_atom& self);
+    std::ostream& operator<<(std::ostream& stream, value_atom* self);
     
     
     /////////////////////////////////////////////////////////////////////////   
@@ -486,7 +486,7 @@ namespace x680 {
     };
     
    
-    std::ostream& operator<<(std::ostream& stream, numvalue_atom& self);    
+    std::ostream& operator<<(std::ostream& stream, numvalue_atom* self);    
     
     /////////////////////////////////////////////////////////////////////////   
     // realvalue_atom
@@ -507,7 +507,7 @@ namespace x680 {
 
     };
    
-    std::ostream& operator<<(std::ostream& stream, realvalue_atom&self);     
+    std::ostream& operator<<(std::ostream& stream, realvalue_atom* self);     
     
     /////////////////////////////////////////////////////////////////////////   
     // realvalue_atom
@@ -529,7 +529,7 @@ namespace x680 {
     };    
     
    
-    std::ostream& operator<<(std::ostream& stream, boolvalue_atom& self);      
+    std::ostream& operator<<(std::ostream& stream, boolvalue_atom* self);      
     
     
     /////////////////////////////////////////////////////////////////////////   
@@ -552,7 +552,7 @@ namespace x680 {
     };    
     
    
-    std::ostream& operator<<(std::ostream& stream, strvalue_atom& self);    
+    std::ostream& operator<<(std::ostream& stream, strvalue_atom* self);    
     
     
     /////////////////////////////////////////////////////////////////////////   
@@ -581,7 +581,7 @@ namespace x680 {
     };    
     
    
-    std::ostream& operator<<(std::ostream& stream, namedvalue_atom& self);      
+    std::ostream& operator<<(std::ostream& stream, namedvalue_atom* self);      
     
     
     /////////////////////////////////////////////////////////////////////////   
@@ -596,7 +596,7 @@ namespace x680 {
         : value_atom(v_struct), values_(vls){};
         
 
-        value_vct values() const {
+        const value_vct& values() const {
             return values_;
         }
 
@@ -606,7 +606,7 @@ namespace x680 {
     };    
     
    
-    std::ostream& operator<<(std::ostream& stream, structvalue_atom& self);    
+    std::ostream& operator<<(std::ostream& stream, structvalue_atom* self);    
     
     
     /////////////////////////////////////////////////////////////////////////   
@@ -621,7 +621,7 @@ namespace x680 {
     };    
     
    
-    std::ostream& operator<<(std::ostream& stream, nullvalue_atom& self);    
+    std::ostream& operator<<(std::ostream& stream, nullvalue_atom* self);    
 
      /////////////////////////////////////////////////////////////////////////   
     // emptyvalue_atom
@@ -635,7 +635,7 @@ namespace x680 {
     };    
     
    
-    std::ostream& operator<<(std::ostream& stream, emptyvalue_atom& self);
+    std::ostream& operator<<(std::ostream& stream, emptyvalue_atom* self);
     
     
     
@@ -686,7 +686,7 @@ namespace x680 {
         basic_atom_ptr big_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, bigassigment_entity& self);
+    std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -723,7 +723,7 @@ namespace x680 {
         basic_atom_ptr little_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, littleassigment_entity& self);
+    std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self);
 
 
 
@@ -753,7 +753,7 @@ namespace x680 {
         type_atom_ptr type_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, typeassigment_entity& self);
+    std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self);
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -790,7 +790,7 @@ namespace x680 {
         value_atom_ptr value_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, valueassigment_entity& self);
+    std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self);
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -827,7 +827,7 @@ namespace x680 {
         basic_atom_ptr valueset_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity& self);
+    std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self);
 
 
     
@@ -857,9 +857,9 @@ namespace x680 {
         class_atom_ptr class_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, classassigment_entity& self);    
+    std::ostream& operator<<(std::ostream& stream, classassigment_entity* self);    
 
-    std::ostream& operator<<(std::ostream& stream, class_atom& self);
+    std::ostream& operator<<(std::ostream& stream, class_atom* self);
     
     std::ostream& operator<<(std::ostream& stream, definedclass_type self); 
 
