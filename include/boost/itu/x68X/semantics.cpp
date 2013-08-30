@@ -575,8 +575,23 @@ namespace x680 {
     
     objidvalue_atom* value_atom::as_objid() {
         return dynamic_cast<objidvalue_atom*> (this);
-    }          
-
+    }      
+    
+    listvalue_atom* value_atom::as_list() {
+        return dynamic_cast<listvalue_atom*> (this);
+    }       
+    
+    definedvalue_atom* value_atom::as_defined() {
+        return dynamic_cast<definedvalue_atom*> (this);
+    }       
+    
+    choicevalue_atom* value_atom::as_choice() {
+        return dynamic_cast<choicevalue_atom*> (this);
+    }      
+    
+    assignvalue_atom* value_atom::as_assign() {
+        return dynamic_cast<assignvalue_atom*> (this);
+    }  
     nullvalue_atom* value_atom::as_null() {
         return dynamic_cast<nullvalue_atom*> (this);
     }
@@ -597,19 +612,15 @@ namespace x680 {
             case v_bstring:                
             case v_cstring: return (stream << self->as_cstr());
             case v_struct: return (stream << self->as_struct()); 
-            case v_objectid: return (stream << self->as_objid());             
+            case v_objectid: return (stream << self->as_objid()); 
+            case v_defined_list:
+            case v_number_list:       
+            case v_value_list:  return (stream << self->as_list());       
+            case v_defined: return (stream << self->as_defined());
+            case v_defined_assign: return (stream << self->as_assign());       
+            case  v_choice: return (stream << self->as_choice());            
             default:
             {
-            }
-        }
-        if (self->valtype() == v_defined) {
-            if (self->reff()->as_expectdef())
-                return stream << "??? *" << self->reff()->name();
-            else {
-                stream << " *" << self->reff()->name();
-                if (self->rooted())
-                    stream << "(@" << self->root() << ")";
-                return stream;
             }
         }
         return stream << "?: " << (int) self->valtype();
@@ -664,7 +675,37 @@ namespace x680 {
              stream << (*it).get();
         }
         return stream << "}" ;       
+    }   
+    
+    std::ostream& operator<<(std::ostream& stream, listvalue_atom* self){
+         stream << " { " ;
+        for (value_vct::const_iterator it=self->values().begin();it!=self->values().end();++it){
+            if (it!=self->values().begin())
+                stream <<   ",  ";
+             stream << (*it).get();
+        }
+        return stream << "}" ;       
+    }       
+    
+    std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self){
+            if (self->reff()->as_expectdef())
+                return stream << "??? *" << self->reff()->name();
+            else {
+                stream << " *" << self->reff()->name();
+                if (self->rooted())
+                    stream << "(@" << self->root() << ")";
+                return stream;
+            }    
+        return stream;        
+    }        
+    
+    std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self){
+        return stream << self->name() << "("  << self->value().get() <<  ")";        
     }    
+    
+    std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self){
+        return stream << self->name() << " : "  << self->value().get(); 
+    }
     
 
     std::ostream& operator<<(std::ostream& stream, nullvalue_atom* self) {
@@ -993,10 +1034,10 @@ namespace x680 {
 
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::value_assignment tmp = boost::get<x680::syntactic::value_assignment>(ent);
-            return valueassigment_entity_ptr(new valueassigment_entity(scope, tmp.identifier, compile_type(tmp.type), compile_value(tmp.value)));
+            return valueassigment_entity_ptr(new valueassigment_entity(scope, tmp.identifier, compile_type(tmp.type), compile_value(scope, tmp.value)));
         }
 
-        value_atom_ptr compile_value(const x680::syntactic::value_element& ent) {
+        value_atom_ptr compile_value(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
             try {
                 switch (ent.type) {
                     case v_boolean: return value_atom_ptr(new boolvalue_atom(ent.value == "TRUE"));
@@ -1004,47 +1045,85 @@ namespace x680 {
                     case v_real: return value_atom_ptr(new realvalue_atom(boost::lexical_cast<double > (ent.value)));
                     case v_null: return value_atom_ptr(new nullvalue_atom());
                     case v_empty: return value_atom_ptr(new emptyvalue_atom());                  
-                    case v_named_value: return compile_namedvalue(ent);                    
+                    case v_named_value: return compile_namedvalue(scope, ent);                    
                     case v_bstring:
                     case v_hstring:
                     case v_cstring: return value_atom_ptr(new strvalue_atom(ent.value, ent.type));
-                    case v_struct: return value_atom_ptr(new structvalue_atom( compile_structvalue(ent)));   
-                    case v_objectid: return  value_atom_ptr(new objidvalue_atom( compile_objidvalue(ent)));                     
-                    //case v_value_list: return value_atom_ptr(new structvalue_atom( compile_structvalue(ent)));                        
+                    case v_struct: return value_atom_ptr(new structvalue_atom( compile_structvalue(scope, ent)));   
+                    case v_objectid: return  value_atom_ptr(new objidvalue_atom( compile_objidvalue(scope, ent)));       
+                    case v_defined_list:
+                    case v_number_list:       
+                    case v_value_list: return value_atom_ptr(new listvalue_atom(ent.type, compile_listvalue(scope, ent)));                           
+                    case v_defined: return  value_atom_ptr(new definedvalue_atom( ent.identifier,scope)); 
+                    case v_defined_assign: return  compile_assignvalue(scope, ent);   
+                    case v_choice: return  compile_choicevalue(scope, ent);                      
                     default:
                     {
                     }
                 }
             } catch (boost::bad_lexical_cast) {
             }
-            return (ent.type != v_defined) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));
+            return value_atom_ptr(new value_atom(v_nodef));
         }
+
+        value_atom_ptr compile_assignvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
+            try {
+                if (ent.value.empty()) {
+                    if (!ent.values.empty()){ 
+                         value_atom_ptr tmp = compile_value(scope, *(ent.values.begin()));
+                         return value_atom_ptr(new assignvalue_atom(ent.identifier, tmp));
+                    }
+                } else {
+                    value_atom_ptr tmp (new numvalue_atom(boost::lexical_cast<int > (ent.value)));
+                    return value_atom_ptr(new assignvalue_atom(ent.identifier, tmp));
+                }
+            } catch (boost::bad_lexical_cast) {
+            }
+            return value_atom_ptr(new value_atom(v_nodef));
+        }   
         
-        value_atom_ptr compile_namedvalue(const x680::syntactic::value_element& ent){
+        
+        value_atom_ptr compile_choicevalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
+            if (!ent.values.empty()) {
+                value_atom_ptr tmp = compile_value(scope, *(ent.values.begin()));
+                return value_atom_ptr(new choicevalue_atom(ent.identifier, tmp));
+            }
+            return value_atom_ptr(new value_atom(v_nodef));
+        }           
+        
+        value_atom_ptr compile_namedvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent){
              if (!ent.values.empty())
-                    return value_atom_ptr( new namedvalue_atom(ent.identifier, compile_value(*(ent.values.begin()))));            
+                    return value_atom_ptr( new namedvalue_atom(ent.identifier, compile_value(scope, *(ent.values.begin()))));            
             return (ent.type != v_defined) ? value_atom_ptr(new value_atom(ent.type)) : value_atom_ptr(new value_atom(ent.identifier, ent.type));
         }        
         
-        value_vct compile_structvalue(const x680::syntactic::value_element& ent) {   
+        value_vct compile_structvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {   
             value_vct rslt;
             if ((ent.type==v_struct)){
                 for(x680::syntactic::value_element_vector::const_iterator it = ent.values.begin(); it!=ent.values.end();++it){    
                     if (!it->values.empty()){ 
-                    rslt.push_back(value_atom_ptr( new namedvalue_atom(it->identifier, compile_value(*(it->values.begin())))));}
+                    rslt.push_back(value_atom_ptr( new namedvalue_atom(it->identifier, compile_value(scope, *(it->values.begin())))));}
                 }
             }
             return rslt;
         }  
         
-        value_vct compile_objidvalue(const x680::syntactic::value_element& ent) {   
+        value_vct compile_objidvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {   
             value_vct rslt;
             if ((ent.type==v_objectid)){
                 for(x680::syntactic::value_element_vector::const_iterator it = ent.values.begin(); it!=ent.values.end();++it){    
-                    rslt.push_back(value_atom_ptr(  compile_value(*it)));}
+                    rslt.push_back(value_atom_ptr(  compile_value(scope, *it)));}
                 }
             return rslt;
-        }          
+        }   
+        
+        value_vct compile_listvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {   
+            value_vct rslt;
+            for(x680::syntactic::value_element_vector::const_iterator it = ent.values.begin(); it!=ent.values.end();++it){    
+                    rslt.push_back(value_atom_ptr(  compile_value(scope, *it)));}
+
+            return rslt;
+        }                  
 
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);

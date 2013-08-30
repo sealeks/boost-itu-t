@@ -99,6 +99,18 @@ namespace x680 {
     class objidvalue_atom;    
     typedef boost::shared_ptr<objidvalue_atom> objidvalue_atom_ptr;    
     
+    class listvalue_atom;    
+    typedef boost::shared_ptr<listvalue_atom> listvalue_atom_ptr;        
+    
+    class definedvalue_atom;
+    typedef boost::shared_ptr<definedvalue_atom> definedvalue_atom_ptr; 
+    
+    class assignvalue_atom;
+    typedef boost::shared_ptr<assignvalue_atom> assignvalue_atom_ptr;   
+   
+    class choicevalue_atom;
+    typedef boost::shared_ptr<choicevalue_atom> choicevalue_atom_ptr;    
+    
     class nullvalue_atom;
     typedef boost::shared_ptr<nullvalue_atom> nullvalue_atom_ptr;      
     
@@ -348,7 +360,7 @@ namespace x680 {
         type_atom* as_type();           
         
 
-    private:
+    protected:
         basic_entity_ptr reff_;
     };
 
@@ -455,7 +467,15 @@ namespace x680 {
             
         structvalue_atom* as_struct();   
         
-        objidvalue_atom* as_objid();            
+        objidvalue_atom* as_objid();   
+        
+        listvalue_atom* as_list();        
+        
+        definedvalue_atom* as_defined();   
+        
+        assignvalue_atom* as_assign();   
+        
+        choicevalue_atom* as_choice();
         
         nullvalue_atom* as_null();      
         
@@ -615,7 +635,7 @@ namespace x680 {
     
     
     /////////////////////////////////////////////////////////////////////////   
-    // structvalue_atom
+    // objidvalue_atom
     /////////////////////////////////////////////////////////////////////////      
     
     class objidvalue_atom : public value_atom {
@@ -638,6 +658,126 @@ namespace x680 {
    
     std::ostream& operator<<(std::ostream& stream, objidvalue_atom* self);        
     
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // listvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+    
+    class listvalue_atom : public value_atom {
+
+    public:
+        
+        listvalue_atom(value_type tpv ,value_vct vls) 
+        : value_atom(tpv), values_(vls){};
+        
+
+        const value_vct& values() const {
+            return values_;
+        }
+
+    private:
+
+        value_vct values_;
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, listvalue_atom* self);     
+    
+  
+    /////////////////////////////////////////////////////////////////////////   
+    // definedvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+    
+    class definedvalue_atom : public value_atom {
+
+    public:
+        
+        definedvalue_atom(const std::string& rff, basic_entity_ptr scp) 
+        : value_atom( rff, v_defined), scope_(scp)  {};
+
+                      
+        
+        basic_entity_ptr scope() const {
+            return scope_;
+        }        
+
+    private:
+        
+        basic_entity_ptr scope_;        
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self);     
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // assignvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+    
+    class assignvalue_atom : public value_atom {
+
+    public:
+        
+        assignvalue_atom(const std::string& id , value_atom_ptr vl) 
+        : value_atom(v_defined_assign), name_(id), value_(vl) {};
+        
+
+        const std::string& name() const {
+            return name_;
+        }
+        
+        value_atom_ptr value() const {
+            return value_;
+        }
+      
+         void value(value_atom_ptr vl)  {
+            value_=vl;
+        }       
+                  
+        
+
+    private:
+
+        std::string name_;
+        value_atom_ptr value_;
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self);           
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // choicevalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+    
+    class choicevalue_atom : public value_atom {
+
+    public:
+        
+        choicevalue_atom(const std::string& id , value_atom_ptr vl) 
+        : value_atom(v_choice), name_(id), value_(vl) {};
+        
+
+        const std::string& name() const {
+            return name_;
+        }
+        
+        value_atom_ptr value() const {
+            return value_;
+        }
+      
+         void value(value_atom_ptr vl)  {
+            value_=vl;
+        }       
+                  
+        
+
+    private:
+
+        std::string name_;
+        value_atom_ptr value_;
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self);          
     
     /////////////////////////////////////////////////////////////////////////   
     // nullvalue_atom
@@ -921,18 +1061,27 @@ namespace x680 {
         basic_entity_ptr compile_import(const x680::syntactic::import& imp);
         void compile_assignments(const x680::syntactic::module& mod, module_entity_ptr mdl);
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        
         typeassigment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         type_atom_ptr compile_type(const x680::syntactic::type_element& ent);
         tagged_ptr compile_tag(const x680::syntactic::tag_type& ent);      
+        
         classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-        class_atom_ptr compile_class(const x680::syntactic::class_element& ent);        
+        class_atom_ptr compile_class(const x680::syntactic::class_element& ent);   
+        
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-        value_atom_ptr compile_value(const x680::syntactic::value_element& ent);
-        value_vct compile_structvalue(const x680::syntactic::value_element& ent);     
-        value_vct compile_objidvalue(const x680::syntactic::value_element& ent);         
-        value_atom_ptr compile_namedvalue(const x680::syntactic::value_element& ent);         
+        value_atom_ptr compile_value(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
+        value_vct compile_structvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);     
+        value_vct compile_objidvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);  
+        value_vct compile_listvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);         
+        value_atom_ptr compile_assignvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);       
+        value_atom_ptr compile_choicevalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);           
+        value_atom_ptr compile_namedvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);     
+        
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent); 
+        
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        
         basic_atom_ptr compile_test(const std::string& rf);
 
 
