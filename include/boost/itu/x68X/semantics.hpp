@@ -79,6 +79,9 @@ namespace x680 {
     class type_atom;
     typedef boost::shared_ptr<type_atom> type_atom_ptr;
     
+    class namedtype_atom;
+    typedef boost::shared_ptr<namedtype_atom> namedtype_atom_ptr;    
+    typedef std::vector<namedtype_atom_ptr> namedtype_atom_vct;   
     
     
     
@@ -492,13 +495,14 @@ namespace x680 {
             predefined_=vl;
         }           
 
-    private:
+    protected:
 
         defined_type builtin_;
         tagged_ptr tag_;
         predefined_ptr predefined_;
 
     };
+    
 
 
     std::ostream& operator<<(std::ostream& stream, type_atom* self);
@@ -506,7 +510,47 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, defined_type self);
     
     
- 
+     /////////////////////////////////////////////////////////////////////////   
+    // namedtype_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class namedtype_atom : public type_atom {
+
+    public:
+        
+        namedtype_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp, tagmarker_type mrker);
+        namedtype_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp, value_atom_ptr vl);        
+
+         const std::string& identifier() const {
+              return identifier_;
+         }    
+         
+        basic_entity_ptr scope() const {
+            return scope_;
+        }
+        
+        value_atom_ptr _default() const {
+            return default_;
+        }        
+        
+        tagmarker_type marker() const {
+            return marker_;
+        }          
+
+    private:
+
+        basic_entity_ptr scope_; 
+        std::string identifier_;
+        value_atom_ptr default_; 
+        tagmarker_type marker_;
+
+    };
+    
+
+
+    std::ostream& operator<<(std::ostream& stream, namedtype_atom* self);
+    
+     std::ostream& operator<<(std::ostream& stream, tagmarker_type self);   
 
 
     /////////////////////////////////////////////////////////////////////////   

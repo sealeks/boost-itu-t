@@ -416,19 +416,17 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
     // predefined
     ///////////////////////////////////////////////////////////////////////// 
-    
-
 
     std::ostream& operator<<(std::ostream& stream, predefined* self) {
         stream << "{$ ";
         for (valueassigment_entity_vct::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
-            if (it != self->values().begin()) 
+            if (it != self->values().begin())
                 stream << " ,";
             stream << (*it)->name();
             if ((*it)->value()) {
-                stream << "( "  << (*it)->value().get() << ")";
+                stream << "( " << (*it)->value().get() << ")";
             };
-        }   
+        }
         return stream << " $}";
     }
 
@@ -477,7 +475,6 @@ namespace x680 {
     type_atom::type_atom(const std::string& reff, defined_type tp, tagged_ptr tg)
     : basic_atom(reff), builtin_(tp), tag_(tg) {
     }
-
 
     std::ostream& operator<<(std::ostream& stream, type_atom* self) {
         if (self->tag()) {
@@ -553,6 +550,38 @@ namespace x680 {
         }
         return stream;
     }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // namedtype_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    namedtype_atom::namedtype_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp, tagmarker_type mrker)
+    : type_atom(tp->builtin(), tp->tag()), scope_(scp), identifier_(id), marker_(mrker) {
+        if (tp->reff())
+            reff(tp->reff());
+    }
+
+    namedtype_atom::namedtype_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp, value_atom_ptr vl)
+    : type_atom(tp->builtin(), tp->tag()), scope_(scp), identifier_(id), marker_(mk_default), default_(vl) {
+        if (tp->reff())
+            reff(tp->reff());
+    }
+
+    std::ostream& operator<<(std::ostream& stream, namedtype_atom* self) {
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, tagmarker_type self) {
+        switch(self){
+            //case mk_none:
+            case mk_default: stream << " DEFAULT "; break;
+            case mk_optional: stream << " OPTIONAL "; break;
+            //case mk_components_of:        
+            default:{}
+        }
+        return stream;
+    }
+
 
     /////////////////////////////////////////////////////////////////////////   
     // value_atom
@@ -1036,10 +1065,10 @@ namespace x680 {
         }
 
         type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
-           type_atom_ptr tmp = ent.reference.empty() ? type_atom_ptr(new type_atom(ent.builtin_t, compile_tag(ent.tag))) :
+            type_atom_ptr tmp = ent.reference.empty() ? type_atom_ptr(new type_atom(ent.builtin_t, compile_tag(ent.tag))) :
                     type_atom_ptr(new type_atom(ent.reference, ent.builtin_t, compile_tag(ent.tag)));
-           tmp->predefined(compile_typepredef(scope, ent));
-           return tmp;
+            tmp->predefined(compile_typepredef(scope, ent));
+            return tmp;
         }
 
         predefined_ptr compile_typepredef(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
@@ -1052,13 +1081,13 @@ namespace x680 {
                     rslt.push_back(el);
                 } else {
                     try {
-                    valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(t_INTEGER)),
-                             value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (it->value)))));
-                    rslt.push_back(el);
+                        valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(t_INTEGER)),
+                                value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (it->value)))));
+                        rslt.push_back(el);
                     } catch (boost::bad_lexical_cast) {
-                     valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(t_INTEGER)),
-                             value_atom_ptr(new definedvalue_atom(it->value, scope) )));
-                     rslt.push_back(el);                       
+                        valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(t_INTEGER)),
+                                value_atom_ptr(new definedvalue_atom(it->value, scope))));
+                        rslt.push_back(el);
                     }
                 }
             }
