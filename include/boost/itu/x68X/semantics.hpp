@@ -57,6 +57,7 @@ namespace x680 {
 
     class valueassigment_entity;
     typedef boost::shared_ptr<valueassigment_entity> valueassigment_entity_ptr;
+    typedef std::vector<valueassigment_entity_ptr> valueassigment_entity_vct;
     
     class valuesetassigment_entity;
     typedef boost::shared_ptr<valuesetassigment_entity> valuesetassigment_entity_ptr;    
@@ -67,11 +68,20 @@ namespace x680 {
     class basic_atom;
     typedef boost::shared_ptr<basic_atom> basic_atom_ptr;
     
+    
+
+    class predefined; 
+    typedef boost::shared_ptr<predefined> predefined_ptr;        
+    
     class tagged; 
     typedef boost::shared_ptr<tagged> tagged_ptr;    
 
     class type_atom;
     typedef boost::shared_ptr<type_atom> type_atom_ptr;
+    
+    
+    
+    
 
     class value_atom;
     typedef boost::shared_ptr<value_atom> value_atom_ptr;
@@ -119,6 +129,9 @@ namespace x680 {
     
     class emptyvalue_atom;
     typedef boost::shared_ptr<emptyvalue_atom> emptyvalue_atom_ptr;         
+    
+    
+    
     
     class class_atom;
     typedef boost::shared_ptr<class_atom> class_atom_ptr;    
@@ -372,6 +385,49 @@ namespace x680 {
     
     
     /////////////////////////////////////////////////////////////////////////   
+    // predefined
+    /////////////////////////////////////////////////////////////////////////      
+    
+    
+    class predefined {
+
+    public:
+        
+        predefined(basic_entity_ptr scp, defined_type tp)  
+        : scope_(scp), type_(tp)  {};
+        
+        virtual ~predefined(){};  
+
+        const valueassigment_entity_vct& values() const {
+            return values_;
+        }          
+        
+        void values(const valueassigment_entity_vct& vl)  {
+            values_=vl;
+        }  
+           
+        defined_type type() const {
+            return type_;
+        }            
+        
+        basic_entity_ptr scope() const {
+            return scope_;
+        }        
+
+    private:
+        
+        basic_entity_ptr scope_; 
+        valueassigment_entity_vct values_;
+        defined_type type_;
+    };    
+    
+   
+    std::ostream& operator<<(std::ostream& stream, predefined* self);         
+    
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
     // tagged
     /////////////////////////////////////////////////////////////////////////      
     
@@ -426,12 +482,21 @@ namespace x680 {
         
          tagged_ptr tag() const {
               return tag_;
-         }          
+         }      
+         
+        predefined_ptr predefined() const {
+            return predefined_;
+        }          
+        
+        void predefined(predefined_ptr vl)  {
+            predefined_=vl;
+        }           
 
     private:
 
         defined_type builtin_;
         tagged_ptr tag_;
+        predefined_ptr predefined_;
 
     };
 
@@ -1109,7 +1174,8 @@ namespace x680 {
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         
         typeassigment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-        type_atom_ptr compile_type(const x680::syntactic::type_element& ent);
+        type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
+        predefined_ptr compile_typepredef(basic_entity_ptr scope, const x680::syntactic::type_element& ent);        
         tagged_ptr compile_tag(const x680::syntactic::tag_type& ent);      
         
         classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
