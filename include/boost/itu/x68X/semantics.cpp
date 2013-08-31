@@ -422,10 +422,12 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, predefined* self) {
         stream << "{$ ";
         for (valueassigment_entity_vct::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
-            if (it != self->values().begin()) {
+            if (it != self->values().begin()) 
                 stream << " ,";
-            }
             stream << (*it)->name();
+            if ((*it)->value()) {
+                stream << "( "  << (*it)->value().get() << ")";
+            };
         }   
         return stream << " $}";
     }
@@ -476,9 +478,6 @@ namespace x680 {
     : basic_atom(reff), builtin_(tp), tag_(tg) {
     }
 
-    //   basic_entity_ptr type_atom::find(const std::string& nm) {
-
-    //            }
 
     std::ostream& operator<<(std::ostream& stream, type_atom* self) {
         if (self->tag()) {
@@ -495,10 +494,8 @@ namespace x680 {
         } else {
             stream << self->builtin();
         }
-        if (self->predefined()){
+        if (self->predefined())
             stream << self->predefined().get();
-        }
-        //stream << " id: " << self->name();
         return stream;
     }
 
