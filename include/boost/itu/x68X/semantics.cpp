@@ -110,7 +110,7 @@ namespace x680 {
             basic_entity_ptr fnd = elm->find(tmp->big()->reff()->name());
             if (fnd) {
                 if (fnd->kind() == et_Type) {
-                    basic_entity_ptr rslt(new typeassigment_entity(elm->scope(), tmp->name(), type_atom_ptr(new type_atom(tmp->big()->reff()->name(), t_Reference))));
+                    basic_entity_ptr rslt(new typeassigment_entity(elm->scope(), tmp->name(), type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference))));
                     return resolve_type_assigment(rslt);
                 }
                 if (fnd->kind() == et_Class) {
@@ -376,10 +376,10 @@ namespace x680 {
     // basic_atom
     /////////////////////////////////////////////////////////////////////////   
 
-    basic_atom::basic_atom() {
+    basic_atom::basic_atom(basic_entity_ptr scp) : scope_(scp) {
     };
 
-    basic_atom::basic_atom(const std::string& reff) {
+    basic_atom::basic_atom(const std::string& reff, basic_entity_ptr scp) : scope_(scp) {
         reff_ = basic_entity_ptr(new expectdef_entity(reff));
     }
 
@@ -468,12 +468,20 @@ namespace x680 {
     // type_atom
     /////////////////////////////////////////////////////////////////////////   
 
-    type_atom::type_atom(defined_type tp, tagged_ptr tg)
-    : basic_atom(), builtin_(tp), tag_(tg) {
+    type_atom::type_atom(basic_entity_ptr scp, defined_type tp, tagged_ptr tg)
+    : basic_atom(scp), builtin_(tp), tag_(tg) {
     }
 
-    type_atom::type_atom(const std::string& reff, defined_type tp, tagged_ptr tg)
-    : basic_atom(reff), builtin_(tp), tag_(tg) {
+    type_atom::type_atom(basic_entity_ptr scp, const std::string& reff, defined_type tp, tagged_ptr tg)
+    : basic_atom(reff, scp), builtin_(tp), tag_(tg) {
+    }
+
+    type_atom::type_atom(basic_entity_ptr scp, defined_type tp, namedtype_atom_vct elms, tagged_ptr tg)
+    : basic_atom(scp), builtin_(tp), tag_(tg), elemens_(elms) {
+    }
+
+    namedtype_atom* type_atom::as_named() {
+        return dynamic_cast<namedtype_atom*> (this);
     }
 
     std::ostream& operator<<(std::ostream& stream, type_atom* self) {
@@ -556,13 +564,13 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     namedtype_atom::namedtype_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp, tagmarker_type mrker)
-    : type_atom(tp->builtin(), tp->tag()), scope_(scp), identifier_(id), marker_(mrker) {
+    : type_atom(scp, tp->builtin(), tp->tag()), identifier_(id), marker_(mrker), type_(tp) {
         if (tp->reff())
             reff(tp->reff());
     }
 
     namedtype_atom::namedtype_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp, value_atom_ptr vl)
-    : type_atom(tp->builtin(), tp->tag()), scope_(scp), identifier_(id), marker_(mk_default), default_(vl) {
+    : type_atom(scp, tp->builtin(), tp->tag()), identifier_(id), marker_(mk_default), type_(tp), default_(vl) {
         if (tp->reff())
             reff(tp->reff());
     }
@@ -572,27 +580,33 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, tagmarker_type self) {
-        switch(self){
-            //case mk_none:
-            case mk_default: stream << " DEFAULT "; break;
-            case mk_optional: stream << " OPTIONAL "; break;
-            //case mk_components_of:        
-            default:{}
+        switch (self) {
+                //case mk_none:
+            case mk_default: stream << " DEFAULT ";
+                break;
+            case mk_optional: stream << " OPTIONAL ";
+                break;
+                //case mk_components_of:        
+            default:
+            {
+            }
         }
         return stream;
     }
+
+
 
 
     /////////////////////////////////////////////////////////////////////////   
     // value_atom
     /////////////////////////////////////////////////////////////////////////       
 
-    value_atom::value_atom(value_type tpv)
-    : basic_atom(), valtype_(tpv) {
+    value_atom::value_atom(basic_entity_ptr scp, value_type tpv)
+    : basic_atom(scp), valtype_(tpv) {
     }
 
-    value_atom::value_atom(const std::string& reff, value_type tpv)
-    : basic_atom(reff), valtype_(tpv) {
+    value_atom::value_atom(basic_entity_ptr scp, const std::string& reff, value_type tpv)
+    : basic_atom(reff, scp), valtype_(tpv) {
     }
 
     numvalue_atom* value_atom::as_number() {
@@ -779,11 +793,11 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
 
     class_atom::class_atom(definedclass_type tp)
-    : basic_atom(), builtin_(tp) {
+    : basic_atom(basic_entity_ptr()), builtin_(tp) {
     }
 
     class_atom::class_atom(const std::string& reff, definedclass_type tp)
-    : basic_atom(reff), builtin_(tp) {
+    : basic_atom(reff, basic_entity_ptr()), builtin_(tp) {
     }
 
 
@@ -1065,8 +1079,8 @@ namespace x680 {
         }
 
         type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
-            type_atom_ptr tmp = ent.reference.empty() ? type_atom_ptr(new type_atom(ent.builtin_t, compile_tag(ent.tag))) :
-                    type_atom_ptr(new type_atom(ent.reference, ent.builtin_t, compile_tag(ent.tag)));
+            type_atom_ptr tmp = ent.reference.empty() ? type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag))) :
+                    type_atom_ptr(new type_atom(scope, ent.reference, ent.builtin_t, compile_tag(scope, ent.tag)));
             tmp->predefined(compile_typepredef(scope, ent));
             return tmp;
         }
@@ -1077,15 +1091,15 @@ namespace x680 {
             valueassigment_entity_vct rslt;
             for (x680::syntactic::value_element_vector::const_iterator it = ent.predefined.begin(); it != ent.predefined.end(); ++it) {
                 if (it->value.empty()) {
-                    valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(t_INTEGER)), value_atom_ptr()));
+                    valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)), value_atom_ptr()));
                     rslt.push_back(el);
                 } else {
                     try {
-                        valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(t_INTEGER)),
+                        valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)),
                                 value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (it->value)))));
                         rslt.push_back(el);
                     } catch (boost::bad_lexical_cast) {
-                        valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(t_INTEGER)),
+                        valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)),
                                 value_atom_ptr(new definedvalue_atom(it->value, scope))));
                         rslt.push_back(el);
                     }
@@ -1096,7 +1110,7 @@ namespace x680 {
             return tmp;
         }
 
-        tagged_ptr compile_tag(const x680::syntactic::tag_type& ent) {
+        tagged_ptr compile_tag(basic_entity_ptr scope, const x680::syntactic::tag_type& ent) {
             if (ent.number.empty())
                 return tagged_ptr();
             try {
@@ -1104,7 +1118,7 @@ namespace x680 {
                 return tagged_ptr(new tagged(nm, ent.class_, ent.rule));
             } catch (...) {
             }
-            value_atom_ptr nm(new value_atom(ent.number, v_defined));
+            value_atom_ptr nm(new value_atom(scope, ent.number, v_defined));
             return tagged_ptr(new tagged(nm, ent.class_, ent.rule));
         }
 
@@ -1149,7 +1163,7 @@ namespace x680 {
                 }
             } catch (boost::bad_lexical_cast) {
             }
-            return value_atom_ptr(new value_atom(v_nodef));
+            return value_atom_ptr(new value_atom(scope, v_nodef));
         }
 
         value_atom_ptr compile_assignvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
@@ -1165,7 +1179,7 @@ namespace x680 {
                 }
             } catch (boost::bad_lexical_cast) {
             }
-            return value_atom_ptr(new value_atom(v_nodef));
+            return value_atom_ptr(new value_atom(scope, v_nodef));
         }
 
         value_atom_ptr compile_choicevalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
@@ -1173,20 +1187,20 @@ namespace x680 {
                 value_atom_ptr tmp = compile_value(scope, *(ent.values.begin()));
                 return value_atom_ptr(new choicevalue_atom(ent.identifier, tmp));
             }
-            return value_atom_ptr(new value_atom(v_nodef));
+            return value_atom_ptr(new value_atom(scope, v_nodef));
         }
 
         value_atom_ptr compile_openvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
             if (ent.typevalue) {
                 return value_atom_ptr(new openvalue_atom(compile_type(scope, ent.typevalue->type), compile_value(scope, ent.typevalue->value)));
             }
-            return value_atom_ptr(new value_atom(v_nodef));
+            return value_atom_ptr(new value_atom(scope, v_nodef));
         }
 
         value_atom_ptr compile_namedvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
             if (!ent.values.empty())
                 return value_atom_ptr(new namedvalue_atom(ent.identifier, compile_value(scope, *(ent.values.begin()))));
-            return value_atom_ptr(new value_atom(v_nodef));
+            return value_atom_ptr(new value_atom(scope, v_nodef));
         }
 
         value_vct compile_structvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
