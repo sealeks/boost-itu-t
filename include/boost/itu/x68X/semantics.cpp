@@ -143,6 +143,11 @@ namespace x680 {
                 basic_entity_ptr fnd = elm->find(tmp->type()->reff()->name());
                 if (fnd) {
                     tmp->type()->reff(fnd);
+                    if (!tmp->childs().empty()){
+                        for (basic_entity_vector::iterator it = tmp->childs().begin(); it != tmp->childs().end(); ++it) {
+                            *it = resolve_assigment(*it);                 
+                        }
+                    }
                 }
             }
         }
@@ -190,12 +195,12 @@ namespace x680 {
     }
     
     
-    std::ostream& indent(std::ostream& stream, namedtypeassigment_atom* self){
+    std::ostream& indent(std::ostream& stream, typeassigment_entity* self){
         if (self){
             int inten =self->level();
             if (inten>0) inten--;
             while(inten){
-                stream << "  ";
+                stream << "    ";
                 inten--;
             }
         }
@@ -499,9 +504,6 @@ namespace x680 {
     : basic_atom(reff, scp), builtin_(tp), tag_(tg) {
     }
 
-    type_atom::type_atom(basic_entity_ptr scp, defined_type tp, namedtypeassigment_atom_vct elms, tagged_ptr tg)
-    : basic_atom(scp), builtin_(tp), tag_(tg), elemens_(elms) {
-    }
 
     std::ostream& operator<<(std::ostream& stream, type_atom* self) {
         if (self->tag()) {
@@ -520,24 +522,7 @@ namespace x680 {
         }
         if (self->predefined())
             stream << self->predefined().get();
-        switch (self->builtin()) {
-            case t_SEQUENCE:
-            case t_SEQUENCE_OF:
-            case t_SET:
-            case t_SET_OF:
-            case t_CHOICE:;
-            {
-                stream << " {" << "\n";
-                for (namedtypeassigment_atom_vct::const_iterator it = self->elemens().begin(); it != self->elemens().end(); ++it) {
-                    stream << (*it).get() << "\n";
-                }
-                stream << "}" << "\n";
-                break;
-            }
-            default:
-            {
-            };
-        }
+
         return stream;
     }
 
@@ -871,32 +856,58 @@ namespace x680 {
             return scope()->find(nm);
     }
 
-    namedtypeassigment_atom* typeassigment_entity::as_named() {
-        return dynamic_cast<namedtypeassigment_atom*> (this);
+    namedtypeassigment_entity* typeassigment_entity::as_named() {
+        return dynamic_cast<namedtypeassigment_entity*> (this);
     }
 
     std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self) {
-        return stream << "(T) " << self->name() << " :: = " << self->type().get() << "\n";
+        if (self->as_named()) {
+                indent(stream, self);
+                 stream << self->name() << " " << self->type() << " " << self->as_named()->marker();  
+                 if (self->as_named()->_default())
+                     stream <<  " " << self->as_named()->_default().get();
+        }
+        else
+             stream << "(T) " << self->name() << " :: = " << self->type().get() ;
+        switch (self->type()->builtin()) {
+            case t_SEQUENCE:
+            case t_SEQUENCE_OF:
+            case t_SET:
+            case t_SET_OF:
+            case t_CHOICE:;
+            {
+                stream << " {" << "\n";
+                for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                    if ((*it)->as_typeassigment())
+                        stream << (*it)->as_typeassigment();
+                }
+                indent(stream, self);
+                stream << "}" << "\n";
+                break;
+            }
+            default:
+            {
+                stream << "\n";
+            };
+        }   
+        return stream;
     }
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // namedtypeassigment_atom
+    // namedtypeassigment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    namedtypeassigment_atom::namedtypeassigment_atom(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker)
+    namedtypeassigment_entity::namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker)
     : typeassigment_entity(scp, nm, tp), marker_(mrker) {
     }
 
-    namedtypeassigment_atom::namedtypeassigment_atom(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl)
+    namedtypeassigment_entity::namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl)
     : typeassigment_entity(scp, nm, tp), marker_(mk_default), default_(vl) {
 
     }
 
-    std::ostream& operator<<(std::ostream& stream, namedtypeassigment_atom* self) {
-        indent(stream, self); 
-        return stream << self->name() << " " << self->type() << " " << self->marker();
-    }
+
 
     std::ostream& operator<<(std::ostream& stream, tagmarker_type self) {
         switch (self) {
@@ -1113,40 +1124,53 @@ namespace x680 {
 
         typeassigment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::type_assignment tmp = boost::get<x680::syntactic::type_assignment>(ent);
-            return typeassigment_entity_ptr(new typeassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
+            typeassigment_entity_ptr tmpt(new typeassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
+            switch (tmp.type.builtin_t) {
+                case t_SEQUENCE:
+                case t_SEQUENCE_OF:
+                case t_SET:
+                case t_SET_OF:
+                case t_CHOICE: tmpt->childs()=compile_structtype(tmpt, tmp.type);
+                default:
+                {
+                };
+            }
+            return tmpt;
         }
 
-        namedtypeassigment_atom_vct compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
-            namedtypeassigment_atom_vct rslt;
+        basic_entity_vector compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
+            basic_entity_vector rslt;
             for (x680::syntactic::named_type_element_vector::const_iterator it = ent.elements.begin(); it != ent.elements.end(); ++it) {
-                rslt.push_back(compile_namedtype(scope, it->identifier, it->type));
+                rslt.push_back(compile_namedtype(scope, *it));
             }
             return rslt;
         }
 
-        namedtypeassigment_atom_ptr compile_namedtype(basic_entity_ptr scope, const std::string& nm, const x680::syntactic::type_element& ent) {
-            type_atom_ptr tmp = compile_type(scope, ent);
-            if (ent.marker == mk_default) {
-                return namedtypeassigment_atom_ptr(new namedtypeassigment_atom(scope, nm, tmp, compile_value(scope, ent.value)));
+        typeassigment_entity_ptr compile_namedtype(basic_entity_ptr scope, const x680::syntactic::type_assignment& ent) {
+            type_atom_ptr tmp = compile_type(scope, ent.type);
+            typeassigment_entity_ptr tmpt;
+            if (ent.type.marker == mk_default) {
+                 tmpt = namedtypeassigment_entity_ptr(new namedtypeassigment_entity(scope, ent.identifier, tmp, compile_value(scope, ent.type.value)));
             } else {
-                return namedtypeassigment_atom_ptr(new namedtypeassigment_atom(scope, nm, tmp, ent.marker));
+                tmpt = namedtypeassigment_entity_ptr(new namedtypeassigment_entity(scope, ent.identifier, tmp, ent.type.marker));
             }
+            switch (ent.type.builtin_t) {
+                case t_SEQUENCE:
+                case t_SEQUENCE_OF:
+                case t_SET:
+                case t_SET_OF:
+                case t_CHOICE: tmpt->childs()=compile_structtype(tmpt, ent.type);
+                default:
+                {
+                };
+            }
+            return tmpt;           
         }
 
         type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
             type_atom_ptr tmp = ent.reference.empty() ? type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag))) :
                     type_atom_ptr(new type_atom(scope, ent.reference, ent.builtin_t, compile_tag(scope, ent.tag)));
             tmp->predefined(compile_typepredef(scope, ent));
-            switch (ent.builtin_t) {
-                case t_SEQUENCE:
-                case t_SEQUENCE_OF:
-                case t_SET:
-                case t_SET_OF:
-                case t_CHOICE: tmp->elemens(compile_structtype(scope, ent));
-                default:
-                {
-                };
-            }
             return tmp;
         }
 

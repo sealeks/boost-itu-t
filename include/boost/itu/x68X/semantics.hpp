@@ -55,9 +55,9 @@ namespace x680 {
     class typeassigment_entity;
     typedef boost::shared_ptr<typeassigment_entity> typeassigment_entity_ptr;
 
-    class namedtypeassigment_atom;
-    typedef boost::shared_ptr<namedtypeassigment_atom> namedtypeassigment_atom_ptr;
-    typedef std::vector<namedtypeassigment_atom_ptr> namedtypeassigment_atom_vct;
+    class namedtypeassigment_entity;
+    typedef boost::shared_ptr<namedtypeassigment_entity> namedtypeassigment_entity_ptr;
+    typedef std::vector<namedtypeassigment_entity_ptr> namedtypeassigment_entity_vct;
 
     class valueassigment_entity;
     typedef boost::shared_ptr<valueassigment_entity> valueassigment_entity_ptr;
@@ -234,7 +234,7 @@ namespace x680 {
     };
     
     
-    std::ostream& indent(std::ostream& stream, namedtypeassigment_atom* self);
+    std::ostream& indent(std::ostream& stream, typeassigment_entity* self);
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -493,7 +493,6 @@ namespace x680 {
     public:
         type_atom(basic_entity_ptr scp, defined_type tp, tagged_ptr tg = tagged_ptr());
         type_atom(basic_entity_ptr scp, const std::string& reff, defined_type tp, tagged_ptr tg = tagged_ptr());
-        type_atom(basic_entity_ptr scp, defined_type tp, namedtypeassigment_atom_vct elms, tagged_ptr tg = tagged_ptr());
 
         defined_type builtin() const {
             return builtin_;
@@ -511,13 +510,7 @@ namespace x680 {
             predefined_ = vl;
         }
 
-        const namedtypeassigment_atom_vct& elemens() const {
-            return elemens_;
-        }
 
-        void elemens(const namedtypeassigment_atom_vct& elm) {
-            elemens_ = elm;
-        }
 
 
     protected:
@@ -525,7 +518,6 @@ namespace x680 {
         defined_type builtin_;
         tagged_ptr tag_;
         predefined_ptr predefined_;
-        namedtypeassigment_atom_vct elemens_;
 
     };
 
@@ -1062,7 +1054,7 @@ namespace x680 {
 
         virtual basic_entity_ptr find(const std::string& nm);
 
-        namedtypeassigment_atom* as_named();
+        namedtypeassigment_entity* as_named();
 
 
 
@@ -1077,15 +1069,15 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // namedtypeassigment_atom
+    // namedtypeassigment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class namedtypeassigment_atom : public typeassigment_entity {
+    class namedtypeassigment_entity : public typeassigment_entity {
 
     public:
 
-        namedtypeassigment_atom(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker);
-        namedtypeassigment_atom(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
+        namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker);
+        namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
 
         value_atom_ptr _default() const {
             return default_;
@@ -1103,8 +1095,6 @@ namespace x680 {
     };
 
 
-
-    std::ostream& operator<<(std::ostream& stream, namedtypeassigment_atom* self);
 
     std::ostream& operator<<(std::ostream& stream, tagmarker_type self);
 
@@ -1246,8 +1236,8 @@ namespace x680 {
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
 
         typeassigment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-        namedtypeassigment_atom_vct compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
-        namedtypeassigment_atom_ptr compile_namedtype(basic_entity_ptr scope, const std::string& nm, const x680::syntactic::type_element& ent);
+        basic_entity_vector compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
+        typeassigment_entity_ptr compile_namedtype(basic_entity_ptr scope, const x680::syntactic::type_assignment& ent);
         type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         predefined_ptr compile_typepredef(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         tagged_ptr compile_tag(basic_entity_ptr scope, const x680::syntactic::tag_type& ent);
