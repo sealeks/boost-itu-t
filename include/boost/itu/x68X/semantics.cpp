@@ -19,6 +19,16 @@ namespace x680 {
     void basic_entity::resolve() {
         resolve_child();
     };
+    
+    int basic_entity::level() const {
+         int rslt=0;
+         basic_entity_ptr scp= this->scope();
+         while(scp){
+             rslt++;
+             scp = scp->scope();
+         }
+         return rslt;
+    }    
 
     void basic_entity::resolve_child() {
         for (basic_entity_vector::const_iterator it = childs().begin(); it != childs().end(); ++it) {
@@ -178,6 +188,19 @@ namespace x680 {
         }
         return elm;
     }
+    
+    
+    std::ostream& indent(std::ostream& stream, namedtypeassigment_atom* self){
+        if (self){
+            int inten =self->level();
+            if (inten>0) inten--;
+            while(inten){
+                stream << "  ";
+                inten--;
+            }
+        }
+        return stream;
+    }    
 
     /////////////////////////////////////////////////////////////////////////   
     // global_entity
@@ -439,7 +462,7 @@ namespace x680 {
             case tcl_universal: return stream << "UNIVERSAL ";
             case tcl_application: return stream << "APPLICATION ";
             case tcl_private: return stream << "PRIVATE ";
-            case tcl_context: return stream << "CONTEXT ";
+            case tcl_context: return stream << "";
         }
         return stream;
     }
@@ -457,9 +480,9 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, tagged& self) {
         if (self.number()) {
             if (self.rule() == noset_tags)
-                return stream << " [" << self.number().get() << " " << self._class() << "] ";
+                return stream << " ["   << self._class() << " "  << self.number().get()<< "] ";
             else
-                return stream << " [ " << self.rule() << self.number().get() << " " << self._class() << "] ";
+                return stream << " [ " << self.rule()  << self._class() << " "  << self.number().get() << "] ";
         }
         return stream;
     }
@@ -476,12 +499,8 @@ namespace x680 {
     : basic_atom(reff, scp), builtin_(tp), tag_(tg) {
     }
 
-    type_atom::type_atom(basic_entity_ptr scp, defined_type tp, namedtype_atom_vct elms, tagged_ptr tg)
+    type_atom::type_atom(basic_entity_ptr scp, defined_type tp, namedtypeassigment_atom_vct elms, tagged_ptr tg)
     : basic_atom(scp), builtin_(tp), tag_(tg), elemens_(elms) {
-    }
-
-    namedtype_atom* type_atom::as_named() {
-        return dynamic_cast<namedtype_atom*> (this);
     }
 
     std::ostream& operator<<(std::ostream& stream, type_atom* self) {
@@ -501,6 +520,24 @@ namespace x680 {
         }
         if (self->predefined())
             stream << self->predefined().get();
+        switch (self->builtin()) {
+            case t_SEQUENCE:
+            case t_SEQUENCE_OF:
+            case t_SET:
+            case t_SET_OF:
+            case t_CHOICE:;
+            {
+                stream << " {" << "\n";
+                for (namedtypeassigment_atom_vct::const_iterator it = self->elemens().begin(); it != self->elemens().end(); ++it) {
+                    stream << (*it).get() << "\n";
+                }
+                stream << "}" << "\n";
+                break;
+            }
+            default:
+            {
+            };
+        }
         return stream;
     }
 
@@ -558,43 +595,6 @@ namespace x680 {
         }
         return stream;
     }
-
-    /////////////////////////////////////////////////////////////////////////   
-    // namedtype_atom
-    /////////////////////////////////////////////////////////////////////////  
-
-    namedtype_atom::namedtype_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp, tagmarker_type mrker)
-    : type_atom(scp, tp->builtin(), tp->tag()), identifier_(id), marker_(mrker), type_(tp) {
-        if (tp->reff())
-            reff(tp->reff());
-    }
-
-    namedtype_atom::namedtype_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp, value_atom_ptr vl)
-    : type_atom(scp, tp->builtin(), tp->tag()), identifier_(id), marker_(mk_default), type_(tp), default_(vl) {
-        if (tp->reff())
-            reff(tp->reff());
-    }
-
-    std::ostream& operator<<(std::ostream& stream, namedtype_atom* self) {
-        return stream;
-    }
-
-    std::ostream& operator<<(std::ostream& stream, tagmarker_type self) {
-        switch (self) {
-                //case mk_none:
-            case mk_default: stream << " DEFAULT ";
-                break;
-            case mk_optional: stream << " OPTIONAL ";
-                break;
-                //case mk_components_of:        
-            default:
-            {
-            }
-        }
-        return stream;
-    }
-
-
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -871,8 +871,46 @@ namespace x680 {
             return scope()->find(nm);
     }
 
+    namedtypeassigment_atom* typeassigment_entity::as_named() {
+        return dynamic_cast<namedtypeassigment_atom*> (this);
+    }
+
     std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self) {
         return stream << "(T) " << self->name() << " :: = " << self->type().get() << "\n";
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // namedtypeassigment_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    namedtypeassigment_atom::namedtypeassigment_atom(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker)
+    : typeassigment_entity(scp, nm, tp), marker_(mrker) {
+    }
+
+    namedtypeassigment_atom::namedtypeassigment_atom(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl)
+    : typeassigment_entity(scp, nm, tp), marker_(mk_default), default_(vl) {
+
+    }
+
+    std::ostream& operator<<(std::ostream& stream, namedtypeassigment_atom* self) {
+        indent(stream, self); 
+        return stream << self->name() << " " << self->type() << " " << self->marker();
+    }
+
+    std::ostream& operator<<(std::ostream& stream, tagmarker_type self) {
+        switch (self) {
+                //case mk_none:
+            case mk_default: stream << " DEFAULT ";
+                break;
+            case mk_optional: stream << " OPTIONAL ";
+                break;
+                //case mk_components_of:        
+            default:
+            {
+            }
+        }
+        return stream;
     }
 
 
@@ -1078,10 +1116,37 @@ namespace x680 {
             return typeassigment_entity_ptr(new typeassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
         }
 
+        namedtypeassigment_atom_vct compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
+            namedtypeassigment_atom_vct rslt;
+            for (x680::syntactic::named_type_element_vector::const_iterator it = ent.elements.begin(); it != ent.elements.end(); ++it) {
+                rslt.push_back(compile_namedtype(scope, it->identifier, it->type));
+            }
+            return rslt;
+        }
+
+        namedtypeassigment_atom_ptr compile_namedtype(basic_entity_ptr scope, const std::string& nm, const x680::syntactic::type_element& ent) {
+            type_atom_ptr tmp = compile_type(scope, ent);
+            if (ent.marker == mk_default) {
+                return namedtypeassigment_atom_ptr(new namedtypeassigment_atom(scope, nm, tmp, compile_value(scope, ent.value)));
+            } else {
+                return namedtypeassigment_atom_ptr(new namedtypeassigment_atom(scope, nm, tmp, ent.marker));
+            }
+        }
+
         type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
             type_atom_ptr tmp = ent.reference.empty() ? type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag))) :
                     type_atom_ptr(new type_atom(scope, ent.reference, ent.builtin_t, compile_tag(scope, ent.tag)));
             tmp->predefined(compile_typepredef(scope, ent));
+            switch (ent.builtin_t) {
+                case t_SEQUENCE:
+                case t_SEQUENCE_OF:
+                case t_SET:
+                case t_SET_OF:
+                case t_CHOICE: tmp->elemens(compile_structtype(scope, ent));
+                default:
+                {
+                };
+            }
             return tmp;
         }
 
