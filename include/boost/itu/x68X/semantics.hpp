@@ -220,6 +220,7 @@ namespace x680 {
         static basic_entity_ptr resolve_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
         static basic_entity_ptr resolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
         static basic_entity_ptr resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static void resolve_typepredef_assigment(typeassigment_entity* elm);
         static basic_entity_ptr resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
         static basic_entity_ptr resolve_class_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
 

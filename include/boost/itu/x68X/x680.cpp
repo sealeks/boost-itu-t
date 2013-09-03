@@ -96,7 +96,7 @@ namespace x680 {
         std::size_t synxtas_error::build(const std::string& src, std::size_t pos, std::size_t& symb, std::string& line) {
             std::size_t rslt = 0;
             symb = 0;
-            std::string::size_type it, itl, ita, itd = 0;
+            std::string::size_type it = 0, itl = 0, ita = 0, itd = 0;
             while ((it < pos) && (it != std::string::npos)) {
                 itl = it;
                 ita = src.find_first_of('\x0a', it);
