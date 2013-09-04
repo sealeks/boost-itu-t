@@ -567,7 +567,7 @@ namespace x680 {
         }
         if (scope())
             return scope()->find(nm);
-        *
+        return basic_entity_ptr();
     }
 
     namedtypeassigment_entity* typeassigment_entity::as_named() {
