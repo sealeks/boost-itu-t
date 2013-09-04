@@ -23,7 +23,8 @@ namespace x680 {
         et_Class,
         et_Object,
         et_ObjectSet,
-        et_Parameter
+        et_Parameter,
+        et_Extention   
     };
 
 
@@ -69,6 +70,10 @@ namespace x680 {
     class classassigment_entity;
     typedef boost::shared_ptr<classassigment_entity> classassigment_entity_ptr;
 
+    class extention_entity;
+    typedef boost::shared_ptr<extention_entity> extention_entity_ptr;    
+    
+    
     class basic_atom;
     typedef boost::shared_ptr<basic_atom> basic_atom_ptr;
 
@@ -211,6 +216,10 @@ namespace x680 {
         valuesetassigment_entity* as_valuesetassigment();
 
         classassigment_entity* as_classassigment();
+        
+        extention_entity* as_extention();
+        
+        void referenceerror_throw(const std::string& val);
 
         /////
 
@@ -351,6 +360,17 @@ namespace x680 {
     };
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // expectdef_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class extention_entity : public basic_entity {
+
+    public:
+
+        extention_entity() : basic_entity(et_Extention){};
+    };
+    
 
     /////////////////////////////////////////////////////////////////////////   
     // basic_atom
@@ -420,11 +440,11 @@ namespace x680 {
         virtual ~predefined() {
         };
 
-        valueassigment_entity_vct& values() {
+        basic_entity_vector& values() {
             return values_;
         }
 
-        void values(const valueassigment_entity_vct& vl) {
+        void values(const basic_entity_vector& vl) {
             values_ = vl;
         }
 
@@ -439,7 +459,7 @@ namespace x680 {
     private:
 
         basic_entity_ptr scope_;
-        valueassigment_entity_vct values_;
+        basic_entity_vector values_;
         defined_type type_;
     };
 
@@ -501,7 +521,7 @@ namespace x680 {
             return tag_;
         }
 
-        predefined_ptr predefined() const {
+        predefined_ptr predefined()  {
             return predefined_;
         }
 
@@ -1034,6 +1054,10 @@ namespace x680 {
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
         
         virtual void resolve();
+        
+    protected:
+
+         void resolve_predef();        
 
     private:
 
@@ -1103,6 +1127,8 @@ namespace x680 {
         void value(value_atom_ptr vl) {
             value_ = vl;
         }
+        
+        void check_value_with_exception(value_type tp);
 
 
         /////        
@@ -1269,6 +1295,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, module_entity* self);
     std::ostream& operator<<(std::ostream& stream, import_entity* self);
     std::ostream& operator<<(std::ostream& stream, expectdef_entity* self);
+    std::ostream& operator<<(std::ostream& stream, extention_entity* self);    
     std::ostream& operator<<(std::ostream& stream, basic_atom* self);
     std::ostream& operator<<(std::ostream& stream, predefined* self);
     std::ostream& operator<<(std::ostream& stream, tagclass_type self);

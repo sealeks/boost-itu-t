@@ -62,6 +62,10 @@ namespace x680 {
         return dynamic_cast<classassigment_entity*> (this);
     }
 
+    extention_entity * basic_entity::as_extention() {
+        return dynamic_cast<extention_entity*> (this);
+    }
+
     module_entity* basic_entity::moduleref() {
         module_entity* rf = as_module();
         basic_entity_ptr sc = scope();
@@ -77,6 +81,20 @@ namespace x680 {
         if (rf)
             return " in module: " + rf->name() + " in file: " + rf->file();
         return " in undefined module";
+    }
+
+    void basic_entity::referenceerror_throw(const std::string& val) {
+        std::string rslt = " Unknown reference : '" + val + "'";
+        if (as_typeassigment())
+            rslt = rslt + " in typeassignment";
+        else if (as_valueassigment())
+            rslt = rslt + " in valueassignment";
+        else if (as_classassigment())
+            rslt = rslt + " in classassignment";
+        else
+            rslt = rslt + " in assignment";
+        rslt = rslt + " '" + name() + "'" + modulerefname();
+        throw semantics::error(rslt);
     }
 
     void basic_entity::resolve_assigments(basic_entity_vector& elm) {
@@ -123,12 +141,12 @@ namespace x680 {
             basic_entity_ptr fnd = elm->find(tmp->big()->reff()->name());
             if (fnd) {
                 if (fnd->kind() == et_Type) {
-                    basic_entity_ptr rslt(new typeassigment_entity(elm->scope(), tmp->name(), 
+                    basic_entity_ptr rslt(new typeassigment_entity(elm->scope(), tmp->name(),
                             type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference))));
                     return resolve_type_assigment(rslt);
                 }
                 if (fnd->kind() == et_Class) {
-                    basic_entity_ptr rslt(new classassigment_entity(elm->scope(), tmp->name(), 
+                    basic_entity_ptr rslt(new classassigment_entity(elm->scope(), tmp->name(),
                             class_atom_ptr(new class_atom(tmp->big()->reff()->name(), cl_Reference))));
                     return resolve_class_assigment(rslt);
                 }
@@ -136,13 +154,13 @@ namespace x680 {
         }
         return elm;
     }
-    
-    basic_entity_ptr basic_entity::resolve_assigment(basic_atom_ptr elm, bool all){
-          if (elm && (elm->expecteddef()) && (elm->scope())){
-              return elm->scope()->find(elm->reff()->name(), all);
-          }  
-          return basic_entity_ptr();
-    }    
+
+    basic_entity_ptr basic_entity::resolve_assigment(basic_atom_ptr elm, bool all) {
+        if (elm && (elm->expecteddef()) && (elm->scope())) {
+            return elm->scope()->find(elm->reff()->name(), all);
+        }
+        return basic_entity_ptr();
+    }
 
     basic_entity_ptr basic_entity::resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
         /* if (!start)
@@ -153,38 +171,14 @@ namespace x680 {
         if (tmp) {
             if ((tmp->type()) && (tmp->type()->expecteddef())) {
                 basic_entity_ptr fnd = elm->find(tmp->type()->expectedname());
-                if (fnd) {
+                if (fnd)
                     tmp->type()->reff(fnd);
-                }
+                else
+                    tmp->referenceerror_throw(tmp->type()->expectedname());
             }
-            resolve_typepredef_assigment(tmp);
+            //resolve_typepredef_assigment(tmp);
         }
         return elm;
-    }
-
-    void basic_entity::resolve_typepredef_assigment(typeassigment_entity* elm) {
-        if (elm->type()->predefined()) {
-            switch (elm->type()->builtin()) {
-                case t_INTEGER:
-                {
-                    for (valueassigment_entity_vct::const_iterator it = elm->type()->predefined()->values().begin(); it != elm->type()->predefined()->values().end(); ++it) {
-                        if (!(*it)->value())
-                            throw semantics::error("INTEGER  type '" + elm->name() + "' predefine name '" +
-                                    (*it)->name() + "' dosn't assign " + elm->modulerefname());
-                        if ((*it)->value()->expecteddef()) {
-                            basic_entity_ptr fnd = elm->find((*it)->value()->expectedname(), false);
-                            if (fnd) 
-                                (*it)->value()->reff(fnd);
-                        }
-                    }
-                    break;
-                }
-                default:
-                {
-
-                }
-            }
-        }
     }
 
     basic_entity_ptr basic_entity::resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
@@ -196,15 +190,17 @@ namespace x680 {
         if (tmp) {
             if ((tmp->type()) && (tmp->type()->expecteddef())) {
                 basic_entity_ptr fnd = elm->find(tmp->type()->expectedname());
-                if (fnd) {
+                if (fnd)
                     tmp->type()->reff(fnd);
-                }
+                else
+                    tmp->referenceerror_throw(tmp->type()->expectedname());
             }
             if ((tmp->value()) && (tmp->value()->expecteddef())) {
                 basic_entity_ptr fnd = elm->find(tmp->value()->expectedname());
-                if (fnd) {
+                if (fnd)
                     tmp->value()->reff(fnd);
-                }
+                else
+                    tmp->referenceerror_throw(tmp->value()->expectedname());
             }
         }
         return elm;
@@ -219,9 +215,10 @@ namespace x680 {
         if (tmp) {
             if ((tmp->_class()) && (tmp->_class()->reff()) && (tmp->_class()->reff()->as_expectdef())) {
                 basic_entity_ptr fnd = elm->find(tmp->_class()->reff()->name());
-                if (fnd) {
+                if (fnd)
                     tmp->_class()->reff(fnd);
-                }
+                else
+                    tmp->referenceerror_throw(tmp->_class()->expectedname());
             }
         }
         return elm;
@@ -286,7 +283,7 @@ namespace x680 {
     /////
 
     basic_entity_ptr module_entity::find(const std::string& nm, bool all) {
-        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) 
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
             if ((*it)->name() == nm)
                 return *it = resolve_assigment(*it);
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
@@ -372,13 +369,13 @@ namespace x680 {
         if ((scope()) && (reff()) && (!reff()->as_expectdef()) && (scope()->moduleref()) && (reff()->moduleref()))
             return ((scope()->moduleref()) != (reff()->moduleref())) ? reff()->moduleref() : 0;
         return 0;
-    }    
-    
+    }
+
     std::string basic_atom::externalpreff() const {
         if (external())
-                 return external()->name() + "::";
+            return external()->name() + "::";
         return "";
-    }       
+    }
 
     basic_atom* basic_atom::root() {
         if (!reff())
@@ -564,27 +561,63 @@ namespace x680 {
     basic_entity_ptr typeassigment_entity::find(const std::string& nm, bool all) {
         if (all) {
             if (((type()->predefined()))) {
-                for (valueassigment_entity_vct::const_iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
+                for (basic_entity_vector::const_iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
                     if ((*it)->name() == nm) {
-                        return  *it;
+                        return *it;
                     }
                 }
             }
-            if ((type()->reff()) && (!type()->reff()->as_expectdef())){
+            if ((type()->reff()) && (!type()->reff()->as_expectdef())) {
                 basic_entity_ptr fnd = type()->reff()->find(nm, all);
                 if (fnd)
-                    return fnd;                
+                    return fnd;
             }
         }
         if (scope())
             return scope()->find(nm, all);
         return basic_entity_ptr();
     }
-    
-    void typeassigment_entity::resolve(){
+
+    void typeassigment_entity::resolve() {
+        resolve_predef();
         resolve_assigments(childs());
-        resolve_child();  
-    }   
+        resolve_child();
+    }
+
+    void typeassigment_entity::resolve_predef() {
+        if (type()->predefined()) {
+            for (basic_entity_vector::const_iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
+                switch (type()->builtin()) {
+                    case t_INTEGER:
+                    {
+                        if ((*it)->as_extention())
+                            throw semantics::error("type '" + name() + "' must not have extention in predefine   in module " +
+                                modulerefname());
+
+                    }
+                    case t_BIT_STRING:
+                    {
+                        if (((*it)->as_valueassigment()) && (!(*it)->as_valueassigment()->value()))
+                            throw semantics::error("type '" + name() + "' predefine name '" +
+                                (*it)->name() + "' dosn't assign " + modulerefname());
+                    }
+                    default:
+                    {
+                    }
+                }
+                if (((*it)->as_valueassigment()) && ((*it)->as_valueassigment()->value())
+                        && ((*it)->as_valueassigment()->value()->expecteddef())) {
+                    basic_entity_ptr fnd = find((*it)->as_valueassigment()->value()->expectedname(), false);
+                    if (fnd)
+                        (*it)->as_valueassigment()->value()->reff(fnd);
+                    else
+                        (*it)->referenceerror_throw((*it)->as_valueassigment()->value()->expectedname());
+                    (*it)->as_valueassigment()->check_value_with_exception(v_number);
+
+                }
+            }
+        }
+    }
 
     namedtypeassigment_entity* typeassigment_entity::as_named() {
         return dynamic_cast<namedtypeassigment_entity*> (this);
@@ -604,10 +637,10 @@ namespace x680 {
     : typeassigment_entity(scp, nm, tp), marker_(mk_default), default_(vl) {
 
     }
-    
-    void namedtypeassigment_entity::resolve(){
+
+    void namedtypeassigment_entity::resolve() {
         typeassigment_entity::resolve();
-    }       
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // valueassigment_entity
@@ -617,19 +650,27 @@ namespace x680 {
     basic_entity(scope, nm, et_Value), type_(tp), value_(vl) {
     };
 
+    void valueassigment_entity::check_value_with_exception(value_type tp) {
+        if ((value()) && (value()->root()) && (value()->root()->as_value())) {
+            if (value()->root()->as_value()->valtype() != tp)
+                throw semantics::error("value '" + name() + "' has invalid type " +
+                    modulerefname());
+        }
+    }
+
     basic_entity_ptr valueassigment_entity::find(const std::string& nm, bool all) {
         if (all) {
             if (((type()->predefined()))) {
-                for (valueassigment_entity_vct::const_iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
+                for (basic_entity_vector::const_iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
                     if ((*it)->name() == nm) {
-                        return  *it;
+                        return *it;
                     }
                 }
             }
-            if ((type()->reff()) && (!type()->reff()->as_expectdef())){
+            if ((type()->reff()) && (!type()->reff()->as_expectdef())) {
                 basic_entity_ptr fnd = type()->reff()->find(nm, all);
                 if (fnd)
-                    return fnd;                
+                    return fnd;
             }
         }
         if (scope())
@@ -643,8 +684,8 @@ namespace x680 {
             return scope()->find(nm, all);
     }
 
-    void valueassigment_entity::resolve(){
-    }  
+    void valueassigment_entity::resolve() {
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -667,8 +708,8 @@ namespace x680 {
             return scope()->find(nm, all);
     }
 
-    void valuesetassigment_entity::resolve(){
-    }  
+    void valuesetassigment_entity::resolve() {
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // classassigment_entity
@@ -690,10 +731,10 @@ namespace x680 {
             return scope()->find(nm, all);
     }
 
-    void classassigment_entity::resolve(){
-    }  
-    
-    
+    void classassigment_entity::resolve() {
+    }
+
+
     namespace semantics {
 
         std::ostream& operator<<(std::ostream& stream, const error& self) {
@@ -858,32 +899,37 @@ namespace x680 {
         predefined_ptr compile_typepredef(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
             if (ent.predefined.empty())
                 return predefined_ptr();
-            valueassigment_entity_vct rslt;
+            basic_entity_vector rslt;
             for (x680::syntactic::value_element_vector::const_iterator it = ent.predefined.begin(); it != ent.predefined.end(); ++it) {
-                if (it->value.empty()) {
-                    if (it->values.empty()) {
-                        valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)), value_atom_ptr()));
-                        rslt.push_back(el);
+                if (it->type == v_extention) {
+                    extention_entity_ptr el(new extention_entity());
+                    rslt.push_back(el);
+                } else {
+                    if (it->value.empty()) {
+                        if (it->values.empty()) {
+                            valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)), value_atom_ptr()));
+                            rslt.push_back(el);
+                        } else {
+                            try {
+                                valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)),
+                                        value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (it->values.begin()->identifier)))));
+                                rslt.push_back(el);
+                            } catch (boost::bad_lexical_cast) {
+                                valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)),
+                                        value_atom_ptr(new definedvalue_atom(it->values.begin()->identifier, scope))));
+                                rslt.push_back(el);
+                            }
+                        }
                     } else {
                         try {
                             valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)),
-                                    value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (it->values.begin()->identifier)))));
+                                    value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (it->value)))));
                             rslt.push_back(el);
                         } catch (boost::bad_lexical_cast) {
                             valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)),
-                                    value_atom_ptr(new definedvalue_atom(it->values.begin()->identifier, scope))));
+                                    value_atom_ptr(new definedvalue_atom(it->fromreff, scope))));
                             rslt.push_back(el);
                         }
-                    }
-                } else {
-                    try {
-                        valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)),
-                                value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (it->value)))));
-                        rslt.push_back(el);
-                    } catch (boost::bad_lexical_cast) {
-                        valueassigment_entity_ptr el(new valueassigment_entity(scope, it->identifier, type_atom_ptr(new type_atom(scope, t_INTEGER)),
-                                value_atom_ptr(new definedvalue_atom(it->fromreff, scope))));
-                        rslt.push_back(el);
                     }
                 }
             }
@@ -1129,8 +1175,11 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, expectdef_entity* self) {
-        stream << self->name() << "(?)";
-        return stream;
+        return stream << self->name() << "(?)";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, extention_entity* self) {
+        return stream << " ...";
     }
 
     std::ostream& operator<<(std::ostream& stream, basic_atom* self) {
@@ -1143,12 +1192,14 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, predefined* self) {
         stream << "{$ ";
-        for (valueassigment_entity_vct::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
+        for (basic_entity_vector::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
             if (it != self->values().begin())
                 stream << " ,";
             stream << (*it)->name();
-            if ((*it)->value()) {
-                stream << "( " << (*it)->value().get() << ")";
+            if ((*it)->as_extention())
+                stream << "...";
+            if (((*it)->as_valueassigment()) && ((*it)->as_valueassigment()->value())) {
+                stream << "( " << (*it)->as_valueassigment()->value().get() << ")";
             };
         }
         return stream << " $}";
