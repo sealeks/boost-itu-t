@@ -136,6 +136,13 @@ namespace x680 {
         }
         return elm;
     }
+    
+    basic_entity_ptr basic_entity::resolve_assigment(basic_atom_ptr elm, bool all){
+          if (elm && (elm->expecteddef()) && (elm->scope())){
+              return elm->scope()->find(elm->reff()->name(), all);
+          }  
+          return basic_entity_ptr();
+    }    
 
     basic_entity_ptr basic_entity::resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
         /* if (!start)
@@ -150,11 +157,6 @@ namespace x680 {
                     tmp->type()->reff(fnd);
                 }
             }
-           /* if (!tmp->childs().empty()) {
-                for (basic_entity_vector::iterator it = tmp->childs().begin(); it != tmp->childs().end(); ++it) {
-                    *it = resolve_assigment(*it);
-                }
-            }*/
             resolve_typepredef_assigment(tmp);
         }
         return elm;
