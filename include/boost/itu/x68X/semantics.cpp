@@ -150,11 +150,11 @@ namespace x680 {
                     tmp->type()->reff(fnd);
                 }
             }
-            if (!tmp->childs().empty()) {
+           /* if (!tmp->childs().empty()) {
                 for (basic_entity_vector::iterator it = tmp->childs().begin(); it != tmp->childs().end(); ++it) {
                     *it = resolve_assigment(*it);
                 }
-            }
+            }*/
             resolve_typepredef_assigment(tmp);
         }
         return elm;
@@ -580,7 +580,8 @@ namespace x680 {
     }
     
     void typeassigment_entity::resolve(){
-        
+        resolve_assigments(childs());
+        resolve_child();  
     }   
 
     namedtypeassigment_entity* typeassigment_entity::as_named() {
