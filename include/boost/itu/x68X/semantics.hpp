@@ -214,7 +214,7 @@ namespace x680 {
 
         /////
 
-        virtual basic_entity_ptr find(const std::string& nm);
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -222,7 +222,7 @@ namespace x680 {
 
         void resolve_child();
 
-        static void resolve_assigments(basic_entity* elm);
+        static void resolve_assigments(basic_entity_vector& elm);
         static basic_entity_ptr resolve_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
         static basic_entity_ptr resolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
         static basic_entity_ptr resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
@@ -259,7 +259,7 @@ namespace x680 {
 
         //////
 
-        virtual basic_entity_ptr find(const std::string& nm);
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -320,7 +320,7 @@ namespace x680 {
 
         //////
 
-        virtual basic_entity_ptr find(const std::string& nm);
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -376,10 +376,18 @@ namespace x680 {
             reff_ = vl;
         }
         
+        bool expecteddef() const {
+            return ((reff_) && (reff_->as_expectdef()));
+        }       
+        
+        std::string expectedname() const {
+            return expecteddef() ? reff_->name() : "";
+        }               
+        
         module_entity* external() const;
         
         std::string externalpreff() const;
-
+        
         virtual basic_atom* root();
 
         bool rooted();
@@ -944,7 +952,9 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm);
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        
+        virtual void resolve(){};        
 
 
     private:
@@ -983,7 +993,9 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm);
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        
+        virtual void resolve(){};
 
 
     private:
@@ -1018,7 +1030,9 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm);
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        
+        virtual void resolve();
 
     private:
 
@@ -1048,6 +1062,10 @@ namespace x680 {
         tagmarker_type marker() const {
             return marker_;
         }
+        
+        //////
+        
+        virtual void resolve();        
 
     private:
 
@@ -1088,7 +1106,9 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm);
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        
+        virtual void resolve();        
 
 
     private:
@@ -1128,7 +1148,9 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm);
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        
+        virtual void resolve();        
 
 
     private:
@@ -1161,7 +1183,9 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm);
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        
+        virtual void resolve();        
 
     private:
 
