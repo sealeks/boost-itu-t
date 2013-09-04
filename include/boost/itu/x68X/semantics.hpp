@@ -178,19 +178,19 @@ namespace x680 {
             return !scope_._empty() ? scope_.lock() : basic_entity_ptr();
         }
 
-        virtual basic_entity_ptr find(const std::string& nm);
-
-        virtual void resolve();
-
         void scope(basic_entity_ptr vl) {
             scope_ = basic_entity_wptr(vl);
         }
-        
-        int level() const ;
 
         basic_entity_vector& childs() {
             return childs_;
         }
+
+        int level() const;
+
+        module_entity* moduleref();
+
+        std::string modulerefname();
 
         global_entity* as_global();
 
@@ -212,6 +212,12 @@ namespace x680 {
 
         classassigment_entity* as_classassigment();
 
+        /////
+
+        virtual basic_entity_ptr find(const std::string& nm);
+
+        virtual void resolve();
+
     protected:
 
         void resolve_child();
@@ -226,21 +232,19 @@ namespace x680 {
 
     private:
 
-
-
         std::string name_;
         entity_enum kind_;
         basic_entity_wptr scope_;
         basic_entity_vector childs_;
     };
-    
-    
-    std::ostream& indent(std::ostream& stream, typeassigment_entity* self);
+
+
+
 
 
     /////////////////////////////////////////////////////////////////////////   
     // assigment_entity
-
+    /////////////////////////////////////////////////////////////////////////  
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -252,18 +256,14 @@ namespace x680 {
     public:
 
         global_entity();
-        virtual void resolve();
+
+        //////
+
         virtual basic_entity_ptr find(const std::string& nm);
 
-    private:
-
+        virtual void resolve();
 
     };
-
-    std::ostream& operator<<(std::ostream& stream, global_entity* self);
-
-
-
 
 
 
@@ -278,7 +278,6 @@ namespace x680 {
     public:
 
         import_entity(const std::string& nm);
-        virtual void resolve();
 
         import_vector& import() {
             return import_;
@@ -290,7 +289,6 @@ namespace x680 {
 
     };
 
-    std::ostream& operator<<(std::ostream& stream, expectdef_entity* self);
 
 
 
@@ -320,6 +318,8 @@ namespace x680 {
             return allexport_;
         }
 
+        //////
+
         virtual basic_entity_ptr find(const std::string& nm);
 
         virtual void resolve();
@@ -337,8 +337,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, module_entity* self);
-
 
     /////////////////////////////////////////////////////////////////////////   
     // expectdef_entity
@@ -349,9 +347,6 @@ namespace x680 {
     public:
 
         expectdef_entity(const std::string& nm);
-
-
-
     };
 
 
@@ -396,8 +391,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, basic_atom* self);
-
 
     /////////////////////////////////////////////////////////////////////////   
     // predefined
@@ -414,7 +407,7 @@ namespace x680 {
         virtual ~predefined() {
         };
 
-        const valueassigment_entity_vct& values() const {
+        valueassigment_entity_vct& values() {
             return values_;
         }
 
@@ -436,9 +429,6 @@ namespace x680 {
         valueassigment_entity_vct values_;
         defined_type type_;
     };
-
-
-    std::ostream& operator<<(std::ostream& stream, predefined* self);
 
 
 
@@ -479,11 +469,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, tagclass_type self);
-
-    std::ostream& operator<<(std::ostream& stream, tagrule_type self);
-
-    std::ostream& operator<<(std::ostream& stream, tagged& self);
 
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
@@ -512,8 +497,6 @@ namespace x680 {
         }
 
 
-
-
     protected:
 
         defined_type builtin_;
@@ -521,13 +504,6 @@ namespace x680 {
         predefined_ptr predefined_;
 
     };
-
-
-
-    std::ostream& operator<<(std::ostream& stream, type_atom* self);
-
-    std::ostream& operator<<(std::ostream& stream, defined_type self);
-
 
 
 
@@ -582,9 +558,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, value_atom* self);
-
-
     /////////////////////////////////////////////////////////////////////////   
     // numvalue_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -607,8 +580,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, numvalue_atom* self);
-
     /////////////////////////////////////////////////////////////////////////   
     // realvalue_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -627,10 +598,8 @@ namespace x680 {
     private:
 
         double value_;
-
     };
 
-    std::ostream& operator<<(std::ostream& stream, realvalue_atom* self);
 
     /////////////////////////////////////////////////////////////////////////   
     // realvalue_atom
@@ -650,11 +619,7 @@ namespace x680 {
     private:
 
         bool value_;
-
     };
-
-
-    std::ostream& operator<<(std::ostream& stream, boolvalue_atom* self);
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -675,11 +640,8 @@ namespace x680 {
     private:
 
         std::string value_;
-
     };
 
-
-    std::ostream& operator<<(std::ostream& stream, strvalue_atom* self);
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -709,8 +671,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, namedvalue_atom* self);
-
 
     /////////////////////////////////////////////////////////////////////////   
     // structvalue_atom
@@ -732,9 +692,6 @@ namespace x680 {
 
         value_vct values_;
     };
-
-
-    std::ostream& operator<<(std::ostream& stream, structvalue_atom* self);
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -759,8 +716,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, objidvalue_atom* self);
-
 
     /////////////////////////////////////////////////////////////////////////   
     // listvalue_atom
@@ -784,8 +739,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, listvalue_atom* self);
-
 
     /////////////////////////////////////////////////////////////////////////   
     // definedvalue_atom
@@ -802,7 +755,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self);
 
     /////////////////////////////////////////////////////////////////////////   
     // assignvalue_atom
@@ -837,7 +789,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self);
 
     /////////////////////////////////////////////////////////////////////////   
     // choicevalue_atom
@@ -872,7 +823,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self);
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -912,7 +862,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, openvalue_atom* self);
 
     /////////////////////////////////////////////////////////////////////////   
     // nullvalue_atom
@@ -928,7 +877,6 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, nullvalue_atom* self);
 
     /////////////////////////////////////////////////////////////////////////   
     // emptyvalue_atom
@@ -944,7 +892,7 @@ namespace x680 {
     };
 
 
-    std::ostream& operator<<(std::ostream& stream, emptyvalue_atom* self);
+
 
 
 
@@ -962,13 +910,15 @@ namespace x680 {
             return builtin_;
         }
 
-        //virtual basic_entity_ptr find(const std::string& nm);
-
     private:
 
         definedclass_type builtin_;
 
     };
+
+
+
+
 
     /////////////////////////////////////////////////////////////////////////   
     // bigassigment_entity
@@ -987,6 +937,9 @@ namespace x680 {
             big_ = vl;
         }
 
+
+        /////        
+
         virtual basic_entity_ptr find(const std::string& nm);
 
 
@@ -995,7 +948,7 @@ namespace x680 {
         basic_atom_ptr big_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
+
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1023,6 +976,9 @@ namespace x680 {
             little_ = vl;
         }
 
+
+        /////        
+
         virtual basic_entity_ptr find(const std::string& nm);
 
 
@@ -1032,7 +988,7 @@ namespace x680 {
         basic_atom_ptr little_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self);
+
 
 
 
@@ -1053,18 +1009,19 @@ namespace x680 {
             type_ = vl;
         }
 
-        virtual basic_entity_ptr find(const std::string& nm);
-
         namedtypeassigment_entity* as_named();
 
 
+        /////        
+
+        virtual basic_entity_ptr find(const std::string& nm);
 
     private:
 
         type_atom_ptr type_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self);
+
 
 
 
@@ -1097,7 +1054,6 @@ namespace x680 {
 
 
 
-    std::ostream& operator<<(std::ostream& stream, tagmarker_type self);
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1125,6 +1081,9 @@ namespace x680 {
             value_ = vl;
         }
 
+
+        /////        
+
         virtual basic_entity_ptr find(const std::string& nm);
 
 
@@ -1134,7 +1093,7 @@ namespace x680 {
         value_atom_ptr value_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self);
+
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1162,6 +1121,9 @@ namespace x680 {
             valueset_ = vl;
         }
 
+
+        /////        
+
         virtual basic_entity_ptr find(const std::string& nm);
 
 
@@ -1171,7 +1133,7 @@ namespace x680 {
         basic_atom_ptr valueset_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self);
+
 
 
 
@@ -1192,20 +1154,17 @@ namespace x680 {
             class_ = vl;
         }
 
+
+        /////        
+
         virtual basic_entity_ptr find(const std::string& nm);
-
-
 
     private:
 
         class_atom_ptr class_;
     };
 
-    std::ostream& operator<<(std::ostream& stream, classassigment_entity* self);
 
-    std::ostream& operator<<(std::ostream& stream, class_atom* self);
-
-    std::ostream& operator<<(std::ostream& stream, definedclass_type self);
 
 
     namespace semantics {
@@ -1226,6 +1185,11 @@ namespace x680 {
         };
 
         std::ostream& operator<<(std::ostream& stream, const error& self);
+
+
+        /////////////////////////////////////////////////////////////////////////   
+        // precomile modules
+        /////////////////////////////////////////////////////////////////////////          
 
         global_entity_ptr compile_fs(const std::string& path, const std::string& ext = "asn");
 
@@ -1264,8 +1228,51 @@ namespace x680 {
 
 
 
-
     }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // std::cout  tree
+    /////////////////////////////////////////////////////////////////////////          
+
+
+    std::ostream& indent(std::ostream& stream, typeassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, global_entity* self);
+    std::ostream& operator<<(std::ostream& stream, module_entity* self);
+    std::ostream& operator<<(std::ostream& stream, import_entity* self);
+    std::ostream& operator<<(std::ostream& stream, expectdef_entity* self);
+    std::ostream& operator<<(std::ostream& stream, basic_atom* self);
+    std::ostream& operator<<(std::ostream& stream, predefined* self);
+    std::ostream& operator<<(std::ostream& stream, tagclass_type self);
+    std::ostream& operator<<(std::ostream& stream, tagrule_type self);
+    std::ostream& operator<<(std::ostream& stream, tagged& self);
+    std::ostream& operator<<(std::ostream& stream, type_atom* self);
+    std::ostream& operator<<(std::ostream& stream, defined_type self);
+    std::ostream& operator<<(std::ostream& stream, value_atom* self);
+    std::ostream& operator<<(std::ostream& stream, numvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, realvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, boolvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, strvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, namedvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, structvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, objidvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, listvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, openvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, nullvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, emptyvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, tagmarker_type self);
+    std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, classassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, class_atom* self);
+    std::ostream& operator<<(std::ostream& stream, definedclass_type self);
+
+
 }
 
 #endif	
