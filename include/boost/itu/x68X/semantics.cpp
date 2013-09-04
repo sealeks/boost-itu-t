@@ -14,7 +14,7 @@ namespace x680 {
 
     int basic_entity::level() const {
         int rslt = 0;
-        basic_entity_ptr scp = this->scope();
+        basic_entity_ptr scp = scope();
         while (scp) {
             rslt++;
             scp = scp->scope();
@@ -23,19 +23,19 @@ namespace x680 {
     }
 
     global_entity* basic_entity::as_global() {
-        return kind_ == et_Global ? dynamic_cast<global_entity*> (this) : 0;
+        return dynamic_cast<global_entity*> (this);
     }
 
     module_entity* basic_entity::as_module() {
-        return kind_ == et_Module ? dynamic_cast<module_entity*> (this) : 0;
+        return dynamic_cast<module_entity*> (this);
     }
 
     expectdef_entity* basic_entity::as_expectdef() {
-        return kind_ == et_Nodef ? dynamic_cast<expectdef_entity*> (this) : 0;
+        return dynamic_cast<expectdef_entity*> (this);
     }
 
     import_entity* basic_entity::as_import() {
-        return kind_ == et_Import ? dynamic_cast<import_entity*> (this) : 0;
+        return dynamic_cast<import_entity*> (this);
     }
 
     bigassigment_entity * basic_entity::as_bigassigment() {
@@ -165,12 +165,12 @@ namespace x680 {
                 {
                     for (valueassigment_entity_vct::const_iterator it = elm->type()->predefined()->values().begin(); it != elm->type()->predefined()->values().end(); ++it) {
                         if (!(*it)->value())
-                            throw semantics::error("INTEGER  type '" + elm->name() + "' predefine name '" + (*it)->name() + "' dosn't assign " + elm->modulerefname());
+                            throw semantics::error("INTEGER  type '" + elm->name() + "' predefine name '" +
+                                    (*it)->name() + "' dosn't assign " + elm->modulerefname());
                         if (((*it)->value()->reff()) && ((*it)->value()->reff()->as_expectdef())) {
                             basic_entity_ptr fnd = elm->scope()->find((*it)->value()->reff()->name());
-                            if (fnd) {
+                            if (fnd) 
                                 (*it)->value()->reff(fnd);
-                            }
                         }
                     }
                     break;
@@ -226,6 +226,7 @@ namespace x680 {
     ////////
 
     basic_entity_ptr basic_entity::find(const std::string& nm) {
+        //throw semantics::error("Idenifier" + nm + " not found");
         return basic_entity_ptr();
     }
 
@@ -255,9 +256,7 @@ namespace x680 {
     }
 
     basic_entity_ptr global_entity::find(const std::string& nm) {
-        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-            if (nm == (*it)->name())
-                return *it;
+        //throw semantics::error("Idenifier" + nm + " not found");
         return basic_entity_ptr();
     }
 
@@ -283,15 +282,13 @@ namespace x680 {
     /////
 
     basic_entity_ptr module_entity::find(const std::string& nm) {
-        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) 
             if ((*it)->name() == nm)
                 return *it = resolve_assigment(*it);
-            ;
-        }
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
             import_entity* importmod = (*it)->as_import();
-            if (importmod->scope() && (!importmod->scope()->childs().empty())) {
-                basic_entity_ptr fnd = importmod->scope()->childs().front()->find(nm);
+            if (importmod->scope()) {
+                basic_entity_ptr fnd = importmod->scope()->find(nm);
                 if (fnd)
                     return fnd;
             }
@@ -365,6 +362,18 @@ namespace x680 {
     basic_atom::basic_atom(const std::string& reff, basic_entity_ptr scp) : scope_(scp) {
         reff_ = basic_entity_ptr(new expectdef_entity(reff));
     }
+
+    module_entity* basic_atom::external() const {
+        if ((scope()) && (reff()) && (!reff()->as_expectdef()) && (scope()->moduleref()) && (reff()->moduleref()))
+            return ((scope()->moduleref()) != (reff()->moduleref())) ? reff()->moduleref() : 0;
+        return 0;
+    }    
+    
+    std::string basic_atom::externalpreff() const {
+        if (external())
+                 return external()->name() + "::";
+        return "";
+    }       
 
     basic_atom* basic_atom::root() {
         if (!reff())
@@ -1161,7 +1170,7 @@ namespace x680 {
             if (self->reff()->as_expectdef())
                 stream << "??? *" << self->reff()->name();
             else {
-                stream << " *" << self->reff()->name();
+                stream << " *" << self->externalpreff() << self->reff()->name();
                 if (self->rooted())
                     stream << "(@" << self->root() << ")";
             }

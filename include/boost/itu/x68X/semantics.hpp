@@ -375,6 +375,10 @@ namespace x680 {
         void reff(basic_entity_ptr vl) {
             reff_ = vl;
         }
+        
+        module_entity* external() const;
+        
+        std::string externalpreff() const;
 
         virtual basic_atom* root();
 
