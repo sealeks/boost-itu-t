@@ -4,7 +4,7 @@
 //  See http://www.boost.org/LICENSE_1_0.txt
 
 #include <boost/itu/x68X/semantics.hpp>
-
+#include <set>
 
 namespace x680 {
 
@@ -83,18 +83,53 @@ namespace x680 {
         return " in undefined module";
     }
 
-    void basic_entity::referenceerror_throw(const std::string& val) {
-        std::string rslt = " Unknown reference : '" + val + "'";
+    std::string basic_entity::source_throw() {
+        std::string rslt = "";
         if (as_typeassigment())
             rslt = rslt + " in typeassignment";
         else if (as_valueassigment())
             rslt = rslt + " in valueassignment";
         else if (as_classassigment())
             rslt = rslt + " in classassignment";
+        else if (as_module())
+            return "";
         else
             rslt = rslt + " in assignment";
+        if ((scope()) && (moduleref()) && (moduleref() != scope().get())) {
+            std::string stack = "";
+            basic_entity_ptr sc = scope();
+            while ((sc) && (moduleref() != sc.get())) {
+                stack = stack.empty() ? sc->name() : (sc->name() + "::" + stack);
+                sc = sc->scope();
+            }
+            if (moduleref() == sc.get())
+                stack = sc->name() + "::" + stack;
+            rslt = rslt + " stack: " + stack + " ";
+        } else
+            rslt = rslt + " ";
+        return rslt;
+    }
+
+    void basic_entity::referenceerror_throw(const std::string& val) {
+        std::string rslt = " Unknown reference : '" + val + "'";
+        rslt += source_throw();
         rslt = rslt + " '" + name() + "'" + modulerefname();
         throw semantics::error(rslt);
+    }
+
+    void basic_entity::unicalelerror_throw(const basic_entity_vector& elms) {
+        std::set<std::string> set;
+        for (basic_entity_vector::const_iterator it = elms.begin(); it != elms.end(); ++it) {
+            if ((*it)->as_extention()) {
+            } else {
+                if (!(*it)->name().empty()) {
+                    if (set.find((*it)->name()) != set.end())
+                        throw semantics::error("Identifier '" + (*it)->name() + "' duplicates " + (*it)->source_throw() + modulerefname());
+                    else
+                        set.insert((*it)->name());
+                }
+            }
+        }
     }
 
     void basic_entity::resolve_assigments(basic_entity_vector& elm) {
@@ -298,10 +333,12 @@ namespace x680 {
     }
 
     void module_entity::resolve() {
+        unicalelerror_throw(childs());
         resolve_export();
         resolve_externalmodule();
-        resolve_assigments(childs());
         resolve_child();
+        resolve_assigments(childs());
+
     }
 
     void module_entity::resolve_export() {
@@ -380,9 +417,9 @@ namespace x680 {
     basic_atom* basic_atom::root() {
         if (!reff())
             return this;
-        if (reff()->as_typeassigment())
+        if ((reff()->as_typeassigment()) && (reff()->as_typeassigment()->type()))
             return reff()->as_typeassigment()->type()->root();
-        if (reff()->as_valueassigment())
+        if ((reff()->as_valueassigment()) && (reff()->as_valueassigment()->value()))
             return reff()->as_valueassigment()->value()->root();
         return 0;
     }
@@ -406,7 +443,7 @@ namespace x680 {
         if (scope())
             return scope()->find(nm, all);
         return basic_entity_ptr();
-    }    
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -429,6 +466,130 @@ namespace x680 {
 
     type_atom::type_atom(basic_entity_ptr scp, const std::string& reff, defined_type tp, tagged_ptr tg)
     : basic_atom(reff, scp), builtin_(tp), tag_(tg) {
+    }
+
+    void type_atom::resolve() {
+        resolve_predef();
+    }
+
+    void type_atom::resolve_predef() {
+        if (predefined() && scope()) {
+            scope()->unicalelerror_throw(predefined()->values());
+            resolve_predef_assign(predefined()->values());
+            if (builtin() == t_ENUMERATED)
+                resolve_predef_enum(predefined()->values());
+            resolve_predef_check(predefined()->values());
+        }
+    }
+
+    void type_atom::resolve_predef_assign(basic_entity_vector& vl) {
+        for (basic_entity_vector::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+            switch (builtin()) {
+                case t_INTEGER:
+                {
+                    if ((*it)->as_extention())
+                        throw semantics::error("type '" + scope()->name() + "' must not have extention in predefine   in module " +
+                            scope()->modulerefname());
+
+                }
+                case t_BIT_STRING:
+                {
+                    if (((*it)->as_valueassigment()) && (!(*it)->as_valueassigment()->value()))
+                        throw semantics::error("type '" + scope()->name() + "' predefine name '" +
+                            (*it)->name() + "' dosn't assign " + scope()->modulerefname());
+                }
+                default:
+                {
+                    if ((*it)->as_extention())
+                        predefined()->extended(true);
+                }
+            }
+            if (((*it)->as_valueassigment()) && ((*it)->as_valueassigment()->value())
+                    && ((*it)->as_valueassigment()->value()->expecteddef())) {
+                basic_entity_ptr fnd = find((*it)->as_valueassigment()->value()->expectedname(), false);
+                if (fnd)
+                    (*it)->as_valueassigment()->value()->reff(fnd);
+                else
+                    (*it)->referenceerror_throw((*it)->as_valueassigment()->value()->expectedname());
+                (*it)->as_valueassigment()->check_value_with_exception(v_number);
+
+            }
+        }
+    }
+
+    void type_atom::resolve_predef_enum(basic_entity_vector& vl) {
+        std::set<int, std::less<int> > set;
+        bool firstpart = true;
+        for (basic_entity_vector::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+            if ((*it)->as_extention())
+                firstpart = false;
+            else if ((*it)->as_valueassigment()->value()) {
+                value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
+                if (vltmp->as_number()) {
+                    if (firstpart)
+                        set.insert(vltmp->as_number()->value());
+                } else {
+                    if ((vltmp->root()) && (vltmp->root()->as_value()))
+                        if (firstpart)
+                            set.insert(vltmp->root()->as_value()->as_number()->value());
+                }
+            }
+        }
+        int start = 0;
+        firstpart = true;
+        for (basic_entity_vector::iterator it = vl.begin(); it != vl.end(); ++it) {
+            if ((*it)->as_extention()) {
+                firstpart = false;
+            } else if (!(*it)->as_valueassigment()->value()) {
+                int newen = start++;
+                while (set.find(newen) != set.end())
+                    newen = start++;
+                (*it) = basic_entity_ptr(new valueassigment_entity((*it)->scope(), (*it)->name(), type_atom_ptr(new type_atom((*it)->scope(), t_INTEGER)),
+                        value_atom_ptr(new numvalue_atom(newen))));
+            } else {
+                if (!firstpart) {
+                    value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
+                    if (vltmp->as_number()) {
+                        if (vltmp->as_number()->value() < start)
+                            throw semantics::error("type '" + scope()->name() + "' predefine name '" +
+                                (*it)->name() + "' is not at the rule " + scope()->modulerefname());
+                        else
+                            start = vltmp->as_number()->value() + 1;
+                    } else {
+                        if (vltmp->root()->as_value()->as_number()->value() < start)
+                            throw semantics::error("type '" + scope()-> name() + "' predefine name '" +
+                                (*it)->name() + "' is not at the rule " + scope()->modulerefname());
+                        else
+                            start = vltmp->root()->as_value()->as_number()->value() + 1;
+                    }
+                }
+            }
+        }
+    }
+
+    void type_atom::resolve_predef_check(basic_entity_vector& vl) {
+        std::set<int, std::less<int> > set;
+        for (basic_entity_vector::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+            if ((*it)->as_extention()) {
+            } else if ((*it)->as_valueassigment()->value()) {
+                value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
+                if (vltmp->as_number()) {
+                    if (set.find(vltmp->as_number()->value()) != set.end())
+                        throw semantics::error("type '" + scope()->name() + "' predefine name '" +
+                            (*it)->name() + "'is not unical " + scope()->modulerefname());
+                    else
+                        set.insert(vltmp->as_number()->value());
+                } else {
+                    if ((vltmp->root()) && (vltmp->root()->as_value())) {
+                        if (set.find(vltmp->root()->as_value()->as_number()->value()) != set.end())
+                            throw semantics::error("type '" + scope()->name() + "' predefine name '" +
+                                (*it)->name() + "' is not unical " + scope()->modulerefname());
+                        else
+                            set.insert(vltmp->root()->as_value()->as_number()->value());
+                    }
+                }
+            }
+        }
     }
 
 
@@ -569,9 +730,9 @@ namespace x680 {
     basic_entity_ptr typeassigment_entity::find(const std::string& nm, bool all) {
         if (all) {
             if (((type()->predefined()))) {
-                for (basic_entity_vector::const_iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
+                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
                     if ((*it)->name() == nm) {
-                        return *it;
+                        return *it = resolve_assigment(*it);
                     }
                 }
             }
@@ -587,123 +748,11 @@ namespace x680 {
     }
 
     void typeassigment_entity::resolve() {
-        resolve_predef();
+        unicalelerror_throw(childs());
+        resolve_child();
         type()->resolve();
         resolve_assigments(childs());
-        resolve_child();
-    }
 
-    void typeassigment_entity::resolve_predef() {
-        typedef std::set<int> intset;
-        if (type()->predefined()) {
-            basic_entity_vector& predef = type()->predefined()->values();
-            for (basic_entity_vector::const_iterator it = predef.begin(); it != predef.end(); ++it) {
-                switch (type()->builtin()) {
-                    case t_INTEGER:
-                    {
-                        if ((*it)->as_extention())
-                            throw semantics::error("type '" + name() + "' must not have extention in predefine   in module " +
-                                modulerefname());
-
-                    }
-                    case t_BIT_STRING:
-                    {
-                        if (((*it)->as_valueassigment()) && (!(*it)->as_valueassigment()->value()))
-                            throw semantics::error("type '" + name() + "' predefine name '" +
-                                (*it)->name() + "' dosn't assign " + modulerefname());
-                    }
-                    default:
-                    {
-                        if ((*it)->as_extention())
-                            type()->predefined()->extended(true);
-                    }
-                }
-                if (((*it)->as_valueassigment()) && ((*it)->as_valueassigment()->value())
-                        && ((*it)->as_valueassigment()->value()->expecteddef())) {
-                    basic_entity_ptr fnd = find((*it)->as_valueassigment()->value()->expectedname(), false);
-                    if (fnd)
-                        (*it)->as_valueassigment()->value()->reff(fnd);
-                    else
-                        (*it)->referenceerror_throw((*it)->as_valueassigment()->value()->expectedname());
-                    (*it)->as_valueassigment()->check_value_with_exception(v_number);
-
-                }
-            }
-            if (type()->builtin() == t_ENUMERATED) {
-                intset set1;
-                bool firstpart = true;
-                for (basic_entity_vector::const_iterator it = predef.begin(); it != predef.end(); ++it) {
-                    if ((*it)->as_extention())
-                        firstpart = false;
-                    else if ((*it)->as_valueassigment()->value()) {
-                        value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
-                        if (vltmp->as_number()) {
-                            if (firstpart)
-                                set1.insert(vltmp->as_number()->value());
-                        } else {
-                            if ((vltmp->root()) && (vltmp->root()->as_value()))
-                                if (firstpart)
-                                    set1.insert(vltmp->root()->as_value()->as_number()->value());
-                        }
-                    }
-                }
-                int start = 0;
-                firstpart = true;
-                for (basic_entity_vector::iterator it = predef.begin(); it != predef.end(); ++it) {
-                    if ((*it)->as_extention()) {
-                        firstpart = false;
-                    } else if (!(*it)->as_valueassigment()->value()) {
-                        int newen = start++;
-                        while (set1.find(newen) != set1.end())
-                            newen = start++;
-                        (*it) = basic_entity_ptr(new valueassigment_entity((*it)->scope(), (*it)->name(), type_atom_ptr(new type_atom((*it)->scope(), t_INTEGER)),
-                                value_atom_ptr(new numvalue_atom(newen))));
-                    }
-                    else{
-                        if (!firstpart){
-                            value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
-                            if (vltmp->as_number()) {
-                                if(vltmp->as_number()->value()<start)
-                                    throw semantics::error("type '" + name() + "' predefine name '" +
-                                       (*it)->name() + "' is not at the rule " + modulerefname());
-                                else
-                                      start = vltmp->as_number()->value()+1;
-                            }
-                            else{
-                                if(vltmp->root()->as_value()->as_number()->value()<start)
-                                    throw semantics::error("type '" + name() + "' predefine name '" +
-                                       (*it)->name() + "' is not at the rule " + modulerefname());
-                                else
-                                      start = vltmp->root()->as_value()->as_number()->value()+1;                                
-                            }
-                        }
-                    }
-                }
-            }
-            intset set3;
-            for (basic_entity_vector::const_iterator it = predef.begin(); it != predef.end(); ++it) {
-                if ((*it)->as_extention()) {
-                } else if ((*it)->as_valueassigment()->value()) {
-                    value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
-                    if (vltmp->as_number()) {
-                        if (set3.find(vltmp->as_number()->value()) != set3.end())
-                            throw semantics::error("type '" + name() + "' predefine name '" +
-                                (*it)->name() + "'is not unical " + modulerefname());
-                        else
-                            set3.insert(vltmp->as_number()->value());
-                    } else {
-                        if ((vltmp->root()) && (vltmp->root()->as_value())) {
-                            if (set3.find(vltmp->root()->as_value()->as_number()->value()) != set3.end())
-                                throw semantics::error("type '" + name() + "' predefine name '" +
-                                    (*it)->name() + "' is not unical " + modulerefname());
-                            else
-                                set3.insert(vltmp->root()->as_value()->as_number()->value());
-                        }
-                    }
-                }
-            }
-
-        }
     }
 
     namedtypeassigment_entity* typeassigment_entity::as_named() {
@@ -748,9 +797,9 @@ namespace x680 {
     basic_entity_ptr valueassigment_entity::find(const std::string& nm, bool all) {
         if (all) {
             if (((type()->predefined()))) {
-                for (basic_entity_vector::const_iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
+                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
                     if ((*it)->name() == nm) {
-                        return *it;
+                        return *it = resolve_assigment(*it);
                     }
                 }
             }
@@ -763,15 +812,18 @@ namespace x680 {
         if (scope())
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (nm == (*it)->name()) {
-                    *it = resolve_assigment(*it);
-                    return *it;
+                    return *it = resolve_assigment(*it);
                 }
             }
         if (scope())
             return scope()->find(nm, all);
+        return basic_entity_ptr();
     }
 
     void valueassigment_entity::resolve() {
+        resolve_child();
+        type()->resolve();
+
     }
 
 
@@ -784,6 +836,15 @@ namespace x680 {
     };
 
     basic_entity_ptr valuesetassigment_entity::find(const std::string& nm, bool all) {
+        if (all) {
+            if (((type()->predefined()))) {
+                for (basic_entity_vector::const_iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
+                    if ((*it)->name() == nm) {
+                        return *it;
+                    }
+                }
+            }
+        }
         if (scope())
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (nm == (*it)->name()) {
@@ -793,6 +854,7 @@ namespace x680 {
             }
         if (scope())
             return scope()->find(nm, all);
+        return basic_entity_ptr();
     }
 
     void valuesetassigment_entity::resolve() {
@@ -1048,7 +1110,9 @@ namespace x680 {
 
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::value_assignment tmp = boost::get<x680::syntactic::value_assignment>(ent);
-            valueassigment_entity_ptr tmpt(new valueassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type), compile_value(scope, tmp.value)));
+            valueassigment_entity_ptr tmpt(new valueassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type), value_atom_ptr()));
+            value_atom_ptr tmpv = compile_value(tmpt, tmp.value);
+            tmpt->value(tmpv);
             tmpt->type()->predefined(compile_typepredef(tmpt, tmp.type));
             return tmpt;
         }
@@ -1058,7 +1122,7 @@ namespace x680 {
                 switch (ent.type) {
                     case v_boolean: return value_atom_ptr(new boolvalue_atom(ent.value == "TRUE"));
                     case v_number: return value_atom_ptr(new numvalue_atom(boost::lexical_cast<int > (ent.value)));
-                    case v_real: return value_atom_ptr(new realvalue_atom(boost::lexical_cast<double > (ent.value)));
+                    case v_real: return compile_realvalue(scope, ent.value);
                     case v_null: return value_atom_ptr(new nullvalue_atom());
                     case v_empty: return value_atom_ptr(new emptyvalue_atom());
                     case v_named_value: return compile_namedvalue(scope, ent);
@@ -1094,6 +1158,20 @@ namespace x680 {
                     value_atom_ptr tmp(new numvalue_atom(boost::lexical_cast<int > (ent.value)));
                     return value_atom_ptr(new assignvalue_atom(ent.identifier, tmp));
                 }
+            } catch (boost::bad_lexical_cast) {
+            }
+            return value_atom_ptr(new value_atom(scope, v_nodef));
+        }
+
+        value_atom_ptr compile_realvalue(basic_entity_ptr scope, const std::string& val) {
+            try {
+                if (val == "PLUS-INFINITY")
+                    return value_atom_ptr(new realvalue_atom(std::numeric_limits<double>::infinity()));
+                if (val == "MINUS-INFINITY")
+                    return value_atom_ptr(new realvalue_atom(-std::numeric_limits<double>::infinity()));
+                if (val == "NOT-A-NUMBER")
+                    return value_atom_ptr(new realvalue_atom(-std::numeric_limits<double>::signaling_NaN()));
+                return value_atom_ptr(new realvalue_atom(boost::lexical_cast<double > (val)));
             } catch (boost::bad_lexical_cast) {
             }
             return value_atom_ptr(new value_atom(scope, v_nodef));
@@ -1492,13 +1570,15 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self) {
-        if (self->reff()->as_expectdef())
-            return stream << "??? *" << self->reff()->name();
-        else {
-            stream << " *" << self->reff()->name();
-            if (self->rooted())
-                stream << "(@" << self->root() << ")";
-            return stream;
+        if (self->reff()) {
+            if (self->reff()->as_expectdef())
+                return stream << "??? *" << self->reff()->name();
+            else {
+                stream << " *" << self->reff()->name();
+                if (self->rooted())
+                    stream << "(@" << self->root() << ")";
+                return stream;
+            }
         }
         return stream;
     }
@@ -1580,7 +1660,10 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self) {
-        return stream << "(v) " << self->name() << " [" << self->type().get() << "] :: = " << self->value().get() << "\n";
+        stream << "(v) " << self->name() << " [" << self->type().get() << "] :: = ";
+        if (self->value())
+            return stream << self->value().get() << "\n";
+        return stream << "???" << "\n";
     }
 
     std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self) {

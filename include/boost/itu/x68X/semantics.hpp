@@ -24,7 +24,7 @@ namespace x680 {
         et_Object,
         et_ObjectSet,
         et_Parameter,
-        et_Extention   
+        et_Extention
     };
 
 
@@ -71,9 +71,9 @@ namespace x680 {
     typedef boost::shared_ptr<classassigment_entity> classassigment_entity_ptr;
 
     class extention_entity;
-    typedef boost::shared_ptr<extention_entity> extention_entity_ptr;    
-    
-    
+    typedef boost::shared_ptr<extention_entity> extention_entity_ptr;
+
+
     class basic_atom;
     typedef boost::shared_ptr<basic_atom> basic_atom_ptr;
 
@@ -216,10 +216,14 @@ namespace x680 {
         valuesetassigment_entity* as_valuesetassigment();
 
         classassigment_entity* as_classassigment();
-        
+
         extention_entity* as_extention();
-        
+
+        std::string source_throw();
+
         void referenceerror_throw(const std::string& val);
+
+        void unicalelerror_throw(const basic_entity_vector& elms);
 
         /////
 
@@ -368,9 +372,10 @@ namespace x680 {
 
     public:
 
-        extention_entity() : basic_entity(et_Extention){};
+        extention_entity() : basic_entity(et_Extention) {
+        };
     };
-    
+
 
     /////////////////////////////////////////////////////////////////////////   
     // basic_atom
@@ -396,19 +401,19 @@ namespace x680 {
         void reff(basic_entity_ptr vl) {
             reff_ = vl;
         }
-        
+
         bool expecteddef() const {
             return ((reff_) && (reff_->as_expectdef()));
-        }       
-        
+        }
+
         std::string expectedname() const {
             return expecteddef() ? reff_->name() : "";
-        }               
-        
+        }
+
         module_entity* external() const;
-        
+
         std::string externalpreff() const;
-        
+
         virtual basic_atom* root();
 
         bool rooted();
@@ -416,9 +421,9 @@ namespace x680 {
         value_atom* as_value();
 
         type_atom* as_type();
-        
+
         ////////
-        
+
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
 
         virtual void resolve();
@@ -440,7 +445,7 @@ namespace x680 {
     public:
 
         predefined(basic_entity_ptr scp, defined_type tp)
-        : scope_(scp), type_(tp), extended_(false)  {
+        : scope_(scp), type_(tp), extended_(false) {
         };
 
         virtual ~predefined() {
@@ -461,14 +466,14 @@ namespace x680 {
         basic_entity_ptr scope() const {
             return scope_;
         }
-        
+
         bool extended() const {
             return extended_;
         }
 
         void extended(bool vl) {
             extended_ = vl;
-        }        
+        }
 
     private:
 
@@ -536,7 +541,7 @@ namespace x680 {
             return tag_;
         }
 
-        predefined_ptr predefined()  {
+        predefined_ptr predefined() {
             return predefined_;
         }
 
@@ -544,8 +549,16 @@ namespace x680 {
             predefined_ = vl;
         }
 
+        virtual void resolve();
+
+
 
     protected:
+
+        void resolve_predef();
+        void resolve_predef_assign(basic_entity_vector& vl);
+        void resolve_predef_enum(basic_entity_vector& vl);
+        void resolve_predef_check(basic_entity_vector& vl);
 
         defined_type builtin_;
         tagged_ptr tag_;
@@ -989,8 +1002,9 @@ namespace x680 {
         /////        
 
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
-        
-        virtual void resolve(){};        
+
+        virtual void resolve() {
+        };
 
 
     private:
@@ -1030,8 +1044,9 @@ namespace x680 {
         /////        
 
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
-        
-        virtual void resolve(){};
+
+        virtual void resolve() {
+        };
 
 
     private:
@@ -1067,12 +1082,12 @@ namespace x680 {
         /////        
 
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
-        
-        virtual void resolve();
-        
-    protected:
 
-         void resolve_predef();        
+        virtual void resolve();
+
+        // protected:
+
+        //   void resolve_predef();        
 
     private:
 
@@ -1102,10 +1117,10 @@ namespace x680 {
         tagmarker_type marker() const {
             return marker_;
         }
-        
+
         //////
-        
-        virtual void resolve();        
+
+        virtual void resolve();
 
     private:
 
@@ -1142,15 +1157,15 @@ namespace x680 {
         void value(value_atom_ptr vl) {
             value_ = vl;
         }
-        
+
         void check_value_with_exception(value_type tp);
 
 
         /////        
 
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
-        
-        virtual void resolve();        
+
+        virtual void resolve();
 
 
     private:
@@ -1191,8 +1206,8 @@ namespace x680 {
         /////        
 
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
-        
-        virtual void resolve();        
+
+        virtual void resolve();
 
 
     private:
@@ -1226,8 +1241,8 @@ namespace x680 {
         /////        
 
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
-        
-        virtual void resolve();        
+
+        virtual void resolve();
 
     private:
 
@@ -1286,6 +1301,7 @@ namespace x680 {
         value_vct compile_objidvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_vct compile_listvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_atom_ptr compile_assignvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
+        value_atom_ptr compile_realvalue(basic_entity_ptr scope, const std::string& val);
         value_atom_ptr compile_choicevalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_atom_ptr compile_openvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_atom_ptr compile_namedvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
@@ -1310,7 +1326,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, module_entity* self);
     std::ostream& operator<<(std::ostream& stream, import_entity* self);
     std::ostream& operator<<(std::ostream& stream, expectdef_entity* self);
-    std::ostream& operator<<(std::ostream& stream, extention_entity* self);    
+    std::ostream& operator<<(std::ostream& stream, extention_entity* self);
     std::ostream& operator<<(std::ostream& stream, basic_atom* self);
     std::ostream& operator<<(std::ostream& stream, predefined* self);
     std::ostream& operator<<(std::ostream& stream, tagclass_type self);
