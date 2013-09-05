@@ -399,6 +399,14 @@ namespace x680 {
         return dynamic_cast<type_atom*> (this);
     }
 
+    void basic_atom::resolve() {
+    }
+
+    basic_entity_ptr basic_atom::find(const std::string& nm, bool all) {
+        if (scope())
+            return scope()->find(nm, all);
+        return basic_entity_ptr();
+    }    
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -580,6 +588,7 @@ namespace x680 {
 
     void typeassigment_entity::resolve() {
         resolve_predef();
+        type()->resolve();
         resolve_assigments(childs());
         resolve_child();
     }

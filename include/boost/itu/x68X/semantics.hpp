@@ -416,6 +416,12 @@ namespace x680 {
         value_atom* as_value();
 
         type_atom* as_type();
+        
+        ////////
+        
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+
+        virtual void resolve();
 
 
     protected:
