@@ -559,6 +559,7 @@ namespace x680 {
         void resolve_predef_assign(basic_entity_vector& vl);
         void resolve_predef_enum(basic_entity_vector& vl);
         void resolve_predef_check(basic_entity_vector& vl);
+        void resolve_tag();       
 
         defined_type builtin_;
         tagged_ptr tag_;

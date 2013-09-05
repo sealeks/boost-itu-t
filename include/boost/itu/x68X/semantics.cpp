@@ -469,6 +469,7 @@ namespace x680 {
     }
 
     void type_atom::resolve() {
+        resolve_tag();
         resolve_predef();
     }
 
@@ -591,6 +592,18 @@ namespace x680 {
             }
         }
     }
+    
+   void type_atom::resolve_tag(){
+       if (tag()){
+           if ((tag()->number()) && (tag()->number()->as_defined()) && (tag()->number()->expecteddef())) {
+                basic_entity_ptr fnd = find(tag()->number()->expectedname(), false);
+                if (fnd)
+                    tag()->number()->reff(fnd);
+                else
+                   throw semantics::error("");
+           }    
+       }
+   }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1095,7 +1108,7 @@ namespace x680 {
                 return tagged_ptr(new tagged(nm, ent.class_, ent.rule));
             } catch (...) {
             }
-            value_atom_ptr nm(new value_atom(scope, ent.number, v_defined));
+            value_atom_ptr nm(new definedvalue_atom(ent.number, scope));
             return tagged_ptr(new tagged(nm, ent.class_, ent.rule));
         }
 
