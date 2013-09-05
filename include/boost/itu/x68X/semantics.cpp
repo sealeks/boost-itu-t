@@ -585,8 +585,10 @@ namespace x680 {
     }
 
     void typeassigment_entity::resolve_predef() {
+        typedef std::set<int> intset;
         if (type()->predefined()) {
-            for (basic_entity_vector::const_iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
+            basic_entity_vector& predef = type()->predefined()->values();
+            for (basic_entity_vector::const_iterator it = predef.begin(); it != predef.end(); ++it) {
                 switch (type()->builtin()) {
                     case t_INTEGER:
                     {
@@ -603,6 +605,8 @@ namespace x680 {
                     }
                     default:
                     {
+                        if ((*it)->as_extention())
+                            type()->predefined()->extended(true);
                     }
                 }
                 if (((*it)->as_valueassigment()) && ((*it)->as_valueassigment()->value())
@@ -616,6 +620,80 @@ namespace x680 {
 
                 }
             }
+            if (type()->builtin() == t_ENUMERATED) {
+                intset set1;
+                bool firstpart = true;
+                for (basic_entity_vector::const_iterator it = predef.begin(); it != predef.end(); ++it) {
+                    if ((*it)->as_extention())
+                        firstpart = false;
+                    else if ((*it)->as_valueassigment()->value()) {
+                        value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
+                        if (vltmp->as_number()) {
+                            if (firstpart)
+                                set1.insert(vltmp->as_number()->value());
+                        } else {
+                            if ((vltmp->root()) && (vltmp->root()->as_value()))
+                                if (firstpart)
+                                    set1.insert(vltmp->root()->as_value()->as_number()->value());
+                        }
+                    }
+                }
+                int start = 0;
+                firstpart = true;
+                for (basic_entity_vector::iterator it = predef.begin(); it != predef.end(); ++it) {
+                    if ((*it)->as_extention()) {
+                        firstpart = false;
+                    } else if (!(*it)->as_valueassigment()->value()) {
+                        int newen = start++;
+                        while (set1.find(newen) != set1.end())
+                            newen = start++;
+                        (*it) = basic_entity_ptr(new valueassigment_entity((*it)->scope(), (*it)->name(), type_atom_ptr(new type_atom((*it)->scope(), t_INTEGER)),
+                                value_atom_ptr(new numvalue_atom(newen))));
+                    }
+                    else{
+                        if (!firstpart){
+                            value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
+                            if (vltmp->as_number()) {
+                                if(vltmp->as_number()->value()<start)
+                                    throw semantics::error("type '" + name() + "' predefine name '" +
+                                       (*it)->name() + "' is not at the rule " + modulerefname());
+                                else
+                                      start = vltmp->as_number()->value()+1;
+                            }
+                            else{
+                                if(vltmp->root()->as_value()->as_number()->value()<start)
+                                    throw semantics::error("type '" + name() + "' predefine name '" +
+                                       (*it)->name() + "' is not at the rule " + modulerefname());
+                                else
+                                      start = vltmp->root()->as_value()->as_number()->value()+1;                                
+                            }
+                        }
+                    }
+                }
+            }
+            intset set3;
+            for (basic_entity_vector::const_iterator it = predef.begin(); it != predef.end(); ++it) {
+                if ((*it)->as_extention()) {
+                } else if ((*it)->as_valueassigment()->value()) {
+                    value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
+                    if (vltmp->as_number()) {
+                        if (set3.find(vltmp->as_number()->value()) != set3.end())
+                            throw semantics::error("type '" + name() + "' predefine name '" +
+                                (*it)->name() + "'is not unical " + modulerefname());
+                        else
+                            set3.insert(vltmp->as_number()->value());
+                    } else {
+                        if ((vltmp->root()) && (vltmp->root()->as_value())) {
+                            if (set3.find(vltmp->root()->as_value()->as_number()->value()) != set3.end())
+                                throw semantics::error("type '" + name() + "' predefine name '" +
+                                    (*it)->name() + "' is not unical " + modulerefname());
+                            else
+                                set3.insert(vltmp->root()->as_value()->as_number()->value());
+                        }
+                    }
+                }
+            }
+
         }
     }
 
@@ -1191,7 +1269,10 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, predefined* self) {
-        stream << "{$ ";
+        if (self->extended())
+            stream << "{$(...) ";
+        else
+            stream << "{$ ";
         for (basic_entity_vector::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
             if (it != self->values().begin())
                 stream << " ,";

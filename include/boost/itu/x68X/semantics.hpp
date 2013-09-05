@@ -434,7 +434,7 @@ namespace x680 {
     public:
 
         predefined(basic_entity_ptr scp, defined_type tp)
-        : scope_(scp), type_(tp) {
+        : scope_(scp), type_(tp), extended_(false)  {
         };
 
         virtual ~predefined() {
@@ -455,12 +455,21 @@ namespace x680 {
         basic_entity_ptr scope() const {
             return scope_;
         }
+        
+        bool extended() const {
+            return extended_;
+        }
+
+        void extended(bool vl) {
+            extended_ = vl;
+        }        
 
     private:
 
         basic_entity_ptr scope_;
         basic_entity_vector values_;
         defined_type type_;
+        bool extended_;
     };
 
 
