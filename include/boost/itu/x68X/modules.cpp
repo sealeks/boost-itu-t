@@ -10,7 +10,7 @@ namespace x680 {
     namespace syntactic {
 
         namespace phx = boost::phoenix;
-
+        
         //Modules_grammar
 
         void Modules_grammar::init() {
@@ -40,7 +40,7 @@ namespace x680 {
                     | (-(qi::lexeme[qi::omit[EXPORTS_ >> +qi::space >> ALL_ >> *qi::space >> qi::lit(";") ]]))[bind(&module_allexport, qi::_val)])
                     >> -(Imports[bind(&module_imports, qi::_val, qi::_1)])
                     >> -(Assignments[bind(&module_assignments, qi::_val, qi::_1)])
-                    >> END_;
+                    >> END_ >>  qi::lexeme[qi::omit[*comment_skip]];
 
             Import = SymbolList[ bind(&import_add, qi::_val, qi::_1) ]
                     >> FROM_

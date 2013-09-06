@@ -1028,8 +1028,8 @@ namespace x680 {
                 skip
                         = qi::space |
                         repository::confix("/*", "*/")[*(qi::char_ - "*/")] |
-                        repository::confix("--", "--")[*(qi::char_ - ("--" | qi::eol))] |
-                        repository::confix("--", qi::eol)[*(qi::char_ - qi::eol)]
+                        repository::confix("--", "--")[*(qi::char_ - ("--" | qi::eol | qi::eoi))] |
+                        repository::confix("--", (qi::eol | qi::eoi))[*(qi::char_ - (qi::eol | qi::eoi))]
                         ;
                 ;
             }
