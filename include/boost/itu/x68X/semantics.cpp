@@ -134,7 +134,7 @@ namespace x680 {
 
     void basic_entity::resolve_assigments(basic_entity_vector& elm) {
         for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
-                resolve_assigment(*it);
+            resolve_assigment(*it);
         }
     }
 
@@ -166,6 +166,11 @@ namespace x680 {
     }
 
     basic_entity_ptr basic_entity::resolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        basic_entity_ptr rslt = resolve_nodef_assigment(elm.get(), start.get());
+        return rslt ? rslt : elm;
+    }
+
+    basic_entity_ptr basic_entity::resolve_nodef_assigment(basic_entity* elm, basic_entity* start) {
         /*if (!start)
             start = elm;
         else
@@ -188,17 +193,23 @@ namespace x680 {
                 }
             }
         }
-        return elm;
-    }
-
-    basic_entity_ptr basic_entity::resolve_assigment(basic_atom_ptr elm, bool all) {
-        if (elm && (elm->expecteddef()) && (elm->scope())) {
-            return elm->scope()->find(elm->reff()->name(), all);
-        }
         return basic_entity_ptr();
     }
 
+    void basic_entity::resolve_atom(basic_atom_ptr elm, bool all) {
+        if (elm && (elm->expecteddef()) && (elm->scope())) {
+            basic_entity_ptr fnd = elm->scope()->find(elm->reff()->name(), all);
+            if (fnd) {
+                elm->reff(fnd);
+            }
+        }
+    }
+
     void basic_entity::resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        resolve_type_assigment(elm.get(), start.get());
+    }
+
+    void basic_entity::resolve_type_assigment(basic_entity* elm, basic_entity* start) {
         /* if (!start)
              start = elm;
          else
@@ -217,6 +228,10 @@ namespace x680 {
     }
 
     void basic_entity::resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        resolve_value_assigment(elm.get(), start.get());
+    }
+
+    void basic_entity::resolve_value_assigment(basic_entity* elm, basic_entity* start) {
         /* if (!start)
              start = elm;
          else
@@ -241,6 +256,10 @@ namespace x680 {
     }
 
     void basic_entity::resolve_class_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        resolve_type_assigment(elm.get(), start.get());
+    }
+
+    void basic_entity::resolve_class_assigment(basic_entity* elm, basic_entity* start) {
         /* if (!start)
              start = elm;
          else
@@ -317,9 +336,10 @@ namespace x680 {
 
     basic_entity_ptr module_entity::find(const std::string& nm, bool all) {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-            if ((*it)->name() == nm){
+            if ((*it)->name() == nm) {
                 resolve_assigment(*it);
-                return *it ;}
+                return *it;
+            }
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
             import_entity* importmod = (*it)->as_import();
             if (importmod->scope()) {
@@ -591,18 +611,18 @@ namespace x680 {
             }
         }
     }
-    
-   void type_atom::resolve_tag(){
-       if (tag()){
-           if ((tag()->number()) && (tag()->number()->as_defined()) && (tag()->number()->expecteddef())) {
+
+    void type_atom::resolve_tag() {
+        if (tag()) {
+            if ((tag()->number()) && (tag()->number()->as_defined()) && (tag()->number()->expecteddef())) {
                 basic_entity_ptr fnd = find(tag()->number()->expectedname(), false);
                 if (fnd)
                     tag()->number()->reff(fnd);
                 else
-                   throw semantics::error("");
-           }    
-       }
-   }
+                    throw semantics::error("");
+            }
+        }
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -749,15 +769,9 @@ namespace x680 {
                     }
                 }
             }
-            //resolve_assigment(type()->reff());
-            if ((type()->reff()) /*&& (!type()->reff()->as_expectdef())*/) {
-                if (type()->reff()->as_expectdef()){
-                    basic_entity_ptr fndr = scope()->find(type()->reff()->name());
-                    if (fndr)
-                          type()->reff(fndr);
-                    else
-                          referenceerror_throw(type()->reff()->name());
-                }
+
+            if ((type()->reff())) {
+                resolve_atom(type());
                 basic_entity_ptr fnd = type()->reff()->find(nm, all);
                 if (fnd)
                     return fnd;
@@ -797,18 +811,18 @@ namespace x680 {
 
     void namedtypeassigment_entity::resolve() {
         typeassigment_entity::resolve();
-        resolve_default();        
+        resolve_default();
     }
-    
-    void namedtypeassigment_entity::resolve_default(){
-        if ((_default()) && (_default()->expecteddef())){
-           basic_entity_ptr fnd = find(_default()->expectedname());
-                if (fnd)
-                    _default()->reff(fnd);
-                else
-                    referenceerror_throw(_default()->expectedname());
+
+    void namedtypeassigment_entity::resolve_default() {
+        if ((_default()) && (_default()->expecteddef())) {
+            basic_entity_ptr fnd = find(_default()->expectedname());
+            if (fnd)
+                _default()->reff(fnd);
+            else
+                referenceerror_throw(_default()->expectedname());
         }
-    }     
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // valueassigment_entity
@@ -836,7 +850,8 @@ namespace x680 {
                     }
                 }
             }
-            if ((type()->reff()) && (!type()->reff()->as_expectdef())) {
+            if (type()->reff()) {
+                resolve_atom(type());
                 basic_entity_ptr fnd = type()->reff()->find(nm, all);
                 if (fnd)
                     return fnd;
@@ -845,8 +860,8 @@ namespace x680 {
         if (scope())
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (nm == (*it)->name()) {
-                        resolve_assigment(*it);
-                        return *it;
+                    resolve_assigment(*it);
+                    return *it;
                 }
             }
         if (scope())

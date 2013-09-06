@@ -237,11 +237,15 @@ namespace x680 {
 
         static void resolve_assigments(basic_entity_vector& elm);
         static void resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start = basic_entity_ptr());
-        static  basic_entity_ptr resolve_assigment(basic_atom_ptr elm, bool all = true);
+        static void resolve_atom(basic_atom_ptr elm, bool all = true);
         static basic_entity_ptr resolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static basic_entity_ptr resolve_nodef_assigment(basic_entity* elm, basic_entity* start = 0);
         static void resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static void resolve_type_assigment(basic_entity* elm, basic_entity* start = 0);
         static void resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static void resolve_value_assigment(basic_entity* elm, basic_entity* start = 0);
         static void resolve_class_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static void resolve_class_assigment(basic_entity* elm, basic_entity* start = 0);
 
     private:
 
@@ -558,7 +562,7 @@ namespace x680 {
         void resolve_predef_assign(basic_entity_vector& vl);
         void resolve_predef_enum(basic_entity_vector& vl);
         void resolve_predef_check(basic_entity_vector& vl);
-        void resolve_tag();       
+        void resolve_tag();
 
         defined_type builtin_;
         tagged_ptr tag_;
@@ -1123,8 +1127,8 @@ namespace x680 {
         virtual void resolve();
 
     private:
-        
-        void resolve_default();        
+
+        void resolve_default();
 
         value_atom_ptr default_;
         tagmarker_type marker_;
