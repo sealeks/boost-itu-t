@@ -1123,6 +1123,8 @@ namespace x680 {
         virtual void resolve();
 
     private:
+        
+        void resolve_default();        
 
         value_atom_ptr default_;
         tagmarker_type marker_;

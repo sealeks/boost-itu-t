@@ -749,7 +749,15 @@ namespace x680 {
                     }
                 }
             }
-            if ((type()->reff()) && (!type()->reff()->as_expectdef())) {
+            //resolve_assigment(type()->reff());
+            if ((type()->reff()) /*&& (!type()->reff()->as_expectdef())*/) {
+                if (type()->reff()->as_expectdef()){
+                    basic_entity_ptr fndr = scope()->find(type()->reff()->name());
+                    if (fndr)
+                          type()->reff(fndr);
+                    else
+                          referenceerror_throw(type()->reff()->name());
+                }
                 basic_entity_ptr fnd = type()->reff()->find(nm, all);
                 if (fnd)
                     return fnd;
@@ -789,7 +797,18 @@ namespace x680 {
 
     void namedtypeassigment_entity::resolve() {
         typeassigment_entity::resolve();
+        resolve_default();        
     }
+    
+    void namedtypeassigment_entity::resolve_default(){
+        if ((_default()) && (_default()->expecteddef())){
+           basic_entity_ptr fnd = find(_default()->expectedname());
+                if (fnd)
+                    _default()->reff(fnd);
+                else
+                    referenceerror_throw(_default()->expectedname());
+        }
+    }     
 
     /////////////////////////////////////////////////////////////////////////   
     // valueassigment_entity
