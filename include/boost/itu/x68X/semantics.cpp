@@ -726,6 +726,7 @@ namespace x680 {
             }
         if (scope())
             return scope()->find(nm);
+        return basic_entity_ptr();
     }
 
 
@@ -744,6 +745,7 @@ namespace x680 {
     basic_entity_ptr littleassigment_entity::find(const std::string& nm, bool all) {
         if (scope())
             return scope()->find(nm, all);
+        return basic_entity_ptr();
     }
 
 
@@ -927,6 +929,7 @@ namespace x680 {
             }
         if (scope())
             return scope()->find(nm, all);
+        return basic_entity_ptr();
     }
 
     void classassigment_entity::resolve() {
@@ -1088,6 +1091,8 @@ namespace x680 {
         }
 
         type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
+            //if (ent.builtin_t==t_ClassField)
+            //    return type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag)));
             type_atom_ptr tmp = ent.reference.empty() ? type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag))) :
                     type_atom_ptr(new type_atom(scope, ent.reference, ent.builtin_t, compile_tag(scope, ent.tag)));
 

@@ -431,9 +431,9 @@ namespace x680 {
 
         str_rule Reference_ = typereference_ | valuereference_;
 
-        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_[qi::_val = qi::_1 ] 
-                >> qi::string(".")[qi::_val += qi::_1] >> qi::omit[(*qi::space)]  >> FieldName_[qi::_val += qi::_1]];
-
+        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_[qi::_val = qi::_1 ]] 
+                >> qi::string(".")[qi::_val += qi::_1] >> qi::omit[(*qi::space)]  >> FieldName_[qi::_val += qi::_1];
+        
         str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObject_[qi::_val = qi::_1 ] 
                 >> qi::string(".")[qi::_val += qi::_1] >>qi::omit[(*qi::space)]  >> FieldName_[qi::_val += qi::_1]];
 
