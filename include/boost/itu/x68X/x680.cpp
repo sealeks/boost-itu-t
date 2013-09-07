@@ -344,15 +344,15 @@ namespace x680 {
 
         str_rule typereference_strict = distinct(qi::alnum | ('-' >> qi::alnum))[typereference_ - objectclassreference_];
 
-        str_rule typefieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> typereference_[qi::_val += qi::_1]]; //(&typereference_)   
+        str_rule typefieldreference_ = qi::lexeme[qi::string("&") >> typereference_]; //(&typereference_)   
 
-        str_rule valuefieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> valuereference_[qi::_val += qi::_1]]; //(&valuereference_)  
+        str_rule valuefieldreference_ = qi::lexeme[qi::string("&") >> valuereference_]; //(&valuereference_)  
 
-        str_rule valuesetfieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> typereference_[qi::_val += qi::_1]]; //(&typereference_)   
+        str_rule valuesetfieldreference_ = qi::lexeme[qi::string("&") >> typereference_]; //(&typereference_)   
 
-        str_rule objectfieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> objectreference_[qi::_val += qi::_1]]; //(&objectreference_)
+        str_rule objectfieldreference_ = qi::lexeme[qi::string("&") >> objectreference_]; //(&objectreference_)
 
-        str_rule objectsetfieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> objectsetreference_[qi::_val += qi::_1]]; //(&objectsetreference_)  
+        str_rule objectsetfieldreference_ = qi::lexeme[qi::string("&") >> objectsetreference_]; //(&objectsetreference_)  
 
 
         str_rule bigreference_ = typereference_;
@@ -367,39 +367,39 @@ namespace x680 {
 
         str_rule PrimitiveFieldName_ = bigfieldreference_ | littlefieldreference_;
 
-        str_rule FieldName_ = PrimitiveFieldName_[qi::_val = qi::_1] >> -(qi::string(".")[qi::_val += qi::_1] 
-                >>  qi::omit[(*qi::space)] >> (PrimitiveFieldName_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1]));
+        str_rule FieldName_ = PrimitiveFieldName_ >> -(qi::string(".") 
+                >>  qi::omit[(*qi::space)] >> (PrimitiveFieldName_ % qi::string(".")));
 
 
 
-        str_rule ExternalTypeReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1]
-                >> typereference_[qi::_val += qi::_1];
+        str_rule ExternalTypeReference_ = modulereference_
+                >> qi::string(".")
+                >> typereference_;
 
-        str_rule ExternalTypeReference_strict = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1]
-                >> typereference_strict[qi::_val += qi::_1];
+        str_rule ExternalTypeReference_strict = modulereference_
+                >> qi::string(".")
+                >> typereference_strict;
 
 
-        str_rule ExternalValueReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1]
-                >> valuereference_[qi::_val += qi::_1];
+        str_rule ExternalValueReference_ = modulereference_
+                >> qi::string(".")
+                >> valuereference_;
 
-        str_rule ExternalValueSetReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1]
-                >> valuesetreference_[qi::_val += qi::_1];
+        str_rule ExternalValueSetReference_ = modulereference_
+                >> qi::string(".")
+                >> valuesetreference_;
 
-        str_rule ExternalObjectClassReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1]
-                >> objectclassreference_[qi::_val += qi::_1];
+        str_rule ExternalObjectClassReference_ = modulereference_
+                >> qi::string(".")
+                >> objectclassreference_;
 
-        str_rule ExternalObjectReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1]
-                >> objectreference_[qi::_val += qi::_1];
+        str_rule ExternalObjectReference_ = modulereference_
+                >> qi::string(".")
+                >> objectreference_;
 
-        str_rule ExternalObjectSetReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1]
-                >> objectsetreference_[qi::_val += qi::_1];
+        str_rule ExternalObjectSetReference_ = modulereference_
+                >> qi::string(".")
+                >> objectsetreference_;
 
         str_rule UsefulObjectClass_ = TYPE_IDENTIFIER_
                 | ABSTRACT_SYNTAX_;
@@ -423,28 +423,28 @@ namespace x680 {
 
         str_rule DefinedObjectSet_ = ExternalObjectSetReference_ | objectsetreference_;
 
-        str_rule UserDefinedConstraintParameter_ = (DefinedType_[qi::_val = qi::_1 ] | DefinedObjectClass_[qi::_val = qi::_1 ])
-                >> -(qi::string(".")[qi::_val += qi::_1] >> DefinedValue_[qi::_val += qi::_1]);
+        str_rule UserDefinedConstraintParameter_ = (DefinedType_ | DefinedObjectClass_)
+                >> -(qi::string(".") >> DefinedValue_);
 
-        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.' | '@')[qi::string("@")[qi::_val = qi::_1 ] 
-                >> *(qi::string(".")[qi::_val += qi::_1]) >> (identifier_[qi::_val += qi::_1] % qi::string(".")[qi::_val += qi::_1])];
+        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.' | '@')[qi::string("@") 
+                >> *(qi::string(".")) >> (identifier_  % qi::string("."))];
 
         str_rule Reference_ = typereference_ | valuereference_;
 
-        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_[qi::_val = qi::_1 ]] 
-                >> qi::string(".")[qi::_val += qi::_1] >> qi::omit[(*qi::space)]  >> FieldName_[qi::_val += qi::_1];
+        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_
+                >> qi::string(".") >> qi::omit[(*qi::space)]  >> FieldName_];
         
-        str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObject_[qi::_val = qi::_1 ] 
-                >> qi::string(".")[qi::_val += qi::_1] >>qi::omit[(*qi::space)]  >> FieldName_[qi::_val += qi::_1]];
+        str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObject_
+                >> qi::string(".")>>qi::omit[(*qi::space)]  >> FieldName_];
 
-        str_rule BigFromObjects_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObjectSet_[qi::_val = qi::_1 ] 
-                >> qi::string(".")[qi::_val += qi::_1] >> qi::omit[(*qi::space)]  >> FieldName_[qi::_val += qi::_1]];
+        str_rule BigFromObjects_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObjectSet_ 
+                >> qi::string(".") >> qi::omit[(*qi::space)]  >> FieldName_];
 
-        str_rule ParameterizedReference_ = Reference_[ qi::_val = qi::_1]
+        str_rule ParameterizedReference_ = Reference_
                 >> qi::omit[*qi::space
                 >> curly_barket_pair];
 
-        str_rule Symbol_ = ParameterizedReference_[ qi::_val = qi::_1] | Reference_[ qi::_val = qi::_1];
+        str_rule Symbol_ = ParameterizedReference_ | Reference_;
 
 
 
