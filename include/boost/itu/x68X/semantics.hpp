@@ -235,8 +235,11 @@ namespace x680 {
 
         void resolve_child();
 
+    public:
+
         static void resolve_assigments(basic_entity_vector& elm);
         static void resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start = basic_entity_ptr());
+        static void resolve_atom(basic_atom* elm, bool all = true);
         static void resolve_atom(basic_atom_ptr elm, bool all = true);
         static basic_entity_ptr resolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
         static basic_entity_ptr resolve_nodef_assigment(basic_entity* elm, basic_entity* start = 0);
@@ -616,6 +619,13 @@ namespace x680 {
 
         emptyvalue_atom* as_empty();
 
+
+    protected:
+
+        void resolve_vect(value_vct& vl);
+
+        void resolve_ptr(value_atom_ptr vl);
+
     private:
 
         value_type valtype_;
@@ -729,6 +739,9 @@ namespace x680 {
             return value_;
         }
 
+        virtual void resolve();
+
+
     private:
 
         std::string name_;
@@ -749,9 +762,11 @@ namespace x680 {
         : value_atom(basic_entity_ptr(), v_struct), values_(vls) {
         };
 
-        const value_vct& values() const {
+        value_vct& values() {
             return values_;
         }
+
+        virtual void resolve();
 
     private:
 
@@ -771,9 +786,11 @@ namespace x680 {
         : value_atom(basic_entity_ptr(), v_objectid), values_(vls) {
         };
 
-        const value_vct& values() const {
+        value_vct& values() {
             return values_;
         }
+
+        virtual void resolve();
 
     private:
 
@@ -794,9 +811,11 @@ namespace x680 {
         : value_atom(basic_entity_ptr(), tpv), values_(vls) {
         };
 
-        const value_vct& values() const {
+        value_vct& values() {
             return values_;
         }
+
+        virtual void resolve();
 
     private:
 
@@ -816,6 +835,8 @@ namespace x680 {
         definedvalue_atom(const std::string& rff, basic_entity_ptr scp)
         : value_atom(scp, rff, v_defined) {
         };
+
+        virtual void resolve();
 
     };
 
@@ -844,6 +865,9 @@ namespace x680 {
         void value(value_atom_ptr vl) {
             value_ = vl;
         }
+
+        virtual void resolve();
+
 
 
 
@@ -879,6 +903,7 @@ namespace x680 {
             value_ = vl;
         }
 
+        virtual void resolve();
 
 
     private:
@@ -917,6 +942,9 @@ namespace x680 {
         void value(value_atom_ptr vl) {
             value_ = vl;
         }
+
+        virtual void resolve();
+
 
 
 

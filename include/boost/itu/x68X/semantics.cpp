@@ -197,10 +197,18 @@ namespace x680 {
     }
 
     void basic_entity::resolve_atom(basic_atom_ptr elm, bool all) {
+        resolve_atom(elm.get(), all);
+    }
+
+    void basic_entity::resolve_atom(basic_atom* elm, bool all) {
         if (elm && (elm->expecteddef()) && (elm->scope())) {
             basic_entity_ptr fnd = elm->scope()->find(elm->reff()->name(), all);
             if (fnd) {
                 elm->reff(fnd);
+            } else {
+                if (elm->scope()) {
+                    elm->scope()->referenceerror_throw(elm->reff()->name());
+                }
             }
         }
     }
@@ -693,10 +701,90 @@ namespace x680 {
         return dynamic_cast<emptyvalue_atom*> (this);
     }
 
+    void value_atom::resolve_vect(value_vct& vl) {
+        for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
+            basic_entity::resolve_atom(*it);
+    }
+
+    void value_atom::resolve_ptr(value_atom_ptr vl) {
+        basic_entity::resolve_atom(vl);
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // namedvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void namedvalue_atom::resolve() {
+        resolve_ptr(value_);
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // type_atom
+    // structvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void structvalue_atom::resolve() {
+        resolve_vect(values_);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // objidvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void objidvalue_atom::resolve() {
+        resolve_vect(values_);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // listvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void listvalue_atom::resolve() {
+        resolve_vect(values_);
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // definedvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void definedvalue_atom::resolve() {
+        basic_entity::resolve_atom(this);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // assignvalue_atom
+    ///////////////////////////////////////////////////////////////////////// 
+
+    void assignvalue_atom::resolve() {
+        resolve_ptr(value_);
+    }
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // choicevalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void choicevalue_atom::resolve() {
+        resolve_ptr(value_);
+    }    
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // openvalue_atom_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void openvalue_atom::resolve() {
+        if (type_)
+            type_->resolve();
+        resolve_ptr(value_);
+    }
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    //class_atom
     /////////////////////////////////////////////////////////////////////////   
 
     class_atom::class_atom(definedclass_type tp)
@@ -874,7 +962,8 @@ namespace x680 {
     void valueassigment_entity::resolve() {
         resolve_child();
         type()->resolve();
-
+        if (value())
+            value()->resolve();
     }
 
 
@@ -1091,8 +1180,8 @@ namespace x680 {
         }
 
         type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
-            //if (ent.builtin_t==t_ClassField)
-            //    return type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag)));
+            if (ent.builtin_t == t_ClassField)
+                return type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag)));
             type_atom_ptr tmp = ent.reference.empty() ? type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag))) :
                     type_atom_ptr(new type_atom(scope, ent.reference, ent.builtin_t, compile_tag(scope, ent.tag)));
 
@@ -1753,7 +1842,4 @@ namespace x680 {
         }
         return stream;
     }
-
-
-
 }
