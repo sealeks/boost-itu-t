@@ -7,6 +7,16 @@
 #include <set>
 
 namespace x680 {
+    
+    
+    void insert_assigment(basic_entity_ptr scope, basic_entity_ptr val){
+         scope->childs().push_back(val);
+     }
+    
+    void insert_global(basic_entity_ptr global){
+           insert_assigment(global  ,valueassigment_entity_ptr (new valueassigment_entity(global, "joint-iso-itu-t" , 
+                    type_atom_ptr(new type_atom(global , t_INTEGER)) , value_atom_ptr(new numvalue_atom(1))))); 
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // basic_entity
@@ -317,7 +327,10 @@ namespace x680 {
     }
 
     basic_entity_ptr global_entity::find(const std::string& nm, bool all) {
-        //throw semantics::error("Idenifier" + nm + " not found");
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+            if ((*it)->name() == nm) {
+                return *it;
+            }
         return basic_entity_ptr();
     }
 
@@ -356,6 +369,8 @@ namespace x680 {
                     return fnd;
             }
         }
+        if (scope())
+            return scope()->find(nm, all);        
         return basic_entity_ptr();
     }
 
@@ -1053,6 +1068,9 @@ namespace x680 {
             int success = x680::syntactic::parse_fs(path, synxtasresult);
 
             global_entity_ptr global = global_entity_ptr(new global_entity());
+            
+            
+            insert_global(global);
 
             for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it)
                 compile_module(*it, global);

@@ -146,7 +146,12 @@ namespace x680 {
 
     typedef std::vector<std::string> export_vector;
     typedef std::vector<std::string> import_vector;
-
+    
+    
+    
+    void insert_assigment(basic_entity_ptr scope, basic_entity_ptr val);
+    
+    void insert_global(basic_entity_ptr global);    
 
     /////////////////////////////////////////////////////////////////////////   
     // basic_entity
