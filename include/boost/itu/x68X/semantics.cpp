@@ -7,15 +7,54 @@
 #include <set>
 
 namespace x680 {
-    
-    
-    void insert_assigment(basic_entity_ptr scope, basic_entity_ptr val){
-         scope->childs().push_back(val);
-     }
-    
-    void insert_global(basic_entity_ptr global){
-           insert_assigment(global  ,valueassigment_entity_ptr (new valueassigment_entity(global, "joint-iso-itu-t" , 
-                    type_atom_ptr(new type_atom(global , t_INTEGER)) , value_atom_ptr(new numvalue_atom(1))))); 
+
+    void insert_assigment(basic_entity_ptr scope, basic_entity_ptr val) {
+        scope->childs().push_back(val);
+    }
+
+    void insert_global(basic_entity_ptr global) {
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "itu-t",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(0)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "iso",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(1)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "joint-iso-itu-t",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(2)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "recommendation",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(0)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "question",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(1)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "administration",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(2)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "network-operator",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(3)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "identified-organization",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(4)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "r-recommendation",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(5)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "standard",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(0)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "registration-authority",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(1)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "member-body",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(2)))));
+
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, " identified-organization",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(3)))));
+
+
+
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -370,11 +409,12 @@ namespace x680 {
             }
         }
         if (scope())
-            return scope()->find(nm, all);        
+            return scope()->find(nm, all);
         return basic_entity_ptr();
     }
 
     void module_entity::resolve() {
+        resolve_oid();
         unicalelerror_throw(childs());
         resolve_export();
         resolve_externalmodule();
@@ -418,6 +458,14 @@ namespace x680 {
         }
         return basic_entity_ptr();
     }
+
+    void module_entity::resolve_oid() {
+        if (objectid()) {
+            resolve_atom(objectid().get());
+        }
+    }
+
+
 
 
 
@@ -776,14 +824,14 @@ namespace x680 {
     void assignvalue_atom::resolve() {
         resolve_ptr(value_);
     }
-    
+
     /////////////////////////////////////////////////////////////////////////   
     // choicevalue_atom
     /////////////////////////////////////////////////////////////////////////      
 
     void choicevalue_atom::resolve() {
         resolve_ptr(value_);
-    }    
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1068,8 +1116,8 @@ namespace x680 {
             int success = x680::syntactic::parse_fs(path, synxtasresult);
 
             global_entity_ptr global = global_entity_ptr(new global_entity());
-            
-            
+
+
             insert_global(global);
 
             for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it)
@@ -1088,6 +1136,8 @@ namespace x680 {
             compile_export(mod, modul);
             compile_imports(mod, modul);
             compile_assignments(mod, modul);
+            if (mod.oid.type == v_objectid)
+                modul->objectid(objidvalue_atom_ptr(new objidvalue_atom(compile_objidvalue(modul, mod.oid))));
             global->childs().push_back(modul);
         }
 
@@ -1456,7 +1506,11 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, module_entity* self) {
         stream << "\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
-        stream << "module: " << self->name() << "\nfile:" << self->file() << "\n";
+        stream << "module: " << self->name();
+        if (self->objectid())
+            stream << " {" << self->objectid().get() << " }";
+        stream << " \nfile:" << self->file() << "\n";
+
         stream << "----------------------------------------------------------\n";
         if (self->allexport())
             stream << "      export ALL\n ";

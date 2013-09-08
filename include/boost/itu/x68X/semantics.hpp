@@ -146,12 +146,12 @@ namespace x680 {
 
     typedef std::vector<std::string> export_vector;
     typedef std::vector<std::string> import_vector;
-    
-    
-    
+
+
+
     void insert_assigment(basic_entity_ptr scope, basic_entity_ptr val);
-    
-    void insert_global(basic_entity_ptr global);    
+
+    void insert_global(basic_entity_ptr global);
 
     /////////////////////////////////////////////////////////////////////////   
     // basic_entity
@@ -343,6 +343,14 @@ namespace x680 {
             return allexport_;
         }
 
+        objidvalue_atom_ptr objectid() const {
+            return objectid_;
+        }
+
+        void objectid(objidvalue_atom_ptr vl) {
+            objectid_ = vl;
+        }
+
         //////
 
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
@@ -354,11 +362,13 @@ namespace x680 {
         void resolve_export();
         void resolve_externalmodule();
         basic_entity_ptr findmodule(const std::string& nm);
+        void resolve_oid();
 
         export_vector exports_;
         basic_entity_vector imports_;
         std::string file_;
         bool allexport_;
+        objidvalue_atom_ptr objectid_;
     };
 
 
