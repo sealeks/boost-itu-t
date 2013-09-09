@@ -16,6 +16,9 @@ namespace x680 {
 
         insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "itu-t",
                 type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(0)))));
+        
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "ccitt",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(0)))));        
 
         insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "iso",
                 type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(1)))));
@@ -188,8 +191,7 @@ namespace x680 {
     }
 
     void basic_entity::resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start) {
-        if (elm->name().empty())
-            return;
+
         switch (elm->kind()) {
             case et_Nodef:
             {
@@ -500,8 +502,8 @@ namespace x680 {
     // expectdef_entity
     /////////////////////////////////////////////////////////////////////////
 
-    expectdef_entity::expectdef_entity(const std::string& nm)
-    : basic_entity(nm, et_Nodef) {
+    expectdef_entity::expectdef_entity(basic_entity_ptr scope, const std::string& nm)
+    : basic_entity(scope, nm, et_Nodef) {
     }
 
 
@@ -514,7 +516,7 @@ namespace x680 {
     };
 
     basic_atom::basic_atom(const std::string& reff, basic_entity_ptr scp) : scope_(scp) {
-        reff_ = basic_entity_ptr(new expectdef_entity(reff));
+        reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
     }
 
     module_entity* basic_atom::external() const {
@@ -1859,8 +1861,11 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self) {
         if (self->as_named()) {
             indent(stream, self);
-            stream << self->name() << " " << self->type() << " " << self->as_named()->marker();
-            if (self->as_named()->_default())
+            stream << self->name() << " ";
+            if (self->as_named()->marker()==mk_components_of)
+                   stream << self->name() << "COMPONENTS OF ";
+            stream << self->type() << " " << self->as_named()->marker();
+            if ((self->as_named()->_default()) && (self->as_named()->marker()==mk_default))
                 stream << " " << self->as_named()->_default().get();
         } else
             stream << "(T) " << self->name() << " :: = " << self->type().get();
