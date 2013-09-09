@@ -288,6 +288,8 @@ namespace x680 {
 
         virtual void resolve();
 
+        void preresolve();
+
     };
 
 
@@ -302,15 +304,34 @@ namespace x680 {
 
     public:
 
-        import_entity(const std::string& nm);
+        import_entity(const std::string& nm, basic_entity_ptr inscp);
 
         import_vector& import() {
             return import_;
         }
 
+        objidvalue_atom_ptr objectid() const {
+            return objectid_;
+        }
+
+        void objectid(objidvalue_atom_ptr vl) {
+            objectid_ = vl;
+        }
+
+        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+
+        virtual void resolve();
+
+        basic_entity_ptr inscope() const {
+            return inscope_;
+        }
+
+
     private:
 
         import_vector import_;
+        objidvalue_atom_ptr objectid_;
+        basic_entity_ptr inscope_;
 
     };
 
@@ -356,6 +377,8 @@ namespace x680 {
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
 
         virtual void resolve();
+
+        void preresolve();
 
     private:
 
@@ -1330,7 +1353,7 @@ namespace x680 {
         void compile_module(const x680::syntactic::module& mod, global_entity_ptr global);
         void compile_export(const x680::syntactic::module& mod, module_entity_ptr mdl);
         void compile_imports(const x680::syntactic::module& mod, module_entity_ptr mdl);
-        basic_entity_ptr compile_import(const x680::syntactic::import& imp);
+        basic_entity_ptr compile_import(const x680::syntactic::import& imp, module_entity_ptr mdl);
         void compile_assignments(const x680::syntactic::module& mod, module_entity_ptr mdl);
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
 

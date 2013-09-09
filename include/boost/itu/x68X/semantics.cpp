@@ -365,6 +365,13 @@ namespace x680 {
         resolve_child();
     }
 
+    void global_entity::preresolve() {
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+            if ((*it)->as_module()) {
+                (*it)->as_module()->preresolve();
+            }
+    }
+
     basic_entity_ptr global_entity::find(const std::string& nm, bool all) {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
             if ((*it)->name() == nm) {
@@ -379,10 +386,21 @@ namespace x680 {
     // import_entity
     /////////////////////////////////////////////////////////////////////////
 
-    import_entity::import_entity(const std::string& nm)
-    : basic_entity(nm, et_Import) {
+    import_entity::import_entity(const std::string& nm, basic_entity_ptr inscp)
+    : basic_entity(nm, et_Import), inscope_(inscp) {
     }
 
+    void import_entity::resolve() {
+        if (objectid()) {
+            objectid()->resolve();
+        }
+    }
+
+    basic_entity_ptr import_entity::find(const std::string& nm, bool all) {
+        if (inscope())
+            return inscope()->find(nm, all);
+        return basic_entity_ptr();
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // module_entity
@@ -414,12 +432,19 @@ namespace x680 {
     }
 
     void module_entity::resolve() {
-        resolve_oid();
+        //resolve_oid();
         unicalelerror_throw(childs());
         resolve_export();
         resolve_externalmodule();
         resolve_child();
         resolve_assigments(childs());
+    }
+
+    void module_entity::preresolve() {
+        resolve_oid();
+        for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it)
+            if ((*it)->as_import())
+                (*it)->as_import()->resolve();
 
     }
 
@@ -461,7 +486,7 @@ namespace x680 {
 
     void module_entity::resolve_oid() {
         if (objectid()) {
-            resolve_atom(objectid().get());
+            objectid()->resolve();
         }
     }
 
@@ -1122,7 +1147,7 @@ namespace x680 {
 
             for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it)
                 compile_module(*it, global);
-
+            global->preresolve();
             global->resolve();
             return global;
         }
@@ -1156,7 +1181,7 @@ namespace x680 {
 
         void compile_imports(const x680::syntactic::module& mod, module_entity_ptr mdl) {
             for (x680::syntactic::imports::const_iterator it = mod.imports_.begin(); it != mod.imports_.end(); ++it) {
-                mdl->imports().push_back(compile_import(*it));
+                mdl->imports().push_back(compile_import(*it, mdl));
             }
         }
 
@@ -1165,8 +1190,10 @@ namespace x680 {
 
         //  compile_import         
 
-        basic_entity_ptr compile_import(const x680::syntactic::import& imp) {
-            import_entity_ptr rslt = import_entity_ptr(new import_entity(imp.name));
+        basic_entity_ptr compile_import(const x680::syntactic::import& imp, module_entity_ptr mdl) {
+            import_entity_ptr rslt = import_entity_ptr(new import_entity(imp.name, mdl));
+            if (imp.oid.type == v_objectid)
+                rslt->objectid(objidvalue_atom_ptr(new objidvalue_atom(compile_objidvalue(rslt, imp.oid))));
             for (x680::syntactic::string_vector::const_iterator it = imp.names.begin(); it != imp.names.end(); ++it)
                 rslt->import().push_back(*it);
             return rslt;
@@ -1496,6 +1523,8 @@ namespace x680 {
             stream << "      from module: " << self->name();
         else
             stream << "      from module: " << self->name() << "(?)";
+        if (self->objectid())
+            stream << " {" << self->objectid().get() << " }";
         stream << "\n      symbol: ";
         for (import_vector::iterator it = self->import().begin(); it != self->import().end(); ++it) {
             stream << *it << ", ";
