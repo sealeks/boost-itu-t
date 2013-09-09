@@ -1873,7 +1873,8 @@ namespace x680 {
             stream << "(T) " << self->name() << " :: = " << self->type().get();
             operatorstruct(stream, self);
         }
-        return stream << "\n";;
+        return stream << "\n";
+        ;
     }
 
     std::ostream& operatorstruct(std::ostream& stream, typeassigment_entity* self) {

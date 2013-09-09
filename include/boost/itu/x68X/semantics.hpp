@@ -1183,10 +1183,10 @@ namespace x680 {
         value_atom_ptr _default() const {
             return default_;
         }
-        
-        void  _default(value_atom_ptr v)  {
+
+        void _default(value_atom_ptr v) {
             default_ = v;
-        }        
+        }
 
         tagmarker_type marker() const {
             return marker_;
