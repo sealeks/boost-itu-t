@@ -16,9 +16,9 @@ namespace x680 {
 
         insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "itu-t",
                 type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(0)))));
-        
+
         insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "ccitt",
-                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(0)))));        
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(0)))));
 
         insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "iso",
                 type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(1)))));
@@ -1862,13 +1862,21 @@ namespace x680 {
         if (self->as_named()) {
             indent(stream, self);
             stream << self->name() << " ";
-            if (self->as_named()->marker()==mk_components_of)
-                   stream << self->name() << "COMPONENTS OF ";
-            stream << self->type() << " " << self->as_named()->marker();
-            if ((self->as_named()->_default()) && (self->as_named()->marker()==mk_default))
+            if (self->as_named()->marker() == mk_components_of)
+                stream << self->name() << "COMPONENTS OF ";
+            stream << self->type() << " ";
+            operatorstruct(stream, self);
+            stream << self->as_named()->marker();
+            if ((self->as_named()->_default()) && (self->as_named()->marker() == mk_default))
                 stream << " " << self->as_named()->_default().get();
-        } else
+        } else {
             stream << "(T) " << self->name() << " :: = " << self->type().get();
+            operatorstruct(stream, self);
+        }
+        return stream << "\n";;
+    }
+
+    std::ostream& operatorstruct(std::ostream& stream, typeassigment_entity* self) {
         switch (self->type()->builtin()) {
             case t_SEQUENCE:
             case t_SEQUENCE_OF:
@@ -1882,12 +1890,12 @@ namespace x680 {
                         stream << (*it)->as_typeassigment();
                 }
                 indent(stream, self);
-                stream << "}" << "\n";
+                stream << "}" << " ";
                 break;
             }
             default:
             {
-                stream << "\n";
+                stream << " ";
             };
         }
         return stream;

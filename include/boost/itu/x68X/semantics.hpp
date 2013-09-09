@@ -1183,6 +1183,10 @@ namespace x680 {
         value_atom_ptr _default() const {
             return default_;
         }
+        
+        void  _default(value_atom_ptr v)  {
+            default_ = v;
+        }        
 
         tagmarker_type marker() const {
             return marker_;
@@ -1424,6 +1428,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
     std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self);
     std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self);
+    std::ostream& operatorstruct(std::ostream& stream, typeassigment_entity* self);
     std::ostream& operator<<(std::ostream& stream, tagmarker_type self);
     std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self);
     std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self);
