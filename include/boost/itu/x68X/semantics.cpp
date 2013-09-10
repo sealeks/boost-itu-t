@@ -972,7 +972,46 @@ namespace x680 {
 
     /////////////////////////////////////////////////////////////////////////   
     // resolve functions
-    /////////////////////////////////////////////////////////////////////////          
+    /////////////////////////////////////////////////////////////////////////       
+
+    void preresolve_assigments(basic_entity_vector& elm) {
+        for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
+            if ((*it)->kind() == et_Nodef) {
+                *it = preresolve_nodef_assigment(*it);
+            }
+        }
+    }
+
+    basic_entity_ptr preresolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        basic_entity_ptr rslt = preresolve_nodef_assigment(elm.get(), start.get());
+        return rslt ? rslt : elm;
+    }
+
+    basic_entity_ptr preresolve_nodef_assigment(basic_entity* elm, basic_entity* start) {
+        /*if (!start)
+            start = elm;
+        else
+            check_resolve_ciclic(elm, start);*/
+        bigassigment_entity* tmp = elm->as_bigassigment();
+        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
+            basic_entity_ptr fnd = elm->find(tmp->big()->reff()->name());
+            if (fnd) {
+                if (fnd->kind() == et_Type) {
+                    basic_entity_ptr rslt(new typeassigment_entity(elm->scope(), tmp->name(),
+                            type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference))));
+                    resolve_type_assigment(rslt);
+                    return rslt;
+                }
+                if (fnd->kind() == et_Class) {
+                    basic_entity_ptr rslt(new classassigment_entity(elm->scope(), tmp->name(),
+                            class_atom_ptr(new class_atom(tmp->big()->reff()->name(), cl_Reference))));
+                    resolve_class_assigment(rslt);
+                    return rslt;
+                }
+            }
+        }
+        return basic_entity_ptr();
+    }
 
     void resolve_assigments(basic_entity_vector& elm) {
         for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {

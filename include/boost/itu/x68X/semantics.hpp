@@ -1317,6 +1317,9 @@ namespace x680 {
     // resolve functions
     /////////////////////////////////////////////////////////////////////////  
 
+    void preresolve_assigments(basic_entity_vector& elm);   
+    basic_entity_ptr preresolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+    basic_entity_ptr preresolve_nodef_assigment(basic_entity* elm, basic_entity* start = 0);    
 
     void resolve_assigments(basic_entity_vector& elm);
     void resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start = basic_entity_ptr());
