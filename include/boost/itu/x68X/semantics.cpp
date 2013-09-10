@@ -184,156 +184,7 @@ namespace x680 {
         }
     }
 
-    void basic_entity::resolve_assigments(basic_entity_vector& elm) {
-        for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
-            resolve_assigment(*it);
-        }
-    }
 
-    void basic_entity::resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start) {
-
-        switch (elm->kind()) {
-            case et_Nodef:
-            {
-                elm = resolve_nodef_assigment(elm, start);
-                break;
-            }
-            case et_Type:
-            {
-                resolve_type_assigment(elm, start);
-                break;
-            }
-            case et_Value:
-            {
-                resolve_value_assigment(elm, start);
-                break;
-            }
-            case et_Class:
-            {
-                resolve_class_assigment(elm, start);
-                break;
-            }
-        }
-    }
-
-    basic_entity_ptr basic_entity::resolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
-        basic_entity_ptr rslt = resolve_nodef_assigment(elm.get(), start.get());
-        return rslt ? rslt : elm;
-    }
-
-    basic_entity_ptr basic_entity::resolve_nodef_assigment(basic_entity* elm, basic_entity* start) {
-        /*if (!start)
-            start = elm;
-        else
-            check_resolve_ciclic(elm, start);*/
-        bigassigment_entity* tmp = elm->as_bigassigment();
-        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
-            basic_entity_ptr fnd = elm->find(tmp->big()->reff()->name());
-            if (fnd) {
-                if (fnd->kind() == et_Type) {
-                    basic_entity_ptr rslt(new typeassigment_entity(elm->scope(), tmp->name(),
-                            type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference))));
-                    resolve_type_assigment(rslt);
-                    return rslt;
-                }
-                if (fnd->kind() == et_Class) {
-                    basic_entity_ptr rslt(new classassigment_entity(elm->scope(), tmp->name(),
-                            class_atom_ptr(new class_atom(tmp->big()->reff()->name(), cl_Reference))));
-                    resolve_class_assigment(rslt);
-                    return rslt;
-                }
-            }
-        }
-        return basic_entity_ptr();
-    }
-
-    void basic_entity::resolve_atom(basic_atom_ptr elm, bool all) {
-        resolve_atom(elm.get(), all);
-    }
-
-    void basic_entity::resolve_atom(basic_atom* elm, bool all) {
-        if (elm && (elm->expecteddef()) && (elm->scope())) {
-            basic_entity_ptr fnd = elm->scope()->find(elm->reff()->name(), all);
-            if (fnd) {
-                elm->reff(fnd);
-            } else {
-                if (elm->scope()) {
-                    elm->scope()->referenceerror_throw(elm->reff()->name());
-                }
-            }
-        }
-    }
-
-    void basic_entity::resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
-        resolve_type_assigment(elm.get(), start.get());
-    }
-
-    void basic_entity::resolve_type_assigment(basic_entity* elm, basic_entity* start) {
-        /* if (!start)
-             start = elm;
-         else
-             check_resolve_ciclic(elm, start);*/
-        typeassigment_entity* tmp = elm->as_typeassigment();
-        if (tmp) {
-            if ((tmp->type()) && (tmp->type()->expecteddef())) {
-                basic_entity_ptr fnd = elm->find(tmp->type()->expectedname());
-                if (fnd)
-                    tmp->type()->reff(fnd);
-                else
-                    tmp->referenceerror_throw(tmp->type()->expectedname());
-            }
-            //resolve_typepredef_assigment(tmp);
-        }
-    }
-
-    void basic_entity::resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
-        resolve_value_assigment(elm.get(), start.get());
-    }
-
-    void basic_entity::resolve_value_assigment(basic_entity* elm, basic_entity* start) {
-        /* if (!start)
-             start = elm;
-         else
-             check_resolve_ciclic(elm, start);*/
-        valueassigment_entity* tmp = elm->as_valueassigment();
-        if (tmp) {
-            if ((tmp->type()) && (tmp->type()->expecteddef())) {
-                basic_entity_ptr fnd = elm->find(tmp->type()->expectedname());
-                if (fnd)
-                    tmp->type()->reff(fnd);
-                else
-                    tmp->referenceerror_throw(tmp->type()->expectedname());
-            }
-            if ((tmp->value()) && (tmp->value()->expecteddef())) {
-                basic_entity_ptr fnd = elm->find(tmp->value()->expectedname());
-                if (fnd)
-                    tmp->value()->reff(fnd);
-                else
-                    tmp->referenceerror_throw(tmp->value()->expectedname());
-            }
-        }
-    }
-
-    void basic_entity::resolve_class_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
-        resolve_type_assigment(elm.get(), start.get());
-    }
-
-    void basic_entity::resolve_class_assigment(basic_entity* elm, basic_entity* start) {
-        /* if (!start)
-             start = elm;
-         else
-             check_resolve_ciclic(elm, start);*/
-        classassigment_entity* tmp = elm->as_classassigment();
-        if (tmp) {
-            if ((tmp->_class()) && (tmp->_class()->reff()) && (tmp->_class()->reff()->as_expectdef())) {
-                basic_entity_ptr fnd = elm->find(tmp->_class()->reff()->name());
-                if (fnd)
-                    tmp->_class()->reff(fnd);
-                else
-                    tmp->referenceerror_throw(tmp->_class()->expectedname());
-            }
-        }
-    }
 
     ////////
 
@@ -793,11 +644,11 @@ namespace x680 {
 
     void value_atom::resolve_vect(value_vct& vl) {
         for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
-            basic_entity::resolve_atom(*it);
+            resolve_atom(*it);
     }
 
     void value_atom::resolve_ptr(value_atom_ptr vl) {
-        basic_entity::resolve_atom(vl);
+        resolve_atom(vl);
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -840,7 +691,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     void definedvalue_atom::resolve() {
-        basic_entity::resolve_atom(this);
+        resolve_atom(this);
     }
 
 
@@ -1112,6 +963,166 @@ namespace x680 {
     }
 
     void classassigment_entity::resolve() {
+    }
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // resolve functions
+    /////////////////////////////////////////////////////////////////////////          
+
+    void resolve_assigments(basic_entity_vector& elm) {
+        for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
+            resolve_assigment(*it);
+        }
+    }
+
+    void resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start) {
+
+        switch (elm->kind()) {
+            case et_Nodef:
+            {
+                elm = resolve_nodef_assigment(elm, start);
+                break;
+            }
+            case et_Type:
+            {
+                resolve_type_assigment(elm, start);
+                break;
+            }
+            case et_Value:
+            {
+                resolve_value_assigment(elm, start);
+                break;
+            }
+            case et_Class:
+            {
+                resolve_class_assigment(elm, start);
+                break;
+            }
+        }
+    }
+
+    basic_entity_ptr resolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        basic_entity_ptr rslt = resolve_nodef_assigment(elm.get(), start.get());
+        return rslt ? rslt : elm;
+    }
+
+    basic_entity_ptr resolve_nodef_assigment(basic_entity* elm, basic_entity* start) {
+        /*if (!start)
+            start = elm;
+        else
+            check_resolve_ciclic(elm, start);*/
+        bigassigment_entity* tmp = elm->as_bigassigment();
+        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
+            basic_entity_ptr fnd = elm->find(tmp->big()->reff()->name());
+            if (fnd) {
+                if (fnd->kind() == et_Type) {
+                    basic_entity_ptr rslt(new typeassigment_entity(elm->scope(), tmp->name(),
+                            type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference))));
+                    resolve_type_assigment(rslt);
+                    return rslt;
+                }
+                if (fnd->kind() == et_Class) {
+                    basic_entity_ptr rslt(new classassigment_entity(elm->scope(), tmp->name(),
+                            class_atom_ptr(new class_atom(tmp->big()->reff()->name(), cl_Reference))));
+                    resolve_class_assigment(rslt);
+                    return rslt;
+                }
+            }
+        }
+        return basic_entity_ptr();
+    }
+
+    void resolve_atom(basic_atom_ptr elm, bool all) {
+        resolve_atom(elm.get(), all);
+    }
+
+    void resolve_atom(basic_atom* elm, bool all) {
+        if (elm && (elm->expecteddef()) && (elm->scope())) {
+            basic_entity_ptr fnd = elm->scope()->find(elm->reff()->name(), all);
+            if (fnd) {
+                elm->reff(fnd);
+            } else {
+                if (elm->scope()) {
+                    elm->scope()->referenceerror_throw(elm->reff()->name());
+                }
+            }
+        }
+    }
+
+    void resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        resolve_type_assigment(elm.get(), start.get());
+    }
+
+    void resolve_type_assigment(basic_entity* elm, basic_entity* start) {
+        /* if (!start)
+             start = elm;
+         else
+             check_resolve_ciclic(elm, start);*/
+        typeassigment_entity* tmp = elm->as_typeassigment();
+        if (tmp) {
+            if ((tmp->type()) && (tmp->type()->expecteddef())) {
+                basic_entity_ptr fnd = elm->find(tmp->type()->expectedname());
+                if (fnd)
+                    tmp->type()->reff(fnd);
+                else
+                    tmp->referenceerror_throw(tmp->type()->expectedname());
+            }
+            //resolve_typepredef_assigment(tmp);
+        }
+    }
+
+    void resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        resolve_value_assigment(elm.get(), start.get());
+    }
+
+    void resolve_value_assigment(basic_entity* elm, basic_entity* start) {
+        /* if (!start)
+             start = elm;
+         else
+             check_resolve_ciclic(elm, start);*/
+        valueassigment_entity* tmp = elm->as_valueassigment();
+        if (tmp) {
+            if ((tmp->type()) && (tmp->type()->expecteddef())) {
+                basic_entity_ptr fnd = elm->find(tmp->type()->expectedname());
+                if (fnd)
+                    tmp->type()->reff(fnd);
+                else
+                    tmp->referenceerror_throw(tmp->type()->expectedname());
+            }
+            if ((tmp->value()) && (tmp->value()->expecteddef())) {
+                basic_entity_ptr fnd = elm->find(tmp->value()->expectedname());
+                if (fnd)
+                    tmp->value()->reff(fnd);
+                else
+                    tmp->referenceerror_throw(tmp->value()->expectedname());
+            }
+        }
+    }
+
+    void resolve_class_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        resolve_type_assigment(elm.get(), start.get());
+    }
+
+    void resolve_class_assigment(basic_entity* elm, basic_entity* start) {
+        /* if (!start)
+             start = elm;
+         else
+             check_resolve_ciclic(elm, start);*/
+        classassigment_entity* tmp = elm->as_classassigment();
+        if (tmp) {
+            if ((tmp->_class()) && (tmp->_class()->reff()) && (tmp->_class()->reff()->as_expectdef())) {
+                basic_entity_ptr fnd = elm->find(tmp->_class()->reff()->name());
+                if (fnd)
+                    tmp->_class()->reff(fnd);
+                else
+                    tmp->referenceerror_throw(tmp->_class()->expectedname());
+            }
+        }
     }
 
 
