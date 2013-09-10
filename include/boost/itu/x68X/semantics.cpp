@@ -977,7 +977,7 @@ namespace x680 {
     void preresolve_assigments(basic_entity_vector& elm) {
         for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
             if ((*it)->kind() == et_Nodef) {
-                *it = preresolve_nodef_assigment(*it);
+                *it = preresolve_nodef_assigment((*it).get());
             }
         }
     }
