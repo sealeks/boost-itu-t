@@ -297,7 +297,7 @@ namespace x680 {
 
     public:
 
-        import_entity(const std::string& nm, basic_entity_ptr inscp);
+        import_entity(const std::string& nm);
 
         import_vector& import() {
             return import_;
@@ -315,16 +315,11 @@ namespace x680 {
 
         virtual void resolve();
 
-        basic_entity_ptr inscope() const {
-            return inscope_;
-        }
-
 
     private:
 
         import_vector import_;
         objidvalue_atom_ptr objectid_;
-        basic_entity_ptr inscope_;
 
     };
 
@@ -377,10 +372,14 @@ namespace x680 {
 
     private:
 
-        void resolve_export();
-        void resolve_externalmodule();
-        basic_entity_ptr findmodule(const std::string& nm);
+        
         void resolve_oid();
+        
+        basic_entity_ptr findmodule(const std::string& nm);        
+        
+        void preresolve_export();
+        
+        void preresolve_externalmodule();
 
         export_vector exports_;
         basic_entity_vector imports_;

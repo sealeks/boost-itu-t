@@ -241,8 +241,11 @@ namespace x680 {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
             if ((*it)->as_module()) {
                 (*it)->as_module()->preresolve_external();
-                (*it)->as_module()->preresolve();
             }
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+            if ((*it)->as_module()) {
+                (*it)->as_module()->preresolve();
+            }        
     }
 
     basic_entity_ptr global_entity::find(const std::string& nm, bool all) {
@@ -260,8 +263,8 @@ namespace x680 {
     // import_entity
     /////////////////////////////////////////////////////////////////////////
 
-    import_entity::import_entity(const std::string& nm, basic_entity_ptr inscp)
-    : basic_entity(nm, et_Import), inscope_(inscp) {
+    import_entity::import_entity(const std::string& nm)
+    : basic_entity(nm, et_Import) {
     }
 
     void import_entity::resolve() {
@@ -271,8 +274,11 @@ namespace x680 {
     }
 
     basic_entity_ptr import_entity::find(const std::string& nm, bool all) {
-        if (inscope())
-            return inscope()->find(nm, all);
+        for (import_vector::iterator it = import_.begin(); it != import_.end(); ++it){
+            if ((*it) == nm) {        
+               if (scope())
+                      return scope()->find(nm, all);}
+        }
         return basic_entity_ptr();
     }
 
@@ -295,8 +301,8 @@ namespace x680 {
             }
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
             import_entity* importmod = (*it)->as_import();
-            if (importmod->scope()) {
-                basic_entity_ptr fnd = importmod->scope()->find(nm, all);
+            if (importmod) {
+                basic_entity_ptr fnd = importmod->find(nm, all);
                 if (fnd)
                     return fnd;
             }
@@ -319,36 +325,18 @@ namespace x680 {
     }
 
     void module_entity::preresolve() {
-        for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it)
+       /* for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it)
             if ((*it)->as_import())
-                (*it)->as_import()->resolve();
+                (*it)->as_import()->resolve();*/
         basic_entity::preresolve();
 
     }
 
-    void module_entity::resolve_export() {
-        if (allexport()) {
-            for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-                exports().push_back((*it)->name());
-            }
-        } else {
-            for (export_vector::iterator it = exports().begin(); it != exports().end(); ++it) {
-            }
-        }
-    }
 
-    void module_entity::resolve_externalmodule() {
-        for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
-            import_entity* importmod = (*it)->as_import();
-            if (importmod) {
-                basic_entity_ptr finded = findmodule(importmod->name());
-                if (finded && (finded->as_module())) {
-                    importmod->scope(finded);
-                } else {
-                    throw semantics::error("Not find imported module: " + importmod->name() +
-                            " in module: " + name() + " in file: " + file());
-                }
-            }
+
+    void module_entity::resolve_oid() {
+        if (objectid()) {
+            objectid()->resolve();
         }
     }
 
@@ -361,13 +349,32 @@ namespace x680 {
         }
         return basic_entity_ptr();
     }
-
-    void module_entity::resolve_oid() {
-        if (objectid()) {
-            objectid()->resolve();
+    
+    
+     void module_entity::preresolve_export() {
+        if (allexport()) {
+            for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) 
+                exports().push_back((*it)->name());
+        } else {
+            for (export_vector::iterator it = exports().begin(); it != exports().end(); ++it) {
+            }
         }
     }
 
+    void module_entity::preresolve_externalmodule() {
+        for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
+            import_entity* importmod = (*it)->as_import();
+            if (importmod) {
+                basic_entity_ptr finded = findmodule(importmod->name());
+                if (finded && (finded->as_module())) {
+                    importmod->scope(finded);
+                } else {
+                    throw semantics::error("Not find imported module: " + importmod->name() +
+                            " in module: " + name() + " in file: " + file());
+                }
+            }
+        }
+    }   
 
 
 
@@ -1245,7 +1252,7 @@ namespace x680 {
         //  compile_import         
 
         basic_entity_ptr compile_import(const x680::syntactic::import& imp, module_entity_ptr mdl) {
-            import_entity_ptr rslt = import_entity_ptr(new import_entity(imp.name, mdl));
+            import_entity_ptr rslt = import_entity_ptr(new import_entity(imp.name));
             if (imp.oid.type == v_objectid)
                 rslt->objectid(objidvalue_atom_ptr(new objidvalue_atom(compile_objidvalue(rslt, imp.oid))));
             for (x680::syntactic::string_vector::const_iterator it = imp.names.begin(); it != imp.names.end(); ++it)
