@@ -25,6 +25,9 @@ namespace x680 {
 
         insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "joint-iso-itu-t",
                 type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(2)))));
+        
+        insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "joint-iso-ccitt",
+                type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(2)))));
 
         insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "recommendation",
                 type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(0)))));
@@ -321,7 +324,7 @@ namespace x680 {
     }
 
     void module_entity::preresolve_external() {
-        preesolve_export();
+        preresolve_export();
         preresolve_externalmodule();
     }
 
