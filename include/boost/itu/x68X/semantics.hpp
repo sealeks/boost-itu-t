@@ -236,16 +236,24 @@ namespace x680 {
 
         virtual void resolve();
 
+        virtual void preresolve();
+
     protected:
 
         void resolve_child();
         
+        void preresolve_child();
+
+        void prefind(const std::string& nm, basic_entity_vector& elm);
+
+        basic_entity_wptr scope_;
+        basic_entity_vector childs_;
+
     private:
 
         std::string name_;
         entity_enum kind_;
-        basic_entity_wptr scope_;
-        basic_entity_vector childs_;
+
     };
 
 
@@ -273,7 +281,7 @@ namespace x680 {
 
         virtual void resolve();
 
-        void preresolve();
+        virtual void preresolve();
 
     };
 
@@ -363,7 +371,9 @@ namespace x680 {
 
         virtual void resolve();
 
-        void preresolve();
+        virtual void preresolve();
+
+        void preresolve_external();
 
     private:
 
@@ -1317,16 +1327,14 @@ namespace x680 {
     // resolve functions
     /////////////////////////////////////////////////////////////////////////  
 
-    void preresolve_assigments(basic_entity_vector& elm);   
+    void preresolve_assigments(basic_entity_vector& elm);
     basic_entity_ptr preresolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-    basic_entity_ptr preresolve_nodef_assigment(basic_entity* elm, basic_entity* start = 0);    
+    basic_entity_ptr preresolve_nodef_assigment(basic_entity* elm, basic_entity* start = 0);
 
     void resolve_assigments(basic_entity_vector& elm);
     void resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start = basic_entity_ptr());
     void resolve_atom(basic_atom* elm, bool all = true);
     void resolve_atom(basic_atom_ptr elm, bool all = true);
-    basic_entity_ptr resolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-    basic_entity_ptr resolve_nodef_assigment(basic_entity* elm, basic_entity* start = 0);
     void resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
     void resolve_type_assigment(basic_entity* elm, basic_entity* start = 0);
     void resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
