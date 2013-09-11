@@ -245,7 +245,7 @@ namespace x680 {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
             if ((*it)->as_module()) {
                 (*it)->as_module()->preresolve();
-            }        
+            }
     }
 
     basic_entity_ptr global_entity::find(const std::string& nm, bool all) {
@@ -274,10 +274,11 @@ namespace x680 {
     }
 
     basic_entity_ptr import_entity::find(const std::string& nm, bool all) {
-        for (import_vector::iterator it = import_.begin(); it != import_.end(); ++it){
-            if ((*it) == nm) {        
-               if (scope())
-                      return scope()->find(nm, all);}
+        for (import_vector::iterator it = import_.begin(); it != import_.end(); ++it) {
+            if ((*it) == nm) {
+                if (scope())
+                    return scope()->find(nm, all);
+            }
         }
         return basic_entity_ptr();
     }
@@ -320,19 +321,17 @@ namespace x680 {
     }
 
     void module_entity::preresolve_external() {
-        resolve_export();
-        resolve_externalmodule();
+        preesolve_export();
+        preresolve_externalmodule();
     }
 
     void module_entity::preresolve() {
-       /* for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it)
-            if ((*it)->as_import())
-                (*it)->as_import()->resolve();*/
+        /* for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it)
+             if ((*it)->as_import())
+                 (*it)->as_import()->resolve();*/
         basic_entity::preresolve();
 
     }
-
-
 
     void module_entity::resolve_oid() {
         if (objectid()) {
@@ -349,11 +348,10 @@ namespace x680 {
         }
         return basic_entity_ptr();
     }
-    
-    
-     void module_entity::preresolve_export() {
+
+    void module_entity::preresolve_export() {
         if (allexport()) {
-            for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) 
+            for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
                 exports().push_back((*it)->name());
         } else {
             for (export_vector::iterator it = exports().begin(); it != exports().end(); ++it) {
@@ -374,7 +372,7 @@ namespace x680 {
                 }
             }
         }
-    }   
+    }
 
 
 

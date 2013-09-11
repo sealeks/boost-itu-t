@@ -241,7 +241,7 @@ namespace x680 {
     protected:
 
         void resolve_child();
-        
+
         void preresolve_child();
 
         void prefind(const std::string& nm, basic_entity_vector& elm);
@@ -372,13 +372,13 @@ namespace x680 {
 
     private:
 
-        
+
         void resolve_oid();
-        
-        basic_entity_ptr findmodule(const std::string& nm);        
-        
+
+        basic_entity_ptr findmodule(const std::string& nm);
+
         void preresolve_export();
-        
+
         void preresolve_externalmodule();
 
         export_vector exports_;
