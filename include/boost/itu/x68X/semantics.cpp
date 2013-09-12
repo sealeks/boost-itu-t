@@ -199,7 +199,7 @@ namespace x680 {
                 else
                     basic_entity_ptr();
             } else {
-                    return find_by_name(reff->as_expectdef()->name());
+                    return find_by_name(reff->as_expectdef()->name(), all);
             }
         }
         return reff;
@@ -286,7 +286,7 @@ namespace x680 {
             objectid()->resolve();
         }
     }
-
+    
     basic_entity_ptr import_entity::find_by_name(const std::string& nm, bool all) {
         for (import_vector::iterator it = import_.begin(); it != import_.end(); ++it) {
             if ((*it) == nm) {
@@ -467,7 +467,7 @@ namespace x680 {
         if (it!=std::string::npos){
             if ((it) && (it<(name_.size()-1))){
                 if (name_[it+1]!='&'){
-                    module_=name_.substr(0,it-1);
+                    module_=name_.substr(0,it);
                     name_=name_.substr(it+1);
                 }
             }         
@@ -1117,7 +1117,7 @@ namespace x680 {
             check_resolve_ciclic(elm, start);*/
         bigassigment_entity* tmp = elm->as_bigassigment();
         if (tmp && (tmp->big()) && (tmp->big()->reff())) {
-            basic_entity_ptr fnd = elm->find_by_name(tmp->big()->reff()->name());
+            basic_entity_ptr fnd = elm->find(tmp->big()->reff());
             if (fnd) {
                 if (fnd->kind() == et_Type) {
                     basic_entity_ptr rslt(new typeassigment_entity(elm->scope(), tmp->name(),
@@ -1175,7 +1175,7 @@ namespace x680 {
 
     void resolve_atom(basic_atom* elm, bool all) {
         if (elm && (elm->expecteddef()) && (elm->scope())) {
-            basic_entity_ptr fnd = elm->scope()->find_by_name(elm->reff()->name(), all);
+            basic_entity_ptr fnd = elm->scope()->find(elm->reff(), all);
             if (fnd) {
                 elm->reff(fnd);
             } else {
@@ -1198,7 +1198,7 @@ namespace x680 {
         typeassigment_entity* tmp = elm->as_typeassigment();
         if (tmp) {
             if ((tmp->type()) && (tmp->type()->expecteddef())) {
-                basic_entity_ptr fnd = elm->find_by_name(tmp->type()->expectedname());
+                basic_entity_ptr fnd = elm->find(tmp->type()->reff());
                 if (fnd)
                     tmp->type()->reff(fnd);
                 else
@@ -1220,14 +1220,14 @@ namespace x680 {
         valueassigment_entity* tmp = elm->as_valueassigment();
         if (tmp) {
             if ((tmp->type()) && (tmp->type()->expecteddef())) {
-                basic_entity_ptr fnd = elm->find_by_name(tmp->type()->expectedname());
+                basic_entity_ptr fnd = elm->find(tmp->type()->reff());
                 if (fnd)
                     tmp->type()->reff(fnd);
                 else
                     tmp->referenceerror_throw(tmp->type()->expectedname());
             }
             if ((tmp->value()) && (tmp->value()->expecteddef())) {
-                basic_entity_ptr fnd = elm->find_by_name(tmp->value()->expectedname());
+                basic_entity_ptr fnd = elm->find(tmp->value()->reff());
                 if (fnd)
                     tmp->value()->reff(fnd);
                 else
@@ -1248,7 +1248,7 @@ namespace x680 {
         classassigment_entity* tmp = elm->as_classassigment();
         if (tmp) {
             if ((tmp->_class()) && (tmp->_class()->reff()) && (tmp->_class()->reff()->as_expectdef())) {
-                basic_entity_ptr fnd = elm->find_by_name(tmp->_class()->reff()->name());
+                basic_entity_ptr fnd = elm->find(tmp->_class()->reff());
                 if (fnd)
                     tmp->_class()->reff(fnd);
                 else
