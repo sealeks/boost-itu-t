@@ -248,11 +248,9 @@ namespace x680 {
 
         basic_entity_wptr scope_;
         basic_entity_vector childs_;
-
-    private:
-
         std::string name_;
-        entity_enum kind_;
+        entity_enum kind_;        
+
 
     };
 
@@ -366,6 +364,8 @@ namespace x680 {
         //////
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        
+        basic_entity_ptr find_in_importmodule(const std::string& mod, const std::string& nm);         
 
         virtual void resolve();
 
@@ -375,7 +375,7 @@ namespace x680 {
 
 
     private:
-
+       
 
         basic_entity_ptr findmodule(const std::string& nm);
 
@@ -404,6 +404,23 @@ namespace x680 {
     public:
 
         expectdef_entity(basic_entity_ptr scope, const std::string& nm);
+        
+        std::string module() const {
+            return module_;
+        }    
+
+        bool ismodule() const {
+            return module_.empty();
+        }           
+        
+       
+    protected:
+
+        std::string module_;   
+        
+        void buildreff();
+        
+        
     };
 
 

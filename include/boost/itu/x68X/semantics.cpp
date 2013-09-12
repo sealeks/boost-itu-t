@@ -310,11 +310,20 @@ namespace x680 {
             return scope()->find_by_name(nm, all);
         return basic_entity_ptr();
     }
+    
+    
+    basic_entity_ptr module_entity::find_in_importmodule(const std::string& mod, const std::string& nm) {
+        basic_entity_ptr impmod = module_entity::findmodule(mod);
+        if (impmod){
+            return impmod->find_by_name(nm);
+        }
+    //referenceerror_throw(nm);    
+    return  basic_entity_ptr();  
+    }     
 
     void module_entity::resolve() {
         unicalelerror_throw(childs());
         preresolve();
-        ;
         resolve_child();
         resolve_assigments(childs());
     }
@@ -350,7 +359,7 @@ namespace x680 {
             objectid()->resolve();
         }
     }
-
+    
     basic_entity_ptr module_entity::findmodule(const std::string& nm) {
         if (scope() && scope()->as_global()) {
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
@@ -434,8 +443,21 @@ namespace x680 {
 
     expectdef_entity::expectdef_entity(basic_entity_ptr scope, const std::string& nm)
     : basic_entity(scope, nm, et_Nodef) {
+        buildreff();
     }
 
+    void expectdef_entity::buildreff(){
+       std::string::size_type it = name_.find_first_of('.');
+        if (it!=std::string::npos){
+            if ((it) && (it<(name_.size()-1))){
+                if (name_[it+1]!='&'){
+                    module_=name_.substr(0,it-1);
+                    name_=name_.substr(it+1);
+                    name_=name_;
+                }
+            }         
+        }
+    }  
 
 
     /////////////////////////////////////////////////////////////////////////   
