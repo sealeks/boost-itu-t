@@ -231,8 +231,10 @@ namespace x680 {
         void unicalelerror_throw(const basic_entity_vector& elms);
 
         /////
+        
+        basic_entity_ptr find(const basic_entity_ptr& reff, bool all = true);       
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);        
 
         virtual void resolve();
 

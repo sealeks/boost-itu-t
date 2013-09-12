@@ -191,10 +191,26 @@ namespace x680 {
 
     ////////
 
+    basic_entity_ptr basic_entity::find(const basic_entity_ptr& reff, bool all) {
+        if (reff->as_expectdef()) {
+            if (reff->as_expectdef()->ismodule()) {
+                if (reff->moduleref())
+                    return reff->moduleref()->find_in_importmodule(reff->as_expectdef()->module(),reff->as_expectdef()->name());
+                else
+                    return basic_entity_ptr();
+            } else {
+                    return find_by_name(reff->as_expectdef()->name());
+            }
+        }
+        return reff;
+    }  
+
     basic_entity_ptr basic_entity::find_by_name(const std::string& nm, bool all) {
         //throw semantics::error("Idenifier" + nm + " not found");
         return basic_entity_ptr();
     }
+    
+    
 
     void basic_entity::resolve() {
         preresolve();
