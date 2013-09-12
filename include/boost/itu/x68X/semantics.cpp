@@ -197,7 +197,7 @@ namespace x680 {
                 if (reff->moduleref())
                     return reff->moduleref()->find_in_importmodule(reff->as_expectdef()->module(),reff->as_expectdef()->name());
                 else
-                    return basic_entity_ptr();
+                    basic_entity_ptr();
             } else {
                     return find_by_name(reff->as_expectdef()->name());
             }

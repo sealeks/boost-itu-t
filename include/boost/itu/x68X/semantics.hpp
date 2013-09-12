@@ -412,7 +412,7 @@ namespace x680 {
         }    
 
         bool ismodule() const {
-            return module_.empty();
+            return !module_.empty();
         }           
         
        
