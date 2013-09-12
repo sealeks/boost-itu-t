@@ -372,34 +372,34 @@ namespace x680 {
 
 
 
-        str_rule ExternalTypeReference_ = modulereference_
-                >> qi::string(".")
-                >> typereference_;
+        str_rule ExternalTypeReference_ = modulereference_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1 ]
+                >> typereference_[qi::_val += qi::_1 ];
 
-        str_rule ExternalTypeReference_strict = modulereference_
-                >> qi::string(".")
-                >> typereference_strict;
+        str_rule ExternalTypeReference_strict = modulereference_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1 ]
+                >> typereference_strict[qi::_val += qi::_1 ];
 
 
-        str_rule ExternalValueReference_ = modulereference_
-                >> qi::string(".")
-                >> valuereference_;
+        str_rule ExternalValueReference_ = modulereference_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1 ]
+                >> valuereference_[qi::_val += qi::_1 ];
 
-        str_rule ExternalValueSetReference_ = modulereference_
-                >> qi::string(".")
-                >> valuesetreference_;
+        str_rule ExternalValueSetReference_ = modulereference_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1 ]
+                >> valuesetreference_[qi::_val += qi::_1 ];
 
-        str_rule ExternalObjectClassReference_ = modulereference_
-                >> qi::string(".")
-                >> objectclassreference_;
+        str_rule ExternalObjectClassReference_ = modulereference_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1 ]
+                >> objectclassreference_[qi::_val += qi::_1 ];
 
-        str_rule ExternalObjectReference_ = modulereference_
-                >> qi::string(".")
-                >> objectreference_;
+        str_rule ExternalObjectReference_ = modulereference_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1 ]
+                >> objectreference_[qi::_val += qi::_1 ];
 
-        str_rule ExternalObjectSetReference_ = modulereference_
-                >> qi::string(".")
-                >> objectsetreference_;
+        str_rule ExternalObjectSetReference_ = modulereference_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1 ]
+                >> objectsetreference_[qi::_val += qi::_1 ];
 
         str_rule UsefulObjectClass_ = TYPE_IDENTIFIER_
                 | ABSTRACT_SYNTAX_;
