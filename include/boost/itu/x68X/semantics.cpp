@@ -197,23 +197,17 @@ namespace x680 {
     }
 
     void basic_entity::resolve() {
+        preresolve();
         resolve_child();
     };
 
     void basic_entity::preresolve() {
         preresolve_assigments(childs_);
-        resolve_child();
     };
 
     void basic_entity::resolve_child() {
         for (basic_entity_vector::const_iterator it = childs().begin(); it != childs().end(); ++it) {
             (*it)->resolve();
-        }
-    }
-
-    void basic_entity::preresolve_child() {
-        for (basic_entity_vector::iterator it = childs_.begin(); it != childs_.end(); ++it) {
-            (*it)->preresolve();
         }
     }
 
@@ -237,17 +231,14 @@ namespace x680 {
     ////////
 
     void global_entity::resolve() {
+        preresolve();
         resolve_child();
     }
 
     void global_entity::preresolve() {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
             if ((*it)->as_module()) {
-                (*it)->as_module()->preresolve_external();
-            }
-        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-            if ((*it)->as_module()) {
-                (*it)->as_module()->preresolve();
+                (*it)->as_module()->preresolve_externalref();
             }
     }
 
@@ -317,24 +308,32 @@ namespace x680 {
     }
 
     void module_entity::resolve() {
+        preresolve();
         resolve_oid();
         unicalelerror_throw(childs());
         resolve_child();
         resolve_assigments(childs());
     }
 
-    void module_entity::preresolve_external() {
-        preresolve_export();
-        preresolve_externalmodule();
+    void module_entity::preresolve_externalref() {
+        if (allexport()) {
+            for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+                exports().push_back((*it)->name());
+        }
+        for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
+            import_entity* importmod = (*it)->as_import();
+            if (importmod) {
+                basic_entity_ptr finded = findmodule(importmod->name());
+                if (finded && (finded->as_module())) {
+                    importmod->scope(finded);
+                } else {
+                    throw semantics::error("Not find imported module: " + importmod->name() +
+                            " in module: " + name() + " in file: " + file());
+                }
+            }
+        }
     }
 
-    void module_entity::preresolve() {
-        /* for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it)
-             if ((*it)->as_import())
-                 (*it)->as_import()->resolve();*/
-        basic_entity::preresolve();
-
-    }
 
     void module_entity::resolve_oid() {
         if (objectid()) {
@@ -351,33 +350,6 @@ namespace x680 {
         }
         return basic_entity_ptr();
     }
-
-    void module_entity::preresolve_export() {
-        if (allexport()) {
-            for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-                exports().push_back((*it)->name());
-        } else {
-            for (export_vector::iterator it = exports().begin(); it != exports().end(); ++it) {
-            }
-        }
-    }
-
-    void module_entity::preresolve_externalmodule() {
-        for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
-            import_entity* importmod = (*it)->as_import();
-            if (importmod) {
-                basic_entity_ptr finded = findmodule(importmod->name());
-                if (finded && (finded->as_module())) {
-                    importmod->scope(finded);
-                } else {
-                    throw semantics::error("Not find imported module: " + importmod->name() +
-                            " in module: " + name() + " in file: " + file());
-                }
-            }
-        }
-    }
-
-
 
 
 
@@ -1209,7 +1181,6 @@ namespace x680 {
 
             for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it)
                 compile_module(*it, global);
-            global->preresolve();
             global->resolve();
             return global;
         }

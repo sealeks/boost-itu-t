@@ -236,13 +236,13 @@ namespace x680 {
 
         virtual void resolve();
 
-        virtual void preresolve();
+
 
     protected:
+        
+        virtual void preresolve();        
 
         void resolve_child();
-
-        void preresolve_child();
 
         void prefind(const std::string& nm, basic_entity_vector& elm);
 
@@ -280,6 +280,9 @@ namespace x680 {
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
 
         virtual void resolve();
+        
+
+    protected:        
 
         virtual void preresolve();
 
@@ -366,9 +369,8 @@ namespace x680 {
 
         virtual void resolve();
 
-        virtual void preresolve();
-
-        void preresolve_external();
+        void preresolve_externalref();
+               
 
     private:
 
@@ -377,9 +379,6 @@ namespace x680 {
 
         basic_entity_ptr findmodule(const std::string& nm);
 
-        void preresolve_export();
-
-        void preresolve_externalmodule();
 
         export_vector exports_;
         basic_entity_vector imports_;
