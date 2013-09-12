@@ -232,7 +232,7 @@ namespace x680 {
 
         /////
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -277,7 +277,7 @@ namespace x680 {
 
         //////
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -314,7 +314,7 @@ namespace x680 {
             objectid_ = vl;
         }
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -365,7 +365,7 @@ namespace x680 {
 
         //////
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -467,7 +467,7 @@ namespace x680 {
 
         ////////
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -1070,7 +1070,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve() {
         };
@@ -1112,7 +1112,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve() {
         };
@@ -1150,7 +1150,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -1238,7 +1238,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -1280,7 +1280,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
@@ -1315,7 +1315,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
 
