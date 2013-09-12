@@ -239,8 +239,8 @@ namespace x680 {
 
 
     protected:
-        
-        virtual void preresolve();        
+
+        virtual void preresolve();
 
         void resolve_child();
 
@@ -280,9 +280,9 @@ namespace x680 {
         virtual basic_entity_ptr find(const std::string& nm, bool all = true);
 
         virtual void resolve();
-        
 
-    protected:        
+
+    protected:
 
         virtual void preresolve();
 
@@ -370,14 +370,20 @@ namespace x680 {
         virtual void resolve();
 
         void preresolve_externalref();
-               
+
+        void preresolve_oid();
+
 
     private:
 
 
-        void resolve_oid();
-
         basic_entity_ptr findmodule(const std::string& nm);
+
+        basic_entity_ptr findmodule(objidvalue_atom_ptr oid, const std::string& nm);
+
+        std::vector<std::string> setfrom_objid(objidvalue_atom* vl);
+
+        bool compareoid(objidvalue_atom_ptr ls, objidvalue_atom_ptr rs);
 
 
         export_vector exports_;

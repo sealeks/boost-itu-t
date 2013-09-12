@@ -25,7 +25,7 @@ namespace x680 {
 
         insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "joint-iso-itu-t",
                 type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(2)))));
-        
+
         insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, "joint-iso-ccitt",
                 type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(2)))));
 
@@ -59,9 +59,9 @@ namespace x680 {
         insert_assigment(global, valueassigment_entity_ptr(new valueassigment_entity(global, " identified-organization",
                 type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(3)))));
 
-
-
     }
+
+
 
     /////////////////////////////////////////////////////////////////////////   
     // basic_entity
@@ -238,6 +238,10 @@ namespace x680 {
     void global_entity::preresolve() {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
             if ((*it)->as_module()) {
+                (*it)->as_module()->preresolve_oid();
+            }
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+            if ((*it)->as_module()) {
                 (*it)->as_module()->preresolve_externalref();
             }
     }
@@ -308,9 +312,9 @@ namespace x680 {
     }
 
     void module_entity::resolve() {
-        preresolve();
-        resolve_oid();
         unicalelerror_throw(childs());
+        preresolve();
+        ;
         resolve_child();
         resolve_assigments(childs());
     }
@@ -320,10 +324,17 @@ namespace x680 {
             for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
                 exports().push_back((*it)->name());
         }
+        //preresolve_oid();
+        for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
+            import_entity* importmod = (*it)->as_import();
+            if (importmod && (importmod->objectid())) {
+                importmod->objectid()->resolve();
+            }
+        }
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
             import_entity* importmod = (*it)->as_import();
             if (importmod) {
-                basic_entity_ptr finded = findmodule(importmod->name());
+                basic_entity_ptr finded = findmodule(importmod->objectid(), importmod->name());
                 if (finded && (finded->as_module())) {
                     importmod->scope(finded);
                 } else {
@@ -334,8 +345,7 @@ namespace x680 {
         }
     }
 
-
-    void module_entity::resolve_oid() {
+    void module_entity::preresolve_oid() {
         if (objectid()) {
             objectid()->resolve();
         }
@@ -344,11 +354,75 @@ namespace x680 {
     basic_entity_ptr module_entity::findmodule(const std::string& nm) {
         if (scope() && scope()->as_global()) {
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
-                if (nm == (*it)->name())
+                if (((*it)->as_module()) && (nm == (*it)->name()))
                     return *it;
             }
         }
         return basic_entity_ptr();
+    }
+
+    basic_entity_ptr module_entity::findmodule(objidvalue_atom_ptr oid, const std::string& nm) {
+        if (!oid)
+            return findmodule(nm);
+        if (scope() && scope()->as_global()) {
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if (((*it)->as_module()) && ((*it)->as_module()->objectid()))
+                    if (compareoid(oid, (*it)->as_module()->objectid()))
+                        return *it;
+            }
+        }
+        return findmodule(nm);
+    }
+
+    std::vector<std::string> module_entity::setfrom_objid(objidvalue_atom*vl) {
+        std::vector<std::string> tmp;
+        try {
+            for (value_vct::const_iterator it = vl->values().begin(); it != vl->values().end(); ++it) {
+                switch ((*it)->valtype()) {
+                    case v_number:
+                        tmp.push_back(boost::lexical_cast<std::string>((*it)->as_number()->value()));
+                        break;
+                    case v_defined_assign:
+                    {
+                        if ((*it)->as_assign()->value()) {
+                            if ((*it)->as_assign()->value()->as_number())
+                                tmp.push_back(boost::lexical_cast<std::string>((*it)->as_assign()->value()->as_number()->value()));
+                            else
+                                tmp.push_back((*it)->as_assign()->name());
+                            break;
+                        }
+                    }
+                    case v_defined:
+                    {
+                        if (((*it)->as_defined()->root()) && ((*it)->as_defined()->root()->as_value())) {
+                            if ((*it)->as_defined()->root()->as_value()->as_number()) {
+                                tmp.push_back(boost::lexical_cast<std::string>((*it)->as_defined()->root()->as_value()->as_number()->value()));
+                                break;
+                            } else if ((*it)->as_defined()->root()->as_value()->as_objid()) {
+                                std::vector<std::string> tmp2  = setfrom_objid((*it)->as_defined()->root()->as_value()->as_objid());
+                                tmp.insert(tmp.end(), tmp2.begin(), tmp2.end());
+                                break;
+                            }
+                        }
+                        tmp.push_back((*it)->as_defined()->expectedname());
+                        break;
+                    }
+                    default:
+                    {
+                        throw semantics::error(" Undefined object Id");
+                    };
+                }
+            }
+        } catch (boost::bad_lexical_cast) {
+            throw semantics::error(" Undefined object Id");
+        }
+        return tmp;
+    }
+
+    bool module_entity::compareoid(objidvalue_atom_ptr ls, objidvalue_atom_ptr rs) {
+        if (ls && rs)
+            return (setfrom_objid(ls.get()) == setfrom_objid(rs.get()));
+        return false;
     }
 
 
@@ -1226,7 +1300,7 @@ namespace x680 {
         basic_entity_ptr compile_import(const x680::syntactic::import& imp, module_entity_ptr mdl) {
             import_entity_ptr rslt = import_entity_ptr(new import_entity(imp.name));
             if (imp.oid.type == v_objectid)
-                rslt->objectid(objidvalue_atom_ptr(new objidvalue_atom(compile_objidvalue(rslt, imp.oid))));
+                rslt->objectid(objidvalue_atom_ptr(new objidvalue_atom(compile_objidvalue(mdl, imp.oid))));
             for (x680::syntactic::string_vector::const_iterator it = imp.names.begin(); it != imp.names.end(); ++it)
                 rslt->import().push_back(*it);
             return rslt;
