@@ -318,7 +318,7 @@ namespace x680 {
 
         virtual void resolve();
 
-
+        
     private:
 
         import_vector import_;
