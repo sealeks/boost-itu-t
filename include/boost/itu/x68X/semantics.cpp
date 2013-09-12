@@ -453,7 +453,6 @@ namespace x680 {
                 if (name_[it+1]!='&'){
                     module_=name_.substr(0,it-1);
                     name_=name_.substr(it+1);
-                    name_=name_;
                 }
             }         
         }
