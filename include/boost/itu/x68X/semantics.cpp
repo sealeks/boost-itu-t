@@ -837,57 +837,57 @@ namespace x680 {
         resolve_ptr(value_);
     }
 
-    
-    
-    
+
+
+
     /////////////////////////////////////////////////////////////////////////   
     //constraint_atom
     /////////////////////////////////////////////////////////////////////////       
 
     constraint_atom::constraint_atom(constraint_type tpv)
     : basic_atom(), cotstrtype_(tpv) {
-    }   
-    
+    }
+
     constraint_atom::constraint_atom(basic_entity_ptr scp, constraint_type tpv)
     : basic_atom(scp), cotstrtype_(tpv) {
     }
 
     constraint_atom::constraint_atom(basic_entity_ptr scp, const std::string& reff, constraint_type tpv)
     : basic_atom(reff, scp), cotstrtype_(tpv) {
-    }    
-    
-     valueconstraint_atom* constraint_atom::as_value_c(){
+    }
+
+    valueconstraint_atom* constraint_atom::as_value_c() {
         return dynamic_cast<valueconstraint_atom*> (this);
-     }    
-     
-     valuerangrconstraint_atom* as_valuerange();         
-        return dynamic_cast<valuerangrconstraint_atom*> (this);
-     }    
-         
-     unionconstraint_atom* constraint_atom::as_union(){
+    }
+
+    rangeconstraint_atom* constraint_atom::as_range() {
+        return dynamic_cast<rangeconstraint_atom*> (this);
+    }
+
+    unionconstraint_atom* constraint_atom::as_union() {
         return dynamic_cast<unionconstraint_atom*> (this);
-     }       
-     
-     intersectionconstraint_atom* constraint_atom::as_intersection(){
+    }
+
+    intersectionconstraint_atom* constraint_atom::as_intersection() {
         return dynamic_cast<intersectionconstraint_atom*> (this);
-     }       
-     
-     exceptconstraint_atom* constraint_atom::as_except(){
+    }
+
+    exceptconstraint_atom* constraint_atom::as_except() {
         return dynamic_cast<exceptconstraint_atom*> (this);
-     }       
-     
-     allexceptconstraint_atom* constraint_atom::as_allexcept(){
+    }
+
+    allexceptconstraint_atom* constraint_atom::as_allexcept() {
         return dynamic_cast<allexceptconstraint_atom*> (this);
-     }        
-     
-     extentionconstraint_atom* constraint_atom::as_extention(){
+    }
+
+    extentionconstraint_atom* constraint_atom::as_extention() {
         return dynamic_cast<extentionconstraint_atom*> (this);
-     }       
-     
-     exceptionconstraint_atom* constraint_atom::as_exception(){
+    }
+
+    exceptionconstraint_atom* constraint_atom::as_exception() {
         return dynamic_cast<exceptionconstraint_atom*> (this);
-     }       
-     
+    }
+
 
 
     /////////////////////////////////////////////////////////////////////////   

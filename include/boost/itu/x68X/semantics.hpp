@@ -131,46 +131,46 @@ namespace x680 {
 
     class emptyvalue_atom;
     typedef boost::shared_ptr<emptyvalue_atom> emptyvalue_atom_ptr;
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     class constraint_atom;
-    typedef boost::shared_ptr<constraint_atom> constraint_atom_ptr;  
-    
+    typedef boost::shared_ptr<constraint_atom> constraint_atom_ptr;
+
     class valueconstraint_atom;
-    typedef boost::shared_ptr<valueconstraint_atom> valueconstraint_atom_ptr;   
-    
-    class valuerangeconstraint_atom;
-    typedef boost::shared_ptr<valuerangeconstraint_atom> valuerangeconstraint_atom_ptr;    
+    typedef boost::shared_ptr<valueconstraint_atom> valueconstraint_atom_ptr;
+
+    class rangeconstraint_atom;
+    typedef boost::shared_ptr<rangeconstraint_atom> rangeconstraint_atom_ptr;
 
     class unionconstraint_atom;
-    typedef boost::shared_ptr<unionconstraint_atom> unionconstraint_atom_ptr;   
-    
+    typedef boost::shared_ptr<unionconstraint_atom> unionconstraint_atom_ptr;
+
     class intersectionconstraint_atom;
-    typedef boost::shared_ptr<intersectionconstraint_atom> intersectionconstraint_atom_ptr;    
+    typedef boost::shared_ptr<intersectionconstraint_atom> intersectionconstraint_atom_ptr;
 
     class exceptconstraint_atom;
-    typedef boost::shared_ptr<exceptconstraint_atom> exceptconstraint_atom_ptr;       
-    
+    typedef boost::shared_ptr<exceptconstraint_atom> exceptconstraint_atom_ptr;
+
     class allexceptconstraint_atom;
-    typedef boost::shared_ptr<allexceptconstraint_atom> allexceptconstraint_atom_ptr;      
-    
+    typedef boost::shared_ptr<allexceptconstraint_atom> allexceptconstraint_atom_ptr;
+
     class exceptconstraint_atom;
-    typedef boost::shared_ptr<exceptconstraint_atom> exceptconstraint_atom_ptr;       
-    
+    typedef boost::shared_ptr<exceptconstraint_atom> exceptconstraint_atom_ptr;
+
     class allexceptconstraint_atom;
-    typedef boost::shared_ptr<allexceptconstraint_atom> allexceptconstraint_atom_ptr;     
-    
+    typedef boost::shared_ptr<allexceptconstraint_atom> allexceptconstraint_atom_ptr;
+
     class extentionconstraint_atom;
-    typedef boost::shared_ptr<extentionconstraint_atom> extentionconstraint_atom_ptr;       
-    
+    typedef boost::shared_ptr<extentionconstraint_atom> extentionconstraint_atom_ptr;
+
     class exceptionconstraint_atom;
-    typedef boost::shared_ptr<exceptionconstraint_atom> exceptionconstraint_atom_ptr;     
-    
-    
+    typedef boost::shared_ptr<exceptionconstraint_atom> exceptionconstraint_atom_ptr;
+
+
 
 
     class class_atom;
@@ -1031,7 +1031,7 @@ namespace x680 {
 
 
 
-    
+
     /////////////////////////////////////////////////////////////////////////   
     // constraint_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -1039,7 +1039,7 @@ namespace x680 {
     class constraint_atom : public basic_atom {
 
     public:
-        constraint_atom(constraint_type tp);        
+        constraint_atom(constraint_type tp);
         constraint_atom(basic_entity_ptr scp, constraint_type tp);
         constraint_atom(basic_entity_ptr scp, const std::string& reff, constraint_type tp);
 
@@ -1048,8 +1048,8 @@ namespace x680 {
         }
 
         valueconstraint_atom* as_value_c();
-        
-        valueconstraint_atom* as_valuerange();        
+
+        rangeconstraint_atom* as_range();
 
         unionconstraint_atom* as_union();
 
@@ -1068,9 +1068,9 @@ namespace x680 {
 
         constraint_type cotstrtype_;
 
-    };    
-    
-    
+    };
+
+
     /////////////////////////////////////////////////////////////////////////   
     // valueconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -1078,10 +1078,14 @@ namespace x680 {
     class valueconstraint_atom : public constraint_atom {
 
     public:
-        valueconstraint_atom(value_atom_ptr vl) : constraint_atom(cns_SingleValue) , value_(vl) {} ;
-        valueconstraint_atom(basic_entity_ptr scp, value_atom_ptr vl): constraint_atom(scp, cns_SingleValue) , value_(vl) {} ;
 
-        value_atom_ptr value()  {
+        valueconstraint_atom(value_atom_ptr vl) : constraint_atom(cns_SingleValue), value_(vl) {
+        };
+
+        valueconstraint_atom(basic_entity_ptr scp, value_atom_ptr vl) : constraint_atom(scp, cns_SingleValue), value_(vl) {
+        };
+
+        value_atom_ptr value() {
             return value_;
         }
 
@@ -1089,10 +1093,10 @@ namespace x680 {
 
         value_atom_ptr value_;
 
-    };    
-    
-    
-    
+    };
+
+
+
     /////////////////////////////////////////////////////////////////////////   
     // rangeconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -1100,108 +1104,123 @@ namespace x680 {
     class rangeconstraint_atom : public constraint_atom {
 
     public:
-        rangeconstraint_atom(value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp) : 
-        constraint_atom(cns_ValueRange) , from_(fr), fromtype_(frtp), to_(to), totype_(totp) {} ;
-        
-        rangeconstraint_atom(basic_entity_ptr scp, value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp) :
-        constraint_atom(scp, cns_ValueRange) , from_(fr), fromtype_(frtp), to_(to), totype_(totp) {} ;
 
-        value_atom_ptr from()  {
+        rangeconstraint_atom(value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp) :
+        constraint_atom(cns_ValueRange), from_(fr), fromtype_(frtp), to_(to), totype_(totp) {
+        };
+
+        rangeconstraint_atom(basic_entity_ptr scp, value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp) :
+        constraint_atom(scp, cns_ValueRange), from_(fr), fromtype_(frtp), to_(to), totype_(totp) {
+        };
+
+        value_atom_ptr from() {
             return from_;
         }
-        
-        range_type fromtype()  {
+
+        range_type fromtype() {
             return fromtype_;
-        }      
-        
-        value_atom_ptr to()  {
+        }
+
+        value_atom_ptr to() {
             return to_;
         }
-        
-        range_type totype()  {
+
+        range_type totype() {
             return totype_;
-        }        
+        }
 
     private:
 
         value_atom_ptr from_;
-        range_type fromtype_;       
-        value_atom_ptr to_;      
-        range_type totype_;               
+        range_type fromtype_;
+        value_atom_ptr to_;
+        range_type totype_;
 
-    };   
-    
-    
+    };
+
+
     /////////////////////////////////////////////////////////////////////////   
     // unionconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-
     class unionconstraint_atom : public constraint_atom {
-    public:
-        unionconstraint_atom(): constraint_atom(cns_UNION){}
-    };    
 
-    
-    
-    
+    public:
+
+        unionconstraint_atom() : constraint_atom(cns_UNION) {
+        }
+    };
+
+
+
+
     /////////////////////////////////////////////////////////////////////////   
     // intersectionconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-
     class intersectionconstraint_atom : public constraint_atom {
+
     public:
-        intersectionconstraint_atom() : constraint_atom(cns_INTERSECTION){}
-    };     
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+
+        intersectionconstraint_atom() : constraint_atom(cns_INTERSECTION) {
+        }
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // exceptconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
-
 
     class exceptconstraint_atom : public constraint_atom {
+
     public:
-        exceptconstraint_atom() : constraint_atom(cns_EXCEPT){}
-    };        
-    
- 
-      /////////////////////////////////////////////////////////////////////////   
+
+        exceptconstraint_atom() : constraint_atom(cns_EXCEPT) {
+        }
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // allexceptconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-
     class allexceptconstraint_atom : public constraint_atom {
-    public:
-        allexceptconstraint_atom() : constraint_atom(cns_ALLEXCEPT){}
-    };     
 
-    
-     /////////////////////////////////////////////////////////////////////////   
+    public:
+
+        allexceptconstraint_atom() : constraint_atom(cns_ALLEXCEPT) {
+        }
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // exceptconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-
     class extentionconstraint_atom : public constraint_atom {
+
     public:
-         extentionconstraint_atom() : constraint_atom(cns_EXTENTION){}
-    };        
-    
- 
-      /////////////////////////////////////////////////////////////////////////   
+
+        extentionconstraint_atom() : constraint_atom(cns_EXTENTION) {
+        }
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // allexceptconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-
     class exceptionconstraint_atom : public constraint_atom {
+
     public:
-        exceptionconstraint_atom() : constraint_atom(cns_EXCEPTION){}
-    };    
-    
-    
-    
-    
+
+        exceptionconstraint_atom() : constraint_atom(cns_EXCEPTION) {
+        }
+    };
+
+
+
+
 
     /////////////////////////////////////////////////////////////////////////   
     // class_atom
