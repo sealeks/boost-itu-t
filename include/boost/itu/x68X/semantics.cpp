@@ -326,11 +326,10 @@ namespace x680 {
     }
 
     basic_entity_ptr module_entity::find_in_importmodule(const std::string& mod, const std::string& nm) {
-        basic_entity_ptr impmod = module_entity::findmodule(mod);
-        if (impmod) {
-            return impmod->find_by_name(nm);
-        }
-        //referenceerror_throw(nm);    
+        for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it){
+            import_entity* importmod = (*it)->as_import();
+            if (importmod && (importmod->name() == mod) &&  (importmod->scope())) 
+                return importmod->find_by_name(nm);}
         return basic_entity_ptr();
     }
 
