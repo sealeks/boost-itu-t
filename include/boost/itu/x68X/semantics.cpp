@@ -195,22 +195,20 @@ namespace x680 {
         if (reff->as_expectdef()) {
             if (reff->as_expectdef()->ismodule()) {
                 if (reff->moduleref())
-                    return reff->moduleref()->find_in_importmodule(reff->as_expectdef()->module(),reff->as_expectdef()->name());
+                    return reff->moduleref()->find_in_importmodule(reff->as_expectdef()->module(), reff->as_expectdef()->name());
                 else
                     basic_entity_ptr();
             } else {
-                    return find_by_name(reff->as_expectdef()->name(), all);
+                return find_by_name(reff->as_expectdef()->name(), all);
             }
         }
         return reff;
-    }  
+    }
 
     basic_entity_ptr basic_entity::find_by_name(const std::string& nm, bool all) {
         //throw semantics::error("Idenifier" + nm + " not found");
         return basic_entity_ptr();
     }
-    
-    
 
     void basic_entity::resolve() {
         preresolve();
@@ -286,7 +284,7 @@ namespace x680 {
             objectid()->resolve();
         }
     }
-    
+
     basic_entity_ptr import_entity::find_by_name(const std::string& nm, bool all) {
         for (import_vector::iterator it = import_.begin(); it != import_.end(); ++it) {
             if ((*it) == nm) {
@@ -326,16 +324,15 @@ namespace x680 {
             return scope()->find_by_name(nm, all);
         return basic_entity_ptr();
     }
-    
-    
+
     basic_entity_ptr module_entity::find_in_importmodule(const std::string& mod, const std::string& nm) {
         basic_entity_ptr impmod = module_entity::findmodule(mod);
-        if (impmod){
+        if (impmod) {
             return impmod->find_by_name(nm);
         }
-    //referenceerror_throw(nm);    
-    return  basic_entity_ptr();  
-    }     
+        //referenceerror_throw(nm);    
+        return basic_entity_ptr();
+    }
 
     void module_entity::resolve() {
         unicalelerror_throw(childs());
@@ -375,7 +372,7 @@ namespace x680 {
             objectid()->resolve();
         }
     }
-    
+
     basic_entity_ptr module_entity::findmodule(const std::string& nm) {
         if (scope() && scope()->as_global()) {
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
@@ -424,7 +421,7 @@ namespace x680 {
                                 tmp.push_back(boost::lexical_cast<std::string>((*it)->as_defined()->root()->as_value()->as_number()->value()));
                                 break;
                             } else if ((*it)->as_defined()->root()->as_value()->as_objid()) {
-                                std::vector<std::string> tmp2  = setfrom_objid((*it)->as_defined()->root()->as_value()->as_objid());
+                                std::vector<std::string> tmp2 = setfrom_objid((*it)->as_defined()->root()->as_value()->as_objid());
                                 tmp.insert(tmp.end(), tmp2.begin(), tmp2.end());
                                 break;
                             }
@@ -462,17 +459,17 @@ namespace x680 {
         buildreff();
     }
 
-    void expectdef_entity::buildreff(){
-       std::string::size_type it = name_.find_first_of('.');
-        if (it!=std::string::npos){
-            if ((it) && (it<(name_.size()-1))){
-                if (name_[it+1]!='&'){
-                    module_=name_.substr(0,it);
-                    name_=name_.substr(it+1);
+    void expectdef_entity::buildreff() {
+        std::string::size_type it = name_.find_first_of('.');
+        if (it != std::string::npos) {
+            if ((it) && (it < (name_.size() - 1))) {
+                if (name_[it + 1] != '&') {
+                    module_ = name_.substr(0, it);
+                    name_ = name_.substr(it + 1);
                 }
-            }         
+            }
         }
-    }  
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
