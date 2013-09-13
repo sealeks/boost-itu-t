@@ -856,10 +856,14 @@ namespace x680 {
     : basic_atom(reff, scp), cotstrtype_(tpv) {
     }    
     
-     valueconstraint_atom* constraint_atom::as_value(){
+     valueconstraint_atom* constraint_atom::as_value_c(){
         return dynamic_cast<valueconstraint_atom*> (this);
      }    
-    
+     
+     valuerangrconstraint_atom* as_valuerange();         
+        return dynamic_cast<valuerangrconstraint_atom*> (this);
+     }    
+         
      unionconstraint_atom* constraint_atom::as_union(){
         return dynamic_cast<unionconstraint_atom*> (this);
      }       

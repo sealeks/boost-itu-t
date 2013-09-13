@@ -141,7 +141,10 @@ namespace x680 {
     typedef boost::shared_ptr<constraint_atom> constraint_atom_ptr;  
     
     class valueconstraint_atom;
-    typedef boost::shared_ptr<valueconstraint_atom> valueconstraint_atom_ptr;    
+    typedef boost::shared_ptr<valueconstraint_atom> valueconstraint_atom_ptr;   
+    
+    class valuerangeconstraint_atom;
+    typedef boost::shared_ptr<valuerangeconstraint_atom> valuerangeconstraint_atom_ptr;    
 
     class unionconstraint_atom;
     typedef boost::shared_ptr<unionconstraint_atom> unionconstraint_atom_ptr;   
@@ -1044,7 +1047,9 @@ namespace x680 {
             return cotstrtype_;
         }
 
-        valueconstraint_atom* as_value();
+        valueconstraint_atom* as_value_c();
+        
+        valueconstraint_atom* as_valuerange();        
 
         unionconstraint_atom* as_union();
 
@@ -1085,7 +1090,46 @@ namespace x680 {
         value_atom_ptr value_;
 
     };    
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // rangeconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
 
+    class rangeconstraint_atom : public constraint_atom {
+
+    public:
+        rangeconstraint_atom(value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp) : 
+        constraint_atom(cns_ValueRange) , from_(fr), fromtype_(frtp), to_(to), totype_(totp) {} ;
+        
+        rangeconstraint_atom(basic_entity_ptr scp, value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp) :
+        constraint_atom(scp, cns_ValueRange) , from_(fr), fromtype_(frtp), to_(to), totype_(totp) {} ;
+
+        value_atom_ptr from()  {
+            return from_;
+        }
+        
+        range_type fromtype()  {
+            return fromtype_;
+        }      
+        
+        value_atom_ptr to()  {
+            return to_;
+        }
+        
+        range_type totype()  {
+            return totype_;
+        }        
+
+    private:
+
+        value_atom_ptr from_;
+        range_type fromtype_;       
+        value_atom_ptr to_;      
+        range_type totype_;               
+
+    };   
     
     
     /////////////////////////////////////////////////////////////////////////   
