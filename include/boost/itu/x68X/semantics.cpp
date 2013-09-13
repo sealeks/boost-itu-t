@@ -326,10 +326,11 @@ namespace x680 {
     }
 
     basic_entity_ptr module_entity::find_in_importmodule(const std::string& mod, const std::string& nm) {
-        for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it){
+        for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
             import_entity* importmod = (*it)->as_import();
-            if (importmod && (importmod->name() == mod) &&  (importmod->scope())) 
-                return importmod->find_by_name(nm);}
+            if (importmod && (importmod->name() == mod) && (importmod->scope()))
+                return importmod->find_by_name(nm);
+        }
         return basic_entity_ptr();
     }
 
@@ -382,21 +383,28 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    basic_entity_ptr module_entity::findmodule(objidvalue_atom_ptr oid, const std::string& nm) {
+    basic_entity_ptr module_entity::findmodule(value_atom_ptr oid, const std::string& nm) {
         if (!oid)
             return findmodule(nm);
         if (scope() && scope()->as_global()) {
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (((*it)->as_module()) && ((*it)->as_module()->objectid()))
-                    if (compareoid(oid, (*it)->as_module()->objectid()))
+                    if (compareoid((*it)->as_module()->objectid(), oid))
                         return *it;
             }
         }
         return findmodule(nm);
     }
 
-    std::vector<std::string> module_entity::setfrom_objid(objidvalue_atom*vl) {
+    std::vector<std::string> module_entity::setfrom_objid(value_atom*vls) {
         std::vector<std::string> tmp;
+        structvalue_atom*vl = vls->as_list();
+        if (!vl) {
+            if ((vls->as_defined()->root()) && (vls->as_defined()->root()->as_value()) && (vls->as_defined()->root()->as_value()->as_list()))
+                vl = vls->as_defined()->root()->as_value()->as_list();
+            else
+                throw semantics::error(" Undefined module Object Identificator");
+        }
         try {
             for (value_vct::const_iterator it = vl->values().begin(); it != vl->values().end(); ++it) {
                 switch ((*it)->valtype()) {
@@ -430,17 +438,17 @@ namespace x680 {
                     }
                     default:
                     {
-                        throw semantics::error(" Undefined object Id");
+                        throw semantics::error(" Undefined module Object Identificator");
                     };
                 }
             }
         } catch (boost::bad_lexical_cast) {
-            throw semantics::error(" Undefined object Id");
+            throw semantics::error(" Undefined module Object Identificator");
         }
         return tmp;
     }
 
-    bool module_entity::compareoid(objidvalue_atom_ptr ls, objidvalue_atom_ptr rs) {
+    bool module_entity::compareoid(structvalue_atom_ptr ls, value_atom_ptr rs) {
         if (ls && rs)
             return (setfrom_objid(ls.get()) == setfrom_objid(rs.get()));
         return false;
@@ -719,15 +727,27 @@ namespace x680 {
     }
 
     structvalue_atom* value_atom::as_struct() {
+        return (valtype() == v_struct) ? dynamic_cast<structvalue_atom*> (this) : 0;
+    }
+
+    structvalue_atom* value_atom::as_objid() {
+        return (valtype() == v_objectid) ? dynamic_cast<structvalue_atom*> (this) : 0;
+    }
+
+    structvalue_atom* value_atom::as_valuelist() {
+        return (valtype() == v_value_list) ? dynamic_cast<structvalue_atom*> (this) : 0;
+    }
+
+    structvalue_atom* value_atom::as_definedlist() {
+        return (valtype() == v_defined_list) ? dynamic_cast<structvalue_atom*> (this) : 0;
+    }
+
+    structvalue_atom* value_atom::as_numberlist() {
+        return (valtype() == v_number_list) ? dynamic_cast<structvalue_atom*> (this) : 0;
+    }
+
+    structvalue_atom* value_atom::as_list() {
         return dynamic_cast<structvalue_atom*> (this);
-    }
-
-    objidvalue_atom* value_atom::as_objid() {
-        return dynamic_cast<objidvalue_atom*> (this);
-    }
-
-    listvalue_atom* value_atom::as_list() {
-        return dynamic_cast<listvalue_atom*> (this);
     }
 
     definedvalue_atom* value_atom::as_defined() {
@@ -772,29 +792,12 @@ namespace x680 {
     }
 
 
+
     /////////////////////////////////////////////////////////////////////////   
     // structvalue_atom
     /////////////////////////////////////////////////////////////////////////      
 
     void structvalue_atom::resolve() {
-        resolve_vect(values_);
-    }
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // objidvalue_atom
-    /////////////////////////////////////////////////////////////////////////      
-
-    void objidvalue_atom::resolve() {
-        resolve_vect(values_);
-    }
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // listvalue_atom
-    /////////////////////////////////////////////////////////////////////////      
-
-    void listvalue_atom::resolve() {
         resolve_vect(values_);
     }
 
@@ -1302,7 +1305,7 @@ namespace x680 {
             compile_imports(mod, modul);
             compile_assignments(mod, modul);
             if (mod.oid.type == v_objectid)
-                modul->objectid(objidvalue_atom_ptr(new objidvalue_atom(compile_objidvalue(modul, mod.oid))));
+                modul->objectid(structvalue_atom_ptr(new structvalue_atom(v_objectid, compile_objidvalue(modul, mod.oid))));
             global->childs().push_back(modul);
         }
 
@@ -1332,8 +1335,7 @@ namespace x680 {
 
         basic_entity_ptr compile_import(const x680::syntactic::import& imp, module_entity_ptr mdl) {
             import_entity_ptr rslt = import_entity_ptr(new import_entity(imp.name));
-            if (imp.oid.type == v_objectid)
-                rslt->objectid(objidvalue_atom_ptr(new objidvalue_atom(compile_objidvalue(mdl, imp.oid))));
+            rslt->objectid(compile_value(mdl, imp.oid));
             for (x680::syntactic::string_vector::const_iterator it = imp.names.begin(); it != imp.names.end(); ++it)
                 rslt->import().push_back(*it);
             return rslt;
@@ -1507,11 +1509,11 @@ namespace x680 {
                     case v_bstring:
                     case v_hstring:
                     case v_cstring: return value_atom_ptr(new strvalue_atom(ent.value, ent.type));
-                    case v_struct: return value_atom_ptr(new structvalue_atom(compile_structvalue(scope, ent)));
-                    case v_objectid: return value_atom_ptr(new objidvalue_atom(compile_objidvalue(scope, ent)));
+                    case v_struct: return value_atom_ptr(new structvalue_atom(ent.type, compile_structvalue(scope, ent)));
+                    case v_objectid: return value_atom_ptr(new structvalue_atom(ent.type, compile_objidvalue(scope, ent)));
                     case v_defined_list:
                     case v_number_list:
-                    case v_value_list: return value_atom_ptr(new listvalue_atom(ent.type, compile_listvalue(scope, ent)));
+                    case v_value_list: return value_atom_ptr(new structvalue_atom(ent.type, compile_listvalue(scope, ent)));
                     case v_defined: return value_atom_ptr(new definedvalue_atom(ent.identifier, scope));
                     case v_defined_assign: return compile_assignvalue(scope, ent);
                     case v_choice: return compile_choicevalue(scope, ent);
@@ -1927,27 +1929,10 @@ namespace x680 {
         stream << " { ";
         for (value_vct::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
             if (it != self->values().begin())
-                stream << ",  ";
-            stream << (*it).get();
-        }
-        return stream << "}";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, objidvalue_atom* self) {
-        stream << " { ";
-        for (value_vct::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
-            if (it != self->values().begin())
-                stream << "  ";
-            stream << (*it).get();
-        }
-        return stream << "}";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, listvalue_atom* self) {
-        stream << " { ";
-        for (value_vct::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
-            if (it != self->values().begin())
-                stream << ",  ";
+                if (self->as_objid())
+                    stream << "  ";
+                else
+                    stream << ",  ";
             stream << (*it).get();
         }
         return stream << "}";

@@ -114,12 +114,6 @@ namespace x680 {
     class structvalue_atom;
     typedef boost::shared_ptr<structvalue_atom> structvalue_atom_ptr;
 
-    class objidvalue_atom;
-    typedef boost::shared_ptr<objidvalue_atom> objidvalue_atom_ptr;
-
-    class listvalue_atom;
-    typedef boost::shared_ptr<listvalue_atom> listvalue_atom_ptr;
-
     class definedvalue_atom;
     typedef boost::shared_ptr<definedvalue_atom> definedvalue_atom_ptr;
 
@@ -306,11 +300,11 @@ namespace x680 {
             return import_;
         }
 
-        objidvalue_atom_ptr objectid() const {
+        value_atom_ptr objectid() const {
             return objectid_;
         }
 
-        void objectid(objidvalue_atom_ptr vl) {
+        void objectid(value_atom_ptr vl) {
             objectid_ = vl;
         }
 
@@ -322,7 +316,7 @@ namespace x680 {
     private:
 
         import_vector import_;
-        objidvalue_atom_ptr objectid_;
+        value_atom_ptr objectid_;
 
     };
 
@@ -355,11 +349,11 @@ namespace x680 {
             return allexport_;
         }
 
-        objidvalue_atom_ptr objectid() const {
+        structvalue_atom_ptr objectid() const {
             return objectid_;
         }
 
-        void objectid(objidvalue_atom_ptr vl) {
+        void objectid(structvalue_atom_ptr vl) {
             objectid_ = vl;
         }
 
@@ -381,18 +375,18 @@ namespace x680 {
 
         basic_entity_ptr findmodule(const std::string& nm);
 
-        basic_entity_ptr findmodule(objidvalue_atom_ptr oid, const std::string& nm);
+        basic_entity_ptr findmodule(value_atom_ptr oid, const std::string& nm);
 
-        std::vector<std::string> setfrom_objid(objidvalue_atom* vl);
+        std::vector<std::string> setfrom_objid(value_atom* vls);
 
-        bool compareoid(objidvalue_atom_ptr ls, objidvalue_atom_ptr rs);
+        bool compareoid(structvalue_atom_ptr ls, value_atom_ptr rs);
 
 
         export_vector exports_;
         basic_entity_vector imports_;
         std::string file_;
         bool allexport_;
-        objidvalue_atom_ptr objectid_;
+        structvalue_atom_ptr objectid_;
     };
 
 
@@ -659,9 +653,15 @@ namespace x680 {
 
         structvalue_atom* as_struct();
 
-        objidvalue_atom* as_objid();
+        structvalue_atom* as_objid();
 
-        listvalue_atom* as_list();
+        structvalue_atom* as_valuelist();
+
+        structvalue_atom* as_definedlist();
+
+        structvalue_atom* as_numberlist();
+
+        structvalue_atom* as_list();
 
         definedvalue_atom* as_defined();
 
@@ -814,56 +814,7 @@ namespace x680 {
 
     public:
 
-        structvalue_atom(value_vct vls)
-        : value_atom(basic_entity_ptr(), v_struct), values_(vls) {
-        };
-
-        value_vct& values() {
-            return values_;
-        }
-
-        virtual void resolve();
-
-    private:
-
-        value_vct values_;
-    };
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // objidvalue_atom
-    /////////////////////////////////////////////////////////////////////////      
-
-    class objidvalue_atom : public value_atom {
-
-    public:
-
-        objidvalue_atom(value_vct vls)
-        : value_atom(basic_entity_ptr(), v_objectid), values_(vls) {
-        };
-
-        value_vct& values() {
-            return values_;
-        }
-
-        virtual void resolve();
-
-    private:
-
-        value_vct values_;
-    };
-
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // listvalue_atom
-    /////////////////////////////////////////////////////////////////////////      
-
-    class listvalue_atom : public value_atom {
-
-    public:
-
-        listvalue_atom(value_type tpv, value_vct vls)
+        structvalue_atom(value_type tpv, value_vct vls)
         : value_atom(basic_entity_ptr(), tpv), values_(vls) {
         };
 
@@ -1456,8 +1407,6 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, strvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, namedvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, structvalue_atom* self);
-    std::ostream& operator<<(std::ostream& stream, objidvalue_atom* self);
-    std::ostream& operator<<(std::ostream& stream, listvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self);
