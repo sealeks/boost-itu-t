@@ -1872,6 +1872,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, namedconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, constraintmarker_type tp);
+    std::ostream& operator<<(std::ostream& stream, range_type tp);    
     std::ostream& operator<<(std::ostream& stream, complexconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, multipletypeconstraint_atom * self);
 

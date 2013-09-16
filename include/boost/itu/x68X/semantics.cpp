@@ -1622,7 +1622,8 @@ namespace x680 {
                 case cns_DurationRange:
                 case cns_TimePointRange:
                 case cns_RecurrenceRange: return constraint_atom_ptr(new rangeconstraint_atom(scope, ent.tp,
-                            compile_value(scope, ent.from_), ent.fromtype_, compile_value(scope, ent.to_), ent.totype_));
+                            (((ent.fromtype_==close_range) || (ent.fromtype_==open_range)) ? compile_value(scope, ent.from_) : value_atom_ptr()) , ent.fromtype_, 
+                            (((ent.totype_==close_range) || (ent.totype_==open_range)) ? compile_value(scope, ent.to_) : value_atom_ptr()) , ent.totype_));
                 case cns_ContainedSubtype:
                 case cns_TypeConstraint: return constraint_atom_ptr(new typeconstraint_atom(scope, ent.tp,
                             compile_type(scope, ent.type), false));
@@ -2069,14 +2070,18 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, constraints_atom* self) {
         if (self) {
-            stream << "(";
+            stream << "(#";
+            if (self->extend())
+                stream << "(...) ";
+            else
+               stream << " ";
             for (constraint_atom_vct::const_iterator it = self->constraintline().begin(); it != self->constraintline().end(); ++it)
                  stream << " " << (*it).get();
             if (self->extend())
                 stream << "  ...  ";
             for (constraint_atom_vct::const_iterator it = self->extendline().begin(); it != self->extendline().end(); ++it)
                 stream << " " << (*it).get();
-            stream << ")";
+            stream << " #)";
         }
         return stream;
     }
@@ -2126,10 +2131,12 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom* self) {
         stream << "[";
-        if (self && (self->from()))
+        stream << (self->fromtype());      
+        if ((self->from()))
             stream << (self->from().get());
         stream << "..";
-        if (self && (self->to()))
+        stream << (self->totype());        
+        if ((self->to()))
             stream << (self->to().get());
         stream << "]";
         return stream;
@@ -2156,6 +2163,18 @@ namespace x680 {
         }
         return stream;
     }
+    
+    std::ostream& operator<<(std::ostream& stream, range_type tp) {
+        switch (tp) {
+            case min_range: return stream << "MIN";
+            case max_range: return stream << "NAX";
+            case open_range: return stream << "<>";
+            default:
+            {
+            }
+        }
+        return stream;
+    }    
 
     std::ostream& operator<<(std::ostream& stream, complexconstraint_atom* self) {
         switch (self->cotstrtype()) {
