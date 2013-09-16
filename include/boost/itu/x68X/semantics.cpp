@@ -856,12 +856,69 @@ namespace x680 {
     : basic_atom(reff, scp), cotstrtype_(tpv) {
     }
 
-    valueconstraint_atom* constraint_atom::as_value_c() {
-        return dynamic_cast<valueconstraint_atom*> (this);
+    valueconstraint_atom* constraint_atom::as_valueconstraint() {
+        return cotstrtype_ == cns_SingleValue ? dynamic_cast<valueconstraint_atom*> (this) : 0;
     }
+
+    valueconstraint_atom* constraint_atom::as_pattern() {
+        return cotstrtype_ == cns_PatternConstraint ? dynamic_cast<valueconstraint_atom*> (this) : 0;
+    }
+
+    typeconstraint_atom* constraint_atom::as_subtypeconstraint() {
+        return cotstrtype_ == cns_ContainedSubtype ? dynamic_cast<typeconstraint_atom*> (this) : 0;
+    };
+
+    typeconstraint_atom* constraint_atom::as_typeconstraint() {
+        return cotstrtype_ == cns_TypeConstraint ? dynamic_cast<typeconstraint_atom*> (this) : 0;
+    };
 
     rangeconstraint_atom* constraint_atom::as_range() {
         return dynamic_cast<rangeconstraint_atom*> (this);
+    }
+
+    rangeconstraint_atom*constraint_atom::as_strictrange() {
+        return cotstrtype_ == cns_ValueRange ? dynamic_cast<rangeconstraint_atom*> (this) : 0;
+    };
+
+    rangeconstraint_atom* constraint_atom::as_duration() {
+        return cotstrtype_ == cns_DurationRange ? dynamic_cast<rangeconstraint_atom*> (this) : 0;
+    };
+
+    rangeconstraint_atom* constraint_atom::as_timepoint() {
+        return cotstrtype_ == cns_TimePointRange ? dynamic_cast<rangeconstraint_atom*> (this) : 0;
+    };
+
+    rangeconstraint_atom* constraint_atom::as_reccurence() {
+        return cotstrtype_ == cns_RecurrenceRange ? dynamic_cast<rangeconstraint_atom*> (this) : 0;
+    };
+
+    complexconstraint_atom* constraint_atom::as_complex() {
+        return dynamic_cast<complexconstraint_atom*> (this);
+    }
+
+    complexconstraint_atom* constraint_atom::as_size() {
+        return cotstrtype_ == cns_SizeConstraint ? dynamic_cast<complexconstraint_atom*> (this) : 0;
+    };
+
+    complexconstraint_atom* constraint_atom::as_permitted() {
+        return cotstrtype_ == cns_PermittedAlphabet ? dynamic_cast<complexconstraint_atom*> (this) : 0;
+    };
+
+    complexconstraint_atom* constraint_atom::as_singletype() {
+        return cotstrtype_ == cns_SingleTypeConstraint ? dynamic_cast<complexconstraint_atom*> (this) : 0;
+    };
+
+    namedconstraint_atom* constraint_atom::as_named() {
+        return dynamic_cast<namedconstraint_atom*> (this);
+    }
+
+    multipletypeconstraint_atom * constraint_atom::as_multipletypeconstraint() {
+        return dynamic_cast<multipletypeconstraint_atom *> (this);
+    }
+
+    stringconstraint_atom * constraint_atom::as_property() {
+        return cotstrtype_ == cns_PropertySettings ? dynamic_cast<stringconstraint_atom *> (this) : 0;
+
     }
 
     unionconstraint_atom* constraint_atom::as_union() {
