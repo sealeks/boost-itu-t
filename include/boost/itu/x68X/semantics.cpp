@@ -1521,6 +1521,7 @@ namespace x680 {
                 {
                 };
             }
+            tmpt->type()->constraints(compile_constraints_vct(tmpt, ent.type.constraints));
             return tmpt;
         }
 
@@ -1529,7 +1530,7 @@ namespace x680 {
                 return type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag)));
             type_atom_ptr tmp = ent.reference.empty() ? type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag))) :
                     type_atom_ptr(new type_atom(scope, ent.reference, ent.builtin_t, compile_tag(scope, ent.tag)));
-
+            tmp->constraints(compile_constraints_vct(scope, ent.constraints));
             return tmp;
         }
 
@@ -1585,6 +1586,88 @@ namespace x680 {
             }
             value_atom_ptr nm(new definedvalue_atom(ent.number, scope));
             return tagged_ptr(new tagged(nm, ent.class_, ent.rule));
+        }
+
+        constraints_atom_vct compile_constraints_vct(basic_entity_ptr scope, const x680::syntactic::constraints_vector& ent) {
+            constraints_atom_vct tmp;
+            for (x680::syntactic::constraints_vector::const_iterator it = ent.begin(); it != ent.end(); ++it)
+                tmp.push_back(compile_constraints(scope, *it));
+            return tmp;
+        }
+
+        constraints_atom_ptr compile_constraints(basic_entity_ptr scope, const x680::syntactic::constraint_element_vector& ent) {
+            bool first = true;
+            constraint_atom_vct tmp1;
+            constraint_atom_vct tmp2;
+            ;
+            for (x680::syntactic::constraint_element_vector::const_iterator it = ent.begin(); it != ent.end(); ++it) {
+                if (it->tp == cns_EXTENTION) {
+                    first = false;
+                } else {
+                    if (first)
+                        tmp1.push_back(compile_constraint(scope, *it));
+                    else
+                        tmp2.push_back(compile_constraint(scope, *it));
+                }
+            }
+            return first ? constraints_atom_ptr(new constraints_atom(scope, tmp1)) : constraints_atom_ptr(new constraints_atom(scope, tmp1, tmp2));
+        }
+
+        constraint_atom_ptr compile_constraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
+            constraint_atom_ptr tmp;
+            switch (ent.tp) {
+                case cns_PatternConstraint:
+                case cns_SingleValue: return constraint_atom_ptr(new valueconstraint_atom(scope, ent.tp, compile_value(scope, ent.value)));
+                case cns_ValueRange:
+                case cns_DurationRange:
+                case cns_TimePointRange:
+                case cns_RecurrenceRange: return constraint_atom_ptr(new rangeconstraint_atom(scope, ent.tp,
+                            compile_value(scope, ent.from_), ent.fromtype_, compile_value(scope, ent.to_), ent.totype_));
+                case cns_ContainedSubtype:
+                case cns_TypeConstraint: return constraint_atom_ptr(new typeconstraint_atom(scope, ent.tp,
+                            compile_type(scope, ent.type), false));
+                case cns_PermittedAlphabet:
+                case cns_SizeConstraint:
+                case cns_SingleTypeConstraint: return constraint_atom_ptr(new complexconstraint_atom(scope, ent.tp,
+                            compile_constraints(scope, ent.constraint)));
+                case cns_PropertySettings: return constraint_atom_ptr(new stringconstraint_atom(scope, ent.tp, ent.identifier));
+                case cns_MultipleTypeConstraints: return compile_multipletypeconstraint(scope, ent);
+                case cns_NamedConstraint: return compile_namedconstraint(scope, ent);
+                case cns_UNION: return constraint_atom_ptr(new unionconstraint_atom());
+                case cns_INTERSECTION: return constraint_atom_ptr(new intersectionconstraint_atom());
+                case cns_EXCEPT: return constraint_atom_ptr(new exceptconstraint_atom());
+                case cns_ALLEXCEPT: return constraint_atom_ptr(new allexceptconstraint_atom());
+                case cns_EXTENTION: return constraint_atom_ptr(new extentionconstraint_atom());
+                case cns_EXCEPTION: return constraint_atom_ptr(new exceptionconstraint_atom());
+                    /*case cns_UserDefinedConstraint,
+                    case cns_SimpleTableConstraint,
+                    case cns_ComponentRelation,
+                    case cns_ContentsType,
+                    case cns_ContentsValue,
+                    case cns_ContentsTypeValue,*/
+                default:
+                {
+                }
+            }
+            return constraint_atom_ptr(new constraint_atom());
+        }
+
+        constraint_atom_ptr compile_namedconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
+            if (!ent.constraint.empty())
+                return constraint_atom_ptr(new namedconstraint_atom(scope, ent.identifier, compile_constraints(scope, ent.constraint), ent.marker));
+            return constraint_atom_ptr(new namedconstraint_atom(scope, ent.identifier, ent.marker));
+        }
+
+        constraint_atom_ptr compile_multipletypeconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
+            constraint_atom_vct tmp;
+            for (x680::syntactic::constraint_element_vector::const_iterator it = ent.constraint.begin(); it != ent.constraint.end(); ++it) {
+                switch (it->tp) {
+                    case cns_NamedConstraint: tmp.push_back(compile_namedconstraint(scope, *it));
+                        break;
+                    default: tmp.push_back(compile_constraint(scope, *it));
+                }
+            }
+            return constraint_atom_ptr(new multipletypeconstraint_atom(scope, tmp));
         }
 
         classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
@@ -1914,6 +1997,9 @@ namespace x680 {
         }
         if (self->predefined())
             stream << self->predefined().get();
+        if (self->has_constraint()) {
+            stream << self->constraints();
+        }
 
         return stream;
     }
@@ -1971,6 +2057,126 @@ namespace x680 {
             };
         }
         return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, const constraints_atom_vct& self) {
+        if (self.empty())
+            return stream;
+        for (constraints_atom_vct::const_iterator it = self.begin(); it != self.end(); ++it)
+            stream << (*it).get();
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, constraints_atom* self) {
+        if (self) {
+            stream << "(";
+            for (constraint_atom_vct::const_iterator it = self->constraintline().begin(); it != self->constraintline().end(); ++it)
+                 stream << " " << (*it).get();
+            if (self->extend())
+                stream << "  ...  ";
+            for (constraint_atom_vct::const_iterator it = self->extendline().begin(); it != self->extendline().end(); ++it)
+                stream << " " << (*it).get();
+            stream << ")";
+        }
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, const constraint_atom_vct& self) {
+        for (constraint_atom_vct::const_iterator it = self.begin(); it != self.end(); ++it) {
+            if (*it) stream << " " << (*it).get();
+        }
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, constraint_atom* self) {
+        switch (self->cotstrtype()) {
+            case cns_PatternConstraint: stream << self->as_pattern();
+            case cns_SingleValue: return stream << self->as_valueconstraint();
+            case cns_ValueRange: return stream << self->as_range();
+            case cns_DurationRange: return stream << self->as_duration();
+            case cns_TimePointRange:return stream << self->as_timepoint();
+            case cns_RecurrenceRange: return stream << self->as_reccurence();
+            case cns_ContainedSubtype: return stream << self->as_subtypeconstraint();
+            case cns_TypeConstraint: return stream << self->as_typeconstraint();
+            case cns_PermittedAlphabet:return stream << self->as_permitted();
+            case cns_SizeConstraint: return stream << self->as_size();
+            case cns_SingleTypeConstraint: return stream << self->as_singletype();
+            case cns_PropertySettings: return stream << self->as_property();
+            case cns_MultipleTypeConstraints: return stream << self->as_multipletypeconstraint();
+            case cns_NamedConstraint: return stream << self->as_named();
+            case cns_UNION: return stream << " && ";
+            case cns_INTERSECTION: return stream << " || ";
+            case cns_EXCEPT: return stream << " ^ ";
+            case cns_ALLEXCEPT: return stream << " ~ ";
+            case cns_EXTENTION: return stream << " ... ";
+            case cns_EXCEPTION: return stream << " ! ";
+        }
+        return stream << "!!! NULL coctraint  !!!!";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, valueconstraint_atom* self) {
+        if (self->cotstrtype() == cns_PatternConstraint)
+            return stream << "(PATTERN \"" << (self->value().get()) << "\")";
+        return stream << (self->value().get());
+    }
+
+    std::ostream& operator<<(std::ostream& stream, typeconstraint_atom* self) {
+        return stream << (self->type().get());
+    }
+
+    std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom* self) {
+        stream << "[";
+        if (self && (self->from()))
+            stream << (self->from().get());
+        stream << "..";
+        if (self && (self->to()))
+            stream << (self->to().get());
+        stream << "]";
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, namedconstraint_atom* self) {
+        stream << self->name();
+        if (self->constraints())
+            stream << " " << self->constraints().get();
+        return stream << self->marker();
+    }
+
+    std::ostream& operator<<(std::ostream& stream, constraintmarker_type tp) {
+        switch (tp) {
+                //case cmk_none:
+            case cmk_optional: return stream << " OPTIONAL";
+            case cmk_absent: return stream << " ABSENT";
+            case cmk_present: return stream << " PRESENT";
+                //case  cmk_extention,
+                //case cmk_exception
+            default:
+            {
+            }
+        }
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, complexconstraint_atom* self) {
+        switch (self->cotstrtype()) {
+            case cns_PermittedAlphabet: stream << " FROM";
+                break;
+            case cns_SizeConstraint: stream << " SIZE";
+                break;
+            case cns_SingleTypeConstraint: stream << " WITH COMPONENT";
+                break;
+            default:
+            {
+            }
+        }
+        return stream << " " << self->constraints().get();
+    }
+
+    std::ostream& operator<<(std::ostream& stream, multipletypeconstraint_atom * self) {
+        stream << " WITH COMPONENTS { ";
+        for (constraint_atom_vct::const_iterator it = self->components().begin(); it != self->components().end(); ++it)
+            stream << (*it).get() << " ,";
+        return stream << " }";
     }
 
     std::ostream& operator<<(std::ostream& stream, value_atom* self) {

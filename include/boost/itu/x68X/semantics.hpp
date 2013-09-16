@@ -136,33 +136,33 @@ namespace x680 {
 
     class constraints_atom;
     typedef boost::shared_ptr<constraints_atom> constraints_atom_ptr;
-    typedef std::vector<constraints_atom_ptr> constraints_atom_vct;    
+    typedef std::vector<constraints_atom_ptr> constraints_atom_vct;
 
 
     class constraint_atom;
     typedef boost::shared_ptr<constraint_atom> constraint_atom_ptr;
-    typedef std::vector<constraint_atom_ptr> constraint_atom_vct;    
-    
+    typedef std::vector<constraint_atom_ptr> constraint_atom_vct;
+
     class typeconstraint_atom;
-    typedef boost::shared_ptr<typeconstraint_atom> typeconstraint_atom_ptr;    
+    typedef boost::shared_ptr<typeconstraint_atom> typeconstraint_atom_ptr;
 
     class valueconstraint_atom;
     typedef boost::shared_ptr<valueconstraint_atom> valueconstraint_atom_ptr;
 
     class rangeconstraint_atom;
     typedef boost::shared_ptr<rangeconstraint_atom> rangeconstraint_atom_ptr;
-    
+
     class stringconstraint_atom;
-    typedef boost::shared_ptr<stringconstraint_atom> stringconstraint_atom_ptr;    
-    
+    typedef boost::shared_ptr<stringconstraint_atom> stringconstraint_atom_ptr;
+
     class namedconstraint_atom;
-    typedef boost::shared_ptr<namedconstraint_atom> namedconstraint_atom_ptr;    
-    
+    typedef boost::shared_ptr<namedconstraint_atom> namedconstraint_atom_ptr;
+
     class multipletypeconstraint_atom;
-    typedef boost::shared_ptr<multipletypeconstraint_atom> multipletypeconstraint_atom_ptr;       
-    
+    typedef boost::shared_ptr<multipletypeconstraint_atom> multipletypeconstraint_atom_ptr;
+
     class complexconstraint_atom;
-    typedef boost::shared_ptr<complexconstraint_atom> complexconstraint_atom_ptr;      
+    typedef boost::shared_ptr<complexconstraint_atom> complexconstraint_atom_ptr;
 
     class unionconstraint_atom;
     typedef boost::shared_ptr<unionconstraint_atom> unionconstraint_atom_ptr;
@@ -657,6 +657,18 @@ namespace x680 {
             return predefined_;
         }
 
+        constraints_atom_vct& constraints() {
+            return constraints_;
+        }
+
+        void constraints(constraints_atom_vct vl) {
+            constraints_ = vl;
+        }
+
+        bool has_constraint() const {
+            return !constraints_.empty();
+        }
+
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
         }
@@ -676,6 +688,7 @@ namespace x680 {
         defined_type builtin_;
         tagged_ptr tag_;
         predefined_ptr predefined_;
+        constraints_atom_vct constraints_;
 
     };
 
@@ -1049,37 +1062,46 @@ namespace x680 {
 
 
 
-     /////////////////////////////////////////////////////////////////////////   
+    /////////////////////////////////////////////////////////////////////////   
     // constraints_atom
     /////////////////////////////////////////////////////////////////////////  
 
     class constraints_atom : public basic_atom {
 
-        constraints_atom(basic_entity_ptr scp, const constraint_atom_vct& fst) :
-        basic_atom(scp), constraintline_(fst)  {};
-        
+    public:
+
+        constraints_atom(basic_entity_ptr scp, const constraint_atom_vct& fst, bool ext=false) :
+        basic_atom(scp), constraintline_(fst), extend_(ext) {
+        };
+
         constraints_atom(basic_entity_ptr scp, const constraint_atom_vct& fst, const constraint_atom_vct& scd) :
-        basic_atom(scp), constraintline_(fst) , extendline_(scd)   {};
-        
+        basic_atom(scp), constraintline_(fst), extendline_(scd), extend_(true) {
+        };
+
         constraint_atom_vct& constraintline() {
             return constraintline_;
         }
-        
+
         constraint_atom_vct& extendline() {
             return extendline_;
-        }      
-        
-        bool extend() const{
-            return extendline_.empty();
         }
-  
+
+        bool extend() const {
+            return (!extendline_.empty()) || extend_;
+        }
+        
+        void extend(bool val)  {
+            extend_=val;
+        }        
+
     protected:
-        
+
         constraint_atom_vct constraintline_;
-        constraint_atom_vct extendline_;        
-        
+        constraint_atom_vct extendline_;
+        bool extend_;
+
     };
-    
+
 
     /////////////////////////////////////////////////////////////////////////   
     // constraint_atom
@@ -1088,7 +1110,7 @@ namespace x680 {
     class constraint_atom : public basic_atom {
 
     public:
-        constraint_atom(constraint_type tp);
+        constraint_atom(constraint_type tp = cns_nodef);
         constraint_atom(basic_entity_ptr scp, constraint_type tp);
         constraint_atom(basic_entity_ptr scp, const std::string& reff, constraint_type tp);
 
@@ -1097,36 +1119,36 @@ namespace x680 {
         }
 
         valueconstraint_atom* as_valueconstraint();
-        
-        valueconstraint_atom* as_pattern();        
-        
-        typeconstraint_atom* as_subtypeconstraint();        
-        
-        typeconstraint_atom* as_typeconstraint();        
+
+        valueconstraint_atom* as_pattern();
+
+        typeconstraint_atom* as_subtypeconstraint();
+
+        typeconstraint_atom* as_typeconstraint();
 
         rangeconstraint_atom* as_range();
-        
-        rangeconstraint_atom* as_strictrange();        
-        
-        rangeconstraint_atom* as_duration();        
-        
-        rangeconstraint_atom* as_timepoint();       
-        
-        rangeconstraint_atom* as_reccurence();    
-        
-        namedconstraint_atom* as_named(); 
-        
-        complexconstraint_atom* as_complex();         
-        
-        complexconstraint_atom* as_size();  
-        
-        complexconstraint_atom* as_permitted();     
-        
-        complexconstraint_atom* as_singletype();             
-        
+
+        rangeconstraint_atom* as_strictrange();
+
+        rangeconstraint_atom* as_duration();
+
+        rangeconstraint_atom* as_timepoint();
+
+        rangeconstraint_atom* as_reccurence();
+
+        namedconstraint_atom* as_named();
+
+        complexconstraint_atom* as_complex();
+
+        complexconstraint_atom* as_size();
+
+        complexconstraint_atom* as_permitted();
+
+        complexconstraint_atom* as_singletype();
+
         multipletypeconstraint_atom * as_multipletypeconstraint();
-        
-        stringconstraint_atom * as_property();        
+
+        stringconstraint_atom * as_property();
 
         unionconstraint_atom* as_union();
 
@@ -1156,7 +1178,7 @@ namespace x680 {
 
     public:
 
-        valueconstraint_atom(basic_entity_ptr scp, value_atom_ptr vl) : constraint_atom(scp, cns_SingleValue), value_(vl) {
+        valueconstraint_atom(basic_entity_ptr scp, constraint_type tpc, value_atom_ptr vl) : constraint_atom(scp, tpc), value_(vl) {
         };
 
         value_atom_ptr value() {
@@ -1168,8 +1190,8 @@ namespace x680 {
         value_atom_ptr value_;
 
     };
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////   
     // rangeconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -1178,27 +1200,27 @@ namespace x680 {
 
     public:
 
-        typeconstraint_atom(basic_entity_ptr scp, constraint_type  tpc, type_atom_ptr tp, bool incl) :
+        typeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, type_atom_ptr tp, bool incl) :
         constraint_atom(scp, tpc), type_(tp), includes_(incl) {
         };
 
         type_atom_ptr type() {
             return type_;
         }
-        
+
         bool includdes() {
             return includes_;
-        }        
+        }
 
     private:
 
         type_atom_ptr type_;
         bool includes_;
 
-    };    
+    };
 
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////   
     // stringconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -1207,20 +1229,20 @@ namespace x680 {
 
     public:
 
-        stringconstraint_atom(basic_entity_ptr scp, constraint_type  tpc, const std::string& prop) :
+        stringconstraint_atom(basic_entity_ptr scp, constraint_type tpc, const std::string& prop) :
         constraint_atom(scp, tpc), property_(prop) {
         };
 
         std::string property() {
             return property_;
-        }        
+        }
 
     private:
 
         std::string property_;
 
 
-    };        
+    };
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1231,7 +1253,7 @@ namespace x680 {
 
     public:
 
-        rangeconstraint_atom(basic_entity_ptr scp, constraint_type  tpc,  value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp) :
+        rangeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp) :
         constraint_atom(scp, tpc), from_(fr), fromtype_(frtp), to_(to), totype_(totp) {
         };
 
@@ -1259,8 +1281,8 @@ namespace x680 {
         range_type totype_;
 
     };
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////   
     // rangeconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -1269,57 +1291,59 @@ namespace x680 {
 
     public:
 
-        namedconstraint_atom(basic_entity_ptr scp, const std::string& nm,  constraints_atom_ptr ctrs, constraintmarker_type mrkr = cmk_none) :
+        namedconstraint_atom(basic_entity_ptr scp, const std::string& nm, constraints_atom_ptr ctrs, constraintmarker_type mrkr = cmk_none) :
         constraint_atom(scp, cns_NamedConstraint), name_(nm), constraints_(ctrs), marker_(mrkr) {
         };
-        
-        namedconstraint_atom(basic_entity_ptr scp, const std::string& nm,  constraintmarker_type mrkr = cmk_none) :
-        constraint_atom(scp, cns_NamedConstraint), name_(nm),  marker_(mrkr) {
-        };        
+
+        namedconstraint_atom(basic_entity_ptr scp, const std::string& nm, constraintmarker_type mrkr = cmk_none) :
+        constraint_atom(scp, cns_NamedConstraint), name_(nm), marker_(mrkr) {
+        };
 
         std::string name() {
             return name_;
         }
-        
+
         constraints_atom_ptr constraints() {
             return constraints_;
-        }                
-        
+        }
+
         constraintmarker_type marker() {
             return marker_;
-        }        
+        }
 
     private:
 
         std::string name_;
         constraints_atom_ptr constraints_;
         constraintmarker_type marker_;
-    };        
-    
-    
-    
-      /////////////////////////////////////////////////////////////////////////   
+    };
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // multipletypeconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class multipletypeconstraint_atom : public basic_atom {
+    class multipletypeconstraint_atom : public constraint_atom {
+
+    public:
 
         multipletypeconstraint_atom(basic_entity_ptr scp, const constraint_atom_vct& fst) :
-        basic_atom(scp), components_(fst)  {};
+        constraint_atom(scp, cns_MultipleTypeConstraints), components_(fst) {
+        };
 
-        
         constraint_atom_vct& components() {
             return components_;
         }
-        
+
 
     protected:
-        
-        constraint_atom_vct components_; 
-        
-    };   
-    
-    
+
+        constraint_atom_vct components_;
+
+    };
+
+
     /////////////////////////////////////////////////////////////////////////   
     // complexconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -1328,20 +1352,20 @@ namespace x680 {
 
     public:
 
-        complexconstraint_atom(basic_entity_ptr scp, constraint_type  tpc,  constraints_atom_ptr ctrs) :
+        complexconstraint_atom(basic_entity_ptr scp, constraint_type tpc, constraints_atom_ptr ctrs) :
         constraint_atom(scp, tpc), constraints_(ctrs) {
         };
 
         constraints_atom_ptr constraints() {
             return constraints_;
-        }                
+        }
 
 
     private:
 
         constraints_atom_ptr constraints_;
-    };           
-    
+    };
+
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1789,6 +1813,12 @@ namespace x680 {
         predefined_ptr compile_typepredef(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         tagged_ptr compile_tag(basic_entity_ptr scope, const x680::syntactic::tag_type& ent);
 
+        constraints_atom_vct compile_constraints_vct(basic_entity_ptr scope, const x680::syntactic::constraints_vector& ent);
+        constraints_atom_ptr compile_constraints(basic_entity_ptr scope, const x680::syntactic::constraint_element_vector& ent);
+        constraint_atom_ptr compile_constraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
+        constraint_atom_ptr compile_namedconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
+        constraint_atom_ptr compile_multipletypeconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
+
         classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         class_atom_ptr compile_class(const x680::syntactic::class_element& ent);
 
@@ -1825,11 +1855,26 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, expectdef_entity* self);
     std::ostream& operator<<(std::ostream& stream, extention_entity* self);
     std::ostream& operator<<(std::ostream& stream, basic_atom* self);
+
+
     std::ostream& operator<<(std::ostream& stream, predefined* self);
     std::ostream& operator<<(std::ostream& stream, tagclass_type self);
     std::ostream& operator<<(std::ostream& stream, tagrule_type self);
     std::ostream& operator<<(std::ostream& stream, tagged& self);
     std::ostream& operator<<(std::ostream& stream, type_atom* self);
+
+    std::ostream& operator<<(std::ostream& stream, const constraints_atom_vct& self);
+    std::ostream& operator<<(std::ostream& stream, constraints_atom* self);
+    std::ostream& operator<<(std::ostream& stream, const constraint_atom_vct& self);
+    std::ostream& operator<<(std::ostream& stream, constraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, valueconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, typeconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, namedconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, constraintmarker_type tp);
+    std::ostream& operator<<(std::ostream& stream, complexconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, multipletypeconstraint_atom * self);
+
     std::ostream& operator<<(std::ostream& stream, defined_type self);
     std::ostream& operator<<(std::ostream& stream, value_atom* self);
     std::ostream& operator<<(std::ostream& stream, numvalue_atom* self);
@@ -1844,6 +1889,8 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, openvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, nullvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, emptyvalue_atom* self);
+
+
     std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
     std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self);
     std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self);
