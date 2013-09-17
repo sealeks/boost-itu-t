@@ -1138,7 +1138,7 @@ namespace x680 {
     // valuesetassigment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    valuesetassigment_entity::valuesetassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, basic_atom_ptr vl) :
+    valuesetassigment_entity::valuesetassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, constraints_atom_ptr vl) :
     basic_entity(scope, nm, et_ValueSet), type_(tp), valueset_(vl) {
     };
 
@@ -1599,7 +1599,6 @@ namespace x680 {
             bool first = true;
             constraint_atom_vct tmp1;
             constraint_atom_vct tmp2;
-            ;
             for (x680::syntactic::constraint_element_vector::const_iterator it = ent.begin(); it != ent.end(); ++it) {
                 if (it->tp == cns_EXTENTION) {
                     first = false;
@@ -1802,7 +1801,12 @@ namespace x680 {
 
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);
-            return valuesetassigment_entity_ptr(new valuesetassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type), basic_atom_ptr()));
+            valuesetassigment_entity_ptr tmpv(new valuesetassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type), constraints_atom_ptr()));
+            if (tmp.set.tp == vs_Strait)     
+                tmpv->valueset(compile_constraints(tmpv, tmp.set.set));             
+            else    
+                tmpv->valueset( constraints_atom_ptr( new constraints_atom(tmpv, tmp.set.reference)));     
+            return tmpv;
         }
 
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
@@ -1909,6 +1913,10 @@ namespace x680 {
                 stream << (*it)->as_valueassigment();
                 continue;
             }
+            if ((*it)->as_valuesetassigment()) {
+                stream << (*it)->as_valuesetassigment();
+                continue;
+            }            
             if ((*it)->as_classassigment()) {
                 stream << (*it)->as_classassigment();
                 continue;
@@ -2070,18 +2078,25 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, constraints_atom* self) {
         if (self) {
-            stream << "(#";
-            if (self->extend())
-                stream << "(...) ";
-            else
-               stream << " ";
-            for (constraint_atom_vct::const_iterator it = self->constraintline().begin(); it != self->constraintline().end(); ++it)
-                 stream << " " << (*it).get();
-            if (self->extend())
-                stream << "  ...  ";
-            for (constraint_atom_vct::const_iterator it = self->extendline().begin(); it != self->extendline().end(); ++it)
-                stream << " " << (*it).get();
-            stream << " #)";
+            if (self->reff()) {
+                if (self->reff()->as_expectdef())
+                    return stream << "??? *" << self->reff()->name();
+                else
+                    stream << " *" << self->reff()->name();
+            } else {
+                stream << "(#";
+                if (self->extend())
+                    stream << "(...) ";
+                else
+                    stream << " ";
+                for (constraint_atom_vct::const_iterator it = self->constraintline().begin(); it != self->constraintline().end(); ++it)
+                    stream << " " << (*it).get();
+                if (self->extend())
+                    stream << "  ...  ";
+                for (constraint_atom_vct::const_iterator it = self->extendline().begin(); it != self->extendline().end(); ++it)
+                    stream << " " << (*it).get();
+                stream << " #)";
+            }
         }
         return stream;
     }
@@ -2167,7 +2182,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, range_type tp) {
         switch (tp) {
             case min_range: return stream << "MIN";
-            case max_range: return stream << "NAX";
+            case max_range: return stream << "MAX";
             case open_range: return stream << "<>";
             default:
             {
@@ -2381,9 +2396,9 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self) {
-        return stream << "(vS) " << self->name() << " [" << self->type().get() << "] :: = " << "\n";
+        return stream << "(vS) " << self->name() << " [" << self->type().get() << "] :: = " <<  self->valueset().get() << "\n";
     }
-
+    
     std::ostream& operator<<(std::ostream& stream, classassigment_entity* self) {
         return stream << "(C) " << self->name() << " :: = " << self->_class().get() << "\n";
     }
