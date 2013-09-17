@@ -527,10 +527,16 @@ namespace x680 {
     void basic_atom::resolve() {
     }
 
-    basic_entity_ptr basic_atom::find_by_name(const std::string& nm, bool all) {
-        if (scope())
-            return scope()->find_by_name(nm, all);
-        return basic_entity_ptr();
+    void basic_atom::resolve_reff(bool all) {
+        if ((scope()) && (reff()->as_expectdef())) {
+            if (reff()->as_expectdef()->ismodule()) {
+                basic_entity_ptr fnd = scope()->find_by_name(expectedname(), all);
+                if (fnd) {
+                    reff(fnd);
+                } else
+                    scope()->referenceerror_throw(expectedname());
+            }
+        }
     }
 
 
@@ -559,6 +565,7 @@ namespace x680 {
     void type_atom::resolve() {
         resolve_tag();
         resolve_predef();
+        resolve_constraints();
     }
 
     void type_atom::resolve_predef() {
@@ -595,11 +602,7 @@ namespace x680 {
             }
             if (((*it)->as_valueassigment()) && ((*it)->as_valueassigment()->value())
                     && ((*it)->as_valueassigment()->value()->expecteddef())) {
-                basic_entity_ptr fnd = find_by_name((*it)->as_valueassigment()->value()->expectedname(), false);
-                if (fnd)
-                    (*it)->as_valueassigment()->value()->reff(fnd);
-                else
-                    (*it)->referenceerror_throw((*it)->as_valueassigment()->value()->expectedname());
+                (*it)->as_valueassigment()->value()->resolve_reff(false);
                 (*it)->as_valueassigment()->check_value_with_exception(v_number);
 
             }
@@ -684,13 +687,14 @@ namespace x680 {
     void type_atom::resolve_tag() {
         if (tag()) {
             if ((tag()->number()) && (tag()->number()->as_defined()) && (tag()->number()->expecteddef())) {
-                basic_entity_ptr fnd = find_by_name(tag()->number()->expectedname(), false);
-                if (fnd)
-                    tag()->number()->reff(fnd);
-                else
-                    throw semantics::error("");
+                tag()->number()->resolve_reff(false);
             }
         }
+    }
+
+    void type_atom::resolve_constraints() {
+        for (constraints_atom_vct::iterator it = constraints_.begin(); it != constraints_.end(); ++it)
+            (*it)->resolve();
     }
 
 
@@ -776,19 +780,17 @@ namespace x680 {
 
     void value_atom::resolve_vect(value_vct& vl) {
         for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
-            resolve_atom(*it);
+            (*it)->resolve_reff();
     }
 
-    void value_atom::resolve_ptr(value_atom_ptr vl) {
-        resolve_atom(vl);
-    }
 
     /////////////////////////////////////////////////////////////////////////   
     // namedvalue_atom
     /////////////////////////////////////////////////////////////////////////      
 
     void namedvalue_atom::resolve() {
-        resolve_ptr(value_);
+        if (value_)
+            value_->resolve_reff();
     }
 
 
@@ -806,7 +808,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     void definedvalue_atom::resolve() {
-        resolve_atom(this);
+        resolve_reff();
     }
 
 
@@ -815,7 +817,8 @@ namespace x680 {
     ///////////////////////////////////////////////////////////////////////// 
 
     void assignvalue_atom::resolve() {
-        resolve_ptr(value_);
+        if (value_)
+            value_->resolve_reff();
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -823,7 +826,8 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     void choicevalue_atom::resolve() {
-        resolve_ptr(value_);
+        if (value_)
+            value_->resolve_reff();
     }
 
 
@@ -834,11 +838,23 @@ namespace x680 {
     void openvalue_atom::resolve() {
         if (type_)
             type_->resolve();
-        resolve_ptr(value_);
+        if (value_)
+            value_->resolve_reff();
     }
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // constraints_atom
+    /////////////////////////////////////////////////////////////////////////
 
+    void constraints_atom::resolve() {
+        for (constraint_atom_vct::iterator it = constraintline_.begin(); it != constraintline_.end(); ++it)
+            if (*it)
+                (*it)->resolve();
+        for (constraint_atom_vct::iterator it = extendline_.begin(); it != extendline_.end(); ++it)
+            if (*it)
+                (*it)->resolve();
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     //constraint_atom
@@ -945,6 +961,75 @@ namespace x680 {
         return dynamic_cast<exceptionconstraint_atom*> (this);
     }
 
+    /////////////////////////////////////////////////////////////////////////   
+    // valueconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    void valueconstraint_atom::resolve() {
+        if (value_)
+            value_->resolve_reff();
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // typeconstraint_atom
+    /////////////////////////////////////////////////////////////////////////
+
+    void typeconstraint_atom::resolve() {
+        if (type_)
+            type_->resolve();
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // rangeconstraint_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void rangeconstraint_atom::resolve() {
+        if (from_)
+            from_->resolve_reff();
+        if (to_)
+            to_->resolve_reff();
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // namedconstraint_atom
+    ///////////////////////////////////////////////////////////////////////// 
+
+    void namedconstraint_atom::resolve() {
+        if (constraints_)
+            constraints_->resolve();
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // multipletypeconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    bool multipletypeconstraint_atom::full() const {
+        return ((!components_.empty()) &&
+                (components_.front()) &&
+                (!components_.front()->as_extention()));
+    }
+
+    void multipletypeconstraint_atom::resolve() {
+        for (constraint_atom_vct::iterator it = components_.begin(); it != components_.end(); ++it)
+            if (*it)
+                (*it)->resolve();
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // complexconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    void complexconstraint_atom::resolve() {
+        if (constraints_)
+            constraints_->resolve();
+    }
+
+
+
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1026,7 +1111,7 @@ namespace x680 {
             }
 
             if ((type()->reff())) {
-                resolve_atom(type());
+                type()->resolve_reff();
                 basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
                 if (fnd)
                     return fnd;
@@ -1106,7 +1191,7 @@ namespace x680 {
                 }
             }
             if (type()->reff()) {
-                resolve_atom(type());
+                type()->resolve_reff(all);
                 basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
                 if (fnd)
                     return fnd;
@@ -1167,6 +1252,9 @@ namespace x680 {
     }
 
     void valuesetassigment_entity::resolve() {
+        type()->resolve();
+        if (valueset())
+            valueset()->resolve();
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1276,23 +1364,6 @@ namespace x680 {
         }
     }
 
-    void resolve_atom(basic_atom_ptr elm, bool all) {
-        resolve_atom(elm.get(), all);
-    }
-
-    void resolve_atom(basic_atom* elm, bool all) {
-        if (elm && (elm->expecteddef()) && (elm->scope())) {
-            basic_entity_ptr fnd = elm->scope()->find(elm->reff(), all);
-            if (fnd) {
-                elm->reff(fnd);
-            } else {
-                if (elm->scope()) {
-                    elm->scope()->referenceerror_throw(elm->reff()->name());
-                }
-            }
-        }
-    }
-
     void resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
         resolve_type_assigment(elm.get(), start.get());
     }
@@ -1311,7 +1382,6 @@ namespace x680 {
                 else
                     tmp->referenceerror_throw(tmp->type()->expectedname());
             }
-            //resolve_typepredef_assigment(tmp);
         }
     }
 
@@ -1621,8 +1691,8 @@ namespace x680 {
                 case cns_DurationRange:
                 case cns_TimePointRange:
                 case cns_RecurrenceRange: return constraint_atom_ptr(new rangeconstraint_atom(scope, ent.tp,
-                            (((ent.fromtype_==close_range) || (ent.fromtype_==open_range)) ? compile_value(scope, ent.from_) : value_atom_ptr()) , ent.fromtype_, 
-                            (((ent.totype_==close_range) || (ent.totype_==open_range)) ? compile_value(scope, ent.to_) : value_atom_ptr()) , ent.totype_));
+                            (((ent.fromtype_ == close_range) || (ent.fromtype_ == open_range)) ? compile_value(scope, ent.from_) : value_atom_ptr()), ent.fromtype_,
+                            (((ent.totype_ == close_range) || (ent.totype_ == open_range)) ? compile_value(scope, ent.to_) : value_atom_ptr()), ent.totype_));
                 case cns_ContainedSubtype:
                 case cns_TypeConstraint: return constraint_atom_ptr(new typeconstraint_atom(scope, ent.tp,
                             compile_type(scope, ent.type), false));
@@ -1802,10 +1872,10 @@ namespace x680 {
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);
             valuesetassigment_entity_ptr tmpv(new valuesetassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type), constraints_atom_ptr()));
-            if (tmp.set.tp == vs_Strait)     
-                tmpv->valueset(compile_constraints(tmpv, tmp.set.set));             
-            else    
-                tmpv->valueset( constraints_atom_ptr( new constraints_atom(tmpv, tmp.set.reference)));     
+            if (tmp.set.tp == vs_Strait)
+                tmpv->valueset(compile_constraints(tmpv, tmp.set.set));
+            else
+                tmpv->valueset(constraints_atom_ptr(new constraints_atom(tmpv, tmp.set.reference)));
             return tmpv;
         }
 
@@ -1916,7 +1986,7 @@ namespace x680 {
             if ((*it)->as_valuesetassigment()) {
                 stream << (*it)->as_valuesetassigment();
                 continue;
-            }            
+            }
             if ((*it)->as_classassigment()) {
                 stream << (*it)->as_classassigment();
                 continue;
@@ -2146,11 +2216,11 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom* self) {
         stream << "[";
-        stream << (self->fromtype());      
+        stream << (self->fromtype());
         if ((self->from()))
             stream << (self->from().get());
         stream << "..";
-        stream << (self->totype());        
+        stream << (self->totype());
         if ((self->to()))
             stream << (self->to().get());
         stream << "]";
@@ -2178,7 +2248,7 @@ namespace x680 {
         }
         return stream;
     }
-    
+
     std::ostream& operator<<(std::ostream& stream, range_type tp) {
         switch (tp) {
             case min_range: return stream << "MIN";
@@ -2189,7 +2259,7 @@ namespace x680 {
             }
         }
         return stream;
-    }    
+    }
 
     std::ostream& operator<<(std::ostream& stream, complexconstraint_atom* self) {
         switch (self->cotstrtype()) {
@@ -2396,9 +2466,9 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self) {
-        return stream << "(vS) " << self->name() << " [" << self->type().get() << "] :: = " <<  self->valueset().get() << "\n";
+        return stream << "(vS) " << self->name() << " [" << self->type().get() << "] :: = " << self->valueset().get() << "\n";
     }
-    
+
     std::ostream& operator<<(std::ostream& stream, classassigment_entity* self) {
         return stream << "(C) " << self->name() << " :: = " << self->_class().get() << "\n";
     }

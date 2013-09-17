@@ -536,7 +536,7 @@ namespace x680 {
 
         ////////
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        void resolve_reff(bool all = true);
 
         virtual void resolve();
 
@@ -684,6 +684,7 @@ namespace x680 {
         void resolve_predef_enum(basic_entity_vector& vl);
         void resolve_predef_check(basic_entity_vector& vl);
         void resolve_tag();
+        void resolve_constraints();
 
         defined_type builtin_;
         tagged_ptr tag_;
@@ -748,8 +749,6 @@ namespace x680 {
     protected:
 
         void resolve_vect(value_vct& vl);
-
-        void resolve_ptr(value_atom_ptr vl);
 
     private:
 
@@ -1069,12 +1068,12 @@ namespace x680 {
     class constraints_atom : public basic_atom {
 
     public:
-        
+
         constraints_atom(basic_entity_ptr scp, const std::string& reff) :
         basic_atom(reff, scp) {
-        };        
+        };
 
-        constraints_atom(basic_entity_ptr scp, const constraint_atom_vct& fst, bool ext=false) :
+        constraints_atom(basic_entity_ptr scp, const constraint_atom_vct& fst, bool ext = false) :
         basic_atom(scp), constraintline_(fst), extend_(ext) {
         };
 
@@ -1093,10 +1092,14 @@ namespace x680 {
         bool extend() const {
             return (!extendline_.empty()) || extend_;
         }
-        
-        void extend(bool val)  {
-            extend_=val;
-        }        
+
+        void extend(bool val) {
+            extend_ = val;
+        }
+
+        ////
+
+        virtual void resolve();
 
     protected:
 
@@ -1189,6 +1192,8 @@ namespace x680 {
             return value_;
         }
 
+        virtual void resolve();
+
     private:
 
         value_atom_ptr value_;
@@ -1197,7 +1202,7 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // rangeconstraint_atom
+    // typeconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
     class typeconstraint_atom : public constraint_atom {
@@ -1215,6 +1220,8 @@ namespace x680 {
         bool includdes() {
             return includes_;
         }
+
+        virtual void resolve();
 
     private:
 
@@ -1277,6 +1284,8 @@ namespace x680 {
             return totype_;
         }
 
+        virtual void resolve();
+
     private:
 
         value_atom_ptr from_;
@@ -1288,7 +1297,7 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // rangeconstraint_atom
+    // namedconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
     class namedconstraint_atom : public constraint_atom {
@@ -1315,6 +1324,8 @@ namespace x680 {
             return marker_;
         }
 
+        virtual void resolve();
+
     private:
 
         std::string name_;
@@ -1339,12 +1350,10 @@ namespace x680 {
         constraint_atom_vct& components() {
             return components_;
         }
-        
-        bool full() const{
-            return ((!components_.empty()) && 
-                    (components_.front()) &&
-                    (!components_.front()->as_extention()));
-        }
+
+        bool full() const;
+
+        virtual void resolve();
 
 
     protected:
@@ -1369,6 +1378,8 @@ namespace x680 {
         constraints_atom_ptr constraints() {
             return constraints_;
         }
+
+        virtual void resolve();
 
 
     private:
@@ -1772,8 +1783,6 @@ namespace x680 {
 
     void resolve_assigments(basic_entity_vector& elm);
     void resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start = basic_entity_ptr());
-    void resolve_atom(basic_atom* elm, bool all = true);
-    void resolve_atom(basic_atom_ptr elm, bool all = true);
     void resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
     void resolve_type_assigment(basic_entity* elm, basic_entity* start = 0);
     void resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
@@ -1882,7 +1891,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, namedconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, constraintmarker_type tp);
-    std::ostream& operator<<(std::ostream& stream, range_type tp);    
+    std::ostream& operator<<(std::ostream& stream, range_type tp);
     std::ostream& operator<<(std::ostream& stream, complexconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, multipletypeconstraint_atom * self);
 
