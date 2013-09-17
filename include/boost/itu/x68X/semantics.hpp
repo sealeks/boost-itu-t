@@ -1069,6 +1069,10 @@ namespace x680 {
     class constraints_atom : public basic_atom {
 
     public:
+        
+        constraints_atom(basic_entity_ptr scp, const std::string& reff) :
+        basic_atom(reff, scp) {
+        };        
 
         constraints_atom(basic_entity_ptr scp, const constraint_atom_vct& fst, bool ext=false) :
         basic_atom(scp), constraintline_(fst), extend_(ext) {
@@ -1334,6 +1338,12 @@ namespace x680 {
 
         constraint_atom_vct& components() {
             return components_;
+        }
+        
+        bool full() const{
+            return ((!components_.empty()) && 
+                    (components_.front()) &&
+                    (!components_.front()->as_extention()));
         }
 
 
@@ -1684,7 +1694,7 @@ namespace x680 {
     class valuesetassigment_entity : public basic_entity {
 
     public:
-        valuesetassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, basic_atom_ptr vl);
+        valuesetassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, constraints_atom_ptr vl);
 
         type_atom_ptr type() const {
             return type_;
@@ -1694,11 +1704,11 @@ namespace x680 {
             type_ = vl;
         }
 
-        basic_atom_ptr valueset() const {
+        constraints_atom_ptr valueset() const {
             return valueset_;
         }
 
-        void valueset(basic_atom_ptr vl) {
+        void valueset(constraints_atom_ptr vl) {
             valueset_ = vl;
         }
 
@@ -1713,7 +1723,7 @@ namespace x680 {
     private:
 
         type_atom_ptr type_;
-        basic_atom_ptr valueset_;
+        constraints_atom_ptr valueset_;
     };
 
 
