@@ -291,7 +291,7 @@ namespace x680 {
 
 
     protected:
-
+        
         virtual void preresolve();
 
         void resolve_child();

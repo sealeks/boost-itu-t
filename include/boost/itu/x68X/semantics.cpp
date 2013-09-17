@@ -190,7 +190,7 @@ namespace x680 {
 
 
     ////////
-
+    
     basic_entity_ptr basic_entity::find(const basic_entity_ptr& reff, bool all) {
         if (reff->as_expectdef()) {
             if (reff->as_expectdef()->ismodule()) {
@@ -528,15 +528,13 @@ namespace x680 {
     }
 
     void basic_atom::resolve_reff(bool all) {
-        if ((scope()) && (reff()->as_expectdef())) {
-            if (reff()->as_expectdef()->ismodule()) {
-                basic_entity_ptr fnd = scope()->find_by_name(expectedname(), all);
+        if ((scope()) && (reff()) && (reff()->as_expectdef())) {
+                basic_entity_ptr fnd = scope()->find(reff(), all);
                 if (fnd) {
                     reff(fnd);
                 } else
                     scope()->referenceerror_throw(expectedname());
             }
-        }
     }
 
 
