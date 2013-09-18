@@ -37,7 +37,8 @@ namespace x680 {
 
             FieldSpecs = FieldSpec % qi::omit[qi::lit(",")];
 
-            FieldSpec = TypeFieldSpecS | FixedTypeValueFieldSpec | FixedTypeValueSetFieldSpec | VariableTypeValueSetFieldSpec | VariableTypeValueFieldSpec | ObjectFieldSpec | ObjectSetFieldSpec | TypeFieldSpec; //;     
+            FieldSpec = TypeFieldSpecS | FixedTypeValueFieldSpecLS  | FixedTypeValueSetFieldSpecLS | FixedTypeValueFieldSpec | FixedTypeValueSetFieldSpec |
+                                  VariableTypeValueSetFieldSpec | VariableTypeValueFieldSpec | ObjectFieldSpec | ObjectSetFieldSpec | TypeFieldSpec; //;     
 
             TypeFieldSpecS = (typefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
                     >> (OPTIONAL_[bind(&classfield_optional, qi::_val)] | (qi::omit[DEFAULT_]
@@ -46,6 +47,14 @@ namespace x680 {
             TypeFieldSpec = (typefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
                     >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] | (qi::omit[DEFAULT_]
                     >> Type[bind(&classfield_defaulttype, qi::_val, qi::_1)])))[bind(&classfield_tp, qi::_val, fkind_TypeFieldSpec)];
+                    
+            FixedTypeValueFieldSpecLS = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> StrictType[bind(&classfield_holder_ftstr, qi::_val, qi::_1, true)]
+                    >> -(((UNIQUE_[bind(&classfield_unique, qi::_val)])
+                    || OPTIONAL_[bind(&classfield_optional, qi::_val)])
+                    | (OPTIONAL_[bind(&classfield_optional, qi::_val)])
+                    | (qi::omit[DEFAULT_]
+                    >> (Value[bind(&classfield_defaultvalue, qi::_val, qi::_1)])));                    
 
             FixedTypeValueFieldSpec = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
                     >> Type[bind(&classfield_holder_ft, qi::_val, qi::_1, true)]
@@ -63,6 +72,12 @@ namespace x680 {
                     >> (Value[bind(&classfield_defaultvalue, qi::_val, qi::_1)]))))[bind(&classfield_tp, qi::_val, fkind_VariableTypeValueFieldSpec)];
 
 
+            FixedTypeValueSetFieldSpecLS = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> StrictType[bind(&classfield_holder_ftstr, qi::_val, qi::_1, false)]
+                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
+                    (qi::omit[DEFAULT_]
+                    >> (ValueSet[bind(&classfield_defaultset, qi::_val, qi::_1)]))));                    
+                    
             FixedTypeValueSetFieldSpec = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
                     >> Type[bind(&classfield_holder_ft, qi::_val, qi::_1, false)]
                     >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |

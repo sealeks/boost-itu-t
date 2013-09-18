@@ -342,17 +342,17 @@ namespace x680 {
                 >> -qi::char_("A-Z0-9")[qi::_val += qi::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::char_("A-Z0-9")))))]]; //(~typereference_)      
 
-        str_rule typereference_strict = distinct(qi::alnum | ('-' >> qi::alnum))[typereference_ - objectclassreference_];
+        str_rule typereference_strict = distinct(qi::alnum | ('-' >> qi::alnum))[typereference_ - qi::omit[objectclassreference_]];
 
-        str_rule typefieldreference_ = qi::lexeme[qi::string("&") >> typereference_]; //(&typereference_)   
+        str_rule typefieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> typereference_[qi::_val += qi::_1 ]]; //(&typereference_[qi::_val += qi::_1 ])   
 
-        str_rule valuefieldreference_ = qi::lexeme[qi::string("&") >> valuereference_]; //(&valuereference_)  
+        str_rule valuefieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> valuereference_[qi::_val += qi::_1 ]]; //(&valuereference_)  
 
-        str_rule valuesetfieldreference_ = qi::lexeme[qi::string("&") >> typereference_]; //(&typereference_)   
+        str_rule valuesetfieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> typereference_[qi::_val += qi::_1 ]]; //(&typereference_)   
 
-        str_rule objectfieldreference_ = qi::lexeme[qi::string("&") >> objectreference_]; //(&objectreference_)
+        str_rule objectfieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> objectreference_[qi::_val += qi::_1 ]]; //(&objectreference_)
 
-        str_rule objectsetfieldreference_ = qi::lexeme[qi::string("&") >> objectsetreference_]; //(&objectsetreference_)  
+        str_rule objectsetfieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> objectsetreference_[qi::_val += qi::_1 ]]; //(&objectsetreference_)  
 
 
         str_rule bigreference_ = typereference_;

@@ -117,6 +117,10 @@ namespace x680 {
         return dynamic_cast<classassigment_entity*> (this);
     }
 
+    field_entity* basic_entity::as_classfield() {
+        return dynamic_cast<field_entity*> (this);
+    }
+
     extention_entity * basic_entity::as_extention() {
         return dynamic_cast<extention_entity*> (this);
     }
@@ -144,6 +148,8 @@ namespace x680 {
             rslt = rslt + " in typeassignment";
         else if (as_valueassigment())
             rslt = rslt + " in valueassignment";
+        else if (as_valuesetassigment())
+            rslt = rslt + " in valuesetassignment";
         else if (as_classassigment())
             rslt = rslt + " in classassignment";
         else if (as_module())
@@ -190,7 +196,7 @@ namespace x680 {
 
 
     ////////
-    
+
     basic_entity_ptr basic_entity::find(const basic_entity_ptr& reff, bool all) {
         if (reff->as_expectdef()) {
             if (reff->as_expectdef()->ismodule()) {
@@ -263,9 +269,8 @@ namespace x680 {
     basic_entity_ptr global_entity::find_by_name(const std::string& nm, bool all) {
         prefind(nm, childs());
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-            if ((*it)->name() == nm) {
+            if ((*it)->name() == nm)
                 return *it;
-            }
         return basic_entity_ptr();
     }
 
@@ -280,18 +285,14 @@ namespace x680 {
     }
 
     void import_entity::resolve() {
-        if (objectid()) {
+        if (objectid())
             objectid()->resolve();
-        }
     }
 
     basic_entity_ptr import_entity::find_by_name(const std::string& nm, bool all) {
-        for (import_vector::iterator it = import_.begin(); it != import_.end(); ++it) {
-            if ((*it) == nm) {
-                if (scope())
-                    return scope()->find_by_name(nm, all);
-            }
-        }
+        for (import_vector::iterator it = import_.begin(); it != import_.end(); ++it)
+            if (((*it) == nm) && (scope()))
+                return scope()->find_by_name(nm, all);
         return basic_entity_ptr();
     }
 
@@ -346,7 +347,6 @@ namespace x680 {
             for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
                 exports().push_back((*it)->name());
         }
-        //preresolve_oid();
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
             import_entity* importmod = (*it)->as_import();
             if (importmod && (importmod->objectid())) {
@@ -529,12 +529,12 @@ namespace x680 {
 
     void basic_atom::resolve_reff(bool all) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {
-                basic_entity_ptr fnd = scope()->find(reff(), all);
-                if (fnd) {
-                    reff(fnd);
-                } else
-                    scope()->referenceerror_throw(expectedname());
-            }
+            basic_entity_ptr fnd = scope()->find(reff(), all);
+            if (fnd)
+                reff(fnd);
+            else
+                scope()->referenceerror_throw(expectedname());
+        }
     }
 
 
@@ -582,15 +582,17 @@ namespace x680 {
                 case t_INTEGER:
                 {
                     if ((*it)->as_extention())
-                        throw semantics::error("type '" + scope()->name() + "' must not have extention in predefine   in module " +
-                            scope()->modulerefname());
+                        throw semantics::error("type '" + scope()->name() +
+                            "' must not have extention in predefine   in module " +
+                            (scope() ? scope()->modulerefname() : ""));
 
                 }
                 case t_BIT_STRING:
                 {
                     if (((*it)->as_valueassigment()) && (!(*it)->as_valueassigment()->value()))
                         throw semantics::error("type '" + scope()->name() + "' predefine name '" +
-                            (*it)->name() + "' dosn't assign " + scope()->modulerefname());
+                            (*it)->name() + "' dosn't assign " +
+                            (scope() ? scope()->modulerefname() : ""));
                 }
                 default:
                 {
@@ -1029,20 +1031,6 @@ namespace x680 {
 
 
 
-
-    /////////////////////////////////////////////////////////////////////////   
-    //class_atom
-    /////////////////////////////////////////////////////////////////////////   
-
-    class_atom::class_atom(definedclass_type tp)
-    : basic_atom(basic_entity_ptr()), builtin_(tp) {
-    }
-
-    class_atom::class_atom(const std::string& reff, definedclass_type tp)
-    : basic_atom(reff, basic_entity_ptr()), builtin_(tp) {
-    }
-
-
     /////////////////////////////////////////////////////////////////////////   
     // bigassigment_entity
     /////////////////////////////////////////////////////////////////////////  
@@ -1107,7 +1095,6 @@ namespace x680 {
                     }
                 }
             }
-
             if ((type()->reff())) {
                 type()->resolve_reff();
                 basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
@@ -1256,6 +1243,97 @@ namespace x680 {
     }
 
     /////////////////////////////////////////////////////////////////////////   
+    // field_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    field_entity::field_entity(basic_entity_ptr scope, const std::string& nm, fieldkind_type tp, tagmarker_type mkr) :
+    basic_entity(scope, nm, et_ClassField), fieldkind_(tp), marker_(mkr) {
+    }
+
+    typefield_entity* field_entity::as_typefield() {
+        return (fieldkind_ == fkind_TypeFieldSpec) ? dynamic_cast<typefield_entity*> (this) : 0;
+    }
+
+    valuefield_entity* field_entity::as_valuefield() {
+        return (fieldkind_ == fkind_FixedTypeValueFieldSpec) ? dynamic_cast<valuefield_entity*> (this) : 0;
+    }
+
+    valuesetfield_entity* field_entity::as_valuesetfield() {
+        return (fieldkind_ == fkind_FixedTypeValueSetFieldSpec) ? dynamic_cast<valuesetfield_entity*> (this) : 0;
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // typefield_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    void typefield_entity::resolve() {
+        if (_default())
+            _default()->resolve_reff();
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // valuefield_entity
+    ///////////////////////////////////////////////////////////////////////// 
+
+    void valuefield_entity::resolve() {
+        if (type())
+            type()->resolve_reff();
+        if (_default())
+            _default()->resolve_reff();
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // valuefield_entity
+    ///////////////////////////////////////////////////////////////////////// 
+
+    void valuesetfield_entity::resolve() {
+        if (type())
+            type()->resolve_reff();
+        if (_default())
+            _default()->resolve_reff();
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
+    //class_atom
+    /////////////////////////////////////////////////////////////////////////   
+
+    class_atom::class_atom(basic_entity_ptr scope, definedclass_type tp)
+    : basic_atom(scope), builtin_(tp) {
+    }
+
+    class_atom::class_atom(basic_entity_ptr scope, const std::string& reff, definedclass_type tp)
+    : basic_atom(reff, scope), builtin_(tp) {
+    }
+
+    defnclass_atom* class_atom::as_defn() {
+        return (builtin_ == cl_SpecDef) ? dynamic_cast<defnclass_atom*> (this) : 0;
+    }
+
+    defineclass_atom* class_atom::as_define() {
+        return (builtin_ == cl_Reference) ? dynamic_cast<defineclass_atom*> (this) : 0;
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // defineclass_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void defineclass_atom::resolve() {
+        resolve_reff();
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // defnclass_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void defnclass_atom::resolve() {
+        for (field_entity_vct::const_iterator it = fields_.begin(); it != fields_.end(); ++it) {
+            if (*it)
+                (*it)->resolve();
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
     // classassigment_entity
     /////////////////////////////////////////////////////////////////////////  
 
@@ -1279,6 +1357,8 @@ namespace x680 {
     }
 
     void classassigment_entity::resolve() {
+        if (_class())
+            _class()->resolve();
     }
 
 
@@ -1319,7 +1399,7 @@ namespace x680 {
                 }
                 if (fnd->kind() == et_Class) {
                     basic_entity_ptr rslt(new classassigment_entity(elm->scope(), tmp->name(),
-                            class_atom_ptr(new class_atom(tmp->big()->reff()->name(), cl_Reference))));
+                            class_atom_ptr(new defineclass_atom(elm->scope(), tmp->big()->reff()->name()))));
                     return rslt;
                 }
             } else {
@@ -1740,11 +1820,88 @@ namespace x680 {
 
         classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::class_assignment tmp = boost::get<x680::syntactic::class_assignment>(ent);
-            return classassigment_entity_ptr(new classassigment_entity(scope, tmp.identifier, compile_class(tmp.class_)));
+            classassigment_entity_ptr tmpc(new classassigment_entity(scope, tmp.identifier, class_atom_ptr()));
+            tmpc->_class(compile_class(tmpc, tmp.class_));
+            return tmpc;
         }
 
-        class_atom_ptr compile_class(const x680::syntactic::class_element& ent) {
-            return ent.reference.empty() ? class_atom_ptr(new class_atom(ent.tp)) : class_atom_ptr(new class_atom(ent.reference, ent.tp));
+        class_atom_ptr compile_class(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
+            switch (ent.tp) {
+                case cl_Reference: return class_atom_ptr(new defineclass_atom(scope, ent.reference));
+                case cl_SpecDef:
+                {
+                    class_atom_ptr tmp(new defnclass_atom(scope));
+                    tmp->as_defn()->fields(compile_classfield(scope, ent));
+                    return tmp;
+                }
+                default:
+                {
+                }
+            }
+            return class_atom_ptr(new class_atom(scope, ent.tp));
+        }
+
+        field_entity_vct compile_classfield(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
+            field_entity_vct tmp;
+            for (x680::syntactic::classfield_vector::const_iterator it = ent.fields.begin(); it != ent.fields.end(); ++it) {
+                switch (it->tp) {
+                    case fkind_TypeFieldSpec: tmp.push_back(compile_typeclassfield(scope, *it));
+                        break;
+                    case fkind_FixedTypeValueFieldSpec: tmp.push_back(compile_valueclassfield(scope, *it));
+                        break;
+                    case fkind_FixedTypeValueSetFieldSpec: tmp.push_back(compile_valuesetclassfield(scope, *it));
+                        break;
+                    default: tmp.push_back(field_entity_ptr(new field_entity(scope, it->field, it->tp)));
+                }
+            }
+            return tmp;
+        }
+
+        field_entity_ptr compile_typeclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
+            switch (ent.marker) {
+                case field_defaulttype:
+                {
+                    type_atom_ptr tp = compile_type(scope, ent.defaulttype);
+                    return field_entity_ptr(new typefield_entity(scope, ent.field, tp));
+                }
+                case field_optional: return field_entity_ptr(new typefield_entity(scope, ent.field, mk_optional));
+                default:
+                {
+                }
+            }
+            return field_entity_ptr(new typefield_entity(scope, ent.field));
+        }
+
+        field_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
+            type_atom_ptr tp = compile_type(scope, ent.holdertype);
+            switch (ent.marker) {
+                case field_defaultvalue:
+                {
+                    value_atom_ptr vl = compile_value(scope, ent.defaultvalue);
+                    return field_entity_ptr(new valuefield_entity(scope, ent.field, tp, vl));
+                }
+                case field_optional: return field_entity_ptr(new valuefield_entity(scope, ent.field, tp, ent.unique, mk_optional));
+                default:
+                {
+                }
+            }
+            return field_entity_ptr(new valuefield_entity(scope, ent.field, tp, ent.unique));
+        }
+
+        field_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
+            type_atom_ptr tp = compile_type(scope, ent.holdertype);
+            switch (ent.marker) {
+                case field_defaultvalue:
+                {
+                    valueset_atom_ptr vl = compile_constraints(scope, ent.defaultset.set);
+                    return field_entity_ptr(new valuesetfield_entity(scope, ent.field, tp, vl));
+                }
+                case field_optional: return field_entity_ptr(new valuesetfield_entity(scope, ent.field, tp, mk_optional));
+                default:
+                {
+                }
+            }
+            return field_entity_ptr(new valuesetfield_entity(scope, ent.field, tp));
         }
 
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
@@ -1782,8 +1939,9 @@ namespace x680 {
                     }
                 }
             } catch (boost::bad_lexical_cast) {
+                return value_atom_ptr(new value_atom(scope, v_nodef));
             }
-            return value_atom_ptr(new value_atom(scope, v_nodef));
+            return value_atom_ptr();
         }
 
         value_atom_ptr compile_assignvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
@@ -2478,10 +2636,27 @@ namespace x680 {
             else
                 stream << self->reff()->name();
         } else {
+            if (self->as_defn())
+                return stream << self->as_defn();
             stream << self->builtin();
         }
         //stream << " id: " << self->name();
         return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, defnclass_atom* self) {
+        stream << " CLASS { ";
+        for (field_entity_vct::const_iterator it = self->fields().begin(); it != self->fields().end(); ++it) {
+            if (*it)
+                stream << (*it).get();
+        }
+
+        stream << " }";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, defineclass_atom* self) {
+
+        return stream << self->reff()->name();
     }
 
     std::ostream& operator<<(std::ostream& stream, definedclass_type self) {
@@ -2494,6 +2669,64 @@ namespace x680 {
             {
             };
         }
+
         return stream;
     }
+
+    std::ostream& operator<<(std::ostream& stream, fieldkind_type self) {
+        switch (self) {
+            case fkind_NoDef: return stream << "!null";
+            case fkind_TypeFieldSpec: return stream << "T";
+            case fkind_FixedTypeValueFieldSpec: return stream << "FixTypeVal";
+            case fkind_VariableTypeValueFieldSpec: return stream << "VTVal";
+            case fkind_FixedTypeValueSetFieldSpec: return stream << "FixTypeValSet";
+            case fkind_VariableTypeValueSetFieldSpec: return stream << "VTSet";
+            case fkind_ObjectFieldSpec: return stream << "ObjectVal";
+            case fkind_ObjectSetFieldSpec: return stream << "ObjectSet";
+            case fkind_FixedType_or_Object: return stream << "?FixTypeVal or ObjectVal";
+            case fkind_FixedTypeSet_or_ObjectSet: return stream << "?FixTypeSet or ObjectSet";
+            default:
+            {
+            }
+        }
+        return stream << "!null";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, field_entity* self) {
+        switch (self->fieldkind()) {
+            case fkind_TypeFieldSpec: return stream << self->as_typefield();
+            case fkind_FixedTypeValueFieldSpec: return stream << self->as_valuefield();
+            case fkind_FixedTypeValueSetFieldSpec: return stream << self->as_valuesetfield();
+            default:
+            {
+            }
+        }
+        return stream << "\n      " << self->name() << " :  " << self->fieldkind();
+    }
+
+    std::ostream& operator<<(std::ostream& stream, typefield_entity* self) {
+        stream << "\n      ( T)" << self->name() << " " << self->marker();
+        if (self->_default())
+            stream << " " << self->_default().get();
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, valuefield_entity* self) {
+        stream << "\n      (v )" << self->name() << " " << self->type().get();
+        if (self->unique())
+            stream << " UNIQUE";
+        stream << " " << self->marker();
+        if (self->_default())
+            stream << " " << self->_default().get();
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, valuesetfield_entity* self) {
+        stream << "\n      (vS)" << self->name() << " " << self->type().get();
+        stream << " " << self->marker();
+        if (self->_default())
+            stream << " " << self->_default().get();
+        return stream;
+    }
+
 }

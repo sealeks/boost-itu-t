@@ -602,7 +602,7 @@ namespace x680 {
         inline void classfield_field(classfield_type& holder, const std::string& val) {
             holder.field = val;
         }
-
+        
         inline void classfield_holder_ft(classfield_type& holder, const type_element& val, bool type) {
             if (val.builtin_t == t_Reference) {
                 holder.holder = val.reference;
@@ -610,6 +610,11 @@ namespace x680 {
             } else {
                 holder.tp = type ? fkind_FixedTypeValueFieldSpec : fkind_FixedTypeValueSetFieldSpec;
             }
+            holder.holdertype = val;
+        }        
+
+        inline void classfield_holder_ftstr(classfield_type& holder, const type_element& val, bool type) {
+            holder.tp = type ? fkind_FixedTypeValueFieldSpec : fkind_FixedTypeValueSetFieldSpec;
             holder.holdertype = val;
         }
 

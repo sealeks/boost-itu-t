@@ -436,8 +436,10 @@ namespace x680 {
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> FieldSpec;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> TypeFieldSpecS;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> TypeFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueFieldSpecLS;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueFieldSpec;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> VariableTypeValueFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueSetFieldSpecLS;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueSetFieldSpec;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> VariableTypeValueSetFieldSpec;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> ObjectFieldSpec;
