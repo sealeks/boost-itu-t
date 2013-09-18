@@ -74,15 +74,15 @@ namespace x680 {
     class field_entity;
     typedef boost::shared_ptr<field_entity> field_entity_ptr;
     typedef std::vector<field_entity_ptr> field_entity_vct;
-    
+
     class typefield_entity;
     typedef boost::shared_ptr<typefield_entity> typefield_entity_ptr;
-    
+
     class valuefield_entity;
-    typedef boost::shared_ptr<valuefield_entity> valuefield_entity_ptr;    
-    
+    typedef boost::shared_ptr<valuefield_entity> valuefield_entity_ptr;
+
     class valuesetfield_entity;
-    typedef boost::shared_ptr<valuesetfield_entity> valuesetfield_entity_ptr;      
+    typedef boost::shared_ptr<valuesetfield_entity> valuesetfield_entity_ptr;
 
     class extention_entity;
     typedef boost::shared_ptr<extention_entity> extention_entity_ptr;
@@ -151,8 +151,10 @@ namespace x680 {
     class constraints_atom;
     typedef boost::shared_ptr<constraints_atom> constraints_atom_ptr;
     typedef std::vector<constraints_atom_ptr> constraints_atom_vct;
-    typedef constraints_atom valueset_atom;
-    typedef constraints_atom_ptr valueset_atom_ptr;
+
+    class valueset_atom;
+    typedef boost::shared_ptr<valueset_atom> valueset_atom_ptr;
+
 
     class constraint_atom;
     typedef boost::shared_ptr<constraint_atom> constraint_atom_ptr;
@@ -204,12 +206,6 @@ namespace x680 {
     typedef boost::shared_ptr<exceptionconstraint_atom> exceptionconstraint_atom_ptr;
 
 
-    class defnclass_atom;
-    typedef boost::shared_ptr<defnclass_atom> defnclass_atom_ptr;
-
-    class defineclass_atom;
-    typedef boost::shared_ptr<defineclass_atom> defineclass_atom_ptr;
-
     class class_atom;
     typedef boost::shared_ptr<class_atom> class_atom_ptr;
 
@@ -222,7 +218,15 @@ namespace x680 {
 
     void insert_global(basic_entity_ptr global);
 
+
+
+
+
+
+
     /////////////////////////////////////////////////////////////////////////   
+    //  BASIC
+    /////////////////////////////////////////////////////////////////////////
     // basic_entity
     /////////////////////////////////////////////////////////////////////////  
 
@@ -569,7 +573,12 @@ namespace x680 {
 
 
 
+
+
+
     /////////////////////////////////////////////////////////////////////////   
+    // TYPE
+    /////////////////////////////////////////////////////////////////////////     
     // predefined
     /////////////////////////////////////////////////////////////////////////      
 
@@ -716,9 +725,91 @@ namespace x680 {
 
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // typeassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class typeassigment_entity : public basic_entity {
+
+    public:
+        typeassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp);
+
+        type_atom_ptr type() const {
+            return type_;
+        }
+
+        void type(type_atom_ptr vl) {
+            type_ = vl;
+        }
+
+        namedtypeassigment_entity* as_named();
+
+
+        /////        
+
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+
+        virtual void resolve();
+
+        // protected:
+
+        //   void resolve_predef();        
+
+    private:
+
+        type_atom_ptr type_;
+    };
+
+
+
+
 
 
     /////////////////////////////////////////////////////////////////////////   
+    // namedtypeassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class namedtypeassigment_entity : public typeassigment_entity {
+
+    public:
+
+        namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker);
+        namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
+
+        value_atom_ptr _default() const {
+            return default_;
+        }
+
+        void _default(value_atom_ptr v) {
+            default_ = v;
+        }
+
+        tagmarker_type marker() const {
+            return marker_;
+        }
+
+        //////
+
+        virtual void resolve();
+
+    private:
+
+        void resolve_default();
+
+        value_atom_ptr default_;
+        tagmarker_type marker_;
+
+    };
+
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // VALUE
+    /////////////////////////////////////////////////////////////////////////      
     // value_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -1052,6 +1143,8 @@ namespace x680 {
 
 
 
+
+
     /////////////////////////////////////////////////////////////////////////   
     // nullvalue_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -1079,6 +1172,87 @@ namespace x680 {
         };
 
     };
+
+    /////////////////////////////////////////////////////////////////////////   
+    // valueassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class valueassigment_entity : public basic_entity {
+
+    public:
+        valueassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
+
+        type_atom_ptr type() const {
+            return type_;
+        }
+
+        void type(type_atom_ptr vl) {
+            type_ = vl;
+        }
+
+        value_atom_ptr value() const {
+            return value_;
+        }
+
+        void value(value_atom_ptr vl) {
+            value_ = vl;
+        }
+
+        void check_value_with_exception(value_type tp);
+
+
+        /////        
+
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+
+        virtual void resolve();
+
+
+    private:
+
+        type_atom_ptr type_;
+        value_atom_ptr value_;
+    };
+
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // VALUESET
+    /////////////////////////////////////////////////////////////////////////   
+    // valueset_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class valueset_atom : public basic_atom {
+
+    public:
+        valueset_atom(basic_entity_ptr scope, valueset_type tp);
+        valueset_atom(basic_entity_ptr scope, const std::string& reff, valueset_type tp);
+
+        valueset_type builtin() const {
+            return builtin_;
+        }
+
+        constraints_atom_ptr set() const {
+            return set_;
+        }
+
+        void set(constraints_atom_ptr vl) {
+            set_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        valueset_type builtin_;
+        constraints_atom_ptr set_;
+
+    };
+
 
 
 
@@ -1129,6 +1303,8 @@ namespace x680 {
         bool extend_;
 
     };
+
+
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1491,8 +1667,283 @@ namespace x680 {
 
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // valuesetassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class valuesetassigment_entity : public basic_entity {
+
+    public:
+        valuesetassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, valueset_atom_ptr vl);
+
+        type_atom_ptr type() const {
+            return type_;
+        }
+
+        void type(type_atom_ptr vl) {
+            type_ = vl;
+        }
+
+        valueset_atom_ptr valueset() const {
+            return valueset_;
+        }
+
+        void valueset(valueset_atom_ptr vl) {
+            valueset_ = vl;
+        }
 
 
+        /////        
+
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+
+        virtual void resolve();
+
+
+    private:
+
+        type_atom_ptr type_;
+        valueset_atom_ptr valueset_;
+    };
+
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // CLASS
+    /////////////////////////////////////////////////////////////////////////    
+    // field_entity
+    /////////////////////////////////////////////////////////////////////////
+
+    class field_entity : public basic_entity {
+
+    public:
+        field_entity(basic_entity_ptr scope, const std::string& nm, fieldkind_type tp, tagmarker_type mkr = mk_none);
+
+        fieldkind_type fieldkind() const {
+            return fieldkind_;
+        }
+
+        void fieldkind(fieldkind_type vl) {
+            fieldkind_ = vl;
+        }
+
+        tagmarker_type marker() const {
+            return marker_;
+        }
+
+        void marker(tagmarker_type vl) {
+            marker_ = vl;
+        }
+
+        typefield_entity* as_typefield();
+
+        valuefield_entity* as_valuefield();
+
+        valuesetfield_entity* as_valuesetfield();
+
+
+    protected:
+        fieldkind_type fieldkind_;
+        tagmarker_type marker_;
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // typefield_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class typefield_entity : public field_entity {
+
+    public:
+
+        typefield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr dflt) :
+        field_entity(scope, nm, fkind_TypeFieldSpec, mk_default), default_(dflt) {
+        };
+
+        typefield_entity(basic_entity_ptr scope, const std::string& nm, tagmarker_type mkr = mk_none) :
+        field_entity(scope, nm, fkind_TypeFieldSpec, mkr) {
+        };
+
+        type_atom_ptr _default() const {
+            return default_;
+        }
+
+        void _default(type_atom_ptr vl) {
+            default_ = vl;
+        }
+
+        //         
+
+        virtual void resolve();
+
+    protected:
+        type_atom_ptr default_;
+    };
+
+    /////////////////////////////////////////////////////////////////////////   
+    // valuefield_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class valuefield_entity : public field_entity {
+
+    public:
+
+        valuefield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr dflt) :
+        field_entity(scope, nm, fkind_FixedTypeValueFieldSpec, mk_default), type_(tp), default_(dflt), unique_(false) {
+        };
+
+        valuefield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, bool unic, tagmarker_type mkr = mk_none) :
+        field_entity(scope, nm, fkind_FixedTypeValueFieldSpec, mkr), type_(tp), unique_(unic) {
+        };
+
+        type_atom_ptr type() const {
+            return type_;
+        }
+
+        void type(type_atom_ptr vl) {
+            type_ = vl;
+        }
+
+        value_atom_ptr _default() const {
+            return default_;
+        }
+
+        void _default(value_atom_ptr vl) {
+            default_ = vl;
+        }
+
+        bool unique() const {
+            return unique_;
+        }
+
+        void unique(bool vl) {
+            unique_ = vl;
+        }
+
+        //         
+
+        virtual void resolve();
+
+    protected:
+        type_atom_ptr type_;
+        value_atom_ptr default_;
+        bool unique_;
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // valuesetfield_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class valuesetfield_entity : public field_entity {
+
+    public:
+
+        valuesetfield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, valueset_atom_ptr dflt) :
+        field_entity(scope, nm, fkind_FixedTypeValueSetFieldSpec, mk_default), type_(tp), default_(dflt) {
+        };
+
+        valuesetfield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, tagmarker_type mkr = mk_none) :
+        field_entity(scope, nm, fkind_FixedTypeValueSetFieldSpec, mkr), type_(tp) {
+        };
+
+        type_atom_ptr type() const {
+            return type_;
+        }
+
+        void type(type_atom_ptr vl) {
+            type_ = vl;
+        }
+
+        valueset_atom_ptr _default() const {
+            return default_;
+        }
+
+        void _default(valueset_atom_ptr vl) {
+            default_ = vl;
+        }
+
+
+
+        //         
+
+        virtual void resolve();
+
+    protected:
+        type_atom_ptr type_;
+        valueset_atom_ptr default_;
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // class_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class class_atom : public basic_atom {
+
+    public:
+        class_atom(basic_entity_ptr scope, definedclass_type tp);
+        class_atom(basic_entity_ptr scope, const std::string& reff, definedclass_type tp);
+
+        definedclass_type builtin() const {
+            return builtin_;
+        }
+
+        class_atom* as_defn();
+
+        class_atom* as_define();
+
+        virtual void resolve();
+
+    private:
+
+        definedclass_type builtin_;
+
+    };
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // classassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class classassigment_entity : public basic_entity {
+
+    public:
+        classassigment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp);
+
+        class_atom_ptr _class() const {
+            return class_;
+        }
+
+        void _class(class_atom_ptr vl) {
+            class_ = vl;
+        }
+
+
+        /////        
+
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+
+        virtual void resolve();
+
+    private:
+
+        class_atom_ptr class_;
+    };
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // BIG
     /////////////////////////////////////////////////////////////////////////   
     // bigassigment_entity
     /////////////////////////////////////////////////////////////////////////  
@@ -1527,7 +1978,11 @@ namespace x680 {
 
 
 
+
+
     /////////////////////////////////////////////////////////////////////////   
+    // LITTLE
+    /////////////////////////////////////////////////////////////////////////     
     // littleassigment_entity
     /////////////////////////////////////////////////////////////////////////  
 
@@ -1570,430 +2025,9 @@ namespace x680 {
 
 
 
-
     /////////////////////////////////////////////////////////////////////////   
-    // typeassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    class typeassigment_entity : public basic_entity {
-
-    public:
-        typeassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp);
-
-        type_atom_ptr type() const {
-            return type_;
-        }
-
-        void type(type_atom_ptr vl) {
-            type_ = vl;
-        }
-
-        namedtypeassigment_entity* as_named();
-
-
-        /////        
-
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
-
-        virtual void resolve();
-
-        // protected:
-
-        //   void resolve_predef();        
-
-    private:
-
-        type_atom_ptr type_;
-    };
-
-
-
-
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // namedtypeassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    class namedtypeassigment_entity : public typeassigment_entity {
-
-    public:
-
-        namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker);
-        namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
-
-        value_atom_ptr _default() const {
-            return default_;
-        }
-
-        void _default(value_atom_ptr v) {
-            default_ = v;
-        }
-
-        tagmarker_type marker() const {
-            return marker_;
-        }
-
-        //////
-
-        virtual void resolve();
-
-    private:
-
-        void resolve_default();
-
-        value_atom_ptr default_;
-        tagmarker_type marker_;
-
-    };
-
-
-
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // valueassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    class valueassigment_entity : public basic_entity {
-
-    public:
-        valueassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
-
-        type_atom_ptr type() const {
-            return type_;
-        }
-
-        void type(type_atom_ptr vl) {
-            type_ = vl;
-        }
-
-        value_atom_ptr value() const {
-            return value_;
-        }
-
-        void value(value_atom_ptr vl) {
-            value_ = vl;
-        }
-
-        void check_value_with_exception(value_type tp);
-
-
-        /////        
-
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
-
-        virtual void resolve();
-
-
-    private:
-
-        type_atom_ptr type_;
-        value_atom_ptr value_;
-    };
-
-
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // valueassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    class valuesetassigment_entity : public basic_entity {
-
-    public:
-        valuesetassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, constraints_atom_ptr vl);
-
-        type_atom_ptr type() const {
-            return type_;
-        }
-
-        void type(type_atom_ptr vl) {
-            type_ = vl;
-        }
-
-        constraints_atom_ptr valueset() const {
-            return valueset_;
-        }
-
-        void valueset(constraints_atom_ptr vl) {
-            valueset_ = vl;
-        }
-
-
-        /////        
-
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
-
-        virtual void resolve();
-
-
-    private:
-
-        type_atom_ptr type_;
-        constraints_atom_ptr valueset_;
-    };
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // field_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    class field_entity : public basic_entity {
-
-    public:
-        field_entity(basic_entity_ptr scope, const std::string& nm, fieldkind_type tp, tagmarker_type mkr = mk_none);
-
-        fieldkind_type fieldkind() const {
-            return fieldkind_;
-        }
-
-        void fieldkind(fieldkind_type vl) {
-            fieldkind_ = vl;
-        }
-        
-        tagmarker_type marker() const {
-            return marker_;
-        }
-
-        void marker(tagmarker_type vl) {
-            marker_ = vl;
-        }      
-        
-        typefield_entity* as_typefield();
-        
-        valuefield_entity* as_valuefield();   
-        
-        valuesetfield_entity* as_valuesetfield();        
-        
-
-    protected:
-        fieldkind_type fieldkind_;
-        tagmarker_type marker_;
-    };
-
-    
-    /////////////////////////////////////////////////////////////////////////   
-    // typefield_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    class typefield_entity : public field_entity {
-
-    public:
-        typefield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr dflt): 
-        field_entity(scope,nm, fkind_TypeFieldSpec, mk_default), default_(dflt)  {};
-        
-        typefield_entity(basic_entity_ptr scope, const std::string& nm, tagmarker_type mkr = mk_none): 
-        field_entity(scope,nm, fkind_TypeFieldSpec, mkr)  {};        
-
-        type_atom_ptr _default() const {
-            return default_;
-        }
-
-        void _default(type_atom_ptr vl) {
-            default_ = vl;
-        }
-        
-        //         
-        
-        virtual void resolve();        
-
-    protected:
-        type_atom_ptr default_;
-    };    
-    
-     /////////////////////////////////////////////////////////////////////////   
-    // valuefield_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    class valuefield_entity : public field_entity {
-
-    public:
-        valuefield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr dflt): 
-        field_entity(scope,nm, fkind_FixedTypeValueFieldSpec, mk_default), type_(tp), default_(dflt), unique_(false)  {};
-        
-        valuefield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, bool unic, tagmarker_type mkr = mk_none): 
-        field_entity(scope,nm, fkind_FixedTypeValueFieldSpec, mkr), type_(tp), unique_(unic)  {};        
-
-        type_atom_ptr type() const {
-            return type_;
-        }
-
-        void type(type_atom_ptr vl) {
-            type_ = vl;
-        }
-        
-        value_atom_ptr _default() const {
-            return default_;
-        }
-
-        void _default(value_atom_ptr vl) {
-            default_ = vl;
-        }     
-        
-        bool unique() const {
-            return unique_;
-        }
-
-        void unique(bool vl) {
-            unique_ = vl;
-        }     
-        
-        //         
-        
-        virtual void resolve();         
-
-    protected:
-        type_atom_ptr type_;
-        value_atom_ptr default_; 
-        bool unique_;
-    };       
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
-    // valuesetfield_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    class valuesetfield_entity : public field_entity {
-
-    public:
-        valuesetfield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, valueset_atom_ptr dflt): 
-        field_entity(scope,nm, fkind_FixedTypeValueSetFieldSpec, mk_default), type_(tp), default_(dflt)  {};
-        
-        valuesetfield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, tagmarker_type mkr = mk_none): 
-        field_entity(scope,nm, fkind_FixedTypeValueSetFieldSpec, mkr), type_(tp)  {};        
-
-        type_atom_ptr type() const {
-            return type_;
-        }
-
-        void type(type_atom_ptr vl) {
-            type_ = vl;
-        }
-        
-        valueset_atom_ptr _default() const {
-            return default_;
-        }
-
-        void _default(valueset_atom_ptr vl) {
-            default_ = vl;
-        }     
-        
-
-        
-        //         
-        
-        virtual void resolve();         
-
-    protected:
-        type_atom_ptr type_;
-        valueset_atom_ptr default_; 
-    };           
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // class_atom
-    /////////////////////////////////////////////////////////////////////////  
-
-    class class_atom : public basic_atom {
-
-    public:
-        class_atom(basic_entity_ptr scope, definedclass_type tp);
-        class_atom(basic_entity_ptr scope, const std::string& reff, definedclass_type tp);
-
-        definedclass_type builtin() const {
-            return builtin_;
-        }
-
-        defnclass_atom* as_defn();
-
-        defineclass_atom* as_define();
-
-    private:
-
-        definedclass_type builtin_;
-
-    };
-
-    /////////////////////////////////////////////////////////////////////////   
-    // defineclass_atom
-    /////////////////////////////////////////////////////////////////////////  
-
-    class defineclass_atom : public class_atom {
-
-    public:
-
-        defineclass_atom(basic_entity_ptr scope, const std::string& reff) : class_atom(scope, cl_Reference) {
-        }
-        
-        //         
-        
-        virtual void resolve();           
-
-    };
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // defnclass_atom
-    /////////////////////////////////////////////////////////////////////////  
-
-    class defnclass_atom : public class_atom {
-
-    public:
-
-        defnclass_atom(basic_entity_ptr scope) : class_atom(scope, cl_SpecDef) {
-        }
-
-        field_entity_vct& fields() {
-            return fields_;
-        }
-
-        void fields(field_entity_vct vl) {
-            fields_ = vl;
-        }
-        
-        //         
-        
-        virtual void resolve();            
-
-    private:
-        field_entity_vct fields_;
-    };
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // classassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    class classassigment_entity : public basic_entity {
-
-    public:
-        classassigment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp);
-
-        class_atom_ptr _class() const {
-            return class_;
-        }
-
-        void _class(class_atom_ptr vl) {
-            class_ = vl;
-        }
-
-
-        /////        
-
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
-
-        virtual void resolve();
-
-    private:
-
-        class_atom_ptr class_;
-    };
-
-
-
-
-    /////////////////////////////////////////////////////////////////////////   
+    // RESOLVE
+    /////////////////////////////////////////////////////////////////////////    
     // resolve functions
     /////////////////////////////////////////////////////////////////////////  
 
@@ -2032,6 +2066,11 @@ namespace x680 {
         std::ostream& operator<<(std::ostream& stream, const error& self);
 
 
+
+
+
+        /////////////////////////////////////////////////////////////////////////   
+        // COMPILE
         /////////////////////////////////////////////////////////////////////////   
         // precomile modules
         /////////////////////////////////////////////////////////////////////////          
@@ -2044,27 +2083,14 @@ namespace x680 {
         basic_entity_ptr compile_import(const x680::syntactic::import& imp, module_entity_ptr mdl);
         void compile_assignments(const x680::syntactic::module& mod, module_entity_ptr mdl);
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-
+        // type
         typeassigment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         basic_entity_vector compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         typeassigment_entity_ptr compile_namedtype(basic_entity_ptr scope, const x680::syntactic::type_assignment& ent);
         type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         predefined_ptr compile_typepredef(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         tagged_ptr compile_tag(basic_entity_ptr scope, const x680::syntactic::tag_type& ent);
-
-        constraints_atom_vct compile_constraints_vct(basic_entity_ptr scope, const x680::syntactic::constraints_vector& ent);
-        constraints_atom_ptr compile_constraints(basic_entity_ptr scope, const x680::syntactic::constraint_element_vector& ent);
-        constraint_atom_ptr compile_constraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
-        constraint_atom_ptr compile_namedconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
-        constraint_atom_ptr compile_multipletypeconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
-
-        classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-        class_atom_ptr compile_class(basic_entity_ptr scope, const x680::syntactic::class_element& ent);
-        field_entity_vct compile_classfield(basic_entity_ptr scope, const x680::syntactic::class_element& ent);     
-        field_entity_ptr compile_typeclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);      
-        field_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);    
-        field_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);         
-
+        // value
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         value_atom_ptr compile_value(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_vct compile_structvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
@@ -2075,17 +2101,36 @@ namespace x680 {
         value_atom_ptr compile_choicevalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_atom_ptr compile_openvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_atom_ptr compile_namedvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
-
+        // valueset
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-
+        valueset_atom_ptr compile_valueset(basic_entity_ptr scope, const x680::syntactic::valueset_element& ent);
+        constraints_atom_vct compile_constraints_vct(basic_entity_ptr scope, const x680::syntactic::constraints_vector& ent);
+        constraints_atom_ptr compile_constraints(basic_entity_ptr scope, const x680::syntactic::constraint_element_vector& ent);
+        constraint_atom_ptr compile_constraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
+        constraint_atom_ptr compile_namedconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
+        constraint_atom_ptr compile_multipletypeconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
+        // class
+        classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        basic_entity_vector compile_classfields(basic_entity_ptr scope, const x680::syntactic::class_element& ent);
+        basic_entity_ptr compile_typeclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        basic_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        basic_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        // big
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
-
-        basic_atom_ptr compile_test(const std::string& rf);
+        // reff
+        basic_atom_ptr compile_reff(const std::string& rf);
 
 
 
     }
 
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // COUT
     /////////////////////////////////////////////////////////////////////////   
     // std::cout  tree
     /////////////////////////////////////////////////////////////////////////          
@@ -2099,26 +2144,17 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, extention_entity* self);
     std::ostream& operator<<(std::ostream& stream, basic_atom* self);
 
-
+    // type
+    std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self);
+    std::ostream& operatorstruct(std::ostream& stream, typeassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, tagmarker_type self);
     std::ostream& operator<<(std::ostream& stream, predefined* self);
     std::ostream& operator<<(std::ostream& stream, tagclass_type self);
     std::ostream& operator<<(std::ostream& stream, tagrule_type self);
     std::ostream& operator<<(std::ostream& stream, tagged& self);
     std::ostream& operator<<(std::ostream& stream, type_atom* self);
-
-    std::ostream& operator<<(std::ostream& stream, const constraints_atom_vct& self);
-    std::ostream& operator<<(std::ostream& stream, constraints_atom* self);
-    std::ostream& operator<<(std::ostream& stream, const constraint_atom_vct& self);
-    std::ostream& operator<<(std::ostream& stream, constraint_atom* self);
-    std::ostream& operator<<(std::ostream& stream, valueconstraint_atom* self);
-    std::ostream& operator<<(std::ostream& stream, typeconstraint_atom* self);
-    std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom* self);
-    std::ostream& operator<<(std::ostream& stream, namedconstraint_atom* self);
-    std::ostream& operator<<(std::ostream& stream, constraintmarker_type tp);
-    std::ostream& operator<<(std::ostream& stream, range_type tp);
-    std::ostream& operator<<(std::ostream& stream, complexconstraint_atom* self);
-    std::ostream& operator<<(std::ostream& stream, multipletypeconstraint_atom * self);
-
+    //value
+    std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self);
     std::ostream& operator<<(std::ostream& stream, defined_type self);
     std::ostream& operator<<(std::ostream& stream, value_atom* self);
     std::ostream& operator<<(std::ostream& stream, numvalue_atom* self);
@@ -2133,25 +2169,35 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, openvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, nullvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, emptyvalue_atom* self);
-
-
-    std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
-    std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self);
-    std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self);
-    std::ostream& operatorstruct(std::ostream& stream, typeassigment_entity* self);
-    std::ostream& operator<<(std::ostream& stream, tagmarker_type self);
-    std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self);
+    // valueset
     std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, valueset_atom* self);
+    std::ostream& operator<<(std::ostream& stream, const constraints_atom_vct& self);
+    std::ostream& operator<<(std::ostream& stream, constraints_atom* self);
+    std::ostream& operator<<(std::ostream& stream, const constraint_atom_vct& self);
+    std::ostream& operator<<(std::ostream& stream, constraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, valueconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, typeconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, namedconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, constraintmarker_type tp);
+    std::ostream& operator<<(std::ostream& stream, range_type tp);
+    std::ostream& operator<<(std::ostream& stream, complexconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, multipletypeconstraint_atom * self);
+    // class
     std::ostream& operator<<(std::ostream& stream, classassigment_entity* self);
     std::ostream& operator<<(std::ostream& stream, class_atom* self);
-    std::ostream& operator<<(std::ostream& stream, defnclass_atom* self);  
-    std::ostream& operator<<(std::ostream& stream, defineclass_atom* self);      
     std::ostream& operator<<(std::ostream& stream, definedclass_type self);
-   std::ostream& operator<<(std::ostream& stream, fieldkind_type self);    
+    std::ostream& operator<<(std::ostream& stream, fieldkind_type self);
     std::ostream& operator<<(std::ostream& stream, field_entity* self);
     std::ostream& operator<<(std::ostream& stream, typefield_entity* self);
     std::ostream& operator<<(std::ostream& stream, valuefield_entity* self);
-    std::ostream& operator<<(std::ostream& stream, valuesetfield_entity* self);    
+    std::ostream& operator<<(std::ostream& stream, valuesetfield_entity* self);
+    // big
+    std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
+    //little
+    std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self);
+
 
 }
 

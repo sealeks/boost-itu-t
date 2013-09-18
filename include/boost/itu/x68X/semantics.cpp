@@ -64,6 +64,8 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
+    //  BASIC
+    /////////////////////////////////////////////////////////////////////////
     // basic_entity
     ///////////////////////////////////////////////////////////////////////// 
 
@@ -538,7 +540,13 @@ namespace x680 {
     }
 
 
+
+
+
+
     /////////////////////////////////////////////////////////////////////////   
+    // TYPE
+    /////////////////////////////////////////////////////////////////////////     
     // predefined
     ///////////////////////////////////////////////////////////////////////// 
 
@@ -699,6 +707,88 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
+    // typeassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    typeassigment_entity::typeassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp) :
+    basic_entity(scope, nm, et_Type), type_(tp) {
+    };
+
+    ////////
+
+    basic_entity_ptr typeassigment_entity::find_by_name(const std::string& nm, bool all) {
+        if (all) {
+            if (((type()->predefined()))) {
+                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
+                    if ((*it)->name() == nm) {
+                        resolve_assigment(*it);
+                        return *it;
+                    }
+                }
+            }
+            if ((type()->reff())) {
+                type()->resolve_reff();
+                basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
+                if (fnd)
+                    return fnd;
+            }
+        }
+        if (scope())
+            return scope()->find_by_name(nm, all);
+        return basic_entity_ptr();
+    }
+
+    void typeassigment_entity::resolve() {
+        unicalelerror_throw(childs());
+        resolve_child();
+        type()->resolve();
+        resolve_assigments(childs());
+
+    }
+
+    namedtypeassigment_entity* typeassigment_entity::as_named() {
+        return dynamic_cast<namedtypeassigment_entity*> (this);
+    }
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // namedtypeassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    namedtypeassigment_entity::namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker)
+    : typeassigment_entity(scp, nm, tp), marker_(mrker) {
+    }
+
+    namedtypeassigment_entity::namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl)
+    : typeassigment_entity(scp, nm, tp), marker_(mk_default), default_(vl) {
+
+    }
+
+    void namedtypeassigment_entity::resolve() {
+        typeassigment_entity::resolve();
+        resolve_default();
+    }
+
+    void namedtypeassigment_entity::resolve_default() {
+        if ((_default()) && (_default()->expecteddef())) {
+            basic_entity_ptr fnd = find_by_name(_default()->expectedname());
+            if (fnd)
+                _default()->reff(fnd);
+            else
+                referenceerror_throw(_default()->expectedname());
+        }
+    }
+
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // VALUE
+    ///////////////////////////////////////////////////////////////////////// 
     // value_atom
     /////////////////////////////////////////////////////////////////////////       
 
@@ -840,6 +930,91 @@ namespace x680 {
             type_->resolve();
         if (value_)
             value_->resolve_reff();
+    }
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // valueassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    valueassigment_entity::valueassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl) :
+    basic_entity(scope, nm, et_Value), type_(tp), value_(vl) {
+    };
+
+    void valueassigment_entity::check_value_with_exception(value_type tp) {
+        if ((value()) && (value()->root()) && (value()->root()->as_value())) {
+            if (value()->root()->as_value()->valtype() != tp)
+                throw semantics::error("value '" + name() + "' has invalid type " +
+                    modulerefname());
+        }
+    }
+
+    basic_entity_ptr valueassigment_entity::find_by_name(const std::string& nm, bool all) {
+        if (all) {
+            if (((type()->predefined()))) {
+                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
+                    if ((*it)->name() == nm) {
+                        resolve_assigment(*it);
+                        return *it;
+                    }
+                }
+            }
+            if (type()->reff()) {
+                type()->resolve_reff(all);
+                basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
+                if (fnd)
+                    return fnd;
+            }
+        }
+        if (scope()) {
+            prefind(nm, scope()->childs());
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if (nm == (*it)->name()) {
+                    resolve_assigment(*it);
+                    return *it;
+                }
+            }
+        }
+        if (scope())
+            return scope()->find_by_name(nm, all);
+        return basic_entity_ptr();
+    }
+
+    void valueassigment_entity::resolve() {
+        resolve_child();
+        type()->resolve();
+        if (value())
+            value()->resolve();
+    }
+
+
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // VALUESET
+    /////////////////////////////////////////////////////////////////////////   
+    // valueset_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    valueset_atom::valueset_atom(basic_entity_ptr scope, valueset_type tp)
+    : basic_atom(scope), builtin_(tp) {
+    }
+
+    valueset_atom::valueset_atom(basic_entity_ptr scope, const std::string& reff, valueset_type tp)
+    : basic_atom(reff, scope), builtin_(tp) {
+    }
+
+    void valueset_atom::resolve() {
+        if (builtin_ != vs_Strait)
+            resolve_reff();
+        if (set())
+            set()->resolve();
+
     }
 
 
@@ -1032,183 +1207,10 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // bigassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    bigassigment_entity::bigassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg) :
-    basic_entity(scope, nm, et_Nodef), big_(bg) {
-    };
-
-    basic_entity_ptr bigassigment_entity::find_by_name(const std::string& nm, bool all) {
-        if (scope())
-            prefind(nm, scope()->childs());
-        for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
-            if (nm == (*it)->name()) {
-                resolve_assigment(*it);
-                return *it;
-            }
-        }
-        if (scope())
-            return scope()->find_by_name(nm);
-        return basic_entity_ptr();
-    }
-
-
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // valueassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    littleassigment_entity::littleassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg, basic_atom_ptr lt) :
-    basic_entity(scope, nm, et_Type), big_(bg), little_(lt) {
-    };
-
-    /////////
-
-    basic_entity_ptr littleassigment_entity::find_by_name(const std::string& nm, bool all) {
-        if (scope())
-            return scope()->find_by_name(nm, all);
-        return basic_entity_ptr();
-    }
-
-
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // typeassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    typeassigment_entity::typeassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp) :
-    basic_entity(scope, nm, et_Type), type_(tp) {
-    };
-
-    ////////
-
-    basic_entity_ptr typeassigment_entity::find_by_name(const std::string& nm, bool all) {
-        if (all) {
-            if (((type()->predefined()))) {
-                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
-                    if ((*it)->name() == nm) {
-                        resolve_assigment(*it);
-                        return *it;
-                    }
-                }
-            }
-            if ((type()->reff())) {
-                type()->resolve_reff();
-                basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
-                if (fnd)
-                    return fnd;
-            }
-        }
-        if (scope())
-            return scope()->find_by_name(nm, all);
-        return basic_entity_ptr();
-    }
-
-    void typeassigment_entity::resolve() {
-        unicalelerror_throw(childs());
-        resolve_child();
-        type()->resolve();
-        resolve_assigments(childs());
-
-    }
-
-    namedtypeassigment_entity* typeassigment_entity::as_named() {
-        return dynamic_cast<namedtypeassigment_entity*> (this);
-    }
-
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // namedtypeassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    namedtypeassigment_entity::namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker)
-    : typeassigment_entity(scp, nm, tp), marker_(mrker) {
-    }
-
-    namedtypeassigment_entity::namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl)
-    : typeassigment_entity(scp, nm, tp), marker_(mk_default), default_(vl) {
-
-    }
-
-    void namedtypeassigment_entity::resolve() {
-        typeassigment_entity::resolve();
-        resolve_default();
-    }
-
-    void namedtypeassigment_entity::resolve_default() {
-        if ((_default()) && (_default()->expecteddef())) {
-            basic_entity_ptr fnd = find_by_name(_default()->expectedname());
-            if (fnd)
-                _default()->reff(fnd);
-            else
-                referenceerror_throw(_default()->expectedname());
-        }
-    }
-
-    /////////////////////////////////////////////////////////////////////////   
-    // valueassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-    valueassigment_entity::valueassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl) :
-    basic_entity(scope, nm, et_Value), type_(tp), value_(vl) {
-    };
-
-    void valueassigment_entity::check_value_with_exception(value_type tp) {
-        if ((value()) && (value()->root()) && (value()->root()->as_value())) {
-            if (value()->root()->as_value()->valtype() != tp)
-                throw semantics::error("value '" + name() + "' has invalid type " +
-                    modulerefname());
-        }
-    }
-
-    basic_entity_ptr valueassigment_entity::find_by_name(const std::string& nm, bool all) {
-        if (all) {
-            if (((type()->predefined()))) {
-                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
-                    if ((*it)->name() == nm) {
-                        resolve_assigment(*it);
-                        return *it;
-                    }
-                }
-            }
-            if (type()->reff()) {
-                type()->resolve_reff(all);
-                basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
-                if (fnd)
-                    return fnd;
-            }
-        }
-        if (scope()) {
-            prefind(nm, scope()->childs());
-            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
-                if (nm == (*it)->name()) {
-                    resolve_assigment(*it);
-                    return *it;
-                }
-            }
-        }
-        if (scope())
-            return scope()->find_by_name(nm, all);
-        return basic_entity_ptr();
-    }
-
-    void valueassigment_entity::resolve() {
-        resolve_child();
-        type()->resolve();
-        if (value())
-            value()->resolve();
-    }
-
-
-    /////////////////////////////////////////////////////////////////////////   
     // valuesetassigment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    valuesetassigment_entity::valuesetassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, constraints_atom_ptr vl) :
+    valuesetassigment_entity::valuesetassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, valueset_atom_ptr vl) :
     basic_entity(scope, nm, et_ValueSet), type_(tp), valueset_(vl) {
     };
 
@@ -1242,7 +1244,19 @@ namespace x680 {
             valueset()->resolve();
     }
 
+
+
+
+
+
+
+
+
+
+
     /////////////////////////////////////////////////////////////////////////   
+    // CLASS
+    /////////////////////////////////////////////////////////////////////////    
     // field_entity
     /////////////////////////////////////////////////////////////////////////  
 
@@ -1306,32 +1320,20 @@ namespace x680 {
     : basic_atom(reff, scope), builtin_(tp) {
     }
 
-    defnclass_atom* class_atom::as_defn() {
-        return (builtin_ == cl_SpecDef) ? dynamic_cast<defnclass_atom*> (this) : 0;
+    class_atom* class_atom::as_defn() {
+        return (builtin_ == cl_SpecDef) ? dynamic_cast<class_atom*> (this) : 0;
     }
 
-    defineclass_atom* class_atom::as_define() {
-        return (builtin_ == cl_Reference) ? dynamic_cast<defineclass_atom*> (this) : 0;
+    class_atom* class_atom::as_define() {
+        return (builtin_ == cl_Reference) ? dynamic_cast<class_atom*> (this) : 0;
     }
 
-    /////////////////////////////////////////////////////////////////////////   
-    // defineclass_atom
-    /////////////////////////////////////////////////////////////////////////      
-
-    void defineclass_atom::resolve() {
-        resolve_reff();
+    void class_atom::resolve() {
+        if (builtin_ == cl_Reference)
+            resolve_reff();
     }
 
-    /////////////////////////////////////////////////////////////////////////   
-    // defnclass_atom
-    /////////////////////////////////////////////////////////////////////////      
 
-    void defnclass_atom::resolve() {
-        for (field_entity_vct::const_iterator it = fields_.begin(); it != fields_.end(); ++it) {
-            if (*it)
-                (*it)->resolve();
-        }
-    }
 
     /////////////////////////////////////////////////////////////////////////   
     // classassigment_entity
@@ -1357,10 +1359,61 @@ namespace x680 {
     }
 
     void classassigment_entity::resolve() {
+        resolve_child();
         if (_class())
             _class()->resolve();
     }
 
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // BIG
+    /////////////////////////////////////////////////////////////////////////   
+    // bigassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    bigassigment_entity::bigassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg) :
+    basic_entity(scope, nm, et_Nodef), big_(bg) {
+    };
+
+    basic_entity_ptr bigassigment_entity::find_by_name(const std::string& nm, bool all) {
+        if (scope())
+            prefind(nm, scope()->childs());
+        for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+            if (nm == (*it)->name()) {
+                resolve_assigment(*it);
+                return *it;
+            }
+        }
+        if (scope())
+            return scope()->find_by_name(nm);
+        return basic_entity_ptr();
+    }
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // LITTLE
+    /////////////////////////////////////////////////////////////////////////   
+    // littleassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    littleassigment_entity::littleassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg, basic_atom_ptr lt) :
+    basic_entity(scope, nm, et_Type), big_(bg), little_(lt) {
+    };
+
+    /////////
+
+    basic_entity_ptr littleassigment_entity::find_by_name(const std::string& nm, bool all) {
+        if (scope())
+            return scope()->find_by_name(nm, all);
+        return basic_entity_ptr();
+    }
 
 
 
@@ -1399,7 +1452,7 @@ namespace x680 {
                 }
                 if (fnd->kind() == et_Class) {
                     basic_entity_ptr rslt(new classassigment_entity(elm->scope(), tmp->name(),
-                            class_atom_ptr(new defineclass_atom(elm->scope(), tmp->big()->reff()->name()))));
+                            class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference))));
                     return rslt;
                 }
             } else {
@@ -1625,6 +1678,10 @@ namespace x680 {
             return rslt;
         }
 
+
+
+        //  type
+
         typeassigment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::type_assignment tmp = boost::get<x680::syntactic::type_assignment>(ent);
             typeassigment_entity_ptr tmpt(new typeassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
@@ -1736,173 +1793,10 @@ namespace x680 {
             return tagged_ptr(new tagged(nm, ent.class_, ent.rule));
         }
 
-        constraints_atom_vct compile_constraints_vct(basic_entity_ptr scope, const x680::syntactic::constraints_vector& ent) {
-            constraints_atom_vct tmp;
-            for (x680::syntactic::constraints_vector::const_iterator it = ent.begin(); it != ent.end(); ++it)
-                tmp.push_back(compile_constraints(scope, *it));
-            return tmp;
-        }
 
-        constraints_atom_ptr compile_constraints(basic_entity_ptr scope, const x680::syntactic::constraint_element_vector& ent) {
-            bool first = true;
-            constraint_atom_vct tmp1;
-            constraint_atom_vct tmp2;
-            for (x680::syntactic::constraint_element_vector::const_iterator it = ent.begin(); it != ent.end(); ++it) {
-                if (it->tp == cns_EXTENTION) {
-                    first = false;
-                } else {
-                    if (first)
-                        tmp1.push_back(compile_constraint(scope, *it));
-                    else
-                        tmp2.push_back(compile_constraint(scope, *it));
-                }
-            }
-            return first ? constraints_atom_ptr(new constraints_atom(scope, tmp1)) : constraints_atom_ptr(new constraints_atom(scope, tmp1, tmp2));
-        }
 
-        constraint_atom_ptr compile_constraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
-            constraint_atom_ptr tmp;
-            switch (ent.tp) {
-                case cns_PatternConstraint:
-                case cns_SingleValue: return constraint_atom_ptr(new valueconstraint_atom(scope, ent.tp, compile_value(scope, ent.value)));
-                case cns_ValueRange:
-                case cns_DurationRange:
-                case cns_TimePointRange:
-                case cns_RecurrenceRange: return constraint_atom_ptr(new rangeconstraint_atom(scope, ent.tp,
-                            (((ent.fromtype_ == close_range) || (ent.fromtype_ == open_range)) ? compile_value(scope, ent.from_) : value_atom_ptr()), ent.fromtype_,
-                            (((ent.totype_ == close_range) || (ent.totype_ == open_range)) ? compile_value(scope, ent.to_) : value_atom_ptr()), ent.totype_));
-                case cns_ContainedSubtype:
-                case cns_TypeConstraint: return constraint_atom_ptr(new typeconstraint_atom(scope, ent.tp,
-                            compile_type(scope, ent.type), false));
-                case cns_PermittedAlphabet:
-                case cns_SizeConstraint:
-                case cns_SingleTypeConstraint: return constraint_atom_ptr(new complexconstraint_atom(scope, ent.tp,
-                            compile_constraints(scope, ent.constraint)));
-                case cns_PropertySettings: return constraint_atom_ptr(new stringconstraint_atom(scope, ent.tp, ent.identifier));
-                case cns_MultipleTypeConstraints: return compile_multipletypeconstraint(scope, ent);
-                case cns_NamedConstraint: return compile_namedconstraint(scope, ent);
-                case cns_UNION: return constraint_atom_ptr(new unionconstraint_atom());
-                case cns_INTERSECTION: return constraint_atom_ptr(new intersectionconstraint_atom());
-                case cns_EXCEPT: return constraint_atom_ptr(new exceptconstraint_atom());
-                case cns_ALLEXCEPT: return constraint_atom_ptr(new allexceptconstraint_atom());
-                case cns_EXTENTION: return constraint_atom_ptr(new extentionconstraint_atom());
-                case cns_EXCEPTION: return constraint_atom_ptr(new exceptionconstraint_atom());
-                    /*case cns_UserDefinedConstraint,
-                    case cns_SimpleTableConstraint,
-                    case cns_ComponentRelation,
-                    case cns_ContentsType,
-                    case cns_ContentsValue,
-                    case cns_ContentsTypeValue,*/
-                default:
-                {
-                }
-            }
-            return constraint_atom_ptr(new constraint_atom());
-        }
 
-        constraint_atom_ptr compile_namedconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
-            if (!ent.constraint.empty())
-                return constraint_atom_ptr(new namedconstraint_atom(scope, ent.identifier, compile_constraints(scope, ent.constraint), ent.marker));
-            return constraint_atom_ptr(new namedconstraint_atom(scope, ent.identifier, ent.marker));
-        }
-
-        constraint_atom_ptr compile_multipletypeconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
-            constraint_atom_vct tmp;
-            for (x680::syntactic::constraint_element_vector::const_iterator it = ent.constraint.begin(); it != ent.constraint.end(); ++it) {
-                switch (it->tp) {
-                    case cns_NamedConstraint: tmp.push_back(compile_namedconstraint(scope, *it));
-                        break;
-                    default: tmp.push_back(compile_constraint(scope, *it));
-                }
-            }
-            return constraint_atom_ptr(new multipletypeconstraint_atom(scope, tmp));
-        }
-
-        classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::class_assignment tmp = boost::get<x680::syntactic::class_assignment>(ent);
-            classassigment_entity_ptr tmpc(new classassigment_entity(scope, tmp.identifier, class_atom_ptr()));
-            tmpc->_class(compile_class(tmpc, tmp.class_));
-            return tmpc;
-        }
-
-        class_atom_ptr compile_class(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
-            switch (ent.tp) {
-                case cl_Reference: return class_atom_ptr(new defineclass_atom(scope, ent.reference));
-                case cl_SpecDef:
-                {
-                    class_atom_ptr tmp(new defnclass_atom(scope));
-                    tmp->as_defn()->fields(compile_classfield(scope, ent));
-                    return tmp;
-                }
-                default:
-                {
-                }
-            }
-            return class_atom_ptr(new class_atom(scope, ent.tp));
-        }
-
-        field_entity_vct compile_classfield(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
-            field_entity_vct tmp;
-            for (x680::syntactic::classfield_vector::const_iterator it = ent.fields.begin(); it != ent.fields.end(); ++it) {
-                switch (it->tp) {
-                    case fkind_TypeFieldSpec: tmp.push_back(compile_typeclassfield(scope, *it));
-                        break;
-                    case fkind_FixedTypeValueFieldSpec: tmp.push_back(compile_valueclassfield(scope, *it));
-                        break;
-                    case fkind_FixedTypeValueSetFieldSpec: tmp.push_back(compile_valuesetclassfield(scope, *it));
-                        break;
-                    default: tmp.push_back(field_entity_ptr(new field_entity(scope, it->field, it->tp)));
-                }
-            }
-            return tmp;
-        }
-
-        field_entity_ptr compile_typeclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
-            switch (ent.marker) {
-                case field_defaulttype:
-                {
-                    type_atom_ptr tp = compile_type(scope, ent.defaulttype);
-                    return field_entity_ptr(new typefield_entity(scope, ent.field, tp));
-                }
-                case field_optional: return field_entity_ptr(new typefield_entity(scope, ent.field, mk_optional));
-                default:
-                {
-                }
-            }
-            return field_entity_ptr(new typefield_entity(scope, ent.field));
-        }
-
-        field_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
-            type_atom_ptr tp = compile_type(scope, ent.holdertype);
-            switch (ent.marker) {
-                case field_defaultvalue:
-                {
-                    value_atom_ptr vl = compile_value(scope, ent.defaultvalue);
-                    return field_entity_ptr(new valuefield_entity(scope, ent.field, tp, vl));
-                }
-                case field_optional: return field_entity_ptr(new valuefield_entity(scope, ent.field, tp, ent.unique, mk_optional));
-                default:
-                {
-                }
-            }
-            return field_entity_ptr(new valuefield_entity(scope, ent.field, tp, ent.unique));
-        }
-
-        field_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
-            type_atom_ptr tp = compile_type(scope, ent.holdertype);
-            switch (ent.marker) {
-                case field_defaultvalue:
-                {
-                    valueset_atom_ptr vl = compile_constraints(scope, ent.defaultset.set);
-                    return field_entity_ptr(new valuesetfield_entity(scope, ent.field, tp, vl));
-                }
-                case field_optional: return field_entity_ptr(new valuesetfield_entity(scope, ent.field, tp, mk_optional));
-                default:
-                {
-                }
-            }
-            return field_entity_ptr(new valuesetfield_entity(scope, ent.field, tp));
-        }
+        //  value
 
         valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::value_assignment tmp = boost::get<x680::syntactic::value_assignment>(ent);
@@ -2025,22 +1919,211 @@ namespace x680 {
             return rslt;
         }
 
+
+
+        // valueset
+
         valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);
-            valuesetassigment_entity_ptr tmpv(new valuesetassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type), constraints_atom_ptr()));
-            if (tmp.set.tp == vs_Strait)
-                tmpv->valueset(compile_constraints(tmpv, tmp.set.set));
-            else
-                tmpv->valueset(constraints_atom_ptr(new constraints_atom(tmpv, tmp.set.reference)));
+            valuesetassigment_entity_ptr tmpv(new valuesetassigment_entity(scope, tmp.identifier, compile_type(scope, tmp.type), valueset_atom_ptr()));
+            tmpv->valueset(compile_valueset(tmpv, tmp.set));
             return tmpv;
         }
 
-        bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::unknown_tc_assignment tmp = boost::get<x680::syntactic::unknown_tc_assignment>(ent);
-            return bigassigment_entity_ptr(new bigassigment_entity(scope, tmp.identifier, compile_test(tmp.unknown_tc.reff)));
+        valueset_atom_ptr compile_valueset(basic_entity_ptr scope, const x680::syntactic::valueset_element& ent) {
+            if (ent.tp == vs_Strait) {
+                valueset_atom_ptr tmp(new valueset_atom(scope, ent.tp));
+                tmp->set(compile_constraints(scope, ent.set));
+                return tmp;
+            }
+            return valueset_atom_ptr(new valueset_atom(scope, ent.reference, ent.tp));
         }
 
-        basic_atom_ptr compile_test(const std::string& rf) {
+        constraints_atom_vct compile_constraints_vct(basic_entity_ptr scope, const x680::syntactic::constraints_vector& ent) {
+            constraints_atom_vct tmp;
+            for (x680::syntactic::constraints_vector::const_iterator it = ent.begin(); it != ent.end(); ++it)
+                tmp.push_back(compile_constraints(scope, *it));
+            return tmp;
+        }
+
+        constraints_atom_ptr compile_constraints(basic_entity_ptr scope, const x680::syntactic::constraint_element_vector& ent) {
+            bool first = true;
+            constraint_atom_vct tmp1;
+            constraint_atom_vct tmp2;
+            for (x680::syntactic::constraint_element_vector::const_iterator it = ent.begin(); it != ent.end(); ++it) {
+                if (it->tp == cns_EXTENTION) {
+                    first = false;
+                } else {
+                    if (first)
+                        tmp1.push_back(compile_constraint(scope, *it));
+                    else
+                        tmp2.push_back(compile_constraint(scope, *it));
+                }
+            }
+            return first ? constraints_atom_ptr(new constraints_atom(scope, tmp1)) : constraints_atom_ptr(new constraints_atom(scope, tmp1, tmp2));
+        }
+
+        constraint_atom_ptr compile_constraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
+            constraint_atom_ptr tmp;
+            switch (ent.tp) {
+                case cns_PatternConstraint:
+                case cns_SingleValue: return constraint_atom_ptr(new valueconstraint_atom(scope, ent.tp, compile_value(scope, ent.value)));
+                case cns_ValueRange:
+                case cns_DurationRange:
+                case cns_TimePointRange:
+                case cns_RecurrenceRange: return constraint_atom_ptr(new rangeconstraint_atom(scope, ent.tp,
+                            (((ent.fromtype_ == close_range) || (ent.fromtype_ == open_range)) ? compile_value(scope, ent.from_) : value_atom_ptr()), ent.fromtype_,
+                            (((ent.totype_ == close_range) || (ent.totype_ == open_range)) ? compile_value(scope, ent.to_) : value_atom_ptr()), ent.totype_));
+                case cns_ContainedSubtype:
+                case cns_TypeConstraint: return constraint_atom_ptr(new typeconstraint_atom(scope, ent.tp,
+                            compile_type(scope, ent.type), false));
+                case cns_PermittedAlphabet:
+                case cns_SizeConstraint:
+                case cns_SingleTypeConstraint: return constraint_atom_ptr(new complexconstraint_atom(scope, ent.tp,
+                            compile_constraints(scope, ent.constraint)));
+                case cns_PropertySettings: return constraint_atom_ptr(new stringconstraint_atom(scope, ent.tp, ent.identifier));
+                case cns_MultipleTypeConstraints: return compile_multipletypeconstraint(scope, ent);
+                case cns_NamedConstraint: return compile_namedconstraint(scope, ent);
+                case cns_UNION: return constraint_atom_ptr(new unionconstraint_atom());
+                case cns_INTERSECTION: return constraint_atom_ptr(new intersectionconstraint_atom());
+                case cns_EXCEPT: return constraint_atom_ptr(new exceptconstraint_atom());
+                case cns_ALLEXCEPT: return constraint_atom_ptr(new allexceptconstraint_atom());
+                case cns_EXTENTION: return constraint_atom_ptr(new extentionconstraint_atom());
+                case cns_EXCEPTION: return constraint_atom_ptr(new exceptionconstraint_atom());
+                    /*case cns_UserDefinedConstraint,
+                    case cns_SimpleTableConstraint,
+                    case cns_ComponentRelation,
+                    case cns_ContentsType,
+                    case cns_ContentsValue,
+                    case cns_ContentsTypeValue,*/
+                default:
+                {
+                }
+            }
+            return constraint_atom_ptr(new constraint_atom());
+        }
+
+        constraint_atom_ptr compile_namedconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
+            if (!ent.constraint.empty())
+                return constraint_atom_ptr(new namedconstraint_atom(scope, ent.identifier, compile_constraints(scope, ent.constraint), ent.marker));
+            return constraint_atom_ptr(new namedconstraint_atom(scope, ent.identifier, ent.marker));
+        }
+
+        constraint_atom_ptr compile_multipletypeconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
+            constraint_atom_vct tmp;
+            for (x680::syntactic::constraint_element_vector::const_iterator it = ent.constraint.begin(); it != ent.constraint.end(); ++it) {
+                switch (it->tp) {
+                    case cns_NamedConstraint: tmp.push_back(compile_namedconstraint(scope, *it));
+                        break;
+                    default: tmp.push_back(compile_constraint(scope, *it));
+                }
+            }
+            return constraint_atom_ptr(new multipletypeconstraint_atom(scope, tmp));
+        }
+
+
+
+
+        //class
+
+        classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
+            x680::syntactic::class_assignment tmp = boost::get<x680::syntactic::class_assignment>(ent);
+            classassigment_entity_ptr tmpc(new classassigment_entity(scope, tmp.identifier, class_atom_ptr()));
+            switch (tmp.class_.tp) {
+                case cl_Reference:
+                {
+                    tmpc->_class(class_atom_ptr(new class_atom(tmpc, tmp.class_.reference, tmp.class_.tp)));
+                    return tmpc;
+                }
+                case cl_SpecDef:
+                {
+                    tmpc->_class(class_atom_ptr(new class_atom(tmpc, tmp.class_.tp)));
+                    tmpc->childs() = compile_classfields(tmpc, tmp.class_);
+                    return tmpc;
+                }
+                default:
+                {
+                }
+            }
+            tmpc->_class(class_atom_ptr(new class_atom(tmpc, tmp.class_.tp)));
+            return tmpc;
+        }
+
+        basic_entity_vector compile_classfields(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
+            basic_entity_vector tmp;
+            for (x680::syntactic::classfield_vector::const_iterator it = ent.fields.begin(); it != ent.fields.end(); ++it) {
+                switch (it->tp) {
+                    case fkind_TypeFieldSpec: tmp.push_back(compile_typeclassfield(scope, *it));
+                        break;
+                    case fkind_FixedTypeValueFieldSpec: tmp.push_back(compile_valueclassfield(scope, *it));
+                        break;
+                    case fkind_FixedTypeValueSetFieldSpec: tmp.push_back(compile_valuesetclassfield(scope, *it));
+                        break;
+                    default: tmp.push_back(basic_entity_ptr(new field_entity(scope, it->field, it->tp)));
+                }
+            }
+            return tmp;
+        }
+
+        basic_entity_ptr compile_typeclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
+            switch (ent.marker) {
+                case field_defaulttype:
+                {
+                    type_atom_ptr tp = compile_type(scope, ent.defaulttype);
+                    return basic_entity_ptr(new typefield_entity(scope, ent.field, tp));
+                }
+                case field_optional: return basic_entity_ptr(new typefield_entity(scope, ent.field, mk_optional));
+                default:
+                {
+                }
+            }
+            return basic_entity_ptr(new typefield_entity(scope, ent.field));
+        }
+
+        basic_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
+            type_atom_ptr tp = compile_type(scope, ent.holdertype);
+            switch (ent.marker) {
+                case field_defaultvalue:
+                {
+                    value_atom_ptr vl = compile_value(scope, ent.defaultvalue);
+                    return basic_entity_ptr(new valuefield_entity(scope, ent.field, tp, vl));
+                }
+                case field_optional: return basic_entity_ptr(new valuefield_entity(scope, ent.field, tp, ent.unique, mk_optional));
+                default:
+                {
+                }
+            }
+            return basic_entity_ptr(new valuefield_entity(scope, ent.field, tp, ent.unique));
+        }
+
+        basic_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
+            type_atom_ptr tp = compile_type(scope, ent.holdertype);
+            switch (ent.marker) {
+                case field_defaultvalue:
+                {
+                    valueset_atom_ptr vl = compile_valueset(scope, ent.defaultset);
+                    return basic_entity_ptr(new valuesetfield_entity(scope, ent.field, tp, vl));
+                }
+                case field_optional: return basic_entity_ptr(new valuesetfield_entity(scope, ent.field, tp, mk_optional));
+                default:
+                {
+                }
+            }
+            return basic_entity_ptr(new valuesetfield_entity(scope, ent.field, tp));
+        }
+
+
+
+        // big
+
+        bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
+            x680::syntactic::unknown_tc_assignment tmp = boost::get<x680::syntactic::unknown_tc_assignment>(ent);
+            return bigassigment_entity_ptr(new bigassigment_entity(scope, tmp.identifier, compile_reff(tmp.unknown_tc.reff)));
+        }
+
+        // reff
+
+        basic_atom_ptr compile_reff(const std::string& rf) {
             return basic_atom_ptr(new basic_atom(rf));
         }
 
@@ -2055,11 +2138,11 @@ namespace x680 {
 
 
 
-
-
+    /////////////////////////////////////////////////////////////////////////   
+    // COUT
     /////////////////////////////////////////////////////////////////////////   
     // std::cout  tree
-    /////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////////////       
 
     std::ostream& indent(std::ostream& stream, typeassigment_entity* self) {
         if (self) {
@@ -2164,6 +2247,69 @@ namespace x680 {
             return stream << self->as_type()->builtin();
         if (self->as_value())
             return stream << self->as_value();
+        return stream;
+    }
+
+
+
+    //  type
+
+    std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self) {
+        if (self->as_named()) {
+            indent(stream, self);
+            stream << self->name() << " ";
+            if (self->as_named()->marker() == mk_components_of)
+                stream << self->name() << "COMPONENTS OF ";
+            stream << self->type() << " ";
+            operatorstruct(stream, self);
+            stream << self->as_named()->marker();
+            if ((self->as_named()->_default()) && (self->as_named()->marker() == mk_default))
+                stream << " " << self->as_named()->_default().get();
+        } else {
+            stream << "(T) " << self->name() << " :: = " << self->type().get();
+            operatorstruct(stream, self);
+        }
+        return stream << "\n";
+        ;
+    }
+
+    std::ostream& operatorstruct(std::ostream& stream, typeassigment_entity* self) {
+        switch (self->type()->builtin()) {
+            case t_SEQUENCE:
+            case t_SEQUENCE_OF:
+            case t_SET:
+            case t_SET_OF:
+            case t_CHOICE:;
+            {
+                stream << " {" << "\n";
+                for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                    if ((*it)->as_typeassigment())
+                        stream << (*it)->as_typeassigment();
+                }
+                indent(stream, self);
+                stream << "}" << " ";
+                break;
+            }
+            default:
+            {
+                stream << " ";
+            };
+        }
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, tagmarker_type self) {
+        switch (self) {
+                //case mk_none:
+            case mk_default: stream << " DEFAULT ";
+                break;
+            case mk_optional: stream << " OPTIONAL ";
+                break;
+                //case mk_components_of:        
+            default:
+            {
+            }
+        }
         return stream;
     }
 
@@ -2290,6 +2436,150 @@ namespace x680 {
             default:
             {
             };
+        }
+        return stream;
+    }
+
+
+
+    // value
+
+    std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self) {
+        stream << "(v) " << self->name() << " [" << self->type().get() << "] :: = ";
+        if (self->value())
+            return stream << self->value().get() << "\n";
+        return stream << "???" << "\n";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, value_atom* self) {
+        switch (self->valtype()) {
+            case v_boolean: return (stream << self->as_bool());
+            case v_number: return (stream << self->as_number());
+            case v_real: return (stream << self->as_real());
+            case v_null: return (stream << self->as_null());
+            case v_empty: return (stream << self->as_empty());
+            case v_named_value: return (stream << self->as_named());
+            case v_hstring:
+            case v_bstring:
+            case v_cstring: return (stream << self->as_cstr());
+            case v_struct: return (stream << self->as_struct());
+            case v_objectid: return (stream << self->as_objid());
+            case v_defined_list:
+            case v_number_list:
+            case v_value_list: return (stream << self->as_list());
+            case v_defined: return (stream << self->as_defined());
+            case v_defined_assign: return (stream << self->as_assign());
+            case v_choice: return (stream << self->as_choice());
+            case v_open: return (stream << self->as_open());
+            default:
+            {
+            }
+        }
+        return stream << "?: " << (int) self->valtype();
+    }
+
+    std::ostream& operator<<(std::ostream& stream, numvalue_atom* self) {
+        return stream << "(" << self->value() << ")";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, realvalue_atom* self) {
+        return stream << "(" << self->value() << ")";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, boolvalue_atom* self) {
+        if (self->value())
+            return stream << "(TRUE)";
+        else
+            return stream << "(FALSE)";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, strvalue_atom* self) {
+        stream << "('";
+        switch (self->valtype()) {
+            case v_hstring: stream << "&H ";
+                break;
+            case v_bstring: stream << "&B ";
+                break;
+            default:
+            {
+            }
+        }
+        return stream << self->value() << "')";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, namedvalue_atom* self) {
+        return stream << self->name() << " : " << self->value();
+    }
+
+    std::ostream& operator<<(std::ostream& stream, structvalue_atom* self) {
+        stream << " { ";
+        for (value_vct::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
+            if (it != self->values().begin())
+                if (self->as_objid())
+                    stream << "  ";
+                else
+                    stream << ",  ";
+            stream << (*it).get();
+        }
+        return stream << "}";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self) {
+        if (self->reff()) {
+            if (self->reff()->as_expectdef())
+                return stream << "??? *" << self->reff()->name();
+            else {
+                stream << " *" << self->reff()->name();
+                if (self->rooted())
+                    stream << "(@" << self->root() << ")";
+                return stream;
+            }
+        }
+        return stream;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self) {
+        return stream << "(" << self->name() << "(" << self->value().get() << ") )";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self) {
+        return stream << "(" << self->name() << " : " << self->value().get() << ")";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, openvalue_atom* self) {
+        return stream << "(" << self->type().get() << " : " << self->value().get() << ")";
+        ;
+    }
+
+    std::ostream& operator<<(std::ostream& stream, nullvalue_atom* self) {
+        return stream << "(NULL)";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, emptyvalue_atom* self) {
+        return stream << "({})";
+    }
+
+
+
+
+    //valueset
+
+    std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self) {
+        return stream << "(vS) " << self->name() << " [" << self->type().get() << "] :: = " << self->valueset().get() << "\n";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, valueset_atom* self) {
+        if (self->reff()) {
+            if (self->reff()->as_expectdef())
+                return stream << "??? *" << self->reff()->name();
+            else {
+                stream << " *" << self->reff()->name();
+
+                return stream;
+            }
+        } else {
+            if (self->set())
+                stream << self->set().get();
         }
         return stream;
     }
@@ -2439,194 +2729,21 @@ namespace x680 {
         return stream << " }";
     }
 
-    std::ostream& operator<<(std::ostream& stream, value_atom* self) {
-        switch (self->valtype()) {
-            case v_boolean: return (stream << self->as_bool());
-            case v_number: return (stream << self->as_number());
-            case v_real: return (stream << self->as_real());
-            case v_null: return (stream << self->as_null());
-            case v_empty: return (stream << self->as_empty());
-            case v_named_value: return (stream << self->as_named());
-            case v_hstring:
-            case v_bstring:
-            case v_cstring: return (stream << self->as_cstr());
-            case v_struct: return (stream << self->as_struct());
-            case v_objectid: return (stream << self->as_objid());
-            case v_defined_list:
-            case v_number_list:
-            case v_value_list: return (stream << self->as_list());
-            case v_defined: return (stream << self->as_defined());
-            case v_defined_assign: return (stream << self->as_assign());
-            case v_choice: return (stream << self->as_choice());
-            case v_open: return (stream << self->as_open());
-            default:
-            {
-            }
-        }
-        return stream << "?: " << (int) self->valtype();
-    }
 
-    std::ostream& operator<<(std::ostream& stream, numvalue_atom* self) {
-        return stream << "(" << self->value() << ")";
-    }
 
-    std::ostream& operator<<(std::ostream& stream, realvalue_atom* self) {
-        return stream << "(" << self->value() << ")";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, boolvalue_atom* self) {
-        if (self->value())
-            return stream << "(TRUE)";
-        else
-            return stream << "(FALSE)";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, strvalue_atom* self) {
-        stream << "('";
-        switch (self->valtype()) {
-            case v_hstring: stream << "&H ";
-                break;
-            case v_bstring: stream << "&B ";
-                break;
-            default:
-            {
-            }
-        }
-        return stream << self->value() << "')";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, namedvalue_atom* self) {
-        return stream << self->name() << " : " << self->value();
-    }
-
-    std::ostream& operator<<(std::ostream& stream, structvalue_atom* self) {
-        stream << " { ";
-        for (value_vct::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
-            if (it != self->values().begin())
-                if (self->as_objid())
-                    stream << "  ";
-                else
-                    stream << ",  ";
-            stream << (*it).get();
-        }
-        return stream << "}";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self) {
-        if (self->reff()) {
-            if (self->reff()->as_expectdef())
-                return stream << "??? *" << self->reff()->name();
-            else {
-                stream << " *" << self->reff()->name();
-                if (self->rooted())
-                    stream << "(@" << self->root() << ")";
-                return stream;
-            }
-        }
-        return stream;
-    }
-
-    std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self) {
-        return stream << "(" << self->name() << "(" << self->value().get() << ") )";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self) {
-        return stream << "(" << self->name() << " : " << self->value().get() << ")";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, openvalue_atom* self) {
-        return stream << "(" << self->type().get() << " : " << self->value().get() << ")";
-        ;
-    }
-
-    std::ostream& operator<<(std::ostream& stream, nullvalue_atom* self) {
-        return stream << "(NULL)";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, emptyvalue_atom* self) {
-        return stream << "({})";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self) {
-        return stream << "(?B)" << self->name() << " :: = " << "\n";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self) {
-        return stream << "(?l)" << self->name() << " [" << "] :: = " << "\n";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self) {
-        if (self->as_named()) {
-            indent(stream, self);
-            stream << self->name() << " ";
-            if (self->as_named()->marker() == mk_components_of)
-                stream << self->name() << "COMPONENTS OF ";
-            stream << self->type() << " ";
-            operatorstruct(stream, self);
-            stream << self->as_named()->marker();
-            if ((self->as_named()->_default()) && (self->as_named()->marker() == mk_default))
-                stream << " " << self->as_named()->_default().get();
-        } else {
-            stream << "(T) " << self->name() << " :: = " << self->type().get();
-            operatorstruct(stream, self);
-        }
-        return stream << "\n";
-        ;
-    }
-
-    std::ostream& operatorstruct(std::ostream& stream, typeassigment_entity* self) {
-        switch (self->type()->builtin()) {
-            case t_SEQUENCE:
-            case t_SEQUENCE_OF:
-            case t_SET:
-            case t_SET_OF:
-            case t_CHOICE:;
-            {
-                stream << " {" << "\n";
-                for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                    if ((*it)->as_typeassigment())
-                        stream << (*it)->as_typeassigment();
-                }
-                indent(stream, self);
-                stream << "}" << " ";
-                break;
-            }
-            default:
-            {
-                stream << " ";
-            };
-        }
-        return stream;
-    }
-
-    std::ostream& operator<<(std::ostream& stream, tagmarker_type self) {
-        switch (self) {
-                //case mk_none:
-            case mk_default: stream << " DEFAULT ";
-                break;
-            case mk_optional: stream << " OPTIONAL ";
-                break;
-                //case mk_components_of:        
-            default:
-            {
-            }
-        }
-        return stream;
-    }
-
-    std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self) {
-        stream << "(v) " << self->name() << " [" << self->type().get() << "] :: = ";
-        if (self->value())
-            return stream << self->value().get() << "\n";
-        return stream << "???" << "\n";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self) {
-        return stream << "(vS) " << self->name() << " [" << self->type().get() << "] :: = " << self->valueset().get() << "\n";
-    }
+    // class
 
     std::ostream& operator<<(std::ostream& stream, classassigment_entity* self) {
-        return stream << "(C) " << self->name() << " :: = " << self->_class().get() << "\n";
+        stream << "(C) " << self->name() << " :: = ";
+        if (self->_class()->as_defn()) {
+            stream << " CLASS { ";
+            for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                if ((*it) && ((*it)->as_classfield()))
+                    stream << (*it)->as_classfield();
+            }
+            stream << " }";
+        }
+        return stream << self->_class().get() << "\n";
     }
 
     std::ostream& operator<<(std::ostream& stream, class_atom* self) {
@@ -2637,26 +2754,11 @@ namespace x680 {
                 stream << self->reff()->name();
         } else {
             if (self->as_defn())
-                return stream << self->as_defn();
+                return stream;
             stream << self->builtin();
         }
         //stream << " id: " << self->name();
         return stream;
-    }
-
-    std::ostream& operator<<(std::ostream& stream, defnclass_atom* self) {
-        stream << " CLASS { ";
-        for (field_entity_vct::const_iterator it = self->fields().begin(); it != self->fields().end(); ++it) {
-            if (*it)
-                stream << (*it).get();
-        }
-
-        stream << " }";
-    }
-
-    std::ostream& operator<<(std::ostream& stream, defineclass_atom* self) {
-
-        return stream << self->reff()->name();
     }
 
     std::ostream& operator<<(std::ostream& stream, definedclass_type self) {
@@ -2728,5 +2830,31 @@ namespace x680 {
             stream << " " << self->_default().get();
         return stream;
     }
+
+
+
+
+
+
+    // big
+
+    std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self) {
+        return stream << "(?B)" << self->name() << " :: = " << "\n";
+    }
+
+
+    //little
+
+    std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self) {
+        return stream << "(?l)" << self->name() << " [" << "] :: = " << "\n";
+    }
+
+
+
+
+
+
+
+
 
 }
