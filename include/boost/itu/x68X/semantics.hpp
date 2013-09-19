@@ -71,21 +71,10 @@ namespace x680 {
     class classassigment_entity;
     typedef boost::shared_ptr<classassigment_entity> classassigment_entity_ptr;
 
-    class field_entity;
-    typedef boost::shared_ptr<field_entity> field_entity_ptr;
-    typedef std::vector<field_entity_ptr> field_entity_vct;
-
-    class typefield_entity;
-    typedef boost::shared_ptr<typefield_entity> typefield_entity_ptr;
-
-    class valuefield_entity;
-    typedef boost::shared_ptr<valuefield_entity> valuefield_entity_ptr;
-
-    class valuesetfield_entity;
-    typedef boost::shared_ptr<valuesetfield_entity> valuesetfield_entity_ptr;
-
     class extention_entity;
     typedef boost::shared_ptr<extention_entity> extention_entity_ptr;
+
+
 
 
     class basic_atom;
@@ -148,13 +137,13 @@ namespace x680 {
 
 
 
-    class constraints_atom;
-    typedef boost::shared_ptr<constraints_atom> constraints_atom_ptr;
-    typedef std::vector<constraints_atom_ptr> constraints_atom_vct;
 
     class valueset_atom;
     typedef boost::shared_ptr<valueset_atom> valueset_atom_ptr;
 
+    class constraints_atom;
+    typedef boost::shared_ptr<constraints_atom> constraints_atom_ptr;
+    typedef std::vector<constraints_atom_ptr> constraints_atom_vct;
 
     class constraint_atom;
     typedef boost::shared_ptr<constraint_atom> constraint_atom_ptr;
@@ -208,6 +197,29 @@ namespace x680 {
 
     class class_atom;
     typedef boost::shared_ptr<class_atom> class_atom_ptr;
+
+
+    class field_entity;
+    typedef boost::shared_ptr<field_entity> field_entity_ptr;
+    typedef std::vector<field_entity_ptr> field_entity_vct;
+
+    class typefield_entity;
+    typedef boost::shared_ptr<typefield_entity> typefield_entity_ptr;
+
+    class valuefield_entity;
+    typedef boost::shared_ptr<valuefield_entity> valuefield_entity_ptr;
+
+    class valuesetfield_entity;
+    typedef boost::shared_ptr<valuesetfield_entity> valuesetfield_entity_ptr;
+
+    class reffvaluefield_entity;
+    typedef boost::shared_ptr<reffvaluefield_entity> reffvaluefield_entity_ptr;
+
+    class reffvaluesetfield_entity;
+    typedef boost::shared_ptr<reffvaluesetfield_entity> reffvaluesetfield_entity_ptr;
+
+
+
 
     typedef std::vector<std::string> export_vector;
     typedef std::vector<std::string> import_vector;
@@ -1745,6 +1757,10 @@ namespace x680 {
 
         valuesetfield_entity* as_valuesetfield();
 
+        reffvaluefield_entity* as_reffvaluefield();
+
+        reffvaluesetfield_entity* as_reffvaluesetfield();
+
 
     protected:
         fieldkind_type fieldkind_;
@@ -1875,6 +1891,94 @@ namespace x680 {
 
     protected:
         type_atom_ptr type_;
+        valueset_atom_ptr default_;
+    };
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // reffvaluefield_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class reffvaluefield_entity : public field_entity {
+
+    public:
+
+        reffvaluefield_entity(basic_entity_ptr scope, const std::string& nm, const std::string& reff, value_atom_ptr dflt) :
+        field_entity(scope, nm, fkind_VariableTypeValueFieldSpec, mk_default), field_(new basic_atom(reff, scope)), default_(dflt) {
+        };
+
+        reffvaluefield_entity(basic_entity_ptr scope, const std::string& nm, const std::string& reff, tagmarker_type mkr = mk_none) :
+        field_entity(scope, nm, fkind_VariableTypeValueFieldSpec, mkr), field_(new basic_atom(reff, scope)) {
+        };
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        value_atom_ptr _default() const {
+            return default_;
+        }
+
+        void _default(value_atom_ptr vl) {
+            default_ = vl;
+        }
+
+        //         
+
+        virtual void resolve();
+
+    protected:
+        basic_atom_ptr field_;
+        value_atom_ptr default_;
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // reffvaluesetfield_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class reffvaluesetfield_entity : public field_entity {
+
+    public:
+
+        reffvaluesetfield_entity(basic_entity_ptr scope, const std::string& nm, const std::string& reff, valueset_atom_ptr dflt) :
+        field_entity(scope, nm, fkind_VariableTypeValueSetFieldSpec, mk_default), field_(new basic_atom(reff, scope)), default_(dflt) {
+        };
+
+        reffvaluesetfield_entity(basic_entity_ptr scope, const std::string& nm, const std::string& reff, tagmarker_type mkr = mk_none) :
+        field_entity(scope, nm, fkind_VariableTypeValueSetFieldSpec, mkr), field_(new basic_atom(reff, scope)) {
+        };
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        valueset_atom_ptr _default() const {
+            return default_;
+        }
+
+        void _default(valueset_atom_ptr vl) {
+            default_ = vl;
+        }
+
+
+
+        //         
+
+        virtual void resolve();
+
+    protected:
+        basic_atom_ptr field_;
         valueset_atom_ptr default_;
     };
 
@@ -2111,6 +2215,8 @@ namespace x680 {
         basic_entity_ptr compile_typeclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        basic_entity_ptr compile_reffvalueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        basic_entity_ptr compile_reffvaluesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         // big
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         // reff
@@ -2189,6 +2295,8 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, typefield_entity* self);
     std::ostream& operator<<(std::ostream& stream, valuefield_entity* self);
     std::ostream& operator<<(std::ostream& stream, valuesetfield_entity* self);
+    std::ostream& operator<<(std::ostream& stream, reffvaluefield_entity* self);
+    std::ostream& operator<<(std::ostream& stream, reffvaluesetfield_entity* self);
     // big
     std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
     //little

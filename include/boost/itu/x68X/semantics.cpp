@@ -1276,6 +1276,14 @@ namespace x680 {
         return (fieldkind_ == fkind_FixedTypeValueSetFieldSpec) ? dynamic_cast<valuesetfield_entity*> (this) : 0;
     }
 
+    reffvaluefield_entity* field_entity::as_reffvaluefield() {
+        return (fieldkind_ == fkind_VariableTypeValueFieldSpec) ? dynamic_cast<reffvaluefield_entity*> (this) : 0;
+    }
+
+    reffvaluesetfield_entity* field_entity::as_reffvaluesetfield() {
+        return (fieldkind_ == fkind_VariableTypeValueSetFieldSpec) ? dynamic_cast<reffvaluesetfield_entity*> (this) : 0;
+    }
+
     /////////////////////////////////////////////////////////////////////////   
     // typefield_entity
     /////////////////////////////////////////////////////////////////////////  
@@ -1306,6 +1314,47 @@ namespace x680 {
             type()->resolve_reff();
         if (_default())
             _default()->resolve_reff();
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // reffvaluefield_entity
+    ///////////////////////////////////////////////////////////////////////// 
+
+    void reffvaluefield_entity::resolve() {
+        if (_default())
+            _default()->resolve_reff();
+        if (field()->expecteddef()) {
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if (field()->expectedname() == (*it)->name()) {
+                    if (((*it)->as_classfield()) && ((*it)->as_classfield()->fieldkind() != fkind_TypeFieldSpec))
+                        semantics::error("Field '" + name() + "' refference error in " + source_throw());
+                    field()->reff(*it);
+                    return;
+                }
+            }
+        }
+        referenceerror_throw(field()->expectedname());
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // reffvaluefield_entity
+    ///////////////////////////////////////////////////////////////////////// 
+
+    void reffvaluesetfield_entity::resolve() {
+        if (_default())
+            _default()->resolve_reff();
+        if (field()->expecteddef()) {
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if (field()->expectedname() == (*it)->name()) {
+                    if (((*it)->as_classfield()) && ((*it)->as_classfield()->fieldkind() != fkind_TypeFieldSpec))
+                        semantics::error("Field '" + name() + "' refference error in " + source_throw());
+                    field()->reff(*it);
+                    return;
+                }
+            }
+        }
+        referenceerror_throw(field()->expectedname());
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -2051,6 +2100,10 @@ namespace x680 {
                         break;
                     case fkind_FixedTypeValueSetFieldSpec: tmp.push_back(compile_valuesetclassfield(scope, *it));
                         break;
+                    case fkind_VariableTypeValueFieldSpec: tmp.push_back(compile_reffvalueclassfield(scope, *it));
+                        break;
+                    case fkind_VariableTypeValueSetFieldSpec: tmp.push_back(compile_reffvaluesetclassfield(scope, *it));
+                        break;
                     default: tmp.push_back(basic_entity_ptr(new field_entity(scope, it->field, it->tp)));
                 }
             }
@@ -2102,6 +2155,38 @@ namespace x680 {
                 }
             }
             return basic_entity_ptr(new valuesetfield_entity(scope, ent.field, tp));
+        }
+
+        basic_entity_ptr compile_reffvalueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
+            //basic_atom_ptr reff = basic_atom_ptr( new basic_atom( ent.holder, scope));
+            switch (ent.marker) {
+                case field_defaultvalue:
+                {
+                    value_atom_ptr vl = compile_value(scope, ent.defaultvalue);
+                    return basic_entity_ptr(new reffvaluefield_entity(scope, ent.field, ent.holder, vl));
+                }
+                case field_optional: return basic_entity_ptr(new reffvaluefield_entity(scope, ent.field, ent.holder, mk_optional));
+                default:
+                {
+                }
+            }
+            return basic_entity_ptr(new reffvaluefield_entity(scope, ent.field, ent.holder));
+        }
+
+        basic_entity_ptr compile_reffvaluesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
+            //basic_atom_ptr reff = basic_atom_ptr( new basic_atom( ent.holder, scope));
+            switch (ent.marker) {
+                case field_defaultvalue:
+                {
+                    valueset_atom_ptr vl = compile_valueset(scope, ent.defaultset);
+                    return basic_entity_ptr(new reffvaluesetfield_entity(scope, ent.field, ent.holder, vl));
+                }
+                case field_optional: return basic_entity_ptr(new reffvaluesetfield_entity(scope, ent.field, ent.holder, mk_optional));
+                default:
+                {
+                }
+            }
+            return basic_entity_ptr(new reffvaluesetfield_entity(scope, ent.field, ent.holder));
         }
 
 
@@ -2255,7 +2340,7 @@ namespace x680 {
             stream << self->type() << " ";
             operatorstruct(stream, self);
             if (self->type()->has_constraint())
-                stream << self->type()->constraints();              
+                stream << self->type()->constraints();
             stream << self->as_named()->marker();
             if ((self->as_named()->_default()) && (self->as_named()->marker() == mk_default))
                 stream << " " << self->as_named()->_default().get();
@@ -2263,7 +2348,7 @@ namespace x680 {
             stream << "(T) " << self->name() << " :: = " << self->type().get();
             operatorstruct(stream, self);
             if (self->type()->has_constraint())
-                stream << self->type()->constraints();            
+                stream << self->type()->constraints();
         }
         return stream << "\n";
         ;
@@ -2727,7 +2812,7 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, classassigment_entity* self) {
         stream << "(C) " << self->name() << " :: = ";
-        if (self->_class()->builtin()==cl_SpecDef) {
+        if (self->_class()->builtin() == cl_SpecDef) {
             stream << " CLASS { ";
             for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if ((*it) && ((*it)->as_classfield()))
@@ -2745,7 +2830,7 @@ namespace x680 {
             else
                 stream << self->reff()->name();
         } else {
-            if (self->builtin()==cl_SpecDef)
+            if (self->builtin() == cl_SpecDef)
                 return stream;
             stream << self->builtin();
         }
@@ -2791,6 +2876,8 @@ namespace x680 {
             case fkind_TypeFieldSpec: return stream << self->as_typefield();
             case fkind_FixedTypeValueFieldSpec: return stream << self->as_valuefield();
             case fkind_FixedTypeValueSetFieldSpec: return stream << self->as_valuesetfield();
+            case fkind_VariableTypeValueFieldSpec: return stream << self->as_reffvaluefield();
+            case fkind_VariableTypeValueSetFieldSpec: return stream << self->as_reffvaluesetfield();
             default:
             {
             }
@@ -2799,14 +2886,14 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, typefield_entity* self) {
-        stream << "\n      ( T)" << self->name() << " " << self->marker();
+        stream << "\n      (  T)  " << self->name() << " " << self->marker();
         if (self->_default())
             stream << " " << self->_default().get();
         return stream;
     }
 
     std::ostream& operator<<(std::ostream& stream, valuefield_entity* self) {
-        stream << "\n      (v )" << self->name() << " " << self->type().get();
+        stream << "\n      (v  )  " << self->name() << " " << self->type().get();
         if (self->unique())
             stream << " UNIQUE";
         stream << " " << self->marker();
@@ -2816,14 +2903,36 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, valuesetfield_entity* self) {
-        stream << "\n      (vS)" << self->name() << " " << self->type().get();
+        stream << "\n      (vS )  " << self->name() << " " << self->type().get();
         stream << " " << self->marker();
         if (self->_default())
             stream << " " << self->_default().get();
         return stream;
     }
 
+    std::ostream& operator<<(std::ostream& stream, reffvaluefield_entity* self) {
+        stream << "\n      ( *v)  " << self->name();
+        if (self->field()->expecteddef())
+            stream << " ??? " << self->field()->reff()->name();
+        else
+            stream << " * " << self->field()->reff()->name();
+        stream << " " << self->marker();
+        if (self->_default())
+            stream << " " << self->_default().get();
+        return stream;
+    }
 
+    std::ostream& operator<<(std::ostream& stream, reffvaluesetfield_entity* self) {
+        stream << "\n      (*Vs)  " << self->name();
+        if (self->field()->expecteddef())
+            stream << " ??? " << self->field()->reff()->name();
+        else
+            stream << " * " << self->field()->reff()->name();
+        stream << " " << self->marker();
+        if (self->_default())
+            stream << " " << self->_default().get();
+        return stream;
+    }
 
 
 
@@ -2840,12 +2949,6 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self) {
         return stream << "(?l)" << self->name() << " [" << "] :: = " << "\n";
     }
-
-
-
-
-
-
 
 
 
