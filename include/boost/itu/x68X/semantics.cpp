@@ -2365,6 +2365,7 @@ namespace x680 {
                 stream << (*it)->as_classassigment();
                 continue;
             }
+            stream << "     \n";
         }
         return stream;
     }

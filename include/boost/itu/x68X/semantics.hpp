@@ -2330,7 +2330,6 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////          
 
 
-    std::ostream& indent(std::ostream& stream, typeassigment_entity* self);
     std::ostream& operator<<(std::ostream& stream, global_entity* self);
     std::ostream& operator<<(std::ostream& stream, module_entity* self);
     std::ostream& operator<<(std::ostream& stream, import_entity* self);
