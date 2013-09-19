@@ -1320,14 +1320,6 @@ namespace x680 {
     : basic_atom(reff, scope), builtin_(tp) {
     }
 
-    class_atom* class_atom::as_defn() {
-        return (builtin_ == cl_SpecDef) ? dynamic_cast<class_atom*> (this) : 0;
-    }
-
-    class_atom* class_atom::as_define() {
-        return (builtin_ == cl_Reference) ? dynamic_cast<class_atom*> (this) : 0;
-    }
-
     void class_atom::resolve() {
         if (builtin_ == cl_Reference)
             resolve_reff();
@@ -2262,12 +2254,16 @@ namespace x680 {
                 stream << self->name() << "COMPONENTS OF ";
             stream << self->type() << " ";
             operatorstruct(stream, self);
+            if (self->type()->has_constraint())
+                stream << self->type()->constraints();              
             stream << self->as_named()->marker();
             if ((self->as_named()->_default()) && (self->as_named()->marker() == mk_default))
                 stream << " " << self->as_named()->_default().get();
         } else {
             stream << "(T) " << self->name() << " :: = " << self->type().get();
             operatorstruct(stream, self);
+            if (self->type()->has_constraint())
+                stream << self->type()->constraints();            
         }
         return stream << "\n";
         ;
@@ -2378,10 +2374,6 @@ namespace x680 {
         }
         if (self->predefined())
             stream << self->predefined().get();
-        if (self->has_constraint()) {
-            stream << self->constraints();
-        }
-
         return stream;
     }
 
@@ -2735,7 +2727,7 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, classassigment_entity* self) {
         stream << "(C) " << self->name() << " :: = ";
-        if (self->_class()->as_defn()) {
+        if (self->_class()->builtin()==cl_SpecDef) {
             stream << " CLASS { ";
             for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if ((*it) && ((*it)->as_classfield()))
@@ -2753,7 +2745,7 @@ namespace x680 {
             else
                 stream << self->reff()->name();
         } else {
-            if (self->as_defn())
+            if (self->builtin()==cl_SpecDef)
                 return stream;
             stream << self->builtin();
         }

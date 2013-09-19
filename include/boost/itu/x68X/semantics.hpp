@@ -1893,10 +1893,6 @@ namespace x680 {
             return builtin_;
         }
 
-        class_atom* as_defn();
-
-        class_atom* as_define();
-
         virtual void resolve();
 
     private:
