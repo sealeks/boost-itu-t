@@ -30,13 +30,18 @@ namespace x680 {
             ObjectDefn = DefaultSyntax | DefinedSyntax;
 
 
-            DefaultSyntax = qi::omit[qi::lit("{")] >> FieldSettings[bind(&object_fields, qi::_val, qi::_1)] >> qi::omit[qi::lit("}")];
+            DefaultSyntax = qi::omit[qi::lit("{")] 
+                    >> FieldSettings[bind(&object_fields, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lit("}")];
 
             FieldSettings = FieldSetting % qi::omit[qi::lit(",")];
 
-            FieldSetting = PrimitiveFieldName_[bind(&objectfield_field, qi::_val, qi::_1)] >> Setting[bind(&objectfield_setting, qi::_val, qi::_1)];
+            FieldSetting = PrimitiveFieldName_[bind(&objectfield_field, qi::_val, qi::_1)] 
+                    >> Setting[bind(&objectfield_setting, qi::_val, qi::_1)];
 
-            DefinedSyntax = qi::omit[qi::lit("{")] >> DefinedSyntaxTokens[bind(&object_fields, qi::_val, qi::_1)] >> qi::omit[qi::lit("}")];
+            DefinedSyntax = qi::omit[qi::lit("{")] 
+                    >> DefinedSyntaxTokens[bind(&object_fields, qi::_val, qi::_1)] 
+                    >> qi::omit[qi::lit("}")];
 
             DefinedSyntaxTokens = +DefinedSyntaxToken;
 

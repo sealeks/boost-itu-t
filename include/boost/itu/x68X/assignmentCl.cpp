@@ -33,20 +33,25 @@ namespace x680 {
 
             DefinedObjectClass = UsefulObjectClass | SimpleDefinedObjectClass;
 
-            ParameterizedObjectClass = DefinedObjectClass[qi::_val = qi::_1] >> -(ActualParameters[bind(&class_parameters, qi::_val, qi::_1)]);
+            ParameterizedObjectClass = DefinedObjectClass[qi::_val = qi::_1] 
+                    >> -(ActualParameters[bind(&class_parameters, qi::_val, qi::_1)]);
 
             FieldSpecs = FieldSpec % qi::omit[qi::lit(",")];
 
-            FieldSpec = TypeFieldSpecS | FixedTypeValueFieldSpecLS  | FixedTypeValueSetFieldSpecLS | FixedTypeValueFieldSpec | FixedTypeValueSetFieldSpec |
-                                  VariableTypeValueSetFieldSpec | VariableTypeValueFieldSpec | ObjectFieldSpec | ObjectSetFieldSpec | TypeFieldSpec; //;     
+            FieldSpec = TypeFieldSpecS | FixedTypeValueFieldSpecLS  | FixedTypeValueSetFieldSpecLS
+                    | FixedTypeValueFieldSpec | FixedTypeValueSetFieldSpec
+                    | VariableTypeValueSetFieldSpec | VariableTypeValueFieldSpec 
+                    | ObjectFieldSpec | ObjectSetFieldSpec | TypeFieldSpec; //;     
 
             TypeFieldSpecS = (typefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
                     >> (OPTIONAL_[bind(&classfield_optional, qi::_val)] | (qi::omit[DEFAULT_]
-                    >> Type[bind(&classfield_defaulttype, qi::_val, qi::_1)])))[bind(&classfield_tp, qi::_val, fkind_TypeFieldSpec)];
+                    >> Type[bind(&classfield_defaulttype, qi::_val, qi::_1)])))
+                    [bind(&classfield_tp, qi::_val, fkind_TypeFieldSpec)];
 
             TypeFieldSpec = (typefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
                     >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] | (qi::omit[DEFAULT_]
-                    >> Type[bind(&classfield_defaulttype, qi::_val, qi::_1)])))[bind(&classfield_tp, qi::_val, fkind_TypeFieldSpec)];
+                    >> Type[bind(&classfield_defaulttype, qi::_val, qi::_1)])))
+                    [bind(&classfield_tp, qi::_val, fkind_TypeFieldSpec)];
                     
             FixedTypeValueFieldSpecLS = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
                     >> StrictType[bind(&classfield_holder_ftstr, qi::_val, qi::_1, true)]
@@ -69,7 +74,8 @@ namespace x680 {
                     >> FieldName_[bind(&classfield_holder, qi::_val, qi::_1)]
                     >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
                     (qi::omit[DEFAULT_]
-                    >> (Value[bind(&classfield_defaultvalue, qi::_val, qi::_1)]))))[bind(&classfield_tp, qi::_val, fkind_VariableTypeValueFieldSpec)];
+                    >> (Value[bind(&classfield_defaultvalue, qi::_val, qi::_1)]))))
+                    [bind(&classfield_tp, qi::_val, fkind_VariableTypeValueFieldSpec)];
 
 
             FixedTypeValueSetFieldSpecLS = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
@@ -89,7 +95,8 @@ namespace x680 {
                     >> FieldName_[bind(&classfield_holder, qi::_val, qi::_1)]
                     >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
                     (qi::omit[DEFAULT_]
-                    >> (ValueSet[bind(&classfield_defaultset, qi::_val, qi::_1)]))))[bind(&classfield_tp, qi::_val, fkind_VariableTypeValueSetFieldSpec)];
+                    >> (ValueSet[bind(&classfield_defaultset, qi::_val, qi::_1)]))))
+                    [bind(&classfield_tp, qi::_val, fkind_VariableTypeValueSetFieldSpec)];
 
 
             ObjectFieldSpec = objectfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
@@ -107,13 +114,23 @@ namespace x680 {
 
 
             WithSyntaxSpec = qi::omit[ qi::lexeme[WITH_ >> +qi::blank >> SYNTAX_]] >> SyntaxList;
+            
             SyntaxList = qi::omit[qi::lit("{")] >> TokenOrGroupSpec >> qi::omit[qi::lit("}")];
+            
             TokenOrGroupSpec = +(AiasTokenOToken | RequiredToken | OptionalToken | TokenOToken);
+            
             OptionalGroup = qi::omit[qi::lit("[")] >> TokenOrGroupSpec >> qi::omit[qi::lit("]")] >> -qi::omit[qi::lit(",")];
+            
             TokenOToken = OptionalGroup[bind(&classsyntax_group, qi::_val, qi::_1)];
-            AiasTokenOToken = (SyntaxField_ >> OptionalGroup)[bind(&classsyntax_agroup, qi::_val, qi::_1, qi::_2)];
-            RequiredToken = -(SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)]) >> PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)] >> -qi::omit[qi::lit(",")];
-            OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")] >> -qi::omit[qi::lit(",")])[bind(&classsyntax_optional, qi::_val)];
+            
+            AiasTokenOToken = (SyntaxField_ >> OptionalGroup)
+                    [bind(&classsyntax_agroup, qi::_val, qi::_1, qi::_2)];
+                    
+            RequiredToken = -(SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)]) 
+                    >> PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)] >> -qi::omit[qi::lit(",")];
+            
+            OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")] 
+                    >> -qi::omit[qi::lit(",")])[bind(&classsyntax_optional, qi::_val)];
 
 
 

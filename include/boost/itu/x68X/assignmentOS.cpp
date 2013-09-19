@@ -25,13 +25,15 @@ namespace x680 {
              
              SimpleDefinedObjectSet= DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)];
             
-            ParameterizedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)] >> -(ActualParameters[bind(&objectset_parameters, qi::_val, qi::_1)]);           
+            ParameterizedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)] 
+                    >> -(ActualParameters[bind(&objectset_parameters, qi::_val, qi::_1)]);           
             
             ObjectSetFromObjects = LittleFromObject_[bind(&objectset_fromobject, qi::_val, qi::_1)];            
 
             StrictObjectSet   =   ObjectSetdecl[bind(&objectset_set, qi::_val, qi::_1)];
             
-            oDefinedObjectSet  =  DefinedObjectSet_[bind(&object_objectsetdef, qi::_val, qi::_1)] >> -(ActualParameters[bind(&object_parameters, qi::_val, qi::_1)]);
+            oDefinedObjectSet  =  DefinedObjectSet_[bind(&object_objectsetdef, qi::_val, qi::_1)] 
+                    >> -(ActualParameters[bind(&object_parameters, qi::_val, qi::_1)]);
             
             oObjectSetFromObjects =  BigFromObjects_[bind(&object_objectsetfromobject, qi::_val, qi::_1)];       
             
@@ -54,25 +56,24 @@ namespace x680 {
             oUElems %= ((qi::omit[(UNION_ | qi::lit("|"))]
                     >> oUnions)[ bind(&object_element_vector::push_back, qi::_val, OBJECT_UNION) ]);
 
-            oElementSetSpec
-                    = oUnions[bind(&push_objects, qi::_val, qi::_1)] >> *(oUElems[bind(&push_objects, qi::_val, qi::_1)]);
+            oElementSetSpec = oUnions[bind(&push_objects, qi::_val, qi::_1)] 
+                    >> *(oUElems[bind(&push_objects, qi::_val, qi::_1)]);
 
             oIElems %= (qi::omit[(INTERSECTION_ | qi::lit("^"))]
                     >> oIntersections)[bind(&object_element_vector::push_back, qi::_val, OBJECT_INTERSECTION)];
 
-            oUnions =
-                    oIntersections[bind(&push_objects, qi::_val, qi::_1)] >> *(oIElems[bind(&push_objects, qi::_val, qi::_1)]);
+            oUnions = oIntersections[bind(&push_objects, qi::_val, qi::_1)] 
+                    >> *(oIElems[bind(&push_objects, qi::_val, qi::_1)]);
 
 
             oEElems %= (qi::omit[EXCEPT_ ]
                     >> oExclusions)[bind(&object_element_vector::push_back, qi::_val, OBJECT_EXCEPT)];
 
-            oIntersections =
-                    oExclusions[bind(&push_objects, qi::_val, qi::_1)] >> *(oEElems[bind(&push_objects, qi::_val, qi::_1)]);
+            oIntersections = oExclusions[bind(&push_objects, qi::_val, qi::_1)] 
+                    >> *(oEElems[bind(&push_objects, qi::_val, qi::_1)]);
 
 
-            oAElems %=
-                    (qi::omit[qi::lit("ALL EXCEPT")]
+            oAElems %=  (qi::omit[qi::lit("ALL EXCEPT")]
                     >> oExclusions)[bind(&object_element_vector::push_back, qi::_val, OBJECT_ALLEXCEPT)];
 
             oExclusions

@@ -21,13 +21,15 @@ namespace x680 {
             //  UnknownTCAssigment grammar (Type or Class)
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
 
-            UnknownReferencedTC = UnknownTCValueSetFromObjects | UnknownTCFromObject | UnknownTC;
+            UnknownReferencedTC = UnknownTCValueSetFromObjects | 
+                    UnknownTCFromObject | UnknownTC;
 
-            UnknownTC = DefinedType_[bind(&unknown_tc_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&unknown_tc_parameters, qi::_val, qi::_1)]);
+            UnknownTC = DefinedType_[bind(&unknown_tc_refference, qi::_val, qi::_1)] 
+                    >> -(ActualParameters[bind(&unknown_tc_parameters, qi::_val, qi::_1)]);
 
-            UnknownTCFromObject = LittleFromObject_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+            UnknownTCFromObject = LittleFromObject_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; 
 
-            UnknownTCValueSetFromObjects = BigFromObjects_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]); 
+            UnknownTCValueSetFromObjects = BigFromObjects_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  TypeAssigment grammar
@@ -45,7 +47,9 @@ namespace x680 {
 
             ConstraintReferencedType = SimpleReferencedType[ qi::_val = qi::_1 ] >> Constraints[bind(&type_constraints, qi::_val, qi::_1)];
 
-            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType | SelectionType | SequenceOfType | SetOfType | SequenceType | ChoiceType | SetType | InstanceOfType;
+            BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType
+                    | SelectionType | SequenceOfType | SetOfType | SequenceType 
+                    | ChoiceType | SetType | InstanceOfType;
 
             TaggedType = (Tag
                     >> Type)[bind(&type_tagged, qi::_val, qi::_1, qi::_2)];
@@ -53,25 +57,30 @@ namespace x680 {
             SimpleTaggedType = (Tag
                     >> SimpleType)[bind(&type_tagged, qi::_val, qi::_1, qi::_2)];
 
-            ObjectClassFieldType = ObjectClassFieldType_[bind(&type_objectfield, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+            ObjectClassFieldType = ObjectClassFieldType_[bind(&type_objectfield, qi::_val, qi::_1)]
+                    >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
-            SimpleTypeFromObject = LittleFromObject_[bind(&type_fromobject, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+            SimpleTypeFromObject = LittleFromObject_[bind(&type_fromobject, qi::_val, qi::_1)]; 
 
-            SimpleValueSetFromObjects = BigFromObjects_[bind(&type_fromobjectset, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);           
+            SimpleValueSetFromObjects = BigFromObjects_[bind(&type_fromobjectset, qi::_val, qi::_1)];       
 
             SimpleDefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)];
 
-            DefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+            DefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)] 
+                    >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
-            StrictDefinedType = DefinedType_strict[bind(&type_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+            StrictDefinedType = DefinedType_strict[bind(&type_refference, qi::_val, qi::_1)] 
+                    >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
 
             InstanceOfType = qi::omit[qi::lexeme[INSTANCE_ >> +qi::space >> OF_]]
                     >> DefinedObjectClass_[bind(&type_instance, qi::_val, qi::_1)]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
-            SimpleReferencedType = ObjectClassFieldType | SimpleTypeFromObject | SimpleValueSetFromObjects | DefinedType;
+            SimpleReferencedType = ObjectClassFieldType | SimpleTypeFromObject
+                    | SimpleValueSetFromObjects | DefinedType;
 
-            ReferencedType = SimpleReferencedType[ qi::_val = qi::_1 ] >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
+            ReferencedType = SimpleReferencedType[ qi::_val = qi::_1 ] 
+                    >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
             SimpleType = ((qi::lexeme[OCTET_ >> +qi::space >> STRING_])[bind(&type_deff, qi::_val, t_OCTET_STRING)]
                     | (qi::lexeme[CHARACTER_ >> +qi::space >> STRING_])[bind(&type_deff, qi::_val, t_CHARACTER_STRING)]
@@ -98,12 +107,14 @@ namespace x680 {
 
 
             SequenceOfType = (SEQUENCE_
-                    >> -((SizeConstraints[bind(&type_constraints, qi::_val, qi::_1)]) | (Constraints[bind(&type_constraints, qi::_val, qi::_1)]))
+                    >> -((SizeConstraints[bind(&type_constraints, qi::_val, qi::_1)]) 
+                    | (Constraints[bind(&type_constraints, qi::_val, qi::_1)]))
                     >> OF_)[bind(&type_deff, qi::_val, t_SEQUENCE_OF)]
                     >> (TypeA | NamedType)[bind(&type_push, qi::_val, qi::_1) ];
 
             SetOfType = (SET_
-                    >> -((SizeConstraints[bind(&type_constraints, qi::_val, qi::_1)]) | (Constraints[bind(&type_constraints, qi::_val, qi::_1)]))
+                    >> -((SizeConstraints[bind(&type_constraints, qi::_val, qi::_1)]) 
+                    | (Constraints[bind(&type_constraints, qi::_val, qi::_1)]))
                     >> OF_)[bind(&type_deff, qi::_val, t_SET_OF)]
                     >> (TypeA | NamedType)[bind(&type_push, qi::_val, qi::_1) ];
 
@@ -145,11 +156,14 @@ namespace x680 {
 
             ExtensionEndMarker = qi::omit[qi::lit(",")] >> Extension;
 
-            ComponentTypeListsKrn = ExtensionAndException >> -ExtensionAdditions >> -ExtensionEndMarker;
+            ComponentTypeListsKrn = ExtensionAndException 
+                    >> -ExtensionAdditions >> -ExtensionEndMarker;
 
-            ComponentTypeListsEx = ExtensionAndException >> -ExtensionEndMarker;
+            ComponentTypeListsEx = ExtensionAndException 
+                    >> -ExtensionEndMarker;
 
-            ComponentTypeLists = -ComponentTypeList >> -qi::lit(",") >> -ComponentTypeListsKrn >> -(qi::lit(",") >> ComponentTypeList);
+            ComponentTypeLists = -ComponentTypeList >> -qi::lit(",") 
+                    >> -ComponentTypeListsKrn >> -(qi::lit(",") >> ComponentTypeList);
 
             RootComponentTypeLists = ComponentTypeListsEx | ComponentTypeLists;
 
@@ -166,9 +180,11 @@ namespace x680 {
 
             ExtensionAdditionAlternativesGroup = ExtensionAdditionAlternativesGroup1 | AlternativeTypeList;
 
-            ExtensionAdditionAlternative = qi::omit[qi::lit(",")] >> (ExtensionAdditionAlternativesGroup | NamedType);
+            ExtensionAdditionAlternative = qi::omit[qi::lit(",")] 
+                    >> (ExtensionAdditionAlternativesGroup | NamedType);
 
-            ExtensionAdditionAlternatives = qi::omit[qi::lit(",")] >> ExtensionAdditionAlternativesGroup >> -(ExtensionAdditionAlternative);
+            ExtensionAdditionAlternatives = qi::omit[qi::lit(",")] 
+                    >> ExtensionAdditionAlternativesGroup >> -(ExtensionAdditionAlternative);
 
             AlternativeTypeLists = RootAlternativeTypeList
                     >> -(qi::lit(",")

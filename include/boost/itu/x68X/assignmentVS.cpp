@@ -21,7 +21,8 @@ namespace x680 {
 
             ValueSet = ValueSetFromObjects | StrictValueSet | ParameterizedValueSet;
 
-            ParameterizedValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)] >> -(ActualParameters[bind(&valueset_parameters, qi::_val, qi::_1)]);
+            ParameterizedValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)] 
+                    >> -(ActualParameters[bind(&valueset_parameters, qi::_val, qi::_1)]);
 
             ValueSetFromObjects = BigFromObjects_[bind(&valueset_fromobject, qi::_val, qi::_1)];
 
@@ -60,13 +61,16 @@ namespace x680 {
                     >> Unions)[ bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_UNION) ]);
 
             ElementSetSpec
-                    = Unions[bind(&push_constraints, qi::_val, qi::_1)] >> *(UElems[bind(&push_constraints, qi::_val, qi::_1)]);
+                    = Unions[bind(&push_constraints, qi::_val, qi::_1)] 
+                    >> *(UElems[bind(&push_constraints, qi::_val, qi::_1)]);
 
             IElems %= (qi::omit[(INTERSECTION_ | qi::lit("^"))]
-                    >> Intersections)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_INTERSECTION)];
+                    >> Intersections)
+                    [bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_INTERSECTION)];
 
             Unions =
-                    Intersections[bind(&push_constraints, qi::_val, qi::_1)] >> *(IElems[bind(&push_constraints, qi::_val, qi::_1)]);
+                    Intersections[bind(&push_constraints, qi::_val, qi::_1)] 
+                    >> *(IElems[bind(&push_constraints, qi::_val, qi::_1)]);
 
 
             EElems %= (qi::omit[EXCEPT_ ]
@@ -111,7 +115,8 @@ namespace x680 {
 
             TypeConstraint = Type[bind(&constraint_type, qi::_val, qi::_1)];
 
-            SimpleElement = ContainedSubtype | PatternConstraint | PropertySettings | ValueRange | SingleValue | TypeConstraint;
+            SimpleElement = ContainedSubtype | PatternConstraint 
+                    | PropertySettings | ValueRange | SingleValue | TypeConstraint;
 
             SizeConstraint = qi::omit[SIZE_]
                     >> Constraint[bind(&constraint_size, qi::_val, qi::_1)];
@@ -136,7 +141,8 @@ namespace x680 {
             MultipleTypeConstraints = qi::omit[qi::lexeme[WITH_ >> +qi::space >> COMPONENTS_]]
                     >> FullSpecification[bind(&constraint_multitype, qi::_val, qi::_1)];
 
-            Element = SizeConstraint | PermittedAlphabet | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement;
+            Element = SizeConstraint | PermittedAlphabet 
+                    | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement;
 
 
 
@@ -150,7 +156,8 @@ namespace x680 {
 
 
 
-            UserDefinedConstraintParameters = qi::omit[qi::lexeme[qi::lit("{")]] >> -(UserDefinedConstraintParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
+            UserDefinedConstraintParameters = qi::omit[qi::lexeme[qi::lit("{")]] 
+                    >> -(UserDefinedConstraintParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
             UserDefinedConstraintParameter = UserDefinedConstraintParameterA | UserDefinedConstraintParameterB |
                     UserDefinedConstraintParameterC | UserDefinedConstraintParameterD;
@@ -168,8 +175,7 @@ namespace x680 {
 
 
 
-            UserDefinedConstraint =
-                    (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::space >> BY_]]//[bind(&constraint_tp, qi::_val, cns_UserDefinedConstraint)]
+            UserDefinedConstraint = (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::space >> BY_]]
                     >> UserDefinedConstraintParameters)[bind(&constraint_userdef, qi::_val, qi::_1)];
 
             SimpleTableConstraint = StrictObjectSet[bind(&constraint_setelement, qi::_val, qi::_1)];
@@ -193,9 +199,6 @@ namespace x680 {
                     >> Type
                     >> qi::omit[qi::lexeme[ENCODED_ >> +qi::space >> BY_]]
                     >> (DefinedValue | ObjectIdentifierValue))[bind(&constraint_content_tv, qi::_val, qi::_1, qi::_2)];
-
-
-
 
 
         }

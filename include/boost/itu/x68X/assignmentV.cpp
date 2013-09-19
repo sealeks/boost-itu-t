@@ -20,13 +20,15 @@ namespace x680 {
             //  UnknownTCAssigment grammar (Value or Object)
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
 
-            UnknownReferencedVO = UnknownVOValueSetFromObjects | UnknownVOFromObject | UnknownVO;
+            UnknownReferencedVO = UnknownVOValueSetFromObjects 
+                    | UnknownVOFromObject | UnknownVO;
 
-            UnknownVO = DefinedValue_[bind(&unknown_vo_refference, qi::_val, qi::_1)] >> -(ActualParameters[bind(&unknown_vo_parameters, qi::_val, qi::_1)]);
+            UnknownVO = DefinedValue_[bind(&unknown_vo_refference, qi::_val, qi::_1)] 
+                    >> -(ActualParameters[bind(&unknown_vo_parameters, qi::_val, qi::_1)]);
 
-            UnknownVOFromObject = LittleFromObject_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+            UnknownVOFromObject = LittleFromObject_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; 
 
-            UnknownVOValueSetFromObjects = BigFromObjects_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; //>> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);             
+            UnknownVOValueSetFromObjects = BigFromObjects_[bind(&unknown_vo_refference, qi::_val, qi::_1)];      
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
@@ -34,7 +36,8 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
             
             
-            Value = ObjectClassFieldValue |  ValueFromObject  |  NullValue | BooleanValue | RealValue | IntegerValue | HStringValue
+            Value = ObjectClassFieldValue |  ValueFromObject  |  NullValue
+                    | BooleanValue | RealValue | IntegerValue | HStringValue
                     | BStringValue | CStringValue | NumberList | ObjectIdentifierValue
                     | NamedValueList | ValueList | ChoiceValue | EmptySetValue
                     | DefinedValue;

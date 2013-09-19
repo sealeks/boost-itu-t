@@ -21,7 +21,8 @@ namespace x680 {
 
 
             ModuleDefinition = qi::lexeme[ modulereference_[ bind(&module_name, qi::_val, qi::_1) ]]
-                    >> -(ObjectIdentifierValue[ bind(&module_oid, qi::_val, qi::_1) ] >> -(IRIValue[ bind(&module_iri, qi::_val, qi::_1) ]))
+                    >> -(ObjectIdentifierValue[ bind(&module_oid, qi::_val, qi::_1) ] 
+                    >> -(IRIValue[ bind(&module_iri, qi::_val, qi::_1) ]))
                     >> qi::lexeme[DEFINITIONS_ ]
 
                     >> -(qi::lexeme[EncodingReferenceDefault[bind(&module_encoding, qi::_val, qi::_1)]]
@@ -37,7 +38,8 @@ namespace x680 {
                     >> qi::lexeme[qi::lit("::=")]
                     >> qi::lexeme[BEGIN_]
                     >> (Exports[bind(&module_exports, qi::_val, qi::_1)]
-                    | (-(qi::lexeme[qi::omit[EXPORTS_ >> +qi::space >> ALL_ >> *qi::space >> qi::lit(";") ]]))[bind(&module_allexport, qi::_val)])
+                    | (-(qi::lexeme[qi::omit[EXPORTS_ >> +qi::space >> ALL_ 
+                    >> *qi::space >> qi::lit(";") ]]))[bind(&module_allexport, qi::_val)])
                     >> -(Imports[bind(&module_imports, qi::_val, qi::_1)])
                     >> -(Assignments[bind(&module_assignments, qi::_val, qi::_1)])
                     >> END_ >>  qi::lexeme[qi::omit[*comment_skip]];
@@ -45,7 +47,9 @@ namespace x680 {
             Import = SymbolList[ bind(&import_add, qi::_val, qi::_1) ]
                     >> FROM_
                     >> modulereference_[ bind(&import_name, qi::_val, qi::_1) ]
-                    >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ] | (DefinedValue - qi::omit[(DefinedValue >> (FROM_ | qi::lit(",")))])[ bind(&import_defined, qi::_val, qi::_1) ]);
+                    >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ] 
+                    | (DefinedValue - qi::omit[(DefinedValue 
+                    >> (FROM_ | qi::lit(",")))])[ bind(&import_defined, qi::_val, qi::_1) ]);
 
 
             Importsdecl = *Import;
@@ -61,9 +65,12 @@ namespace x680 {
             SymbolList = qi::lexeme[Symbol_] % qi::omit[qi::lexeme[ lit(",")]];
 
 
-            Assignments = *(ObjectClassAssignment | TypeAssignment | TypeAssignmentSS | UnknownTCAssignment
-                    | ValueAssignmentLS | ValueAssignmentRS | ObjectAssignmentLS | ObjectAssignmentRS | ValueAssignment | ObjectAssignment
-                    | ValueSetTypeAssignmentLS | ObjectSetAssignmentLS | ValueSetTypeAssignment | ObjectSetAssignment);
+            Assignments = *(ObjectClassAssignment | TypeAssignment 
+                    | TypeAssignmentSS | UnknownTCAssignment
+                    | ValueAssignmentLS | ValueAssignmentRS | ObjectAssignmentLS 
+                    | ObjectAssignmentRS | ValueAssignment | ObjectAssignment
+                    | ValueSetTypeAssignmentLS | ObjectSetAssignmentLS 
+                    | ValueSetTypeAssignment | ObjectSetAssignment);
 
 
 
@@ -185,9 +192,11 @@ namespace x680 {
             SettingUnknownVO = UnknownVO[bind(&setting_vo, qi::_val, qi::_1)];
 
 
-            Parameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
+            Parameters = qi::omit[qi::lexeme[qi::lit("{")]] 
+                    >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
-            Parameter = ParameterA1 | ParameterA1 | ParameterB1 | ParameterB2 | ParameterC1 | ParameterC2 | ParameterD1 | ParameterD2;
+            Parameter = ParameterA1 | ParameterA1 | ParameterB1
+                    | ParameterB2 | ParameterC1 | ParameterC2 | ParameterD1 | ParameterD2;
 
             ParameterA1 = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
                     >> typereference_)[bind(&argument_governor_cl, qi::_val, qi::_1, qi::_2, true)];
@@ -213,10 +222,13 @@ namespace x680 {
 
 
 
-            ActualParameters = qi::omit[qi::lexeme[qi::lit("{")]] >> (ActualParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
+            ActualParameters = qi::omit[qi::lexeme[qi::lit("{")]] 
+                    >> (ActualParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
-            ActualParameter = SettingStrictType | SettingStrictValue | SettingStrictClass | SettingUnknownTC | /*SettingUnknownVO | */
-                    SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet;
+            ActualParameter = SettingStrictType | SettingStrictValue 
+                    | SettingStrictClass | SettingUnknownTC | 
+                    SettingType | SettingValue | SettingValueSet 
+                    | SettingClass | SettingObject | SettingObjectSet;
 
 
 
@@ -322,8 +334,6 @@ namespace x680 {
             throw synxtas_error(filename, src, begin.pos());
             return PARSE_ESYNXTAS;
         }
-
-
 
 
     }
