@@ -217,10 +217,20 @@ namespace x680 {
 
     class reffvaluesetfield_entity;
     typedef boost::shared_ptr<reffvaluesetfield_entity> reffvaluesetfield_entity_ptr;
+    
+    
+    
 
-
-
-
+    class syntax_atom;
+    typedef boost::shared_ptr<syntax_atom> syntax_atom_ptr;
+    typedef std::vector<syntax_atom_ptr> syntax_atom_vct;
+    
+    class groupsyntax_atom;
+    typedef boost::shared_ptr<groupsyntax_atom> groupsyntax_atom_ptr;    
+    typedef groupsyntax_atom_ptr withsyntax_atom;
+    
+    
+    
     typedef std::vector<std::string> export_vector;
     typedef std::vector<std::string> import_vector;
 
@@ -1981,6 +1991,78 @@ namespace x680 {
         basic_atom_ptr field_;
         valueset_atom_ptr default_;
     };
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // syntax_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class syntax_atom : public basic_atom {
+
+    public:
+
+
+        
+        syntax_atom(basic_entity_ptr scope, std::string als, bool opt) :
+        basic_atom(scope), alias_(als), optional_(opt) {}        
+        
+        syntax_atom(basic_entity_ptr scope, std::string als, const std::string& field, bool opt) : 
+        basic_atom(field, scope), alias_(als), optional_(opt) {}        
+        
+        bool optional() const {
+            return optional_;
+        }       
+        
+         std::string  alias() const {
+            return alias_;
+        }      
+         
+         bool  isalias() const {
+            return !alias_.empty();
+        }               
+
+        groupsyntax_atom* as_group();   
+        
+
+
+        //         
+
+        virtual void resolve();        
+
+    private:
+        std::string alias_;
+        bool optional_;
+    };
+    
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // groupsyntax_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class groupsyntax_atom : public syntax_atom {
+
+    public:
+
+        groupsyntax_atom(basic_entity_ptr scope, std::string als, syntax_atom_vct grp, bool opt) :
+        syntax_atom(scope,  als, opt), group_(grp){}
+        
+        syntax_atom_vct& group() {
+            return group_;
+        }
+
+        void group(syntax_atom_vct vl) {
+            group_ = vl;
+        }
+        
+        //         
+
+        virtual void resolve();         
+        
+    private:
+
+        syntax_atom_vct group_;
+    };    
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -2025,6 +2107,13 @@ namespace x680 {
             class_ = vl;
         }
 
+        withsyntax_atom withsyntax() const {
+            return withsyntax_;
+        }
+
+        void withsyntax(withsyntax_atom vl) {
+            withsyntax_ = vl;
+        }        
 
         /////        
 
@@ -2035,6 +2124,7 @@ namespace x680 {
     private:
 
         class_atom_ptr class_;
+        withsyntax_atom withsyntax_;
     };
 
 
@@ -2216,7 +2306,9 @@ namespace x680 {
         basic_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_reffvalueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
-        basic_entity_ptr compile_reffvaluesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        basic_entity_ptr compile_reffvaluesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);       
+        withsyntax_atom compile_withsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent);       
+        syntax_atom_vct compile_groupwithsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent);        
         // big
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         // reff
@@ -2297,6 +2389,8 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, valuesetfield_entity* self);
     std::ostream& operator<<(std::ostream& stream, reffvaluefield_entity* self);
     std::ostream& operator<<(std::ostream& stream, reffvaluesetfield_entity* self);
+    std::ostream& operator<<(std::ostream& stream, syntax_atom* self);
+    std::ostream& operator<<(std::ostream& stream, groupsyntax_atom* self);    
     // big
     std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
     //little

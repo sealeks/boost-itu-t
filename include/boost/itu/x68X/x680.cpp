@@ -305,7 +305,7 @@ namespace x680 {
                 >> -qi::upper[qi::_val += qi::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::upper))))]];
 
-        str_rule spaces_ = qi::space[ qi::_val = qi::_1 ] >> *(qi::space[qi::_val += qi::_1 ]);
+        str_rule spaces_ = distinct((*qi::space)>> '&')[qi::space[ qi::_val = qi::_1 ] >> *(qi::space[qi::_val += qi::_1 ])];
 
         str_rule Literal_ = (word_ - literal_except_token) | qi::string(",");
 

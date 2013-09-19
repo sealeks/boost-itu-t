@@ -1356,6 +1356,39 @@ namespace x680 {
         }
         referenceerror_throw(field()->expectedname());
     }
+    
+    
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // sintax_atom
+    /////////////////////////////////////////////////////////////////////////      
+    
+
+        groupsyntax_atom* syntax_atom::as_group(){
+              return dynamic_cast<groupsyntax_atom*> (this);           
+        }      
+        
+        void syntax_atom::resolve(){
+         if (expecteddef()) {
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if (expectedname() == (*it)->name()) {
+                    reff(*it);
+                    return;
+                }
+            }
+        }
+        scope()->referenceerror_throw(expectedname());           
+        }
+        
+     /////////////////////////////////////////////////////////////////////////   
+    // groupsyntax_atom
+    ///////////////////////////////////////////////////////////////////////// 
+
+    void groupsyntax_atom::resolve() {
+        for (syntax_atom_vct::iterator it = group_.begin(); it != group_.end(); ++it) 
+            (*it)->resolve();
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     //class_atom
@@ -1403,6 +1436,8 @@ namespace x680 {
         resolve_child();
         if (_class())
             _class()->resolve();
+        if (withsyntax())
+            withsyntax()->resolve();        
     }
 
 
@@ -2080,6 +2115,8 @@ namespace x680 {
                 {
                     tmpc->_class(class_atom_ptr(new class_atom(tmpc, tmp.class_.tp)));
                     tmpc->childs() = compile_classfields(tmpc, tmp.class_);
+                    withsyntax_atom wsyn =compile_withsyntax(scope, tmp.class_.syntaxes);
+                    tmpc->withsyntax(compile_withsyntax(tmpc, tmp.class_.syntaxes));
                     return tmpc;
                 }
                 default:
@@ -2188,7 +2225,28 @@ namespace x680 {
             }
             return basic_entity_ptr(new reffvaluesetfield_entity(scope, ent.field, ent.holder));
         }
+        
+        
+        
+        withsyntax_atom compile_withsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent){
+            if (ent.empty())
+                return withsyntax_atom();
+            return withsyntax_atom(new groupsyntax_atom(scope, "",  compile_groupwithsyntax(scope, ent) , false));
+        }
+        
 
+       syntax_atom_vct compile_groupwithsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent){
+            syntax_atom_vct tmp;
+            for (x680::syntactic::classsyntax_vector::const_iterator it = ent.begin(); it != ent.end(); ++it) {
+                if (it->group.empty()) {
+                    tmp.push_back( syntax_atom_ptr(new syntax_atom(scope,it->alias,it->field, it->optional)));
+                }
+                else{
+                    tmp.push_back( syntax_atom_ptr(new groupsyntax_atom(scope, it->alias, compile_groupwithsyntax(scope, it->group) , it->optional)));
+                }
+            }
+            return tmp;
+        }
 
 
         // big
@@ -2819,6 +2877,12 @@ namespace x680 {
                     stream << (*it)->as_classfield();
             }
             stream << " }";
+            if (self->withsyntax()){
+                stream << "\n    WITH SYNTAX {  ";
+                stream << self->withsyntax().get();
+                stream << "    }";                
+            }
+                
         }
         return stream << self->_class().get() << "\n";
     }
@@ -2934,7 +2998,31 @@ namespace x680 {
         return stream;
     }
 
-
+    std::ostream& operator<<(std::ostream& stream, syntax_atom* self){
+        if (self->optional())
+                stream << " [ ";       
+        if (self->isalias())
+                stream << " '" << self->alias() << "' ";          
+        if  (self->as_group()){
+                stream << " " << self->as_group();  
+        }
+        else {
+            if (self->expecteddef())
+                stream << " ??? " << self->reff()->name();
+            else
+                stream << " *" << self->reff()->name();        
+        }
+        if (self->optional())
+            stream << " ] ";          
+        return stream;
+    }
+    
+    std::ostream& operator<<(std::ostream& stream, groupsyntax_atom* self) {
+        for (syntax_atom_vct::const_iterator it = self->group().begin(); it != self->group().end(); ++it) {
+             stream <<  "\n     " << (*it);
+        }        
+        return stream;
+    }
 
 
     // big
