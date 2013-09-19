@@ -2181,7 +2181,7 @@ namespace x680 {
         basic_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
             type_atom_ptr tp = compile_type(scope, ent.holdertype);
             switch (ent.marker) {
-                case field_defaultvalue:
+                case field_defaultset:
                 {
                     valueset_atom_ptr vl = compile_valueset(scope, ent.defaultset);
                     return basic_entity_ptr(new valuesetfield_entity(scope, ent.field, tp, vl));
