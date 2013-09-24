@@ -11,26 +11,26 @@
 
 namespace x680 {
     namespace syntactic {
-        
+
         //  tag_rule
-        
-    inline void tag_rule(tag_type& holder, const tagrule_type& val) {
-        holder.rule = val;
-    }
 
-    inline void tag_class(tag_type& holder, const tagclass_type& val) {
-        holder.class_ = val;
-    }
+        inline void tag_rule(tag_type& holder, const tagrule_type& val) {
+            holder.rule = val;
+        }
 
-    inline void tag_encoding(tag_type& holder, const encoding_references_type& val) {
-        holder.encoding = val;
-    }
+        inline void tag_class(tag_type& holder, const tagclass_type& val) {
+            holder.class_ = val;
+        }
 
-    inline void tag_number(tag_type& holder, const std::string& val) {
-        holder.number = val;
-    }        
+        inline void tag_encoding(tag_type& holder, const encoding_references_type& val) {
+            holder.encoding = val;
+        }
 
-        
+        inline void tag_number(tag_type& holder, const std::string& val) {
+            holder.number = val;
+        }
+
+
         //  unknown_tc_element setter            
 
         inline void unknown_tc_refference(unknown_tc_element& holder, const std::string& val) {
@@ -55,8 +55,8 @@ namespace x680 {
 
         inline void unknown_tca_arguments(unknown_tc_assignment& holder, const argument_vector& val) {
             holder.arguments = val;
-        }        
-        
+        }
+
 
         //  unknown_vo_element setter            
 
@@ -64,20 +64,19 @@ namespace x680 {
             holder.reff = val;
         }
 
-
         inline void unknown_vo_parameters(unknown_vo_element& holder, const parameter_vector& val) {
             holder.parameters = val;
         }
-        
+
         inline void unknown_vo_value(unknown_vo_element& holder, const value_element& val) {
-            holder.value_ =value_element_ptr( new value_element(val));
-            holder.alternative_= AS_VALUE ;
-        }        
-        
+            holder.value_ = value_element_ptr(new value_element(val));
+            holder.alternative_ |= AS_VALUE;
+        }
+
         inline void unknown_vo_object(unknown_vo_element& holder, const object_element& val) {
-            holder.object_ =object_element_ptr( new object_element(val));
-            holder.alternative_= AS_OBJECT ;
-        }                
+            holder.object_ = object_element_ptr(new object_element(val));
+            holder.alternative_ |= AS_OBJECT;
+        }
 
 
 
@@ -87,6 +86,10 @@ namespace x680 {
             holder.identifier = val;
         }
 
+        inline void unknown_voa_refference(unknown_vo_assignment& holder, const std::string& val) {
+            holder.reff = val;
+        }
+
         inline void unknown_voa(unknown_vo_assignment& holder, const unknown_vo_element& val) {
             holder.unknown_vo = val;
         }
@@ -94,24 +97,23 @@ namespace x680 {
         inline void unknown_voa_arguments(unknown_vo_assignment& holder, const argument_vector& val) {
             holder.arguments = val;
         }
-        
-        
-        //  unknown_so_element setter            
 
+
+        //  unknown_so_element setter            
 
         inline void unknown_so_parameters(unknown_so_element& holder, const parameter_vector& val) {
             holder.parameters = val;
         }
-        
+
         inline void unknown_so_valueset(unknown_so_element& holder, const valueset_element& val) {
-            holder.valueset_ =valueset_element_ptr( new valueset_element(val));
-            holder.alternative_= AS_VALUESET ;
-        }        
-        
+            holder.valueset_ = valueset_element_ptr(new valueset_element(val));
+            holder.alternative_ |= AS_VALUESET;
+        }
+
         inline void unknown_so_objectset(unknown_so_element& holder, const objectset_element& val) {
-            holder.objectset_ =objectset_element_ptr( new objectset_element(val));
-            holder.alternative_= AS_OBJECTSET ;
-        }                
+            holder.objectset_ = objectset_element_ptr(new objectset_element(val));
+            holder.alternative_ |= AS_OBJECTSET;
+        }
 
 
 
@@ -121,13 +123,17 @@ namespace x680 {
             holder.identifier = val;
         }
 
+        inline void unknown_soa_refference(unknown_so_assignment& holder, const std::string& val) {
+            holder.reff = val;
+        }
+
         inline void unknown_soa(unknown_so_assignment& holder, const unknown_so_element& val) {
             holder.unknown_so = val;
         }
 
         inline void unknown_soa_arguments(unknown_so_assignment& holder, const argument_vector& val) {
             holder.arguments = val;
-        }        
+        }
 
 
 
@@ -155,7 +161,7 @@ namespace x680 {
         }
 
         inline void value_setassignedval(value_element& holder, const std::string& id, const value_element& val) {
-            holder.type = v_defined_assign;//val;
+            holder.type = v_defined_assign; //val;
             holder.identifier = id;
             holder.values.push_back(val);
         }
@@ -484,19 +490,19 @@ namespace x680 {
         inline void userdefconstraint_governor_tp(userdefconstraint_type& holder, const type_element& val, const setting_element& par) {
             holder.governortype = val;
             holder.tp = gvr_Type;
-            holder.argument = par;            
+            holder.argument = par;
         }
 
         inline void userdefconstraint_governor_cl(userdefconstraint_type& holder, const class_element& val, const setting_element& par) {
             holder.governorclass = val;
             holder.tp = gvr_Class;
-            holder.argument = par; 
+            holder.argument = par;
         }
 
         inline void userdefconstraint_governor_reff(userdefconstraint_type& holder, const unknown_tc_element& val, const setting_element& par) {
             holder.governorreff = val;
             holder.tp = gvr_Type_or_Class;
-            holder.argument = par;           
+            holder.argument = par;
         }
 
         inline void userdefconstraint_argument(userdefconstraint_type& holder, const setting_element& val) {
@@ -647,7 +653,7 @@ namespace x680 {
         inline void classfield_field(classfield_type& holder, const std::string& val) {
             holder.field = val;
         }
-        
+
         inline void classfield_holder_ft(classfield_type& holder, const type_element& val, bool type) {
             if (val.builtin_t == t_Reference) {
                 holder.holder = val.reference;
@@ -656,7 +662,7 @@ namespace x680 {
                 holder.tp = type ? fkind_FixedTypeValueFieldSpec : fkind_FixedTypeValueSetFieldSpec;
             }
             holder.holdertype = val;
-        }        
+        }
 
         inline void classfield_holder_ftstr(classfield_type& holder, const type_element& val, bool type) {
             holder.tp = type ? fkind_FixedTypeValueFieldSpec : fkind_FixedTypeValueSetFieldSpec;
@@ -852,7 +858,7 @@ namespace x680 {
         inline void setting_vo(setting_element& holder, const unknown_vo_element& val) {
             holder.tp = sett_UnknownVO;
             holder.unknown_vo = val;
-        }     
+        }
 
 
 
@@ -1008,25 +1014,25 @@ namespace x680 {
 
         // Argument setter
 
-        inline void argument_governor_tp(argument_type& holder, const type_element& val, const std::string& par,  bool big) {
+        inline void argument_governor_tp(argument_type& holder, const type_element& val, const std::string& par, bool big) {
             holder.governortype = val;
             holder.tp = gvr_Type;
             holder.argument = par;
-            holder.atp = big ? argm_Big : argm_Little;            
+            holder.atp = big ? argm_Big : argm_Little;
         }
 
         inline void argument_governor_cl(argument_type& holder, const class_element& val, const std::string& par, bool big) {
             holder.governorclass = val;
             holder.tp = gvr_Class;
             holder.argument = par;
-            holder.atp = big ? argm_Big : argm_Little;    
+            holder.atp = big ? argm_Big : argm_Little;
         }
 
         inline void argument_governor_reff(argument_type& holder, const unknown_tc_element& val, const std::string& par, bool big) {
             holder.governorreff = val;
             holder.tp = gvr_Type_or_Class;
             holder.argument = par;
-            holder.atp = big ? argm_Big : argm_Little;            
+            holder.atp = big ? argm_Big : argm_Little;
         }
 
         inline void argument_argument(argument_type& holder, const std::string& val, bool big) {
@@ -1044,10 +1050,10 @@ namespace x680 {
         inline void module_oid(module& holder, const value_element& val) {
             holder.oid = val;
         }
-        
+
         inline void module_iri(module& holder, const std::string& val) {
             holder.iri = val;
-        }        
+        }
 
         inline void module_tags(module& holder, const tagrule_type & val) {
             holder.default_tags_t = val;
@@ -1060,10 +1066,10 @@ namespace x680 {
         inline void module_extesibility(module & holder) {
             holder.extesibility_implied = true;
         }
-        
+
         inline void module_allexport(module & holder) {
             holder.allexport = true;
-        }        
+        }
 
         inline void module_exports(module& holder, const string_vector& val) {
             holder.exports_ = val;
@@ -1076,8 +1082,8 @@ namespace x680 {
         inline void module_assignments(module& holder, const assignment_vector& val) {
             holder.elements = val;
         }
-        
-        
+
+
 
 
 
@@ -1090,10 +1096,10 @@ namespace x680 {
         inline void import_oid(import& holder, const value_element & val) {
             holder.oid = val;
         }
-        
+
         inline void import_defined(import& holder, const value_element & val) {
-            holder.defined= val;
-        }        
+            holder.defined = val;
+        }
 
         inline void import_add(import& holder, const string_vector & val) {
             holder.names = val;
