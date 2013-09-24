@@ -148,6 +148,8 @@ namespace x680 {
             qi::rule<str_iterator, objectset_assignment(), skip_cmt_type> ObjectSetAssignmentLS; // left strict
             qi::rule<str_iterator, objectset_assignment(), skip_cmt_type> ObjectSetAssignment;
             qi::rule<str_iterator, unknown_tc_assignment(), skip_cmt_type> UnknownTCAssignment;
+            qi::rule<str_iterator, unknown_vo_assignment(), skip_cmt_type> UnknownValObjAssignment;    
+            qi::rule<str_iterator, unknown_so_assignment(), skip_cmt_type> UnknownValSetObjSetAssignment;                
 
 
             qi::rule<str_iterator, parameter_vector(), skip_cmt_type> ActualParameters;
@@ -203,6 +205,17 @@ namespace x680 {
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVO;
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVOFromObject;
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVOValueSetFromObjects;
+            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> ValueOrObjectM;
+            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> ValueOrObject;        
+            
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            //  UnknownVOAssigment grammar (ValueSet or ObjectSet)
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
+
+
+
+            qi::rule<str_iterator, unknown_so_element(), skip_cmt_type> ValueSetOrObjectSetM;
+            qi::rule<str_iterator, unknown_so_element(), skip_cmt_type> ValueSetOrObjectSet;                  
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     

@@ -64,9 +64,20 @@ namespace x680 {
             holder.reff = val;
         }
 
+
         inline void unknown_vo_parameters(unknown_vo_element& holder, const parameter_vector& val) {
             holder.parameters = val;
         }
+        
+        inline void unknown_vo_value(unknown_vo_element& holder, const value_element& val) {
+            holder.value_ =value_element_ptr( new value_element(val));
+            holder.alternative_= AS_VALUE ;
+        }        
+        
+        inline void unknown_vo_object(unknown_vo_element& holder, const object_element& val) {
+            holder.object_ =object_element_ptr( new object_element(val));
+            holder.alternative_= AS_OBJECT ;
+        }                
 
 
 
@@ -83,6 +94,40 @@ namespace x680 {
         inline void unknown_voa_arguments(unknown_vo_assignment& holder, const argument_vector& val) {
             holder.arguments = val;
         }
+        
+        
+        //  unknown_so_element setter            
+
+
+        inline void unknown_so_parameters(unknown_so_element& holder, const parameter_vector& val) {
+            holder.parameters = val;
+        }
+        
+        inline void unknown_so_valueset(unknown_so_element& holder, const valueset_element& val) {
+            holder.valueset_ =valueset_element_ptr( new valueset_element(val));
+            holder.alternative_= AS_VALUESET ;
+        }        
+        
+        inline void unknown_so_objectset(unknown_so_element& holder, const objectset_element& val) {
+            holder.objectset_ =objectset_element_ptr( new objectset_element(val));
+            holder.alternative_= AS_OBJECTSET ;
+        }                
+
+
+
+        //  unknown_so_assignment setter        
+
+        inline void unknown_soa_identifier(unknown_so_assignment& holder, const std::string& val) {
+            holder.identifier = val;
+        }
+
+        inline void unknown_soa(unknown_so_assignment& holder, const unknown_so_element& val) {
+            holder.unknown_so = val;
+        }
+
+        inline void unknown_soa_arguments(unknown_so_assignment& holder, const argument_vector& val) {
+            holder.arguments = val;
+        }        
 
 
 

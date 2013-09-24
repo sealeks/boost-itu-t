@@ -28,7 +28,7 @@ namespace x680 {
 
             UnknownVOFromObject = LittleFromObject_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; 
 
-            UnknownVOValueSetFromObjects = BigFromObjects_[bind(&unknown_vo_refference, qi::_val, qi::_1)];      
+            UnknownVOValueSetFromObjects = BigFromObjects_[bind(&unknown_vo_refference, qi::_val, qi::_1)];
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     

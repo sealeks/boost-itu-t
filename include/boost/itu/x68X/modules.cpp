@@ -231,6 +231,28 @@ namespace x680 {
                     | SettingClass | SettingObject | SettingObjectSet;
 
 
+            ValueOrObjectM = Value[bind(&unknown_vo_value, qi::_val, qi::_1)] | Object[bind(&unknown_vo_object, qi::_val, qi::_1)]; 
+            ValueOrObject = (qi::hold[Value[bind(&unknown_vo_value, qi::_val, qi::_1)]>> qi::omit[';']]
+                    | qi::hold[Object[bind(&unknown_vo_object, qi::_val, qi::_1)] >> qi::omit[';']])
+                    >>  ValueOrObjectM;      
+            
+            ValueSetOrObjectSetM = ValueSet[bind(&unknown_so_valueset, qi::_val, qi::_1)] | ObjectSet[bind(&unknown_so_objectset, qi::_val, qi::_1)]; 
+            ValueSetOrObjectSet = (qi::hold[ValueSet[bind(&unknown_so_valueset, qi::_val, qi::_1)]>> qi::omit[';']]
+                    | qi::hold[ObjectSet[bind(&unknown_so_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
+                    >>  ValueSetOrObjectSetM;     
+            
+            
+            UnknownValObjAssignment = valuereference_[bind(&unknown_voa_identifier, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&unknown_voa_arguments, qi::_val, qi::_1)])
+                    >> typereference_[bind(&unknown_voa_identifier, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> ValueOrObject[bind(&unknown_voa, qi::_val, qi::_1)];
+            
+            UnknownValSetObjSetAssignment = valuesetreference_[bind(&unknown_soa_identifier, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&unknown_soa_arguments, qi::_val, qi::_1)])
+                    >> typereference_[bind(&unknown_soa_identifier, qi::_val, qi::_1)]
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> ValueSetOrObjectSet[bind(&unknown_soa, qi::_val, qi::_1)];          
 
 
             initV();

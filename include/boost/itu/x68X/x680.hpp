@@ -319,6 +319,15 @@ namespace x680 {
         prm_Value_or_Object,
         prm_Reff
     };
+    
+    
+    typedef int alternmask;
+    
+    const alternmask AS_NODEF = 0x0;    
+    const alternmask AS_VALUE = 0x1;
+    const alternmask AS_OBJECT = 0x2;  
+    const alternmask AS_VALUESET = 0x4;
+    const alternmask AS_OBJECTSET = 0x8;      
 
 
     namespace syntactic {
@@ -335,6 +344,10 @@ namespace x680 {
 
         struct value_element;
         typedef std::vector<value_element> value_element_vector;
+        typedef boost::shared_ptr<value_element> value_element_ptr;        
+        
+        struct valueset_element;
+        typedef boost::shared_ptr<valueset_element> valueset_element_ptr;            
 
         struct constraint_element;
         typedef std::vector<constraint_element> constraint_element_vector;
@@ -429,8 +442,13 @@ namespace x680 {
 
         struct unknown_vo_element {
 
+            unknown_vo_element() : alternative_(0){};
+            
             std::string reff;
+            value_element_ptr value_;
+            object_element_ptr object_;            
             parameter_vector parameters;
+            alternmask alternative_;
         };
 
 
@@ -445,8 +463,37 @@ namespace x680 {
             std::string identifier;
             argument_vector arguments;
             unknown_vo_element unknown_vo;
-
         };
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  unknown_vo_element (ValueSet or ObjectSet)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        struct unknown_so_element {
+
+            unknown_so_element() : alternative_(0){};
+
+            valueset_element_ptr valueset_;
+            objectset_element_ptr objectset_;              
+            parameter_vector parameters;
+            alternmask alternative_;            
+        };
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  unknown_tc_assignment
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+
+        struct unknown_so_assignment {
+
+            std::string identifier;
+            argument_vector arguments;
+            unknown_so_element unknown_so;
+
+        };        
 
 
 
@@ -862,7 +909,8 @@ namespace x680 {
         object_assignment,
         objectset_assignment,
         unknown_tc_assignment,
-        unknown_vo_assignment>
+        unknown_vo_assignment,
+        unknown_so_assignment>
         assignment;
 
         typedef std::vector<assignment> assignment_vector;
