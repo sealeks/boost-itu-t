@@ -2341,6 +2341,7 @@ namespace x680 {
         }
         stream << "     \n";
         for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+            stream << "     \n";
             if ((*it)->as_bigassigment()) {
                 stream << (*it)->as_bigassigment();
                 continue;
@@ -2365,7 +2366,6 @@ namespace x680 {
                 stream << (*it)->as_classassigment();
                 continue;
             }
-            stream << "     \n";
         }
         return stream;
     }
