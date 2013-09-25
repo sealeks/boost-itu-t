@@ -1469,8 +1469,57 @@ namespace x680 {
     }
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // OBJECT
+    /////////////////////////////////////////////////////////////////////////       
+    /////////////////////////////////////////////////////////////////////////   
+    // object_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    object_atom::object_atom(basic_entity_ptr scope, object_type tp)
+    : basic_atom(scope), builtin_(tp) {
+    }
+
+    object_atom::object_atom(basic_entity_ptr scope, const std::string& reff, object_type tp)
+    : basic_atom(reff, scope), builtin_(tp) {
+    }
+
+    void object_atom::resolve() {
+        if (builtin_ == ot_Refference)
+            resolve_reff();
+    }
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // objectassigment_entity
+    /////////////////////////////////////////////////////////////////////////    
+
+    objectassigment_entity::objectassigment_entity(basic_entity_ptr scope, const std::string& nm) :
+    basic_entity(scope, nm, et_Object) {
+    };
+
+    basic_entity_ptr objectassigment_entity::find_by_name(const std::string& nm, bool all) {
+        /*if (scope()) {
+            prefind(nm, scope()->childs());
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if (nm == (*it)->name()) {
+                    resolve_assigment(*it);
+                    return *it;
+                }
+            }
+        }
+        if (scope())
+            return scope()->find_by_name(nm, all);*/
+        return basic_entity_ptr();
+    }
+
+    void objectassigment_entity::resolve() {
+        /*resolve_child();
+        if (_class())
+            _class()->resolve();
+        if (withsyntax())
+            withsyntax()->resolve();*/
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1620,7 +1669,7 @@ namespace x680 {
                     if (tmp->value()) {
                         basic_entity_ptr rslt(new valueassigment_entity(elm->scope(), tmp->name(),
                                 type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->value()));
-                        rslt->as_valueassigment()->value()->swap_scope(rslt);                     
+                        rslt->as_valueassigment()->value()->swap_scope(rslt);
                         return rslt;
                     } else {
                         tmp->referenceerror_throw(tmp->big()->reff()->name());
@@ -1661,7 +1710,7 @@ namespace x680 {
                     if (tmp->valueset()) {
                         basic_entity_ptr rslt(new valuesetassigment_entity(elm->scope(), tmp->name(),
                                 type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->valueset()));
-                        rslt->as_valuesetassigment()->valueset()->swap_scope(rslt);   
+                        rslt->as_valuesetassigment()->valueset()->swap_scope(rslt);
                         return rslt;
                     } else {
                         tmp->referenceerror_throw(tmp->big()->reff()->name());
@@ -1712,7 +1761,7 @@ namespace x680 {
             {
                 resolve_valueset_assigment(elm, start);
                 break;
-            }            
+            }
             case et_Class:
             {
                 resolve_class_assigment(elm, start);
@@ -1769,7 +1818,7 @@ namespace x680 {
             }
         }
     }
-    
+
     void resolve_valueset_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
         resolve_valueset_assigment(elm.get(), start.get());
     }
@@ -1796,7 +1845,7 @@ namespace x680 {
                     tmp->referenceerror_throw(tmp->valueset()->expectedname());
             }
         }
-    }    
+    }
 
     void resolve_class_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
         resolve_type_assigment(elm.get(), start.get());

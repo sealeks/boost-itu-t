@@ -70,6 +70,9 @@ namespace x680 {
     class classassigment_entity;
     typedef boost::shared_ptr<classassigment_entity> classassigment_entity_ptr;
 
+    class objectassigment_entity;
+    typedef boost::shared_ptr<objectassigment_entity> objectassigment_entity_ptr;
+
     class extention_entity;
     typedef boost::shared_ptr<extention_entity> extention_entity_ptr;
 
@@ -232,6 +235,12 @@ namespace x680 {
     class groupsyntax_atom;
     typedef boost::shared_ptr<groupsyntax_atom> groupsyntax_atom_ptr;
     typedef groupsyntax_atom_ptr withsyntax_atom;
+
+
+
+    class object_atom;
+    typedef boost::shared_ptr<object_atom> object_atom_ptr;
+
 
 
 
@@ -2145,6 +2154,71 @@ namespace x680 {
 
 
 
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // OBJECT
+    /////////////////////////////////////////////////////////////////////////      
+    // objectassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // class_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class object_atom : public basic_atom {
+
+    public:
+        object_atom(basic_entity_ptr scope, object_type tp);
+        object_atom(basic_entity_ptr scope, const std::string& reff, object_type tp);
+
+        object_type builtin() const {
+            return builtin_;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        object_type builtin_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // objectassigment_entity
+    /////////////////////////////////////////////////////////////////////////    
+
+    class objectassigment_entity : public basic_entity {
+
+    public:
+        objectassigment_entity(basic_entity_ptr scope, const std::string& nm);
+
+        object_atom_ptr object() const {
+            return object_;
+        }
+
+        void object(object_atom_ptr vl) {
+            object_ = vl;
+        }
+
+        /////        
+
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+
+        virtual void resolve();
+
+    private:
+
+        object_atom_ptr object_;
+    };
+
+
+
+
+
+
     /////////////////////////////////////////////////////////////////////////   
     // BIG
     /////////////////////////////////////////////////////////////////////////   
@@ -2311,7 +2385,7 @@ namespace x680 {
     void resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
     void resolve_value_assigment(basic_entity* elm, basic_entity* start = 0);
     void resolve_valueset_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-    void resolve_valueset_assigment(basic_entity* elm, basic_entity* start = 0);    
+    void resolve_valueset_assigment(basic_entity* elm, basic_entity* start = 0);
     void resolve_class_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
     void resolve_class_assigment(basic_entity* elm, basic_entity* start = 0);
 
