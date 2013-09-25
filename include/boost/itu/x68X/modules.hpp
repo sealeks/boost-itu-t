@@ -148,8 +148,8 @@ namespace x680 {
             qi::rule<str_iterator, objectset_assignment(), skip_cmt_type> ObjectSetAssignmentLS; // left strict
             qi::rule<str_iterator, objectset_assignment(), skip_cmt_type> ObjectSetAssignment;
             qi::rule<str_iterator, unknown_tc_assignment(), skip_cmt_type> UnknownTCAssignment;
-            qi::rule<str_iterator, unknown_vo_assignment(), skip_cmt_type> UnknownValObjAssignment;    
-            qi::rule<str_iterator, unknown_so_assignment(), skip_cmt_type> UnknownValSetObjSetAssignment;                
+            qi::rule<str_iterator, unknown_vo_assignment(), skip_cmt_type> UnknownValObjAssignment;
+            qi::rule<str_iterator, unknown_so_assignment(), skip_cmt_type> UnknownValSetObjSetAssignment;
 
 
             qi::rule<str_iterator, parameter_vector(), skip_cmt_type> ActualParameters;
@@ -158,18 +158,17 @@ namespace x680 {
             qi::rule<str_iterator, setting_element(), skip_cmt_type> Setting;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingU1;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingU2;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM1;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM2;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM3;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM4;
 
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingType;
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictType;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingValue;
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictValue;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingValueSet;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingClass;
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingStrictClass;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObject;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObjectSet;
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingUnknownTC;
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingUnknownVO;
 
             qi::rule<str_iterator, argument_type(), skip_cmt_type> Parameter;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterA1;
@@ -206,8 +205,8 @@ namespace x680 {
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVOFromObject;
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVOValueSetFromObjects;
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> ValueOrObjectM;
-            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> ValueOrObject;        
-            
+            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> ValueOrObject;
+
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  UnknownVOAssigment grammar (ValueSet or ObjectSet)
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
@@ -215,7 +214,7 @@ namespace x680 {
 
 
             qi::rule<str_iterator, unknown_so_element(), skip_cmt_type> ValueSetOrObjectSetM;
-            qi::rule<str_iterator, unknown_so_element(), skip_cmt_type> ValueSetOrObjectSet;                  
+            qi::rule<str_iterator, unknown_so_element(), skip_cmt_type> ValueSetOrObjectSet;
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
@@ -450,13 +449,14 @@ namespace x680 {
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> TypeFieldSpecS;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> TypeFieldSpec;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueFieldSpecLS;
-            qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueFieldSpecMS;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedUndefFieldSpec;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> VariableTypeValueFieldSpec;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueSetFieldSpecLS;
-            qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedTypeValueSetFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> FixedUndefSetFieldSpec;
             qi::rule<str_iterator, classfield_type(), skip_cmt_type> VariableTypeValueSetFieldSpec;
-            qi::rule<str_iterator, classfield_type(), skip_cmt_type> ObjectFieldSpec;
-            qi::rule<str_iterator, classfield_type(), skip_cmt_type> ObjectSetFieldSpec;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> ObjectFieldSpecLS;
+            qi::rule<str_iterator, classfield_type(), skip_cmt_type> ObjectSetFieldSpecLS;
 
             qi::rule<str_iterator, classsyntax_vector(), skip_cmt_type> WithSyntaxSpec;
             qi::rule<str_iterator, classsyntax_vector(), skip_cmt_type> SyntaxList;

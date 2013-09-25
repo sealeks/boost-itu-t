@@ -33,15 +33,17 @@ namespace x680 {
 
             DefinedObjectClass = UsefulObjectClass | SimpleDefinedObjectClass;
 
-            ParameterizedObjectClass = DefinedObjectClass[qi::_val = qi::_1] 
+            ParameterizedObjectClass = DefinedObjectClass[qi::_val = qi::_1]
                     >> -(ActualParameters[bind(&class_parameters, qi::_val, qi::_1)]);
 
             FieldSpecs = FieldSpec % qi::omit[qi::lit(",")];
 
-            FieldSpec = TypeFieldSpecS | FixedTypeValueFieldSpecLS  | FixedTypeValueSetFieldSpecLS
-                    | FixedTypeValueFieldSpec | FixedTypeValueSetFieldSpec
-                    | VariableTypeValueSetFieldSpec | VariableTypeValueFieldSpec 
-                    | ObjectFieldSpec | ObjectSetFieldSpec | TypeFieldSpec; //;     
+            FieldSpec = TypeFieldSpecS | FixedTypeValueFieldSpecMS
+                    | FixedTypeValueFieldSpecLS | FixedTypeValueSetFieldSpecLS
+                    | VariableTypeValueSetFieldSpec | VariableTypeValueFieldSpec
+                    | ObjectFieldSpecLS | ObjectSetFieldSpecLS
+                    | FixedUndefFieldSpec | FixedUndefSetFieldSpec
+                    | TypeFieldSpec; //;     
 
             TypeFieldSpecS = (typefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
                     >> (OPTIONAL_[bind(&classfield_optional, qi::_val)] | (qi::omit[DEFAULT_]
@@ -52,17 +54,15 @@ namespace x680 {
                     >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] | (qi::omit[DEFAULT_]
                     >> Type[bind(&classfield_defaulttype, qi::_val, qi::_1)])))
                     [bind(&classfield_tp, qi::_val, fkind_TypeFieldSpec)];
-                    
-            FixedTypeValueFieldSpecLS = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> StrictType[bind(&classfield_holder_ftstr, qi::_val, qi::_1, true)]
-                    >> -(((UNIQUE_[bind(&classfield_unique, qi::_val)])
-                    || OPTIONAL_[bind(&classfield_optional, qi::_val)])
-                    | (OPTIONAL_[bind(&classfield_optional, qi::_val)])
-                    | (qi::omit[DEFAULT_]
-                    >> (Value[bind(&classfield_defaultvalue, qi::_val, qi::_1)])));                    
 
-            FixedTypeValueFieldSpec = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+
+            FixedTypeValueFieldSpecMS = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
                     >> Type[bind(&classfield_holder_ft, qi::_val, qi::_1, true)]
+                    >> UNIQUE_[bind(&classfield_unique, qi::_val)]
+                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)]);
+
+            FixedTypeValueFieldSpecLS = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> StrictType[bind(&classfield_holder_ft, qi::_val, qi::_1, true)]
                     >> -(((UNIQUE_[bind(&classfield_unique, qi::_val)])
                     || OPTIONAL_[bind(&classfield_optional, qi::_val)])
                     | (OPTIONAL_[bind(&classfield_optional, qi::_val)])
@@ -79,13 +79,7 @@ namespace x680 {
 
 
             FixedTypeValueSetFieldSpecLS = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> StrictType[bind(&classfield_holder_ftstr, qi::_val, qi::_1, false)]
-                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
-                    (qi::omit[DEFAULT_]
-                    >> (ValueSet[bind(&classfield_defaultset, qi::_val, qi::_1)]))));                    
-                    
-            FixedTypeValueSetFieldSpec = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> Type[bind(&classfield_holder_ft, qi::_val, qi::_1, false)]
+                    >> StrictType[bind(&classfield_holder_ft, qi::_val, qi::_1, false)]
                     >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
                     (qi::omit[DEFAULT_]
                     >> (ValueSet[bind(&classfield_defaultset, qi::_val, qi::_1)]))));
@@ -99,37 +93,51 @@ namespace x680 {
                     [bind(&classfield_tp, qi::_val, fkind_VariableTypeValueSetFieldSpec)];
 
 
-            ObjectFieldSpec = objectfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> DefinedObjectClass_[bind(&classfield_holder_ov, qi::_val, qi::_1)]
+            ObjectFieldSpecLS = objectfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> UsefulObjectClass[bind(&classfield_holder_cl, qi::_val, qi::_1, true)]
                     >> -((OPTIONAL_[bind(&classfield_optional, qi::_val)])
                     | (qi::omit[DEFAULT_]
                     >> (Object[bind(&classfield_defaultovalue, qi::_val, qi::_1)])));
 
-            ObjectSetFieldSpec = (objectsetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> DefinedObjectClass_[bind(&classfield_holder_ov, qi::_val, qi::_1)]
+            ObjectSetFieldSpecLS = (objectsetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> UsefulObjectClass[bind(&classfield_holder_cl, qi::_val, qi::_1, false)]
                     >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
                     (qi::omit[DEFAULT_]
                     >> (ObjectSet[bind(&classfield_defaultoset, qi::_val, qi::_1)]))));
-            ;
+
+            FixedUndefFieldSpec = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> DefinedType_[bind(&classfield_holder_undf, qi::_val, qi::_1, true)]
+                    >> -(((UNIQUE_[bind(&classfield_unique, qi::_val)])
+                    || OPTIONAL_[bind(&classfield_optional, qi::_val)])
+                    | (OPTIONAL_[bind(&classfield_optional, qi::_val)])
+                    | (qi::omit[DEFAULT_]
+                    >> (ValueOrObject[bind(&classfield_defaultov, qi::_val, qi::_1)])));
+
+            FixedUndefSetFieldSpec = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
+                    >> DefinedType_[bind(&classfield_holder_undf, qi::_val, qi::_1, false)]
+                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
+                    (qi::omit[DEFAULT_]
+                    >> (ValueSetOrObjectSet[bind(&classfield_defaultos, qi::_val, qi::_1)]))));
+
 
 
             WithSyntaxSpec = qi::omit[ qi::lexeme[WITH_ >> +qi::blank >> SYNTAX_]] >> SyntaxList;
-            
+
             SyntaxList = qi::omit[qi::lit("{")] >> TokenOrGroupSpec >> qi::omit[qi::lit("}")];
-            
+
             TokenOrGroupSpec = +(AiasTokenOToken | RequiredToken | OptionalToken | TokenOToken);
-            
+
             OptionalGroup = qi::omit[qi::lit("[")] >> TokenOrGroupSpec >> qi::omit[qi::lit("]")] >> -qi::omit[qi::lit(",")];
-            
+
             TokenOToken = OptionalGroup[bind(&classsyntax_group, qi::_val, qi::_1)];
-            
+
             AiasTokenOToken = (SyntaxField_ >> OptionalGroup)
                     [bind(&classsyntax_agroup, qi::_val, qi::_1, qi::_2)];
-                    
-            RequiredToken = -(SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)]) 
+
+            RequiredToken = -(SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)])
                     >> PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)] >> -qi::omit[qi::lit(",")];
-            
-            OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")] 
+
+            OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")]
                     >> -qi::omit[qi::lit(",")])[bind(&classsyntax_optional, qi::_val)];
 
 

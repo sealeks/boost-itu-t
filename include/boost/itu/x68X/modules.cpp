@@ -102,19 +102,19 @@ namespace x680 {
                     >> -(Parameters[bind(&valuea_arguments, qi::_val, qi::_1)])
                     >> StrictType[bind(&valuea_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> Value[bind(&valuea_value, qi::_val, qi::_1, true)];
+                    >> Value[bind(&valuea_value, qi::_val, qi::_1)];
 
             ValueAssignmentRS = valuereference_[bind(&valuea_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&valuea_arguments, qi::_val, qi::_1)])
                     >> Type[bind(&valuea_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> StrictValue[bind(&valuea_value, qi::_val, qi::_1, true)];
+                    >> StrictValue[bind(&valuea_value, qi::_val, qi::_1)];
 
             ValueAssignment = valuereference_[bind(&valuea_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&valuea_arguments, qi::_val, qi::_1)])
                     >> Type[bind(&valuea_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> Value[bind(&valuea_value, qi::_val, qi::_1, false)];
+                    >> Value[bind(&valuea_value, qi::_val, qi::_1)];
 
             ObjectAssignmentLS = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
@@ -139,13 +139,13 @@ namespace x680 {
                     >> -(Parameters[bind(&valueseta_arguments, qi::_val, qi::_1)])
                     >> StrictType[bind(&valueseta_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ValueSet[bind(&valueset_set, qi::_val, qi::_1, true)];
+                    >> ValueSet[bind(&valueseta_set, qi::_val, qi::_1)];
 
             ValueSetTypeAssignment = valuesetreference_[bind(&valueset_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&valueseta_arguments, qi::_val, qi::_1)])
                     >> Type[bind(&valueseta_type, qi::_val, qi::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ValueSet[bind(&valueset_set, qi::_val, qi::_1, false)];
+                    >> ValueSet[bind(&valueseta_set, qi::_val, qi::_1)];
 
             ObjectSetAssignmentLS = objectsetreference_[bind(&objectseta_reference, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&objectseta_arguments, qi::_val, qi::_1)])
@@ -161,37 +161,47 @@ namespace x680 {
 
 
 
-            Setting = SettingStrictType | SettingStrictValue | SettingStrictClass | SettingUnknownTC | /*SettingUnknownVO | */
-                    SettingType | SettingValue | SettingValueSet | /*SettingClass |*/ SettingObject | SettingObjectSet;
-
-            SettingU1 = SettingValue | SettingObject;
-
-            SettingU2 = SettingStrictType | SettingStrictClass | SettingUnknownTC |
-                    SettingType | SettingObjectSet;
-
 
             SettingType = Type[bind(&setting_settype, qi::_val, qi::_1)];
 
-            SettingStrictType = StrictType[bind(&setting_settype, qi::_val, qi::_1)];
-
             SettingValue = Value[bind(&setting_value, qi::_val, qi::_1)];
-
-            SettingStrictValue = StrictValue[bind(&setting_value, qi::_val, qi::_1)];
 
             SettingValueSet = ValueSet[bind(&setting_valueset, qi::_val, qi::_1)];
 
             SettingClass = DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)];
 
-            SettingStrictClass = UsefulObjectClass[bind(&setting_class, qi::_val, qi::_1)];
-
             SettingObject = Object[bind(&setting_object, qi::_val, qi::_1)];
 
             SettingObjectSet = ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)];
 
-            SettingUnknownTC = UnknownTC[bind(&setting_tc, qi::_val, qi::_1)];
 
-            SettingUnknownVO = UnknownVO[bind(&setting_vo, qi::_val, qi::_1)];
+            SettingM1 = SettingType | SettingValue | SettingValueSet | SettingObject | SettingObjectSet;
 
+            Setting = ((qi::hold[SettingType >> qi::omit[';']])
+                    | (qi::hold[SettingValue >> qi::omit[';']])
+                    | (qi::hold[SettingValueSet >> qi::omit[';']])
+                    | (qi::hold[SettingObject >> qi::omit[';']])
+                    | (qi::hold[SettingObjectSet >> qi::omit[';']])) | SettingM1;
+
+            SettingM2 = SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet;
+
+            ActualParameter = ((qi::hold[SettingType >> qi::omit[';']])
+                    | (qi::hold[SettingValue >> qi::omit[';']])
+                    | (qi::hold[SettingValueSet >> qi::omit[';']])
+                    | (qi::hold[SettingClass >> qi::omit[';']])
+                    | (qi::hold[SettingObject >> qi::omit[';']])
+                    | (qi::hold[SettingObjectSet >> qi::omit[';']])) | SettingM2;
+
+            SettingM3 = SettingValue | SettingObject;
+
+            SettingU1 = ((qi::hold[SettingValue >> qi::omit[';']])
+                    | (qi::hold[SettingObject >> qi::omit[';']])) | SettingM3;
+
+            SettingM4 = SettingType | SettingClass | SettingObjectSet;
+
+            SettingU2 = ((qi::hold[SettingType >> qi::omit[';']])
+                    | (qi::hold[SettingClass >> qi::omit[';']])
+                    | (qi::hold[SettingObjectSet >> qi::omit[';']])) | SettingM4;
 
             Parameters = qi::omit[qi::lexeme[qi::lit("{")]]
                     >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
@@ -226,10 +236,8 @@ namespace x680 {
             ActualParameters = qi::omit[qi::lexeme[qi::lit("{")]]
                     >> (ActualParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
-            ActualParameter = SettingStrictType | SettingStrictValue
-                    | SettingStrictClass | SettingUnknownTC |
-                    SettingType | SettingValue | SettingValueSet
-                    | SettingClass | SettingObject | SettingObjectSet;
+
+
 
 
             ValueOrObjectM = Value[bind(&unknown_vo_value, qi::_val, qi::_1)] | Object[bind(&unknown_vo_object, qi::_val, qi::_1)];
