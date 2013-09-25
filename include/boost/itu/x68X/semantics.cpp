@@ -1474,7 +1474,11 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////       
     /////////////////////////////////////////////////////////////////////////   
     // object_atom
-    /////////////////////////////////////////////////////////////////////////      
+    /////////////////////////////////////////////////////////////////////////  
+
+    object_atom::object_atom(object_type tp)
+    : basic_atom(), builtin_(tp) {
+    }
 
     object_atom::object_atom(basic_entity_ptr scope, object_type tp)
     : basic_atom(scope), builtin_(tp) {
@@ -1520,6 +1524,63 @@ namespace x680 {
         if (withsyntax())
             withsyntax()->resolve();*/
     }
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // OBJECTSET
+    /////////////////////////////////////////////////////////////////////////       
+    /////////////////////////////////////////////////////////////////////////   
+    // object_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    objectset_atom::objectset_atom(basic_entity_ptr scope, objectset_type tp)
+    : basic_atom(scope), builtin_(tp) {
+    }
+
+    objectset_atom::objectset_atom(basic_entity_ptr scope, const std::string& reff, objectset_type tp)
+    : basic_atom(reff, scope), builtin_(tp) {
+    }
+
+    void objectset_atom::resolve() {
+        if (builtin_ != os_Strait)
+            resolve_reff();
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // objectsetassigment_entity
+    /////////////////////////////////////////////////////////////////////////    
+
+    objectsetassigment_entity::objectsetassigment_entity(basic_entity_ptr scope, const std::string& nm) :
+    basic_entity(scope, nm, et_Object) {
+    };
+
+    basic_entity_ptr objectsetassigment_entity::find_by_name(const std::string& nm, bool all) {
+        /*if (scope()) {
+            prefind(nm, scope()->childs());
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+                if (nm == (*it)->name()) {
+                    resolve_assigment(*it);
+                    return *it;
+                }
+            }
+        }
+        if (scope())
+            return scope()->find_by_name(nm, all);*/
+        return basic_entity_ptr();
+    }
+
+    void objectsetassigment_entity::resolve() {
+        /*resolve_child();
+        if (_class())
+            _class()->resolve();
+        if (withsyntax())
+            withsyntax()->resolve();*/
+    }
+
+
 
 
     /////////////////////////////////////////////////////////////////////////   

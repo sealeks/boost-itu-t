@@ -73,6 +73,9 @@ namespace x680 {
     class objectassigment_entity;
     typedef boost::shared_ptr<objectassigment_entity> objectassigment_entity_ptr;
 
+    class objectsetassigment_entity;
+    typedef boost::shared_ptr<objectsetassigment_entity> objectsetassigment_entity_ptr;
+
     class extention_entity;
     typedef boost::shared_ptr<extention_entity> extention_entity_ptr;
 
@@ -227,7 +230,6 @@ namespace x680 {
 
 
 
-
     class syntax_atom;
     typedef boost::shared_ptr<syntax_atom> syntax_atom_ptr;
     typedef std::vector<syntax_atom_ptr> syntax_atom_vct;
@@ -242,6 +244,8 @@ namespace x680 {
     typedef boost::shared_ptr<object_atom> object_atom_ptr;
 
 
+    class objectset_atom;
+    typedef boost::shared_ptr<objectset_atom> objectset_atom_ptr;
 
 
     typedef std::vector<std::string> export_vector;
@@ -2158,18 +2162,14 @@ namespace x680 {
 
     /////////////////////////////////////////////////////////////////////////   
     // OBJECT
-    /////////////////////////////////////////////////////////////////////////      
-    // objectassigment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-
-    /////////////////////////////////////////////////////////////////////////   
-    // class_atom
+    /////////////////////////////////////////////////////////////////////////        
+    // object_atom
     /////////////////////////////////////////////////////////////////////////  
 
     class object_atom : public basic_atom {
 
     public:
+        object_atom(object_type tp);
         object_atom(basic_entity_ptr scope, object_type tp);
         object_atom(basic_entity_ptr scope, const std::string& reff, object_type tp);
 
@@ -2212,6 +2212,66 @@ namespace x680 {
     private:
 
         object_atom_ptr object_;
+    };
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // OBJECTSET
+    /////////////////////////////////////////////////////////////////////////      
+    // objectsetassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // objectset_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class objectset_atom : public basic_atom {
+
+    public:
+        objectset_atom(basic_entity_ptr scope, objectset_type tp);
+        objectset_atom(basic_entity_ptr scope, const std::string& reff, objectset_type tp);
+
+        objectset_type builtin() const {
+            return builtin_;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        objectset_type builtin_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // objectsetassigment_entity
+    /////////////////////////////////////////////////////////////////////////    
+
+    class objectsetassigment_entity : public basic_entity {
+
+    public:
+        objectsetassigment_entity(basic_entity_ptr scope, const std::string& nm);
+
+        objectset_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr vl) {
+            objectset_ = vl;
+        }
+
+        /////        
+
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+
+        virtual void resolve();
+
+    private:
+
+        objectset_atom_ptr objectset_;
     };
 
 
