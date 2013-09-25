@@ -243,9 +243,10 @@ namespace x680 {
         field_defaulttype,
         field_defaultvalue,
         field_defaultset,
-        field_defaultref,
         field_defaultoset,
-        field_defaultovalue
+        field_defaultovalue,
+        field_defaultov,
+        field_defaultos
     };
 
     enum setting_type {
@@ -328,6 +329,8 @@ namespace x680 {
     const alternmask AS_OBJECT = 0x2;
     const alternmask AS_VALUESET = 0x4;
     const alternmask AS_OBJECTSET = 0x8;
+    const alternmask AS_TYPE = 0x10;
+    const alternmask AS_CLASS = 0x20;
 
 
     namespace syntactic {
@@ -341,6 +344,12 @@ namespace x680 {
         struct type_assignment;
         typedef std::vector<type_assignment> type_assignment_vector;
         typedef type_assignment_vector named_type_element_vector;
+
+        struct type_element;
+        typedef boost::shared_ptr<type_element> type_element_ptr;
+
+        struct class_element;
+        typedef boost::shared_ptr<class_element> class_element_ptr;
 
         struct value_element;
         typedef std::vector<value_element> value_element_vector;
@@ -607,14 +616,14 @@ namespace x680 {
 
         struct value_assignment {
 
-            value_assignment() : exact(false) {
+            value_assignment() {
             }
 
             std::string identifier;
             argument_vector arguments;
             type_element type;
             value_element value;
-            bool exact;
+
         };
 
 
@@ -643,14 +652,13 @@ namespace x680 {
 
         struct valueset_assignment {
 
-            valueset_assignment() : exact(false) {
+            valueset_assignment() {
             }
 
             std::string identifier;
             argument_vector arguments;
             type_element type;
             valueset_element set;
-            bool exact;
 
         };
 
@@ -695,6 +703,7 @@ namespace x680 {
             std::string field;
             std::string holder;
             type_element holdertype;
+            class_element_ptr holderclass;
             fieldmarker_type marker;
             fieldkind_type tp;
             bool unique;
@@ -703,6 +712,8 @@ namespace x680 {
             valueset_element defaultset;
             object_element_ptr defaultovalue;
             objectset_element_ptr defaultoset;
+            unknown_vo_element defvalobj;
+            unknown_so_element defvalobjset;
             std::string defaultreff;
         };
 
@@ -756,18 +767,16 @@ namespace x680 {
 
         struct setting_element {
 
-            setting_element() : tp(sett_NoDef) {
+            setting_element() : alternative(0) {
             }
 
-            setting_type tp;
-            value_element value;
-            type_element type;
-            valueset_element valueset;
-            class_element class_;
+            type_element_ptr type;
+            class_element_ptr class_;
+            value_element_ptr value;
             object_element_ptr object;
+            valueset_element_ptr valueset;
             objectset_element_ptr objectset;
-            unknown_tc_element unknown_tc;
-            unknown_vo_element unknown_vo;
+            alternmask alternative;
         };
 
 
