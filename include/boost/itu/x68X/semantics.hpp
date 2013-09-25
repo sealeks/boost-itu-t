@@ -243,11 +243,20 @@ namespace x680 {
 
 
 
+
+    class fieldsetting_atom;
+    typedef boost::shared_ptr<fieldsetting_atom> fieldsetting_atom_ptr;
+    typedef std::vector<fieldsetting_atom_ptr> fieldsetting_atom_vct;
+
     class object_atom;
     typedef boost::shared_ptr<object_atom> object_atom_ptr;
+    typedef std::vector<object_atom_ptr> object_atom_vct;
 
     class definedobject_atom;
     typedef boost::shared_ptr<definedobject_atom> definedobject_atom_ptr;
+
+    class defnobject_atom;
+    typedef boost::shared_ptr<defnobject_atom> defnobject_atom_ptr;
 
     class unionobject_atom;
     typedef boost::shared_ptr<unionobject_atom> unionobject_atom_ptr;
@@ -2269,6 +2278,47 @@ namespace x680 {
 
     /////////////////////////////////////////////////////////////////////////   
     // OBJECT
+    /////////////////////////////////////////////////////////////////////////   
+    // fieldsetting_atom_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fieldsetting_atom : public basic_atom {
+
+    public:
+
+        fieldsetting_atom(basic_entity_ptr scope, const std::string& flf, setting_atom_ptr settg) :
+        basic_atom(scope), field_(flf), setting_(settg) {
+        };
+
+        fieldsetting_atom(const std::string& flf, setting_atom_ptr settg) :
+        basic_atom(), field_(flf), setting_(settg) {
+        };
+
+        std::string field() const {
+            return field_;
+        }
+
+        void field(std::string vl) {
+            field_ = vl;
+        }
+
+        setting_atom_ptr setting() const {
+            return setting_;
+        }
+
+        void setting(setting_atom_ptr vl) {
+            setting_ = vl;
+        }
+
+        virtual void resolve() {
+        };
+
+    private:
+        std::string field_;
+        setting_atom_ptr setting_;
+    };
+
+
     /////////////////////////////////////////////////////////////////////////        
     // object_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -2285,6 +2335,8 @@ namespace x680 {
         }
 
         definedobject_atom* as_defined();
+
+        defnobject_atom* as_defn();
 
         unionobject_atom* as_union();
 
@@ -2319,6 +2371,35 @@ namespace x680 {
         virtual void resolve() {
         };
 
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////        
+    // defnobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class defnobject_atom : public object_atom {
+
+    public:
+
+        defnobject_atom(basic_entity_ptr scope, fieldsetting_atom_vct fldst)
+        : object_atom(scope, ot_Object), fieldsetting_(fldst) {
+        };
+
+        virtual void resolve() {
+        };
+
+        fieldsetting_atom_vct& fieldsetting() {
+            return fieldsetting_;
+        }
+
+        void fieldsetting(fieldsetting_atom_vct vl) {
+            fieldsetting_ = vl;
+        }
+
+    private:
+
+        fieldsetting_atom_vct fieldsetting_;
 
     };
 
@@ -2442,12 +2523,7 @@ namespace x680 {
 
     /////////////////////////////////////////////////////////////////////////   
     // OBJECTSET
-    /////////////////////////////////////////////////////////////////////////      
-    // objectsetassignment_entity
-    /////////////////////////////////////////////////////////////////////////  
-
-
-    /////////////////////////////////////////////////////////////////////////   
+    /////////////////////////////////////////////////////////////////////////        
     // objectset_atom
     /////////////////////////////////////////////////////////////////////////  
 

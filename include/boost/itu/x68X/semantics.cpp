@@ -1547,6 +1547,10 @@ namespace x680 {
         return dynamic_cast<definedobject_atom*> (this);
     }
 
+    defnobject_atom* object_atom::as_defn() {
+        return dynamic_cast<defnobject_atom*> (this);
+    }
+
     unionobject_atom* object_atom::as_union() {
         return dynamic_cast<unionobject_atom*> (this);
     }
