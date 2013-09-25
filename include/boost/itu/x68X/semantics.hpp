@@ -50,45 +50,48 @@ namespace x680 {
     class module_entity;
     typedef boost::shared_ptr<module_entity> module_entity_ptr;
 
-    class bigassigment_entity;
-    typedef boost::shared_ptr<bigassigment_entity> bigassigment_entity_ptr;
+    class bigassignment_entity;
+    typedef boost::shared_ptr<bigassignment_entity> bigassignment_entity_ptr;
 
-    class typeassigment_entity;
-    typedef boost::shared_ptr<typeassigment_entity> typeassigment_entity_ptr;
+    class typeassignment_entity;
+    typedef boost::shared_ptr<typeassignment_entity> typeassignment_entity_ptr;
 
-    class namedtypeassigment_entity;
-    typedef boost::shared_ptr<namedtypeassigment_entity> namedtypeassigment_entity_ptr;
-    typedef std::vector<namedtypeassigment_entity_ptr> namedtypeassigment_entity_vct;
+    class namedtypeassignment_entity;
+    typedef boost::shared_ptr<namedtypeassignment_entity> namedtypeassignment_entity_ptr;
+    typedef std::vector<namedtypeassignment_entity_ptr> namedtypeassignment_entity_vct;
 
-    class valueassigment_entity;
-    typedef boost::shared_ptr<valueassigment_entity> valueassigment_entity_ptr;
-    typedef std::vector<valueassigment_entity_ptr> valueassigment_entity_vct;
+    class valueassignment_entity;
+    typedef boost::shared_ptr<valueassignment_entity> valueassignment_entity_ptr;
+    typedef std::vector<valueassignment_entity_ptr> valueassignment_entity_vct;
 
-    class valuesetassigment_entity;
-    typedef boost::shared_ptr<valuesetassigment_entity> valuesetassigment_entity_ptr;
+    class valuesetassignment_entity;
+    typedef boost::shared_ptr<valuesetassignment_entity> valuesetassignment_entity_ptr;
 
-    class classassigment_entity;
-    typedef boost::shared_ptr<classassigment_entity> classassigment_entity_ptr;
+    class classassignment_entity;
+    typedef boost::shared_ptr<classassignment_entity> classassignment_entity_ptr;
 
-    class objectassigment_entity;
-    typedef boost::shared_ptr<objectassigment_entity> objectassigment_entity_ptr;
+    class objectassignment_entity;
+    typedef boost::shared_ptr<objectassignment_entity> objectassignment_entity_ptr;
 
-    class objectsetassigment_entity;
-    typedef boost::shared_ptr<objectsetassigment_entity> objectsetassigment_entity_ptr;
+    class objectsetassignment_entity;
+    typedef boost::shared_ptr<objectsetassignment_entity> objectsetassignment_entity_ptr;
 
     class extention_entity;
     typedef boost::shared_ptr<extention_entity> extention_entity_ptr;
 
-    class voassigment_entity;
-    typedef boost::shared_ptr<voassigment_entity> voassigment_entity_ptr;
+    class voassignment_entity;
+    typedef boost::shared_ptr<voassignment_entity> voassignment_entity_ptr;
 
-    class soassigment_entity;
-    typedef boost::shared_ptr<soassigment_entity> soassigment_entity_ptr;
+    class soassignment_entity;
+    typedef boost::shared_ptr<soassignment_entity> soassignment_entity_ptr;
 
 
 
     class basic_atom;
     typedef boost::shared_ptr<basic_atom> basic_atom_ptr;
+
+    class setting_atom;
+    typedef boost::shared_ptr<setting_atom> setting_atom_ptr;
 
 
 
@@ -322,19 +325,19 @@ namespace x680 {
 
         import_entity* as_import();
 
-        bigassigment_entity* as_bigassigment();
+        bigassignment_entity* as_bigassigment();
 
-        voassigment_entity* as_voassigment();
+        voassignment_entity* as_voassigment();
 
-        soassigment_entity* as_soassigment();
+        soassignment_entity* as_soassigment();
 
-        typeassigment_entity* as_typeassigment();
+        typeassignment_entity* as_typeassigment();
 
-        valueassigment_entity* as_valueassigment();
+        valueassignment_entity* as_valueassigment();
 
-        valuesetassigment_entity* as_valuesetassigment();
+        valuesetassignment_entity* as_valuesetassigment();
 
-        classassigment_entity* as_classassigment();
+        classassignment_entity* as_classassigment();
 
         field_entity* as_classfield();
 
@@ -377,7 +380,7 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // assigment_entity
+    // assignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
 
@@ -616,7 +619,86 @@ namespace x680 {
 
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // SETTING
+    /////////////////////////////////////////////////////////////////////////     
+    // setting_atom
+    /////////////////////////////////////////////////////////////////////////    
 
+    class setting_atom : public basic_atom {
+
+    public:
+
+        setting_atom(basic_entity_ptr scp = basic_entity_ptr()) : basic_atom(scp), mask_(0) {
+        };
+
+        alternmask mask() {
+            return mask_;
+        }
+
+        void mask(alternmask vl) {
+            mask_ = vl;
+        }
+
+        type_atom_ptr type() {
+            return type_;
+        }
+
+        void type(type_atom_ptr vl) {
+            type_ = vl;
+        }
+
+        value_atom_ptr value() {
+            return value_;
+        }
+
+        void value(value_atom_ptr vl) {
+            value_ = vl;
+        }
+
+        valueset_atom_ptr valueset() {
+            return valueset_;
+        }
+
+        void valueset(valueset_atom_ptr vl) {
+            valueset_ = vl;
+        }
+
+        class_atom_ptr _class() {
+            return class_;
+        }
+
+        void _class(class_atom_ptr vl) {
+            class_ = vl;
+        }
+
+        object_atom_ptr object() {
+            return object_;
+        }
+
+        void object(object_atom_ptr vl) {
+            object_ = vl;
+        }
+
+        objectset_atom_ptr objectset() {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr vl) {
+            objectset_ = vl;
+        }
+
+
+    private:
+
+        alternmask mask_;
+        type_atom_ptr type_;
+        value_atom_ptr value_;
+        valueset_atom_ptr valueset_;
+        class_atom_ptr class_;
+        object_atom_ptr object_;
+        objectset_atom_ptr objectset_;
+    };
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -769,13 +851,13 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // typeassigment_entity
+    // typeassignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class typeassigment_entity : public basic_entity {
+    class typeassignment_entity : public basic_entity {
 
     public:
-        typeassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp);
+        typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp);
 
         type_atom_ptr type() const {
             return type_;
@@ -785,7 +867,7 @@ namespace x680 {
             type_ = vl;
         }
 
-        namedtypeassigment_entity* as_named();
+        namedtypeassignment_entity* as_named();
 
 
         /////        
@@ -809,15 +891,15 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // namedtypeassigment_entity
+    // namedtypeassignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class namedtypeassigment_entity : public typeassigment_entity {
+    class namedtypeassignment_entity : public typeassignment_entity {
 
     public:
 
-        namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker);
-        namedtypeassigment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
+        namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker);
+        namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
 
         value_atom_ptr _default() const {
             return default_;
@@ -1221,13 +1303,13 @@ namespace x680 {
     };
 
     /////////////////////////////////////////////////////////////////////////   
-    // valueassigment_entity
+    // valueassignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class valueassigment_entity : public basic_entity {
+    class valueassignment_entity : public basic_entity {
 
     public:
-        valueassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
+        valueassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
 
         type_atom_ptr type() const {
             return type_;
@@ -1715,13 +1797,13 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // valuesetassigment_entity
+    // valuesetassignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class valuesetassigment_entity : public basic_entity {
+    class valuesetassignment_entity : public basic_entity {
 
     public:
-        valuesetassigment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, valueset_atom_ptr vl);
+        valuesetassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, valueset_atom_ptr vl);
 
         type_atom_ptr type() const {
             return type_;
@@ -2117,13 +2199,13 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // classassigment_entity
+    // classassignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class classassigment_entity : public basic_entity {
+    class classassignment_entity : public basic_entity {
 
     public:
-        classassigment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp);
+        classassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp);
 
         class_atom_ptr _class() const {
             return class_;
@@ -2187,13 +2269,13 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // objectassigment_entity
+    // objectassignment_entity
     /////////////////////////////////////////////////////////////////////////    
 
-    class objectassigment_entity : public basic_entity {
+    class objectassignment_entity : public basic_entity {
 
     public:
-        objectassigment_entity(basic_entity_ptr scope, const std::string& nm);
+        objectassignment_entity(basic_entity_ptr scope, const std::string& nm);
 
         object_atom_ptr object() const {
             return object_;
@@ -2219,7 +2301,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
     // OBJECTSET
     /////////////////////////////////////////////////////////////////////////      
-    // objectsetassigment_entity
+    // objectsetassignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
 
@@ -2247,13 +2329,13 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // objectsetassigment_entity
+    // objectsetassignment_entity
     /////////////////////////////////////////////////////////////////////////    
 
-    class objectsetassigment_entity : public basic_entity {
+    class objectsetassignment_entity : public basic_entity {
 
     public:
-        objectsetassigment_entity(basic_entity_ptr scope, const std::string& nm);
+        objectsetassignment_entity(basic_entity_ptr scope, const std::string& nm);
 
         objectset_atom_ptr objectset() const {
             return objectset_;
@@ -2282,13 +2364,13 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
     // BIG
     /////////////////////////////////////////////////////////////////////////   
-    // bigassigment_entity
+    // bigassignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class bigassigment_entity : public basic_entity {
+    class bigassignment_entity : public basic_entity {
 
     public:
-        bigassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
+        bigassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
 
         basic_atom_ptr big() const {
             return big_;
@@ -2320,13 +2402,13 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
     // VALUE OR OBJECT
     /////////////////////////////////////////////////////////////////////////     
-    // voassigment_entity
+    // voassignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class voassigment_entity : public basic_entity {
+    class voassignment_entity : public basic_entity {
 
     public:
-        voassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
+        voassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
 
         basic_atom_ptr big() const {
             return big_;
@@ -2373,13 +2455,13 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
     // VALUESET OR OBJECTSET
     /////////////////////////////////////////////////////////////////////////     
-    // soassigment_entity
+    // soassignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class soassigment_entity : public basic_entity {
+    class soassignment_entity : public basic_entity {
 
     public:
-        soassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
+        soassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
 
         basic_atom_ptr big() const {
             return big_;
@@ -2489,14 +2571,14 @@ namespace x680 {
         void compile_assignments(const x680::syntactic::module& mod, module_entity_ptr mdl);
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         // type
-        typeassigment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        typeassignment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         basic_entity_vector compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
-        typeassigment_entity_ptr compile_namedtype(basic_entity_ptr scope, const x680::syntactic::type_assignment& ent);
+        typeassignment_entity_ptr compile_namedtype(basic_entity_ptr scope, const x680::syntactic::type_assignment& ent);
         type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         predefined_ptr compile_typepredef(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         tagged_ptr compile_tag(basic_entity_ptr scope, const x680::syntactic::tag_type& ent);
         // value
-        valueassigment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        valueassignment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         value_atom_ptr compile_value(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_vct compile_structvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_vct compile_objidvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
@@ -2507,7 +2589,7 @@ namespace x680 {
         value_atom_ptr compile_openvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_atom_ptr compile_namedvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         // valueset
-        valuesetassigment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        valuesetassignment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         valueset_atom_ptr compile_valueset(basic_entity_ptr scope, const x680::syntactic::valueset_element& ent);
         constraints_atom_vct compile_constraints_vct(basic_entity_ptr scope, const x680::syntactic::constraints_vector& ent);
         constraints_atom_ptr compile_constraints(basic_entity_ptr scope, const x680::syntactic::constraint_element_vector& ent);
@@ -2515,7 +2597,7 @@ namespace x680 {
         constraint_atom_ptr compile_namedconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
         constraint_atom_ptr compile_multipletypeconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
         // class
-        classassigment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        classassignment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         basic_entity_vector compile_classfields(basic_entity_ptr scope, const x680::syntactic::class_element& ent);
         basic_entity_ptr compile_typeclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
@@ -2525,11 +2607,11 @@ namespace x680 {
         withsyntax_atom compile_withsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent);
         syntax_atom_vct compile_groupwithsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent);
         // big
-        bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        bigassignment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         // value or object
-        voassigment_entity_ptr compile_voassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        voassignment_entity_ptr compile_voassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         // valueset or objectset
-        soassigment_entity_ptr compile_soassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        soassignment_entity_ptr compile_soassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         // reff
         basic_atom_ptr compile_reff(const std::string& rf);
 
@@ -2557,8 +2639,8 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, basic_atom* self);
 
     // type
-    std::ostream& operator<<(std::ostream& stream, typeassigment_entity* self);
-    std::ostream& operatorstruct(std::ostream& stream, typeassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, typeassignment_entity* self);
+    std::ostream& operatorstruct(std::ostream& stream, typeassignment_entity* self);
     std::ostream& operator<<(std::ostream& stream, tagmarker_type self);
     std::ostream& operator<<(std::ostream& stream, predefined* self);
     std::ostream& operator<<(std::ostream& stream, tagclass_type self);
@@ -2566,7 +2648,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, tagged& self);
     std::ostream& operator<<(std::ostream& stream, type_atom* self);
     //value
-    std::ostream& operator<<(std::ostream& stream, valueassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, valueassignment_entity* self);
     std::ostream& operator<<(std::ostream& stream, defined_type self);
     std::ostream& operator<<(std::ostream& stream, value_atom* self);
     std::ostream& operator<<(std::ostream& stream, numvalue_atom* self);
@@ -2582,7 +2664,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, nullvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, emptyvalue_atom* self);
     // valueset
-    std::ostream& operator<<(std::ostream& stream, valuesetassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, valuesetassignment_entity* self);
     std::ostream& operator<<(std::ostream& stream, valueset_atom* self);
     std::ostream& operator<<(std::ostream& stream, const constraints_atom_vct& self);
     std::ostream& operator<<(std::ostream& stream, constraints_atom* self);
@@ -2597,7 +2679,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, complexconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, multipletypeconstraint_atom * self);
     // class
-    std::ostream& operator<<(std::ostream& stream, classassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, classassignment_entity* self);
     std::ostream& operator<<(std::ostream& stream, class_atom* self);
     std::ostream& operator<<(std::ostream& stream, definedclass_type self);
     std::ostream& operator<<(std::ostream& stream, fieldkind_type self);
@@ -2610,13 +2692,13 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, syntax_atom* self);
     std::ostream& operator<<(std::ostream& stream, groupsyntax_atom* self);
     // big
-    std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, bigassignment_entity* self);
     // value or object
-    std::ostream& operator<<(std::ostream& stream, voassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, voassignment_entity* self);
     // valueset or objectset
-    std::ostream& operator<<(std::ostream& stream, soassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, soassignment_entity* self);
     //little
-    std::ostream& operator<<(std::ostream& stream, voassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, voassignment_entity* self);
 
 
 }
