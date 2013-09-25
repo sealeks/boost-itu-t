@@ -1238,11 +1238,18 @@ namespace x680 {
     basic_entity_ptr valuesetassigment_entity::find_by_name(const std::string& nm, bool all) {
         if (all) {
             if (((type()->predefined()))) {
-                for (basic_entity_vector::const_iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
+                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
                     if ((*it)->name() == nm) {
+                        resolve_assigment(*it);
                         return *it;
                     }
                 }
+            }
+            if (type()->reff()) {
+                type()->resolve_reff(all);
+                basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
+                if (fnd)
+                    return fnd;
             }
         }
         if (scope()) {
@@ -1260,6 +1267,7 @@ namespace x680 {
     }
 
     void valuesetassigment_entity::resolve() {
+        resolve_child();
         type()->resolve();
         if (valueset())
             valueset()->resolve();
@@ -1612,7 +1620,7 @@ namespace x680 {
                     if (tmp->value()) {
                         basic_entity_ptr rslt(new valueassigment_entity(elm->scope(), tmp->name(),
                                 type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->value()));
-                        rslt->as_valueassigment()->value()->swap_scope(rslt);
+                        rslt->as_valueassigment()->value()->swap_scope(rslt);                     
                         return rslt;
                     } else {
                         tmp->referenceerror_throw(tmp->big()->reff()->name());
@@ -1653,6 +1661,7 @@ namespace x680 {
                     if (tmp->valueset()) {
                         basic_entity_ptr rslt(new valuesetassigment_entity(elm->scope(), tmp->name(),
                                 type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->valueset()));
+                        rslt->as_valuesetassigment()->valueset()->swap_scope(rslt);   
                         return rslt;
                     } else {
                         tmp->referenceerror_throw(tmp->big()->reff()->name());
@@ -1699,6 +1708,11 @@ namespace x680 {
                 resolve_value_assigment(elm, start);
                 break;
             }
+            case et_ValueSet:
+            {
+                resolve_valueset_assigment(elm, start);
+                break;
+            }            
             case et_Class:
             {
                 resolve_class_assigment(elm, start);
@@ -1755,6 +1769,34 @@ namespace x680 {
             }
         }
     }
+    
+    void resolve_valueset_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        resolve_valueset_assigment(elm.get(), start.get());
+    }
+
+    void resolve_valueset_assigment(basic_entity* elm, basic_entity* start) {
+        /* if (!start)
+             start = elm;
+         else
+             check_resolve_ciclic(elm, start);*/
+        valuesetassigment_entity* tmp = elm->as_valuesetassigment();
+        if (tmp) {
+            if ((tmp->type()) && (tmp->type()->expecteddef())) {
+                basic_entity_ptr fnd = elm->find(tmp->type()->reff());
+                if (fnd)
+                    tmp->type()->reff(fnd);
+                else
+                    tmp->referenceerror_throw(tmp->type()->expectedname());
+            }
+            if ((tmp->valueset()) && (tmp->valueset()->expecteddef())) {
+                basic_entity_ptr fnd = elm->find(tmp->valueset()->reff());
+                if (fnd)
+                    tmp->valueset()->reff(fnd);
+                else
+                    tmp->referenceerror_throw(tmp->valueset()->expectedname());
+            }
+        }
+    }    
 
     void resolve_class_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
         resolve_type_assigment(elm.get(), start.get());
