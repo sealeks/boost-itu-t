@@ -525,9 +525,8 @@ namespace x680 {
             holder.arguments = val;
         }
 
-        inline void valuea_value(value_assignment& holder, const value_element& val, bool exact) {
+        inline void valuea_value(value_assignment& holder, const value_element& val) {
             holder.value = val;
-            holder.exact = exact;
         }
 
 
@@ -570,9 +569,8 @@ namespace x680 {
             holder.arguments = val;
         }
 
-        inline void valueset_set(valueset_assignment& holder, const valueset_element& val, bool exact) {
+        inline void valueseta_set(valueset_assignment& holder, const valueset_element& val) {
             holder.set = val;
-            holder.exact = exact;
         }
 
 
@@ -654,33 +652,23 @@ namespace x680 {
             holder.field = val;
         }
 
-        inline void classfield_holder_ft(classfield_type& holder, const type_element& val, bool type) {
-            if (val.builtin_t == t_Reference) {
-                holder.holder = val.reference;
-                holder.tp = type ? fkind_FixedType_or_Object : fkind_FixedTypeSet_or_ObjectSet;
-            } else {
-                holder.tp = type ? fkind_FixedTypeValueFieldSpec : fkind_FixedTypeValueSetFieldSpec;
-            }
-            holder.holdertype = val;
+        inline void classfield_holder_undf(classfield_type& holder, const std::string& val, bool type) {
+            holder.holder = val;
+            holder.tp = type ? fkind_FixedType_or_Object : fkind_FixedTypeSet_or_ObjectSet;
         }
 
-        inline void classfield_holder_ftstr(classfield_type& holder, const type_element& val, bool type) {
+        inline void classfield_holder_ft(classfield_type& holder, const type_element& val, bool type) {
             holder.tp = type ? fkind_FixedTypeValueFieldSpec : fkind_FixedTypeValueSetFieldSpec;
             holder.holdertype = val;
         }
 
+        inline void classfield_holder_cl(classfield_type& holder, const class_element& val, bool type) {
+            holder.tp = type ? fkind_ObjectFieldSpec : fkind_ObjectSetFieldSpec;
+            holder.holderclass = class_element_ptr( new class_element(val));
+        }
+
         inline void classfield_holder(classfield_type& holder, const std::string& val) {
             holder.holder = val;
-        }
-
-        inline void classfield_holder_ov(classfield_type& holder, const std::string& val) {
-            holder.holder = val;
-            holder.tp = fkind_ObjectFieldSpec;
-        }
-
-        inline void classfield_holder_os(classfield_type& holder, const std::string& val) {
-            holder.holder = val;
-            holder.tp = fkind_ObjectSetFieldSpec;
         }
 
         inline void classfield_unique(classfield_type& holder) {
@@ -711,11 +699,6 @@ namespace x680 {
             holder.defaultset = val;
         }
 
-        inline void classfield_defaultref(classfield_type& holder, const std::string& val) {
-            holder.marker = field_defaultref;
-            holder.defaultreff = val;
-        }
-
         inline void classfield_defaultovalue(classfield_type& holder, const object_element& val) {
             holder.marker = field_defaultovalue;
             holder.defaultovalue = object_element_ptr(new object_element(val));
@@ -724,6 +707,16 @@ namespace x680 {
         inline void classfield_defaultoset(classfield_type& holder, const objectset_element& val) {
             holder.marker = field_defaultoset;
             holder.defaultoset = objectset_element_ptr(new objectset_element(val));
+        }
+
+        inline void classfield_defaultov(classfield_type& holder, const unknown_vo_element& val) {
+            holder.marker = field_defaultov;
+            holder.defvalobj = val;
+        }
+
+        inline void classfield_defaultos(classfield_type& holder, const unknown_so_element& val) {
+            holder.marker = field_defaultos;
+            holder.defvalobjset = val;
         }
 
 
@@ -821,44 +814,36 @@ namespace x680 {
         // setting setter        
 
         inline void setting_settype(setting_element& holder, const type_element& val) {
-            holder.tp = sett_Type;
-            holder.type = val;
+            holder.type = type_element_ptr(new type_element(val));
+            holder.alternative |= AS_TYPE;
         }
 
         inline void setting_value(setting_element& holder, const value_element& val) {
-            holder.tp = sett_Value;
-            holder.value = val;
+            holder.value = value_element_ptr(new value_element(val));
+            holder.alternative |= AS_VALUE;
         }
 
         inline void setting_valueset(setting_element& holder, const valueset_element& val) {
-            holder.tp = sett_ValueSet;
-            holder.valueset = val;
+            holder.valueset = valueset_element_ptr(new valueset_element(val));
+            holder.alternative |= AS_VALUESET;
         }
 
         inline void setting_class(setting_element& holder, const class_element& val) {
-            holder.tp = sett_DefineClass;
-            holder.class_ = val;
+            holder.class_ = class_element_ptr(new class_element(val));
+            holder.alternative |= AS_CLASS;
         }
 
         inline void setting_object(setting_element& holder, const object_element& val) {
-            holder.tp = sett_Object;
             holder.object = object_element_ptr(new object_element(val));
+            holder.alternative |= AS_OBJECT;
         }
 
         inline void setting_objectset(setting_element& holder, const objectset_element& val) {
-            holder.tp = sett_ObjectSet;
             holder.objectset = objectset_element_ptr(new objectset_element(val));
+            holder.alternative |= AS_OBJECTSET;
         }
 
-        inline void setting_tc(setting_element& holder, const unknown_tc_element& val) {
-            holder.tp = sett_UnknownTC;
-            holder.unknown_tc = val;
-        }
 
-        inline void setting_vo(setting_element& holder, const unknown_vo_element& val) {
-            holder.tp = sett_UnknownVO;
-            holder.unknown_vo = val;
-        }
 
 
 
