@@ -1543,6 +1543,30 @@ namespace x680 {
     : basic_atom(reff, scope), builtin_(tp) {
     }
 
+    definedobject_atom* object_atom::as_defined() {
+        return dynamic_cast<definedobject_atom*> (this);
+    }
+
+    unionobject_atom* object_atom::as_union() {
+        return dynamic_cast<unionobject_atom*> (this);
+    }
+
+    intersectionobject_atom* object_atom::as_intersection() {
+        return dynamic_cast<intersectionobject_atom*> (this);
+    }
+
+    exceptobject_atom* object_atom::as_except() {
+        return dynamic_cast<exceptobject_atom*> (this);
+    }
+
+    allexceptobject_atom* object_atom::as_allexcept() {
+        return dynamic_cast<allexceptobject_atom*> (this);
+    }
+
+    extentionobject_atom* object_atom::as_extention() {
+        return dynamic_cast<extentionobject_atom*> (this);
+    }
+
     void objectset_atom::resolve() {
         if (builtin_ != os_Strait)
             resolve_reff();

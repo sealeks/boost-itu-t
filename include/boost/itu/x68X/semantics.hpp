@@ -246,6 +246,31 @@ namespace x680 {
     class object_atom;
     typedef boost::shared_ptr<object_atom> object_atom_ptr;
 
+    class definedobject_atom;
+    typedef boost::shared_ptr<definedobject_atom> definedobject_atom_ptr;
+
+    class unionobject_atom;
+    typedef boost::shared_ptr<unionobject_atom> unionobject_atom_ptr;
+
+    class intersectionobject_atom;
+    typedef boost::shared_ptr<intersectionobject_atom> intersectionobject_atom_ptr;
+
+    class exceptobject_atom;
+    typedef boost::shared_ptr<exceptobject_atom> exceptobject_atom_ptr;
+
+    class allexceptobject_atom;
+    typedef boost::shared_ptr<allexceptobject_atom> allexceptobject_atom_ptr;
+
+    class exceptobject_atom;
+    typedef boost::shared_ptr<exceptobject_atom> exceptobject_atom_ptr;
+
+    class allexceptobject_atom;
+    typedef boost::shared_ptr<allexceptobject_atom> allexceptobject_atom_ptr;
+
+    class extentionobject_atom;
+    typedef boost::shared_ptr<extentionobject_atom> extentionobject_atom_ptr;
+
+
 
     class objectset_atom;
     typedef boost::shared_ptr<objectset_atom> objectset_atom_ptr;
@@ -2259,6 +2284,18 @@ namespace x680 {
             return builtin_;
         }
 
+        definedobject_atom* as_defined();
+
+        unionobject_atom* as_union();
+
+        intersectionobject_atom* as_intersection();
+
+        exceptobject_atom* as_except();
+
+        allexceptobject_atom* as_allexcept();
+
+        extentionobject_atom* as_extention();
+
         virtual void resolve();
 
     private:
@@ -2266,6 +2303,111 @@ namespace x680 {
         object_type builtin_;
 
     };
+
+
+    /////////////////////////////////////////////////////////////////////////        
+    // defineobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class definedobject_atom : public object_atom {
+
+    public:
+
+        definedobject_atom(basic_entity_ptr scope, const std::string& reff) : object_atom(scope, reff, ot_Refference) {
+        };
+
+        virtual void resolve() {
+        };
+
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////        
+    // unionobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class unionobject_atom : public object_atom {
+
+    public:
+
+        unionobject_atom() : object_atom(ot_UNION) {
+        };
+
+        virtual void resolve() {
+        };
+
+    };
+
+    /////////////////////////////////////////////////////////////////////////        
+    // intersectionobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class intersectionobject_atom : public object_atom {
+
+    public:
+
+        intersectionobject_atom() : object_atom(ot_INTERSECTION) {
+        };
+
+        virtual void resolve() {
+        };
+
+    };
+
+    /////////////////////////////////////////////////////////////////////////        
+    // exceptobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class exceptobject_atom : public object_atom {
+
+    public:
+
+        exceptobject_atom() : object_atom(ot_EXCEPT) {
+        };
+
+        virtual void resolve() {
+        };
+
+    };
+
+    /////////////////////////////////////////////////////////////////////////        
+    // allexceptobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class allexceptobject_atom : public object_atom {
+
+    public:
+
+        allexceptobject_atom() : object_atom(ot_ALLEXCEPT) {
+        };
+
+        virtual void resolve() {
+        };
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////        
+    // extentionobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class extentionobject_atom : public object_atom {
+
+    public:
+
+        extentionobject_atom() : object_atom(ot_EXTENTION) {
+        };
+
+        virtual void resolve() {
+        };
+
+    };
+
+
+
+
+
 
 
     /////////////////////////////////////////////////////////////////////////   
