@@ -99,8 +99,12 @@ namespace x680 {
         return dynamic_cast<bigassigment_entity*> (this);
     }
 
-    littleassigment_entity * basic_entity::as_littleassigment() {
-        return dynamic_cast<littleassigment_entity*> (this);
+    voassigment_entity * basic_entity::as_voassigment() {
+        return dynamic_cast<voassigment_entity*> (this);
+    }
+
+    soassigment_entity * basic_entity::as_soassigment() {
+        return dynamic_cast<soassigment_entity*> (this);
     }
 
     typeassigment_entity * basic_entity::as_typeassigment() {
@@ -529,6 +533,13 @@ namespace x680 {
     void basic_atom::resolve() {
     }
 
+    void basic_atom::swap_scope(basic_entity_ptr to_, basic_entity_ptr from_) {
+        if (!from_)
+            from_ = scope();
+        if ((from_) && (from_ != to_))
+            scope_ = to_;
+    }
+
     void basic_atom::resolve_reff(bool all) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {
             basic_entity_ptr fnd = scope()->find(reff(), all);
@@ -538,6 +549,7 @@ namespace x680 {
                 scope()->referenceerror_throw(expectedname());
         }
     }
+
 
 
 
@@ -873,6 +885,11 @@ namespace x680 {
             (*it)->resolve_reff();
     }
 
+    /*void value_atom::swap_scope_vect(value_vct& vl, basic_entity_ptr to_, basic_entity_ptr from_) {
+        for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
+            (*it)->swap_scope(to_, from_);
+    }*/
+
 
     /////////////////////////////////////////////////////////////////////////   
     // namedvalue_atom
@@ -892,6 +909,10 @@ namespace x680 {
     void structvalue_atom::resolve() {
         resolve_vect(values_);
     }
+
+    /*void structvalue_atom::swap_scope(basic_entity_ptr to_, basic_entity_ptr from_) {      
+        swap_scope_vect(values_,to_,from_);
+    }*/
 
     /////////////////////////////////////////////////////////////////////////   
     // definedvalue_atom
@@ -1356,21 +1377,20 @@ namespace x680 {
         }
         referenceerror_throw(field()->expectedname());
     }
-    
-    
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // sintax_atom
     /////////////////////////////////////////////////////////////////////////      
-    
 
-        groupsyntax_atom* syntax_atom::as_group(){
-              return dynamic_cast<groupsyntax_atom*> (this);           
-        }      
-        
-        void syntax_atom::resolve(){
-         if (expecteddef()) {
+    groupsyntax_atom* syntax_atom::as_group() {
+        return dynamic_cast<groupsyntax_atom*> (this);
+    }
+
+    void syntax_atom::resolve() {
+        if (expecteddef()) {
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (expectedname() == (*it)->name()) {
                     reff(*it);
@@ -1378,15 +1398,15 @@ namespace x680 {
                 }
             }
         }
-        scope()->referenceerror_throw(expectedname());           
-        }
-        
-     /////////////////////////////////////////////////////////////////////////   
+        scope()->referenceerror_throw(expectedname());
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
     // groupsyntax_atom
     ///////////////////////////////////////////////////////////////////////// 
 
     void groupsyntax_atom::resolve() {
-        for (syntax_atom_vct::iterator it = group_.begin(); it != group_.end(); ++it) 
+        for (syntax_atom_vct::iterator it = group_.begin(); it != group_.end(); ++it)
             (*it)->resolve();
     }
 
@@ -1437,7 +1457,7 @@ namespace x680 {
         if (_class())
             _class()->resolve();
         if (withsyntax())
-            withsyntax()->resolve();        
+            withsyntax()->resolve();
     }
 
 
@@ -1474,18 +1494,37 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // LITTLE
+    // VALUE OR OBJECT
     /////////////////////////////////////////////////////////////////////////   
-    // littleassigment_entity
+    // voassigment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    littleassigment_entity::littleassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg, basic_atom_ptr lt) :
-    basic_entity(scope, nm, et_Type), big_(bg), little_(lt) {
+    voassigment_entity::voassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg) :
+    basic_entity(scope, nm, et_NodefV), big_(bg) {
     };
 
     /////////
 
-    basic_entity_ptr littleassigment_entity::find_by_name(const std::string& nm, bool all) {
+    basic_entity_ptr voassigment_entity::find_by_name(const std::string& nm, bool all) {
+        if (scope())
+            return scope()->find_by_name(nm, all);
+        return basic_entity_ptr();
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // VALUE OR OBJECT
+    /////////////////////////////////////////////////////////////////////////   
+    // voassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    soassigment_entity::soassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg) :
+    basic_entity(scope, nm, et_NodefS), big_(bg) {
+    };
+
+    /////////
+
+    basic_entity_ptr soassigment_entity::find_by_name(const std::string& nm, bool all) {
         if (scope())
             return scope()->find_by_name(nm, all);
         return basic_entity_ptr();
@@ -1501,8 +1540,24 @@ namespace x680 {
 
     void preresolve_assigments(basic_entity_vector& elm) {
         for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
-            if ((*it)->kind() == et_Nodef) {
-                *it = preresolve_nodef_assigment((*it).get());
+            switch ((*it)->kind()) {
+                case et_Nodef: *it = preresolve_nodef_assigment((*it).get());
+                    break;
+                case et_NodefV:
+                {
+                    basic_entity_ptr tmp = preresolve_nodefv_assigment((*it).get());
+                    if (tmp) *it = tmp;
+                    break;
+                }
+                case et_NodefS:
+                {
+                    basic_entity_ptr tmp = preresolve_nodefs_assigment((*it).get());
+                    if (tmp) *it = tmp;
+                    break;
+                }
+                default:
+                {
+                };
             }
         }
     }
@@ -1530,6 +1585,87 @@ namespace x680 {
                     basic_entity_ptr rslt(new classassigment_entity(elm->scope(), tmp->name(),
                             class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference))));
                     return rslt;
+                }
+            } else {
+                tmp->referenceerror_throw(tmp->big()->reff()->name());
+            }
+        }
+        tmp->referenceerror_throw(tmp->name());
+        return basic_entity_ptr();
+    }
+
+    basic_entity_ptr preresolve_nodefv_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        basic_entity_ptr rslt = preresolve_nodefv_assigment(elm.get(), start.get());
+        return rslt ? rslt : elm;
+    }
+
+    basic_entity_ptr preresolve_nodefv_assigment(basic_entity* elm, basic_entity* start) {
+        /*if (!start)
+            start = elm;
+        else
+            check_resolve_ciclic(elm, start);*/
+        voassigment_entity* tmp = elm->as_voassigment();
+        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
+            basic_entity_ptr fnd = elm->find(tmp->big()->reff());
+            if (fnd) {
+                if (fnd->kind() == et_Type) {
+                    if (tmp->value()) {
+                        basic_entity_ptr rslt(new valueassigment_entity(elm->scope(), tmp->name(),
+                                type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->value()));
+                        rslt->as_valueassigment()->value()->swap_scope(rslt);
+                        return rslt;
+                    } else {
+                        tmp->referenceerror_throw(tmp->big()->reff()->name());
+                    }
+                }
+                if (fnd->kind() == et_Class) {
+                    if (tmp->object()) {
+                        //basic_entity_ptr rslt(new classassigment_entity(elm->scope(), tmp->name(),
+                        //        class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference))));
+                        return basic_entity_ptr();
+                    } else {
+                        tmp->referenceerror_throw(tmp->big()->reff()->name());
+                    }
+                }
+            } else {
+                tmp->referenceerror_throw(tmp->big()->reff()->name());
+            }
+        }
+        tmp->referenceerror_throw(tmp->name());
+        return basic_entity_ptr();
+    }
+
+    basic_entity_ptr preresolve_nodefs_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        basic_entity_ptr rslt = preresolve_nodefs_assigment(elm.get(), start.get());
+        return rslt ? rslt : elm;
+    }
+
+    basic_entity_ptr preresolve_nodefs_assigment(basic_entity* elm, basic_entity* start) {
+        /*if (!start)
+            start = elm;
+        else
+            check_resolve_ciclic(elm, start);*/
+        soassigment_entity* tmp = elm->as_soassigment();
+        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
+            basic_entity_ptr fnd = elm->find(tmp->big()->reff());
+            if (fnd) {
+                if (fnd->kind() == et_Type) {
+                    if (tmp->valueset()) {
+                        basic_entity_ptr rslt(new valuesetassigment_entity(elm->scope(), tmp->name(),
+                                type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->valueset()));
+                        return rslt;
+                    } else {
+                        tmp->referenceerror_throw(tmp->big()->reff()->name());
+                    }
+                }
+                if (fnd->kind() == et_Class) {
+                    if (tmp->objectset()) {
+                        //basic_entity_ptr rslt(new classassigment_entity(elm->scope(), tmp->name(),
+                        //        class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference))));
+                        return basic_entity_ptr();
+                    } else {
+                        tmp->referenceerror_throw(tmp->big()->reff()->name());
+                    }
                 }
             } else {
                 tmp->referenceerror_throw(tmp->big()->reff()->name());
@@ -1750,6 +1886,8 @@ namespace x680 {
                 case 2: return compile_valuesetassignment(scope, ent);
                 case 3: return compile_classassignment(scope, ent);
                 case 6: return compile_bigassignment(scope, ent);
+                case 7: return compile_voassignment(scope, ent);
+                case 8: return compile_soassignment(scope, ent);
             }
             return rslt;
         }
@@ -2115,7 +2253,7 @@ namespace x680 {
                 {
                     tmpc->_class(class_atom_ptr(new class_atom(tmpc, tmp.class_.tp)));
                     tmpc->childs() = compile_classfields(tmpc, tmp.class_);
-                    withsyntax_atom wsyn =compile_withsyntax(scope, tmp.class_.syntaxes);
+                    withsyntax_atom wsyn = compile_withsyntax(scope, tmp.class_.syntaxes);
                     tmpc->withsyntax(compile_withsyntax(tmpc, tmp.class_.syntaxes));
                     return tmpc;
                 }
@@ -2225,24 +2363,20 @@ namespace x680 {
             }
             return basic_entity_ptr(new reffvaluesetfield_entity(scope, ent.field, ent.holder));
         }
-        
-        
-        
-        withsyntax_atom compile_withsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent){
+
+        withsyntax_atom compile_withsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent) {
             if (ent.empty())
                 return withsyntax_atom();
-            return withsyntax_atom(new groupsyntax_atom(scope, "",  compile_groupwithsyntax(scope, ent) , false));
+            return withsyntax_atom(new groupsyntax_atom(scope, "", compile_groupwithsyntax(scope, ent), false));
         }
-        
 
-       syntax_atom_vct compile_groupwithsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent){
+        syntax_atom_vct compile_groupwithsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent) {
             syntax_atom_vct tmp;
             for (x680::syntactic::classsyntax_vector::const_iterator it = ent.begin(); it != ent.end(); ++it) {
                 if (it->group.empty()) {
-                    tmp.push_back( syntax_atom_ptr(new syntax_atom(scope,it->alias,it->field, it->optional)));
-                }
-                else{
-                    tmp.push_back( syntax_atom_ptr(new groupsyntax_atom(scope, it->alias, compile_groupwithsyntax(scope, it->group) , it->optional)));
+                    tmp.push_back(syntax_atom_ptr(new syntax_atom(scope, it->alias, it->field, it->optional)));
+                } else {
+                    tmp.push_back(syntax_atom_ptr(new groupsyntax_atom(scope, it->alias, compile_groupwithsyntax(scope, it->group), it->optional)));
                 }
             }
             return tmp;
@@ -2254,6 +2388,30 @@ namespace x680 {
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::unknown_tc_assignment tmp = boost::get<x680::syntactic::unknown_tc_assignment>(ent);
             return bigassigment_entity_ptr(new bigassigment_entity(scope, tmp.identifier, compile_reff(tmp.unknown_tc.reff)));
+        }
+
+        // value or object 
+
+        voassigment_entity_ptr compile_voassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
+            x680::syntactic::unknown_vo_assignment tmp = boost::get<x680::syntactic::unknown_vo_assignment>(ent);
+            voassigment_entity_ptr tmpv = voassigment_entity_ptr(new voassigment_entity(scope, tmp.identifier, compile_reff(tmp.reff)));
+            if ((tmp.unknown_vo.alternative_ & AS_VALUE) && (tmp.unknown_vo.value_))
+                tmpv->value(compile_value(scope, *(tmp.unknown_vo.value_)));
+            if ((tmp.unknown_vo.alternative_ & AS_OBJECT) && (tmp.unknown_vo.object_))
+                tmpv->object(compile_reff("www")/*compile_valueset(scope,*(tmp.unknown_so.valueset_)*/);
+            return tmpv;
+        }
+
+        // valueset or objectset
+
+        soassigment_entity_ptr compile_soassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
+            x680::syntactic::unknown_so_assignment tmp = boost::get<x680::syntactic::unknown_so_assignment>(ent);
+            soassigment_entity_ptr tmpv = soassigment_entity_ptr(new soassigment_entity(scope, tmp.identifier, compile_reff(tmp.reff)));
+            if ((tmp.unknown_so.alternative_ & AS_VALUESET) && (tmp.unknown_so.valueset_))
+                tmpv->valueset(compile_valueset(scope, *(tmp.unknown_so.valueset_)));
+            if ((tmp.unknown_so.alternative_ & AS_OBJECTSET) && (tmp.unknown_so.objectset_))
+                tmpv->objectset(compile_reff("www")/*compile_valueset(scope,*(tmp.unknown_so.valueset_)*/);
+            return tmpv;
         }
 
         // reff
@@ -2346,8 +2504,12 @@ namespace x680 {
                 stream << (*it)->as_bigassigment();
                 continue;
             }
-            if ((*it)->as_littleassigment()) {
-                stream << (*it)->as_littleassigment();
+            if ((*it)->as_voassigment()) {
+                stream << (*it)->as_voassigment();
+                continue;
+            }
+            if ((*it)->as_soassigment()) {
+                stream << (*it)->as_soassigment();
                 continue;
             }
             if ((*it)->as_typeassigment()) {
@@ -2878,12 +3040,12 @@ namespace x680 {
                     stream << (*it)->as_classfield();
             }
             stream << " }";
-            if (self->withsyntax()){
+            if (self->withsyntax()) {
                 stream << "\n    WITH SYNTAX {  ";
                 stream << self->withsyntax().get();
-                stream << "    }";                
+                stream << "    }";
             }
-                
+
         }
         return stream << self->_class().get() << "\n";
     }
@@ -2999,29 +3161,28 @@ namespace x680 {
         return stream;
     }
 
-    std::ostream& operator<<(std::ostream& stream, syntax_atom* self){
+    std::ostream& operator<<(std::ostream& stream, syntax_atom* self) {
         if (self->optional())
-                stream << " [ ";       
+            stream << " [ ";
         if (self->isalias())
-                stream << " '" << self->alias() << "' ";          
-        if  (self->as_group()){
-                stream << " " << self->as_group();  
-        }
-        else {
+            stream << " '" << self->alias() << "' ";
+        if (self->as_group()) {
+            stream << " " << self->as_group();
+        } else {
             if (self->expecteddef())
                 stream << " ??? " << self->reff()->name();
             else
-                stream << " *" << self->reff()->name();        
+                stream << " *" << self->reff()->name();
         }
         if (self->optional())
-            stream << " ] ";          
+            stream << " ] ";
         return stream;
     }
-    
+
     std::ostream& operator<<(std::ostream& stream, groupsyntax_atom* self) {
         for (syntax_atom_vct::const_iterator it = self->group().begin(); it != self->group().end(); ++it) {
-             stream <<  "\n     " << (*it);
-        }        
+            stream << "\n     " << (*it);
+        }
         return stream;
     }
 
@@ -3033,11 +3194,36 @@ namespace x680 {
     }
 
 
-    //little
+    // value or object
 
-    std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self) {
-        return stream << "(?l)" << self->name() << " [" << "] :: = " << "\n";
+    std::ostream& operator<<(std::ostream& stream, voassigment_entity* self) {
+        stream << "(?VO)" << self->name() << " [ ??? " << self->big()->reff()->name() << "] :: = ";
+        if (self->value())
+            stream << "(+v)";
+        else
+            stream << "(-v)";
+        if (self->object())
+            stream << "(+o)";
+        else
+            stream << "(-o)";
+        return stream << "\n";
     }
+
+    // valueset or objectset
+
+    std::ostream& operator<<(std::ostream& stream, soassigment_entity* self) {
+        stream << "(?SO)" << self->name() << " [???" << self->big()->reff()->name() << "] :: = ";
+        if (self->valueset())
+            stream << "(+vs)";
+        else
+            stream << "(-vs)";
+        if (self->objectset())
+            stream << "(+os)";
+        else
+            stream << "(-os)";
+        return stream << "\n";
+    }
+
 
 
 

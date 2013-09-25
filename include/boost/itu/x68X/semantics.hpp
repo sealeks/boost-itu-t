@@ -14,6 +14,8 @@ namespace x680 {
     enum entity_enum {
 
         et_Nodef,
+        et_NodefV,
+        et_NodefS,
         et_Global,
         et_Module,
         et_Import,
@@ -51,9 +53,6 @@ namespace x680 {
     class bigassigment_entity;
     typedef boost::shared_ptr<bigassigment_entity> bigassigment_entity_ptr;
 
-    class littleassigment_entity;
-    typedef boost::shared_ptr<littleassigment_entity> littleassigment_entity_ptr;
-
     class typeassigment_entity;
     typedef boost::shared_ptr<typeassigment_entity> typeassigment_entity_ptr;
 
@@ -74,6 +73,11 @@ namespace x680 {
     class extention_entity;
     typedef boost::shared_ptr<extention_entity> extention_entity_ptr;
 
+    class voassigment_entity;
+    typedef boost::shared_ptr<voassigment_entity> voassigment_entity_ptr;
+
+    class soassigment_entity;
+    typedef boost::shared_ptr<soassigment_entity> soassigment_entity_ptr;
 
 
 
@@ -217,20 +221,20 @@ namespace x680 {
 
     class reffvaluesetfield_entity;
     typedef boost::shared_ptr<reffvaluesetfield_entity> reffvaluesetfield_entity_ptr;
-    
-    
-    
+
+
+
 
     class syntax_atom;
     typedef boost::shared_ptr<syntax_atom> syntax_atom_ptr;
     typedef std::vector<syntax_atom_ptr> syntax_atom_vct;
-    
+
     class groupsyntax_atom;
-    typedef boost::shared_ptr<groupsyntax_atom> groupsyntax_atom_ptr;    
+    typedef boost::shared_ptr<groupsyntax_atom> groupsyntax_atom_ptr;
     typedef groupsyntax_atom_ptr withsyntax_atom;
-    
-    
-    
+
+
+
     typedef std::vector<std::string> export_vector;
     typedef std::vector<std::string> import_vector;
 
@@ -307,7 +311,9 @@ namespace x680 {
 
         bigassigment_entity* as_bigassigment();
 
-        littleassigment_entity* as_littleassigment();
+        voassigment_entity* as_voassigment();
+
+        soassigment_entity* as_soassigment();
 
         typeassigment_entity* as_typeassigment();
 
@@ -586,6 +592,8 @@ namespace x680 {
         void resolve_reff(bool all = true);
 
         virtual void resolve();
+
+        virtual void swap_scope(basic_entity_ptr to_, basic_entity_ptr from_ = basic_entity_ptr());
 
 
     protected:
@@ -884,6 +892,8 @@ namespace x680 {
 
         void resolve_vect(value_vct& vl);
 
+        //void swap_scope_vect(value_vct& vl, basic_entity_ptr to_, basic_entity_ptr from_= basic_entity_ptr());
+
     private:
 
         value_type valtype_;
@@ -1025,6 +1035,8 @@ namespace x680 {
         }
 
         virtual void resolve();
+
+        //virtual  void swap_scope(basic_entity_ptr to_, basic_entity_ptr from_= basic_entity_ptr());     
 
     private:
 
@@ -1991,9 +2003,9 @@ namespace x680 {
         basic_atom_ptr field_;
         valueset_atom_ptr default_;
     };
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // syntax_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -2001,42 +2013,42 @@ namespace x680 {
 
     public:
 
-
-        
         syntax_atom(basic_entity_ptr scope, std::string als, bool opt) :
-        basic_atom(scope), alias_(als), optional_(opt) {}        
-        
-        syntax_atom(basic_entity_ptr scope, std::string als, const std::string& field, bool opt) : 
-        basic_atom(field, scope), alias_(als), optional_(opt) {}        
-        
+        basic_atom(scope), alias_(als), optional_(opt) {
+        }
+
+        syntax_atom(basic_entity_ptr scope, std::string als, const std::string& field, bool opt) :
+        basic_atom(field, scope), alias_(als), optional_(opt) {
+        }
+
         bool optional() const {
             return optional_;
-        }       
-        
-         std::string  alias() const {
-            return alias_;
-        }      
-         
-         bool  isalias() const {
-            return !alias_.empty();
-        }               
+        }
 
-        groupsyntax_atom* as_group();   
-        
+        std::string alias() const {
+            return alias_;
+        }
+
+        bool isalias() const {
+            return !alias_.empty();
+        }
+
+        groupsyntax_atom* as_group();
+
 
 
         //         
 
-        virtual void resolve();        
+        virtual void resolve();
 
     private:
         std::string alias_;
         bool optional_;
     };
-    
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // groupsyntax_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -2045,8 +2057,9 @@ namespace x680 {
     public:
 
         groupsyntax_atom(basic_entity_ptr scope, std::string als, syntax_atom_vct grp, bool opt) :
-        syntax_atom(scope,  als, opt), group_(grp){}
-        
+        syntax_atom(scope, als, opt), group_(grp) {
+        }
+
         syntax_atom_vct& group() {
             return group_;
         }
@@ -2054,15 +2067,15 @@ namespace x680 {
         void group(syntax_atom_vct vl) {
             group_ = vl;
         }
-        
+
         //         
 
-        virtual void resolve();         
-        
+        virtual void resolve();
+
     private:
 
         syntax_atom_vct group_;
-    };    
+    };
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -2113,7 +2126,7 @@ namespace x680 {
 
         void withsyntax(withsyntax_atom vl) {
             withsyntax_ = vl;
-        }        
+        }
 
         /////        
 
@@ -2171,15 +2184,15 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // LITTLE
+    // VALUE OR OBJECT
     /////////////////////////////////////////////////////////////////////////     
-    // littleassigment_entity
+    // voassigment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class littleassigment_entity : public basic_entity {
+    class voassigment_entity : public basic_entity {
 
     public:
-        littleassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg, basic_atom_ptr lt);
+        voassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
 
         basic_atom_ptr big() const {
             return big_;
@@ -2189,12 +2202,20 @@ namespace x680 {
             big_ = vl;
         }
 
-        basic_atom_ptr little() const {
-            return little_;
+        value_atom_ptr value() const {
+            return value_;
         }
 
-        void little(basic_atom_ptr vl) {
-            little_ = vl;
+        void value(value_atom_ptr vl) {
+            value_ = vl;
+        }
+
+        basic_atom_ptr object() const {
+            return object_;
+        }
+
+        void object(basic_atom_ptr vl) {
+            object_ = vl;
         }
 
 
@@ -2209,7 +2230,61 @@ namespace x680 {
     private:
 
         basic_atom_ptr big_;
-        basic_atom_ptr little_;
+        value_atom_ptr value_;
+        basic_atom_ptr object_;
+    };
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // VALUESET OR OBJECTSET
+    /////////////////////////////////////////////////////////////////////////     
+    // soassigment_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class soassigment_entity : public basic_entity {
+
+    public:
+        soassigment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
+
+        basic_atom_ptr big() const {
+            return big_;
+        }
+
+        void big(type_atom_ptr vl) {
+            big_ = vl;
+        }
+
+        valueset_atom_ptr valueset() const {
+            return valueset_;
+        }
+
+        void valueset(valueset_atom_ptr vl) {
+            valueset_ = vl;
+        }
+
+        basic_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(basic_atom_ptr vl) {
+            objectset_ = vl;
+        }
+
+
+        /////        
+
+        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+
+        virtual void resolve() {
+        };
+
+
+    private:
+
+        basic_atom_ptr big_;
+        valueset_atom_ptr valueset_;
+        basic_atom_ptr objectset_;
     };
 
 
@@ -2224,6 +2299,10 @@ namespace x680 {
     void preresolve_assigments(basic_entity_vector& elm);
     basic_entity_ptr preresolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
     basic_entity_ptr preresolve_nodef_assigment(basic_entity* elm, basic_entity* start = 0);
+    basic_entity_ptr preresolve_nodefv_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+    basic_entity_ptr preresolve_nodefv_assigment(basic_entity* elm, basic_entity* start = 0);
+    basic_entity_ptr preresolve_nodefs_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+    basic_entity_ptr preresolve_nodefs_assigment(basic_entity* elm, basic_entity* start = 0);
 
     void resolve_assigments(basic_entity_vector& elm);
     void resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start = basic_entity_ptr());
@@ -2306,11 +2385,15 @@ namespace x680 {
         basic_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_reffvalueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
-        basic_entity_ptr compile_reffvaluesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);       
-        withsyntax_atom compile_withsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent);       
-        syntax_atom_vct compile_groupwithsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent);        
+        basic_entity_ptr compile_reffvaluesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        withsyntax_atom compile_withsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent);
+        syntax_atom_vct compile_groupwithsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent);
         // big
         bigassigment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        // value or object
+        voassigment_entity_ptr compile_voassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        // valueset or objectset
+        soassigment_entity_ptr compile_soassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         // reff
         basic_atom_ptr compile_reff(const std::string& rf);
 
@@ -2389,11 +2472,15 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, reffvaluefield_entity* self);
     std::ostream& operator<<(std::ostream& stream, reffvaluesetfield_entity* self);
     std::ostream& operator<<(std::ostream& stream, syntax_atom* self);
-    std::ostream& operator<<(std::ostream& stream, groupsyntax_atom* self);    
+    std::ostream& operator<<(std::ostream& stream, groupsyntax_atom* self);
     // big
     std::ostream& operator<<(std::ostream& stream, bigassigment_entity* self);
+    // value or object
+    std::ostream& operator<<(std::ostream& stream, voassigment_entity* self);
+    // valueset or objectset
+    std::ostream& operator<<(std::ostream& stream, soassigment_entity* self);
     //little
-    std::ostream& operator<<(std::ostream& stream, littleassigment_entity* self);
+    std::ostream& operator<<(std::ostream& stream, voassigment_entity* self);
 
 
 }
