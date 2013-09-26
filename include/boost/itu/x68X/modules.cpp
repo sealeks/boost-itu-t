@@ -177,31 +177,31 @@ namespace x680 {
 
             SettingM1 = SettingType | SettingValue | SettingValueSet | SettingObject | SettingObjectSet;
 
-            Setting = ((qi::hold[SettingType >> qi::omit[';']])
-                    | (qi::hold[SettingValue >> qi::omit[';']])
-                    | (qi::hold[SettingValueSet >> qi::omit[';']])
-                    | (qi::hold[SettingObject >> qi::omit[';']])
-                    | (qi::hold[SettingObjectSet >> qi::omit[';']])) | SettingM1;
+            Setting = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[Value[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[Object[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM1;
 
             SettingM2 = SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet;
 
-            ActualParameter = ((qi::hold[SettingType >> qi::omit[';']])
-                    | (qi::hold[SettingValue >> qi::omit[';']])
-                    | (qi::hold[SettingValueSet >> qi::omit[';']])
-                    | (qi::hold[SettingClass >> qi::omit[';']])
-                    | (qi::hold[SettingObject >> qi::omit[';']])
-                    | (qi::hold[SettingObjectSet >> qi::omit[';']])) | SettingM2;
+            ActualParameter = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[Value[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[Object[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM2;
 
             SettingM3 = SettingValue | SettingObject;
 
-            SettingU1 = ((qi::hold[SettingValue >> qi::omit[';']])
-                    | (qi::hold[SettingObject >> qi::omit[';']])) | SettingM3;
+            SettingU1 = ((qi::hold[Value[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[Object[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM3;
 
             SettingM4 = SettingType | SettingClass | SettingObjectSet;
 
-            SettingU2 = ((qi::hold[SettingType >> qi::omit[';']])
-                    | (qi::hold[SettingClass >> qi::omit[';']])
-                    | (qi::hold[SettingObjectSet >> qi::omit[';']])) | SettingM4;
+            SettingU2 = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM4;
 
             Parameters = qi::omit[qi::lexeme[qi::lit("{")]]
                     >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
