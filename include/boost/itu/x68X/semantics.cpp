@@ -123,6 +123,14 @@ namespace x680 {
         return dynamic_cast<classassignment_entity*> (this);
     }
 
+    objectassignment_entity * basic_entity::as_objectassigment() {
+        return dynamic_cast<objectassignment_entity*> (this);
+    }
+
+    objectsetassignment_entity * basic_entity::as_objectsetassigment() {
+        return dynamic_cast<objectsetassignment_entity*> (this);
+    }
+
     field_entity* basic_entity::as_classfield() {
         return dynamic_cast<field_entity*> (this);
     }
@@ -1488,6 +1496,34 @@ namespace x680 {
     : basic_atom(reff, scope), builtin_(tp) {
     }
 
+    definedobject_atom* object_atom::as_defined() {
+        return dynamic_cast<definedobject_atom*> (this);
+    }
+
+    defnobject_atom* object_atom::as_defn() {
+        return dynamic_cast<defnobject_atom*> (this);
+    }
+
+    unionobject_atom* object_atom::as_union() {
+        return dynamic_cast<unionobject_atom*> (this);
+    }
+
+    intersectionobject_atom* object_atom::as_intersection() {
+        return dynamic_cast<intersectionobject_atom*> (this);
+    }
+
+    exceptobject_atom* object_atom::as_except() {
+        return dynamic_cast<exceptobject_atom*> (this);
+    }
+
+    allexceptobject_atom* object_atom::as_allexcept() {
+        return dynamic_cast<allexceptobject_atom*> (this);
+    }
+
+    extentionobject_atom* object_atom::as_extention() {
+        return dynamic_cast<extentionobject_atom*> (this);
+    }
+
     void object_atom::resolve() {
         if (builtin_ == ot_Refference)
             resolve_reff();
@@ -1498,8 +1534,8 @@ namespace x680 {
     // objectassignment_entity
     /////////////////////////////////////////////////////////////////////////    
 
-    objectassignment_entity::objectassignment_entity(basic_entity_ptr scope, const std::string& nm) :
-    basic_entity(scope, nm, et_Object) {
+    objectassignment_entity::objectassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr cls, object_atom_ptr obj) :
+    basic_entity(scope, nm, et_Object), class_(cls), object_(obj) {
     };
 
     basic_entity_ptr objectassignment_entity::find_by_name(const std::string& nm, bool all) {
@@ -1543,32 +1579,12 @@ namespace x680 {
     : basic_atom(reff, scope), builtin_(tp) {
     }
 
-    definedobject_atom* object_atom::as_defined() {
-        return dynamic_cast<definedobject_atom*> (this);
+    definedobjectset_atom* objectset_atom::as_defined() {
+        return dynamic_cast<definedobjectset_atom*> (this);
     }
 
-    defnobject_atom* object_atom::as_defn() {
-        return dynamic_cast<defnobject_atom*> (this);
-    }
-
-    unionobject_atom* object_atom::as_union() {
-        return dynamic_cast<unionobject_atom*> (this);
-    }
-
-    intersectionobject_atom* object_atom::as_intersection() {
-        return dynamic_cast<intersectionobject_atom*> (this);
-    }
-
-    exceptobject_atom* object_atom::as_except() {
-        return dynamic_cast<exceptobject_atom*> (this);
-    }
-
-    allexceptobject_atom* object_atom::as_allexcept() {
-        return dynamic_cast<allexceptobject_atom*> (this);
-    }
-
-    extentionobject_atom* object_atom::as_extention() {
-        return dynamic_cast<extentionobject_atom*> (this);
+    defnobjectset_atom* objectset_atom::as_defn() {
+        return dynamic_cast<defnobjectset_atom*> (this);
     }
 
     void objectset_atom::resolve() {
@@ -1581,8 +1597,8 @@ namespace x680 {
     // objectsetassignment_entity
     /////////////////////////////////////////////////////////////////////////    
 
-    objectsetassignment_entity::objectsetassignment_entity(basic_entity_ptr scope, const std::string& nm) :
-    basic_entity(scope, nm, et_Object) {
+    objectsetassignment_entity::objectsetassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr cls, objectset_atom_ptr objs) :
+    basic_entity(scope, nm, et_ObjectSet), class_(cls), objectset_(objs) {
     };
 
     basic_entity_ptr objectsetassignment_entity::find_by_name(const std::string& nm, bool all) {
@@ -2065,6 +2081,8 @@ namespace x680 {
                 case 1: return compile_valueassignment(scope, ent);
                 case 2: return compile_valuesetassignment(scope, ent);
                 case 3: return compile_classassignment(scope, ent);
+                case 4: return compile_objectassignment(scope, ent);
+                case 5: return compile_objectsetassignment(scope, ent);
                 case 6: return compile_bigassignment(scope, ent);
                 case 7: return compile_voassignment(scope, ent);
                 case 8: return compile_soassignment(scope, ent);
@@ -2445,6 +2463,10 @@ namespace x680 {
             return tmpc;
         }
 
+        class_atom_ptr compile_classdefined(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
+            return class_atom_ptr(new class_atom(scope, ent.reference, ent.tp));
+        }
+
         basic_entity_vector compile_classfields(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
             basic_entity_vector tmp;
             for (x680::syntactic::classfield_vector::const_iterator it = ent.fields.begin(); it != ent.fields.end(); ++it) {
@@ -2563,7 +2585,90 @@ namespace x680 {
         }
 
 
-        // big
+        // object         
+
+        objectassignment_entity_ptr compile_objectassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
+            x680::syntactic::object_assignment tmp = boost::get<x680::syntactic::object_assignment>(ent);
+            objectassignment_entity_ptr tmpc(new objectassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_), object_atom_ptr()));
+            object_atom_ptr obj = compile_object(tmpc, tmp.object);
+            tmpc->object(obj);
+            return tmpc;
+        }
+
+        object_atom_ptr compile_object(basic_entity_ptr scope, const x680::syntactic::object_element& ent) {
+            switch (ent.tp) {
+                case ot_FromObject:
+                case ot_ObjectSetFromObjects:
+                case ot_Refference: return object_atom_ptr(new definedobject_atom(scope, ent.reff));
+                case ot_DefinedObjectSet:
+                case ot_Object: return object_atom_ptr(new defnobject_atom(scope, compile_object_fields(scope, ent.fields)));
+                case ot_UNION: return object_atom_ptr(new unionobject_atom());
+                case ot_INTERSECTION: return object_atom_ptr(new intersectionobject_atom());
+                case ot_EXCEPT: return object_atom_ptr(new exceptobject_atom());
+                case ot_ALLEXCEPT: return object_atom_ptr(new allexceptobject_atom());
+                case ot_EXTENTION: return object_atom_ptr(new extentionobject_atom());
+            }
+            return object_atom_ptr();
+
+        }
+
+        fieldsetting_atom_vct compile_object_fields(basic_entity_ptr scope, const x680::syntactic::objectfield_vector& ent) {
+            fieldsetting_atom_vct tmp;
+            for (x680::syntactic::objectfield_vector::const_iterator it = ent.begin(); it != ent.end(); ++it)
+                tmp.push_back(compile_object_field(scope, (*it)));
+            return tmp;
+        }
+
+        fieldsetting_atom_ptr compile_object_field(basic_entity_ptr scope, const x680::syntactic::objectfield_type& ent) {
+            return fieldsetting_atom_ptr(new fieldsetting_atom(scope, ent.field, compile_setting(scope, ent.setting)));
+        }
+
+        setting_atom_ptr compile_setting(basic_entity_ptr scope, const x680::syntactic::setting_element& ent) {
+            setting_atom_ptr tmp(new setting_atom(ent.alternative, scope));
+            if ((ent.alternative & AS_TYPE) && (ent.type))
+                tmp->type(compile_type(scope, *ent.type));
+            if ((ent.alternative & AS_VALUE) && (ent.value))
+                tmp->value(compile_value(scope, *ent.value));
+            if ((ent.alternative & AS_VALUESET) && (ent.valueset))
+                tmp->valueset(compile_valueset(scope, * ent.valueset));
+            if ((ent.alternative & AS_CLASS) && (ent.class_))
+                tmp->_class(compile_classdefined(scope, *ent.class_));
+            if ((ent.alternative & AS_OBJECT) && (ent.object))
+                tmp->object(compile_object(scope, *ent.object));
+            if ((ent.alternative & AS_OBJECTSET) && (ent.objectset))
+                tmp->objectset(compile_objectset(scope, *ent.objectset));
+            return tmp;
+        }
+
+
+        // objectset         
+
+        objectsetassignment_entity_ptr compile_objectsetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
+            x680::syntactic::objectset_assignment tmp = boost::get<x680::syntactic::objectset_assignment>(ent);
+            objectsetassignment_entity_ptr tmpc(new objectsetassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_), objectset_atom_ptr()));
+            objectset_atom_ptr objs = compile_objectset(tmpc, tmp.set);
+            tmpc->objectset(objs);
+            return tmpc;
+        }
+
+        objectset_atom_ptr compile_objectset(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
+            switch (ent.tp) {
+                case os_ObjectSetFromObject:
+                case os_defined:return objectset_atom_ptr(new definedobjectset_atom(scope, ent.reference));
+                case os_Strait: return objectset_atom_ptr(new defnobjectset_atom(scope, compile_objectset_vct(scope, ent)));
+                default:
+                {
+                }
+            }
+            return objectset_atom_ptr();
+        }
+
+        object_atom_vct compile_objectset_vct(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
+            object_atom_vct tmp;
+            for (x680::syntactic::object_element_vector::const_iterator it = ent.set.begin(); it != ent.set.end(); ++it)
+                tmp.push_back(compile_object(scope, *it));
+            return tmp;
+        }
 
         bigassignment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::unknown_tc_assignment tmp = boost::get<x680::syntactic::unknown_tc_assignment>(ent);
@@ -2708,6 +2813,16 @@ namespace x680 {
                 stream << (*it)->as_classassigment();
                 continue;
             }
+            if ((*it)->as_objectassigment()) {
+                stream << (*it)->as_objectassigment();
+                continue;
+            }
+            if ((*it)->as_objectsetassigment()) {
+                stream << (*it)->as_objectsetassigment();
+                continue;
+            }
+
+
         }
         return stream;
     }
@@ -3118,8 +3233,8 @@ namespace x680 {
             case cns_PropertySettings: return stream << self->as_property();
             case cns_MultipleTypeConstraints: return stream << self->as_multipletypeconstraint();
             case cns_NamedConstraint: return stream << self->as_named();
-            case cns_UNION: return stream << " && ";
-            case cns_INTERSECTION: return stream << " || ";
+            case cns_UNION: return stream << " | ";
+            case cns_INTERSECTION: return stream << " & ";
             case cns_EXCEPT: return stream << " ^ ";
             case cns_ALLEXCEPT: return stream << " ~ ";
             case cns_EXTENTION: return stream << " ... ";
@@ -3362,6 +3477,108 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, groupsyntax_atom* self) {
         for (syntax_atom_vct::const_iterator it = self->group().begin(); it != self->group().end(); ++it) {
             stream << "\n     " << (*it);
+        }
+        return stream;
+    }
+
+    // object
+
+    std::ostream& operator<<(std::ostream& stream, objectassignment_entity* self) {
+        stream << "(o) " << self->name() << " [" << self->_class().get() << "] :: = ";
+        if (self->object())
+            return stream << self->object().get() << "\n";
+        return stream << "???" << "\n";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, object_atom* self) {
+        switch (self->builtin()) {
+            case ot_FromObject:
+            case ot_ObjectSetFromObjects:
+            case ot_Refference: return stream << self->as_defined();
+            case ot_DefinedObjectSet:
+            case ot_Object: return stream << self->as_defn();
+            case ot_UNION: return stream << " | ";
+            case ot_INTERSECTION: return stream << " & ";
+            case ot_EXCEPT: return stream << " ^ ";
+            case ot_ALLEXCEPT: return stream << " ~ ";
+            case ot_EXTENTION: return stream << " ... ";
+        }
+        return stream << "!!!!NULL OBJECT";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, definedobject_atom* self) {
+        if (self->reff()->as_expectdef())
+            return stream << "??? *" << self->reff()->name();
+        return stream << self->reff()->name();
+    }
+
+    std::ostream& operator<<(std::ostream& stream, defnobject_atom* self) {
+        return stream << self->fieldsetting(); //self->reff()->name();
+    }
+
+    std::ostream& operator<<(std::ostream& stream, const fieldsetting_atom_vct& self) {
+        stream << " {  \n";
+        for (fieldsetting_atom_vct::const_iterator it = self.begin(); it != self.end(); ++it) {
+            stream << (*it).get();
+        }
+        return stream << " }";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, fieldsetting_atom* self) {
+        stream << "    " << self->field() << "   ";
+        if (self->setting()) {
+            if (self->setting()->type())
+                stream << "(+T)";
+            else
+                stream << "(-T)";
+            if (self->setting()->value())
+                stream << "(+v)";
+            else
+                stream << "(-v)";
+            if (self->setting()->valueset())
+                stream << "(+vs)";
+            else
+                stream << "(-vs)";
+            if (self->setting()->_class())
+                stream << "(+C)";
+            else
+                stream << "(-C)";
+            if (self->setting()->object())
+                stream << "(+o)";
+            else
+                stream << "(-o)";
+            if (self->setting()->objectset())
+                stream << "(+os)";
+            else
+                stream << "(-os)";
+        } else
+            stream << "???";
+        return stream << "\n";
+    }
+
+
+    //  objectset
+
+    std::ostream& operator<<(std::ostream& stream, objectsetassignment_entity* self) {
+        stream << "(oS) " << self->name() << " [" << self->_class().get() << "] :: = ";
+        if (self->objectset())
+            return stream << self->objectset().get() << "\n";
+        return stream << "???" << "\n";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, objectset_atom* self) {
+        if (self) {
+            if (self->as_defined()) {
+                if (self->reff()->as_expectdef())
+                    return stream << "??? *" << self->reff()->name();
+                else
+                    stream << " *" << self->reff()->name();
+            } else if (self->as_defn()) {
+                stream << "($ ";
+                for (object_atom_vct::const_iterator it = self->as_defn()->objects().begin(); it != self->as_defn()->objects().end(); ++it)
+                    stream << " " << (*it).get();
+                stream << " $)";
+            }
         }
         return stream;
     }
