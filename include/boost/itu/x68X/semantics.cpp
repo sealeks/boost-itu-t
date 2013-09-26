@@ -247,8 +247,13 @@ namespace x680 {
 
     void basic_entity::prefind(const std::string& nm, basic_entity_vector& elm) {
         for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
-            if (((*it)->name() == nm) && ((*it)->kind() == et_Nodef)) {
-                *it = preresolve_nodef_assigment(*it);
+            if ((*it)->name() == nm) {
+                if (((*it)->kind() == et_Nodef))
+                    *it = preresolve_nodef_assigment(*it);
+                if (((*it)->kind() == et_NodefV))
+                    *it = preresolve_nodefv_assigment(*it);
+                if (((*it)->kind() == et_NodefS))
+                    *it = preresolve_nodefs_assigment(*it);
             }
         }
     }
@@ -1320,6 +1325,14 @@ namespace x680 {
     reffvaluesetfield_entity* field_entity::as_reffvaluesetfield() {
         return (fieldkind_ == fkind_VariableTypeValueSetFieldSpec) ? dynamic_cast<reffvaluesetfield_entity*> (this) : 0;
     }
+    
+    objectfield_entity* field_entity::as_objectfield() {
+        return (fieldkind_ == fkind_ObjectFieldSpec) ? dynamic_cast<objectfield_entity*> (this) : 0;
+    }
+
+    objectsetfield_entity* field_entity::as_objectsetfield() {
+        return (fieldkind_ == fkind_ObjectSetFieldSpec) ? dynamic_cast<objectsetfield_entity*> (this) : 0;
+    }    
 
     /////////////////////////////////////////////////////////////////////////   
     // typefield_entity
@@ -1394,7 +1407,28 @@ namespace x680 {
         referenceerror_throw(field()->expectedname());
     }
 
+    /////////////////////////////////////////////////////////////////////////   
+    // objectfield_entity
+    ///////////////////////////////////////////////////////////////////////// 
 
+    void objectfield_entity::resolve() {
+        if (type())
+            type()->resolve_reff();
+        if (_default())
+            _default()->resolve_reff();
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // objectfield_entity
+    ///////////////////////////////////////////////////////////////////////// 
+
+    void objectsetfield_entity::resolve() {
+        if (type())
+            type()->resolve_reff();
+        if (_default())
+            _default()->resolve_reff();
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1782,9 +1816,10 @@ namespace x680 {
                 }
                 if (fnd->kind() == et_Class) {
                     if (tmp->object()) {
-                        //basic_entity_ptr rslt(new classassignment_entity(elm->scope(), tmp->name(),
-                        //        class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference))));
-                        return basic_entity_ptr();
+                        basic_entity_ptr rslt(new objectassignment_entity(elm->scope(), tmp->name(),
+                                class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference)), tmp->object()));
+                        rslt->as_objectassigment()->object()->swap_scope(rslt);
+                        return rslt;
                     } else {
                         tmp->referenceerror_throw(tmp->big()->reff()->name());
                     }
@@ -1823,9 +1858,10 @@ namespace x680 {
                 }
                 if (fnd->kind() == et_Class) {
                     if (tmp->objectset()) {
-                        //basic_entity_ptr rslt(new classassignment_entity(elm->scope(), tmp->name(),
-                        //        class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference))));
-                        return basic_entity_ptr();
+                        basic_entity_ptr rslt(new objectsetassignment_entity(elm->scope(), tmp->name(),
+                                class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference)), tmp->objectset()));
+                        rslt->as_objectsetassigment()->objectset()->swap_scope(rslt);
+                        return rslt;
                     } else {
                         tmp->referenceerror_throw(tmp->big()->reff()->name());
                     }
@@ -2683,7 +2719,7 @@ namespace x680 {
             if ((tmp.unknown_vo.alternative_ & AS_VALUE) && (tmp.unknown_vo.value_))
                 tmpv->value(compile_value(scope, *(tmp.unknown_vo.value_)));
             if ((tmp.unknown_vo.alternative_ & AS_OBJECT) && (tmp.unknown_vo.object_))
-                tmpv->object(compile_reff("www")/*compile_valueset(scope,*(tmp.unknown_so.valueset_)*/);
+                tmpv->object(compile_object(scope, *(tmp.unknown_vo.object_)));
             return tmpv;
         }
 
@@ -2695,7 +2731,7 @@ namespace x680 {
             if ((tmp.unknown_so.alternative_ & AS_VALUESET) && (tmp.unknown_so.valueset_))
                 tmpv->valueset(compile_valueset(scope, *(tmp.unknown_so.valueset_)));
             if ((tmp.unknown_so.alternative_ & AS_OBJECTSET) && (tmp.unknown_so.objectset_))
-                tmpv->objectset(compile_reff("www")/*compile_valueset(scope,*(tmp.unknown_so.valueset_)*/);
+                tmpv->objectset(compile_objectset(scope, *(tmp.unknown_so.objectset_)));
             return tmpv;
         }
 
