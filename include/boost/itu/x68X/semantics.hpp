@@ -266,6 +266,9 @@ namespace x680 {
 
     class definedobject_atom;
     typedef boost::shared_ptr<definedobject_atom> definedobject_atom_ptr;
+    
+    class definedsetobject_atom;
+    typedef boost::shared_ptr<definedsetobject_atom> definedsetobject_atom_ptr;    
 
     class defnobject_atom;
     typedef boost::shared_ptr<defnobject_atom> defnobject_atom_ptr;
@@ -2557,6 +2560,8 @@ namespace x680 {
         }
 
         definedobject_atom* as_defined();
+        
+        definedsetobject_atom* as_definedset();        
 
         defnobject_atom* as_defn();
 
@@ -2593,6 +2598,22 @@ namespace x680 {
         virtual void resolve();
 
     };
+    
+    
+    /////////////////////////////////////////////////////////////////////////        
+    // defineobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class definedsetobject_atom : public object_atom {
+
+    public:
+
+        definedsetobject_atom(basic_entity_ptr scope, const std::string& reff) : object_atom(scope, reff, ot_DefinedObjectSet) {
+        };
+
+        virtual void resolve();
+
+    };    
 
 
     /////////////////////////////////////////////////////////////////////////        
@@ -3221,6 +3242,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, objectassignment_entity* self);
     std::ostream& operator<<(std::ostream& stream, object_atom* self);
     std::ostream& operator<<(std::ostream& stream, definedobject_atom* self);
+    std::ostream& operator<<(std::ostream& stream, definedsetobject_atom* self);    
     std::ostream& operator<<(std::ostream& stream, defnobject_atom* self);
     std::ostream& operator<<(std::ostream& stream, const fieldsetting_atom_vct& self);
     std::ostream& operator<<(std::ostream& stream, fieldsetting_atom* self);

@@ -1612,6 +1612,10 @@ namespace x680 {
     definedobject_atom* object_atom::as_defined() {
         return dynamic_cast<definedobject_atom*> (this);
     }
+    
+    definedsetobject_atom* object_atom::as_definedset() {
+        return dynamic_cast<definedsetobject_atom*> (this);
+    }    
 
     defnobject_atom* object_atom::as_defn() {
         return dynamic_cast<defnobject_atom*> (this);
@@ -1648,10 +1652,19 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     void definedobject_atom::resolve() {
-        if (builtin() == ot_Refference)
+       // if (builtin() == ot_Refference)
             resolve_reff();
     };
+    
+    
+    /////////////////////////////////////////////////////////////////////////        
+    // defenedsetobject_atom
+    /////////////////////////////////////////////////////////////////////////  
 
+    void definedsetobject_atom::resolve() {
+        //if (builtin() == ot_DefinedObjectSet)
+            resolve_reff();
+    };
 
     /////////////////////////////////////////////////////////////////////////        
     // defnobject_atom
@@ -2813,7 +2826,7 @@ namespace x680 {
                 case ot_FromObject:
                 case ot_ObjectSetFromObjects:
                 case ot_Refference: return object_atom_ptr(new definedobject_atom(scope, ent.reff));
-                case ot_DefinedObjectSet:
+                case ot_DefinedObjectSet: return object_atom_ptr(new definedsetobject_atom(scope, ent.reff));
                 case ot_Object: return object_atom_ptr(new defnobject_atom(scope, compile_object_fields(scope, ent.fields)));
                 case ot_UNION: return object_atom_ptr(new unionobject_atom());
                 case ot_INTERSECTION: return object_atom_ptr(new intersectionobject_atom());
@@ -3748,7 +3761,7 @@ namespace x680 {
             case ot_FromObject:
             case ot_ObjectSetFromObjects:
             case ot_Refference: return stream << self->as_defined();
-            case ot_DefinedObjectSet:
+            case ot_DefinedObjectSet: return stream << self->as_definedset();
             case ot_Object: return stream << self->as_defn();
             case ot_UNION: return stream << " | ";
             case ot_INTERSECTION: return stream << " & ";
@@ -3764,6 +3777,12 @@ namespace x680 {
             return stream << "??? *" << self->reff()->name();
         return stream << self->reff()->name();
     }
+    
+    std::ostream& operator<<(std::ostream& stream, definedsetobject_atom* self) {
+        if (self->reff()->as_expectdef())
+            return stream << "??? *" << self->reff()->name();
+        return stream << self->reff()->name();
+    }    
 
     std::ostream& operator<<(std::ostream& stream, defnobject_atom* self) {
         return stream << self->fieldsetting(); //self->reff()->name();
