@@ -3799,8 +3799,9 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, fieldsetting_atom* self) {
         stream << "    " << self->field() << "   ";
         if (self->setting()) {
+            stream << self->setting()->mask();
             if (self->setting()->type())
-                stream << "(+T)";
+                stream << "(+T)"  << self->setting()->type()->as_type();
             else
                 stream << "(-T)";
             if (self->setting()->value())
