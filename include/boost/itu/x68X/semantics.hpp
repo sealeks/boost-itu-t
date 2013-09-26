@@ -230,12 +230,18 @@ namespace x680 {
 
     class reffvaluesetfield_entity;
     typedef boost::shared_ptr<reffvaluesetfield_entity> reffvaluesetfield_entity_ptr;
-    
+
     class objectfield_entity;
     typedef boost::shared_ptr<objectfield_entity> objectfield_entity_ptr;
 
     class objectsetfield_entity;
-    typedef boost::shared_ptr<objectsetfield_entity> objectsetfield_entity_ptr;    
+    typedef boost::shared_ptr<objectsetfield_entity> objectsetfield_entity_ptr;
+
+    class undeffield_entity;
+    typedef boost::shared_ptr<undeffield_entity> undeffield_entity_ptr;
+
+    class undefsetfield_entity;
+    typedef boost::shared_ptr<undefsetfield_entity> undefsetfield_entity_ptr;
 
 
 
@@ -1928,10 +1934,14 @@ namespace x680 {
         reffvaluefield_entity* as_reffvaluefield();
 
         reffvaluesetfield_entity* as_reffvaluesetfield();
-        
+
         objectfield_entity* as_objectfield();
 
-        objectsetfield_entity* as_objectsetfield();        
+        objectsetfield_entity* as_objectsetfield();
+
+        undeffield_entity* as_undeffield();
+
+        undefsetfield_entity* as_undefsetfield();
 
 
     protected:
@@ -2163,20 +2173,20 @@ namespace x680 {
 
     public:
 
-        objectfield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, object_atom_ptr dflt) :
-        field_entity(scope, nm, fkind_ObjectFieldSpec, mk_default), type_(tp), default_(dflt) {
+        objectfield_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp, object_atom_ptr dflt) :
+        field_entity(scope, nm, fkind_ObjectFieldSpec, mk_default), class_(tp), default_(dflt) {
         };
 
-        objectfield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, bool unic, tagmarker_type mkr = mk_none) :
-        field_entity(scope, nm, fkind_ObjectFieldSpec, mkr), type_(tp) {
+        objectfield_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp, tagmarker_type mkr = mk_none) :
+        field_entity(scope, nm, fkind_ObjectFieldSpec, mkr), class_(tp) {
         };
 
-        type_atom_ptr type() const {
-            return type_;
+        class_atom_ptr _class() const {
+            return class_;
         }
 
-        void type(type_atom_ptr vl) {
-            type_ = vl;
+        void _class(class_atom_ptr vl) {
+            class_ = vl;
         }
 
         object_atom_ptr _default() const {
@@ -2192,7 +2202,7 @@ namespace x680 {
         virtual void resolve();
 
     protected:
-        type_atom_ptr type_;
+        class_atom_ptr class_;
         object_atom_ptr default_;
     };
 
@@ -2205,20 +2215,20 @@ namespace x680 {
 
     public:
 
-        objectsetfield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, objectset_atom_ptr dflt) :
-        field_entity(scope, nm, fkind_ObjectSetFieldSpec, mk_default), type_(tp), default_(dflt) {
+        objectsetfield_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp, objectset_atom_ptr dflt) :
+        field_entity(scope, nm, fkind_ObjectSetFieldSpec, mk_default), class_(tp), default_(dflt) {
         };
 
-        objectsetfield_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, tagmarker_type mkr = mk_none) :
-        field_entity(scope, nm, fkind_ObjectSetFieldSpec, mkr), type_(tp) {
+        objectsetfield_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp, tagmarker_type mkr = mk_none) :
+        field_entity(scope, nm, fkind_ObjectSetFieldSpec, mkr), class_(tp) {
         };
 
-        type_atom_ptr type() const {
-            return type_;
+        class_atom_ptr _class() const {
+            return class_;
         }
 
-        void type(type_atom_ptr vl) {
-            type_ = vl;
+        void _class(class_atom_ptr vl) {
+            class_ = vl;
         }
 
         objectset_atom_ptr _default() const {
@@ -2236,8 +2246,113 @@ namespace x680 {
         virtual void resolve();
 
     protected:
-        type_atom_ptr type_;
+        class_atom_ptr class_;
         objectset_atom_ptr default_;
+    };
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // undeffield_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class undeffield_entity : public field_entity {
+
+    public:
+
+        undeffield_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg, value_atom_ptr dfltv, object_atom_ptr dflto) :
+        field_entity(scope, nm, fkind_FixedType_or_Object, mk_default), big_(bg), defaultv_(dfltv), defaulto_(dflto) {
+        };
+
+        undeffield_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg, tagmarker_type mkr = mk_none) :
+        field_entity(scope, nm, fkind_FixedType_or_Object, mkr), big_(bg) {
+        };
+
+        basic_atom_ptr big() const {
+            return big_;
+        }
+
+        void big(basic_atom_ptr vl) {
+            big_ = vl;
+        }
+
+        value_atom_ptr _defaultv() const {
+            return defaultv_;
+        }
+
+        void _defaulto(value_atom_ptr vl) {
+            defaultv_ = vl;
+        }
+
+        object_atom_ptr _defaulto() const {
+            return defaulto_;
+        }
+
+        void _defaulto(object_atom_ptr vl) {
+            defaulto_ = vl;
+        }
+
+        //         
+
+        virtual void resolve();
+
+    protected:
+        basic_atom_ptr big_;
+        value_atom_ptr defaultv_;
+        object_atom_ptr defaulto_;
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // undefsetfield_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class undefsetfield_entity : public field_entity {
+
+    public:
+
+        undefsetfield_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg, valueset_atom_ptr dfltv, objectset_atom_ptr dflto) :
+        field_entity(scope, nm, fkind_FixedTypeSet_or_ObjectSet, mk_default), big_(bg), defaultv_(dfltv), defaulto_(dflto) {
+        };
+
+        undefsetfield_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg, tagmarker_type mkr = mk_none) :
+        field_entity(scope, nm, fkind_FixedTypeSet_or_ObjectSet, mkr), big_(bg) {
+        };
+
+        basic_atom_ptr big() const {
+            return big_;
+        }
+
+        void big(basic_atom_ptr vl) {
+            big_ = vl;
+        }
+
+        valueset_atom_ptr _defaultv() const {
+            return defaultv_;
+        }
+
+        void _defaultv(valueset_atom_ptr vl) {
+            defaultv_ = vl;
+        }
+
+        objectset_atom_ptr _defaulto() const {
+            return defaulto_;
+        }
+
+        void _defaulto(objectset_atom_ptr vl) {
+            defaulto_ = vl;
+        }
+
+
+
+        //         
+
+        virtual void resolve();
+
+    protected:
+        basic_atom_ptr big_;
+        objectset_atom_ptr defaulto_;
+        valueset_atom_ptr defaultv_;
     };
 
 
@@ -2475,8 +2590,7 @@ namespace x680 {
         definedobject_atom(basic_entity_ptr scope, const std::string& reff) : object_atom(scope, reff, ot_Refference) {
         };
 
-        virtual void resolve() {
-        };
+        virtual void resolve();
 
     };
 
@@ -2501,8 +2615,7 @@ namespace x680 {
             fieldsetting_ = vl;
         }
 
-        virtual void resolve() {
-        };
+        virtual void resolve();
 
     private:
 
@@ -2999,6 +3112,10 @@ namespace x680 {
         basic_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_reffvalueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_reffvaluesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        basic_entity_ptr compile_objectclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        basic_entity_ptr compile_objectsetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        basic_entity_ptr compile_undefclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
+        basic_entity_ptr compile_unsefsetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         withsyntax_atom compile_withsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent);
         syntax_atom_vct compile_groupwithsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent);
         // object         
@@ -3094,6 +3211,10 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, valuesetfield_entity* self);
     std::ostream& operator<<(std::ostream& stream, reffvaluefield_entity* self);
     std::ostream& operator<<(std::ostream& stream, reffvaluesetfield_entity* self);
+    std::ostream& operator<<(std::ostream& stream, objectfield_entity* self);
+    std::ostream& operator<<(std::ostream& stream, objectsetfield_entity* self);
+    std::ostream& operator<<(std::ostream& stream, undeffield_entity* self);
+    std::ostream& operator<<(std::ostream& stream, undefsetfield_entity* self);
     std::ostream& operator<<(std::ostream& stream, syntax_atom* self);
     std::ostream& operator<<(std::ostream& stream, groupsyntax_atom* self);
     // object
