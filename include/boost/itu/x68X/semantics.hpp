@@ -92,6 +92,7 @@ namespace x680 {
 
     class setting_atom;
     typedef boost::shared_ptr<setting_atom> setting_atom_ptr;
+    typedef std::vector<setting_atom_ptr> setting_atom_vct;
 
 
 
@@ -266,12 +267,15 @@ namespace x680 {
 
     class definedobject_atom;
     typedef boost::shared_ptr<definedobject_atom> definedobject_atom_ptr;
-    
-    class definedsetobject_atom;
-    typedef boost::shared_ptr<definedsetobject_atom> definedsetobject_atom_ptr;    
 
-    class defnobject_atom;
-    typedef boost::shared_ptr<defnobject_atom> defnobject_atom_ptr;
+    class definedsetobject_atom;
+    typedef boost::shared_ptr<definedsetobject_atom> definedsetobject_atom_ptr;
+
+    class defltobject_atom;
+    typedef boost::shared_ptr<defltobject_atom> defltobject_atom_ptr;
+
+    class defsyntxobject_atom;
+    typedef boost::shared_ptr<defsyntxobject_atom> defsyntxobject_atom_ptr;
 
     class unionobject_atom;
     typedef boost::shared_ptr<unionobject_atom> unionobject_atom_ptr;
@@ -647,6 +651,18 @@ namespace x680 {
             return ((reff_) && (reff_->as_expectdef()));
         }
 
+        setting_atom_vct& parameters() {
+            return parameters_;
+        }
+
+        void parameters(setting_atom_vct vl) {
+            parameters_ = vl;
+        }
+
+        bool parameterized() const {
+            return !parameters_.empty();
+        }
+
         std::string expectedname() const {
             return expecteddef() ? reff_->name() : "";
         }
@@ -675,6 +691,7 @@ namespace x680 {
     protected:
         basic_entity_ptr reff_;
         basic_entity_ptr scope_;
+        setting_atom_vct parameters_;
     };
 
 
@@ -748,6 +765,14 @@ namespace x680 {
             objectset_ = vl;
         }
 
+        std::string literal() {
+            return literal_;
+        }
+
+        void literal(const std::string& vl) {
+            literal_ = vl;
+        }
+
 
     private:
 
@@ -758,6 +783,7 @@ namespace x680 {
         class_atom_ptr class_;
         object_atom_ptr object_;
         objectset_atom_ptr objectset_;
+        std::string literal_;
     };
 
 
@@ -2560,10 +2586,12 @@ namespace x680 {
         }
 
         definedobject_atom* as_defined();
-        
-        definedsetobject_atom* as_definedset();        
 
-        defnobject_atom* as_defn();
+        definedsetobject_atom* as_definedset();
+
+        defltobject_atom* as_deflt();
+
+        defsyntxobject_atom* as_defnsyntx();
 
         unionobject_atom* as_union();
 
@@ -2598,8 +2626,8 @@ namespace x680 {
         virtual void resolve();
 
     };
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////        
     // defineobject_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -2613,19 +2641,48 @@ namespace x680 {
 
         virtual void resolve();
 
-    };    
+    };
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // defnobject_atom
+    // defltobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class defnobject_atom : public object_atom {
+    class defltobject_atom : public object_atom {
 
     public:
 
-        defnobject_atom(basic_entity_ptr scope, fieldsetting_atom_vct fldst = fieldsetting_atom_vct())
+        defltobject_atom(basic_entity_ptr scope, fieldsetting_atom_vct fldst = fieldsetting_atom_vct())
         : object_atom(scope, ot_Object), fieldsetting_(fldst) {
+        };
+
+        fieldsetting_atom_vct& fieldsetting() {
+            return fieldsetting_;
+        }
+
+        void fieldsetting(fieldsetting_atom_vct vl) {
+            fieldsetting_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        fieldsetting_atom_vct fieldsetting_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////        
+    // defsyntxobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class defsyntxobject_atom : public object_atom {
+
+    public:
+
+        defsyntxobject_atom(basic_entity_ptr scope, fieldsetting_atom_vct fldst = fieldsetting_atom_vct())
+        : object_atom(scope, ot_ObjectDefineSyn), fieldsetting_(fldst) {
         };
 
         fieldsetting_atom_vct& fieldsetting() {
@@ -3098,6 +3155,7 @@ namespace x680 {
         basic_entity_ptr compile_import(const x680::syntactic::import& imp, module_entity_ptr mdl);
         void compile_assignments(const x680::syntactic::module& mod, module_entity_ptr mdl);
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
+        setting_atom_vct compile_parameters(basic_entity_ptr scope, const x680::syntactic::parameter_vector& ent);
         // type
         typeassignment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         basic_entity_vector compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
@@ -3108,6 +3166,7 @@ namespace x680 {
         // value
         valueassignment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         value_atom_ptr compile_value(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
+        value_atom_ptr compile_value_impl(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_vct compile_structvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_vct compile_objidvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
         value_vct compile_listvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent);
@@ -3142,12 +3201,14 @@ namespace x680 {
         // object         
         objectassignment_entity_ptr compile_objectassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         object_atom_ptr compile_object(basic_entity_ptr scope, const x680::syntactic::object_element& ent);
+        object_atom_ptr compile_object_impl(basic_entity_ptr scope, const x680::syntactic::object_element& ent);
         fieldsetting_atom_vct compile_object_fields(basic_entity_ptr scope, const x680::syntactic::objectfield_vector& ent);
         fieldsetting_atom_ptr compile_object_field(basic_entity_ptr scope, const x680::syntactic::objectfield_type& ent);
         setting_atom_ptr compile_setting(basic_entity_ptr scope, const x680::syntactic::setting_element& ent);
         // objectset         
         objectsetassignment_entity_ptr compile_objectsetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         objectset_atom_ptr compile_objectset(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent);
+        objectset_atom_ptr compile_objectset_impl(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent);
         object_atom_vct compile_objectset_vct(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent);
         // big
         bigassignment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
@@ -3242,10 +3303,14 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, objectassignment_entity* self);
     std::ostream& operator<<(std::ostream& stream, object_atom* self);
     std::ostream& operator<<(std::ostream& stream, definedobject_atom* self);
-    std::ostream& operator<<(std::ostream& stream, definedsetobject_atom* self);    
-    std::ostream& operator<<(std::ostream& stream, defnobject_atom* self);
+    std::ostream& operator<<(std::ostream& stream, definedsetobject_atom* self);
+    std::ostream& operator<<(std::ostream& stream, defltobject_atom* self);
+    std::ostream& operator<<(std::ostream& stream, defsyntxobject_atom* self);
     std::ostream& operator<<(std::ostream& stream, const fieldsetting_atom_vct& self);
     std::ostream& operator<<(std::ostream& stream, fieldsetting_atom* self);
+    std::ostream& operator<<(std::ostream& stream, const setting_atom_vct& self);
+    std::ostream& operator<<(std::ostream& stream, setting_atom* self);
+    std::ostream& fieldsettingstrm(std::ostream& stream, fieldsetting_atom* self);
     // objectset    
     std::ostream& operator<<(std::ostream& stream, objectsetassignment_entity* self);
     std::ostream& operator<<(std::ostream& stream, objectset_atom* self);

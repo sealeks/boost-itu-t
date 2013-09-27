@@ -1612,13 +1612,17 @@ namespace x680 {
     definedobject_atom* object_atom::as_defined() {
         return dynamic_cast<definedobject_atom*> (this);
     }
-    
+
     definedsetobject_atom* object_atom::as_definedset() {
         return dynamic_cast<definedsetobject_atom*> (this);
-    }    
+    }
 
-    defnobject_atom* object_atom::as_defn() {
-        return dynamic_cast<defnobject_atom*> (this);
+    defltobject_atom* object_atom::as_deflt() {
+        return dynamic_cast<defltobject_atom*> (this);
+    }
+
+    defsyntxobject_atom* object_atom::as_defnsyntx() {
+        return dynamic_cast<defsyntxobject_atom*> (this);
     }
 
     unionobject_atom* object_atom::as_union() {
@@ -1652,29 +1656,38 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     void definedobject_atom::resolve() {
-       // if (builtin() == ot_Refference)
-            resolve_reff();
+        // if (builtin() == ot_Refference)
+        resolve_reff();
     };
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////        
     // defenedsetobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
     void definedsetobject_atom::resolve() {
         //if (builtin() == ot_DefinedObjectSet)
-            resolve_reff();
+        resolve_reff();
     };
 
     /////////////////////////////////////////////////////////////////////////        
-    // defnobject_atom
+    // defltobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    void defnobject_atom::resolve() {
+    void defltobject_atom::resolve() {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
         }
     };
 
+
+    /////////////////////////////////////////////////////////////////////////        
+    // defsyntxobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    void defsyntxobject_atom::resolve() {
+        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
+        }
+    };
 
     /////////////////////////////////////////////////////////////////////////   
     // objectassignment_entity
@@ -2238,7 +2251,12 @@ namespace x680 {
             return rslt;
         }
 
-
+        setting_atom_vct compile_parameters(basic_entity_ptr scope, const x680::syntactic::parameter_vector& ent) {
+            setting_atom_vct tmp;
+            for (x680::syntactic::parameter_vector::const_iterator it = ent.begin(); it != ent.end(); ++it)
+                tmp.push_back(compile_setting(scope, *it));
+            return tmp;
+        }
 
         //  type
 
@@ -2296,6 +2314,7 @@ namespace x680 {
             type_atom_ptr tmp = ent.reference.empty() ? type_atom_ptr(new type_atom(scope, ent.builtin_t, compile_tag(scope, ent.tag))) :
                     type_atom_ptr(new type_atom(scope, ent.reference, ent.builtin_t, compile_tag(scope, ent.tag)));
             tmp->constraints(compile_constraints_vct(scope, ent.constraints));
+            tmp->parameters(compile_parameters(scope, ent.parameters));
             return tmp;
         }
 
@@ -2368,6 +2387,13 @@ namespace x680 {
         }
 
         value_atom_ptr compile_value(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
+            value_atom_ptr tmp = compile_value_impl(scope, ent);
+            if (tmp)
+                tmp->parameters(compile_parameters(scope, ent.parameters));
+            return tmp;
+        }
+
+        value_atom_ptr compile_value_impl(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
             try {
                 switch (ent.type) {
                     case v_boolean: return value_atom_ptr(new boolvalue_atom(ent.value == "TRUE"));
@@ -2494,6 +2520,7 @@ namespace x680 {
             if (ent.tp == vs_Strait) {
                 valueset_atom_ptr tmp(new valueset_atom(scope, ent.tp));
                 tmp->set(compile_constraints(scope, ent.set));
+                tmp->parameters(compile_parameters(scope, ent.parameters));
                 return tmp;
             }
             return valueset_atom_ptr(new valueset_atom(scope, ent.reference, ent.tp));
@@ -2612,7 +2639,9 @@ namespace x680 {
         }
 
         class_atom_ptr compile_classdefined(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
-            return class_atom_ptr(new class_atom(scope, ent.reference, ent.tp));
+            class_atom_ptr tmp = class_atom_ptr(new class_atom(scope, ent.reference, ent.tp));
+            tmp->parameters(compile_parameters(scope, ent.parameters));
+            return tmp;
         }
 
         basic_entity_vector compile_classfields(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
@@ -2822,12 +2851,20 @@ namespace x680 {
         }
 
         object_atom_ptr compile_object(basic_entity_ptr scope, const x680::syntactic::object_element& ent) {
+            object_atom_ptr tmp = compile_object_impl(scope, ent);
+            if (tmp)
+                tmp->parameters(compile_parameters(scope, ent.parameters));
+            return tmp;
+        }
+
+        object_atom_ptr compile_object_impl(basic_entity_ptr scope, const x680::syntactic::object_element& ent) {
             switch (ent.tp) {
                 case ot_FromObject:
                 case ot_ObjectSetFromObjects:
                 case ot_Refference: return object_atom_ptr(new definedobject_atom(scope, ent.reff));
                 case ot_DefinedObjectSet: return object_atom_ptr(new definedsetobject_atom(scope, ent.reff));
-                case ot_Object: return object_atom_ptr(new defnobject_atom(scope, compile_object_fields(scope, ent.fields)));
+                case ot_Object: return object_atom_ptr(new defltobject_atom(scope, compile_object_fields(scope, ent.fields)));
+                case ot_ObjectDefineSyn: return object_atom_ptr(new defsyntxobject_atom(scope, compile_object_fields(scope, ent.fields)));
                 case ot_UNION: return object_atom_ptr(new unionobject_atom());
                 case ot_INTERSECTION: return object_atom_ptr(new intersectionobject_atom());
                 case ot_EXCEPT: return object_atom_ptr(new exceptobject_atom());
@@ -2863,6 +2900,8 @@ namespace x680 {
                 tmp->object(compile_object(scope, *ent.object));
             if ((ent.alternative & AS_OBJECTSET) && (ent.objectset))
                 tmp->objectset(compile_objectset(scope, *ent.objectset));
+            if ((ent.alternative & AS_LITERAL))
+                tmp->literal(ent.literal);
             return tmp;
         }
 
@@ -2878,6 +2917,13 @@ namespace x680 {
         }
 
         objectset_atom_ptr compile_objectset(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
+            objectset_atom_ptr tmp = compile_objectset_impl(scope, ent);
+            if (tmp)
+                tmp->parameters(compile_parameters(scope, ent.parameters));
+            return tmp;
+        }
+
+        objectset_atom_ptr compile_objectset_impl(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
             switch (ent.tp) {
                 case os_ObjectSetFromObject:
                 case os_defined:return objectset_atom_ptr(new definedobjectset_atom(scope, ent.reference));
@@ -3199,6 +3245,8 @@ namespace x680 {
         } else {
             stream << self->builtin();
         }
+        if (self->parameterized())
+            stream << self->parameters();
         if (self->predefined())
             stream << self->predefined().get();
         return stream;
@@ -3354,6 +3402,8 @@ namespace x680 {
                 return stream;
             }
         }
+        if (self->parameterized())
+            stream << self->parameters();
         return stream;
     }
 
@@ -3393,7 +3443,8 @@ namespace x680 {
                 return stream << "??? *" << self->reff()->name();
             else {
                 stream << " *" << self->reff()->name();
-
+                if (self->parameterized())
+                    stream << self->parameters();
                 return stream;
             }
         } else {
@@ -3582,7 +3633,8 @@ namespace x680 {
                 return stream;
             stream << self->builtin();
         }
-        //stream << " id: " << self->name();
+        if (self->parameterized())
+            stream << self->parameters();
         return stream;
     }
 
@@ -3762,7 +3814,8 @@ namespace x680 {
             case ot_ObjectSetFromObjects:
             case ot_Refference: return stream << self->as_defined();
             case ot_DefinedObjectSet: return stream << self->as_definedset();
-            case ot_Object: return stream << self->as_defn();
+            case ot_Object: return stream << self->as_deflt();
+            case ot_ObjectDefineSyn: return stream << self->as_defnsyntx();
             case ot_UNION: return stream << " | ";
             case ot_INTERSECTION: return stream << " & ";
             case ot_EXCEPT: return stream << " ^ ";
@@ -3774,18 +3827,32 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, definedobject_atom* self) {
         if (self->reff()->as_expectdef())
-            return stream << "??? *" << self->reff()->name();
-        return stream << self->reff()->name();
+            stream << "??? ";
+        stream << "*" << self->reff()->name();
+        if (self->parameterized())
+            stream << self->parameters();
+        return stream;
     }
-    
+
     std::ostream& operator<<(std::ostream& stream, definedsetobject_atom* self) {
         if (self->reff()->as_expectdef())
-            return stream << "??? *" << self->reff()->name();
-        return stream << self->reff()->name();
-    }    
+            stream << "??? ";
+        stream << "*" << self->reff()->name();
+        if (self->parameterized())
+            stream << self->parameters();
+        return stream;
+    }
 
-    std::ostream& operator<<(std::ostream& stream, defnobject_atom* self) {
+    std::ostream& operator<<(std::ostream& stream, defltobject_atom* self) {
         return stream << self->fieldsetting(); //self->reff()->name();
+    }
+
+    std::ostream& operator<<(std::ostream& stream, defsyntxobject_atom* self) {
+        stream << " {  ";
+        for (fieldsetting_atom_vct::const_iterator it = self->fieldsetting().begin(); it != self->fieldsetting().end(); ++it) {
+            fieldsettingstrm(stream, (*it).get());
+        }
+        return stream << " }";
     }
 
     std::ostream& operator<<(std::ostream& stream, const fieldsetting_atom_vct& self) {
@@ -3797,36 +3864,114 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, fieldsetting_atom* self) {
-        stream << "    " << self->field() << "   ";
+        stream << "    " << self->field() << "   [";
         if (self->setting()) {
             stream << self->setting()->mask();
             if (self->setting()->type())
-                stream << "(+T)"  << self->setting()->type()->as_type();
+                stream << "+";
             else
-                stream << "(-T)";
+                stream << "-";
             if (self->setting()->value())
-                stream << "(+v)";
+                stream << "+";
             else
-                stream << "(-v)";
+                stream << "-";
             if (self->setting()->valueset())
-                stream << "(+vs)";
+                stream << "+";
             else
-                stream << "(-vs)";
+                stream << "-";
             if (self->setting()->_class())
-                stream << "(+C)";
+                stream << "+";
             else
-                stream << "(-C)";
+                stream << "-";
             if (self->setting()->object())
-                stream << "(+o)";
+                stream << "+";
             else
-                stream << "(-o)";
+                stream << "-";
             if (self->setting()->objectset())
-                stream << "(+os)";
+                stream << "+";
             else
-                stream << "(-os)";
+                stream << "-";
         } else
             stream << "???";
-        return stream << "\n";
+        return stream << "]\n";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, const setting_atom_vct& self) {
+        if (self.empty())
+            return stream;
+        stream << " (";
+        for (setting_atom_vct::const_iterator it = self.begin(); it != self.end(); ++it) {
+            if (it != self.begin())
+                stream << " ,";
+            stream << (*it).get();
+        }
+        return stream << " )";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, setting_atom* self) {
+        stream << "[arg@";
+        if (self->type())
+            stream << "+";
+        else
+            stream << "-";
+        if (self->value())
+            stream << "+";
+        else
+            stream << "-";
+        if (self->valueset())
+            stream << "+";
+        else
+            stream << "-";
+        if (self->_class())
+            stream << "+";
+        else
+            stream << "-";
+        if (self->object())
+            stream << "+";
+        else
+            stream << "-";
+        if (self->objectset())
+            stream << "+";
+        else
+            stream << "-";
+        return stream << "]";
+    }
+
+    std::ostream& fieldsettingstrm(std::ostream& stream, fieldsetting_atom* self) {
+        stream << "  {";
+        if (self->setting()) {
+            if (!self->setting()->literal().empty())
+                stream << "  '" << self->setting()->literal() << "'";
+            else
+                stream << "-";
+            if (self->setting()->type())
+                stream << "+";
+            else
+                stream << "-";
+            if (self->setting()->value())
+                stream << "+";
+            else
+                stream << "-";
+            if (self->setting()->valueset())
+                stream << "+";
+            else
+                stream << "-";
+            if (self->setting()->_class())
+                stream << "+";
+            else
+                stream << "-";
+            if (self->setting()->object())
+                stream << "+";
+            else
+                stream << "-";
+            if (self->setting()->objectset())
+                stream << "+";
+            else
+                stream << "-";
+
+        } else
+            stream << "???";
+        return stream << "} ";
     }
 
 
@@ -3843,9 +3988,10 @@ namespace x680 {
         if (self) {
             if (self->as_defined()) {
                 if (self->reff()->as_expectdef())
-                    return stream << "??? *" << self->reff()->name();
-                else
-                    stream << " *" << self->reff()->name();
+                    stream << "??? ";
+                stream << " *" << self->reff()->name();
+                if (self->parameterized())
+                    stream << self->parameters();
             } else if (self->as_defn()) {
                 stream << "($ ";
                 for (object_atom_vct::const_iterator it = self->as_defn()->objects().begin(); it != self->as_defn()->objects().end(); ++it)
