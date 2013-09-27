@@ -95,6 +95,10 @@ namespace x680 {
         return dynamic_cast<import_entity*> (this);
     }
 
+    assignment_entity * basic_entity::as_assigment() {
+        return dynamic_cast<assignment_entity*> (this);
+    }
+
     bigassignment_entity * basic_entity::as_bigassigment() {
         return dynamic_cast<bigassignment_entity*> (this);
     }
@@ -499,6 +503,35 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
+    // argument_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    argument_entity::argument_entity(basic_entity_ptr scope, const std::string& nm, argumentsize_type tp)
+    : basic_entity(scope, nm, et_Argument), typesize_(tp), argumenttype_(argm_Nodef) {
+    }
+
+    argument_entity::argument_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr gvnr, argumentsize_type tp)
+    : basic_entity(scope, nm, et_Argument), typesize_(tp), argumenttype_(argm_Nodef), governor_(gvnr) {
+    }
+
+    argument_entity::argument_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr gvnr, argumentsize_type tp)
+    : basic_entity(scope, nm, et_Argument), typesize_(tp), argumenttype_(argm_Nodef), governor_(gvnr) {
+    }
+
+    argument_entity::argument_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr gvnr, argumentsize_type tp)
+    : basic_entity(scope, nm, et_Argument), typesize_(tp), argumenttype_(argm_Nodef), governor_(gvnr) {
+    }
+
+    void argument_entity::governor(basic_atom_ptr vl) {
+        governor_ = vl;
+    }
+
+    void argument_entity::argumenttype(argument_enum vl) {
+        argumenttype_ = vl;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // basic_atom
     /////////////////////////////////////////////////////////////////////////   
 
@@ -535,12 +568,28 @@ namespace x680 {
         return ((root()) && (root() != this));
     }
 
+    type_atom* basic_atom::as_type() {
+        return dynamic_cast<type_atom*> (this);
+    }
+
     value_atom* basic_atom::as_value() {
         return dynamic_cast<value_atom*> (this);
     }
 
-    type_atom* basic_atom::as_type() {
-        return dynamic_cast<type_atom*> (this);
+    valueset_atom* basic_atom::as_valueset() {
+        return dynamic_cast<valueset_atom*> (this);
+    }
+
+    class_atom* basic_atom::as_class() {
+        return dynamic_cast<class_atom*> (this);
+    }
+
+    object_atom* basic_atom::as_object() {
+        return dynamic_cast<object_atom*> (this);
+    }
+
+    objectset_atom* basic_atom::as_objectset() {
+        return dynamic_cast<objectset_atom*> (this);
     }
 
     void basic_atom::resolve() {
@@ -565,7 +614,19 @@ namespace x680 {
 
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // ASSIGNMENT
+    /////////////////////////////////////////////////////////////////////////         
+    // assignment_entity
+    /////////////////////////////////////////////////////////////////////////  
 
+    basic_entity_ptr assignment_entity::find_by_name(const std::string& nm, bool all) {
+        return basic_entity_ptr();
+    }
+
+    void assignment_entity::resolve() {
+
+    }
 
 
 
@@ -736,7 +797,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     typeassignment_entity::typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp) :
-    basic_entity(scope, nm, et_Type), type_(tp) {
+    assignment_entity(scope, nm, et_Type), type_(tp) {
     };
 
     ////////
@@ -973,7 +1034,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     valueassignment_entity::valueassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl) :
-    basic_entity(scope, nm, et_Value), type_(tp), value_(vl) {
+    assignment_entity(scope, nm, et_Value), type_(tp), value_(vl) {
     };
 
     void valueassignment_entity::check_value_with_exception(value_type tp) {
@@ -1245,7 +1306,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     valuesetassignment_entity::valuesetassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, valueset_atom_ptr vl) :
-    basic_entity(scope, nm, et_ValueSet), type_(tp), valueset_(vl) {
+    assignment_entity(scope, nm, et_ValueSet), type_(tp), valueset_(vl) {
     };
 
     basic_entity_ptr valuesetassignment_entity::find_by_name(const std::string& nm, bool all) {
@@ -1510,7 +1571,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     classassignment_entity::classassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp) :
-    basic_entity(scope, nm, et_Class), class_(tp) {
+    assignment_entity(scope, nm, et_Class), class_(tp) {
     };
 
     basic_entity_ptr classassignment_entity::find_by_name(const std::string& nm, bool all) {
@@ -1694,7 +1755,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////    
 
     objectassignment_entity::objectassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr cls, object_atom_ptr obj) :
-    basic_entity(scope, nm, et_Object), class_(cls), object_(obj) {
+    assignment_entity(scope, nm, et_Object), class_(cls), object_(obj) {
     };
 
     basic_entity_ptr objectassignment_entity::find_by_name(const std::string& nm, bool all) {
@@ -1757,7 +1818,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////    
 
     objectsetassignment_entity::objectsetassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr cls, objectset_atom_ptr objs) :
-    basic_entity(scope, nm, et_ObjectSet), class_(cls), objectset_(objs) {
+    assignment_entity(scope, nm, et_ObjectSet), class_(cls), objectset_(objs) {
     };
 
     basic_entity_ptr objectsetassignment_entity::find_by_name(const std::string& nm, bool all) {
@@ -1793,7 +1854,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     bigassignment_entity::bigassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg) :
-    basic_entity(scope, nm, et_Nodef), big_(bg) {
+    assignment_entity(scope, nm, et_Nodef), big_(bg) {
     };
 
     basic_entity_ptr bigassignment_entity::find_by_name(const std::string& nm, bool all) {
@@ -1821,7 +1882,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     voassignment_entity::voassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg) :
-    basic_entity(scope, nm, et_NodefV), big_(bg) {
+    assignment_entity(scope, nm, et_NodefV), big_(bg) {
     };
 
     /////////
@@ -1840,7 +1901,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     soassignment_entity::soassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg) :
-    basic_entity(scope, nm, et_NodefS), big_(bg) {
+    assignment_entity(scope, nm, et_NodefS), big_(bg) {
     };
 
     /////////
@@ -2258,6 +2319,26 @@ namespace x680 {
             return tmp;
         }
 
+        argument_entity_vct compile_arguments(basic_entity_ptr scope, const x680::syntactic::argument_vector& ent) {
+            argument_entity_vct tmp;
+            for (x680::syntactic::argument_vector::const_iterator it = ent.begin(); it != ent.end(); ++it)
+                tmp.push_back(compile_argument(scope, *it));
+            return tmp;
+        }
+
+        argument_entity_ptr compile_argument(basic_entity_ptr scope, const x680::syntactic::argument_type& ent) {
+            argument_entity_ptr tmp(new argument_entity(scope, ent.argument, ent.atp));
+            switch (ent.tp) {
+                case gvr_Type: tmp->governor(compile_type(scope,ent.governortype)); break;
+                case gvr_Class: tmp->governor(compile_classdefined(scope,ent.governorclass)); break;
+                case gvr_Type_or_Class: tmp->governor(basic_atom_ptr(new basic_atom(ent.governorreff.reff))); break;
+                default:
+                {
+                }
+            }
+            return tmp;
+        }
+
         //  type
 
         typeassignment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
@@ -2274,6 +2355,7 @@ namespace x680 {
                 };
             }
             tmpt->type()->predefined(compile_typepredef(tmpt, tmp.type));
+            tmpt->arguments(compile_arguments(tmpt, tmp.arguments));
             return tmpt;
         }
 
@@ -2383,6 +2465,7 @@ namespace x680 {
             value_atom_ptr tmpv = compile_value(tmpt, tmp.value);
             tmpt->value(tmpv);
             tmpt->type()->predefined(compile_typepredef(tmpt, tmp.type));
+            tmpt->arguments(compile_arguments(tmpt, tmp.arguments));
             return tmpt;
         }
 
@@ -2513,6 +2596,7 @@ namespace x680 {
             x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);
             valuesetassignment_entity_ptr tmpv(new valuesetassignment_entity(scope, tmp.identifier, compile_type(scope, tmp.type), valueset_atom_ptr()));
             tmpv->valueset(compile_valueset(tmpv, tmp.set));
+            tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
             return tmpv;
         }
 
@@ -2620,6 +2704,7 @@ namespace x680 {
                 case cl_Reference:
                 {
                     tmpc->_class(class_atom_ptr(new class_atom(tmpc, tmp.class_.reference, tmp.class_.tp)));
+                    tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
                     return tmpc;
                 }
                 case cl_SpecDef:
@@ -2628,6 +2713,7 @@ namespace x680 {
                     tmpc->childs() = compile_classfields(tmpc, tmp.class_);
                     withsyntax_atom wsyn = compile_withsyntax(scope, tmp.class_.syntaxes);
                     tmpc->withsyntax(compile_withsyntax(tmpc, tmp.class_.syntaxes));
+                    tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
                     return tmpc;
                 }
                 default:
@@ -2635,6 +2721,7 @@ namespace x680 {
                 }
             }
             tmpc->_class(class_atom_ptr(new class_atom(tmpc, tmp.class_.tp)));
+            tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
             return tmpc;
         }
 
@@ -2847,6 +2934,7 @@ namespace x680 {
             objectassignment_entity_ptr tmpc(new objectassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_), object_atom_ptr()));
             object_atom_ptr obj = compile_object(tmpc, tmp.object);
             tmpc->object(obj);
+            tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
             return tmpc;
         }
 
@@ -2913,6 +3001,7 @@ namespace x680 {
             objectsetassignment_entity_ptr tmpc(new objectsetassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_), objectset_atom_ptr()));
             objectset_atom_ptr objs = compile_objectset(tmpc, tmp.set);
             tmpc->objectset(objs);
+            tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
             return tmpc;
         }
 
@@ -3115,6 +3204,30 @@ namespace x680 {
         return stream;
     }
 
+    std::ostream& operator<<(std::ostream& stream, const argument_entity_vct& self) {
+        if (self.empty())
+            return stream;
+        stream << " {";
+        for (argument_entity_vct::const_iterator it = self.begin(); it != self.end(); ++it) {
+            if (it != self.begin())
+                stream << " ,";
+            stream << (*it).get();
+        }
+        return stream << " }";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, argument_entity* self) {
+        if (self->governor()){
+            if (self->governor()->as_type())
+                 stream << self->governor()->as_type() << ":";
+            else if (self->governor()->as_class())
+                stream << self->governor()->as_class() << ":";
+            else
+                stream << "???" <<self->governor()->reff()->name() << ":";
+        }
+        return stream << self->name();
+    }
+
 
 
     //  type
@@ -3133,7 +3246,10 @@ namespace x680 {
             if ((self->as_named()->_default()) && (self->as_named()->marker() == mk_default))
                 stream << " " << self->as_named()->_default().get();
         } else {
-            stream << "(T) " << self->name() << " :: = " << self->type().get();
+            stream << "(T) " << self->name();
+            if (self->has_arguments())
+                stream << self->arguments();
+            stream << " :: = " << self->type().get();
             operatorstruct(stream, self);
             if (self->type()->has_constraint())
                 stream << self->type()->constraints();
@@ -3236,9 +3352,9 @@ namespace x680 {
         }
         if (self->builtin() == t_Reference) {
             if (self->reff()->as_expectdef())
-                stream << "??? *" << self->reff()->name();
+                stream << "??? " << self->reff()->name();
             else {
-                stream << " *" << self->externalpreff() << self->reff()->name();
+                stream << " " << self->externalpreff() << self->reff()->name();
                 if (self->rooted())
                     stream << "(@" << self->root() << ")";
             }
@@ -3312,7 +3428,10 @@ namespace x680 {
     // value
 
     std::ostream& operator<<(std::ostream& stream, valueassignment_entity* self) {
-        stream << "(v) " << self->name() << " [" << self->type().get() << "] :: = ";
+        stream << "(v) " << self->name() << " [" << self->type().get() << "]";
+        if (self->has_arguments())
+            stream << self->arguments();
+        stream << " :: = ";
         if (self->value())
             return stream << self->value().get() << "\n";
         return stream << "???" << "\n";
@@ -3394,9 +3513,9 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self) {
         if (self->reff()) {
             if (self->reff()->as_expectdef())
-                return stream << "??? *" << self->reff()->name();
+                return stream << "??? " << self->reff()->name();
             else {
-                stream << " *" << self->reff()->name();
+                stream << " " << self->reff()->name();
                 if (self->rooted())
                     stream << "(@" << self->root() << ")";
                 return stream;
@@ -3434,7 +3553,10 @@ namespace x680 {
     //valueset
 
     std::ostream& operator<<(std::ostream& stream, valuesetassignment_entity* self) {
-        return stream << "(vS) " << self->name() << " [" << self->type().get() << "] :: = " << self->valueset().get() << "\n";
+        stream << "(vS) " << self->name() << " [" << self->type().get() << "]";
+        if (self->has_arguments())
+            stream << self->arguments();
+        return stream << ":: = " << self->valueset().get() << "\n";
     }
 
     std::ostream& operator<<(std::ostream& stream, valueset_atom* self) {
@@ -3442,7 +3564,7 @@ namespace x680 {
             if (self->reff()->as_expectdef())
                 return stream << "??? *" << self->reff()->name();
             else {
-                stream << " *" << self->reff()->name();
+                stream << " " << self->reff()->name();
                 if (self->parameterized())
                     stream << self->parameters();
                 return stream;
@@ -3466,9 +3588,9 @@ namespace x680 {
         if (self) {
             if (self->reff()) {
                 if (self->reff()->as_expectdef())
-                    return stream << "??? *" << self->reff()->name();
+                    return stream << "??? " << self->reff()->name();
                 else
-                    stream << " *" << self->reff()->name();
+                    stream << " " << self->reff()->name();
             } else {
                 stream << "(#";
                 if (self->extend())
@@ -3604,7 +3726,10 @@ namespace x680 {
     // class
 
     std::ostream& operator<<(std::ostream& stream, classassignment_entity* self) {
-        stream << "(C) " << self->name() << " :: = ";
+        stream << "(C) " << self->name();
+        if (self->has_arguments())
+            stream << self->arguments();
+        stream << " :: = ";
         if (self->_class()->builtin() == cl_SpecDef) {
             stream << " CLASS { ";
             for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
@@ -3719,7 +3844,7 @@ namespace x680 {
         if (self->field()->expecteddef())
             stream << " ??? " << self->field()->reff()->name();
         else
-            stream << " * " << self->field()->reff()->name();
+            stream << " " << self->field()->reff()->name();
         stream << " " << self->marker();
         if (self->_default())
             stream << " " << self->_default().get();
@@ -3731,7 +3856,7 @@ namespace x680 {
         if (self->field()->expecteddef())
             stream << " ??? " << self->field()->reff()->name();
         else
-            stream << " * " << self->field()->reff()->name();
+            stream << " " << self->field()->reff()->name();
         stream << " " << self->marker();
         if (self->_default())
             stream << " " << self->_default().get();
@@ -3802,7 +3927,10 @@ namespace x680 {
     // object
 
     std::ostream& operator<<(std::ostream& stream, objectassignment_entity* self) {
-        stream << "(o) " << self->name() << " [" << self->_class().get() << "] :: = ";
+        stream << "(o) " << self->name() << " [" << self->_class().get() << "]";
+        if (self->has_arguments())
+            stream << self->arguments();
+        stream << " :: = ";
         if (self->object())
             return stream << self->object().get() << "\n";
         return stream << "???" << "\n";
@@ -3828,7 +3956,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, definedobject_atom* self) {
         if (self->reff()->as_expectdef())
             stream << "??? ";
-        stream << "*" << self->reff()->name();
+        stream << "" << self->reff()->name();
         if (self->parameterized())
             stream << self->parameters();
         return stream;
@@ -3837,7 +3965,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, definedsetobject_atom* self) {
         if (self->reff()->as_expectdef())
             stream << "??? ";
-        stream << "*" << self->reff()->name();
+        stream << "" << self->reff()->name();
         if (self->parameterized())
             stream << self->parameters();
         return stream;
@@ -3978,7 +4106,10 @@ namespace x680 {
     //  objectset
 
     std::ostream& operator<<(std::ostream& stream, objectsetassignment_entity* self) {
-        stream << "(oS) " << self->name() << " [" << self->_class().get() << "] :: = ";
+        stream << "(oS) " << self->name() << " [" << self->_class().get() << "]";
+        if (self->has_arguments())
+            stream << self->arguments();
+        stream << " :: = ";
         if (self->objectset())
             return stream << self->objectset().get() << "\n";
         return stream << "???" << "\n";
@@ -3989,7 +4120,7 @@ namespace x680 {
             if (self->as_defined()) {
                 if (self->reff()->as_expectdef())
                     stream << "??? ";
-                stream << " *" << self->reff()->name();
+                stream << " " << self->reff()->name();
                 if (self->parameterized())
                     stream << self->parameters();
             } else if (self->as_defn()) {
