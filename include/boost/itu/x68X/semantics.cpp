@@ -332,10 +332,8 @@ namespace x680 {
     basic_entity_ptr module_entity::find_by_name(const std::string& nm, bool all) {
         prefind(nm, childs());
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-            if ((*it)->name() == nm) {
-                //resolve_assigment(*it);
+            if ((*it)->name() == nm)
                 return *it;
-            }
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
             import_entity* importmod = (*it)->as_import();
             if (importmod) {
@@ -361,7 +359,6 @@ namespace x680 {
     void module_entity::resolve() {
         unicalelerror_throw(childs());
         resolve_child();
-        //resolve_assigments(childs());
     }
 
     void module_entity::preresolve_externalref() {
@@ -749,8 +746,8 @@ namespace x680 {
             basic_entity_ptr fnd = scope()->find(reff(), all);
             if (fnd)
                 reff(fnd);
-          //  else
-           //     scope()->referenceerror_throw(expectedname());
+            //  else
+            //     scope()->referenceerror_throw(expectedname());
         }
     }
 
@@ -767,7 +764,7 @@ namespace x680 {
     }
 
     void assignment_entity::resolve() {
-        for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) 
+        for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it)
             if ((*it)->governor())
                 (*it)->governor()->resolve_reff();
     }
@@ -971,12 +968,9 @@ namespace x680 {
     basic_entity_ptr typeassignment_entity::find_by_name(const std::string& nm, bool all) {
         if (all) {
             if (((type()->predefined()))) {
-                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
-                    if ((*it)->name() == nm) {
-                        //resolve_assigment(*it);
+                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it)
+                    if ((*it)->name() == nm)
                         return *it;
-                    }
-                }
             }
             if ((type()->reff())) {
                 type()->resolve_reff();
@@ -992,10 +986,9 @@ namespace x680 {
 
     void typeassignment_entity::resolve() {
         unicalelerror_throw(childs());
-         assignment_entity::resolve();        
-        resolve_child();  
+        assignment_entity::resolve();
+        resolve_child();
         type()->resolve();
-        //resolve_assigments(childs());
 
     }
 
@@ -1215,12 +1208,9 @@ namespace x680 {
     basic_entity_ptr valueassignment_entity::find_by_name(const std::string& nm, bool all) {
         if (all) {
             if (((type()->predefined()))) {
-                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
-                    if ((*it)->name() == nm) {
-                        //resolve_assigment(*it);
+                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it)
+                    if ((*it)->name() == nm)
                         return *it;
-                    }
-                }
             }
             if (type()->reff()) {
                 type()->resolve_reff(all);
@@ -1231,12 +1221,9 @@ namespace x680 {
         }
         if (scope()) {
             prefind(nm, scope()->childs());
-            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
-                if (nm == (*it)->name()) {
-                    //resolve_assigment(*it);
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
+                if (nm == (*it)->name())
                     return *it;
-                }
-            }
         }
         if (scope())
             return scope()->find_by_name(nm, all);
@@ -1244,7 +1231,7 @@ namespace x680 {
     }
 
     void valueassignment_entity::resolve() {
-        assignment_entity::resolve();        
+        assignment_entity::resolve();
         resolve_child();
         type()->resolve();
         if (value())
@@ -1480,12 +1467,9 @@ namespace x680 {
     basic_entity_ptr valuesetassignment_entity::find_by_name(const std::string& nm, bool all) {
         if (all) {
             if (((type()->predefined()))) {
-                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it) {
-                    if ((*it)->name() == nm) {
-                        //resolve_assigment(*it);
+                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it)
+                    if ((*it)->name() == nm)
                         return *it;
-                    }
-                }
             }
             if (type()->reff()) {
                 type()->resolve_reff(all);
@@ -1496,12 +1480,9 @@ namespace x680 {
         }
         if (scope()) {
             prefind(nm, scope()->childs());
-            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
-                if (nm == (*it)->name()) {
-                    //resolve_assigment(*it);
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
+                if (nm == (*it)->name())
                     return *it;
-                }
-            }
         }
         if (scope())
             return scope()->find_by_name(nm, all);
@@ -1746,12 +1727,9 @@ namespace x680 {
     basic_entity_ptr classassignment_entity::find_by_name(const std::string& nm, bool all) {
         if (scope()) {
             prefind(nm, scope()->childs());
-            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
-                if (nm == (*it)->name()) {
-                    //resolve_assigment(*it);
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
+                if (nm == (*it)->name())
                     return *it;
-                }
-            }
         }
         if (scope())
             return scope()->find_by_name(nm, all);
@@ -1759,7 +1737,7 @@ namespace x680 {
     }
 
     void classassignment_entity::resolve() {
-        assignment_entity::resolve();        
+        assignment_entity::resolve();
         if (_class())
             _class()->resolve();
         if (withsyntax())
@@ -1935,27 +1913,21 @@ namespace x680 {
     };
 
     basic_entity_ptr objectassignment_entity::find_by_name(const std::string& nm, bool all) {
-        /*if (scope()) {
+        if (scope()) {
             prefind(nm, scope()->childs());
-            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
-                if (nm == (*it)->name()) {
-                    resolve_assigment(*it);
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
+                if (nm == (*it)->name())
                     return *it;
-                }
-            }
         }
         if (scope())
-            return scope()->find_by_name(nm, all);*/
+            return scope()->find_by_name(nm, all);
         return basic_entity_ptr();
     }
 
     void objectassignment_entity::resolve() {
-        assignment_entity::resolve();        
-        resolve_child();
+        assignment_entity::resolve();
         if (_class())
             _class()->resolve();
-        /*if (withsyntax())
-            withsyntax()->resolve();*/
     }
 
 
@@ -1999,27 +1971,24 @@ namespace x680 {
     };
 
     basic_entity_ptr objectsetassignment_entity::find_by_name(const std::string& nm, bool all) {
-        /*if (scope()) {
+        if (scope()) {
             prefind(nm, scope()->childs());
-            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
                 if (nm == (*it)->name()) {
-                    resolve_assigment(*it);
                     return *it;
                 }
-            }
         }
         if (scope())
-            return scope()->find_by_name(nm, all);*/
+            return scope()->find_by_name(nm, all);
         return basic_entity_ptr();
     }
 
     void objectsetassignment_entity::resolve() {
-        assignment_entity::resolve();       
-        /*resolve_child();
+        assignment_entity::resolve();
         if (_class())
             _class()->resolve();
-        if (withsyntax())
-            withsyntax()->resolve();*/
+        //if (withsyntax())
+        // withsyntax()->resolve();
     }
 
 
@@ -2038,12 +2007,9 @@ namespace x680 {
     basic_entity_ptr bigassignment_entity::find_by_name(const std::string& nm, bool all) {
         if (scope())
             prefind(nm, scope()->childs());
-        for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
-            if (nm == (*it)->name()) {
-                //resolve_assigment(*it);
+        for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
+            if (nm == (*it)->name())
                 return *it;
-            }
-        }
         if (scope())
             return scope()->find_by_name(nm);
         return basic_entity_ptr();
