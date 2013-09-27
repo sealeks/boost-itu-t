@@ -3233,26 +3233,6 @@ namespace x680 {
 
 
 
-    /////////////////////////////////////////////////////////////////////////   
-    // RESOLVE
-    /////////////////////////////////////////////////////////////////////////    
-    // resolve functions
-    /////////////////////////////////////////////////////////////////////////  
-
-
-
-    void resolve_assigments(basic_entity_vector& elm);
-    void resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start = basic_entity_ptr());
-    void resolve_type_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-    void resolve_type_assigment(basic_entity* elm, basic_entity* start = 0);
-    void resolve_value_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-    void resolve_value_assigment(basic_entity* elm, basic_entity* start = 0);
-    void resolve_valueset_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-    void resolve_valueset_assigment(basic_entity* elm, basic_entity* start = 0);
-    void resolve_class_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-    void resolve_class_assigment(basic_entity* elm, basic_entity* start = 0);
-
-
 
     namespace semantics {
 
