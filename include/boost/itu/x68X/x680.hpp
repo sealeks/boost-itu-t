@@ -280,6 +280,7 @@ namespace x680 {
 
         ot_Nodef,
         ot_Object,
+        ot_ObjectDefineSyn,       
         ot_Refference,
         ot_FromObject,
         ot_DefinedObjectSet,
@@ -331,6 +332,7 @@ namespace x680 {
     const alternmask AS_OBJECTSET = 0x8;
     const alternmask AS_TYPE = 0x10;
     const alternmask AS_CLASS = 0x20;
+    const alternmask AS_LITERAL = 0x40;    
 
 
     namespace syntactic {
@@ -776,6 +778,7 @@ namespace x680 {
             object_element_ptr object;
             valueset_element_ptr valueset;
             objectset_element_ptr objectset;
+            std::string literal;
             alternmask alternative;
         };
 
