@@ -189,8 +189,8 @@ namespace x680 {
         return rslt;
     }
 
-    void basic_entity::referenceerror_throw(const std::string& val) {
-        std::string rslt = " Unknown reference : '" + val + "'";
+    void basic_entity::referenceerror_throw(const std::string& val, const std::string& msg) {
+        std::string rslt = msg + "'" + val + "'";
         rslt += source_throw();
         rslt = rslt + " '" + name() + "'" + modulerefname();
         throw semantics::error(rslt);
@@ -235,12 +235,11 @@ namespace x680 {
     }
 
     void basic_entity::resolve() {
-        preresolve();
+        //preresolve();
         resolve_child();
     };
 
     void basic_entity::preresolve() {
-        preresolve_assigments(childs_);
     };
 
     void basic_entity::resolve_child() {
@@ -253,11 +252,11 @@ namespace x680 {
         for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
             if ((*it)->name() == nm) {
                 if (((*it)->kind() == et_Nodef))
-                    *it = preresolve_nodef_assigment(*it);
+                    *it = module_entity::preresolve_nodef_assigment(*it);
                 if (((*it)->kind() == et_NodefV))
-                    *it = preresolve_nodefv_assigment(*it);
+                    *it = module_entity::preresolve_nodefv_assigment(*it);
                 if (((*it)->kind() == et_NodefS))
-                    *it = preresolve_nodefs_assigment(*it);
+                    *it = module_entity::preresolve_nodefs_assigment(*it);
             }
         }
     }
@@ -275,18 +274,19 @@ namespace x680 {
 
     void global_entity::resolve() {
         preresolve();
-        resolve_child();
+        //resolve_child();
     }
 
     void global_entity::preresolve() {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-            if ((*it)->as_module()) {
+            if ((*it)->as_module())
                 (*it)->as_module()->preresolve_oid();
-            }
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-            if ((*it)->as_module()) {
+            if ((*it)->as_module())
                 (*it)->as_module()->preresolve_externalref();
-            }
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+            if ((*it)->as_module())
+                (*it)->as_module()->preresolve();
     }
 
     basic_entity_ptr global_entity::find_by_name(const std::string& nm, bool all) {
@@ -360,9 +360,9 @@ namespace x680 {
 
     void module_entity::resolve() {
         unicalelerror_throw(childs());
-        preresolve();
-        resolve_child();
-        resolve_assigments(childs());
+        //preresolve_assigments(childs_);
+        //resolve_child();
+        //resolve_assigments(childs());
     }
 
     void module_entity::preresolve_externalref() {
@@ -388,6 +388,14 @@ namespace x680 {
                 }
             }
         }
+    }
+
+    void module_entity::preresolve() {
+        unicalelerror_throw(childs());
+        preresolve_assigments(childs_);
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+            if ((*it)->as_assigment())
+                (*it)->as_assigment()->preresolve();
     }
 
     void module_entity::preresolve_oid() {
@@ -477,7 +485,137 @@ namespace x680 {
         return false;
     }
 
+    void module_entity::preresolve_assigments(basic_entity_vector& elm) {
+        for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
+            switch ((*it)->kind()) {
+                case et_Nodef: *it = preresolve_nodef_assigment(*it);
+                    break;
+                case et_NodefV: *it = preresolve_nodefv_assigment(*it);
+                    break;
+                case et_NodefS: *it = preresolve_nodefs_assigment(*it);
+                    break;
+                default:
+                {
+                };
+            }
+        }
+    }
 
+    basic_entity_ptr module_entity::preresolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        /*if (!start)
+            start = elm;
+        else
+            check_resolve_ciclic(elm, start);*/
+        bigassignment_entity* tmp = elm->as_bigassigment();
+        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
+            basic_entity_ptr fnd = elm->find(tmp->big()->reff());
+            if (fnd) {
+                if (fnd->kind() == et_Type) {
+                    basic_entity_ptr rslt(new typeassignment_entity(elm->scope(), tmp->name(),
+                            type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference))));
+                    swap_arguments_scope(rslt->as_assigment(), rslt);
+                    return rslt;
+                }
+                if (fnd->kind() == et_Class) {
+                    basic_entity_ptr rslt(new classassignment_entity(elm->scope(), tmp->name(),
+                            class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference))));
+                    swap_arguments_scope(rslt->as_assigment(), rslt);
+                    return rslt;
+                }
+            } else {
+                tmp->referenceerror_throw(tmp->big()->reff()->name());
+            }
+        }
+        tmp->referenceerror_throw(tmp->name());
+        return basic_entity_ptr();
+    }
+
+    basic_entity_ptr module_entity::preresolve_nodefv_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        /*if (!start)
+            start = elm;
+        else
+            check_resolve_ciclic(elm, start);*/
+        voassignment_entity* tmp = elm->as_voassigment();
+        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
+            basic_entity_ptr fnd = elm->find(tmp->big()->reff());
+            if (fnd) {
+                if (fnd->kind() == et_Type) {
+                    if (tmp->value()) {
+                        basic_entity_ptr rslt(new valueassignment_entity(elm->scope(), tmp->name(),
+                                type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->value()));
+                        rslt->as_valueassigment()->value()->swap_scope(rslt);
+                        swap_arguments_scope(rslt->as_assigment(), rslt);
+                        return rslt;
+                    } else {
+                        tmp->referenceerror_throw(tmp->big()->reff()->name());
+                    }
+                }
+                if (fnd->kind() == et_Class) {
+                    if (tmp->object()) {
+                        basic_entity_ptr rslt(new objectassignment_entity(elm->scope(), tmp->name(),
+                                class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference)), tmp->object()));
+                        rslt->as_objectassigment()->object()->swap_scope(rslt);
+                        swap_arguments_scope(rslt->as_assigment(), rslt);
+                        return rslt;
+                    } else {
+                        tmp->referenceerror_throw(tmp->big()->reff()->name());
+                    }
+                }
+            } else {
+                tmp->referenceerror_throw(tmp->big()->reff()->name());
+            }
+        }
+        tmp->referenceerror_throw(tmp->name());
+        return basic_entity_ptr();
+    }
+
+    basic_entity_ptr module_entity::preresolve_nodefs_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
+        /*if (!start)
+            start = elm;
+        else
+            check_resolve_ciclic(elm, start);*/
+        soassignment_entity* tmp = elm->as_soassigment();
+        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
+            basic_entity_ptr fnd = elm->find(tmp->big()->reff());
+            if (fnd) {
+                if (fnd->kind() == et_Type) {
+                    if (tmp->valueset()) {
+                        basic_entity_ptr rslt(new valuesetassignment_entity(elm->scope(), tmp->name(),
+                                type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->valueset()));
+                        rslt->as_valuesetassigment()->valueset()->swap_scope(rslt);
+                        swap_arguments_scope(rslt->as_assigment(), rslt);
+                        return rslt;
+                    } else {
+                        tmp->referenceerror_throw(tmp->big()->reff()->name());
+                    }
+                }
+                if (fnd->kind() == et_Class) {
+                    if (tmp->objectset()) {
+                        basic_entity_ptr rslt(new objectsetassignment_entity(elm->scope(), tmp->name(),
+                                class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference)), tmp->objectset()));
+                        rslt->as_objectsetassigment()->objectset()->swap_scope(rslt);
+                        swap_arguments_scope(rslt->as_assigment(), rslt);
+                        return rslt;
+                    } else {
+                        tmp->referenceerror_throw(tmp->big()->reff()->name());
+                    }
+                }
+            } else {
+                tmp->referenceerror_throw(tmp->big()->reff()->name());
+            }
+        }
+        tmp->referenceerror_throw(tmp->name());
+        return basic_entity_ptr();
+    }
+
+    void module_entity::swap_arguments_scope(assignment_entity* assign, basic_entity_ptr newscope) {
+        assign->scope(newscope);
+        for (argument_entity_vct::const_iterator it = assign->arguments().begin(); it != assign->arguments().end(); ++it) {
+            (*it)->scope(newscope);
+            if ((*it)->governor())
+                (*it)->governor()->scope(newscope);
+        }
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -522,6 +660,10 @@ namespace x680 {
     : basic_entity(scope, nm, et_Argument), typesize_(tp), argumenttype_(argm_Nodef), governor_(gvnr) {
     }
 
+    bool argument_entity::has_undef_governor() const {
+        return ( governor_ && !((governor_->as_type()) || (governor_->as_class())));
+    }
+
     void argument_entity::governor(basic_atom_ptr vl) {
         governor_ = vl;
     }
@@ -529,6 +671,7 @@ namespace x680 {
     void argument_entity::argumenttype(argument_enum vl) {
         argumenttype_ = vl;
     }
+
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -627,6 +770,27 @@ namespace x680 {
     void assignment_entity::resolve() {
 
     }
+
+    void assignment_entity::preresolve() {
+        for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
+            if ((*it)->has_undef_governor()) {
+                if (!(*it)->governor()->reff())
+                    scope()->referenceerror_throw(scope()->name());
+                basic_entity_ptr fnd = scope()->find((*it)->governor()->reff());
+                if (fnd) {
+                    if (fnd->kind() == et_Type) {
+                        (*it)->governor(type_atom_ptr(new type_atom(*it, (*it)->governor()->expectedname(), t_Reference)));
+                    } else if (fnd->kind() == et_Class) {
+                        (*it)->governor(class_atom_ptr(new class_atom(*it, (*it)->governor()->expectedname(), cl_Reference)));
+
+                    } else
+                        scope()->referenceerror_throw((*it)->governor()->expectedname());
+                } else
+                    scope()->referenceerror_throw(scope()->name());
+            }
+        }
+    }
+
 
 
 
@@ -1590,6 +1754,15 @@ namespace x680 {
     }
 
     void classassignment_entity::resolve() {
+        if (_class())
+            _class()->resolve();
+        if (withsyntax())
+            withsyntax()->resolve();
+        resolve_child();
+    }
+
+    void classassignment_entity::preresolve() {
+        assignment_entity::preresolve();
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
             if ((*it)->as_classfield()) {
                 if ((*it)->as_classfield()->as_undeffield()) {
@@ -1643,12 +1816,9 @@ namespace x680 {
                 }
             }
         }
-        if (_class())
-            _class()->resolve();
-        if (withsyntax())
-            withsyntax()->resolve();
-        resolve_child();
     }
+
+
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1920,146 +2090,6 @@ namespace x680 {
     // resolve functions
     /////////////////////////////////////////////////////////////////////////       
 
-    void preresolve_assigments(basic_entity_vector& elm) {
-        for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
-            switch ((*it)->kind()) {
-                case et_Nodef: *it = preresolve_nodef_assigment((*it).get());
-                    break;
-                case et_NodefV:
-                {
-                    basic_entity_ptr tmp = preresolve_nodefv_assigment((*it).get());
-                    if (tmp) *it = tmp;
-                    break;
-                }
-                case et_NodefS:
-                {
-                    basic_entity_ptr tmp = preresolve_nodefs_assigment((*it).get());
-                    if (tmp) *it = tmp;
-                    break;
-                }
-                default:
-                {
-                };
-            }
-        }
-    }
-
-    basic_entity_ptr preresolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
-        basic_entity_ptr rslt = preresolve_nodef_assigment(elm.get(), start.get());
-        return rslt ? rslt : elm;
-    }
-
-    basic_entity_ptr preresolve_nodef_assigment(basic_entity* elm, basic_entity* start) {
-        /*if (!start)
-            start = elm;
-        else
-            check_resolve_ciclic(elm, start);*/
-        bigassignment_entity* tmp = elm->as_bigassigment();
-        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
-            basic_entity_ptr fnd = elm->find(tmp->big()->reff());
-            if (fnd) {
-                if (fnd->kind() == et_Type) {
-                    basic_entity_ptr rslt(new typeassignment_entity(elm->scope(), tmp->name(),
-                            type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference))));
-                    return rslt;
-                }
-                if (fnd->kind() == et_Class) {
-                    basic_entity_ptr rslt(new classassignment_entity(elm->scope(), tmp->name(),
-                            class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference))));
-                    return rslt;
-                }
-            } else {
-                tmp->referenceerror_throw(tmp->big()->reff()->name());
-            }
-        }
-        tmp->referenceerror_throw(tmp->name());
-        return basic_entity_ptr();
-    }
-
-    basic_entity_ptr preresolve_nodefv_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
-        basic_entity_ptr rslt = preresolve_nodefv_assigment(elm.get(), start.get());
-        return rslt ? rslt : elm;
-    }
-
-    basic_entity_ptr preresolve_nodefv_assigment(basic_entity* elm, basic_entity* start) {
-        /*if (!start)
-            start = elm;
-        else
-            check_resolve_ciclic(elm, start);*/
-        voassignment_entity* tmp = elm->as_voassigment();
-        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
-            basic_entity_ptr fnd = elm->find(tmp->big()->reff());
-            if (fnd) {
-                if (fnd->kind() == et_Type) {
-                    if (tmp->value()) {
-                        basic_entity_ptr rslt(new valueassignment_entity(elm->scope(), tmp->name(),
-                                type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->value()));
-                        rslt->as_valueassigment()->value()->swap_scope(rslt);
-                        return rslt;
-                    } else {
-                        tmp->referenceerror_throw(tmp->big()->reff()->name());
-                    }
-                }
-                if (fnd->kind() == et_Class) {
-                    if (tmp->object()) {
-                        basic_entity_ptr rslt(new objectassignment_entity(elm->scope(), tmp->name(),
-                                class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference)), tmp->object()));
-                        rslt->as_objectassigment()->object()->swap_scope(rslt);
-                        return rslt;
-                    } else {
-                        tmp->referenceerror_throw(tmp->big()->reff()->name());
-                    }
-                }
-            } else {
-                tmp->referenceerror_throw(tmp->big()->reff()->name());
-            }
-        }
-        tmp->referenceerror_throw(tmp->name());
-        return basic_entity_ptr();
-    }
-
-    basic_entity_ptr preresolve_nodefs_assigment(basic_entity_ptr elm, basic_entity_ptr start) {
-        basic_entity_ptr rslt = preresolve_nodefs_assigment(elm.get(), start.get());
-        return rslt ? rslt : elm;
-    }
-
-    basic_entity_ptr preresolve_nodefs_assigment(basic_entity* elm, basic_entity* start) {
-        /*if (!start)
-            start = elm;
-        else
-            check_resolve_ciclic(elm, start);*/
-        soassignment_entity* tmp = elm->as_soassigment();
-        if (tmp && (tmp->big()) && (tmp->big()->reff())) {
-            basic_entity_ptr fnd = elm->find(tmp->big()->reff());
-            if (fnd) {
-                if (fnd->kind() == et_Type) {
-                    if (tmp->valueset()) {
-                        basic_entity_ptr rslt(new valuesetassignment_entity(elm->scope(), tmp->name(),
-                                type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->valueset()));
-                        rslt->as_valuesetassigment()->valueset()->swap_scope(rslt);
-                        return rslt;
-                    } else {
-                        tmp->referenceerror_throw(tmp->big()->reff()->name());
-                    }
-                }
-                if (fnd->kind() == et_Class) {
-                    if (tmp->objectset()) {
-                        basic_entity_ptr rslt(new objectsetassignment_entity(elm->scope(), tmp->name(),
-                                class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference)), tmp->objectset()));
-                        rslt->as_objectsetassigment()->objectset()->swap_scope(rslt);
-                        return rslt;
-                    } else {
-                        tmp->referenceerror_throw(tmp->big()->reff()->name());
-                    }
-                }
-            } else {
-                tmp->referenceerror_throw(tmp->big()->reff()->name());
-            }
-        }
-        tmp->referenceerror_throw(tmp->name());
-        return basic_entity_ptr();
-    }
-
     void resolve_assigments(basic_entity_vector& elm) {
         for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
             resolve_assigment(*it);
@@ -2329,9 +2359,12 @@ namespace x680 {
         argument_entity_ptr compile_argument(basic_entity_ptr scope, const x680::syntactic::argument_type& ent) {
             argument_entity_ptr tmp(new argument_entity(scope, ent.argument, ent.atp));
             switch (ent.tp) {
-                case gvr_Type: tmp->governor(compile_type(scope,ent.governortype)); break;
-                case gvr_Class: tmp->governor(compile_classdefined(scope,ent.governorclass)); break;
-                case gvr_Type_or_Class: tmp->governor(basic_atom_ptr(new basic_atom(ent.governorreff.reff))); break;
+                case gvr_Type: tmp->governor(compile_type(scope, ent.governortype));
+                    break;
+                case gvr_Class: tmp->governor(compile_classdefined(scope, ent.governorclass));
+                    break;
+                case gvr_Type_or_Class: tmp->governor(basic_atom_ptr(new basic_atom(ent.governorreff.reff)));
+                    break;
                 default:
                 {
                 }
@@ -3217,13 +3250,13 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, argument_entity* self) {
-        if (self->governor()){
+        if (self->governor()) {
             if (self->governor()->as_type())
-                 stream << self->governor()->as_type() << ":";
+                stream << "(T)" << self->governor()->as_type() << ":";
             else if (self->governor()->as_class())
-                stream << self->governor()->as_class() << ":";
+                stream << "(C)" << self->governor()->as_class() << ":";
             else
-                stream << "???" <<self->governor()->reff()->name() << ":";
+                stream << "(T?C)" << self->governor()->reff()->name() << ":";
         }
         return stream << self->name();
     }

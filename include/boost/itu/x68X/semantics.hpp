@@ -431,7 +431,7 @@ namespace x680 {
 
         std::string source_throw();
 
-        void referenceerror_throw(const std::string& val);
+        void referenceerror_throw(const std::string& val, const std::string& msg = "Unknown reference :");
 
         void unicalelerror_throw(const basic_entity_vector& elms);
 
@@ -443,11 +443,9 @@ namespace x680 {
 
         virtual void resolve();
 
-
+        virtual void preresolve();
 
     protected:
-
-        virtual void preresolve();
 
         void resolve_child();
 
@@ -485,9 +483,6 @@ namespace x680 {
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
-
-
-    protected:
 
         virtual void preresolve();
 
@@ -541,6 +536,8 @@ namespace x680 {
 
     class module_entity : public basic_entity {
 
+        friend class basic_entity;
+
     public:
         module_entity(basic_entity_ptr scope, const std::string& nm, const std::string& fl, bool allexp);
 
@@ -576,13 +573,14 @@ namespace x680 {
 
         virtual void resolve();
 
+        virtual void preresolve();
+
         void preresolve_externalref();
 
         void preresolve_oid();
 
 
     private:
-
 
         basic_entity_ptr findmodule(const std::string& nm);
 
@@ -591,6 +589,12 @@ namespace x680 {
         std::vector<std::string> setfrom_objid(value_atom* vls);
 
         bool compareoid(structvalue_atom_ptr ls, value_atom_ptr rs);
+
+        static void preresolve_assigments(basic_entity_vector& elm);
+        static basic_entity_ptr preresolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static basic_entity_ptr preresolve_nodefv_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static basic_entity_ptr preresolve_nodefs_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
+        static void swap_arguments_scope(assignment_entity* assign, basic_entity_ptr newscope);
 
 
         export_vector exports_;
@@ -652,13 +656,7 @@ namespace x680 {
             return governor_;
         }
 
-        /*bool has_type_governor() const {
-            return governor_->as_type();
-        }       
-        
-        bool has_class_governor() const {
-            return governor_->as_class();
-        }*/
+        bool has_undef_governor() const;
 
         void governor(basic_atom_ptr vl);
 
@@ -708,6 +706,10 @@ namespace x680 {
 
         basic_entity_ptr scope() const {
             return scope_;
+        }
+
+        void scope(basic_entity_ptr vl) {
+            scope_ = vl;
         }
 
         basic_entity_ptr reff() const {
@@ -911,6 +913,8 @@ namespace x680 {
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
+
+        virtual void preresolve();
 
     private:
 
@@ -2650,6 +2654,8 @@ namespace x680 {
 
         virtual void resolve();
 
+        virtual void preresolve();
+
     private:
 
         class_atom_ptr class_;
@@ -3233,13 +3239,7 @@ namespace x680 {
     // resolve functions
     /////////////////////////////////////////////////////////////////////////  
 
-    void preresolve_assigments(basic_entity_vector& elm);
-    basic_entity_ptr preresolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-    basic_entity_ptr preresolve_nodef_assigment(basic_entity* elm, basic_entity* start = 0);
-    basic_entity_ptr preresolve_nodefv_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-    basic_entity_ptr preresolve_nodefv_assigment(basic_entity* elm, basic_entity* start = 0);
-    basic_entity_ptr preresolve_nodefs_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-    basic_entity_ptr preresolve_nodefs_assigment(basic_entity* elm, basic_entity* start = 0);
+
 
     void resolve_assigments(basic_entity_vector& elm);
     void resolve_assigment(basic_entity_ptr& elm, basic_entity_ptr start = basic_entity_ptr());
