@@ -842,6 +842,12 @@ namespace x680 {
             holder.objectset = objectset_element_ptr(new objectset_element(val));
             holder.alternative |= AS_OBJECTSET;
         }
+        
+        inline void setting_literal(setting_element& holder, const std::string& val) {
+            holder.literal = val;
+            holder.alternative |= AS_LITERAL;
+        }
+        
 
 
 
@@ -878,8 +884,12 @@ namespace x680 {
 
         inline void object_fields(object_element& holder, const objectfield_vector& val) {
             holder.fields = val;
-            holder.tp = ot_Object;
         }
+        
+        inline void object_typeset(object_element& holder, const object_type& val) {
+            holder.tp = val;
+        }        
+        
 
         inline void object_refference(object_element& holder, const std::string& val) {
             holder.reff = val;

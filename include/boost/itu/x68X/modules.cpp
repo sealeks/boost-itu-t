@@ -173,15 +173,18 @@ namespace x680 {
             SettingObject = Object[bind(&setting_object, qi::_val, qi::_1)];
 
             SettingObjectSet = ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)];
+            
+            SettingLiteral = SyntaxField_[bind(&setting_literal, qi::_val, qi::_1)];
 
 
-            SettingM1 = SettingType | SettingValue | SettingValueSet | SettingObject | SettingObjectSet;
+            SettingM1 = SettingType | SettingValue | SettingValueSet | SettingObject | SettingObjectSet | SettingLiteral ;
 
             Setting = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[Value[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[ValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[Object[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM1;
+                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[SyntaxField_[bind(&setting_literal, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM1;
 
             SettingM2 = SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet;
 
