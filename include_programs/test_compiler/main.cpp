@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
         x680::global_entity_ptr rsl = x680::semantics::compile_fs(IN_FILE);
 
 
-        std::cout << "!!!!!!!!!!!!: " << (*rsl) << std::endl;
+        std::cout << "!!!!!!!!!!!!: " << (rsl.get()) << std::endl;
     } catch (x680::syntactic::synxtas_error& e) {
         std::cout << e << std::endl;
     } catch (x680::semantics::error& ec) {
