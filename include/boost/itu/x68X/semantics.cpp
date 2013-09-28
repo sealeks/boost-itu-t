@@ -69,6 +69,12 @@ namespace x680 {
     // basic_entity
     ///////////////////////////////////////////////////////////////////////// 
 
+    void basic_entity::scope(basic_entity_ptr vl) {
+        if (vl && (vl.get() == this))
+            throw semantics::error("Internal error selfscoping :" + name());
+        scope_ = basic_entity_wptr(vl);
+    }
+
     int basic_entity::level() const {
         int rslt = 0;
         basic_entity_ptr scp = scope();
@@ -357,7 +363,6 @@ namespace x680 {
     }
 
     void module_entity::resolve() {
-        unicalelerror_throw(childs());
         resolve_child();
     }
 
@@ -509,12 +514,14 @@ namespace x680 {
                 if (fnd->kind() == et_Type) {
                     basic_entity_ptr rslt(new typeassignment_entity(elm->scope(), tmp->name(),
                             type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference))));
+                    rslt->as_assigment()->arguments(tmp->arguments());
                     swap_arguments_scope(rslt->as_assigment(), rslt);
                     return rslt;
                 }
                 if (fnd->kind() == et_Class) {
                     basic_entity_ptr rslt(new classassignment_entity(elm->scope(), tmp->name(),
                             class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference))));
+                    rslt->as_assigment()->arguments(tmp->arguments());
                     swap_arguments_scope(rslt->as_assigment(), rslt);
                     return rslt;
                 }
@@ -540,6 +547,7 @@ namespace x680 {
                         basic_entity_ptr rslt(new valueassignment_entity(elm->scope(), tmp->name(),
                                 type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->value()));
                         rslt->as_valueassigment()->value()->swap_scope(rslt);
+                        rslt->as_assigment()->arguments(tmp->arguments());
                         swap_arguments_scope(rslt->as_assigment(), rslt);
                         return rslt;
                     } else {
@@ -551,6 +559,7 @@ namespace x680 {
                         basic_entity_ptr rslt(new objectassignment_entity(elm->scope(), tmp->name(),
                                 class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference)), tmp->object()));
                         rslt->as_objectassigment()->object()->swap_scope(rslt);
+                        rslt->as_assigment()->arguments(tmp->arguments());
                         swap_arguments_scope(rslt->as_assigment(), rslt);
                         return rslt;
                     } else {
@@ -579,6 +588,7 @@ namespace x680 {
                         basic_entity_ptr rslt(new valuesetassignment_entity(elm->scope(), tmp->name(),
                                 type_atom_ptr(new type_atom(elm->scope(), tmp->big()->reff()->name(), t_Reference)), tmp->valueset()));
                         rslt->as_valuesetassigment()->valueset()->swap_scope(rslt);
+                        rslt->as_assigment()->arguments(tmp->arguments());
                         swap_arguments_scope(rslt->as_assigment(), rslt);
                         return rslt;
                     } else {
@@ -590,6 +600,7 @@ namespace x680 {
                         basic_entity_ptr rslt(new objectsetassignment_entity(elm->scope(), tmp->name(),
                                 class_atom_ptr(new class_atom(elm->scope(), tmp->big()->reff()->name(), cl_Reference)), tmp->objectset()));
                         rslt->as_objectsetassigment()->objectset()->swap_scope(rslt);
+                        rslt->as_assigment()->arguments(tmp->arguments());
                         swap_arguments_scope(rslt->as_assigment(), rslt);
                         return rslt;
                     } else {
@@ -605,7 +616,7 @@ namespace x680 {
     }
 
     void module_entity::swap_arguments_scope(assignment_entity* assign, basic_entity_ptr newscope) {
-        assign->scope(newscope);
+        //assign->scope(newscope);
         for (argument_entity_vct::const_iterator it = assign->arguments().begin(); it != assign->arguments().end(); ++it) {
             (*it)->scope(newscope);
             if ((*it)->governor())
@@ -700,6 +711,14 @@ namespace x680 {
             return reff()->as_typeassigment()->type()->root();
         if ((reff()->as_valueassigment()) && (reff()->as_valueassigment()->value()))
             return reff()->as_valueassigment()->value()->root();
+        if ((reff()->as_valuesetassigment()) && (reff()->as_valuesetassigment()->valueset()))
+            return reff()->as_valuesetassigment()->valueset()->root();
+        if ((reff()->as_classassigment()) && (reff()->as_classassigment()->_class()))
+            return reff()->as_classassigment()->_class()->root();
+        if ((reff()->as_objectassigment()) && (reff()->as_objectassigment()->object()))
+            return reff()->as_objectassigment()->object()->root();
+        if ((reff()->as_objectsetassigment()) && (reff()->as_objectsetassigment()->objectset()))
+            return reff()->as_objectsetassigment()->objectset()->root();
         return 0;
     }
 
@@ -759,6 +778,24 @@ namespace x680 {
     // assignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
+    /*basic_entity* basic_atom::root_assignment(basic_entity* assign) {
+        if (!assign->reff())
+            return assign;
+        if ((reff()->as_typeassigment()) && (reff()->as_typeassigment()->type()))
+            return reff()->as_typeassigment()->type()->root_assignment();
+        if ((reff()->as_valueassigment()) && (reff()->as_valueassigment()->value()))
+            return reff()->as_valueassigment()->value()->root_assignment();
+        if ((reff()->as_valuesetassigment()) && (reff()->as_valuesetassigment()->valueset()))
+            return reff()->as_valuesetassigment()->valueset()->root_assignment();   
+        if ((reff()->as_classassigment()) && (reff()->as_classassigment()->_class()))
+            return reff()->as_classassigment()->_class()->root_assignment();
+        if ((reff()->as_objectassigment()) && (reff()->as_objectassigment()->object()))
+            return reff()->as_objectassigment()->object()->root_assignment();
+        if ((reff()->as_objectsetassigment()) && (reff()->as_objectsetassigment()->objectset()))
+            return reff()->as_objectsetassigment()->objectset()->root_assignment();          
+        return 0;
+    }*/
+
     basic_entity_ptr assignment_entity::find_by_name(const std::string& nm, bool all) {
         return basic_entity_ptr();
     }
@@ -777,10 +814,9 @@ namespace x680 {
                 basic_entity_ptr fnd = scope()->find((*it)->governor()->reff());
                 if (fnd) {
                     if (fnd->kind() == et_Type) {
-                        (*it)->governor(type_atom_ptr(new type_atom(*it, (*it)->governor()->expectedname(), t_Reference)));
+                        (*it)->governor(type_atom_ptr(new type_atom((*it)->scope(), (*it)->governor()->expectedname(), t_Reference)));
                     } else if (fnd->kind() == et_Class) {
-                        (*it)->governor(class_atom_ptr(new class_atom(*it, (*it)->governor()->expectedname(), cl_Reference)));
-
+                        (*it)->governor(class_atom_ptr(new class_atom((*it)->scope(), (*it)->governor()->expectedname(), cl_Reference)));
                     } else
                         scope()->referenceerror_throw((*it)->governor()->expectedname());
                 } else
@@ -1760,7 +1796,7 @@ namespace x680 {
                                     tmp->referenceerror_throw(tmp->big()->reff()->name());
                                 *it = basic_entity_ptr(new valuefield_entity(scope(), tmp->name(), tp, tmp->_defaultv()));
                             } else
-                                *it = basic_entity_ptr(new valuefield_entity(scope(), tmp->name(), tp, tmp->marker()));
+                                *it = basic_entity_ptr(new valuefield_entity(scope(), tmp->name(), tp, false, tmp->marker()));
                         }
                         if (fnd->kind() == et_Class) {
                             class_atom_ptr tp = class_atom_ptr(new class_atom(scope(), tmp->big()->reff()->name(), cl_Reference));
@@ -1928,7 +1964,23 @@ namespace x680 {
         assignment_entity::resolve();
         if (_class())
             _class()->resolve();
+        if (object())
+            object()->resolve();
     }
+
+    void objectassignment_entity::apply_fields() {
+        if (!has_arguments()) {
+            basic_entity_ptr cl = _class()->reff();
+            while (cl && (cl->as_classassigment()) && (cl->as_classassigment()->_class()->reff()))
+                cl = cl->as_classassigment()->_class()->reff();
+            if (cl) {
+                if (classassignment_entity * clsa = cl->as_classassigment()) {
+
+                }
+            }
+        }
+    }
+
 
 
 
@@ -1961,6 +2013,15 @@ namespace x680 {
             resolve_reff();
     }
 
+    /////////////////////////////////////////////////////////////////////////        
+    // defnobjectset_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void defnobjectset_atom::resolve() {
+        for (object_atom_vct::iterator it = objects_.begin(); it != objects_.end(); ++it) {
+            (*it)->resolve();
+        }
+    };
 
     /////////////////////////////////////////////////////////////////////////   
     // objectsetassignment_entity
@@ -1987,8 +2048,8 @@ namespace x680 {
         assignment_entity::resolve();
         if (_class())
             _class()->resolve();
-        //if (withsyntax())
-        // withsyntax()->resolve();
+        if (objectset())
+            objectset()->resolve();
     }
 
 
@@ -2194,7 +2255,7 @@ namespace x680 {
                     break;
                 case gvr_Class: tmp->governor(compile_classdefined(scope, ent.governorclass));
                     break;
-                case gvr_Type_or_Class: tmp->governor(basic_atom_ptr(new basic_atom(ent.governorreff.reff)));
+                case gvr_Type_or_Class: tmp->governor(basic_atom_ptr(new basic_atom(ent.reff)));
                     break;
                 default:
                 {
@@ -2897,7 +2958,9 @@ namespace x680 {
 
         bigassignment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::unknown_tc_assignment tmp = boost::get<x680::syntactic::unknown_tc_assignment>(ent);
-            return bigassignment_entity_ptr(new bigassignment_entity(scope, tmp.identifier, compile_reff(tmp.unknown_tc.reff)));
+            bigassignment_entity_ptr tmpv = bigassignment_entity_ptr(new bigassignment_entity(scope, tmp.identifier, compile_reff(tmp.unknown_tc.reff)));
+            tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
+            return tmpv;
         }
 
         // value or object 
@@ -2909,6 +2972,7 @@ namespace x680 {
                 tmpv->value(compile_value(scope, *(tmp.unknown_vo.value_)));
             if ((tmp.unknown_vo.alternative_ & AS_OBJECT) && (tmp.unknown_vo.object_))
                 tmpv->object(compile_object(scope, *(tmp.unknown_vo.object_)));
+            tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
             return tmpv;
         }
 
@@ -2921,6 +2985,7 @@ namespace x680 {
                 tmpv->valueset(compile_valueset(scope, *(tmp.unknown_so.valueset_)));
             if ((tmp.unknown_so.alternative_ & AS_OBJECTSET) && (tmp.unknown_so.objectset_))
                 tmpv->objectset(compile_objectset(scope, *(tmp.unknown_so.objectset_)));
+            tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
             return tmpv;
         }
 

@@ -147,7 +147,6 @@ namespace x680 {
             qi::rule<str_iterator, valueset_assignment(), skip_cmt_type> ValueSetTypeAssignment;
             qi::rule<str_iterator, objectset_assignment(), skip_cmt_type> ObjectSetAssignmentLS; // left strict
             qi::rule<str_iterator, objectset_assignment(), skip_cmt_type> ObjectSetAssignment;
-            qi::rule<str_iterator, unknown_tc_assignment(), skip_cmt_type> UnknownTCAssignment;
             qi::rule<str_iterator, unknown_vo_assignment(), skip_cmt_type> UnknownValObjAssignment;
             qi::rule<str_iterator, unknown_so_assignment(), skip_cmt_type> UnknownValSetObjSetAssignment;
 
@@ -169,7 +168,8 @@ namespace x680 {
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingClass;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObject;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObjectSet;
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingLiteral;           
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingLiteral;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingArgument;
 
             qi::rule<str_iterator, argument_type(), skip_cmt_type> Parameter;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterA1;
@@ -183,36 +183,16 @@ namespace x680 {
             qi::rule<str_iterator, argument_vector(), skip_cmt_type> Parameters;
 
 
-
-
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-            //  UnknownTCAssigment grammar (Type or Class)
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
-
-
-            qi::rule<str_iterator, unknown_tc_element(), skip_cmt_type> UnknownReferencedTC;
-            qi::rule<str_iterator, unknown_tc_element(), skip_cmt_type> UnknownTC;
-            qi::rule<str_iterator, unknown_tc_element(), skip_cmt_type> UnknownTCFromObject;
-            qi::rule<str_iterator, unknown_tc_element(), skip_cmt_type> UnknownTCValueSetFromObjects;
-
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  UnknownVOAssigment grammar (Value or Object)
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
 
-
-            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownReferencedVO;
-            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVO;
-            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVOFromObject;
-            qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> UnknownVOValueSetFromObjects;
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> ValueOrObjectM;
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> ValueOrObject;
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-            //  UnknownVOAssigment grammar (ValueSet or ObjectSet)
+            //  UnknownSOAssigment grammar (ValueSet or ObjectSet)
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
-
-
 
             qi::rule<str_iterator, unknown_so_element(), skip_cmt_type> ValueSetOrObjectSetM;
             qi::rule<str_iterator, unknown_so_element(), skip_cmt_type> ValueSetOrObjectSet;
@@ -221,8 +201,6 @@ namespace x680 {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  ValueAssigment grammar
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
             qi::rule<str_iterator, value_element(), skip_cmt_type> Value;

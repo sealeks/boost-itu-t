@@ -33,7 +33,7 @@ namespace x680 {
         }
 
 #ifdef __GNUC__    
-        
+
         position_iterator&
                 position_iterator::operator+=(const difference_type& n) {
             return *this = private_ctr(super() + n, base_, pos_);
@@ -55,7 +55,7 @@ namespace x680 {
         }
 
 #endif
-        
+
         position_iterator::supertype&
         position_iterator::super() const {
             return (supertype&) (*this);
@@ -111,8 +111,8 @@ namespace x680 {
                     if ((ita == std::string::npos) && (itd == std::string::npos))
                         it = std::string::npos;
                 }
-                if (((it == std::string::npos) &&  (pos<src.size())) || (it>pos))
-                    it=pos;
+                if (((it == std::string::npos) && (pos < src.size())) || (it > pos))
+                    it = pos;
                 rslt++;
                 if (it != std::string::npos) {
                     it++;
@@ -122,7 +122,7 @@ namespace x680 {
                 line = src.substr(itl, it == std::string::npos ? std::string::npos : (it - itl));
                 symb = (it == std::string::npos ? 0 : (it - itl));
             }
-            return rslt;// = rslt ? rslt - 1 : rslt;
+            return rslt; // = rslt ? rslt - 1 : rslt;
         }
 
         std::ostream& operator<<(std::ostream& stream, const synxtas_error& self) {
@@ -305,7 +305,7 @@ namespace x680 {
                 >> -qi::upper[qi::_val += qi::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::upper))))]];
 
-        str_rule spaces_ = distinct((*qi::space)>> '&')[qi::space[ qi::_val = qi::_1 ] >> *(qi::space[qi::_val += qi::_1 ])];
+        str_rule spaces_ = distinct((*qi::space) >> '&')[qi::space[ qi::_val = qi::_1 ] >> *(qi::space[qi::_val += qi::_1 ])];
 
         str_rule Literal_ = (word_ - literal_except_token) | qi::string(",");
 
@@ -367,8 +367,8 @@ namespace x680 {
 
         str_rule PrimitiveFieldName_ = bigfieldreference_ | littlefieldreference_;
 
-        str_rule FieldName_ = PrimitiveFieldName_ >> -(qi::string(".") 
-                >>  qi::omit[(*qi::space)] >> (PrimitiveFieldName_ % qi::string(".")));
+        str_rule FieldName_ = PrimitiveFieldName_[qi::_val = qi::_1 ] >> -(qi::string(".")[qi::_val += qi::_1 ]
+                >> qi::omit[(*qi::space)] >> (PrimitiveFieldName_[qi::_val += qi::_1 ] % qi::string(".")[qi::_val += qi::_1 ]));
 
 
 
@@ -424,21 +424,21 @@ namespace x680 {
         str_rule DefinedObjectSet_ = ExternalObjectSetReference_ | objectsetreference_;
 
         str_rule UserDefinedConstraintParameter_ = (DefinedType_ | DefinedObjectClass_)
-                >> -(qi::string(".") >> DefinedValue_);
+        >> -(qi::string(".") >> DefinedValue_);
 
-        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.' | '@')[qi::string("@") 
-                >> *(qi::string(".")) >> (identifier_  % qi::string("."))];
+        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.' | '@')[qi::string("@")
+        >> *(qi::string(".")) >> (identifier_ % qi::string("."))];
 
         str_rule Reference_ = typereference_ | valuereference_;
 
-        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_
-                >> qi::string(".") >> qi::omit[(*qi::space)]  >> FieldName_];
-        
-        str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObject_
-                >> qi::string(".")>>qi::omit[(*qi::space)]  >> FieldName_];
+        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[qi::_val += qi::_1 ] ];
 
-        str_rule BigFromObjects_ = distinct(qi::alnum | ('-' >> qi::alnum) |  '.')[DefinedObjectSet_ 
-                >> qi::string(".") >> qi::omit[(*qi::space)]  >> FieldName_];
+        str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObject_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[qi::_val += qi::_1 ]];
+
+        str_rule BigFromObjects_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectSet_[qi::_val = qi::_1 ]
+                >> qi::string(".")[qi::_val += qi::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[qi::_val += qi::_1 ]];
 
         str_rule ParameterizedReference_ = Reference_
                 >> qi::omit[*qi::space

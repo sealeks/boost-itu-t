@@ -66,12 +66,9 @@ namespace x680 {
 
 
             Assignments = *(ObjectClassAssignment | TypeAssignment
-                    | TypeAssignmentSS | UnknownTCAssignment
-                    | ValueAssignmentLS | /*ValueAssignmentRS |*/ ObjectAssignmentLS
-                    | ObjectAssignmentRS /* ValueAssignment | ObjectAssignment*/
-                    | ValueSetTypeAssignmentLS | ObjectSetAssignmentLS
-                    | UnknownValObjAssignment | UnknownValSetObjSetAssignment
-                    /*| ValueSetTypeAssignment | ObjectSetAssignment*/);
+                    | TypeAssignmentSS | ValueAssignmentLS | ObjectAssignmentLS
+                    | ObjectAssignmentRS | ValueSetTypeAssignmentLS | ObjectSetAssignmentLS
+                    | UnknownValObjAssignment | UnknownValSetObjSetAssignment);
 
 
 
@@ -89,11 +86,6 @@ namespace x680 {
                     >> -(Parameters[bind(&typea_arguments, qi::_val, qi::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> Type[bind(&typea_type, qi::_val, qi::_1)];
-
-            UnknownTCAssignment = objectclassreference_[bind(&unknown_tca_identifier, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&unknown_tca_arguments, qi::_val, qi::_1)])
-                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> UnknownReferencedTC[bind(&unknown_tca, qi::_val, qi::_1)];
 
 
 
@@ -173,11 +165,13 @@ namespace x680 {
             SettingObject = Object[bind(&setting_object, qi::_val, qi::_1)];
 
             SettingObjectSet = ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)];
-            
+
             SettingLiteral = SyntaxField_[bind(&setting_literal, qi::_val, qi::_1)];
 
+            SettingArgument = bothreference_[bind(&setting_literal, qi::_val, qi::_1)];
 
-            SettingM1 = SettingType | SettingValue | SettingValueSet | SettingObject | SettingObjectSet | SettingLiteral ;
+
+            SettingM1 = SettingType | SettingValue | SettingValueSet | SettingObject | SettingObjectSet | SettingLiteral;
 
             Setting = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[Value[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
@@ -186,14 +180,15 @@ namespace x680 {
                     | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[SyntaxField_[bind(&setting_literal, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM1;
 
-            SettingM2 = SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet;
+            SettingM2 = SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet | SettingArgument;
 
             ActualParameter = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[Value[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[ValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[Object[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM2;
+                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[bothreference_[bind(&setting_literal, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM2;
 
             SettingM3 = SettingValue | SettingObject;
 
@@ -224,10 +219,10 @@ namespace x680 {
             ParameterB2 = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
                     >> valuereference_)[bind(&argument_governor_tp, qi::_val, qi::_1, qi::_2, false)];
 
-            ParameterC1 = (UnknownTC >> qi::omit[qi::lexeme[qi::lit(":")]]
+            ParameterC1 = (DefinedType_ >> qi::omit[qi::lexeme[qi::lit(":")]]
                     >> typereference_)[bind(&argument_governor_reff, qi::_val, qi::_1, qi::_2, true)];
 
-            ParameterC2 = (UnknownTC >> qi::omit[qi::lexeme[qi::lit(":")]]
+            ParameterC2 = (DefinedType_ >> qi::omit[qi::lexeme[qi::lit(":")]]
                     >> valuereference_)[bind(&argument_governor_reff, qi::_val, qi::_1, qi::_2, false)];
 
             ParameterD1 = typereference_[bind(&argument_argument, qi::_val, qi::_1, true)];

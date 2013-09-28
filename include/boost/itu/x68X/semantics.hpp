@@ -383,9 +383,7 @@ namespace x680 {
             return !scope_._empty() ? scope_.lock() : basic_entity_ptr();
         }
 
-        void scope(basic_entity_ptr vl) {
-            scope_ = basic_entity_wptr(vl);
-        }
+        void scope(basic_entity_ptr vl);
 
         basic_entity_vector& childs() {
             return childs_;
@@ -744,7 +742,7 @@ namespace x680 {
 
         std::string externalpreff() const;
 
-        virtual basic_atom* root();
+        virtual basic_atom* root();            
 
         bool rooted();
 
@@ -906,6 +904,8 @@ namespace x680 {
         bool has_arguments() const {
             return !arguments_.empty();
         }
+        
+    
 
 
         /////        
@@ -2961,6 +2961,8 @@ namespace x680 {
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
+        
+        void apply_fields();
 
     private:
 
@@ -3036,8 +3038,7 @@ namespace x680 {
             objects_ = vl;
         }
 
-        virtual void resolve() {
-        };
+        virtual void resolve();
 
     private:
 

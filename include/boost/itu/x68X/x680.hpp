@@ -249,19 +249,6 @@ namespace x680 {
         field_defaultos
     };
 
-    enum setting_type {
-
-        sett_NoDef,
-        sett_Type,
-        sett_Value,
-        sett_ValueSet,
-        sett_DefineClass,
-        sett_Object,
-        sett_ObjectSet,
-        sett_UnknownTC,
-        sett_UnknownVO
-    };
-
     enum fieldkind_type {
 
         fkind_NoDef,
@@ -280,7 +267,7 @@ namespace x680 {
 
         ot_Nodef,
         ot_Object,
-        ot_ObjectDefineSyn,       
+        ot_ObjectDefineSyn,
         ot_Refference,
         ot_FromObject,
         ot_DefinedObjectSet,
@@ -332,7 +319,7 @@ namespace x680 {
     const alternmask AS_OBJECTSET = 0x8;
     const alternmask AS_TYPE = 0x10;
     const alternmask AS_CLASS = 0x20;
-    const alternmask AS_LITERAL = 0x40;    
+    const alternmask AS_LITERAL = 0x40;
 
 
     namespace syntactic {
@@ -888,7 +875,7 @@ namespace x680 {
             argument_type() : tp(gvr_No), atp(argm_No) {
             }
 
-            unknown_tc_element governorreff;
+            std::string reff;
             type_element governortype;
             class_element governorclass;
             governor_type tp;
@@ -902,7 +889,7 @@ namespace x680 {
             userdefconstraint_type() : tp(gvr_No) {
             }
 
-            unknown_tc_element governorreff;
+            std::string reff;
             type_element governortype;
             class_element governorclass;
             governor_type tp;

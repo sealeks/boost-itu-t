@@ -17,19 +17,6 @@ namespace x680 {
                     >> qi::omit[qi::lit("]")]
                     >> -(Rule[bind(&tag_rule, qi::_val, qi::_1)]);
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-            //  UnknownTCAssigment grammar (Type or Class)
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
-
-            UnknownReferencedTC = UnknownTCValueSetFromObjects | 
-                    UnknownTCFromObject | UnknownTC;
-
-            UnknownTC = DefinedType_[bind(&unknown_tc_refference, qi::_val, qi::_1)] 
-                    >> -(ActualParameters[bind(&unknown_tc_parameters, qi::_val, qi::_1)]);
-
-            UnknownTCFromObject = LittleFromObject_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; 
-
-            UnknownTCValueSetFromObjects = BigFromObjects_[bind(&unknown_tc_refference, qi::_val, qi::_1)]; 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  TypeAssigment grammar

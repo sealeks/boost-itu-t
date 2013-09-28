@@ -14,29 +14,15 @@ namespace x680 {
         // Type_grammar
 
         void Modules_grammar::initV() {
-            
-            
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-            //  UnknownTCAssigment grammar (Value or Object)
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////             
 
-            UnknownReferencedVO = UnknownVOValueSetFromObjects 
-                    | UnknownVOFromObject | UnknownVO;
-
-            UnknownVO = DefinedValue_[bind(&unknown_vo_refference, qi::_val, qi::_1)] 
-                    >> -(ActualParameters[bind(&unknown_vo_parameters, qi::_val, qi::_1)]);
-
-            UnknownVOFromObject = LittleFromObject_[bind(&unknown_vo_refference, qi::_val, qi::_1)]; 
-
-            UnknownVOValueSetFromObjects = BigFromObjects_[bind(&unknown_vo_refference, qi::_val, qi::_1)];
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  ValueAssigment grammar 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
-            
-            
-            Value = ObjectClassFieldValue |  ValueFromObject  |  NullValue
+
+
+            Value = ObjectClassFieldValue | ValueFromObject | NullValue
                     | BooleanValue | RealValue | IntegerValue | HStringValue
                     | BStringValue | CStringValue | NumberList | ObjectIdentifierValue
                     | NamedValueList | ValueList | ChoiceValue | EmptySetValue
@@ -126,11 +112,11 @@ namespace x680 {
 
             ObjIdComponents = +ObjIdComponent;
 
-            NameBitList = qi::omit[qi::lexeme[qi::lit("{")]] >> 
-                    (NameAndNumberForm2 | NameAndNumberForm3) % qi::omit[qi::lit(",")]>>
+            NameBitList = qi::omit[qi::lexeme[qi::lit("{")]] >>
+                    (NameAndNumberForm2 | NameAndNumberForm3) % qi::omit[qi::lit(",")] >>
                     qi::omit[qi::lexeme[qi::lit("}")]];
 
-            NamedNumberList =qi::omit[qi::lexeme[qi::lit("{")]] >>
+            NamedNumberList = qi::omit[qi::lexeme[qi::lit("{")]] >>
                     (NameAndNumberForm1 | NameAndNumberForm3) % qi::omit[qi::lit(",")] >>
                     qi::omit[qi::lexeme[qi::lit("}")]];
 

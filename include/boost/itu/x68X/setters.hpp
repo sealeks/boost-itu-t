@@ -499,8 +499,8 @@ namespace x680 {
             holder.argument = par;
         }
 
-        inline void userdefconstraint_governor_reff(userdefconstraint_type& holder, const unknown_tc_element& val, const setting_element& par) {
-            holder.governorreff = val;
+        inline void userdefconstraint_governor_reff(userdefconstraint_type& holder, const std::string& val, const setting_element& par) {
+            holder.reff = val;
             holder.tp = gvr_Type_or_Class;
             holder.argument = par;
         }
@@ -664,7 +664,7 @@ namespace x680 {
 
         inline void classfield_holder_cl(classfield_type& holder, const class_element& val, bool type) {
             holder.tp = type ? fkind_ObjectFieldSpec : fkind_ObjectSetFieldSpec;
-            holder.holderclass = class_element_ptr( new class_element(val));
+            holder.holderclass = class_element_ptr(new class_element(val));
         }
 
         inline void classfield_holder(classfield_type& holder, const std::string& val) {
@@ -842,12 +842,12 @@ namespace x680 {
             holder.objectset = objectset_element_ptr(new objectset_element(val));
             holder.alternative |= AS_OBJECTSET;
         }
-        
+
         inline void setting_literal(setting_element& holder, const std::string& val) {
             holder.literal = val;
             holder.alternative |= AS_LITERAL;
         }
-        
+
 
 
 
@@ -885,11 +885,10 @@ namespace x680 {
         inline void object_fields(object_element& holder, const objectfield_vector& val) {
             holder.fields = val;
         }
-        
+
         inline void object_typeset(object_element& holder, const object_type& val) {
             holder.tp = val;
-        }        
-        
+        }
 
         inline void object_refference(object_element& holder, const std::string& val) {
             holder.reff = val;
@@ -1023,8 +1022,8 @@ namespace x680 {
             holder.atp = big ? argm_Big : argm_Little;
         }
 
-        inline void argument_governor_reff(argument_type& holder, const unknown_tc_element& val, const std::string& par, bool big) {
-            holder.governorreff = val;
+        inline void argument_governor_reff(argument_type& holder, const std::string& val, const std::string& par, bool big) {
+            holder.reff = val;
             holder.tp = gvr_Type_or_Class;
             holder.argument = par;
             holder.atp = big ? argm_Big : argm_Little;

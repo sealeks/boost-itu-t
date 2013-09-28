@@ -168,7 +168,7 @@ namespace x680 {
             UserDefinedConstraintParameterB = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
                     >> SettingU1)[bind(&userdefconstraint_governor_tp, qi::_val, qi::_1, qi::_2)];
 
-            UserDefinedConstraintParameterC = (UnknownTC >> qi::omit[qi::lexeme[qi::lit(":")]]
+            UserDefinedConstraintParameterC = (DefinedType_ >> qi::omit[qi::lexeme[qi::lit(":")]]
                     >> SettingU1)[bind(&userdefconstraint_governor_reff, qi::_val, qi::_1, qi::_2)];
 
             UserDefinedConstraintParameterD = SettingU2[bind(&userdefconstraint_argument, qi::_val, qi::_1)];
