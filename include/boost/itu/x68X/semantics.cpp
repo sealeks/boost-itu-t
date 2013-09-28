@@ -1998,6 +1998,7 @@ namespace x680 {
             if (cl) {
                 if (classassignment_entity * clsa = cl->as_classassigment()) {
                     for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
+                        std::cout << "CLEN: "  <<(*it)->as_classfield()->name()   << std::endl;
                         if (object()->find_field((*it)->as_classfield()->name() ))
                             std::cout << "CLEN: "  <<(*it)->as_classfield()->name()   << std::endl;
                     }
