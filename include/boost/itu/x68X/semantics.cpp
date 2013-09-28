@@ -281,6 +281,7 @@ namespace x680 {
     void global_entity::resolve() {
         preresolve();
         resolve_child();
+        apply_fields();
     }
 
     void global_entity::preresolve() {
@@ -304,6 +305,12 @@ namespace x680 {
     }
 
 
+    void global_entity::apply_fields() {
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) 
+            if ((*it)->as_module())
+               (*it)->as_module()->apply_fields();       
+    }     
+ 
 
     /////////////////////////////////////////////////////////////////////////
     // import_entity
@@ -414,6 +421,13 @@ namespace x680 {
         }
         return basic_entity_ptr();
     }
+    
+    void module_entity::apply_fields() {
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+            if ((*it)->as_objectassigment())
+               (*it)->as_objectassigment()->apply_fields();
+        }        
+    }    
 
     basic_entity_ptr module_entity::findmodule(value_atom_ptr oid, const std::string& nm) {
         if (!oid)
@@ -1929,6 +1943,14 @@ namespace x680 {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
         }
     };
+    
+    fieldsetting_atom_ptr defltobject_atom::find_field(const std::string& name) {
+         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
+             if ((*it)->field()==name)
+                 return (*it);
+        }   
+       return  fieldsetting_atom_ptr(); 
+    }
 
 
     /////////////////////////////////////////////////////////////////////////        
@@ -1975,7 +1997,10 @@ namespace x680 {
                 cl = cl->as_classassigment()->_class()->reff();
             if (cl) {
                 if (classassignment_entity * clsa = cl->as_classassigment()) {
-
+                    for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
+                        if (object()->find_field((*it)->as_classfield()->name() ))
+                            std::cout << "CLEN: "  <<(*it)->as_classfield()->name()   << std::endl;
+                    }
                 }
             }
         }

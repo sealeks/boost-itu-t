@@ -442,7 +442,7 @@ namespace x680 {
         virtual void resolve();
 
         virtual void preresolve();
-
+        
     protected:
 
         void resolve_child();
@@ -482,8 +482,10 @@ namespace x680 {
 
         virtual void resolve();
 
-        virtual void preresolve();
-
+        virtual void preresolve();   
+        
+        void apply_fields();        
+               
     };
 
 
@@ -575,12 +577,13 @@ namespace x680 {
 
         void preresolve_externalref();
 
-        void preresolve_oid();
-
+        void preresolve_oid();      
+        
+        void apply_fields();          
 
     private:
 
-        basic_entity_ptr findmodule(const std::string& nm);
+        basic_entity_ptr findmodule(const std::string& nm);      
 
         basic_entity_ptr findmodule(value_atom_ptr oid, const std::string& nm);
 
@@ -2746,6 +2749,10 @@ namespace x680 {
         extentionobject_atom* as_extention();
 
         virtual void resolve();
+        
+        virtual fieldsetting_atom_ptr find_field(const std::string& name) {
+            return fieldsetting_atom_ptr ();
+        }                
 
     private:
 
@@ -2766,6 +2773,7 @@ namespace x680 {
         };
 
         virtual void resolve();
+        
 
     };
 
@@ -2807,6 +2815,9 @@ namespace x680 {
         }
 
         virtual void resolve();
+      
+        virtual fieldsetting_atom_ptr find_field(const std::string& name);
+        
 
     private:
 
