@@ -309,7 +309,7 @@ namespace x680 {
 
         str_rule Literal_ = (word_ - literal_except_token) | qi::string(",");
 
-        str_rule SyntaxField_ = Literal_[qi::_val = qi::_1 ] >> *(spaces_[ qi::_val += qi::_1 ] >> Literal_[ qi::_val += qi::_1 ]);
+        str_rule SyntaxField_ = Literal_[qi::_val = qi::_1 ] >> *(spaces_[ qi::_val += ' '] >> Literal_[ qi::_val += qi::_1 ]);
 
         str_rule typereference_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
                 >> *(((qi::char_("-")[qi::_val += qi::_1]

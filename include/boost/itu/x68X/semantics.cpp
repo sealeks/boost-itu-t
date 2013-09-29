@@ -280,7 +280,7 @@ namespace x680 {
 
     void global_entity::resolve() {
         preresolve();
-        apply_fields();        
+        apply_fields();
         resolve_child();
     }
 
@@ -1987,44 +1987,44 @@ namespace x680 {
             _class()->resolve();
         if (object())
             object()->resolve();
-        resolve_child();            
+        resolve_child();
     }
 
     void objectassignment_entity::apply_fields() {
         //if (!has_arguments()) {
         if (!object()->as_deflt())
             return;
-            _class()->resolve();
-            basic_entity_ptr cl = _class()->reff();
-            while (cl && (cl->as_classassigment()) && (cl->as_classassigment()->_class()->reff())){
-                as_classassigment()->_class()->resolve();
-                cl = cl->as_classassigment()->_class()->reff();}
-            if (cl) {
-                if (classassignment_entity * clsa = cl->as_classassigment()) {
-                    for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
-                        if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
-                            create_fields((*it)->as_classfield(), fnd->setting().get());
-                        } else {
-                            switch (((*it)->as_classfield()->marker())) {
-                                case mk_default:create_fields((*it)->as_classfield());
-                                    break;
-                                case mk_optional: break;
-                                default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
-                            }
+        _class()->resolve();
+        basic_entity_ptr cl = _class()->reff();
+        while (cl && (cl->as_classassigment()) && (cl->as_classassigment()->_class()->reff())) {
+            as_classassigment()->_class()->resolve();
+            cl = cl->as_classassigment()->_class()->reff();
+        }
+        if (cl) {
+            if (classassignment_entity * clsa = cl->as_classassigment()) {
+                for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
+                    if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
+                        create_fields((*it)->as_classfield(), fnd->setting().get());
+                    } else {
+                        switch (((*it)->as_classfield()->marker())) {
+                            case mk_default:create_fields((*it)->as_classfield());
+                                break;
+                            case mk_optional: break;
+                            default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
                         }
                     }
                 }
             }
+        }
         //}
     }
 
     void objectassignment_entity::create_fields(field_entity* fld, setting_atom* st) {
         if (st) {
             if (fld->as_typefield()) {
-                if (st->type()){
-                    childs_.push_back(typeassignment_entity_ptr(new typeassignment_entity(st->scope(), fld->name(), st->type())));                
-                }
-                else
+                if (st->type()) {
+                    childs_.push_back(typeassignment_entity_ptr(new typeassignment_entity(st->scope(), fld->name(), st->type())));
+                } else
                     referenceerror_throw(fld->name(), "Field is not type: ");
             } else if (fld->as_valuefield()) {
                 if (st->value())
@@ -3749,7 +3749,7 @@ namespace x680 {
             }
             stream << " }";
             if (self->withsyntax()) {
-                stream << "\n    WITH SYNTAX {  ";
+                stream << "\n    WITH SYNTAX { \n   ";
                 stream << self->withsyntax().get();
                 stream << "    }";
             }
@@ -3913,11 +3913,11 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, syntax_atom* self) {
         if (self->optional())
             stream << " [ ";
-        if (self->isalias())
-            stream << " '" << self->alias() << "' ";
         if (self->as_group()) {
             stream << " " << self->as_group();
         } else {
+            if (self->isalias())
+                stream << " '" << self->alias() << "' ";
             if (self->expecteddef())
                 stream << " ??? " << self->reff()->name();
             else
@@ -3930,7 +3930,10 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, groupsyntax_atom* self) {
         for (syntax_atom_vct::const_iterator it = self->group().begin(); it != self->group().end(); ++it) {
-            stream << "\n     " << (*it);
+            if (it != self->group().begin())
+                stream << "\n     " << (*it);
+            else
+                stream << "" << (*it);
         }
         return stream;
     }
@@ -3946,7 +3949,7 @@ namespace x680 {
             if (self->object())
                 return stream << self->object().get() << "\n";
         } else {
-             stream << " {\n";
+            stream << " {\n";
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if ((*it)->as_assigment()) {
                     stream << "     ";
@@ -3971,7 +3974,7 @@ namespace x680 {
                         continue;
                     }
                 }
-                
+
             }
             return stream << "}\n";
         }
