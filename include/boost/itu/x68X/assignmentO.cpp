@@ -22,6 +22,10 @@ namespace x680 {
 
             Object = ObjectFromObject | DefinedObject | ObjectDefn;
 
+            ObjectNA = ObjectFromObject | SimpleDefinedObject | ObjectDefn;
+
+            SimpleDefinedObject = DefinedObject_[bind(&object_refference, qi::_val, qi::_1)];
+
             DefinedObject = DefinedObject_[bind(&object_refference, qi::_val, qi::_1)] >>
                     -(ActualParameters[bind(&object_parameters, qi::_val, qi::_1)]);
 
@@ -30,17 +34,17 @@ namespace x680 {
             ObjectDefn = DefaultSyntax | DefinedSyntax;
 
 
-            DefaultSyntax = (qi::omit[qi::lit("{")] 
+            DefaultSyntax = (qi::omit[qi::lit("{")]
                     >> FieldSettings[bind(&object_fields, qi::_val, qi::_1)]
                     >> qi::omit[qi::lit("}")])[bind(&object_typeset, qi::_val, ot_Object)];
 
             FieldSettings = FieldSetting % qi::omit[qi::lit(",")];
 
-            FieldSetting = PrimitiveFieldName_[bind(&objectfield_field, qi::_val, qi::_1)] 
+            FieldSetting = PrimitiveFieldName_[bind(&objectfield_field, qi::_val, qi::_1)]
                     >> Setting[bind(&objectfield_setting, qi::_val, qi::_1)];
 
-            DefinedSyntax = (qi::omit[qi::lit("{")] 
-                    >> DefinedSyntaxTokens[bind(&object_fields, qi::_val, qi::_1)] 
+            DefinedSyntax = (qi::omit[qi::lit("{")]
+                    >> DefinedSyntaxTokens[bind(&object_fields, qi::_val, qi::_1)]
                     >> qi::omit[qi::lit("}")])[bind(&object_typeset, qi::_val, ot_ObjectDefineSyn)];
 
             DefinedSyntaxTokens = +DefinedSyntaxToken;
@@ -49,7 +53,7 @@ namespace x680 {
 
             DefinedSyntaxToken1 = SyntaxField_[bind(&objectfield_field, qi::_val, qi::_1)];
 
-            DefinedSyntaxToken2 = Setting[bind(&objectfield_setting, qi::_val, qi::_1)];
+            DefinedSyntaxToken2 = SettingNA[bind(&objectfield_setting, qi::_val, qi::_1)];
 
 
 

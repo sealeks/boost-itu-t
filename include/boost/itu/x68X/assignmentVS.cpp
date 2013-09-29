@@ -21,7 +21,11 @@ namespace x680 {
 
             ValueSet = ValueSetFromObjects | StrictValueSet | ParameterizedValueSet;
 
-            ParameterizedValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)] 
+            ValueSetNA = ValueSetFromObjects | StrictValueSet | SimpleValueSet;
+
+            SimpleValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)];
+
+            ParameterizedValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)]
                     >> -(ActualParameters[bind(&valueset_parameters, qi::_val, qi::_1)]);
 
             ValueSetFromObjects = BigFromObjects_[bind(&valueset_fromobject, qi::_val, qi::_1)];
@@ -61,7 +65,7 @@ namespace x680 {
                     >> Unions)[ bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_UNION) ]);
 
             ElementSetSpec
-                    = Unions[bind(&push_constraints, qi::_val, qi::_1)] 
+                    = Unions[bind(&push_constraints, qi::_val, qi::_1)]
                     >> *(UElems[bind(&push_constraints, qi::_val, qi::_1)]);
 
             IElems %= (qi::omit[(INTERSECTION_ | qi::lit("^"))]
@@ -69,7 +73,7 @@ namespace x680 {
                     [bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_INTERSECTION)];
 
             Unions =
-                    Intersections[bind(&push_constraints, qi::_val, qi::_1)] 
+                    Intersections[bind(&push_constraints, qi::_val, qi::_1)]
                     >> *(IElems[bind(&push_constraints, qi::_val, qi::_1)]);
 
 
@@ -115,7 +119,7 @@ namespace x680 {
 
             TypeConstraint = Type[bind(&constraint_type, qi::_val, qi::_1)];
 
-            SimpleElement = ContainedSubtype | PatternConstraint 
+            SimpleElement = ContainedSubtype | PatternConstraint
                     | PropertySettings | ValueRange | SingleValue | TypeConstraint;
 
             SizeConstraint = qi::omit[SIZE_]
@@ -141,7 +145,7 @@ namespace x680 {
             MultipleTypeConstraints = qi::omit[qi::lexeme[WITH_ >> +qi::space >> COMPONENTS_]]
                     >> FullSpecification[bind(&constraint_multitype, qi::_val, qi::_1)];
 
-            Element = SizeConstraint | PermittedAlphabet 
+            Element = SizeConstraint | PermittedAlphabet
                     | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement;
 
 
@@ -156,7 +160,7 @@ namespace x680 {
 
 
 
-            UserDefinedConstraintParameters = qi::omit[qi::lexeme[qi::lit("{")]] 
+            UserDefinedConstraintParameters = qi::omit[qi::lexeme[qi::lit("{")]]
                     >> -(UserDefinedConstraintParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
 
             UserDefinedConstraintParameter = UserDefinedConstraintParameterA | UserDefinedConstraintParameterB |

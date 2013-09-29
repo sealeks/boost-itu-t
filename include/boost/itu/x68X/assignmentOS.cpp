@@ -8,7 +8,7 @@
 namespace x680 {
     namespace syntactic {
 
-       
+
 
 
         // Type_grammar
@@ -20,60 +20,62 @@ namespace x680 {
             //  ObjectSetAssignment grammar
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
-            
-             ObjectSet = ObjectSetFromObjects | StrictObjectSet | ParameterizedObjectSet; 
-             
-             SimpleDefinedObjectSet= DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)];
-            
-            ParameterizedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)] 
-                    >> -(ActualParameters[bind(&objectset_parameters, qi::_val, qi::_1)]);           
-            
-            ObjectSetFromObjects = LittleFromObject_[bind(&objectset_fromobject, qi::_val, qi::_1)];            
 
-            StrictObjectSet   =   ObjectSetdecl[bind(&objectset_set, qi::_val, qi::_1)];
-            
-            oDefinedObjectSet  =  DefinedObjectSet_[bind(&object_objectsetdef, qi::_val, qi::_1)] 
+            ObjectSet = ObjectSetFromObjects | StrictObjectSet | ParameterizedObjectSet;
+
+            ObjectSetNA = ObjectSetFromObjects | StrictObjectSet | SimpleDefinedObjectSet;
+
+            SimpleDefinedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)];
+
+            ParameterizedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)]
+                    >> -(ActualParameters[bind(&objectset_parameters, qi::_val, qi::_1)]);
+
+            ObjectSetFromObjects = LittleFromObject_[bind(&objectset_fromobject, qi::_val, qi::_1)];
+
+            StrictObjectSet = ObjectSetdecl[bind(&objectset_set, qi::_val, qi::_1)];
+
+            oDefinedObjectSet = DefinedObjectSet_[bind(&object_objectsetdef, qi::_val, qi::_1)]
                     >> -(ActualParameters[bind(&object_parameters, qi::_val, qi::_1)]);
-            
-            oObjectSetFromObjects =  BigFromObjects_[bind(&object_objectsetfromobject, qi::_val, qi::_1)];       
-            
+
+            oObjectSetFromObjects = BigFromObjects_[bind(&object_objectsetfromobject, qi::_val, qi::_1)];
+
 
             ObjectSetdecl = qi::omit[qi::lit("{")]
                     >> oElementSetSpecs
                     >> qi::omit[qi::lit("}")];
 
-            
+
             oElementSetSpecs = oElementSetSpecs2 | oElementSetSpecs1;
 
             oElementSetSpecs1 %= oElementSetSpec >>
                     -(qi::omit[qi::lit(",")] >> oExtention >>
                     -(qi::omit[qi::lit(",")] >> oElementSetSpec));
-            
-            oElementSetSpecs2 %=  oExtention >>
-                    -(qi::omit[qi::lit(",")] >> oElementSetSpec);          
+
+            oElementSetSpecs2 %= oExtention >>
+                    -(qi::omit[qi::lit(",")] >> oElementSetSpec);
 
 
             oUElems %= ((qi::omit[(UNION_ | qi::lit("|"))]
                     >> oUnions)[ bind(&object_element_vector::push_back, qi::_val, OBJECT_UNION) ]);
 
-            oElementSetSpec = oUnions[bind(&push_objects, qi::_val, qi::_1)] 
+            oElementSetSpec = oUnions[bind(&push_objects, qi::_val, qi::_1)]
                     >> *(oUElems[bind(&push_objects, qi::_val, qi::_1)]);
 
             oIElems %= (qi::omit[(INTERSECTION_ | qi::lit("^"))]
                     >> oIntersections)[bind(&object_element_vector::push_back, qi::_val, OBJECT_INTERSECTION)];
 
-            oUnions = oIntersections[bind(&push_objects, qi::_val, qi::_1)] 
+            oUnions = oIntersections[bind(&push_objects, qi::_val, qi::_1)]
                     >> *(oIElems[bind(&push_objects, qi::_val, qi::_1)]);
 
 
             oEElems %= (qi::omit[EXCEPT_ ]
                     >> oExclusions)[bind(&object_element_vector::push_back, qi::_val, OBJECT_EXCEPT)];
 
-            oIntersections = oExclusions[bind(&push_objects, qi::_val, qi::_1)] 
+            oIntersections = oExclusions[bind(&push_objects, qi::_val, qi::_1)]
                     >> *(oEElems[bind(&push_objects, qi::_val, qi::_1)]);
 
 
-            oAElems %=  (qi::omit[qi::lit("ALL EXCEPT")]
+            oAElems %= (qi::omit[qi::lit("ALL EXCEPT")]
                     >> oExclusions)[bind(&object_element_vector::push_back, qi::_val, OBJECT_ALLEXCEPT)];
 
             oExclusions
@@ -86,7 +88,7 @@ namespace x680 {
 
             oExtention = qi::lit("...")[qi::_val = OBJECT_EXTENTION];
 
-            oElement = oObjectSetFromObjects | oDefinedObjectSet | Object ;
+            oElement = oObjectSetFromObjects | oDefinedObjectSet | Object;
 
 
 

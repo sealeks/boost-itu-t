@@ -1991,7 +1991,9 @@ namespace x680 {
     }
 
     void objectassignment_entity::apply_fields() {
-        if (!has_arguments()) {
+        //if (!has_arguments()) {
+        if (!object()->as_deflt())
+            return;
             _class()->resolve();
             basic_entity_ptr cl = _class()->reff();
             while (cl && (cl->as_classassigment()) && (cl->as_classassigment()->_class()->reff())){
@@ -2002,7 +2004,6 @@ namespace x680 {
                     for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
                         if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
                             create_fields((*it)->as_classfield(), fnd->setting().get());
-                            std::cout << "CLEN: " << (*it)->as_classfield()->name() << std::endl;
                         } else {
                             switch (((*it)->as_classfield()->marker())) {
                                 case mk_default:create_fields((*it)->as_classfield());
@@ -2013,18 +2014,15 @@ namespace x680 {
                         }
                     }
                 }
-                resolve();
             }
-        }
+        //}
     }
 
     void objectassignment_entity::create_fields(field_entity* fld, setting_atom* st) {
         if (st) {
             if (fld->as_typefield()) {
                 if (st->type()){
-                    typeassignment_entity_ptr tmp = typeassignment_entity_ptr(new typeassignment_entity(st->scope(), fld->name(), st->type()));
-                    tmp->type()->scope(st->scope());
-                    childs_.push_back(tmp);                  
+                    childs_.push_back(typeassignment_entity_ptr(new typeassignment_entity(st->scope(), fld->name(), st->type())));                
                 }
                 else
                     referenceerror_throw(fld->name(), "Field is not type: ");

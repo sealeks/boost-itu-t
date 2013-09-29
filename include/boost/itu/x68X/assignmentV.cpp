@@ -28,6 +28,12 @@ namespace x680 {
                     | NamedValueList | ValueList | ChoiceValue | EmptySetValue
                     | DefinedValue;
 
+            ValueNA = ObjectClassFieldValue | ValueFromObject | NullValue
+                    | BooleanValue | RealValue | IntegerValue | HStringValue
+                    | BStringValue | CStringValue | NumberList | ObjectIdentifierValue
+                    | NamedValueList | ValueList | ChoiceValue | EmptySetValue
+                    | SimpleDefinedValue;
+
             SimpleDefinedValue = DefinedValue_[bind(&value_setdefined, qi::_val, qi::_1)];
 
             DefinedValue = DefinedValue_[bind(&value_setdefined, qi::_val, qi::_1)]
