@@ -280,8 +280,8 @@ namespace x680 {
 
     void global_entity::resolve() {
         preresolve();
+        apply_fields();        
         resolve_child();
-        apply_fields();
     }
 
     void global_entity::preresolve() {
@@ -304,13 +304,12 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-
     void global_entity::apply_fields() {
-        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) 
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
             if ((*it)->as_module())
-               (*it)->as_module()->apply_fields();       
-    }     
- 
+                (*it)->as_module()->apply_fields();
+    }
+
 
     /////////////////////////////////////////////////////////////////////////
     // import_entity
@@ -421,13 +420,13 @@ namespace x680 {
         }
         return basic_entity_ptr();
     }
-    
+
     void module_entity::apply_fields() {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
             if ((*it)->as_objectassigment())
-               (*it)->as_objectassigment()->apply_fields();
-        }        
-    }    
+                (*it)->as_objectassigment()->apply_fields();
+        }
+    }
 
     basic_entity_ptr module_entity::findmodule(value_atom_ptr oid, const std::string& nm) {
         if (!oid)
@@ -1943,13 +1942,13 @@ namespace x680 {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
         }
     };
-    
+
     fieldsetting_atom_ptr defltobject_atom::find_field(const std::string& name) {
-         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
-             if ((*it)->field()==name)
-                 return (*it);
-        }   
-       return  fieldsetting_atom_ptr(); 
+        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
+            if ((*it)->field() == name)
+                return (*it);
+        }
+        return fieldsetting_atom_ptr();
     }
 
 
@@ -1988,24 +1987,83 @@ namespace x680 {
             _class()->resolve();
         if (object())
             object()->resolve();
+        resolve_child();            
     }
 
     void objectassignment_entity::apply_fields() {
         if (!has_arguments()) {
+            _class()->resolve();
             basic_entity_ptr cl = _class()->reff();
-            while (cl && (cl->as_classassigment()) && (cl->as_classassigment()->_class()->reff()))
-                cl = cl->as_classassigment()->_class()->reff();
+            while (cl && (cl->as_classassigment()) && (cl->as_classassigment()->_class()->reff())){
+                as_classassigment()->_class()->resolve();
+                cl = cl->as_classassigment()->_class()->reff();}
             if (cl) {
                 if (classassignment_entity * clsa = cl->as_classassigment()) {
                     for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
-                        std::cout << "CLEN: "  <<(*it)->as_classfield()->name()   << std::endl;
-                        if (object()->find_field((*it)->as_classfield()->name() ))
-                            std::cout << "CLEN: "  <<(*it)->as_classfield()->name()   << std::endl;
+                        if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
+                            create_fields((*it)->as_classfield(), fnd->setting().get());
+                            std::cout << "CLEN: " << (*it)->as_classfield()->name() << std::endl;
+                        } else {
+                            switch (((*it)->as_classfield()->marker())) {
+                                case mk_default:create_fields((*it)->as_classfield());
+                                    break;
+                                case mk_optional: break;
+                                default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
+                            }
+                        }
                     }
                 }
+                resolve();
             }
         }
     }
+
+    void objectassignment_entity::create_fields(field_entity* fld, setting_atom* st) {
+        if (st) {
+            if (fld->as_typefield()) {
+                if (st->type()){
+                    typeassignment_entity_ptr tmp = typeassignment_entity_ptr(new typeassignment_entity(st->scope(), fld->name(), st->type()));
+                    tmp->type()->scope(st->scope());
+                    childs_.push_back(tmp);                  
+                }
+                else
+                    referenceerror_throw(fld->name(), "Field is not type: ");
+            } else if (fld->as_valuefield()) {
+                if (st->value())
+                    childs_.push_back(basic_entity_ptr(new valueassignment_entity(st->scope(), fld->name(), fld->as_valuefield()->type(), st->value())));
+                else
+                    referenceerror_throw(fld->name(), "Field is not value: ");
+            } else if (fld->as_valuesetfield()) {
+                if (st->valueset())
+                    childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(st->scope(), fld->name(), fld->as_valuesetfield()->type(), st->valueset())));
+                else
+                    referenceerror_throw(fld->name(), "Field is not valueset: ");
+            } else if (fld->as_objectfield()) {
+                if (st->object())
+                    childs_.push_back(basic_entity_ptr(new objectassignment_entity(st->scope(), fld->name(), fld->as_objectfield()->_class(), st->object())));
+                else
+                    referenceerror_throw(fld->name(), "Field is not object: ");
+            } else if (fld->as_objectsetfield()) {
+                if (st->objectset())
+                    childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(st->scope(), fld->name(), fld->as_objectsetfield()->_class(), st->objectset())));
+                else
+                    referenceerror_throw(fld->name(), "Field is not objectset: ");
+            }
+        } else {
+            if (fld->as_typefield()) {
+                childs_.push_back(basic_entity_ptr(new typeassignment_entity(fld->scope(), fld->name(), fld->as_typefield()->_default())));
+            } else if (fld->as_valuefield()) {
+                childs_.push_back(basic_entity_ptr(new valueassignment_entity(fld->scope(), fld->name(), fld->as_valuefield()->type(), fld->as_valuefield()->_default())));
+            } else if (fld->as_valuesetfield()) {
+                childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(fld->scope(), fld->name(), fld->as_valuesetfield()->type(), fld->as_valuesetfield()->_default())));
+            } else if (fld->as_objectfield()) {
+                childs_.push_back(basic_entity_ptr(new objectassignment_entity(fld->scope(), fld->name(), fld->as_objectfield()->_class(), fld->as_objectfield()->_default())));
+            } else if (fld->as_objectsetfield()) {
+                childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(fld->scope(), fld->name(), fld->as_objectsetfield()->_class(), fld->as_objectsetfield()->_default())));
+            }
+        }
+    }
+
 
 
 
@@ -3886,8 +3944,39 @@ namespace x680 {
         if (self->has_arguments())
             stream << self->arguments();
         stream << " :: = ";
-        if (self->object())
-            return stream << self->object().get() << "\n";
+        if (self->childs().empty()) {
+            if (self->object())
+                return stream << self->object().get() << "\n";
+        } else {
+             stream << " {\n";
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                if ((*it)->as_assigment()) {
+                    stream << "     ";
+                    if ((*it)->as_typeassigment()) {
+                        stream << (*it)->as_typeassigment();
+                        continue;
+                    }
+                    if ((*it)->as_valueassigment()) {
+                        stream << (*it)->as_valueassigment();
+                        continue;
+                    }
+                    if ((*it)->as_valuesetassigment()) {
+                        stream << (*it)->as_valuesetassigment();
+                        continue;
+                    }
+                    if ((*it)->as_objectassigment()) {
+                        stream << (*it)->as_objectassigment();
+                        continue;
+                    }
+                    if ((*it)->as_objectsetassigment()) {
+                        stream << (*it)->as_objectsetassigment();
+                        continue;
+                    }
+                }
+                
+            }
+            return stream << "}\n";
+        }
         return stream << "???" << "\n";
     }
 

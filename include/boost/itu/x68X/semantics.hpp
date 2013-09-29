@@ -2974,6 +2974,8 @@ namespace x680 {
         virtual void resolve();
         
         void apply_fields();
+        
+        void create_fields(field_entity* fld, setting_atom* st =0);        
 
     private:
 
