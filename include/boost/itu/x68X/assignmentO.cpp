@@ -47,7 +47,7 @@ namespace x680 {
                     >> DefinedSyntaxTokens[bind(&object_fields, qi::_val, qi::_1)]
                     >> qi::omit[qi::lit("}")])[bind(&object_typeset, qi::_val, ot_ObjectDefineSyn)];
 
-            DefinedSyntaxTokens = +DefinedSyntaxToken;
+            DefinedSyntaxTokens = +DefinedSyntaxToken2;
 
             DefinedSyntaxToken = DefinedSyntaxToken2 | DefinedSyntaxToken1;
 
