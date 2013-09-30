@@ -844,7 +844,7 @@ namespace x680 {
         }
 
         inline void setting_literal(setting_element& holder, const std::string& val) {
-            holder.literal = val;
+            holder.literal = boost::algorithm::trim_right_copy(val);
             holder.alternative |= AS_LITERAL;
         }
 
