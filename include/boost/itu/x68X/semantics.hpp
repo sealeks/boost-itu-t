@@ -153,9 +153,9 @@ namespace x680 {
 
     class definedvalue_atom;
     typedef boost::shared_ptr<definedvalue_atom> definedvalue_atom_ptr;
-    
+
     class fromobjectvalue_atom;
-    typedef boost::shared_ptr<fromobjectvalue_atom> fromobjectvalue_atom_ptr;    
+    typedef boost::shared_ptr<fromobjectvalue_atom> fromobjectvalue_atom_ptr;
 
     class assignvalue_atom;
     typedef boost::shared_ptr<assignvalue_atom> assignvalue_atom_ptr;
@@ -445,7 +445,7 @@ namespace x680 {
         virtual void resolve();
 
         virtual void preresolve();
-        
+
     protected:
 
         void resolve_child();
@@ -485,10 +485,10 @@ namespace x680 {
 
         virtual void resolve();
 
-        virtual void preresolve();   
-        
-        void apply_fields();        
-               
+        virtual void preresolve();
+
+        void apply_fields();
+
     };
 
 
@@ -580,13 +580,13 @@ namespace x680 {
 
         void preresolve_externalref();
 
-        void preresolve_oid();      
-        
-        void apply_fields();          
+        void preresolve_oid();
+
+        void apply_fields();
 
     private:
 
-        basic_entity_ptr findmodule(const std::string& nm);      
+        basic_entity_ptr findmodule(const std::string& nm);
 
         basic_entity_ptr findmodule(value_atom_ptr oid, const std::string& nm);
 
@@ -748,7 +748,7 @@ namespace x680 {
 
         std::string externalpreff() const;
 
-        virtual basic_atom* root();            
+        virtual basic_atom* root();
 
         bool rooted();
 
@@ -910,8 +910,8 @@ namespace x680 {
         bool has_arguments() const {
             return !arguments_.empty();
         }
-        
-    
+
+
 
 
         /////        
@@ -1203,7 +1203,7 @@ namespace x680 {
         structvalue_atom* as_list();
 
         definedvalue_atom* as_defined();
-        
+
         fromobjectvalue_atom* as_fromobject();
 
         assignvalue_atom* as_assign();
@@ -1389,9 +1389,9 @@ namespace x680 {
         virtual void resolve();
 
     };
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // fromobjectvalue_atom
     /////////////////////////////////////////////////////////////////////////      
 
@@ -1405,7 +1405,7 @@ namespace x680 {
 
         virtual void resolve();
 
-    };   
+    };
 
 
 
@@ -2655,7 +2655,7 @@ namespace x680 {
     class classassignment_entity : public assignment_entity {
 
     public:
-        classassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp);
+        classassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp = class_atom_ptr());
 
         class_atom_ptr _class() const {
             return class_;
@@ -2771,10 +2771,10 @@ namespace x680 {
         extentionobject_atom* as_extention();
 
         virtual void resolve();
-        
+
         virtual fieldsetting_atom_ptr find_field(const std::string& name) {
-            return fieldsetting_atom_ptr ();
-        }                
+            return fieldsetting_atom_ptr();
+        }
 
     private:
 
@@ -2795,7 +2795,7 @@ namespace x680 {
         };
 
         virtual void resolve();
-        
+
 
     };
 
@@ -2837,9 +2837,9 @@ namespace x680 {
         }
 
         virtual void resolve();
-      
-        virtual fieldsetting_atom_ptr find_field(const std::string& name);             
-        
+
+        virtual fieldsetting_atom_ptr find_field(const std::string& name);
+
 
     private:
 
@@ -2869,10 +2869,10 @@ namespace x680 {
         }
 
         virtual void resolve();
-        
-        virtual fieldsetting_atom_ptr find_field(const std::string& name);   
-        
-        bool find_literal(const std::string& name);        
+
+        virtual fieldsetting_atom_ptr find_field(const std::string& name);
+
+        bool find_literal(const std::string& name);
 
     private:
 
@@ -2998,14 +2998,14 @@ namespace x680 {
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
         virtual void resolve();
-        
+
         void apply_fields();
-        
+
         void calculate_fields(classassignment_entity*cls, defsyntxobject_atom* obj);
-        
-        void create_fields(field_entity* fld, setting_atom* st =0);        
-        
-        bool calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional = false);        
+
+        void create_fields(field_entity* fld, setting_atom* st = 0);
+
+        bool calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional = false);
 
     private:
 
@@ -3426,7 +3426,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, namedvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, structvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self);
-    std::ostream& operator<<(std::ostream& stream, fromobjectvalue_atom* self);    
+    std::ostream& operator<<(std::ostream& stream, fromobjectvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, openvalue_atom* self);

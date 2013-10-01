@@ -59,6 +59,53 @@ namespace x680 {
         insert_assigment(global, valueassignment_entity_ptr(new valueassignment_entity(global, " identified-organization",
                 type_atom_ptr(new type_atom(global, t_INTEGER)), value_atom_ptr(new numvalue_atom(3)))));
 
+
+
+        // ABSTRACT-SYNTAX        
+
+        classassignment_entity_ptr ASCL = classassignment_entity_ptr(new classassignment_entity(global, "ABSTRACT-SYNTAX"));
+
+        ASCL->_class(class_atom_ptr(new class_atom(ASCL, cl_ABSTRACT_SYNTAX)));
+
+        ASCL->childs().push_back(basic_entity_ptr(new valuefield_entity(ASCL, "&id",
+                type_atom_ptr(new type_atom(ASCL, t_OBJECT_IDENTIFIER)), true)));
+        ASCL->childs().push_back(basic_entity_ptr(new typefield_entity(ASCL, "&Type")));
+        ASCL->childs().push_back(basic_entity_ptr(new valuefield_entity(ASCL, "&property",
+                type_atom_ptr(new type_atom(ASCL, t_BIT_STRING)), value_atom_ptr(new emptyvalue_atom()))));
+        predefined_ptr predef_abstrsyn = predefined_ptr(new predefined(ASCL, t_BIT_STRING));
+        predef_abstrsyn->values().push_back(valueassignment_entity_ptr(new valueassignment_entity(ASCL, "handles-invalid-encodings",
+                type_atom_ptr(new type_atom(ASCL, t_INTEGER)), value_atom_ptr(new numvalue_atom(0)))));
+        ASCL->childs()[2]->as_classfield()->as_valuefield()->type()->predefined(predef_abstrsyn);
+
+        ASCL->withsyntax(withsyntax_atom(new groupsyntax_atom(ASCL, "", syntax_atom_vct(), false)));
+        ASCL->withsyntax()->as_group()->group().push_back(syntax_atom_ptr(new syntax_atom(ASCL, "", "&Type")));
+        ASCL->withsyntax()->as_group()->group().back()->reff(ASCL->childs()[1]);
+        ASCL->withsyntax()->as_group()->group().push_back(syntax_atom_ptr(new syntax_atom(ASCL, "IDENTIFIED BY", "&d")));
+        ASCL->withsyntax()->as_group()->group().back()->reff(ASCL->childs()[0]);
+        ASCL->withsyntax()->as_group()->group().push_back(syntax_atom_ptr(new syntax_atom(ASCL, "HAS PROPERTY", "&property", true)));
+        ASCL->withsyntax()->as_group()->group().back()->reff(ASCL->childs()[2]);
+
+        insert_assigment(global, ASCL);
+
+
+        // TYPE-IDENTIFIER
+
+        classassignment_entity_ptr TPID = classassignment_entity_ptr(new classassignment_entity(global, "TYPE-IDENTIFIER"));
+
+        TPID->_class(class_atom_ptr(new class_atom(TPID, cl_ABSTRACT_SYNTAX)));
+
+        TPID->childs().push_back(basic_entity_ptr(new valuefield_entity(TPID, "&id",
+                type_atom_ptr(new type_atom(TPID, t_OBJECT_IDENTIFIER)), true)));
+        TPID->childs().push_back(basic_entity_ptr(new typefield_entity(TPID, "&Type")));
+
+        TPID->withsyntax(withsyntax_atom(new groupsyntax_atom(TPID, "", syntax_atom_vct(), false)));
+        TPID->withsyntax()->as_group()->group().push_back(syntax_atom_ptr(new syntax_atom(TPID, "", "&Type")));
+        TPID->withsyntax()->as_group()->group().back()->reff(TPID->childs()[1]);
+        TPID->withsyntax()->as_group()->group().push_back(syntax_atom_ptr(new syntax_atom(TPID, "IDENTIFIED BY", "&d")));
+        TPID->withsyntax()->as_group()->group().back()->reff(TPID->childs()[0]);
+
+        insert_assigment(global, TPID);
+
     }
 
 
@@ -1142,10 +1189,10 @@ namespace x680 {
     definedvalue_atom* value_atom::as_defined() {
         return dynamic_cast<definedvalue_atom*> (this);
     }
-    
+
     fromobjectvalue_atom* value_atom::as_fromobject() {
         return dynamic_cast<fromobjectvalue_atom*> (this);
-    }    
+    }
 
     choicevalue_atom* value_atom::as_choice() {
         return dynamic_cast<choicevalue_atom*> (this);
@@ -1208,15 +1255,15 @@ namespace x680 {
     void definedvalue_atom::resolve() {
         resolve_reff();
     }
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////     
     // fromobjectvalue_atom
     /////////////////////////////////////////////////////////////////////////      
 
     void fromobjectvalue_atom::resolve() {
         resolve_reff();
-    }    
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1746,8 +1793,8 @@ namespace x680 {
                     return;
                 }
             }
+            scope()->referenceerror_throw(expectedname());
         }
-        scope()->referenceerror_throw(expectedname());
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1987,18 +2034,19 @@ namespace x680 {
     bool defsyntxobject_atom::find_literal(const std::string& name) {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
             if (!(*it)->setting()->literal().empty()) {
-                if (name ==(*it)->setting()->literal()) {
-                    std::cout << "Find  field success:" <<  (*it)->setting()->literal()  << std::endl ;  
-                    std::string tmpstr =name;
+                if (name == (*it)->setting()->literal()) {
+                    std::cout << "Find  field success:" << (*it)->setting()->literal() << std::endl;
+                    std::string tmpstr = name;
                     ++it;
-                    while((it!=fieldsetting_.end()) && (tmpstr.find_first_of(' ')!=std::string::npos)){
+                    while ((it != fieldsetting_.end()) && (tmpstr.find_first_of(' ') != std::string::npos)) {
                         ++it;
-                        tmpstr=tmpstr.substr(tmpstr.find_first_of(' ')+1);}
+                        tmpstr = tmpstr.substr(tmpstr.find_first_of(' ') + 1);
+                    }
                     fieldsetting_.erase(fieldsetting_.begin(), it);
                     return true;
-            } else
-                return false;
-        }
+                } else
+                    return false;
+            }
         }
         return false;
     }
@@ -2038,13 +2086,13 @@ namespace x680 {
             return;
         _class()->resolve();
         basic_entity_ptr cl = _class()->reff();
-        while (cl && (cl->as_classassigment()) && (cl->as_classassigment()->_class()->reff())) {
-            as_classassigment()->_class()->resolve();
+        while (cl && (cl->as_classassigment()) && (cl->as_classassigment()->_class()) && (cl->as_classassigment()->_class()->reff())) {
+            cl->as_classassigment()->_class()->resolve();
             cl = cl->as_classassigment()->_class()->reff();
         }
-        if (cl) {
+        if (cl && (cl->as_classassigment())) {
             if (object()->as_defnsyntx()) {
-               calculate_fields(cl->as_classassigment(), object()->as_defnsyntx());
+                calculate_fields(cl->as_classassigment(), object()->as_defnsyntx());
             }
             if (classassignment_entity * clsa = cl->as_classassigment()) {
                 for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
@@ -2065,9 +2113,9 @@ namespace x680 {
 
     void objectassignment_entity::calculate_fields(classassignment_entity*cls, defsyntxobject_atom* obj) {
         fieldsetting_atom_vct newvct;
-        if (cls->withsyntax()) {   
+        if (cls->withsyntax()) {
             calculate_fields(cls->withsyntax().get(), obj, newvct);
-            std::cout << "calculate_fields size:" <<  newvct.size() << std::endl ;   
+            std::cout << "calculate_fields size:" << newvct.size() << std::endl;
             obj->fieldsetting(newvct);
         }
     }
@@ -2807,11 +2855,23 @@ namespace x680 {
 
         classassignment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::class_assignment tmp = boost::get<x680::syntactic::class_assignment>(ent);
-            classassignment_entity_ptr tmpc(new classassignment_entity(scope, tmp.identifier, class_atom_ptr()));
+            classassignment_entity_ptr tmpc(new classassignment_entity(scope, tmp.identifier));
             switch (tmp.class_.tp) {
                 case cl_Reference:
                 {
                     tmpc->_class(class_atom_ptr(new class_atom(tmpc, tmp.class_.reference, tmp.class_.tp)));
+                    tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
+                    return tmpc;
+                }
+                case cl_TYPE_IDENTIFIER:
+                {
+                    tmpc->_class(class_atom_ptr(new class_atom(tmpc, "TYPE-IDENTIFIER", cl_Reference)));
+                    tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
+                    return tmpc;
+                }
+                case cl_ABSTRACT_SYNTAX:
+                {
+                    tmpc->_class(class_atom_ptr(new class_atom(tmpc, "ABSTRACT-SYNTAX", cl_Reference)));
                     tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
                     return tmpc;
                 }
@@ -2834,7 +2894,16 @@ namespace x680 {
         }
 
         class_atom_ptr compile_classdefined(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
-            class_atom_ptr tmp = class_atom_ptr(new class_atom(scope, ent.reference, ent.tp));
+            class_atom_ptr tmp;
+            switch (ent.tp) {
+                case cl_Reference: tmp = class_atom_ptr(new class_atom(scope, ent.reference, ent.tp));
+                    break;
+                case cl_TYPE_IDENTIFIER: tmp = class_atom_ptr(new class_atom(scope, "TYPE-IDENTIFIER", cl_Reference));
+                    break;
+                case cl_ABSTRACT_SYNTAX: tmp = class_atom_ptr(new class_atom(scope, "ABSTRACT-SYNTAX", cl_Reference));
+                    break;
+                default: tmp = class_atom_ptr(new class_atom(scope, ent.reference, ent.tp));
+            }
             tmp->parameters(compile_parameters(scope, ent.parameters));
             return tmp;
         }
@@ -3566,7 +3635,7 @@ namespace x680 {
             case v_number_list:
             case v_value_list: return (stream << self->as_list());
             case v_defined: return (stream << self->as_defined());
-            case v_ValueFromObject: return (stream << self->as_fromobject());            
+            case v_ValueFromObject: return (stream << self->as_fromobject());
             case v_defined_assign: return (stream << self->as_assign());
             case v_choice: return (stream << self->as_choice());
             case v_open: return (stream << self->as_open());
@@ -3638,7 +3707,7 @@ namespace x680 {
             stream << self->parameters();
         return stream;
     }
-    
+
     std::ostream& operator<<(std::ostream& stream, fromobjectvalue_atom* self) {
         if (self->reff()) {
             if (self->reff()->as_expectdef())
@@ -3653,7 +3722,7 @@ namespace x680 {
         if (self->parameterized())
             stream << self->parameters();
         return stream;
-    }    
+    }
 
     std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self) {
         return stream << "(" << self->name() << "(" << self->value().get() << ") )";
@@ -4030,22 +4099,22 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, syntax_atom* self) {
         if (self->as_group()) {
-             if (self->isalias())
-                stream << " " << self->alias();           
+            if (self->isalias())
+                stream << " " << self->alias();
             if (self->optional())
                 stream << " [- ";
             else
-                stream << " <- "; 
+                stream << " <- ";
             stream << " " << self->as_group();
             if (self->optional())
                 stream << " -] ";
             else
-                stream << " -> "; 
+                stream << " -> ";
         } else {
             if (self->optional())
                 stream << " [ ";
             else
-                stream << " < "; 
+                stream << " < ";
             if (self->isalias())
                 stream << " '" << self->alias() << "' ";
             if (self->expecteddef())
@@ -4055,7 +4124,7 @@ namespace x680 {
             if (self->optional())
                 stream << " ] ";
             else
-                stream << " > "; 
+                stream << " > ";
         }
         return stream;
     }
