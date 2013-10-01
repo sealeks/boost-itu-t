@@ -153,6 +153,9 @@ namespace x680 {
 
     class definedvalue_atom;
     typedef boost::shared_ptr<definedvalue_atom> definedvalue_atom_ptr;
+    
+    class fromobjectvalue_atom;
+    typedef boost::shared_ptr<fromobjectvalue_atom> fromobjectvalue_atom_ptr;    
 
     class assignvalue_atom;
     typedef boost::shared_ptr<assignvalue_atom> assignvalue_atom_ptr;
@@ -1200,6 +1203,8 @@ namespace x680 {
         structvalue_atom* as_list();
 
         definedvalue_atom* as_defined();
+        
+        fromobjectvalue_atom* as_fromobject();
 
         assignvalue_atom* as_assign();
 
@@ -1384,6 +1389,23 @@ namespace x680 {
         virtual void resolve();
 
     };
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // fromobjectvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    class fromobjectvalue_atom : public value_atom {
+
+    public:
+
+        fromobjectvalue_atom(const std::string& rff, basic_entity_ptr scp)
+        : value_atom(scp, rff, v_ValueFromObject) {
+        };
+
+        virtual void resolve();
+
+    };   
 
 
 
@@ -3404,6 +3426,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, namedvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, structvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, definedvalue_atom* self);
+    std::ostream& operator<<(std::ostream& stream, fromobjectvalue_atom* self);    
     std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, choicevalue_atom* self);
     std::ostream& operator<<(std::ostream& stream, openvalue_atom* self);

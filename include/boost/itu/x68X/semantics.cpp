@@ -1142,6 +1142,10 @@ namespace x680 {
     definedvalue_atom* value_atom::as_defined() {
         return dynamic_cast<definedvalue_atom*> (this);
     }
+    
+    fromobjectvalue_atom* value_atom::as_fromobject() {
+        return dynamic_cast<fromobjectvalue_atom*> (this);
+    }    
 
     choicevalue_atom* value_atom::as_choice() {
         return dynamic_cast<choicevalue_atom*> (this);
@@ -1204,6 +1208,15 @@ namespace x680 {
     void definedvalue_atom::resolve() {
         resolve_reff();
     }
+    
+    
+    /////////////////////////////////////////////////////////////////////////     
+    // fromobjectvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void fromobjectvalue_atom::resolve() {
+        resolve_reff();
+    }    
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -2031,8 +2044,7 @@ namespace x680 {
         }
         if (cl) {
             if (object()->as_defnsyntx()) {
-                calculate_fields(cl->as_classassigment(), object()->as_defnsyntx());
-                return;
+               calculate_fields(cl->as_classassigment(), object()->as_defnsyntx());
             }
             if (classassignment_entity * clsa = cl->as_classassigment()) {
                 for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
@@ -2065,7 +2077,7 @@ namespace x680 {
             if (syn->isalias()) {
                 if (obj->find_literal(syn->alias())) {
                 } else {
-                    if ((!syn->optional())  && !optional)
+                    if ((!syn->optional()) && !optional)
                         referenceerror_throw(syn->alias(), "Fields object parsing error:");
                     else
                         return false;
@@ -2078,17 +2090,19 @@ namespace x680 {
                 } else
                     calculate_fields((*it).get(), obj, newvct);
             }
+            return true;
         } else {
             if (syn->isalias()) {
                 if (obj->find_literal(syn->alias())) {
-                     std::cout << "find alias:" <<  syn->alias() << std::endl ; 
+                    std::cout << "find alias:" << syn->alias() << std::endl;
                     if (obj->fieldsetting().empty())
                         referenceerror_throw(syn->alias(), "Fields object parsing error:");
-                    std::cout << "Create field:" <<  syn->reff()->name() << std::endl ;                   
+                    std::cout << "Create field:" << syn->reff()->name() << std::endl;
                     newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
                     obj->fieldsetting().erase(obj->fieldsetting().begin());
+                    return true;
                 } else {
-                    if ((!syn->optional())  && !optional)
+                    if ((!syn->optional()) && !optional)
                         referenceerror_throw(syn->alias(), "Fields object parsing error:");
                     else
                         return false;
@@ -2096,12 +2110,13 @@ namespace x680 {
             } else {
                 if (obj->fieldsetting().empty())
                     referenceerror_throw(syn->alias(), "Fields object parsing error:");
-                std::cout << "Create field:" <<  syn->reff()->name()<< std::endl ; 
+                std::cout << "Create field:" << syn->reff()->name() << std::endl;
                 newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
                 obj->fieldsetting().erase(obj->fieldsetting().begin());
                 return true;
             }
         }
+        return false;
     }
 
     void objectassignment_entity::create_fields(field_entity* fld, setting_atom* st) {
@@ -2586,6 +2601,7 @@ namespace x680 {
                     case v_number_list:
                     case v_value_list: return value_atom_ptr(new structvalue_atom(ent.type, compile_listvalue(scope, ent)));
                     case v_defined: return value_atom_ptr(new definedvalue_atom(ent.identifier, scope));
+                    case v_ValueFromObject: return value_atom_ptr(new fromobjectvalue_atom(ent.identifier, scope));
                     case v_defined_assign: return compile_assignvalue(scope, ent);
                     case v_choice: return compile_choicevalue(scope, ent);
                     case v_open: return compile_openvalue(scope, ent);
@@ -3550,6 +3566,7 @@ namespace x680 {
             case v_number_list:
             case v_value_list: return (stream << self->as_list());
             case v_defined: return (stream << self->as_defined());
+            case v_ValueFromObject: return (stream << self->as_fromobject());            
             case v_defined_assign: return (stream << self->as_assign());
             case v_choice: return (stream << self->as_choice());
             case v_open: return (stream << self->as_open());
@@ -3621,6 +3638,22 @@ namespace x680 {
             stream << self->parameters();
         return stream;
     }
+    
+    std::ostream& operator<<(std::ostream& stream, fromobjectvalue_atom* self) {
+        if (self->reff()) {
+            if (self->reff()->as_expectdef())
+                return stream << "??? " << self->reff()->name();
+            else {
+                stream << " " << self->reff()->name();
+                if (self->rooted())
+                    stream << "(@" << self->root() << ")";
+                return stream;
+            }
+        }
+        if (self->parameterized())
+            stream << self->parameters();
+        return stream;
+    }    
 
     std::ostream& operator<<(std::ostream& stream, assignvalue_atom* self) {
         return stream << "(" << self->name() << "(" << self->value().get() << ") )";
@@ -4120,7 +4153,7 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, defsyntxobject_atom* self) {
-        return stream << self->fieldsetting();
+        //return stream << self->fieldsetting();
         stream << " {  ";
         for (fieldsetting_atom_vct::const_iterator it = self->fieldsetting().begin(); it != self->fieldsetting().end(); ++it) {
             fieldsettingstrm(stream, (*it).get());
@@ -4215,8 +4248,6 @@ namespace x680 {
         if (self->setting()) {
             if (!self->setting()->literal().empty())
                 stream << "  '" << self->setting()->literal() << "'";
-            else
-                stream << "-";
             if (self->setting()->type())
                 stream << "+";
             else

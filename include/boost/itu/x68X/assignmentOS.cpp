@@ -21,16 +21,18 @@ namespace x680 {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 
-            ObjectSet = ObjectSetFromObjects | StrictObjectSet | ParameterizedObjectSet;
+            ObjectSet = ObjectSetFromObject | ObjectSetFromObjects | StrictObjectSet | ParameterizedObjectSet;
 
-            ObjectSetNA = ObjectSetFromObjects | StrictObjectSet | SimpleDefinedObjectSet;
+            ObjectSetNA = ObjectSetFromObject | ObjectSetFromObjects | StrictObjectSet | SimpleDefinedObjectSet;
 
             SimpleDefinedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)];
 
             ParameterizedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)]
                     >> -(ActualParameters[bind(&objectset_parameters, qi::_val, qi::_1)]);
+            
+            ObjectSetFromObjects = BigFromObjects_[bind(&objectset_fromobjects, qi::_val, qi::_1)];           
 
-            ObjectSetFromObjects = LittleFromObject_[bind(&objectset_fromobject, qi::_val, qi::_1)];
+            ObjectSetFromObject = LittleFromObject_[bind(&objectset_fromobject, qi::_val, qi::_1)];
 
             StrictObjectSet = ObjectSetdecl[bind(&objectset_set, qi::_val, qi::_1)];
 

@@ -546,12 +546,15 @@ namespace x680 {
             holder.tp = vs_defined;
         }
 
+        inline void valueset_fromobjects(valueset_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.tp = vs_ValueSetFromObjects;
+        }
+
         inline void valueset_fromobject(valueset_element& holder, const std::string& val) {
             holder.reference = val;
             holder.tp = vs_ValueSetFromObject;
         }
-
-
 
 
 
@@ -955,10 +958,15 @@ namespace x680 {
             holder.reference = val;
             holder.tp = os_defined;
         }
-
+        
         inline void objectset_fromobject(objectset_element& holder, const std::string& val) {
             holder.reference = val;
             holder.tp = os_ObjectSetFromObject;
+        }       
+
+        inline void objectset_fromobjects(objectset_element& holder, const std::string& val) {
+            holder.reference = val;
+            holder.tp = os_ObjectSetFromObjects;
         }
 
 

@@ -19,16 +19,18 @@ namespace x680 {
             //  Constraint grammar
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
-            ValueSet = ValueSetFromObjects | StrictValueSet | ParameterizedValueSet;
+            ValueSet = ValueSetFromObject | ValueSetFromObjects | StrictValueSet | ParameterizedValueSet;
 
-            ValueSetNA = ValueSetFromObjects | StrictValueSet | SimpleValueSet;
+            ValueSetNA = ValueSetFromObject | ValueSetFromObjects | StrictValueSet | SimpleValueSet;
 
             SimpleValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)];
 
             ParameterizedValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)]
                     >> -(ActualParameters[bind(&valueset_parameters, qi::_val, qi::_1)]);
 
-            ValueSetFromObjects = BigFromObjects_[bind(&valueset_fromobject, qi::_val, qi::_1)];
+            ValueSetFromObjects = BigFromObjects_[bind(&valueset_fromobjects, qi::_val, qi::_1)];
+            
+            ValueSetFromObject = LittleFromObject_[bind(&valueset_fromobject, qi::_val, qi::_1)];            
 
             StrictValueSet = ValueSetdecl[bind(&valueset_set, qi::_val, qi::_1)];
 

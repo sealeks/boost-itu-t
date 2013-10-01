@@ -371,7 +371,8 @@ namespace x680 {
             qi::rule < str_iterator, valueset_element(), skip_cmt_type> SimpleValueSet;
             qi::rule < str_iterator, valueset_element(), skip_cmt_type> ParameterizedValueSet;
             qi::rule < str_iterator, valueset_element(), skip_cmt_type> StrictValueSet;
-            qi::rule < str_iterator, valueset_element(), skip_cmt_type> ValueSetFromObjects;
+            qi::rule < str_iterator, valueset_element(), skip_cmt_type> ValueSetFromObject;
+            qi::rule < str_iterator, valueset_element(), skip_cmt_type> ValueSetFromObjects;            
             qi::rule < str_iterator, constraint_element_vector(), skip_cmt_type> ValueSetdecl;
 
             qi::rule < str_iterator, constraints_vector(), skip_cmt_type> Constraints;
@@ -513,7 +514,8 @@ namespace x680 {
             qi::rule < str_iterator, objectset_element(), skip_cmt_type> ObjectSetNA;
             qi::rule < str_iterator, objectset_element(), skip_cmt_type> SimpleDefinedObjectSet;
             qi::rule < str_iterator, objectset_element(), skip_cmt_type> ParameterizedObjectSet;
-            qi::rule < str_iterator, objectset_element(), skip_cmt_type> ObjectSetFromObjects;
+            qi::rule < str_iterator, objectset_element(), skip_cmt_type> ObjectSetFromObject;
+            qi::rule < str_iterator, objectset_element(), skip_cmt_type> ObjectSetFromObjects;            
             qi::rule < str_iterator, objectset_element(), skip_cmt_type> StrictObjectSet;
             qi::rule < str_iterator, object_element_vector(), skip_cmt_type> ObjectSetdecl;
 

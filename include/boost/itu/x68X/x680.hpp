@@ -203,6 +203,7 @@ namespace x680 {
 
         vs_Strait,
         vs_defined,
+        vs_ValueSetFromObjects,
         vs_ValueSetFromObject
     };
 
@@ -210,6 +211,7 @@ namespace x680 {
 
         os_Strait,
         os_defined,
+        os_ObjectSetFromObjects,
         os_ObjectSetFromObject
     };
 
