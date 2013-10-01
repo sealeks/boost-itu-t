@@ -2107,6 +2107,18 @@ namespace x680 {
                         }
                     }
                 }
+                for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
+                    if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
+                        create_fields_var((*it)->as_classfield(), fnd->setting().get());
+                    } else {
+                        switch (((*it)->as_classfield()->marker())) {
+                            case mk_default:create_fields_var((*it)->as_classfield());
+                                break;
+                            case mk_optional: break;
+                            default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
+                        }
+                    }
+                }                
             }
         }
     }
@@ -2208,6 +2220,51 @@ namespace x680 {
                 childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(fld->scope(), fld->name(), fld->as_objectsetfield()->_class(), fld->as_objectsetfield()->_default())));
             }
         }
+    }
+
+    void objectassignment_entity::create_fields_var(field_entity* fld, setting_atom* st) {
+        if (st) {
+            if (fld->as_reffvaluefield()) {
+                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluefield()->field()->reff()->name());
+                if ((st->value()) && (fnd)) {
+                    type_atom_ptr tp = type_atom_ptr(new type_atom(st->scope(), fld->as_reffvaluefield()->field()->reff()->name(), t_Reference));
+                    tp->reff(fnd);
+                    childs_.push_back(basic_entity_ptr(new valueassignment_entity(st->scope(), fld->name(), tp, st->value())));
+                } else
+                    referenceerror_throw(fld->name(), "Field is not value: ");
+            } else if (fld->as_reffvaluesetfield()) {
+                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluesetfield()->field()->reff()->name());
+                if (st->valueset()) {
+                    type_atom_ptr tp = type_atom_ptr(new type_atom(st->scope(), fld->as_reffvaluesetfield()->field()->reff()->name(), t_Reference));
+                    tp->reff(fnd);
+                    childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(st->scope(), fld->name(), tp, st->valueset())));
+                } else
+                    referenceerror_throw(fld->name(), "Field is not valueset: ");
+            }
+        } else {
+            if (fld->as_reffvaluefield()) {
+                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluefield()->field()->reff()->name());
+                if (!fnd)
+                    referenceerror_throw(fld->name(), "Field is not  refference to type: ");
+                type_atom_ptr tp = type_atom_ptr(new type_atom(st->scope(), fld->as_reffvaluefield()->field()->reff()->name(), t_Reference));
+                tp->reff(fnd);
+                childs_.push_back(basic_entity_ptr(new valueassignment_entity(fld->scope(), fld->name(), tp, fld->as_reffvaluefield()->_default())));
+            } else if (fld->as_reffvaluesetfield()) {
+                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluesetfield()->field()->reff()->name());
+                if (!fnd)
+                    referenceerror_throw(fld->name(), "Field is not  refference to type: ");
+                type_atom_ptr tp = type_atom_ptr(new type_atom(st->scope(), fld->as_reffvaluesetfield()->field()->reff()->name(), t_Reference));
+                tp->reff(fnd);
+                childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(fld->scope(), fld->name(), tp, fld->as_reffvaluesetfield()->_default())));
+            }
+        }
+    }
+
+    basic_entity_ptr objectassignment_entity::find_typefields(const std::string& nm) {
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+            if (((*it)->name() == nm) && ((*it)->as_typeassigment()))
+                return (*it);
+        return basic_entity_ptr();
     }
 
 

@@ -3001,13 +3001,17 @@ namespace x680 {
 
         void apply_fields();
 
+    private:
+        
         void calculate_fields(classassignment_entity*cls, defsyntxobject_atom* obj);
 
         void create_fields(field_entity* fld, setting_atom* st = 0);
+        
+        void create_fields_var(field_entity* fld, setting_atom* st = 0);        
+        
+        basic_entity_ptr find_typefields(const std::string& nm);          
 
-        bool calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional = false);
-
-    private:
+        bool calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional = false);       
 
         class_atom_ptr class_;
         object_atom_ptr object_;
