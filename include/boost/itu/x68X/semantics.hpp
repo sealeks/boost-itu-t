@@ -2816,7 +2816,7 @@ namespace x680 {
 
         virtual void resolve();
       
-        virtual fieldsetting_atom_ptr find_field(const std::string& name);
+        virtual fieldsetting_atom_ptr find_field(const std::string& name);             
         
 
     private:
@@ -2847,6 +2847,10 @@ namespace x680 {
         }
 
         virtual void resolve();
+        
+        virtual fieldsetting_atom_ptr find_field(const std::string& name);   
+        
+        bool find_literal(const std::string& name);        
 
     private:
 
@@ -2975,7 +2979,11 @@ namespace x680 {
         
         void apply_fields();
         
+        void calculate_fields(classassignment_entity*cls, defsyntxobject_atom* obj);
+        
         void create_fields(field_entity* fld, setting_atom* st =0);        
+        
+        bool calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional = false);        
 
     private:
 

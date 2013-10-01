@@ -125,9 +125,9 @@ namespace x680 {
 
             SyntaxList = qi::omit[qi::lit("{")] >> TokenOrGroupSpec >> qi::omit[qi::lit("}")];
 
-            TokenOrGroupSpec = +(AiasTokenOToken | RequiredToken | OptionalToken | TokenOToken);
+            TokenOrGroupSpec = +(AiasTokenOToken | TokenOToken | RequiredToken | OptionalToken );
 
-            OptionalGroup = qi::omit[qi::lit("[")] >> TokenOrGroupSpec >> qi::omit[qi::lit("]")] >> -qi::omit[qi::lit(",")];
+            OptionalGroup = qi::omit[qi::lit("[")] >> qi::repeat(2, qi::inf)[(AiasTokenOToken | TokenOToken | RequiredToken | OptionalToken )] >> qi::omit[qi::lit("]")];
 
             TokenOToken = OptionalGroup[bind(&classsyntax_group, qi::_val, qi::_1)];
 
@@ -135,10 +135,10 @@ namespace x680 {
                     [bind(&classsyntax_agroup, qi::_val, qi::_1, qi::_2)];
 
             RequiredToken = -(SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)])
-                    >> PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)] >> -qi::omit[qi::lit(",")];
+                    >> PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)] ;
 
             OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")]
-                    >> -qi::omit[qi::lit(",")])[bind(&classsyntax_optional, qi::_val)];
+                    )[bind(&classsyntax_optional, qi::_val)];
 
 
 

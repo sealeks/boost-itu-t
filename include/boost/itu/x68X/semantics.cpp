@@ -1952,6 +1952,8 @@ namespace x680 {
     }
 
 
+
+
     /////////////////////////////////////////////////////////////////////////        
     // defsyntxobject_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -1960,6 +1962,33 @@ namespace x680 {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
         }
     };
+
+    fieldsetting_atom_ptr defsyntxobject_atom::find_field(const std::string& name) {
+        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
+            if ((*it)->field() == name)
+                return (*it);
+        }
+        return fieldsetting_atom_ptr();
+    }
+
+    bool defsyntxobject_atom::find_literal(const std::string& name) {
+        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
+            if (!(*it)->setting()->literal().empty()) {
+                if (name ==(*it)->setting()->literal()) {
+                    std::cout << "Find  field success:" <<  (*it)->setting()->literal()  << std::endl ;  
+                    std::string tmpstr =name;
+                    ++it;
+                    while((it!=fieldsetting_.end()) && (tmpstr.find_first_of(' ')!=std::string::npos)){
+                        ++it;
+                        tmpstr=tmpstr.substr(tmpstr.find_first_of(' ')+1);}
+                    fieldsetting_.erase(fieldsetting_.begin(), it);
+                    return true;
+            } else
+                return false;
+        }
+        }
+        return false;
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // objectassignment_entity
@@ -1992,7 +2021,7 @@ namespace x680 {
 
     void objectassignment_entity::apply_fields() {
         //if (!has_arguments()) {
-        if (!object()->as_deflt())
+        if (!((object()->as_deflt()) || (object()->as_defnsyntx())))
             return;
         _class()->resolve();
         basic_entity_ptr cl = _class()->reff();
@@ -2001,6 +2030,10 @@ namespace x680 {
             cl = cl->as_classassigment()->_class()->reff();
         }
         if (cl) {
+            if (object()->as_defnsyntx()) {
+                calculate_fields(cl->as_classassigment(), object()->as_defnsyntx());
+                return;
+            }
             if (classassignment_entity * clsa = cl->as_classassigment()) {
                 for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
                     if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
@@ -2016,7 +2049,59 @@ namespace x680 {
                 }
             }
         }
-        //}
+    }
+
+    void objectassignment_entity::calculate_fields(classassignment_entity*cls, defsyntxobject_atom* obj) {
+        fieldsetting_atom_vct newvct;
+        if (cls->withsyntax()) {   
+            calculate_fields(cls->withsyntax().get(), obj, newvct);
+            std::cout << "calculate_fields size:" <<  newvct.size() << std::endl ;   
+            obj->fieldsetting(newvct);
+        }
+    }
+
+    bool objectassignment_entity::calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional) {
+        if (syn->as_group()) {
+            if (syn->isalias()) {
+                if (obj->find_literal(syn->alias())) {
+                } else {
+                    if ((!syn->optional())  && !optional)
+                        referenceerror_throw(syn->alias(), "Fields object parsing error:");
+                    else
+                        return false;
+                }
+            }
+            for (syntax_atom_vct::iterator it = syn->as_group()->group().begin(); it != syn->as_group()->group().end(); ++it) {
+                if ((it == syn->as_group()->group().begin()) && syn->optional()) {
+                    if (!calculate_fields((*it).get(), obj, newvct, syn->optional()))
+                        return false;
+                } else
+                    calculate_fields((*it).get(), obj, newvct);
+            }
+        } else {
+            if (syn->isalias()) {
+                if (obj->find_literal(syn->alias())) {
+                     std::cout << "find alias:" <<  syn->alias() << std::endl ; 
+                    if (obj->fieldsetting().empty())
+                        referenceerror_throw(syn->alias(), "Fields object parsing error:");
+                    std::cout << "Create field:" <<  syn->reff()->name() << std::endl ;                   
+                    newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
+                    obj->fieldsetting().erase(obj->fieldsetting().begin());
+                } else {
+                    if ((!syn->optional())  && !optional)
+                        referenceerror_throw(syn->alias(), "Fields object parsing error:");
+                    else
+                        return false;
+                }
+            } else {
+                if (obj->fieldsetting().empty())
+                    referenceerror_throw(syn->alias(), "Fields object parsing error:");
+                std::cout << "Create field:" <<  syn->reff()->name()<< std::endl ; 
+                newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
+                obj->fieldsetting().erase(obj->fieldsetting().begin());
+                return true;
+            }
+        }
     }
 
     void objectassignment_entity::create_fields(field_entity* fld, setting_atom* st) {
@@ -3911,29 +3996,43 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, syntax_atom* self) {
-        if (self->optional())
-            stream << " [ ";
         if (self->as_group()) {
+             if (self->isalias())
+                stream << " " << self->alias();           
+            if (self->optional())
+                stream << " [- ";
+            else
+                stream << " <- "; 
             stream << " " << self->as_group();
+            if (self->optional())
+                stream << " -] ";
+            else
+                stream << " -> "; 
         } else {
+            if (self->optional())
+                stream << " [ ";
+            else
+                stream << " < "; 
             if (self->isalias())
                 stream << " '" << self->alias() << "' ";
             if (self->expecteddef())
                 stream << " ??? " << self->reff()->name();
             else
                 stream << " *" << self->reff()->name();
+            if (self->optional())
+                stream << " ] ";
+            else
+                stream << " > "; 
         }
-        if (self->optional())
-            stream << " ] ";
         return stream;
     }
 
     std::ostream& operator<<(std::ostream& stream, groupsyntax_atom* self) {
         for (syntax_atom_vct::const_iterator it = self->group().begin(); it != self->group().end(); ++it) {
             if (it != self->group().begin())
-                stream << "\n     " << (*it);
+                stream << "\n     " << (*it).get();
             else
-                stream << "" << (*it);
+                stream << "" << (*it).get();
         }
         return stream;
     }
@@ -4021,6 +4120,7 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, defsyntxobject_atom* self) {
+        return stream << self->fieldsetting();
         stream << " {  ";
         for (fieldsetting_atom_vct::const_iterator it = self->fieldsetting().begin(); it != self->fieldsetting().end(); ++it) {
             fieldsettingstrm(stream, (*it).get());
