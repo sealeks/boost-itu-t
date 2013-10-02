@@ -1059,6 +1059,10 @@ namespace x680 {
     assignment_entity(scope, nm, et_Type), type_(tp) {
     };
 
+    typeassignment_entity::typeassignment_entity(basic_entity_ptr scope) :
+    assignment_entity(scope, et_Type) {
+    };
+
     ////////
 
     basic_entity_ptr typeassignment_entity::find_by_name(const std::string& nm, bool all) {
@@ -2118,7 +2122,7 @@ namespace x680 {
                             default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
                         }
                     }
-                }                
+                }
             }
         }
     }
@@ -2574,7 +2578,10 @@ namespace x680 {
         basic_entity_vector compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
             basic_entity_vector rslt;
             for (x680::syntactic::named_type_element_vector::const_iterator it = ent.elements.begin(); it != ent.elements.end(); ++it) {
-                rslt.push_back(compile_namedtype(scope, *it));
+                if (it->type.marker == mk_extention)
+                    rslt.push_back(basic_entity_ptr(new extention_entity()));
+                else
+                    rslt.push_back(compile_namedtype(scope, *it));
             }
             return rslt;
         }
@@ -3506,7 +3513,10 @@ namespace x680 {
             {
                 stream << " {" << "\n";
                 for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                    if ((*it)->as_typeassigment())
+                    if ((*it)->as_extention()) {
+                        indent(stream, self);
+                        stream << "   (...)\n";
+                    } else if ((*it)->as_typeassigment())
                         stream << (*it)->as_typeassigment();
                 }
                 indent(stream, self);

@@ -80,6 +80,9 @@ namespace x680 {
     typedef boost::shared_ptr<namedtypeassignment_entity> namedtypeassignment_entity_ptr;
     typedef std::vector<namedtypeassignment_entity_ptr> namedtypeassignment_entity_vct;
 
+    class extentiontypeassignment_entity;
+    typedef boost::shared_ptr<extentiontypeassignment_entity> extentiontypeassignment_entity_ptr;
+
     class valueassignment_entity;
     typedef boost::shared_ptr<valueassignment_entity> valueassignment_entity_ptr;
     typedef std::vector<valueassignment_entity_ptr> valueassignment_entity_vct;
@@ -367,8 +370,8 @@ namespace x680 {
         : name_(nm), kind_(tp) {
         }
 
-        basic_entity(entity_enum tp)
-        : kind_(tp) {
+        basic_entity(entity_enum tp, basic_entity_ptr scope = basic_entity_ptr())
+        : scope_(scope), kind_(tp) {
         }
 
         virtual ~basic_entity() {
@@ -891,6 +894,10 @@ namespace x680 {
         : basic_entity(scope, nm, tp) {
         }
 
+        assignment_entity(basic_entity_ptr scope, entity_enum tp)
+        : basic_entity(tp, scope) {
+        }
+
         assignment_entity(const std::string& nm, entity_enum tp)
         : basic_entity(nm, tp) {
         }
@@ -1089,7 +1096,8 @@ namespace x680 {
     class typeassignment_entity : public assignment_entity {
 
     public:
-        typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp);
+        typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp = type_atom_ptr());
+        typeassignment_entity(basic_entity_ptr scope);
 
         type_atom_ptr type() const {
             return type_;
@@ -1157,10 +1165,6 @@ namespace x680 {
         tagmarker_type marker_;
 
     };
-
-
-
-
 
 
 
@@ -3002,16 +3006,16 @@ namespace x680 {
         void apply_fields();
 
     private:
-        
+
         void calculate_fields(classassignment_entity*cls, defsyntxobject_atom* obj);
 
         void create_fields(field_entity* fld, setting_atom* st = 0);
-        
-        void create_fields_var(field_entity* fld, setting_atom* st = 0);        
-        
-        basic_entity_ptr find_typefields(const std::string& nm);          
 
-        bool calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional = false);       
+        void create_fields_var(field_entity* fld, setting_atom* st = 0);
+
+        basic_entity_ptr find_typefields(const std::string& nm);
+
+        bool calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional = false);
 
         class_atom_ptr class_;
         object_atom_ptr object_;
