@@ -1140,7 +1140,8 @@ namespace x680 {
 
         namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker);
         namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
-        namedtypeassignment_entity(basic_entity_ptr scp,  type_atom_ptr tp, value_atom_ptr vl);        
+        namedtypeassignment_entity(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl);
+        namedtypeassignment_entity(basic_entity_ptr scp);
 
         value_atom_ptr _default() const {
             return default_;
@@ -2046,28 +2047,27 @@ namespace x680 {
 
     public:
 
-       // exceptionconstraint_atom() : constraint_atom(cns_EXCEPTION) {
-       // }      
-        
-       
-         exceptionconstraint_atom(basic_entity_ptr scp, int vl) : constraint_atom(scp, cns_EXCEPTION),
-        value_(value_atom_ptr(new numvalue_atom(vl))), type_(type_atom_ptr(new type_atom(scp, t_INTEGER))){
+        // exceptionconstraint_atom() : constraint_atom(cns_EXCEPTION) {
+        // }      
+
+        exceptionconstraint_atom(basic_entity_ptr scp, int vl) : constraint_atom(scp, cns_EXCEPTION),
+        value_(value_atom_ptr(new numvalue_atom(vl))), type_(type_atom_ptr(new type_atom(scp, t_INTEGER))) {
         }
 
-       exceptionconstraint_atom(basic_entity_ptr scp, std::string vl) : constraint_atom(scp, cns_EXCEPTION),
-        value_(value_atom_ptr(new definedvalue_atom(vl, scp))), type_(type_atom_ptr(new type_atom(scp, t_INTEGER))){
-        }     
-        
+        exceptionconstraint_atom(basic_entity_ptr scp, std::string vl) : constraint_atom(scp, cns_EXCEPTION),
+        value_(value_atom_ptr(new definedvalue_atom(vl, scp))), type_(type_atom_ptr(new type_atom(scp, t_INTEGER))) {
+        }
+
         exceptionconstraint_atom(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl) : constraint_atom(scp, cns_EXCEPTION),
-        value_(vl), type_(tp){
-        }         
-        
+        value_(vl), type_(tp) {
+        }
+
         value_atom_ptr value() const {
             return value_;
         }
 
         void value(value_atom_ptr val) {
-            value_=val;
+            value_ = val;
         }
 
         type_atom_ptr type() const {
@@ -2075,14 +2075,14 @@ namespace x680 {
         }
 
         void type(type_atom_ptr val) {
-            type_=val;
+            type_ = val;
         }
-        
-    private:        
-        
-        value_atom_ptr value_;    
-        type_atom_ptr type_;             
-        
+
+    private:
+
+        value_atom_ptr value_;
+        type_atom_ptr type_;
+
     };
 
 
@@ -3389,7 +3389,7 @@ namespace x680 {
         constraint_atom_ptr compile_constraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
         constraint_atom_ptr compile_namedconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
         constraint_atom_ptr compile_multipletypeconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
-        constraint_atom_ptr compile_exceptionconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);        
+        constraint_atom_ptr compile_exceptionconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
         // class
         classassignment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         basic_entity_vector compile_classfields(basic_entity_ptr scope, const x680::syntactic::class_element& ent);

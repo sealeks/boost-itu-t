@@ -1088,7 +1088,8 @@ namespace x680 {
         unicalelerror_throw(childs());
         assignment_entity::resolve();
         resolve_child();
-        type()->resolve();
+        if (type())
+            type()->resolve();
 
     }
 
@@ -1109,10 +1110,14 @@ namespace x680 {
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl)
     : typeassignment_entity(scp, nm, tp), marker_(mk_default), default_(vl) {
     }
-    
-    namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp,  type_atom_ptr tp, value_atom_ptr vl)
-    : typeassignment_entity(scp, "", tp), marker_(mk_exception), default_(vl) {        
-    }    
+
+    namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl)
+    : typeassignment_entity(scp, "", tp), marker_(mk_exception), default_(vl) {
+    }
+
+    namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp)
+    : typeassignment_entity(scp, "", type_atom_ptr()), marker_(mk_extention) {
+    }
 
     void namedtypeassignment_entity::resolve() {
         typeassignment_entity::resolve();
@@ -2575,23 +2580,22 @@ namespace x680 {
 
         basic_entity_vector compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
             basic_entity_vector rslt;
-            for (x680::syntactic::named_type_element_vector::const_iterator it = ent.elements.begin(); it != ent.elements.end(); ++it) {
-                switch (it->type.marker) {
-                    case mk_extention: rslt.push_back(basic_entity_ptr(new extention_entity()));
-                        break;
-                    default: rslt.push_back(compile_namedtype(scope, *it));
-                }
-            }
+            for (x680::syntactic::named_type_element_vector::const_iterator it = ent.elements.begin(); it != ent.elements.end(); ++it)
+                rslt.push_back(compile_namedtype(scope, *it));
             return rslt;
         }
 
         typeassignment_entity_ptr compile_namedtype(basic_entity_ptr scope, const x680::syntactic::type_assignment& ent) {
-            type_atom_ptr tmp = compile_type(scope, ent.type);
+            type_atom_ptr tmp = (ent.type.marker != mk_extention) ? compile_type(scope, ent.type) : type_atom_ptr();
             typeassignment_entity_ptr tmpt;
-            switch(ent.type.marker){
-                case mk_default:  tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, compile_value(scope, ent.type.value))); break;
-                case mk_exception:  tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope,  tmp, compile_value(scope, ent.type.value))); break;
-                default:  tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, ent.type.marker));
+            switch (ent.type.marker) {
+                case mk_default: tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, compile_value(scope, ent.type.value)));
+                    break;
+                case mk_exception: tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, tmp, compile_value(scope, ent.type.value)));
+                    break;
+                case mk_extention: return namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope));
+                    break;
+                default: tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, ent.type.marker));
             }
             tmpt->type()->predefined(compile_typepredef(tmpt, ent.type));
             switch (ent.type.builtin_t) {
@@ -2879,7 +2883,7 @@ namespace x680 {
                 case cns_EXCEPT: return constraint_atom_ptr(new exceptconstraint_atom());
                 case cns_ALLEXCEPT: return constraint_atom_ptr(new allexceptconstraint_atom());
                 case cns_EXTENTION: return constraint_atom_ptr(new extentionconstraint_atom());
-                case cns_EXCEPTION: return compile_exceptionconstraint(scope,ent);
+                case cns_EXCEPTION: return compile_exceptionconstraint(scope, ent);
                     /*case cns_UserDefinedConstraint,
                     case cns_SimpleTableConstraint,
                     case cns_ComponentRelation,
@@ -2910,10 +2914,10 @@ namespace x680 {
             }
             return constraint_atom_ptr(new multipletypeconstraint_atom(scope, tmp));
         }
-        
-        constraint_atom_ptr compile_exceptionconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {        
-            return constraint_atom_ptr( new exceptionconstraint_atom(scope,  compile_type(scope, ent.type), compile_value(scope, ent.value)));
-        }        
+
+        constraint_atom_ptr compile_exceptionconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
+            return constraint_atom_ptr(new exceptionconstraint_atom(scope, compile_type(scope, ent.type), compile_value(scope, ent.value)));
+        }
 
 
 
@@ -3482,11 +3486,13 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, typeassignment_entity* self) {
         if (self->as_named()) {
-            indent(stream, self);      
+            indent(stream, self);
             if (self->as_named()->marker() == mk_components_of)
                 stream << self->name() << " COMPONENTS OF ";
-            else if (self->as_named()->marker() == mk_exception)                
-                stream <<  "! "  << " ";  
+            else if (self->as_named()->marker() == mk_exception)
+                stream << "! " << " ";
+            else if (self->as_named()->marker() == mk_extention)
+                return stream << "(...) " << "\n";
             else
                 stream << self->name() << "  ";
             stream << self->type() << " ";
@@ -3495,11 +3501,12 @@ namespace x680 {
                 stream << self->type()->constraints();
             stream << self->as_named()->marker();
             if ((self->as_named()->_default())
-                    && ((self->as_named()->marker() == mk_default) 
-                    || (self->as_named()->marker() == mk_exception))){
+                    && ((self->as_named()->marker() == mk_default)
+                    || (self->as_named()->marker() == mk_exception))) {
                 if (self->as_named()->marker() == mk_exception)
                     stream << " : ";
-                stream << " " << self->as_named()->_default().get();}
+                stream << " " << self->as_named()->_default().get();
+            }
         } else {
             stream << "(T) " << self->name();
             if (self->has_arguments())
@@ -3996,8 +4003,8 @@ namespace x680 {
         return stream << " }";
     }
 
-    std::ostream& operator<<(std::ostream& stream, exceptionconstraint_atom* self) {    
-        return stream << " !" << self->type().get()  << " : "  <<  self->value().get();
+    std::ostream& operator<<(std::ostream& stream, exceptionconstraint_atom* self) {
+        return stream << " !" << self->type().get() << " : " << self->value().get();
     }
 
 
