@@ -615,11 +615,11 @@ namespace x680 {
             holder.type.builtin_t = t_INTEGER;
             holder.type.marker = mk_exception;
         }
-
+        
         inline void type_exceptidetifier(type_assignment& holder, const std::string& val) {
             holder.type.value.type = v_defined;
             holder.type.value.identifier = val;
-            //holder.type.builtin_t = t_INTEGER;
+            holder.type.builtin_t = t_INTEGER;
             holder.type.marker = mk_exception;
         }
 

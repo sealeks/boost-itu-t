@@ -153,7 +153,7 @@ namespace x680 {
 
 
 
-            ExceptionSpecConstraint = qi::omit[qi::lit("!")] >> (pos_number_str[bind(&constraint_exceptnumber, qi::_val, qi::_1) ]
+            ExceptionSpecConstraint = qi::omit[qi::lit("!")] >> (number_str[bind(&constraint_exceptnumber, qi::_val, qi::_1) ]
                     | DefinedValue_[bind(&constraint_exceptidentifier, qi::_val, qi::_1) ]
                     | (Type >> qi::omit[ qi::lit(":")] >> Value)[bind(&constraint_excepttypevalue, qi::_val, qi::_1, qi::_2) ]
                     );

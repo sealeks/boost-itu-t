@@ -1108,8 +1108,11 @@ namespace x680 {
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl)
     : typeassignment_entity(scp, nm, tp), marker_(mk_default), default_(vl) {
-
     }
+    
+    namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp,  type_atom_ptr tp, value_atom_ptr vl)
+    : typeassignment_entity(scp, "", tp), marker_(mk_exception), default_(vl) {        
+    }    
 
     void namedtypeassignment_entity::resolve() {
         typeassignment_entity::resolve();
@@ -2039,7 +2042,6 @@ namespace x680 {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
             if (!(*it)->setting()->literal().empty()) {
                 if (name == (*it)->setting()->literal()) {
-                    std::cout << "Find  field success:" << (*it)->setting()->literal() << std::endl;
                     std::string tmpstr = name;
                     ++it;
                     while ((it != fieldsetting_.end()) && (tmpstr.find_first_of(' ') != std::string::npos)) {
@@ -2131,7 +2133,6 @@ namespace x680 {
         fieldsetting_atom_vct newvct;
         if (cls->withsyntax()) {
             calculate_fields(cls->withsyntax().get(), obj, newvct);
-            std::cout << "calculate_fields size:" << newvct.size() << std::endl;
             obj->fieldsetting(newvct);
         }
     }
@@ -2158,10 +2159,8 @@ namespace x680 {
         } else {
             if (syn->isalias()) {
                 if (obj->find_literal(syn->alias())) {
-                    std::cout << "find alias:" << syn->alias() << std::endl;
                     if (obj->fieldsetting().empty())
                         referenceerror_throw(syn->alias(), "Fields object parsing error:");
-                    std::cout << "Create field:" << syn->reff()->name() << std::endl;
                     newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
                     obj->fieldsetting().erase(obj->fieldsetting().begin());
                     return true;
@@ -2174,7 +2173,6 @@ namespace x680 {
             } else {
                 if (obj->fieldsetting().empty())
                     referenceerror_throw(syn->alias(), "Fields object parsing error:");
-                std::cout << "Create field:" << syn->reff()->name() << std::endl;
                 newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
                 obj->fieldsetting().erase(obj->fieldsetting().begin());
                 return true;
@@ -2578,10 +2576,11 @@ namespace x680 {
         basic_entity_vector compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
             basic_entity_vector rslt;
             for (x680::syntactic::named_type_element_vector::const_iterator it = ent.elements.begin(); it != ent.elements.end(); ++it) {
-                if (it->type.marker == mk_extention)
-                    rslt.push_back(basic_entity_ptr(new extention_entity()));
-                else
-                    rslt.push_back(compile_namedtype(scope, *it));
+                switch (it->type.marker) {
+                    case mk_extention: rslt.push_back(basic_entity_ptr(new extention_entity()));
+                        break;
+                    default: rslt.push_back(compile_namedtype(scope, *it));
+                }
             }
             return rslt;
         }
@@ -2589,10 +2588,10 @@ namespace x680 {
         typeassignment_entity_ptr compile_namedtype(basic_entity_ptr scope, const x680::syntactic::type_assignment& ent) {
             type_atom_ptr tmp = compile_type(scope, ent.type);
             typeassignment_entity_ptr tmpt;
-            if (ent.type.marker == mk_default) {
-                tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, compile_value(scope, ent.type.value)));
-            } else {
-                tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, ent.type.marker));
+            switch(ent.type.marker){
+                case mk_default:  tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, compile_value(scope, ent.type.value))); break;
+                case mk_exception:  tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope,  tmp, compile_value(scope, ent.type.value))); break;
+                default:  tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, ent.type.marker));
             }
             tmpt->type()->predefined(compile_typepredef(tmpt, ent.type));
             switch (ent.type.builtin_t) {
@@ -2880,7 +2879,7 @@ namespace x680 {
                 case cns_EXCEPT: return constraint_atom_ptr(new exceptconstraint_atom());
                 case cns_ALLEXCEPT: return constraint_atom_ptr(new allexceptconstraint_atom());
                 case cns_EXTENTION: return constraint_atom_ptr(new extentionconstraint_atom());
-                case cns_EXCEPTION: return constraint_atom_ptr(new exceptionconstraint_atom());
+                case cns_EXCEPTION: return compile_exceptionconstraint(scope,ent);
                     /*case cns_UserDefinedConstraint,
                     case cns_SimpleTableConstraint,
                     case cns_ComponentRelation,
@@ -2911,6 +2910,10 @@ namespace x680 {
             }
             return constraint_atom_ptr(new multipletypeconstraint_atom(scope, tmp));
         }
+        
+        constraint_atom_ptr compile_exceptionconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {        
+            return constraint_atom_ptr( new exceptionconstraint_atom(scope,  compile_type(scope, ent.type), compile_value(scope, ent.value)));
+        }        
 
 
 
@@ -3479,17 +3482,24 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, typeassignment_entity* self) {
         if (self->as_named()) {
-            indent(stream, self);
-            stream << self->name() << " ";
+            indent(stream, self);      
             if (self->as_named()->marker() == mk_components_of)
-                stream << self->name() << "COMPONENTS OF ";
+                stream << self->name() << " COMPONENTS OF ";
+            else if (self->as_named()->marker() == mk_exception)                
+                stream <<  "! "  << " ";  
+            else
+                stream << self->name() << "  ";
             stream << self->type() << " ";
             operatorstruct(stream, self);
             if (self->type()->has_constraint())
                 stream << self->type()->constraints();
             stream << self->as_named()->marker();
-            if ((self->as_named()->_default()) && (self->as_named()->marker() == mk_default))
-                stream << " " << self->as_named()->_default().get();
+            if ((self->as_named()->_default())
+                    && ((self->as_named()->marker() == mk_default) 
+                    || (self->as_named()->marker() == mk_exception))){
+                if (self->as_named()->marker() == mk_exception)
+                    stream << " : ";
+                stream << " " << self->as_named()->_default().get();}
         } else {
             stream << "(T) " << self->name();
             if (self->has_arguments())
@@ -3902,7 +3912,7 @@ namespace x680 {
             case cns_EXCEPT: return stream << " ^ ";
             case cns_ALLEXCEPT: return stream << " ~ ";
             case cns_EXTENTION: return stream << " ... ";
-            case cns_EXCEPTION: return stream << " ! ";
+            case cns_EXCEPTION: return stream << self->as_exception();
         }
         return stream << "!!! NULL coctraint  !!!!";
     }
@@ -3986,6 +3996,9 @@ namespace x680 {
         return stream << " }";
     }
 
+    std::ostream& operator<<(std::ostream& stream, exceptionconstraint_atom* self) {    
+        return stream << " !" << self->type().get()  << " : "  <<  self->value().get();
+    }
 
 
     // class
