@@ -745,10 +745,10 @@ namespace x680 {
     // basic_atom
     /////////////////////////////////////////////////////////////////////////   
 
-    basic_atom::basic_atom(basic_entity_ptr scp) : scope_(scp) {
+    basic_atom::basic_atom(basic_entity_ptr scp) : scope_(scp), extention_(false) {
     };
 
-    basic_atom::basic_atom(const std::string& reff, basic_entity_ptr scp) : scope_(scp) {
+    basic_atom::basic_atom(const std::string& reff, basic_entity_ptr scp) : scope_(scp), extention_(false) {
         reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
     }
 
@@ -2593,8 +2593,15 @@ namespace x680 {
                     break;
                 case mk_exception: tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, tmp, compile_value(scope, ent.type.value)));
                     break;
-                case mk_extention: return namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope));
+                case mk_extention:
+                {
+                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope));
+                    if (scope && (scope->as_typeassigment()) && (scope->as_typeassigment()->type()))
+                        scope->as_typeassigment()->type()->extention(true);
+
+                    return tmpt;
                     break;
+                }
                 default: tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, ent.type.marker));
             }
             tmpt->type()->predefined(compile_typepredef(tmpt, ent.type));
@@ -3528,7 +3535,10 @@ namespace x680 {
             case t_SET_OF:
             case t_CHOICE:;
             {
-                stream << " {" << "\n";
+                if (self->type()->has_extention())
+                    stream << " {" << "(has ...)\n";
+                else
+                    stream << " {" << "\n";   
                 for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                     if ((*it)->as_extention()) {
                         indent(stream, self);

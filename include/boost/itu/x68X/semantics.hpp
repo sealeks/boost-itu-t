@@ -752,6 +752,14 @@ namespace x680 {
         std::string externalpreff() const;
 
         virtual basic_atom* root();
+        
+        void extention(bool vl) {
+            extention_ = vl;
+        }  
+        
+        bool has_extention() const {
+            return extention_;
+        }           
 
         bool rooted();
 
@@ -780,6 +788,7 @@ namespace x680 {
         basic_entity_ptr reff_;
         basic_entity_ptr scope_;
         setting_atom_vct parameters_;
+        bool extention_;
     };
 
 
@@ -1065,7 +1074,7 @@ namespace x680 {
 
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
-        }
+        }   
 
         virtual void resolve();
 
