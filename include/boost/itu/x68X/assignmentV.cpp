@@ -116,7 +116,7 @@ namespace x680 {
 
             ObjIdComponent = NameAndNumberForm | NumberForm | NameForm;
 
-            ObjIdComponents = +ObjIdComponent;
+            ObjIdComponents = qi::repeat(2, qi::inf)[ObjIdComponent];
 
             NameBitList = qi::omit[qi::lexeme[qi::lit("{")]] >>
                     (NameAndNumberForm2 | NameAndNumberForm3) % qi::omit[qi::lit(",")] >>
