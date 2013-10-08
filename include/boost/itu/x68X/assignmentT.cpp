@@ -44,7 +44,8 @@ namespace x680 {
 
             TypeNA = BuitinType | TaggedType | ReferencedTypeNA;
 
-            GovernorType = SimpleValueSetFromObjects | SimpleTypeFromObject | BuitinType | StrictDefinedType;
+            GovernorType = SimpleValueSetFromObjects | SimpleTypeFromObject
+                    | BuitinType | StrictDefinedType;
 
             NamedType = (identifier_ >> Type)[bind(&type_named, qi::_val, qi::_1, qi::_2)];
 
@@ -52,7 +53,8 @@ namespace x680 {
 
             StrictType = BuitinType | TaggedType | ConstraintReferencedType | StrictDefinedType;
 
-            ConstraintReferencedType = SimpleReferencedType[ qi::_val = qi::_1 ] >> Constraints[bind(&type_constraints, qi::_val, qi::_1)];
+            ConstraintReferencedType = SimpleReferencedType[ qi::_val = qi::_1 ] 
+                    >> Constraints[bind(&type_constraints, qi::_val, qi::_1)];
 
             BuitinType = SimpleType | IntegerType | EnumeratedType | BitStringType
                     | SelectionType | SequenceOfType | SetOfType | SequenceType
@@ -64,8 +66,10 @@ namespace x680 {
             SimpleTaggedType = (Tag
                     >> SimpleType)[bind(&type_tagged, qi::_val, qi::_1, qi::_2)];
 
-            ObjectClassFieldType = ObjectClassFieldType_[bind(&type_objectfield, qi::_val, qi::_1)]
-                    >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);
+            ObjectClassFieldType = (DefinedObjectClass_
+                    >> qi::omit[qi::string(".") >> (*qi::space)] 
+                    >> FieldName_)[bind(&type_objectfield, qi::_val, qi::_1,qi::_2)]
+                    >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);      
 
             SimpleTypeFromObject = LittleFromObject_[bind(&type_fromobject, qi::_val, qi::_1)];
 
@@ -95,11 +99,16 @@ namespace x680 {
             ReferencedTypeNA = SimpleReferencedTypeNA[ qi::_val = qi::_1 ]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
-            SimpleType = ((qi::lexeme[OCTET_ >> +qi::space >> STRING_])[bind(&type_deff, qi::_val, t_OCTET_STRING)]
-                    | (qi::lexeme[CHARACTER_ >> +qi::space >> STRING_])[bind(&type_deff, qi::_val, t_CHARACTER_STRING)]
-                    | (qi::lexeme[EMBEDDED_ >> +qi::space >> PDV_])[bind(&type_deff, qi::_val, t_EMBEDDED_PDV)]
-                    | (qi::lexeme[OBJECT_ >> +qi::space >> IDENTIFIER_])[bind(&type_deff, qi::_val, t_OBJECT_IDENTIFIER)]
-                    | (qi::lexeme[DATE_ >> +qi::space >> TIME_])[bind(&type_deff, qi::_val, t_DATE_TIME)]
+            SimpleType = ((qi::lexeme[OCTET_ >> +qi::space 
+                    >> STRING_])[bind(&type_deff, qi::_val, t_OCTET_STRING)]
+                    | (qi::lexeme[CHARACTER_ >> +qi::space 
+                    >> STRING_])[bind(&type_deff, qi::_val, t_CHARACTER_STRING)]
+                    | (qi::lexeme[EMBEDDED_ >> +qi::space 
+                    >> PDV_])[bind(&type_deff, qi::_val, t_EMBEDDED_PDV)]
+                    | (qi::lexeme[OBJECT_ >> +qi::space 
+                    >> IDENTIFIER_])[bind(&type_deff, qi::_val, t_OBJECT_IDENTIFIER)]
+                    | (qi::lexeme[DATE_ >> +qi::space 
+                    >> TIME_])[bind(&type_deff, qi::_val, t_DATE_TIME)]
                     | (distinct(qi::alnum | '-')[simple_typer[bind(&type_deff, qi::_val, qi::_1)]])
                     )
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
@@ -112,7 +121,8 @@ namespace x680 {
                     >> -Enumerations[bind(&type_deffinit, qi::_val, qi::_1)]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
-            BitStringType = (qi::lexeme[BIT_ >> +qi::space >> STRING_])[bind(&type_deff, qi::_val, t_BIT_STRING)]
+            BitStringType = (qi::lexeme[BIT_ >> +qi::space 
+                    >> STRING_])[bind(&type_deff, qi::_val, t_BIT_STRING)]
                     >> -NameBitList[bind(&type_deffinit, qi::_val, qi::_1)]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);
 
@@ -135,18 +145,22 @@ namespace x680 {
 
 
 
-            ExceptionSpec = qi::omit[qi::lit("!")] >> (pos_number_str[bind(&type_exceptnumber, qi::_val, qi::_1) ]
+            ExceptionSpec = qi::omit[qi::lit("!")] 
+                    >> (pos_number_str[bind(&type_exceptnumber, qi::_val, qi::_1) ]
                     | DefinedValue_[bind(&type_exceptidetifier, qi::_val, qi::_1) ]
-                    | (TypeA[qi::_val = qi::_1 ] >> qi::omit[ qi::lit(":")] >> Value[bind(&type_exceptvalue, qi::_val, qi::_1) ])
+                    | (TypeA[qi::_val = qi::_1 ] >> qi::omit[ qi::lit(":")]
+                    >> Value[bind(&type_exceptvalue, qi::_val, qi::_1) ])
                     );
 
 
             //    
 
 
-            ComponentType %= ((qi::omit[qi::lexeme[COMPONENTS_ >> +qi::space >> OF_]] >> TypeA)[bind(&type_marker, qi::_val, mk_components_of)]
+            ComponentType %= ((qi::omit[qi::lexeme[COMPONENTS_ >> +qi::space >> OF_]] 
+                    >> TypeA)[bind(&type_marker, qi::_val, mk_components_of)]
                     | (NamedType >> qi::omit[OPTIONAL_])[bind(&type_marker, qi::_val, mk_optional)]
-                    | ((NamedType >> qi::omit[DEFAULT_])[bind(&type_marker, qi::_val, mk_default)] >> qi::omit[Value[bind(&type_defaultvalue, qi::_val, qi::_1)]])
+                    | ((NamedType >> qi::omit[DEFAULT_])[bind(&type_marker, qi::_val, mk_default)] 
+                    >> qi::omit[Value[bind(&type_defaultvalue, qi::_val, qi::_1)]])
                     | NamedType);
 
             ComponentTypeList = (ComponentType % qi::omit[qi::lit(",")]);
@@ -159,9 +173,11 @@ namespace x680 {
 
             ExtensionAdditionGroup = ExtensionAdditionGroup1 | ComponentTypeList;
 
-            ExtensionAddition = qi::omit[qi::lit(",")] >> (ExtensionAdditionGroup | ComponentType);
+            ExtensionAddition = qi::omit[qi::lit(",")] 
+                    >> (ExtensionAdditionGroup | ComponentType);
 
-            ExtensionAdditions = qi::omit[qi::lit(",")] >> ExtensionAdditionGroup >> -(ExtensionAddition);
+            ExtensionAdditions = qi::omit[qi::lit(",")] >> ExtensionAdditionGroup
+                    >> -(ExtensionAddition);
 
             Extension = qi::lit("...")[qi::_val = extention_type_assignment ];
 
@@ -191,13 +207,15 @@ namespace x680 {
                     >> AlternativeTypeList
                     >> qi::omit[qi::lit("]]")];
 
-            ExtensionAdditionAlternativesGroup = ExtensionAdditionAlternativesGroup1 | AlternativeTypeList;
+            ExtensionAdditionAlternativesGroup = ExtensionAdditionAlternativesGroup1 
+                    | AlternativeTypeList;
 
             ExtensionAdditionAlternative = qi::omit[qi::lit(",")]
                     >> (ExtensionAdditionAlternativesGroup | NamedType);
 
             ExtensionAdditionAlternatives = qi::omit[qi::lit(",")]
-                    >> ExtensionAdditionAlternativesGroup >> -(ExtensionAdditionAlternative);
+                    >> ExtensionAdditionAlternativesGroup 
+                    >> -(ExtensionAdditionAlternative);
 
             AlternativeTypeLists = RootAlternativeTypeList
                     >> -(qi::lit(",")

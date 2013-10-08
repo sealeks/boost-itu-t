@@ -526,6 +526,7 @@ namespace x680 {
             value_element_vector values;
             typevalue_element_ptr typevalue;
             std::string fromreff;
+            std::string fieldreference;
         };
 
 
@@ -557,6 +558,7 @@ namespace x680 {
             value_element_vector predefined;
             named_type_element_vector elements;
             constraints_vector constraints;
+            std::string fieldreference;
         };
 
 
@@ -1205,6 +1207,9 @@ namespace x680 {
         extern term_rule EMBEDDED_;
         extern term_rule INTEGER_;
         extern term_rule RELATIVE_OID_IRI_;
+
+        extern str_rule TYPE_IDENTIFIER__;
+        extern str_rule ABSTRACT_SYNTAX__;
 
 
         extern str_rule literal_except_token;

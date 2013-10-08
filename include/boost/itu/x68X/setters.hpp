@@ -265,8 +265,9 @@ namespace x680 {
             holder.builtin_t = t_Reference;
         }
 
-        inline void type_objectfield(type_element& holder, const std::string& val) {
+        inline void type_objectfield(type_element& holder, const std::string& val,const std::string& reff) {
             holder.reference = val;
+            holder.fieldreference = reff;
             holder.builtin_t = t_ClassField;
         }
 

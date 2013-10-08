@@ -267,6 +267,8 @@ namespace x680 {
         term_rule INTEGER_ = distinct(qi::alnum | ('-' >> qi::alnum))["INTEGER"];
         term_rule RELATIVE_OID_IRI_ = distinct(qi::alnum | ('-' >> qi::alnum))["RELATIVE-OID-IRI"];
 
+        str_rule ABSTRACT_SYNTAX__ = distinct(qi::alnum | ('-' >> qi::alnum))["ABSTRACT-SYNTAX"];
+        str_rule TYPE_IDENTIFIER__ = distinct(qi::alnum | ('-' >> qi::alnum))["TYPE-IDENTIFIER"];
 
         str_rule literal_except_token = distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("BIT")]
         | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("BOOLEAN")]
@@ -401,12 +403,12 @@ namespace x680 {
                 >> qi::string(".")[qi::_val += qi::_1 ]
                 >> objectsetreference_[qi::_val += qi::_1 ];
 
-        str_rule UsefulObjectClass_ = TYPE_IDENTIFIER_
-                | ABSTRACT_SYNTAX_;
+        str_rule UsefulObjectClass_ = TYPE_IDENTIFIER__
+                | ABSTRACT_SYNTAX__;
 
-        str_rule DefinedObjectClass_ = ExternalObjectClassReference_
-                | TYPE_IDENTIFIER_
-                | ABSTRACT_SYNTAX_
+        str_rule DefinedObjectClass_ = TYPE_IDENTIFIER__
+                | ABSTRACT_SYNTAX__
+                | ExternalObjectClassReference_
                 | objectclassreference_;
 
 
