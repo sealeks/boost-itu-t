@@ -159,7 +159,13 @@ namespace x680 {
 
             ObjectClassFieldValue = OpenTypeFieldValv[bind(&value_typevalue, qi::_val, qi::_1)];
 
-            ValueFromObject = LittleFromObject_[bind(&value_fromobject, qi::_val, qi::_1)];
+            ValueFromObject = (DefinedObject 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>LFieldName_)[bind(&value_fromobject, qi::_val, qi::_1, qi::_2)];
+                    
+            ValueFromObjectNA = (SimpleDefinedObject 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>LFieldName_)[bind(&value_fromobject, qi::_val, qi::_1, qi::_2)];                    
 
 
         }

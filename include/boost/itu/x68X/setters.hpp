@@ -229,8 +229,9 @@ namespace x680 {
             holder.typevalue = typevalue_element_ptr(new typevalue_element(val));
         }
 
-        inline void value_fromobject(value_element& holder, const std::string& val) {
-            holder.fromreff = val;
+        inline void value_fromobject(value_element& holder, const object_element& val, const std::string& reff) {
+            holder.objectref = object_element_ptr(new object_element(val));
+            holder.fieldreference = reff;
             holder.type = v_ValueFromObject;
         }
 
@@ -265,19 +266,21 @@ namespace x680 {
             holder.builtin_t = t_Reference;
         }
 
-        inline void type_objectfield(type_element& holder, const std::string& val,const std::string& reff) {
+        inline void type_objectfield(type_element& holder, const std::string& val, const std::string& reff) {
             holder.reference = val;
             holder.fieldreference = reff;
             holder.builtin_t = t_ClassField;
         }
 
-        inline void type_fromobject(type_element& holder, const std::string& val) {
-            holder.reference = val;
+        inline void type_fromobject(type_element& holder, const object_element& val, const std::string& reff) {
+            holder.objectref = object_element_ptr(new object_element(val));
+            holder.fieldreference = reff;
             holder.builtin_t = t_TypeFromObject;
         }
 
-        inline void type_fromobjectset(type_element& holder, const std::string& val) {
-            holder.reference = val;
+        inline void type_fromobjectset(type_element& holder, const objectset_element& val, const std::string& reff) {
+            holder.objectsetref = objectset_element_ptr(new objectset_element(val));
+            holder.fieldreference = reff;
             holder.builtin_t = t_ValueSetFromObjects;
         }
 
@@ -616,7 +619,7 @@ namespace x680 {
             holder.type.builtin_t = t_INTEGER;
             holder.type.marker = mk_exception;
         }
-        
+
         inline void type_exceptidetifier(type_assignment& holder, const std::string& val) {
             holder.type.value.type = v_defined;
             holder.type.value.identifier = val;
@@ -899,8 +902,9 @@ namespace x680 {
             holder.tp = ot_Refference;
         }
 
-        inline void object_fromobject(object_element& holder, const std::string& val) {
-            holder.reff = val;
+        inline void object_fromobject(object_element& holder, const object_element& val, const std::string& reff) {
+            holder.objectref = object_element_ptr(new object_element(val));
+            holder.fieldreference = reff;
             holder.tp = ot_FromObject;
         }
 
@@ -959,11 +963,11 @@ namespace x680 {
             holder.reference = val;
             holder.tp = os_defined;
         }
-        
+
         inline void objectset_fromobject(objectset_element& holder, const std::string& val) {
             holder.reference = val;
             holder.tp = os_ObjectSetFromObject;
-        }       
+        }
 
         inline void objectset_fromobjects(objectset_element& holder, const std::string& val) {
             holder.reference = val;

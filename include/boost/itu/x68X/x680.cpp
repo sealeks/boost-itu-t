@@ -372,6 +372,12 @@ namespace x680 {
         str_rule FieldName_ = PrimitiveFieldName_[qi::_val = qi::_1 ] >> -(qi::string(".")[qi::_val += qi::_1 ]
                 >> qi::omit[(*qi::space)] >> (PrimitiveFieldName_[qi::_val += qi::_1 ] % qi::string(".")[qi::_val += qi::_1 ]));
 
+        str_rule BFieldName_ = bigfieldreference_[qi::_val = qi::_1 ] >> -(qi::string(".")[qi::_val += qi::_1 ]
+                >> qi::omit[(*qi::space)] >> (bigfieldreference_[qi::_val += qi::_1 ] % qi::string(".")[qi::_val += qi::_1 ]));
+
+        str_rule LFieldName_ = littlefieldreference_[qi::_val = qi::_1 ] >> -(qi::string(".")[qi::_val += qi::_1 ]
+                >> qi::omit[(*qi::space)] >> (littlefieldreference_[qi::_val += qi::_1 ] % qi::string(".")[qi::_val += qi::_1 ]));
+
 
 
         str_rule ExternalTypeReference_ = modulereference_[qi::_val = qi::_1 ]

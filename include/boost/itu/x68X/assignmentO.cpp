@@ -29,7 +29,13 @@ namespace x680 {
             DefinedObject = DefinedObject_[bind(&object_refference, qi::_val, qi::_1)] >>
                     -(ActualParameters[bind(&object_parameters, qi::_val, qi::_1)]);
 
-            ObjectFromObject = LittleFromObject_[bind(&object_fromobject, qi::_val, qi::_1)];
+            ObjectFromObject = (DefinedObject 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>LFieldName_)[bind(&object_fromobject, qi::_val, qi::_1, qi::_2)];
+                    
+            ObjectFromObjectNA = (SimpleDefinedObject 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>LFieldName_)[bind(&object_fromobject, qi::_val, qi::_1, qi::_2)];                   
 
             ObjectDefn = DefaultSyntax | DefinedSyntax;
 

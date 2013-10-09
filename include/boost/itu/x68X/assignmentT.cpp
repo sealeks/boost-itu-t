@@ -71,9 +71,21 @@ namespace x680 {
                     >> FieldName_)[bind(&type_objectfield, qi::_val, qi::_1,qi::_2)]
                     >> -(ActualParameters[bind(&type_parameters, qi::_val, qi::_1)]);      
 
-            SimpleTypeFromObject = LittleFromObject_[bind(&type_fromobject, qi::_val, qi::_1)];
+            SimpleTypeFromObject = (DefinedObject 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&type_fromobject, qi::_val, qi::_1, qi::_2)];
+                    
+            SimpleTypeFromObjectNA = (SimpleDefinedObject 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&type_fromobject, qi::_val, qi::_1, qi::_2)];                    
 
-            SimpleValueSetFromObjects = BigFromObjects_[bind(&type_fromobjectset, qi::_val, qi::_1)];
+            SimpleValueSetFromObjects = (DefinedObjectSet 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&type_fromobjectset, qi::_val, qi::_1, qi::_2)];
+                    
+            SimpleValueSetFromObjectsNA = (SimpleDefinedObjectSet 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&type_fromobjectset, qi::_val, qi::_1, qi::_2)];                    
 
             SimpleDefinedType = DefinedType_[bind(&type_refference, qi::_val, qi::_1)];
 
@@ -90,8 +102,8 @@ namespace x680 {
             SimpleReferencedType = ObjectClassFieldType | SimpleTypeFromObject
                     | SimpleValueSetFromObjects | DefinedType;
 
-            SimpleReferencedTypeNA = ObjectClassFieldType | SimpleTypeFromObject
-                    | SimpleValueSetFromObjects | SimpleDefinedType;
+            SimpleReferencedTypeNA = ObjectClassFieldType | SimpleTypeFromObjectNA
+                    | SimpleValueSetFromObjectsNA | SimpleDefinedType;
 
             ReferencedType = SimpleReferencedType[ qi::_val = qi::_1 ]
                     >> -(Constraints[bind(&type_constraints, qi::_val, qi::_1)]);

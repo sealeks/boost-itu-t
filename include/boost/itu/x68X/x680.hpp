@@ -526,6 +526,7 @@ namespace x680 {
             value_element_vector values;
             typevalue_element_ptr typevalue;
             std::string fromreff;
+            object_element_ptr objectref;
             std::string fieldreference;
         };
 
@@ -559,6 +560,8 @@ namespace x680 {
             named_type_element_vector elements;
             constraints_vector constraints;
             std::string fieldreference;
+            object_element_ptr objectref;
+            objectset_element_ptr objectsetref;
         };
 
 
@@ -596,6 +599,7 @@ namespace x680 {
             constraintmarker_type marker;
             std::string objsetref;
             objectset_element_ptr setelement;
+            object_element_ptr objectref;
             constraint_element_vector constraint;
         };
 
@@ -804,6 +808,8 @@ namespace x680 {
             objectfield_vector fields;
             std::string reff;
             std::string raw;
+            object_element_ptr objectref;
+            std::string fieldreference;
 
         };
 
@@ -1238,6 +1244,8 @@ namespace x680 {
         extern str_rule littlefieldreference_; //(valuefieldreference_ | valuesetfieldreference_ |objectsetfieldreference_ )    
         extern str_rule PrimitiveFieldName_;
         extern str_rule FieldName_;
+        extern str_rule BFieldName_;
+        extern str_rule LFieldName_;
 
 
         extern str_rule ExternalTypeReference_;

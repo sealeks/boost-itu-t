@@ -275,6 +275,7 @@ namespace x680 {
 
             qi::rule<str_iterator, value_element(), skip_cmt_type> ObjectClassFieldValue;
             qi::rule<str_iterator, value_element(), skip_cmt_type> ValueFromObject;
+            qi::rule<str_iterator, value_element(), skip_cmt_type> ValueFromObjectNA;            
 
             qi::rule<str_iterator, typevalue_element(), skip_cmt_type> OpenTypeFieldVal;
             qi::rule<str_iterator, typevalue_element(), skip_cmt_type> OpenTypeFieldValv;
@@ -301,8 +302,9 @@ namespace x680 {
             qi::rule<str_iterator, type_element(), skip_cmt_type> ConstraintReferencedType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> ObjectClassFieldType;
             qi::rule<str_iterator, type_element(), skip_cmt_type> SimpleTypeFromObject;
+            qi::rule<str_iterator, type_element(), skip_cmt_type> SimpleTypeFromObjectNA;            
             qi::rule<str_iterator, type_element(), skip_cmt_type> SimpleValueSetFromObjects;
-
+            qi::rule<str_iterator, type_element(), skip_cmt_type> SimpleValueSetFromObjectsNA;
 
 
 
@@ -490,6 +492,7 @@ namespace x680 {
             qi::rule<str_iterator, object_element(), skip_cmt_type> DefinedObject;
             qi::rule<str_iterator, object_element(), skip_cmt_type> SimpleDefinedObject;
             qi::rule<str_iterator, object_element(), skip_cmt_type> ObjectFromObject;
+            qi::rule<str_iterator, object_element(), skip_cmt_type> ObjectFromObjectNA;            
 
             qi::rule<str_iterator, object_element(), skip_cmt_type> ObjectDefn;
             qi::rule<str_iterator, object_element(), skip_cmt_type> DefaultSyntax;
@@ -513,7 +516,7 @@ namespace x680 {
             qi::rule < str_iterator, objectset_element(), skip_cmt_type> ObjectSet;
             qi::rule < str_iterator, objectset_element(), skip_cmt_type> ObjectSetNA;
             qi::rule < str_iterator, objectset_element(), skip_cmt_type> SimpleDefinedObjectSet;
-            qi::rule < str_iterator, objectset_element(), skip_cmt_type> ParameterizedObjectSet;
+            qi::rule < str_iterator, objectset_element(), skip_cmt_type> DefinedObjectSet;
             qi::rule < str_iterator, objectset_element(), skip_cmt_type> ObjectSetFromObject;
             qi::rule < str_iterator, objectset_element(), skip_cmt_type> ObjectSetFromObjects;            
             qi::rule < str_iterator, objectset_element(), skip_cmt_type> StrictObjectSet;
