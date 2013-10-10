@@ -26,10 +26,12 @@ namespace x680 {
 
             SimpleDefinedObjectClass = DefinedObjectClass_[bind(&class_reference, qi::_val, qi::_1)];
 
-            ObjectClassDefn = qi::omit[CLASS_ >> qi::lit("{")] >> FieldSpecs[bind(&class_fields, qi::_val, qi::_1)] >> qi::omit[qi::lit("}")]
+            ObjectClassDefn = qi::omit[CLASS_ >> qi::lit("{")]
+                    >> FieldSpecs[bind(&class_fields, qi::_val, qi::_1)] >> qi::omit[qi::lit("}")]
                     >> -(WithSyntaxSpec[bind(&class_syntaxes, qi::_val, qi::_1)]);
 
-            UsefulObjectClass = TYPE_IDENTIFIER_[qi::_val = CLASS_TYPE_IDENTIFIER] | ABSTRACT_SYNTAX_[qi::_val = CLASS_ABSTRACT_SYNTAX];
+            UsefulObjectClass = TYPE_IDENTIFIER_[qi::_val = CLASS_TYPE_IDENTIFIER]
+                    | ABSTRACT_SYNTAX_[qi::_val = CLASS_ABSTRACT_SYNTAX];
 
             DefinedObjectClass = UsefulObjectClass | SimpleDefinedObjectClass;
 
@@ -125,9 +127,10 @@ namespace x680 {
 
             SyntaxList = qi::omit[qi::lit("{")] >> TokenOrGroupSpec >> qi::omit[qi::lit("}")];
 
-            TokenOrGroupSpec = +(AiasTokenOToken | TokenOToken | RequiredToken | OptionalToken );
+            TokenOrGroupSpec = +(AiasTokenOToken | TokenOToken | RequiredToken | OptionalToken);
 
-            OptionalGroup = qi::omit[qi::lit("[")] >> qi::repeat(2, qi::inf)[(AiasTokenOToken | TokenOToken | RequiredToken | OptionalToken )] >> qi::omit[qi::lit("]")];
+            OptionalGroup = qi::omit[qi::lit("[")] >> qi::repeat(2, qi::inf)[(AiasTokenOToken
+                    | TokenOToken | RequiredToken | OptionalToken)] >> qi::omit[qi::lit("]")];
 
             TokenOToken = OptionalGroup[bind(&classsyntax_group, qi::_val, qi::_1)];
 
@@ -135,20 +138,10 @@ namespace x680 {
                     [bind(&classsyntax_agroup, qi::_val, qi::_1, qi::_2)];
 
             RequiredToken = -(SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)])
-                    >> PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)] ;
+                    >> PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)];
 
             OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")]
                     )[bind(&classsyntax_optional, qi::_val)];
-
-
-
-
-
-
-
-
-
-
 
 
 

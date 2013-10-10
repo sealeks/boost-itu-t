@@ -62,8 +62,6 @@ namespace x680 {
             DefinedSyntaxToken2 = SettingNA[bind(&objectfield_setting, qi::_val, qi::_1)];
 
 
-
-
         }
 
     }

@@ -47,7 +47,8 @@ namespace x680 {
 
             NullValue = NULL_[bind(&value_setnull, qi::_val)];
 
-            BooleanValue = TRUE_[ qi::_val = VALUE_BOOL_TRUE ] | FALSE_[qi::_val = VALUE_BOOL_FALSE];
+            BooleanValue = TRUE_[ qi::_val = VALUE_BOOL_TRUE ]
+                    | FALSE_[qi::_val = VALUE_BOOL_FALSE];
 
             IntegerValue = number_str[bind(&value_setnumber, qi::_val, qi::_1)];
 

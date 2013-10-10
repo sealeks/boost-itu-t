@@ -94,8 +94,8 @@ namespace x680 {
             EElems %= (qi::omit[EXCEPT_ ]
                     >> Exclusions)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_EXCEPT)];
 
-            Intersections =
-                    Exclusions[bind(&push_constraints, qi::_val, qi::_1)] >> *(EElems[bind(&push_constraints, qi::_val, qi::_1)]);
+            Intersections = Exclusions[bind(&push_constraints, qi::_val, qi::_1)] 
+                    >> *(EElems[bind(&push_constraints, qi::_val, qi::_1)]);
 
 
             AElems %=
@@ -126,7 +126,8 @@ namespace x680 {
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
                     >>FieldName_)[bind(&constraint_fromobject, qi::_val, qi::_1, qi::_2)];            
 
-            PropertySettings = SETTINGS_ >> (CStringValue | DefinedValue)[bind(&constraint_property, qi::_val, qi::_1)];
+            PropertySettings = SETTINGS_ 
+                    >> (CStringValue | DefinedValue)[bind(&constraint_property, qi::_val, qi::_1)];
 
             ValueRange = (MIN_[bind(&constraint_fromtype, qi::_val, min_range)]
                     | (RangeValue)[bind(&constraint_from, qi::_val, qi::_1)])
@@ -141,7 +142,8 @@ namespace x680 {
 
             TypeConstraint = Type[bind(&constraint_type, qi::_val, qi::_1)];
 
-            SimpleElement = ConstraintFromObjects| ConstraintFromObject | ContainedSubtype | PatternConstraint
+            SimpleElement = ConstraintFromObjects| ConstraintFromObject
+                    | ContainedSubtype | PatternConstraint
                     | PropertySettings | ValueRange | SingleValue | TypeConstraint;
 
             SizeConstraint = qi::omit[SIZE_]
@@ -173,7 +175,8 @@ namespace x680 {
 
 
 
-            ExceptionSpecConstraint = qi::omit[qi::lit("!")] >> (number_str[bind(&constraint_exceptnumber, qi::_val, qi::_1) ]
+            ExceptionSpecConstraint = qi::omit[qi::lit("!")] 
+                    >> (number_str[bind(&constraint_exceptnumber, qi::_val, qi::_1) ]
                     | DefinedValue_[bind(&constraint_exceptidentifier, qi::_val, qi::_1) ]
                     | (Type >> qi::omit[ qi::lit(":")] >> Value)[bind(&constraint_excepttypevalue, qi::_val, qi::_1, qi::_2) ]
                     );
@@ -183,7 +186,8 @@ namespace x680 {
 
 
             UserDefinedConstraintParameters = qi::omit[qi::lexeme[qi::lit("{")]]
-                    >> -(UserDefinedConstraintParameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];
+                    >> -(UserDefinedConstraintParameter % qi::omit[qi::lit(",")]) 
+                    >> qi::omit[qi::lexeme[qi::lit("}")]];
 
             UserDefinedConstraintParameter = UserDefinedConstraintParameterA | UserDefinedConstraintParameterB |
                     UserDefinedConstraintParameterC | UserDefinedConstraintParameterD;
@@ -225,7 +229,6 @@ namespace x680 {
                     >> Type
                     >> qi::omit[qi::lexeme[ENCODED_ >> +qi::space >> BY_]]
                     >> (DefinedValue | ObjectIdentifierValue))[bind(&constraint_content_tv, qi::_val, qi::_1, qi::_2)];
-
 
         }
 
