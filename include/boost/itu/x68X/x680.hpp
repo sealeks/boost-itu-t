@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <set>
 #include  <iterator>
 
 #include <boost/config/warning_disable.hpp>
@@ -40,6 +41,7 @@
 
 #include <boost/variant.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
