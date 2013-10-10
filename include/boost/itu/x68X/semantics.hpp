@@ -211,6 +211,12 @@ namespace x680 {
     class valueconstraint_atom;
     typedef boost::shared_ptr<valueconstraint_atom> valueconstraint_atom_ptr;
 
+    class fromdefinedsetconstraint_atom;
+    typedef boost::shared_ptr<fromdefinedsetconstraint_atom> fromdefinedsetconstraint_atom_ptr;
+
+    class fromdefinedconstraint_atom;
+    typedef boost::shared_ptr<fromdefinedconstraint_atom> fromdefinedconstraint_atom_ptr;
+
     class rangeconstraint_atom;
     typedef boost::shared_ptr<rangeconstraint_atom> rangeconstraint_atom_ptr;
 
@@ -312,6 +318,12 @@ namespace x680 {
 
     class definedsetobject_atom;
     typedef boost::shared_ptr<definedsetobject_atom> definedsetobject_atom_ptr;
+
+    class fromdefinedsetobject_atom;
+    typedef boost::shared_ptr<fromdefinedsetobject_atom> fromdefinedsetobject_atom_ptr;
+
+    class fromdefinedobject_atom;
+    typedef boost::shared_ptr<fromdefinedobject_atom> fromdefinedobject_atom_ptr;
 
     class defltobject_atom;
     typedef boost::shared_ptr<defltobject_atom> defltobject_atom_ptr;
@@ -1986,6 +1998,10 @@ namespace x680 {
 
         valueconstraint_atom* as_valueconstraint();
 
+        fromdefinedsetconstraint_atom* as_fromdefinedset();
+
+        fromdefinedconstraint_atom* as_fromdefined();
+
         valueconstraint_atom* as_pattern();
 
         typeconstraint_atom* as_subtypeconstraint();
@@ -2056,6 +2072,78 @@ namespace x680 {
     private:
 
         value_atom_ptr value_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////        
+    // fromdefinedsetconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromdefinedsetconstraint_atom : public constraint_atom {
+
+    public:
+
+        fromdefinedsetconstraint_atom(basic_entity_ptr scope, const std::string& refffld, objectset_atom_ptr objs = objectset_atom_ptr());
+
+        objectset_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr vl) {
+            objectset_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        objectset_atom_ptr objectset_;
+        basic_atom_ptr field_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////        
+    // fromdefinedconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromdefinedconstraint_atom : public constraint_atom {
+
+    public:
+
+        fromdefinedconstraint_atom(basic_entity_ptr scope, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+
+        object_atom_ptr object() const {
+            return object_;
+        }
+
+        void object(object_atom_ptr vl) {
+            object_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        object_atom_ptr object_;
+        basic_atom_ptr field_;
 
     };
 
@@ -3078,6 +3166,10 @@ namespace x680 {
 
         fromobjectobject_atom* as_fromobject();
 
+        fromdefinedsetobject_atom* as_fromdefinedset();
+
+        fromdefinedobject_atom* as_fromdefined();
+
         unionobject_atom* as_union();
 
         intersectionobject_atom* as_intersection();
@@ -3119,17 +3211,100 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // defineobject_atom
+    // definedsetobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
     class definedsetobject_atom : public object_atom {
 
     public:
 
-        definedsetobject_atom(basic_entity_ptr scope, const std::string& reff) : object_atom(scope, reff, ot_DefinedObjectSet) {
-        };
+        definedsetobject_atom(basic_entity_ptr scope, objectset_atom_ptr objs = objectset_atom_ptr());
+
+        objectset_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr vl) {
+            objectset_ = vl;
+        }
 
         virtual void resolve();
+
+    private:
+
+        objectset_atom_ptr objectset_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////        
+    // fromdefinedsetobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromdefinedsetobject_atom : public object_atom {
+
+    public:
+
+        fromdefinedsetobject_atom(basic_entity_ptr scope, const std::string& refffld, objectset_atom_ptr objs = objectset_atom_ptr());
+
+        objectset_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr vl) {
+            objectset_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        objectset_atom_ptr objectset_;
+        basic_atom_ptr field_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////        
+    // fromdefinedobject_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromdefinedobject_atom : public object_atom {
+
+    public:
+
+        fromdefinedobject_atom(basic_entity_ptr scope, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+
+        object_atom_ptr object() const {
+            return object_;
+        }
+
+        void object(object_atom_ptr vl) {
+            object_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        object_atom_ptr object_;
+        basic_atom_ptr field_;
 
     };
 
@@ -3775,7 +3950,7 @@ namespace x680 {
         // valueset
         valuesetassignment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         valueset_atom_ptr compile_valueset(basic_entity_ptr scope, const x680::syntactic::valueset_element& ent);
-        valueset_atom_ptr compile_valueset_impl(basic_entity_ptr scope, const x680::syntactic::valueset_element& ent);        
+        valueset_atom_ptr compile_valueset_impl(basic_entity_ptr scope, const x680::syntactic::valueset_element& ent);
         constraints_atom_vct compile_constraints_vct(basic_entity_ptr scope, const x680::syntactic::constraints_vector& ent);
         constraints_atom_ptr compile_constraints(basic_entity_ptr scope, const x680::syntactic::constraint_element_vector& ent);
         constraint_atom_ptr compile_constraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
@@ -3877,6 +4052,8 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, const constraint_atom_vct& self);
     std::ostream& operator<<(std::ostream& stream, constraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, valueconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, fromdefinedsetconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, fromdefinedconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, typeconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, namedconstraint_atom* self);
@@ -3907,6 +4084,8 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, object_atom* self);
     std::ostream& operator<<(std::ostream& stream, definedobject_atom* self);
     std::ostream& operator<<(std::ostream& stream, definedsetobject_atom* self);
+    std::ostream& operator<<(std::ostream& stream, fromdefinedsetobject_atom* self);
+    std::ostream& operator<<(std::ostream& stream, fromdefinedobject_atom* self);
     std::ostream& operator<<(std::ostream& stream, defltobject_atom* self);
     std::ostream& operator<<(std::ostream& stream, fromobjectobject_atom* self);
     std::ostream& operator<<(std::ostream& stream, defsyntxobject_atom* self);

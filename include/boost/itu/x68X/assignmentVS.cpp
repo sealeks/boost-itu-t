@@ -21,16 +21,28 @@ namespace x680 {
 
             ValueSet = ValueSetFromObject | ValueSetFromObjects | StrictValueSet | ParameterizedValueSet;
 
-            ValueSetNA = ValueSetFromObject | ValueSetFromObjects | StrictValueSet | SimpleValueSet;
+            ValueSetNA = ValueSetFromObjectNA | ValueSetFromObjectsNA | StrictValueSet | SimpleValueSet;
 
             SimpleValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)];
 
             ParameterizedValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)]
                     >> -(ActualParameters[bind(&valueset_parameters, qi::_val, qi::_1)]);
 
-            ValueSetFromObjects = BigFromObjects_[bind(&valueset_fromobjects, qi::_val, qi::_1)];
-            
-            ValueSetFromObject = LittleFromObject_[bind(&valueset_fromobject, qi::_val, qi::_1)];            
+            ValueSetFromObject = (DefinedObject
+                    >> qi::omit[qi::string(".") >> (*qi::space)]
+                    >> FieldName_)[bind(&valueset_fromobject, qi::_val, qi::_1, qi::_2)];
+
+            ValueSetFromObjectNA = (SimpleDefinedObject
+                    >> qi::omit[qi::string(".") >> (*qi::space)]
+                    >> FieldName_)[bind(&valueset_fromobject, qi::_val, qi::_1, qi::_2)];
+
+            ValueSetFromObjects = (DefinedObjectSet
+                    >> qi::omit[qi::string(".") >> (*qi::space)]
+                    >> FieldName_)[bind(&valueset_fromobjects, qi::_val, qi::_1, qi::_2)];
+
+            ValueSetFromObjectsNA = (SimpleDefinedObjectSet
+                    >> qi::omit[qi::string(".") >> (*qi::space)]
+                    >> FieldName_)[bind(&valueset_fromobjects, qi::_val, qi::_1, qi::_2)];
 
             StrictValueSet = ValueSetdecl[bind(&valueset_set, qi::_val, qi::_1)];
 
@@ -105,6 +117,14 @@ namespace x680 {
             PatternConstraint = PATTERN_ >> CStringValue[bind(&constraint_patterntype, qi::_val, qi::_1)];
 
             SingleValue = Value[bind(&constraint_singlevalue, qi::_val, qi::_1)];
+            
+            ConstraintFromObjects =  (DefinedObjectSet 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&constraint_fromobjects, qi::_val, qi::_1, qi::_2)];
+                    
+            ConstraintFromObject = (DefinedObject 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&constraint_fromobject, qi::_val, qi::_1, qi::_2)];            
 
             PropertySettings = SETTINGS_ >> (CStringValue | DefinedValue)[bind(&constraint_property, qi::_val, qi::_1)];
 
@@ -121,7 +141,7 @@ namespace x680 {
 
             TypeConstraint = Type[bind(&constraint_type, qi::_val, qi::_1)];
 
-            SimpleElement = ContainedSubtype | PatternConstraint
+            SimpleElement = ConstraintFromObjects| ConstraintFromObject | ContainedSubtype | PatternConstraint
                     | PropertySettings | ValueRange | SingleValue | TypeConstraint;
 
             SizeConstraint = qi::omit[SIZE_]

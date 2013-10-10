@@ -276,7 +276,7 @@ namespace x680 {
             holder.objectref = object_element_ptr(new object_element(val));
             holder.fieldreference = reff;
             holder.builtin_t = t_TypeFromObject;
-        }
+        }      
 
         inline void type_fromobjectset(type_element& holder, const objectset_element& val, const std::string& reff) {
             holder.objectsetref = objectset_element_ptr(new objectset_element(val));
@@ -462,6 +462,19 @@ namespace x680 {
             holder.type.marker = mk_exception;
             holder.tp = cns_EXCEPTION;
         }
+        
+
+        inline void constraint_fromobject(constraint_element& holder,const object_element& val, const std::string& reff) {
+            holder.objectref = object_element_ptr(new object_element(val));
+            holder.fieldreference = reff;
+            holder.tp = cns_ValueSetFromObject;
+        }
+         
+        inline void constraint_fromobjects(constraint_element& holder, const objectset_element& val, const std::string& reff) {
+            holder.objectsetref = objectset_element_ptr(new objectset_element(val));
+            holder.fieldreference = reff;
+            holder.tp = cns_ValueSetFromObjects;
+        }               
 
         inline void push_constraint(constraint_element_vector& holder, const constraint_element& val) {
             holder.push_back(val);
@@ -550,15 +563,17 @@ namespace x680 {
             holder.tp = vs_defined;
         }
 
-        inline void valueset_fromobjects(valueset_element& holder, const std::string& val) {
-            holder.reference = val;
-            holder.tp = vs_ValueSetFromObjects;
-        }
-
-        inline void valueset_fromobject(valueset_element& holder, const std::string& val) {
-            holder.reference = val;
+        inline void valueset_fromobject(valueset_element& holder,const object_element& val, const std::string& reff) {
+            holder.objectref = object_element_ptr(new object_element(val));
+            holder.fieldreference = reff;
             holder.tp = vs_ValueSetFromObject;
         }
+         
+        inline void valueset_fromobjects(valueset_element& holder, const objectset_element& val, const std::string& reff) {
+            holder.objectsetref = objectset_element_ptr(new objectset_element(val));
+            holder.fieldreference = reff;
+            holder.tp = vs_ValueSetFromObjects;
+        }       
 
 
 
@@ -908,17 +923,22 @@ namespace x680 {
             holder.tp = ot_FromObject;
         }
 
-        inline void object_objectsetdef(object_element& holder, const std::string& val) {
-            holder.reff = val;
+        inline void object_objectsetdef(object_element& holder, const objectset_element& val) {
+            holder.objectsetref = objectset_element_ptr(new objectset_element(val));
             holder.tp = ot_DefinedObjectSet;
         }
 
-        inline void object_objectsetfromobject(object_element& holder, const std::string& val) {
-            holder.reff = val;
+        inline void object_objectsetfromobjects(object_element& holder,const objectset_element& val, const std::string& reff) {
+            holder.objectsetref = objectset_element_ptr(new objectset_element(val));
+            holder.fieldreference = reff;
             holder.tp = ot_ObjectSetFromObjects;
         }
 
-
+        inline void object_objectsetfromobject(object_element& holder,const object_element& val, const std::string& reff) {
+            holder.objectref = object_element_ptr(new object_element(val));
+            holder.fieldreference = reff;
+            holder.tp = ot_ObjectSetFromObject;
+        }
 
 
 
@@ -964,13 +984,15 @@ namespace x680 {
             holder.tp = os_defined;
         }
 
-        inline void objectset_fromobject(objectset_element& holder, const std::string& val) {
-            holder.reference = val;
+        inline void objectset_fromobject(objectset_element& holder, const object_element& val, const std::string& reff) {
+            holder.objectref = object_element_ptr(new object_element(val));
+            holder.fieldreference = reff;
             holder.tp = os_ObjectSetFromObject;
         }
 
-        inline void objectset_fromobjects(objectset_element& holder, const std::string& val) {
-            holder.reference = val;
+        inline void objectset_fromobjects(objectset_element& holder, const objectset_element& val, const std::string& reff) {
+            holder.objectsetref = objectset_element_ptr(new objectset_element(val));
+            holder.fieldreference = reff;
             holder.tp = os_ObjectSetFromObjects;
         }
 

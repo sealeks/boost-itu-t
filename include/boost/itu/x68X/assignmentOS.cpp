@@ -28,18 +28,35 @@ namespace x680 {
             SimpleDefinedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)];
 
             DefinedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)]
-                    >> -(ActualParameters[bind(&objectset_parameters, qi::_val, qi::_1)]);
-            
-            ObjectSetFromObjects = BigFromObjects_[bind(&objectset_fromobjects, qi::_val, qi::_1)];           
+                    >> -(ActualParameters[bind(&objectset_parameters, qi::_val, qi::_1)]);                 
 
-            ObjectSetFromObject = LittleFromObject_[bind(&objectset_fromobject, qi::_val, qi::_1)];
+            ObjectSetFromObject =  (DefinedObject 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&objectset_fromobject, qi::_val, qi::_1, qi::_2)];
+                    
+            ObjectSetFromObjectNA =  (SimpleDefinedObject 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&objectset_fromobject, qi::_val, qi::_1, qi::_2)];
+                    
+            ObjectSetFromObjects = (DefinedObjectSet 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&objectset_fromobjects, qi::_val, qi::_1, qi::_2)];   
+                    
+            ObjectSetFromObjectsNA = (SimpleDefinedObjectSet 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&objectset_fromobjects, qi::_val, qi::_1, qi::_2)];                       
 
             StrictObjectSet = ObjectSetdecl[bind(&objectset_set, qi::_val, qi::_1)];
 
-            oDefinedObjectSet = DefinedObjectSet_[bind(&object_objectsetdef, qi::_val, qi::_1)]
-                    >> -(ActualParameters[bind(&object_parameters, qi::_val, qi::_1)]);
+            oDefinedObjectSet = DefinedObjectSet[bind(&object_objectsetdef, qi::_val, qi::_1)];
 
-            oObjectSetFromObjects = BigFromObjects_[bind(&object_objectsetfromobject, qi::_val, qi::_1)];
+            oObjectSetFromObjects =  (DefinedObjectSet 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&object_objectsetfromobjects, qi::_val, qi::_1, qi::_2)];
+                    
+            oObjectSetFromObject = (DefinedObject 
+                    >>  qi::omit[qi::string(".") >> (*qi::space)]  
+                    >>FieldName_)[bind(&object_objectsetfromobject, qi::_val, qi::_1, qi::_2)];        
 
 
             ObjectSetdecl = qi::omit[qi::lit("{")]
@@ -90,7 +107,7 @@ namespace x680 {
 
             oExtention = qi::lit("...")[qi::_val = OBJECT_EXTENTION];
 
-            oElement = oObjectSetFromObjects | oDefinedObjectSet | Object;
+            oElement = oObjectSetFromObject | oObjectSetFromObjects | oDefinedObjectSet | Object;
 
 
 

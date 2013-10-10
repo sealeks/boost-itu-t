@@ -191,6 +191,8 @@ namespace x680 {
         cns_ContentsType,
         cns_ContentsValue,
         cns_ContentsTypeValue,
+        cns_ValueSetFromObjects,
+        cns_ValueSetFromObject,             
         cns_UNION,
         cns_INTERSECTION,
         cns_EXCEPT,
@@ -274,6 +276,7 @@ namespace x680 {
         ot_FromObject,
         ot_DefinedObjectSet,
         ot_ObjectSetFromObjects,
+        ot_ObjectSetFromObject,        
         ot_UNION,
         ot_INTERSECTION,
         ot_EXCEPT,
@@ -599,8 +602,11 @@ namespace x680 {
             constraintmarker_type marker;
             std::string objsetref;
             objectset_element_ptr setelement;
-            object_element_ptr objectref;
             constraint_element_vector constraint;
+            std::string fieldreference;
+            object_element_ptr objectref;
+            objectset_element_ptr objectsetref;            
+            
         };
 
 
