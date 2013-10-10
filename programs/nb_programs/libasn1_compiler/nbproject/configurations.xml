@@ -4,12 +4,36 @@
     <logicalFolder name="boost" displayName="boost" projectFiles="true">
       <logicalFolder name="itu" displayName="itu" projectFiles="true">
         <logicalFolder name="x68X" displayName="x68X" projectFiles="true">
-          <itemPath>../../../include/boost/itu/x68X/asn1module.cpp</itemPath>
-          <itemPath>../../../include/boost/itu/x68X/asn1module.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/assignmentCl.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/assignmentO.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/assignmentOS.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/assignmentT.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/assignmentV.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/assignmentVS.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/debug_cout.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/dedug_cout.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/modules.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/modules.hpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/parser.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/parser.hpp</itemPath>
-          <itemPath>../../../include/boost/itu/x68X/type.cpp</itemPath>
-          <itemPath>../../../include/boost/itu/x68X/type.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_assignment.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_assignment.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_classassignment.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_classassignment.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_objectassignment.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_objectassignment.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_objectsetassignment.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_objectsetassignment.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_typeassignment.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_typeassignment.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_valueassignment.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_valueassignment.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_valuesetassignment.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/sem_valuesetassignment.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/semantics.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/semantics.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/setters.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/setters.hpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/x680.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/x680.hpp</itemPath>
         </logicalFolder>
@@ -37,6 +61,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -57,12 +83,52 @@
           <output>../../../lib/${CND_CONF}/libasn1_compiler.a</output>
         </archiverTool>
       </compileType>
-      <item path="../../../include/boost/itu/x68X/asn1module.cpp"
+      <item path="../../../include/boost/itu/x68X/assignmentCl.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/asn1module.hpp"
+      <item path="../../../include/boost/itu/x68X/assignmentO.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentOS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentT.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentV.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentVS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/debug_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/dedug_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/modules.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/modules.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -77,12 +143,92 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/type.cpp"
+      <item path="../../../include/boost/itu/x68X/sem_assignment.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/type.hpp"
+      <item path="../../../include/boost/itu/x68X/sem_assignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_classassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_classassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectsetassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectsetassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_typeassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_typeassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valueassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valueassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valuesetassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valuesetassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/semantics.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/semantics.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/setters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/setters.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -102,6 +248,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -121,12 +269,52 @@
           <output>../../../lib/${CND_CONF}/libasn1_compiler.a</output>
         </archiverTool>
       </compileType>
-      <item path="../../../include/boost/itu/x68X/asn1module.cpp"
+      <item path="../../../include/boost/itu/x68X/assignmentCl.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/asn1module.hpp"
+      <item path="../../../include/boost/itu/x68X/assignmentO.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentOS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentT.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentV.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentVS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/debug_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/dedug_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/modules.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/modules.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -141,12 +329,92 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/type.cpp"
+      <item path="../../../include/boost/itu/x68X/sem_assignment.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/type.hpp"
+      <item path="../../../include/boost/itu/x68X/sem_assignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_classassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_classassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectsetassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectsetassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_typeassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_typeassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valueassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valueassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valuesetassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valuesetassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/semantics.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/semantics.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/setters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/setters.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -166,12 +434,14 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
           <architecture>2</architecture>
           <incDir>
-            <pElem>../../include</pElem>
+            <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
           <commandLine>-fno-strict-aliasing</commandLine>
@@ -184,12 +454,52 @@
           <output>../../../lib/${CND_CONF}/libasn1_compiler.a</output>
         </archiverTool>
       </compileType>
-      <item path="../../../include/boost/itu/x68X/asn1module.cpp"
+      <item path="../../../include/boost/itu/x68X/assignmentCl.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/asn1module.hpp"
+      <item path="../../../include/boost/itu/x68X/assignmentO.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentOS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentT.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentV.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentVS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/debug_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/dedug_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/modules.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/modules.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -204,12 +514,92 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/type.cpp"
+      <item path="../../../include/boost/itu/x68X/sem_assignment.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/type.hpp"
+      <item path="../../../include/boost/itu/x68X/sem_assignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_classassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_classassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectsetassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectsetassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_typeassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_typeassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valueassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valueassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valuesetassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valuesetassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/semantics.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/semantics.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/setters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/setters.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -229,13 +619,15 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
           <developmentMode>5</developmentMode>
           <architecture>2</architecture>
           <incDir>
-            <pElem>../../include</pElem>
+            <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
           <commandLine>-fno-strict-aliasing</commandLine>
@@ -245,12 +637,52 @@
           <output>../../../lib/${CND_CONF}/libasn1_compiler.a</output>
         </archiverTool>
       </compileType>
-      <item path="../../../include/boost/itu/x68X/asn1module.cpp"
+      <item path="../../../include/boost/itu/x68X/assignmentCl.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/asn1module.hpp"
+      <item path="../../../include/boost/itu/x68X/assignmentO.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentOS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentT.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentV.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentVS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/debug_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/dedug_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/modules.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/modules.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -265,12 +697,92 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/type.cpp"
+      <item path="../../../include/boost/itu/x68X/sem_assignment.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x68X/type.hpp"
+      <item path="../../../include/boost/itu/x68X/sem_assignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_classassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_classassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectsetassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_objectsetassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_typeassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_typeassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valueassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valueassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valuesetassignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/sem_valuesetassignment.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/semantics.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/semantics.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/setters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/setters.hpp"
             ex="false"
             tool="3"
             flavor2="0">
