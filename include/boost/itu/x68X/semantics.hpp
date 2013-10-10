@@ -128,7 +128,17 @@ namespace x680 {
     class type_atom;
     typedef boost::shared_ptr<type_atom> type_atom_ptr;
 
+    class classfieldtype_atom;
+    typedef boost::shared_ptr<classfieldtype_atom> classfieldtype_atom_ptr;
 
+    class instanceoftype_atom;
+    typedef boost::shared_ptr<instanceoftype_atom> instanceoftype_atom_ptr;
+
+    class fromobjecttype_atom;
+    typedef boost::shared_ptr<fromobjecttype_atom> fromobjecttype_atom_ptr;
+
+    class fromobjectsettype_atom;
+    typedef boost::shared_ptr<fromobjectsettype_atom> fromobjectsettype_atom_ptr;
 
 
     class value_atom;
@@ -180,6 +190,12 @@ namespace x680 {
 
     class valueset_atom;
     typedef boost::shared_ptr<valueset_atom> valueset_atom_ptr;
+
+    class fromobjectvalueset_atom;
+    typedef boost::shared_ptr<fromobjectvalueset_atom> fromobjectvalueset_atom_ptr;
+
+    class fromobjectsetvalueset_atom;
+    typedef boost::shared_ptr<fromobjectsetvalueset_atom> fromobjectsetvalueset_atom_ptr;
 
     class constraints_atom;
     typedef boost::shared_ptr<constraints_atom> constraints_atom_ptr;
@@ -303,6 +319,9 @@ namespace x680 {
     class defsyntxobject_atom;
     typedef boost::shared_ptr<defsyntxobject_atom> defsyntxobject_atom_ptr;
 
+    class fromobjectobject_atom;
+    typedef boost::shared_ptr<fromobjectobject_atom> fromobjectobject_atom_ptr;
+
     class unionobject_atom;
     typedef boost::shared_ptr<unionobject_atom> unionobject_atom_ptr;
 
@@ -328,6 +347,12 @@ namespace x680 {
 
     class objectset_atom;
     typedef boost::shared_ptr<objectset_atom> objectset_atom_ptr;
+
+    class fromobjectobjectset_atom;
+    typedef boost::shared_ptr<fromobjectobjectset_atom> fromobjectobjectset_atom_ptr;
+
+    class fromobjectsetobjectset_atom;
+    typedef boost::shared_ptr<fromobjectsetobjectset_atom> fromobjectsetobjectset_atom_ptr;
 
     class definedobjectset_atom;
     typedef boost::shared_ptr<definedobjectset_atom> definedobjectset_atom_ptr;
@@ -752,14 +777,14 @@ namespace x680 {
         std::string externalpreff() const;
 
         virtual basic_atom* root();
-        
+
         void extention(bool vl) {
             extention_ = vl;
-        }  
-        
+        }
+
         bool has_extention() const {
             return extention_;
-        }           
+        }
 
         bool rooted();
 
@@ -1074,7 +1099,15 @@ namespace x680 {
 
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
-        }   
+        }
+
+        classfieldtype_atom* as_classfield();
+
+        instanceoftype_atom* as_instance();
+
+        fromobjecttype_atom* as_fromobject();
+
+        fromobjectsettype_atom* as_fromobjectset();
 
         virtual void resolve();
 
@@ -1093,6 +1126,145 @@ namespace x680 {
         tagged_ptr tag_;
         predefined_ptr predefined_;
         constraints_atom_vct constraints_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // instanceoftype_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class instanceoftype_atom : public type_atom {
+
+    public:
+        instanceoftype_atom(basic_entity_ptr scp, const std::string& reffcl, tagged_ptr tg = tagged_ptr());
+
+        instanceoftype_atom(basic_entity_ptr scp, tagged_ptr tg = tagged_ptr()) : type_atom(scp, t_Instance_Of, tg) {
+        };
+
+        class_atom_ptr _class() const {
+            return class_;
+        }
+
+        void _class(class_atom_ptr vl) {
+            class_ = vl;
+        }
+
+
+        virtual void resolve();
+
+    private:
+
+        class_atom_ptr class_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // classfieldtype_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class classfieldtype_atom : public type_atom {
+
+    public:
+        classfieldtype_atom(basic_entity_ptr scp, const std::string& reffcl, const std::string& refffld, tagged_ptr tg = tagged_ptr());
+
+        classfieldtype_atom(basic_entity_ptr scp, tagged_ptr tg = tagged_ptr()) : type_atom(scp, t_ClassField, tg) {
+        };
+
+        class_atom_ptr _class() const {
+            return class_;
+        }
+
+        void _class(class_atom_ptr vl) {
+            class_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        class_atom_ptr class_;
+        basic_atom_ptr field_;
+
+    };
+
+    /////////////////////////////////////////////////////////////////////////   
+    // fromobjecttype_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromobjecttype_atom : public type_atom {
+
+    public:
+
+        fromobjecttype_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr(), tagged_ptr tg = tagged_ptr());
+
+        object_atom_ptr object() const {
+            return object_;
+        }
+
+        void object(object_atom_ptr vl) {
+            object_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        object_atom_ptr object_;
+        basic_atom_ptr field_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // fromobjectsettype_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromobjectsettype_atom : public type_atom {
+
+    public:
+
+        fromobjectsettype_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj = objectset_atom_ptr(), tagged_ptr tg = tagged_ptr());
+
+        objectset_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr vl) {
+            objectset_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        objectset_atom_ptr objectset_;
+        basic_atom_ptr field_;
 
     };
 
@@ -1414,11 +1586,30 @@ namespace x680 {
 
     public:
 
-        fromobjectvalue_atom(const std::string& rff, basic_entity_ptr scp)
-        : value_atom(scp, rff, v_ValueFromObject) {
-        };
+        fromobjectvalue_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+
+        object_atom_ptr object() const {
+            return object_;
+        }
+
+        void object(object_atom_ptr vl) {
+            object_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
 
         virtual void resolve();
+
+    private:
+
+        object_atom_ptr object_;
+        basic_atom_ptr field_;
 
     };
 
@@ -1639,12 +1830,88 @@ namespace x680 {
             set_ = vl;
         }
 
+        fromobjectvalueset_atom* as_fromobject();
+
+        fromobjectsetvalueset_atom* as_fromobjectset();
+
         virtual void resolve();
 
     private:
 
         valueset_type builtin_;
         constraints_atom_ptr set_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // fromobjectvalueset_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromobjectvalueset_atom : public valueset_atom {
+
+    public:
+
+        fromobjectvalueset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+
+        object_atom_ptr object() const {
+            return object_;
+        }
+
+        void object(object_atom_ptr vl) {
+            object_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        object_atom_ptr object_;
+        basic_atom_ptr field_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // fromobjectsetvalueset_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromobjectsetvalueset_atom : public valueset_atom {
+
+    public:
+
+        fromobjectsetvalueset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj = objectset_atom_ptr());
+
+        objectset_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr vl) {
+            objectset_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        objectset_atom_ptr objectset_;
+        basic_atom_ptr field_;
 
     };
 
@@ -2680,7 +2947,7 @@ namespace x680 {
 
     public:
         class_atom(basic_entity_ptr scope, definedclass_type tp);
-        class_atom(basic_entity_ptr scope, const std::string& reff, definedclass_type tp);
+        class_atom(basic_entity_ptr scope, const std::string& reff, definedclass_type tp = cl_Reference);
 
         definedclass_type builtin() const {
             return builtin_;
@@ -2809,6 +3076,8 @@ namespace x680 {
 
         defsyntxobject_atom* as_defnsyntx();
 
+        fromobjectobject_atom* as_fromobject();
+
         unionobject_atom* as_union();
 
         intersectionobject_atom* as_intersection();
@@ -2926,6 +3195,42 @@ namespace x680 {
     private:
 
         fieldsetting_atom_vct fieldsetting_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // fromobjectobject_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    class fromobjectobject_atom : public object_atom {
+
+    public:
+
+        fromobjectobject_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+
+        object_atom_ptr object() const {
+            return object_;
+        }
+
+        void object(object_atom_ptr vl) {
+            object_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        object_atom_ptr object_;
+        basic_atom_ptr field_;
 
     };
 
@@ -3077,22 +3382,99 @@ namespace x680 {
     class objectset_atom : public basic_atom {
 
     public:
+
         objectset_atom(basic_entity_ptr scope, objectset_type tp);
         objectset_atom(basic_entity_ptr scope, const std::string& reff, objectset_type tp);
+
+        objectset_type builtin() const {
+            return builtin_;
+        }
 
         definedobjectset_atom* as_defined();
 
         defnobjectset_atom* as_defn();
 
-        objectset_type builtin() const {
-            return builtin_;
-        }
+        fromobjectobjectset_atom* as_fromobject();
+
+        fromobjectsetobjectset_atom* as_fromobjectset();
 
         virtual void resolve();
 
     private:
 
         objectset_type builtin_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // fromobjectobjectset_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromobjectobjectset_atom : public objectset_atom {
+
+    public:
+
+        fromobjectobjectset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+
+        object_atom_ptr object() const {
+            return object_;
+        }
+
+        void object(object_atom_ptr vl) {
+            object_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        object_atom_ptr object_;
+        basic_atom_ptr field_;
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // fromobjectsetobjectset_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromobjectsetobjectset_atom : public objectset_atom {
+
+    public:
+
+        fromobjectsetobjectset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj = objectset_atom_ptr());
+
+        objectset_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr vl) {
+            objectset_ = vl;
+        }
+
+        basic_atom_ptr field() const {
+            return field_;
+        }
+
+        void field(basic_atom_ptr vl) {
+            field_ = vl;
+        }
+
+        virtual void resolve();
+
+    private:
+
+        objectset_atom_ptr objectset_;
+        basic_atom_ptr field_;
 
     };
 
@@ -3393,6 +3775,7 @@ namespace x680 {
         // valueset
         valuesetassignment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         valueset_atom_ptr compile_valueset(basic_entity_ptr scope, const x680::syntactic::valueset_element& ent);
+        valueset_atom_ptr compile_valueset_impl(basic_entity_ptr scope, const x680::syntactic::valueset_element& ent);        
         constraints_atom_vct compile_constraints_vct(basic_entity_ptr scope, const x680::syntactic::constraints_vector& ent);
         constraints_atom_ptr compile_constraints(basic_entity_ptr scope, const x680::syntactic::constraint_element_vector& ent);
         constraint_atom_ptr compile_constraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
@@ -3525,6 +3908,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, definedobject_atom* self);
     std::ostream& operator<<(std::ostream& stream, definedsetobject_atom* self);
     std::ostream& operator<<(std::ostream& stream, defltobject_atom* self);
+    std::ostream& operator<<(std::ostream& stream, fromobjectobject_atom* self);
     std::ostream& operator<<(std::ostream& stream, defsyntxobject_atom* self);
     std::ostream& operator<<(std::ostream& stream, const fieldsetting_atom_vct& self);
     std::ostream& operator<<(std::ostream& stream, fieldsetting_atom* self);
