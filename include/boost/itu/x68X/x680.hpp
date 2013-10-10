@@ -639,6 +639,9 @@ namespace x680 {
             valueset_type tp;
             std::string reference;
             constraint_element_vector set;
+            std::string fieldreference;
+            object_element_ptr objectref;
+            objectset_element_ptr objectsetref;            
         };
 
 
@@ -809,6 +812,7 @@ namespace x680 {
             std::string reff;
             std::string raw;
             object_element_ptr objectref;
+            objectset_element_ptr objectsetref;            
             std::string fieldreference;
 
         };
@@ -844,6 +848,9 @@ namespace x680 {
             objectset_type tp;
             std::string reference;
             object_element_vector set;
+            std::string fieldreference;
+            object_element_ptr objectref;
+            objectset_element_ptr objectsetref;            
         };
 
 
