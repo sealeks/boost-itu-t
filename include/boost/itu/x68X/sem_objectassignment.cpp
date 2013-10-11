@@ -214,12 +214,14 @@ namespace x680 {
     };
 
     basic_entity_ptr objectassignment_entity::find_by_name(const std::string& nm, bool all) {
+        if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
+            return argfnd;         
         if (scope()) {
             prefind(nm, scope()->childs());
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
                 if (nm == (*it)->name())
                     return *it;
-        }
+        }        
         if (scope())
             return scope()->find_by_name(nm, all);
         return basic_entity_ptr();

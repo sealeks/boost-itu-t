@@ -331,8 +331,8 @@ namespace x680 {
                     }
                 }
             } catch (boost::bad_lexical_cast) {
-                return value_atom_ptr(new value_atom(scope, v_nodef));
             }
+            scope->referenceerror_throw(scope->name(),"Value dos'nt set"); 
             return value_atom_ptr();
         }
 
@@ -909,8 +909,10 @@ namespace x680 {
 
         bigassignment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::unknown_tc_assignment tmp = boost::get<x680::syntactic::unknown_tc_assignment>(ent);
-            bigassignment_entity_ptr tmpv = bigassignment_entity_ptr(new bigassignment_entity(scope, tmp.identifier, compile_reff(tmp.unknown_tc.reff)));
+            bigassignment_entity_ptr tmpv = bigassignment_entity_ptr(new bigassignment_entity(scope, tmp.identifier));
+            tmpv->big(compile_reff(scope, tmp.unknown_tc.reff));
             tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
+            tmpv->big()->parameters(compile_parameters(scope,tmp.unknown_tc.parameters));
             return tmpv;
         }
 
@@ -918,7 +920,8 @@ namespace x680 {
 
         voassignment_entity_ptr compile_voassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::unknown_vo_assignment tmp = boost::get<x680::syntactic::unknown_vo_assignment>(ent);
-            voassignment_entity_ptr tmpv = voassignment_entity_ptr(new voassignment_entity(scope, tmp.identifier, compile_reff(tmp.reff)));
+            voassignment_entity_ptr tmpv = voassignment_entity_ptr(new voassignment_entity(scope, tmp.identifier));
+            tmpv->big(compile_reff(tmpv, tmp.reff));
             if ((tmp.unknown_vo.alternative_ & AS_VALUE) && (tmp.unknown_vo.value_))
                 tmpv->value(compile_value(scope, *(tmp.unknown_vo.value_)));
             if ((tmp.unknown_vo.alternative_ & AS_OBJECT) && (tmp.unknown_vo.object_))
@@ -931,7 +934,8 @@ namespace x680 {
 
         soassignment_entity_ptr compile_soassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
             x680::syntactic::unknown_so_assignment tmp = boost::get<x680::syntactic::unknown_so_assignment>(ent);
-            soassignment_entity_ptr tmpv = soassignment_entity_ptr(new soassignment_entity(scope, tmp.identifier, compile_reff(tmp.reff)));
+            soassignment_entity_ptr tmpv = soassignment_entity_ptr(new soassignment_entity(scope, tmp.identifier));
+            tmpv->big(compile_reff(tmpv, tmp.reff));
             if ((tmp.unknown_so.alternative_ & AS_VALUESET) && (tmp.unknown_so.valueset_))
                 tmpv->valueset(compile_valueset(scope, *(tmp.unknown_so.valueset_)));
             if ((tmp.unknown_so.alternative_ & AS_OBJECTSET) && (tmp.unknown_so.objectset_))
@@ -942,8 +946,8 @@ namespace x680 {
 
         // reff
 
-        basic_atom_ptr compile_reff(const std::string& rf) {
-            return basic_atom_ptr(new basic_atom(rf));
+        basic_atom_ptr compile_reff(basic_entity_ptr scope, const std::string& rf) {
+            return basic_atom_ptr(new basic_atom(rf, scope));
         }
 
 

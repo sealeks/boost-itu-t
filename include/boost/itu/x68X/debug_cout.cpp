@@ -127,6 +127,8 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, basic_atom* self) {
+        if (!self)
+            return stream << "@unspec";
         if (self->as_type())
             return stream << self->as_type()->builtin();
         if (self->as_value())
@@ -155,8 +157,21 @@ namespace x680 {
             else
                 stream << "(T?C)" << self->governor()->reff()->name() << ":";
         }
-        return stream << self->name();
+        return stream << "[*" << self->reffcount() <<  "]" <<  self->argumenttype() << self->name();
     }
+    
+    std::ostream& operator<<(std::ostream& stream, argument_enum self) {
+        switch (self) {    
+           case argm_Type: return stream  << "(T)";
+           case argm_Value: return stream  << "(v)";
+           case argm_ValueSet: return stream  << "(vS)";
+           case argm_Class:  return stream  << "(C)";
+           case argm_Object:  return stream  << "(o)";
+           case argm_ObjectSet: return stream  << "(oS)";  
+            default:{}
+        }
+        return stream  << "(?u)";
+    }    
 
 
 
@@ -342,7 +357,8 @@ namespace x680 {
             stream << self->predefined().get();
         return stream;
     }
-
+        
+    
     std::ostream& operator<<(std::ostream& stream, defined_type self) {
         switch (self) {
             case t_NODEF: return stream << "NODEF";

@@ -118,7 +118,7 @@ namespace x680 {
         // valueset or objectset
         soassignment_entity_ptr compile_soassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent);
         // reff
-        basic_atom_ptr compile_reff(const std::string& rf);
+        basic_atom_ptr compile_reff(basic_entity_ptr scope, const std::string& rf);
 
 
 

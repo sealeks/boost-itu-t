@@ -128,8 +128,7 @@ namespace x680 {
         definedobjectset_atom(basic_entity_ptr scope, const std::string& reff) : objectset_atom(scope, reff, os_defined) {
         };
 
-        virtual void resolve() {
-        };
+        virtual void resolve();
 
     };
 

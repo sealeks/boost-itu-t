@@ -315,6 +315,8 @@ namespace x680 {
                     return fnd;
             }
         }
+        if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
+            return argfnd;         
         if (scope()) {
             prefind(nm, scope()->childs());
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)

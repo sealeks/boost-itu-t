@@ -282,6 +282,8 @@ namespace x680 {
                     return fnd;
             }
         }
+        if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
+            return argfnd;
         if (scope())
             return scope()->find_by_name(nm, all);
         return basic_entity_ptr();

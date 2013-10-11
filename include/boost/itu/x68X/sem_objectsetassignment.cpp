@@ -41,11 +41,18 @@ namespace x680 {
     }
 
     void objectset_atom::resolve() {
-        if (builtin_ != os_Strait)
+        if (builtin_ == os_defined)
             resolve_reff();
     }
 
 
+    /////////////////////////////////////////////////////////////////////////        
+    // defineobjectset_atom
+    /////////////////////////////////////////////////////////////////////////    
+
+    void definedobjectset_atom::resolve() {
+        resolve_reff();
+    }  
 
     /////////////////////////////////////////////////////////////////////////   
     // fromobjectobjectset_atom
@@ -92,6 +99,8 @@ namespace x680 {
     };
 
     basic_entity_ptr objectsetassignment_entity::find_by_name(const std::string& nm, bool all) {
+        if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
+            return argfnd;         
         if (scope()) {
             prefind(nm, scope()->childs());
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)

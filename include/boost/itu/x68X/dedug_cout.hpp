@@ -26,6 +26,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, basic_atom* self);
     std::ostream& operator<<(std::ostream& stream, const argument_entity_vct& self);
     std::ostream& operator<<(std::ostream& stream, argument_entity* self);
+    std::ostream& operator<<(std::ostream& stream, argument_enum self);   
 
     // type
     std::ostream& operator<<(std::ostream& stream, typeassignment_entity* self);

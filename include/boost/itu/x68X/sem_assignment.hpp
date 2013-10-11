@@ -8,7 +8,7 @@
 
 
 #include <boost/itu/x68X/x680.hpp>
-
+#include <boost/enable_shared_from_this.hpp>
 
 namespace x680 {
 
@@ -38,7 +38,6 @@ namespace x680 {
         argm_Value,
         argm_ValueSet,
         argm_Class,
-        argm_ClassField,
         argm_Object,
         argm_ObjectSet
     };
@@ -81,9 +80,6 @@ namespace x680 {
     typedef boost::shared_ptr<namedtypeassignment_entity> namedtypeassignment_entity_ptr;
     typedef std::vector<namedtypeassignment_entity_ptr> namedtypeassignment_entity_vct;
 
-    class extentiontypeassignment_entity;
-    typedef boost::shared_ptr<extentiontypeassignment_entity> extentiontypeassignment_entity_ptr;
-
     class valueassignment_entity;
     typedef boost::shared_ptr<valueassignment_entity> valueassignment_entity_ptr;
     typedef std::vector<valueassignment_entity_ptr> valueassignment_entity_vct;
@@ -113,6 +109,7 @@ namespace x680 {
 
     class basic_atom;
     typedef boost::shared_ptr<basic_atom> basic_atom_ptr;
+    typedef std::vector<basic_atom_ptr> basic_atom_vct;
 
     class setting_atom;
     typedef boost::shared_ptr<setting_atom> setting_atom_ptr;
@@ -380,6 +377,8 @@ namespace x680 {
 
 
 
+    void debug_warning(const std::string& msg);
+
     void insert_assigment(basic_entity_ptr scope, basic_entity_ptr val);
 
     void insert_global(basic_entity_ptr global);
@@ -448,6 +447,8 @@ namespace x680 {
         import_entity* as_import();
 
         assignment_entity* as_assigment();
+
+        argument_entity* as_argument();
 
         bigassignment_entity* as_bigassigment();
 
@@ -703,23 +704,38 @@ namespace x680 {
 
         bool has_undef_governor() const;
 
-        void governor(basic_atom_ptr vl);
+        void governor(type_atom_ptr vl);
 
-        argumentsize_type typesize() const {
-            return typesize_;
-        }
+        void governor(class_atom_ptr vl);
+
+        void governor(basic_atom_ptr vl);
 
         argument_enum argumenttype() const {
             return argumenttype_;
         }
 
-        void argumenttype(argument_enum vl);
+        assignment_entity_ptr unspecified() const {
+            return unspecified_;
+        }
+
+        std::size_t reffcount() {
+            return dummyrefferences_.size();
+        }
+
+        void insert_dummyrefference(basic_atom_ptr val);
+
+        ///
+
+        virtual void resolve();
 
     private:
 
         basic_atom_ptr governor_;
         argumentsize_type typesize_;
         argument_enum argumenttype_;
+        assignment_entity_ptr unspecified_;
+        basic_atom_vct dummyrefferences_;
+
     };
 
 
@@ -740,9 +756,12 @@ namespace x680 {
     // basic_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class basic_atom {
+    class basic_atom : public boost::enable_shared_from_this<basic_atom> {
 
     public:
+
+        typedef boost::shared_ptr<basic_atom> self_shared_type;
+
         basic_atom(basic_entity_ptr scp = basic_entity_ptr());
         basic_atom(const std::string& reff, basic_entity_ptr scp = basic_entity_ptr());
 
@@ -755,6 +774,10 @@ namespace x680 {
 
         void scope(basic_entity_ptr vl) {
             scope_ = vl;
+        }
+
+        self_shared_type self() {
+            return shared_from_this();
         }
 
         basic_entity_ptr reff() const {
@@ -799,6 +822,14 @@ namespace x680 {
             return extention_;
         }
 
+        bool isdummy() const {
+            return isdummy_;
+        }
+
+        void isdummy(bool vl) {
+            isdummy_ = vl;
+        }
+
         bool rooted();
 
         type_atom* as_type();
@@ -827,6 +858,7 @@ namespace x680 {
         basic_entity_ptr scope_;
         setting_atom_vct parameters_;
         bool extention_;
+        bool isdummy_;
     };
 
 
@@ -997,7 +1029,7 @@ namespace x680 {
     class bigassignment_entity : public assignment_entity {
 
     public:
-        bigassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
+        bigassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg = basic_atom_ptr());
 
         basic_atom_ptr big() const {
             return big_;
@@ -1035,7 +1067,7 @@ namespace x680 {
     class voassignment_entity : public assignment_entity {
 
     public:
-        voassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
+        voassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg = basic_atom_ptr());
 
         basic_atom_ptr big() const {
             return big_;
@@ -1088,7 +1120,7 @@ namespace x680 {
     class soassignment_entity : public assignment_entity {
 
     public:
-        soassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg);
+        soassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg = basic_atom_ptr());
 
         basic_atom_ptr big() const {
             return big_;
