@@ -597,7 +597,7 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // allexceptconstraint_atom
+    // exceptionconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
     class exceptionconstraint_atom : public constraint_atom {
@@ -634,6 +634,8 @@ namespace x680 {
         void type(type_atom_ptr val) {
             type_ = val;
         }
+        
+         virtual void resolve();
 
     private:
 

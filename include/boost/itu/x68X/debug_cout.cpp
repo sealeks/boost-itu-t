@@ -1260,30 +1260,14 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, voassignment_entity* self) {
         stream << "(?VO)" << self->name() << " [ ??? " << self->big()->reff()->name() << "] :: = ";
-        if (self->value())
-            stream << "(+v)";
-        else
-            stream << "(-v)";
-        if (self->object())
-            stream << "(+o)";
-        else
-            stream << "(-o)";
-        return stream << "\n";
+        return stream << "?\n";
     }
 
     // valueset or objectset
 
     std::ostream& operator<<(std::ostream& stream, soassignment_entity* self) {
         stream << "(?SO)" << self->name() << " [???" << self->big()->reff()->name() << "] :: = ";
-        if (self->valueset())
-            stream << "(+vs)";
-        else
-            stream << "(-vs)";
-        if (self->objectset())
-            stream << "(+os)";
-        else
-            stream << "(-os)";
-        return stream << "\n";
+        return stream << "?\n";
     }
 
 

@@ -289,6 +289,19 @@ namespace x680 {
         if (constraints_)
             constraints_->resolve();
     }
+    
+ 
+     /////////////////////////////////////////////////////////////////////////   
+    // exceptionconstraint_atom
+    /////////////////////////////////////////////////////////////////////////    
+    
+    
+        void exceptionconstraint_atom::resolve() {
+            if (type())
+                type()->resolve();
+            if (value())
+                value()->resolve();
+        }
 
 
 

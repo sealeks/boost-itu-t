@@ -68,8 +68,6 @@ namespace x680 {
 
         void resolve_vect(value_vct& vl);
 
-        //void swap_scope_vect(value_vct& vl, basic_entity_ptr to_, basic_entity_ptr from_= basic_entity_ptr());
-
     private:
 
         value_type valtype_;
@@ -211,8 +209,6 @@ namespace x680 {
         }
 
         virtual void resolve();
-
-        //virtual  void swap_scope(basic_entity_ptr to_, basic_entity_ptr from_= basic_entity_ptr());     
 
     private:
 
@@ -426,7 +422,7 @@ namespace x680 {
     class valueassignment_entity : public assignment_entity {
 
     public:
-        valueassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl = value_atom_ptr ());
+        valueassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl = value_atom_ptr());
 
         type_atom_ptr type() const {
             return type_;

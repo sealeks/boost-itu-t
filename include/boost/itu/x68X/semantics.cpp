@@ -27,9 +27,10 @@ namespace x680 {
 
 
             insert_global(global);
-
-            for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it)
-                compile_module(*it, global);
+ 
+            for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it){
+                std::cout << "compile module: " << it->name << std::endl;
+                compile_module(*it, global);}
             global->resolve();
             return global;
         }
@@ -99,15 +100,15 @@ namespace x680 {
             entity_enum tp = et_Nodef;
             basic_entity_ptr rslt;
             switch (ent.which()) {
-                case 0: return compile_typeassignment(scope, ent);
-                case 1: return compile_valueassignment(scope, ent);
-                case 2: return compile_valuesetassignment(scope, ent);
-                case 3: return compile_classassignment(scope, ent);
-                case 4: return compile_objectassignment(scope, ent);
-                case 5: return compile_objectsetassignment(scope, ent);
-                case 6: return compile_bigassignment(scope, ent);
-                case 7: return compile_voassignment(scope, ent);
-                case 8: return compile_soassignment(scope, ent);
+                case 0: return compile_typeassignment(scope, boost::get<x680::syntactic::type_assignment>(ent));
+                case 1: return compile_valueassignment(scope, boost::get<x680::syntactic::value_assignment>(ent));
+                case 2: return compile_valuesetassignment(scope, boost::get<x680::syntactic::valueset_assignment>(ent));
+                case 3: return compile_classassignment(scope, boost::get<x680::syntactic::class_assignment>(ent));
+                case 4: return compile_objectassignment(scope, boost::get<x680::syntactic::object_assignment>(ent));
+                case 5: return compile_objectsetassignment(scope, boost::get<x680::syntactic::objectset_assignment>(ent));
+                case 6: return compile_bigassignment(scope, boost::get<x680::syntactic::unknown_tc_assignment>(ent));
+                case 7: return compile_voassignment(scope, boost::get<x680::syntactic::unknown_vo_assignment>(ent));
+                case 8: return compile_soassignment(scope, boost::get<x680::syntactic::unknown_so_assignment>(ent));
             }
             return rslt;
         }
@@ -144,8 +145,7 @@ namespace x680 {
 
         //  type
 
-        typeassignment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::type_assignment tmp = boost::get<x680::syntactic::type_assignment>(ent);
+        typeassignment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::type_assignment& tmp) {
             typeassignment_entity_ptr tmpt(new typeassignment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
             switch (tmp.type.builtin_t) {
                 case t_SEQUENCE:
@@ -286,8 +286,7 @@ namespace x680 {
 
         //  value
 
-        valueassignment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::value_assignment tmp = boost::get<x680::syntactic::value_assignment>(ent);
+        valueassignment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::value_assignment& tmp) {
             valueassignment_entity_ptr tmpt(new valueassignment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
             value_atom_ptr tmpv = compile_value(tmpt, tmp.value);
             tmpt->value(tmpv);
@@ -332,7 +331,7 @@ namespace x680 {
                 }
             } catch (boost::bad_lexical_cast) {
             }
-            scope->referenceerror_throw(scope->name(),"Value dos'nt set"); 
+            scope->referenceerror_throw(scope->name(), "Value dos'nt set");
             return value_atom_ptr();
         }
 
@@ -421,8 +420,7 @@ namespace x680 {
 
         // valueset
 
-        valuesetassignment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::valueset_assignment tmp = boost::get<x680::syntactic::valueset_assignment>(ent);
+        valuesetassignment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::valueset_assignment& tmp) {
             valuesetassignment_entity_ptr tmpv(new valuesetassignment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
             tmpv->valueset(compile_valueset(tmpv, tmp.set));
             tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
@@ -548,8 +546,7 @@ namespace x680 {
 
         //class
 
-        classassignment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::class_assignment tmp = boost::get<x680::syntactic::class_assignment>(ent);
+        classassignment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::class_assignment& tmp) {
             classassignment_entity_ptr tmpc(new classassignment_entity(scope, tmp.identifier));
             switch (tmp.class_.tp) {
                 case cl_Reference:
@@ -801,8 +798,7 @@ namespace x680 {
 
         // object         
 
-        objectassignment_entity_ptr compile_objectassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::object_assignment tmp = boost::get<x680::syntactic::object_assignment>(ent);
+        objectassignment_entity_ptr compile_objectassignment(basic_entity_ptr scope, const x680::syntactic::object_assignment& tmp) {
             objectassignment_entity_ptr tmpc(new objectassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_)));
             object_atom_ptr obj = compile_object(tmpc, tmp.object);
             tmpc->object(obj);
@@ -872,8 +868,7 @@ namespace x680 {
 
         // objectset         
 
-        objectsetassignment_entity_ptr compile_objectsetassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::objectset_assignment tmp = boost::get<x680::syntactic::objectset_assignment>(ent);
+        objectsetassignment_entity_ptr compile_objectsetassignment(basic_entity_ptr scope, const x680::syntactic::objectset_assignment& tmp) {
             objectsetassignment_entity_ptr tmpc(new objectsetassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_)));
             objectset_atom_ptr objs = compile_objectset(tmpc, tmp.set);
             tmpc->objectset(objs);
@@ -907,40 +902,41 @@ namespace x680 {
             return tmp;
         }
 
-        bigassignment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::unknown_tc_assignment tmp = boost::get<x680::syntactic::unknown_tc_assignment>(ent);
+        bigassignment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::unknown_tc_assignment& tmp) {
             bigassignment_entity_ptr tmpv = bigassignment_entity_ptr(new bigassignment_entity(scope, tmp.identifier));
             tmpv->big(compile_reff(scope, tmp.unknown_tc.reff));
             tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
-            tmpv->big()->parameters(compile_parameters(scope,tmp.unknown_tc.parameters));
+            tmpv->big()->parameters(compile_parameters(scope, tmp.unknown_tc.parameters));
+            if ((tmp.alternative_ & AS_TYPE) && (tmp.typea))
+                tmpv->bigT(compile_typeassignment(scope, *tmp.typea));
+            if ((tmp.alternative_ & AS_CLASS) && (tmp.classa))
+                tmpv->bigC(compile_classassignment(scope, *tmp.classa));
             return tmpv;
         }
 
         // value or object 
 
-        voassignment_entity_ptr compile_voassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::unknown_vo_assignment tmp = boost::get<x680::syntactic::unknown_vo_assignment>(ent);
+        voassignment_entity_ptr compile_voassignment(basic_entity_ptr scope, const x680::syntactic::unknown_vo_assignment& tmp) {
             voassignment_entity_ptr tmpv = voassignment_entity_ptr(new voassignment_entity(scope, tmp.identifier));
             tmpv->big(compile_reff(tmpv, tmp.reff));
-            if ((tmp.unknown_vo.alternative_ & AS_VALUE) && (tmp.unknown_vo.value_))
-                tmpv->value(compile_value(scope, *(tmp.unknown_vo.value_)));
-            if ((tmp.unknown_vo.alternative_ & AS_OBJECT) && (tmp.unknown_vo.object_))
-                tmpv->object(compile_object(scope, *(tmp.unknown_vo.object_)));
-            tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
+            if ((tmp.alternative_ & AS_VALUE) && (tmp.valuea))
+                tmpv->bigT(compile_valueassignment(scope, *tmp.valuea));
+            if ((tmp.alternative_ & AS_OBJECT) && (tmp.objecta))
+                tmpv->bigC(compile_objectassignment(scope, *tmp.objecta));
+
             return tmpv;
         }
 
         // valueset or objectset
 
-        soassignment_entity_ptr compile_soassignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            x680::syntactic::unknown_so_assignment tmp = boost::get<x680::syntactic::unknown_so_assignment>(ent);
+        soassignment_entity_ptr compile_soassignment(basic_entity_ptr scope,  const x680::syntactic::unknown_so_assignment& tmp){
             soassignment_entity_ptr tmpv = soassignment_entity_ptr(new soassignment_entity(scope, tmp.identifier));
             tmpv->big(compile_reff(tmpv, tmp.reff));
-            if ((tmp.unknown_so.alternative_ & AS_VALUESET) && (tmp.unknown_so.valueset_))
-                tmpv->valueset(compile_valueset(scope, *(tmp.unknown_so.valueset_)));
-            if ((tmp.unknown_so.alternative_ & AS_OBJECTSET) && (tmp.unknown_so.objectset_))
-                tmpv->objectset(compile_objectset(scope, *(tmp.unknown_so.objectset_)));
-            tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
+            if ((tmp.alternative_ & AS_VALUESET) && (tmp.valueseta))
+                tmpv->bigT(compile_valuesetassignment(scope, *tmp.valueseta));
+            if ((tmp.alternative_ & AS_OBJECTSET) && (tmp.objectseta))
+                tmpv->bigC(compile_objectsetassignment(scope, *tmp.objectseta));
+
             return tmpv;
         }
 

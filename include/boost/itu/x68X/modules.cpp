@@ -76,21 +76,26 @@ namespace x680 {
                     >> -(Parameters[bind(&classa_arguments, qi::_val, qi::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> StrictObjectClass[bind(&classa_class, qi::_val, qi::_1)];
+            
+            ObjectClassAssignment0 = objectclassreference_[bind(&classa_reference, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&classa_arguments, qi::_val, qi::_1)])
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> ObjectClass[bind(&classa_class, qi::_val, qi::_1)];            
 
             TypeAssignment = typereference_[bind(&type_identifier, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&typea_arguments, qi::_val, qi::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> /*Type*/StrictType[bind(&typea_type, qi::_val, qi::_1)];
-
+                       
             TypeAssignmentSS = typereference_strict[bind(&type_identifier, qi::_val, qi::_1)]
                     >> -(Parameters[bind(&typea_arguments, qi::_val, qi::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> Type[bind(&typea_type, qi::_val, qi::_1)];
-
-            UnknownTCAssignment = objectclassreference_[bind(&unknown_tca_identifier, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&unknown_tca_arguments, qi::_val, qi::_1)])
+            
+            TypeAssignment0 = typereference_[bind(&type_identifier, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&typea_arguments, qi::_val, qi::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> UnknownReferencedTC[bind(&unknown_tca, qi::_val, qi::_1)];
+                    >> Type[bind(&typea_type, qi::_val, qi::_1)];            
 
 
 
@@ -155,9 +160,17 @@ namespace x680 {
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
                     >> ObjectSet[bind(&objectseta_objectset, qi::_val, qi::_1)];
 
+            
 
+            
+            UnknownTCAssignment =  ((qi::hold[TypeAssignment0[bind(&unknown_tca_type, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectClassAssignment0[bind(&unknown_tca_class, qi::_val, qi::_1)] >> qi::omit[';']])) |
+                     (objectclassreference_[bind(&unknown_tca_identifier, qi::_val, qi::_1)]
+                    >> -(Parameters[bind(&unknown_tca_arguments, qi::_val, qi::_1)])
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
+                    >> UnknownReferencedTC[bind(&unknown_tca, qi::_val, qi::_1)]);
 
-
+                    
             SettingType = Type[bind(&setting_settype, qi::_val, qi::_1)];
 
             SettingValue = Value[bind(&setting_value, qi::_val, qi::_1)];
@@ -262,28 +275,40 @@ namespace x680 {
 
 
 
-            ValueOrObjectM = Value[bind(&unknown_vo_value, qi::_val, qi::_1)] | Object[bind(&unknown_vo_object, qi::_val, qi::_1)];
-            ValueOrObject = (qi::hold[Value[bind(&unknown_vo_value, qi::_val, qi::_1)] >> qi::omit[';']]
+            ValueOrObjectM = 
+                    Value[bind(&unknown_vo_value, qi::_val, qi::_1)] | Object[bind(&unknown_vo_object, qi::_val, qi::_1)];
+            
+            ValueOrObject =
+                    (qi::hold[Value[bind(&unknown_vo_value, qi::_val, qi::_1)] >> qi::omit[';']]
                     | qi::hold[Object[bind(&unknown_vo_object, qi::_val, qi::_1)] >> qi::omit[';']])
                     | ValueOrObjectM;
 
-            ValueSetOrObjectSetM = ValueSet[bind(&unknown_so_valueset, qi::_val, qi::_1)] | ObjectSet[bind(&unknown_so_objectset, qi::_val, qi::_1)];
+            ValueSetOrObjectSetM =
+                    ValueSet[bind(&unknown_so_valueset, qi::_val, qi::_1)] | ObjectSet[bind(&unknown_so_objectset, qi::_val, qi::_1)];
+            
             ValueSetOrObjectSet = (qi::hold[ValueSet[bind(&unknown_so_valueset, qi::_val, qi::_1)] >> qi::omit[';']]
                     | qi::hold[ObjectSet[bind(&unknown_so_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
                     | ValueSetOrObjectSetM;
 
 
-            UnknownValObjAssignment = valuereference_[bind(&unknown_voa_identifier, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&unknown_voa_arguments, qi::_val, qi::_1)])
+            UnknownValObjAssignment = 
+                    ((qi::hold[ValueAssignment[bind(&unknown_voa_value, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectAssignment[bind(&unknown_voa_object, qi::_val, qi::_1)] >> qi::omit[';']])) 
+                    | (valuereference_[bind(&unknown_voa_identifier, qi::_val, qi::_1)]
+                    >> qi::omit[-(Parameters)]
                     >> DefinedType_[bind(&unknown_voa_refference, qi::_val, qi::_1)]
-                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ValueOrObject[bind(&unknown_voa, qi::_val, qi::_1)];
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]
+                    >> ValueOrObject]);            
 
-            UnknownValSetObjSetAssignment = valuesetreference_[bind(&unknown_soa_identifier, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&unknown_soa_arguments, qi::_val, qi::_1)])
+            
+            UnknownValSetObjSetAssignment=
+                    ((qi::hold[ValueSetTypeAssignment[bind(&unknown_soa_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSetAssignment[bind(&unknown_soa_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) 
+                    | ( valuesetreference_[bind(&unknown_soa_identifier, qi::_val, qi::_1)]
+                    >> qi::omit[-(Parameters)]
                     >> DefinedType_[bind(&unknown_soa_refference, qi::_val, qi::_1)]
-                    >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ValueSetOrObjectSet[bind(&unknown_soa, qi::_val, qi::_1)];
+                    >> qi::omit[qi::lexeme[qi::lit("::=")]
+                    >> ValueSetOrObjectSet]);            
 
 
             initV();
@@ -369,7 +394,7 @@ namespace x680 {
 
             result.clear();
             std::string src;
-            std::cout << "compile file:" << filename << std::endl;
+            std::cout << "parse file:" << filename << std::endl;
             if (!read_module_file(filename, src)) {
                 throw FILE_OR_DIRECTORY_ERROR;
             }

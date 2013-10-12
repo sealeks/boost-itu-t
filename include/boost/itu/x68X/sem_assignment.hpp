@@ -640,7 +640,6 @@ namespace x680 {
         static basic_entity_ptr preresolve_nodef_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
         static basic_entity_ptr preresolve_nodefv_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
         static basic_entity_ptr preresolve_nodefs_assigment(basic_entity_ptr elm, basic_entity_ptr start = basic_entity_ptr());
-        static void swap_arguments_scope(assignment_entity* assign, basic_entity_ptr newscope);
 
 
         export_vector exports_;
@@ -850,8 +849,6 @@ namespace x680 {
 
         virtual void resolve();
 
-        virtual void swap_scope(basic_entity_ptr to_, basic_entity_ptr from_ = basic_entity_ptr());
-
 
     protected:
         basic_entity_ptr reff_;
@@ -1039,6 +1036,21 @@ namespace x680 {
             big_ = vl;
         }
 
+        typeassignment_entity_ptr bigT() const {
+            return bigT_;
+        }
+
+        void bigT(typeassignment_entity_ptr vl) {
+            bigT_ = vl;
+        }
+
+        classassignment_entity_ptr bigC() const {
+            return bigC_;
+        }
+
+        void bigC(classassignment_entity_ptr vl) {
+            bigC_ = vl;
+        }
 
         /////        
 
@@ -1051,6 +1063,8 @@ namespace x680 {
     private:
 
         basic_atom_ptr big_;
+        typeassignment_entity_ptr bigT_;
+        classassignment_entity_ptr bigC_;
     };
 
 
@@ -1077,21 +1091,22 @@ namespace x680 {
             big_ = vl;
         }
 
-        value_atom_ptr value() const {
-            return value_;
+        valueassignment_entity_ptr bigT() const {
+            return bigT_;
         }
 
-        void value(value_atom_ptr vl) {
-            value_ = vl;
+        void bigT(valueassignment_entity_ptr vl) {
+            bigT_ = vl;
         }
 
-        object_atom_ptr object() const {
-            return object_;
+        objectassignment_entity_ptr bigC() const {
+            return bigC_;
         }
 
-        void object(object_atom_ptr vl) {
-            object_ = vl;
+        void bigC(objectassignment_entity_ptr vl) {
+            bigC_ = vl;
         }
+
 
 
         /////        
@@ -1105,8 +1120,8 @@ namespace x680 {
     private:
 
         basic_atom_ptr big_;
-        value_atom_ptr value_;
-        object_atom_ptr object_;
+        valueassignment_entity_ptr bigT_;
+        objectassignment_entity_ptr bigC_;
     };
 
 
@@ -1130,20 +1145,20 @@ namespace x680 {
             big_ = vl;
         }
 
-        valueset_atom_ptr valueset() const {
-            return valueset_;
+        valuesetassignment_entity_ptr bigT() const {
+            return bigT_;
         }
 
-        void valueset(valueset_atom_ptr vl) {
-            valueset_ = vl;
+        void bigT(valuesetassignment_entity_ptr vl) {
+            bigT_ = vl;
         }
 
-        objectset_atom_ptr objectset() const {
-            return objectset_;
+        objectsetassignment_entity_ptr bigC() const {
+            return bigC_;
         }
 
-        void objectset(objectset_atom_ptr vl) {
-            objectset_ = vl;
+        void bigC(objectsetassignment_entity_ptr vl) {
+            bigC_ = vl;
         }
 
 
@@ -1158,8 +1173,8 @@ namespace x680 {
     private:
 
         basic_atom_ptr big_;
-        valueset_atom_ptr valueset_;
-        objectset_atom_ptr objectset_;
+        valuesetassignment_entity_ptr bigT_;
+        objectsetassignment_entity_ptr bigC_;
     };
 
 

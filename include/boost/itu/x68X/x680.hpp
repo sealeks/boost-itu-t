@@ -338,8 +338,24 @@ namespace x680 {
         typedef std::vector<string_pair> string_pair_vector;
 
         struct type_assignment;
+        typedef boost::shared_ptr<type_assignment> type_assignment_ptr;
         typedef std::vector<type_assignment> type_assignment_vector;
         typedef type_assignment_vector named_type_element_vector;
+        
+        struct value_assignment;
+        typedef boost::shared_ptr<value_assignment> value_assignment_ptr;       
+        
+        struct valueset_assignment;
+        typedef boost::shared_ptr<valueset_assignment> valueset_assignment_ptr;         
+
+        struct class_assignment;
+        typedef boost::shared_ptr<class_assignment> class_assignment_ptr;     
+        
+        struct object_assignment;
+        typedef boost::shared_ptr<object_assignment> object_assignment_ptr;       
+        
+        struct objectset_assignment;
+        typedef boost::shared_ptr<objectset_assignment> objectset_assignment_ptr;    
 
         struct type_element;
         typedef boost::shared_ptr<type_element> type_element_ptr;
@@ -432,10 +448,15 @@ namespace x680 {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
         struct unknown_tc_assignment {
+            
+            unknown_tc_assignment()  : alternative_(0){}
 
             std::string identifier;
             argument_vector arguments;
             unknown_tc_element unknown_tc;
+            type_assignment_ptr typea;
+            class_assignment_ptr classa;
+            alternmask alternative_;            
 
         };
 
@@ -464,12 +485,15 @@ namespace x680 {
         //  unknown_tc_assignment
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
-        struct unknown_vo_assignment {
+        struct unknown_vo_assignment  {
 
+            unknown_vo_assignment()  : alternative_(0){}
+            
             std::string identifier;
             std::string reff;
-            argument_vector arguments;
-            unknown_vo_element unknown_vo;
+            value_assignment_ptr valuea;
+            object_assignment_ptr objecta;
+            alternmask alternative_;            
         };
 
 
@@ -495,12 +519,16 @@ namespace x680 {
         //  unknown_tc_assignment
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
-        struct unknown_so_assignment {
+        struct unknown_so_assignment  {
 
+
+            unknown_so_assignment()  : alternative_(0){}     
+            
             std::string identifier;
             std::string reff;
-            argument_vector arguments;
-            unknown_so_element unknown_so;
+            valueset_assignment_ptr valueseta;
+            objectset_assignment_ptr objectseta;
+            alternmask alternative_;            
 
         };
 

@@ -140,7 +140,7 @@ namespace x680 {
 
 
 
-            TypeConstraint = Type[bind(&constraint_type, qi::_val, qi::_1)];
+            TypeConstraint = Type[bind(&constraint_typeset, qi::_val, qi::_1)];
 
             SimpleElement = ConstraintFromObjects| ConstraintFromObject
                     | ContainedSubtype | PatternConstraint

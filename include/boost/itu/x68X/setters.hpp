@@ -38,10 +38,10 @@ namespace x680 {
         void unknown_tca(unknown_tc_assignment& holder, const unknown_tc_element& val);
 
         void unknown_tca_arguments(unknown_tc_assignment& holder, const argument_vector& val);
-        
+
         void unknown_tca_type(unknown_tc_assignment& holder, const type_assignment& val);
 
-        void unknown_tca_class(unknown_tc_assignment& holder, const class_assignment& val);        
+        void unknown_tca_class(unknown_tc_assignment& holder, const class_assignment& val);
 
 
         //  unknown_vo_element setter            
@@ -62,13 +62,9 @@ namespace x680 {
 
         void unknown_voa_refference(unknown_vo_assignment& holder, const std::string& val);
 
-        void unknown_voa(unknown_vo_assignment& holder, const unknown_vo_element& val);
+        void unknown_voa_value(unknown_vo_assignment& holder, const value_assignment& val);
 
-        void unknown_voa_arguments(unknown_vo_assignment& holder, const argument_vector& val);
-        
-          void unknown_voa_value(unknown_vo_assignment& holder, const value_assignment& val);
-
-        void unknown_voa_object(unknown_vo_assignment& holder, const object_assignment& val);            
+        void unknown_voa_object(unknown_vo_assignment& holder, const object_assignment& val);
 
 
         //  unknown_so_element setter            
@@ -87,13 +83,9 @@ namespace x680 {
 
         void unknown_soa_refference(unknown_so_assignment& holder, const std::string& val);
 
-        void unknown_soa(unknown_so_assignment& holder, const unknown_so_element& val);
+        void unknown_soa_valueset(unknown_so_assignment& holder, const valueset_assignment& val);
 
-        void unknown_soa_arguments(unknown_so_assignment& holder, const argument_vector& val);
-        
-         void unknown_soa_valueset(unknown_so_assignment& holder, const valueset_assignment& val);
-
-        void unknown_soa_objectset(unknown_so_assignment& holder, const objectset_assignment& val);              
+        void unknown_soa_objectset(unknown_so_assignment& holder, const objectset_assignment& val);
 
 
 
@@ -158,7 +150,7 @@ namespace x680 {
 
         void type_objectfield(type_element& holder, const std::string& val, const std::string& reff);
 
-        void type_fromobject(type_element& holder, const object_element& val, const std::string& reff);      
+        void type_fromobject(type_element& holder, const object_element& val, const std::string& reff);
 
         void type_fromobjectset(type_element& holder, const objectset_element& val, const std::string& reff);
 
@@ -195,7 +187,7 @@ namespace x680 {
 
         void constraint_subtype(constraint_element& holder, const type_element& val);
 
-        void constraint_type(constraint_element& holder, const type_element& val);
+        void constraint_typeset(constraint_element& holder, const type_element& val);
 
         void constraint_patterntype(constraint_element& holder, const value_element& val);
 
@@ -236,11 +228,11 @@ namespace x680 {
         void constraint_exceptidentifier(constraint_element& holder, const std::string& val);
 
         void constraint_excepttypevalue(constraint_element& holder, const type_element& valt, const value_element& valv);
-        
 
-        void constraint_fromobject(constraint_element& holder,const object_element& val, const std::string& reff);
-         
-        void constraint_fromobjects(constraint_element& holder, const objectset_element& val, const std::string& reff);               
+
+        void constraint_fromobject(constraint_element& holder, const object_element& val, const std::string& reff);
+
+        void constraint_fromobjects(constraint_element& holder, const objectset_element& val, const std::string& reff);
 
         void push_constraint(constraint_element_vector& holder, const constraint_element& val);
 
@@ -291,9 +283,9 @@ namespace x680 {
 
         void valueset_defined(valueset_element& holder, const std::string& val);
 
-        void valueset_fromobject(valueset_element& holder,const object_element& val, const std::string& reff);
-         
-        void valueset_fromobjects(valueset_element& holder, const objectset_element& val, const std::string& reff);       
+        void valueset_fromobject(valueset_element& holder, const object_element& val, const std::string& reff);
+
+        void valueset_fromobjects(valueset_element& holder, const objectset_element& val, const std::string& reff);
 
 
 
@@ -488,9 +480,9 @@ namespace x680 {
 
         void object_objectsetdef(object_element& holder, const objectset_element& val);
 
-        void object_objectsetfromobjects(object_element& holder,const objectset_element& val, const std::string& reff);
+        void object_objectsetfromobjects(object_element& holder, const objectset_element& val, const std::string& reff);
 
-        void object_objectsetfromobject(object_element& holder,const object_element& val, const std::string& reff);
+        void object_objectsetfromobject(object_element& holder, const object_element& val, const std::string& reff);
 
 
 

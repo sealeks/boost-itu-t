@@ -96,13 +96,6 @@ namespace x680 {
             holder.reff = val;
         }
 
-        void unknown_voa(unknown_vo_assignment& holder, const unknown_vo_element& val) {
-            holder.unknown_vo = val;
-        }
-
-        void unknown_voa_arguments(unknown_vo_assignment& holder, const argument_vector& val) {
-            holder.arguments = val;
-        }
 
         void unknown_voa_value(unknown_vo_assignment& holder, const value_assignment& val) {
             holder.valuea = value_assignment_ptr(new value_assignment(val));
@@ -141,14 +134,6 @@ namespace x680 {
 
         void unknown_soa_refference(unknown_so_assignment& holder, const std::string& val) {
             holder.reff = val;
-        }
-
-        void unknown_soa(unknown_so_assignment& holder, const unknown_so_element& val) {
-            holder.unknown_so = val;
-        }
-
-        void unknown_soa_arguments(unknown_so_assignment& holder, const argument_vector& val) {
-            holder.arguments = val;
         }
 
         void unknown_soa_valueset(unknown_so_assignment& holder, const valueset_assignment& val) {
@@ -367,7 +352,7 @@ namespace x680 {
             holder.tp = cns_ContainedSubtype;
         }
 
-        void constraint_type(constraint_element& holder, const type_element& val) {
+        void constraint_typeset(constraint_element& holder, const type_element& val) {
             holder.type = val;
             holder.tp = cns_TypeConstraint;
         }
@@ -671,8 +656,6 @@ namespace x680 {
         }
 
 
-        const type_assignment extention_type_assignment(mk_extention);
-        const type_assignment exception_type_assignment(mk_exception);
 
 
 

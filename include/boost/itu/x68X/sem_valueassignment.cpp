@@ -100,10 +100,7 @@ namespace x680 {
             (*it)->resolve_reff();
     }
 
-    /*void value_atom::swap_scope_vect(value_vct& vl, basic_entity_ptr to_, basic_entity_ptr from_) {
-        for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
-            (*it)->swap_scope(to_, from_);
-    }*/
+
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -125,9 +122,6 @@ namespace x680 {
         resolve_vect(values_);
     }
 
-    /*void structvalue_atom::swap_scope(basic_entity_ptr to_, basic_entity_ptr from_) {      
-        swap_scope_vect(values_,to_,from_);
-    }*/
 
     /////////////////////////////////////////////////////////////////////////   
     // definedvalue_atom
@@ -215,7 +209,7 @@ namespace x680 {
             }
         }
         if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
-            return argfnd;        
+            return argfnd;
         if (scope()) {
             prefind(nm, scope()->childs());
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)

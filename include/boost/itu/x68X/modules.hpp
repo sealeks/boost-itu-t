@@ -134,7 +134,9 @@ namespace x680 {
 
 
             qi::rule<str_iterator, class_assignment(), skip_cmt_type> ObjectClassAssignment;
+            qi::rule<str_iterator, class_assignment(), skip_cmt_type> ObjectClassAssignment0;            
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeAssignment; // strict
+            qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeAssignment0; // strict            
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> TypeAssignmentSS; // synctatic strict            
             qi::rule<str_iterator, value_assignment(), skip_cmt_type> ValueAssignmentLS; // left strict
             qi::rule<str_iterator, value_assignment(), skip_cmt_type> ValueAssignmentRS; // right strict      
@@ -146,9 +148,9 @@ namespace x680 {
             qi::rule<str_iterator, valueset_assignment(), skip_cmt_type> ValueSetTypeAssignmentLS; // left strict  
             qi::rule<str_iterator, valueset_assignment(), skip_cmt_type> ValueSetTypeAssignment;
             qi::rule<str_iterator, objectset_assignment(), skip_cmt_type> ObjectSetAssignmentLS; // left strict
-            qi::rule<str_iterator, objectset_assignment(), skip_cmt_type> ObjectSetAssignment;
-            qi::rule<str_iterator, unknown_tc_assignment(), skip_cmt_type> UnknownTCAssignment;
-            qi::rule<str_iterator, unknown_vo_assignment(), skip_cmt_type> UnknownValObjAssignment;
+            qi::rule<str_iterator, objectset_assignment(), skip_cmt_type> ObjectSetAssignment;    
+            qi::rule<str_iterator, unknown_tc_assignment(), skip_cmt_type> UnknownTCAssignment;     
+            qi::rule<str_iterator, unknown_vo_assignment(), skip_cmt_type> UnknownValObjAssignment;       
             qi::rule<str_iterator, unknown_so_assignment(), skip_cmt_type> UnknownValSetObjSetAssignment;
 
 
@@ -195,8 +197,8 @@ namespace x680 {
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  UnknownTCAssigment grammar (Type or Class)
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
-
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            
 
             qi::rule<str_iterator, unknown_tc_element(), skip_cmt_type> UnknownReferencedTC;
             qi::rule<str_iterator, unknown_tc_element(), skip_cmt_type> UnknownTC;
@@ -206,8 +208,8 @@ namespace x680 {
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  UnknownVOAssigment grammar (Value or Object)
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
-
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
+                     
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> ValueOrObjectM;
             qi::rule<str_iterator, unknown_vo_element(), skip_cmt_type> ValueOrObject;
 
