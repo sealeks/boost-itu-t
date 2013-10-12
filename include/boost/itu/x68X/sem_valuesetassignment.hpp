@@ -224,6 +224,8 @@ namespace x680 {
         multipletypeconstraint_atom * as_multipletypeconstraint();
 
         stringconstraint_atom * as_property();
+        
+        userconstraint_atom* as_user();
 
         unionconstraint_atom* as_union();
 
@@ -604,8 +606,6 @@ namespace x680 {
 
     public:
 
-        // exceptionconstraint_atom() : constraint_atom(cns_EXCEPTION) {
-        // }      
 
         exceptionconstraint_atom(basic_entity_ptr scp, int vl) : constraint_atom(scp, cns_EXCEPTION),
         value_(value_atom_ptr(new numvalue_atom(vl))), type_(type_atom_ptr(new type_atom(scp, t_INTEGER))) {
@@ -643,6 +643,40 @@ namespace x680 {
         type_atom_ptr type_;
 
     };
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // userconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class userconstraint_atom : public constraint_atom {
+
+    public:
+
+
+        userconstraint_atom(basic_entity_ptr scp, argument_entity_vct vct) 
+        : constraint_atom(scp, cns_UserDefinedConstraint), arguments_(vct) {
+        }
+
+        argument_entity_vct& arguments() {
+            return arguments_;
+        }
+
+        void arguments(argument_entity_vct vl) {
+            arguments_ = vl;
+        }
+
+        bool has_arguments() const {
+            return !arguments_.empty();
+        }
+        
+         virtual void resolve();
+
+    private:
+
+        argument_entity_vct arguments_;
+
+    };   
 
 
 

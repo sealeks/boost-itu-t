@@ -213,7 +213,7 @@ namespace x680 {
 
         void constraint_multitype(constraint_element& holder, const constraint_element_vector& val);
 
-        void constraint_userdef(constraint_element& holder, const userdefconstraint_vector& val);
+        void constraint_userdef(constraint_element& holder, const argument_vector& val);
 
         void constraint_relation(constraint_element& holder, const objectset_element& valr, const string_vector& valp);
 
@@ -251,16 +251,6 @@ namespace x680 {
         const constraint_element CONSTRAINT_ALLEXCEPT = constraint_element(cns_ALLEXCEPT);
         const constraint_element CONSTRAINT_EXTENTION = constraint_element(cns_EXTENTION, cmk_extention);
 
-
-        // Userconstraint setter
-
-        void userdefconstraint_governor_tp(userdefconstraint_type& holder, const type_element& val, const setting_element& par);
-
-        void userdefconstraint_governor_cl(userdefconstraint_type& holder, const class_element& val, const setting_element& par);
-
-        void userdefconstraint_governor_reff(userdefconstraint_type& holder, const std::string& val, const setting_element& par);
-
-        void userdefconstraint_argument(userdefconstraint_type& holder, const setting_element& val);
 
 
 

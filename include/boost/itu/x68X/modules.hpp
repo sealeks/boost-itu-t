@@ -193,7 +193,7 @@ namespace x680 {
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD1;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD2;
             qi::rule<str_iterator, argument_vector(), skip_cmt_type> Parameters;
-
+            qi::rule<str_iterator, argument_vector(), skip_cmt_type> UParameters;
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  UnknownTCAssigment grammar (Type or Class)
@@ -421,13 +421,6 @@ namespace x680 {
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ExceptionSpecConstraint;
             qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> ExceptionSpecConstraints;
 
-
-            qi::rule<str_iterator, userdefconstraint_type(), skip_cmt_type> UserDefinedConstraintParameter;
-            qi::rule<str_iterator, userdefconstraint_type(), skip_cmt_type> UserDefinedConstraintParameterA;
-            qi::rule<str_iterator, userdefconstraint_type(), skip_cmt_type> UserDefinedConstraintParameterB;
-            qi::rule<str_iterator, userdefconstraint_type(), skip_cmt_type> UserDefinedConstraintParameterC;
-            qi::rule<str_iterator, userdefconstraint_type(), skip_cmt_type> UserDefinedConstraintParameterD;
-            qi::rule<str_iterator, userdefconstraint_vector(), skip_cmt_type> UserDefinedConstraintParameters;
 
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> UserDefinedConstraint;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> SimpleTableConstraint;

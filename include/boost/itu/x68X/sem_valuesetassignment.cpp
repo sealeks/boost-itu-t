@@ -167,7 +167,10 @@ namespace x680 {
 
     stringconstraint_atom * constraint_atom::as_property() {
         return cotstrtype_ == cns_PropertySettings ? dynamic_cast<stringconstraint_atom *> (this) : 0;
-
+    }
+    
+    userconstraint_atom* constraint_atom::as_user(){
+        return cotstrtype_ == cns_UserDefinedConstraint ? dynamic_cast<userconstraint_atom*> (this) : 0;
     }
 
     unionconstraint_atom* constraint_atom::as_union() {
@@ -303,6 +306,29 @@ namespace x680 {
                 value()->resolve();
         }
 
+        
+     /////////////////////////////////////////////////////////////////////////   
+    // userconstraint_atom
+    /////////////////////////////////////////////////////////////////////////    
+        
+    void userconstraint_atom::resolve() {
+        for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
+            if ((*it)->has_undef_governor()) {
+                if (!(*it)->governor()->reff())
+                    scope()->referenceerror_throw(scope()->name());
+                basic_entity_ptr fnd = scope()->find((*it)->governor()->reff());
+                if (fnd) {
+                    if (fnd->kind() == et_Type) {
+                        (*it)->governor(type_atom_ptr(new type_atom((*it)->scope(), (*it)->governor()->expectedname(), t_Reference)));
+                    } else if (fnd->kind() == et_Class) {
+                        (*it)->governor(class_atom_ptr(new class_atom((*it)->scope(), (*it)->governor()->expectedname(), cl_Reference)));
+                    } else
+                        scope()->referenceerror_throw((*it)->governor()->expectedname());
+                } else
+                    scope()->referenceerror_throw(scope()->name());
+            }
+        }
+    }        
 
 
 

@@ -229,7 +229,10 @@ namespace x680 {
 
     class complexconstraint_atom;
     typedef boost::shared_ptr<complexconstraint_atom> complexconstraint_atom_ptr;
-
+    
+    class userconstraint_atom;
+    typedef boost::shared_ptr<userconstraint_atom> userconstraint_atom_ptr;
+    
     class unionconstraint_atom;
     typedef boost::shared_ptr<unionconstraint_atom> unionconstraint_atom_ptr;
 

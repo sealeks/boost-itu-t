@@ -185,28 +185,8 @@ namespace x680 {
 
 
 
-            UserDefinedConstraintParameters = qi::omit[qi::lexeme[qi::lit("{")]]
-                    >> -(UserDefinedConstraintParameter % qi::omit[qi::lit(",")]) 
-                    >> qi::omit[qi::lexeme[qi::lit("}")]];
-
-            UserDefinedConstraintParameter = UserDefinedConstraintParameterA | UserDefinedConstraintParameterB |
-                    UserDefinedConstraintParameterC | UserDefinedConstraintParameterD;
-
-            UserDefinedConstraintParameterA = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> SettingU1)[bind(&userdefconstraint_governor_cl, qi::_val, qi::_1, qi::_2)];
-
-            UserDefinedConstraintParameterB = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> SettingU1)[bind(&userdefconstraint_governor_tp, qi::_val, qi::_1, qi::_2)];
-
-            UserDefinedConstraintParameterC = (DefinedType_ >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> SettingU1)[bind(&userdefconstraint_governor_reff, qi::_val, qi::_1, qi::_2)];
-
-            UserDefinedConstraintParameterD = SettingU2[bind(&userdefconstraint_argument, qi::_val, qi::_1)];
-
-
-
             UserDefinedConstraint = (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::space >> BY_]]
-                    >> UserDefinedConstraintParameters)[bind(&constraint_userdef, qi::_val, qi::_1)];
+                    >> UParameters)[bind(&constraint_userdef, qi::_val, qi::_1)];
 
             SimpleTableConstraint = StrictObjectSet[bind(&constraint_setelement, qi::_val, qi::_1)];
 

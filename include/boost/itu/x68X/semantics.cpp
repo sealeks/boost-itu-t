@@ -506,8 +506,8 @@ namespace x680 {
                 case cns_ALLEXCEPT: return constraint_atom_ptr(new allexceptconstraint_atom());
                 case cns_EXTENTION: return constraint_atom_ptr(new extentionconstraint_atom());
                 case cns_EXCEPTION: return compile_exceptionconstraint(scope, ent);
-                    /*case cns_UserDefinedConstraint,
-                    case cns_SimpleTableConstraint,
+                case cns_UserDefinedConstraint: return constraint_atom_ptr( new userconstraint_atom(scope, compile_arguments(scope, ent.uparameters)));
+                  /*  case cns_SimpleTableConstraint,
                     case cns_ComponentRelation,
                     case cns_ContentsType,
                     case cns_ContentsValue,

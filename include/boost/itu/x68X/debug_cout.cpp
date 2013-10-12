@@ -137,8 +137,6 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, const argument_entity_vct& self) {
-        if (self.empty())
-            return stream;
         stream << " {";
         for (argument_entity_vct::const_iterator it = self.begin(); it != self.end(); ++it) {
             if (it != self.begin())
@@ -656,6 +654,7 @@ namespace x680 {
             case cns_NamedConstraint: return stream << self->as_named();
             case cns_ValueSetFromObjects: return stream << self->as_fromdefinedset();
             case cns_ValueSetFromObject: return stream << self->as_fromdefined();
+            case cns_UserDefinedConstraint: return stream << self->as_user();
             case cns_UNION: return stream << " | ";
             case cns_INTERSECTION: return stream << " & ";
             case cns_EXCEPT: return stream << " ^ ";
@@ -755,6 +754,10 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, exceptionconstraint_atom* self) {
         return stream << " !" << self->type().get() << " : " << self->value().get();
+    }
+    
+    std::ostream& operator<<(std::ostream& stream, userconstraint_atom* self){
+        return stream << " CONSTRAINED BY  "  << self->arguments();
     }
 
 
