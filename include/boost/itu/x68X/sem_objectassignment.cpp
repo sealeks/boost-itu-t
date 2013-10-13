@@ -145,10 +145,9 @@ namespace x680 {
     };
 
     fieldsetting_atom_ptr defltobject_atom::find_field(const std::string& name) {
-        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
+        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) 
             if ((*it)->field() == name)
                 return (*it);
-        }
         return fieldsetting_atom_ptr();
     }
 
@@ -165,10 +164,9 @@ namespace x680 {
     };
 
     fieldsetting_atom_ptr defsyntxobject_atom::find_field(const std::string& name) {
-        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
+        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) 
             if ((*it)->field() == name)
                 return (*it);
-        }
         return fieldsetting_atom_ptr();
     }
 
@@ -335,27 +333,27 @@ namespace x680 {
         if (st) {
             if (fld->as_typefield()) {
                 if (st->type()) {
-                    childs_.push_back(typeassignment_entity_ptr(new typeassignment_entity(st->scope(), fld->name(), st->type())));
+                    childs_.push_back(typeassignment_entity_ptr(new typeassignment_entity(fld->scope(), fld->name(), st->type())));
                 } else
                     referenceerror_throw(fld->name(), "Field is not type: ");
             } else if (fld->as_valuefield()) {
                 if (st->value())
-                    childs_.push_back(basic_entity_ptr(new valueassignment_entity(st->scope(), fld->name(), fld->as_valuefield()->type(), st->value())));
+                    childs_.push_back(basic_entity_ptr(new valueassignment_entity(fld->scope(), fld->name(), fld->as_valuefield()->type(), st->value())));
                 else
                     referenceerror_throw(fld->name(), "Field is not value: ");
             } else if (fld->as_valuesetfield()) {
                 if (st->valueset())
-                    childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(st->scope(), fld->name(), fld->as_valuesetfield()->type(), st->valueset())));
+                    childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(fld->scope(), fld->name(), fld->as_valuesetfield()->type(), st->valueset())));
                 else
                     referenceerror_throw(fld->name(), "Field is not valueset: ");
             } else if (fld->as_objectfield()) {
                 if (st->object())
-                    childs_.push_back(basic_entity_ptr(new objectassignment_entity(st->scope(), fld->name(), fld->as_objectfield()->_class(), st->object())));
+                    childs_.push_back(basic_entity_ptr(new objectassignment_entity(fld->scope(), fld->name(), fld->as_objectfield()->_class(), st->object())));
                 else
                     referenceerror_throw(fld->name(), "Field is not object: ");
             } else if (fld->as_objectsetfield()) {
                 if (st->objectset())
-                    childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(st->scope(), fld->name(), fld->as_objectsetfield()->_class(), st->objectset())));
+                    childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(fld->scope(), fld->name(), fld->as_objectsetfield()->_class(), st->objectset())));
                 else
                     referenceerror_throw(fld->name(), "Field is not objectset: ");
             }
@@ -379,17 +377,17 @@ namespace x680 {
             if (fld->as_reffvaluefield()) {
                 basic_entity_ptr fnd = find_typefields(fld->as_reffvaluefield()->field()->reff()->name());
                 if ((st->value()) && (fnd)) {
-                    type_atom_ptr tp = type_atom_ptr(new type_atom(st->scope(), fld->as_reffvaluefield()->field()->reff()->name(), t_Reference));
+                    type_atom_ptr tp = type_atom_ptr(new type_atom(fld->scope(), fld->as_reffvaluefield()->field()->reff()->name(), t_Reference));
                     tp->reff(fnd);
-                    childs_.push_back(basic_entity_ptr(new valueassignment_entity(st->scope(), fld->name(), tp, st->value())));
+                    childs_.push_back(basic_entity_ptr(new valueassignment_entity(fld->scope(), fld->name(), tp, st->value())));
                 } else
                     referenceerror_throw(fld->name(), "Field is not value: ");
             } else if (fld->as_reffvaluesetfield()) {
                 basic_entity_ptr fnd = find_typefields(fld->as_reffvaluesetfield()->field()->reff()->name());
                 if (st->valueset()) {
-                    type_atom_ptr tp = type_atom_ptr(new type_atom(st->scope(), fld->as_reffvaluesetfield()->field()->reff()->name(), t_Reference));
+                    type_atom_ptr tp = type_atom_ptr(new type_atom(fld->scope(), fld->as_reffvaluesetfield()->field()->reff()->name(), t_Reference));
                     tp->reff(fnd);
-                    childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(st->scope(), fld->name(), tp, st->valueset())));
+                    childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(fld->scope(), fld->name(), tp, st->valueset())));
                 } else
                     referenceerror_throw(fld->name(), "Field is not valueset: ");
             }
@@ -398,14 +396,14 @@ namespace x680 {
                 basic_entity_ptr fnd = find_typefields(fld->as_reffvaluefield()->field()->reff()->name());
                 if (!fnd)
                     referenceerror_throw(fld->name(), "Field is not  refference to type: ");
-                type_atom_ptr tp = type_atom_ptr(new type_atom(st->scope(), fld->as_reffvaluefield()->field()->reff()->name(), t_Reference));
+                type_atom_ptr tp = type_atom_ptr(new type_atom(fld->scope(), fld->as_reffvaluefield()->field()->reff()->name(), t_Reference));
                 tp->reff(fnd);
                 childs_.push_back(basic_entity_ptr(new valueassignment_entity(fld->scope(), fld->name(), tp, fld->as_reffvaluefield()->_default())));
             } else if (fld->as_reffvaluesetfield()) {
                 basic_entity_ptr fnd = find_typefields(fld->as_reffvaluesetfield()->field()->reff()->name());
                 if (!fnd)
                     referenceerror_throw(fld->name(), "Field is not  refference to type: ");
-                type_atom_ptr tp = type_atom_ptr(new type_atom(st->scope(), fld->as_reffvaluesetfield()->field()->reff()->name(), t_Reference));
+                type_atom_ptr tp = type_atom_ptr(new type_atom(fld->scope(), fld->as_reffvaluesetfield()->field()->reff()->name(), t_Reference));
                 tp->reff(fnd);
                 childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(fld->scope(), fld->name(), tp, fld->as_reffvaluesetfield()->_default())));
             }

@@ -230,6 +230,10 @@ namespace x680 {
             rslt = rslt + " in valuesetassignment";
         else if (as_classassigment())
             rslt = rslt + " in classassignment";
+        else if (as_objectassigment())
+            rslt = rslt + " in objectassignment";
+        else if (as_objectsetassigment())
+            rslt = rslt + " in objectsetassignment";        
         else if (as_module())
             return "";
         else
@@ -896,8 +900,12 @@ void basic_atom::resolve_reff(basic_atom_ptr holder, bool all) {
                         debug_warning("Should be error : refference" + expectedname() + "undefined assigment");
                     reff(fnd);
                 } else {
-                    debug_warning("Should be error : refference : " + expectedname() + "  not found :" +
-                            source->name());
+                    if (holder) {
+                        resolve_reff(basic_atom_ptr(), all);
+                        return;
+                    } else
+                        debug_warning("Should be error : refference : " + expectedname() + "  source : " +
+                            source->name() + "  scope : " + scope()->name());
                 }
             } else
                 debug_warning("Should be error : refference : " + expectedname() + "  not found : no holder");

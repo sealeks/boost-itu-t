@@ -279,7 +279,6 @@ namespace x680 {
                 type()->resolve_reff();
                 if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all))
                         return fnd;
-
             }
         }
         if (basic_entity_ptr fnd = assignment_entity::find_by_name(nm))
