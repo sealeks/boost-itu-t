@@ -194,19 +194,21 @@ namespace x680 {
         }
     }
 
-    basic_entity_ptr valueassignment_entity::find_by_name(const std::string& nm, bool all) {
-        if (all) {
+    basic_entity_ptr valueassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
+        if (sch & local_search) {
             if (((type()->predefined()))) {
                 for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it)
                     if ((*it)->name() == nm)
                         return *it;
             }
             if ((type()->reff() && (type()->reff()->name()!=nm))) {
-                type()->resolve_reff(basic_atom_ptr(), all);              
-                if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all))
+                type()->resolve_reff(basic_atom_ptr(), sch);              
+                if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, sch))
                     return fnd;
             }
         }
+        if (!(sch & extend_search))
+                return basic_entity_ptr();        
         if (basic_entity_ptr fnd = assignment_entity::find_by_name(nm))
             return fnd;
         if (scope()) {
@@ -216,7 +218,7 @@ namespace x680 {
                     return *it;
         }
         if (scope())
-            return scope()->find_by_name(nm, all);
+            return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
     }
 

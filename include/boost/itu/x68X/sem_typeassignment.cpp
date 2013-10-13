@@ -92,7 +92,7 @@ namespace x680 {
             }
             if (((*it)->as_valueassigment()) && ((*it)->as_valueassigment()->value())
                     && ((*it)->as_valueassigment()->value()->expecteddef())) {
-                (*it)->as_valueassigment()->value()->resolve_reff(basic_atom_ptr(), false);
+                (*it)->as_valueassigment()->value()->resolve_reff(basic_atom_ptr(), extend_search);
                 (*it)->as_valueassigment()->check_value_with_exception(v_number);
 
             }
@@ -177,7 +177,7 @@ namespace x680 {
     void type_atom::resolve_tag() {
         if (tag()) {
             if ((tag()->number()) && (tag()->number()->as_defined()) && (tag()->number()->expecteddef())) {
-                tag()->number()->resolve_reff(basic_atom_ptr(), false);
+                tag()->number()->resolve_reff(basic_atom_ptr(), extend_search);
             }
         }
     }
@@ -268,8 +268,8 @@ namespace x680 {
 
     ////////
 
-    basic_entity_ptr typeassignment_entity::find_by_name(const std::string& nm, bool all) {
-        if (all) {
+    basic_entity_ptr typeassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
+        if (sch & local_search) {
             if (((type()->predefined()))) {
                 for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it)
                     if ((*it)->name() == nm)
@@ -277,14 +277,16 @@ namespace x680 {
             }
           if (type()->reff() && (type()->reff()->name()!=nm)) {
                 type()->resolve_reff();
-                if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all))
+                if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, sch))
                         return fnd;
             }
         }
+        if (!(sch & extend_search))
+                return basic_entity_ptr();
         if (basic_entity_ptr fnd = assignment_entity::find_by_name(nm))
             return fnd;
         if (scope())
-            return scope()->find_by_name(nm, all);
+            return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
     }
 

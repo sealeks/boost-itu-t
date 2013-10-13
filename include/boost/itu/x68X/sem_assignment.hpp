@@ -11,6 +11,13 @@
 #include <boost/enable_shared_from_this.hpp>
 
 namespace x680 {
+    
+    
+    typedef int search_marker;
+    
+    const search_marker local_search = 0x1;
+    const search_marker extend_search = 0x2;
+    const search_marker full_search = 0x3;      
 
     enum entity_enum {
 
@@ -492,9 +499,9 @@ namespace x680 {
 
         /////
 
-        basic_entity_ptr find(const basic_entity_ptr& reff, bool all = true);
+        basic_entity_ptr find(const basic_entity_ptr& reff, search_marker sch = full_search);
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -535,7 +542,7 @@ namespace x680 {
 
         //////
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -571,7 +578,7 @@ namespace x680 {
             objectid_ = vl;
         }
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -624,7 +631,7 @@ namespace x680 {
 
         //////
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         basic_entity_ptr find_in_importmodule(const std::string& mod, const std::string& nm);
 
@@ -857,7 +864,7 @@ namespace x680 {
 
         ////////
         
-        void resolve_reff(basic_atom_ptr holder = basic_atom_ptr(), bool all = true);
+        void resolve_reff(basic_atom_ptr holder = basic_atom_ptr(), search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -1011,7 +1018,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -1066,7 +1073,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
@@ -1123,7 +1130,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
@@ -1176,7 +1183,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };

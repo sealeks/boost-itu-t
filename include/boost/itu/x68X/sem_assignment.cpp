@@ -279,7 +279,7 @@ namespace x680 {
 
     ////////
 
-    basic_entity_ptr basic_entity::find(const basic_entity_ptr& reff, bool all) {
+    basic_entity_ptr basic_entity::find(const basic_entity_ptr& reff, search_marker sch) {
         if (reff->as_expectdef()) {
             if (reff->as_expectdef()->ismodule()) {
                 if (reff->moduleref())
@@ -287,13 +287,13 @@ namespace x680 {
                 else
                     basic_entity_ptr();
             } else {
-                return find_by_name(reff->as_expectdef()->name(), all);
+                return find_by_name(reff->as_expectdef()->name(), sch);
             }
         }
         return reff;
     }
 
-    basic_entity_ptr basic_entity::find_by_name(const std::string& nm, bool all) {
+    basic_entity_ptr basic_entity::find_by_name(const std::string& nm, search_marker sch) {
         //throw semantics::error("Idenifier" + nm + " not found");
         return basic_entity_ptr();
     }
@@ -354,7 +354,7 @@ namespace x680 {
                 (*it)->as_module()->preresolve();
     }
 
-    basic_entity_ptr global_entity::find_by_name(const std::string& nm, bool all) {
+    basic_entity_ptr global_entity::find_by_name(const std::string& nm, search_marker sch) {
         prefind(nm, childs());
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
             if ((*it)->name() == nm)
@@ -382,10 +382,10 @@ namespace x680 {
             objectid()->resolve();
     }
 
-    basic_entity_ptr import_entity::find_by_name(const std::string& nm, bool all) {
+    basic_entity_ptr import_entity::find_by_name(const std::string& nm, search_marker sch) {
         for (import_vector::iterator it = import_.begin(); it != import_.end(); ++it)
             if (((*it) == nm) && (scope()))
-                return scope()->find_by_name(nm, all);
+                return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
     }
 
@@ -399,7 +399,7 @@ namespace x680 {
 
     /////
 
-    basic_entity_ptr module_entity::find_by_name(const std::string& nm, bool all) {
+    basic_entity_ptr module_entity::find_by_name(const std::string& nm, search_marker sch) {
         prefind(nm, childs());
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
             if ((*it)->name() == nm)
@@ -407,13 +407,13 @@ namespace x680 {
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
             import_entity* importmod = (*it)->as_import();
             if (importmod) {
-                basic_entity_ptr fnd = importmod->find_by_name(nm, all);
+                basic_entity_ptr fnd = importmod->find_by_name(nm, sch);
                 if (fnd)
                     return fnd;
             }
         }
         if (scope())
-            return scope()->find_by_name(nm, all);
+            return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
     }
 
@@ -866,12 +866,12 @@ namespace x680 {
     void basic_atom::resolve(basic_atom_ptr holder) {
     }
 
-void basic_atom::resolve_reff(basic_atom_ptr holder, bool all) {
+void basic_atom::resolve_reff(basic_atom_ptr holder, search_marker sch) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {
             basic_entity_ptr source = holder ?
                     (holder->reff() ? holder->reff() : holder->scope()) : scope();
             if (source) {
-                basic_entity_ptr fnd = source->find(reff(), all);
+                basic_entity_ptr fnd = source->find(reff(), holder ? local_search : sch);
                 if (fnd) {
                     if (fnd->as_typeassigment()) {
                         if (!as_type())
@@ -894,14 +894,13 @@ void basic_atom::resolve_reff(basic_atom_ptr holder, bool all) {
                     } else if (fnd->as_argument()) {
                         debug_warning("Here is argument parser: " + expectedname() + "");
                         fnd->as_argument()->insert_dummyrefference(self());
-                        //reff(fnd->as_argument()->unspecified());
                         return;
                     } else
                         debug_warning("Should be error : refference" + expectedname() + "undefined assigment");
                     reff(fnd);
                 } else {
                     if (holder) {
-                        resolve_reff(basic_atom_ptr(), all);
+                        resolve_reff(basic_atom_ptr(), sch);
                         return;
                     } else
                         debug_warning("Should be error : refference : " + expectedname() + "  source : " +
@@ -937,7 +936,7 @@ void basic_atom::resolve_reff(basic_atom_ptr holder, bool all) {
             return 0;
         }*/
 
-    basic_entity_ptr assignment_entity::find_by_name(const std::string& nm, bool all) {
+    basic_entity_ptr assignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it)
             if ((*it)->name() == nm)
                 return (*it);
@@ -982,7 +981,7 @@ void basic_atom::resolve_reff(basic_atom_ptr holder, bool all) {
     assignment_entity(scope, nm, et_Nodef), big_(bg) {
     };
 
-    basic_entity_ptr bigassignment_entity::find_by_name(const std::string& nm, bool all) {
+    basic_entity_ptr bigassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (scope())
             prefind(nm, scope()->childs());
         for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
@@ -1009,9 +1008,9 @@ void basic_atom::resolve_reff(basic_atom_ptr holder, bool all) {
 
     /////////
 
-    basic_entity_ptr voassignment_entity::find_by_name(const std::string& nm, bool all) {
+    basic_entity_ptr voassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (scope())
-            return scope()->find_by_name(nm, all);
+            return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
     }
 
@@ -1028,9 +1027,9 @@ void basic_atom::resolve_reff(basic_atom_ptr holder, bool all) {
 
     /////////
 
-    basic_entity_ptr soassignment_entity::find_by_name(const std::string& nm, bool all) {
+    basic_entity_ptr soassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (scope())
-            return scope()->find_by_name(nm, all);
+            return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
     }
 

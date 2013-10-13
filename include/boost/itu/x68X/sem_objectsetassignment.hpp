@@ -189,7 +189,7 @@ namespace x680 {
 
         /////        
 
-        virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
+        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 

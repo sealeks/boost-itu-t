@@ -98,7 +98,7 @@ namespace x680 {
     assignment_entity(scope, nm, et_ObjectSet), class_(cls), objectset_(objs) {
     };
 
-    basic_entity_ptr objectsetassignment_entity::find_by_name(const std::string& nm, bool all) {
+    basic_entity_ptr objectsetassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
             return argfnd;         
         if (scope()) {
@@ -109,7 +109,7 @@ namespace x680 {
                 }
         }
         if (scope())
-            return scope()->find_by_name(nm, all);
+            return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
     }
 
