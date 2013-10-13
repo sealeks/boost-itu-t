@@ -107,7 +107,7 @@ namespace x680 {
     // namedvalue_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    void namedvalue_atom::resolve() {
+    void namedvalue_atom::resolve(basic_atom_ptr holder) {
         if (value_)
             value_->resolve_reff();
     }
@@ -118,7 +118,7 @@ namespace x680 {
     // structvalue_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    void structvalue_atom::resolve() {
+    void structvalue_atom::resolve(basic_atom_ptr holder) {
         resolve_vect(values_);
     }
 
@@ -127,7 +127,7 @@ namespace x680 {
     // definedvalue_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    void definedvalue_atom::resolve() {
+    void definedvalue_atom::resolve(basic_atom_ptr holder) {
         resolve_reff();
     }
 
@@ -140,7 +140,7 @@ namespace x680 {
     : value_atom(scp, v_ValueFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
     };
 
-    void fromobjectvalue_atom::resolve() {
+    void fromobjectvalue_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }
@@ -150,7 +150,7 @@ namespace x680 {
     // assignvalue_atom
     ///////////////////////////////////////////////////////////////////////// 
 
-    void assignvalue_atom::resolve() {
+    void assignvalue_atom::resolve(basic_atom_ptr holder) {
         if (value_)
             value_->resolve_reff();
     }
@@ -159,7 +159,7 @@ namespace x680 {
     // choicevalue_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    void choicevalue_atom::resolve() {
+    void choicevalue_atom::resolve(basic_atom_ptr holder) {
         if (value_)
             value_->resolve_reff();
     }
@@ -169,7 +169,7 @@ namespace x680 {
     // openvalue_atom_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    void openvalue_atom::resolve() {
+    void openvalue_atom::resolve(basic_atom_ptr holder) {
         if (type_)
             type_->resolve();
         if (value_)
@@ -221,12 +221,12 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    void valueassignment_entity::resolve() {
-        assignment_entity::resolve();
+    void valueassignment_entity::resolve(basic_atom_ptr holder) {
+        assignment_entity::resolve(holder);
         resolve_child();
         type()->resolve();
         if (value())
-            value()->resolve();
+            value()->resolve(type());
     }
 
 

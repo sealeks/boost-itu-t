@@ -294,7 +294,7 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    void basic_entity::resolve() {
+    void basic_entity::resolve(basic_atom_ptr holder) {
         //preresolve();
         resolve_child();
     };
@@ -332,7 +332,7 @@ namespace x680 {
 
     ////////
 
-    void global_entity::resolve() {
+    void global_entity::resolve(basic_atom_ptr holder) {
         preresolve();
         apply_fields();
         resolve_child();
@@ -373,7 +373,7 @@ namespace x680 {
     : basic_entity(nm, et_Import) {
     }
 
-    void import_entity::resolve() {
+    void import_entity::resolve(basic_atom_ptr holder) {
         if (objectid())
             objectid()->resolve();
     }
@@ -422,7 +422,7 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    void module_entity::resolve() {
+    void module_entity::resolve(basic_atom_ptr holder) {
         resolve_child();
     }
 
@@ -783,7 +783,7 @@ namespace x680 {
         dummyrefferences_.push_back(val);
     }
 
-    void argument_entity::resolve() {
+    void argument_entity::resolve(basic_atom_ptr holder) {
         if (has_governor())
             governor()->resolve_reff();
 
@@ -859,7 +859,7 @@ namespace x680 {
         return dynamic_cast<objectset_atom*> (this);
     }
 
-    void basic_atom::resolve() {
+    void basic_atom::resolve(basic_atom_ptr holder) {
     }
 
 
@@ -931,7 +931,7 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    void assignment_entity::resolve() {
+    void assignment_entity::resolve(basic_atom_ptr holder) {
         for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it)
             if ((*it)->governor())
                 (*it)->resolve();

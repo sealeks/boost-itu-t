@@ -58,7 +58,7 @@ namespace x680 {
     // typefield_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    void typefield_entity::resolve() {
+    void typefield_entity::resolve(basic_atom_ptr holder) {
         if (_default())
             _default()->resolve_reff();
     }
@@ -67,7 +67,7 @@ namespace x680 {
     // valuefield_entity
     ///////////////////////////////////////////////////////////////////////// 
 
-    void valuefield_entity::resolve() {
+    void valuefield_entity::resolve(basic_atom_ptr holder) {
         if (type())
             type()->resolve_reff();
         if (_default())
@@ -79,7 +79,7 @@ namespace x680 {
     // valuefield_entity
     ///////////////////////////////////////////////////////////////////////// 
 
-    void valuesetfield_entity::resolve() {
+    void valuesetfield_entity::resolve(basic_atom_ptr holder) {
         if (type())
             type()->resolve_reff();
         if (_default())
@@ -90,7 +90,7 @@ namespace x680 {
     // reffvaluefield_entity
     ///////////////////////////////////////////////////////////////////////// 
 
-    void reffvaluefield_entity::resolve() {
+    void reffvaluefield_entity::resolve(basic_atom_ptr holder) {
         if (_default())
             _default()->resolve_reff();
         if (field()->expecteddef()) {
@@ -111,7 +111,7 @@ namespace x680 {
     // reffvaluefield_entity
     ///////////////////////////////////////////////////////////////////////// 
 
-    void reffvaluesetfield_entity::resolve() {
+    void reffvaluesetfield_entity::resolve(basic_atom_ptr holder) {
         if (_default())
             _default()->resolve_reff();
         if (field()->expecteddef()) {
@@ -131,7 +131,7 @@ namespace x680 {
     // objectfield_entity
     ///////////////////////////////////////////////////////////////////////// 
 
-    void objectfield_entity::resolve() {
+    void objectfield_entity::resolve(basic_atom_ptr holder) {
         if (_class())
             _class()->resolve_reff();
         if (_default())
@@ -143,7 +143,7 @@ namespace x680 {
     // objectsetfield_entity
     ///////////////////////////////////////////////////////////////////////// 
 
-    void objectsetfield_entity::resolve() {
+    void objectsetfield_entity::resolve(basic_atom_ptr holder) {
         if (_class())
             _class()->resolve_reff();
         if (_default())
@@ -155,7 +155,7 @@ namespace x680 {
     // undeffield_entity
     ///////////////////////////////////////////////////////////////////////// 
 
-    void undeffield_entity::resolve() {
+    void undeffield_entity::resolve(basic_atom_ptr holder) {
 
     }
 
@@ -164,7 +164,7 @@ namespace x680 {
     // undeffield_entity
     ///////////////////////////////////////////////////////////////////////// 
 
-    void undefsetfield_entity::resolve() {
+    void undefsetfield_entity::resolve(basic_atom_ptr holder) {
 
     }
 
@@ -177,7 +177,7 @@ namespace x680 {
         return dynamic_cast<groupsyntax_atom*> (this);
     }
 
-    void syntax_atom::resolve() {
+    void syntax_atom::resolve(basic_atom_ptr holder) {
         if (expecteddef()) {
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (expectedname() == (*it)->name()) {
@@ -193,7 +193,7 @@ namespace x680 {
     // groupsyntax_atom
     ///////////////////////////////////////////////////////////////////////// 
 
-    void groupsyntax_atom::resolve() {
+    void groupsyntax_atom::resolve(basic_atom_ptr holder) {
         for (syntax_atom_vct::iterator it = group_.begin(); it != group_.end(); ++it)
             (*it)->resolve();
     }
@@ -210,7 +210,7 @@ namespace x680 {
     : basic_atom(reff, scope), builtin_(tp) {
     }
 
-    void class_atom::resolve() {
+    void class_atom::resolve(basic_atom_ptr holder) {
         if (builtin_ == cl_Reference)
             resolve_reff();
     }
@@ -239,8 +239,8 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    void classassignment_entity::resolve() {
-        assignment_entity::resolve();
+    void classassignment_entity::resolve(basic_atom_ptr holder) {
+        assignment_entity::resolve(holder);
         if (_class())
             _class()->resolve();
         if (withsyntax())

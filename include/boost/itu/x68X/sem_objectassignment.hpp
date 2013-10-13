@@ -46,7 +46,7 @@ namespace x680 {
             setting_ = vl;
         }
 
-        virtual void resolve() {
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
 
     private:
@@ -94,7 +94,7 @@ namespace x680 {
 
         extentionobject_atom* as_extention();
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual fieldsetting_atom_ptr find_field(const std::string& name) {
             return fieldsetting_atom_ptr();
@@ -118,7 +118,7 @@ namespace x680 {
         definedobject_atom(basic_entity_ptr scope, const std::string& reff) : object_atom(scope, reff, ot_Refference) {
         };
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
 
     };
@@ -142,7 +142,7 @@ namespace x680 {
             objectset_ = vl;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -177,7 +177,7 @@ namespace x680 {
             field_ = vl;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -213,7 +213,7 @@ namespace x680 {
             field_ = vl;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -243,7 +243,7 @@ namespace x680 {
             fieldsetting_ = vl;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual fieldsetting_atom_ptr find_field(const std::string& name);
 
@@ -275,7 +275,7 @@ namespace x680 {
             fieldsetting_ = vl;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual fieldsetting_atom_ptr find_field(const std::string& name);
 
@@ -314,7 +314,7 @@ namespace x680 {
             field_ = vl;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -335,7 +335,7 @@ namespace x680 {
         unionobject_atom() : object_atom(ot_UNION) {
         };
 
-        virtual void resolve() {
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
 
     };
@@ -351,7 +351,7 @@ namespace x680 {
         intersectionobject_atom() : object_atom(ot_INTERSECTION) {
         };
 
-        virtual void resolve() {
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
 
     };
@@ -367,7 +367,7 @@ namespace x680 {
         exceptobject_atom() : object_atom(ot_EXCEPT) {
         };
 
-        virtual void resolve() {
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
 
     };
@@ -383,7 +383,7 @@ namespace x680 {
         allexceptobject_atom() : object_atom(ot_ALLEXCEPT) {
         };
 
-        virtual void resolve() {
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
 
     };
@@ -400,7 +400,7 @@ namespace x680 {
         extentionobject_atom() : object_atom(ot_EXTENTION) {
         };
 
-        virtual void resolve() {
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
 
     };
@@ -440,7 +440,7 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         void apply_fields();
 

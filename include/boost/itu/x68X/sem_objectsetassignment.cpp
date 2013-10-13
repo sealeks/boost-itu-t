@@ -40,7 +40,7 @@ namespace x680 {
         return dynamic_cast<fromobjectsetobjectset_atom*> (this);
     }
 
-    void objectset_atom::resolve() {
+    void objectset_atom::resolve(basic_atom_ptr holder) {
         if (builtin_ == os_defined)
             resolve_reff();
     }
@@ -50,7 +50,7 @@ namespace x680 {
     // defineobjectset_atom
     /////////////////////////////////////////////////////////////////////////    
 
-    void definedobjectset_atom::resolve() {
+    void definedobjectset_atom::resolve(basic_atom_ptr holder) {
         resolve_reff();
     }  
 
@@ -62,7 +62,7 @@ namespace x680 {
     objectset_atom(scp, os_ObjectSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
     };
 
-    void fromobjectobjectset_atom::resolve() {
+    void fromobjectobjectset_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }
@@ -75,7 +75,7 @@ namespace x680 {
     objectset_atom(scp, os_ObjectSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
     };
 
-    void fromobjectsetobjectset_atom::resolve() {
+    void fromobjectsetobjectset_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }
@@ -84,7 +84,7 @@ namespace x680 {
     // defnobjectset_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    void defnobjectset_atom::resolve() {
+    void defnobjectset_atom::resolve(basic_atom_ptr holder) {
         for (object_atom_vct::iterator it = objects_.begin(); it != objects_.end(); ++it) {
             (*it)->resolve();
         }
@@ -113,8 +113,8 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    void objectsetassignment_entity::resolve() {
-        assignment_entity::resolve();
+    void objectsetassignment_entity::resolve(basic_atom_ptr holder) {
+        assignment_entity::resolve(holder);
         if (_class())
             _class()->resolve();
         if (objectset())

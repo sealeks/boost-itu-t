@@ -41,7 +41,7 @@ namespace x680 {
 
         fromobjectsetvalueset_atom* as_fromobjectset();
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -77,7 +77,7 @@ namespace x680 {
             field_ = vl;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -113,7 +113,7 @@ namespace x680 {
             field_ = vl;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -163,7 +163,7 @@ namespace x680 {
 
         ////
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     protected:
 
@@ -270,7 +270,7 @@ namespace x680 {
             return value_;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -305,7 +305,7 @@ namespace x680 {
             field_ = vl;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -341,7 +341,7 @@ namespace x680 {
             field_ = vl;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -371,7 +371,7 @@ namespace x680 {
             return includes_;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -434,7 +434,7 @@ namespace x680 {
             return totype_;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -474,7 +474,7 @@ namespace x680 {
             return marker_;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -503,7 +503,7 @@ namespace x680 {
 
         bool full() const;
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
 
     protected:
@@ -529,7 +529,7 @@ namespace x680 {
             return constraints_;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
 
     private:
@@ -645,7 +645,7 @@ namespace x680 {
             type_ = val;
         }
         
-         virtual void resolve();
+         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -680,7 +680,7 @@ namespace x680 {
             return !arguments_.empty();
         }
         
-         virtual void resolve();
+         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -725,7 +725,7 @@ namespace x680 {
             type_ = val;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -765,7 +765,7 @@ namespace x680 {
            snotation_ = val;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -796,7 +796,7 @@ namespace x680 {
             objectset_ = val;
         }
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -838,7 +838,7 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
 
     private:

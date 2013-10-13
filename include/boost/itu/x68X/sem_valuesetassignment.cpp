@@ -32,7 +32,7 @@ namespace x680 {
         return dynamic_cast<fromobjectsetvalueset_atom*> (this);
     }
 
-    void valueset_atom::resolve() {
+    void valueset_atom::resolve(basic_atom_ptr holder) {
         if (builtin_ != vs_Strait)
             resolve_reff();
         if (set())
@@ -49,7 +49,7 @@ namespace x680 {
     valueset_atom(scp, vs_ValueSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
     };
 
-    void fromobjectvalueset_atom::resolve() {
+    void fromobjectvalueset_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }
@@ -62,7 +62,7 @@ namespace x680 {
     valueset_atom(scp, vs_ValueSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
     };
 
-    void fromobjectsetvalueset_atom::resolve() {
+    void fromobjectsetvalueset_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }
@@ -72,7 +72,7 @@ namespace x680 {
     // constraints_atom
     /////////////////////////////////////////////////////////////////////////
 
-    void constraints_atom::resolve() {
+    void constraints_atom::resolve(basic_atom_ptr holder) {
         for (constraint_atom_vct::iterator it = constraintline_.begin(); it != constraintline_.end(); ++it)
             if (*it)
                 (*it)->resolve();
@@ -213,7 +213,7 @@ namespace x680 {
     // valueconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    void valueconstraint_atom::resolve() {
+    void valueconstraint_atom::resolve(basic_atom_ptr holder) {
         if (value_)
             value_->resolve_reff();
     }
@@ -229,7 +229,7 @@ namespace x680 {
 
     }
 
-    void fromdefinedsetconstraint_atom::resolve() {
+    void fromdefinedsetconstraint_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }
@@ -243,7 +243,7 @@ namespace x680 {
 
     }
 
-    void fromdefinedconstraint_atom::resolve() {
+    void fromdefinedconstraint_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }
@@ -252,7 +252,7 @@ namespace x680 {
     // typeconstraint_atom
     /////////////////////////////////////////////////////////////////////////
 
-    void typeconstraint_atom::resolve() {
+    void typeconstraint_atom::resolve(basic_atom_ptr holder) {
         if (type_)
             type_->resolve();
     }
@@ -261,7 +261,7 @@ namespace x680 {
     // rangeconstraint_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    void rangeconstraint_atom::resolve() {
+    void rangeconstraint_atom::resolve(basic_atom_ptr holder) {
         if (from_)
             from_->resolve_reff();
         if (to_)
@@ -273,7 +273,7 @@ namespace x680 {
     // namedconstraint_atom
     ///////////////////////////////////////////////////////////////////////// 
 
-    void namedconstraint_atom::resolve() {
+    void namedconstraint_atom::resolve(basic_atom_ptr holder) {
         if (constraints_)
             constraints_->resolve();
     }
@@ -289,7 +289,7 @@ namespace x680 {
                 (!components_.front()->as_extention()));
     }
 
-    void multipletypeconstraint_atom::resolve() {
+    void multipletypeconstraint_atom::resolve(basic_atom_ptr holder) {
         for (constraint_atom_vct::iterator it = components_.begin(); it != components_.end(); ++it)
             if (*it)
                 (*it)->resolve();
@@ -300,7 +300,7 @@ namespace x680 {
     // complexconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    void complexconstraint_atom::resolve() {
+    void complexconstraint_atom::resolve(basic_atom_ptr holder) {
         if (constraints_)
             constraints_->resolve();
     }
@@ -311,7 +311,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////    
     
     
-        void exceptionconstraint_atom::resolve() {
+        void exceptionconstraint_atom::resolve(basic_atom_ptr holder) {
             if (type())
                 type()->resolve();
             if (value())
@@ -323,7 +323,7 @@ namespace x680 {
     // userconstraint_atom
     /////////////////////////////////////////////////////////////////////////    
         
-    void userconstraint_atom::resolve() {
+    void userconstraint_atom::resolve(basic_atom_ptr holder) {
         for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
             if ((*it)->has_undef_governor()) {
                 if (!(*it)->governor()->reff())
@@ -347,7 +347,7 @@ namespace x680 {
     // contentconstraint_atom
     /////////////////////////////////////////////////////////////////////////    
 
-    void contentconstraint_atom::resolve() {
+    void contentconstraint_atom::resolve(basic_atom_ptr holder) {
         if (type())
             type()->resolve();
         if (value())
@@ -359,7 +359,7 @@ namespace x680 {
     // relationconstraint_atom
     /////////////////////////////////////////////////////////////////////////    
 
-    void relationconstraint_atom::resolve() {
+    void relationconstraint_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }         
@@ -368,7 +368,7 @@ namespace x680 {
     // tableconstraint_atom
     /////////////////////////////////////////////////////////////////////////    
 
-    void tableconstraint_atom::resolve() {
+    void tableconstraint_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }        
@@ -410,12 +410,12 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    void valuesetassignment_entity::resolve() {
-        assignment_entity::resolve();
+    void valuesetassignment_entity::resolve(basic_atom_ptr holder) {
+        assignment_entity::resolve(holder);
         resolve_child();
         type()->resolve();
         if (valueset())
-            valueset()->resolve();
+            valueset()->resolve(type());
     }
 
 

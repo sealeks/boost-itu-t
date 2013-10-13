@@ -496,7 +496,7 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual void preresolve();
 
@@ -537,7 +537,7 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual void preresolve();
 
@@ -573,7 +573,7 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
 
     private:
@@ -628,7 +628,7 @@ namespace x680 {
 
         basic_entity_ptr find_in_importmodule(const std::string& mod, const std::string& nm);
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual void preresolve();
 
@@ -737,7 +737,7 @@ namespace x680 {
 
         ///
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -859,7 +859,7 @@ namespace x680 {
         
         void resolve_reff(basic_atom_ptr holder = basic_atom_ptr(), bool all = true);
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
 
     protected:
@@ -1013,7 +1013,7 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
-        virtual void resolve();
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual void preresolve();
 
@@ -1068,7 +1068,7 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
-        virtual void resolve() {
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
 
 
@@ -1125,7 +1125,7 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
-        virtual void resolve() {
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
 
 
@@ -1178,7 +1178,7 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, bool all = true);
 
-        virtual void resolve() {
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
         };
 
 

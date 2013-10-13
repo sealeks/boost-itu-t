@@ -76,7 +76,7 @@ namespace x680 {
         return dynamic_cast<extentionobject_atom*> (this);
     }
 
-    void object_atom::resolve() {
+    void object_atom::resolve(basic_atom_ptr holder) {
         if (builtin_ == ot_Refference)
             resolve_reff();
     }
@@ -86,7 +86,7 @@ namespace x680 {
     // defenedobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    void definedobject_atom::resolve() {
+    void definedobject_atom::resolve(basic_atom_ptr holder) {
         // if (builtin() == ot_Refference)
         resolve_reff();
     };
@@ -100,7 +100,7 @@ namespace x680 {
     object_atom(scope, ot_DefinedObjectSet), objectset_(objs) {
     };
 
-    void definedsetobject_atom::resolve() {
+    void definedsetobject_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }
@@ -115,7 +115,7 @@ namespace x680 {
 
     }
 
-    void fromdefinedsetobject_atom::resolve() {
+    void fromdefinedsetobject_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }
@@ -129,7 +129,7 @@ namespace x680 {
 
     }
 
-    void fromdefinedobject_atom::resolve() {
+    void fromdefinedobject_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }
@@ -139,7 +139,7 @@ namespace x680 {
     // defltobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    void defltobject_atom::resolve() {
+    void defltobject_atom::resolve(basic_atom_ptr holder) {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
         }
     };
@@ -159,7 +159,7 @@ namespace x680 {
     // defsyntxobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    void defsyntxobject_atom::resolve() {
+    void defsyntxobject_atom::resolve(basic_atom_ptr holder) {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
         }
     };
@@ -199,7 +199,7 @@ namespace x680 {
     : object_atom(scp, ot_FromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
     };
 
-    void fromobjectobject_atom::resolve() {
+    void fromobjectobject_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }
@@ -227,8 +227,8 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    void objectassignment_entity::resolve() {
-        assignment_entity::resolve();
+    void objectassignment_entity::resolve(basic_atom_ptr holder) {
+        assignment_entity::resolve(holder);
         if (_class())
             _class()->resolve();
         if (object())

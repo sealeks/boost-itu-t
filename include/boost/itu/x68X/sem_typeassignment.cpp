@@ -49,7 +49,7 @@ namespace x680 {
         return dynamic_cast<fromobjectsettype_atom*> (this);
     }
 
-    void type_atom::resolve() {
+    void type_atom::resolve(basic_atom_ptr holder) {
         resolve_reff();
         resolve_tag();
         resolve_predef();
@@ -196,7 +196,7 @@ namespace x680 {
     type_atom(scp, t_Instance_Of, tg), class_(class_atom_ptr(new class_atom(scp, reffcl))) {
     };
 
-    void instanceoftype_atom::resolve() {
+    void instanceoftype_atom::resolve(basic_atom_ptr holder) {
         if (_class())
             _class()->resolve();
         resolve_tag();
@@ -213,7 +213,7 @@ namespace x680 {
     type_atom(scp, t_ClassField, tg), class_(class_atom_ptr(new class_atom(scp, reffcl))), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
     };
 
-    void classfieldtype_atom::resolve() {
+    void classfieldtype_atom::resolve(basic_atom_ptr holder) {
         if (_class())
             _class()->resolve();
         resolve_tag();
@@ -229,7 +229,7 @@ namespace x680 {
     type_atom(scp, t_TypeFromObject, tg), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
     };
 
-    void fromobjecttype_atom::resolve() {
+    void fromobjecttype_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
         resolve_tag();
@@ -245,7 +245,7 @@ namespace x680 {
     type_atom(scp, t_ValueSetFromObjects, tg), objectset_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
     };
 
-    void fromobjectsettype_atom::resolve() {
+    void fromobjectsettype_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
         resolve_tag();
@@ -289,9 +289,9 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    void typeassignment_entity::resolve() {
+    void typeassignment_entity::resolve(basic_atom_ptr holder) {
         unicalelerror_throw(childs());
-        assignment_entity::resolve();
+        assignment_entity::resolve(holder);
         resolve_child();
         if (type())
             type()->resolve();
@@ -324,8 +324,8 @@ namespace x680 {
     : typeassignment_entity(scp, "", type_atom_ptr()), marker_(mk_extention) {
     }
 
-    void namedtypeassignment_entity::resolve() {
-        typeassignment_entity::resolve();
+    void namedtypeassignment_entity::resolve(basic_atom_ptr holder) {
+        typeassignment_entity::resolve(holder);
         resolve_default();
     }
 
