@@ -275,15 +275,15 @@ namespace x680 {
                     if ((*it)->name() == nm)
                         return *it;
             }
-            if ((type()->reff())) {
+          if (type()->reff() && (type()->reff()->name()!=nm)) {
                 type()->resolve_reff();
-                basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
-                if (fnd)
-                    return fnd;
+                if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all))
+                        return fnd;
+
             }
         }
-        if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
-            return argfnd;
+        if (basic_entity_ptr fnd = assignment_entity::find_by_name(nm))
+            return fnd;
         if (scope())
             return scope()->find_by_name(nm, all);
         return basic_entity_ptr();
@@ -330,13 +330,8 @@ namespace x680 {
     }
 
     void namedtypeassignment_entity::resolve_default() {
-        if ((_default()) && (_default()->expecteddef())) {
-            basic_entity_ptr fnd = find_by_name(_default()->expectedname());
-            if (fnd)
-                _default()->reff(fnd);
-            else
-                referenceerror_throw(_default()->expectedname());
-        }
+        if (_default()) 
+                _default()->resolve(type());
     }
 
 

@@ -66,7 +66,7 @@ namespace x680 {
 
     protected:
 
-        void resolve_vect(value_vct& vl);
+        void resolve_vect(value_vct& vl, basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 

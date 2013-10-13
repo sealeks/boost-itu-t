@@ -170,23 +170,29 @@ namespace x680 {
         }
 
         typeassignment_entity_ptr compile_namedtype(basic_entity_ptr scope, const x680::syntactic::type_assignment& ent) {
-            type_atom_ptr tmp = (ent.type.marker != mk_extention) ? compile_type(scope, ent.type) : type_atom_ptr();
-            typeassignment_entity_ptr tmpt;
+            namedtypeassignment_entity_ptr tmpt;
             switch (ent.type.marker) {
-                case mk_default: tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, compile_value(scope, ent.type.value)));
-                    break;
-                case mk_exception: tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, tmp, compile_value(scope, ent.type.value)));
-                    break;
+                case mk_default:{ 
+                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier,type_atom_ptr() , value_atom_ptr()));
+                    tmpt->type(compile_type(tmpt , ent.type));
+                    tmpt-> _default(compile_value(tmpt , ent.type.value));          
+                    break;}
+                case mk_exception: {
+                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, type_atom_ptr(), value_atom_ptr()));
+                    tmpt->type(compile_type(tmpt , ent.type));
+                    tmpt-> _default(compile_value(tmpt , ent.type.value)); 
+                    break;}
                 case mk_extention:
                 {
                     tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope));
                     if (scope && (scope->as_typeassigment()) && (scope->as_typeassigment()->type()))
                         scope->as_typeassigment()->type()->extention(true);
-
                     return tmpt;
                     break;
                 }
-                default: tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, tmp, ent.type.marker));
+                default:{
+                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, type_atom_ptr() , ent.type.marker));
+                    tmpt->type(compile_type( tmpt , ent.type));}
             }
             tmpt->type()->predefined(compile_typepredef(tmpt, ent.type));
             switch (ent.type.builtin_t) {

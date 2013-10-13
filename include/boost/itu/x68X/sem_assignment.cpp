@@ -862,40 +862,45 @@ namespace x680 {
     void basic_atom::resolve(basic_atom_ptr holder) {
     }
 
-
-    
-    void basic_atom::resolve_reff(basic_atom_ptr holder, bool all) {
+void basic_atom::resolve_reff(basic_atom_ptr holder, bool all) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {
-            basic_entity_ptr fnd = holder ? holder->scope()->find(reff(), all) : scope()->find(reff(), all);
-            if (fnd) {
-                if (fnd->as_typeassigment()) {
-                    if (!as_type())
-                        debug_warning("Should be error : " + expectedname() + " ref to typeassigment");
-                } else if (fnd->as_valueassigment()) {
-                    if (!as_value())
-                        debug_warning("Should be error : " + expectedname() + " ref to valueassigment");
-                } else if (fnd->as_valuesetassigment()) {
-                    if (!as_valueset())
-                        debug_warning("Should be error : " + expectedname() + " ref to valuesetassigment");
-                } else if (fnd->as_classassigment()) {
-                    if (!as_class())
-                        debug_warning("Should be error : " + expectedname() + " ref to classassigment");
-                } else if (fnd->as_objectassigment()) {
-                    if (!as_object())
-                        debug_warning("Should be error : " + expectedname() + " ref to objectassigment");
-                } else if (fnd->as_objectsetassigment()) {
-                    if (!as_objectset())
-                        debug_warning("Should be error : " + expectedname() + " ref to objectsetassigment");
-                } else if (fnd->as_argument()) {
-                    debug_warning("Here is argument parser: " + expectedname() + "");
-                    fnd->as_argument()->insert_dummyrefference(self());
-                    //reff(fnd->as_argument()->unspecified());
-                    return;
-                } else
-                    debug_warning("Should be error : refference" + expectedname() + "undefined assigment");
-                reff(fnd);
+            basic_entity_ptr source = holder ?
+                    (holder->reff() ? holder->reff() : holder->scope()) : scope();
+            if (source) {
+                basic_entity_ptr fnd = source->find(reff(), all);
+                if (fnd) {
+                    if (fnd->as_typeassigment()) {
+                        if (!as_type())
+                            debug_warning("Should be error : " + expectedname() + " ref to typeassigment");
+                    } else if (fnd->as_valueassigment()) {
+                        if (!as_value())
+                            debug_warning("Should be error : " + expectedname() + " ref to valueassigment");
+                    } else if (fnd->as_valuesetassigment()) {
+                        if (!as_valueset())
+                            debug_warning("Should be error : " + expectedname() + " ref to valuesetassigment");
+                    } else if (fnd->as_classassigment()) {
+                        if (!as_class())
+                            debug_warning("Should be error : " + expectedname() + " ref to classassigment");
+                    } else if (fnd->as_objectassigment()) {
+                        if (!as_object())
+                            debug_warning("Should be error : " + expectedname() + " ref to objectassigment");
+                    } else if (fnd->as_objectsetassigment()) {
+                        if (!as_objectset())
+                            debug_warning("Should be error : " + expectedname() + " ref to objectsetassigment");
+                    } else if (fnd->as_argument()) {
+                        debug_warning("Here is argument parser: " + expectedname() + "");
+                        fnd->as_argument()->insert_dummyrefference(self());
+                        //reff(fnd->as_argument()->unspecified());
+                        return;
+                    } else
+                        debug_warning("Should be error : refference" + expectedname() + "undefined assigment");
+                    reff(fnd);
+                } else {
+                    debug_warning("Should be error : refference : " + expectedname() + "  not found :" +
+                            source->name());
+                }
             } else
-                debug_warning("Should be error : refference : " + expectedname() + "  not found");
+                debug_warning("Should be error : refference : " + expectedname() + "  not found : no holder");
         }
     }    
 

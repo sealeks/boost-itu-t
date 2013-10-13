@@ -95,9 +95,9 @@ namespace x680 {
         return dynamic_cast<emptyvalue_atom*> (this);
     }
 
-    void value_atom::resolve_vect(value_vct& vl) {
+    void value_atom::resolve_vect(value_vct& vl, basic_atom_ptr holder ) {
         for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
-            (*it)->resolve_reff();
+            (*it)->resolve_reff(holder);
     }
 
 
@@ -109,7 +109,7 @@ namespace x680 {
 
     void namedvalue_atom::resolve(basic_atom_ptr holder) {
         if (value_)
-            value_->resolve_reff();
+            value_->resolve_reff(holder);
     }
 
 
@@ -119,7 +119,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     void structvalue_atom::resolve(basic_atom_ptr holder) {
-        resolve_vect(values_);
+        resolve_vect(values_, holder);
     }
 
 
@@ -128,7 +128,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     void definedvalue_atom::resolve(basic_atom_ptr holder) {
-        resolve_reff();
+        resolve_reff(holder);
     }
 
 
@@ -142,7 +142,7 @@ namespace x680 {
 
     void fromobjectvalue_atom::resolve(basic_atom_ptr holder) {
         if (object())
-            object()->resolve();
+            object()->resolve(holder);
     }
 
 
@@ -152,7 +152,7 @@ namespace x680 {
 
     void assignvalue_atom::resolve(basic_atom_ptr holder) {
         if (value_)
-            value_->resolve_reff();
+            value_->resolve_reff(holder);
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -161,7 +161,7 @@ namespace x680 {
 
     void choicevalue_atom::resolve(basic_atom_ptr holder) {
         if (value_)
-            value_->resolve_reff();
+            value_->resolve_reff(holder);
     }
 
 
@@ -202,14 +202,13 @@ namespace x680 {
                         return *it;
             }
             if (type()->reff()) {
-                type()->resolve_reff(basic_atom_ptr(), all);
-                basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
-                if (fnd)
+                type()->resolve_reff(basic_atom_ptr(), all);              
+                if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all))
                     return fnd;
             }
         }
-        if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
-            return argfnd;
+        if (basic_entity_ptr fnd = assignment_entity::find_by_name(nm))
+            return fnd;
         if (scope()) {
             prefind(nm, scope()->childs());
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)

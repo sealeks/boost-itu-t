@@ -302,7 +302,7 @@ namespace x680 {
 
     void complexconstraint_atom::resolve(basic_atom_ptr holder) {
         if (constraints_)
-            constraints_->resolve();
+            constraints_->resolve(holder);
     }
     
  
@@ -315,7 +315,7 @@ namespace x680 {
             if (type())
                 type()->resolve();
             if (value())
-                value()->resolve();
+                value()->resolve(type());
         }
 
         
@@ -392,13 +392,12 @@ namespace x680 {
             }
             if (type()->reff()) {
                 type()->resolve_reff(basic_atom_ptr(), all);
-                basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
-                if (fnd)
+                if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all))
                     return fnd;
             }
         }
-        if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
-            return argfnd;         
+        if (basic_entity_ptr fnd = assignment_entity::find_by_name(nm))
+            return fnd;         
         if (scope()) {
             prefind(nm, scope()->childs());
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
