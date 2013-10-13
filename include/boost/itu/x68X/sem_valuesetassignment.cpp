@@ -391,7 +391,7 @@ namespace x680 {
                         return *it;
             }
             if (type()->reff()) {
-                type()->resolve_reff(all);
+                type()->resolve_reff(basic_atom_ptr(), all);
                 basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
                 if (fnd)
                     return fnd;

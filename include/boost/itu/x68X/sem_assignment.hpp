@@ -856,8 +856,8 @@ namespace x680 {
         objectset_atom* as_objectset();
 
         ////////
-
-        void resolve_reff(bool all = true);
+        
+        void resolve_reff(basic_atom_ptr holder = basic_atom_ptr(), bool all = true);
 
         virtual void resolve();
 

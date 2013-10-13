@@ -173,7 +173,7 @@ namespace x680 {
         if (type_)
             type_->resolve();
         if (value_)
-            value_->resolve_reff();
+            value_->resolve_reff(type_);
     }
 
 
@@ -202,7 +202,7 @@ namespace x680 {
                         return *it;
             }
             if (type()->reff()) {
-                type()->resolve_reff(all);
+                type()->resolve_reff(basic_atom_ptr(), all);
                 basic_entity_ptr fnd = type()->reff()->find_by_name(nm, all);
                 if (fnd)
                     return fnd;

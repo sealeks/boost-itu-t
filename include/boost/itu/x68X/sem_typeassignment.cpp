@@ -92,7 +92,7 @@ namespace x680 {
             }
             if (((*it)->as_valueassigment()) && ((*it)->as_valueassigment()->value())
                     && ((*it)->as_valueassigment()->value()->expecteddef())) {
-                (*it)->as_valueassigment()->value()->resolve_reff(false);
+                (*it)->as_valueassigment()->value()->resolve_reff(basic_atom_ptr(), false);
                 (*it)->as_valueassigment()->check_value_with_exception(v_number);
 
             }
@@ -177,7 +177,7 @@ namespace x680 {
     void type_atom::resolve_tag() {
         if (tag()) {
             if ((tag()->number()) && (tag()->number()->as_defined()) && (tag()->number()->expecteddef())) {
-                tag()->number()->resolve_reff(false);
+                tag()->number()->resolve_reff(basic_atom_ptr(), false);
             }
         }
     }

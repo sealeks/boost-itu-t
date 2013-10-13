@@ -862,9 +862,11 @@ namespace x680 {
     void basic_atom::resolve() {
     }
 
-    void basic_atom::resolve_reff(bool all) {
+
+    
+    void basic_atom::resolve_reff(basic_atom_ptr holder, bool all) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {
-            basic_entity_ptr fnd = scope()->find(reff(), all);
+            basic_entity_ptr fnd = holder ? holder->scope()->find(reff(), all) : scope()->find(reff(), all);
             if (fnd) {
                 if (fnd->as_typeassigment()) {
                     if (!as_type())
@@ -895,8 +897,7 @@ namespace x680 {
             } else
                 debug_warning("Should be error : refference : " + expectedname() + "  not found");
         }
-    }
-
+    }    
 
 
     /////////////////////////////////////////////////////////////////////////   
