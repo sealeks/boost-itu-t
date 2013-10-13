@@ -333,7 +333,7 @@ namespace x680 {
         }
 
         void constraint_setelement(constraint_element& holder, const objectset_element& val) {
-            holder.setelement = objectset_element_ptr(new objectset_element(val));
+            holder.objectsetref = objectset_element_ptr(new objectset_element(val));
             holder.tp = cns_SimpleTableConstraint;
         }
 
@@ -420,25 +420,25 @@ namespace x680 {
         }
 
         void constraint_relation(constraint_element& holder, const objectset_element& valr, const string_vector& valp) {
-            holder.setelement = objectset_element_ptr(new objectset_element(valr));
+            holder.objectsetref = objectset_element_ptr(new objectset_element(valr));
             holder.parameters = valp;
             holder.tp = cns_ComponentRelation;
         }
 
         void constraint_content_t(constraint_element& holder, const type_element& val) {
             holder.type = val;
-            holder.tp = cns_ContentsType;
+            holder.tp = cns_Contents;
         }
 
         void constraint_content_v(constraint_element& holder, const value_element& val) {
             holder.value = val;
-            holder.tp = cns_ContentsValue;
+            holder.tp = cns_Contents;
         }
 
         void constraint_content_tv(constraint_element& holder, const type_element& valt, const value_element& valv) {
             holder.type = valt;
             holder.value = valv;
-            holder.tp = cns_ContentsTypeValue;
+            holder.tp = cns_Contents;
         }
 
         void constraint_exceptnumber(constraint_element& holder, const std::string& val) {

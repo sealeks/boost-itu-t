@@ -190,11 +190,11 @@ namespace x680 {
         cns_UserDefinedConstraint,
         cns_SimpleTableConstraint,
         cns_ComponentRelation,
-        cns_ContentsType,
-        cns_ContentsValue,
-        cns_ContentsTypeValue,
+        cns_Contents,
+        cns_ValueSet,        
         cns_ValueSetFromObjects,
-        cns_ValueSetFromObject,             
+        cns_ValueSetFromObject,   
+        cns_Undef_T_ST_VS,        
         cns_UNION,
         cns_INTERSECTION,
         cns_EXCEPT,
@@ -398,9 +398,6 @@ namespace x680 {
 
         struct setting_element;
         typedef std::vector<setting_element> parameter_vector;
-
-        struct userdefconstraint_type;
-        typedef std::vector<userdefconstraint_type> userdefconstraint_vector;
 
         struct module;
         typedef std::vector<module> modules;
@@ -621,7 +618,7 @@ namespace x680 {
 
             std::string identifier;
             string_vector parameters;
-            userdefconstraint_vector uparameters;
+            argument_vector uparameters;
             constraint_type tp;
             value_element value;
             value_element from_;
@@ -631,7 +628,6 @@ namespace x680 {
             type_element type;
             constraintmarker_type marker;
             std::string objsetref;
-            objectset_element_ptr setelement;
             constraint_element_vector constraint;
             std::string fieldreference;
             object_element_ptr objectref;
@@ -937,18 +933,7 @@ namespace x680 {
 
         };
 
-        struct userdefconstraint_type {
 
-            userdefconstraint_type() : tp(gvr_No) {
-            }
-
-            std::string reff;
-            type_element governortype;
-            class_element governorclass;
-            governor_type tp;
-            setting_element argument;
-
-        };
 
 
 

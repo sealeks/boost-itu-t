@@ -434,8 +434,8 @@ namespace x680 {
         str_rule UserDefinedConstraintParameter_ = (DefinedType_ | DefinedObjectClass_)
         >> -(qi::string(".") >> DefinedValue_);
 
-        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.' | '@')[qi::string("@")
-        >> *(qi::string(".")) >> (identifier_ % qi::string("."))];
+        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.' | '@')[qi::string("@")[qi::_val = qi::_1 ]
+        >> *(qi::string(".")[qi::_val += qi::_1 ]) >> (identifier_[qi::_val += qi::_1 ] % qi::string(".")[qi::_val += qi::_1 ])];
 
         str_rule Reference_ = typereference_ | valuereference_;
 

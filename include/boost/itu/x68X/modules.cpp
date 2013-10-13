@@ -196,8 +196,8 @@ namespace x680 {
             SettingObjectNA = ObjectNA[bind(&setting_object, qi::_val, qi::_1)];
 
             SettingObjectSetNA = ObjectSetNA[bind(&setting_objectset, qi::_val, qi::_1)];
-
-
+            
+            
 
             SettingM1 = SettingType | SettingValue | SettingValueSet | SettingObject | SettingObjectSet | SettingLiteral;
 
@@ -237,6 +237,17 @@ namespace x680 {
             SettingU2 = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM4;
+            
+            
+            SettingCValueSet = SimpleValueSet[bind(&setting_valueset, qi::_val, qi::_1)];
+            
+            SettingM5 = SettingType | SettingCValueSet | SettingObjectSet;
+            
+            SettingC  = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[SimpleValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM5;
+            
+            
 
             Parameters = qi::omit[qi::lexeme[qi::lit("{")]]
                     >> (Parameter % qi::omit[qi::lit(",")]) >> qi::omit[qi::lexeme[qi::lit("}")]];

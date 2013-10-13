@@ -172,6 +172,18 @@ namespace x680 {
     userconstraint_atom* constraint_atom::as_user(){
         return cotstrtype_ == cns_UserDefinedConstraint ? dynamic_cast<userconstraint_atom*> (this) : 0;
     }
+    
+    contentconstraint_atom* constraint_atom::as_content(){
+        return cotstrtype_ == cns_Contents ? dynamic_cast<contentconstraint_atom*> (this) : 0;
+    }    
+    
+    relationconstraint_atom* constraint_atom::as_relation(){
+        return cotstrtype_ == cns_ComponentRelation ? dynamic_cast<relationconstraint_atom*> (this) : 0;
+    }    
+    
+    tableconstraint_atom* constraint_atom::as_table(){
+        return cotstrtype_ == cns_SimpleTableConstraint ? dynamic_cast<tableconstraint_atom*> (this) : 0;
+    }        
 
     unionconstraint_atom* constraint_atom::as_union() {
         return dynamic_cast<unionconstraint_atom*> (this);
@@ -329,7 +341,38 @@ namespace x680 {
             }
         }
     }        
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // contentconstraint_atom
+    /////////////////////////////////////////////////////////////////////////    
 
+    void contentconstraint_atom::resolve() {
+        if (type())
+            type()->resolve();
+        if (value())
+            value()->resolve();
+    }        
+
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // relationconstraint_atom
+    /////////////////////////////////////////////////////////////////////////    
+
+    void relationconstraint_atom::resolve() {
+        if (objectset())
+            objectset()->resolve();
+    }         
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // tableconstraint_atom
+    /////////////////////////////////////////////////////////////////////////    
+
+    void tableconstraint_atom::resolve() {
+        if (objectset())
+            objectset()->resolve();
+    }        
+    
 
 
     /////////////////////////////////////////////////////////////////////////   

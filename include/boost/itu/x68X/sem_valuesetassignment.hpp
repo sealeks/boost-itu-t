@@ -10,6 +10,8 @@
 
 namespace x680 {
 
+    
+     typedef std::vector<std::string> snotation_vector;    
 
     /////////////////////////////////////////////////////////////////////////   
     // VALUESET
@@ -226,6 +228,12 @@ namespace x680 {
         stringconstraint_atom * as_property();
         
         userconstraint_atom* as_user();
+        
+        contentconstraint_atom* as_content();      
+        
+       relationconstraint_atom* as_relation();     
+       
+       tableconstraint_atom* as_table();           
 
         unionconstraint_atom* as_union();
 
@@ -607,16 +615,18 @@ namespace x680 {
     public:
 
 
-        exceptionconstraint_atom(basic_entity_ptr scp, int vl) : constraint_atom(scp, cns_EXCEPTION),
-        value_(value_atom_ptr(new numvalue_atom(vl))), type_(type_atom_ptr(new type_atom(scp, t_INTEGER))) {
+        exceptionconstraint_atom(basic_entity_ptr scp, int vl)
+        : constraint_atom(scp, cns_EXCEPTION), value_(value_atom_ptr(new numvalue_atom(vl))), 
+                type_(type_atom_ptr(new type_atom(scp, t_INTEGER))) {
         }
 
-        exceptionconstraint_atom(basic_entity_ptr scp, std::string vl) : constraint_atom(scp, cns_EXCEPTION),
-        value_(value_atom_ptr(new definedvalue_atom(vl, scp))), type_(type_atom_ptr(new type_atom(scp, t_INTEGER))) {
+        exceptionconstraint_atom(basic_entity_ptr scp, std::string vl)
+        : constraint_atom(scp, cns_EXCEPTION), value_(value_atom_ptr(new definedvalue_atom(vl, scp))),
+        type_(type_atom_ptr(new type_atom(scp, t_INTEGER))) {
         }
 
-        exceptionconstraint_atom(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl) : constraint_atom(scp, cns_EXCEPTION),
-        value_(vl), type_(tp) {
+        exceptionconstraint_atom(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl)
+        : constraint_atom(scp, cns_EXCEPTION),  value_(vl), type_(tp) {
         }
 
         value_atom_ptr value() const {
@@ -677,6 +687,124 @@ namespace x680 {
         argument_entity_vct arguments_;
 
     };   
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // contentconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class contentconstraint_atom : public constraint_atom {
+
+    public:
+
+        contentconstraint_atom(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl)
+        : constraint_atom(scp, cns_Contents),  value_(vl), type_(tp)  {
+        }
+
+        contentconstraint_atom(basic_entity_ptr scp, type_atom_ptr tp)
+        : constraint_atom(scp, cns_Contents),  type_(tp)  {
+        }
+        
+        contentconstraint_atom(basic_entity_ptr scp, value_atom_ptr vl)
+        : constraint_atom(scp, cns_Contents),  value_(vl)  {
+        }        
+        
+        value_atom_ptr value() const {
+            return value_;
+        }
+
+        void value(value_atom_ptr val) {
+            value_ = val;
+        }
+
+        type_atom_ptr type() const {
+            return type_;
+        }
+
+        void type(type_atom_ptr val) {
+            type_ = val;
+        }
+
+        virtual void resolve();
+
+    private:
+
+
+        value_atom_ptr value_;
+        type_atom_ptr type_;
+
+    };       
+    
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // relationconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class relationconstraint_atom : public constraint_atom {
+
+    public:
+
+        relationconstraint_atom(basic_entity_ptr scp, objectset_atom_ptr objs, snotation_vector nots)
+        : constraint_atom(scp, cns_ComponentRelation),  objectset_(objs),  snotation_(nots)  {
+        }
+        
+        objectset_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr val) {
+            objectset_ = val;
+        }
+
+        const snotation_vector& snotation() const {
+            return snotation_;
+        }
+
+        void snotation(snotation_vector val) {
+           snotation_ = val;
+        }
+
+        virtual void resolve();
+
+    private:
+
+
+        objectset_atom_ptr objectset_;
+        snotation_vector snotation_;
+
+    };       
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // tableconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class tableconstraint_atom : public constraint_atom {
+
+    public:
+
+        tableconstraint_atom(basic_entity_ptr scp, objectset_atom_ptr objs)
+        : constraint_atom(scp, cns_SimpleTableConstraint),  objectset_(objs)  {
+        }
+        
+        objectset_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr val) {
+            objectset_ = val;
+        }
+
+        virtual void resolve();
+
+    private:
+
+
+        objectset_atom_ptr objectset_;
+
+    };           
+    
 
 
 

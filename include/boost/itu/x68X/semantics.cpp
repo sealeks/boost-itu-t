@@ -507,11 +507,10 @@ namespace x680 {
                 case cns_EXTENTION: return constraint_atom_ptr(new extentionconstraint_atom());
                 case cns_EXCEPTION: return compile_exceptionconstraint(scope, ent);
                 case cns_UserDefinedConstraint: return constraint_atom_ptr( new userconstraint_atom(scope, compile_arguments(scope, ent.uparameters)));
-                  /*  case cns_SimpleTableConstraint,
-                    case cns_ComponentRelation,
-                    case cns_ContentsType,
-                    case cns_ContentsValue,
-                    case cns_ContentsTypeValue,*/
+                case cns_Contents: return compile_contentconstraint(scope, ent);
+                case cns_ComponentRelation:  return constraint_atom_ptr( new relationconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref), ent.parameters));
+                case cns_SimpleTableConstraint:  return constraint_atom_ptr( new tableconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref)));
+                /*case cns_ComponentRelation*/
                 default:
                 {
                 }
@@ -540,6 +539,20 @@ namespace x680 {
         constraint_atom_ptr compile_exceptionconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
             return constraint_atom_ptr(new exceptionconstraint_atom(scope, compile_type(scope, ent.type), compile_value(scope, ent.value)));
         }
+        
+        constraint_atom_ptr compile_contentconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent){
+            if ((ent.type.builtin_t!=t_NODEF) && (ent.value.type!=v_nodef)){
+                return constraint_atom_ptr( new contentconstraint_atom(scope,  compile_type(scope, ent.type), compile_value(scope, ent.value)));
+            }
+            else  if (ent.type.builtin_t!=t_NODEF){
+                return constraint_atom_ptr( new contentconstraint_atom(scope,  compile_type(scope, ent.type)));
+            }
+            else  if (ent.value.type!=v_nodef) {
+                return constraint_atom_ptr( new contentconstraint_atom(scope, compile_value(scope, ent.value)));
+            }
+            scope->referenceerror_throw(scope->name(), "Content constraint dos'nt set");
+            return constraint_atom_ptr();
+        }        
 
 
 

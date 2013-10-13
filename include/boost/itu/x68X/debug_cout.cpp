@@ -655,6 +655,9 @@ namespace x680 {
             case cns_ValueSetFromObjects: return stream << self->as_fromdefinedset();
             case cns_ValueSetFromObject: return stream << self->as_fromdefined();
             case cns_UserDefinedConstraint: return stream << self->as_user();
+            case cns_Contents: return stream << self->as_content();        
+            case cns_ComponentRelation: return stream << self->as_relation();       
+            case cns_SimpleTableConstraint: return stream << self->as_table();             
             case cns_UNION: return stream << " | ";
             case cns_INTERSECTION: return stream << " & ";
             case cns_EXCEPT: return stream << " ^ ";
@@ -757,8 +760,35 @@ namespace x680 {
     }
     
     std::ostream& operator<<(std::ostream& stream, userconstraint_atom* self){
-        return stream << " CONSTRAINED BY  "  << self->arguments();
+        return stream << "CONSTRAINED BY "  << self->arguments();
     }
+    
+     std::ostream& operator<<(std::ostream& stream, contentconstraint_atom* self){
+            if ((self->type()) && (self->value())){
+                return stream << "CONTAINING "  << self->type() << " ENCODED BY " << self->value();
+            }
+            else  if (self->type()) {
+                return stream << "CONTAINING "  << self->type();
+            }
+            else  if (self->value())  {
+                return stream << "ENCODED BY " << self->value();
+            }
+           return stream << "CONTAINING???";
+     }   
+     
+         std::ostream& operator<<(std::ostream& stream,relationconstraint_atom* self){
+             stream << "(RC){"  << self->objectset() << "}{";
+             for (snotation_vector::const_iterator it = self->snotation().begin(); it != self->snotation().end(); ++it)
+                 if (it!=self->snotation().begin())
+                     stream  << " ," << *it;     
+                 else
+                     stream  << *it;
+             return stream << "}";
+         }
+         
+         std::ostream& operator<<(std::ostream& stream,tableconstraint_atom* self){
+             return stream << "(ST){"  << self->objectset() << "}";
+         }        
 
 
     // class

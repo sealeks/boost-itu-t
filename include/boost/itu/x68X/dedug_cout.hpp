@@ -72,7 +72,10 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, complexconstraint_atom* self);
     std::ostream& operator<<(std::ostream& stream, multipletypeconstraint_atom * self);
     std::ostream& operator<<(std::ostream& stream, exceptionconstraint_atom* self);
-    std::ostream& operator<<(std::ostream& stream, userconstraint_atom* self);    
+    std::ostream& operator<<(std::ostream& stream, userconstraint_atom* self);
+    std::ostream& operator<<(std::ostream& stream, contentconstraint_atom* self);    
+    std::ostream& operator<<(std::ostream& stream,relationconstraint_atom* self);  
+    std::ostream& operator<<(std::ostream& stream,tableconstraint_atom* self);    
     // class
     std::ostream& operator<<(std::ostream& stream, classassignment_entity* self);
     std::ostream& operator<<(std::ostream& stream, class_atom* self);

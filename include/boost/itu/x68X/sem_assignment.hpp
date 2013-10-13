@@ -233,6 +233,15 @@ namespace x680 {
     class userconstraint_atom;
     typedef boost::shared_ptr<userconstraint_atom> userconstraint_atom_ptr;
     
+    class contentconstraint_atom;
+    typedef boost::shared_ptr<contentconstraint_atom> contentconstraint_atom_ptr;    
+    
+    class relationconstraint_atom;
+    typedef boost::shared_ptr<relationconstraint_atom> relationconstraint_atom_ptr;    
+    
+    class tableconstraint_atom;
+    typedef boost::shared_ptr<tableconstraint_atom> tableconstraint_atom_ptr;      
+    
     class unionconstraint_atom;
     typedef boost::shared_ptr<unionconstraint_atom> unionconstraint_atom_ptr;
 
