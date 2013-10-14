@@ -763,6 +763,28 @@ namespace x680 {
         return stream << "CONSTRAINED BY "  << self->arguments();
     }
     
+    std::ostream& operator<<(std::ostream& stream, const uargument_entity_vct& self) {
+        stream << " {";
+        for (uargument_entity_vct::const_iterator it = self.begin(); it != self.end(); ++it) {
+            if (it != self.begin())
+                stream << " ,";
+            stream << (*it).get();
+        }
+        return stream << " }";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, uargument_entity* self) {
+        if (self->governor()) {
+            if (self->governor()->as_type())
+                stream << "(T)" << self->governor()->as_type() << ":";
+            else if (self->governor()->as_class())
+                stream << "(C)" << self->governor()->as_class() << ":";
+            else
+                stream << "(T?C)" << self->governor()->reff()->name() << ":";
+        }
+        return stream   << self->setting().get();
+    }    
+    
      std::ostream& operator<<(std::ostream& stream, contentconstraint_atom* self){
             if ((self->type()) && (self->value())){
                 return stream << "CONTAINING "  << self->type() << " ENCODED BY " << self->value();

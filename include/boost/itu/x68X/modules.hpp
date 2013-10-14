@@ -158,9 +158,13 @@ namespace x680 {
 
             qi::rule<str_iterator, setting_element(), skip_cmt_type> ActualParameter;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> Setting;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> Setting0;           
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingG;             
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingNA;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingU1;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingU2;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM0;    
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingMG;            
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM1;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM1NA;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM2;
@@ -196,7 +200,13 @@ namespace x680 {
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD1;
             qi::rule<str_iterator, argument_type(), skip_cmt_type> ParameterD2;
             qi::rule<str_iterator, argument_vector(), skip_cmt_type> Parameters;
-            qi::rule<str_iterator, argument_vector(), skip_cmt_type> UParameters;
+            
+            qi::rule<str_iterator, uargument_type(), skip_cmt_type> UParameterA;
+            qi::rule<str_iterator, uargument_type(), skip_cmt_type> UParameterB;
+            qi::rule<str_iterator, uargument_type(), skip_cmt_type> UParameterC;        
+            qi::rule<str_iterator, uargument_type(), skip_cmt_type> UParameterD;             
+            qi::rule<str_iterator, uargument_type(), skip_cmt_type> UParameter;              
+            qi::rule<str_iterator, uargument_vector(), skip_cmt_type> UParameters;
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             //  UnknownTCAssigment grammar (Type or Class)

@@ -664,15 +664,15 @@ namespace x680 {
     public:
 
 
-        userconstraint_atom(basic_entity_ptr scp, argument_entity_vct vct) 
+        userconstraint_atom(basic_entity_ptr scp, uargument_entity_vct vct) 
         : constraint_atom(scp, cns_UserDefinedConstraint), arguments_(vct) {
         }
 
-        argument_entity_vct& arguments() {
+        uargument_entity_vct& arguments() {
             return arguments_;
         }
 
-        void arguments(argument_entity_vct vl) {
+        void arguments(uargument_entity_vct vl) {
             arguments_ = vl;
         }
 
@@ -684,7 +684,7 @@ namespace x680 {
 
     private:
 
-        argument_entity_vct arguments_;
+        uargument_entity_vct arguments_;
 
     };   
     

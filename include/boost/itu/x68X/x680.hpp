@@ -392,6 +392,9 @@ namespace x680 {
 
         struct argument_type;
         typedef std::vector<argument_type> argument_vector;
+        
+        struct uargument_type;
+        typedef std::vector<uargument_type> uargument_vector;
 
         struct typevalue_element;
         typedef boost::shared_ptr<typevalue_element> typevalue_element_ptr;
@@ -618,7 +621,7 @@ namespace x680 {
 
             std::string identifier;
             string_vector parameters;
-            argument_vector uparameters;
+            uargument_vector uparameters;
             constraint_type tp;
             value_element value;
             value_element from_;
@@ -932,6 +935,25 @@ namespace x680 {
             std::string argument;
 
         };
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+        //  argument_type
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+        struct uargument_type {
+
+            uargument_type() : tp(gvr_No) {
+            }
+
+            std::string reff;
+            type_element governortype;
+            class_element governorclass;
+            governor_type tp;
+            setting_element parameter;
+
+
+        };        
 
 
 

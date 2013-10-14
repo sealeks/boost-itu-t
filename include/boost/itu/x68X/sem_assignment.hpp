@@ -35,6 +35,7 @@ namespace x680 {
         et_Object,
         et_ObjectSet,
         et_Argument,
+        et_UArgument,
         et_Extention
     };
 
@@ -64,6 +65,10 @@ namespace x680 {
     class argument_entity;
     typedef boost::shared_ptr<argument_entity> argument_entity_ptr;
     typedef std::vector<argument_entity_ptr> argument_entity_vct;
+    
+    class uargument_entity;
+    typedef boost::shared_ptr<uargument_entity> uargument_entity_ptr;
+    typedef std::vector<uargument_entity_ptr> uargument_entity_vct;    
 
     class global_entity;
     typedef boost::shared_ptr<global_entity> global_entity_ptr;
@@ -468,6 +473,8 @@ namespace x680 {
         assignment_entity* as_assigment();
 
         argument_entity* as_argument();
+        
+        uargument_entity* as_uargument();       
 
         bigassignment_entity* as_bigassigment();
 
@@ -755,6 +762,67 @@ namespace x680 {
         basic_atom_vct dummyrefferences_;
 
     };
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // uargument_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    class uargument_entity : public basic_entity {
+
+    public:
+
+        uargument_entity(basic_entity_ptr scope, setting_atom_ptr st);    
+        uargument_entity(basic_entity_ptr scope, type_atom_ptr gvnr);
+        uargument_entity(basic_entity_ptr scope, class_atom_ptr gvnr);
+        uargument_entity(basic_entity_ptr scope, basic_atom_ptr gvnr);
+
+        basic_atom_ptr governor() const {
+            return governor_;
+        }     
+
+        bool has_governor() const {
+            return governor_;
+        }
+        
+
+        bool has_undef_governor() const;
+
+        void governor(type_atom_ptr vl);
+
+        void governor(class_atom_ptr vl);
+
+        void governor(basic_atom_ptr vl);
+        
+        setting_atom_ptr setting() const {
+            return setting_;
+        }       
+        
+        void setting(setting_atom_ptr vl){
+            setting_=vl;
+        }        
+        
+        basic_atom_ptr parameter() const {
+            return parameter_;
+        }       
+        
+        void parameter(basic_atom_ptr vl){
+            parameter_=vl;
+        }         
+        
+
+        ///
+
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+    private:
+
+        basic_atom_ptr governor_;     
+        setting_atom_ptr setting_;
+        basic_atom_ptr parameter_;
+
+    };    
 
 
     /////////////////////////////////////////////////////////////////////////   

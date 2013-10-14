@@ -213,7 +213,7 @@ namespace x680 {
 
         void constraint_multitype(constraint_element& holder, const constraint_element_vector& val);
 
-        void constraint_userdef(constraint_element& holder, const argument_vector& val);
+        void constraint_userdef(constraint_element& holder, const uargument_vector& val);
 
         void constraint_relation(constraint_element& holder, const objectset_element& valr, const string_vector& valp);
 
@@ -544,6 +544,18 @@ namespace x680 {
         void argument_governor_reff(argument_type& holder, const std::string& val, const std::string& par, bool big);
 
         void argument_argument(argument_type& holder, const std::string& val, bool big);
+        
+        
+        
+        // UArgument setter
+        
+        void uargument_governor_tp(uargument_type& holder, const type_element& val, const setting_element& sett);
+
+        void uargument_governor_cl(uargument_type& holder, const class_element& vall, const setting_element& sett);
+
+        void uargument_governor_reff(uargument_type& holder, const std::string& vall, const setting_element& sett);
+
+        void uargument_setting(uargument_type& holderl, const setting_element& sett);           
 
 
         // Module setter       

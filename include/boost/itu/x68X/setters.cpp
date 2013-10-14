@@ -414,7 +414,7 @@ namespace x680 {
             holder.tp = cns_MultipleTypeConstraints;
         }
 
-        void constraint_userdef(constraint_element& holder, const argument_vector& val) {
+        void constraint_userdef(constraint_element& holder, const uargument_vector& val) {
             holder.uparameters = val;
             holder.tp = cns_UserDefinedConstraint;
         }
@@ -1027,6 +1027,30 @@ namespace x680 {
             holder.atp = big ? argm_Big : argm_Little;
         }
 
+        
+        // UArgument setter
+
+        void uargument_governor_tp(uargument_type& holder, const type_element& val, const setting_element& sett) {
+            holder.governortype = val;
+            holder.tp = gvr_Type;
+            holder.parameter = sett;
+        }
+
+        void uargument_governor_cl(uargument_type& holder, const class_element& val, const setting_element& sett) {
+            holder.governorclass = val;
+            holder.tp = gvr_Class;
+            holder.parameter = sett;
+        }
+
+        void uargument_governor_reff(uargument_type& holder, const std::string& val, const setting_element& sett) {
+            holder.reff = val;
+            holder.tp = gvr_Type_or_Class;
+            holder.parameter = sett;
+        }
+
+        void uargument_setting(uargument_type& holder, const setting_element& sett) {
+            holder.parameter = sett;
+        }        
 
         // Module setter       
 

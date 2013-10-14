@@ -67,7 +67,6 @@ namespace x680 {
                     >> StrictType[bind(&classfield_holder_ft, qi::_val, qi::_1, true)]
                     >> -(((UNIQUE_[bind(&classfield_unique, qi::_val)])
                     || OPTIONAL_[bind(&classfield_optional, qi::_val)])
-                    | (OPTIONAL_[bind(&classfield_optional, qi::_val)])
                     | (qi::omit[DEFAULT_]
                     >> (Value[bind(&classfield_defaultvalue, qi::_val, qi::_1)])));
 
@@ -137,8 +136,8 @@ namespace x680 {
             AiasTokenOToken = (SyntaxField_ >> OptionalGroup)
                     [bind(&classsyntax_agroup, qi::_val, qi::_1, qi::_2)];
 
-            RequiredToken = -(SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)])
-                    >> PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)];
+            RequiredToken = (SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)])
+                    || PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)];
 
             OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")]
                     )[bind(&classsyntax_optional, qi::_val)];

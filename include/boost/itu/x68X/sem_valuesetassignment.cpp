@@ -324,7 +324,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////    
         
     void userconstraint_atom::resolve(basic_atom_ptr holder) {
-        for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
+        for (uargument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
             if ((*it)->has_undef_governor()) {
                 if (!(*it)->governor()->reff())
                     scope()->referenceerror_throw(scope()->name());

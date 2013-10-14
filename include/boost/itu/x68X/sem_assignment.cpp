@@ -159,6 +159,10 @@ namespace x680 {
         return dynamic_cast<argument_entity*> (this);
     }
 
+    uargument_entity* basic_entity::as_uargument() {
+        return dynamic_cast<uargument_entity*> (this);
+    }    
+
     bigassignment_entity * basic_entity::as_bigassigment() {
         return dynamic_cast<bigassignment_entity*> (this);
     }
@@ -792,6 +796,48 @@ namespace x680 {
             governor()->resolve_reff();
 
     }
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // argument_entity
+    /////////////////////////////////////////////////////////////////////////  
+
+    uargument_entity::uargument_entity(basic_entity_ptr scope, setting_atom_ptr st)
+    : basic_entity(scope, "", et_UArgument), setting_(st) {
+    }
+
+    uargument_entity::uargument_entity(basic_entity_ptr scope, type_atom_ptr gvnr)
+    : basic_entity(scope, "", et_UArgument), governor_(gvnr) {
+    }
+
+    uargument_entity::uargument_entity(basic_entity_ptr scope, class_atom_ptr gvnr)
+    : basic_entity(scope, "", et_UArgument), governor_(gvnr) {
+    }
+    
+    uargument_entity::uargument_entity(basic_entity_ptr scope, basic_atom_ptr gvnr)
+    : basic_entity(scope, "", et_UArgument),  governor_(gvnr){
+    }    
+
+    bool uargument_entity::has_undef_governor() const {
+        return ( governor_ && !((governor_->as_type()) || (governor_->as_class())));
+    }
+
+    void uargument_entity::governor(type_atom_ptr vl) {
+        governor_ = vl;
+    }
+
+    void uargument_entity::governor(class_atom_ptr vl) {
+        governor_ = vl;
+    }
+
+    void uargument_entity::governor(basic_atom_ptr vl) {
+        governor_ = vl;
+    }
+
+    void uargument_entity::resolve(basic_atom_ptr holder) {
+        if (has_governor())
+            governor()->resolve_reff();
+    }    
 
 
     /////////////////////////////////////////////////////////////////////////   

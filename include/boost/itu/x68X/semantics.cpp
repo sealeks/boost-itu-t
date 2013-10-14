@@ -337,7 +337,7 @@ namespace x680 {
                 }
             } catch (boost::bad_lexical_cast) {
             }
-            scope->referenceerror_throw(scope->name(), "Value dos'nt set");
+            //scope->referenceerror_throw(scope->name(), "Value dos'nt set");
             return value_atom_ptr();
         }
 
@@ -512,7 +512,7 @@ namespace x680 {
                 case cns_ALLEXCEPT: return constraint_atom_ptr(new allexceptconstraint_atom());
                 case cns_EXTENTION: return constraint_atom_ptr(new extentionconstraint_atom());
                 case cns_EXCEPTION: return compile_exceptionconstraint(scope, ent);
-                case cns_UserDefinedConstraint: return constraint_atom_ptr( new userconstraint_atom(scope, compile_arguments(scope, ent.uparameters)));
+                case cns_UserDefinedConstraint: return constraint_atom_ptr( new userconstraint_atom(scope, compile_uarguments(scope, ent.uparameters)));
                 case cns_Contents: return compile_contentconstraint(scope, ent);
                 case cns_ComponentRelation:  return constraint_atom_ptr( new relationconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref), ent.parameters));
                 case cns_SimpleTableConstraint:  return constraint_atom_ptr( new tableconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref)));
@@ -559,6 +559,35 @@ namespace x680 {
             scope->referenceerror_throw(scope->name(), "Content constraint dos'nt set");
             return constraint_atom_ptr();
         }        
+        
+         uargument_entity_vct compile_uarguments(basic_entity_ptr scope, const x680::syntactic::uargument_vector& ent){
+            uargument_entity_vct tmp;
+            for (x680::syntactic::uargument_vector::const_iterator it = ent.begin(); it != ent.end(); ++it)
+                tmp.push_back(compile_uargument(scope, *it));
+            return tmp;
+         }
+         
+        uargument_entity_ptr compile_uargument(basic_entity_ptr scope, const x680::syntactic::uargument_type& ent){
+            switch (ent.tp) {
+                case gvr_Type:{
+                     uargument_entity_ptr tmp(new uargument_entity(scope, compile_type(scope, ent.governortype)));
+                     tmp->setting(compile_setting(tmp, ent.parameter));
+                    return tmp;}
+                case gvr_Class:{
+                     uargument_entity_ptr tmp(new uargument_entity(scope, compile_classdefined(scope, ent.governorclass)));
+                     tmp->setting(compile_setting(tmp, ent.parameter));
+                    return tmp;}
+                case gvr_Type_or_Class:{
+                    uargument_entity_ptr tmp(new uargument_entity(scope, basic_atom_ptr(new basic_atom(ent.reff))));
+                    tmp->setting(compile_setting(tmp, ent.parameter));  
+                    return tmp;}
+                default:
+                {
+                }
+            }
+            return uargument_entity_ptr(new uargument_entity(scope, compile_setting(scope, ent.parameter)));
+        }     
+        
 
 
 
