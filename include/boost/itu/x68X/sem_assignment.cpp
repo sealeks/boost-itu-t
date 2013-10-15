@@ -250,7 +250,7 @@ namespace x680 {
                 sc = sc->scope();
             }
             if (moduleref() == sc.get())
-                stack = sc->name() + "::" + stack;
+                stack = sc->name() + "@" + stack;
             rslt = rslt + " stack: " + stack + " ";
         } else
             rslt = rslt + " ";
