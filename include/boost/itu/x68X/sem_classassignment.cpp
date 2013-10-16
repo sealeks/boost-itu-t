@@ -96,14 +96,9 @@ namespace x680 {
         if (field()->expecteddef()) {
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (field()->expectedname() == (*it)->name()) {
-                    if (((*it)->as_classfield()) && (((*it)->as_classfield()->fieldkind() != fkind_TypeFieldSpec)
-                            || ((*it)->as_classfield()->fieldkind() != fkind_VariableTypeValueFieldSpec)))
+                    if (((*it)->as_classfield()) && ((*it)->as_classfield()->fieldkind() != fkind_TypeFieldSpec))
                         semantics::error("Field '" + name() + "' refference error in " + source_throw());
-                    if ((*it)->as_classfield()->fieldkind() == fkind_VariableTypeValueFieldSpec) {
-                       (*it)->as_classfield()->resolve();
-                       field()->reff((*it)->as_classfield()->as_reffvaluefield()->field()->reff());
-                    } else
-                        field()->reff(*it);
+                    field()->reff(*it);
                     return;
                 }
             }
@@ -122,14 +117,9 @@ namespace x680 {
         if (field()->expecteddef()) {
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (field()->expectedname() == (*it)->name()) {
-                    if (((*it)->as_classfield()) && (((*it)->as_classfield()->fieldkind() != fkind_TypeFieldSpec)
-                            || ((*it)->as_classfield()->fieldkind() != fkind_VariableTypeValueSetFieldSpec)))
+                    if (((*it)->as_classfield()) && ((*it)->as_classfield()->fieldkind() != fkind_TypeFieldSpec))
                         semantics::error("Field '" + name() + "' refference error in " + source_throw());
-                    if ((*it)->as_classfield()->fieldkind() == fkind_VariableTypeValueSetFieldSpec) {
-                       (*it)->as_classfield()->resolve();
-                       field()->reff((*it)->as_classfield()->as_reffvaluesetfield()->field()->reff());
-                    } else
-                        field()->reff(*it);
+                    field()->reff(*it);
                     return;
                 }
             }
