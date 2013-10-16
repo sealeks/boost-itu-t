@@ -210,6 +210,8 @@ namespace x680 {
                     >> qi::omit[qi::lexeme[ENCODED_ >> +qi::space >> BY_]]
                     >> (DefinedValue | ObjectIdentifierValue))[bind(&constraint_content_tv, qi::_val, qi::_1, qi::_2)];
 
+            ConstraintTVSOS = DefinedType_[bind(&constraint_tvsos, qi::_val, qi::_1)];         
+
         }
 
     }

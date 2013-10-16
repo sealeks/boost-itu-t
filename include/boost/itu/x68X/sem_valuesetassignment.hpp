@@ -233,7 +233,9 @@ namespace x680 {
         
        relationconstraint_atom* as_relation();     
        
-       tableconstraint_atom* as_table();           
+       tableconstraint_atom* as_table();        
+       
+       tvosoconstraint_atom* as_tvoso();
 
         unionconstraint_atom* as_union();
 
@@ -804,6 +806,61 @@ namespace x680 {
         objectset_atom_ptr objectset_;
 
     };           
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // tvosoconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class tvosoconstraint_atom : public constraint_atom {
+
+    public:
+
+        tvosoconstraint_atom(basic_entity_ptr scp, const std::string& reff);
+
+        type_atom_ptr type() const {
+            return type_;
+        }
+
+        void type(type_atom_ptr val) {
+            type_ = val;
+        }
+
+        valueset_atom_ptr valueset() const {
+            return valueset_;
+        }
+
+        void valueset(valueset_atom_ptr val) {
+            valueset_ = val;
+        }
+
+        objectset_atom_ptr objectset() const {
+            return objectset_;
+        }
+
+        void objectset(objectset_atom_ptr val) {
+            objectset_ = val;
+        }
+        
+        argument_enum tp() const {
+            return tp_;
+        }
+
+        void tp(argument_enum val) {
+            tp_ = val;
+        }        
+
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+    private:
+
+
+        objectset_atom_ptr objectset_;
+        valueset_atom_ptr valueset_;
+        type_atom_ptr type_;
+        argument_enum tp_;
+
+    };      
     
 
 

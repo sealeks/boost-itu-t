@@ -516,6 +516,7 @@ namespace x680 {
                 case cns_Contents: return compile_contentconstraint(scope, ent);
                 case cns_ComponentRelation:  return constraint_atom_ptr( new relationconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref), ent.parameters));
                 case cns_SimpleTableConstraint:  return constraint_atom_ptr( new tableconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref)));
+                case cns_Undef_T_ST_VS:  return constraint_atom_ptr( new tvosoconstraint_atom(scope, ent.identifier));
                 /*case cns_ComponentRelation*/
                 default:
                 {

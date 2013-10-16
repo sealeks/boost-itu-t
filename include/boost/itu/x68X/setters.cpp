@@ -479,6 +479,11 @@ namespace x680 {
             holder.fieldreference = reff;
             holder.tp = cns_ValueSetFromObjects;
         }
+        
+        void constraint_tvsos(constraint_element& holder, const std::string& reff) {
+            holder.identifier = reff;
+            holder.tp = cns_Undef_T_ST_VS;
+        }        
 
         void push_constraint(constraint_element_vector& holder, const constraint_element& val) {
             holder.push_back(val);

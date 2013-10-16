@@ -657,7 +657,8 @@ namespace x680 {
             case cns_UserDefinedConstraint: return stream << self->as_user();
             case cns_Contents: return stream << self->as_content();        
             case cns_ComponentRelation: return stream << self->as_relation();       
-            case cns_SimpleTableConstraint: return stream << self->as_table();             
+            case cns_SimpleTableConstraint: return stream << self->as_table();        
+            case cns_Undef_T_ST_VS: return stream << self->as_tvoso();            
             case cns_UNION: return stream << " | ";
             case cns_INTERSECTION: return stream << " & ";
             case cns_EXCEPT: return stream << " ^ ";
@@ -773,6 +774,7 @@ namespace x680 {
         return stream << " }";
     }
 
+
     std::ostream& operator<<(std::ostream& stream, uargument_entity* self) {
         if (self->governor()) {
             if (self->governor()->as_type())
@@ -813,6 +815,11 @@ namespace x680 {
          }        
 
 
+    
+    std::ostream& operator<<(std::ostream& stream, tvosoconstraint_atom* self){
+        return stream << "TVOSO("+ self->type()->reff()->name() +")";
+    }             
+         
     // class
 
     std::ostream& operator<<(std::ostream& stream, classassignment_entity* self) {

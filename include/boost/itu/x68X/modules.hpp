@@ -444,6 +444,7 @@ namespace x680 {
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintValue;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> ContentsConstraintTypeValue;
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> UndefTVOConstraint;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ConstraintTVSOS;
 
 
 

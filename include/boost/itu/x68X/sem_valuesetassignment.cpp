@@ -168,22 +168,26 @@ namespace x680 {
     stringconstraint_atom * constraint_atom::as_property() {
         return cotstrtype_ == cns_PropertySettings ? dynamic_cast<stringconstraint_atom *> (this) : 0;
     }
-    
-    userconstraint_atom* constraint_atom::as_user(){
+
+    userconstraint_atom* constraint_atom::as_user() {
         return cotstrtype_ == cns_UserDefinedConstraint ? dynamic_cast<userconstraint_atom*> (this) : 0;
     }
-    
-    contentconstraint_atom* constraint_atom::as_content(){
+
+    contentconstraint_atom* constraint_atom::as_content() {
         return cotstrtype_ == cns_Contents ? dynamic_cast<contentconstraint_atom*> (this) : 0;
-    }    
-    
-    relationconstraint_atom* constraint_atom::as_relation(){
+    }
+
+    relationconstraint_atom* constraint_atom::as_relation() {
         return cotstrtype_ == cns_ComponentRelation ? dynamic_cast<relationconstraint_atom*> (this) : 0;
-    }    
-    
-    tableconstraint_atom* constraint_atom::as_table(){
+    }
+
+    tableconstraint_atom* constraint_atom::as_table() {
         return cotstrtype_ == cns_SimpleTableConstraint ? dynamic_cast<tableconstraint_atom*> (this) : 0;
-    }        
+    }
+
+    tvosoconstraint_atom* constraint_atom::as_tvoso() {
+        return cotstrtype_ == cns_Undef_T_ST_VS ? dynamic_cast<tvosoconstraint_atom*> (this) : 0;
+    }
 
     unionconstraint_atom* constraint_atom::as_union() {
         return dynamic_cast<unionconstraint_atom*> (this);
@@ -304,25 +308,24 @@ namespace x680 {
         if (constraints_)
             constraints_->resolve(holder);
     }
-    
- 
-     /////////////////////////////////////////////////////////////////////////   
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // exceptionconstraint_atom
     /////////////////////////////////////////////////////////////////////////    
-    
-    
-        void exceptionconstraint_atom::resolve(basic_atom_ptr holder) {
-            if (type())
-                type()->resolve();
-            if (value())
-                value()->resolve(type());
-        }
 
-        
-     /////////////////////////////////////////////////////////////////////////   
+    void exceptionconstraint_atom::resolve(basic_atom_ptr holder) {
+        if (type())
+            type()->resolve();
+        if (value())
+            value()->resolve(type());
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // userconstraint_atom
     /////////////////////////////////////////////////////////////////////////    
-        
+
     void userconstraint_atom::resolve(basic_atom_ptr holder) {
         for (uargument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
             if ((*it)->has_undef_governor()) {
@@ -340,10 +343,10 @@ namespace x680 {
                     scope()->referenceerror_throw(scope()->name());
             }
         }
-    }        
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // contentconstraint_atom
     /////////////////////////////////////////////////////////////////////////    
 
@@ -352,28 +355,43 @@ namespace x680 {
             type()->resolve();
         if (value())
             value()->resolve();
-    }        
+    }
 
-    
-     /////////////////////////////////////////////////////////////////////////   
+
+    /////////////////////////////////////////////////////////////////////////   
     // relationconstraint_atom
     /////////////////////////////////////////////////////////////////////////    
 
     void relationconstraint_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
-    }         
-    
-     /////////////////////////////////////////////////////////////////////////   
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
     // tableconstraint_atom
     /////////////////////////////////////////////////////////////////////////    
 
     void tableconstraint_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
-    }        
-    
+    }
 
+    /////////////////////////////////////////////////////////////////////////   
+    // tvosoconstraint_atom
+    /////////////////////////////////////////////////////////////////////////    
+
+    tvosoconstraint_atom::tvosoconstraint_atom(basic_entity_ptr scp, const std::string& reff)
+    : constraint_atom(scp, cns_Undef_T_ST_VS),
+    type_(new type_atom(scp, reff, t_Reference)),
+    valueset_(new valueset_atom(scp, reff, vs_defined)),
+    objectset_(new objectset_atom(scp, reff, os_defined)),
+    tp_(argm_Nodef) {
+    }
+
+    void tvosoconstraint_atom::resolve(basic_atom_ptr holder) {
+        // if (objectset())
+        //  objectset()->resolve();
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // valuesetassignment_entity
@@ -390,16 +408,16 @@ namespace x680 {
                     if ((*it)->name() == nm)
                         return *it;
             }
-            if ((type()->reff() && (type()->reff()->name()!=nm))) {
+            if ((type()->reff() && (type()->reff()->name() != nm))) {
                 type()->resolve_reff(basic_atom_ptr(), sch);
                 if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, sch))
                     return fnd;
             }
         }
         if (!(sch & extend_search))
-                return basic_entity_ptr();            
+            return basic_entity_ptr();
         if (basic_entity_ptr fnd = assignment_entity::find_by_name(nm))
-            return fnd;         
+            return fnd;
         if (scope()) {
             prefind(nm, scope()->childs());
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)

@@ -234,6 +234,8 @@ namespace x680 {
 
         void constraint_fromobjects(constraint_element& holder, const objectset_element& val, const std::string& reff);
 
+        void constraint_tvsos(constraint_element& holder, const std::string& reff);        
+
         void push_constraint(constraint_element_vector& holder, const constraint_element& val);
 
         void push_constraints(constraint_element_vector& holder, const constraint_element_vector& val);

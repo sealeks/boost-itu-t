@@ -11,13 +11,13 @@
 #include <boost/enable_shared_from_this.hpp>
 
 namespace x680 {
-    
-    
+
+
     typedef int search_marker;
-    
+
     const search_marker local_search = 0x1;
     const search_marker extend_search = 0x2;
-    const search_marker full_search = 0x3;      
+    const search_marker full_search = 0x3;
 
     enum entity_enum {
 
@@ -65,10 +65,10 @@ namespace x680 {
     class argument_entity;
     typedef boost::shared_ptr<argument_entity> argument_entity_ptr;
     typedef std::vector<argument_entity_ptr> argument_entity_vct;
-    
+
     class uargument_entity;
     typedef boost::shared_ptr<uargument_entity> uargument_entity_ptr;
-    typedef std::vector<uargument_entity_ptr> uargument_entity_vct;    
+    typedef std::vector<uargument_entity_ptr> uargument_entity_vct;
 
     class global_entity;
     typedef boost::shared_ptr<global_entity> global_entity_ptr;
@@ -241,19 +241,22 @@ namespace x680 {
 
     class complexconstraint_atom;
     typedef boost::shared_ptr<complexconstraint_atom> complexconstraint_atom_ptr;
-    
+
     class userconstraint_atom;
     typedef boost::shared_ptr<userconstraint_atom> userconstraint_atom_ptr;
-    
+
     class contentconstraint_atom;
-    typedef boost::shared_ptr<contentconstraint_atom> contentconstraint_atom_ptr;    
-    
+    typedef boost::shared_ptr<contentconstraint_atom> contentconstraint_atom_ptr;
+
     class relationconstraint_atom;
-    typedef boost::shared_ptr<relationconstraint_atom> relationconstraint_atom_ptr;    
-    
+    typedef boost::shared_ptr<relationconstraint_atom> relationconstraint_atom_ptr;
+
     class tableconstraint_atom;
-    typedef boost::shared_ptr<tableconstraint_atom> tableconstraint_atom_ptr;      
-    
+    typedef boost::shared_ptr<tableconstraint_atom> tableconstraint_atom_ptr;
+
+    class tvosoconstraint_atom;
+    typedef boost::shared_ptr<tvosoconstraint_atom> tvosoconstraint_atom_ptr;
+
     class unionconstraint_atom;
     typedef boost::shared_ptr<unionconstraint_atom> unionconstraint_atom_ptr;
 
@@ -473,8 +476,8 @@ namespace x680 {
         assignment_entity* as_assigment();
 
         argument_entity* as_argument();
-        
-        uargument_entity* as_uargument();       
+
+        uargument_entity* as_uargument();
 
         bigassignment_entity* as_bigassigment();
 
@@ -762,9 +765,9 @@ namespace x680 {
         basic_atom_vct dummyrefferences_;
 
     };
-    
-    
-    
+
+
+
     /////////////////////////////////////////////////////////////////////////   
     // uargument_entity
     /////////////////////////////////////////////////////////////////////////  
@@ -773,19 +776,19 @@ namespace x680 {
 
     public:
 
-        uargument_entity(basic_entity_ptr scope, setting_atom_ptr st);    
+        uargument_entity(basic_entity_ptr scope, setting_atom_ptr st);
         uargument_entity(basic_entity_ptr scope, type_atom_ptr gvnr);
         uargument_entity(basic_entity_ptr scope, class_atom_ptr gvnr);
         uargument_entity(basic_entity_ptr scope, basic_atom_ptr gvnr);
 
         basic_atom_ptr governor() const {
             return governor_;
-        }     
+        }
 
         bool has_governor() const {
             return governor_;
         }
-        
+
 
         bool has_undef_governor() const;
 
@@ -794,23 +797,23 @@ namespace x680 {
         void governor(class_atom_ptr vl);
 
         void governor(basic_atom_ptr vl);
-        
+
         setting_atom_ptr setting() const {
             return setting_;
-        }       
-        
-        void setting(setting_atom_ptr vl){
-            setting_=vl;
-        }        
-        
+        }
+
+        void setting(setting_atom_ptr vl) {
+            setting_ = vl;
+        }
+
         basic_atom_ptr parameter() const {
             return parameter_;
-        }       
-        
-        void parameter(basic_atom_ptr vl){
-            parameter_=vl;
-        }         
-        
+        }
+
+        void parameter(basic_atom_ptr vl) {
+            parameter_ = vl;
+        }
+
 
         ///
 
@@ -818,11 +821,11 @@ namespace x680 {
 
     private:
 
-        basic_atom_ptr governor_;     
+        basic_atom_ptr governor_;
         setting_atom_ptr setting_;
         basic_atom_ptr parameter_;
 
-    };    
+    };
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -931,7 +934,7 @@ namespace x680 {
         objectset_atom* as_objectset();
 
         ////////
-        
+
         void resolve_reff(basic_atom_ptr holder = basic_atom_ptr(), search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
