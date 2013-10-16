@@ -413,14 +413,12 @@ namespace x680 {
     }
 
     basic_entity_ptr objectassignment_entity::find_typefields(reffvaluefield_entity* fld) {
-        std::cout << "search: "  << fld->name() << std::endl;
         if ((fld->field()) && (fld->field()->reff())) {
             for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                 if ((*it)->name() == (fld->name())) {
                     if ((*it)->as_valueassigment())
                         (*it)->as_valueassigment()->type()
                         ->reff(find_typefields((*it)->as_valueassigment()->type()->reff()->name()));
-                    std::cout << "set type: "  << (*it)->as_valueassigment()->type() ->reff()->name() << std::endl;
                     return basic_entity_ptr();
                 }
             }
@@ -443,10 +441,8 @@ namespace x680 {
     }
 
     basic_entity_ptr objectassignment_entity::find_typefields(const std::string& nm) {
-        std::cout << "try find: "  << nm << std::endl;
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
             if (((*it)->name() == nm) && ((*it)->as_typeassigment())){
-                std::cout << "success find: "  << nm << std::endl;
                 return (*it);}
             if (((*it)->name() == nm) && ((*it)->as_valueassigment()))
                 return find_typefields((*it)->as_valueassigment()->type()->reff()->name());
