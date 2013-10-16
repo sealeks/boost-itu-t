@@ -178,6 +178,7 @@ namespace x680 {
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObject;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingObjectSet;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingLiteral;
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingSLiteral;            
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingArgument;
 
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingTypeNA;

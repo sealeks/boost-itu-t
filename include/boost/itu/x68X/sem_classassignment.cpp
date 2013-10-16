@@ -96,9 +96,14 @@ namespace x680 {
         if (field()->expecteddef()) {
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (field()->expectedname() == (*it)->name()) {
-                    if (((*it)->as_classfield()) && ((*it)->as_classfield()->fieldkind() != fkind_TypeFieldSpec))
+                    if (((*it)->as_classfield()) && (((*it)->as_classfield()->fieldkind() != fkind_TypeFieldSpec)
+                            || ((*it)->as_classfield()->fieldkind() != fkind_VariableTypeValueFieldSpec)))
                         semantics::error("Field '" + name() + "' refference error in " + source_throw());
-                    field()->reff(*it);
+                    if ((*it)->as_classfield()->fieldkind() == fkind_VariableTypeValueFieldSpec) {
+                       (*it)->as_classfield()->resolve();
+                       field()->reff((*it)->as_classfield()->as_reffvaluefield()->field()->reff());
+                    } else
+                        field()->reff(*it);
                     return;
                 }
             }
@@ -117,9 +122,14 @@ namespace x680 {
         if (field()->expecteddef()) {
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (field()->expectedname() == (*it)->name()) {
-                    if (((*it)->as_classfield()) && ((*it)->as_classfield()->fieldkind() != fkind_TypeFieldSpec))
+                    if (((*it)->as_classfield()) && (((*it)->as_classfield()->fieldkind() != fkind_TypeFieldSpec)
+                            || ((*it)->as_classfield()->fieldkind() != fkind_VariableTypeValueSetFieldSpec)))
                         semantics::error("Field '" + name() + "' refference error in " + source_throw());
-                    field()->reff(*it);
+                    if ((*it)->as_classfield()->fieldkind() == fkind_VariableTypeValueSetFieldSpec) {
+                       (*it)->as_classfield()->resolve();
+                       field()->reff((*it)->as_classfield()->as_reffvaluesetfield()->field()->reff());
+                    } else
+                        field()->reff(*it);
                     return;
                 }
             }
@@ -179,6 +189,8 @@ namespace x680 {
 
     void syntax_atom::resolve(basic_atom_ptr holder) {
         if (expecteddef()) {
+            if (expectedname().empty()){
+                return;}
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it) {
                 if (expectedname() == (*it)->name()) {
                     reff(*it);

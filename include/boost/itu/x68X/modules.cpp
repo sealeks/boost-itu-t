@@ -184,6 +184,8 @@ namespace x680 {
             SettingObjectSet = ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)];
 
             SettingLiteral = SyntaxField_[bind(&setting_literal, qi::_val, qi::_1)];
+            
+            SettingSLiteral = Literal_[bind(&setting_literal, qi::_val, qi::_1)];
 
             SettingArgument = bothreference_[bind(&setting_literal, qi::_val, qi::_1)];
 
@@ -221,14 +223,14 @@ namespace x680 {
                     | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[SyntaxField_[bind(&setting_literal, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM1;
 
-            SettingM1NA = SettingTypeNA | SettingValueNA | SettingValueSetNA | SettingObjectNA | SettingObjectSetNA | SettingLiteral;
+            SettingM1NA = SettingTypeNA | SettingValueNA | SettingValueSetNA | SettingObjectNA | SettingObjectSetNA | SettingSLiteral;
 
             SettingNA = ((qi::hold[TypeNA[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[ValueNA[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[ValueSetNA[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[ObjectNA[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])
                     | (qi::hold[ObjectSetNA[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[SyntaxField_[bind(&setting_literal, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM1NA;
+                    | (qi::hold[Literal_[bind(&setting_literal, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM1NA;
 
             SettingM2 = SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet | SettingArgument;
 

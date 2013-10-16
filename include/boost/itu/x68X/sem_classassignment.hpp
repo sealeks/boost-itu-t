@@ -495,7 +495,7 @@ namespace x680 {
         bool isalias() const {
             return !alias_.empty();
         }
-
+        
         groupsyntax_atom* as_group();
 
 

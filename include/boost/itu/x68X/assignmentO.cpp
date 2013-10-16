@@ -57,7 +57,7 @@ namespace x680 {
 
             DefinedSyntaxToken = DefinedSyntaxToken2 | DefinedSyntaxToken1;
 
-            DefinedSyntaxToken1 = SyntaxField_[bind(&objectfield_field, qi::_val, qi::_1)];
+            DefinedSyntaxToken1 = Literal_[bind(&objectfield_field, qi::_val, qi::_1)];
 
             DefinedSyntaxToken2 = SettingNA[bind(&objectfield_setting, qi::_val, qi::_1)];
 

@@ -145,7 +145,7 @@ namespace x680 {
     };
 
     fieldsetting_atom_ptr defltobject_atom::find_field(const std::string& name) {
-        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) 
+        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it)
             if ((*it)->field() == name)
                 return (*it);
         return fieldsetting_atom_ptr();
@@ -164,27 +164,28 @@ namespace x680 {
     };
 
     fieldsetting_atom_ptr defsyntxobject_atom::find_field(const std::string& name) {
-        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) 
+        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it)
             if ((*it)->field() == name)
                 return (*it);
         return fieldsetting_atom_ptr();
     }
 
     bool defsyntxobject_atom::find_literal(const std::string& name) {
+        std::string tmpl = "";
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
             if (!(*it)->setting()->literal().empty()) {
-                if (name == (*it)->setting()->literal()) {
-                    std::string tmpstr = name;
-                    ++it;
-                    while ((it != fieldsetting_.end()) && (tmpstr.find_first_of(' ') != std::string::npos)) {
-                        ++it;
-                        tmpstr = tmpstr.substr(tmpstr.find_first_of(' ') + 1);
-                    }
-                    fieldsetting_.erase(fieldsetting_.begin(), it);
-                    return true;
+                tmpl += (*it)->setting()->literal();
+                if ((name.size() >= tmpl.size())
+                        && (name.substr(0, tmpl.size()) == tmpl)) {
+                    if (name == tmpl) {
+                        fieldsetting_.erase(fieldsetting_.begin(), ++it);
+                        return true;
+                    } else
+                        tmpl += " ";
                 } else
                     return false;
-            }
+            } else
+                return false;
         }
         return false;
     }
@@ -213,13 +214,13 @@ namespace x680 {
 
     basic_entity_ptr objectassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
-            return argfnd;         
+            return argfnd;
         if (scope()) {
             prefind(nm, scope()->childs());
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
                 if (nm == (*it)->name())
                     return *it;
-        }        
+        }
         if (scope())
             return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
@@ -235,7 +236,7 @@ namespace x680 {
     }
 
     void objectassignment_entity::apply_fields() {
-        //if (!has_arguments()) {
+        //return;
         if (!((object()->as_deflt()) || (object()->as_defnsyntx())))
             return;
         _class()->resolve();
@@ -250,26 +251,30 @@ namespace x680 {
             }
             if (classassignment_entity * clsa = cl->as_classassigment()) {
                 for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
-                    if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
-                        create_fields((*it)->as_classfield(), fnd->setting().get());
-                    } else {
-                        switch (((*it)->as_classfield()->marker())) {
-                            case mk_default:create_fields((*it)->as_classfield());
-                                break;
-                            case mk_optional: break;
-                            default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
+                    if (!(((*it)->as_classfield()->as_reffvaluefield()) || ((*it)->as_classfield()->as_reffvaluesetfield()))) {
+                        if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
+                            create_fields((*it)->as_classfield(), fnd->setting().get());
+                        } else {
+                            switch (((*it)->as_classfield()->marker())) {
+                                case mk_default:create_fields((*it)->as_classfield());
+                                    break;
+                                case mk_optional: break;
+                                default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
+                            }
                         }
                     }
                 }
                 for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
-                    if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
-                        create_fields_var((*it)->as_classfield(), fnd->setting().get());
-                    } else {
-                        switch (((*it)->as_classfield()->marker())) {
-                            case mk_default:create_fields_var((*it)->as_classfield());
-                                break;
-                            case mk_optional: break;
-                            default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
+                    if  (((*it)->as_classfield()->as_reffvaluefield()) || ((*it)->as_classfield()->as_reffvaluesetfield())) {
+                        if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
+                            create_fields_var((*it)->as_classfield(), fnd->setting().get());
+                        } else {
+                            switch (((*it)->as_classfield()->marker())) {
+                                case mk_default:create_fields_var((*it)->as_classfield());
+                                    break;
+                                case mk_optional: break;
+                                default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
+                            }
                         }
                     }
                 }
@@ -291,7 +296,7 @@ namespace x680 {
                 if (obj->find_literal(syn->alias())) {
                 } else {
                     if ((!syn->optional()) && !optional)
-                        referenceerror_throw(syn->alias(), "Fields object parsing error:");
+                        referenceerror_throw(syn->alias(), "Field object parsing error:");
                     else
                         return false;
                 }
@@ -307,20 +312,23 @@ namespace x680 {
         } else {
             if (syn->isalias()) {
                 if (obj->find_literal(syn->alias())) {
-                    if (obj->fieldsetting().empty())
-                        referenceerror_throw(syn->alias(), "Fields object parsing error:");
+                    if (obj->fieldsetting().empty()) {
+                        referenceerror_throw(syn->alias(), "Field object parsing error:");
+                    }
+                    if (syn->reff()->name().empty())
+                        return true;
                     newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
                     obj->fieldsetting().erase(obj->fieldsetting().begin());
                     return true;
                 } else {
                     if ((!syn->optional()) && !optional)
-                        referenceerror_throw(syn->alias(), "Fields object parsing error:");
+                        referenceerror_throw(syn->alias(), "Field object parsing error:");
                     else
                         return false;
                 }
             } else {
                 if (obj->fieldsetting().empty())
-                    referenceerror_throw(syn->alias(), "Fields object parsing error:");
+                    referenceerror_throw(syn->alias(), "Field object parsing error:");
                 newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
                 obj->fieldsetting().erase(obj->fieldsetting().begin());
                 return true;
@@ -375,15 +383,15 @@ namespace x680 {
     void objectassignment_entity::create_fields_var(field_entity* fld, setting_atom* st) {
         if (st) {
             if (fld->as_reffvaluefield()) {
-                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluefield()->field()->reff()->name());
-                if ((st->value()) && (fnd)) {
+                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluefield());
+                if ((st->value())) {
                     type_atom_ptr tp = type_atom_ptr(new type_atom(fld->scope(), fld->as_reffvaluefield()->field()->reff()->name(), t_Reference));
                     tp->reff(fnd);
                     childs_.push_back(basic_entity_ptr(new valueassignment_entity(fld->scope(), fld->name(), tp, st->value())));
                 } else
                     referenceerror_throw(fld->name(), "Field is not value: ");
             } else if (fld->as_reffvaluesetfield()) {
-                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluesetfield()->field()->reff()->name());
+                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluesetfield());
                 if (st->valueset()) {
                     type_atom_ptr tp = type_atom_ptr(new type_atom(fld->scope(), fld->as_reffvaluesetfield()->field()->reff()->name(), t_Reference));
                     tp->reff(fnd);
@@ -393,16 +401,12 @@ namespace x680 {
             }
         } else {
             if (fld->as_reffvaluefield()) {
-                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluefield()->field()->reff()->name());
-                if (!fnd)
-                    referenceerror_throw(fld->name(), "Field is not  refference to type: ");
+                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluefield());
                 type_atom_ptr tp = type_atom_ptr(new type_atom(fld->scope(), fld->as_reffvaluefield()->field()->reff()->name(), t_Reference));
                 tp->reff(fnd);
                 childs_.push_back(basic_entity_ptr(new valueassignment_entity(fld->scope(), fld->name(), tp, fld->as_reffvaluefield()->_default())));
             } else if (fld->as_reffvaluesetfield()) {
-                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluesetfield()->field()->reff()->name());
-                if (!fnd)
-                    referenceerror_throw(fld->name(), "Field is not  refference to type: ");
+                basic_entity_ptr fnd = find_typefields(fld->as_reffvaluesetfield());
                 type_atom_ptr tp = type_atom_ptr(new type_atom(fld->scope(), fld->as_reffvaluesetfield()->field()->reff()->name(), t_Reference));
                 tp->reff(fnd);
                 childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(fld->scope(), fld->name(), tp, fld->as_reffvaluesetfield()->_default())));
@@ -410,10 +414,44 @@ namespace x680 {
         }
     }
 
+    basic_entity_ptr objectassignment_entity::find_typefields(reffvaluefield_entity* fld) {
+        reffvaluefield_entity* fnd = fld;          
+        /*while (fnd && (fnd->field()) && (fnd->field()->reff())
+                && (fnd->field()->reff()->as_classfield())
+                && (fnd->field()->reff()->as_classfield()->as_reffvaluefield()))
+            fnd = fnd->field()->reff()->as_classfield()->as_reffvaluefield();
+        if (fnd && (fnd->field()) && (fnd->field()->reff())
+                && (fnd->field()->reff()->as_classfield())
+                && (fnd->field()->reff()->as_classfield()->as_typefield())) {
+        }*/
+        if (fnd && (fnd->field()) && (fnd->field()->reff()))
+            return find_typefields(fnd->field()->reff()->name());
+
+        referenceerror_throw(fld->name(), "Field   refference error: ");
+        return basic_entity_ptr();
+    }
+
+    basic_entity_ptr objectassignment_entity::find_typefields(reffvaluesetfield_entity* fld) {
+        reffvaluesetfield_entity* fnd = fld;
+        /*while (fnd && (fnd->field()) && (fnd->field()->reff())
+                && (fnd->field()->reff()->as_classfield())
+                && (fnd->field()->reff()->as_classfield()->as_reffvaluesetfield()))
+            fnd = fnd->field()->reff()->as_classfield()->as_reffvaluesetfield();
+        if (fnd && (fnd->field()) && (fnd->field()->reff())
+                && (fnd->field()->reff()->as_classfield())
+                && (fnd->field()->reff()->as_classfield()->as_typefield())) {}*/
+        if (fnd && (fnd->field()) && (fnd->field()->reff()))
+            return find_typefields(fnd->field()->reff()->name());
+
+                referenceerror_throw(fld->name(), "Field   refference error: ");
+            return basic_entity_ptr();
+    }
+
     basic_entity_ptr objectassignment_entity::find_typefields(const std::string& nm) {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
             if (((*it)->name() == nm) && ((*it)->as_typeassigment()))
                 return (*it);
+        referenceerror_throw(nm, "Field   refference error: ");
         return basic_entity_ptr();
     }
 

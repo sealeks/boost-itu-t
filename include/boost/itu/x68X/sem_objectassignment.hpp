@@ -452,7 +452,11 @@ namespace x680 {
 
         void create_fields_var(field_entity* fld, setting_atom* st = 0);
 
-        basic_entity_ptr find_typefields(const std::string& nm);
+        basic_entity_ptr find_typefields(reffvaluefield_entity* fld);
+
+        basic_entity_ptr find_typefields(reffvaluesetfield_entity* fld);
+        
+        basic_entity_ptr find_typefields(const std::string& nm);       
 
         bool calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional = false);
 

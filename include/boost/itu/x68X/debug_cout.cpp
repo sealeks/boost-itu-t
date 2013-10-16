@@ -1009,10 +1009,12 @@ namespace x680 {
                 stream << " < ";
             if (self->isalias())
                 stream << " '" << self->alias() << "' ";
-            if (self->expecteddef())
-                stream << " ??? " << self->reff()->name();
-            else
-                stream << " *" << self->reff()->name();
+            if (self->reff()) {
+                if (self->expecteddef())
+                    stream << " ??? " << self->reff()->name();
+                else
+                    stream << " *" << self->reff()->name();
+            }
             if (self->optional())
                 stream << " ] ";
             else
