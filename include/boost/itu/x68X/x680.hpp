@@ -401,6 +401,7 @@ namespace x680 {
 
         struct setting_element;
         typedef std::vector<setting_element> parameter_vector;
+         typedef boost::shared_ptr<setting_element> setting_element_ptr;
 
         struct module;
         typedef std::vector<module> modules;
@@ -634,7 +635,8 @@ namespace x680 {
             constraint_element_vector constraint;
             std::string fieldreference;
             object_element_ptr objectref;
-            objectset_element_ptr objectsetref;            
+            objectset_element_ptr objectsetref;     
+            setting_element_ptr setting;
             
         };
 

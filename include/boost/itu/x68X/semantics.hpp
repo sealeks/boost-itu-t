@@ -84,7 +84,8 @@ namespace x680 {
         constraint_atom_ptr compile_namedconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
         constraint_atom_ptr compile_multipletypeconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
         constraint_atom_ptr compile_exceptionconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
-        constraint_atom_ptr compile_contentconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);   
+        constraint_atom_ptr compile_contentconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
+        constraint_atom_ptr compile_tvosoconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent);
         uargument_entity_vct compile_uarguments(basic_entity_ptr scope, const x680::syntactic::uargument_vector& ent);
         uargument_entity_ptr compile_uargument(basic_entity_ptr scope, const x680::syntactic::uargument_type& ent);        
         // class

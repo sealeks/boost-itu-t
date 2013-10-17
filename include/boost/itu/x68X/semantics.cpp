@@ -516,7 +516,7 @@ namespace x680 {
                 case cns_Contents: return compile_contentconstraint(scope, ent);
                 case cns_ComponentRelation:  return constraint_atom_ptr( new relationconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref), ent.parameters));
                 case cns_SimpleTableConstraint:  return constraint_atom_ptr( new tableconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref)));
-                case cns_Undef_T_ST_VS:  return constraint_atom_ptr( new tvosoconstraint_atom(scope, ent.identifier));
+                case cns_Undef_T_ST_VS:  return compile_tvosoconstraint(scope,ent);
                 /*case cns_ComponentRelation*/
                 default:
                 {
@@ -559,6 +559,17 @@ namespace x680 {
             }
             scope->referenceerror_throw(scope->name(), "Content constraint dos'nt set");
             return constraint_atom_ptr();
+        }  
+        
+        constraint_atom_ptr compile_tvosoconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
+            tvosoconstraint_atom_ptr tmp(new tvosoconstraint_atom(scope));
+            if (((*ent.setting).alternative & AS_TYPE) && ((*ent.setting).type))
+                tmp->type(compile_type(scope,  (*((*ent.setting).type))));
+            if (((*ent.setting).alternative & AS_VALUESET)  && ((*ent.setting).valueset))
+                tmp->valueset(compile_valueset(scope,  (*((*ent.setting).valueset))));
+            if (((*ent.setting).alternative & AS_OBJECTSET) && ((*ent.setting).objectset))
+                tmp->objectset(compile_objectset(scope,   (*((*ent.setting).objectset))));
+            return tmp;
         }        
         
          uargument_entity_vct compile_uarguments(basic_entity_ptr scope, const x680::syntactic::uargument_vector& ent){

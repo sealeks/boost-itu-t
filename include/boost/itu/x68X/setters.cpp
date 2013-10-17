@@ -480,8 +480,8 @@ namespace x680 {
             holder.tp = cns_ValueSetFromObjects;
         }
         
-        void constraint_tvsos(constraint_element& holder, const std::string& reff) {
-            holder.identifier = reff;
+        void constraint_tvsos(constraint_element& holder, const setting_element& st) {
+            holder.setting = setting_element_ptr(new setting_element(st));
             holder.tp = cns_Undef_T_ST_VS;
         }        
 
