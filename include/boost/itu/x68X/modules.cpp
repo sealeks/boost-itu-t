@@ -201,10 +201,11 @@ namespace x680 {
 
 
 
-            SettingMG = SettingType | SettingClass;
+            SettingMCN= SettingType | SettingValueSet | SettingObjectSet;
 
-            SettingG = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingMG;
+            SettingCN = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSetNA[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingMCN;
 
             SettingM0 = SettingValue | SettingValueSet | SettingObject | SettingObjectSet;
 

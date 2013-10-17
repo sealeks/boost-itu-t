@@ -159,12 +159,12 @@ namespace x680 {
             qi::rule<str_iterator, setting_element(), skip_cmt_type> ActualParameter;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> Setting;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> Setting0;           
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingG;             
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingCN;             
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingNA;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingU1;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingU2;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM0;    
-            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingMG;            
+            qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingMCN;            
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM1;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM1NA;
             qi::rule<str_iterator, setting_element(), skip_cmt_type> SettingM2;
