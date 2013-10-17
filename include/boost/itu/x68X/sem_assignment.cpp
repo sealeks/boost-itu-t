@@ -740,44 +740,52 @@ namespace x680 {
             } else if (val->as_class()) {
                 unspecified_ = assignment_entity_ptr(new classassignment_entity(scope(), name()));
                 argumenttype_ = argm_Class;
-            } else
+            } else{
                 debug_warning("Should be error argument type set");
+                return;}
         }
         switch (argumenttype_) {
             case argm_Type:
             {
-                if (!val->as_type())
+                if (!val->as_type()){
                     debug_warning("Should be error argument type ambiguous: Type ");
+                    return;}
                 break;
             }
             case argm_Value:
             {
-                if (!val->as_value())
+                if (!val->as_value()){
                     debug_warning("Should be error argument type ambiguous: Value ");
+                    return;}                
                 break;
             }
             case argm_ValueSet:
             {
-                if (!val->as_valueset())
+                if (!val->as_valueset()){
                     debug_warning("Should be error argument type ambiguous: ValueSet ");
+                    return;}
                 break;
             }
             case argm_Class:
             {
-                if (!val->as_class())
+                if (!val->as_class()){
                     debug_warning("Should be error argument type ambiguous: Class ");
+                    return;}
                 break;
             }
             case argm_Object:
             {
-                if (!val->as_object())
+                if (!val->as_object()){
                     debug_warning("Should be error argument type ambiguous: Object ");
+                    return;}
                 break;
             }
             case argm_ObjectSet:
             {
-                if (!val->as_objectset())
+                if (!val->as_objectset()) {
                     debug_warning("Should be error argument type ambiguous: ObjectSet ");
+                    return;
+                }
                 break;
             }
             default:
