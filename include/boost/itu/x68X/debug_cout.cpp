@@ -817,8 +817,8 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, tvosoconstraint_atom* self) {
         switch(self->tp()){
             case argm_Type: return stream  <<  self->type();
-            case argm_ValueSet: return stream  <<  self->valueset();
-            case argm_ObjectSet: return stream  << "ST"  << self->objectset();
+            case argm_ValueSet: return stream  <<  "(vS)"  << self->valueset();
+            case argm_ObjectSet: return stream  << "ST {"  << self->objectset()  << "}";
             default:{}
         }
         return stream << "TVOSO(" <<  self->tp() << ")";    
