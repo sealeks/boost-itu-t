@@ -140,7 +140,7 @@ namespace x680 {
 
 
 
-            TypeConstraint = Type[bind(&constraint_typeset, qi::_val, qi::_1)];
+            TypeConstraint = BuitinType[bind(&constraint_typeset, qi::_val, qi::_1)];  /// ??
 
             SimpleElement = ConstraintFromObjects| ConstraintFromObject
                     | ContainedSubtype | PatternConstraint
@@ -170,7 +170,8 @@ namespace x680 {
                     >> FullSpecification[bind(&constraint_multitype, qi::_val, qi::_1)];
 
             Element = SizeConstraint | PermittedAlphabet
-                    | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement;
+                    | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement
+                    | ConstraintTVSOS;
 
 
 
@@ -210,7 +211,7 @@ namespace x680 {
                     >> qi::omit[qi::lexeme[ENCODED_ >> +qi::space >> BY_]]
                     >> (DefinedValue | ObjectIdentifierValue))[bind(&constraint_content_tv, qi::_val, qi::_1, qi::_2)];
 
-            ConstraintTVSOS = DefinedType_[bind(&constraint_tvsos, qi::_val, qi::_1)];         
+            ConstraintTVSOS = SettingCN[bind(&constraint_tvsos, qi::_val, qi::_1)];         
 
         }
 
