@@ -382,15 +382,56 @@ namespace x680 {
 
     tvosoconstraint_atom::tvosoconstraint_atom(basic_entity_ptr scp, const std::string& reff)
     : constraint_atom(scp, cns_Undef_T_ST_VS),
-    type_(new type_atom(scp, reff, t_Reference)),
-    valueset_(new valueset_atom(scp, reff, vs_defined)),
-    objectset_(new objectset_atom(scp, reff, os_defined)),
     tp_(argm_Nodef) {
     }
 
     void tvosoconstraint_atom::resolve(basic_atom_ptr holder) {
-        // if (objectset())
-        //  objectset()->resolve();
+        if (type() && (type()->reff())) {
+            basic_entity_ptr fnd = type()->scope()->find(type()->reff());
+            if (fnd)
+                if (fnd && ((fnd->as_typeassigment())
+                        || (fnd->as_argument()))) {
+                    if ((fnd->as_typeassigment()) || ((fnd->as_argument()->argumenttype() == argm_Nodef)
+                            || (fnd->as_argument()->argumenttype() == argm_Type))) {
+                        tp_ = argm_Type;
+                        if (objectset_)
+                            objectset_.reset();
+                        if (valueset_)
+                            valueset_.reset();
+                        type()->resolve();
+                        return;
+                    }
+                }
+        }
+        if (valueset() && (valueset()->reff())) {
+            basic_entity_ptr fnd = valueset()->scope()->find(valueset()->reff());
+            if (fnd && ((fnd->as_valuesetassigment()) || (fnd->as_argument()))) {
+                if ((fnd->as_valuesetassigment()) || (fnd->as_argument()->argumenttype() == argm_ValueSet)) {
+                    tp_ = argm_ValueSet;
+                    if (objectset_)
+                        objectset_.reset();
+                    if (type_)
+                        type_.reset();
+                    valueset()->resolve();
+                    return;
+                }
+            }
+        }
+        if (objectset() && (objectset()->reff())) {
+            basic_entity_ptr fnd = objectset()->scope()->find(objectset()->reff());
+            if (fnd && ((fnd->as_objectsetassigment()) || (fnd->as_argument()))) {
+                if ((fnd->as_objectsetassigment()) || (fnd->as_argument()->argumenttype() == argm_ObjectSet)) {
+                    tp_ = argm_ObjectSet;
+                    if (valueset_)
+                        valueset_.reset();
+                    if (type_)
+                        type_.reset();
+                    objectset()->resolve();
+                    return;
+                }
+            }
+        }
+        debug_warning("Should be error :  tvosoconstraint resolve");
     }
 
     /////////////////////////////////////////////////////////////////////////   
