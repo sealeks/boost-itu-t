@@ -812,12 +812,16 @@ namespace x680 {
          
          std::ostream& operator<<(std::ostream& stream,tableconstraint_atom* self){
              return stream << "(ST){"  << self->objectset() << "}";
-         }        
+         }
 
-
-    
-    std::ostream& operator<<(std::ostream& stream, tvosoconstraint_atom* self){
-        return stream << "TVOSO("+ self->type()->reff()->name() +")";
+    std::ostream& operator<<(std::ostream& stream, tvosoconstraint_atom* self) {
+        switch(self->tp()){
+            case argm_Type: return stream  <<  self->type();
+            case argm_ValueSet: return stream  <<  self->valueset();
+            case argm_ObjectSet: return stream  << "ST"  << self->objectset();
+            default:{}
+        }
+        return stream << "TVOSO(" <<  self->tp() << ")";    
     }             
          
     // class
