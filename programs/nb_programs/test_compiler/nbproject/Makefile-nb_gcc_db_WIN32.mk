@@ -52,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L../../../lib/${CND_CONF} -L../../../lib/boost/${CND_CONF} -lasn1_compiler -lboost_thread -lboost_date_time -lboost_system -lboost_chrono -lole32 -lwsock32 -loleaut32 -lws2_32
+LDLIBSOPTIONS=-L../../../lib/${CND_CONF} -L../../../lib/boost/${CND_CONF} -lasn1_compiler -lboost_thread -lboost_date_time -lboost_system -lboost_filesystem -lboost_chrono -lole32 -lwsock32 -loleaut32 -lws2_32
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

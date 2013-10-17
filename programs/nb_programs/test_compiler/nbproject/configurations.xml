@@ -24,6 +24,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -48,6 +50,7 @@
             <linkerLibLibItem>boost_thread</linkerLibLibItem>
             <linkerLibLibItem>boost_date_time</linkerLibLibItem>
             <linkerLibLibItem>boost_system</linkerLibLibItem>
+            <linkerLibLibItem>boost_filesystem</linkerLibLibItem>
             <linkerLibLibItem>boost_chrono</linkerLibLibItem>
             <linkerLibLibItem>ole32</linkerLibLibItem>
             <linkerLibLibItem>wsock32</linkerLibLibItem>
@@ -66,6 +69,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -104,6 +109,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -116,11 +123,11 @@
         <linkerTool>
           <output>../../../bin/${CND_CONF}/test_compiler</output>
           <linkerAddLib>
-            <pElem>../../lib/boost/${CND_CONF}</pElem>
+            <pElem>../../../lib/${CND_CONF}</pElem>
+            <pElem>../../../lib/boost/${CND_CONF}</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerLibLibItem>nskernel</linkerLibLibItem>
-            <linkerLibLibItem>isostack</linkerLibLibItem>
+            <linkerLibLibItem>asn1_compiler</linkerLibLibItem>
             <linkerLibLibItem>boost_date_time</linkerLibLibItem>
             <linkerLibLibItem>boost_filesystem</linkerLibLibItem>
             <linkerLibLibItem>boost_program_options</linkerLibLibItem>
@@ -146,6 +153,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -157,11 +166,11 @@
         <linkerTool>
           <output>../../../bin/${CND_CONF}/test_compiler</output>
           <linkerAddLib>
-            <pElem>../../lib/boost/${CND_CONF}</pElem>
+            <pElem>../../../lib/${CND_CONF}</pElem>
+            <pElem>../../../lib/boost/${CND_CONF}</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerLibLibItem>nskernel</linkerLibLibItem>
-            <linkerLibLibItem>isostack</linkerLibLibItem>
+            <linkerLibLibItem>asn1_compiler</linkerLibLibItem>
             <linkerLibLibItem>boost_date_time</linkerLibLibItem>
             <linkerLibLibItem>boost_filesystem</linkerLibLibItem>
             <linkerLibLibItem>boost_program_options</linkerLibLibItem>

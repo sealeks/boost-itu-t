@@ -24,21 +24,20 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" ALexeev 102</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" l</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" Alexeev:102</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" Alexeev102</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" Alexeev 102</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" </runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.2.18</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.2.18 102</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" localhost 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" " rrr ::= INTEGER "</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" " { a(1), b(2) } "</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" " Tggg ::= ENUMERATED { a(1), b(2) } "</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" </runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" " Tggg ::= ENUMERATED { /* kkkkkkkk */ a(1), b(2) } "</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" "TRUE "</runcommandpicklistitem>
+          <runcommandpicklistitem></runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" " 1..10|4|6"</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" localhost 102</runcommand>
-        <rundir>F:\Project\itu-t\</rundir>
+        <runcommand>"${OUTPUT_PATH}" " 1..10|4|6"</runcommand>
+        <rundir></rundir>
         <buildfirst>true</buildfirst>
-        <console-type>2</console-type>
         <terminal-type>0</terminal-type>
         <remove-instrumentation>0</remove-instrumentation>
         <environment>
@@ -148,7 +147,7 @@
         <runcommand>"${OUTPUT_PATH}" localhost 102</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
-        <console-type>1</console-type>
+        <console-type>2</console-type>
         <terminal-type>0</terminal-type>
         <remove-instrumentation>0</remove-instrumentation>
         <environment>
