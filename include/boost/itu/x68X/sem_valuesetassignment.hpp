@@ -816,7 +816,7 @@ namespace x680 {
 
     public:
 
-        tvosoconstraint_atom(basic_entity_ptr scp, const std::string& reff);
+        tvosoconstraint_atom(basic_entity_ptr scp, const std::string& reff = "");
 
         type_atom_ptr type() const {
             return type_;
