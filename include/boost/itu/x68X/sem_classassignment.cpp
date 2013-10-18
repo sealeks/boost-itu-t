@@ -71,7 +71,7 @@ namespace x680 {
         if (type())
             type()->resolve_reff();
         if (_default())
-            _default()->resolve_reff();
+            _default()->resolve_reff(type());
     }
 
 
@@ -83,7 +83,7 @@ namespace x680 {
         if (type())
             type()->resolve_reff();
         if (_default())
-            _default()->resolve_reff();
+            _default()->resolve_reff(type());
     }
 
     /////////////////////////////////////////////////////////////////////////   

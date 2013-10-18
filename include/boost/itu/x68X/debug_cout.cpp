@@ -676,11 +676,11 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, fromdefinedsetconstraint_atom* self) {
-        stream << "(oS) " << self->objectset().get() << "." << self->field()->reff()->name();
+        return stream << "(oS) " << self->objectset().get() << "." << self->field()->reff()->name();
     }
 
     std::ostream& operator<<(std::ostream& stream, fromdefinedconstraint_atom* self) {
-        stream << "(o) " << self->object().get() << "." << self->field()->reff()->name();
+        return stream << "(o) " << self->object().get() << "." << self->field()->reff()->name();
     }
 
     std::ostream& operator<<(std::ostream& stream, typeconstraint_atom* self) {
@@ -1115,15 +1115,15 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, definedsetobject_atom* self) {
-        stream << "(oS) " << self->objectset().get();
+        return stream << "(oS) " << self->objectset().get();
     }
 
     std::ostream& operator<<(std::ostream& stream, fromdefinedsetobject_atom* self) {
-        stream << "(oS) " << self->objectset().get() << "." << self->field()->reff()->name();
+        return stream << "(oS) " << self->objectset().get() << "." << self->field()->reff()->name();
     }
 
     std::ostream& operator<<(std::ostream& stream, fromdefinedobject_atom* self) {
-        stream << "(o) " << self->object().get() << "." << self->field()->reff()->name();
+        return stream << "(o) " << self->object().get() << "." << self->field()->reff()->name();
     }
 
     std::ostream& operator<<(std::ostream& stream, defltobject_atom* self) {

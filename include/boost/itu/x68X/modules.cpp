@@ -382,9 +382,9 @@ namespace x680 {
             src.clear();
             if (ifs) {
                 ifs.seekg(0, ifs.end);
-                std::size_t length = ifs.tellg();
+                std::streamoff length = ifs.tellg();
                 ifs.seekg(0, ifs.beg);
-                char * buffer = new char [length];
+                char * buffer = new char [static_cast<std::size_t>(length)];
                 ifs.read(buffer, length);
                 src.insert(src.end(), buffer, buffer + length);
                 delete[] buffer;
