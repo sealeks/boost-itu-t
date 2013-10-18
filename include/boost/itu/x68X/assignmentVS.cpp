@@ -23,28 +23,28 @@ namespace x680 {
 
             ValueSetNA = ValueSetFromObjectNA | ValueSetFromObjectsNA | StrictValueSet | SimpleValueSet;
 
-            SimpleValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)];
+            SimpleValueSet = DefinedType_[phx::bind(&valueset_defined, sprt::_val, sprt::_1)];
 
-            ParameterizedValueSet = DefinedType_[bind(&valueset_defined, qi::_val, qi::_1)]
-                    >> -(ActualParameters[bind(&valueset_parameters, qi::_val, qi::_1)]);
+            ParameterizedValueSet = DefinedType_[phx::bind(&valueset_defined, sprt::_val, sprt::_1)]
+                    >> -(ActualParameters[phx::bind(&valueset_parameters, sprt::_val, sprt::_1)]);
 
             ValueSetFromObject = (DefinedObject
                     >> qi::omit[qi::string(".") >> (*qi::space)]
-                    >> FieldName_)[bind(&valueset_fromobject, qi::_val, qi::_1, qi::_2)];
+                    >> FieldName_)[phx::bind(&valueset_fromobject, sprt::_val, sprt::_1, sprt::_2)];
 
             ValueSetFromObjectNA = (SimpleDefinedObject
                     >> qi::omit[qi::string(".") >> (*qi::space)]
-                    >> FieldName_)[bind(&valueset_fromobject, qi::_val, qi::_1, qi::_2)];
+                    >> FieldName_)[phx::bind(&valueset_fromobject, sprt::_val, sprt::_1, sprt::_2)];
 
             ValueSetFromObjects = (DefinedObjectSet
                     >> qi::omit[qi::string(".") >> (*qi::space)]
-                    >> FieldName_)[bind(&valueset_fromobjects, qi::_val, qi::_1, qi::_2)];
+                    >> FieldName_)[phx::bind(&valueset_fromobjects, sprt::_val, sprt::_1, sprt::_2)];
 
             ValueSetFromObjectsNA = (SimpleDefinedObjectSet
                     >> qi::omit[qi::string(".") >> (*qi::space)]
-                    >> FieldName_)[bind(&valueset_fromobjects, qi::_val, qi::_1, qi::_2)];
+                    >> FieldName_)[phx::bind(&valueset_fromobjects, sprt::_val, sprt::_1, sprt::_2)];
 
-            StrictValueSet = ValueSetdecl[bind(&valueset_set, qi::_val, qi::_1)];
+            StrictValueSet = ValueSetdecl[phx::bind(&valueset_set, sprt::_val, sprt::_1)];
 
             ValueSetdecl = qi::omit[qi::lit("{")]
                     >> ElementSetSpecs
@@ -52,7 +52,7 @@ namespace x680 {
 
             Constraints = +Constraint;
 
-            SizeConstraints = SizeConstraint[bind(&pushs_constraint, qi::_val, qi::_1)];
+            SizeConstraints = SizeConstraint[phx::bind(&pushs_constraint, sprt::_val, sprt::_1)];
 
             Constraint %= qi::omit[qi::lit("(")] >> ConstraintSpec
                     >> -ExceptionSpecConstraints
@@ -70,37 +70,37 @@ namespace x680 {
                     | ContentsConstraintType
                     | ComponentRelationConstraint | SimpleTableConstraint);
 
-            GeneralConstraint = GeneralConstraintdecl[ bind(&push_constraints, qi::_val, qi::_1) ];
+            GeneralConstraint = GeneralConstraintdecl[ phx::bind(&push_constraints, sprt::_val, sprt::_1) ];
 
 
 
 
             UElems %= ((qi::omit[(UNION_ | qi::lit("|"))]
-                    >> Unions)[ bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_UNION) ]);
+                    >> Unions)[ phx::bind(&push_constraint, sprt::_val, CONSTRAINT_UNION) ]);
 
             ElementSetSpec
-                    = Unions[bind(&push_constraints, qi::_val, qi::_1)]
-                    >> *(UElems[bind(&push_constraints, qi::_val, qi::_1)]);
+                    = Unions[phx::bind(&push_constraints, sprt::_val, sprt::_1)]
+                    >> *(UElems[phx::bind(&push_constraints, sprt::_val, sprt::_1)]);
 
             IElems %= (qi::omit[(INTERSECTION_ | qi::lit("^"))]
                     >> Intersections)
-                    [bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_INTERSECTION)];
+                    [phx::bind(&push_constraint, sprt::_val, CONSTRAINT_INTERSECTION)];
 
             Unions =
-                    Intersections[bind(&push_constraints, qi::_val, qi::_1)]
-                    >> *(IElems[bind(&push_constraints, qi::_val, qi::_1)]);
+                    Intersections[phx::bind(&push_constraints, sprt::_val, sprt::_1)]
+                    >> *(IElems[phx::bind(&push_constraints, sprt::_val, sprt::_1)]);
 
 
             EElems %= (qi::omit[EXCEPT_ ]
-                    >> Exclusions)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_EXCEPT)];
+                    >> Exclusions)[phx::bind(&push_constraint, sprt::_val, CONSTRAINT_EXCEPT)];
 
-            Intersections = Exclusions[bind(&push_constraints, qi::_val, qi::_1)] 
-                    >> *(EElems[bind(&push_constraints, qi::_val, qi::_1)]);
+            Intersections = Exclusions[phx::bind(&push_constraints, sprt::_val, sprt::_1)] 
+                    >> *(EElems[phx::bind(&push_constraints, sprt::_val, sprt::_1)]);
 
 
             AElems %=
                     (qi::omit[qi::lit("ALL EXCEPT")]
-                    >> Exclusions)[bind(&constraint_element_vector::push_back, qi::_val, CONSTRAINT_ALLEXCEPT)];
+                    >> Exclusions)[phx::bind(&push_constraint, sprt::_val, CONSTRAINT_ALLEXCEPT)];
 
             Exclusions
                     = Element
@@ -110,56 +110,56 @@ namespace x680 {
                     | AElems
                     ;
 
-            Extention = qi::lit("...")[qi::_val = CONSTRAINT_EXTENTION];
+            Extention = qi::lit("...")[sprt::_val = CONSTRAINT_EXTENTION];
 
-            ContainedSubtype = INCLUDES_ >> Type[bind(&constraint_subtype, qi::_val, qi::_1)];
+            ContainedSubtype = INCLUDES_ >> Type[phx::bind(&constraint_subtype, sprt::_val, sprt::_1)];
 
-            PatternConstraint = PATTERN_ >> CStringValue[bind(&constraint_patterntype, qi::_val, qi::_1)];
+            PatternConstraint = PATTERN_ >> CStringValue[phx::bind(&constraint_patterntype, sprt::_val, sprt::_1)];
 
-            SingleValue = Value[bind(&constraint_singlevalue, qi::_val, qi::_1)];
+            SingleValue = Value[phx::bind(&constraint_singlevalue, sprt::_val, sprt::_1)];
             
             ConstraintFromObjects =  (DefinedObjectSet 
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
-                    >>FieldName_)[bind(&constraint_fromobjects, qi::_val, qi::_1, qi::_2)];
+                    >>FieldName_)[phx::bind(&constraint_fromobjects, sprt::_val, sprt::_1, sprt::_2)];
                     
             ConstraintFromObject = (DefinedObject 
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
-                    >>FieldName_)[bind(&constraint_fromobject, qi::_val, qi::_1, qi::_2)];            
+                    >>FieldName_)[phx::bind(&constraint_fromobject, sprt::_val, sprt::_1, sprt::_2)];            
 
             PropertySettings = SETTINGS_ 
-                    >> (CStringValue | DefinedValue)[bind(&constraint_property, qi::_val, qi::_1)];
+                    >> (CStringValue | DefinedValue)[phx::bind(&constraint_property, sprt::_val, sprt::_1)];
 
-            ValueRange = (MIN_[bind(&constraint_fromtype, qi::_val, min_range)]
-                    | (RangeValue)[bind(&constraint_from, qi::_val, qi::_1)])
-                    >> -(qi::lit("<")[bind(&constraint_fromtype, qi::_val, open_range)])
+            ValueRange = (MIN_[phx::bind(&constraint_fromtype, sprt::_val, min_range)]
+                    | (RangeValue)[phx::bind(&constraint_from, sprt::_val, sprt::_1)])
+                    >> -(qi::lit("<")[phx::bind(&constraint_fromtype, sprt::_val, open_range)])
                     >> qi::lit("..")
-                    >> -(qi::lit("<")[bind(&constraint_totype, qi::_val, open_range)])
-                    >> (MAX_[bind(&constraint_totype, qi::_val, max_range)]
-                    | (RangeValue)[bind(&constraint_to, qi::_val, qi::_1)]);
+                    >> -(qi::lit("<")[phx::bind(&constraint_totype, sprt::_val, open_range)])
+                    >> (MAX_[phx::bind(&constraint_totype, sprt::_val, max_range)]
+                    | (RangeValue)[phx::bind(&constraint_to, sprt::_val, sprt::_1)]);
 
 
 
 
-            TypeConstraint = BuitinType[bind(&constraint_typeset, qi::_val, qi::_1)];  /// ??
+            TypeConstraint = BuitinType[phx::bind(&constraint_typeset, sprt::_val, sprt::_1)];  /// ??
 
             SimpleElement = ConstraintFromObjects| ConstraintFromObject
                     | ContainedSubtype | PatternConstraint
                     | PropertySettings | ValueRange | SingleValue | TypeConstraint;
 
             SizeConstraint = qi::omit[SIZE_]
-                    >> Constraint[bind(&constraint_size, qi::_val, qi::_1)];
+                    >> Constraint[phx::bind(&constraint_size, sprt::_val, sprt::_1)];
 
             PermittedAlphabet = qi::omit[FROM_]
-                    >> Constraint[bind(&constraint_alphabet, qi::_val, qi::_1)];
+                    >> Constraint[phx::bind(&constraint_alphabet, sprt::_val, sprt::_1)];
 
             SingleTypeConstraint = qi::omit[qi::lexeme[WITH_ >> +qi::space >> COMPONENT_]]
-                    >> Constraint[bind(&constraint_singletype, qi::_val, qi::_1)];
+                    >> Constraint[phx::bind(&constraint_singletype, sprt::_val, sprt::_1)];
 
-            NamedConstraint = identifier_[bind(&constraint_identifier, qi::_val, qi::_1)]
-                    >> -Constraint[bind(&constraint_namedtype, qi::_val, qi::_1)]
-                    >> -(PRESENT_[bind(&constraint_marker, qi::_val, cmk_present)]
-                    | ABSENT_[bind(&constraint_marker, qi::_val, cmk_absent)]
-                    | OPTIONAL_[bind(&constraint_marker, qi::_val, cmk_optional)]);
+            NamedConstraint = identifier_[phx::bind(&constraint_identifier, sprt::_val, sprt::_1)]
+                    >> -Constraint[phx::bind(&constraint_namedtype, sprt::_val, sprt::_1)]
+                    >> -(PRESENT_[phx::bind(&constraint_marker, sprt::_val, cmk_present)]
+                    | ABSENT_[phx::bind(&constraint_marker, sprt::_val, cmk_absent)]
+                    | OPTIONAL_[phx::bind(&constraint_marker, sprt::_val, cmk_optional)]);
 
             FullSpecification = qi::omit[qi::lit("{")]
                     >> -(Extention >> qi::omit[qi::lit(",")])
@@ -167,7 +167,7 @@ namespace x680 {
                     >> qi::omit[qi::lit("}")];
 
             MultipleTypeConstraints = qi::omit[qi::lexeme[WITH_ >> +qi::space >> COMPONENTS_]]
-                    >> FullSpecification[bind(&constraint_multitype, qi::_val, qi::_1)];
+                    >> FullSpecification[phx::bind(&constraint_multitype, sprt::_val, sprt::_1)];
 
             Element = SizeConstraint | PermittedAlphabet
                     | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement
@@ -177,19 +177,19 @@ namespace x680 {
 
 
             ExceptionSpecConstraint = qi::omit[qi::lit("!")] 
-                    >> (number_str[bind(&constraint_exceptnumber, qi::_val, qi::_1) ]
-                    | DefinedValue_[bind(&constraint_exceptidentifier, qi::_val, qi::_1) ]
-                    | (Type >> qi::omit[ qi::lit(":")] >> Value)[bind(&constraint_excepttypevalue, qi::_val, qi::_1, qi::_2) ]
+                    >> (number_str[phx::bind(&constraint_exceptnumber, sprt::_val, sprt::_1) ]
+                    | DefinedValue_[phx::bind(&constraint_exceptidentifier, sprt::_val, sprt::_1) ]
+                    | (Type >> qi::omit[ qi::lit(":")] >> Value)[phx::bind(&constraint_excepttypevalue, sprt::_val, sprt::_1, sprt::_2) ]
                     );
 
-            ExceptionSpecConstraints = ExceptionSpecConstraint[ bind(&constraint_element_vector::push_back, qi::_val, qi::_1) ];
+            ExceptionSpecConstraints = ExceptionSpecConstraint[ phx::bind(&push_constraint, sprt::_val, sprt::_1) ];
 
 
 
             UserDefinedConstraint = (qi::omit[qi::lexeme[CONSTRAINED_ >> +qi::space >> BY_]]
-                    >> UParameters)[bind(&constraint_userdef, qi::_val, qi::_1)];
+                    >> UParameters)[phx::bind(&constraint_userdef, sprt::_val, sprt::_1)];
 
-            SimpleTableConstraint = StrictObjectSet[bind(&constraint_setelement, qi::_val, qi::_1)];
+            SimpleTableConstraint = StrictObjectSet[phx::bind(&constraint_setelement, sprt::_val, sprt::_1)];
 
             AtNotations = AtNotation_ % qi::omit[qi::lit(",")];
 
@@ -198,20 +198,20 @@ namespace x680 {
                     >> qi::omit[qi::lit("}")]
                     >> qi::omit[qi::lit("{")]
                     >> AtNotations
-                    >> qi::omit[qi::lit("}")])[bind(&constraint_relation, qi::_val, qi::_1, qi::_2)];
+                    >> qi::omit[qi::lit("}")])[phx::bind(&constraint_relation, sprt::_val, sprt::_1, sprt::_2)];
 
             ContentsConstraintType = qi::omit[CONTAINING_]
-                    >> Type[bind(&constraint_content_t, qi::_val, qi::_1)];
+                    >> Type[phx::bind(&constraint_content_t, sprt::_val, sprt::_1)];
 
             ContentsConstraintValue = qi::omit[qi::lexeme[ENCODED_ >> +qi::space >> BY_]]
-                    >> (DefinedValue | ObjectIdentifierValue)[bind(&constraint_content_v, qi::_val, qi::_1)];
+                    >> (DefinedValue | ObjectIdentifierValue)[phx::bind(&constraint_content_v, sprt::_val, sprt::_1)];
 
             ContentsConstraintTypeValue = (qi::omit[CONTAINING_]
                     >> Type
                     >> qi::omit[qi::lexeme[ENCODED_ >> +qi::space >> BY_]]
-                    >> (DefinedValue | ObjectIdentifierValue))[bind(&constraint_content_tv, qi::_val, qi::_1, qi::_2)];
+                    >> (DefinedValue | ObjectIdentifierValue))[phx::bind(&constraint_content_tv, sprt::_val, sprt::_1, sprt::_2)];
 
-            ConstraintTVSOS = SettingCN[bind(&constraint_tvsos, qi::_val, qi::_1)];         
+            ConstraintTVSOS = SettingCN[phx::bind(&constraint_tvsos, sprt::_val, sprt::_1)];         
 
         }
 

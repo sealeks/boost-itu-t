@@ -20,36 +20,36 @@ namespace x680 {
 
 
 
-            ModuleDefinition = qi::lexeme[ modulereference_[ bind(&module_name, qi::_val, qi::_1) ]]
-                    >> -(ObjectIdentifierValue[ bind(&module_oid, qi::_val, qi::_1) ]
-                    >> -(IRIValue[ bind(&module_iri, qi::_val, qi::_1) ]))
+            ModuleDefinition = qi::lexeme[ modulereference_[ phx::bind(&module_name, sprt::_val, sprt::_1) ]]
+                    >> -(ObjectIdentifierValue[ phx::bind(&module_oid, sprt::_val, sprt::_1) ]
+                    >> -(IRIValue[ phx::bind(&module_iri, sprt::_val, sprt::_1) ]))
                     >> qi::lexeme[DEFINITIONS_ ]
 
-                    >> -(qi::lexeme[EncodingReferenceDefault[bind(&module_encoding, qi::_val, qi::_1)]]
+                    >> -(qi::lexeme[EncodingReferenceDefault[phx::bind(&module_encoding, sprt::_val, sprt::_1)]]
                     >> qi::lexeme[INSTRUCTIONS_])
 
-                    >> -(qi::lexeme[ TagDefault[bind(&module_tags, qi::_val, qi::_1)]
+                    >> -(qi::lexeme[ TagDefault[phx::bind(&module_tags, sprt::_val, sprt::_1)]
                     >> +qi::space >> TAGS_])
 
                     >> -(qi::lexeme[EXTENSIBILITY_
                     >> +qi::space
-                    >> IMPLIED_[ bind(&module_extesibility, qi::_val) ]])
+                    >> IMPLIED_[ phx::bind(&module_extesibility, sprt::_val) ]])
 
                     >> qi::lexeme[qi::lit("::=")]
                     >> qi::lexeme[BEGIN_]
-                    >> (Exports[bind(&module_exports, qi::_val, qi::_1)]
+                    >> (Exports[phx::bind(&module_exports, sprt::_val, sprt::_1)]
                     | (-(qi::lexeme[qi::omit[EXPORTS_ >> +qi::space >> ALL_
-                    >> *qi::space >> qi::lit(";") ]]))[bind(&module_allexport, qi::_val)])
-                    >> -(Imports[bind(&module_imports, qi::_val, qi::_1)])
-                    >> -(Assignments[bind(&module_assignments, qi::_val, qi::_1)])
+                    >> *qi::space >> qi::lit(";") ]]))[phx::bind(&module_allexport, sprt::_val)])
+                    >> -(Imports[phx::bind(&module_imports, sprt::_val, sprt::_1)])
+                    >> -(Assignments[phx::bind(&module_assignments, sprt::_val, sprt::_1)])
                     >> END_ >> qi::lexeme[qi::omit[*comment_skip]];
 
-            Import = SymbolList[ bind(&import_add, qi::_val, qi::_1) ]
+            Import = SymbolList[ phx::bind(&import_add, sprt::_val, sprt::_1) ]
                     >> FROM_
-                    >> modulereference_[ bind(&import_name, qi::_val, qi::_1) ]
-                    >> -(ObjectIdentifierValue[ bind(&import_oid, qi::_val, qi::_1) ]
+                    >> modulereference_[ phx::bind(&import_name, sprt::_val, sprt::_1) ]
+                    >> -(ObjectIdentifierValue[ phx::bind(&import_oid, sprt::_val, sprt::_1) ]
                     | (DefinedValue - qi::omit[(DefinedValue
-                    >> (FROM_ | qi::lit(",")))])[ bind(&import_defined, qi::_val, qi::_1) ]);
+                    >> (FROM_ | qi::lit(",")))])[ phx::bind(&import_defined, sprt::_val, sprt::_1) ]);
 
 
             Importsdecl = *Import;
@@ -72,196 +72,196 @@ namespace x680 {
                     | UnknownValObjAssignment | UnknownValSetObjSetAssignment);
 
 
-            ObjectClassAssignment = objectclassreference_[bind(&classa_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&classa_arguments, qi::_val, qi::_1)])
+            ObjectClassAssignment = objectclassreference_[phx::bind(&classa_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&classa_arguments, sprt::_val, sprt::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> StrictObjectClass[bind(&classa_class, qi::_val, qi::_1)];
+                    >> StrictObjectClass[phx::bind(&classa_class, sprt::_val, sprt::_1)];
 
-            ObjectClassAssignment0 = objectclassreference_[bind(&classa_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&classa_arguments, qi::_val, qi::_1)])
+            ObjectClassAssignment0 = objectclassreference_[phx::bind(&classa_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&classa_arguments, sprt::_val, sprt::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ObjectClass[bind(&classa_class, qi::_val, qi::_1)];
+                    >> ObjectClass[phx::bind(&classa_class, sprt::_val, sprt::_1)];
 
-            TypeAssignment = typereference_[bind(&type_identifier, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&typea_arguments, qi::_val, qi::_1)])
+            TypeAssignment = typereference_[phx::bind(&type_identifier, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&typea_arguments, sprt::_val, sprt::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> /*Type*/StrictType[bind(&typea_type, qi::_val, qi::_1)];
+                    >> /*Type*/StrictType[phx::bind(&typea_type, sprt::_val, sprt::_1)];
 
-            TypeAssignmentSS = typereference_strict[bind(&type_identifier, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&typea_arguments, qi::_val, qi::_1)])
+            TypeAssignmentSS = typereference_strict[phx::bind(&type_identifier, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&typea_arguments, sprt::_val, sprt::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> Type[bind(&typea_type, qi::_val, qi::_1)];
+                    >> Type[phx::bind(&typea_type, sprt::_val, sprt::_1)];
 
-            TypeAssignment0 = typereference_[bind(&type_identifier, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&typea_arguments, qi::_val, qi::_1)])
+            TypeAssignment0 = typereference_[phx::bind(&type_identifier, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&typea_arguments, sprt::_val, sprt::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> Type[bind(&typea_type, qi::_val, qi::_1)];
+                    >> Type[phx::bind(&typea_type, sprt::_val, sprt::_1)];
 
 
 
-            ValueAssignmentLS = valuereference_[bind(&valuea_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&valuea_arguments, qi::_val, qi::_1)])
-                    >> StrictType[bind(&valuea_type, qi::_val, qi::_1)]
+            ValueAssignmentLS = valuereference_[phx::bind(&valuea_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&valuea_arguments, sprt::_val, sprt::_1)])
+                    >> StrictType[phx::bind(&valuea_type, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> Value[bind(&valuea_value, qi::_val, qi::_1)];
+                    >> Value[phx::bind(&valuea_value, sprt::_val, sprt::_1)];
 
-            ValueAssignmentRS = valuereference_[bind(&valuea_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&valuea_arguments, qi::_val, qi::_1)])
-                    >> Type[bind(&valuea_type, qi::_val, qi::_1)]
+            ValueAssignmentRS = valuereference_[phx::bind(&valuea_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&valuea_arguments, sprt::_val, sprt::_1)])
+                    >> Type[phx::bind(&valuea_type, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> StrictValue[bind(&valuea_value, qi::_val, qi::_1)];
+                    >> StrictValue[phx::bind(&valuea_value, sprt::_val, sprt::_1)];
 
-            ValueAssignment = valuereference_[bind(&valuea_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&valuea_arguments, qi::_val, qi::_1)])
-                    >> Type[bind(&valuea_type, qi::_val, qi::_1)]
+            ValueAssignment = valuereference_[phx::bind(&valuea_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&valuea_arguments, sprt::_val, sprt::_1)])
+                    >> Type[phx::bind(&valuea_type, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> Value[bind(&valuea_value, qi::_val, qi::_1)];
+                    >> Value[phx::bind(&valuea_value, sprt::_val, sprt::_1)];
 
-            ObjectAssignmentLS = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
-                    >> UsefulObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
+            ObjectAssignmentLS = objectreference_[phx::bind(&objecta_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&objecta_arguments, sprt::_val, sprt::_1)])
+                    >> UsefulObjectClass[phx::bind(&objecta_class, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ObjectDefn[bind(&objecta_object, qi::_val, qi::_1)];
+                    >> ObjectDefn[phx::bind(&objecta_object, sprt::_val, sprt::_1)];
 
-            ObjectAssignmentRS = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
-                    >> SimpleDefinedObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
+            ObjectAssignmentRS = objectreference_[phx::bind(&objecta_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&objecta_arguments, sprt::_val, sprt::_1)])
+                    >> SimpleDefinedObjectClass[phx::bind(&objecta_class, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> DefaultSyntax[bind(&objecta_object, qi::_val, qi::_1)];
+                    >> DefaultSyntax[phx::bind(&objecta_object, sprt::_val, sprt::_1)];
 
-            ObjectAssignment = objectreference_[bind(&objecta_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&objecta_arguments, qi::_val, qi::_1)])
-                    >> SimpleDefinedObjectClass[bind(&objecta_class, qi::_val, qi::_1)]
+            ObjectAssignment = objectreference_[phx::bind(&objecta_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&objecta_arguments, sprt::_val, sprt::_1)])
+                    >> SimpleDefinedObjectClass[phx::bind(&objecta_class, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ObjectDefn[bind(&objecta_object, qi::_val, qi::_1)];
+                    >> ObjectDefn[phx::bind(&objecta_object, sprt::_val, sprt::_1)];
 
 
-            ValueSetTypeAssignmentLS = valuesetreference_[bind(&valueset_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&valueseta_arguments, qi::_val, qi::_1)])
-                    >> StrictType[bind(&valueseta_type, qi::_val, qi::_1)]
+            ValueSetTypeAssignmentLS = valuesetreference_[phx::bind(&valueset_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&valueseta_arguments, sprt::_val, sprt::_1)])
+                    >> StrictType[phx::bind(&valueseta_type, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ValueSet[bind(&valueseta_set, qi::_val, qi::_1)];
+                    >> ValueSet[phx::bind(&valueseta_set, sprt::_val, sprt::_1)];
 
-            ValueSetTypeAssignment = valuesetreference_[bind(&valueset_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&valueseta_arguments, qi::_val, qi::_1)])
-                    >> Type[bind(&valueseta_type, qi::_val, qi::_1)]
+            ValueSetTypeAssignment = valuesetreference_[phx::bind(&valueset_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&valueseta_arguments, sprt::_val, sprt::_1)])
+                    >> Type[phx::bind(&valueseta_type, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ValueSet[bind(&valueseta_set, qi::_val, qi::_1)];
+                    >> ValueSet[phx::bind(&valueseta_set, sprt::_val, sprt::_1)];
 
-            ObjectSetAssignmentLS = objectsetreference_[bind(&objectseta_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&objectseta_arguments, qi::_val, qi::_1)])
-                    >> UsefulObjectClass[bind(&objectseta_class, qi::_val, qi::_1)]
+            ObjectSetAssignmentLS = objectsetreference_[phx::bind(&objectseta_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&objectseta_arguments, sprt::_val, sprt::_1)])
+                    >> UsefulObjectClass[phx::bind(&objectseta_class, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ObjectSet[bind(&objectseta_objectset, qi::_val, qi::_1)];
+                    >> ObjectSet[phx::bind(&objectseta_objectset, sprt::_val, sprt::_1)];
 
-            ObjectSetAssignment = objectsetreference_[bind(&objectseta_reference, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&objectseta_arguments, qi::_val, qi::_1)])
-                    >> SimpleDefinedObjectClass[bind(&objectseta_class, qi::_val, qi::_1)]
+            ObjectSetAssignment = objectsetreference_[phx::bind(&objectseta_reference, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&objectseta_arguments, sprt::_val, sprt::_1)])
+                    >> SimpleDefinedObjectClass[phx::bind(&objectseta_class, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ObjectSet[bind(&objectseta_objectset, qi::_val, qi::_1)];
+                    >> ObjectSet[phx::bind(&objectseta_objectset, sprt::_val, sprt::_1)];
 
 
 
 
-            UnknownTCAssignment = ((qi::hold[TypeAssignment0[bind(&unknown_tca_type, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectClassAssignment0[bind(&unknown_tca_class, qi::_val, qi::_1)] >> qi::omit[';']])) |
-                    (objectclassreference_[bind(&unknown_tca_identifier, qi::_val, qi::_1)]
-                    >> -(Parameters[bind(&unknown_tca_arguments, qi::_val, qi::_1)])
+            UnknownTCAssignment = ((qi::hold[TypeAssignment0[phx::bind(&unknown_tca_type, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectClassAssignment0[phx::bind(&unknown_tca_class, sprt::_val, sprt::_1)] >> qi::omit[';']])) |
+                    (objectclassreference_[phx::bind(&unknown_tca_identifier, sprt::_val, sprt::_1)]
+                    >> -(Parameters[phx::bind(&unknown_tca_arguments, sprt::_val, sprt::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> UnknownReferencedTC[bind(&unknown_tca, qi::_val, qi::_1)]);
+                    >> UnknownReferencedTC[phx::bind(&unknown_tca, sprt::_val, sprt::_1)]);
 
 
-            SettingType = Type[bind(&setting_settype, qi::_val, qi::_1)];
+            SettingType = Type[phx::bind(&setting_settype, sprt::_val, sprt::_1)];
 
-            SettingValue = Value[bind(&setting_value, qi::_val, qi::_1)];
+            SettingValue = Value[phx::bind(&setting_value, sprt::_val, sprt::_1)];
 
-            SettingValueSet = ValueSet[bind(&setting_valueset, qi::_val, qi::_1)];
+            SettingValueSet = ValueSet[phx::bind(&setting_valueset, sprt::_val, sprt::_1)];
 
-            SettingClass = DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)];
+            SettingClass = DefinedObjectClass[phx::bind(&setting_class, sprt::_val, sprt::_1)];
 
-            SettingObject = Object[bind(&setting_object, qi::_val, qi::_1)];
+            SettingObject = Object[phx::bind(&setting_object, sprt::_val, sprt::_1)];
 
-            SettingObjectSet = ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)];
+            SettingObjectSet = ObjectSet[phx::bind(&setting_objectset, sprt::_val, sprt::_1)];
 
-            SettingLiteral = SyntaxField_[bind(&setting_literal, qi::_val, qi::_1)];
+            SettingLiteral = SyntaxField_[phx::bind(&setting_literal, sprt::_val, sprt::_1)];
             
-            SettingSLiteral = Literal_[bind(&setting_literal, qi::_val, qi::_1)];
+            SettingSLiteral = Literal_[phx::bind(&setting_literal, sprt::_val, sprt::_1)];
 
-            SettingArgument = bothreference_[bind(&setting_literal, qi::_val, qi::_1)];
+            SettingArgument = bothreference_[phx::bind(&setting_literal, sprt::_val, sprt::_1)];
 
-            SettingTypeNA = TypeNA[bind(&setting_settype, qi::_val, qi::_1)];
+            SettingTypeNA = TypeNA[phx::bind(&setting_settype, sprt::_val, sprt::_1)];
 
-            SettingValueNA = ValueNA[bind(&setting_value, qi::_val, qi::_1)];
+            SettingValueNA = ValueNA[phx::bind(&setting_value, sprt::_val, sprt::_1)];
 
-            SettingValueSetNA = ValueSetNA[bind(&setting_valueset, qi::_val, qi::_1)];
+            SettingValueSetNA = ValueSetNA[phx::bind(&setting_valueset, sprt::_val, sprt::_1)];
 
-            SettingObjectNA = ObjectNA[bind(&setting_object, qi::_val, qi::_1)];
+            SettingObjectNA = ObjectNA[phx::bind(&setting_object, sprt::_val, sprt::_1)];
 
-            SettingObjectSetNA = ObjectSetNA[bind(&setting_objectset, qi::_val, qi::_1)];
+            SettingObjectSetNA = ObjectSetNA[phx::bind(&setting_objectset, sprt::_val, sprt::_1)];
 
 
 
             SettingMCN= SettingType | SettingValueSet | SettingObjectSet;
 
-            SettingCN = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSetNA[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingMCN;
+            SettingCN = ((qi::hold[Type[phx::bind(&setting_settype, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ValueSet[phx::bind(&setting_valueset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSetNA[phx::bind(&setting_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']])) | SettingMCN;
 
             SettingM0 = SettingValue | SettingValueSet | SettingObject | SettingObjectSet;
 
-            Setting0 = ((qi::hold[Value[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[Object[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM0;
+            Setting0 = ((qi::hold[Value[phx::bind(&setting_value, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ValueSet[phx::bind(&setting_valueset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Object[phx::bind(&setting_object, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSet[phx::bind(&setting_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']])) | SettingM0;
 
 
             SettingM1 = SettingType | SettingValue | SettingValueSet | SettingObject | SettingObjectSet | SettingLiteral;
 
-            Setting = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[Value[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[Object[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[SyntaxField_[bind(&setting_literal, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM1;
+            Setting = ((qi::hold[Type[phx::bind(&setting_settype, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Value[phx::bind(&setting_value, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ValueSet[phx::bind(&setting_valueset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Object[phx::bind(&setting_object, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSet[phx::bind(&setting_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[SyntaxField_[phx::bind(&setting_literal, sprt::_val, sprt::_1)] >> qi::omit[';']])) | SettingM1;
 
             SettingM1NA = SettingTypeNA | SettingValueNA | SettingValueSetNA | SettingObjectNA | SettingObjectSetNA | SettingSLiteral;
 
-            SettingNA = ((qi::hold[TypeNA[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ValueNA[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ValueSetNA[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectNA[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSetNA[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[Literal_[bind(&setting_literal, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM1NA;
+            SettingNA = ((qi::hold[TypeNA[phx::bind(&setting_settype, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ValueNA[phx::bind(&setting_value, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ValueSetNA[phx::bind(&setting_valueset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectNA[phx::bind(&setting_object, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSetNA[phx::bind(&setting_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Literal_[phx::bind(&setting_literal, sprt::_val, sprt::_1)] >> qi::omit[';']])) | SettingM1NA;
 
             SettingM2 = SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet | SettingArgument;
 
-            ActualParameter = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[Value[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[Object[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[bothreference_[bind(&setting_literal, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM2;
+            ActualParameter = ((qi::hold[Type[phx::bind(&setting_settype, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Value[phx::bind(&setting_value, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ValueSet[phx::bind(&setting_valueset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[DefinedObjectClass[phx::bind(&setting_class, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Object[phx::bind(&setting_object, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSet[phx::bind(&setting_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[bothreference_[phx::bind(&setting_literal, sprt::_val, sprt::_1)] >> qi::omit[';']])) | SettingM2;
 
             SettingM3 = SettingValue | SettingObject;
 
-            SettingU1 = ((qi::hold[Value[bind(&setting_value, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[Object[bind(&setting_object, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM3;
+            SettingU1 = ((qi::hold[Value[phx::bind(&setting_value, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Object[phx::bind(&setting_object, sprt::_val, sprt::_1)] >> qi::omit[';']])) | SettingM3;
 
             SettingM4 = SettingType | SettingClass | SettingObjectSet;
 
-            SettingU2 = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[DefinedObjectClass[bind(&setting_class, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM4;
+            SettingU2 = ((qi::hold[Type[phx::bind(&setting_settype, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[DefinedObjectClass[phx::bind(&setting_class, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSet[phx::bind(&setting_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']])) | SettingM4;
 
 
-            SettingCValueSet = SimpleValueSet[bind(&setting_valueset, qi::_val, qi::_1)];
+            SettingCValueSet = SimpleValueSet[phx::bind(&setting_valueset, sprt::_val, sprt::_1)];
 
             SettingM5 = SettingType | SettingCValueSet | SettingObjectSet;
 
-            SettingC = ((qi::hold[Type[bind(&setting_settype, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[SimpleValueSet[bind(&setting_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSet[bind(&setting_objectset, qi::_val, qi::_1)] >> qi::omit[';']])) | SettingM5;
+            SettingC = ((qi::hold[Type[phx::bind(&setting_settype, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[SimpleValueSet[phx::bind(&setting_valueset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSet[phx::bind(&setting_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']])) | SettingM5;
 
 
 
@@ -273,26 +273,26 @@ namespace x680 {
                     | ParameterB2 | ParameterC1 | ParameterC2 | ParameterD1 | ParameterD2;
 
             ParameterA1 = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> typereference_)[bind(&argument_governor_cl, qi::_val, qi::_1, qi::_2, true)];
+                    >> typereference_)[phx::bind(&argument_governor_cl, sprt::_val, sprt::_1, sprt::_2, true)];
 
             ParameterA2 = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> valuereference_)[bind(&argument_governor_cl, qi::_val, qi::_1, qi::_2, false)];
+                    >> valuereference_)[phx::bind(&argument_governor_cl, sprt::_val, sprt::_1, sprt::_2, false)];
 
             ParameterB1 = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> typereference_)[bind(&argument_governor_tp, qi::_val, qi::_1, qi::_2, true)];
+                    >> typereference_)[phx::bind(&argument_governor_tp, sprt::_val, sprt::_1, sprt::_2, true)];
 
             ParameterB2 = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> valuereference_)[bind(&argument_governor_tp, qi::_val, qi::_1, qi::_2, false)];
+                    >> valuereference_)[phx::bind(&argument_governor_tp, sprt::_val, sprt::_1, sprt::_2, false)];
 
             ParameterC1 = (DefinedType_ >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> typereference_)[bind(&argument_governor_reff, qi::_val, qi::_1, qi::_2, true)];
+                    >> typereference_)[phx::bind(&argument_governor_reff, sprt::_val, sprt::_1, sprt::_2, true)];
 
             ParameterC2 = (DefinedType_ >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> valuereference_)[bind(&argument_governor_reff, qi::_val, qi::_1, qi::_2, false)];
+                    >> valuereference_)[phx::bind(&argument_governor_reff, sprt::_val, sprt::_1, sprt::_2, false)];
 
-            ParameterD1 = typereference_[bind(&argument_argument, qi::_val, qi::_1, true)];
+            ParameterD1 = typereference_[phx::bind(&argument_argument, sprt::_val, sprt::_1, true)];
 
-            ParameterD2 = valuereference_[bind(&argument_argument, qi::_val, qi::_1, false)];
+            ParameterD2 = valuereference_[phx::bind(&argument_argument, sprt::_val, sprt::_1, false)];
 
 
 
@@ -302,15 +302,15 @@ namespace x680 {
 
 
             UParameterA = (UsefulObjectClass >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> Setting0)[bind(&uargument_governor_cl, qi::_val, qi::_1, qi::_2)];
+                    >> Setting0)[phx::bind(&uargument_governor_cl, sprt::_val, sprt::_1, sprt::_2)];
 
             UParameterB = (GovernorType >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> Setting0)[bind(&uargument_governor_tp, qi::_val, qi::_1, qi::_2)];
+                    >> Setting0)[phx::bind(&uargument_governor_tp, sprt::_val, sprt::_1, sprt::_2)];
 
             UParameterC = (DefinedType_ >> qi::omit[qi::lexeme[qi::lit(":")]]
-                    >> Setting0)[bind(&uargument_governor_reff, qi::_val, qi::_1, qi::_2)];
+                    >> Setting0)[phx::bind(&uargument_governor_reff, sprt::_val, sprt::_1, sprt::_2)];
 
-            UParameterD = (SettingM2)[bind(&uargument_setting, qi::_val, qi::_1)];
+            UParameterD = (SettingM2)[phx::bind(&uargument_setting, sprt::_val, sprt::_1)];
 
             UParameter = UParameterA | UParameterB | UParameterC | UParameterD;
 
@@ -322,37 +322,37 @@ namespace x680 {
 
 
             ValueOrObjectM =
-                    Value[bind(&unknown_vo_value, qi::_val, qi::_1)] | Object[bind(&unknown_vo_object, qi::_val, qi::_1)];
+                    Value[phx::bind(&unknown_vo_value, sprt::_val, sprt::_1)] | Object[phx::bind(&unknown_vo_object, sprt::_val, sprt::_1)];
 
             ValueOrObject =
-                    (qi::hold[Value[bind(&unknown_vo_value, qi::_val, qi::_1)] >> qi::omit[';']]
-                    | qi::hold[Object[bind(&unknown_vo_object, qi::_val, qi::_1)] >> qi::omit[';']])
+                    (qi::hold[Value[phx::bind(&unknown_vo_value, sprt::_val, sprt::_1)] >> qi::omit[';']]
+                    | qi::hold[Object[phx::bind(&unknown_vo_object, sprt::_val, sprt::_1)] >> qi::omit[';']])
                     | ValueOrObjectM;
 
             ValueSetOrObjectSetM =
-                    ValueSet[bind(&unknown_so_valueset, qi::_val, qi::_1)] | ObjectSet[bind(&unknown_so_objectset, qi::_val, qi::_1)];
+                    ValueSet[phx::bind(&unknown_so_valueset, sprt::_val, sprt::_1)] | ObjectSet[phx::bind(&unknown_so_objectset, sprt::_val, sprt::_1)];
 
-            ValueSetOrObjectSet = (qi::hold[ValueSet[bind(&unknown_so_valueset, qi::_val, qi::_1)] >> qi::omit[';']]
-                    | qi::hold[ObjectSet[bind(&unknown_so_objectset, qi::_val, qi::_1)] >> qi::omit[';']])
+            ValueSetOrObjectSet = (qi::hold[ValueSet[phx::bind(&unknown_so_valueset, sprt::_val, sprt::_1)] >> qi::omit[';']]
+                    | qi::hold[ObjectSet[phx::bind(&unknown_so_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']])
                     | ValueSetOrObjectSetM;
 
 
             UnknownValObjAssignment =
-                    ((qi::hold[ValueAssignment[bind(&unknown_voa_value, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectAssignment[bind(&unknown_voa_object, qi::_val, qi::_1)] >> qi::omit[';']]))
-                    | (valuereference_[bind(&unknown_voa_identifier, qi::_val, qi::_1)]
+                    ((qi::hold[ValueAssignment[phx::bind(&unknown_voa_value, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectAssignment[phx::bind(&unknown_voa_object, sprt::_val, sprt::_1)] >> qi::omit[';']]))
+                    | (valuereference_[phx::bind(&unknown_voa_identifier, sprt::_val, sprt::_1)]
                     >> qi::omit[-(Parameters)]
-                    >> DefinedType_[bind(&unknown_voa_refference, qi::_val, qi::_1)]
+                    >> DefinedType_[phx::bind(&unknown_voa_refference, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]
                     >> ValueOrObject]);
 
 
             UnknownValSetObjSetAssignment =
-                    ((qi::hold[ValueSetTypeAssignment[bind(&unknown_soa_valueset, qi::_val, qi::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSetAssignment[bind(&unknown_soa_objectset, qi::_val, qi::_1)] >> qi::omit[';']]))
-                    | (valuesetreference_[bind(&unknown_soa_identifier, qi::_val, qi::_1)]
+                    ((qi::hold[ValueSetTypeAssignment[phx::bind(&unknown_soa_valueset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSetAssignment[phx::bind(&unknown_soa_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']]))
+                    | (valuesetreference_[phx::bind(&unknown_soa_identifier, sprt::_val, sprt::_1)]
                     >> qi::omit[-(Parameters)]
-                    >> DefinedType_[bind(&unknown_soa_refference, qi::_val, qi::_1)]
+                    >> DefinedType_[phx::bind(&unknown_soa_refference, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]
                     >> ValueSetOrObjectSet]);
 

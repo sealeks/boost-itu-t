@@ -522,7 +522,8 @@ namespace x680 {
         void objectseta_arguments(objectset_assignment& holder, const argument_vector& val);
 
         void push_objects(object_element_vector& holder, const object_element_vector& val);
-
+        
+        void objectsetpush_object(object_element_vector& holder, const object_element& val);
 
 
 

@@ -25,38 +25,38 @@ namespace x680 {
 
             ObjectSetNA = ObjectSetFromObject | ObjectSetFromObjects | StrictObjectSet | SimpleDefinedObjectSet;
 
-            SimpleDefinedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)];
+            SimpleDefinedObjectSet = DefinedObjectSet_[phx::bind(&objectset_defined, sprt::_val, sprt::_1)];
 
-            DefinedObjectSet = DefinedObjectSet_[bind(&objectset_defined, qi::_val, qi::_1)]
-                    >> -(ActualParameters[bind(&objectset_parameters, qi::_val, qi::_1)]);                 
+            DefinedObjectSet = DefinedObjectSet_[phx::bind(&objectset_defined, sprt::_val, sprt::_1)]
+                    >> -(ActualParameters[phx::bind(&objectset_parameters, sprt::_val, sprt::_1)]);                 
 
             ObjectSetFromObject =  (DefinedObject 
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
-                    >>FieldName_)[bind(&objectset_fromobject, qi::_val, qi::_1, qi::_2)];
+                    >>FieldName_)[phx::bind(&objectset_fromobject, sprt::_val, sprt::_1, sprt::_2)];
                     
             ObjectSetFromObjectNA =  (SimpleDefinedObject 
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
-                    >>FieldName_)[bind(&objectset_fromobject, qi::_val, qi::_1, qi::_2)];
+                    >>FieldName_)[phx::bind(&objectset_fromobject, sprt::_val, sprt::_1, sprt::_2)];
                     
             ObjectSetFromObjects = (DefinedObjectSet 
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
-                    >>FieldName_)[bind(&objectset_fromobjects, qi::_val, qi::_1, qi::_2)];   
+                    >>FieldName_)[phx::bind(&objectset_fromobjects, sprt::_val, sprt::_1, sprt::_2)];   
                     
             ObjectSetFromObjectsNA = (SimpleDefinedObjectSet 
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
-                    >>FieldName_)[bind(&objectset_fromobjects, qi::_val, qi::_1, qi::_2)];                       
+                    >>FieldName_)[phx::bind(&objectset_fromobjects, sprt::_val, sprt::_1, sprt::_2)];                       
 
-            StrictObjectSet = ObjectSetdecl[bind(&objectset_set, qi::_val, qi::_1)];
+            StrictObjectSet = ObjectSetdecl[phx::bind(&objectset_set, sprt::_val, sprt::_1)];
 
-            oDefinedObjectSet = DefinedObjectSet[bind(&object_objectsetdef, qi::_val, qi::_1)];
+            oDefinedObjectSet = DefinedObjectSet[phx::bind(&object_objectsetdef, sprt::_val, sprt::_1)];
 
             oObjectSetFromObjects =  (DefinedObjectSet 
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
-                    >>FieldName_)[bind(&object_objectsetfromobjects, qi::_val, qi::_1, qi::_2)];
+                    >>FieldName_)[phx::bind(&object_objectsetfromobjects, sprt::_val, sprt::_1, sprt::_2)];
                     
             oObjectSetFromObject = (DefinedObject 
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
-                    >>FieldName_)[bind(&object_objectsetfromobject, qi::_val, qi::_1, qi::_2)];        
+                    >>FieldName_)[phx::bind(&object_objectsetfromobject, sprt::_val, sprt::_1, sprt::_2)];        
 
 
             ObjectSetdecl = qi::omit[qi::lit("{")]
@@ -75,27 +75,27 @@ namespace x680 {
 
 
             oUElems %= ((qi::omit[(UNION_ | qi::lit("|"))]
-                    >> oUnions)[ bind(&object_element_vector::push_back, qi::_val, OBJECT_UNION) ]);
+                    >> oUnions)[ phx::bind(&objectsetpush_object, sprt::_val, OBJECT_UNION) ]);
 
-            oElementSetSpec = oUnions[bind(&push_objects, qi::_val, qi::_1)]
-                    >> *(oUElems[bind(&push_objects, qi::_val, qi::_1)]);
+            oElementSetSpec = oUnions[phx::bind(&push_objects, sprt::_val, sprt::_1)]
+                    >> *(oUElems[phx::bind(&push_objects, sprt::_val, sprt::_1)]);
 
             oIElems %= (qi::omit[(INTERSECTION_ | qi::lit("^"))]
-                    >> oIntersections)[bind(&object_element_vector::push_back, qi::_val, OBJECT_INTERSECTION)];
+                    >> oIntersections)[phx::bind(&objectsetpush_object, sprt::_val, OBJECT_INTERSECTION)];
 
-            oUnions = oIntersections[bind(&push_objects, qi::_val, qi::_1)]
-                    >> *(oIElems[bind(&push_objects, qi::_val, qi::_1)]);
+            oUnions = oIntersections[phx::bind(&push_objects, sprt::_val, sprt::_1)]
+                    >> *(oIElems[phx::bind(&push_objects, sprt::_val, sprt::_1)]);
 
 
             oEElems %= (qi::omit[EXCEPT_ ]
-                    >> oExclusions)[bind(&object_element_vector::push_back, qi::_val, OBJECT_EXCEPT)];
+                    >> oExclusions)[phx::bind(&objectsetpush_object, sprt::_val, OBJECT_EXCEPT)];
 
-            oIntersections = oExclusions[bind(&push_objects, qi::_val, qi::_1)]
-                    >> *(oEElems[bind(&push_objects, qi::_val, qi::_1)]);
+            oIntersections = oExclusions[phx::bind(&push_objects, sprt::_val, sprt::_1)]
+                    >> *(oEElems[phx::bind(&push_objects, sprt::_val, sprt::_1)]);
 
 
             oAElems %= (qi::omit[qi::lit("ALL EXCEPT")]
-                    >> oExclusions)[bind(&object_element_vector::push_back, qi::_val, OBJECT_ALLEXCEPT)];
+                    >> oExclusions)[phx::bind(&objectsetpush_object, sprt::_val, OBJECT_ALLEXCEPT)];
 
             oExclusions
                     = oElement
@@ -105,7 +105,7 @@ namespace x680 {
                     | oAElems
                     ;
 
-            oExtention = qi::lit("...")[qi::_val = OBJECT_EXTENTION];
+            oExtention = qi::lit("...")[sprt::_val = OBJECT_EXTENTION];
 
             oElement = oObjectSetFromObject | oObjectSetFromObjects | oDefinedObjectSet | Object;
 

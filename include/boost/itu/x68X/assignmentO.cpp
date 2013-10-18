@@ -24,42 +24,42 @@ namespace x680 {
 
             ObjectNA = ObjectFromObject | SimpleDefinedObject | ObjectDefn;
 
-            SimpleDefinedObject = DefinedObject_[bind(&object_refference, qi::_val, qi::_1)];
+            SimpleDefinedObject = DefinedObject_[phx::bind(&object_refference, sprt::_val, sprt::_1)];
 
-            DefinedObject = DefinedObject_[bind(&object_refference, qi::_val, qi::_1)] >>
-                    -(ActualParameters[bind(&object_parameters, qi::_val, qi::_1)]);
+            DefinedObject = DefinedObject_[phx::bind(&object_refference, sprt::_val, sprt::_1)] >>
+                    -(ActualParameters[phx::bind(&object_parameters, sprt::_val, sprt::_1)]);
 
             ObjectFromObject = (DefinedObject 
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
-                    >>LFieldName_)[bind(&object_fromobject, qi::_val, qi::_1, qi::_2)];
+                    >>LFieldName_)[phx::bind(&object_fromobject, sprt::_val, sprt::_1, sprt::_2)];
                     
             ObjectFromObjectNA = (SimpleDefinedObject 
                     >>  qi::omit[qi::string(".") >> (*qi::space)]  
-                    >>LFieldName_)[bind(&object_fromobject, qi::_val, qi::_1, qi::_2)];                   
+                    >>LFieldName_)[phx::bind(&object_fromobject, sprt::_val, sprt::_1, sprt::_2)];                   
 
             ObjectDefn = DefaultSyntax | DefinedSyntax;
 
 
             DefaultSyntax = (qi::omit[qi::lit("{")]
-                    >> FieldSettings[bind(&object_fields, qi::_val, qi::_1)]
-                    >> qi::omit[qi::lit("}")])[bind(&object_typeset, qi::_val, ot_Object)];
+                    >> FieldSettings[phx::bind(&object_fields, sprt::_val, sprt::_1)]
+                    >> qi::omit[qi::lit("}")])[phx::bind(&object_typeset, sprt::_val, ot_Object)];
 
             FieldSettings = FieldSetting % qi::omit[qi::lit(",")];
 
-            FieldSetting = PrimitiveFieldName_[bind(&objectfield_field, qi::_val, qi::_1)]
-                    >> Setting[bind(&objectfield_setting, qi::_val, qi::_1)];
+            FieldSetting = PrimitiveFieldName_[phx::bind(&objectfield_field, sprt::_val, sprt::_1)]
+                    >> Setting[phx::bind(&objectfield_setting, sprt::_val, sprt::_1)];
 
             DefinedSyntax = (qi::omit[qi::lit("{")]
-                    >> DefinedSyntaxTokens[bind(&object_fields, qi::_val, qi::_1)]
-                    >> qi::omit[qi::lit("}")])[bind(&object_typeset, qi::_val, ot_ObjectDefineSyn)];
+                    >> DefinedSyntaxTokens[phx::bind(&object_fields, sprt::_val, sprt::_1)]
+                    >> qi::omit[qi::lit("}")])[phx::bind(&object_typeset, sprt::_val, ot_ObjectDefineSyn)];
 
             DefinedSyntaxTokens = +DefinedSyntaxToken2;
 
             DefinedSyntaxToken = DefinedSyntaxToken2 | DefinedSyntaxToken1;
 
-            DefinedSyntaxToken1 = Literal_[bind(&objectfield_field, qi::_val, qi::_1)];
+            DefinedSyntaxToken1 = Literal_[phx::bind(&objectfield_field, sprt::_val, sprt::_1)];
 
-            DefinedSyntaxToken2 = SettingNA[bind(&objectfield_setting, qi::_val, qi::_1)];
+            DefinedSyntaxToken2 = SettingNA[phx::bind(&objectfield_setting, sprt::_val, sprt::_1)];
 
 
         }

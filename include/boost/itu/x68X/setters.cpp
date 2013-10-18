@@ -984,7 +984,9 @@ namespace x680 {
             holder.insert(holder.end(), val.begin(), val.end());
         }
 
-
+        void objectsetpush_object(object_element_vector& holder, const object_element& val) {
+            holder.push_back(val);
+        }
 
 
 

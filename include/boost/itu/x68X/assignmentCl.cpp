@@ -24,19 +24,19 @@ namespace x680 {
 
             StrictObjectClass = UsefulObjectClass | ObjectClassDefn;
 
-            SimpleDefinedObjectClass = DefinedObjectClass_[bind(&class_reference, qi::_val, qi::_1)];
+            SimpleDefinedObjectClass = DefinedObjectClass_[phx::bind(&class_reference, sprt::_val, sprt::_1)];
 
             ObjectClassDefn = qi::omit[CLASS_ >> qi::lit("{")]
-                    >> FieldSpecs[bind(&class_fields, qi::_val, qi::_1)] >> qi::omit[qi::lit("}")]
-                    >> -(WithSyntaxSpec[bind(&class_syntaxes, qi::_val, qi::_1)]);
+                    >> FieldSpecs[phx::bind(&class_fields, sprt::_val, sprt::_1)] >> qi::omit[qi::lit("}")]
+                    >> -(WithSyntaxSpec[phx::bind(&class_syntaxes, sprt::_val, sprt::_1)]);
 
-            UsefulObjectClass = TYPE_IDENTIFIER_[qi::_val = CLASS_TYPE_IDENTIFIER]
-                    | ABSTRACT_SYNTAX_[qi::_val = CLASS_ABSTRACT_SYNTAX];
+            UsefulObjectClass = TYPE_IDENTIFIER_[sprt::_val = CLASS_TYPE_IDENTIFIER]
+                    | ABSTRACT_SYNTAX_[sprt::_val = CLASS_ABSTRACT_SYNTAX];
 
             DefinedObjectClass = UsefulObjectClass | SimpleDefinedObjectClass;
 
-            ParameterizedObjectClass = DefinedObjectClass[qi::_val = qi::_1]
-                    >> -(ActualParameters[bind(&class_parameters, qi::_val, qi::_1)]);
+            ParameterizedObjectClass = DefinedObjectClass[sprt::_val = sprt::_1]
+                    >> -(ActualParameters[phx::bind(&class_parameters, sprt::_val, sprt::_1)]);
 
             FieldSpecs = FieldSpec % qi::omit[qi::lit(",")];
 
@@ -47,78 +47,78 @@ namespace x680 {
                     | FixedUndefFieldSpec | FixedUndefSetFieldSpec
                     | TypeFieldSpec; //;     
 
-            TypeFieldSpecS = (typefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> (OPTIONAL_[bind(&classfield_optional, qi::_val)] | (qi::omit[DEFAULT_]
-                    >> Type[bind(&classfield_defaulttype, qi::_val, qi::_1)])))
-                    [bind(&classfield_tp, qi::_val, fkind_TypeFieldSpec)];
+            TypeFieldSpecS = (typefieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> (OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)] | (qi::omit[DEFAULT_]
+                    >> Type[phx::bind(&classfield_defaulttype, sprt::_val, sprt::_1)])))
+                    [phx::bind(&classfield_tp, sprt::_val, fkind_TypeFieldSpec)];
 
-            TypeFieldSpec = (typefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] | (qi::omit[DEFAULT_]
-                    >> Type[bind(&classfield_defaulttype, qi::_val, qi::_1)])))
-                    [bind(&classfield_tp, qi::_val, fkind_TypeFieldSpec)];
+            TypeFieldSpec = (typefieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> -(OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)] | (qi::omit[DEFAULT_]
+                    >> Type[phx::bind(&classfield_defaulttype, sprt::_val, sprt::_1)])))
+                    [phx::bind(&classfield_tp, sprt::_val, fkind_TypeFieldSpec)];
 
 
-            FixedTypeValueFieldSpecMS = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> Type[bind(&classfield_holder_ft, qi::_val, qi::_1, true)]
-                    >> UNIQUE_[bind(&classfield_unique, qi::_val)]
-                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)]);
+            FixedTypeValueFieldSpecMS = valuefieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> Type[phx::bind(&classfield_holder_ft, sprt::_val, sprt::_1, true)]
+                    >> UNIQUE_[phx::bind(&classfield_unique, sprt::_val)]
+                    >> -(OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)]);
 
-            FixedTypeValueFieldSpecLS = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> StrictType[bind(&classfield_holder_ft, qi::_val, qi::_1, true)]
-                    >> -(((UNIQUE_[bind(&classfield_unique, qi::_val)])
-                    || OPTIONAL_[bind(&classfield_optional, qi::_val)])
+            FixedTypeValueFieldSpecLS = valuefieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> StrictType[phx::bind(&classfield_holder_ft, sprt::_val, sprt::_1, true)]
+                    >> -(((UNIQUE_[phx::bind(&classfield_unique, sprt::_val)])
+                    || OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)])
                     | (qi::omit[DEFAULT_]
-                    >> (Value[bind(&classfield_defaultvalue, qi::_val, qi::_1)])));
+                    >> (Value[phx::bind(&classfield_defaultvalue, sprt::_val, sprt::_1)])));
 
 
-            VariableTypeValueFieldSpec = (valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> FieldName_[bind(&classfield_holder, qi::_val, qi::_1)]
-                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
+            VariableTypeValueFieldSpec = (valuefieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> FieldName_[phx::bind(&classfield_holder, sprt::_val, sprt::_1)]
+                    >> -(OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)] |
                     (qi::omit[DEFAULT_]
-                    >> (Value[bind(&classfield_defaultvalue, qi::_val, qi::_1)]))))
-                    [bind(&classfield_tp, qi::_val, fkind_VariableTypeValueFieldSpec)];
+                    >> (Value[phx::bind(&classfield_defaultvalue, sprt::_val, sprt::_1)]))))
+                    [phx::bind(&classfield_tp, sprt::_val, fkind_VariableTypeValueFieldSpec)];
 
 
-            FixedTypeValueSetFieldSpecLS = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> StrictType[bind(&classfield_holder_ft, qi::_val, qi::_1, false)]
-                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
+            FixedTypeValueSetFieldSpecLS = (valuesetfieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> StrictType[phx::bind(&classfield_holder_ft, sprt::_val, sprt::_1, false)]
+                    >> -(OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)] |
                     (qi::omit[DEFAULT_]
-                    >> (ValueSet[bind(&classfield_defaultset, qi::_val, qi::_1)]))));
+                    >> (ValueSet[phx::bind(&classfield_defaultset, sprt::_val, sprt::_1)]))));
 
 
-            VariableTypeValueSetFieldSpec = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> FieldName_[bind(&classfield_holder, qi::_val, qi::_1)]
-                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
+            VariableTypeValueSetFieldSpec = (valuesetfieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> FieldName_[phx::bind(&classfield_holder, sprt::_val, sprt::_1)]
+                    >> -(OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)] |
                     (qi::omit[DEFAULT_]
-                    >> (ValueSet[bind(&classfield_defaultset, qi::_val, qi::_1)]))))
-                    [bind(&classfield_tp, qi::_val, fkind_VariableTypeValueSetFieldSpec)];
+                    >> (ValueSet[phx::bind(&classfield_defaultset, sprt::_val, sprt::_1)]))))
+                    [phx::bind(&classfield_tp, sprt::_val, fkind_VariableTypeValueSetFieldSpec)];
 
 
-            ObjectFieldSpecLS = objectfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> UsefulObjectClass[bind(&classfield_holder_cl, qi::_val, qi::_1, true)]
-                    >> -((OPTIONAL_[bind(&classfield_optional, qi::_val)])
+            ObjectFieldSpecLS = objectfieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> UsefulObjectClass[phx::bind(&classfield_holder_cl, sprt::_val, sprt::_1, true)]
+                    >> -((OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)])
                     | (qi::omit[DEFAULT_]
-                    >> (Object[bind(&classfield_defaultovalue, qi::_val, qi::_1)])));
+                    >> (Object[phx::bind(&classfield_defaultovalue, sprt::_val, sprt::_1)])));
 
-            ObjectSetFieldSpecLS = (objectsetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> UsefulObjectClass[bind(&classfield_holder_cl, qi::_val, qi::_1, false)]
-                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
+            ObjectSetFieldSpecLS = (objectsetfieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> UsefulObjectClass[phx::bind(&classfield_holder_cl, sprt::_val, sprt::_1, false)]
+                    >> -(OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)] |
                     (qi::omit[DEFAULT_]
-                    >> (ObjectSet[bind(&classfield_defaultoset, qi::_val, qi::_1)]))));
+                    >> (ObjectSet[phx::bind(&classfield_defaultoset, sprt::_val, sprt::_1)]))));
 
-            FixedUndefFieldSpec = valuefieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> DefinedType_[bind(&classfield_holder_undf, qi::_val, qi::_1, true)]
-                    >> -(((UNIQUE_[bind(&classfield_unique, qi::_val)])
-                    || OPTIONAL_[bind(&classfield_optional, qi::_val)])
-                    | (OPTIONAL_[bind(&classfield_optional, qi::_val)])
+            FixedUndefFieldSpec = valuefieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> DefinedType_[phx::bind(&classfield_holder_undf, sprt::_val, sprt::_1, true)]
+                    >> -(((UNIQUE_[phx::bind(&classfield_unique, sprt::_val)])
+                    || OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)])
+                    | (OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)])
                     | (qi::omit[DEFAULT_]
-                    >> (ValueOrObject[bind(&classfield_defaultov, qi::_val, qi::_1)])));
+                    >> (ValueOrObject[phx::bind(&classfield_defaultov, sprt::_val, sprt::_1)])));
 
-            FixedUndefSetFieldSpec = (valuesetfieldreference_[bind(&classfield_field, qi::_val, qi::_1)]
-                    >> DefinedType_[bind(&classfield_holder_undf, qi::_val, qi::_1, false)]
-                    >> -(OPTIONAL_[bind(&classfield_optional, qi::_val)] |
+            FixedUndefSetFieldSpec = (valuesetfieldreference_[phx::bind(&classfield_field, sprt::_val, sprt::_1)]
+                    >> DefinedType_[phx::bind(&classfield_holder_undf, sprt::_val, sprt::_1, false)]
+                    >> -(OPTIONAL_[phx::bind(&classfield_optional, sprt::_val)] |
                     (qi::omit[DEFAULT_]
-                    >> (ValueSetOrObjectSet[bind(&classfield_defaultos, qi::_val, qi::_1)]))));
+                    >> (ValueSetOrObjectSet[phx::bind(&classfield_defaultos, sprt::_val, sprt::_1)]))));
 
 
 
@@ -131,16 +131,16 @@ namespace x680 {
             OptionalGroup = qi::omit[qi::lit("[")] >> qi::repeat(2, qi::inf)[(AiasTokenOToken
                     | TokenOToken | RequiredToken | OptionalToken)] >> qi::omit[qi::lit("]")];
 
-            TokenOToken = OptionalGroup[bind(&classsyntax_group, qi::_val, qi::_1)];
+            TokenOToken = OptionalGroup[phx::bind(&classsyntax_group, sprt::_val, sprt::_1)];
 
             AiasTokenOToken = (SyntaxField_ >> OptionalGroup)
-                    [bind(&classsyntax_agroup, qi::_val, qi::_1, qi::_2)];
+                    [phx::bind(&classsyntax_agroup, sprt::_val, sprt::_1, sprt::_2)];
 
-            RequiredToken = (SyntaxField_[bind(&classsyntax_alias, qi::_val, qi::_1)])
-                    || PrimitiveFieldName_[bind(&classsyntax_field, qi::_val, qi::_1)];
+            RequiredToken = (SyntaxField_[phx::bind(&classsyntax_alias, sprt::_val, sprt::_1)])
+                    || PrimitiveFieldName_[phx::bind(&classsyntax_field, sprt::_val, sprt::_1)];
 
             OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")]
-                    )[bind(&classsyntax_optional, qi::_val)];
+                    )[phx::bind(&classsyntax_optional, sprt::_val)];
 
 
 

@@ -137,40 +137,40 @@ namespace x680 {
 
 
 
-        str_rule pos_number_str = distinct(qi::alnum | ('-' >> qi::alnum))[qi::char_("0")[ qi::_val = qi::_1 ]
-                | (qi::char_("1-9")[ qi::_val = qi::_1]
-                >> *(qi::char_("0-9")[ qi::_val += qi::_1]))];
+        str_rule pos_number_str = distinct(qi::alnum | ('-' >> qi::alnum))[qi::char_("0")[ sprt::_val = sprt::_1 ]
+                | (qi::char_("1-9")[ sprt::_val = sprt::_1]
+                >> *(qi::char_("0-9")[ sprt::_val += sprt::_1]))];
 
 
-        str_rule number_str = distinct(qi::alnum | ('-' >> qi::alnum))[(qi::string("-")[ qi::_val = qi::_1 ]
+        str_rule number_str = distinct(qi::alnum | ('-' >> qi::alnum))[(qi::string("-")[ sprt::_val = sprt::_1 ]
                 >> qi::omit[*qi::blank]
-                >> pos_number_str[ qi::_val += qi::_1 ])
-        | pos_number_str[ qi::_val = qi::_1 ]];
+                >> pos_number_str[ sprt::_val += sprt::_1 ])
+        | pos_number_str[ sprt::_val = sprt::_1 ]];
 
-        str_rule realnumber_str = distinct(qi::alnum | ('-' >> qi::alnum))[number_str[ qi::_val = qi::_1 ]
-                >> (qi::string(".")[ qi::_val += qi::_1 ] >> number_str[ qi::_val += qi::_1 ])];
+        str_rule realnumber_str = distinct(qi::alnum | ('-' >> qi::alnum))[number_str[ sprt::_val = sprt::_1 ]
+                >> (qi::string(".")[ sprt::_val += sprt::_1 ] >> number_str[ sprt::_val += sprt::_1 ])];
 
         str_rule bstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::omit[qi::char_("'")]
-        >> *(qi::char_("0-1")[ qi::_val += qi::_1] | qi::omit[qi::space])
+        >> *(qi::char_("0-1")[ sprt::_val += sprt::_1] | qi::omit[qi::space])
         >> qi::omit[ qi::char_("'")
         >> qi::char_("B")]];
 
         str_rule hstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::omit[qi::char_("'")]
-        >> *(qi::char_("0-9ABCDEF")[ qi::_val += qi::_1] | qi::omit[qi::space])
+        >> *(qi::char_("0-9ABCDEF")[ sprt::_val += sprt::_1] | qi::omit[qi::space])
         >> qi::omit[ qi::char_("'")
         >> qi::char_("H")]];
 
         str_rule cstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::char_("\"")
-        >> *((qi::print)[ qi::_val += qi::_1] - qi::char_("\""))
+        >> *((qi::print)[ sprt::_val += sprt::_1] - qi::char_("\""))
         >> qi::char_("\"")];
 
         str_rule IRIValue = cstring_str;
 
 
 
-        str_rule curly_barket_pair = qi::char_("{")[ qi::_val = qi::_1 ]
+        str_rule curly_barket_pair = qi::char_("{")[ sprt::_val = sprt::_1 ]
                 >> *qi::space
-                >> qi::char_("}")[ qi::_val += qi::_1];
+                >> qi::char_("}")[ sprt::_val += sprt::_1];
 
         skip_comment_grammar comment_skip;
 
@@ -300,31 +300,31 @@ namespace x680 {
         | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("UNION")];
 
 
-        str_rule word_ = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
-                >> *(((qi::char_("-")[qi::_val += qi::_1]
-                >> qi::upper[qi::_val += qi::_1])
-                | (qi::upper[qi::_val += qi::_1]
-                >> -qi::upper[qi::_val += qi::_1])) - (qi::char_("-")
+        str_rule word_ = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::lexeme[qi::upper[ sprt::_val = sprt::_1 ]
+                >> *(((qi::char_("-")[sprt::_val += sprt::_1]
+                >> qi::upper[sprt::_val += sprt::_1])
+                | (qi::upper[sprt::_val += sprt::_1]
+                >> -qi::upper[sprt::_val += sprt::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::upper))))]];
 
-        str_rule spaces_ = distinct((*qi::space) >> '&')[qi::space[ qi::_val = qi::_1 ] >> *(qi::space[qi::_val += qi::_1 ])];
+        str_rule spaces_ = distinct((*qi::space) >> '&')[qi::space[ sprt::_val = sprt::_1 ] >> *(qi::space[sprt::_val += sprt::_1 ])];
 
         str_rule Literal_ = (word_ - literal_except_token) | qi::string(",");
 
-        str_rule SyntaxField_ = Literal_[qi::_val = qi::_1 ] >> *(spaces_[ qi::_val += ' '] >> Literal_[ qi::_val += qi::_1 ]);
+        str_rule SyntaxField_ = Literal_[sprt::_val = sprt::_1 ] >> *(spaces_[ sprt::_val += ' '] >> Literal_[ sprt::_val += sprt::_1 ]);
 
-        str_rule typereference_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::upper[ qi::_val = qi::_1 ]
-                >> *(((qi::char_("-")[qi::_val += qi::_1]
-                >> qi::alnum[qi::_val += qi::_1])
-                | (qi::alnum[qi::_val += qi::_1]
-                >> -qi::alnum[qi::_val += qi::_1])) - (qi::char_("-")
+        str_rule typereference_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::upper[ sprt::_val = sprt::_1 ]
+                >> *(((qi::char_("-")[sprt::_val += sprt::_1]
+                >> qi::alnum[sprt::_val += sprt::_1])
+                | (qi::alnum[sprt::_val += sprt::_1]
+                >> -qi::alnum[sprt::_val += sprt::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::alnum))))]];
 
-        str_rule identifier_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::lower[qi::_val = qi::_1 ]
-                >> *(((qi::char_("-")[qi::_val += qi::_1]
-                >> qi::alnum[qi::_val += qi::_1])
-                | (qi::alnum[qi::_val += qi::_1]
-                >> -qi::alnum[qi::_val += qi::_1])) - (qi::char_("-")
+        str_rule identifier_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::lower[sprt::_val = sprt::_1 ]
+                >> *(((qi::char_("-")[sprt::_val += sprt::_1]
+                >> qi::alnum[sprt::_val += sprt::_1])
+                | (qi::alnum[sprt::_val += sprt::_1]
+                >> -qi::alnum[sprt::_val += sprt::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::alnum))))]];
 
         str_rule valuereference_ = identifier_;
@@ -337,24 +337,24 @@ namespace x680 {
 
         str_rule objectsetreference_ = typereference_;
 
-        str_rule objectclassreference_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::upper[qi::_val = qi::_1 ]
-                >> *(((qi::char_("-")[qi::_val += qi::_1]
-                >> qi::char_("A-Z0-9")[qi::_val += qi::_1])
-                | (qi::char_("A-Z0-9")[qi::_val += qi::_1]
-                >> -qi::char_("A-Z0-9")[qi::_val += qi::_1])) - (qi::char_("-")
+        str_rule objectclassreference_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::upper[sprt::_val = sprt::_1 ]
+                >> *(((qi::char_("-")[sprt::_val += sprt::_1]
+                >> qi::char_("A-Z0-9")[sprt::_val += sprt::_1])
+                | (qi::char_("A-Z0-9")[sprt::_val += sprt::_1]
+                >> -qi::char_("A-Z0-9")[sprt::_val += sprt::_1])) - (qi::char_("-")
                 >> ((qi::char_("-") | !qi::char_("A-Z0-9")))))]]; //(~typereference_)      
 
         str_rule typereference_strict = distinct(qi::alnum | ('-' >> qi::alnum))[typereference_ - qi::omit[objectclassreference_]];
 
-        str_rule typefieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> typereference_[qi::_val += qi::_1 ]]; //(&typereference_[qi::_val += qi::_1 ])   
+        str_rule typefieldreference_ = qi::lexeme[qi::string("&")[sprt::_val = sprt::_1 ] >> typereference_[sprt::_val += sprt::_1 ]]; //(&typereference_[sprt::_val += sprt::_1 ])   
 
-        str_rule valuefieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> valuereference_[qi::_val += qi::_1 ]]; //(&valuereference_)  
+        str_rule valuefieldreference_ = qi::lexeme[qi::string("&")[sprt::_val = sprt::_1 ] >> valuereference_[sprt::_val += sprt::_1 ]]; //(&valuereference_)  
 
-        str_rule valuesetfieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> typereference_[qi::_val += qi::_1 ]]; //(&typereference_)   
+        str_rule valuesetfieldreference_ = qi::lexeme[qi::string("&")[sprt::_val = sprt::_1 ] >> typereference_[sprt::_val += sprt::_1 ]]; //(&typereference_)   
 
-        str_rule objectfieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> objectreference_[qi::_val += qi::_1 ]]; //(&objectreference_)
+        str_rule objectfieldreference_ = qi::lexeme[qi::string("&")[sprt::_val = sprt::_1 ] >> objectreference_[sprt::_val += sprt::_1 ]]; //(&objectreference_)
 
-        str_rule objectsetfieldreference_ = qi::lexeme[qi::string("&")[qi::_val = qi::_1 ] >> objectsetreference_[qi::_val += qi::_1 ]]; //(&objectsetreference_)  
+        str_rule objectsetfieldreference_ = qi::lexeme[qi::string("&")[sprt::_val = sprt::_1 ] >> objectsetreference_[sprt::_val += sprt::_1 ]]; //(&objectsetreference_)  
 
 
         str_rule bigreference_ = typereference_;
@@ -369,45 +369,45 @@ namespace x680 {
 
         str_rule PrimitiveFieldName_ = bigfieldreference_ | littlefieldreference_;
 
-        str_rule FieldName_ = PrimitiveFieldName_[qi::_val = qi::_1 ] >> -(qi::string(".")[qi::_val += qi::_1 ]
-                >> qi::omit[(*qi::space)] >> (PrimitiveFieldName_[qi::_val += qi::_1 ] % qi::string(".")[qi::_val += qi::_1 ]));
+        str_rule FieldName_ = PrimitiveFieldName_[sprt::_val = sprt::_1 ] >> -(qi::string(".")[sprt::_val += sprt::_1 ]
+                >> qi::omit[(*qi::space)] >> (PrimitiveFieldName_[sprt::_val += sprt::_1 ] % qi::string(".")[sprt::_val += sprt::_1 ]));
 
-        str_rule BFieldName_ = bigfieldreference_[qi::_val = qi::_1 ] >> -(qi::string(".")[qi::_val += qi::_1 ]
-                >> qi::omit[(*qi::space)] >> (bigfieldreference_[qi::_val += qi::_1 ] % qi::string(".")[qi::_val += qi::_1 ]));
+        str_rule BFieldName_ = bigfieldreference_[sprt::_val = sprt::_1 ] >> -(qi::string(".")[sprt::_val += sprt::_1 ]
+                >> qi::omit[(*qi::space)] >> (bigfieldreference_[sprt::_val += sprt::_1 ] % qi::string(".")[sprt::_val += sprt::_1 ]));
 
-        str_rule LFieldName_ = littlefieldreference_[qi::_val = qi::_1 ] >> -(qi::string(".")[qi::_val += qi::_1 ]
-                >> qi::omit[(*qi::space)] >> (littlefieldreference_[qi::_val += qi::_1 ] % qi::string(".")[qi::_val += qi::_1 ]));
-
-
-
-        str_rule ExternalTypeReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1 ]
-                >> typereference_[qi::_val += qi::_1 ];
-
-        str_rule ExternalTypeReference_strict = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1 ]
-                >> typereference_strict[qi::_val += qi::_1 ];
+        str_rule LFieldName_ = littlefieldreference_[sprt::_val = sprt::_1 ] >> -(qi::string(".")[sprt::_val += sprt::_1 ]
+                >> qi::omit[(*qi::space)] >> (littlefieldreference_[sprt::_val += sprt::_1 ] % qi::string(".")[sprt::_val += sprt::_1 ]));
 
 
-        str_rule ExternalValueReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1 ]
-                >> valuereference_[qi::_val += qi::_1 ];
 
-        str_rule ExternalValueSetReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1 ]
-                >> valuesetreference_[qi::_val += qi::_1 ];
+        str_rule ExternalTypeReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> typereference_[sprt::_val += sprt::_1 ];
 
-        str_rule ExternalObjectClassReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1 ]
-                >> objectclassreference_[qi::_val += qi::_1 ];
+        str_rule ExternalTypeReference_strict = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> typereference_strict[sprt::_val += sprt::_1 ];
 
-        str_rule ExternalObjectReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1 ]
-                >> objectreference_[qi::_val += qi::_1 ];
 
-        str_rule ExternalObjectSetReference_ = modulereference_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1 ]
-                >> objectsetreference_[qi::_val += qi::_1 ];
+        str_rule ExternalValueReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> valuereference_[sprt::_val += sprt::_1 ];
+
+        str_rule ExternalValueSetReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> valuesetreference_[sprt::_val += sprt::_1 ];
+
+        str_rule ExternalObjectClassReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> objectclassreference_[sprt::_val += sprt::_1 ];
+
+        str_rule ExternalObjectReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> objectreference_[sprt::_val += sprt::_1 ];
+
+        str_rule ExternalObjectSetReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> objectsetreference_[sprt::_val += sprt::_1 ];
 
         str_rule UsefulObjectClass_ = TYPE_IDENTIFIER__
                 | ABSTRACT_SYNTAX__;
@@ -434,19 +434,19 @@ namespace x680 {
         str_rule UserDefinedConstraintParameter_ = (DefinedType_ | DefinedObjectClass_)
         >> -(qi::string(".") >> DefinedValue_);
 
-        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.' | '@')[qi::string("@")[qi::_val = qi::_1 ]
-        >> *(qi::string(".")[qi::_val += qi::_1 ]) >> (identifier_[qi::_val += qi::_1 ] % qi::string(".")[qi::_val += qi::_1 ])];
+        str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.' | '@')[qi::string("@")[sprt::_val = sprt::_1 ]
+        >> *(qi::string(".")[sprt::_val += sprt::_1 ]) >> (identifier_[sprt::_val += sprt::_1 ] % qi::string(".")[sprt::_val += sprt::_1 ])];
 
         str_rule Reference_ = typereference_ | valuereference_;
 
-        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[qi::_val += qi::_1 ] ];
+        str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[sprt::_val += sprt::_1 ] ];
 
-        str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObject_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[qi::_val += qi::_1 ]];
+        str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObject_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[sprt::_val += sprt::_1 ]];
 
-        str_rule BigFromObjects_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectSet_[qi::_val = qi::_1 ]
-                >> qi::string(".")[qi::_val += qi::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[qi::_val += qi::_1 ]];
+        str_rule BigFromObjects_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectSet_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[sprt::_val += sprt::_1 ]];
 
         str_rule ParameterizedReference_ = Reference_
                 >> qi::omit[*qi::space

@@ -1133,6 +1133,8 @@ namespace x680 {
 
         namespace ascii = boost::spirit::ascii;
         namespace repository = boost::spirit::repository;
+        namespace sprt = boost::spirit;
+        namespace phx = boost::phoenix;        
 
         struct skip_comment_grammar : public qi::grammar<str_iterator> {
 
