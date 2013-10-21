@@ -161,7 +161,7 @@ namespace x680 {
 
     uargument_entity* basic_entity::as_uargument() {
         return dynamic_cast<uargument_entity*> (this);
-    }    
+    }
 
     bigassignment_entity * basic_entity::as_bigassigment() {
         return dynamic_cast<bigassignment_entity*> (this);
@@ -237,7 +237,7 @@ namespace x680 {
         else if (as_objectassigment())
             rslt = rslt + " in objectassignment";
         else if (as_objectsetassigment())
-            rslt = rslt + " in objectsetassignment";        
+            rslt = rslt + " in objectsetassignment";
         else if (as_module())
             return "";
         else
@@ -397,8 +397,10 @@ namespace x680 {
     // module_entity
     /////////////////////////////////////////////////////////////////////////   
 
-    module_entity::module_entity(basic_entity_ptr scope, const std::string& nm, const std::string& fl, bool allexp)
-    : basic_entity(scope, nm, et_Module), file_(fl), allexport_(allexp) {
+    module_entity::module_entity(basic_entity_ptr scope, const std::string& nm,
+            const std::string& fl, bool allexp, tagrule_type tgr, bool ext)
+    : basic_entity(scope, nm, et_Module), file_(fl), allexport_(allexp),
+    tagrule_(tgr), extesibility_implied_(ext) {
     }
 
     /////
@@ -627,7 +629,7 @@ namespace x680 {
         soassignment_entity* tmp = elm->as_soassigment();
         if (tmp && (tmp->big()) && (tmp->big()->reff())) {
             basic_entity_ptr fnd = elm->find(tmp->big()->reff());
-            if (fnd) {           
+            if (fnd) {
                 if ((fnd->kind() == et_Type) && (tmp->bigT()))
                     return tmp->bigT();
                 if ((fnd->kind() == et_Class) && (tmp->bigC()))
@@ -740,57 +742,93 @@ namespace x680 {
             } else if (val->as_class()) {
                 unspecified_ = assignment_entity_ptr(new classassignment_entity(scope(), name()));
                 argumenttype_ = argm_Class;
-            } else{
+            } else {
+#ifdef  DEBUG_SEMANTIC                
                 debug_warning("Should be error argument type set");
-                return;}
+#else
+                val->scope()->referenceerror_throw(name(), "Should be error argument type set");
+#endif                
+                return;
+            }
         }
         switch (argumenttype_) {
             case argm_Type:
             {
-                if (!val->as_type()){
+                if (!val->as_type()) {
+#ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: Type ");
-                    return;}
+#else
+                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous: Type expected");
+#endif                         
+                    return;
+                }
                 break;
             }
             case argm_Value:
             {
-                if (!val->as_value()){
+                if (!val->as_value()) {
+#ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: Value ");
-                    return;}                
+#else
+                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous. Value expected : ");
+#endif    
+                    return;
+                }
                 break;
             }
             case argm_ValueSet:
             {
-                if (!val->as_valueset()){
+                if (!val->as_valueset()) {
+#ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: ValueSet ");
-                    return;}
+#else
+                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous. ValueSet expected : ");
+#endif   
+                    return;
+                }
                 break;
             }
             case argm_Class:
             {
-                if (!val->as_class()){
+                if (!val->as_class()) {
+#ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: Class ");
-                    return;}
+#else
+                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous. Class expected : ");
+#endif   
+                    return;
+                }
                 break;
             }
             case argm_Object:
             {
-                if (!val->as_object()){
+                if (!val->as_object()) {
+#ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: Object ");
-                    return;}
+#else
+                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous. Object expected : ");
+#endif   
+                    return;
+                }
                 break;
             }
             case argm_ObjectSet:
             {
                 if (!val->as_objectset()) {
+#ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: ObjectSet ");
+#else
+                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous. ObjectSet expected : ");
+#endif   
                     return;
                 }
                 break;
             }
             default:
             {
+#ifdef  DEBUG_SEMANTIC                
                 debug_warning("Should be error argument type dummy insert ");
+#endif                                 
                 return;
             }
         }
@@ -804,8 +842,8 @@ namespace x680 {
             governor()->resolve_reff();
 
     }
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////   
     // argument_entity
     /////////////////////////////////////////////////////////////////////////  
@@ -821,10 +859,10 @@ namespace x680 {
     uargument_entity::uargument_entity(basic_entity_ptr scope, class_atom_ptr gvnr)
     : basic_entity(scope, "", et_UArgument), governor_(gvnr) {
     }
-    
+
     uargument_entity::uargument_entity(basic_entity_ptr scope, basic_atom_ptr gvnr)
-    : basic_entity(scope, "", et_UArgument),  governor_(gvnr){
-    }    
+    : basic_entity(scope, "", et_UArgument), governor_(gvnr) {
+    }
 
     bool uargument_entity::has_undef_governor() const {
         return ( governor_ && !((governor_->as_type()) || (governor_->as_class())));
@@ -845,7 +883,7 @@ namespace x680 {
     void uargument_entity::resolve(basic_atom_ptr holder) {
         if (has_governor())
             governor()->resolve_reff();
-    }    
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -869,6 +907,11 @@ namespace x680 {
         if (external())
             return external()->name() + "::";
         return "";
+    }
+
+    bool basic_atom::extesibility_implied() const {
+        return (scope() && (scope()->moduleref())
+                && (scope()->moduleref()->extesibility_implied()));
     }
 
     basic_atom* basic_atom::root() {
@@ -920,7 +963,7 @@ namespace x680 {
     void basic_atom::resolve(basic_atom_ptr holder) {
     }
 
-void basic_atom::resolve_reff(basic_atom_ptr holder, search_marker sch) {
+    void basic_atom::resolve_reff(basic_atom_ptr holder, search_marker sch) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {
             basic_entity_ptr source = holder ?
                     (holder->reff() ? holder->reff() : holder->scope()) : scope();
@@ -929,41 +972,84 @@ void basic_atom::resolve_reff(basic_atom_ptr holder, search_marker sch) {
                 if (fnd) {
                     if (fnd->as_typeassigment()) {
                         if (!as_type())
+#ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to typeassigment");
+#else
+                            scope()->referenceerror_throw(expectedname(), "Refference to Type : ");
+#endif                                                          
                     } else if (fnd->as_valueassigment()) {
                         if (!as_value())
+#ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to valueassigment");
+#else
+                            scope()->referenceerror_throw(expectedname(), "Refference to Value : ");
+#endif                                                          
                     } else if (fnd->as_valuesetassigment()) {
                         if (!as_valueset())
+#ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to valuesetassigment");
+#else
+                            scope()->referenceerror_throw(expectedname(), "Refference to ValueSet : ");
+#endif                                                         
                     } else if (fnd->as_classassigment()) {
                         if (!as_class())
+#ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to classassigment");
+#else
+                            scope()->referenceerror_throw(expectedname(), "Refference to Class: ");
+#endif                                                            
                     } else if (fnd->as_objectassigment()) {
                         if (!as_object())
+#ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to objectassigment");
+#else
+                            scope()->referenceerror_throw(expectedname(), "Refference to Object: ");
+#endif                                                           
                     } else if (fnd->as_objectsetassigment()) {
                         if (!as_objectset())
+#ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to objectsetassigment");
+#else
+                            scope()->referenceerror_throw(expectedname(), "Refference to ObjectSet: ");
+#endif                                                                     
                     } else if (fnd->as_argument()) {
+#ifdef  DEBUG_SEMANTIC                        
                         debug_warning("Here is argument parser: " + expectedname() + "");
+#endif                          
                         fnd->as_argument()->insert_dummyrefference(self());
                         return;
-                    } else
+                    } else {
+#ifdef  DEBUG_SEMANTIC                
                         debug_warning("Should be error : refference" + expectedname() + "undefined assigment");
+#else
+                        scope()->referenceerror_throw(expectedname(), "Refference to Undefined: ");
+#endif                                               
+                        return;
+                    }
+
                     reff(fnd);
                 } else {
                     if (holder) {
                         resolve_reff(basic_atom_ptr(), sch);
                         return;
-                    } else
+                    } else {
+#ifdef  DEBUG_SEMANTIC                
                         debug_warning("Should be error : refference : " + expectedname() + "  source : " +
-                            source->name() + "  scope : " + scope()->name());
+                                source->name() + "  scope : " + scope()->name());
+#else
+                        scope()->referenceerror_throw(expectedname(), "Refference don't find");
+#endif                         
+                    }
                 }
-            } else
+            } else {
+#ifdef  DEBUG_SEMANTIC                
                 debug_warning("Should be error : refference : " + expectedname() + "  not found : no holder");
+#else
+                throw semantics::error(expectedname() + "Try find in null scope");
+#endif                  
+            }
         }
-    }    
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -972,23 +1058,23 @@ void basic_atom::resolve_reff(basic_atom_ptr holder, search_marker sch) {
     // assignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-        /*basic_entity* basic_atom::root_assignment(basic_entity* assign) {
-            if (!assign->reff())
-                return assign;
-            if ((reff()->as_typeassigment()) && (reff()->as_typeassigment()->type()))
-                return reff()->as_typeassigment()->type()->root_assignment();
-            if ((reff()->as_valueassigment()) && (reff()->as_valueassigment()->value()))
-                return reff()->as_valueassigment()->value()->root_assignment();
-            if ((reff()->as_valuesetassigment()) && (reff()->as_valuesetassigment()->valueset()))
-                return reff()->as_valuesetassigment()->valueset()->root_assignment();   
-            if ((reff()->as_classassigment()) && (reff()->as_classassigment()->_class()))
-                return reff()->as_classassigment()->_class()->root_assignment();
-            if ((reff()->as_objectassigment()) && (reff()->as_objectassigment()->object()))
-                return reff()->as_objectassigment()->object()->root_assignment();
-            if ((reff()->as_objectsetassigment()) && (reff()->as_objectsetassigment()->objectset()))
-                return reff()->as_objectsetassigment()->objectset()->root_assignment();          
-            return 0;
-        }*/
+    /*basic_entity* basic_atom::root_assignment(basic_entity* assign) {
+        if (!assign->reff())
+            return assign;
+        if ((reff()->as_typeassigment()) && (reff()->as_typeassigment()->type()))
+            return reff()->as_typeassigment()->type()->root_assignment();
+        if ((reff()->as_valueassigment()) && (reff()->as_valueassigment()->value()))
+            return reff()->as_valueassigment()->value()->root_assignment();
+        if ((reff()->as_valuesetassigment()) && (reff()->as_valuesetassigment()->valueset()))
+            return reff()->as_valuesetassigment()->valueset()->root_assignment();   
+        if ((reff()->as_classassigment()) && (reff()->as_classassigment()->_class()))
+            return reff()->as_classassigment()->_class()->root_assignment();
+        if ((reff()->as_objectassigment()) && (reff()->as_objectassigment()->object()))
+            return reff()->as_objectassigment()->object()->root_assignment();
+        if ((reff()->as_objectsetassigment()) && (reff()->as_objectsetassigment()->objectset()))
+            return reff()->as_objectsetassigment()->objectset()->root_assignment();          
+        return 0;
+    }*/
 
     basic_entity_ptr assignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it)

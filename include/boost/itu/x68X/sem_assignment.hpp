@@ -10,6 +10,8 @@
 #include <boost/itu/x68X/x680.hpp>
 #include <boost/enable_shared_from_this.hpp>
 
+#define  DEBUG_SEMANTIC
+
 namespace x680 {
 
 
@@ -613,7 +615,8 @@ namespace x680 {
         friend class basic_entity;
 
     public:
-        module_entity(basic_entity_ptr scope, const std::string& nm, const std::string& fl, bool allexp);
+        module_entity(basic_entity_ptr scope, const std::string& nm,
+                const std::string& fl, bool allexp, tagrule_type tgr, bool ext);
 
         export_vector& exports() {
             return exports_;
@@ -629,6 +632,14 @@ namespace x680 {
 
         bool allexport() const {
             return allexport_;
+        }
+
+        bool extesibility_implied() const {
+            return extesibility_implied_;
+        }
+
+        tagrule_type tagrule() const {
+            return tagrule_;
         }
 
         structvalue_atom_ptr objectid() const {
@@ -675,7 +686,9 @@ namespace x680 {
         basic_entity_vector imports_;
         std::string file_;
         bool allexport_;
+        bool extesibility_implied_;
         structvalue_atom_ptr objectid_;
+        tagrule_type tagrule_;
     };
 
 
@@ -880,6 +893,8 @@ namespace x680 {
         bool expecteddef() const {
             return ((reff_) && (reff_->as_expectdef()));
         }
+
+        bool extesibility_implied() const;
 
         setting_atom_vct& parameters() {
             return parameters_;

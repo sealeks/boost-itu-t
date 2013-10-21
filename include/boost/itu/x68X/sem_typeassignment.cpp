@@ -33,6 +33,77 @@ namespace x680 {
     : basic_atom(reff, scp), builtin_(tp), tag_(tg) {
     }
 
+    defined_type type_atom::root_builtin() {
+        if (builtin_ != t_Reference)
+            return builtin_;
+        resolve();
+        if (reff() && (reff()->as_typeassigment())) {
+            if (reff()->as_typeassigment()->type())
+                return reff()->as_typeassigment()->type()->root_builtin();
+        }
+        return t_NODEF;
+    }
+
+    defined_type type_atom::effective_builtin() {
+        if (builtin_ != t_Reference)
+            return builtin_;
+        if (!istypedef())
+            return t_Reference;
+        resolve();
+        if (reff() && (reff()->as_typeassigment())) {
+            if (reff()->as_typeassigment()->type())
+                return reff()->as_typeassigment()->type()->root_builtin();
+        }
+        return t_NODEF;
+    }
+
+    bool type_atom::isopen() const {
+        return ((builtin_ == t_ClassField) || (builtin_ == t_ANY));
+    }
+
+    bool type_atom::istypedef() const {
+        return ((builtin_ == t_Reference) && (!tag_) && (constraints_.empty()));
+    }
+
+    bool type_atom::isno_taggedchoice() {
+        if (builtin_ == t_CHOICE) {
+            if (tag_) {
+                return false;
+            }
+            return true;
+        }
+        if ((builtin_ != t_Reference) || (!reff()))
+            return false;
+        reff()-> resolve();
+        if (reff() && (reff()->as_typeassigment())) {
+            if (reff()->as_typeassigment()->type())
+                return reff()->as_typeassigment()->type()->isno_taggedchoice();
+        }
+        return false;
+    }
+
+    bool type_atom::isallways_explicit() {
+        return ((isno_taggedchoice()) || (isopen()) || (isdummy())) && ((tag()) && (tag()->number()));
+    }
+
+    basic_atom_ptr type_atom::effective_type() {
+        if (builtin_ != t_Reference)
+            return self();
+        if (!istypedef())
+            return self();
+        resolve();
+        if (reff() && (reff()->as_typeassigment())) {
+            if (reff()->as_typeassigment()->type())
+                return reff()->as_typeassigment()->type()->effective_type();
+        }
+        return basic_atom_ptr();
+    }
+
+    tagrule_type type_atom::tagrule() const {
+        return (scope() && (scope()->moduleref())) ?
+                scope()->moduleref()->tagrule() : noset_tags;
+    }
+
     classfieldtype_atom* type_atom::as_classfield() {
         return dynamic_cast<classfieldtype_atom*> (this);
     }
@@ -176,6 +247,27 @@ namespace x680 {
 
     void type_atom::resolve_tag() {
         if (tag()) {
+            if ((tag()->rule() == noset_tags) && (tag()->number())) {
+                switch (tagrule()) {
+                    case explicit_tags: if (isallways_explicit())
+                            tag()->rule(explicit_tags);
+                        break;
+                    case implicit_tags:
+                    case automatic_tags:
+                    {
+                        tag()->rule(isallways_explicit() ? explicit_tags : implicit_tags);
+                        break;
+                    }
+                    default:
+                    {
+                        if (isallways_explicit())
+                            tag()->rule(explicit_tags);
+                    };
+                }
+            }
+            if ((isallways_explicit()) && (tag()->rule() == implicit_tags) && (tag()->number()))
+                // std::cout << "Test error namr: "  << scope()->name()  << std:: endl;
+                scope()->referenceerror_throw("type ", " shall not be implicit '");
             if ((tag()->number()) && (tag()->number()->as_defined()) && (tag()->number()->expecteddef())) {
                 tag()->number()->resolve_reff(basic_atom_ptr(), extend_search);
             }
@@ -275,19 +367,23 @@ namespace x680 {
                     if ((*it)->name() == nm)
                         return *it;
             }
-          if (type()->reff() && (type()->reff()->name()!=nm)) {
+            if (type()->reff() && (type()->reff()->name() != nm)) {
                 type()->resolve_reff();
                 if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, sch))
-                        return fnd;
+                    return fnd;
             }
         }
         if (!(sch & extend_search))
-                return basic_entity_ptr();
+            return basic_entity_ptr();
         if (basic_entity_ptr fnd = assignment_entity::find_by_name(nm))
             return fnd;
         if (scope())
             return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
+    }
+
+    namedtypeassignment_entity* typeassignment_entity::as_named() {
+        return dynamic_cast<namedtypeassignment_entity*> (this);
     }
 
     void typeassignment_entity::resolve(basic_atom_ptr holder) {
@@ -296,12 +392,70 @@ namespace x680 {
         resolve_child();
         if (type())
             type()->resolve();
+        post_resolve_child();
 
     }
 
-    namedtypeassignment_entity* typeassignment_entity::as_named() {
-        return dynamic_cast<namedtypeassignment_entity*> (this);
+    void typeassignment_entity::post_resolve_child() {
+        post_resolve_apply_componentsof();
+        post_resolve_autotag();
     }
+
+    void typeassignment_entity::post_resolve_apply_componentsof() {
+        if ((type()) and (!childs().empty())) {
+            if ((type()->builtin() == t_SEQUENCE) && ((type()->builtin() == t_SET))) {
+                bool find_compomensof = true;
+                while (find_compomensof) {
+                    find_compomensof = false;
+                    for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+                        if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                            namedtypeassignment_entity* named = (*it)->as_typeassigment()->as_named();
+                            if (named->marker() == mk_components_of) {
+                                if (basic_entity_ptr namedreff = named->type()->reff()) {
+                                    namedreff->resolve();
+                                    basic_entity_vector tmpch;
+                                    if ((namedreff->as_typeassigment())
+                                            && (!namedreff->as_typeassigment()->childs().empty())) {
+                                        if (!namedreff->as_typeassigment()->type())
+                                            scope()->referenceerror_throw("Undefined type");
+                                        if (namedreff->as_typeassigment()->type()->effective_builtin() != type()->builtin())
+                                            scope()->referenceerror_throw("Apply COMPONENT OF error");
+                                        for (basic_entity_vector::iterator its = namedreff->as_typeassigment()->childs().begin();
+                                                its != namedreff->as_typeassigment()->childs().end(); ++its) {
+                                            if ((*its)->as_typeassigment()->as_named()->marker() != mk_extention) {
+                                                namedtypeassignment_entity_ptr tmp;
+                                                if ((*its)->as_typeassigment()->as_named()->marker() == mk_default) {
+                                                    tmp = namedtypeassignment_entity_ptr(new namedtypeassignment_entity((*it)->scope(),
+                                                            (*its)->name(), (*its)->as_typeassigment()->as_named()->type(),
+                                                            (*its)->as_typeassigment()->as_named()->_default()));
+                                                } else
+                                                    tmp = namedtypeassignment_entity_ptr(new namedtypeassignment_entity((*it)->scope(),
+                                                        (*its)->name(), (*its)->as_typeassigment()->as_named()->type(),
+                                                        (*its)->as_typeassigment()->as_named()->marker()));
+                                                tmpch.push_back(tmp);
+                                            } else
+                                                break;
+                                        }
+                                        if (!tmpch.empty()) {
+                                            childs().insert(childs().erase(it), tmpch.begin(), tmpch.end());
+                                            find_compomensof = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void typeassignment_entity::post_resolve_autotag() {
+        if ((type()) and (!childs().empty())) {
+        }
+    }
+
 
 
 
@@ -331,8 +485,8 @@ namespace x680 {
     }
 
     void namedtypeassignment_entity::resolve_default() {
-        if (_default()) 
-                _default()->resolve(type());
+        if (_default())
+            _default()->resolve(type());
     }
 
 

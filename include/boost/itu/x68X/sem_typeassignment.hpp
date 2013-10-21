@@ -83,12 +83,24 @@ namespace x680 {
             return number_;
         }
 
+        void number(value_atom_ptr vl) {
+            number_ = vl;
+        }
+
         tagclass_type _class() const {
             return class_;
         }
 
+        void _class(tagclass_type vl) {
+            class_ = vl;
+        }
+
         tagrule_type rule() const {
             return rule_;
+        }
+
+        void rule(tagrule_type vl) {
+            rule_ = vl;
         }
 
     private:
@@ -138,6 +150,22 @@ namespace x680 {
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
         }
+
+        defined_type root_builtin();
+
+        defined_type effective_builtin();
+
+        bool isopen() const;
+
+        bool istypedef() const;
+
+        bool isno_taggedchoice();
+
+        bool isallways_explicit();
+
+        basic_atom_ptr effective_type();
+
+        tagrule_type tagrule() const;
 
         classfieldtype_atom* as_classfield();
 
@@ -340,6 +368,12 @@ namespace x680 {
         //   void resolve_predef();        
 
     private:
+
+        void post_resolve_child();
+
+        void post_resolve_apply_componentsof();
+
+        void post_resolve_autotag();
 
         type_atom_ptr type_;
     };

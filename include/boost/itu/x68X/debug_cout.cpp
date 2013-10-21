@@ -54,6 +54,9 @@ namespace x680 {
         stream << "module: " << self->name();
         if (self->objectid())
             stream << " {" << self->objectid().get() << " }";
+        stream << " \ntag rule:" << self->tagrule() << "\n";
+        if (self->extesibility_implied())
+        stream << " \nEXTESIBILITY IMPLIED\n";     
         stream << " \nfile:" << self->file() << "\n";
 
         stream << "----------------------------------------------------------\n";
@@ -117,7 +120,7 @@ namespace x680 {
         }
         return stream;
     }
-
+    
     std::ostream& operator<<(std::ostream& stream, expectdef_entity* self) {
         return stream << self->name() << "(?)";
     }

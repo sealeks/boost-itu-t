@@ -27,10 +27,11 @@ namespace x680 {
 
 
             insert_global(global);
- 
-            for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it){
+
+            for (x680::syntactic::modules::const_iterator it = synxtasresult.begin(); it != synxtasresult.end(); ++it) {
                 std::cout << "compile module: " << it->name << std::endl;
-                compile_module(*it, global);}
+                compile_module(*it, global);
+            }
             global->resolve();
             return global;
         }
@@ -40,7 +41,8 @@ namespace x680 {
         //  compile_module        
 
         void compile_module(const x680::syntactic::module& mod, global_entity_ptr global) {
-            module_entity_ptr modul = module_entity_ptr(new module_entity(global, mod.name, mod.file, mod.allexport));
+            module_entity_ptr modul = module_entity_ptr(new module_entity(global, mod.name, mod.file,
+                    mod.allexport, mod.default_tags_t == noset_tags ? explicit_tags : mod.default_tags_t, mod.extesibility_implied));
             compile_export(mod, modul);
             compile_imports(mod, modul);
             compile_assignments(mod, modul);
@@ -172,16 +174,20 @@ namespace x680 {
         typeassignment_entity_ptr compile_namedtype(basic_entity_ptr scope, const x680::syntactic::type_assignment& ent) {
             namedtypeassignment_entity_ptr tmpt;
             switch (ent.type.marker) {
-                case mk_default:{ 
-                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier,type_atom_ptr() , value_atom_ptr()));
-                    tmpt->type(compile_type(tmpt , ent.type));
-                    tmpt-> _default(compile_value(tmpt , ent.type.value));          
-                    break;}
-                case mk_exception: {
+                case mk_default:
+                {
+                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, type_atom_ptr(), value_atom_ptr()));
+                    tmpt->type(compile_type(tmpt, ent.type));
+                    tmpt-> _default(compile_value(tmpt, ent.type.value));
+                    break;
+                }
+                case mk_exception:
+                {
                     tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, type_atom_ptr(), value_atom_ptr()));
-                    tmpt->type(compile_type(tmpt , ent.type));
-                    tmpt-> _default(compile_value(tmpt , ent.type.value)); 
-                    break;}
+                    tmpt->type(compile_type(tmpt, ent.type));
+                    tmpt-> _default(compile_value(tmpt, ent.type.value));
+                    break;
+                }
                 case mk_extention:
                 {
                     tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope));
@@ -190,9 +196,11 @@ namespace x680 {
                     return tmpt;
                     break;
                 }
-                default:{
-                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, type_atom_ptr() , ent.type.marker));
-                    tmpt->type(compile_type( tmpt , ent.type));}
+                default:
+                {
+                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, type_atom_ptr(), ent.type.marker));
+                    tmpt->type(compile_type(tmpt, ent.type));
+                }
             }
             tmpt->type()->predefined(compile_typepredef(tmpt, ent.type));
             switch (ent.type.builtin_t) {
@@ -512,12 +520,12 @@ namespace x680 {
                 case cns_ALLEXCEPT: return constraint_atom_ptr(new allexceptconstraint_atom());
                 case cns_EXTENTION: return constraint_atom_ptr(new extentionconstraint_atom());
                 case cns_EXCEPTION: return compile_exceptionconstraint(scope, ent);
-                case cns_UserDefinedConstraint: return constraint_atom_ptr( new userconstraint_atom(scope, compile_uarguments(scope, ent.uparameters)));
+                case cns_UserDefinedConstraint: return constraint_atom_ptr(new userconstraint_atom(scope, compile_uarguments(scope, ent.uparameters)));
                 case cns_Contents: return compile_contentconstraint(scope, ent);
-                case cns_ComponentRelation:  return constraint_atom_ptr( new relationconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref), ent.parameters));
-                case cns_SimpleTableConstraint:  return constraint_atom_ptr( new tableconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref)));
-                case cns_Undef_T_ST_VS:  return compile_tvosoconstraint(scope,ent);
-                /*case cns_ComponentRelation*/
+                case cns_ComponentRelation: return constraint_atom_ptr(new relationconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref), ent.parameters));
+                case cns_SimpleTableConstraint: return constraint_atom_ptr(new tableconstraint_atom(scope, compile_objectset(scope, *ent.objectsetref)));
+                case cns_Undef_T_ST_VS: return compile_tvosoconstraint(scope, ent);
+                    /*case cns_ComponentRelation*/
                 default:
                 {
                 }
@@ -546,60 +554,64 @@ namespace x680 {
         constraint_atom_ptr compile_exceptionconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
             return constraint_atom_ptr(new exceptionconstraint_atom(scope, compile_type(scope, ent.type), compile_value(scope, ent.value)));
         }
-        
-        constraint_atom_ptr compile_contentconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent){
-            if ((ent.type.builtin_t!=t_NODEF) && (ent.value.type!=v_nodef)){
-                return constraint_atom_ptr( new contentconstraint_atom(scope,  compile_type(scope, ent.type), compile_value(scope, ent.value)));
-            }
-            else  if (ent.type.builtin_t!=t_NODEF){
-                return constraint_atom_ptr( new contentconstraint_atom(scope,  compile_type(scope, ent.type)));
-            }
-            else  if (ent.value.type!=v_nodef) {
-                return constraint_atom_ptr( new contentconstraint_atom(scope, compile_value(scope, ent.value)));
+
+        constraint_atom_ptr compile_contentconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
+            if ((ent.type.builtin_t != t_NODEF) && (ent.value.type != v_nodef)) {
+                return constraint_atom_ptr(new contentconstraint_atom(scope, compile_type(scope, ent.type), compile_value(scope, ent.value)));
+            } else if (ent.type.builtin_t != t_NODEF) {
+                return constraint_atom_ptr(new contentconstraint_atom(scope, compile_type(scope, ent.type)));
+            } else if (ent.value.type != v_nodef) {
+                return constraint_atom_ptr(new contentconstraint_atom(scope, compile_value(scope, ent.value)));
             }
             scope->referenceerror_throw(scope->name(), "Content constraint dos'nt set");
             return constraint_atom_ptr();
-        }  
-        
+        }
+
         constraint_atom_ptr compile_tvosoconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
             tvosoconstraint_atom_ptr tmp(new tvosoconstraint_atom(scope));
             if (((*ent.setting).alternative & AS_TYPE) && ((*ent.setting).type))
-                tmp->type(compile_type(scope,  (*((*ent.setting).type))));
-            if (((*ent.setting).alternative & AS_VALUESET)  && ((*ent.setting).valueset))
-                tmp->valueset(compile_valueset(scope,  (*((*ent.setting).valueset))));
+                tmp->type(compile_type(scope, (*((*ent.setting).type))));
+            if (((*ent.setting).alternative & AS_VALUESET) && ((*ent.setting).valueset))
+                tmp->valueset(compile_valueset(scope, (*((*ent.setting).valueset))));
             if (((*ent.setting).alternative & AS_OBJECTSET) && ((*ent.setting).objectset))
-                tmp->objectset(compile_objectset(scope,   (*((*ent.setting).objectset))));
+                tmp->objectset(compile_objectset(scope, (*((*ent.setting).objectset))));
             return tmp;
-        }        
-        
-         uargument_entity_vct compile_uarguments(basic_entity_ptr scope, const x680::syntactic::uargument_vector& ent){
+        }
+
+        uargument_entity_vct compile_uarguments(basic_entity_ptr scope, const x680::syntactic::uargument_vector& ent) {
             uargument_entity_vct tmp;
             for (x680::syntactic::uargument_vector::const_iterator it = ent.begin(); it != ent.end(); ++it)
                 tmp.push_back(compile_uargument(scope, *it));
             return tmp;
-         }
-         
-        uargument_entity_ptr compile_uargument(basic_entity_ptr scope, const x680::syntactic::uargument_type& ent){
+        }
+
+        uargument_entity_ptr compile_uargument(basic_entity_ptr scope, const x680::syntactic::uargument_type& ent) {
             switch (ent.tp) {
-                case gvr_Type:{
-                     uargument_entity_ptr tmp(new uargument_entity(scope, compile_type(scope, ent.governortype)));
-                     tmp->setting(compile_setting(tmp, ent.parameter));
-                    return tmp;}
-                case gvr_Class:{
-                     uargument_entity_ptr tmp(new uargument_entity(scope, compile_classdefined(scope, ent.governorclass)));
-                     tmp->setting(compile_setting(tmp, ent.parameter));
-                    return tmp;}
-                case gvr_Type_or_Class:{
+                case gvr_Type:
+                {
+                    uargument_entity_ptr tmp(new uargument_entity(scope, compile_type(scope, ent.governortype)));
+                    tmp->setting(compile_setting(tmp, ent.parameter));
+                    return tmp;
+                }
+                case gvr_Class:
+                {
+                    uargument_entity_ptr tmp(new uargument_entity(scope, compile_classdefined(scope, ent.governorclass)));
+                    tmp->setting(compile_setting(tmp, ent.parameter));
+                    return tmp;
+                }
+                case gvr_Type_or_Class:
+                {
                     uargument_entity_ptr tmp(new uargument_entity(scope, basic_atom_ptr(new basic_atom(ent.reff))));
-                    tmp->setting(compile_setting(tmp, ent.parameter));  
-                    return tmp;}
+                    tmp->setting(compile_setting(tmp, ent.parameter));
+                    return tmp;
+                }
                 default:
                 {
                 }
             }
             return uargument_entity_ptr(new uargument_entity(scope, compile_setting(scope, ent.parameter)));
-        }     
-        
+        }
+
 
 
 
@@ -989,7 +1001,7 @@ namespace x680 {
 
         // valueset or objectset
 
-        soassignment_entity_ptr compile_soassignment(basic_entity_ptr scope,  const x680::syntactic::unknown_so_assignment& tmp){
+        soassignment_entity_ptr compile_soassignment(basic_entity_ptr scope, const x680::syntactic::unknown_so_assignment& tmp) {
             soassignment_entity_ptr tmpv = soassignment_entity_ptr(new soassignment_entity(scope, tmp.identifier));
             tmpv->big(compile_reff(tmpv, tmp.reff));
             if ((tmp.alternative_ & AS_VALUESET) && (tmp.valueseta))
