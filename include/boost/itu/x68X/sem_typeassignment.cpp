@@ -36,7 +36,8 @@ namespace x680 {
     defined_type type_atom::root_builtin() {
         if (builtin_ != t_Reference)
             return builtin_;
-        resolve();
+        if ((builtin_ != t_Reference) || (!reff()))
+            return builtin_;
         if (reff() && (reff()->as_typeassigment())) {
             if (reff()->as_typeassigment()->type())
                 return reff()->as_typeassigment()->type()->root_builtin();
@@ -49,7 +50,9 @@ namespace x680 {
             return builtin_;
         if (!istypedef())
             return t_Reference;
-        resolve();
+        if ((builtin_ != t_Reference) || (!reff()))
+            return builtin_;
+        reff()-> resolve();
         if (reff() && (reff()->as_typeassigment())) {
             if (reff()->as_typeassigment()->type())
                 return reff()->as_typeassigment()->type()->root_builtin();
@@ -90,6 +93,8 @@ namespace x680 {
         if (builtin_ != t_Reference)
             return self();
         if (!istypedef())
+            return self();
+        if ((builtin_ != t_Reference) || (!reff()))
             return self();
         resolve();
         if (reff() && (reff()->as_typeassigment())) {
@@ -249,8 +254,8 @@ namespace x680 {
         if (tag()) {
             if ((tag()->rule() == noset_tags) && (tag()->number())) {
                 switch (tagrule()) {
-                    case explicit_tags: if (isallways_explicit())
-                            tag()->rule(explicit_tags);
+                    case explicit_tags:
+                        tag()->rule(explicit_tags);
                         break;
                     case implicit_tags:
                     case automatic_tags:
@@ -260,14 +265,13 @@ namespace x680 {
                     }
                     default:
                     {
-                        if (isallways_explicit())
-                            tag()->rule(explicit_tags);
+                        tag()->rule(explicit_tags);
                     };
                 }
             }
             if ((isallways_explicit()) && (tag()->rule() == implicit_tags) && (tag()->number()))
-                // std::cout << "Test error namr: "  << scope()->name()  << std:: endl;
-                scope()->referenceerror_throw("type ", " shall not be implicit '");
+                std::cout << "Test error namr: " << scope()->name() << std::endl;
+            //scope()->referenceerror_throw("type ", " shall not be implicit '");
             if ((tag()->number()) && (tag()->number()->as_defined()) && (tag()->number()->expecteddef())) {
                 tag()->number()->resolve_reff(basic_atom_ptr(), extend_search);
             }
@@ -403,7 +407,7 @@ namespace x680 {
 
     void typeassignment_entity::post_resolve_apply_componentsof() {
         if ((type()) and (!childs().empty())) {
-            if ((type()->builtin() == t_SEQUENCE) && ((type()->builtin() == t_SET))) {
+            if ((type()->builtin() == t_SEQUENCE) || ((type()->builtin() == t_SET))) {
                 bool find_compomensof = true;
                 while (find_compomensof) {
                     find_compomensof = false;
@@ -428,10 +432,15 @@ namespace x680 {
                                                     tmp = namedtypeassignment_entity_ptr(new namedtypeassignment_entity((*it)->scope(),
                                                             (*its)->name(), (*its)->as_typeassigment()->as_named()->type(),
                                                             (*its)->as_typeassigment()->as_named()->_default()));
-                                                } else
+                                                    //if  (tmp->type()->scope()!=(*its)->as_typeassigment()->as_named()->type()->scope()){
+                                                    tmp->type()->scope((*its)->as_typeassigment()->as_named()->type()->scope()); //}
+                                                } else {
                                                     tmp = namedtypeassignment_entity_ptr(new namedtypeassignment_entity((*it)->scope(),
-                                                        (*its)->name(), (*its)->as_typeassigment()->as_named()->type(),
-                                                        (*its)->as_typeassigment()->as_named()->marker()));
+                                                            (*its)->name(), (*its)->as_typeassigment()->as_named()->type(),
+                                                            (*its)->as_typeassigment()->as_named()->marker()));
+                                                    //  if (tmp->type()->scope()!=(*its)->as_typeassigment()->as_named()->type()->scope()){                                                 
+                                                    tmp->type()->scope((*its)->as_typeassigment()->as_named()->type()->scope()); //}
+                                                }
                                                 tmpch.push_back(tmp);
                                             } else
                                                 break;
@@ -449,6 +458,7 @@ namespace x680 {
                 }
             }
         }
+        unicalelerror_throw(childs());
     }
 
     void typeassignment_entity::post_resolve_autotag() {

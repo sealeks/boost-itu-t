@@ -56,7 +56,7 @@ namespace x680 {
             stream << " {" << self->objectid().get() << " }";
         stream << " \ntag rule:" << self->tagrule() << "\n";
         if (self->extesibility_implied())
-        stream << " \nEXTESIBILITY IMPLIED\n";     
+            stream << " \nEXTESIBILITY IMPLIED\n";
         stream << " \nfile:" << self->file() << "\n";
 
         stream << "----------------------------------------------------------\n";
@@ -120,7 +120,7 @@ namespace x680 {
         }
         return stream;
     }
-    
+
     std::ostream& operator<<(std::ostream& stream, expectdef_entity* self) {
         return stream << self->name() << "(?)";
     }
@@ -158,21 +158,23 @@ namespace x680 {
             else
                 stream << "(T?C)" << self->governor()->reff()->name() << ":";
         }
-        return stream << "[*" << self->reffcount() <<  "]" <<  self->argumenttype() << self->name();
+        return stream << "[*" << self->reffcount() << "]" << self->argumenttype() << self->name();
     }
-    
+
     std::ostream& operator<<(std::ostream& stream, argument_enum self) {
-        switch (self) {    
-           case argm_Type: return stream  << "(T)";
-           case argm_Value: return stream  << "(v)";
-           case argm_ValueSet: return stream  << "(vS)";
-           case argm_Class:  return stream  << "(C)";
-           case argm_Object:  return stream  << "(o)";
-           case argm_ObjectSet: return stream  << "(oS)";  
-            default:{}
+        switch (self) {
+            case argm_Type: return stream << "(T)";
+            case argm_Value: return stream << "(v)";
+            case argm_ValueSet: return stream << "(vS)";
+            case argm_Class: return stream << "(C)";
+            case argm_Object: return stream << "(o)";
+            case argm_ObjectSet: return stream << "(oS)";
+            default:
+            {
+            }
         }
-        return stream  << "(?u)";
-    }    
+        return stream << "(?u)";
+    }
 
 
 
@@ -318,7 +320,10 @@ namespace x680 {
                 if (self->reff()->as_expectdef())
                     stream << "??? " << self->reff()->name();
                 else {
-                    stream << " " << self->externalpreff() << self->reff()->name();
+                    if ((self->reff()) && (self->reff()->moduleref()))
+                        stream << " " << self->reff()->moduleref()->name() << "::";
+                    //stream << " " << self->externalpreff() << self->reff()->name();
+                    stream << self->reff()->name();
                     if (self->rooted())
                         stream << "(@" << self->root() << ")";
                 }
@@ -358,8 +363,7 @@ namespace x680 {
             stream << self->predefined().get();
         return stream;
     }
-        
-    
+
     std::ostream& operator<<(std::ostream& stream, defined_type self) {
         switch (self) {
             case t_NODEF: return stream << "NODEF";
@@ -658,10 +662,10 @@ namespace x680 {
             case cns_ValueSetFromObjects: return stream << self->as_fromdefinedset();
             case cns_ValueSetFromObject: return stream << self->as_fromdefined();
             case cns_UserDefinedConstraint: return stream << self->as_user();
-            case cns_Contents: return stream << self->as_content();        
-            case cns_ComponentRelation: return stream << self->as_relation();       
-            case cns_SimpleTableConstraint: return stream << self->as_table();        
-            case cns_Undef_T_ST_VS: return stream << self->as_tvoso();            
+            case cns_Contents: return stream << self->as_content();
+            case cns_ComponentRelation: return stream << self->as_relation();
+            case cns_SimpleTableConstraint: return stream << self->as_table();
+            case cns_Undef_T_ST_VS: return stream << self->as_tvoso();
             case cns_UNION: return stream << " | ";
             case cns_INTERSECTION: return stream << " & ";
             case cns_EXCEPT: return stream << " ^ ";
@@ -762,11 +766,11 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, exceptionconstraint_atom* self) {
         return stream << " !" << self->type().get() << " : " << self->value().get();
     }
-    
-    std::ostream& operator<<(std::ostream& stream, userconstraint_atom* self){
-        return stream << "CONSTRAINED BY "  << self->arguments();
+
+    std::ostream& operator<<(std::ostream& stream, userconstraint_atom* self) {
+        return stream << "CONSTRAINED BY " << self->arguments();
     }
-    
+
     std::ostream& operator<<(std::ostream& stream, const uargument_entity_vct& self) {
         stream << " {";
         for (uargument_entity_vct::const_iterator it = self.begin(); it != self.end(); ++it) {
@@ -777,7 +781,6 @@ namespace x680 {
         return stream << " }";
     }
 
-
     std::ostream& operator<<(std::ostream& stream, uargument_entity* self) {
         if (self->governor()) {
             if (self->governor()->as_type())
@@ -787,46 +790,46 @@ namespace x680 {
             else
                 stream << "(T?C)" << self->governor()->reff()->name() << ":";
         }
-        return stream   << self->setting().get();
-    }    
-    
-     std::ostream& operator<<(std::ostream& stream, contentconstraint_atom* self){
-            if ((self->type()) && (self->value())){
-                return stream << "CONTAINING "  << self->type() << " ENCODED BY " << self->value();
-            }
-            else  if (self->type()) {
-                return stream << "CONTAINING "  << self->type();
-            }
-            else  if (self->value())  {
-                return stream << "ENCODED BY " << self->value();
-            }
-           return stream << "CONTAINING???";
-     }   
-     
-         std::ostream& operator<<(std::ostream& stream,relationconstraint_atom* self){
-             stream << "(RC){"  << self->objectset() << "}{";
-             for (snotation_vector::const_iterator it = self->snotation().begin(); it != self->snotation().end(); ++it)
-                 if (it!=self->snotation().begin())
-                     stream  << " ," << *it;     
-                 else
-                     stream  << *it;
-             return stream << "}";
-         }
-         
-         std::ostream& operator<<(std::ostream& stream,tableconstraint_atom* self){
-             return stream << "(ST){"  << self->objectset() << "}";
-         }
+        return stream << self->setting().get();
+    }
+
+    std::ostream& operator<<(std::ostream& stream, contentconstraint_atom* self) {
+        if ((self->type()) && (self->value())) {
+            return stream << "CONTAINING " << self->type() << " ENCODED BY " << self->value();
+        } else if (self->type()) {
+            return stream << "CONTAINING " << self->type();
+        } else if (self->value()) {
+            return stream << "ENCODED BY " << self->value();
+        }
+        return stream << "CONTAINING???";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, relationconstraint_atom* self) {
+        stream << "(RC){" << self->objectset() << "}{";
+        for (snotation_vector::const_iterator it = self->snotation().begin(); it != self->snotation().end(); ++it)
+            if (it != self->snotation().begin())
+                stream << " ," << *it;
+            else
+                stream << *it;
+        return stream << "}";
+    }
+
+    std::ostream& operator<<(std::ostream& stream, tableconstraint_atom* self) {
+        return stream << "(ST){" << self->objectset() << "}";
+    }
 
     std::ostream& operator<<(std::ostream& stream, tvosoconstraint_atom* self) {
-        switch(self->tp()){
-            case argm_Type: return stream  <<  self->type();
-            case argm_ValueSet: return stream  <<  "(vS)"  << self->valueset();
-            case argm_ObjectSet: return stream  << "ST {"  << self->objectset()  << "}";
-            default:{}
+        switch (self->tp()) {
+            case argm_Type: return stream << self->type();
+            case argm_ValueSet: return stream << "(vS)" << self->valueset();
+            case argm_ObjectSet: return stream << "ST {" << self->objectset() << "}";
+            default:
+            {
+            }
         }
-        return stream << "TVOSO(" <<  self->tp() << ")";    
-    }             
-         
+        return stream << "TVOSO(" << self->tp() << ")";
+    }
+
     // class
 
     std::ostream& operator<<(std::ostream& stream, classassignment_entity* self) {

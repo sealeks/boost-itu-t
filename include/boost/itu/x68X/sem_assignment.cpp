@@ -898,7 +898,7 @@ namespace x680 {
     }
 
     module_entity* basic_atom::external() const {
-        if ((scope()) && (reff()) && (!reff()->as_expectdef()) && (scope()->moduleref()) && (reff()->moduleref()))
+        if ((scope()) && (reff()) /*&& (!reff()->as_expectdef()) */ && (scope()->moduleref()) && (reff()->moduleref()))
             return ((scope()->moduleref()) != (reff()->moduleref())) ? reff()->moduleref() : 0;
         return 0;
     }
