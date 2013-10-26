@@ -207,10 +207,9 @@ namespace rsa_util {
                 t /= 2;
                 s++;
             }
+            //std::cout << "Try prime  s : " <<  s <<  std::endl;
             size_num sz = size_in_bit(val);
-            numtype a = random_by_bit_range(sz - 20, sz - 15);
-            if (!(a % 2))
-                a++;
+            numtype a =  random_by_bit_range(5, sz /2);
             numtype rsl = pow_modulo(a, t, val);
             if (!((rsl == 1) || (rsl == t)) && s)
                 while (s--)
@@ -219,8 +218,8 @@ namespace rsa_util {
         }
 
         static bool primetest_multi(numtype val) {
-            numtype rnd = 1;//size_in_bit(val) + 20;
-            while ((rnd--)) {
+            numtype r = size_in_bit(val);
+            while ((r--)) {
                 if (!primetest(val))
                     return false;
             }
