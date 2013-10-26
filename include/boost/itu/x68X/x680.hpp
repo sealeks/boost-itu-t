@@ -191,10 +191,10 @@ namespace x680 {
         cns_SimpleTableConstraint,
         cns_ComponentRelation,
         cns_Contents,
-        cns_ValueSet,        
+        cns_ValueSet,
         cns_ValueSetFromObjects,
-        cns_ValueSetFromObject,   
-        cns_Undef_T_ST_VS,        
+        cns_ValueSetFromObject,
+        cns_Undef_T_ST_VS,
         cns_UNION,
         cns_INTERSECTION,
         cns_EXCEPT,
@@ -278,7 +278,7 @@ namespace x680 {
         ot_FromObject,
         ot_DefinedObjectSet,
         ot_ObjectSetFromObjects,
-        ot_ObjectSetFromObject,        
+        ot_ObjectSetFromObject,
         ot_UNION,
         ot_INTERSECTION,
         ot_EXCEPT,
@@ -341,21 +341,21 @@ namespace x680 {
         typedef boost::shared_ptr<type_assignment> type_assignment_ptr;
         typedef std::vector<type_assignment> type_assignment_vector;
         typedef type_assignment_vector named_type_element_vector;
-        
+
         struct value_assignment;
-        typedef boost::shared_ptr<value_assignment> value_assignment_ptr;       
-        
+        typedef boost::shared_ptr<value_assignment> value_assignment_ptr;
+
         struct valueset_assignment;
-        typedef boost::shared_ptr<valueset_assignment> valueset_assignment_ptr;         
+        typedef boost::shared_ptr<valueset_assignment> valueset_assignment_ptr;
 
         struct class_assignment;
-        typedef boost::shared_ptr<class_assignment> class_assignment_ptr;     
-        
+        typedef boost::shared_ptr<class_assignment> class_assignment_ptr;
+
         struct object_assignment;
-        typedef boost::shared_ptr<object_assignment> object_assignment_ptr;       
-        
+        typedef boost::shared_ptr<object_assignment> object_assignment_ptr;
+
         struct objectset_assignment;
-        typedef boost::shared_ptr<objectset_assignment> objectset_assignment_ptr;    
+        typedef boost::shared_ptr<objectset_assignment> objectset_assignment_ptr;
 
         struct type_element;
         typedef boost::shared_ptr<type_element> type_element_ptr;
@@ -392,7 +392,7 @@ namespace x680 {
 
         struct argument_type;
         typedef std::vector<argument_type> argument_vector;
-        
+
         struct uargument_type;
         typedef std::vector<uargument_type> uargument_vector;
 
@@ -401,7 +401,7 @@ namespace x680 {
 
         struct setting_element;
         typedef std::vector<setting_element> parameter_vector;
-         typedef boost::shared_ptr<setting_element> setting_element_ptr;
+        typedef boost::shared_ptr<setting_element> setting_element_ptr;
 
         struct module;
         typedef std::vector<module> modules;
@@ -449,15 +449,16 @@ namespace x680 {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
         struct unknown_tc_assignment {
-            
-            unknown_tc_assignment()  : alternative_(0){}
+
+            unknown_tc_assignment() : alternative_(0) {
+            }
 
             std::string identifier;
             argument_vector arguments;
             unknown_tc_element unknown_tc;
             type_assignment_ptr typea;
             class_assignment_ptr classa;
-            alternmask alternative_;            
+            alternmask alternative_;
 
         };
 
@@ -486,15 +487,16 @@ namespace x680 {
         //  unknown_tc_assignment
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
-        struct unknown_vo_assignment  {
+        struct unknown_vo_assignment {
 
-            unknown_vo_assignment()  : alternative_(0){}
-            
+            unknown_vo_assignment() : alternative_(0) {
+            }
+
             std::string identifier;
             std::string reff;
             value_assignment_ptr valuea;
             object_assignment_ptr objecta;
-            alternmask alternative_;            
+            alternmask alternative_;
         };
 
 
@@ -520,16 +522,16 @@ namespace x680 {
         //  unknown_tc_assignment
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
-        struct unknown_so_assignment  {
+        struct unknown_so_assignment {
 
+            unknown_so_assignment() : alternative_(0) {
+            }
 
-            unknown_so_assignment()  : alternative_(0){}     
-            
             std::string identifier;
             std::string reff;
             valueset_assignment_ptr valueseta;
             objectset_assignment_ptr objectseta;
-            alternmask alternative_;            
+            alternmask alternative_;
 
         };
 
@@ -547,13 +549,13 @@ namespace x680 {
             }
 
             value_element(bool v)
-            : type(v_boolean), value(v ? "TRUE" : "FALSE") {
+            : value(v ? "TRUE" : "FALSE"), type(v_boolean) {
             }
 
             value_element(value_type t) : type(t) {
             }
 
-            parameter_vector parameters;            
+            parameter_vector parameters;
             std::string value;
             std::string identifier;
             value_type type;
@@ -587,9 +589,9 @@ namespace x680 {
             tag_type tag;
             parameter_vector parameters;
             std::string reference;
+            defined_type builtin_t;
             tagmarker_type marker;
             value_element value;
-            defined_type builtin_t;
             value_element_vector predefined;
             named_type_element_vector elements;
             constraints_vector constraints;
@@ -624,7 +626,7 @@ namespace x680 {
             string_vector parameters;
             uargument_vector uparameters;
             constraint_type tp;
-            constraintmarker_type marker;            
+            constraintmarker_type marker;
             value_element value;
             value_element from_;
             range_type fromtype_;
@@ -635,9 +637,9 @@ namespace x680 {
             constraint_element_vector constraint;
             std::string fieldreference;
             object_element_ptr objectref;
-            objectset_element_ptr objectsetref;     
+            objectset_element_ptr objectsetref;
             setting_element_ptr setting;
-            
+
         };
 
 
@@ -678,7 +680,7 @@ namespace x680 {
             constraint_element_vector set;
             std::string fieldreference;
             object_element_ptr objectref;
-            objectset_element_ptr objectsetref;            
+            objectset_element_ptr objectsetref;
         };
 
 
@@ -849,7 +851,7 @@ namespace x680 {
             std::string reff;
             std::string raw;
             object_element_ptr objectref;
-            objectset_element_ptr objectsetref;            
+            objectset_element_ptr objectsetref;
             std::string fieldreference;
 
         };
@@ -887,7 +889,7 @@ namespace x680 {
             object_element_vector set;
             std::string fieldreference;
             object_element_ptr objectref;
-            objectset_element_ptr objectsetref;            
+            objectset_element_ptr objectsetref;
         };
 
 
@@ -937,8 +939,8 @@ namespace x680 {
             std::string argument;
 
         };
-        
-        
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
         //  argument_type
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -955,7 +957,7 @@ namespace x680 {
             setting_element parameter;
 
 
-        };        
+        };
 
 
 
@@ -1134,7 +1136,7 @@ namespace x680 {
         namespace ascii = boost::spirit::ascii;
         namespace repository = boost::spirit::repository;
         namespace sprt = boost::spirit;
-        namespace phx = boost::phoenix;        
+        namespace phx = boost::phoenix;
 
         struct skip_comment_grammar : public qi::grammar<str_iterator> {
 

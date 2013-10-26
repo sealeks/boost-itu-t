@@ -463,8 +463,8 @@ namespace x680 {
 
     protected:
         basic_atom_ptr big_;
-        objectset_atom_ptr defaulto_;
         valueset_atom_ptr defaultv_;
+        objectset_atom_ptr defaulto_;
     };
 
 
@@ -495,7 +495,7 @@ namespace x680 {
         bool isalias() const {
             return !alias_.empty();
         }
-        
+
         groupsyntax_atom* as_group();
 
 

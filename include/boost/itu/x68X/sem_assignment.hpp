@@ -773,9 +773,9 @@ namespace x680 {
 
         basic_atom_ptr governor_;
         argumentsize_type typesize_;
-        argument_enum argumenttype_;
         assignment_entity_ptr unspecified_;
         basic_atom_vct dummyrefferences_;
+        argument_enum argumenttype_;
 
     };
 

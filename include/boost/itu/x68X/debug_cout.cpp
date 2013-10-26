@@ -497,12 +497,13 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, structvalue_atom* self) {
         stream << " { ";
         for (value_vct::const_iterator it = self->values().begin(); it != self->values().end(); ++it) {
-            if (it != self->values().begin())
+            if (it != self->values().begin()) {
                 if (self->as_objid())
                     stream << "  ";
                 else
                     stream << ",  ";
-            stream << (*it).get();
+                stream << (*it).get();
+            }
         }
         return stream << "}";
     }
@@ -672,6 +673,9 @@ namespace x680 {
             case cns_ALLEXCEPT: return stream << " ~ ";
             case cns_EXTENTION: return stream << " ... ";
             case cns_EXCEPTION: return stream << self->as_exception();
+            default:
+            {
+            }
         }
         return stream << "!!! NULL coctraint  !!!!";
     }
@@ -1107,6 +1111,9 @@ namespace x680 {
             case ot_EXCEPT: return stream << " ^ ";
             case ot_ALLEXCEPT: return stream << " ~ ";
             case ot_EXTENTION: return stream << " ... ";
+            default:
+            {
+            };
         }
         return stream << "!!!!NULL OBJECT";
     }

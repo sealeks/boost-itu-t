@@ -400,7 +400,7 @@ namespace x680 {
     module_entity::module_entity(basic_entity_ptr scope, const std::string& nm,
             const std::string& fl, bool allexp, tagrule_type tgr, bool ext)
     : basic_entity(scope, nm, et_Module), file_(fl), allexport_(allexp),
-    tagrule_(tgr), extesibility_implied_(ext) {
+    extesibility_implied_(ext), tagrule_(tgr) {
     }
 
     /////
@@ -675,11 +675,11 @@ namespace x680 {
     }
 
     argument_entity::argument_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr gvnr, argumentsize_type tp)
-    : basic_entity(scope, nm, et_Argument), typesize_(tp), argumenttype_(argm_Nodef), governor_(gvnr) {
+    : basic_entity(scope, nm, et_Argument), governor_(gvnr), typesize_(tp), argumenttype_(argm_Nodef) {
     }
 
     argument_entity::argument_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr gvnr, argumentsize_type tp)
-    : basic_entity(scope, nm, et_Argument), typesize_(tp), argumenttype_(argm_Nodef), governor_(gvnr) {
+    : basic_entity(scope, nm, et_Argument), governor_(gvnr), typesize_(tp), argumenttype_(argm_Nodef) {
         if (tp == argm_Big) {
             unspecified_ = assignment_entity_ptr(new valuesetassignment_entity(scope, nm, gvnr));
             argumenttype_ = argm_ValueSet;
@@ -690,7 +690,7 @@ namespace x680 {
     }
 
     argument_entity::argument_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr gvnr, argumentsize_type tp)
-    : basic_entity(scope, nm, et_Argument), typesize_(tp), argumenttype_(argm_Nodef), governor_(gvnr) {
+    : basic_entity(scope, nm, et_Argument), governor_(gvnr), typesize_(tp), argumenttype_(argm_Nodef) {
         if (tp == argm_Big) {
             unspecified_ = assignment_entity_ptr(new objectsetassignment_entity(scope, nm, gvnr));
             argumenttype_ = argm_ObjectSet;

@@ -471,18 +471,16 @@ namespace x680 {
                 for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                     if (((*it)->as_typeassigment()) &&
                             ((*it)->as_typeassigment()->as_named()) &&
-                            ((*it)->as_typeassigment()->type())  &&
+                            ((*it)->as_typeassigment()->type()) &&
                             ((*it)->as_typeassigment()->type()->tag()) &&
-                            ((*it)->as_typeassigment()->as_named()->marker()!=mk_components_of)) {
+                            ((*it)->as_typeassigment()->as_named()->marker() != mk_components_of)) {
                         if (((*it)->as_typeassigment()->type()->tag()) || (num++ > 3)) {
                             automatic = false;
                             break;
                         }
-                    }
-                    else
+                    } else
                         num++;
                 }
-                std::size_t num = 0;
                 return automatic;
             }
         }

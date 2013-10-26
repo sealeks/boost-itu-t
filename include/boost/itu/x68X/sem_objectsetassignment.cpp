@@ -52,7 +52,7 @@ namespace x680 {
 
     void definedobjectset_atom::resolve(basic_atom_ptr holder) {
         resolve_reff();
-    }  
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // fromobjectobjectset_atom
@@ -95,12 +95,12 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////    
 
     objectsetassignment_entity::objectsetassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr cls, objectset_atom_ptr objs) :
-    assignment_entity(scope, nm, et_ObjectSet), class_(cls), objectset_(objs) {
+    assignment_entity(scope, nm, et_ObjectSet), objectset_(objs), class_(cls) {
     };
 
     basic_entity_ptr objectsetassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
-            return argfnd;         
+            return argfnd;
         if (scope()) {
             prefind(nm, scope()->childs());
             for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)

@@ -89,7 +89,7 @@ namespace x680 {
         ///   synxtas_error  
 
         synxtas_error::synxtas_error(const std::string& file, const std::string& src, std::size_t ps) :
-        file_(file), filepos_(ps), linepos_(0), linenum_(0) {
+        filepos_(ps), linepos_(0), linenum_(0), file_(file) {
             linepos_ = build(src, ps, linenum_, line_);
         }
 
@@ -435,7 +435,7 @@ namespace x680 {
         >> -(qi::string(".") >> DefinedValue_);
 
         str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.' | '@')[qi::string("@")[sprt::_val = sprt::_1 ]
-        >> *(qi::string(".")[sprt::_val += sprt::_1 ]) >> (identifier_[sprt::_val += sprt::_1 ] % qi::string(".")[sprt::_val += sprt::_1 ])];
+                >> *(qi::string(".")[sprt::_val += sprt::_1 ]) >> (identifier_[sprt::_val += sprt::_1 ] % qi::string(".")[sprt::_val += sprt::_1 ])];
 
         str_rule Reference_ = typereference_ | valuereference_;
 

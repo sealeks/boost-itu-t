@@ -21,7 +21,7 @@ namespace x680 {
 
         global_entity_ptr compile_fs(const std::string& path, const std::string& ext) {
             x680::syntactic::modules synxtasresult;
-            int success = x680::syntactic::parse_fs(path, synxtasresult);
+            x680::syntactic::parse_fs(path, synxtasresult);
 
             global_entity_ptr global = global_entity_ptr(new global_entity());
 
@@ -99,7 +99,6 @@ namespace x680 {
         //  compile_assignment        
 
         basic_entity_ptr compile_assignment(basic_entity_ptr scope, const x680::syntactic::assignment& ent) {
-            entity_enum tp = et_Nodef;
             basic_entity_ptr rslt;
             switch (ent.which()) {
                 case 0: return compile_typeassignment(scope, boost::get<x680::syntactic::type_assignment>(ent));
@@ -902,6 +901,9 @@ namespace x680 {
                 case ot_EXCEPT: return object_atom_ptr(new exceptobject_atom());
                 case ot_ALLEXCEPT: return object_atom_ptr(new allexceptobject_atom());
                 case ot_EXTENTION: return object_atom_ptr(new extentionobject_atom());
+                default:
+                {
+                }
             }
             return object_atom_ptr();
 
