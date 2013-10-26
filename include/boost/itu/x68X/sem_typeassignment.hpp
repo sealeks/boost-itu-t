@@ -130,6 +130,10 @@ namespace x680 {
         tagged_ptr tag() const {
             return tag_;
         }
+        
+        void tag(tagged_ptr vl) {
+             tag_=vl;
+        }        
 
         predefined_ptr predefined() {
             return predefined_;
@@ -372,6 +376,8 @@ namespace x680 {
         void post_resolve_child();
 
         void post_resolve_apply_componentsof();
+        
+        bool is_resolve_autotag();
 
         void post_resolve_autotag();
 

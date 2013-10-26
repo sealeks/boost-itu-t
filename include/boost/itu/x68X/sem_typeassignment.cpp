@@ -401,12 +401,14 @@ namespace x680 {
     }
 
     void typeassignment_entity::post_resolve_child() {
+        bool autotag = is_resolve_autotag();
         post_resolve_apply_componentsof();
-        post_resolve_autotag();
+        if (autotag)
+            post_resolve_autotag();
     }
 
     void typeassignment_entity::post_resolve_apply_componentsof() {
-        if ((type()) and (!childs().empty())) {
+        if ((type()) && (!childs().empty())) {
             if ((type()->builtin() == t_SEQUENCE) || ((type()->builtin() == t_SET))) {
                 bool find_compomensof = true;
                 while (find_compomensof) {
@@ -461,8 +463,41 @@ namespace x680 {
         unicalelerror_throw(childs());
     }
 
+    bool typeassignment_entity::is_resolve_autotag() {
+        if ((type()) && (!childs().empty())) {
+            bool automatic = true;
+            std::size_t num = 0;
+            if (type()->tagrule() == automatic_tags) {
+                for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+                    if (((*it)->as_typeassigment()) &&
+                            ((*it)->as_typeassigment()->as_named()) &&
+                            ((*it)->as_typeassigment()->type())  &&
+                            ((*it)->as_typeassigment()->type()->tag()) &&
+                            ((*it)->as_typeassigment()->as_named()->marker()!=mk_components_of)) {
+                        if (((*it)->as_typeassigment()->type()->tag()) || (num++ > 3)) {
+                            automatic = false;
+                            break;
+                        }
+                    }
+                    else
+                        num++;
+                }
+                std::size_t num = 0;
+                return automatic;
+            }
+        }
+        return false;
+    }
+
     void typeassignment_entity::post_resolve_autotag() {
-        if ((type()) and (!childs().empty())) {
+        int num = 0;
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+            if ((*it)->as_typeassigment()) {
+                if (!((*it)->as_typeassigment()->type()->tag())) {
+                    (*it)->as_typeassigment()->type()->tag(tagged_ptr(new tagged(value_atom_ptr(new numvalue_atom(num++)), tcl_context, implicit_tags)));
+                } else
+                    num++;
+            }
         }
     }
 

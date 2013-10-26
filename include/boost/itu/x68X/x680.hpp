@@ -553,9 +553,9 @@ namespace x680 {
             value_element(value_type t) : type(t) {
             }
 
-            parameter_vector parameters;
-            std::string identifier;
+            parameter_vector parameters;            
             std::string value;
+            std::string identifier;
             value_type type;
             value_element_vector values;
             typevalue_element_ptr typevalue;
@@ -624,13 +624,13 @@ namespace x680 {
             string_vector parameters;
             uargument_vector uparameters;
             constraint_type tp;
+            constraintmarker_type marker;            
             value_element value;
             value_element from_;
             range_type fromtype_;
             value_element to_;
             range_type totype_;
             type_element type;
-            constraintmarker_type marker;
             std::string objsetref;
             constraint_element_vector constraint;
             std::string fieldreference;
