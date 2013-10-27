@@ -659,7 +659,7 @@ namespace boost {
                 void async_connect(const endpoint_type& peer_endpoint,
                         BOOST_ASIO_MOVE_ARG(ConnectHandler) handler) {
 
-                    BOOST_ASIO_CONNECT_HANDLER_CHECK(ConnectHandler, handler) type_check;
+                    //BOOST_ASIO_CONNECT_HANDLER_CHECK(ConnectHandler, handler) type_check;
 
                     typedef connect_operation<ConnectHandler> connect_operation_type;
 
@@ -1049,7 +1049,7 @@ namespace boost {
                 void async_send(const ConstBufferSequence& buffers,
                         message_flags flags,
                         BOOST_ASIO_MOVE_ARG(WriteHandler) handler, std::size_t constraint_size = 0) {
-                    BOOST_ASIO_WRITE_HANDLER_CHECK(WriteHandler, handler) type_check;
+                    //BOOST_ASIO_WRITE_HANDLER_CHECK(WriteHandler, handler) type_check;
 
                     typedef send_operation<WriteHandler, ConstBufferSequence> send_operation_type;
 
@@ -1280,7 +1280,7 @@ namespace boost {
                         message_flags flags,
                         BOOST_ASIO_MOVE_ARG(ReadHandler) handler) {
 
-                    BOOST_ASIO_READ_HANDLER_CHECK(ReadHandler, handler) type_check;
+                    //BOOST_ASIO_READ_HANDLER_CHECK(ReadHandler, handler) type_check;
 
                     typedef receive_operation<ReadHandler, MutableBufferSequence> receive_operation_type;
                     typedef boost::asio::detail::buffer_sequence_adapter< mutable_buffer, MutableBufferSequence> sequence_adapter_type;
@@ -1743,7 +1743,7 @@ namespace boost {
                 void async_accept_impl(itu_socket& peer,
                         endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
 
-                    BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
+                    //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
 
                     typedef accept_operation<AcceptHandler > accept_operation_type;
 
@@ -1759,7 +1759,7 @@ namespace boost {
                 void async_accept_impl(itu_socket& peer,
                         BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
 
-                    BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
+                    //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
 
                     typedef accept_operation<AcceptHandler > accept_operation_type;
 
