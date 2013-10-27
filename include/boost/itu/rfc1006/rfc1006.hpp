@@ -486,15 +486,15 @@ namespace boost {
 
                 explicit itu_socket(boost::asio::io_service& io_service, const transport_selector& tsel = NULL_TRANSPORT_SELECTOR)
                 : super_type(io_service),
-                transport_option_(0, 1, DEFAULT_TPDU_SIZE, tsel.called(), tsel.calling()), waiting_data_size_(0),
-                eof_state_(true), is_acceptor_(false), tpdusize_(DEFAULT_TPDU_SIZE) {
+                transport_option_(0, 1, DEFAULT_TPDU_SIZE, tsel.called(), tsel.calling()), 
+                tpdusize_(DEFAULT_TPDU_SIZE), waiting_data_size_(0), eof_state_(true), is_acceptor_(false) {
                 }
 
                 itu_socket(boost::asio::io_service& io_service,
                         const endpoint_type& endpoint, const transport_selector& tsel = NULL_TRANSPORT_SELECTOR)
                 : super_type(io_service, endpoint),
-                transport_option_(0, 1, DEFAULT_TPDU_SIZE, tsel.called(), tsel.calling()), waiting_data_size_(0),
-                eof_state_(true), is_acceptor_(false), tpdusize_(DEFAULT_TPDU_SIZE) {
+                transport_option_(0, 1, DEFAULT_TPDU_SIZE, tsel.called(), tsel.calling()),
+                 tpdusize_(DEFAULT_TPDU_SIZE), waiting_data_size_(0), eof_state_(true), is_acceptor_(false) {
                 }
 
 
@@ -1588,8 +1588,8 @@ namespace boost {
                     return 0;
                 }
 
+                protocol_options transport_option_;                
                 tpdu_size tpdusize_;
-                protocol_options transport_option_;
                 std::size_t waiting_data_size_;
                 bool eof_state_;
                 bool is_acceptor_;

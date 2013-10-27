@@ -430,6 +430,7 @@ namespace boost {
                         constructCC(opt, tpdusize);
                         break;
                     }
+                    default:{}
                 }
             }
 

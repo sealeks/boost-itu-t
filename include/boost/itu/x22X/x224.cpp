@@ -48,7 +48,7 @@ namespace boost {
                         preferred(static_cast<uint16_t> (pref[0]), bas);
                     }
                     else {
-                        uint16_t tmp;
+                        uint16_t tmp = 0;
                         if (raw_to_inttype(octet_sequnce(pref.begin() + (pref.size() < 3 ? 0 : (pref.size() - 2)), pref.end()), tmp)) {
                             preferred(tmp, bas);
                         }

@@ -2422,6 +2422,9 @@ namespace boost {
                                         }
                                     }
                                 }
+                                default:
+                                {
+                                }
                             }
                         }
                         // allways  transport disconnect
