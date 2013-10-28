@@ -111,6 +111,7 @@ namespace x680 {
             void initV();
             void initVS();
             void initCl();
+            void initClf();
             void initO();
             void initOS();
             void initSt();
