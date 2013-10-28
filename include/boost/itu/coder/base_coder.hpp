@@ -586,7 +586,7 @@ namespace boost {
 
         private:
             const_sequences_ptr bufferptr_;
-            mutable const_sequences& buffer_;
+            const_sequences& buffer_;
             std::size_t size_;
         };
 
