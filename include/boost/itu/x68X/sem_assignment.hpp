@@ -24,8 +24,10 @@ namespace x680 {
     enum entity_enum {
 
         et_Nodef,
+        et_NodefT,        
         et_NodefV,
         et_NodefS,
+        et_NodefE,               
         et_Global,
         et_Module,
         et_Import,
