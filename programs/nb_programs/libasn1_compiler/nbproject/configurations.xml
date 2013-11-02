@@ -5,8 +5,10 @@
       <logicalFolder name="itu" displayName="itu" projectFiles="true">
         <logicalFolder name="x68X" displayName="x68X" projectFiles="true">
           <itemPath>../../../include/boost/itu/x68X/assignmentCl.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/assignmentClf.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/assignmentO.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/assignmentOS.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/assignmentSe.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/assignmentT.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/assignmentV.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/assignmentVS.cpp</itemPath>
@@ -88,12 +90,22 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x68X/assignmentClf.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x68X/assignmentO.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x68X/assignmentOS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentSe.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -274,12 +286,22 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x68X/assignmentClf.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x68X/assignmentO.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x68X/assignmentOS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentSe.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -459,12 +481,22 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x68X/assignmentClf.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x68X/assignmentO.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x68X/assignmentOS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentSe.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -642,12 +674,22 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x68X/assignmentClf.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x68X/assignmentO.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x68X/assignmentOS.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignmentSe.cpp"
             ex="false"
             tool="1"
             flavor2="0">

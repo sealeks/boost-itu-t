@@ -35,15 +35,23 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/787997029/asn1module.o \
 	${OBJECTDIR}/_ext/787997029/assignmentCl.o \
 	${OBJECTDIR}/_ext/787997029/assignmentO.o \
 	${OBJECTDIR}/_ext/787997029/assignmentOS.o \
 	${OBJECTDIR}/_ext/787997029/assignmentT.o \
 	${OBJECTDIR}/_ext/787997029/assignmentV.o \
 	${OBJECTDIR}/_ext/787997029/assignmentVS.o \
+	${OBJECTDIR}/_ext/787997029/debug_cout.o \
 	${OBJECTDIR}/_ext/787997029/modules.o \
 	${OBJECTDIR}/_ext/787997029/parser.o \
+	${OBJECTDIR}/_ext/787997029/sem_assignment.o \
+	${OBJECTDIR}/_ext/787997029/sem_classassignment.o \
+	${OBJECTDIR}/_ext/787997029/sem_objectassignment.o \
+	${OBJECTDIR}/_ext/787997029/sem_objectsetassignment.o \
+	${OBJECTDIR}/_ext/787997029/sem_typeassignment.o \
+	${OBJECTDIR}/_ext/787997029/sem_valueassignment.o \
+	${OBJECTDIR}/_ext/787997029/sem_valuesetassignment.o \
+	${OBJECTDIR}/_ext/787997029/semantics.o \
 	${OBJECTDIR}/_ext/787997029/setters.o \
 	${OBJECTDIR}/_ext/787997029/x680.o
 
@@ -73,11 +81,6 @@ LDLIBSOPTIONS=
 	${RM} ../../../lib/${CND_CONF}/libasn1_compiler.a
 	${AR} -rv ../../../lib/${CND_CONF}/libasn1_compiler.a ${OBJECTFILES} 
 	$(RANLIB) ../../../lib/${CND_CONF}/libasn1_compiler.a
-
-${OBJECTDIR}/_ext/787997029/asn1module.o: ../../../include/boost/itu/x68X/asn1module.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/asn1module.o ../../../include/boost/itu/x68X/asn1module.cpp
 
 ${OBJECTDIR}/_ext/787997029/assignmentCl.o: ../../../include/boost/itu/x68X/assignmentCl.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
@@ -109,6 +112,11 @@ ${OBJECTDIR}/_ext/787997029/assignmentVS.o: ../../../include/boost/itu/x68X/assi
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentVS.o ../../../include/boost/itu/x68X/assignmentVS.cpp
 
+${OBJECTDIR}/_ext/787997029/debug_cout.o: ../../../include/boost/itu/x68X/debug_cout.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/debug_cout.o ../../../include/boost/itu/x68X/debug_cout.cpp
+
 ${OBJECTDIR}/_ext/787997029/modules.o: ../../../include/boost/itu/x68X/modules.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
@@ -118,6 +126,46 @@ ${OBJECTDIR}/_ext/787997029/parser.o: ../../../include/boost/itu/x68X/parser.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/parser.o ../../../include/boost/itu/x68X/parser.cpp
+
+${OBJECTDIR}/_ext/787997029/sem_assignment.o: ../../../include/boost/itu/x68X/sem_assignment.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_assignment.o ../../../include/boost/itu/x68X/sem_assignment.cpp
+
+${OBJECTDIR}/_ext/787997029/sem_classassignment.o: ../../../include/boost/itu/x68X/sem_classassignment.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_classassignment.o ../../../include/boost/itu/x68X/sem_classassignment.cpp
+
+${OBJECTDIR}/_ext/787997029/sem_objectassignment.o: ../../../include/boost/itu/x68X/sem_objectassignment.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_objectassignment.o ../../../include/boost/itu/x68X/sem_objectassignment.cpp
+
+${OBJECTDIR}/_ext/787997029/sem_objectsetassignment.o: ../../../include/boost/itu/x68X/sem_objectsetassignment.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_objectsetassignment.o ../../../include/boost/itu/x68X/sem_objectsetassignment.cpp
+
+${OBJECTDIR}/_ext/787997029/sem_typeassignment.o: ../../../include/boost/itu/x68X/sem_typeassignment.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_typeassignment.o ../../../include/boost/itu/x68X/sem_typeassignment.cpp
+
+${OBJECTDIR}/_ext/787997029/sem_valueassignment.o: ../../../include/boost/itu/x68X/sem_valueassignment.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_valueassignment.o ../../../include/boost/itu/x68X/sem_valueassignment.cpp
+
+${OBJECTDIR}/_ext/787997029/sem_valuesetassignment.o: ../../../include/boost/itu/x68X/sem_valuesetassignment.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_valuesetassignment.o ../../../include/boost/itu/x68X/sem_valuesetassignment.cpp
+
+${OBJECTDIR}/_ext/787997029/semantics.o: ../../../include/boost/itu/x68X/semantics.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/semantics.o ../../../include/boost/itu/x68X/semantics.cpp
 
 ${OBJECTDIR}/_ext/787997029/setters.o: ../../../include/boost/itu/x68X/setters.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
