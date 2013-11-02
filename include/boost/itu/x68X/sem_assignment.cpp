@@ -135,12 +135,13 @@ namespace x680 {
         return rslt;
     }
 
+    
     global_entity* basic_entity::as_global() {
-        return dynamic_cast<global_entity*> (this);
+        return kind_==et_Global ? static_cast<global_entity*> (this) : 0;
     }
 
     module_entity* basic_entity::as_module() {
-        return dynamic_cast<module_entity*> (this);
+        return kind_==et_Module ? static_cast<module_entity*> (this) : 0;
     }
 
     expectdef_entity* basic_entity::as_expectdef() {
@@ -148,63 +149,68 @@ namespace x680 {
     }
 
     import_entity* basic_entity::as_import() {
-        return dynamic_cast<import_entity*> (this);
+        return kind_==et_Import ? static_cast<import_entity*> (this) : 0;
     }
 
     assignment_entity * basic_entity::as_assigment() {
-        return dynamic_cast<assignment_entity*> (this);
+        return ((kind_==et_Type)
+                || (kind_==et_Value)
+                || (kind_==et_ValueSet)
+                || (kind_==et_Class)
+                || (kind_==et_Object)
+                || (kind_==et_ObjectSet)) ? static_cast<assignment_entity*> (this) : 0;
     }
 
     argument_entity* basic_entity::as_argument() {
-        return dynamic_cast<argument_entity*> (this);
+        return kind_==et_Argument ? static_cast<argument_entity*> (this) : 0;
     }
 
     uargument_entity* basic_entity::as_uargument() {
-        return dynamic_cast<uargument_entity*> (this);
+        return kind_==et_UArgument ? static_cast<uargument_entity*> (this) : 0;
     }
 
     bigassignment_entity * basic_entity::as_bigassigment() {
-        return dynamic_cast<bigassignment_entity*> (this);
+        return kind_==et_NodefT ? static_cast<bigassignment_entity*> (this) : 0;
     }
 
     voassignment_entity * basic_entity::as_voassigment() {
-        return dynamic_cast<voassignment_entity*> (this);
+        return kind_==et_NodefV ? static_cast<voassignment_entity *> (this) : 0;
     }
 
     soassignment_entity * basic_entity::as_soassigment() {
-        return dynamic_cast<soassignment_entity*> (this);
+        return kind_==et_NodefS ? static_cast<soassignment_entity *> (this) : 0;
     }
 
     typeassignment_entity * basic_entity::as_typeassigment() {
-        return dynamic_cast<typeassignment_entity*> (this);
+        return kind_==et_Type ? static_cast<typeassignment_entity*> (this) : 0;
     }
 
     valueassignment_entity * basic_entity::as_valueassigment() {
-        return dynamic_cast<valueassignment_entity*> (this);
+        return kind_==et_Value ? static_cast<valueassignment_entity*> (this) : 0;
     }
 
     valuesetassignment_entity * basic_entity::as_valuesetassigment() {
-        return dynamic_cast<valuesetassignment_entity*> (this);
+        return kind_==et_ValueSet ? static_cast<valuesetassignment_entity*> (this) : 0;
     }
 
     classassignment_entity * basic_entity::as_classassigment() {
-        return dynamic_cast<classassignment_entity*> (this);
+        return kind_==et_Class ? static_cast<classassignment_entity*> (this) : 0;
     }
 
     objectassignment_entity * basic_entity::as_objectassigment() {
-        return dynamic_cast<objectassignment_entity*> (this);
+        return kind_==et_Object ? static_cast<objectassignment_entity *> (this) : 0;
     }
 
     objectsetassignment_entity * basic_entity::as_objectsetassigment() {
-        return dynamic_cast<objectsetassignment_entity*> (this);
+        return kind_==et_ObjectSet ? static_cast<objectsetassignment_entity *> (this) : 0;
     }
 
     field_entity* basic_entity::as_classfield() {
-        return dynamic_cast<field_entity*> (this);
+        return kind_==et_ClassField ? static_cast<field_entity*> (this) : 0;
     }
 
     extention_entity * basic_entity::as_extention() {
-        return dynamic_cast<extention_entity*> (this);
+        return kind_==et_Extention ? static_cast<extention_entity*> (this) : 0;
     }
 
     module_entity* basic_entity::moduleref() {
@@ -649,7 +655,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////
 
     expectdef_entity::expectdef_entity(basic_entity_ptr scope, const std::string& nm)
-    : basic_entity(scope, nm, et_Nodef) {
+    : basic_entity(scope, nm, et_NodefE) {
         buildreff();
     }
 
@@ -1118,7 +1124,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     bigassignment_entity::bigassignment_entity(basic_entity_ptr scope, const std::string& nm, basic_atom_ptr bg) :
-    assignment_entity(scope, nm, et_Nodef), big_(bg) {
+    assignment_entity(scope, nm, et_NodefT), big_(bg) {
     };
 
     basic_entity_ptr bigassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
