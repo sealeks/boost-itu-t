@@ -23,11 +23,11 @@ namespace x680 {
     public:
 
         fieldsetting_atom(basic_entity_ptr scope, const std::string& flf, setting_atom_ptr settg) :
-        basic_atom(scope), field_(flf), setting_(settg) {
+        basic_atom(at_FieldSetting, scope), field_(flf), setting_(settg) {
         };
 
         fieldsetting_atom(const std::string& flf, setting_atom_ptr settg) :
-        basic_atom(), field_(flf), setting_(settg) {
+        basic_atom(at_FieldSetting), field_(flf), setting_(settg) {
         };
 
         std::string field() const {

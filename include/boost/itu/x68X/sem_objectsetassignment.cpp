@@ -17,11 +17,11 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     objectset_atom::objectset_atom(basic_entity_ptr scope, objectset_type tp)
-    : basic_atom(scope), builtin_(tp) {
+    : basic_atom(at_ObjectSet, scope), builtin_(tp) {
     }
 
     objectset_atom::objectset_atom(basic_entity_ptr scope, const std::string& reff, objectset_type tp)
-    : basic_atom(reff, scope), builtin_(tp) {
+    : basic_atom(at_ObjectSet, scope, reff), builtin_(tp) {
     }
 
     definedobjectset_atom* objectset_atom::as_defined() {
@@ -59,7 +59,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////        
 
     fromobjectobjectset_atom::fromobjectobjectset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
-    objectset_atom(scp, os_ObjectSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
+    objectset_atom(scp, os_ObjectSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
     };
 
     void fromobjectobjectset_atom::resolve(basic_atom_ptr holder) {
@@ -72,7 +72,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     fromobjectsetobjectset_atom::fromobjectsetobjectset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj) :
-    objectset_atom(scp, os_ObjectSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
+    objectset_atom(scp, os_ObjectSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
     };
 
     void fromobjectsetobjectset_atom::resolve(basic_atom_ptr holder) {

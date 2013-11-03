@@ -205,11 +205,11 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
 
     class_atom::class_atom(basic_entity_ptr scope, definedclass_type tp)
-    : basic_atom(scope), builtin_(tp) {
+    : basic_atom(at_Class, scope), builtin_(tp) {
     }
 
     class_atom::class_atom(basic_entity_ptr scope, const std::string& reff, definedclass_type tp)
-    : basic_atom(reff, scope), builtin_(tp) {
+    : basic_atom(at_Class, scope, reff), builtin_(tp) {
     }
 
     void class_atom::resolve(basic_atom_ptr holder) {

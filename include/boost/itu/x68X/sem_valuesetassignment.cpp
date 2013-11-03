@@ -17,11 +17,11 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     valueset_atom::valueset_atom(basic_entity_ptr scope, valueset_type tp)
-    : basic_atom(scope), builtin_(tp) {
+    : basic_atom(at_ValueSet, scope), builtin_(tp) {
     }
 
     valueset_atom::valueset_atom(basic_entity_ptr scope, const std::string& reff, valueset_type tp)
-    : basic_atom(reff, scope), builtin_(tp) {
+    : basic_atom(at_ValueSet, scope, reff), builtin_(tp) {
     }
 
     fromobjectvalueset_atom* valueset_atom::as_fromobject() {
@@ -46,7 +46,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////        
 
     fromobjectvalueset_atom::fromobjectvalueset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
-    valueset_atom(scp, vs_ValueSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
+    valueset_atom(scp, vs_ValueSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
     };
 
     void fromobjectvalueset_atom::resolve(basic_atom_ptr holder) {
@@ -59,7 +59,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     fromobjectsetvalueset_atom::fromobjectsetvalueset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj) :
-    valueset_atom(scp, vs_ValueSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
+    valueset_atom(scp, vs_ValueSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
     };
 
     void fromobjectsetvalueset_atom::resolve(basic_atom_ptr holder) {
@@ -86,15 +86,15 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////       
 
     constraint_atom::constraint_atom(constraint_type tpv)
-    : basic_atom(), cotstrtype_(tpv) {
+    : basic_atom(at_Constraint), cotstrtype_(tpv) {
     }
 
     constraint_atom::constraint_atom(basic_entity_ptr scp, constraint_type tpv)
-    : basic_atom(scp), cotstrtype_(tpv) {
+    : basic_atom(at_Constraint, scp), cotstrtype_(tpv) {
     }
 
     constraint_atom::constraint_atom(basic_entity_ptr scp, const std::string& reff, constraint_type tpv)
-    : basic_atom(reff, scp), cotstrtype_(tpv) {
+    : basic_atom(at_Constraint, scp , reff), cotstrtype_(tpv) {
     }
 
     valueconstraint_atom* constraint_atom::as_valueconstraint() {
@@ -228,8 +228,8 @@ namespace x680 {
     // fromdefinedsetconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    fromdefinedsetconstraint_atom::fromdefinedsetconstraint_atom(basic_entity_ptr scope, const std::string& refffld, objectset_atom_ptr objs) :
-    constraint_atom(scope, cns_ValueSetFromObjects), objectset_(objs), field_(basic_atom_ptr(new basic_atom(refffld, scope))) {
+    fromdefinedsetconstraint_atom::fromdefinedsetconstraint_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr objs) :
+    constraint_atom(scp, cns_ValueSetFromObjects), objectset_(objs), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
 
     }
 
@@ -242,8 +242,8 @@ namespace x680 {
     // fromdefinedconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    fromdefinedconstraint_atom::fromdefinedconstraint_atom(basic_entity_ptr scope, const std::string& refffld, object_atom_ptr obj) :
-    constraint_atom(scope, cns_ValueSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scope))) {
+    fromdefinedconstraint_atom::fromdefinedconstraint_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
+    constraint_atom(scp, cns_ValueSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
 
     }
 

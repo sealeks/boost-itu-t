@@ -16,11 +16,11 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////       
 
     value_atom::value_atom(basic_entity_ptr scp, value_type tpv)
-    : basic_atom(scp), valtype_(tpv) {
+    : basic_atom(at_Value, scp), valtype_(tpv) {
     }
 
     value_atom::value_atom(basic_entity_ptr scp, const std::string& reff, value_type tpv)
-    : basic_atom(reff, scp), valtype_(tpv) {
+    : basic_atom(at_Value, scp, reff), valtype_(tpv) {
     }
 
     numvalue_atom* value_atom::as_number() {
@@ -137,7 +137,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     fromobjectvalue_atom::fromobjectvalue_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj)
-    : value_atom(scp, v_ValueFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
+    : value_atom(scp, v_ValueFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
     };
 
     void fromobjectvalue_atom::resolve(basic_atom_ptr holder) {

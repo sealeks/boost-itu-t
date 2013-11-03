@@ -135,7 +135,7 @@ namespace x680 {
         if (self->as_type())
             return stream << self->as_type()->builtin();
         if (self->as_value())
-            return stream << self->as_value();
+        return stream << self->as_value();
         return stream;
     }
 

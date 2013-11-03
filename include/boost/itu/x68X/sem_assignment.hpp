@@ -42,6 +42,22 @@ namespace x680 {
         et_UArgument,
         et_Extention
     };
+    
+        enum assignment_enum {
+
+        at_Nodef,
+        at_Type,        
+        at_Value,
+        at_ValueSet,
+        at_Class,               
+        at_Object,
+        at_ObjectSet,
+        at_Setting,
+        at_Syntax,
+        at_FieldSetting,   
+        at_Constraint,
+        at_Constraints        
+    };
 
     enum argument_enum {
 
@@ -866,8 +882,10 @@ namespace x680 {
 
         typedef boost::shared_ptr<basic_atom> self_shared_type;
 
-        basic_atom(basic_entity_ptr scp = basic_entity_ptr());
-        basic_atom(const std::string& reff, basic_entity_ptr scp = basic_entity_ptr());
+        
+        basic_atom(assignment_enum tp = at_Nodef , basic_entity_ptr scp = basic_entity_ptr());
+        basic_atom(assignment_enum tp,  basic_entity_ptr scp , const std::string& reff);
+        basic_atom(basic_entity_ptr scp, const std::string& reff);        
 
         virtual ~basic_atom() {
         }
@@ -879,6 +897,10 @@ namespace x680 {
         void scope(basic_entity_ptr vl) {
             scope_ = vl;
         }
+        
+        assignment_enum kind() const {
+            return kind_;
+        }        
 
         self_shared_type self() {
             return shared_from_this();
@@ -958,6 +980,7 @@ namespace x680 {
 
 
     protected:
+        assignment_enum kind_;        
         basic_entity_ptr reff_;
         basic_entity_ptr scope_;
         setting_atom_vct parameters_;
@@ -977,7 +1000,8 @@ namespace x680 {
 
     public:
 
-        setting_atom(alternmask msk, basic_entity_ptr scp = basic_entity_ptr()) : basic_atom(scp), mask_(msk) {
+        setting_atom(alternmask msk, basic_entity_ptr scp = basic_entity_ptr()) :
+        basic_atom(at_Setting, scp), mask_(msk) {
         };
 
         alternmask mask() {

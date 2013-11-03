@@ -896,12 +896,19 @@ namespace x680 {
     // basic_atom
     /////////////////////////////////////////////////////////////////////////   
 
-    basic_atom::basic_atom(basic_entity_ptr scp) : scope_(scp), extention_(false), isdummy_(false) {
+    basic_atom::basic_atom(assignment_enum tp , basic_entity_ptr scp) : 
+                kind_(tp), scope_(scp), extention_(false), isdummy_(false) {
     };
 
-    basic_atom::basic_atom(const std::string& reff, basic_entity_ptr scp) : scope_(scp), extention_(false), isdummy_(false) {
+    basic_atom::basic_atom(assignment_enum tp, basic_entity_ptr scp , const std::string& reff ) : 
+                kind_(tp), scope_(scp), extention_(false), isdummy_(false) {
         reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
     }
+    
+    basic_atom::basic_atom(basic_entity_ptr scp , const std::string& reff ) : 
+                kind_(at_Nodef), scope_(scp), extention_(false), isdummy_(false) {
+        reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
+    }    
 
     module_entity* basic_atom::external() const {
         if ((scope()) && (reff()) /*&& (!reff()->as_expectdef()) */ && (scope()->moduleref()) && (reff()->moduleref()))

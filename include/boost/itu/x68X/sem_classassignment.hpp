@@ -200,11 +200,11 @@ namespace x680 {
     public:
 
         reffvaluefield_entity(basic_entity_ptr scope, const std::string& nm, const std::string& reff, value_atom_ptr dflt) :
-        field_entity(scope, nm, fkind_VariableTypeValueFieldSpec, mk_default), field_(new basic_atom(reff, scope)), default_(dflt) {
+        field_entity(scope, nm, fkind_VariableTypeValueFieldSpec, mk_default), field_(new basic_atom(at_Nodef, scope, reff)), default_(dflt) {
         };
 
         reffvaluefield_entity(basic_entity_ptr scope, const std::string& nm, const std::string& reff, tagmarker_type mkr = mk_none) :
-        field_entity(scope, nm, fkind_VariableTypeValueFieldSpec, mkr), field_(new basic_atom(reff, scope)) {
+        field_entity(scope, nm, fkind_VariableTypeValueFieldSpec, mkr), field_(new basic_atom(at_Nodef, scope, reff)) {
         };
 
         basic_atom_ptr field() const {
@@ -242,11 +242,11 @@ namespace x680 {
     public:
 
         reffvaluesetfield_entity(basic_entity_ptr scope, const std::string& nm, const std::string& reff, valueset_atom_ptr dflt) :
-        field_entity(scope, nm, fkind_VariableTypeValueSetFieldSpec, mk_default), field_(new basic_atom(reff, scope)), default_(dflt) {
+        field_entity(scope, nm, fkind_VariableTypeValueSetFieldSpec, mk_default), field_(new basic_atom(at_Nodef, scope, reff)), default_(dflt) {
         };
 
         reffvaluesetfield_entity(basic_entity_ptr scope, const std::string& nm, const std::string& reff, tagmarker_type mkr = mk_none) :
-        field_entity(scope, nm, fkind_VariableTypeValueSetFieldSpec, mkr), field_(new basic_atom(reff, scope)) {
+        field_entity(scope, nm, fkind_VariableTypeValueSetFieldSpec, mkr), field_(new basic_atom(at_Nodef,  scope, reff)) {
         };
 
         basic_atom_ptr field() const {
@@ -477,11 +477,11 @@ namespace x680 {
     public:
 
         syntax_atom(basic_entity_ptr scope, std::string als, bool opt) :
-        basic_atom(scope), alias_(als), optional_(opt) {
+        basic_atom(at_Syntax, scope), alias_(als), optional_(opt) {
         }
 
         syntax_atom(basic_entity_ptr scope, std::string als, const std::string& field, bool opt) :
-        basic_atom(field, scope), alias_(als), optional_(opt) {
+        basic_atom(at_Syntax, scope, field), alias_(als), optional_(opt) {
         }
 
         bool optional() const {

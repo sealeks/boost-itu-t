@@ -135,7 +135,7 @@ namespace x680 {
                     break;
                 case gvr_Class: tmp->governor(compile_classdefined(scope, ent.governorclass));
                     break;
-                case gvr_Type_or_Class: tmp->governor(basic_atom_ptr(new basic_atom(ent.reff)));
+                case gvr_Type_or_Class: tmp->governor(basic_atom_ptr(new basic_atom(scope, ent.reff)));
                     break;
                 default:
                 {
@@ -600,7 +600,7 @@ namespace x680 {
                 }
                 case gvr_Type_or_Class:
                 {
-                    uargument_entity_ptr tmp(new uargument_entity(scope, basic_atom_ptr(new basic_atom(ent.reff))));
+                    uargument_entity_ptr tmp(new uargument_entity(scope, basic_atom_ptr(new basic_atom(scope, ent.reff))));
                     tmp->setting(compile_setting(tmp, ent.parameter));
                     return tmp;
                 }
@@ -811,7 +811,7 @@ namespace x680 {
         }
 
         basic_entity_ptr compile_undefclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
-            basic_atom_ptr bg = basic_atom_ptr(new basic_atom(ent.holder, scope));
+            basic_atom_ptr bg = basic_atom_ptr(new basic_atom(scope, ent.holder));
             switch (ent.marker) {
                 case field_defaultov:
                 {
@@ -830,7 +830,7 @@ namespace x680 {
         }
 
         basic_entity_ptr compile_unsefsetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
-            basic_atom_ptr bg = basic_atom_ptr(new basic_atom(ent.holder, scope));
+            basic_atom_ptr bg = basic_atom_ptr(new basic_atom(scope, ent.holder));
             switch (ent.marker) {
                 case field_defaultos:
                 {
@@ -1017,7 +1017,7 @@ namespace x680 {
         // reff
 
         basic_atom_ptr compile_reff(basic_entity_ptr scope, const std::string& rf) {
-            return basic_atom_ptr(new basic_atom(rf, scope));
+            return basic_atom_ptr(new basic_atom(scope, rf));
         }
 
 

@@ -26,11 +26,11 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
 
     type_atom::type_atom(basic_entity_ptr scp, defined_type tp, tagged_ptr tg)
-    : basic_atom(scp), builtin_(tp), tag_(tg) {
+    : basic_atom(at_Type, scp), builtin_(tp), tag_(tg) {
     }
 
     type_atom::type_atom(basic_entity_ptr scp, const std::string& reff, defined_type tp, tagged_ptr tg)
-    : basic_atom(reff, scp), builtin_(tp), tag_(tg) {
+    : basic_atom(at_Type, scp, reff), builtin_(tp), tag_(tg) {
     }
 
     defined_type type_atom::root_builtin() {
@@ -306,7 +306,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     classfieldtype_atom::classfieldtype_atom(basic_entity_ptr scp, const std::string& reffcl, const std::string& refffld, tagged_ptr tg) :
-    type_atom(scp, t_ClassField, tg), class_(class_atom_ptr(new class_atom(scp, reffcl))), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
+    type_atom(scp, t_ClassField, tg), class_(class_atom_ptr(new class_atom(scp, reffcl))), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
     };
 
     void classfieldtype_atom::resolve(basic_atom_ptr holder) {
@@ -322,7 +322,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     fromobjecttype_atom::fromobjecttype_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj, tagged_ptr tg) :
-    type_atom(scp, t_TypeFromObject, tg), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
+    type_atom(scp, t_TypeFromObject, tg), object_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
     };
 
     void fromobjecttype_atom::resolve(basic_atom_ptr holder) {
@@ -338,7 +338,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     fromobjectsettype_atom::fromobjectsettype_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj, tagged_ptr tg) :
-    type_atom(scp, t_ValueSetFromObjects, tg), objectset_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
+    type_atom(scp, t_ValueSetFromObjects, tg), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
     };
 
     void fromobjectsettype_atom::resolve(basic_atom_ptr holder) {

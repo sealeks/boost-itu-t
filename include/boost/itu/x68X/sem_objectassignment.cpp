@@ -17,15 +17,15 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     object_atom::object_atom(object_type tp)
-    : basic_atom(), builtin_(tp) {
+    : basic_atom(at_Object), builtin_(tp) {
     }
 
     object_atom::object_atom(basic_entity_ptr scope, object_type tp)
-    : basic_atom(scope), builtin_(tp) {
+    : basic_atom(at_Object, scope), builtin_(tp) {
     }
 
     object_atom::object_atom(basic_entity_ptr scope, const std::string& reff, object_type tp)
-    : basic_atom(reff, scope), builtin_(tp) {
+    : basic_atom(at_Object, scope, reff), builtin_(tp) {
     }
 
     definedobject_atom* object_atom::as_defined() {
@@ -111,7 +111,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     fromdefinedsetobject_atom::fromdefinedsetobject_atom(basic_entity_ptr scope, const std::string& refffld, objectset_atom_ptr objs) :
-    object_atom(scope, ot_ObjectSetFromObjects), objectset_(objs), field_(basic_atom_ptr(new basic_atom(refffld, scope))) {
+    object_atom(scope, ot_ObjectSetFromObjects), objectset_(objs), field_(basic_atom_ptr(new basic_atom(at_Nodef, scope, refffld))) {
 
     }
 
@@ -125,7 +125,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     fromdefinedobject_atom::fromdefinedobject_atom(basic_entity_ptr scope, const std::string& refffld, object_atom_ptr obj) :
-    object_atom(scope, ot_ObjectSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scope))) {
+    object_atom(scope, ot_ObjectSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scope, refffld))) {
 
     }
 
@@ -195,7 +195,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     fromobjectobject_atom::fromobjectobject_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj)
-    : object_atom(scp, ot_FromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(refffld, scp))) {
+    : object_atom(scp, ot_FromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
     void fromobjectobject_atom::resolve(basic_atom_ptr holder) {

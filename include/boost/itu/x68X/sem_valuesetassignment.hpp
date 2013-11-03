@@ -134,15 +134,15 @@ namespace x680 {
     public:
 
         constraints_atom(basic_entity_ptr scp, const std::string& reff) :
-        basic_atom(reff, scp) {
+        basic_atom(at_Constraints, scp , reff) {
         };
 
         constraints_atom(basic_entity_ptr scp, const constraint_atom_vct& fst, bool ext = false) :
-        basic_atom(scp), constraintline_(fst), extend_(ext) {
+        basic_atom(at_Constraints, scp), constraintline_(fst), extend_(ext) {
         };
 
         constraints_atom(basic_entity_ptr scp, const constraint_atom_vct& fst, const constraint_atom_vct& scd) :
-        basic_atom(scp), constraintline_(fst), extendline_(scd), extend_(true) {
+        basic_atom(at_Constraints, scp), constraintline_(fst), extendline_(scd), extend_(true) {
         };
 
         constraint_atom_vct& constraintline() {
