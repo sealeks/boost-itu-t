@@ -18,40 +18,40 @@ namespace x680 {
     basic_entity(scope, nm, et_ClassField), fieldkind_(tp), marker_(mkr) {
     }
 
-    typefield_entity* field_entity::as_typefield() {
-        return (fieldkind_ == fkind_TypeFieldSpec) ? dynamic_cast<typefield_entity*> (this) : 0;
+    typefield_entity_ptr field_entity::as_typefield() {
+        return (fieldkind_ == fkind_TypeFieldSpec) ? boost::static_pointer_cast<typefield_entity> (self()) : typefield_entity_ptr();
     }
 
-    valuefield_entity* field_entity::as_valuefield() {
-        return (fieldkind_ == fkind_FixedTypeValueFieldSpec) ? dynamic_cast<valuefield_entity*> (this) : 0;
+    valuefield_entity_ptr field_entity::as_valuefield() {
+        return (fieldkind_ == fkind_FixedTypeValueFieldSpec) ? boost::static_pointer_cast<valuefield_entity> (self()) : valuefield_entity_ptr();
     }
 
-    valuesetfield_entity* field_entity::as_valuesetfield() {
-        return (fieldkind_ == fkind_FixedTypeValueSetFieldSpec) ? dynamic_cast<valuesetfield_entity*> (this) : 0;
+    valuesetfield_entity_ptr field_entity::as_valuesetfield() {
+        return (fieldkind_ == fkind_FixedTypeValueSetFieldSpec) ? boost::static_pointer_cast<valuesetfield_entity> (self()) : valuesetfield_entity_ptr();
     }
 
-    reffvaluefield_entity* field_entity::as_reffvaluefield() {
-        return (fieldkind_ == fkind_VariableTypeValueFieldSpec) ? dynamic_cast<reffvaluefield_entity*> (this) : 0;
+    reffvaluefield_entity_ptr field_entity::as_reffvaluefield() {
+        return (fieldkind_ == fkind_VariableTypeValueFieldSpec) ? boost::static_pointer_cast<reffvaluefield_entity> (self()) : reffvaluefield_entity_ptr();
     }
 
-    reffvaluesetfield_entity* field_entity::as_reffvaluesetfield() {
-        return (fieldkind_ == fkind_VariableTypeValueSetFieldSpec) ? dynamic_cast<reffvaluesetfield_entity*> (this) : 0;
+    reffvaluesetfield_entity_ptr field_entity::as_reffvaluesetfield() {
+        return (fieldkind_ == fkind_VariableTypeValueSetFieldSpec) ? boost::static_pointer_cast<reffvaluesetfield_entity> (self()) : reffvaluesetfield_entity_ptr();
     }
 
-    objectfield_entity* field_entity::as_objectfield() {
-        return (fieldkind_ == fkind_ObjectFieldSpec) ? dynamic_cast<objectfield_entity*> (this) : 0;
+    objectfield_entity_ptr field_entity::as_objectfield() {
+        return (fieldkind_ == fkind_ObjectFieldSpec) ? boost::static_pointer_cast<objectfield_entity> (self()) : objectfield_entity_ptr();
     }
 
-    objectsetfield_entity* field_entity::as_objectsetfield() {
-        return (fieldkind_ == fkind_ObjectSetFieldSpec) ? dynamic_cast<objectsetfield_entity*> (this) : 0;
+    objectsetfield_entity_ptr field_entity::as_objectsetfield() {
+        return (fieldkind_ == fkind_ObjectSetFieldSpec) ? boost::static_pointer_cast<objectsetfield_entity> (self()) : objectsetfield_entity_ptr();
     }
 
-    undeffield_entity* field_entity::as_undeffield() {
-        return (fieldkind_ == fkind_FixedType_or_Object) ? dynamic_cast<undeffield_entity*> (this) : 0;
+    undeffield_entity_ptr field_entity::as_undeffield() {
+        return (fieldkind_ == fkind_FixedType_or_Object) ? boost::static_pointer_cast<undeffield_entity> (self()) : undeffield_entity_ptr();
     }
 
-    undefsetfield_entity* field_entity::as_undefsetfield() {
-        return (fieldkind_ == fkind_FixedTypeSet_or_ObjectSet) ? dynamic_cast<undefsetfield_entity*> (this) : 0;
+    undefsetfield_entity_ptr field_entity::as_undefsetfield() {
+        return (fieldkind_ == fkind_FixedTypeSet_or_ObjectSet) ? boost::static_pointer_cast<undefsetfield_entity> (self()) : undefsetfield_entity_ptr();
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -173,8 +173,8 @@ namespace x680 {
     // sintax_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    groupsyntax_atom* syntax_atom::as_group() {
-        return dynamic_cast<groupsyntax_atom*> (this);
+    groupsyntax_atom_ptr syntax_atom::as_group() {
+        return boost::dynamic_pointer_cast<groupsyntax_atom> (self());
     }
 
     void syntax_atom::resolve(basic_atom_ptr holder) {
@@ -255,7 +255,7 @@ namespace x680 {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
             if ((*it)->as_classfield()) {
                 if ((*it)->as_classfield()->as_undeffield()) {
-                    undeffield_entity* tmp = (*it)->as_classfield()->as_undeffield();
+                    undeffield_entity_ptr tmp = (*it)->as_classfield()->as_undeffield();
                     basic_entity_ptr fnd = scope()->find(tmp->big()->reff());
                     if (fnd) {
                         if (fnd->kind() == et_Type) {
@@ -279,7 +279,7 @@ namespace x680 {
                     } else
                         tmp->referenceerror_throw(tmp->big()->reff()->name());
                 } else if ((*it)->as_classfield()->as_undefsetfield()) {
-                    undefsetfield_entity* tmp = (*it)->as_classfield()->as_undefsetfield();
+                    undefsetfield_entity_ptr tmp = (*it)->as_classfield()->as_undefsetfield();
                     basic_entity_ptr fnd = scope()->find(tmp->big()->reff());
                     if (fnd) {
                         if (fnd->kind() == et_Type) {

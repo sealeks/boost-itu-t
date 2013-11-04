@@ -27,41 +27,41 @@ namespace x680 {
             return valtype_;
         }
 
-        numvalue_atom* as_number();
+        numvalue_atom_ptr as_number();
 
-        realvalue_atom* as_real();
+        realvalue_atom_ptr as_real();
 
-        boolvalue_atom* as_bool();
+        boolvalue_atom_ptr as_bool();
 
-        strvalue_atom* as_cstr();
+        strvalue_atom_ptr as_cstr();
 
-        namedvalue_atom* as_named();
+        namedvalue_atom_ptr as_named();
 
-        structvalue_atom* as_struct();
+        structvalue_atom_ptr as_struct();
 
-        structvalue_atom* as_objid();
+        structvalue_atom_ptr as_objid();
 
-        structvalue_atom* as_valuelist();
+        structvalue_atom_ptr as_valuelist();
 
-        structvalue_atom* as_definedlist();
+        structvalue_atom_ptr as_definedlist();
 
-        structvalue_atom* as_numberlist();
+        structvalue_atom_ptr as_numberlist();
 
-        structvalue_atom* as_list();
+        structvalue_atom_ptr as_list();
 
-        definedvalue_atom* as_defined();
+        definedvalue_atom_ptr as_defined();
 
-        fromobjectvalue_atom* as_fromobject();
+        fromobjectvalue_atom_ptr as_fromobject();
 
-        assignvalue_atom* as_assign();
+        assignvalue_atom_ptr as_assign();
 
-        choicevalue_atom* as_choice();
+        choicevalue_atom_ptr as_choice();
 
-        openvalue_atom* as_open();
+        openvalue_atom_ptr as_open();
 
-        nullvalue_atom* as_null();
+        nullvalue_atom_ptr as_null();
 
-        emptyvalue_atom* as_empty();
+        emptyvalue_atom_ptr as_empty();
 
 
     protected:

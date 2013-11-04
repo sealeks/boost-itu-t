@@ -28,13 +28,13 @@ namespace x680 {
             return builtin_;
         }
 
-        definedobjectset_atom* as_defined();
+        definedobjectset_atom_ptr as_defined();
 
-        defnobjectset_atom* as_defn();
+        defnobjectset_atom_ptr as_defn();
 
-        fromobjectobjectset_atom* as_fromobject();
+        fromobjectobjectset_atom_ptr as_fromobject();
 
-        fromobjectsetobjectset_atom* as_fromobjectset();
+        fromobjectsetobjectset_atom_ptr as_fromobjectset();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 

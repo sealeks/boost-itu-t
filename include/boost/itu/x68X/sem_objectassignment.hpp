@@ -70,29 +70,29 @@ namespace x680 {
             return builtin_;
         }
 
-        definedobject_atom* as_defined();
+        definedobject_atom_ptr as_defined();
 
-        definedsetobject_atom* as_definedset();
+        definedsetobject_atom_ptr as_definedset();
 
-        defltobject_atom* as_deflt();
+        defltobject_atom_ptr as_deflt();
 
-        defsyntxobject_atom* as_defnsyntx();
+        defsyntxobject_atom_ptr as_defnsyntx();
 
-        fromobjectobject_atom* as_fromobject();
+        fromobjectobject_atom_ptr as_fromobject();
 
-        fromdefinedsetobject_atom* as_fromdefinedset();
+        fromdefinedsetobject_atom_ptr as_fromdefinedset();
 
-        fromdefinedobject_atom* as_fromdefined();
+        fromdefinedobject_atom_ptr as_fromdefined();
 
-        unionobject_atom* as_union();
+        unionobject_atom_ptr as_union();
 
-        intersectionobject_atom* as_intersection();
+        intersectionobject_atom_ptr as_intersection();
 
-        exceptobject_atom* as_except();
+        exceptobject_atom_ptr as_except();
 
-        allexceptobject_atom* as_allexcept();
+        allexceptobject_atom_ptr as_allexcept();
 
-        extentionobject_atom* as_extention();
+        extentionobject_atom_ptr as_extention();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -446,19 +446,19 @@ namespace x680 {
 
     private:
 
-        void calculate_fields(classassignment_entity*cls, defsyntxobject_atom* obj);
+        void calculate_fields(classassignment_entity_ptr cls, defsyntxobject_atom_ptr obj);
 
-        void create_fields(field_entity* fld, setting_atom* st = 0);
+        void create_fields(field_entity_ptr fld, setting_atom_ptr st = setting_atom_ptr());
 
-        void create_fields_var(field_entity* fld, setting_atom* st = 0);
+        void create_fields_var(field_entity_ptr fld, setting_atom_ptr st = setting_atom_ptr());
 
-        basic_entity_ptr find_typefields(reffvaluefield_entity* fld);
+        basic_entity_ptr find_typefields(reffvaluefield_entity_ptr fld);
 
-        basic_entity_ptr find_typefields(reffvaluesetfield_entity* fld);
+        basic_entity_ptr find_typefields(reffvaluesetfield_entity_ptr fld);
         
         basic_entity_ptr find_typefields(const std::string& nm);       
 
-        bool calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional = false);
+        bool calculate_fields(syntax_atom_ptr syn, defsyntxobject_atom_ptr obj, fieldsetting_atom_vct& newvct, bool optional = false);
 
         class_atom_ptr class_;
         object_atom_ptr object_;

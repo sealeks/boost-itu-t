@@ -171,13 +171,13 @@ namespace x680 {
 
         tagrule_type tagrule() const;
 
-        classfieldtype_atom* as_classfield();
+        classfieldtype_atom_ptr as_classfield();
 
-        instanceoftype_atom* as_instance();
+        instanceoftype_atom_ptr as_instance();
 
-        fromobjecttype_atom* as_fromobject();
+        fromobjecttype_atom_ptr as_fromobject();
 
-        fromobjectsettype_atom* as_fromobjectset();
+        fromobjectsettype_atom_ptr as_fromobjectset();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -358,7 +358,7 @@ namespace x680 {
             type_ = vl;
         }
 
-        namedtypeassignment_entity* as_named();
+        namedtypeassignment_entity_ptr as_named();
 
 
         /////        

@@ -28,52 +28,52 @@ namespace x680 {
     : basic_atom(at_Object, scope, reff), builtin_(tp) {
     }
 
-    definedobject_atom* object_atom::as_defined() {
-        return dynamic_cast<definedobject_atom*> (this);
+    definedobject_atom_ptr object_atom::as_defined() {
+        return boost::dynamic_pointer_cast<definedobject_atom> (self());
     }
 
-    definedsetobject_atom* object_atom::as_definedset() {
-        return dynamic_cast<definedsetobject_atom*> (this);
+    definedsetobject_atom_ptr object_atom::as_definedset() {
+        return boost::dynamic_pointer_cast<definedsetobject_atom> (self());
     }
 
-    defltobject_atom* object_atom::as_deflt() {
-        return dynamic_cast<defltobject_atom*> (this);
+    defltobject_atom_ptr object_atom::as_deflt() {
+        return boost::dynamic_pointer_cast<defltobject_atom> (self());
     }
 
-    defsyntxobject_atom* object_atom::as_defnsyntx() {
-        return dynamic_cast<defsyntxobject_atom*> (this);
+    defsyntxobject_atom_ptr object_atom::as_defnsyntx() {
+        return boost::dynamic_pointer_cast<defsyntxobject_atom> (self());
     }
 
-    fromobjectobject_atom* object_atom::as_fromobject() {
-        return dynamic_cast<fromobjectobject_atom*> (this);
+    fromobjectobject_atom_ptr object_atom::as_fromobject() {
+        return boost::dynamic_pointer_cast<fromobjectobject_atom> (self());
     }
 
-    fromdefinedsetobject_atom* object_atom::as_fromdefinedset() {
-        return dynamic_cast<fromdefinedsetobject_atom*> (this);
+    fromdefinedsetobject_atom_ptr object_atom::as_fromdefinedset() {
+        return boost::dynamic_pointer_cast<fromdefinedsetobject_atom> (self());
     }
 
-    fromdefinedobject_atom* object_atom::as_fromdefined() {
-        return dynamic_cast<fromdefinedobject_atom*> (this);
+    fromdefinedobject_atom_ptr object_atom::as_fromdefined() {
+        return boost::dynamic_pointer_cast<fromdefinedobject_atom> (self());
     }
 
-    unionobject_atom* object_atom::as_union() {
-        return dynamic_cast<unionobject_atom*> (this);
+    unionobject_atom_ptr object_atom::as_union() {
+        return boost::dynamic_pointer_cast<unionobject_atom> (self());
     }
 
-    intersectionobject_atom* object_atom::as_intersection() {
-        return dynamic_cast<intersectionobject_atom*> (this);
+    intersectionobject_atom_ptr object_atom::as_intersection() {
+        return boost::dynamic_pointer_cast<intersectionobject_atom> (self());
     }
 
-    exceptobject_atom* object_atom::as_except() {
-        return dynamic_cast<exceptobject_atom*> (this);
+    exceptobject_atom_ptr object_atom::as_except() {
+        return boost::dynamic_pointer_cast<exceptobject_atom> (self());
     }
 
-    allexceptobject_atom* object_atom::as_allexcept() {
-        return dynamic_cast<allexceptobject_atom*> (this);
+    allexceptobject_atom_ptr object_atom::as_allexcept() {
+        return boost::dynamic_pointer_cast<allexceptobject_atom> (self());
     }
 
-    extentionobject_atom* object_atom::as_extention() {
-        return dynamic_cast<extentionobject_atom*> (this);
+    extentionobject_atom_ptr object_atom::as_extention() {
+        return boost::dynamic_pointer_cast<extentionobject_atom> (self());
     }
 
     void object_atom::resolve(basic_atom_ptr holder) {
@@ -248,11 +248,11 @@ namespace x680 {
             if (object()->as_defnsyntx()) {
                 calculate_fields(cl->as_classassigment(), object()->as_defnsyntx());
             }
-            if (classassignment_entity * clsa = cl->as_classassigment()) {
+            if (classassignment_entity_ptr clsa = cl->as_classassigment()) {
                 for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
                     if (!(((*it)->as_classfield()->as_reffvaluefield()) || ((*it)->as_classfield()->as_reffvaluesetfield()))) {
                         if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
-                            create_fields((*it)->as_classfield(), fnd->setting().get());
+                            create_fields((*it)->as_classfield(), fnd->setting());
                         } else {
                             switch (((*it)->as_classfield()->marker())) {
                                 case mk_default:create_fields((*it)->as_classfield());
@@ -266,7 +266,7 @@ namespace x680 {
                 for (basic_entity_vector::iterator it = clsa->childs().begin(); it != clsa->childs().end(); ++it) {
                     if (((*it)->as_classfield()->as_reffvaluefield()) || ((*it)->as_classfield()->as_reffvaluesetfield())) {
                         if (fieldsetting_atom_ptr fnd = object()->find_field((*it)->as_classfield()->name())) {
-                            create_fields_var((*it)->as_classfield(), fnd->setting().get());
+                            create_fields_var((*it)->as_classfield(), fnd->setting());
                         } else {
                             switch (((*it)->as_classfield()->marker())) {
                                 case mk_default:create_fields_var((*it)->as_classfield());
@@ -290,15 +290,15 @@ namespace x680 {
         }
     }
 
-    void objectassignment_entity::calculate_fields(classassignment_entity*cls, defsyntxobject_atom* obj) {
+    void objectassignment_entity::calculate_fields(classassignment_entity_ptr cls, defsyntxobject_atom_ptr obj) {
         fieldsetting_atom_vct newvct;
         if (cls->withsyntax()) {
-            calculate_fields(cls->withsyntax().get(), obj, newvct);
+            calculate_fields(cls->withsyntax(), obj, newvct);
             obj->fieldsetting(newvct);
         }
     }
 
-    bool objectassignment_entity::calculate_fields(syntax_atom* syn, defsyntxobject_atom* obj, fieldsetting_atom_vct& newvct, bool optional) {
+    bool objectassignment_entity::calculate_fields(syntax_atom_ptr syn, defsyntxobject_atom_ptr obj, fieldsetting_atom_vct& newvct, bool optional) {
         if (syn->as_group()) {
             if (syn->isalias()) {
                 if (obj->find_literal(syn->alias())) {
@@ -311,10 +311,10 @@ namespace x680 {
             }
             for (syntax_atom_vct::iterator it = syn->as_group()->group().begin(); it != syn->as_group()->group().end(); ++it) {
                 if ((it == syn->as_group()->group().begin()) && syn->optional()) {
-                    if (!calculate_fields((*it).get(), obj, newvct, syn->optional()))
+                    if (!calculate_fields((*it), obj, newvct, syn->optional()))
                         return false;
                 } else
-                    calculate_fields((*it).get(), obj, newvct);
+                    calculate_fields((*it), obj, newvct);
             }
             return true;
         } else {
@@ -345,7 +345,7 @@ namespace x680 {
         return false;
     }
 
-    void objectassignment_entity::create_fields(field_entity* fld, setting_atom* st) {
+    void objectassignment_entity::create_fields(field_entity_ptr fld, setting_atom_ptr st) {
         if (st) {
             if (fld->as_typefield()) {
                 if (st->type()) {
@@ -388,7 +388,7 @@ namespace x680 {
         }
     }
 
-    void objectassignment_entity::create_fields_var(field_entity* fld, setting_atom* st) {
+    void objectassignment_entity::create_fields_var(field_entity_ptr fld, setting_atom_ptr st) {
         if (st) {
             if (fld->as_reffvaluefield()) {
                 if ((st->value())) {
@@ -412,7 +412,7 @@ namespace x680 {
         }
     }
 
-    basic_entity_ptr objectassignment_entity::find_typefields(reffvaluefield_entity* fld) {
+    basic_entity_ptr objectassignment_entity::find_typefields(reffvaluefield_entity_ptr fld) {
         if ((fld->field()) && (fld->field()->reff())) {
             for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                 if ((*it)->name() == (fld->name())) {
@@ -426,7 +426,7 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    basic_entity_ptr objectassignment_entity::find_typefields(reffvaluesetfield_entity* fld) {
+    basic_entity_ptr objectassignment_entity::find_typefields(reffvaluesetfield_entity_ptr fld) {
         if ((fld->field()) && (fld->field()->reff())) {
             for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                 if ((*it)->name() == (fld->field()->reff()->name())) {

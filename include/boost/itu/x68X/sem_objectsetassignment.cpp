@@ -24,20 +24,20 @@ namespace x680 {
     : basic_atom(at_ObjectSet, scope, reff), builtin_(tp) {
     }
 
-    definedobjectset_atom* objectset_atom::as_defined() {
-        return dynamic_cast<definedobjectset_atom*> (this);
+    definedobjectset_atom_ptr objectset_atom::as_defined() {
+        return boost::dynamic_pointer_cast<definedobjectset_atom> (self());
     }
 
-    defnobjectset_atom* objectset_atom::as_defn() {
-        return dynamic_cast<defnobjectset_atom*> (this);
+    defnobjectset_atom_ptr objectset_atom::as_defn() {
+        return boost::dynamic_pointer_cast<defnobjectset_atom> (self());
     }
 
-    fromobjectobjectset_atom* objectset_atom::as_fromobject() {
-        return dynamic_cast<fromobjectobjectset_atom*> (this);
+    fromobjectobjectset_atom_ptr objectset_atom::as_fromobject() {
+        return boost::dynamic_pointer_cast<fromobjectobjectset_atom> (self());
     }
 
-    fromobjectsetobjectset_atom* objectset_atom::as_fromobjectset() {
-        return dynamic_cast<fromobjectsetobjectset_atom*> (this);
+    fromobjectsetobjectset_atom_ptr objectset_atom::as_fromobjectset() {
+        return boost::dynamic_pointer_cast<fromobjectsetobjectset_atom> (self());
     }
 
     void objectset_atom::resolve(basic_atom_ptr holder) {

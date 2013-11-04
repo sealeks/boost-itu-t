@@ -37,9 +37,9 @@ namespace x680 {
             set_ = vl;
         }
 
-        fromobjectvalueset_atom* as_fromobject();
+        fromobjectvalueset_atom_ptr as_fromobject();
 
-        fromobjectsetvalueset_atom* as_fromobjectset();
+        fromobjectsetvalueset_atom_ptr as_fromobjectset();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -191,63 +191,63 @@ namespace x680 {
             return cotstrtype_;
         }
 
-        valueconstraint_atom* as_valueconstraint();
+        valueconstraint_atom_ptr as_valueconstraint();
 
-        fromdefinedsetconstraint_atom* as_fromdefinedset();
+        fromdefinedsetconstraint_atom_ptr as_fromdefinedset();
 
-        fromdefinedconstraint_atom* as_fromdefined();
+        fromdefinedconstraint_atom_ptr as_fromdefined();
 
-        valueconstraint_atom* as_pattern();
+        valueconstraint_atom_ptr as_pattern();
 
-        typeconstraint_atom* as_subtypeconstraint();
+        typeconstraint_atom_ptr as_subtypeconstraint();
 
-        typeconstraint_atom* as_typeconstraint();
+        typeconstraint_atom_ptr as_typeconstraint();
 
-        rangeconstraint_atom* as_range();
+        rangeconstraint_atom_ptr as_range();
 
-        rangeconstraint_atom* as_strictrange();
+        rangeconstraint_atom_ptr as_strictrange();
 
-        rangeconstraint_atom* as_duration();
+        rangeconstraint_atom_ptr as_duration();
 
-        rangeconstraint_atom* as_timepoint();
+        rangeconstraint_atom_ptr as_timepoint();
 
-        rangeconstraint_atom* as_reccurence();
+        rangeconstraint_atom_ptr as_reccurence();
 
-        namedconstraint_atom* as_named();
+        namedconstraint_atom_ptr as_named();
 
-        complexconstraint_atom* as_complex();
+        complexconstraint_atom_ptr as_complex();
 
-        complexconstraint_atom* as_size();
+        complexconstraint_atom_ptr as_size();
 
-        complexconstraint_atom* as_permitted();
+        complexconstraint_atom_ptr as_permitted();
 
-        complexconstraint_atom* as_singletype();
+        complexconstraint_atom_ptr as_singletype();
 
-        multipletypeconstraint_atom * as_multipletypeconstraint();
+        multipletypeconstraint_atom_ptr as_multipletypeconstraint();
 
-        stringconstraint_atom * as_property();
+        stringconstraint_atom_ptr as_property();
         
-        userconstraint_atom* as_user();
+        userconstraint_atom_ptr as_user();
         
-        contentconstraint_atom* as_content();      
+        contentconstraint_atom_ptr as_content();      
         
-       relationconstraint_atom* as_relation();     
+       relationconstraint_atom_ptr as_relation();     
        
-       tableconstraint_atom* as_table();        
+       tableconstraint_atom_ptr as_table();        
        
-       tvosoconstraint_atom* as_tvoso();
+       tvosoconstraint_atom_ptr as_tvoso();
 
-        unionconstraint_atom* as_union();
+        unionconstraint_atom_ptr as_union();
 
-        intersectionconstraint_atom* as_intersection();
+        intersectionconstraint_atom_ptr as_intersection();
 
-        exceptconstraint_atom* as_except();
+        exceptconstraint_atom_ptr as_except();
 
-        allexceptconstraint_atom* as_allexcept();
+        allexceptconstraint_atom_ptr as_allexcept();
 
-        extentionconstraint_atom* as_extention();
+        extentionconstraint_atom_ptr as_extention();
 
-        exceptionconstraint_atom* as_exception();
+        exceptionconstraint_atom_ptr as_exception();
 
 
     private:

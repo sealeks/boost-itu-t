@@ -136,85 +136,85 @@ namespace x680 {
     }
 
     
-    global_entity* basic_entity::as_global() {
-        return kind_==et_Global ? static_cast<global_entity*> (this) : 0;
+    global_entity_ptr basic_entity::as_global() {
+        return kind_==et_Global ? boost::static_pointer_cast<global_entity> (self()) : global_entity_ptr ();
     }
 
-    module_entity* basic_entity::as_module() {
-        return kind_==et_Module ? static_cast<module_entity*> (this) : 0;
+    module_entity_ptr basic_entity::as_module() {
+        return kind_==et_Module ? boost::static_pointer_cast<module_entity> (self()) : module_entity_ptr();
     }
 
-    expectdef_entity* basic_entity::as_expectdef() {
-        return dynamic_cast<expectdef_entity*> (this);
+    expectdef_entity_ptr basic_entity::as_expectdef() {
+        return  kind_==et_NodefE ? boost::static_pointer_cast<expectdef_entity> (self()) : expectdef_entity_ptr() ;
     }
 
-    import_entity* basic_entity::as_import() {
-        return kind_==et_Import ? static_cast<import_entity*> (this) : 0;
+    import_entity_ptr basic_entity::as_import() {
+        return kind_==et_Import ? boost::static_pointer_cast<import_entity> (self()) : import_entity_ptr();
     }
 
-    assignment_entity * basic_entity::as_assigment() {
+    assignment_entity_ptr basic_entity::as_assigment() {
         return ((kind_==et_Type)
                 || (kind_==et_Value)
                 || (kind_==et_ValueSet)
                 || (kind_==et_Class)
                 || (kind_==et_Object)
-                || (kind_==et_ObjectSet)) ? static_cast<assignment_entity*> (this) : 0;
+                || (kind_==et_ObjectSet)) ? boost::static_pointer_cast<assignment_entity> (self()) : assignment_entity_ptr();
     }
 
-    argument_entity* basic_entity::as_argument() {
-        return kind_==et_Argument ? static_cast<argument_entity*> (this) : 0;
+    argument_entity_ptr basic_entity::as_argument() {
+        return kind_==et_Argument ? boost::static_pointer_cast<argument_entity> (self()) : argument_entity_ptr();
     }
 
-    uargument_entity* basic_entity::as_uargument() {
-        return kind_==et_UArgument ? static_cast<uargument_entity*> (this) : 0;
+    uargument_entity_ptr basic_entity::as_uargument() {
+        return kind_==et_UArgument ? boost::static_pointer_cast<uargument_entity> (self()) : uargument_entity_ptr();
     }
 
-    bigassignment_entity * basic_entity::as_bigassigment() {
-        return kind_==et_NodefT ? static_cast<bigassignment_entity*> (this) : 0;
+    bigassignment_entity_ptr basic_entity::as_bigassigment() {
+        return kind_==et_NodefT ? boost::static_pointer_cast<bigassignment_entity> (self()) : bigassignment_entity_ptr();
     }
 
-    voassignment_entity * basic_entity::as_voassigment() {
-        return kind_==et_NodefV ? static_cast<voassignment_entity *> (this) : 0;
+    voassignment_entity_ptr basic_entity::as_voassigment() {
+        return kind_==et_NodefV ? boost::static_pointer_cast<voassignment_entity > (self()) : voassignment_entity_ptr();
     }
 
-    soassignment_entity * basic_entity::as_soassigment() {
-        return kind_==et_NodefS ? static_cast<soassignment_entity *> (this) : 0;
+    soassignment_entity_ptr basic_entity::as_soassigment() {
+        return kind_==et_NodefS ? boost::static_pointer_cast<soassignment_entity > (self()) : soassignment_entity_ptr();
     }
 
-    typeassignment_entity * basic_entity::as_typeassigment() {
-        return kind_==et_Type ? static_cast<typeassignment_entity*> (this) : 0;
+    typeassignment_entity_ptr basic_entity::as_typeassigment() {
+        return kind_==et_Type ? boost::static_pointer_cast<typeassignment_entity> (self()) : typeassignment_entity_ptr();
     }
 
-    valueassignment_entity * basic_entity::as_valueassigment() {
-        return kind_==et_Value ? static_cast<valueassignment_entity*> (this) : 0;
+    valueassignment_entity_ptr basic_entity::as_valueassigment() {
+        return kind_==et_Value ? boost::static_pointer_cast<valueassignment_entity> (self()) : valueassignment_entity_ptr();
     }
 
-    valuesetassignment_entity * basic_entity::as_valuesetassigment() {
-        return kind_==et_ValueSet ? static_cast<valuesetassignment_entity*> (this) : 0;
+    valuesetassignment_entity_ptr basic_entity::as_valuesetassigment() {
+        return kind_==et_ValueSet ? boost::static_pointer_cast<valuesetassignment_entity> (self()) : valuesetassignment_entity_ptr();
     }
 
-    classassignment_entity * basic_entity::as_classassigment() {
-        return kind_==et_Class ? static_cast<classassignment_entity*> (this) : 0;
+    classassignment_entity_ptr basic_entity::as_classassigment() {
+        return kind_==et_Class ? boost::static_pointer_cast<classassignment_entity> (self()) : classassignment_entity_ptr();
     }
 
-    objectassignment_entity * basic_entity::as_objectassigment() {
-        return kind_==et_Object ? static_cast<objectassignment_entity *> (this) : 0;
+    objectassignment_entity_ptr basic_entity::as_objectassigment() {
+        return kind_==et_Object ? boost::static_pointer_cast<objectassignment_entity> (self()) : objectassignment_entity_ptr();
     }
 
-    objectsetassignment_entity * basic_entity::as_objectsetassigment() {
-        return kind_==et_ObjectSet ? static_cast<objectsetassignment_entity *> (this) : 0;
+    objectsetassignment_entity_ptr basic_entity::as_objectsetassigment() {
+        return kind_==et_ObjectSet ? boost::static_pointer_cast<objectsetassignment_entity> (self()) : objectsetassignment_entity_ptr();
     }
 
-    field_entity* basic_entity::as_classfield() {
-        return kind_==et_ClassField ? static_cast<field_entity*> (this) : 0;
+    field_entity_ptr basic_entity::as_classfield() {
+        return kind_==et_ClassField ? boost::static_pointer_cast<field_entity> (self()) : field_entity_ptr();
     }
 
-    extention_entity * basic_entity::as_extention() {
-        return kind_==et_Extention ? static_cast<extention_entity*> (this) : 0;
+    extention_entity_ptr basic_entity::as_extention() {
+        return kind_==et_Extention ? boost::static_pointer_cast<extention_entity> (self()) : extention_entity_ptr();
     }
 
-    module_entity* basic_entity::moduleref() {
-        module_entity* rf = as_module();
+    module_entity_ptr basic_entity::moduleref() {
+        module_entity_ptr rf = as_module();
         basic_entity_ptr sc = scope();
         while ((!rf) && (sc)) {
             rf = sc->as_module();
@@ -224,7 +224,7 @@ namespace x680 {
     }
 
     std::string basic_entity::modulerefname() {
-        module_entity* rf = moduleref();
+        module_entity_ptr rf = moduleref();
         if (rf)
             return " in module: " + rf->name() + " in file: " + rf->file();
         return " in undefined module";
@@ -248,14 +248,14 @@ namespace x680 {
             return "";
         else
             rslt = rslt + " in assignment";
-        if ((scope()) && (moduleref()) && (moduleref() != scope().get())) {
+        if ((scope()) && (moduleref()) && (moduleref() != scope())) {
             std::string stack = "";
             basic_entity_ptr sc = scope();
-            while ((sc) && (moduleref() != sc.get())) {
+            while ((sc) && (moduleref() != sc)) {
                 stack = stack.empty() ? sc->name() : (sc->name() + "::" + stack);
                 sc = sc->scope();
             }
-            if (moduleref() == sc.get())
+            if (moduleref() == sc)
                 stack = sc->name() + "@" + stack;
             rslt = rslt + " stack: " + stack + " ";
         } else
@@ -417,7 +417,7 @@ namespace x680 {
             if ((*it)->name() == nm)
                 return *it;
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
-            import_entity* importmod = (*it)->as_import();
+            import_entity_ptr importmod = (*it)->as_import();
             if (importmod) {
                 basic_entity_ptr fnd = importmod->find_by_name(nm, sch);
                 if (fnd)
@@ -431,7 +431,7 @@ namespace x680 {
 
     basic_entity_ptr module_entity::find_in_importmodule(const std::string& mod, const std::string& nm) {
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
-            import_entity* importmod = (*it)->as_import();
+            import_entity_ptr importmod = (*it)->as_import();
             if (importmod && (importmod->name() == mod) && (importmod->scope()))
                 return importmod->find_by_name(nm);
         }
@@ -448,13 +448,13 @@ namespace x680 {
                 exports().push_back((*it)->name());
         }
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
-            import_entity* importmod = (*it)->as_import();
+            import_entity_ptr importmod = (*it)->as_import();
             if (importmod && (importmod->objectid())) {
                 importmod->objectid()->resolve();
             }
         }
         for (basic_entity_vector::iterator it = imports().begin(); it != imports().end(); ++it) {
-            import_entity* importmod = (*it)->as_import();
+            import_entity_ptr importmod = (*it)->as_import();
             if (importmod) {
                 basic_entity_ptr finded = findmodule(importmod->objectid(), importmod->name());
                 if (finded && (finded->as_module())) {
@@ -511,9 +511,9 @@ namespace x680 {
         return findmodule(nm);
     }
 
-    std::vector<std::string> module_entity::setfrom_objid(value_atom*vls) {
+    std::vector<std::string> module_entity::setfrom_objid(value_atom_ptr vls) {
         std::vector<std::string> tmp;
-        structvalue_atom*vl = vls->as_list();
+        structvalue_atom_ptr vl = vls->as_list();
         if (!vl) {
             if ((vls->as_defined()->root()) && (vls->as_defined()->root()->as_value()) && (vls->as_defined()->root()->as_value()->as_list()))
                 vl = vls->as_defined()->root()->as_value()->as_list();
@@ -565,7 +565,7 @@ namespace x680 {
 
     bool module_entity::compareoid(structvalue_atom_ptr ls, value_atom_ptr rs) {
         if (ls && rs)
-            return (setfrom_objid(ls.get()) == setfrom_objid(rs.get()));
+            return (setfrom_objid(ls) == setfrom_objid(rs));
         return false;
     }
 
@@ -590,7 +590,7 @@ namespace x680 {
             start = elm;
         else
             check_resolve_ciclic(elm, start);*/
-        bigassignment_entity* tmp = elm->as_bigassigment();
+        bigassignment_entity_ptr tmp = elm->as_bigassigment();
         if (tmp && (tmp->big()) && (tmp->big()->reff())) {
             basic_entity_ptr fnd = elm->find(tmp->big()->reff());
             if (fnd) {
@@ -611,7 +611,7 @@ namespace x680 {
             start = elm;
         else
             check_resolve_ciclic(elm, start);*/
-        voassignment_entity* tmp = elm->as_voassigment();
+        voassignment_entity_ptr tmp = elm->as_voassigment();
         if (tmp && (tmp->big()) && (tmp->big()->reff())) {
             basic_entity_ptr fnd = elm->find(tmp->big()->reff());
             if (fnd) {
@@ -632,7 +632,7 @@ namespace x680 {
             start = elm;
         else
             check_resolve_ciclic(elm, start);*/
-        soassignment_entity* tmp = elm->as_soassigment();
+        soassignment_entity_ptr tmp = elm->as_soassigment();
         if (tmp && (tmp->big()) && (tmp->big()->reff())) {
             basic_entity_ptr fnd = elm->find(tmp->big()->reff());
             if (fnd) {
@@ -910,10 +910,10 @@ namespace x680 {
         reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
     }    
 
-    module_entity* basic_atom::external() const {
+    module_entity_ptr basic_atom::external() const {
         if ((scope()) && (reff()) /*&& (!reff()->as_expectdef()) */ && (scope()->moduleref()) && (reff()->moduleref()))
-            return ((scope()->moduleref()) != (reff()->moduleref())) ? reff()->moduleref() : 0;
-        return 0;
+            return ((scope()->moduleref()) != (reff()->moduleref())) ? reff()->moduleref() : module_entity_ptr();
+        return module_entity_ptr();
     }
 
     std::string basic_atom::externalpreff() const {
@@ -927,9 +927,9 @@ namespace x680 {
                 && (scope()->moduleref()->extesibility_implied()));
     }
 
-    basic_atom* basic_atom::root() {
+    basic_atom_ptr basic_atom::root() {
         if (!reff())
-            return this;
+            return self();
         if ((reff()->as_typeassigment()) && (reff()->as_typeassigment()->type()))
             return reff()->as_typeassigment()->type()->root();
         if ((reff()->as_valueassigment()) && (reff()->as_valueassigment()->value()))
@@ -942,55 +942,55 @@ namespace x680 {
             return reff()->as_objectassigment()->object()->root();
         if ((reff()->as_objectsetassigment()) && (reff()->as_objectsetassigment()->objectset()))
             return reff()->as_objectsetassigment()->objectset()->root();
-        return 0;
+        return basic_atom_ptr();
     }
 
     bool basic_atom::rooted() {
-        return ((root()) && (root() != this));
+        return ((root()) && (root() != self()));
     }
     
-    type_atom* basic_atom::as_type() {
-        return kind_==at_Type ? static_cast<type_atom*> (this) : 0;
+    type_atom_ptr basic_atom::as_type() {
+        return kind_==at_Type ? boost::static_pointer_cast<type_atom> (self()) : type_atom_ptr();
     }
 
-    value_atom* basic_atom::as_value() {
-        return kind_==at_Value ? static_cast<value_atom*> (this) : 0;
+    value_atom_ptr basic_atom::as_value() {
+        return kind_==at_Value ? boost::static_pointer_cast<value_atom> (self()) : value_atom_ptr();
     }
 
-    valueset_atom* basic_atom::as_valueset() {
-        return kind_==at_ValueSet ? static_cast<valueset_atom*> (this) : 0;
+    valueset_atom_ptr basic_atom::as_valueset() {
+        return kind_==at_ValueSet ? boost::static_pointer_cast<valueset_atom> (self()) : valueset_atom_ptr();
     }
 
-    class_atom* basic_atom::as_class() {
-        return kind_==at_Class ? static_cast<class_atom*> (this) : 0;
+    class_atom_ptr basic_atom::as_class() {
+        return kind_==at_Class ? boost::static_pointer_cast<class_atom> (self()) : class_atom_ptr();
     }
 
-    object_atom* basic_atom::as_object() {
-        return kind_==at_Object ? static_cast<object_atom*> (this) : 0;
+    object_atom_ptr basic_atom::as_object() {
+        return kind_==at_Object ? boost::static_pointer_cast<object_atom> (self()) : object_atom_ptr();
     }
 
-    objectset_atom* basic_atom::as_objectset() {
-        return kind_==at_ObjectSet ? static_cast<objectset_atom*> (this) : 0;
+    objectset_atom_ptr basic_atom::as_objectset() {
+        return kind_==at_ObjectSet ? boost::static_pointer_cast<objectset_atom> (self()) : objectset_atom_ptr();
     }
     
-    setting_atom* basic_atom::as_setting() {
-        return kind_==at_Setting ? static_cast<setting_atom*> (this) : 0;
+    setting_atom_ptr basic_atom::as_setting() {
+        return kind_==at_Setting ? boost::static_pointer_cast<setting_atom> (self()) : setting_atom_ptr();
     }    
     
-    syntax_atom* basic_atom::as_syntax() {
-        return kind_==at_Syntax ? static_cast<syntax_atom*> (this) : 0;
+    syntax_atom_ptr basic_atom::as_syntax() {
+        return kind_==at_Syntax ? boost::static_pointer_cast<syntax_atom> (self()) : syntax_atom_ptr();
     }        
     
-    fieldsetting_atom* basic_atom::as_fieldsetting() {
-        return kind_==at_FieldSetting ? static_cast<fieldsetting_atom*> (this) : 0;
+    fieldsetting_atom_ptr basic_atom::as_fieldsetting() {
+        return kind_==at_FieldSetting ? boost::static_pointer_cast<fieldsetting_atom> (self()) : fieldsetting_atom_ptr();
     }      
     
-    constraint_atom* basic_atom::as_constraint() {
-        return kind_==at_Constraint ? static_cast<constraint_atom*> (this) : 0;
+    constraint_atom_ptr basic_atom::as_constraint() {
+        return kind_==at_Constraint ? boost::static_pointer_cast<constraint_atom> (self()) : constraint_atom_ptr();
     }        
     
-    constraints_atom* basic_atom::as_constraints() {
-        return kind_==at_Constraints ? static_cast<constraints_atom*> (this) : 0;
+    constraints_atom_ptr basic_atom::as_constraints() {
+        return kind_==at_Constraints ? boost::static_pointer_cast<constraints_atom> (self()) : constraints_atom_ptr();
     }           
 
     void basic_atom::resolve(basic_atom_ptr holder) {

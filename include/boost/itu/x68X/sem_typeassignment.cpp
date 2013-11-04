@@ -109,20 +109,20 @@ namespace x680 {
                 scope()->moduleref()->tagrule() : noset_tags;
     }
 
-    classfieldtype_atom* type_atom::as_classfield() {
-        return dynamic_cast<classfieldtype_atom*> (this);
+    classfieldtype_atom_ptr type_atom::as_classfield() {
+        return boost::dynamic_pointer_cast<classfieldtype_atom> (self());
     }
 
-    instanceoftype_atom* type_atom::as_instance() {
-        return dynamic_cast<instanceoftype_atom*> (this);
+    instanceoftype_atom_ptr type_atom::as_instance() {
+        return boost::dynamic_pointer_cast<instanceoftype_atom> (self());
     }
 
-    fromobjecttype_atom* type_atom::as_fromobject() {
-        return dynamic_cast<fromobjecttype_atom*> (this);
+    fromobjecttype_atom_ptr type_atom::as_fromobject() {
+        return boost::dynamic_pointer_cast<fromobjecttype_atom> (self());
     }
 
-    fromobjectsettype_atom* type_atom::as_fromobjectset() {
-        return dynamic_cast<fromobjectsettype_atom*> (this);
+    fromobjectsettype_atom_ptr type_atom::as_fromobjectset() {
+        return boost::dynamic_pointer_cast<fromobjectsettype_atom> (self());
     }
 
     void type_atom::resolve(basic_atom_ptr holder) {
@@ -386,8 +386,8 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
-    namedtypeassignment_entity* typeassignment_entity::as_named() {
-        return dynamic_cast<namedtypeassignment_entity*> (this);
+    namedtypeassignment_entity_ptr typeassignment_entity::as_named() {
+        return boost::dynamic_pointer_cast<namedtypeassignment_entity> (self());
     }
 
     void typeassignment_entity::resolve(basic_atom_ptr holder) {
@@ -415,7 +415,7 @@ namespace x680 {
                     find_compomensof = false;
                     for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                         if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
-                            namedtypeassignment_entity* named = (*it)->as_typeassigment()->as_named();
+                            namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
                             if (named->marker() == mk_components_of) {
                                 if (basic_entity_ptr namedreff = named->type()->reff()) {
                                     namedreff->resolve();

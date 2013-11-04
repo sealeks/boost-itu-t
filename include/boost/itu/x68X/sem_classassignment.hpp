@@ -37,23 +37,23 @@ namespace x680 {
             marker_ = vl;
         }
 
-        typefield_entity* as_typefield();
+        typefield_entity_ptr as_typefield();
 
-        valuefield_entity* as_valuefield();
+        valuefield_entity_ptr as_valuefield();
 
-        valuesetfield_entity* as_valuesetfield();
+        valuesetfield_entity_ptr as_valuesetfield();
 
-        reffvaluefield_entity* as_reffvaluefield();
+        reffvaluefield_entity_ptr as_reffvaluefield();
 
-        reffvaluesetfield_entity* as_reffvaluesetfield();
+        reffvaluesetfield_entity_ptr as_reffvaluesetfield();
 
-        objectfield_entity* as_objectfield();
+        objectfield_entity_ptr as_objectfield();
 
-        objectsetfield_entity* as_objectsetfield();
+        objectsetfield_entity_ptr as_objectsetfield();
 
-        undeffield_entity* as_undeffield();
+        undeffield_entity_ptr as_undeffield();
 
-        undefsetfield_entity* as_undefsetfield();
+        undefsetfield_entity_ptr as_undefsetfield();
 
 
     protected:
@@ -496,7 +496,7 @@ namespace x680 {
             return !alias_.empty();
         }
 
-        groupsyntax_atom* as_group();
+        groupsyntax_atom_ptr as_group();
 
 
 

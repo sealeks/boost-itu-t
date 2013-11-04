@@ -487,45 +487,45 @@ namespace x680 {
 
         int level() const;
 
-        module_entity* moduleref();
+        module_entity_ptr moduleref();
 
         std::string modulerefname();
 
-        global_entity* as_global();
+        global_entity_ptr as_global();
 
-        module_entity* as_module();
+        module_entity_ptr as_module();
 
-        expectdef_entity* as_expectdef();
+        expectdef_entity_ptr as_expectdef();
 
-        import_entity* as_import();
+        import_entity_ptr as_import();
 
-        assignment_entity* as_assigment();
+        assignment_entity_ptr as_assigment();
 
-        argument_entity* as_argument();
+        argument_entity_ptr as_argument();
 
-        uargument_entity* as_uargument();
+        uargument_entity_ptr as_uargument();
 
-        bigassignment_entity* as_bigassigment();
+        bigassignment_entity_ptr as_bigassigment();
 
-        voassignment_entity* as_voassigment();
+        voassignment_entity_ptr as_voassigment();
 
-        soassignment_entity* as_soassigment();
+        soassignment_entity_ptr as_soassigment();
 
-        typeassignment_entity* as_typeassigment();
+        typeassignment_entity_ptr as_typeassigment();
 
-        valueassignment_entity* as_valueassigment();
+        valueassignment_entity_ptr as_valueassigment();
 
-        valuesetassignment_entity* as_valuesetassigment();
+        valuesetassignment_entity_ptr as_valuesetassigment();
 
-        classassignment_entity* as_classassigment();
+        classassignment_entity_ptr as_classassigment();
 
-        objectassignment_entity * as_objectassigment();
+        objectassignment_entity_ptr as_objectassigment();
 
-        objectsetassignment_entity * as_objectsetassigment();
+        objectsetassignment_entity_ptr as_objectsetassigment();
 
-        field_entity* as_classfield();
+        field_entity_ptr as_classfield();
 
-        extention_entity* as_extention();
+        extention_entity_ptr as_extention();
 
         std::string source_throw();
 
@@ -696,7 +696,7 @@ namespace x680 {
 
         basic_entity_ptr findmodule(value_atom_ptr oid, const std::string& nm);
 
-        std::vector<std::string> setfrom_objid(value_atom* vls);
+        std::vector<std::string> setfrom_objid(value_atom_ptr vls);
 
         bool compareoid(structvalue_atom_ptr ls, value_atom_ptr rs);
 
@@ -942,11 +942,11 @@ namespace x680 {
             return expecteddef() ? reff_->name() : "";
         }
 
-        module_entity* external() const;
+        module_entity_ptr external() const;
 
         std::string externalpreff() const;
 
-        virtual basic_atom* root();
+        virtual basic_atom_ptr root();
 
         void extention(bool vl) {
             extention_ = vl;
@@ -966,27 +966,27 @@ namespace x680 {
 
         bool rooted();
 
-        type_atom* as_type();
+        type_atom_ptr as_type();
 
-        value_atom* as_value();
+        value_atom_ptr as_value();
 
-        valueset_atom* as_valueset();
+        valueset_atom_ptr as_valueset();
 
-        class_atom* as_class();
+        class_atom_ptr as_class();
 
-        object_atom* as_object();
+        object_atom_ptr as_object();
 
-        objectset_atom* as_objectset();
+        objectset_atom_ptr as_objectset();
 
-        setting_atom* as_setting();
+        setting_atom_ptr as_setting();
 
-        syntax_atom* as_syntax();
+        syntax_atom_ptr as_syntax();
 
-        fieldsetting_atom* as_fieldsetting();
+        fieldsetting_atom_ptr as_fieldsetting();
 
-        constraint_atom* as_constraint();
+        constraint_atom_ptr as_constraint();
 
-        constraints_atom* as_constraints();        
+        constraints_atom_ptr as_constraints();        
 
         ////////
 
