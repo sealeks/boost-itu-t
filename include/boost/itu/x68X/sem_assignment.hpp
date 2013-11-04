@@ -442,9 +442,11 @@ namespace x680 {
     // basic_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    class basic_entity {
+    class basic_entity : public boost::enable_shared_from_this<basic_entity> {
 
     public:
+
+        typedef boost::shared_ptr<basic_entity> self_shared_type;
 
         basic_entity(basic_entity_ptr scope, const std::string& nm, entity_enum tp)
         : scope_(scope), name_(nm), kind_(tp) {
@@ -478,6 +480,10 @@ namespace x680 {
         basic_entity_vector& childs() {
             return childs_;
         }
+
+        self_shared_type self() {
+            return shared_from_this();
+        }        
 
         int level() const;
 
