@@ -972,6 +972,16 @@ namespace x680 {
 
         objectset_atom* as_objectset();
 
+        setting_atom* as_setting();
+
+        syntax_atom* as_syntax();
+
+        fieldsetting_atom* as_fieldsetting();
+
+        constraint_atom* as_constraint();
+
+        constraints_atom* as_constraints();        
+
         ////////
 
         void resolve_reff(basic_atom_ptr holder = basic_atom_ptr(), search_marker sch = full_search);

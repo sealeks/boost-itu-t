@@ -948,30 +948,50 @@ namespace x680 {
     bool basic_atom::rooted() {
         return ((root()) && (root() != this));
     }
-
+    
     type_atom* basic_atom::as_type() {
-        return dynamic_cast<type_atom*> (this);
+        return kind_==at_Type ? static_cast<type_atom*> (this) : 0;
     }
 
     value_atom* basic_atom::as_value() {
-        return dynamic_cast<value_atom*> (this);
+        return kind_==at_Value ? static_cast<value_atom*> (this) : 0;
     }
 
     valueset_atom* basic_atom::as_valueset() {
-        return dynamic_cast<valueset_atom*> (this);
+        return kind_==at_ValueSet ? static_cast<valueset_atom*> (this) : 0;
     }
 
     class_atom* basic_atom::as_class() {
-        return dynamic_cast<class_atom*> (this);
+        return kind_==at_Class ? static_cast<class_atom*> (this) : 0;
     }
 
     object_atom* basic_atom::as_object() {
-        return dynamic_cast<object_atom*> (this);
+        return kind_==at_Object ? static_cast<object_atom*> (this) : 0;
     }
 
     objectset_atom* basic_atom::as_objectset() {
-        return dynamic_cast<objectset_atom*> (this);
+        return kind_==at_ObjectSet ? static_cast<objectset_atom*> (this) : 0;
     }
+    
+    setting_atom* basic_atom::as_setting() {
+        return kind_==at_Setting ? static_cast<setting_atom*> (this) : 0;
+    }    
+    
+    syntax_atom* basic_atom::as_syntax() {
+        return kind_==at_Syntax ? static_cast<syntax_atom*> (this) : 0;
+    }        
+    
+    fieldsetting_atom* basic_atom::as_fieldsetting() {
+        return kind_==at_FieldSetting ? static_cast<fieldsetting_atom*> (this) : 0;
+    }      
+    
+    constraint_atom* basic_atom::as_constraint() {
+        return kind_==at_Constraint ? static_cast<constraint_atom*> (this) : 0;
+    }        
+    
+    constraints_atom* basic_atom::as_constraints() {
+        return kind_==at_Constraints ? static_cast<constraints_atom*> (this) : 0;
+    }           
 
     void basic_atom::resolve(basic_atom_ptr holder) {
     }
