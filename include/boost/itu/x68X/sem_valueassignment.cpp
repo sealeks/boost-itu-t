@@ -24,75 +24,94 @@ namespace x680 {
     }
 
     numvalue_atom_ptr value_atom::as_number() {
-        return boost::dynamic_pointer_cast<numvalue_atom> (self());
+        return (valtype() == v_number) ?
+                boost::static_pointer_cast<numvalue_atom> (self()) : numvalue_atom_ptr();
     }
 
     realvalue_atom_ptr value_atom::as_real() {
-        return boost::dynamic_pointer_cast<realvalue_atom> (self());
+        return (valtype() == v_real) ?
+                boost::static_pointer_cast<realvalue_atom> (self()) : realvalue_atom_ptr();
     }
 
     boolvalue_atom_ptr value_atom::as_bool() {
-        return boost::dynamic_pointer_cast<boolvalue_atom> (self());
+        return (valtype() == v_boolean) ?
+                boost::static_pointer_cast<boolvalue_atom> (self()) : boolvalue_atom_ptr();
     }
 
     strvalue_atom_ptr value_atom::as_cstr() {
-        return boost::dynamic_pointer_cast<strvalue_atom> (self());
+        return ((valtype() == v_bstring) || (valtype() == v_hstring) || (valtype() == v_cstring)) ?
+                boost::static_pointer_cast<strvalue_atom> (self()) : strvalue_atom_ptr();
     }
 
     namedvalue_atom_ptr value_atom::as_named() {
-        return boost::dynamic_pointer_cast<namedvalue_atom> (self());
+        return (valtype() == v_named_value) ?
+                boost::static_pointer_cast<namedvalue_atom> (self()) : namedvalue_atom_ptr();
     }
 
     structvalue_atom_ptr value_atom::as_struct() {
-        return (valtype() == v_struct) ? boost::dynamic_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
+        return (valtype() == v_struct) ?
+                boost::static_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
     }
 
     structvalue_atom_ptr value_atom::as_objid() {
-        return (valtype() == v_objectid) ? boost::dynamic_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
+        return (valtype() == v_objectid) ?
+                boost::static_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
     }
 
     structvalue_atom_ptr value_atom::as_valuelist() {
-        return (valtype() == v_value_list) ? boost::dynamic_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
+        return (valtype() == v_value_list) ?
+                boost::static_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
     }
 
     structvalue_atom_ptr value_atom::as_definedlist() {
-        return (valtype() == v_defined_list) ? boost::dynamic_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
+        return (valtype() == v_defined_list) ?
+                boost::static_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
     }
 
     structvalue_atom_ptr value_atom::as_numberlist() {
-        return (valtype() == v_number_list) ? boost::dynamic_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
+        return (valtype() == v_number_list) ?
+                boost::static_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
     }
 
     structvalue_atom_ptr value_atom::as_list() {
-        return boost::dynamic_pointer_cast<structvalue_atom> (self());
+        return ((valtype() == v_struct) || (valtype() == v_struct) || (valtype() == v_objectid) ||
+                (valtype() == v_value_list) || (valtype() == v_defined_list) || (valtype() == v_number_list)) ?
+                boost::static_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
     }
 
     definedvalue_atom_ptr value_atom::as_defined() {
-        return boost::dynamic_pointer_cast<definedvalue_atom> (self());
+        return (valtype() == v_defined) ?
+                boost::static_pointer_cast<definedvalue_atom> (self()) : definedvalue_atom_ptr();
     }
 
     fromobjectvalue_atom_ptr value_atom::as_fromobject() {
-        return boost::dynamic_pointer_cast<fromobjectvalue_atom> (self());
+        return (valtype() == v_ValueFromObject) ?
+                boost::static_pointer_cast<fromobjectvalue_atom> (self()) : fromobjectvalue_atom_ptr();
     }
 
     choicevalue_atom_ptr value_atom::as_choice() {
-        return boost::dynamic_pointer_cast<choicevalue_atom> (self());
+        return (valtype() == v_choice) ?
+                boost::static_pointer_cast<choicevalue_atom> (self()) : choicevalue_atom_ptr();
     }
 
     openvalue_atom_ptr value_atom::as_open() {
-        return boost::dynamic_pointer_cast<openvalue_atom> (self());
+        return (valtype() == v_open) ?
+                boost::static_pointer_cast<openvalue_atom> (self()) : openvalue_atom_ptr();
     }
 
     assignvalue_atom_ptr value_atom::as_assign() {
-        return boost::dynamic_pointer_cast<assignvalue_atom> (self());
+        return (valtype() == v_defined_assign) ?
+                boost::static_pointer_cast<assignvalue_atom> (self()) : assignvalue_atom_ptr();
     }
 
     nullvalue_atom_ptr value_atom::as_null() {
-        return boost::dynamic_pointer_cast<nullvalue_atom> (self());
+        return (valtype() == v_null) ?
+                boost::static_pointer_cast<nullvalue_atom> (self()) : nullvalue_atom_ptr();
     }
 
     emptyvalue_atom_ptr value_atom::as_empty() {
-        return boost::dynamic_pointer_cast<emptyvalue_atom> (self());
+        return (valtype() == v_empty) ?
+                boost::static_pointer_cast<emptyvalue_atom> (self()) : emptyvalue_atom_ptr();
     }
 
     void value_atom::resolve_vect(value_vct& vl, basic_atom_ptr holder ) {

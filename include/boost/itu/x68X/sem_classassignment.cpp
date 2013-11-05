@@ -19,39 +19,48 @@ namespace x680 {
     }
 
     typefield_entity_ptr field_entity::as_typefield() {
-        return (fieldkind_ == fkind_TypeFieldSpec) ? boost::static_pointer_cast<typefield_entity> (self()) : typefield_entity_ptr();
+        return (fieldkind_ == fkind_TypeFieldSpec) ? 
+            boost::static_pointer_cast<typefield_entity> (self()) : typefield_entity_ptr();
     }
 
     valuefield_entity_ptr field_entity::as_valuefield() {
-        return (fieldkind_ == fkind_FixedTypeValueFieldSpec) ? boost::static_pointer_cast<valuefield_entity> (self()) : valuefield_entity_ptr();
+        return (fieldkind_ == fkind_FixedTypeValueFieldSpec) ? 
+            boost::static_pointer_cast<valuefield_entity> (self()) : valuefield_entity_ptr();
     }
 
     valuesetfield_entity_ptr field_entity::as_valuesetfield() {
-        return (fieldkind_ == fkind_FixedTypeValueSetFieldSpec) ? boost::static_pointer_cast<valuesetfield_entity> (self()) : valuesetfield_entity_ptr();
+        return (fieldkind_ == fkind_FixedTypeValueSetFieldSpec) ? 
+            boost::static_pointer_cast<valuesetfield_entity> (self()) : valuesetfield_entity_ptr();
     }
 
     reffvaluefield_entity_ptr field_entity::as_reffvaluefield() {
-        return (fieldkind_ == fkind_VariableTypeValueFieldSpec) ? boost::static_pointer_cast<reffvaluefield_entity> (self()) : reffvaluefield_entity_ptr();
+        return (fieldkind_ == fkind_VariableTypeValueFieldSpec) ? 
+            boost::static_pointer_cast<reffvaluefield_entity> (self()) : reffvaluefield_entity_ptr();
     }
 
     reffvaluesetfield_entity_ptr field_entity::as_reffvaluesetfield() {
-        return (fieldkind_ == fkind_VariableTypeValueSetFieldSpec) ? boost::static_pointer_cast<reffvaluesetfield_entity> (self()) : reffvaluesetfield_entity_ptr();
+        return (fieldkind_ == fkind_VariableTypeValueSetFieldSpec) ? 
+            boost::static_pointer_cast<reffvaluesetfield_entity> (self()) : reffvaluesetfield_entity_ptr();
     }
 
     objectfield_entity_ptr field_entity::as_objectfield() {
-        return (fieldkind_ == fkind_ObjectFieldSpec) ? boost::static_pointer_cast<objectfield_entity> (self()) : objectfield_entity_ptr();
+        return (fieldkind_ == fkind_ObjectFieldSpec) ? 
+            boost::static_pointer_cast<objectfield_entity> (self()) : objectfield_entity_ptr();
     }
 
     objectsetfield_entity_ptr field_entity::as_objectsetfield() {
-        return (fieldkind_ == fkind_ObjectSetFieldSpec) ? boost::static_pointer_cast<objectsetfield_entity> (self()) : objectsetfield_entity_ptr();
+        return (fieldkind_ == fkind_ObjectSetFieldSpec) ? 
+            boost::static_pointer_cast<objectsetfield_entity> (self()) : objectsetfield_entity_ptr();
     }
 
     undeffield_entity_ptr field_entity::as_undeffield() {
-        return (fieldkind_ == fkind_FixedType_or_Object) ? boost::static_pointer_cast<undeffield_entity> (self()) : undeffield_entity_ptr();
+        return (fieldkind_ == fkind_FixedType_or_Object) ?
+            boost::static_pointer_cast<undeffield_entity> (self()) : undeffield_entity_ptr();
     }
 
     undefsetfield_entity_ptr field_entity::as_undefsetfield() {
-        return (fieldkind_ == fkind_FixedTypeSet_or_ObjectSet) ? boost::static_pointer_cast<undefsetfield_entity> (self()) : undefsetfield_entity_ptr();
+        return (fieldkind_ == fkind_FixedTypeSet_or_ObjectSet) ? 
+            boost::static_pointer_cast<undefsetfield_entity> (self()) : undefsetfield_entity_ptr();
     }
 
     /////////////////////////////////////////////////////////////////////////   
