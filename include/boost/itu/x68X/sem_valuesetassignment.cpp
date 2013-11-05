@@ -98,119 +98,149 @@ namespace x680 {
     }
 
     valueconstraint_atom_ptr constraint_atom::as_valueconstraint() {
-        return cotstrtype_ == cns_SingleValue ? boost::static_pointer_cast<valueconstraint_atom> (self()) : valueconstraint_atom_ptr();
+        return cotstrtype_ == cns_SingleValue ? 
+            boost::static_pointer_cast<valueconstraint_atom> (self()) : valueconstraint_atom_ptr();
     }
 
     fromdefinedsetconstraint_atom_ptr constraint_atom::as_fromdefinedset() {
-        return cotstrtype_ == cns_ValueSetFromObjects ? boost::static_pointer_cast<fromdefinedsetconstraint_atom> (self()) : fromdefinedsetconstraint_atom_ptr();
+        return cotstrtype_ == cns_ValueSetFromObjects ? 
+            boost::static_pointer_cast<fromdefinedsetconstraint_atom> (self()) : fromdefinedsetconstraint_atom_ptr();
     }
 
     fromdefinedconstraint_atom_ptr constraint_atom::as_fromdefined() {
-        return cotstrtype_ == cns_ValueSetFromObject ? boost::static_pointer_cast<fromdefinedconstraint_atom> (self()) : fromdefinedconstraint_atom_ptr();
+        return cotstrtype_ == cns_ValueSetFromObject ? 
+            boost::static_pointer_cast<fromdefinedconstraint_atom> (self()) : fromdefinedconstraint_atom_ptr();
     }
 
     valueconstraint_atom_ptr constraint_atom::as_pattern() {
-        return cotstrtype_ == cns_PatternConstraint ? boost::static_pointer_cast<valueconstraint_atom> (self()) :valueconstraint_atom_ptr();
+        return cotstrtype_ == cns_PatternConstraint ? 
+            boost::static_pointer_cast<valueconstraint_atom> (self()) :valueconstraint_atom_ptr();
     }
 
     typeconstraint_atom_ptr constraint_atom::as_subtypeconstraint() {
-        return cotstrtype_ == cns_ContainedSubtype ? boost::static_pointer_cast<typeconstraint_atom> (self()) : typeconstraint_atom_ptr();
+        return cotstrtype_ == cns_ContainedSubtype ? 
+            boost::static_pointer_cast<typeconstraint_atom> (self()) : typeconstraint_atom_ptr();
     };
 
     typeconstraint_atom_ptr constraint_atom::as_typeconstraint() {
-        return cotstrtype_ == cns_TypeConstraint ? boost::static_pointer_cast<typeconstraint_atom> (self()) : typeconstraint_atom_ptr();
+        return cotstrtype_ == cns_TypeConstraint ? 
+            boost::static_pointer_cast<typeconstraint_atom> (self()) : typeconstraint_atom_ptr();
     };
 
     rangeconstraint_atom_ptr constraint_atom::as_range() {
-        return boost::dynamic_pointer_cast<rangeconstraint_atom> (self());
+        return  cotstrtype_ == cns_ValueRange ?
+                boost::static_pointer_cast<rangeconstraint_atom> (self()) : rangeconstraint_atom_ptr();
     }
 
     rangeconstraint_atom_ptr constraint_atom::as_strictrange() {
-        return cotstrtype_ == cns_ValueRange ? boost::static_pointer_cast<rangeconstraint_atom> (self()) : rangeconstraint_atom_ptr();
+        return ((cotstrtype_ == cns_ValueRange) || (cotstrtype_ == cns_DurationRange) ||
+                     (cotstrtype_ == cns_TimePointRange) || (cotstrtype_ == cns_RecurrenceRange)) ? 
+            boost::static_pointer_cast<rangeconstraint_atom> (self()) : rangeconstraint_atom_ptr();
     };
 
     rangeconstraint_atom_ptr constraint_atom::as_duration() {
-        return cotstrtype_ == cns_DurationRange ? boost::static_pointer_cast<rangeconstraint_atom> (self()) : rangeconstraint_atom_ptr();
+        return cotstrtype_ == cns_DurationRange ? 
+            boost::static_pointer_cast<rangeconstraint_atom> (self()) : rangeconstraint_atom_ptr();
     };
 
     rangeconstraint_atom_ptr constraint_atom::as_timepoint() {
-        return cotstrtype_ == cns_TimePointRange ? boost::static_pointer_cast<rangeconstraint_atom> (self()) : rangeconstraint_atom_ptr();
+        return cotstrtype_ == cns_TimePointRange ? 
+            boost::static_pointer_cast<rangeconstraint_atom> (self()) : rangeconstraint_atom_ptr();
     };
 
     rangeconstraint_atom_ptr constraint_atom::as_reccurence() {
-        return cotstrtype_ == cns_RecurrenceRange ? boost::static_pointer_cast<rangeconstraint_atom> (self()) : rangeconstraint_atom_ptr();
+        return cotstrtype_ == cns_RecurrenceRange ? 
+            boost::static_pointer_cast<rangeconstraint_atom> (self()) : rangeconstraint_atom_ptr();
     };
 
     complexconstraint_atom_ptr constraint_atom::as_complex() {
-        return boost::dynamic_pointer_cast<complexconstraint_atom> (self());
+        return cotstrtype_ == cns_SingleTypeConstraint ?
+          boost::static_pointer_cast<complexconstraint_atom> (self()) : complexconstraint_atom_ptr();
     }
 
     complexconstraint_atom_ptr constraint_atom::as_size() {
-        return cotstrtype_ == cns_SizeConstraint ? boost::static_pointer_cast<complexconstraint_atom> (self()) : complexconstraint_atom_ptr();
+        return cotstrtype_ == cns_SizeConstraint ? 
+            boost::static_pointer_cast<complexconstraint_atom> (self()) : complexconstraint_atom_ptr();
     };
 
     complexconstraint_atom_ptr constraint_atom::as_permitted() {
-        return cotstrtype_ == cns_PermittedAlphabet ? boost::static_pointer_cast<complexconstraint_atom> (self()) : complexconstraint_atom_ptr();
+        return cotstrtype_ == cns_PermittedAlphabet ? 
+            boost::static_pointer_cast<complexconstraint_atom> (self()) : complexconstraint_atom_ptr();
     };
 
     complexconstraint_atom_ptr constraint_atom::as_singletype() {
-        return cotstrtype_ == cns_SingleTypeConstraint ? boost::static_pointer_cast<complexconstraint_atom> (self()) : complexconstraint_atom_ptr();
+        return cotstrtype_ == cns_SingleTypeConstraint ? 
+            boost::static_pointer_cast<complexconstraint_atom> (self()) : complexconstraint_atom_ptr();
     };
 
     namedconstraint_atom_ptr constraint_atom::as_named() {
-        return boost::dynamic_pointer_cast<namedconstraint_atom> (self());
+        return cotstrtype_ == cns_NamedConstraint ?
+            boost::static_pointer_cast<namedconstraint_atom> (self()) : namedconstraint_atom_ptr();
     }
 
     multipletypeconstraint_atom_ptr constraint_atom::as_multipletypeconstraint() {
-        return boost::dynamic_pointer_cast<multipletypeconstraint_atom > (self());
+        return cotstrtype_ == cns_MultipleTypeConstraints ?        
+             boost::static_pointer_cast<multipletypeconstraint_atom > (self()) : multipletypeconstraint_atom_ptr();
     }
 
     stringconstraint_atom_ptr constraint_atom::as_property() {
-        return cotstrtype_ == cns_PropertySettings ? boost::static_pointer_cast<stringconstraint_atom > (self()) : stringconstraint_atom_ptr();
+        return cotstrtype_ == cns_PropertySettings ? 
+            boost::static_pointer_cast<stringconstraint_atom > (self()) : stringconstraint_atom_ptr();
     }
 
     userconstraint_atom_ptr constraint_atom::as_user() {
-        return cotstrtype_ == cns_UserDefinedConstraint ? boost::static_pointer_cast<userconstraint_atom> (self()) : userconstraint_atom_ptr();
+        return cotstrtype_ == cns_UserDefinedConstraint ? 
+            boost::static_pointer_cast<userconstraint_atom> (self()) : userconstraint_atom_ptr();
     }
 
     contentconstraint_atom_ptr constraint_atom::as_content() {
-        return cotstrtype_ == cns_Contents ? boost::static_pointer_cast<contentconstraint_atom> (self()) : contentconstraint_atom_ptr();
+        return cotstrtype_ == cns_Contents ? 
+            boost::static_pointer_cast<contentconstraint_atom> (self()) : contentconstraint_atom_ptr();
     }
 
     relationconstraint_atom_ptr constraint_atom::as_relation() {
-        return cotstrtype_ == cns_ComponentRelation ? boost::static_pointer_cast<relationconstraint_atom> (self()) : relationconstraint_atom_ptr();
+        return cotstrtype_ == cns_ComponentRelation ? 
+            boost::static_pointer_cast<relationconstraint_atom> (self()) : relationconstraint_atom_ptr();
     }
 
     tableconstraint_atom_ptr constraint_atom::as_table() {
-        return cotstrtype_ == cns_SimpleTableConstraint ? boost::static_pointer_cast<tableconstraint_atom> (self()) : tableconstraint_atom_ptr();
+        return cotstrtype_ == cns_SimpleTableConstraint ? 
+            boost::static_pointer_cast<tableconstraint_atom> (self()) : tableconstraint_atom_ptr();
     }
 
     tvosoconstraint_atom_ptr constraint_atom::as_tvoso() {
-        return cotstrtype_ == cns_Undef_T_ST_VS ? boost::static_pointer_cast<tvosoconstraint_atom> (self()) : tvosoconstraint_atom_ptr();
+        return cotstrtype_ == cns_Undef_T_ST_VS ? 
+            boost::static_pointer_cast<tvosoconstraint_atom> (self()) : tvosoconstraint_atom_ptr();
     }
 
     unionconstraint_atom_ptr constraint_atom::as_union() {
-        return boost::dynamic_pointer_cast<unionconstraint_atom> (self());
+        return cotstrtype_ ==cns_UNION ?
+             boost::static_pointer_cast<unionconstraint_atom> (self()) : unionconstraint_atom_ptr();
     }
 
     intersectionconstraint_atom_ptr constraint_atom::as_intersection() {
-        return boost::dynamic_pointer_cast<intersectionconstraint_atom> (self());
+        return cotstrtype_ == cns_INTERSECTION ?
+                boost::static_pointer_cast<intersectionconstraint_atom> (self()) : intersectionconstraint_atom_ptr();
     }
 
     exceptconstraint_atom_ptr constraint_atom::as_except() {
-        return boost::dynamic_pointer_cast<exceptconstraint_atom> (self());
+        return cotstrtype_ == cns_EXCEPT ?
+                boost::static_pointer_cast<exceptconstraint_atom> (self()) : exceptconstraint_atom_ptr();
     }
 
     allexceptconstraint_atom_ptr constraint_atom::as_allexcept() {
-        return boost::dynamic_pointer_cast<allexceptconstraint_atom> (self());
+        return cotstrtype_ == cns_ALLEXCEPT ?
+                boost::static_pointer_cast<allexceptconstraint_atom> (self()) : allexceptconstraint_atom_ptr();
     }
 
     extentionconstraint_atom_ptr constraint_atom::as_extention() {
-        return boost::dynamic_pointer_cast<extentionconstraint_atom> (self());
+        return cotstrtype_ == cns_EXTENTION ?
+                boost::static_pointer_cast<extentionconstraint_atom> (self()) : extentionconstraint_atom_ptr();
     }
 
     exceptionconstraint_atom_ptr constraint_atom::as_exception() {
-        return boost::dynamic_pointer_cast<exceptionconstraint_atom> (self());
+        return cotstrtype_ == cns_EXCEPTION ?
+                boost::static_pointer_cast<exceptionconstraint_atom> (self()) : exceptionconstraint_atom_ptr();
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -263,7 +293,11 @@ namespace x680 {
 
     /////////////////////////////////////////////////////////////////////////   
     // rangeconstraint_atom
-    /////////////////////////////////////////////////////////////////////////      
+    /////////////////////////////////////////////////////////////////////////   
+
+    rangeconstraint_atom::rangeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp) :
+    constraint_atom(scp, tpc), from_(fr), fromtype_(frtp), to_(to), totype_(totp) {
+    };    
 
     void rangeconstraint_atom::resolve(basic_atom_ptr holder) {
         if (from_)

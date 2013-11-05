@@ -416,9 +416,7 @@ namespace x680 {
 
     public:
 
-        rangeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp) :
-        constraint_atom(scp, tpc), from_(fr), fromtype_(frtp), to_(to), totype_(totp) {
-        };
+        rangeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, value_atom_ptr fr, range_type frtp, value_atom_ptr to, range_type totp);
 
         value_atom_ptr from() {
             return from_;
