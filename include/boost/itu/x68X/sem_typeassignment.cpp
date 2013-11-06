@@ -110,19 +110,23 @@ namespace x680 {
     }
 
     classfieldtype_atom_ptr type_atom::as_classfield() {
-        return boost::dynamic_pointer_cast<classfieldtype_atom> (self());
+        return builtin() == t_ClassField ?
+                boost::static_pointer_cast<classfieldtype_atom> (self()) : classfieldtype_atom_ptr();
     }
 
     instanceoftype_atom_ptr type_atom::as_instance() {
-        return boost::dynamic_pointer_cast<instanceoftype_atom> (self());
+        return builtin() == t_Instance_Of ?
+                boost::static_pointer_cast<instanceoftype_atom> (self()) : instanceoftype_atom_ptr();
     }
 
     fromobjecttype_atom_ptr type_atom::as_fromobject() {
-        return boost::dynamic_pointer_cast<fromobjecttype_atom> (self());
+        return builtin() == t_TypeFromObject ?
+                boost::static_pointer_cast<fromobjecttype_atom> (self()) : fromobjecttype_atom_ptr();
     }
 
     fromobjectsettype_atom_ptr type_atom::as_fromobjectset() {
-        return boost::dynamic_pointer_cast<fromobjectsettype_atom> (self());
+        return builtin() == t_ValueSetFromObjects ?
+                boost::static_pointer_cast<fromobjectsettype_atom> (self()) : fromobjectsettype_atom_ptr();
     }
 
     void type_atom::resolve(basic_atom_ptr holder) {
@@ -306,7 +310,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     classfieldtype_atom::classfieldtype_atom(basic_entity_ptr scp, const std::string& reffcl, const std::string& refffld, tagged_ptr tg) :
-    type_atom(scp, t_ClassField, tg), class_(class_atom_ptr(new class_atom(scp, reffcl))), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
+    type_atom(scp, t_ClassField, tg), class_(class_atom_ptr(new class_atom(scp, reffcl))), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
     void classfieldtype_atom::resolve(basic_atom_ptr holder) {
@@ -322,7 +326,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     fromobjecttype_atom::fromobjecttype_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj, tagged_ptr tg) :
-    type_atom(scp, t_TypeFromObject, tg), object_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
+    type_atom(scp, t_TypeFromObject, tg), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
     void fromobjecttype_atom::resolve(basic_atom_ptr holder) {
@@ -338,7 +342,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     fromobjectsettype_atom::fromobjectsettype_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj, tagged_ptr tg) :
-    type_atom(scp, t_ValueSetFromObjects, tg), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
+    type_atom(scp, t_ValueSetFromObjects, tg), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
     void fromobjectsettype_atom::resolve(basic_atom_ptr holder) {
@@ -354,12 +358,12 @@ namespace x680 {
     // typeassignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    typeassignment_entity::typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp) :
-    assignment_entity(scope, nm, et_Type), type_(tp) {
+    typeassignment_entity::typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, bool nmd) :
+    assignment_entity(scope, nm, et_Type), type_(tp), named_(nmd) {
     };
 
-    typeassignment_entity::typeassignment_entity(basic_entity_ptr scope) :
-    assignment_entity(scope, et_Type) {
+    typeassignment_entity::typeassignment_entity(basic_entity_ptr scope, bool nmd) :
+    assignment_entity(scope, et_Type), named_(nmd) {
     };
 
     ////////
@@ -387,7 +391,8 @@ namespace x680 {
     }
 
     namedtypeassignment_entity_ptr typeassignment_entity::as_named() {
-        return boost::dynamic_pointer_cast<namedtypeassignment_entity> (self());
+        return named() ?
+                boost::static_pointer_cast<namedtypeassignment_entity> (self()) : namedtypeassignment_entity_ptr();
     }
 
     void typeassignment_entity::resolve(basic_atom_ptr holder) {
@@ -507,19 +512,19 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker)
-    : typeassignment_entity(scp, nm, tp), marker_(mrker) {
+    : typeassignment_entity(scp, nm, tp, true), marker_(mrker) {
     }
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl)
-    : typeassignment_entity(scp, nm, tp), marker_(mk_default), default_(vl) {
+    : typeassignment_entity(scp, nm, tp, true), marker_(mk_default), default_(vl) {
     }
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl)
-    : typeassignment_entity(scp, "", tp), marker_(mk_exception), default_(vl) {
+    : typeassignment_entity(scp, "", tp, true), marker_(mk_exception), default_(vl) {
     }
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp)
-    : typeassignment_entity(scp, "", type_atom_ptr()), marker_(mk_extention) {
+    : typeassignment_entity(scp, "", type_atom_ptr(), true), marker_(mk_extention) {
     }
 
     void namedtypeassignment_entity::resolve(basic_atom_ptr holder) {

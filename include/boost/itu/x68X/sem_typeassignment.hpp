@@ -347,8 +347,8 @@ namespace x680 {
     class typeassignment_entity : public assignment_entity {
 
     public:
-        typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp = type_atom_ptr());
-        typeassignment_entity(basic_entity_ptr scope);
+        typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp = type_atom_ptr(), bool nmd = false);
+        typeassignment_entity(basic_entity_ptr scope, bool nmd = false);
 
         type_atom_ptr type() const {
             return type_;
@@ -356,6 +356,10 @@ namespace x680 {
 
         void type(type_atom_ptr vl) {
             type_ = vl;
+        }
+
+        bool named() const {
+            return named_;
         }
 
         namedtypeassignment_entity_ptr as_named();
@@ -382,6 +386,7 @@ namespace x680 {
         void post_resolve_autotag();
 
         type_atom_ptr type_;
+        bool named_;
     };
 
 
