@@ -9,6 +9,7 @@
 
 #include <boost/itu/x68X/x680.hpp>
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/make_shared.hpp>
 
 #define  DEBUG_SEMANTIC
 
