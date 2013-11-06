@@ -29,51 +29,63 @@ namespace x680 {
     }
 
     definedobject_atom_ptr object_atom::as_defined() {
-        return boost::dynamic_pointer_cast<definedobject_atom> (self());
+        return builtin_ == ot_Refference ?
+                boost::static_pointer_cast<definedobject_atom> (self()) : definedobject_atom_ptr();
     }
 
     definedsetobject_atom_ptr object_atom::as_definedset() {
-        return boost::dynamic_pointer_cast<definedsetobject_atom> (self());
+        return builtin_ == ot_DefinedObjectSet ?
+                boost::static_pointer_cast<definedsetobject_atom> (self()) : definedsetobject_atom_ptr();
     }
 
     defltobject_atom_ptr object_atom::as_deflt() {
-        return boost::dynamic_pointer_cast<defltobject_atom> (self());
+        return builtin_ == ot_Object ?
+                boost::static_pointer_cast<defltobject_atom> (self()) : defltobject_atom_ptr();
     }
 
     defsyntxobject_atom_ptr object_atom::as_defnsyntx() {
-        return boost::dynamic_pointer_cast<defsyntxobject_atom> (self());
+        return builtin_ == ot_ObjectDefineSyn ?
+                boost::static_pointer_cast<defsyntxobject_atom> (self()) : defsyntxobject_atom_ptr();
     }
 
     fromobjectobject_atom_ptr object_atom::as_fromobject() {
-        return boost::dynamic_pointer_cast<fromobjectobject_atom> (self());
+        return builtin_ == ot_FromObject ?
+                boost::static_pointer_cast<fromobjectobject_atom> (self()) : fromobjectobject_atom_ptr();
     }
 
     fromdefinedsetobject_atom_ptr object_atom::as_fromdefinedset() {
-        return boost::dynamic_pointer_cast<fromdefinedsetobject_atom> (self());
+        return builtin_ == ot_ObjectSetFromObjects ?
+                boost::static_pointer_cast<fromdefinedsetobject_atom> (self()) : fromdefinedsetobject_atom_ptr();
     }
 
     fromdefinedobject_atom_ptr object_atom::as_fromdefined() {
-        return boost::dynamic_pointer_cast<fromdefinedobject_atom> (self());
+        return builtin_ == ot_ObjectSetFromObject ?
+                boost::static_pointer_cast<fromdefinedobject_atom> (self()) : fromdefinedobject_atom_ptr();
     }
 
     unionobject_atom_ptr object_atom::as_union() {
-        return boost::dynamic_pointer_cast<unionobject_atom> (self());
+        return builtin_ == ot_UNION ?
+                boost::static_pointer_cast<unionobject_atom> (self()) : unionobject_atom_ptr();
     }
 
     intersectionobject_atom_ptr object_atom::as_intersection() {
-        return boost::dynamic_pointer_cast<intersectionobject_atom> (self());
+        return builtin_ == ot_INTERSECTION ?
+                boost::static_pointer_cast<intersectionobject_atom> (self()) : intersectionobject_atom_ptr();
     }
 
     exceptobject_atom_ptr object_atom::as_except() {
-        return boost::dynamic_pointer_cast<exceptobject_atom> (self());
+        return builtin_ == ot_EXCEPT ?
+                boost::static_pointer_cast<exceptobject_atom> (self()) : exceptobject_atom_ptr();
     }
 
     allexceptobject_atom_ptr object_atom::as_allexcept() {
-        return boost::dynamic_pointer_cast<allexceptobject_atom> (self());
+        return builtin_ == ot_ALLEXCEPT ?
+                boost::static_pointer_cast<allexceptobject_atom> (self()) : allexceptobject_atom_ptr();
     }
 
     extentionobject_atom_ptr object_atom::as_extention() {
-        return boost::dynamic_pointer_cast<extentionobject_atom> (self());
+        return builtin_ == ot_EXTENTION ?
+                boost::static_pointer_cast<extentionobject_atom> (self()) : extentionobject_atom_ptr();
     }
 
     void object_atom::resolve(basic_atom_ptr holder) {
