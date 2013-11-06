@@ -476,12 +476,12 @@ namespace x680 {
 
     public:
 
-        syntax_atom(basic_entity_ptr scope, std::string als, bool opt) :
-        basic_atom(at_Syntax, scope), alias_(als), optional_(opt) {
+        syntax_atom(basic_entity_ptr scope, std::string als, bool opt, bool grp = false) :
+        basic_atom(at_Syntax, scope), alias_(als), optional_(opt), isgroup_(grp) {
         }
 
-        syntax_atom(basic_entity_ptr scope, std::string als, const std::string& field, bool opt) :
-        basic_atom(at_Syntax, scope, field), alias_(als), optional_(opt) {
+        syntax_atom(basic_entity_ptr scope, std::string als, const std::string& field, bool opt, bool grp = false) :
+        basic_atom(at_Syntax, scope, field), alias_(als), optional_(opt), isgroup_(grp) {
         }
 
         bool optional() const {
@@ -491,11 +491,15 @@ namespace x680 {
         std::string alias() const {
             return alias_;
         }
-
+        
         bool isalias() const {
             return !alias_.empty();
-        }
-
+        }   
+        
+        bool isgroup() const {
+            return isgroup_;
+        }           
+        
         groupsyntax_atom_ptr as_group();
 
 
@@ -507,6 +511,7 @@ namespace x680 {
     private:
         std::string alias_;
         bool optional_;
+        bool isgroup_;
     };
 
 
@@ -520,7 +525,7 @@ namespace x680 {
     public:
 
         groupsyntax_atom(basic_entity_ptr scope, std::string als, syntax_atom_vct grp, bool opt) :
-        syntax_atom(scope, als, opt), group_(grp) {
+        syntax_atom(scope, als, opt, true), group_(grp) {
         }
 
         syntax_atom_vct& group() {

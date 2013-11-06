@@ -183,7 +183,8 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     groupsyntax_atom_ptr syntax_atom::as_group() {
-        return boost::dynamic_pointer_cast<groupsyntax_atom> (self());
+        return isgroup_ ? 
+            boost::static_pointer_cast<groupsyntax_atom> (self()) : groupsyntax_atom_ptr();
     }
 
     void syntax_atom::resolve(basic_atom_ptr holder) {

@@ -25,19 +25,23 @@ namespace x680 {
     }
 
     definedobjectset_atom_ptr objectset_atom::as_defined() {
-        return boost::dynamic_pointer_cast<definedobjectset_atom> (self());
+        return builtin_ == os_defined ?
+                boost::static_pointer_cast<definedobjectset_atom> (self()) : definedobjectset_atom_ptr();
     }
 
     defnobjectset_atom_ptr objectset_atom::as_defn() {
-        return boost::dynamic_pointer_cast<defnobjectset_atom> (self());
+        return builtin_ == os_Strait ?
+                boost::static_pointer_cast<defnobjectset_atom> (self()) : defnobjectset_atom_ptr();
     }
 
     fromobjectobjectset_atom_ptr objectset_atom::as_fromobject() {
-        return boost::dynamic_pointer_cast<fromobjectobjectset_atom> (self());
+        return builtin_ == os_ObjectSetFromObject ?
+                boost::static_pointer_cast<fromobjectobjectset_atom> (self()) : fromobjectobjectset_atom_ptr();
     }
 
     fromobjectsetobjectset_atom_ptr objectset_atom::as_fromobjectset() {
-        return boost::dynamic_pointer_cast<fromobjectsetobjectset_atom> (self());
+        return builtin_ == os_ObjectSetFromObjects ?
+                boost::static_pointer_cast<fromobjectsetobjectset_atom> (self()) : fromobjectsetobjectset_atom_ptr();
     }
 
     void objectset_atom::resolve(basic_atom_ptr holder) {
@@ -59,7 +63,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////        
 
     fromobjectobjectset_atom::fromobjectobjectset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
-    objectset_atom(scp, os_ObjectSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
+    objectset_atom(scp, os_ObjectSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
     void fromobjectobjectset_atom::resolve(basic_atom_ptr holder) {
@@ -72,7 +76,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     fromobjectsetobjectset_atom::fromobjectsetobjectset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj) :
-    objectset_atom(scp, os_ObjectSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
+    objectset_atom(scp, os_ObjectSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
     void fromobjectsetobjectset_atom::resolve(basic_atom_ptr holder) {
