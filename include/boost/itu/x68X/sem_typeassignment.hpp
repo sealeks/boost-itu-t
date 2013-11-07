@@ -175,9 +175,9 @@ namespace x680 {
 
         instanceoftype_atom_ptr as_instance();
 
-        fromobjecttype_atom_ptr as_fromobject();
+        fromobject_type_atom_ptr as_fromobject();
 
-        fromobjectsettype_atom_ptr as_fromobjectset();
+        fromobjects_type_atom_ptr as_fromobjectset();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -268,14 +268,15 @@ namespace x680 {
     };
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjecttype_atom
+    // fromobject_type_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class fromobjecttype_atom : public type_atom {
+    class fromobject_type_atom : public type_atom {
 
     public:
 
-        fromobjecttype_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr(), tagged_ptr tg = tagged_ptr());
+        fromobject_type_atom(basic_entity_ptr scp, const std::string& refffld, 
+                object_atom_ptr obj = object_atom_ptr(), tagged_ptr tg = tagged_ptr());
 
         object_atom_ptr object() const {
             return object_;
@@ -304,14 +305,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectsettype_atom
+    // fromobjects_type_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class fromobjectsettype_atom : public type_atom {
+    class fromobjects_type_atom : public type_atom {
 
     public:
 
-        fromobjectsettype_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj = objectset_atom_ptr(), tagged_ptr tg = tagged_ptr());
+        fromobjects_type_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj = objectset_atom_ptr(), tagged_ptr tg = tagged_ptr());
 
         objectset_atom_ptr objectset() const {
             return objectset_;

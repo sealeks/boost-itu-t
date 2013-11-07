@@ -70,19 +70,19 @@ namespace x680 {
             return builtin_;
         }
 
-        definedobject_atom_ptr as_defined();
+        defined_object_atom_ptr as_defined();
 
-        definedsetobject_atom_ptr as_definedset();
+        definedobjects_object_atom_ptr as_definedset();
 
         defltobject_atom_ptr as_deflt();
 
-        defsyntxobject_atom_ptr as_defnsyntx();
+        defsyntax_object_atom_ptr as_defnsyntx();
 
-        fromobjectobject_atom_ptr as_fromobject();
+        fromobject_object_atom_ptr as_fromobject();
 
-        fromdefinedsetobject_atom_ptr as_fromdefinedset();
+        fromdefined_objects_object_atom_ptr as_fromdefinedset();
 
-        fromdefinedobject_atom_ptr as_fromdefined();
+        fromdefined_object_atom_ptr as_fromdefined();
 
         unionobject_atom_ptr as_union();
 
@@ -111,11 +111,11 @@ namespace x680 {
     // defineobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class definedobject_atom : public object_atom {
+    class defined_object_atom : public object_atom {
 
     public:
 
-        definedobject_atom(basic_entity_ptr scope, const std::string& reff) : object_atom(scope, reff, ot_Refference) {
+        defined_object_atom(basic_entity_ptr scope, const std::string& reff) : object_atom(scope, reff, ot_Refference) {
         };
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
@@ -125,14 +125,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // definedsetobject_atom
+    // definedobjects_object_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class definedsetobject_atom : public object_atom {
+    class definedobjects_object_atom : public object_atom {
 
     public:
 
-        definedsetobject_atom(basic_entity_ptr scope, objectset_atom_ptr objs = objectset_atom_ptr());
+        definedobjects_object_atom(basic_entity_ptr scope, objectset_atom_ptr objs = objectset_atom_ptr());
 
         objectset_atom_ptr objectset() const {
             return objectset_;
@@ -152,14 +152,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // fromdefinedsetobject_atom
+    // fromdefined_objects_object_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class fromdefinedsetobject_atom : public object_atom {
+    class fromdefined_objects_object_atom : public object_atom {
 
     public:
 
-        fromdefinedsetobject_atom(basic_entity_ptr scope, const std::string& refffld, objectset_atom_ptr objs = objectset_atom_ptr());
+        fromdefined_objects_object_atom(basic_entity_ptr scope, const std::string& refffld, objectset_atom_ptr objs = objectset_atom_ptr());
 
         objectset_atom_ptr objectset() const {
             return objectset_;
@@ -188,14 +188,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // fromdefinedobject_atom
+    // fromdefined_object_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class fromdefinedobject_atom : public object_atom {
+    class fromdefined_object_atom : public object_atom {
 
     public:
 
-        fromdefinedobject_atom(basic_entity_ptr scope, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+        fromdefined_object_atom(basic_entity_ptr scope, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
 
         object_atom_ptr object() const {
             return object_;
@@ -256,14 +256,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // defsyntxobject_atom
+    // defsyntax_object_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class defsyntxobject_atom : public object_atom {
+    class defsyntax_object_atom : public object_atom {
 
     public:
 
-        defsyntxobject_atom(basic_entity_ptr scope, fieldsetting_atom_vct fldst = fieldsetting_atom_vct())
+        defsyntax_object_atom(basic_entity_ptr scope, fieldsetting_atom_vct fldst = fieldsetting_atom_vct())
         : object_atom(scope, ot_ObjectDefineSyn), fieldsetting_(fldst) {
         };
 
@@ -289,14 +289,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectobject_atom
+    // fromobject_object_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    class fromobjectobject_atom : public object_atom {
+    class fromobject_object_atom : public object_atom {
 
     public:
 
-        fromobjectobject_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+        fromobject_object_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
 
         object_atom_ptr object() const {
             return object_;
@@ -446,7 +446,7 @@ namespace x680 {
 
     private:
 
-        void calculate_fields(classassignment_entity_ptr cls, defsyntxobject_atom_ptr obj);
+        void calculate_fields(classassignment_entity_ptr cls, defsyntax_object_atom_ptr obj);
 
         void create_fields(field_entity_ptr fld, setting_atom_ptr st = setting_atom_ptr());
 
@@ -458,7 +458,7 @@ namespace x680 {
         
         basic_entity_ptr find_typefields(const std::string& nm);       
 
-        bool calculate_fields(syntax_atom_ptr syn, defsyntxobject_atom_ptr obj, fieldsetting_atom_vct& newvct, bool optional = false);
+        bool calculate_fields(syntax_atom_ptr syn, defsyntax_object_atom_ptr obj, fieldsetting_atom_vct& newvct, bool optional = false);
 
         class_atom_ptr class_;
         object_atom_ptr object_;

@@ -24,24 +24,24 @@ namespace x680 {
     : basic_atom(at_ObjectSet, scope, reff), builtin_(tp) {
     }
 
-    definedobjectset_atom_ptr objectset_atom::as_defined() {
+    defined_objectset_atom_ptr objectset_atom::as_defined() {
         return builtin_ == os_defined ?
-                boost::static_pointer_cast<definedobjectset_atom> (self()) : definedobjectset_atom_ptr();
+                boost::static_pointer_cast<defined_objectset_atom> (self()) : defined_objectset_atom_ptr();
     }
 
-    defnobjectset_atom_ptr objectset_atom::as_defn() {
+    defn_objectset_atom_ptr objectset_atom::as_defn() {
         return builtin_ == os_Strait ?
-                boost::static_pointer_cast<defnobjectset_atom> (self()) : defnobjectset_atom_ptr();
+                boost::static_pointer_cast<defn_objectset_atom> (self()) : defn_objectset_atom_ptr();
     }
 
-    fromobjectobjectset_atom_ptr objectset_atom::as_fromobject() {
+    fromobject_objectset_atom_ptr objectset_atom::as_fromobject() {
         return builtin_ == os_ObjectSetFromObject ?
-                boost::static_pointer_cast<fromobjectobjectset_atom> (self()) : fromobjectobjectset_atom_ptr();
+                boost::static_pointer_cast<fromobject_objectset_atom> (self()) : fromobject_objectset_atom_ptr();
     }
 
-    fromobjectsetobjectset_atom_ptr objectset_atom::as_fromobjectset() {
+    fromobjects_objectset_atom_ptr objectset_atom::as_fromobjectset() {
         return builtin_ == os_ObjectSetFromObjects ?
-                boost::static_pointer_cast<fromobjectsetobjectset_atom> (self()) : fromobjectsetobjectset_atom_ptr();
+                boost::static_pointer_cast<fromobjects_objectset_atom> (self()) : fromobjects_objectset_atom_ptr();
     }
 
     void objectset_atom::resolve(basic_atom_ptr holder) {
@@ -54,41 +54,41 @@ namespace x680 {
     // defineobjectset_atom
     /////////////////////////////////////////////////////////////////////////    
 
-    void definedobjectset_atom::resolve(basic_atom_ptr holder) {
+    void defined_objectset_atom::resolve(basic_atom_ptr holder) {
         resolve_reff();
     }
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectobjectset_atom
+    // fromobject_objectset_atom
     /////////////////////////////////////////////////////////////////////////        
 
-    fromobjectobjectset_atom::fromobjectobjectset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
+    fromobject_objectset_atom::fromobject_objectset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
     objectset_atom(scp, os_ObjectSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
-    void fromobjectobjectset_atom::resolve(basic_atom_ptr holder) {
+    void fromobject_objectset_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectsetobjectset_atom
+    // fromobjects_objectset_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    fromobjectsetobjectset_atom::fromobjectsetobjectset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj) :
+    fromobjects_objectset_atom::fromobjects_objectset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj) :
     objectset_atom(scp, os_ObjectSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
-    void fromobjectsetobjectset_atom::resolve(basic_atom_ptr holder) {
+    void fromobjects_objectset_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }
 
     /////////////////////////////////////////////////////////////////////////        
-    // defnobjectset_atom
+    // defn_objectset_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    void defnobjectset_atom::resolve(basic_atom_ptr holder) {
+    void defn_objectset_atom::resolve(basic_atom_ptr holder) {
         for (object_atom_vct::iterator it = objects_.begin(); it != objects_.end(); ++it) {
             (*it)->resolve();
         }

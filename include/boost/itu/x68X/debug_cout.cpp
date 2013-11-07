@@ -508,7 +508,7 @@ namespace x680 {
         return stream << "}";
     }
 
-    std::ostream& operator<<(std::ostream& stream, definedvalue_atom_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, defined_value_atom_ptr self) {
         if (self->reff()) {
             if (self->reff()->as_expectdef())
                 return stream << "??? " << self->reff()->name();
@@ -524,7 +524,7 @@ namespace x680 {
         return stream;
     }
 
-    std::ostream& operator<<(std::ostream& stream, fromobjectvalue_atom_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, fromobject_value_atom_ptr self) {
         stream << "(o)" << self->object() << "." << self->field()->reff()->name();
         if (self->parameterized())
             stream << self->parameters();
@@ -686,11 +686,11 @@ namespace x680 {
         return stream << (self->value());
     }
 
-    std::ostream& operator<<(std::ostream& stream, fromdefinedsetconstraint_atom_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, fromdefined_objects_constraint_atom_ptr self) {
         return stream << "(oS) " << self->objectset() << "." << self->field()->reff()->name();
     }
 
-    std::ostream& operator<<(std::ostream& stream, fromdefinedconstraint_atom_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, fromdefined_constraint_atom_ptr self) {
         return stream << "(o) " << self->object() << "." << self->field()->reff()->name();
     }
 
@@ -1118,7 +1118,7 @@ namespace x680 {
         return stream << "!!!!NULL OBJECT";
     }
 
-    std::ostream& operator<<(std::ostream& stream, definedobject_atom_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, defined_object_atom_ptr self) {
         if (self->reff()->as_expectdef())
             stream << "??? ";
         stream << "" << self->reff()->name();
@@ -1127,15 +1127,15 @@ namespace x680 {
         return stream;
     }
 
-    std::ostream& operator<<(std::ostream& stream, definedsetobject_atom_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, definedobjects_object_atom_ptr self) {
         return stream << "(oS) " << self->objectset();
     }
 
-    std::ostream& operator<<(std::ostream& stream, fromdefinedsetobject_atom_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, fromdefined_objects_object_atom_ptr self) {
         return stream << "(oS) " << self->objectset() << "." << self->field()->reff()->name();
     }
 
-    std::ostream& operator<<(std::ostream& stream, fromdefinedobject_atom_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, fromdefined_object_atom_ptr self) {
         return stream << "(o) " << self->object() << "." << self->field()->reff()->name();
     }
 
@@ -1143,14 +1143,14 @@ namespace x680 {
         return stream << self->fieldsetting(); //self->reff()->name();
     }
 
-    std::ostream& operator<<(std::ostream& stream, fromobjectobject_atom_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, fromobject_object_atom_ptr self) {
         stream << "(o)" << self->object() << "." << self->field()->reff()->name();
         if (self->parameterized())
             stream << self->parameters();
         return stream;
     }
 
-    std::ostream& operator<<(std::ostream& stream, defsyntxobject_atom_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, defsyntax_object_atom_ptr self) {
         //return stream << self->fieldsetting();
         stream << " {  ";
         for (fieldsetting_atom_vct::const_iterator it = self->fieldsetting().begin(); it != self->fieldsetting().end(); ++it) {

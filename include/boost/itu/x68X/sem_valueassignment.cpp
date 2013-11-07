@@ -79,14 +79,14 @@ namespace x680 {
                 boost::static_pointer_cast<structvalue_atom> (self()) : structvalue_atom_ptr();
     }
 
-    definedvalue_atom_ptr value_atom::as_defined() {
+    defined_value_atom_ptr value_atom::as_defined() {
         return (valtype() == v_defined) ?
-                boost::static_pointer_cast<definedvalue_atom> (self()) : definedvalue_atom_ptr();
+                boost::static_pointer_cast<defined_value_atom> (self()) : defined_value_atom_ptr();
     }
 
-    fromobjectvalue_atom_ptr value_atom::as_fromobject() {
+    fromobject_value_atom_ptr value_atom::as_fromobject() {
         return (valtype() == v_ValueFromObject) ?
-                boost::static_pointer_cast<fromobjectvalue_atom> (self()) : fromobjectvalue_atom_ptr();
+                boost::static_pointer_cast<fromobject_value_atom> (self()) : fromobject_value_atom_ptr();
     }
 
     choicevalue_atom_ptr value_atom::as_choice() {
@@ -143,23 +143,23 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // definedvalue_atom
+    // defined_value_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    void definedvalue_atom::resolve(basic_atom_ptr holder) {
+    void defined_value_atom::resolve(basic_atom_ptr holder) {
         resolve_reff(holder);
     }
 
 
     /////////////////////////////////////////////////////////////////////////     
-    // fromobjectvalue_atom
+    // fromobject_value_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    fromobjectvalue_atom::fromobjectvalue_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj)
+    fromobject_value_atom::fromobject_value_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj)
     : value_atom(scp, v_ValueFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp ,refffld))) {
     };
 
-    void fromobjectvalue_atom::resolve(basic_atom_ptr holder) {
+    void fromobject_value_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve(holder);
     }

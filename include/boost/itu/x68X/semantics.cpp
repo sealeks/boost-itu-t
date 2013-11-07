@@ -225,10 +225,10 @@ namespace x680 {
                 case t_Instance_Of: tmp = boost::make_shared< instanceoftype_atom>(scope, ent.reference,
                             compile_tag(scope, ent.tag));
                     break;
-                case t_TypeFromObject: tmp = boost::make_shared< fromobjecttype_atom>(scope, ent.fieldreference,
+                case t_TypeFromObject: tmp = boost::make_shared< fromobject_type_atom>(scope, ent.fieldreference,
                             compile_object(scope, *ent.objectref), compile_tag(scope, ent.tag));
                     break;
-                case t_ValueSetFromObjects: tmp = boost::make_shared< fromobjectsettype_atom>(scope, ent.fieldreference,
+                case t_ValueSetFromObjects: tmp = boost::make_shared< fromobjects_type_atom>(scope, ent.fieldreference,
                             compile_objectset(scope, *ent.objectsetref), compile_tag(scope, ent.tag));
                     break;
                 default:
@@ -260,7 +260,7 @@ namespace x680 {
                                 rslt.push_back(el);
                             } catch (boost::bad_lexical_cast) {
                                 valueassignment_entity_ptr el(new valueassignment_entity(scope, it->identifier, boost::make_shared<type_atom>(scope, t_INTEGER),
-                                        boost::make_shared<definedvalue_atom>(it->values.begin()->identifier, scope)));
+                                        boost::make_shared<defined_value_atom>(it->values.begin()->identifier, scope)));
                                 rslt.push_back(el);
                             }
                         }
@@ -271,7 +271,7 @@ namespace x680 {
                             rslt.push_back(el);
                         } catch (boost::bad_lexical_cast) {
                             valueassignment_entity_ptr el(new valueassignment_entity(scope, it->identifier, boost::make_shared<type_atom>(scope, t_INTEGER),
-                                    boost::make_shared<definedvalue_atom>(it->fromreff, scope)));
+                                    boost::make_shared<defined_value_atom>(it->fromreff, scope)));
                             rslt.push_back(el);
                         }
                     }
@@ -290,7 +290,7 @@ namespace x680 {
                 return boost::make_shared< tagged>(nm, ent.class_, ent.rule);
             } catch (...) {
             }
-            value_atom_ptr nm(new definedvalue_atom(ent.number, scope));
+            value_atom_ptr nm(new defined_value_atom(ent.number, scope));
             return boost::make_shared< tagged>(nm, ent.class_, ent.rule);
         }
 
@@ -332,8 +332,8 @@ namespace x680 {
                     case v_defined_list:
                     case v_number_list:
                     case v_value_list: return boost::make_shared< structvalue_atom>(ent.type, compile_listvalue(scope, ent));
-                    case v_defined: return boost::make_shared< definedvalue_atom>(ent.identifier, scope);
-                    case v_ValueFromObject: return boost::make_shared< fromobjectvalue_atom>(scope, ent.fieldreference,
+                    case v_defined: return boost::make_shared< defined_value_atom>(ent.identifier, scope);
+                    case v_ValueFromObject: return boost::make_shared< fromobject_value_atom>(scope, ent.fieldreference,
                                 compile_object(scope, *ent.objectref));
                     case v_defined_assign: return compile_assignvalue(scope, ent);
                     case v_choice: return compile_choicevalue(scope, ent);
@@ -448,8 +448,8 @@ namespace x680 {
 
         valueset_atom_ptr compile_valueset_impl(basic_entity_ptr scope, const x680::syntactic::valueset_element& ent) {
             switch (ent.tp) {
-                case vs_ValueSetFromObject: return boost::make_shared< fromobjectvalueset_atom>(scope, ent.reference, compile_object(scope, *ent.objectref));
-                case vs_ValueSetFromObjects: return boost::make_shared< fromobjectsetvalueset_atom>(scope, ent.reference, compile_objectset(scope, *ent.objectsetref));
+                case vs_ValueSetFromObject: return boost::make_shared< fromobject_valueset_atom>(scope, ent.reference, compile_object(scope, *ent.objectref));
+                case vs_ValueSetFromObjects: return boost::make_shared< fromobjects_valueset_atom>(scope, ent.reference, compile_objectset(scope, *ent.objectsetref));
                 case vs_Strait:
                 {
                     valueset_atom_ptr tmp(new valueset_atom(scope, ent.tp));
@@ -510,9 +510,9 @@ namespace x680 {
                 case cns_PropertySettings: return boost::make_shared< stringconstraint_atom>(scope, ent.tp, ent.identifier);
                 case cns_MultipleTypeConstraints: return compile_multipletypeconstraint(scope, ent);
                 case cns_NamedConstraint: return compile_namedconstraint(scope, ent);
-                case cns_ValueSetFromObjects: return boost::make_shared< fromdefinedsetconstraint_atom>(scope, ent.fieldreference,
+                case cns_ValueSetFromObjects: return boost::make_shared< fromdefined_objects_constraint_atom>(scope, ent.fieldreference,
                             compile_objectset(scope, *ent.objectsetref));
-                case cns_ValueSetFromObject: return boost::make_shared< fromdefinedconstraint_atom>(scope, ent.fieldreference,
+                case cns_ValueSetFromObject: return boost::make_shared< fromdefined_constraint_atom>(scope, ent.fieldreference,
                             compile_object(scope, *ent.objectref));
                 case cns_UNION: return boost::make_shared< unionconstraint_atom>();
                 case cns_INTERSECTION: return boost::make_shared< intersectionconstraint_atom>();
@@ -888,16 +888,16 @@ namespace x680 {
 
         object_atom_ptr compile_object_impl(basic_entity_ptr scope, const x680::syntactic::object_element& ent) {
             switch (ent.tp) {
-                case ot_FromObject: return boost::make_shared< fromobjectobject_atom>(scope, ent.fieldreference,
+                case ot_FromObject: return boost::make_shared< fromobject_object_atom>(scope, ent.fieldreference,
                             compile_object(scope, *ent.objectref));
-                case ot_ObjectSetFromObjects: return boost::make_shared< fromdefinedsetobject_atom>(scope, ent.fieldreference,
+                case ot_ObjectSetFromObjects: return boost::make_shared< fromdefined_objects_object_atom>(scope, ent.fieldreference,
                             compile_objectset(scope, *ent.objectsetref));
-                case ot_ObjectSetFromObject: return boost::make_shared< fromdefinedobject_atom>(scope, ent.fieldreference,
+                case ot_ObjectSetFromObject: return boost::make_shared< fromdefined_object_atom>(scope, ent.fieldreference,
                             compile_object(scope, *ent.objectref));
-                case ot_Refference: return boost::make_shared< definedobject_atom>(scope, ent.reff);
-                case ot_DefinedObjectSet: return boost::make_shared< definedsetobject_atom>(scope, compile_objectset(scope, *ent.objectsetref));
+                case ot_Refference: return boost::make_shared< defined_object_atom>(scope, ent.reff);
+                case ot_DefinedObjectSet: return boost::make_shared< definedobjects_object_atom>(scope, compile_objectset(scope, *ent.objectsetref));
                 case ot_Object: return boost::make_shared< defltobject_atom>(scope, compile_object_fields(scope, ent.fields));
-                case ot_ObjectDefineSyn: return boost::make_shared< defsyntxobject_atom>(scope, compile_object_fields(scope, ent.fields));
+                case ot_ObjectDefineSyn: return boost::make_shared< defsyntax_object_atom>(scope, compile_object_fields(scope, ent.fields));
                 case ot_UNION: return boost::make_shared< unionobject_atom>();
                 case ot_INTERSECTION: return boost::make_shared< intersectionobject_atom>();
                 case ot_EXCEPT: return boost::make_shared< exceptobject_atom>();
@@ -960,15 +960,15 @@ namespace x680 {
 
         objectset_atom_ptr compile_objectset_impl(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
             switch (ent.tp) {
-                case os_ObjectSetFromObject: return boost::make_shared< fromobjectobjectset_atom>(scope, ent.reference, compile_object(scope, *ent.objectref));
-                case os_ObjectSetFromObjects: return boost::make_shared< fromobjectsetobjectset_atom>(scope, ent.reference, compile_objectset(scope, *ent.objectsetref));
+                case os_ObjectSetFromObject: return boost::make_shared< fromobject_objectset_atom>(scope, ent.reference, compile_object(scope, *ent.objectref));
+                case os_ObjectSetFromObjects: return boost::make_shared< fromobjects_objectset_atom>(scope, ent.reference, compile_objectset(scope, *ent.objectsetref));
                     //case os_defined:
-                case os_Strait: return boost::make_shared< defnobjectset_atom>(scope, compile_objectset_vct(scope, ent));
+                case os_Strait: return boost::make_shared< defn_objectset_atom>(scope, compile_objectset_vct(scope, ent));
                 default:
                 {
                 }
             }
-            return boost::make_shared< definedobjectset_atom>(scope, ent.reference);
+            return boost::make_shared< defined_objectset_atom>(scope, ent.reference);
         }
 
         object_atom_vct compile_objectset_vct(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {

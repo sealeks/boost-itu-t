@@ -47,8 +47,8 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, strvalue_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, namedvalue_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, structvalue_atom_ptr self);
-    std::ostream& operator<<(std::ostream& stream, definedvalue_atom_ptr self);
-    std::ostream& operator<<(std::ostream& stream, fromobjectvalue_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, defined_value_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, fromobject_value_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, assignvalue_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, choicevalue_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, openvalue_atom_ptr self);
@@ -62,8 +62,8 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, const constraint_atom_vct& self);
     std::ostream& operator<<(std::ostream& stream, constraint_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, valueconstraint_atom_ptr self);
-    std::ostream& operator<<(std::ostream& stream, fromdefinedsetconstraint_atom_ptr self);
-    std::ostream& operator<<(std::ostream& stream, fromdefinedconstraint_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, fromdefined_objects_constraint_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, fromdefined_constraint_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, typeconstraint_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, namedconstraint_atom_ptr self);
@@ -99,13 +99,13 @@ namespace x680 {
     // object
     std::ostream& operator<<(std::ostream& stream, objectassignment_entity_ptr self);
     std::ostream& operator<<(std::ostream& stream, object_atom_ptr self);
-    std::ostream& operator<<(std::ostream& stream, definedobject_atom_ptr self);
-    std::ostream& operator<<(std::ostream& stream, definedsetobject_atom_ptr self);
-    std::ostream& operator<<(std::ostream& stream, fromdefinedsetobject_atom_ptr self);
-    std::ostream& operator<<(std::ostream& stream, fromdefinedobject_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, defined_object_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, definedobjects_object_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, fromdefined_objects_object_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, fromdefined_object_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, defltobject_atom_ptr self);
-    std::ostream& operator<<(std::ostream& stream, fromobjectobject_atom_ptr self);
-    std::ostream& operator<<(std::ostream& stream, defsyntxobject_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, fromobject_object_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, defsyntax_object_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, const fieldsetting_atom_vct& self);
     std::ostream& operator<<(std::ostream& stream, fieldsetting_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, const setting_atom_vct& self);

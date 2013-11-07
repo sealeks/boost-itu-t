@@ -24,14 +24,14 @@ namespace x680 {
     : basic_atom(at_ValueSet, scope, reff), builtin_(tp) {
     }
 
-    fromobjectvalueset_atom_ptr valueset_atom::as_fromobject() {
+    fromobject_valueset_atom_ptr valueset_atom::as_fromobject() {
         return builtin_ == vs_ValueSetFromObject ?
-                boost::static_pointer_cast<fromobjectvalueset_atom> (self()) : fromobjectvalueset_atom_ptr();
+                boost::static_pointer_cast<fromobject_valueset_atom> (self()) : fromobject_valueset_atom_ptr();
     }
 
-    fromobjectsetvalueset_atom_ptr valueset_atom::as_fromobjectset() {
+    fromobjects_valueset_atom_ptr valueset_atom::as_fromobjectset() {
         return builtin_ == vs_ValueSetFromObjects ?
-                boost::static_pointer_cast<fromobjectsetvalueset_atom> (self()) : fromobjectsetvalueset_atom_ptr();
+                boost::static_pointer_cast<fromobjects_valueset_atom> (self()) : fromobjects_valueset_atom_ptr();
     }
 
     void valueset_atom::resolve(basic_atom_ptr holder) {
@@ -44,27 +44,27 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectvalueset_atom
+    // fromobject_valueset_atom
     /////////////////////////////////////////////////////////////////////////        
 
-    fromobjectvalueset_atom::fromobjectvalueset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
+    fromobject_valueset_atom::fromobject_valueset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
     valueset_atom(scp, vs_ValueSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
-    void fromobjectvalueset_atom::resolve(basic_atom_ptr holder) {
+    void fromobject_valueset_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectsetvalueset_atom
+    // fromobjects_valueset_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    fromobjectsetvalueset_atom::fromobjectsetvalueset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj) :
+    fromobjects_valueset_atom::fromobjects_valueset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj) :
     valueset_atom(scp, vs_ValueSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
-    void fromobjectsetvalueset_atom::resolve(basic_atom_ptr holder) {
+    void fromobjects_valueset_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }
@@ -104,14 +104,14 @@ namespace x680 {
                 boost::static_pointer_cast<valueconstraint_atom> (self()) : valueconstraint_atom_ptr();
     }
 
-    fromdefinedsetconstraint_atom_ptr constraint_atom::as_fromdefinedset() {
+    fromdefined_objects_constraint_atom_ptr constraint_atom::as_fromdefinedset() {
         return cotstrtype_ == cns_ValueSetFromObjects ?
-                boost::static_pointer_cast<fromdefinedsetconstraint_atom> (self()) : fromdefinedsetconstraint_atom_ptr();
+                boost::static_pointer_cast<fromdefined_objects_constraint_atom> (self()) : fromdefined_objects_constraint_atom_ptr();
     }
 
-    fromdefinedconstraint_atom_ptr constraint_atom::as_fromdefined() {
+    fromdefined_constraint_atom_ptr constraint_atom::as_fromdefined() {
         return cotstrtype_ == cns_ValueSetFromObject ?
-                boost::static_pointer_cast<fromdefinedconstraint_atom> (self()) : fromdefinedconstraint_atom_ptr();
+                boost::static_pointer_cast<fromdefined_constraint_atom> (self()) : fromdefined_constraint_atom_ptr();
     }
 
     valueconstraint_atom_ptr constraint_atom::as_pattern() {
@@ -257,29 +257,29 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // fromdefinedsetconstraint_atom
+    // fromdefined_objects_constraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    fromdefinedsetconstraint_atom::fromdefinedsetconstraint_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr objs) :
+    fromdefined_objects_constraint_atom::fromdefined_objects_constraint_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr objs) :
     constraint_atom(scp, cns_ValueSetFromObjects), objectset_(objs), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
 
     }
 
-    void fromdefinedsetconstraint_atom::resolve(basic_atom_ptr holder) {
+    void fromdefined_objects_constraint_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }
 
     /////////////////////////////////////////////////////////////////////////        
-    // fromdefinedconstraint_atom
+    // fromdefined_constraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    fromdefinedconstraint_atom::fromdefinedconstraint_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
+    fromdefined_constraint_atom::fromdefined_constraint_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
     constraint_atom(scp, cns_ValueSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
 
     }
 
-    void fromdefinedconstraint_atom::resolve(basic_atom_ptr holder) {
+    void fromdefined_constraint_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }

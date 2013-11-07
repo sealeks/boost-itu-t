@@ -37,9 +37,9 @@ namespace x680 {
             set_ = vl;
         }
 
-        fromobjectvalueset_atom_ptr as_fromobject();
+        fromobject_valueset_atom_ptr as_fromobject();
 
-        fromobjectsetvalueset_atom_ptr as_fromobjectset();
+        fromobjects_valueset_atom_ptr as_fromobjectset();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -52,14 +52,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectvalueset_atom
+    // fromobject_valueset_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class fromobjectvalueset_atom : public valueset_atom {
+    class fromobject_valueset_atom : public valueset_atom {
 
     public:
 
-        fromobjectvalueset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+        fromobject_valueset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
 
         object_atom_ptr object() const {
             return object_;
@@ -88,14 +88,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectsetvalueset_atom
+    // fromobjects_valueset_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class fromobjectsetvalueset_atom : public valueset_atom {
+    class fromobjects_valueset_atom : public valueset_atom {
 
     public:
 
-        fromobjectsetvalueset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj = objectset_atom_ptr());
+        fromobjects_valueset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj = objectset_atom_ptr());
 
         objectset_atom_ptr objectset() const {
             return objectset_;
@@ -193,9 +193,9 @@ namespace x680 {
 
         valueconstraint_atom_ptr as_valueconstraint();
 
-        fromdefinedsetconstraint_atom_ptr as_fromdefinedset();
+        fromdefined_objects_constraint_atom_ptr as_fromdefinedset();
 
-        fromdefinedconstraint_atom_ptr as_fromdefined();
+        fromdefined_constraint_atom_ptr as_fromdefined();
 
         valueconstraint_atom_ptr as_pattern();
 
@@ -282,14 +282,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // fromdefinedsetconstraint_atom
+    // fromdefined_objects_constraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class fromdefinedsetconstraint_atom : public constraint_atom {
+    class fromdefined_objects_constraint_atom : public constraint_atom {
 
     public:
 
-        fromdefinedsetconstraint_atom(basic_entity_ptr scope, const std::string& refffld, objectset_atom_ptr objs = objectset_atom_ptr());
+        fromdefined_objects_constraint_atom(basic_entity_ptr scope, const std::string& refffld, objectset_atom_ptr objs = objectset_atom_ptr());
 
         objectset_atom_ptr objectset() const {
             return objectset_;
@@ -318,14 +318,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // fromdefinedconstraint_atom
+    // fromdefined_constraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class fromdefinedconstraint_atom : public constraint_atom {
+    class fromdefined_constraint_atom : public constraint_atom {
 
     public:
 
-        fromdefinedconstraint_atom(basic_entity_ptr scope, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+        fromdefined_constraint_atom(basic_entity_ptr scope, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
 
         object_atom_ptr object() const {
             return object_;
@@ -621,7 +621,7 @@ namespace x680 {
         }
 
         exceptionconstraint_atom(basic_entity_ptr scp, std::string vl)
-        : constraint_atom(scp, cns_EXCEPTION), value_(value_atom_ptr(new definedvalue_atom(vl, scp))),
+        : constraint_atom(scp, cns_EXCEPTION), value_(value_atom_ptr(new defined_value_atom(vl, scp))),
         type_(type_atom_ptr(new type_atom(scp, t_INTEGER))) {
         }
 

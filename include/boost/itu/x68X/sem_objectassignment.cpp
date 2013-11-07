@@ -28,14 +28,14 @@ namespace x680 {
     : basic_atom(at_Object, scope, reff), builtin_(tp) {
     }
 
-    definedobject_atom_ptr object_atom::as_defined() {
+    defined_object_atom_ptr object_atom::as_defined() {
         return builtin_ == ot_Refference ?
-                boost::static_pointer_cast<definedobject_atom> (self()) : definedobject_atom_ptr();
+                boost::static_pointer_cast<defined_object_atom> (self()) : defined_object_atom_ptr();
     }
 
-    definedsetobject_atom_ptr object_atom::as_definedset() {
+    definedobjects_object_atom_ptr object_atom::as_definedset() {
         return builtin_ == ot_DefinedObjectSet ?
-                boost::static_pointer_cast<definedsetobject_atom> (self()) : definedsetobject_atom_ptr();
+                boost::static_pointer_cast<definedobjects_object_atom> (self()) : definedobjects_object_atom_ptr();
     }
 
     defltobject_atom_ptr object_atom::as_deflt() {
@@ -43,24 +43,24 @@ namespace x680 {
                 boost::static_pointer_cast<defltobject_atom> (self()) : defltobject_atom_ptr();
     }
 
-    defsyntxobject_atom_ptr object_atom::as_defnsyntx() {
+    defsyntax_object_atom_ptr object_atom::as_defnsyntx() {
         return builtin_ == ot_ObjectDefineSyn ?
-                boost::static_pointer_cast<defsyntxobject_atom> (self()) : defsyntxobject_atom_ptr();
+                boost::static_pointer_cast<defsyntax_object_atom> (self()) : defsyntax_object_atom_ptr();
     }
 
-    fromobjectobject_atom_ptr object_atom::as_fromobject() {
+    fromobject_object_atom_ptr object_atom::as_fromobject() {
         return builtin_ == ot_FromObject ?
-                boost::static_pointer_cast<fromobjectobject_atom> (self()) : fromobjectobject_atom_ptr();
+                boost::static_pointer_cast<fromobject_object_atom> (self()) : fromobject_object_atom_ptr();
     }
 
-    fromdefinedsetobject_atom_ptr object_atom::as_fromdefinedset() {
+    fromdefined_objects_object_atom_ptr object_atom::as_fromdefinedset() {
         return builtin_ == ot_ObjectSetFromObjects ?
-                boost::static_pointer_cast<fromdefinedsetobject_atom> (self()) : fromdefinedsetobject_atom_ptr();
+                boost::static_pointer_cast<fromdefined_objects_object_atom> (self()) : fromdefined_objects_object_atom_ptr();
     }
 
-    fromdefinedobject_atom_ptr object_atom::as_fromdefined() {
+    fromdefined_object_atom_ptr object_atom::as_fromdefined() {
         return builtin_ == ot_ObjectSetFromObject ?
-                boost::static_pointer_cast<fromdefinedobject_atom> (self()) : fromdefinedobject_atom_ptr();
+                boost::static_pointer_cast<fromdefined_object_atom> (self()) : fromdefined_object_atom_ptr();
     }
 
     unionobject_atom_ptr object_atom::as_union() {
@@ -98,50 +98,50 @@ namespace x680 {
     // defenedobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    void definedobject_atom::resolve(basic_atom_ptr holder) {
+    void defined_object_atom::resolve(basic_atom_ptr holder) {
         // if (builtin() == ot_Refference)
         resolve_reff();
     };
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // definedsetobject_atom
+    // definedobjects_object_atom
     /////////////////////////////////////////////////////////////////////////    
 
-    definedsetobject_atom::definedsetobject_atom(basic_entity_ptr scope, objectset_atom_ptr objs) :
+    definedobjects_object_atom::definedobjects_object_atom(basic_entity_ptr scope, objectset_atom_ptr objs) :
     object_atom(scope, ot_DefinedObjectSet), objectset_(objs) {
     };
 
-    void definedsetobject_atom::resolve(basic_atom_ptr holder) {
+    void definedobjects_object_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // fromdefinedsetobject_atom
+    // fromdefined_objects_object_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    fromdefinedsetobject_atom::fromdefinedsetobject_atom(basic_entity_ptr scope, const std::string& refffld, objectset_atom_ptr objs) :
+    fromdefined_objects_object_atom::fromdefined_objects_object_atom(basic_entity_ptr scope, const std::string& refffld, objectset_atom_ptr objs) :
     object_atom(scope, ot_ObjectSetFromObjects), objectset_(objs), field_(basic_atom_ptr(new basic_atom(at_Nodef, scope, refffld))) {
 
     }
 
-    void fromdefinedsetobject_atom::resolve(basic_atom_ptr holder) {
+    void fromdefined_objects_object_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
     }
 
     /////////////////////////////////////////////////////////////////////////        
-    // fromdefinedobject_atom
+    // fromdefined_object_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    fromdefinedobject_atom::fromdefinedobject_atom(basic_entity_ptr scope, const std::string& refffld, object_atom_ptr obj) :
+    fromdefined_object_atom::fromdefined_object_atom(basic_entity_ptr scope, const std::string& refffld, object_atom_ptr obj) :
     object_atom(scope, ot_ObjectSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scope, refffld))) {
 
     }
 
-    void fromdefinedobject_atom::resolve(basic_atom_ptr holder) {
+    void fromdefined_object_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }
@@ -167,22 +167,22 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////        
-    // defsyntxobject_atom
+    // defsyntax_object_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    void defsyntxobject_atom::resolve(basic_atom_ptr holder) {
+    void defsyntax_object_atom::resolve(basic_atom_ptr holder) {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
         }
     };
 
-    fieldsetting_atom_ptr defsyntxobject_atom::find_field(const std::string& name) {
+    fieldsetting_atom_ptr defsyntax_object_atom::find_field(const std::string& name) {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it)
             if ((*it)->field() == name)
                 return (*it);
         return fieldsetting_atom_ptr();
     }
 
-    bool defsyntxobject_atom::find_literal(const std::string& name) {
+    bool defsyntax_object_atom::find_literal(const std::string& name) {
         std::string tmpl = "";
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
             if (!(*it)->setting()->literal().empty()) {
@@ -203,14 +203,14 @@ namespace x680 {
     }
 
     /////////////////////////////////////////////////////////////////////////     
-    // fromobjectobject_atom
+    // fromobject_object_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    fromobjectobject_atom::fromobjectobject_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj)
+    fromobject_object_atom::fromobject_object_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj)
     : object_atom(scp, ot_FromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
-    void fromobjectobject_atom::resolve(basic_atom_ptr holder) {
+    void fromobject_object_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
     }
@@ -302,7 +302,7 @@ namespace x680 {
         }
     }
 
-    void objectassignment_entity::calculate_fields(classassignment_entity_ptr cls, defsyntxobject_atom_ptr obj) {
+    void objectassignment_entity::calculate_fields(classassignment_entity_ptr cls, defsyntax_object_atom_ptr obj) {
         fieldsetting_atom_vct newvct;
         if (cls->withsyntax()) {
             calculate_fields(cls->withsyntax(), obj, newvct);
@@ -310,7 +310,7 @@ namespace x680 {
         }
     }
 
-    bool objectassignment_entity::calculate_fields(syntax_atom_ptr syn, defsyntxobject_atom_ptr obj, fieldsetting_atom_vct& newvct, bool optional) {
+    bool objectassignment_entity::calculate_fields(syntax_atom_ptr syn, defsyntax_object_atom_ptr obj, fieldsetting_atom_vct& newvct, bool optional) {
         if (syn->as_group()) {
             if (syn->isalias()) {
                 if (obj->find_literal(syn->alias())) {

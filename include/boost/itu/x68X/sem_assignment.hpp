@@ -165,11 +165,11 @@ namespace x680 {
     class instanceoftype_atom;
     typedef boost::shared_ptr<instanceoftype_atom> instanceoftype_atom_ptr;
 
-    class fromobjecttype_atom;
-    typedef boost::shared_ptr<fromobjecttype_atom> fromobjecttype_atom_ptr;
+    class fromobject_type_atom;
+    typedef boost::shared_ptr<fromobject_type_atom> fromobject_type_atom_ptr;
 
-    class fromobjectsettype_atom;
-    typedef boost::shared_ptr<fromobjectsettype_atom> fromobjectsettype_atom_ptr;
+    class fromobjects_type_atom;
+    typedef boost::shared_ptr<fromobjects_type_atom> fromobjects_type_atom_ptr;
 
 
     class value_atom;
@@ -195,11 +195,11 @@ namespace x680 {
     class structvalue_atom;
     typedef boost::shared_ptr<structvalue_atom> structvalue_atom_ptr;
 
-    class definedvalue_atom;
-    typedef boost::shared_ptr<definedvalue_atom> definedvalue_atom_ptr;
+    class defined_value_atom;
+    typedef boost::shared_ptr<defined_value_atom> defined_value_atom_ptr;
 
-    class fromobjectvalue_atom;
-    typedef boost::shared_ptr<fromobjectvalue_atom> fromobjectvalue_atom_ptr;
+    class fromobject_value_atom;
+    typedef boost::shared_ptr<fromobject_value_atom> fromobject_value_atom_ptr;
 
     class assignvalue_atom;
     typedef boost::shared_ptr<assignvalue_atom> assignvalue_atom_ptr;
@@ -222,11 +222,11 @@ namespace x680 {
     class valueset_atom;
     typedef boost::shared_ptr<valueset_atom> valueset_atom_ptr;
 
-    class fromobjectvalueset_atom;
-    typedef boost::shared_ptr<fromobjectvalueset_atom> fromobjectvalueset_atom_ptr;
+    class fromobject_valueset_atom;
+    typedef boost::shared_ptr<fromobject_valueset_atom> fromobject_valueset_atom_ptr;
 
-    class fromobjectsetvalueset_atom;
-    typedef boost::shared_ptr<fromobjectsetvalueset_atom> fromobjectsetvalueset_atom_ptr;
+    class fromobjects_valueset_atom;
+    typedef boost::shared_ptr<fromobjects_valueset_atom> fromobjects_valueset_atom_ptr;
 
     class constraints_atom;
     typedef boost::shared_ptr<constraints_atom> constraints_atom_ptr;
@@ -242,11 +242,11 @@ namespace x680 {
     class valueconstraint_atom;
     typedef boost::shared_ptr<valueconstraint_atom> valueconstraint_atom_ptr;
 
-    class fromdefinedsetconstraint_atom;
-    typedef boost::shared_ptr<fromdefinedsetconstraint_atom> fromdefinedsetconstraint_atom_ptr;
+    class fromdefined_objects_constraint_atom;
+    typedef boost::shared_ptr<fromdefined_objects_constraint_atom> fromdefined_objects_constraint_atom_ptr;
 
-    class fromdefinedconstraint_atom;
-    typedef boost::shared_ptr<fromdefinedconstraint_atom> fromdefinedconstraint_atom_ptr;
+    class fromdefined_constraint_atom;
+    typedef boost::shared_ptr<fromdefined_constraint_atom> fromdefined_constraint_atom_ptr;
 
     class rangeconstraint_atom;
     typedef boost::shared_ptr<rangeconstraint_atom> rangeconstraint_atom_ptr;
@@ -359,26 +359,26 @@ namespace x680 {
     typedef boost::shared_ptr<object_atom> object_atom_ptr;
     typedef std::vector<object_atom_ptr> object_atom_vct;
 
-    class definedobject_atom;
-    typedef boost::shared_ptr<definedobject_atom> definedobject_atom_ptr;
+    class defined_object_atom;
+    typedef boost::shared_ptr<defined_object_atom> defined_object_atom_ptr;
 
-    class definedsetobject_atom;
-    typedef boost::shared_ptr<definedsetobject_atom> definedsetobject_atom_ptr;
+    class definedobjects_object_atom;
+    typedef boost::shared_ptr<definedobjects_object_atom> definedobjects_object_atom_ptr;
 
-    class fromdefinedsetobject_atom;
-    typedef boost::shared_ptr<fromdefinedsetobject_atom> fromdefinedsetobject_atom_ptr;
+    class fromdefined_objects_object_atom;
+    typedef boost::shared_ptr<fromdefined_objects_object_atom> fromdefined_objects_object_atom_ptr;
 
-    class fromdefinedobject_atom;
-    typedef boost::shared_ptr<fromdefinedobject_atom> fromdefinedobject_atom_ptr;
+    class fromdefined_object_atom;
+    typedef boost::shared_ptr<fromdefined_object_atom> fromdefined_object_atom_ptr;
 
     class defltobject_atom;
     typedef boost::shared_ptr<defltobject_atom> defltobject_atom_ptr;
 
-    class defsyntxobject_atom;
-    typedef boost::shared_ptr<defsyntxobject_atom> defsyntxobject_atom_ptr;
+    class defsyntax_object_atom;
+    typedef boost::shared_ptr<defsyntax_object_atom> defsyntax_object_atom_ptr;
 
-    class fromobjectobject_atom;
-    typedef boost::shared_ptr<fromobjectobject_atom> fromobjectobject_atom_ptr;
+    class fromobject_object_atom;
+    typedef boost::shared_ptr<fromobject_object_atom> fromobject_object_atom_ptr;
 
     class unionobject_atom;
     typedef boost::shared_ptr<unionobject_atom> unionobject_atom_ptr;
@@ -406,17 +406,17 @@ namespace x680 {
     class objectset_atom;
     typedef boost::shared_ptr<objectset_atom> objectset_atom_ptr;
 
-    class fromobjectobjectset_atom;
-    typedef boost::shared_ptr<fromobjectobjectset_atom> fromobjectobjectset_atom_ptr;
+    class fromobject_objectset_atom;
+    typedef boost::shared_ptr<fromobject_objectset_atom> fromobject_objectset_atom_ptr;
 
-    class fromobjectsetobjectset_atom;
-    typedef boost::shared_ptr<fromobjectsetobjectset_atom> fromobjectsetobjectset_atom_ptr;
+    class fromobjects_objectset_atom;
+    typedef boost::shared_ptr<fromobjects_objectset_atom> fromobjects_objectset_atom_ptr;
 
-    class definedobjectset_atom;
-    typedef boost::shared_ptr<definedobjectset_atom> definedobjectset_atom_ptr;
+    class defined_objectset_atom;
+    typedef boost::shared_ptr<defined_objectset_atom> defined_objectset_atom_ptr;
 
-    class defnobjectset_atom;
-    typedef boost::shared_ptr<defnobjectset_atom> defnobjectset_atom_ptr;
+    class defn_objectset_atom;
+    typedef boost::shared_ptr<defn_objectset_atom> defn_objectset_atom_ptr;
 
 
 

@@ -119,14 +119,14 @@ namespace x680 {
                 boost::static_pointer_cast<instanceoftype_atom> (self()) : instanceoftype_atom_ptr();
     }
 
-    fromobjecttype_atom_ptr type_atom::as_fromobject() {
+    fromobject_type_atom_ptr type_atom::as_fromobject() {
         return builtin() == t_TypeFromObject ?
-                boost::static_pointer_cast<fromobjecttype_atom> (self()) : fromobjecttype_atom_ptr();
+                boost::static_pointer_cast<fromobject_type_atom> (self()) : fromobject_type_atom_ptr();
     }
 
-    fromobjectsettype_atom_ptr type_atom::as_fromobjectset() {
+    fromobjects_type_atom_ptr type_atom::as_fromobjectset() {
         return builtin() == t_ValueSetFromObjects ?
-                boost::static_pointer_cast<fromobjectsettype_atom> (self()) : fromobjectsettype_atom_ptr();
+                boost::static_pointer_cast<fromobjects_type_atom> (self()) : fromobjects_type_atom_ptr();
     }
 
     void type_atom::resolve(basic_atom_ptr holder) {
@@ -322,14 +322,14 @@ namespace x680 {
     }
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjecttype_atom
+    // fromobject_type_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    fromobjecttype_atom::fromobjecttype_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj, tagged_ptr tg) :
+    fromobject_type_atom::fromobject_type_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj, tagged_ptr tg) :
     type_atom(scp, t_TypeFromObject, tg), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
-    void fromobjecttype_atom::resolve(basic_atom_ptr holder) {
+    void fromobject_type_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
         resolve_tag();
@@ -338,14 +338,14 @@ namespace x680 {
     }
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectsettype_atom
+    // fromobjects_type_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    fromobjectsettype_atom::fromobjectsettype_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj, tagged_ptr tg) :
+    fromobjects_type_atom::fromobjects_type_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj, tagged_ptr tg) :
     type_atom(scp, t_ValueSetFromObjects, tg), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
-    void fromobjectsettype_atom::resolve(basic_atom_ptr holder) {
+    void fromobjects_type_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
         resolve_tag();

@@ -49,9 +49,9 @@ namespace x680 {
 
         structvalue_atom_ptr as_list();
 
-        definedvalue_atom_ptr as_defined();
+        defined_value_atom_ptr as_defined();
 
-        fromobjectvalue_atom_ptr as_fromobject();
+        fromobject_value_atom_ptr as_fromobject();
 
         assignvalue_atom_ptr as_assign();
 
@@ -218,14 +218,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // definedvalue_atom
+    // defined_value_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    class definedvalue_atom : public value_atom {
+    class defined_value_atom : public value_atom {
 
     public:
 
-        definedvalue_atom(const std::string& rff, basic_entity_ptr scp)
+        defined_value_atom(const std::string& rff, basic_entity_ptr scp)
         : value_atom(scp, rff, v_defined) {
         };
 
@@ -235,14 +235,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectvalue_atom
+    // fromobject_value_atom
     /////////////////////////////////////////////////////////////////////////      
 
-    class fromobjectvalue_atom : public value_atom {
+    class fromobject_value_atom : public value_atom {
 
     public:
 
-        fromobjectvalue_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+        fromobject_value_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
 
         object_atom_ptr object() const {
             return object_;

@@ -28,13 +28,13 @@ namespace x680 {
             return builtin_;
         }
 
-        definedobjectset_atom_ptr as_defined();
+        defined_objectset_atom_ptr as_defined();
 
-        defnobjectset_atom_ptr as_defn();
+        defn_objectset_atom_ptr as_defn();
 
-        fromobjectobjectset_atom_ptr as_fromobject();
+        fromobject_objectset_atom_ptr as_fromobject();
 
-        fromobjectsetobjectset_atom_ptr as_fromobjectset();
+        fromobjects_objectset_atom_ptr as_fromobjectset();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -45,15 +45,60 @@ namespace x680 {
     };
 
 
-    /////////////////////////////////////////////////////////////////////////   
-    // fromobjectobjectset_atom
+    /////////////////////////////////////////////////////////////////////////        
+    // defineobjectset_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class fromobjectobjectset_atom : public objectset_atom {
+    class defined_objectset_atom : public objectset_atom {
 
     public:
 
-        fromobjectobjectset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
+        defined_objectset_atom(basic_entity_ptr scope, const std::string& reff) : objectset_atom(scope, reff, os_defined) {
+        };
+
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////        
+    // defn_objectset_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class defn_objectset_atom : public objectset_atom {
+
+    public:
+
+        defn_objectset_atom(basic_entity_ptr scope, object_atom_vct objs = object_atom_vct())
+        : objectset_atom(scope, os_Strait), objects_(objs) {
+        };
+
+        object_atom_vct& objects() {
+            return objects_;
+        }
+
+        void objects(object_atom_vct vl) {
+            objects_ = vl;
+        }
+
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+    private:
+
+        object_atom_vct objects_;
+
+    };
+    
+    
+        /////////////////////////////////////////////////////////////////////////   
+    // fromobject_objectset_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class fromobject_objectset_atom : public objectset_atom {
+
+    public:
+
+        fromobject_objectset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj = object_atom_ptr());
 
         object_atom_ptr object() const {
             return object_;
@@ -82,14 +127,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // fromobjectsetobjectset_atom
+    // fromobjects_objectset_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class fromobjectsetobjectset_atom : public objectset_atom {
+    class fromobjects_objectset_atom : public objectset_atom {
 
     public:
 
-        fromobjectsetobjectset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj = objectset_atom_ptr());
+        fromobjects_objectset_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj = objectset_atom_ptr());
 
         objectset_atom_ptr objectset() const {
             return objectset_;
@@ -113,51 +158,6 @@ namespace x680 {
 
         objectset_atom_ptr objectset_;
         basic_atom_ptr field_;
-
-    };
-
-
-    /////////////////////////////////////////////////////////////////////////        
-    // defineobjectset_atom
-    /////////////////////////////////////////////////////////////////////////  
-
-    class definedobjectset_atom : public objectset_atom {
-
-    public:
-
-        definedobjectset_atom(basic_entity_ptr scope, const std::string& reff) : objectset_atom(scope, reff, os_defined) {
-        };
-
-        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
-
-    };
-
-
-    /////////////////////////////////////////////////////////////////////////        
-    // defnobjectset_atom
-    /////////////////////////////////////////////////////////////////////////  
-
-    class defnobjectset_atom : public objectset_atom {
-
-    public:
-
-        defnobjectset_atom(basic_entity_ptr scope, object_atom_vct objs = object_atom_vct())
-        : objectset_atom(scope, os_Strait), objects_(objs) {
-        };
-
-        object_atom_vct& objects() {
-            return objects_;
-        }
-
-        void objects(object_atom_vct vl) {
-            objects_ = vl;
-        }
-
-        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
-
-    private:
-
-        object_atom_vct objects_;
 
     };
 
