@@ -135,7 +135,7 @@ namespace x680 {
                     break;
                 case gvr_Class: tmp->governor(compile_classdefined(scope, ent.governorclass));
                     break;
-                case gvr_Type_or_Class: tmp->governor(basic_atom_ptr(new basic_atom(scope, ent.reff)));
+                case gvr_Type_or_Class: tmp->governor(boost::make_shared< basic_atom>(scope, ent.reff));
                     break;
                 default:
                 {
@@ -175,21 +175,21 @@ namespace x680 {
             switch (ent.type.marker) {
                 case mk_default:
                 {
-                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, type_atom_ptr(), value_atom_ptr()));
+                    tmpt = boost::make_shared<namedtypeassignment_entity>(scope, ent.identifier, type_atom_ptr(), value_atom_ptr());
                     tmpt->type(compile_type(tmpt, ent.type));
                     tmpt-> _default(compile_value(tmpt, ent.type.value));
                     break;
                 }
                 case mk_exception:
                 {
-                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, type_atom_ptr(), value_atom_ptr()));
+                    tmpt = boost::make_shared<namedtypeassignment_entity>(scope, type_atom_ptr(), value_atom_ptr());
                     tmpt->type(compile_type(tmpt, ent.type));
                     tmpt-> _default(compile_value(tmpt, ent.type.value));
                     break;
                 }
                 case mk_extention:
                 {
-                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope));
+                    tmpt = boost::make_shared<namedtypeassignment_entity>(scope);
                     if (scope && (scope->as_typeassigment()) && (scope->as_typeassigment()->type()))
                         scope->as_typeassigment()->type()->extention(true);
                     return tmpt;
@@ -197,7 +197,7 @@ namespace x680 {
                 }
                 default:
                 {
-                    tmpt = namedtypeassignment_entity_ptr(new namedtypeassignment_entity(scope, ent.identifier, type_atom_ptr(), ent.type.marker));
+                    tmpt = boost::make_shared<namedtypeassignment_entity>(scope, ent.identifier, type_atom_ptr(), ent.type.marker);
                     tmpt->type(compile_type(tmpt, ent.type));
                 }
             }
@@ -601,7 +601,7 @@ namespace x680 {
                 }
                 case gvr_Type_or_Class:
                 {
-                    uargument_entity_ptr tmp(new uargument_entity(scope, basic_atom_ptr(new basic_atom(scope, ent.reff))));
+                    uargument_entity_ptr tmp(new uargument_entity(scope, boost::make_shared< basic_atom>(scope, ent.reff)));
                     tmp->setting(compile_setting(tmp, ent.parameter));
                     return tmp;
                 }
@@ -812,7 +812,7 @@ namespace x680 {
         }
 
         basic_entity_ptr compile_undefclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
-            basic_atom_ptr bg = basic_atom_ptr(new basic_atom(scope, ent.holder));
+            basic_atom_ptr bg = boost::make_shared< basic_atom>(scope, ent.holder);
             switch (ent.marker) {
                 case field_defaultov:
                 {
@@ -831,7 +831,7 @@ namespace x680 {
         }
 
         basic_entity_ptr compile_unsefsetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
-            basic_atom_ptr bg = basic_atom_ptr(new basic_atom(scope, ent.holder));
+            basic_atom_ptr bg = boost::make_shared< basic_atom>(scope, ent.holder);
             switch (ent.marker) {
                 case field_defaultos:
                 {
@@ -852,17 +852,17 @@ namespace x680 {
         withsyntax_atom compile_withsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent) {
             if (ent.empty())
                 return withsyntax_atom();
-            return withsyntax_atom(new groupsyntax_atom(scope, "", compile_groupwithsyntax(scope, ent), false));
+            return boost::make_shared< groupsyntax_atom>(scope, "", compile_groupwithsyntax(scope, ent), false);
         }
 
         syntax_atom_vct compile_groupwithsyntax(basic_entity_ptr scope, const x680::syntactic::classsyntax_vector& ent) {
             syntax_atom_vct tmp;
             for (x680::syntactic::classsyntax_vector::const_iterator it = ent.begin(); it != ent.end(); ++it) {
                 if (it->group.empty()) {
-                    tmp.push_back(syntax_atom_ptr(new syntax_atom(scope, it->alias, it->field, it->optional)));
+                    tmp.push_back(boost::make_shared< syntax_atom>(scope, it->alias, it->field, it->optional));
                 } else {
-                    tmp.push_back(syntax_atom_ptr(new groupsyntax_atom(scope, it->alias, 
-                            compile_groupwithsyntax(scope, it->group), it->optional)));
+                    tmp.push_back(boost::make_shared< groupsyntax_atom>(scope, it->alias, 
+                            compile_groupwithsyntax(scope, it->group), it->optional));
                 }
             }
             return tmp;
@@ -919,7 +919,7 @@ namespace x680 {
         }
 
         fieldsetting_atom_ptr compile_object_field(basic_entity_ptr scope, const x680::syntactic::objectfield_type& ent) {
-            return fieldsetting_atom_ptr(new fieldsetting_atom(scope, ent.field, compile_setting(scope, ent.setting)));
+            return boost::make_shared<fieldsetting_atom>(scope, ent.field, compile_setting(scope, ent.setting));
         }
 
         setting_atom_ptr compile_setting(basic_entity_ptr scope, const x680::syntactic::setting_element& ent) {
@@ -960,15 +960,15 @@ namespace x680 {
 
         objectset_atom_ptr compile_objectset_impl(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
             switch (ent.tp) {
-                case os_ObjectSetFromObject: return objectset_atom_ptr(new fromobjectobjectset_atom(scope, ent.reference, compile_object(scope, *ent.objectref)));
-                case os_ObjectSetFromObjects: return objectset_atom_ptr(new fromobjectsetobjectset_atom(scope, ent.reference, compile_objectset(scope, *ent.objectsetref)));
+                case os_ObjectSetFromObject: return boost::make_shared< fromobjectobjectset_atom>(scope, ent.reference, compile_object(scope, *ent.objectref));
+                case os_ObjectSetFromObjects: return boost::make_shared< fromobjectsetobjectset_atom>(scope, ent.reference, compile_objectset(scope, *ent.objectsetref));
                     //case os_defined:
-                case os_Strait: return objectset_atom_ptr(new defnobjectset_atom(scope, compile_objectset_vct(scope, ent)));
+                case os_Strait: return boost::make_shared< defnobjectset_atom>(scope, compile_objectset_vct(scope, ent));
                 default:
                 {
                 }
             }
-            return objectset_atom_ptr(new definedobjectset_atom(scope, ent.reference));
+            return boost::make_shared< definedobjectset_atom>(scope, ent.reference);
         }
 
         object_atom_vct compile_objectset_vct(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
@@ -979,7 +979,7 @@ namespace x680 {
         }
 
         bigassignment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::unknown_tc_assignment& tmp) {
-            bigassignment_entity_ptr tmpv = bigassignment_entity_ptr(new bigassignment_entity(scope, tmp.identifier));
+            bigassignment_entity_ptr tmpv =boost::make_shared< bigassignment_entity>(scope, tmp.identifier);
             tmpv->big(compile_reff(scope, tmp.unknown_tc.reff));
             tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
             tmpv->big()->parameters(compile_parameters(scope, tmp.unknown_tc.parameters));
@@ -993,7 +993,7 @@ namespace x680 {
         // value or object 
 
         voassignment_entity_ptr compile_voassignment(basic_entity_ptr scope, const x680::syntactic::unknown_vo_assignment& tmp) {
-            voassignment_entity_ptr tmpv = voassignment_entity_ptr(new voassignment_entity(scope, tmp.identifier));
+            voassignment_entity_ptr tmpv = boost::make_shared< voassignment_entity>(scope, tmp.identifier);
             tmpv->big(compile_reff(tmpv, tmp.reff));
             if ((tmp.alternative_ & AS_VALUE) && (tmp.valuea))
                 tmpv->bigT(compile_valueassignment(scope, *tmp.valuea));
@@ -1019,7 +1019,7 @@ namespace x680 {
         // reff
 
         basic_atom_ptr compile_reff(basic_entity_ptr scope, const std::string& rf) {
-            return basic_atom_ptr(new basic_atom(scope, rf));
+            return boost::make_shared< basic_atom>(scope, rf);
         }
 
 
