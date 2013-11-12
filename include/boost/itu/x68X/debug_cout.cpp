@@ -368,12 +368,12 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, canonical_tag_ptr self) {
         if (self) {
             stream << " || ";
-            switch (self) {
-                case tcl_universal: stream << "UNIVERSAL ";
+            switch (self->_class()) {
+                case tcl_universal: stream << "UNIVERSAL";
                     break;
-                case tcl_application: stream << "APPLICATION ";
+                case tcl_application: stream << "APPLICATION";
                     break;
-                case tcl_private: stream << "PRIVATE ";
+                case tcl_private: stream << "PRIVATE";
                     break;
                 case tcl_context: stream << "CONTEXT";
                     break;
