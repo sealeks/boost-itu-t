@@ -18,8 +18,89 @@ namespace x680 {
 
     /////////////////////////////////////////////////////////////////////////   
     // tagged
-    /////////////////////////////////////////////////////////////////////////     
+    /////////////////////////////////////////////////////////////////////////    
 
+
+    /////////////////////////////////////////////////////////////////////////   
+    // canonical_tag
+    /////////////////////////////////////////////////////////////////////////   
+
+    boost::uint64_t from_defined_type(defined_type tp) {
+        switch (tp) {
+            case t_BOOLEAN: return 1;
+            case t_INTEGER: return 2;
+            case t_BIT_STRING: return 3;
+            case t_OCTET_STRING: return 4;
+            case t_NULL: return 5;
+            case t_OBJECT_IDENTIFIER: return 6;
+            case t_ObjectDescriptor: return 7;
+            case t_EXTERNAL: return 8;
+            case t_REAL: return 9;
+            case t_ENUMERATED: return 10;
+            case t_EMBEDDED_PDV: return 11;
+            case t_UTF8String: return 12;
+            case t_RELATIVE_OID: return 13;
+            case t_SEQUENCE:
+            case t_SEQUENCE_OF: return 16;
+            case t_SET:
+            case t_SET_OF: return 17;
+            case t_NumericString: return 18;
+            case t_PrintableString: return 19;
+            case t_T61String: return 20;
+            case t_VideotexString: return 21;
+            case t_IA5String: return 22;
+            case t_UTCTime: return 23;
+            case t_GeneralizedTime: return 24;
+            case t_GraphicString: return 25;
+            case t_VisibleString: return 26;
+            case t_GeneralString: return 27;
+            case t_UniversalString: return 28;
+            case t_CHARACTER_STRING: return 29;
+            case t_BMPString: return 30;
+            case t_TIME: return 31;
+            case t_TIME_OF_DAY: return 32;
+            case t_DATE_TIME: return 33;
+            case t_DURATION: return 34;
+            case t_Instance_Of: return 16;
+                /* 
+                case t_Selection: return          
+                case t_RELATIVE_OID_IRI: return 
+                case t_OID_IRI: return 
+                case t_NODEF: return 
+                case t_ClassField,
+                case t_TypeFromObject,
+                case t_ValueSetFromObjects,
+                case t_CHOICE,                
+                case t_Reference*/
+        }
+        return 0;
+    }
+
+    bool operator==(const canonical_tag& ls, const canonical_tag& rs) {
+        return (ls.number_ == rs.number_) && (ls.class_ == rs.class_);
+    }
+
+    bool operator!=(const canonical_tag& ls, const canonical_tag& rs) {
+        return !(ls == rs);
+    }
+
+    bool operator==(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs) {
+        if ((!ls) || (!rs))
+            return false;
+        return (*ls) == (*rs);
+    }
+
+    bool operator!=(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs) {
+        if ((!ls) || (!rs))
+            return true;
+        return (*ls) != (*rs);
+    }      
+
+    bool canonical_tag::operator<(const canonical_tag& other) {
+        if (class_ != other.class_)
+            return static_cast<int> (class_) <static_cast<int> (other.number_);
+        return number_ < other.number_;
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
@@ -58,6 +139,33 @@ namespace x680 {
                 return reff()->as_typeassigment()->type()->root_builtin();
         }
         return t_NODEF;
+    }
+
+    canonical_tag_ptr type_atom::ctag() {
+        if (!tag()) {
+            switch (builtin_) {
+                case t_Reference:
+                {
+                    if (reff() && (reff()->as_typeassigment())) {
+                        if (reff()->as_typeassigment()->type())
+                            return reff()->as_typeassigment()->type()->ctag();
+                    }
+                    break;
+                }
+                default:
+                {
+                    return canonical_tag_ptr(new canonical_tag(builtin_));
+                }
+            }
+        } else {
+            if ((tag()->number()->root())
+                    && (tag()->number()->root()->as_value())
+                    && (tag()->number()->root()->as_value()->as_number())) {
+                boost::uint64_t num = tag()->number()->root()->as_value()->as_number()->value();
+                return canonical_tag_ptr(new canonical_tag(num, tag()->_class()));
+            }
+        }
+        return canonical_tag_ptr();
     }
 
     bool type_atom::isopen() const {

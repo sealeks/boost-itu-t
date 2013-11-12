@@ -311,9 +311,10 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, type_atom_ptr self) {
-        if (self->tag()) {
+        if (self->ctag()) 
+            stream << self->ctag();        
+        if (self->tag())
             stream << *(self->tag());
-        }
         switch (self->builtin()) {
             case t_Reference:
             {
@@ -364,9 +365,28 @@ namespace x680 {
         return stream;
     }
 
+    std::ostream& operator<<(std::ostream& stream, canonical_tag_ptr self) {
+        if (self) {
+            stream << " || ";
+            switch (self) {
+                case tcl_universal: stream << "UNIVERSAL ";
+                    break;
+                case tcl_application: stream << "APPLICATION ";
+                    break;
+                case tcl_private: stream << "PRIVATE ";
+                    break;
+                case tcl_context: stream << "CONTEXT";
+                    break;
+            }
+            stream << "  [" << self->number() << "] || ";
+        }
+        return stream;
+    }    
+    
+
     std::ostream& operator<<(std::ostream& stream, defined_type self) {
         switch (self) {
-            case t_NODEF: return stream << "NODEF";
+            
             case t_BOOLEAN: return stream << "BOOLEAN";
             case t_INTEGER: return stream << "INTEGER";
             case t_BIT_STRING: return stream << "BIT_STRING";

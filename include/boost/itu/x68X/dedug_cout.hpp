@@ -37,6 +37,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, tagrule_type self);
     std::ostream& operator<<(std::ostream& stream, tagged& self);
     std::ostream& operator<<(std::ostream& stream, type_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, canonical_tag_ptr self);    
     //value
     std::ostream& operator<<(std::ostream& stream, valueassignment_entity_ptr self);
     std::ostream& operator<<(std::ostream& stream, defined_type self);

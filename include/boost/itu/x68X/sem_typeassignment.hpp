@@ -112,6 +112,58 @@ namespace x680 {
     };
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // canonical_tag
+    /////////////////////////////////////////////////////////////////////////   
+
+
+    boost::uint64_t from_defined_type(defined_type tp);
+
+    class canonical_tag {
+
+    public:
+
+        canonical_tag(boost::uint64_t vl, tagclass_type cl = tcl_context)
+        : number_(vl), class_(cl) {
+        }
+
+        canonical_tag(defined_type tp, tagclass_type cl = tcl_universal)
+        : number_(from_defined_type(tp)), class_(cl) {
+        }
+
+        virtual ~canonical_tag() {
+        }
+
+        boost::uint64_t number() const {
+            return number_;
+        }
+
+        tagclass_type _class() const {
+            return class_;
+        }
+
+
+        friend bool operator==(const canonical_tag& ls, const canonical_tag& rs);
+        
+        friend bool operator!=(const canonical_tag& ls, const canonical_tag& rs);    
+        
+        friend bool operator==(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);
+        
+        friend bool operator!=(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);             
+
+        bool operator<(const canonical_tag& other);
+
+    private:
+
+        boost::uint64_t number_;
+        tagclass_type class_;
+
+    };
+
+
+
+
+
 
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
@@ -134,6 +186,8 @@ namespace x680 {
         void tag(tagged_ptr vl) {
             tag_ = vl;
         }
+        
+        canonical_tag_ptr ctag();
 
         predefined_ptr predefined() {
             return predefined_;
@@ -275,7 +329,7 @@ namespace x680 {
 
     public:
 
-        fromobject_type_atom(basic_entity_ptr scp, const std::string& refffld, 
+        fromobject_type_atom(basic_entity_ptr scp, const std::string& refffld,
                 object_atom_ptr obj = object_atom_ptr(), tagged_ptr tg = tagged_ptr());
 
         object_atom_ptr object() const {

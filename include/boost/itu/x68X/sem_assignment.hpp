@@ -155,6 +155,9 @@ namespace x680 {
 
     class tagged;
     typedef boost::shared_ptr<tagged> tagged_ptr;
+    
+    class canonical_tag;
+    typedef boost::shared_ptr<canonical_tag> canonical_tag_ptr;    
 
     class type_atom;
     typedef boost::shared_ptr<type_atom> type_atom_ptr;

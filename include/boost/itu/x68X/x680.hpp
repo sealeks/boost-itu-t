@@ -108,10 +108,10 @@ namespace x680 {
 
     enum tagclass_type {
 
-        tcl_universal,
-        tcl_application,
-        tcl_private,
-        tcl_context
+        tcl_universal = 0,
+        tcl_application = 1,
+        tcl_context = 2,        
+        tcl_private = 3
 
     };
 
