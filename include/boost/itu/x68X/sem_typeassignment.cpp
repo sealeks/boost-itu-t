@@ -62,6 +62,9 @@ namespace x680 {
             case t_DATE_TIME: return 33;
             case t_DURATION: return 34;
             case t_Instance_Of: return 16;
+            default:
+            {
+            }
                 /* 
                 case t_Selection: return          
                 case t_RELATIVE_OID_IRI: return 
@@ -94,7 +97,7 @@ namespace x680 {
         if ((!ls) || (!rs))
             return true;
         return (*ls) != (*rs);
-    }      
+    }
 
     bool canonical_tag::operator<(const canonical_tag& other) {
         if (class_ != other.class_)
@@ -117,8 +120,6 @@ namespace x680 {
     defined_type type_atom::root_builtin() {
         if (builtin_ != t_Reference)
             return builtin_;
-        if ((builtin_ != t_Reference) || (!reff()))
-            return builtin_;
         if (reff() && (reff()->as_typeassigment())) {
             if (reff()->as_typeassigment()->type())
                 return reff()->as_typeassigment()->type()->root_builtin();
@@ -126,20 +127,6 @@ namespace x680 {
         return t_NODEF;
     }
 
-    defined_type type_atom::effective_builtin() {
-        if (builtin_ != t_Reference)
-            return builtin_;
-        if (!istypedef())
-            return t_Reference;
-        if ((builtin_ != t_Reference) || (!reff()))
-            return builtin_;
-        reff()-> resolve();
-        if (reff() && (reff()->as_typeassigment())) {
-            if (reff()->as_typeassigment()->type())
-                return reff()->as_typeassigment()->type()->root_builtin();
-        }
-        return t_NODEF;
-    }
 
     canonical_tag_ptr type_atom::ctag() {
         if (!tag()) {
@@ -167,6 +154,41 @@ namespace x680 {
         }
         return canonical_tag_ptr();
     }
+
+    canonical_tag_ptr type_atom::ptag() {
+        if (type_atom_ptr ptmp=ptype()){
+              if ((ptmp->tag()->number()->root())
+                    && (ptmp->tag()->number()->root()->as_value())
+                    && (ptmp->tag()->number()->root()->as_value()->as_number())) {
+                boost::uint64_t num = ptmp->tag()->number()->root()->as_value()->as_number()->value();
+                return canonical_tag_ptr(new canonical_tag(num, ptmp->tag()->_class()));
+            }
+        }
+        return canonical_tag_ptr();
+    }
+    
+    type_atom_ptr type_atom::ptype() {
+        if (!tag()) {
+            switch (builtin_) {
+                case t_Reference:
+                {
+                    if (reff() && (reff()->as_typeassigment())) {
+                        if (reff()->as_typeassigment()->type())
+                            return reff()->as_typeassigment()->type()->ptype();
+                    }
+                    break;
+                }
+                default:
+                {
+                    return type_atom_ptr();
+                }
+            }
+        } else {
+            return self()->as_type();
+        }
+        return type_atom_ptr();
+    }    
+    
 
     bool type_atom::isopen() const {
         return ((builtin_ == t_ClassField) || (builtin_ == t_ANY));
@@ -197,20 +219,7 @@ namespace x680 {
         return ((isno_taggedchoice()) || (isopen()) || (isdummy())) && ((tag()) && (tag()->number()));
     }
 
-    basic_atom_ptr type_atom::effective_type() {
-        if (builtin_ != t_Reference)
-            return self();
-        if (!istypedef())
-            return self();
-        if ((builtin_ != t_Reference) || (!reff()))
-            return self();
-        resolve();
-        if (reff() && (reff()->as_typeassigment())) {
-            if (reff()->as_typeassigment()->type())
-                return reff()->as_typeassigment()->type()->effective_type();
-        }
-        return basic_atom_ptr();
-    }
+
 
     tagrule_type type_atom::tagrule() const {
         return (scope() && (scope()->moduleref())) ?
@@ -537,7 +546,7 @@ namespace x680 {
                                             && (!namedreff->as_typeassigment()->childs().empty())) {
                                         if (!namedreff->as_typeassigment()->type())
                                             scope()->referenceerror_throw("Undefined type");
-                                        if (namedreff->as_typeassigment()->type()->effective_builtin() != type()->builtin())
+                                        if (namedreff->as_typeassigment()->type()->root_builtin() != type()->builtin())
                                             scope()->referenceerror_throw("Apply COMPONENT OF error");
                                         for (basic_entity_vector::iterator its = namedreff->as_typeassigment()->childs().begin();
                                                 its != namedreff->as_typeassigment()->childs().end(); ++its) {

@@ -178,6 +178,8 @@ namespace x680 {
         defined_type builtin() const {
             return builtin_;
         }
+        
+        defined_type root_builtin();  
 
         tagged_ptr tag() const {
             return tag_;
@@ -187,7 +189,13 @@ namespace x680 {
             tag_ = vl;
         }
         
+        // canonical
         canonical_tag_ptr ctag();
+        
+        // preffix = textualy tagging
+        canonical_tag_ptr ptag();
+        
+        type_atom_ptr ptype();        
 
         predefined_ptr predefined() {
             return predefined_;
@@ -209,10 +217,6 @@ namespace x680 {
             predefined_ = vl;
         }
 
-        defined_type root_builtin();
-
-        defined_type effective_builtin();
-
         bool isopen() const;
 
         bool istypedef() const;
@@ -220,8 +224,7 @@ namespace x680 {
         bool isno_taggedchoice();
 
         bool isallways_explicit();
-
-        basic_atom_ptr effective_type();
+        
 
         tagrule_type tagrule() const;
 
