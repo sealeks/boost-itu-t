@@ -157,7 +157,9 @@ namespace x680 {
     typedef boost::shared_ptr<tagged> tagged_ptr;
     
     class canonical_tag;
-    typedef boost::shared_ptr<canonical_tag> canonical_tag_ptr;    
+    typedef boost::shared_ptr<canonical_tag> canonical_tag_ptr;   
+    typedef std::vector<canonical_tag_ptr> canonical_tag_vct;
+    typedef std::set<canonical_tag_ptr> canonical_tag_set;    
 
     class type_atom;
     typedef boost::shared_ptr<type_atom> type_atom_ptr;
@@ -533,7 +535,7 @@ namespace x680 {
 
         std::string source_throw();
 
-        void referenceerror_throw(const std::string& val, const std::string& msg = "Unknown reference :");
+        void referenceerror_throw(const std::string& msg = "Unknown reference :", const std::string& nm ="");
 
         void unicalelerror_throw(const basic_entity_vector& elms);
 

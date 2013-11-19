@@ -190,12 +190,12 @@ namespace x680 {
         }
         
         // canonical
-        canonical_tag_ptr ctag();
+        canonical_tag_ptr cncl_tag();    
         
         // preffix = textualy tagging
-        canonical_tag_ptr ptag();
+        canonical_tag_ptr textualy_tag();       
         
-        type_atom_ptr ptype();        
+        type_atom_ptr textualy_type();   
 
         predefined_ptr predefined() {
             return predefined_;
@@ -221,7 +221,7 @@ namespace x680 {
 
         bool istypedef() const;
 
-        bool isno_taggedchoice();
+        bool istextualychoice();
 
         bool isallways_explicit();
         
@@ -420,6 +420,9 @@ namespace x680 {
             return named_;
         }
 
+        
+        canonical_tag_vct cncl_tags();           
+   
         namedtypeassignment_entity_ptr as_named();
 
 
@@ -442,6 +445,8 @@ namespace x680 {
         bool is_resolve_autotag();
 
         void post_resolve_autotag();
+
+        void post_resolve_check();        
 
         type_atom_ptr type_;
         bool named_;

@@ -252,7 +252,7 @@ namespace x680 {
             std::string stack = "";
             basic_entity_ptr sc = scope();
             while ((sc) && (moduleref() != sc)) {
-                stack = stack.empty() ? sc->name() : (sc->name() + "::" + stack);
+                stack = stack.empty() ? sc->name() : (sc->name() + "." + stack);
                 sc = sc->scope();
             }
             if (moduleref() == sc)
@@ -263,10 +263,10 @@ namespace x680 {
         return rslt;
     }
 
-    void basic_entity::referenceerror_throw(const std::string& val, const std::string& msg) {
-        std::string rslt = msg + "'" + val + "'";
+    void basic_entity::referenceerror_throw(const std::string& msg, const std::string& nm) {
+        std::string rslt = msg + " '" + nm + "' ";
         rslt += source_throw();
-        rslt = rslt + " '" + name() + "'" + modulerefname();
+        rslt = rslt + " '" + name() + "' " + modulerefname();
         throw semantics::error(rslt);
     }
 
@@ -599,10 +599,10 @@ namespace x680 {
                 if ((fnd->kind() == et_Class) && (tmp->bigC()))
                     return tmp->bigC();
             } else {
-                tmp->referenceerror_throw(tmp->big()->reff()->name());
+                tmp->referenceerror_throw("Assighment refference error : ");
             }
         }
-        tmp->referenceerror_throw(tmp->name());
+        tmp->referenceerror_throw("Assighment refference error : ");
         return basic_entity_ptr();
     }
 
@@ -620,10 +620,10 @@ namespace x680 {
                 if ((fnd->kind() == et_Class) && (tmp->bigC()))
                     return tmp->bigC();
             } else {
-                tmp->referenceerror_throw(tmp->big()->reff()->name());
+                tmp->referenceerror_throw("Assighment refference error : ");
             }
         }
-        tmp->referenceerror_throw(tmp->name());
+        tmp->referenceerror_throw("Assighment refference error : ");
         return basic_entity_ptr();
     }
 
@@ -641,10 +641,10 @@ namespace x680 {
                 if ((fnd->kind() == et_Class) && (tmp->bigC()))
                     return tmp->bigC();
             } else {
-                tmp->referenceerror_throw(tmp->big()->reff()->name());
+                tmp->referenceerror_throw("Assighment refference error : ");
             }
         }
-        tmp->referenceerror_throw(tmp->name());
+        tmp->referenceerror_throw("Assighment refference error : ");
         return basic_entity_ptr();
     }
 
@@ -712,7 +712,7 @@ namespace x680 {
 
     void argument_entity::governor(type_atom_ptr vl) {
         if (argumenttype_ != argm_Nodef)
-            scope()->referenceerror_throw(name(), "Internal error: duplicate argument governer set");
+            scope()->referenceerror_throw("Internal error: duplicate argument governer set ; ", name());
         governor_ = vl;
         if (typesize_ == argm_Big) {
             unspecified_ = assignment_entity_ptr(new valuesetassignment_entity(scope(), name(), vl));
@@ -725,7 +725,7 @@ namespace x680 {
 
     void argument_entity::governor(class_atom_ptr vl) {
         if (argumenttype_ != argm_Nodef)
-            scope()->referenceerror_throw(name(), "Internal error: duplicate argument governer set");
+            scope()->referenceerror_throw("Internal error: duplicate argument governer set : ", name());
         governor_ = vl;
         if (typesize_ == argm_Big) {
             unspecified_ = assignment_entity_ptr(new objectsetassignment_entity(scope(), name(), vl));
@@ -752,7 +752,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                 debug_warning("Should be error argument type set");
 #else
-                val->scope()->referenceerror_throw(name(), "Should be error argument type set");
+                val->scope()->referenceerror_throw( "Should be error argument type set ; ", name());
 #endif                
                 return;
             }
@@ -764,7 +764,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: Type ");
 #else
-                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous: Type expected");
+                    val->scope()->referenceerror_throw( "Argument type ambiguous: Type expected : ", name());
 #endif                         
                     return;
                 }
@@ -776,7 +776,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: Value ");
 #else
-                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous. Value expected : ");
+                    val->scope()->referenceerror_throw( "Argument type ambiguous. Value expected : ", name());
 #endif    
                     return;
                 }
@@ -788,7 +788,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: ValueSet ");
 #else
-                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous. ValueSet expected : ");
+                    val->scope()->referenceerror_throw( "Argument type ambiguous. ValueSet expected : ", name());
 #endif   
                     return;
                 }
@@ -800,7 +800,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: Class ");
 #else
-                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous. Class expected : ");
+                    val->scope()->referenceerror_throw("Argument type ambiguous. Class expected : ", name());
 #endif   
                     return;
                 }
@@ -812,7 +812,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: Object ");
 #else
-                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous. Object expected : ");
+                    val->scope()->referenceerror_throw("Argument type ambiguous. Object expected : ", name());
 #endif   
                     return;
                 }
@@ -824,7 +824,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: ObjectSet ");
 #else
-                    val->scope()->referenceerror_throw(name(), "Argument type ambiguous. ObjectSet expected : ");
+                    val->scope()->referenceerror_throw("Argument type ambiguous. ObjectSet expected : ", name());
 #endif   
                     return;
                 }
@@ -1008,42 +1008,42 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to typeassigment");
 #else
-                            scope()->referenceerror_throw(expectedname(), "Refference to Type : ");
+                            scope()->referenceerror_throw("Refference to Type : ", expectedname());
 #endif                                                          
                     } else if (fnd->as_valueassigment()) {
                         if (!as_value())
 #ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to valueassigment");
 #else
-                            scope()->referenceerror_throw(expectedname(), "Refference to Value : ");
+                            scope()->referenceerror_throw("Refference to Value : ", expectedname());
 #endif                                                          
                     } else if (fnd->as_valuesetassigment()) {
                         if (!as_valueset())
 #ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to valuesetassigment");
 #else
-                            scope()->referenceerror_throw(expectedname(), "Refference to ValueSet : ");
+                            scope()->referenceerror_throw( "Refference to ValueSet : ", expectedname());
 #endif                                                         
                     } else if (fnd->as_classassigment()) {
                         if (!as_class())
 #ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to classassigment");
 #else
-                            scope()->referenceerror_throw(expectedname(), "Refference to Class: ");
+                            scope()->referenceerror_throw("Refference to Class : ", expectedname());
 #endif                                                            
                     } else if (fnd->as_objectassigment()) {
                         if (!as_object())
 #ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to objectassigment");
 #else
-                            scope()->referenceerror_throw(expectedname(), "Refference to Object: ");
+                            scope()->referenceerror_throw( "Refference to Object: ", expectedname());
 #endif                                                           
                     } else if (fnd->as_objectsetassigment()) {
                         if (!as_objectset())
 #ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to objectsetassigment");
 #else
-                            scope()->referenceerror_throw(expectedname(), "Refference to ObjectSet: ");
+                            scope()->referenceerror_throw("Refference to ObjectSet: ", expectedname());
 #endif                                                                     
                     } else if (fnd->as_argument()) {
 #ifdef  DEBUG_SEMANTIC                        
@@ -1055,7 +1055,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                         debug_warning("Should be error : refference" + expectedname() + "undefined assigment");
 #else
-                        scope()->referenceerror_throw(expectedname(), "Refference to Undefined: ");
+                        scope()->referenceerror_throw("Refference to Undefined : ", expectedname());
 #endif                                               
                         return;
                     }
@@ -1070,7 +1070,7 @@ namespace x680 {
                         debug_warning("Should be error : refference : " + expectedname() + "  source : " +
                                 source->name() + "  scope : " + scope()->name());
 #else
-                        scope()->referenceerror_throw(expectedname(), "Refference don't find");
+                        scope()->referenceerror_throw( "Refference don't find", expectedname());
 #endif                         
                     }
                 }
@@ -1126,7 +1126,7 @@ namespace x680 {
         for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
             if ((*it)->has_undef_governor()) {
                 if (!(*it)->governor()->reff())
-                    scope()->referenceerror_throw(scope()->name());
+                    scope()->referenceerror_throw(/*scope()->name()*/);
                 basic_entity_ptr fnd = scope()->find((*it)->governor()->reff());
                 if (fnd) {
                     if (fnd->kind() == et_Type) {
@@ -1134,9 +1134,9 @@ namespace x680 {
                     } else if (fnd->kind() == et_Class) {
                         (*it)->governor(class_atom_ptr(new class_atom((*it)->scope(), (*it)->governor()->expectedname(), cl_Reference)));
                     } else
-                        scope()->referenceerror_throw((*it)->governor()->expectedname());
+                        scope()->referenceerror_throw(/*(*it)->governor()->expectedname()*/);
                 } else
-                    scope()->referenceerror_throw(scope()->name());
+                    scope()->referenceerror_throw(/*scope()->name()*/);
             }
         }
     }

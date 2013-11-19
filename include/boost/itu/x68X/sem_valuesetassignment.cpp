@@ -366,7 +366,7 @@ namespace x680 {
         for (uargument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
             if ((*it)->has_undef_governor()) {
                 if (!(*it)->governor()->reff())
-                    scope()->referenceerror_throw(scope()->name());
+                    scope()->referenceerror_throw("User constraint error : ", scope()->name());
                 basic_entity_ptr fnd = scope()->find((*it)->governor()->reff());
                 if (fnd) {
                     if (fnd->kind() == et_Type) {
@@ -374,9 +374,9 @@ namespace x680 {
                     } else if (fnd->kind() == et_Class) {
                         (*it)->governor(class_atom_ptr(new class_atom((*it)->scope(), (*it)->governor()->expectedname(), cl_Reference)));
                     } else
-                        scope()->referenceerror_throw((*it)->governor()->expectedname());
+                        scope()->referenceerror_throw("User constraint error : ", (*it)->governor()->expectedname());
                 } else
-                    scope()->referenceerror_throw(scope()->name());
+                    scope()->referenceerror_throw("User constraint error : ", scope()->name());
             }
         }
     }

@@ -112,7 +112,7 @@ namespace x680 {
                 }
             }
         }
-        referenceerror_throw(field()->expectedname());
+        referenceerror_throw("Field refference error :",field()->expectedname());
     }
 
 
@@ -133,7 +133,7 @@ namespace x680 {
                 }
             }
         }
-        referenceerror_throw(field()->expectedname());
+        referenceerror_throw("Field refference error :",field()->expectedname());
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -197,7 +197,7 @@ namespace x680 {
                     return;
                 }
             }
-            scope()->referenceerror_throw(expectedname());
+            scope()->referenceerror_throw("Field refference error :", expectedname());
         }
     }
 
@@ -272,7 +272,7 @@ namespace x680 {
                             type_atom_ptr tp = type_atom_ptr(new type_atom(scope(), tmp->big()->reff()->name(), t_Reference));
                             if (tmp->marker() == mk_default) {
                                 if (!tmp->_defaultv())
-                                    tmp->referenceerror_throw(tmp->big()->reff()->name());
+                                    tmp->referenceerror_throw("Classassignment resolve error : ", tmp->big()->reff()->name());
                                 *it = basic_entity_ptr(new valuefield_entity(scope(), tmp->name(), tp, tmp->_defaultv()));
                             } else
                                 *it = basic_entity_ptr(new valuefield_entity(scope(), tmp->name(), tp, false, tmp->marker()));
@@ -281,13 +281,13 @@ namespace x680 {
                             class_atom_ptr tp = class_atom_ptr(new class_atom(scope(), tmp->big()->reff()->name(), cl_Reference));
                             if (tmp->marker() == mk_default) {
                                 if (!tmp->_defaulto())
-                                    tmp->referenceerror_throw(tmp->big()->reff()->name());
+                                    tmp->referenceerror_throw("Classassignment resolve error : ", tmp->big()->reff()->name());
                                 *it = basic_entity_ptr(new objectfield_entity(scope(), tmp->name(), tp, tmp->_defaulto()));
                             } else
                                 *it = basic_entity_ptr(new objectfield_entity(scope(), tmp->name(), tp, tmp->marker()));
                         }
                     } else
-                        tmp->referenceerror_throw(tmp->big()->reff()->name());
+                        tmp->referenceerror_throw("Classassignment resolve error : ", tmp->big()->reff()->name());
                 } else if ((*it)->as_classfield()->as_undefsetfield()) {
                     undefsetfield_entity_ptr tmp = (*it)->as_classfield()->as_undefsetfield();
                     basic_entity_ptr fnd = scope()->find(tmp->big()->reff());
@@ -296,7 +296,7 @@ namespace x680 {
                             type_atom_ptr tp = type_atom_ptr(new type_atom(scope(), tmp->big()->reff()->name(), t_Reference));
                             if (tmp->marker() == mk_default) {
                                 if (!tmp->_defaultv())
-                                    tmp->referenceerror_throw(tmp->big()->reff()->name());
+                                    tmp->referenceerror_throw("Classassignment resolve error : ", tmp->big()->reff()->name());
                                 *it = basic_entity_ptr(new valuesetfield_entity(scope(), tmp->name(), tp, tmp->_defaultv()));
                             } else
                                 *it = basic_entity_ptr(new valuesetfield_entity(scope(), tmp->name(), tp, tmp->marker()));
@@ -305,13 +305,13 @@ namespace x680 {
                             class_atom_ptr tp = class_atom_ptr(new class_atom(scope(), tmp->big()->reff()->name(), cl_Reference));
                             if (tmp->marker() == mk_default) {
                                 if (!tmp->_defaulto())
-                                    tmp->referenceerror_throw(tmp->big()->reff()->name());
+                                    tmp->referenceerror_throw("Classassignment resolve error : ", tmp->big()->reff()->name());
                                 *it = basic_entity_ptr(new objectsetfield_entity(scope(), tmp->name(), tp, tmp->_defaulto()));
                             } else
                                 *it = basic_entity_ptr(new objectsetfield_entity(scope(), tmp->name(), tp, tmp->marker()));
                         }
                     } else
-                        tmp->referenceerror_throw(tmp->big()->reff()->name());
+                        tmp->referenceerror_throw("Classassignment resolve error : ", tmp->big()->reff()->name());
                 }
             }
         }

@@ -270,7 +270,7 @@ namespace x680 {
                                 case mk_default:create_fields((*it)->as_classfield());
                                     break;
                                 case mk_optional: break;
-                                default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
+                                default: referenceerror_throw( "Field sould be set : ", (*it)->as_classfield()->name());
                             }
                         }
                     }
@@ -284,7 +284,7 @@ namespace x680 {
                                 case mk_default:create_fields_var((*it)->as_classfield());
                                     break;
                                 case mk_optional: break;
-                                default: referenceerror_throw((*it)->as_classfield()->name(), "Field sould be set: ");
+                                default: referenceerror_throw( "Field sould be set : " , (*it)->as_classfield()->name());
                             }
                         }
                     }
@@ -316,7 +316,7 @@ namespace x680 {
                 if (obj->find_literal(syn->alias())) {
                 } else {
                     if ((!syn->optional()) && !optional)
-                        referenceerror_throw(syn->alias(), "Field object parsing error:");
+                        referenceerror_throw( "Field object parsing error :", syn->alias());
                     else
                         return false;
                 }
@@ -333,7 +333,7 @@ namespace x680 {
             if (syn->isalias()) {
                 if (obj->find_literal(syn->alias())) {
                     if (obj->fieldsetting().empty()) {
-                        referenceerror_throw(syn->alias(), "Field object parsing error:");
+                        referenceerror_throw("Field object parsing error : ", syn->alias());
                     }
                     if (syn->reff()->name().empty())
                         return true;
@@ -342,13 +342,13 @@ namespace x680 {
                     return true;
                 } else {
                     if ((!syn->optional()) && !optional)
-                        referenceerror_throw(syn->alias(), "Field object parsing error:");
+                        referenceerror_throw("Field object parsing error : " , syn->alias());
                     else
                         return false;
                 }
             } else {
                 if (obj->fieldsetting().empty())
-                    referenceerror_throw(syn->alias(), "Field object parsing error:");
+                    referenceerror_throw("Field object parsing error : " , syn->alias());
                 newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
                 obj->fieldsetting().erase(obj->fieldsetting().begin());
                 return true;
@@ -363,27 +363,27 @@ namespace x680 {
                 if (st->type()) {
                     childs_.push_back(typeassignment_entity_ptr(new typeassignment_entity(fld->scope(), fld->name(), st->type())));
                 } else
-                    referenceerror_throw(fld->name(), "Field is not type: ");
+                    referenceerror_throw("Field is not type : ", fld->name());
             } else if (fld->as_valuefield()) {
                 if (st->value())
                     childs_.push_back(basic_entity_ptr(new valueassignment_entity(fld->scope(), fld->name(), fld->as_valuefield()->type(), st->value())));
                 else
-                    referenceerror_throw(fld->name(), "Field is not value: ");
+                    referenceerror_throw( "Field is not value : ", fld->name());
             } else if (fld->as_valuesetfield()) {
                 if (st->valueset())
                     childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(fld->scope(), fld->name(), fld->as_valuesetfield()->type(), st->valueset())));
                 else
-                    referenceerror_throw(fld->name(), "Field is not valueset: ");
+                    referenceerror_throw("Field is not valueset : ", fld->name());
             } else if (fld->as_objectfield()) {
                 if (st->object())
                     childs_.push_back(basic_entity_ptr(new objectassignment_entity(fld->scope(), fld->name(), fld->as_objectfield()->_class(), st->object())));
                 else
-                    referenceerror_throw(fld->name(), "Field is not object: ");
+                    referenceerror_throw("Field is not object : " , fld->name());
             } else if (fld->as_objectsetfield()) {
                 if (st->objectset())
                     childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(fld->scope(), fld->name(), fld->as_objectsetfield()->_class(), st->objectset())));
                 else
-                    referenceerror_throw(fld->name(), "Field is not objectset: ");
+                    referenceerror_throw("Field is not objectset : ", fld->name());
             }
         } else {
             if (fld->as_typefield()) {
@@ -461,7 +461,7 @@ namespace x680 {
             if (((*it)->name() == nm) && ((*it)->as_valuesetassigment()))
                 return find_typefields((*it)->as_valuesetassigment()->type()->reff()->name());
         }
-        referenceerror_throw(nm, "Field   refference error: ");
+        referenceerror_throw("Field   refference error : ", nm);
         return basic_entity_ptr();
     }
 

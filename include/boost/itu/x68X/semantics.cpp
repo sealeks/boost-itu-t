@@ -563,7 +563,7 @@ namespace x680 {
             } else if (ent.value.type != v_nodef) {
                 return boost::make_shared< contentconstraint_atom>(scope, compile_value(scope, ent.value));
             }
-            scope->referenceerror_throw(scope->name(), "Content constraint dos'nt set");
+            scope->referenceerror_throw( "Content constraint dos'nt set : ", scope->name());
             return constraint_atom_ptr();
         }
 

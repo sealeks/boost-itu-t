@@ -127,15 +127,17 @@ namespace x680 {
         return t_NODEF;
     }
 
-
-    canonical_tag_ptr type_atom::ctag() {
+    canonical_tag_ptr type_atom::cncl_tag() {
         if (!tag()) {
+            if ((istextualychoice()) || (isopen()) ||
+                    (isdummy()))
+                return canonical_tag_ptr();
             switch (builtin_) {
                 case t_Reference:
                 {
                     if (reff() && (reff()->as_typeassigment())) {
                         if (reff()->as_typeassigment()->type())
-                            return reff()->as_typeassigment()->type()->ctag();
+                            return reff()->as_typeassigment()->type()->cncl_tag();
                     }
                     break;
                 }
@@ -155,9 +157,10 @@ namespace x680 {
         return canonical_tag_ptr();
     }
 
-    canonical_tag_ptr type_atom::ptag() {
-        if (type_atom_ptr ptmp=ptype()){
-              if ((ptmp->tag()->number()->root())
+
+    canonical_tag_ptr type_atom::textualy_tag() {
+        if (type_atom_ptr ptmp = textualy_type()) {
+            if ((ptmp->tag()->number()->root())
                     && (ptmp->tag()->number()->root()->as_value())
                     && (ptmp->tag()->number()->root()->as_value()->as_number())) {
                 boost::uint64_t num = ptmp->tag()->number()->root()->as_value()->as_number()->value();
@@ -166,15 +169,15 @@ namespace x680 {
         }
         return canonical_tag_ptr();
     }
-    
-    type_atom_ptr type_atom::ptype() {
+
+    type_atom_ptr type_atom::textualy_type() {
         if (!tag()) {
             switch (builtin_) {
                 case t_Reference:
                 {
                     if (reff() && (reff()->as_typeassigment())) {
                         if (reff()->as_typeassigment()->type())
-                            return reff()->as_typeassigment()->type()->ptype();
+                            return reff()->as_typeassigment()->type()->textualy_type();
                     }
                     break;
                 }
@@ -187,8 +190,7 @@ namespace x680 {
             return self()->as_type();
         }
         return type_atom_ptr();
-    }    
-    
+    }
 
     bool type_atom::isopen() const {
         return ((builtin_ == t_ClassField) || (builtin_ == t_ANY));
@@ -198,28 +200,23 @@ namespace x680 {
         return ((builtin_ == t_Reference) && (!tag_) && (constraints_.empty()));
     }
 
-    bool type_atom::isno_taggedchoice() {
-        if (builtin_ == t_CHOICE) {
-            if (tag_) {
-                return false;
-            }
+    bool type_atom::istextualychoice() {
+        if (builtin_ == t_CHOICE) 
             return true;
-        }
         if ((builtin_ != t_Reference) || (!reff()))
             return false;
         reff()-> resolve();
         if (reff() && (reff()->as_typeassigment())) {
             if (reff()->as_typeassigment()->type())
-                return reff()->as_typeassigment()->type()->isno_taggedchoice();
+                return reff()->as_typeassigment()->type()->istextualychoice();
         }
         return false;
     }
 
     bool type_atom::isallways_explicit() {
-        return ((isno_taggedchoice()) || (isopen()) || (isdummy())) && ((tag()) && (tag()->number()));
+        return (((istextualychoice()) && (!tag())) || (isopen()) ||
+                (isdummy())) && ((tag()) && (tag()->number()));
     }
-
-
 
     tagrule_type type_atom::tagrule() const {
         return (scope() && (scope()->moduleref())) ?
@@ -390,8 +387,8 @@ namespace x680 {
                     };
                 }
             }
-            if ((isallways_explicit()) && (tag()->rule() == implicit_tags) && (tag()->number()))
-                std::cout << "Test error namr: " << scope()->name() << std::endl;
+            //if ((isallways_explicit()) && (tag()->rule() == implicit_tags) && (tag()->number()))
+               // std::cout << "Test error namr: " << scope()->name() << std::endl;
             //scope()->referenceerror_throw("type ", " shall not be implicit '");
             if ((tag()->number()) && (tag()->number()->as_defined()) && (tag()->number()->expecteddef())) {
                 tag()->number()->resolve_reff(basic_atom_ptr(), extend_search);
@@ -507,6 +504,33 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
+    canonical_tag_vct typeassignment_entity::cncl_tags() {
+        canonical_tag_vct tmp;
+        if (type()->istextualychoice()) {
+            type_atom_ptr roottype = type()->textualy_type();
+            if (roottype) {
+                if (roottype->tag()) {
+                    canonical_tag_ptr tg = roottype->cncl_tag();
+                    if (tg)
+                        tmp.push_back(tg);
+                } else {
+                    for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+                        if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                            canonical_tag_vct tmpv = (*it)->as_typeassigment()->cncl_tags();
+                            if (!tmpv.empty())
+                                tmp.insert(tmp.end(), tmpv.begin(), tmpv.end());
+                        }
+                    }
+                }
+            }
+        } else {
+            canonical_tag_ptr tg = type()->cncl_tag();
+            if (tg)
+                tmp.push_back(tg);
+        }
+        return tmp;
+    }    
+
     namedtypeassignment_entity_ptr typeassignment_entity::as_named() {
         return named() ?
                 boost::static_pointer_cast<namedtypeassignment_entity> (self()) : namedtypeassignment_entity_ptr();
@@ -619,6 +643,10 @@ namespace x680 {
                     num++;
             }
         }
+    }
+
+    void typeassignment_entity::post_resolve_check() {
+
     }
 
 
