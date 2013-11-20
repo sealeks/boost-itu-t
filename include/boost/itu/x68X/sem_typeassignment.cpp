@@ -660,19 +660,38 @@ namespace x680 {
                 canonical_tag_set tmpset;
                 for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                     namedtypeassignment_entity_ptr tmpel = ((*it)->as_typeassigment() && (*it)->as_typeassigment()->as_named()) ?
-                        (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr() ;
+                            (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr();
                     if ((tmpel) && (tmpel->type())) {
                         if (tmpel->type()->cncl_tag()) {
-                            if (tmpset.find(tmpel->type()->cncl_tag()) != tmpset.end()) 
-                                referenceerror_throw("Tagging of structured type is ambiguous :",  tmpel->name());
+                            if (tmpset.find(tmpel->type()->cncl_tag()) != tmpset.end())
+                                referenceerror_throw("Tagging of structured type is ambiguous :", tmpel->name());
                             tmpset.insert(tmpel->type()->cncl_tag());
-                        if ((type()->builtin() == t_SEQUENCE) && (tmpel->marker() == mk_none))
-                            tmpset.clear();
+                            if ((type()->builtin() == t_SEQUENCE) && (tmpel->marker() == mk_none))
+                                tmpset.clear();
+                        }
+                        else{
+                            
                         }
                     }
                 }
             } else if (type()->builtin() == t_CHOICE) {
-
+                canonical_tag_set tmpset;
+                for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+                    namedtypeassignment_entity_ptr tmpel = ((*it)->as_typeassigment() && (*it)->as_typeassigment()->as_named()) ?
+                            (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr();
+                    if ((tmpel) && (tmpel->type())) {
+                        canonical_tag_vct tmpelmts = tmpel->cncl_tags();
+                        if (!tmpelmts.empty()){
+                            //std::cout << " Include chose:"  << tmpelmts.size()  << std::endl;
+                            for (canonical_tag_vct::iterator its = tmpelmts.begin(); its != tmpelmts.end(); ++its) {
+                            if (tmpset.find(*its) != tmpset.end())
+                                referenceerror_throw("Tagging of structured type is ambiguous :", tmpel->name());
+                            else
+                                tmpset.insert(*its); 
+                            }                            
+                        }
+                    }
+                }
             }
         }
     }
