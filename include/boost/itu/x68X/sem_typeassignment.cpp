@@ -99,9 +99,16 @@ namespace x680 {
         return (*ls) != (*rs);
     }
 
+    bool operator<(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs) {
+         if ((!ls) || (!rs))
+            return false;      
+        return (*ls) < (*rs);         
+    }
+        
+
     bool canonical_tag::operator<(const canonical_tag& other) {
         if (class_ != other.class_)
-            return static_cast<int> (class_) <static_cast<int> (other.number_);
+            return static_cast<int> (class_) <static_cast<int> (other.class_);
         return number_ < other.number_;
     }
 
@@ -327,13 +334,13 @@ namespace x680 {
                     value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
                     if (vltmp->as_number()) {
                         if (vltmp->as_number()->value() < start)
-                            throw semantics::error("type '" + scope()->name() + "' predefine name '" +
+                            throw semantics::error("Type '" + scope()->name() + "' predefined name '" +
                                 (*it)->name() + "' is not at the rule " + scope()->modulerefname());
                         else
                             start = vltmp->as_number()->value() + 1;
                     } else {
                         if (vltmp->root()->as_value()->as_number()->value() < start)
-                            throw semantics::error("type '" + scope()-> name() + "' predefine name '" +
+                            throw semantics::error("Type '" + scope()-> name() + "' predefined name '" +
                                 (*it)->name() + "' is not at the rule " + scope()->modulerefname());
                         else
                             start = vltmp->root()->as_value()->as_number()->value() + 1;
@@ -351,14 +358,14 @@ namespace x680 {
                 value_atom_ptr vltmp = (*it)->as_valueassigment()->value();
                 if (vltmp->as_number()) {
                     if (set.find(vltmp->as_number()->value()) != set.end())
-                        throw semantics::error("type '" + scope()->name() + "' predefine name '" +
+                        throw semantics::error("Type '" + scope()->name() + "' predefined name '" +
                             (*it)->name() + "'is not unical " + scope()->modulerefname());
                     else
                         set.insert(vltmp->as_number()->value());
                 } else {
                     if ((vltmp->root()) && (vltmp->root()->as_value())) {
                         if (set.find(vltmp->root()->as_value()->as_number()->value()) != set.end())
-                            throw semantics::error("type '" + scope()->name() + "' predefine name '" +
+                            throw semantics::error("Type '" + scope()->name() + "' predefined name '" +
                                 (*it)->name() + "' is not unical " + scope()->modulerefname());
                         else
                             set.insert(vltmp->root()->as_value()->as_number()->value());
@@ -551,6 +558,7 @@ namespace x680 {
         post_resolve_apply_componentsof();
         if (autotag)
             post_resolve_autotag();
+        post_resolve_check();
     }
 
     void typeassignment_entity::post_resolve_apply_componentsof() {
@@ -569,9 +577,9 @@ namespace x680 {
                                     if ((namedreff->as_typeassigment())
                                             && (!namedreff->as_typeassigment()->childs().empty())) {
                                         if (!namedreff->as_typeassigment()->type())
-                                            scope()->referenceerror_throw("Undefined type");
+                                            referenceerror_throw("Undefined type", name());
                                         if (namedreff->as_typeassigment()->type()->root_builtin() != type()->builtin())
-                                            scope()->referenceerror_throw("Apply COMPONENT OF error");
+                                            referenceerror_throw("Apply COMPONENT OF error", name());
                                         for (basic_entity_vector::iterator its = namedreff->as_typeassigment()->childs().begin();
                                                 its != namedreff->as_typeassigment()->childs().end(); ++its) {
                                             if ((*its)->as_typeassigment()->as_named()->marker() != mk_extention) {
@@ -615,12 +623,12 @@ namespace x680 {
             std::size_t num = 0;
             if (type()->tagrule() == automatic_tags) {
                 for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-                    if (((*it)->as_typeassigment()) &&
-                            ((*it)->as_typeassigment()->as_named()) &&
-                            ((*it)->as_typeassigment()->type()) &&
-                            ((*it)->as_typeassigment()->type()->tag()) &&
-                            ((*it)->as_typeassigment()->as_named()->marker() != mk_components_of)) {
-                        if (((*it)->as_typeassigment()->type()->tag()) || (num++ > 3)) {
+                    namedtypeassignment_entity_ptr tmpel = ((*it)->as_typeassigment() && (*it)->as_typeassigment()->as_named()) ?
+                        (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr() ;                    
+                    if ((tmpel) && (tmpel->type()) && (tmpel->type()->tag()) &&
+                            (tmpel->marker() != mk_components_of)) {
+                        if ((tmpel->type()->textualy_tag()) || (num++ > 3)) {
+                            //debug_warning("warning:  : " + source_throw() + " automatic tagging skiped.");
                             automatic = false;
                             break;
                         }
@@ -638,7 +646,8 @@ namespace x680 {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
             if ((*it)->as_typeassigment()) {
                 if (!((*it)->as_typeassigment()->type()->tag())) {
-                    (*it)->as_typeassigment()->type()->tag(tagged_ptr(new tagged(value_atom_ptr(new numvalue_atom(num++)), tcl_context, implicit_tags)));
+                    (*it)->as_typeassigment()->type()->
+                            tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++), tcl_context, implicit_tags));
                 } else
                     num++;
             }
@@ -646,7 +655,26 @@ namespace x680 {
     }
 
     void typeassignment_entity::post_resolve_check() {
+        if ((type()) && (!childs().empty())) {
+            if ((type()->builtin() == t_SEQUENCE) || ((type()->builtin() == t_SET))) {
+                canonical_tag_set tmpset;
+                for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+                    namedtypeassignment_entity_ptr tmpel = ((*it)->as_typeassigment() && (*it)->as_typeassigment()->as_named()) ?
+                        (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr() ;
+                    if ((tmpel) && (tmpel->type())) {
+                        if (tmpel->type()->cncl_tag()) {
+                            if (tmpset.find(tmpel->type()->cncl_tag()) != tmpset.end()) 
+                                referenceerror_throw("Tagging of structured type is ambiguous :",  tmpel->name());
+                            tmpset.insert(tmpel->type()->cncl_tag());
+                        if ((type()->builtin() == t_SEQUENCE) && (tmpel->marker() == mk_none))
+                            tmpset.clear();
+                        }
+                    }
+                }
+            } else if (type()->builtin() == t_CHOICE) {
 
+            }
+        }
     }
 
 

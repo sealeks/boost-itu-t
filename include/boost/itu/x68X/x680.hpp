@@ -1091,7 +1091,7 @@ namespace x680 {
 
 
             synxtas_error(const std::string& file, const std::string& src, std::size_t pos);
-
+            
             std::size_t filepos() const {
                 return filepos_;
             };

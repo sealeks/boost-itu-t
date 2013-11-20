@@ -9,6 +9,7 @@ namespace x680 {
 
     void debug_warning(const std::string& msg) {
         std::cout << msg << std::endl;
+        std::cout.flush();
     }
 
     void insert_assigment(basic_entity_ptr scope, basic_entity_ptr val) {
@@ -248,25 +249,28 @@ namespace x680 {
             return "";
         else
             rslt = rslt + " in assignment";
-        if ((scope()) && (moduleref()) && (moduleref() != scope())) {
-            std::string stack = "";
-            basic_entity_ptr sc = scope();
+        basic_entity_ptr sc = self();
+        std::string stack = "";          
+        if ((scope()) && (moduleref()) && (moduleref() != self())) {        
             while ((sc) && (moduleref() != sc)) {
                 stack = stack.empty() ? sc->name() : (sc->name() + "." + stack);
                 sc = sc->scope();
             }
             if (moduleref() == sc)
                 stack = sc->name() + "@" + stack;
-            rslt = rslt + " stack: " + stack + " ";
+            rslt = rslt + " " + stack + " ";
+            sc = scope();
         } else
             rslt = rslt + " ";
         return rslt;
     }
 
     void basic_entity::referenceerror_throw(const std::string& msg, const std::string& nm) {
-        std::string rslt = msg + " '" + nm + "' ";
+        std::string rslt = msg;
+        if (!nm.empty())
+            rslt += " '" + nm + "' ";
         rslt += source_throw();
-        rslt = rslt + " '" + name() + "' " + modulerefname();
+        rslt = rslt +  " " + modulerefname();
         throw semantics::error(rslt);
     }
 
@@ -1047,13 +1051,13 @@ namespace x680 {
 #endif                                                                     
                     } else if (fnd->as_argument()) {
 #ifdef  DEBUG_SEMANTIC                        
-                        debug_warning("Here is argument parser: " + expectedname() + "");
+                        debug_warning("Here is argument parser: '" + expectedname() + "'");
 #endif                          
                         fnd->as_argument()->insert_dummyrefference(self());
                         return;
                     } else {
 #ifdef  DEBUG_SEMANTIC                
-                        debug_warning("Should be error : refference" + expectedname() + "undefined assigment");
+                        debug_warning("Should be error : refference '" + expectedname() + "' undefined assigment");
 #else
                         scope()->referenceerror_throw("Refference to Undefined : ", expectedname());
 #endif                                               

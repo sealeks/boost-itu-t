@@ -23,7 +23,7 @@ namespace x680 {
 
             error(const std::string& ms) : msg_(ms) {
             }
-
+            
             std::string message() const {
                 return msg_;
             }

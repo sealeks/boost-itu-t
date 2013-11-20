@@ -149,7 +149,9 @@ namespace x680 {
         
         friend bool operator==(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);
         
-        friend bool operator!=(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);             
+        friend bool operator!=(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);         
+        
+        friend bool operator<(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);        
 
         bool operator<(const canonical_tag& other);
 
