@@ -136,7 +136,7 @@ namespace x680 {
 
     canonical_tag_ptr type_atom::cncl_tag() {
         if (!tag()) {
-            if ((istextualychoice()) || (isopen()) ||
+            if ((istextualy_choice()) || (isopen()) ||
                     (isdummy()))
                 return canonical_tag_ptr();
             switch (builtin_) {
@@ -199,29 +199,51 @@ namespace x680 {
         return type_atom_ptr();
     }
 
+    bool type_atom::isrefferrence() const {
+         return (((builtin_ == t_Reference) 
+                 ||   (builtin_ ==t_TypeFromObject)
+                 || (builtin_ ==t_ValueSetFromObjects)) && (reff()));
+    }   
+
     bool type_atom::isopen() const {
         return ((builtin_ == t_ClassField) || (builtin_ == t_ANY));
     }
 
-    bool type_atom::istypedef() const {
-        return ((builtin_ == t_Reference) && (!tag_) && (constraints_.empty()));
+    bool type_atom::isenum() const {
+        return ((isrefferrence())  && (!tag_) && (constraints_.empty()));
     }
 
-    bool type_atom::istextualychoice() {
+    bool type_atom::istextualy_choice() {
         if (builtin_ == t_CHOICE) 
             return true;
-        if ((builtin_ != t_Reference) || (!reff()))
+        if (!isrefferrence())
             return false;
         reff()-> resolve();
         if (reff() && (reff()->as_typeassigment())) {
             if (reff()->as_typeassigment()->type())
-                return reff()->as_typeassigment()->type()->istextualychoice();
+                return reff()->as_typeassigment()->type()->istextualy_choice();
         }
         return false;
     }
 
+    bool type_atom::isnotagged_choice() {
+        if (builtin_ == t_CHOICE)
+            return !tag();
+        if (!isrefferrence())
+            return false;
+        if (tag())
+            return false;        
+        reff()-> resolve();
+        if (reff() && (reff()->as_typeassigment())) {
+            if (reff()->as_typeassigment()->type())
+                return reff()->as_typeassigment()->type()->isnotagged_choice();
+        }
+        return false;
+    }    
+
+
     bool type_atom::isallways_explicit() {
-        return (((istextualychoice()) && (!tag())) || (isopen()) ||
+        return ((isnotagged_choice()) || (isopen()) ||
                 (isdummy())) && ((tag()) && (tag()->number()));
     }
 
@@ -513,30 +535,31 @@ namespace x680 {
 
     canonical_tag_vct typeassignment_entity::cncl_tags() {
         canonical_tag_vct tmp;
-        if (type()->istextualychoice()) {
-            type_atom_ptr roottype = type()->textualy_type();
-            if (roottype) {
-                if (roottype->tag()) {
-                    canonical_tag_ptr tg = roottype->cncl_tag();
-                    if (tg)
-                        tmp.push_back(tg);
-                } else {
-                    for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-                        if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
-                            canonical_tag_vct tmpv = (*it)->as_typeassigment()->cncl_tags();
-                            if (!tmpv.empty())
-                                tmp.insert(tmp.end(), tmpv.begin(), tmpv.end());
+        if (type()) {
+            if (type()->isnotagged_choice()) {
+                if (type()->builtin() == t_CHOICE) {
+                    if ((type()->tag()) && (type()->cncl_tag())) {
+                            tmp.push_back(type()->cncl_tag());
+                    } else {
+                        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+                            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                                canonical_tag_vct tmpv = (*it)->as_typeassigment()->cncl_tags();
+                                if (!tmpv.empty())
+                                    tmp.insert(tmp.end(), tmpv.begin(), tmpv.end());
+                            }
                         }
                     }
+                } else {
+                    if ((type()->reff()) && (type()->reff()->as_typeassigment()))
+                        tmp=type()->reff()->as_typeassigment()->cncl_tags();
                 }
+            } else {
+                if (type()->cncl_tag())
+                    tmp.push_back(type()->cncl_tag());
             }
-        } else {
-            canonical_tag_ptr tg = type()->cncl_tag();
-            if (tg)
-                tmp.push_back(tg);
         }
-        return tmp;
-    }    
+    return tmp;
+}    
 
     namedtypeassignment_entity_ptr typeassignment_entity::as_named() {
         return named() ?
@@ -665,13 +688,20 @@ namespace x680 {
                         if (tmpel->type()->cncl_tag()) {
                             if (tmpset.find(tmpel->type()->cncl_tag()) != tmpset.end())
                                 referenceerror_throw("Tagging of structured type is ambiguous :", tmpel->name());
-                            tmpset.insert(tmpel->type()->cncl_tag());
-                            if ((type()->builtin() == t_SEQUENCE) && (tmpel->marker() == mk_none))
-                                tmpset.clear();
+                            tmpset.insert(tmpel->type()->cncl_tag());                           
+                        } else {
+                            canonical_tag_vct tmpelmts = tmpel->cncl_tags();
+                            if (!tmpelmts.empty()) {
+                                for (canonical_tag_vct::iterator its = tmpelmts.begin(); its != tmpelmts.end(); ++its) {
+                                    if (tmpset.find(*its) != tmpset.end())
+                                        referenceerror_throw("Tagging of structured type is ambiguous :", tmpel->name());
+                                    else
+                                        tmpset.insert(*its);
+                                }
+                            }
                         }
-                        else{
-                            
-                        }
+                        if ((type()->builtin() == t_SEQUENCE) && (tmpel->marker() == mk_none))
+                            tmpset.clear();
                     }
                 }
             } else if (type()->builtin() == t_CHOICE) {
@@ -681,14 +711,13 @@ namespace x680 {
                             (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr();
                     if ((tmpel) && (tmpel->type())) {
                         canonical_tag_vct tmpelmts = tmpel->cncl_tags();
-                        if (!tmpelmts.empty()){
-                            //std::cout << " Include chose:"  << tmpelmts.size()  << std::endl;
+                        if (!tmpelmts.empty()) {
                             for (canonical_tag_vct::iterator its = tmpelmts.begin(); its != tmpelmts.end(); ++its) {
-                            if (tmpset.find(*its) != tmpset.end())
-                                referenceerror_throw("Tagging of structured type is ambiguous :", tmpel->name());
-                            else
-                                tmpset.insert(*its); 
-                            }                            
+                                if (tmpset.find(*its) != tmpset.end())
+                                    referenceerror_throw("Tagging of structured type is ambiguous :", tmpel->name());
+                                else
+                                    tmpset.insert(*its);
+                            }
                         }
                     }
                 }

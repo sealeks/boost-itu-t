@@ -191,7 +191,7 @@ namespace x680 {
             tag_ = vl;
         }
         
-        // canonical
+        // canonical tag
         canonical_tag_ptr cncl_tag();    
         
         // preffix = textualy tagging
@@ -218,12 +218,16 @@ namespace x680 {
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
         }
+        
+        bool isrefferrence() const;        
 
         bool isopen() const;
 
-        bool istypedef() const;
+        bool isenum() const;
 
-        bool istextualychoice();
+        bool istextualy_choice();
+        
+        bool isnotagged_choice();        
 
         bool isallways_explicit();
         
