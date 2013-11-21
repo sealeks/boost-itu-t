@@ -243,8 +243,8 @@ namespace x680 {
 
 
     bool type_atom::isallways_explicit() {
-        return ((isnotagged_choice()) || (isopen()) ||
-                (isdummy())) && ((tag()) && (tag()->number()));
+        return (((istextualy_choice()) || (isopen()) ||
+                (isdummy())) && (tag()));
     }
 
     tagrule_type type_atom::tagrule() const {
@@ -399,7 +399,7 @@ namespace x680 {
 
     void type_atom::resolve_tag() {
         if (tag()) {
-            if ((tag()->rule() == noset_tags) && (tag()->number())) {
+            if ((tag()->rule() == noset_tags)/* && (tag()->number())*/) {
                 switch (tagrule()) {
                     case explicit_tags:
                         tag()->rule(explicit_tags);
@@ -416,9 +416,12 @@ namespace x680 {
                     };
                 }
             }
-            //if ((isallways_explicit()) && (tag()->rule() == implicit_tags) && (tag()->number()))
-               // std::cout << "Test error namr: " << scope()->name() << std::endl;
-            //scope()->referenceerror_throw("type ", " shall not be implicit '");
+            if ((isallways_explicit()) && (tag()->rule() == implicit_tags)) {
+                if (scope())
+                    scope()->referenceerror_throw("Named type should not be implicit", scope()->name());
+                else
+                    throw semantics::error("Named type should not be implicit");
+            }
             if ((tag()->number()) && (tag()->number()->as_defined()) && (tag()->number()->expecteddef())) {
                 tag()->number()->resolve_reff(basic_atom_ptr(), extend_search);
             }
@@ -668,9 +671,12 @@ namespace x680 {
         int num = 0;
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
             if ((*it)->as_typeassigment()) {
-                if (!((*it)->as_typeassigment()->type()->tag())) {
-                    (*it)->as_typeassigment()->type()->
-                            tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++), tcl_context, implicit_tags));
+                type_atom_ptr tmptype = (*it)->as_typeassigment()->type();
+                if ((tmptype) && (!(tmptype->tag()))) {
+                    bool isallways_expl = ((tmptype->isnotagged_choice()) || (tmptype->isopen()) ||
+                            (tmptype->isdummy()));
+                    tmptype-> tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++),
+                            tcl_context, isallways_expl ? explicit_tags : implicit_tags));
                 } else
                     num++;
             }

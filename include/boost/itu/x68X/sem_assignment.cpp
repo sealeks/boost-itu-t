@@ -233,8 +233,12 @@ namespace x680 {
 
     std::string basic_entity::source_throw() {
         std::string rslt = "";
-        if (as_typeassigment())
-            rslt = rslt + " in typeassignment";
+        if (as_typeassigment()) {
+            if (as_typeassigment()->as_named())
+                rslt = rslt + " in named type";
+            else
+                rslt = rslt + " in typeassignment";
+        }
         else if (as_valueassigment())
             rslt = rslt + " in valueassignment";
         else if (as_valuesetassigment())
@@ -281,7 +285,8 @@ namespace x680 {
             } else {
                 if (!(*it)->name().empty()) {
                     if (set.find((*it)->name()) != set.end())
-                        throw semantics::error("Identifier '" + (*it)->name() + "' duplicates " + (*it)->source_throw() + modulerefname());
+                        throw semantics::error("Identifier '" + (*it)->name() + "' duplicates "
+                                + (*it)->source_throw() + " " +modulerefname());
                     else
                         set.insert((*it)->name());
                 }
@@ -297,7 +302,8 @@ namespace x680 {
         if (reff->as_expectdef()) {
             if (reff->as_expectdef()->ismodule()) {
                 if (reff->moduleref())
-                    return reff->moduleref()->find_in_importmodule(reff->as_expectdef()->module(), reff->as_expectdef()->name());
+                    return reff->moduleref()->find_in_importmodule(
+                            reff->as_expectdef()->module(), reff->as_expectdef()->name());
                 else
                     basic_entity_ptr();
             } else {
