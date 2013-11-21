@@ -576,7 +576,7 @@ namespace x680 {
     void module_entity::preresolve_assigments(basic_entity_vector& elm) {
         for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
             switch ((*it)->kind()) {
-                case et_Nodef: *it = preresolve_nodef_assigment(*it);
+                case et_NodefT: *it = preresolve_nodef_assigment(*it);
                     break;
                 case et_NodefV: *it = preresolve_nodefv_assigment(*it);
                     break;
