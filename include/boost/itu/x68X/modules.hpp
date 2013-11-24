@@ -368,11 +368,12 @@ namespace x680 {
 
 
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeList;
-            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> RootAlternativeTypeList;
+            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> RootAlternativeTypeLists;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternativesGroup1;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternativesGroup;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternatives;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternative;
+            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeListsKrn;            
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeLists;
 
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> ExceptionSpec;

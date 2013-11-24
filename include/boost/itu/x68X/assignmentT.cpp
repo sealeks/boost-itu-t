@@ -210,8 +210,6 @@ namespace x680 {
 
             AlternativeTypeList = (NamedType % qi::omit[qi::lit(",")]);
 
-            RootAlternativeTypeList = AlternativeTypeList;
-
             ExtensionAdditionAlternativesGroup1 = qi::omit[qi::lit("[[")
                     >> -(pos_number_str
                     >> qi::lit(":"))]
@@ -227,12 +225,14 @@ namespace x680 {
             ExtensionAdditionAlternatives = qi::omit[qi::lit(",")]
                     >> ExtensionAdditionAlternativesGroup 
                     >> -(ExtensionAdditionAlternative);
+            
+            AlternativeTypeListsKrn = ExtensionAndException
+                    >> -ExtensionAdditionAlternatives >> -ExtensionEndMarker;
 
-            AlternativeTypeLists = RootAlternativeTypeList
-                    >> -(qi::lit(",")
-                    >> ExtensionAndException
-                    >> -ExtensionAdditionAlternatives
-                    >> -ExtensionEndMarker);
+            AlternativeTypeLists = -AlternativeTypeList >> -qi::lit(",")
+                    >> -AlternativeTypeListsKrn >> -(qi::lit(",") >> AlternativeTypeList);
+
+            RootAlternativeTypeLists = ComponentTypeListsEx | AlternativeTypeLists;
 
 
 
@@ -257,7 +257,7 @@ namespace x680 {
 
             ChoiceType = CHOICE_[phx::bind(&type_deff, sprt::_val, t_CHOICE)]
                     >> qi::lit("{")
-                    >> -(AlternativeTypeLists[phx::bind(&type_pushs, sprt::_val, sprt::_1) ])
+                    >> -RootAlternativeTypeLists[phx::bind(&type_pushs, sprt::_val, sprt::_1) ]
                     >> qi::lit("}")
                     >> -(Constraints[phx::bind(&type_constraints, sprt::_val, sprt::_1)]);
 
