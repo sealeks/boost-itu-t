@@ -440,7 +440,11 @@ namespace x680 {
 
         // protected:
 
-        //   void resolve_predef();        
+        //   void resolve_predef();    
+        
+        basic_entity_vector::iterator first_extention();
+
+        basic_entity_vector::iterator second_extention();        
 
     private:
 

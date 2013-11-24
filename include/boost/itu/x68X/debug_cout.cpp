@@ -311,10 +311,10 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, type_atom_ptr self) {
-        if (self->cncl_tag()) 
+        /*if (self->cncl_tag()) 
             stream << self->cncl_tag();        
         if ((self->textualy_tag())  && (self->cncl_tag()!=self->textualy_tag())) 
-            stream << "{{" << self->textualy_tag()  << "}}" ;        
+            stream << "{{" << self->textualy_tag()  << "}}" ;*/        
         if (self->tag())
             stream << *(self->tag());
         switch (self->builtin()) {

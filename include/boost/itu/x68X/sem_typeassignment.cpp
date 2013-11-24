@@ -179,17 +179,11 @@ namespace x680 {
 
     type_atom_ptr type_atom::textualy_type() {
         if (!tag()) {
-            switch (builtin_) {
-                case t_Reference:
-                {
-                    if (reff() && (reff()->as_typeassigment())) {
-                        if (reff()->as_typeassigment()->type())
-                            return reff()->as_typeassigment()->type()->textualy_type();
-                    }
-                    break;
-                }
-                default:
-                {
+            if (isrefferrence()) {
+                if (reff() && (reff()->as_typeassigment())) {
+                    if (reff()->as_typeassigment()->type())
+                        return reff()->as_typeassigment()->type()->textualy_type();
+                } else {
                     return type_atom_ptr();
                 }
             }
@@ -578,6 +572,28 @@ namespace x680 {
         post_resolve_child();
 
     }
+    
+
+    basic_entity_vector::iterator typeassignment_entity::first_extention() {
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+            if (((*it)->as_typeassigment()) && 
+                    ((*it)->as_typeassigment()->as_named()) &&
+                    ((*it)->as_typeassigment()->as_named()->marker() == mk_extention))
+                return (++it);
+        return childs().end();
+    }
+
+    basic_entity_vector::iterator typeassignment_entity::second_extention() {
+        basic_entity_vector::iterator fit = first_extention();
+        if (fit != childs().end()) {
+            for (basic_entity_vector::iterator it = fit; it != childs().end(); ++it)
+            if (((*it)->as_typeassigment()) && 
+                    ((*it)->as_typeassigment()->as_named()) &&
+                    ((*it)->as_typeassigment()->as_named()->marker() == mk_extention))
+                    return (++it);
+        }
+        return childs().end();
+    }        
 
     void typeassignment_entity::post_resolve_child() {
         bool autotag = is_resolve_autotag();
@@ -669,8 +685,10 @@ namespace x680 {
 
     void typeassignment_entity::post_resolve_autotag() {
         int num = 0;
-        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-            if ((*it)->as_typeassigment()) {
+        basic_entity_vector::iterator fit = first_extention();
+        basic_entity_vector::iterator sit = second_extention();
+        for (basic_entity_vector::iterator it = childs().begin(); it != fit; ++it) {
+            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
                 type_atom_ptr tmptype = (*it)->as_typeassigment()->type();
                 if ((tmptype) && (!(tmptype->tag()))) {
                     bool isallways_expl = ((tmptype->isnotagged_choice()) || (tmptype->isopen()) ||
@@ -678,10 +696,42 @@ namespace x680 {
                     tmptype-> tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++),
                             tcl_context, isallways_expl ? explicit_tags : implicit_tags));
                 } else
+                    if ((*it)->as_typeassigment()->as_named()->marker() != mk_extention)
                     num++;
             }
         }
+        if (sit != childs().end()) {
+            for (basic_entity_vector::iterator it = sit; it != childs().end(); ++it) {
+                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                    type_atom_ptr tmptype = (*it)->as_typeassigment()->type();
+                    if ((tmptype) && (!(tmptype->tag()))) {
+                        bool isallways_expl = ((tmptype->isnotagged_choice()) || (tmptype->isopen()) ||
+                                (tmptype->isdummy()));
+                        tmptype-> tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++),
+                                tcl_context, isallways_expl ? explicit_tags : implicit_tags));
+                    } else
+                        if ((*it)->as_typeassigment()->as_named()->marker() != mk_extention)
+                        num++;
+                }
+            }
+        }
+        if (sit != fit) {
+            for (basic_entity_vector::iterator it = fit; it != sit; ++it) {
+                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                    type_atom_ptr tmptype = (*it)->as_typeassigment()->type();
+                    if ((tmptype) && (!(tmptype->tag()))) {
+                        bool isallways_expl = ((tmptype->isnotagged_choice()) || (tmptype->isopen()) ||
+                                (tmptype->isdummy()));
+                        tmptype-> tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++),
+                                tcl_context, isallways_expl ? explicit_tags : implicit_tags));
+                    } else
+                        if ((*it)->as_typeassigment()->as_named()->marker() != mk_extention)
+                        num++;
+                }
+            }
+        }
     }
+
 
     void typeassignment_entity::post_resolve_check() {
         if ((type()) && (!childs().empty())) {
