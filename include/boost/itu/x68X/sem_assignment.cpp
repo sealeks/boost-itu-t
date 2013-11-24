@@ -1119,6 +1119,13 @@ namespace x680 {
         return 0;
     }*/
 
+    basic_entity_ptr assignment_entity::find_component(const std::string& nm)  {
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
+            if ((*it)->name()==nm)
+                return (*it);
+        return basic_entity_ptr();
+    }
+
     basic_entity_ptr assignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it)
             if ((*it)->name() == nm)
@@ -1151,7 +1158,17 @@ namespace x680 {
         }
     }
 
-
+    std::string assignment_entity::subidentifier(std::string& nm) {
+        std::string rslt;
+        std::string::size_type it = nm.find_first_of('.');
+        if (it != std::string::npos) {
+            if ((it) && (it < (nm.size() - 1))) {
+                rslt = nm.substr(0, it - 1);
+                nm = nm.substr(it + 1);
+            }
+        }
+        return rslt;
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   

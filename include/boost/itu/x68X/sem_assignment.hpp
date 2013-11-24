@@ -1151,6 +1151,8 @@ namespace x680 {
 
 
         /////        
+        
+        basic_entity_ptr find_component(const std::string& nm);
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
@@ -1158,6 +1160,10 @@ namespace x680 {
 
         virtual void preresolve();
 
+    protected:
+        
+        std::string subidentifier(std::string& nm);
+        
     private:
 
         argument_entity_vct arguments_;
