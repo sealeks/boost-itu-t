@@ -669,7 +669,7 @@ namespace x680 {
                         (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr() ;                    
                     if ((tmpel) && (tmpel->type()) && (tmpel->type()->tag()) &&
                             (tmpel->marker() != mk_components_of)) {
-                        if ((tmpel->type()->textualy_tag()) || (num++ > 3)) {
+                        if ((tmpel->type()->textualy_tag()) /*|| (num++ > 3)*/) {
                             //debug_warning("warning:  : " + source_throw() + " automatic tagging skiped.");
                             automatic = false;
                             break;
