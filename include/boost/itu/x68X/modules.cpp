@@ -70,8 +70,8 @@ namespace x680 {
                     Value[phx::bind(&unknown_vo_value, sprt::_val, sprt::_1)] | Object[phx::bind(&unknown_vo_object, sprt::_val, sprt::_1)];
 
             ValueOrObject =
-                    (qi::hold[Value[phx::bind(&unknown_vo_value, sprt::_val, sprt::_1)] >> qi::omit[';']]
-                    | qi::hold[Object[phx::bind(&unknown_vo_object, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    ((qi::hold[Value[phx::bind(&unknown_vo_value, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Object[phx::bind(&unknown_vo_object, sprt::_val, sprt::_1)] >> qi::omit[';']]))
                     | ValueOrObjectM;
 
             ValueSetOrObjectSetM =

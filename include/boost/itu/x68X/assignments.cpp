@@ -84,7 +84,7 @@ namespace x680 {
                     >> -(Parameters[phx::bind(&objecta_arguments, sprt::_val, sprt::_1)])
                     >> SimpleDefinedObjectClass[phx::bind(&objecta_class, sprt::_val, sprt::_1)]
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> ObjectDefn[phx::bind(&objecta_object, sprt::_val, sprt::_1)];
+                    >> Object[phx::bind(&objecta_object, sprt::_val, sprt::_1)];
 
 
             ValueSetTypeAssignmentLS = valuesetreference_[phx::bind(&valueset_reference, sprt::_val, sprt::_1)]
