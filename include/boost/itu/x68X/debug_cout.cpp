@@ -137,13 +137,13 @@ namespace x680 {
         if (self->as_value())
             return stream << self->as_value();
         if (self->as_valueset())
-            return stream << self->as_valueset();     
+            return stream << self->as_valueset();
         if (self->as_class())
-            return stream << self->as_class();  
+            return stream << self->as_class();
         if (self->as_object())
             return stream << self->as_object();
         if (self->as_objectset())
-            return stream << self->as_objectset();          
+            return stream << self->as_objectset();
         return stream;
     }
 
@@ -322,7 +322,7 @@ namespace x680 {
         /*if (self->cncl_tag()) 
             stream << self->cncl_tag();        
         if ((self->textualy_tag())  && (self->cncl_tag()!=self->textualy_tag())) 
-            stream << "{{" << self->textualy_tag()  << "}}" ;*/        
+            stream << "{{" << self->textualy_tag()  << "}}" ;*/
         if (self->tag())
             stream << *(self->tag());
         switch (self->builtin()) {
@@ -355,8 +355,8 @@ namespace x680 {
             {
                 stream << "(o)" << self->as_fromobject()->object() << "."
                         << self->as_fromobject()->field()->reff()->name();
-                 if (self->rooted())
-                        stream << "(@" << self->root() << ")";
+                if (self->rooted())
+                    stream << "(@" << self->root() << ")";
                 break;
             }
             case t_ValueSetFromObjects:
@@ -393,12 +393,11 @@ namespace x680 {
             stream << "  [" << self->number() << "] || ";
         }
         return stream;
-    }    
-    
+    }
 
     std::ostream& operator<<(std::ostream& stream, defined_type self) {
         switch (self) {
-            
+
             case t_BOOLEAN: return stream << "BOOLEAN";
             case t_INTEGER: return stream << "INTEGER";
             case t_BIT_STRING: return stream << "BIT_STRING";
@@ -611,7 +610,7 @@ namespace x680 {
                 stream << "(o)" << self->as_fromobject()->object() << "."
                         << self->as_fromobject()->field()->reff()->name();
                 if (self->rooted())
-                    stream << "(@" << self->reff()->name() << ")";  
+                    stream << "(@" << self->reff()->name() << ")";
                 break;
             }
             case vs_ValueSetFromObjects:
@@ -619,7 +618,7 @@ namespace x680 {
                 stream << "(oS)" << self->as_fromobjectset()->objectset() << "."
                         << self->as_fromobject()->field()->reff()->name();
                 if (self->rooted())
-                    stream << "(@" << self->reff()->name() << ")";               
+                    stream << "(@" << self->reff()->name() << ")";
                 break;
             }
             case vs_defined:
@@ -1185,8 +1184,8 @@ namespace x680 {
         stream << "(o)" << self->object() << "." << self->field()->reff()->name();
         if (self->parameterized())
             stream << self->parameters();
-        if (self->rooted())
-            stream << "(@" << self->reff()->name() << ")";  
+        if ((self->rooted()) && (self->reff()))
+            stream << "(@" << self->reff()->name() << ")";
         return stream;
     }
 
@@ -1346,14 +1345,16 @@ namespace x680 {
             {
                 stream << "(o)" << self->as_fromobjectset()->objectset() << "."
                         << self->as_fromobjectset()->field()->reff()->name();
+                if ((self->rooted()) && (self->reff()))
+                    stream << "(@" << self->reff()->name() << ")";
                 break;
             }
             case os_ObjectSetFromObject:
             {
                 stream << "(oS)" << self->as_fromobject()->object() << "."
                         << self->as_fromobject()->field()->reff()->name();
-                if (self->rooted())
-                    stream << "(@" << self->root() << ")";                
+                if ((self->rooted()) && (self->reff()))
+                    stream << "(@" << self->reff()->name() << ")";
                 break;
             }
             case os_defined:
