@@ -135,7 +135,15 @@ namespace x680 {
         if (self->as_type())
             return stream << self->as_type()->builtin();
         if (self->as_value())
-        return stream << self->as_value();
+            return stream << self->as_value();
+        if (self->as_valueset())
+            return stream << self->as_valueset();     
+        if (self->as_class())
+            return stream << self->as_class();  
+        if (self->as_object())
+            return stream << self->as_object();
+        if (self->as_objectset())
+            return stream << self->as_objectset();          
         return stream;
     }
 
@@ -602,12 +610,16 @@ namespace x680 {
             {
                 stream << "(o)" << self->as_fromobject()->object() << "."
                         << self->as_fromobject()->field()->reff()->name();
+                if (self->rooted())
+                    stream << "(@" << self->reff()->name() << ")";  
                 break;
             }
             case vs_ValueSetFromObjects:
             {
                 stream << "(oS)" << self->as_fromobjectset()->objectset() << "."
                         << self->as_fromobject()->field()->reff()->name();
+                if (self->rooted())
+                    stream << "(@" << self->reff()->name() << ")";               
                 break;
             }
             case vs_defined:
@@ -1173,6 +1185,8 @@ namespace x680 {
         stream << "(o)" << self->object() << "." << self->field()->reff()->name();
         if (self->parameterized())
             stream << self->parameters();
+        if (self->rooted())
+            stream << "(@" << self->reff()->name() << ")";  
         return stream;
     }
 
@@ -1338,6 +1352,8 @@ namespace x680 {
             {
                 stream << "(oS)" << self->as_fromobject()->object() << "."
                         << self->as_fromobject()->field()->reff()->name();
+                if (self->rooted())
+                    stream << "(@" << self->root() << ")";                
                 break;
             }
             case os_defined:

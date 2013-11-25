@@ -75,6 +75,14 @@ namespace x680 {
     void fromobject_objectset_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
+        if (object()->reff()) {
+            assignment_entity_ptr tmpasmt = object()->reff()->as_assigment();
+            if (tmpasmt) {
+                if (tmpasmt->find_component(field_->expectedname())) {
+                    reff(tmpasmt->find_component(field_->expectedname()));
+                }
+            }
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -88,6 +96,14 @@ namespace x680 {
     void fromobjects_objectset_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
+        if (objectset()->reff()) {
+            assignment_entity_ptr tmpasmt = objectset()->reff()->as_assigment();
+            if (tmpasmt) {
+                if (tmpasmt->find_component(field_->expectedname())) {
+                    reff(tmpasmt->find_component(field_->expectedname()));
+                }
+            }
+        }        
     }
 
     /////////////////////////////////////////////////////////////////////////        

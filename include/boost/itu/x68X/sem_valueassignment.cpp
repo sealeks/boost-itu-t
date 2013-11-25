@@ -186,6 +186,8 @@ namespace x680 {
     void assignvalue_atom::resolve(basic_atom_ptr holder) {
         if (value_)
             value_->resolve_reff(holder);
+        if (value_->reff())
+            reff(value_->reff());
     }
 
     /////////////////////////////////////////////////////////////////////////   

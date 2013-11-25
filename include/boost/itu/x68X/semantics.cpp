@@ -960,8 +960,8 @@ namespace x680 {
 
         objectset_atom_ptr compile_objectset_impl(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
             switch (ent.tp) {
-                case os_ObjectSetFromObject: return boost::make_shared< fromobject_objectset_atom>(scope, ent.reference, compile_object(scope, *ent.objectref));
-                case os_ObjectSetFromObjects: return boost::make_shared< fromobjects_objectset_atom>(scope, ent.reference, compile_objectset(scope, *ent.objectsetref));
+                case os_ObjectSetFromObject: return boost::make_shared< fromobject_objectset_atom>(scope, ent.fieldreference, compile_object(scope, *ent.objectref));
+                case os_ObjectSetFromObjects: return boost::make_shared< fromobjects_objectset_atom>(scope, ent.fieldreference, compile_objectset(scope, *ent.objectsetref));
                     //case os_defined:
                 case os_Strait: return boost::make_shared< defn_objectset_atom>(scope, compile_objectset_vct(scope, ent));
                 default:
