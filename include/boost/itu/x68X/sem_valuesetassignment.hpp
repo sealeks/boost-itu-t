@@ -37,6 +37,8 @@ namespace x680 {
             set_ = vl;
         }
 
+        virtual bool isrefferrence() const;
+
         fromobject_valueset_atom_ptr as_fromobject();
 
         fromobjects_valueset_atom_ptr as_fromobjectset();

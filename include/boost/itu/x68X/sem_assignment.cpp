@@ -918,6 +918,10 @@ namespace x680 {
     basic_atom::basic_atom(basic_entity_ptr scp , const std::string& reff ) : 
                 kind_(at_Nodef), scope_(scp), extention_(false), isdummy_(false) {
         reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
+    }
+
+    bool basic_atom::isrefferrence() const {
+        return false;
     }    
 
     module_entity_ptr basic_atom::external() const {
@@ -1102,28 +1106,83 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     /*basic_entity* basic_atom::root_assignment(basic_entity* assign) {
-        if (!assign->reff())
-            return assign;
-        if ((reff()->as_typeassigment()) && (reff()->as_typeassigment()->type()))
-            return reff()->as_typeassigment()->type()->root_assignment();
-        if ((reff()->as_valueassigment()) && (reff()->as_valueassigment()->value()))
-            return reff()->as_valueassigment()->value()->root_assignment();
-        if ((reff()->as_valuesetassigment()) && (reff()->as_valuesetassigment()->valueset()))
-            return reff()->as_valuesetassigment()->valueset()->root_assignment();   
-        if ((reff()->as_classassigment()) && (reff()->as_classassigment()->_class()))
-            return reff()->as_classassigment()->_class()->root_assignment();
-        if ((reff()->as_objectassigment()) && (reff()->as_objectassigment()->object()))
-            return reff()->as_objectassigment()->object()->root_assignment();
-        if ((reff()->as_objectsetassigment()) && (reff()->as_objectsetassigment()->objectset()))
-            return reff()->as_objectsetassigment()->objectset()->root_assignment();          
-        return 0;
-    }*/
+                if (!assign->reff())
+                    return assign;
+                if ((reff()->as_typeassigment()) && (reff()->as_typeassigment()->type()))
+                    return reff()->as_typeassigment()->type()->root_assignment();
+                if ((reff()->as_valueassigment()) && (reff()->as_valueassigment()->value()))
+                    return reff()->as_valueassigment()->value()->root_assignment();
+                if ((reff()->as_valuesetassigment()) && (reff()->as_valuesetassigment()->valueset()))
+                    return reff()->as_valuesetassigment()->valueset()->root_assignment();   
+                if ((reff()->as_classassigment()) && (reff()->as_classassigment()->_class()))
+                    return reff()->as_classassigment()->_class()->root_assignment();
+                if ((reff()->as_objectassigment()) && (reff()->as_objectassigment()->object()))
+                    return reff()->as_objectassigment()->object()->root_assignment();
+                if ((reff()->as_objectsetassigment()) && (reff()->as_objectsetassigment()->objectset()))
+                    return reff()->as_objectsetassigment()->objectset()->root_assignment();          
+                return 0;
+            }*/
 
-    basic_entity_ptr assignment_entity::find_component(const std::string& nm)  {
-        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-            if ((*it)->name()==nm)
-                return (*it);
-        return basic_entity_ptr();
+    assignment_entity_ptr assignment_entity::refference_to() {
+        resolve();
+        if (as_typeassigment()) {
+            if ((as_typeassigment()->type())
+                    && (as_typeassigment()->type()->reff())
+                    && (as_typeassigment()->type()->reff()->as_assigment())) {
+                return as_typeassigment()->type()->reff()->as_assigment();
+            }
+        } else if (as_valueassigment()) {
+            if ((as_valueassigment()->value())
+                    && (as_valueassigment()->value()->reff())
+                    && (as_valueassigment()->value()->reff()->as_assigment())) {
+                return as_valueassigment()->value()->reff()->as_assigment();
+            }
+        } else if (as_valuesetassigment()) {
+            if ((as_valuesetassigment()->valueset())
+                    && (as_valuesetassigment()->valueset()->reff())
+                    && (as_valuesetassigment()->valueset()->reff()->as_assigment())) {
+                return as_valuesetassigment()->valueset()->reff()->as_assigment();
+            }
+        } else if (as_classassigment()) {
+            if ((as_classassigment()->_class())
+                    && (as_classassigment()->_class()->reff())
+                    && (as_classassigment()->_class()->reff()->as_assigment())) {
+                return as_classassigment()->_class()->reff()->as_assigment();
+            }
+        } else if (as_objectassigment()) {
+            if ((as_objectassigment()->object())
+                    && (as_objectassigment()->object()->reff())
+                    && (as_objectassigment()->object()->reff()->as_assigment())) {
+                return as_objectassigment()->object()->reff()->as_assigment();
+            }
+        } else if (as_objectsetassigment()) {
+            if ((as_objectsetassigment()->objectset())
+                    && (as_objectsetassigment()->objectset()->reff())
+                    && (as_objectsetassigment()->objectset()->reff()->as_assigment())) {
+                return as_objectsetassigment()->objectset()->reff()->as_assigment();
+            }
+        }
+        return as_assigment();
+    }    
+
+    assignment_entity_ptr assignment_entity::find_component(const std::string& nmf) {
+        std::string nm = nmf;
+        std::string search = subidentifier(nm);
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+            if ((*it)->name() == search) {
+                if ((*it)->as_assigment()) {
+                    if (nm.empty()) {
+                        return (*it)->as_assigment();
+                    } else {
+                        assignment_entity_ptr ref =(*it)->as_assigment()->refference_to();
+                        if (ref && (ref->as_assigment()))                      
+                           return ref->as_assigment()->find_component(nm);
+                    }
+                } else
+                    return assignment_entity_ptr();
+            }
+        }
+        return assignment_entity_ptr();
     }
 
     basic_entity_ptr assignment_entity::find_by_name(const std::string& nm, search_marker sch) {
@@ -1159,14 +1218,13 @@ namespace x680 {
     }
 
     std::string assignment_entity::subidentifier(std::string& nm) {
-        std::string rslt;
+        std::string rslt = nm;
         std::string::size_type it = nm.find_first_of('.');
-        if (it != std::string::npos) {
-            if ((it) && (it < (nm.size() - 1))) {
-                rslt = nm.substr(0, it - 1);
-                nm = nm.substr(it + 1);
-            }
-        }
+        if ((it != std::string::npos) && ((it) && (it < (nm.size() - 1)))) {
+            rslt = nm.substr(0, it );
+            nm = nm.substr(it + 1);
+        } else
+            nm = "";
         return rslt;
     }
 

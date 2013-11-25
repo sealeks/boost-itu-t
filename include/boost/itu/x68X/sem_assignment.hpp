@@ -939,6 +939,8 @@ namespace x680 {
         void parameters(setting_atom_vct vl) {
             parameters_ = vl;
         }
+        
+         virtual bool isrefferrence() const;
 
         bool parameterized() const {
             return !parameters_.empty();
@@ -1152,7 +1154,9 @@ namespace x680 {
 
         /////        
         
-        basic_entity_ptr find_component(const std::string& nm);
+        assignment_entity_ptr refference_to();
+        
+        assignment_entity_ptr find_component(const std::string& nm);
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 

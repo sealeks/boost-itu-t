@@ -26,6 +26,8 @@ namespace x680 {
         value_type valtype() const {
             return valtype_;
         }
+        
+        virtual bool isrefferrence() const;
 
         numvalue_atom_ptr as_number();
 

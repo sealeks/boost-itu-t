@@ -27,6 +27,8 @@ namespace x680 {
         objectset_type builtin() const {
             return builtin_;
         }
+        
+       virtual bool isrefferrence() const;   
 
         defined_objectset_atom_ptr as_defined();
 

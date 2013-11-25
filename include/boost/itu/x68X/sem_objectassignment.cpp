@@ -27,6 +27,15 @@ namespace x680 {
     object_atom::object_atom(basic_entity_ptr scope, const std::string& reff, object_type tp)
     : basic_atom(at_Object, scope, reff), builtin_(tp) {
     }
+    
+    bool object_atom::isrefferrence() const {
+        return (((builtin_ == ot_Refference)
+                || (builtin_ == ot_FromObject)
+                || (builtin_ == ot_DefinedObjectSet)
+                ||  (builtin_ == ot_DefinedObjectSet)
+                || (builtin_ == ot_ObjectSetFromObject)) && (reff()));
+    }            
+    
 
     defined_object_atom_ptr object_atom::as_defined() {
         return builtin_ == ot_Refference ?

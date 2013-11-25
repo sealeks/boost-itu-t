@@ -560,6 +560,8 @@ namespace x680 {
             return builtin_;
         }
 
+        virtual bool isrefferrence() const;
+
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:

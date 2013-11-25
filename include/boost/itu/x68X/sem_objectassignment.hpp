@@ -69,6 +69,8 @@ namespace x680 {
         object_type builtin() const {
             return builtin_;
         }
+        
+        virtual bool isrefferrence() const;        
 
         defined_object_atom_ptr as_defined();
 

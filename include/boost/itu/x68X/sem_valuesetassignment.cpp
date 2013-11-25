@@ -29,6 +29,12 @@ namespace x680 {
                 boost::static_pointer_cast<fromobject_valueset_atom> (self()) : fromobject_valueset_atom_ptr();
     }
 
+    bool valueset_atom::isrefferrence() const {
+        return (((builtin_ == vs_defined)
+                || (builtin_ == vs_ValueSetFromObjects)
+                || (builtin_ == vs_ValueSetFromObject)) && (reff()));
+    }    
+
     fromobjects_valueset_atom_ptr valueset_atom::as_fromobjectset() {
         return builtin_ == vs_ValueSetFromObjects ?
                 boost::static_pointer_cast<fromobjects_valueset_atom> (self()) : fromobjects_valueset_atom_ptr();

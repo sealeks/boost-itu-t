@@ -24,6 +24,12 @@ namespace x680 {
     : basic_atom(at_ObjectSet, scope, reff), builtin_(tp) {
     }
 
+    bool objectset_atom::isrefferrence() const {
+        return (((builtin_ == os_defined)
+                || (builtin_ == os_ObjectSetFromObject)
+                || (builtin_ == os_ObjectSetFromObjects)) && (reff()));
+    }            
+    
     defined_objectset_atom_ptr objectset_atom::as_defined() {
         return builtin_ == os_defined ?
                 boost::static_pointer_cast<defined_objectset_atom> (self()) : defined_objectset_atom_ptr();

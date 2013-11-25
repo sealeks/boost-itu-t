@@ -347,6 +347,8 @@ namespace x680 {
             {
                 stream << "(o)" << self->as_fromobject()->object() << "."
                         << self->as_fromobject()->field()->reff()->name();
+                 if (self->rooted())
+                        stream << "(@" << self->root() << ")";
                 break;
             }
             case t_ValueSetFromObjects:
@@ -550,6 +552,8 @@ namespace x680 {
         stream << "(o)" << self->object() << "." << self->field()->reff()->name();
         if (self->parameterized())
             stream << self->parameters();
+        if (self->rooted())
+            stream << "(@" << self->root() << ")";
         return stream;
     }
 

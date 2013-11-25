@@ -222,6 +222,12 @@ namespace x680 {
     : basic_atom(at_Class, scope, reff), builtin_(tp) {
     }
 
+    bool class_atom::isrefferrence() const {
+        return (((builtin_ == cl_Reference)
+                || (builtin_ == cl_TYPE_IDENTIFIER)
+                || (builtin_ == cl_ABSTRACT_SYNTAX)) && (reff()));
+    }    
+
     void class_atom::resolve(basic_atom_ptr holder) {
         if (builtin_ == cl_Reference)
             resolve_reff();

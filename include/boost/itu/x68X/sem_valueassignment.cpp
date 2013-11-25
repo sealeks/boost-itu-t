@@ -22,6 +22,12 @@ namespace x680 {
     value_atom::value_atom(basic_entity_ptr scp, const std::string& reff, value_type tpv)
     : basic_atom(at_Value, scp, reff), valtype_(tpv) {
     }
+   
+
+    bool value_atom::isrefferrence() const {
+        return (((valtype()==v_defined) 
+                || (valtype()==v_defined_assign)
+                || (valtype()==v_ValueFromObject)) && (reff()));}
 
     numvalue_atom_ptr value_atom::as_number() {
         return (valtype() == v_number) ?
@@ -162,6 +168,14 @@ namespace x680 {
     void fromobject_value_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve(holder);
+        if (object()->reff()) {
+            assignment_entity_ptr tmpasmt=object()->reff()->as_assigment(); 
+            if (tmpasmt) {
+                if (tmpasmt->find_component(field_->expectedname())) {
+                    reff(tmpasmt->find_component(field_->expectedname()));
+                }
+            }
+        }          
     }
 
 
