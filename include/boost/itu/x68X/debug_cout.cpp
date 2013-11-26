@@ -188,7 +188,7 @@ namespace x680 {
 
     //  type
 
-    std::ostream& operator<<(std::ostream& stream, typeassignment_entity_ptr self) {
+    std::ostream& operator<<(std::ostream& stream, typeassignment_entity_ptr self) {        
         if (self->as_named()) {
             indent(stream, self);
             if (self->as_named()->marker() == mk_components_of)
@@ -215,8 +215,8 @@ namespace x680 {
             stream << "(T) " << self->name();
             if (self->has_arguments())
                 stream << self->arguments();
-            stream << " :: = " << self->type();
-            operatorstruct(stream, self);
+                stream << " :: = " << self->type();
+                operatorstruct(stream, self);
             if (self->type()->has_constraint())
                 stream << self->type()->constraints();
         }
@@ -324,7 +324,7 @@ namespace x680 {
         if ((self->textualy_tag())  && (self->cncl_tag()!=self->textualy_tag())) 
             stream << "{{" << self->textualy_tag()  << "}}" ;*/
         if (self->tag())
-            stream << *(self->tag());
+            stream << *(self->tag());        
         switch (self->builtin()) {
             case t_Reference:
             {
@@ -1184,8 +1184,14 @@ namespace x680 {
         stream << "(o)" << self->object() << "." << self->field()->reff()->name();
         if (self->parameterized())
             stream << self->parameters();
-        if ((self->rooted()) && (self->reff()))
-            stream << "(@" << self->reff()->name() << ")";
+        if ((self->rooted()) && (self->reff())) {
+            stream << "(@";
+            if (self->reff()->as_objectsetassigment())
+                stream << "oS ";
+            if (self->reff()->as_objectassigment())
+                stream << "o ";
+            stream << self->reff()->name() << ")";
+        }
         return stream;
     }
 
@@ -1345,16 +1351,28 @@ namespace x680 {
             {
                 stream << "(o)" << self->as_fromobjectset()->objectset() << "."
                         << self->as_fromobjectset()->field()->reff()->name();
-                if ((self->rooted()) && (self->reff()))
-                    stream << "(@" << self->reff()->name() << ")";
+                if ((self->rooted()) && (self->reff())) {
+                    stream << "(@";
+                    if (self->reff()->as_objectsetassigment())
+                        stream << "oS ";
+                    if (self->reff()->as_objectassigment())
+                        stream << "o ";                    
+                    stream << self->reff()->name() << ")";
+                }
                 break;
             }
             case os_ObjectSetFromObject:
             {
                 stream << "(oS)" << self->as_fromobject()->object() << "."
                         << self->as_fromobject()->field()->reff()->name();
-                if ((self->rooted()) && (self->reff()))
-                    stream << "(@" << self->reff()->name() << ")";
+                if ((self->rooted()) && (self->reff())) {
+                    stream << "(@";
+                    if (self->reff()->as_objectsetassigment())
+                        stream << "oS ";
+                    if (self->reff()->as_objectassigment())
+                        stream << "o ";                    
+                    stream << self->reff()->name() << ")";
+                }
                 break;
             }
             case os_defined:
