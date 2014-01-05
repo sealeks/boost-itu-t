@@ -219,7 +219,9 @@ namespace x680 {
             predefined_ = vl;
         }
         
-        virtual bool isrefferrence() const;        
+        virtual bool isrefferrence() const;     
+        
+        bool isstruct() const;        
 
         bool isopen() const;
 

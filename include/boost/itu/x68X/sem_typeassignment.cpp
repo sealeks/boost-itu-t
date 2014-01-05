@@ -198,6 +198,10 @@ namespace x680 {
                  ||   (builtin_ ==t_TypeFromObject)
                  || (builtin_ ==t_ValueSetFromObjects)) && (reff()));
     }   
+    
+     bool type_atom::isstruct() const {
+         return (((builtin_ == t_CHOICE) || (builtin_ == t_SET)  || (builtin_ == t_SEQUENCE)) && (!tag()));
+     }
 
     bool type_atom::isopen() const {
         return ((builtin_ == t_ClassField) || (builtin_ == t_ANY));
@@ -208,11 +212,11 @@ namespace x680 {
     }
 
     bool type_atom::istextualy_choice() {
-        if (builtin_ == t_CHOICE) 
+        if ((builtin_ == t_CHOICE) && (!tag()))
             return true;
         if (!isrefferrence())
             return false;
-        reff()-> resolve();
+        //reff()-> resolve();
         if (reff() && (reff()->as_typeassigment())) {
             if (reff()->as_typeassigment()->type())
                 return reff()->as_typeassigment()->type()->istextualy_choice();
