@@ -162,8 +162,6 @@ namespace x680 {
                 stream << "\n  // import   from  " << self->name();
             else
                 stream << "\n";
-            // if (self->objectid())
-            //     stream  << "" << self->objectid();
             stream << "\n";
             stream << "\n";
             for (import_vector::iterator it = self->import().begin(); it != self->import().end(); ++it) {
@@ -177,11 +175,20 @@ namespace x680 {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if (((*it)->as_typeassigment())) {
                     switch ((*it)->as_typeassigment()->type()->builtin()) {
-                        case t_CHOICE: execute_choice(stream, (*it)->as_typeassigment());
+                        case t_CHOICE: 
+                            stream << "\n";
+                            stream << tabformat((*it)->as_typeassigment()) <<  "// choice " << (*it)->as_typeassigment()->name();
+                            execute_choice(stream, (*it)->as_typeassigment());
                             break;
-                        case t_SEQUENCE: execute_sequence(stream, (*it)->as_typeassigment());
+                        case t_SEQUENCE: 
+                            stream << "\n";
+                            stream << tabformat((*it)->as_typeassigment()) << "// sequence " << (*it)->as_typeassigment()->name();                            
+                            execute_sequence(stream, (*it)->as_typeassigment());
                             break;
-                        case t_SET: execute_set(stream, (*it)->as_typeassigment());
+                        case t_SET: 
+                            stream << "\n";
+                            stream << tabformat((*it)->as_typeassigment()) <<  "// set " << (*it)->as_typeassigment()->name();                            
+                            execute_set(stream, (*it)->as_typeassigment());
                             break;
                         default:
                         {
@@ -208,9 +215,9 @@ namespace x680 {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
                     namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
-                    std::string tmp;
-                    stream << "\n";
+                    std::string tmp;         
                     if (named->type()) {
+                        stream << "\n";
                         switch (named->type()->builtin()) {
                             case t_CHOICE: tmp = "CHOICE";
                                 break;
@@ -248,6 +255,8 @@ namespace x680 {
                 }
             }
         }
+        
+        
 
         void fileout::execute_declare(std::ofstream& stream, typeassignment_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
@@ -294,7 +303,6 @@ namespace x680 {
 
         void fileout::execute_choice(std::ofstream& stream, typeassignment_entity_ptr self) {
 
-            stream << "\n";
             stream << "\n" << tabformat(self) << "enum " << nameconvert(self->name()) << "_enum {";
             stream << "\n" << tabformat(self, 1) << nameconvert((self->name())) << "_null = 0, ";
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
@@ -309,7 +317,7 @@ namespace x680 {
             stream << "\n ";
             execute_declare(stream, self);
 
-            stream << "\n\n" << tabformat(self, 1) << nameconvert(self->name()) << "()";
+            stream << "\n" << tabformat(self, 1) << nameconvert(self->name()) << "()";
             stream << " : " << " BOOST_ASN_CHOICE_STRUCT(" << nameconvert(self->name()) << "_enum) () {}";
 
             stream << "\n ";
@@ -318,9 +326,6 @@ namespace x680 {
 
             stream << "} ";
             stream << "\n ";
-            //for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-
-            //}
         }
 
         void fileout::execute_sequence(std::ofstream& stream, typeassignment_entity_ptr self) {
