@@ -55,7 +55,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/787997029/sem_valuesetassignment.o \
 	${OBJECTDIR}/_ext/787997029/semantics.o \
 	${OBJECTDIR}/_ext/787997029/setters.o \
-	${OBJECTDIR}/_ext/787997029/x680.o
+	${OBJECTDIR}/_ext/787997029/x680.o \
+	${OBJECTDIR}/_ext/627700379/assignments.o \
+	${OBJECTDIR}/_ext/627700379/cpp_cout.o
 
 
 # C Compiler Flags
@@ -87,107 +89,117 @@ LDLIBSOPTIONS=
 ${OBJECTDIR}/_ext/787997029/assignmentCl.o: ../../../include/boost/itu/x68X/assignmentCl.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentCl.o ../../../include/boost/itu/x68X/assignmentCl.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentCl.o ../../../include/boost/itu/x68X/assignmentCl.cpp
 
 ${OBJECTDIR}/_ext/787997029/assignmentClf.o: ../../../include/boost/itu/x68X/assignmentClf.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentClf.o ../../../include/boost/itu/x68X/assignmentClf.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentClf.o ../../../include/boost/itu/x68X/assignmentClf.cpp
 
 ${OBJECTDIR}/_ext/787997029/assignmentO.o: ../../../include/boost/itu/x68X/assignmentO.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentO.o ../../../include/boost/itu/x68X/assignmentO.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentO.o ../../../include/boost/itu/x68X/assignmentO.cpp
 
 ${OBJECTDIR}/_ext/787997029/assignmentOS.o: ../../../include/boost/itu/x68X/assignmentOS.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentOS.o ../../../include/boost/itu/x68X/assignmentOS.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentOS.o ../../../include/boost/itu/x68X/assignmentOS.cpp
 
 ${OBJECTDIR}/_ext/787997029/assignmentSe.o: ../../../include/boost/itu/x68X/assignmentSe.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentSe.o ../../../include/boost/itu/x68X/assignmentSe.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentSe.o ../../../include/boost/itu/x68X/assignmentSe.cpp
 
 ${OBJECTDIR}/_ext/787997029/assignmentT.o: ../../../include/boost/itu/x68X/assignmentT.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentT.o ../../../include/boost/itu/x68X/assignmentT.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentT.o ../../../include/boost/itu/x68X/assignmentT.cpp
 
 ${OBJECTDIR}/_ext/787997029/assignmentV.o: ../../../include/boost/itu/x68X/assignmentV.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentV.o ../../../include/boost/itu/x68X/assignmentV.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentV.o ../../../include/boost/itu/x68X/assignmentV.cpp
 
 ${OBJECTDIR}/_ext/787997029/assignmentVS.o: ../../../include/boost/itu/x68X/assignmentVS.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentVS.o ../../../include/boost/itu/x68X/assignmentVS.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentVS.o ../../../include/boost/itu/x68X/assignmentVS.cpp
 
 ${OBJECTDIR}/_ext/787997029/debug_cout.o: ../../../include/boost/itu/x68X/debug_cout.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/debug_cout.o ../../../include/boost/itu/x68X/debug_cout.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/debug_cout.o ../../../include/boost/itu/x68X/debug_cout.cpp
 
 ${OBJECTDIR}/_ext/787997029/modules.o: ../../../include/boost/itu/x68X/modules.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/modules.o ../../../include/boost/itu/x68X/modules.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/modules.o ../../../include/boost/itu/x68X/modules.cpp
 
 ${OBJECTDIR}/_ext/787997029/parser.o: ../../../include/boost/itu/x68X/parser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/parser.o ../../../include/boost/itu/x68X/parser.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/parser.o ../../../include/boost/itu/x68X/parser.cpp
 
 ${OBJECTDIR}/_ext/787997029/sem_assignment.o: ../../../include/boost/itu/x68X/sem_assignment.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_assignment.o ../../../include/boost/itu/x68X/sem_assignment.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_assignment.o ../../../include/boost/itu/x68X/sem_assignment.cpp
 
 ${OBJECTDIR}/_ext/787997029/sem_classassignment.o: ../../../include/boost/itu/x68X/sem_classassignment.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_classassignment.o ../../../include/boost/itu/x68X/sem_classassignment.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_classassignment.o ../../../include/boost/itu/x68X/sem_classassignment.cpp
 
 ${OBJECTDIR}/_ext/787997029/sem_objectassignment.o: ../../../include/boost/itu/x68X/sem_objectassignment.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_objectassignment.o ../../../include/boost/itu/x68X/sem_objectassignment.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_objectassignment.o ../../../include/boost/itu/x68X/sem_objectassignment.cpp
 
 ${OBJECTDIR}/_ext/787997029/sem_objectsetassignment.o: ../../../include/boost/itu/x68X/sem_objectsetassignment.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_objectsetassignment.o ../../../include/boost/itu/x68X/sem_objectsetassignment.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_objectsetassignment.o ../../../include/boost/itu/x68X/sem_objectsetassignment.cpp
 
 ${OBJECTDIR}/_ext/787997029/sem_typeassignment.o: ../../../include/boost/itu/x68X/sem_typeassignment.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_typeassignment.o ../../../include/boost/itu/x68X/sem_typeassignment.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_typeassignment.o ../../../include/boost/itu/x68X/sem_typeassignment.cpp
 
 ${OBJECTDIR}/_ext/787997029/sem_valueassignment.o: ../../../include/boost/itu/x68X/sem_valueassignment.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_valueassignment.o ../../../include/boost/itu/x68X/sem_valueassignment.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_valueassignment.o ../../../include/boost/itu/x68X/sem_valueassignment.cpp
 
 ${OBJECTDIR}/_ext/787997029/sem_valuesetassignment.o: ../../../include/boost/itu/x68X/sem_valuesetassignment.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_valuesetassignment.o ../../../include/boost/itu/x68X/sem_valuesetassignment.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/sem_valuesetassignment.o ../../../include/boost/itu/x68X/sem_valuesetassignment.cpp
 
 ${OBJECTDIR}/_ext/787997029/semantics.o: ../../../include/boost/itu/x68X/semantics.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/semantics.o ../../../include/boost/itu/x68X/semantics.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/semantics.o ../../../include/boost/itu/x68X/semantics.cpp
 
 ${OBJECTDIR}/_ext/787997029/setters.o: ../../../include/boost/itu/x68X/setters.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/setters.o ../../../include/boost/itu/x68X/setters.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/setters.o ../../../include/boost/itu/x68X/setters.cpp
 
 ${OBJECTDIR}/_ext/787997029/x680.o: ../../../include/boost/itu/x68X/x680.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/x680.o ../../../include/boost/itu/x68X/x680.cpp
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/x680.o ../../../include/boost/itu/x68X/x680.cpp
+
+${OBJECTDIR}/_ext/627700379/assignments.o: /F/Project/itu-t/include/boost/itu/x68X/assignments.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/627700379
+	${RM} $@.d
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/627700379/assignments.o /F/Project/itu-t/include/boost/itu/x68X/assignments.cpp
+
+${OBJECTDIR}/_ext/627700379/cpp_cout.o: /F/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/627700379
+	${RM} $@.d
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/627700379/cpp_cout.o /F/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp
 
 # Subprojects
 .build-subprojects:

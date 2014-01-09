@@ -55,7 +55,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/787997029/sem_valuesetassignment.o \
 	${OBJECTDIR}/_ext/787997029/semantics.o \
 	${OBJECTDIR}/_ext/787997029/setters.o \
-	${OBJECTDIR}/_ext/787997029/x680.o
+	${OBJECTDIR}/_ext/787997029/x680.o \
+	${OBJECTDIR}/_ext/627700379/assignments.o \
+	${OBJECTDIR}/_ext/627700379/cpp_cout.o
 
 
 # C Compiler Flags
@@ -188,6 +190,16 @@ ${OBJECTDIR}/_ext/787997029/x680.o: ../../../include/boost/itu/x68X/x680.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Wall -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/x680.o ../../../include/boost/itu/x68X/x680.cpp
+
+${OBJECTDIR}/_ext/627700379/assignments.o: /F/Project/itu-t/include/boost/itu/x68X/assignments.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/627700379
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/627700379/assignments.o /F/Project/itu-t/include/boost/itu/x68X/assignments.cpp
+
+${OBJECTDIR}/_ext/627700379/cpp_cout.o: /F/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/627700379
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/627700379/cpp_cout.o /F/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp
 
 # Subprojects
 .build-subprojects:

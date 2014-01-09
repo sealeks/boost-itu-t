@@ -6,7 +6,7 @@
 
 # Macros
 TOP=`pwd`
-CND_PLATFORM=GNU-Linux-x86
+CND_PLATFORM=GNU-Windows
 CND_CONF=nb_gcc_rl_LIN64
 CND_DISTDIR=dist
 CND_BUILDDIR=build

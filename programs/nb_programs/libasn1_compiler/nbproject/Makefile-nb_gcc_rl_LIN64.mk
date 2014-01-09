@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux-x86
-CND_DLIB_EXT=so
+CND_PLATFORM=GNU-Windows
+CND_DLIB_EXT=dll
 CND_CONF=nb_gcc_rl_LIN64
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -36,8 +36,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/787997029/assignmentCl.o \
+	${OBJECTDIR}/_ext/787997029/assignmentClf.o \
 	${OBJECTDIR}/_ext/787997029/assignmentO.o \
 	${OBJECTDIR}/_ext/787997029/assignmentOS.o \
+	${OBJECTDIR}/_ext/787997029/assignmentSe.o \
 	${OBJECTDIR}/_ext/787997029/assignmentT.o \
 	${OBJECTDIR}/_ext/787997029/assignmentV.o \
 	${OBJECTDIR}/_ext/787997029/assignmentVS.o \
@@ -53,7 +55,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/787997029/sem_valuesetassignment.o \
 	${OBJECTDIR}/_ext/787997029/semantics.o \
 	${OBJECTDIR}/_ext/787997029/setters.o \
-	${OBJECTDIR}/_ext/787997029/x680.o
+	${OBJECTDIR}/_ext/787997029/x680.o \
+	${OBJECTDIR}/_ext/627700379/assignments.o \
+	${OBJECTDIR}/_ext/627700379/cpp_cout.o
 
 
 # C Compiler Flags
@@ -87,6 +91,11 @@ ${OBJECTDIR}/_ext/787997029/assignmentCl.o: ../../../include/boost/itu/x68X/assi
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentCl.o ../../../include/boost/itu/x68X/assignmentCl.cpp
 
+${OBJECTDIR}/_ext/787997029/assignmentClf.o: ../../../include/boost/itu/x68X/assignmentClf.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentClf.o ../../../include/boost/itu/x68X/assignmentClf.cpp
+
 ${OBJECTDIR}/_ext/787997029/assignmentO.o: ../../../include/boost/itu/x68X/assignmentO.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
@@ -96,6 +105,11 @@ ${OBJECTDIR}/_ext/787997029/assignmentOS.o: ../../../include/boost/itu/x68X/assi
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentOS.o ../../../include/boost/itu/x68X/assignmentOS.cpp
+
+${OBJECTDIR}/_ext/787997029/assignmentSe.o: ../../../include/boost/itu/x68X/assignmentSe.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentSe.o ../../../include/boost/itu/x68X/assignmentSe.cpp
 
 ${OBJECTDIR}/_ext/787997029/assignmentT.o: ../../../include/boost/itu/x68X/assignmentT.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
@@ -176,6 +190,16 @@ ${OBJECTDIR}/_ext/787997029/x680.o: ../../../include/boost/itu/x68X/x680.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/x680.o ../../../include/boost/itu/x68X/x680.cpp
+
+${OBJECTDIR}/_ext/627700379/assignments.o: /F/Project/itu-t/include/boost/itu/x68X/assignments.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/627700379
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/627700379/assignments.o /F/Project/itu-t/include/boost/itu/x68X/assignments.cpp
+
+${OBJECTDIR}/_ext/627700379/cpp_cout.o: /F/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/627700379
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/627700379/cpp_cout.o /F/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp
 
 # Subprojects
 .build-subprojects:
