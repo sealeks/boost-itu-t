@@ -7,7 +7,7 @@
 #define          _ITU_X680ROOTPARSER_H_
 
 #include <boost/itu/x68X/semantics.hpp>
-#include <boost/itu/x68X/dedug_cout.hpp>
+#include <boost/itu/x68X/debug_cout.hpp>
 
 namespace x680 {
     namespace syntactic {

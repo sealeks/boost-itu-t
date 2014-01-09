@@ -8,6 +8,7 @@
 
 
 #include <boost/itu/x68X/semantics.hpp>
+#include <fstream>
 
 namespace x680 {
 
@@ -126,6 +127,8 @@ namespace x680 {
 
 
 }
+
+
 
 #endif	
 
