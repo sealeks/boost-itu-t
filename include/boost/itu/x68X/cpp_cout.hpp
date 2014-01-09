@@ -14,7 +14,12 @@
 namespace x680 {
 
     namespace cpp {
-        
+
+        std::string nameconvert(std::string name);
+        std::string tabformat(assignment_entity_ptr self = assignment_entity_ptr(), const std::string& tab = "    ");
+        std::string headerlock(std::string name);
+        std::string bottomlock(std::string name);
+
         bool dir_exists(const std::string& path);
         bool dir_create(const std::string& path, const std::string& outdir);
         //std::ofstream open(const std::string& path, const std::string& name);
@@ -23,18 +28,20 @@ namespace x680 {
 
         public:
 
-            fileout( global_entity_ptr glb, const std::string& path, const std::string& outdir = "out")
-                    : path_(path), outdir_(outdir), global_(glb){}
-                    
-            virtual ~fileout(){}
-            
+            fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out")
+            : path_(path), outdir_(outdir), global_(glb) {
+            }
+
+            virtual ~fileout() {
+            }
+
             void execute();
-            
+
         private:
-            
-            void execute_import(std::ofstream& fsh, import_entity_ptr self);  
-            void execute_module(module_entity_ptr self);            
-            
+
+            void execute_import(std::ofstream& stream, import_entity_ptr self);
+            void execute_module(module_entity_ptr self);
+
             std::string path_;
             std::string outdir_;
             global_entity_ptr global_;

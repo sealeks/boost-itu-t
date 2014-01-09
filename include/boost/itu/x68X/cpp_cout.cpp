@@ -15,13 +15,39 @@ namespace x680 {
 
         const std::string FHHEADER = "#include <boost/itu/asn1/asnbase.hpp>\n\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
         const std::string FHBOTTOM = "\n\n#endif";
+        const std::string MNDCL = "    using  boost::asn1::null_type;\n"
+                "    using  boost::asn1::enumerated_type;\n"
+                "    using  boost::asn1::bitstring_type;\n"
+                "    using  boost::asn1::octetstring_type;\n"
+                "    using  boost::asn1::oid_type;\n"
+                "    using  boost::asn1::reloid_type;\n"
+                "    using  boost::asn1::utctime_type;\n"
+                "    using  boost::asn1::gentime_type;\n"
+                "    using  boost::asn1::ia5string_type;\n"
+                "    using  boost::asn1::printablestring_type;\n"
+                "    using  boost::asn1::visiblestring_type;\n"
+                "    using  boost::asn1::visiblestring_type;\n"
+                "    using  boost::asn1::numericstring_type;\n"
+                "    using  boost::asn1::universalstring_type;\n"
+                "    using  boost::asn1::bmpstring_type;\n"
+                "    using  boost::asn1::utf8string_type;\n"
+                "    using  boost::asn1::generalstring_type;\n"
+                "    using  boost::asn1::graphicstring_type;\n"
+                "    using  boost::asn1::t61string_type;\n"
+                "    using  boost::asn1::t61string_type;\n"
+                "    using  boost::asn1::videotexstring_type;\n"
+                "    using  boost::asn1::objectdescriptor_type;\n"
+                "    using  boost::asn1::external_type;\n"
+                "    using  boost::asn1::embeded_type;\n"
+                "    using  boost::asn1::characterstring_type;\n"
+                "    using  boost::asn1::any_type;\n";
 
-        inline std::string nameconvert(std::string name) {
+        std::string nameconvert(std::string name) {
             boost::algorithm::replace_all(name, "-", "_");
             return name;
         }
 
-        std::string tabformat(assignment_entity_ptr self = assignment_entity_ptr(), const std::string& tab = "  ") {
+        std::string tabformat(assignment_entity_ptr self, const std::string& tab) {
             std::string rslt = tab;
             if (self) {
                 int inten = self->level();
@@ -34,14 +60,14 @@ namespace x680 {
             return rslt;
         }
 
-        inline std::string headerlock(std::string name) {
+        std::string headerlock(std::string name) {
             name = nameconvert(name);
             boost::algorithm::to_upper(name);
             name = "___" + name;
             return "#ifndef " + name + "\n" + "#define " + name + "\n\n" + FHHEADER + "\n";
         }
 
-        inline std::string bottomlock(std::string name) {
+        std::string bottomlock(std::string name) {
             name = nameconvert(name);
             boost::algorithm::to_upper(name);
             name = "___" + name;
@@ -78,59 +104,83 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_import(std::ofstream& fsh, import_entity_ptr self) {
+        void fileout::execute_import(std::ofstream& stream, import_entity_ptr self) {
             if (self->scope())
-                fsh << "\n  // import   from  " << nameconvert(self->name());
+                stream << "\n  // import   from  " << self->name();
             else
-                fsh << "\n";
-            if (self->objectid())
-                fsh << "" << self->objectid();
-            fsh << "\n";
-            fsh << "\n";
+                stream << "\n";
+            // if (self->objectid())
+            //     stream  << "" << self->objectid();
+            stream << "\n";
+            stream << "\n";
             for (import_vector::iterator it = self->import().begin(); it != self->import().end(); ++it) {
-                fsh << tabformat() << "using " << nameconvert(self->name())
+                stream << tabformat() << "using " << nameconvert(self->name())
                         << "::" << nameconvert(*it) << "\n";
             }
-            fsh << "\n";
+            stream << "\n";
         }
 
         void fileout::execute_module(module_entity_ptr self) {
             std::string newpath = path_ + "\\" + self->name() + ".hpp";
-            std::ofstream fsh(newpath.c_str(), std::ofstream::out | std::ofstream::trunc);
-            fsh << headerlock(self->name());
-            fsh << "\n";
+            std::ofstream stream(newpath.c_str(), std::ofstream::out | std::ofstream::trunc);
+            stream << headerlock(self->name());
+            stream << "\n";
 
-            for (basic_entity_vector::iterator it = self->imports().begin(); it != self->imports().end(); ++it)
+
+
+            stream << "namespace " + nameconvert(self->name()) + " {\n";
+
+            stream << "\n";
+
+            stream << MNDCL;
+
+            stream << "\n";
+
+            /*for (basic_entity_vector::iterator it = self->imports().begin(); it != self->imports().end(); ++it)
                 if ((*it)->as_import())
-                    fsh << "#include \"" << nameconvert((*it)->as_import()->name()) << ".hpp\"\n";
+                    execute_import(stream, (*it)->as_import());
 
-            fsh << "\n";
-
-            fsh << "namespace " + nameconvert(self->name()) + " {\n";
-
-            fsh << "\n";
-
-            for (basic_entity_vector::iterator it = self->imports().begin(); it != self->imports().end(); ++it)
-                if ((*it)->as_import())
-                    execute_import(fsh, (*it)->as_import());
-
-            fsh << "\n";
+            stream << "\n";*/
 
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->type()->isstruct()))
-                    fsh << tabformat((*it)->as_typeassigment()) << "struct " << nameconvert((*it)->name()) + "; " << " \n";
+                    stream << tabformat() << "struct " << nameconvert((*it)->name()) + "; " << " \n";
             }
 
-            fsh << "\n";
+            stream << "\n";
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->type()->isrefferrence()))
-                    fsh << tabformat((*it)->as_typeassigment()) << "typedef " <<
+                    stream << tabformat() << "typedef " <<
                     nameconvert((*it)->name()) << " " <<
                     nameconvert((*it)->as_typeassigment()->type()->reff()->name()) <<
                     "; " << " \n";
             }
-            fsh << "\n} ";
-            fsh << bottomlock(self->name());
+            stream << "\n} ";
+
+            stream << "\n";
+
+            for (basic_entity_vector::iterator it = self->imports().begin(); it != self->imports().end(); ++it)
+                if ((*it)->as_import())
+                    stream << "#include \"" << nameconvert((*it)->as_import()->name()) << ".hpp\"\n";
+
+            stream << "\n";
+
+            stream << "namespace " + nameconvert(self->name()) + " {\n";
+
+            stream << "\n";
+
+
+
+            for (basic_entity_vector::iterator it = self->imports().begin(); it != self->imports().end(); ++it)
+                if ((*it)->as_import())
+                    execute_import(stream, (*it)->as_import());
+
+            stream << "\n";
+
+            stream << "\n} ";
+
+
+            stream << bottomlock(self->name());
         }
 
     }
