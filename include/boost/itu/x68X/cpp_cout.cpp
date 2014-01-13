@@ -126,6 +126,22 @@ namespace x680 {
             }
             return "";
         }
+        
+        
+       std::string type_str(typeassignment_entity_ptr self){
+           if (self->type()) {
+                switch (self->type()->builtin()) {
+                    case t_Reference: return nameconvert(self->type()->reff()->name());
+                    case t_CHOICE: return nameconvert(self->type()->islocaldeclare() ? (self->name() + "_type") : self->name());
+                    case t_SEQUENCE: return nameconvert(self->type()->islocaldeclare() ? (self->name() + "_type") : self->name());
+                    case t_SET: return nameconvert(self->type()->islocaldeclare() ? (self->name() + "_type") : self->name());                    
+                    default:{
+                        return builtin_str(self->type()->builtin());
+                    }       
+                }
+           }
+           return "";
+       }         
 
 
         namespace fsnsp = boost::filesystem;
@@ -141,6 +157,17 @@ namespace x680 {
                 return fsnsp::create_directory(fsnsp::path(newpath.c_str()));
             return true;
         }
+        
+        
+        
+        
+
+        fileout::fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir)
+        : path_(path), outdir_(outdir), global_(glb) {
+        }
+
+        fileout::~fileout() {
+        }
 
         void fileout::execute() {
             if (!dir_exists(path_))
@@ -155,202 +182,6 @@ namespace x680 {
                 if ((*it)->as_module())
                     execute_module((*it)->as_module());
             }
-        }
-
-        void fileout::execute_import(std::ofstream& stream, import_entity_ptr self) {
-            if (self->scope())
-                stream << "\n  // import   from  " << self->name();
-            else
-                stream << "\n";
-            stream << "\n";
-            stream << "\n";
-            for (import_vector::iterator it = self->import().begin(); it != self->import().end(); ++it) {
-                stream << tabformat() << "using " << nameconvert(self->name())
-                        << "::" << nameconvert(*it) << "\n";
-            }
-            stream << "\n";
-        }
-
-        void fileout::execute_struct(std::ofstream& stream, basic_entity_ptr self) {
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if (((*it)->as_typeassigment())) {
-                    switch ((*it)->as_typeassigment()->type()->builtin()) {
-                        case t_CHOICE: 
-                            stream << "\n";
-                            stream << tabformat((*it)->as_typeassigment()) <<  "// choice " << (*it)->as_typeassigment()->name();
-                            execute_choice(stream, (*it)->as_typeassigment());
-                            break;
-                        case t_SEQUENCE: 
-                            stream << "\n";
-                            stream << tabformat((*it)->as_typeassigment()) << "// sequence " << (*it)->as_typeassigment()->name();                            
-                            execute_sequence(stream, (*it)->as_typeassigment());
-                            break;
-                        case t_SET: 
-                            stream << "\n";
-                            stream << tabformat((*it)->as_typeassigment()) <<  "// set " << (*it)->as_typeassigment()->name();                            
-                            execute_set(stream, (*it)->as_typeassigment());
-                            break;
-                        default:
-                        {
-                        }
-                    }
-                }
-            }
-        }
-
-        void fileout::execute_member_marker(std::string& str, namedtypeassignment_entity_ptr self) {
-            switch (self->marker()) {
-                case mk_default:
-                case mk_optional:
-                {
-                    str = "boost::shared_ptr<" + str + ">";
-                }
-                default:
-                {
-                }
-            }
-        }
-
-        void fileout::execute_member(std::ofstream& stream, typeassignment_entity_ptr self) {
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
-                    namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
-                    std::string tmp;         
-                    if (named->type()) {
-                        stream << "\n";
-                        switch (named->type()->builtin()) {
-                            case t_CHOICE: tmp = "CHOICE";
-                                break;
-                            case t_Selection: tmp = "CHOICE";
-                                break;
-                            case t_Instance_Of: tmp = "CHOICE";
-                                break;
-                            case t_RELATIVE_OID_IRI: tmp = "CHOICE";
-                                break;
-                            case t_SEQUENCE: tmp = "CHOICE";
-                                break;
-                            case t_SEQUENCE_OF: tmp = "CHOICE";
-                                break;
-                            case t_SET: tmp = "CHOICE";
-                                break;
-                            case t_SET_OF: tmp = "CHOICE";
-                                break;
-                            case t_TypeFromObject: tmp = "CHOICE";
-                                break;
-                            case t_ValueSetFromObjects: tmp = "CHOICE";
-                                break;
-                            case t_Reference:
-                            {
-                                tmp = nameconvert(named->type()->reff()->name());
-                                break;
-                            }
-                            default:
-                            {
-                                tmp = builtin_str(named->type()->builtin());
-                            }
-                        }
-                        execute_member_marker(tmp, named);
-                        stream << tabformat(self, 1) << tmp << " " << nameconvert(named->name()) << ";";
-                    }
-                }
-            }
-        }
-        
-        
-
-        void fileout::execute_declare(std::ofstream& stream, typeassignment_entity_ptr self) {
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if (((*it)->as_typeassigment())) {
-                    typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                    std::string tmp;
-
-                    if (tpas->type()) {
-                        switch (tpas->type()->builtin()) {
-                            case t_CHOICE: stream << "\n";
-                                execute_struct(stream, tpas);
-                                break;
-                                /*case t_Selection: tmp = "CHOICE";
-                                    break;
-                                case t_Instance_Of: tmp = "CHOICE";
-                                    break;
-                                case t_RELATIVE_OID_IRI: tmp = "CHOICE";
-                                    break;*/
-                            case t_SEQUENCE: stream << "\n";
-                                execute_struct(stream, tpas);
-                                break;
-                                //case t_SEQUENCE_OF: tmp = "CHOICE";
-                                //     break;
-                            case t_SET: stream << "\n";
-                                execute_struct(stream, tpas);
-                                break;
-                                // case t_SET_OF: tmp = "CHOICE";
-                                //     break;
-                                // case t_TypeFromObject: tmp = "CHOICE";
-                                //     break;
-                                // case t_ValueSetFromObjects: tmp = "CHOICE";
-                                //     break;
-                            default:
-                            {
-                                //    tmp = builtin_str(named->type()->builtin());
-                            }
-                        }
-                        // execute_member_marker(tmp, named);
-                        //stream << tabformat(self, 1) << tmp << " " << named->name() << ";";
-                    }
-                }
-            }
-        }
-
-        void fileout::execute_choice(std::ofstream& stream, typeassignment_entity_ptr self) {
-
-            stream << "\n" << tabformat(self) << "enum " << nameconvert(self->name()) << "_enum {";
-            stream << "\n" << tabformat(self, 1) << nameconvert((self->name())) << "_null = 0, ";
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                stream << "\n" << tabformat(self, 1) << nameconvert((self->name())) << "_" << nameconvert(((*it)->name())) << ",";
-            }
-            stream << "} ";
-            stream << "\n ";
-
-            stream << "\n" << tabformat(self) << "struct " << nameconvert(self->name()) << "";
-            stream << " : " << "public BOOST_ASN_CHOICE_STRUCT(" << nameconvert(self->name()) << "_enum) {";
-
-            stream << "\n ";
-            execute_declare(stream, self);
-
-            stream << "\n" << tabformat(self, 1) << nameconvert(self->name()) << "()";
-            stream << " : " << " BOOST_ASN_CHOICE_STRUCT(" << nameconvert(self->name()) << "_enum) () {}";
-
-            stream << "\n ";
-
-            execute_member(stream, self);
-
-            stream << "} ";
-            stream << "\n ";
-        }
-
-        void fileout::execute_sequence(std::ofstream& stream, typeassignment_entity_ptr self) {
-            stream << "\n" << tabformat(self) << "struct " << nameconvert(self->name()) << "{";
-
-            stream << "\n ";
-            execute_declare(stream, self);
-            stream << "\n ";
-            execute_member(stream, self);
-
-            stream << "} ";
-            stream << "\n ";
-        }
-
-        void fileout::execute_set(std::ofstream& stream, typeassignment_entity_ptr self) {
-            stream << "\n" << tabformat(self) << "struct " << nameconvert(self->name()) << "{";
-
-
-            stream << "\n ";
-            execute_declare(stream, self);
-            stream << "\n ";
-            execute_member(stream, self);
-
-            stream << "} ";
-            stream << "\n ";
         }
 
         void fileout::execute_module(module_entity_ptr self) {
@@ -377,7 +208,7 @@ namespace x680 {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->type()->issimplerefferrence()))
                     stream << tabformat() << "typedef " <<
-                    builtin_str((*it)->as_typeassigment()->type()->builtin()) << " " <<
+                    type_str((*it)->as_typeassigment()) << " " <<
                     nameconvert((*it)->name()) <<
                     "; " << " \n";
             }
@@ -416,6 +247,160 @@ namespace x680 {
 
             stream << bottomlock(self->name());
         }
+
+        void fileout::execute_import(std::ofstream& stream, import_entity_ptr self) {
+            if (self->scope())
+                stream << "\n  // import   from  " << self->name();
+            else
+                stream << "\n";
+            stream << "\n";
+            stream << "\n";
+            for (import_vector::iterator it = self->import().begin(); it != self->import().end(); ++it) {
+                stream << tabformat() << "using " << nameconvert(self->name())
+                        << "::" << nameconvert(*it) << "\n";
+            }
+            stream << "\n";
+        }
+
+        void fileout::execute_struct(std::ofstream& stream, basic_entity_ptr self) {
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                if (((*it)->as_typeassigment())) {
+                    switch ((*it)->as_typeassigment()->type()->builtin()) {
+                        case t_CHOICE:
+                            stream << "\n";
+                            stream << tabformat((*it)->as_typeassigment()) << "// choice " << (*it)->as_typeassigment()->name();
+                            execute_choice(stream, (*it)->as_typeassigment());
+                            break;
+                        case t_SEQUENCE:
+                            stream << "\n";
+                            stream << tabformat((*it)->as_typeassigment()) << "// sequence " << (*it)->as_typeassigment()->name();
+                            execute_sequence(stream, (*it)->as_typeassigment());
+                            break;
+                        case t_SET:
+                            stream << "\n";
+                            stream << tabformat((*it)->as_typeassigment()) << "// set " << (*it)->as_typeassigment()->name();
+                            execute_set(stream, (*it)->as_typeassigment());
+                            break;
+                        default:
+                        {
+                        }
+                    }
+                }
+            }
+        }
+
+        void fileout::execute_member_marker(std::string& str, namedtypeassignment_entity_ptr self) {
+            switch (self->marker()) {
+                case mk_default:
+                case mk_optional:
+                {
+                    str = "boost::shared_ptr<" + str + ">";
+                }
+                default:
+                {
+                }
+            }
+        }
+
+        void fileout::execute_member(std::ofstream& stream, typeassignment_entity_ptr self) {
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                    namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
+                    std::string tmp;
+                    if (named->type()) {
+                        stream << "\n";
+                        tmp=  type_str(named);
+                        execute_member_marker(tmp, named);
+                        stream << tabformat(self, 1) << tmp << " " << nameconvert(named->name()) << ";";
+                    }
+                }
+            }
+        }
+
+        void fileout::execute_declare(std::ofstream& stream, typeassignment_entity_ptr self) {
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                if (((*it)->as_typeassigment())) {
+                    typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                    if (tpas->type()) {
+                        switch (tpas->type()->builtin()) {
+                            case t_CHOICE: stream << "\n";
+                                execute_choice(stream, tpas);
+                                break;
+                            case t_SEQUENCE: stream << "\n";
+                                execute_sequence(stream, tpas);
+                                break;
+                            case t_SET: stream << "\n";
+                                execute_set(stream, tpas);
+                                break;
+                            default:
+                            {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        void fileout::execute_choice(std::ofstream& stream, typeassignment_entity_ptr self) {
+
+            stream << "\n" << tabformat(self) << "enum " << nameconvert(self->name()) << "_enum {";
+            stream << "\n" << tabformat(self, 1) << nameconvert((self->name())) << "_null = 0, ";
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                stream << "\n" << tabformat(self, 1) << nameconvert((self->name())) << "_" << nameconvert(((*it)->name())) << ",";
+            }
+            stream << "} ";
+            stream << "\n ";
+
+            stream << "\n" << tabformat(self) << "struct " << type_str(self) << "";
+            stream << " : " << "public BOOST_ASN_CHOICE_STRUCT(" << nameconvert(self->name()) << "_enum) {";
+
+            stream << "\n ";
+            execute_declare(stream, self);
+
+            stream << "\n" << tabformat(self, 1) << type_str(self) << "()";
+            stream << " : " << " BOOST_ASN_CHOICE_STRUCT(" << nameconvert(self->name()) << "_enum) () {}";
+
+            stream << "\n ";
+
+            execute_member(stream, self);
+
+            stream << "} ";
+            stream << "\n ";
+        }
+
+        void fileout::execute_sequence(std::ofstream& stream, typeassignment_entity_ptr self) {
+            stream << "\n" << tabformat(self) << "struct " << type_str(self) << "{";
+
+            stream << "\n ";
+            execute_declare(stream, self);
+
+            stream << "\n ";
+            stream << "\n" << tabformat(self, 1) << "" << type_str(self) << "() {}";     
+            
+            stream << "\n ";            
+            execute_member(stream, self);
+
+            stream << "} ";
+            stream << "\n ";
+        }
+
+        void fileout::execute_set(std::ofstream& stream, typeassignment_entity_ptr self) {
+            stream << "\n" << tabformat(self) << "struct " << type_str(self) << "{";
+
+            stream << "\n ";
+            execute_declare(stream, self);
+            
+            stream << "\n ";
+            stream << "\n" << tabformat(self, 1) << "" << type_str(self) << "() {}";            
+            
+            stream << "\n ";
+            execute_member(stream, self);
+
+            stream << "} ";
+            stream << "\n ";
+        }
+
+
 
     }
 }

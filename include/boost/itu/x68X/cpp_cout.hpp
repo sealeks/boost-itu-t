@@ -22,26 +22,24 @@ namespace x680 {
 
         bool dir_exists(const std::string& path);
         bool dir_create(const std::string& path, const std::string& outdir);
-        //std::ofstream open(const std::string& path, const std::string& name);
+        
+        
 
         class fileout {
 
         public:
 
-            fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out")
-            : path_(path), outdir_(outdir), global_(glb) {
-            }
-
-            virtual ~fileout() {
-            }
+            fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out");
+            virtual ~fileout();
 
             void execute();
 
         private:
 
+            void execute_module(module_entity_ptr self);
             void execute_import(std::ofstream& stream, import_entity_ptr self);
             void execute_struct(std::ofstream& stream, basic_entity_ptr self);
-            void execute_module(module_entity_ptr self);
+            
 
             void execute_member(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_member_marker(std::string& str, namedtypeassignment_entity_ptr self);
