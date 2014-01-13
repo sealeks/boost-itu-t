@@ -199,9 +199,36 @@ namespace x680 {
                  || (builtin_ ==t_ValueSetFromObjects)) && (reff()));
     }   
     
+    bool type_atom::islocaldeclare() const {    
+        if (scope() && (scope()->as_typeassigment()))
+            return ((isstruct()) || (isstruct_of()));
+        return false;
+    }
+    
+    bool type_atom::issimplerefferrence() {
+        switch(builtin_){
+           case t_SEQUENCE: 
+           case t_SEQUENCE_OF: 
+           case t_SET: 
+           case t_SET_OF: 
+           case t_CHOICE:
+           case t_Selection:
+           case t_Instance_Of: 
+           case t_RELATIVE_OID_IRI: 
+           case t_Reference:
+           case t_TypeFromObject: 
+           case t_ValueSetFromObjects: return false;
+            default:{}}
+         return(!tag());
+    }     
+    
      bool type_atom::isstruct() const {
-         return (((builtin_ == t_CHOICE) || (builtin_ == t_SET)  || (builtin_ == t_SEQUENCE)) && (!tag()));
+         return (((builtin_ == t_CHOICE) || (builtin_ == t_SET)  || (builtin_ == t_SEQUENCE)));
      }
+     
+     bool type_atom::isstruct_of() const {
+         return (( (builtin_ == t_SET_OF)  || (builtin_ == t_SEQUENCE_OF)) && (!tag()));
+     }     
 
     bool type_atom::isopen() const {
         return ((builtin_ == t_ClassField) || (builtin_ == t_ANY));
