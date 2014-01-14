@@ -21,8 +21,6 @@ namespace x680 {
 
         std::string nameconvert(std::string name);
         std::string tabformat(assignment_entity_ptr self = assignment_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
-        std::string headerlock(std::string name);
-        std::string bottomlock(std::string name);
 
         class fileout {
 
@@ -36,7 +34,18 @@ namespace x680 {
         private:
 
             void execute_module(module_entity_ptr self);
+            void headerlock(std::ofstream& stream, std::string name);
+            void bottomlock(std::ofstream& stream, std::string name);
+            void execute_include(std::ofstream& stream, std::string name);
+            void execute_includes(std::ofstream& stream, module_entity_ptr self);
+            void execute_standart_type(std::ofstream& stream, module_entity_ptr self);
+            void execute_start_ns(std::ofstream& stream, module_entity_ptr self);
+            void execute_stop_ns(std::ofstream& stream, module_entity_ptr self);
             void execute_import(std::ofstream& stream, import_entity_ptr self);
+            void execute_imports(std::ofstream& stream, module_entity_ptr self);
+            void execute_struct_predeclare(std::ofstream& stream, basic_entity_ptr self);
+            void execute_typedef_simple(std::ofstream& stream, basic_entity_ptr self);
+            void execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self);
             void execute_struct(std::ofstream& stream, basic_entity_ptr self);
             void execute_predefined(std::ofstream& stream, typeassignment_entity_ptr self);
 
