@@ -8,9 +8,21 @@
 
 
 namespace x680 {
-
     namespace cpp {
 
+        namespace fsnsp = boost::filesystem;
+
+        bool dir_exists(const std::string& path) {
+            fsnsp::path p(path.c_str());
+            return ((fsnsp::exists(p)) && (fsnsp::is_directory(p)));
+        }
+
+        bool dir_create(const std::string& path, const std::string& outdir) {
+            std::string newpath = path + "\\" + outdir;
+            if (!dir_exists(newpath))
+                return fsnsp::create_directory(fsnsp::path(newpath.c_str()));
+            return true;
+        }
 
 
         const std::string FHHEADER = "#include <boost/itu/asn1/asnbase.hpp>\n\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
@@ -126,41 +138,35 @@ namespace x680 {
             }
             return "";
         }
-        
-        
-       std::string type_str(typeassignment_entity_ptr self){
-           if (self->type()) {
+
+        std::string type_str(typeassignment_entity_ptr self) {
+            if (self->type()) {
+                switch (self->type()->builtin()) {
+                    case t_Reference: return nameconvert(self->name());
+                    case t_CHOICE:
+                    case t_SEQUENCE:
+                    case t_SET: return nameconvert(self->type()->islocaldeclare() ? (self->name() + "_type"): self->name());
+                    default:
+                    {
+                        return nameconvert(self->name());
+                    }
+                }
+            }
+            return "";
+        }
+
+        std::string fromtype_str(typeassignment_entity_ptr self) {
+            if (self->type()) {
                 switch (self->type()->builtin()) {
                     case t_Reference: return nameconvert(self->type()->reff()->name());
-                    case t_CHOICE: return nameconvert(self->type()->islocaldeclare() ? (self->name() + "_type") : self->name());
-                    case t_SEQUENCE: return nameconvert(self->type()->islocaldeclare() ? (self->name() + "_type") : self->name());
-                    case t_SET: return nameconvert(self->type()->islocaldeclare() ? (self->name() + "_type") : self->name());                    
-                    default:{
+                    default:
+                    {
                         return builtin_str(self->type()->builtin());
-                    }       
+                    }
                 }
-           }
-           return "";
-       }         
-
-
-        namespace fsnsp = boost::filesystem;
-
-        bool dir_exists(const std::string& path) {
-            fsnsp::path p(path.c_str());
-            return ((fsnsp::exists(p)) && (fsnsp::is_directory(p)));
+            }
+            return "";
         }
-
-        bool dir_create(const std::string& path, const std::string& outdir) {
-            std::string newpath = path + "\\" + outdir;
-            if (!dir_exists(path))
-                return fsnsp::create_directory(fsnsp::path(newpath.c_str()));
-            return true;
-        }
-        
-        
-        
-        
 
         fileout::fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir)
         : path_(path), outdir_(outdir), global_(glb) {
@@ -186,7 +192,11 @@ namespace x680 {
 
         void fileout::execute_module(module_entity_ptr self) {
             std::string newpath = path_ + "\\" + self->name() + ".hpp";
-            std::ofstream stream(newpath.c_str(), std::ofstream::out | std::ofstream::trunc);
+            fsnsp::path p(newpath.c_str());
+            std::ofstream stream(p.generic_string().c_str(), std::ofstream::out | std::ofstream::trunc);
+            if (!stream)
+                throw fsnsp::filesystem_error("File dosnt create: " + p.generic_string(),
+                    boost::system::error_code(boost::system::errc::io_error, boost::system::system_category()));
             stream << headerlock(self->name());
             stream << "\n";
 
@@ -201,15 +211,15 @@ namespace x680 {
 
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->type()->isstruct()))
-                    stream << tabformat() << "struct " << nameconvert((*it)->name()) + "; " << " \n";
+                    stream << tabformat() << "struct " << type_str((*it)->as_typeassigment()) + "; " << " \n";
             }
 
             stream << "\n";
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->type()->issimplerefferrence()))
                     stream << tabformat() << "typedef " <<
-                    type_str((*it)->as_typeassigment()) << " " <<
-                    nameconvert((*it)->name()) <<
+                    fromtype_str((*it)->as_typeassigment()) << " " <<
+                    type_str((*it)->as_typeassigment()) <<
                     "; " << " \n";
             }
 
@@ -217,8 +227,8 @@ namespace x680 {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->type()->isrefferrence()))
                     stream << tabformat() << "typedef " <<
-                    nameconvert((*it)->as_typeassigment()->type()->reff()->name()) << " " <<
-                    nameconvert((*it)->name()) <<
+                    fromtype_str((*it)->as_typeassigment()) << " " <<
+                    type_str((*it)->as_typeassigment()) <<
                     "; " << " \n";
             }
 
@@ -264,28 +274,57 @@ namespace x680 {
 
         void fileout::execute_struct(std::ofstream& stream, basic_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if (((*it)->as_typeassigment())) {
-                    switch ((*it)->as_typeassigment()->type()->builtin()) {
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if ((tpas)) {
+                    switch (tpas->type()->builtin()) {
                         case t_CHOICE:
                             stream << "\n";
-                            stream << tabformat((*it)->as_typeassigment()) << "// choice " << (*it)->as_typeassigment()->name();
-                            execute_choice(stream, (*it)->as_typeassigment());
+                            stream << tabformat(tpas) << "// choice " << tpas->name();
+                            execute_choice(stream, tpas);
                             break;
                         case t_SEQUENCE:
                             stream << "\n";
-                            stream << tabformat((*it)->as_typeassigment()) << "// sequence " << (*it)->as_typeassigment()->name();
-                            execute_sequence(stream, (*it)->as_typeassigment());
+                            stream << tabformat(tpas) << "// sequence " << tpas->name();
+                            execute_sequence(stream, tpas);
                             break;
                         case t_SET:
                             stream << "\n";
-                            stream << tabformat((*it)->as_typeassigment()) << "// set " << (*it)->as_typeassigment()->name();
-                            execute_set(stream, (*it)->as_typeassigment());
+                            stream << tabformat(tpas) << "// set " << tpas->name();
+                            execute_set(stream, tpas);
                             break;
+
                         default:
                         {
+                            if ((tpas) && (tpas->type()->predefined())) {
+                                execute_predefined(stream, tpas);
+                            }
                         }
                     }
                 }
+            }
+        }
+
+        void fileout::execute_predefined(std::ofstream& stream, typeassignment_entity_ptr self) {
+            predefined_ptr predef = self->type()->predefined();
+            switch (self->type()->root_builtin()) {
+                case t_INTEGER:
+                {
+                    stream << "\n";
+                    for (basic_entity_vector::const_iterator it = predef->values().begin(); it != predef->values().end(); ++it) {
+                        valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
+                        if (vlass) {
+                            stream << tabformat(self) << "const " << nameconvert(self->name()) << " "
+                                    << nameconvert(vlass->name()) << " = "
+                                    << vlass->value()->as_number()->value() << ";\n";
+                        }
+                    }
+                    break;
+                }
+                default:
+                {
+                }
+                    // t_BIT_STRING,
+                    // t_OCTET_STRING
             }
         }
 
@@ -309,7 +348,7 @@ namespace x680 {
                     std::string tmp;
                     if (named->type()) {
                         stream << "\n";
-                        tmp=  type_str(named);
+                        tmp = type_str(named);
                         execute_member_marker(tmp, named);
                         stream << tabformat(self, 1) << tmp << " " << nameconvert(named->name()) << ";";
                     }
@@ -375,9 +414,9 @@ namespace x680 {
             execute_declare(stream, self);
 
             stream << "\n ";
-            stream << "\n" << tabformat(self, 1) << "" << type_str(self) << "() {}";     
-            
-            stream << "\n ";            
+            stream << "\n" << tabformat(self, 1) << "" << type_str(self) << "() {}";
+
+            stream << "\n ";
             execute_member(stream, self);
 
             stream << "} ";
@@ -389,15 +428,20 @@ namespace x680 {
 
             stream << "\n ";
             execute_declare(stream, self);
-            
+
             stream << "\n ";
-            stream << "\n" << tabformat(self, 1) << "" << type_str(self) << "() {}";            
-            
+            stream << "\n" << tabformat(self, 1) << "" << type_str(self) << "() {}";
+
             stream << "\n ";
             execute_member(stream, self);
 
             stream << "} ";
             stream << "\n ";
+        }
+
+        void fileout::execute_set_of(std::ofstream& stream, typeassignment_entity_ptr self) {
+            if (!self->childs().empty()) {
+            }
         }
 
 
