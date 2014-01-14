@@ -275,8 +275,11 @@ namespace x680 {
 
         void fileout::execute_struct_predeclare(std::ofstream& stream, basic_entity_ptr self) {
             for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->type()->isstruct()))
-                    stream << tabformat() << "struct " << type_str((*it)->as_typeassigment()) + "; " << " \n";
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if (tpas && (tpas->type())) {
+                    if ((tpas->type()) && (tpas->type()->isstruct()))
+                        stream << tabformat() << "struct " << type_str(tpas) + "; " << " \n";
+                }
             }
             if (!self->childs().empty())
                 stream << "\n";
@@ -284,11 +287,14 @@ namespace x680 {
 
         void fileout::execute_typedef_simple(std::ofstream& stream, basic_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->type()->issimplerefferrence()))
-                    stream << tabformat() << "typedef " <<
-                    fromtype_str((*it)->as_typeassigment()) << " " <<
-                    type_str((*it)->as_typeassigment()) <<
-                    "; " << " \n";
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if (tpas && (tpas->type())) {
+                    if (tpas->type()->issimplerefferrence())
+                        stream << tabformat() << "typedef " <<
+                        fromtype_str(tpas) << " " <<
+                        type_str(tpas) <<
+                        "; " << " \n";
+                }
             }
             if (!self->childs().empty())
                 stream << "\n";
@@ -296,11 +302,14 @@ namespace x680 {
 
         void fileout::execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->type()->isrefferrence()))
-                    stream << tabformat() << "typedef " <<
-                    fromtype_str((*it)->as_typeassigment()) << " " <<
-                    type_str((*it)->as_typeassigment()) <<
-                    "; " << " \n";
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if (tpas && (tpas->type())) {
+                    if (tpas->type()->isrefferrence())
+                        stream << tabformat() << "typedef " <<
+                        fromtype_str(tpas) << " " <<
+                        type_str(tpas) <<
+                        "; " << " \n";
+                }
             }
             if (!self->childs().empty())
                 stream << "\n";
@@ -309,7 +318,7 @@ namespace x680 {
         void fileout::execute_struct(std::ofstream& stream, basic_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if ((tpas)) {
+                if (tpas && (tpas->type())) {
                     switch (tpas->type()->builtin()) {
                         case t_CHOICE:
                             stream << "\n";
@@ -339,26 +348,28 @@ namespace x680 {
         }
 
         void fileout::execute_predefined(std::ofstream& stream, typeassignment_entity_ptr self) {
-            predefined_ptr predef = self->type()->predefined();
-            switch (self->type()->root_builtin()) {
-                case t_INTEGER:
-                {
-                    stream << "\n";
-                    for (basic_entity_vector::const_iterator it = predef->values().begin(); it != predef->values().end(); ++it) {
-                        valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
-                        if (vlass) {
-                            stream << tabformat(self) << "const " << nameconvert(self->name()) << " "
-                                    << nameconvert(vlass->name()) << " = "
-                                    << vlass->value()->as_number()->value() << ";\n";
+            if (self->type()) {
+                predefined_ptr predef = self->type()->predefined();
+                switch (self->type()->root_builtin()) {
+                    case t_INTEGER:
+                    {
+                        stream << "\n";
+                        for (basic_entity_vector::const_iterator it = predef->values().begin(); it != predef->values().end(); ++it) {
+                            valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
+                            if (vlass) {
+                                stream << tabformat(self) << "const " << nameconvert(self->name()) << " "
+                                        << nameconvert(vlass->name()) << " = "
+                                        << vlass->value()->as_number()->value() << ";\n";
+                            }
                         }
+                        break;
                     }
-                    break;
+                    default:
+                    {
+                    }
+                        // t_BIT_STRING,
+                        // t_OCTET_STRING
                 }
-                default:
-                {
-                }
-                    // t_BIT_STRING,
-                    // t_OCTET_STRING
             }
         }
 
