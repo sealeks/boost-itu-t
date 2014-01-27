@@ -87,10 +87,6 @@ namespace x680 {
                 case t_EMBEDDED_PDV: return "embeded_type";
                 case t_UTF8String: return "utf8string_type";
                 case t_RELATIVE_OID: return "reloid_type";
-                    //case t_SEQUENCE: return "null_type";
-                    //case t_SEQUENCE_OF: return "null_type";
-                    //case t_SET: return "null_type";
-                    //case t_SET_OF: return "null_type";
                 case t_NumericString: return "numericstring_type";
                 case t_PrintableString: return "printablestring_type";
                 case t_T61String: return "t61string_type";
@@ -109,7 +105,6 @@ namespace x680 {
                 case t_DATE:
                 case t_DATE_TIME:
                 case t_DURATION: return "printablestring_type";
-                    //case t_CHOICE: return "null_type";
                     //case t_Selection: return "null_type";
                     //case t_Instance_Of: return "null_type";
                     //case t_RELATIVE_OID_IRI: return "null_type";
@@ -344,6 +339,11 @@ namespace x680 {
                                 else
                                     stream << tabformat(self->as_typeassigment()) << "typedef std::set< " << fromtype_str(cpas) << "> " << type_str(tpas);
                             } else {
+                                if (!tpas->childs().empty()){
+                                    typeassignment_entity_ptr ipas = tpas->childs().front()->as_typeassigment();
+                                    if ((ipas->type()) && ((ipas->type()->builtin() == t_SEQUENCE_OF) || (ipas->type()->builtin() == t_SEQUENCE_OF)))
+                                        execute_typedef_seqof(stream, ipas);
+                                }
                                 if (tpas->type()->builtin() == t_SEQUENCE_OF)
                                     stream << tabformat(self->as_typeassigment()) << "typedef std::vector< " << fromtype_str(cpas) << "> " << type_str(tpas);
                                 else
@@ -370,12 +370,12 @@ namespace x680 {
                         case t_SEQUENCE:
                             stream << "\n";
                             stream << tabformat(tpas) << "// sequence " << tpas->name();
-                            execute_sequence(stream, tpas);
+                            execute_seqset(stream, tpas);
                             break;
                         case t_SET:
                             stream << "\n";
                             stream << tabformat(tpas) << "// set " << tpas->name();
-                            execute_set(stream, tpas);
+                            execute_seqset(stream, tpas);
                             break;
 
                         default:
@@ -458,11 +458,9 @@ namespace x680 {
                         case t_CHOICE: stream << "\n";
                             execute_choice(stream, tpas);
                             break;
+                        case t_SET:
                         case t_SEQUENCE: stream << "\n";
-                            execute_sequence(stream, tpas);
-                            break;
-                        case t_SET: stream << "\n";
-                            execute_set(stream, tpas);
+                            execute_seqset(stream, tpas);
                             break;
                         default:
                         {
@@ -474,19 +472,14 @@ namespace x680 {
 
         void fileout::execute_choice(std::ofstream& stream, typeassignment_entity_ptr self) {
 
-            stream << "\n" << tabformat(self) << "enum " << nameconvert(self->name()) << "_enum {";
-            stream << "\n" << tabformat(self, 1) << nameconvert((self->name())) << "_null = 0, ";
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                stream << "\n" << tabformat(self, 1) << nameconvert((self->name())) << "_" << nameconvert(((*it)->name())) << ",";
-            }
-            stream << "} ";
-            stream << "\n ";
+            execute_choice_enum(stream, self);
 
             stream << "\n" << tabformat(self) << "struct " << type_str(self) << "";
             stream << " : " << "public BOOST_ASN_CHOICE_STRUCT(" << nameconvert(self->name()) << "_enum) {";
 
-            stream << "\n ";
-            execute_declare(stream, self);
+
+            execute_declare(stream, self);           
+            execute_typedef_seqof(stream, self); 
 
             stream << "\n" << tabformat(self, 1) << type_str(self) << "()";
             stream << " : " << " BOOST_ASN_CHOICE_STRUCT(" << nameconvert(self->name()) << "_enum) () {}";
@@ -498,14 +491,26 @@ namespace x680 {
             stream << "} ";
             stream << "\n ";
         }
+        
+        
+        void fileout::execute_choice_enum(std::ofstream& stream, typeassignment_entity_ptr self){
+            
+            stream << "\n" << tabformat(self) << "enum " << nameconvert(self->name()) << "_enum {";
+            stream << "\n" << tabformat(self, 1) << nameconvert((self->name())) << "_null = 0, ";
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                stream << "\n" << tabformat(self, 1) << nameconvert((self->name())) << "_" << nameconvert(((*it)->name())) << ",";
+            }
+            stream << "} ";
+            stream << "\n ";            
+        }
+        
 
-        void fileout::execute_sequence(std::ofstream& stream, typeassignment_entity_ptr self) {
+        void fileout::execute_seqset(std::ofstream& stream, typeassignment_entity_ptr self) {
             stream << "\n" << tabformat(self) << "struct " << type_str(self) << "{";
 
-            stream << "\n ";
-            execute_declare(stream, self);
-
-            stream << "\n ";
+            execute_declare(stream, self);       
+            execute_typedef_seqof(stream, self);
+            
             stream << "\n" << tabformat(self, 1) << "" << type_str(self) << "() {}";
 
             stream << "\n ";
@@ -515,21 +520,6 @@ namespace x680 {
             stream << "\n ";
         }
 
-        void fileout::execute_set(std::ofstream& stream, typeassignment_entity_ptr self) {
-            stream << "\n" << tabformat(self) << "struct " << type_str(self) << "{";
-
-            stream << "\n ";
-            execute_declare(stream, self);
-
-            stream << "\n ";
-            stream << "\n" << tabformat(self, 1) << "" << type_str(self) << "() {}";
-
-            stream << "\n ";
-            execute_member(stream, self);
-
-            stream << "} ";
-            stream << "\n ";
-        }
 
         void fileout::execute_set_of(std::ofstream& stream, typeassignment_entity_ptr self) {
             if (!self->childs().empty()) {

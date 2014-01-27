@@ -46,6 +46,7 @@ namespace x680 {
             void execute_struct_predeclare(std::ofstream& stream, basic_entity_ptr self);
             void execute_typedef_simple(std::ofstream& stream, basic_entity_ptr self);
             void execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self);
+            void execute_typedef_seqof(std::ofstream& stream, basic_entity_ptr self);  
             void execute_struct(std::ofstream& stream, basic_entity_ptr self);
             void execute_predefined(std::ofstream& stream, typeassignment_entity_ptr self);
 
@@ -54,8 +55,8 @@ namespace x680 {
             void execute_member_marker(std::string& str, namedtypeassignment_entity_ptr self);
             void execute_declare(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_choice(std::ofstream& stream, typeassignment_entity_ptr self);
-            void execute_sequence(std::ofstream& stream, typeassignment_entity_ptr self);
-            void execute_set(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_choice_enum(std::ofstream& stream, typeassignment_entity_ptr self);            
+            void execute_seqset(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_set_of(std::ofstream& stream, typeassignment_entity_ptr self);
 
             std::string path_;
