@@ -131,7 +131,15 @@ namespace x680 {
                     case t_Reference: return nameconvert(self->name());
                     case t_CHOICE:
                     case t_SEQUENCE:
-                    case t_SET: return nameconvert(self->type()->islocaldeclare() ? (self->name() + "_type"): self->name());
+                    case t_SET:
+                    case t_SEQUENCE_OF:
+                    case t_SET_OF:
+                        if ((self->scope()) && (self->scope()->as_typeassigment()) && (self->scope()->as_typeassigment()->type())) {
+                            typeassignment_entity_ptr ppas = self->scope()->as_typeassigment();
+                            if (ppas && ((ppas->type()->builtin() == t_SEQUENCE_OF) || (ppas->type()->builtin() == t_SET_OF)))
+                                return type_str(ppas)+(ppas->type()->builtin() == t_SEQUENCE_OF ? "_seqof" : "_setof");
+                        }
+                        return nameconvert(self->type()->islocaldeclare() ? (self->name() + "_type") : self->name());
                     default:
                     {
                         return nameconvert(self->name());
@@ -145,6 +153,11 @@ namespace x680 {
             if (self->type()) {
                 switch (self->type()->builtin()) {
                     case t_Reference: return nameconvert(self->type()->reff()->name());
+                    case t_CHOICE:
+                    case t_SEQUENCE:
+                    case t_SET:
+                    case t_SEQUENCE_OF:
+                    case t_SET_OF: return type_str(self);
                     default:
                     {
                         return builtin_str(self->type()->builtin());
@@ -195,6 +208,7 @@ namespace x680 {
             execute_struct_predeclare(stream, self);
             execute_typedef_simple(stream, self);
             execute_typedef_reff(stream, self);
+            execute_typedef_seqof(stream, self);
 
             execute_stop_ns(stream, self);
 
@@ -315,6 +329,34 @@ namespace x680 {
                 stream << "\n";
         }
 
+        void fileout::execute_typedef_seqof(std::ofstream& stream, basic_entity_ptr self) {
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if (tpas && (tpas->type())) {
+                    if (((tpas->type()->builtin() == t_SEQUENCE_OF)
+                            || (tpas->type()->builtin() == t_SET_OF)) && (!tpas->childs().empty())) {
+                        typeassignment_entity_ptr cpas = tpas->childs().front()->as_typeassigment();
+                        if (cpas) {
+                            stream << "\n";
+                            if (cpas->type()->isrefferrence()) {
+                                if (tpas->type()->builtin() == t_SEQUENCE_OF)
+                                    stream << tabformat(self->as_typeassigment()) << "typedef std::vector< " << fromtype_str(cpas) << "> " << type_str(tpas);
+                                else
+                                    stream << tabformat(self->as_typeassigment()) << "typedef std::set< " << fromtype_str(cpas) << "> " << type_str(tpas);
+                            } else {
+                                if (tpas->type()->builtin() == t_SEQUENCE_OF)
+                                    stream << tabformat(self->as_typeassigment()) << "typedef std::vector< " << fromtype_str(cpas) << "> " << type_str(tpas);
+                                else
+                                    stream << tabformat(self->as_typeassigment()) << "typedef std::set< " << fromtype_str(cpas) << "> " << type_str(tpas);
+                            }
+                        }
+                    }
+                }
+            }
+            if (!self->childs().empty())
+                stream << "\n";
+        }
+
         void fileout::execute_struct(std::ofstream& stream, basic_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
@@ -387,15 +429,22 @@ namespace x680 {
         }
 
         void fileout::execute_member(std::ofstream& stream, typeassignment_entity_ptr self) {
+            bool ischoice = (self->type()->builtin() == t_CHOICE);
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
-                    namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
-                    std::string tmp;
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if ((tpas) && (tpas->as_named())) {
+                    namedtypeassignment_entity_ptr named = tpas->as_named();
                     if (named->type()) {
                         stream << "\n";
-                        tmp = fromtype_str(named);
-                        execute_member_marker(tmp, named);
-                        stream << tabformat(self, 1) << tmp << " " << nameconvert(named->name()) << ";";
+                        if (!ischoice) {
+                            std::string tmp = fromtype_str(named);
+                            execute_member_marker(tmp, named);
+                            stream << tabformat(self, 1) << tmp << " " << nameconvert(named->name()) << ";";
+                        } else {
+                            stream << tabformat(self, 1) << "BOOST_ASN_VALUE_CHOICE(" <<
+                                    nameconvert(named->name()) << ", " << fromtype_str(named) << ", " <<
+                                    type_str(self) << "_" << nameconvert(named->name()) << ");";
+                        }
                     }
                 }
             }
@@ -403,22 +452,20 @@ namespace x680 {
 
         void fileout::execute_declare(std::ofstream& stream, typeassignment_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if (((*it)->as_typeassigment())) {
-                    typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                    if (tpas->type()) {
-                        switch (tpas->type()->builtin()) {
-                            case t_CHOICE: stream << "\n";
-                                execute_choice(stream, tpas);
-                                break;
-                            case t_SEQUENCE: stream << "\n";
-                                execute_sequence(stream, tpas);
-                                break;
-                            case t_SET: stream << "\n";
-                                execute_set(stream, tpas);
-                                break;
-                            default:
-                            {
-                            }
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if ((tpas) && (tpas->type())) {
+                    switch (tpas->type()->builtin()) {
+                        case t_CHOICE: stream << "\n";
+                            execute_choice(stream, tpas);
+                            break;
+                        case t_SEQUENCE: stream << "\n";
+                            execute_sequence(stream, tpas);
+                            break;
+                        case t_SET: stream << "\n";
+                            execute_set(stream, tpas);
+                            break;
+                        default:
+                        {
                         }
                     }
                 }
