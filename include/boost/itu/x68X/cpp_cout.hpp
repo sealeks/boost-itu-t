@@ -20,7 +20,10 @@ namespace x680 {
         bool dir_create(const std::string& path, const std::string& outdir);
 
         std::string nameconvert(std::string name);
-        std::string tabformat(assignment_entity_ptr self = assignment_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
+        std::string tabformat(basic_entity_ptr selft = basic_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
+        std::string member_marker_str(const std::string& str, tagmarker_type self);        
+        std::string seqof_str(typeassignment_entity_ptr self, const std::string& name);
+        
 
         class fileout {
 
@@ -46,18 +49,19 @@ namespace x680 {
             void execute_struct_predeclare(std::ofstream& stream, basic_entity_ptr self);
             void execute_typedef_simple(std::ofstream& stream, basic_entity_ptr self);
             void execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self);
-            void execute_typedef_seqof(std::ofstream& stream, basic_entity_ptr self);  
-            void execute_struct(std::ofstream& stream, basic_entity_ptr self);
-            void execute_predefined(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_typedef_decl_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_typedef_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr(), bool endl = true);
+            void execute_struct(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_predefined(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
 
 
-            void execute_member(std::ofstream& stream, typeassignment_entity_ptr self);
-            void execute_member_marker(std::string& str, namedtypeassignment_entity_ptr self);
-            void execute_declare(std::ofstream& stream, typeassignment_entity_ptr self);
-            void execute_choice(std::ofstream& stream, typeassignment_entity_ptr self);
-            void execute_choice_enum(std::ofstream& stream, typeassignment_entity_ptr self);            
-            void execute_seqset(std::ofstream& stream, typeassignment_entity_ptr self);
-            void execute_set_of(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_member(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_declare(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_declare_struct(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_choice(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_choice_enum(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_seqset(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_seqsetof(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
 
             std::string path_;
             std::string outdir_;

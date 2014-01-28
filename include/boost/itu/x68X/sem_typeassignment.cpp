@@ -228,8 +228,8 @@ namespace x680 {
      
      bool type_atom::isstruct_of() const {
          return (( (builtin_ == t_SET_OF)  || (builtin_ == t_SEQUENCE_OF)) && (!tag()));
-     }     
-
+     }   
+     
     bool type_atom::isopen() const {
         return ((builtin_ == t_ClassField) || (builtin_ == t_ANY));
     }
