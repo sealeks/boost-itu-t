@@ -227,7 +227,7 @@ namespace x680 {
      }
      
      bool type_atom::isstruct_of() const {
-         return (( (builtin_ == t_SET_OF)  || (builtin_ == t_SEQUENCE_OF)) && (!tag()));
+         return ( (builtin_ == t_SET_OF)  || (builtin_ == t_SEQUENCE_OF));
      }   
      
     bool type_atom::isopen() const {
