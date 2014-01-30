@@ -435,6 +435,10 @@ namespace x680 {
         bool named() const {
             return named_;
         }
+            
+        bool is_cpp_expressed() const{
+            return !has_arguments();
+        }
 
         
         canonical_tag_vct cncl_tags();           
