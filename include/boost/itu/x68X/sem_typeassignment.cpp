@@ -199,11 +199,7 @@ namespace x680 {
                  || (builtin_ ==t_ValueSetFromObjects)) && (reff()));
     }   
     
-    bool type_atom::islocaldeclare() const {    
-        if (scope() && (scope()->as_typeassigment()))
-            return ((isstruct()) || (isstruct_of()));
-        return false;
-    }
+
     
     bool type_atom::issimplerefferrence() {
         switch(builtin_){
@@ -571,6 +567,12 @@ namespace x680 {
         if (scope())
             return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
+    }
+
+    bool typeassignment_entity::islocaldeclare() const {
+        if (scope() && (scope()->as_typeassigment()) && (type()))
+            return (type()->isstructure());
+        return false;
     }
 
     canonical_tag_vct typeassignment_entity::cncl_tags() {

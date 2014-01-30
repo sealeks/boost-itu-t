@@ -75,7 +75,7 @@ namespace x680 {
         std::string builtin_str(defined_type tp) {
             switch (tp) {
                 case t_BOOLEAN: return "boolean";
-                case t_INTEGER: return "integer";
+                case t_INTEGER: return "int";
                 case t_BIT_STRING: return "bitstring_type";
                 case t_OCTET_STRING: return "octetstring_type";
                 case t_NULL: return "null_type";
@@ -130,13 +130,13 @@ namespace x680 {
                     std::string postfix = (ppas || native || (!self->type()->tag())) ? "" : "__impl";
                     if (ppas && (ppas->type())&& (ppas->type()->isstruct_of()))
                         return type_str(ppas)+(ppas->type()->builtin() == t_SEQUENCE_OF ? "__seqof" : "__setof");
-                    return nameconvert(self->type()->islocaldeclare() ? (self->name() + "__type") : self->name()) + postfix;
+                    return nameconvert(self->islocaldeclare() ? (self->name() + "__type") : self->name()) + postfix;
                 } else
                     return nameconvert(self->name());
             }
             return "";
         }
-        
+
         std::string value_int_str(value_atom_ptr self) {
             if (self && (self->as_number())) {
                 try {
@@ -145,22 +145,39 @@ namespace x680 {
                     return "???num???";
                 }
             }
-            if ((self->as_defined()) && (self->as_defined()->reff())){
+            if ((self->as_defined()) && (self->as_defined()->reff())) {
                 if (self->as_defined()->reff()->as_valueassigment())
                     return value_int_str(self->as_defined()->reff()->as_valueassigment()->value());
             }
             return "???num???";
         }
-        
-       bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt){
-           if (self && (self->as_list())) {
-               
-           }
-           rslt.push_back("1");
-           rslt.push_back("2");
-           rslt.push_back("3");
-           return !rslt.empty();
-       }      
+
+        bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt) {
+            if (self && (self->as_list())) {
+                structvalue_atom_ptr lst = self->as_list();
+                for (value_vct::const_iterator it = lst->values().begin(); it != lst->values().end(); ++it) {
+                    value_atom_ptr subval = (*it);
+                    if (subval->as_number())
+                        rslt.push_back(value_int_str(subval));
+                    else if (subval->as_assign())
+                        rslt.push_back(value_int_str(subval->as_assign()->value()));
+                    else if (subval->as_defined()) {
+                        if (subval->as_defined()->reff()) {
+                            if (subval->as_defined()->reff()->as_valueassigment()) {
+                                value_atom_ptr tmpval = subval->as_defined()->reff()->as_valueassigment()->value();
+                                if (tmpval) {
+                                    if (tmpval->as_list())
+                                        value_oid_str(tmpval, rslt);
+                                    else
+                                        rslt.push_back(value_int_str(tmpval));
+                                }
+                            } else rslt.push_back("???");
+                        } else rslt.push_back("???");
+                    } else rslt.push_back("???");
+                }
+            }
+            return !rslt.empty();
+        }
 
         std::string fromtype_str(typeassignment_entity_ptr self) {
             if (self->type()) {
@@ -173,7 +190,7 @@ namespace x680 {
             }
             return "???type???";
         }
-        
+
         std::string fromtype_str(type_atom_ptr self) {
             if (self) {
                 if (self->isrefferrence())
@@ -184,7 +201,7 @@ namespace x680 {
                     return builtin_str(self->builtin());
             }
             return "???type???";
-        }        
+        }
 
         std::string member_marker_str(const std::string& str, tagmarker_type self) {
             switch (self) {
@@ -278,7 +295,7 @@ namespace x680 {
                 } else if (tas->as_valueassigment()) {
                     return !tas->as_valueassigment()->has_arguments();
                 } else if (tas->as_valuesetassigment()) {
-                    return false;// !tas->as_valueassigment()->has_arguments();
+                    return false; // !tas->as_valueassigment()->has_arguments();
                 }
             }
             return false;
@@ -339,17 +356,17 @@ namespace x680 {
             execute_start_ns(stream, self);
 
             execute_imports(stream, self);
-            
+
             // expl X ::=Y or X = [1] Y      
             execute_typedef_reff(stream, self, false);
             execute_typedef_reff(stream, self, true);
-            
+
             // expl  X ::= [1] SEQUNCE { ....
             execute_typedef_struct(stream, self);
 
             execute_typedef_decl_seqof(stream, self, self);
-            execute_typedef_seqof(stream, self, self);            
-            
+            execute_typedef_seqof(stream, self, self);
+
             execute_assignment(stream, self);
 
             execute_stop_ns(stream, self);
@@ -563,7 +580,7 @@ namespace x680 {
             scp = scp ? scp : self;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if (tpas && (tpas->type())  && (tpas->is_cpp_expressed())) {
+                if (tpas && (tpas->type()) && (tpas->is_cpp_expressed())) {
                     switch (tpas->type()->builtin()) {
                         case t_CHOICE:
                             stream << "\n";
@@ -601,8 +618,6 @@ namespace x680 {
             }
         }
 
-
-
         void fileout::execute_predefined(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
             scp = scp ? scp : self;
             if (self->type()) {
@@ -618,7 +633,8 @@ namespace x680 {
                         execute_predefined_bs(stream, predef, self, scp);
                         break;
                     }
-                    case t_ENUMERATED:{
+                    case t_ENUMERATED:
+                    {
                         execute_predefined_int(stream, predef, self, scp);
                     }
                     default:
@@ -637,7 +653,7 @@ namespace x680 {
                 if (vlass) {
                     stream << tabformat(scp) << "const " << nameconvert(self->name()) << " ";
                     stream << nameconvert(self->name()) << "_" << nameconvert(vlass->name()) << " = ";
-                    stream <<  value_int_str(vlass->value()) << ";\n";
+                    stream << value_int_str(vlass->value()) << ";\n";
                 }
             }
         }
@@ -653,10 +669,9 @@ namespace x680 {
                 }
             }
         }
-        
-        
+
         void fileout::execute_valueassignment(std::ofstream& stream, valueassignment_entity_ptr self, basic_entity_ptr scp) {
-            switch(self->type()->root_builtin()){
+            switch (self->type()->root_builtin()) {
                 case t_INTEGER:
                 {
                     stream << "\n" << tabformat(scp) << "const " << fromtype_str(self->type()) << " "
@@ -665,26 +680,29 @@ namespace x680 {
                     stream << "\n";
                     break;
                 }
-                case t_OBJECT_IDENTIFIER:{
+                case t_OBJECT_IDENTIFIER:
+                {
                     std::vector<std::string> rslt;
                     if (value_oid_str(self->value(), rslt)) {
-                    stream << "\n" << tabformat(scp) << "const boost::array<boost::asn1::oidindx_type, ";
-                    stream << rslt.size() << "> " <<  nameconvert(self->name()) << "_OID_ARR = { ";
-                    for (std::vector<std::string>::const_iterator it = rslt.begin(); it != rslt.end(); ++it) {
-                        if (it!=rslt.begin()) 
-                            stream << ", ";
-                       stream << (*it); 
-                    }
-                    stream << "};";
-                    stream << "\n" << tabformat(scp) << "const boost::asn1::oid_type " << nameconvert(self->name());
-                    stream << "  = boost::asn1::oid_type(" << nameconvert(self->name())  << "_OID_ARR )";          
-                    stream << "\n";
+                        stream << "\n" << tabformat(scp) << "const boost::array<boost::asn1::oidindx_type, ";
+                        stream << rslt.size() << "> " << nameconvert(self->name()) << "_OID_ARR = { ";
+                        for (std::vector<std::string>::const_iterator it = rslt.begin(); it != rslt.end(); ++it) {
+                            if (it != rslt.begin())
+                                stream << ", ";
+                            stream << (*it);
+                        }
+                        stream << "};";
+                        stream << "\n" << tabformat(scp) << "const boost::asn1::oid_type " << nameconvert(self->name());
+                        stream << "  = boost::asn1::oid_type(" << nameconvert(self->name()) << "_OID_ARR )";
+                        stream << "\n";
                     }
                     break;
                 }
-                default: {}
-            }          
-        }        
+                default:
+                {
+                }
+            }
+        }
 
         void fileout::execute_member(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
             scp = scp ? scp : self;

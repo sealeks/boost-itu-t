@@ -219,9 +219,7 @@ namespace x680 {
             predefined_ = vl;
         }
         
-        virtual bool isrefferrence() const;    
-        
-        bool islocaldeclare() const;       
+        virtual bool isrefferrence() const; 
 
         bool issimplerefferrence();        
         
@@ -440,7 +438,8 @@ namespace x680 {
             return !has_arguments();
         }
 
-        
+        bool islocaldeclare() const ;
+ 
         canonical_tag_vct cncl_tags();           
    
         namedtypeassignment_entity_ptr as_named();
