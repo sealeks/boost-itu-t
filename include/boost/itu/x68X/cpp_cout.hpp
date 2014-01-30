@@ -20,9 +20,11 @@ namespace x680 {
         bool dir_create(const std::string& path, const std::string& outdir);
 
         std::string type_str(typeassignment_entity_ptr self, bool native = false);
-        std::string fromtype_str(typeassignment_entity_ptr self);           
+        std::string fromtype_str(typeassignment_entity_ptr self);  
+        std::string fromtype_str(type_atom_ptr self);         
         std::string value_int_str(value_atom_ptr self);
-        std::string nameconvert(std::string name);
+        bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
+        std::string nameconvert(std::string name);      
         std::string tabformat(basic_entity_ptr selft = basic_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
         std::string member_marker_str(const std::string& str, tagmarker_type self);        
         std::string seqof_str(typeassignment_entity_ptr self, const std::string& name);

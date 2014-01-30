@@ -151,6 +151,16 @@ namespace x680 {
             }
             return "???num???";
         }
+        
+       bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt){
+           if (self && (self->as_list())) {
+               
+           }
+           rslt.push_back("1");
+           rslt.push_back("2");
+           rslt.push_back("3");
+           return !rslt.empty();
+       }      
 
         std::string fromtype_str(typeassignment_entity_ptr self) {
             if (self->type()) {
@@ -161,8 +171,20 @@ namespace x680 {
                 else
                     return builtin_str(self->type()->builtin());
             }
-            return "";
+            return "???type???";
         }
+        
+        std::string fromtype_str(type_atom_ptr self) {
+            if (self) {
+                if (self->isrefferrence())
+                    return nameconvert(self->reff()->name());
+                else if (self->isstructure())
+                    return "???type???";
+                else
+                    return builtin_str(self->builtin());
+            }
+            return "???type???";
+        }        
 
         std::string member_marker_str(const std::string& str, tagmarker_type self) {
             switch (self) {
@@ -613,9 +635,9 @@ namespace x680 {
             for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {
                 valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
                 if (vlass) {
-                    stream << tabformat(scp) << "const " << nameconvert(self->name()) << " "
-                            << nameconvert(vlass->name()) << " = "
-                            << value_int_str(vlass->value()) << ";\n";
+                    stream << tabformat(scp) << "const " << nameconvert(self->name()) << " ";
+                    stream << nameconvert(self->name()) << "_" << nameconvert(vlass->name()) << " = ";
+                    stream <<  value_int_str(vlass->value()) << ";\n";
                 }
             }
         }
@@ -625,9 +647,9 @@ namespace x680 {
             for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {
                 valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
                 if (vlass) {
-                    stream << tabformat(scp) << "const " << nameconvert(self->name()) << " "
-                            << nameconvert(vlass->name()) << " = "
-                            << "bitstring_type(true, " << value_int_str(vlass->value()) << ");\n";
+                    stream << tabformat(scp) << "const " << nameconvert(self->name()) << " ";
+                    stream << nameconvert(self->name()) << "_" << nameconvert(vlass->name()) << " = ";
+                    stream << "bitstring_type(true, " << value_int_str(vlass->value()) << ");\n";
                 }
             }
         }
@@ -637,12 +659,30 @@ namespace x680 {
             switch(self->type()->root_builtin()){
                 case t_INTEGER:
                 {
-                    /*stream << tabformat(scp) << "const " << nameconvert(self->name()) << " "
-                            << nameconvert(vlass->name()) << " = "
-                            << "bitstring_type(true, " << value_int_str(vlass->value()) << ");\n";*/
+                    stream << "\n" << tabformat(scp) << "const " << fromtype_str(self->type()) << " "
+                            << nameconvert(self->name()) << " = "
+                            << value_int_str(self->value()) << ";";
+                    stream << "\n";
                     break;
                 }
-                default{}
+                case t_OBJECT_IDENTIFIER:{
+                    std::vector<std::string> rslt;
+                    if (value_oid_str(self->value(), rslt)) {
+                    stream << "\n" << tabformat(scp) << "const boost::array<boost::asn1::oidindx_type, ";
+                    stream << rslt.size() << "> " <<  nameconvert(self->name()) << "_OID_ARR = { ";
+                    for (std::vector<std::string>::const_iterator it = rslt.begin(); it != rslt.end(); ++it) {
+                        if (it!=rslt.begin()) 
+                            stream << ", ";
+                       stream << (*it); 
+                    }
+                    stream << "};";
+                    stream << "\n" << tabformat(scp) << "const boost::asn1::oid_type " << nameconvert(self->name());
+                    stream << "  = boost::asn1::oid_type(" << nameconvert(self->name())  << "_OID_ARR )";          
+                    stream << "\n";
+                    }
+                    break;
+                }
+                default: {}
             }          
         }        
 
