@@ -219,7 +219,7 @@ namespace x680 {
            case t_TypeFromObject: 
            case t_ValueSetFromObjects: return false;
             default:{}}
-         return(!tag());
+         return true;
     }     
     
      bool type_atom::isstruct() const {
