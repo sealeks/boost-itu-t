@@ -227,7 +227,9 @@ namespace x680 {
         
         bool isstruct() const;   
         
-        bool isstruct_of() const;      
+        bool isstruct_of() const;     
+        
+        bool isstructure() const;       
         
         bool isopen() const;
 
