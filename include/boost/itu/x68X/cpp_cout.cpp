@@ -120,7 +120,8 @@ namespace x680 {
             return "";
         }
 
-        std::string type_str(typeassignment_entity_ptr self) {
+        std::string type_str(typeassignment_entity_ptr self, bool native) {
+
             if (self->type()) {
                 switch (self->type()->builtin()) {
                     case t_Reference: return nameconvert(self->name());
@@ -132,9 +133,10 @@ namespace x680 {
                     {
                         typeassignment_entity_ptr ppas = self->scope() ?
                                 self->scope()->as_typeassigment() : typeassignment_entity_ptr();
+                        std::string postfix = (ppas || native || (!self->type()->tag())) ? "" : "__impl";
                         if (ppas && (ppas->type())&& (ppas->type()->isstruct_of()))
                             return type_str(ppas)+(ppas->type()->builtin() == t_SEQUENCE_OF ? "__seqof" : "__setof");
-                        return nameconvert(self->type()->islocaldeclare() ? (self->name() + "__type") : self->name());
+                        return nameconvert(self->type()->islocaldeclare() ? (self->name() + "__type") : self->name()) + postfix;
                     }
                     default:
                     {
@@ -153,7 +155,7 @@ namespace x680 {
                     case t_SEQUENCE:
                     case t_SET:
                     case t_SEQUENCE_OF:
-                    case t_SET_OF: return type_str(self);
+                    case t_SET_OF: return type_str(self, true);
                     default:
                     {
                         return builtin_str(self->type()->builtin());
@@ -172,6 +174,7 @@ namespace x680 {
                 }
                 default:
                 {
+                    return "boost::asn1::value_holder<" + str + ">";
                 }
             }
             return str;
@@ -198,57 +201,49 @@ namespace x680 {
             return ""; //-1;            
         }
 
+        std::string tagged_class_str(tagged_ptr self) {
+            switch (self->_class()) {
+                case tcl_application: return "APPLICATION_CLASS";
+                case tcl_universal: return "UNIVERSAL_CLASS";
+                case tcl_private: return "PRIVATE_CLASS";
+                default:
+                {
+                }
+            }
+            return "CONTEXT_CLASS";
+        }
+
         std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name) {
             if (self->type()) {
-                if (self->type()->builtin() == t_CHOICE) {
+                if (self->type()->istextualy_choice()) {
                     if (self->type()->tag()) {
                         switch (self->type()->tag()->_class()) {
                             case tcl_application: return "BOOST_ASN_CHOICE_APPLICATION_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                break;
                             case tcl_universal: return "BOOST_ASN_CHOICE_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                break;
                             case tcl_private: return "BOOST_ASN_CHOICE_PRIVATE_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                break;
-                            default:
-                            {
-                                return "BOOST_ASN_CHOICE_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                            }
+                            default: return "BOOST_ASN_CHOICE_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
                         }
-                    } else {
+                    } else
                         return "BOOST_ASN_CHOICE(" + name + ")";
-                    }
                 } else {
                     if (self->type()->tag()) {
-                        if (self->type()->tagrule() == implicit_tags) {
+                        if (self->type()->tag()->rule() == implicit_tags) {
                             switch (self->type()->tag()->_class()) {
                                 case tcl_application: return "BOOST_ASN_IMPLICIT_APPLICATION_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                    break;
                                 case tcl_universal: return "BOOST_ASN_IMPLICIT_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                    break;
                                 case tcl_private: return "BOOST_ASN_IMPLICIT_PRIVATE_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                    break;
-                                default:
-                                {
-                                    return "BOOST_ASN_IMPLICIT_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                }
+                                default: return "BOOST_ASN_IMPLICIT_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
                             }
                         } else {
                             switch (self->type()->tag()->_class()) {
                                 case tcl_application: return "BOOST_ASN_EXPLICIT_APPLICATION_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                    break;
                                 case tcl_universal: return "BOOST_ASN_EXPLICIT_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                    break;
                                 case tcl_private: return "BOOST_ASN_EXPLICIT_PRIVATE_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                    break;
-                                default:
-                                {
-                                    return "BOOST_ASN_EXPLICIT_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
-                                }
+                                default: return "BOOST_ASN_EXPLICIT_TAG(" + name + ", " + tagged_str(self->type()->tag()) + ")";
                             }
                         }
-                    } else {
+                    } else
                         return "BOOST_ASN_BIND_TAG(" + name + ")";
-                    }
                 }
             }
             return "";
@@ -291,10 +286,22 @@ namespace x680 {
 
             execute_start_ns(stream, self);
 
+            // struct X1; ...
             execute_standart_type(stream, self);
+
             execute_struct_predeclare(stream, self);
-            execute_typedef_simple(stream, self);
-            execute_typedef_reff(stream, self);
+
+            // expl X ::= INTEGER or X = [1] INEGER
+            execute_typedef_simple(stream, self, false);
+            execute_typedef_simple(stream, self, true);
+
+            // expl X ::=Y or X = [1] Y      
+            execute_typedef_reff(stream, self, false);
+            execute_typedef_reff(stream, self, true);
+
+            // expl  X ::= [1] SEQUNCE { ....
+            execute_typedef_struct(stream, self);
+
             execute_typedef_decl_seqof(stream, self, self);
             execute_typedef_seqof(stream, self, self);
 
@@ -381,39 +388,84 @@ namespace x680 {
                 if (tpas && (tpas->type())) {
                     if ((tpas->type()) && (tpas->type()->isstruct()))
                         stream << tabformat() << "struct " << type_str(tpas) + "; " << " \n";
+                    if (tpas->type()->tag())
+                        stream << tabformat() << "struct " << type_str(tpas, true) + "; " << " \n";
                 }
             }
             if (!self->childs().empty())
                 stream << "\n";
         }
 
-        void fileout::execute_typedef_simple(std::ofstream& stream, basic_entity_ptr self) {
+        void fileout::execute_typedef_simple(std::ofstream& stream, basic_entity_ptr self, bool tagged) {
+            std::size_t cnt = 0;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if (tpas && (tpas->type())) {
-                    if (tpas->type()->issimplerefferrence())
-                        stream << tabformat() << "typedef " <<
-                        fromtype_str(tpas) << " " <<
-                        type_str(tpas) <<
-                        "; " << " \n";
+                    if ((tpas->type()->issimplerefferrence())) {
+                        if (!tagged && (!tpas->type()->tag())) {
+                            stream << tabformat() << "typedef ";
+                            stream << fromtype_str(tpas) << " " << type_str(tpas);
+                            stream << "; " << " \n";
+                            cnt++;
+                        } else if (tagged && (tpas->type()->tag())) {
+                            stream << tabformat() << "BOOST_ASN_";
+                            stream << (tpas->type()->tag()->rule() == explicit_tags ? "EXPLICIT_TYPDEF(" : "IMPLICIT_TYPDEF(");
+                            stream << type_str(tpas) << ", " << fromtype_str(tpas) << ",  ";
+                            stream << tagged_str(tpas->type()->tag()) << ", " << tagged_class_str(tpas->type()->tag());
+                            stream << "); " << " \n";
+                            cnt++;
+                        }
+                    }
                 }
             }
-            if (!self->childs().empty())
+            if (cnt)
                 stream << "\n";
         }
 
-        void fileout::execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self) {
+        void fileout::execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self, bool tagged) {
+            std::size_t cnt = 0;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if (tpas && (tpas->type())) {
-                    if (tpas->type()->isrefferrence())
-                        stream << tabformat() << "typedef " <<
-                        fromtype_str(tpas) << " " <<
-                        type_str(tpas) <<
-                        "; " << " \n";
+                    if (tpas->type()->isrefferrence()) {
+                        if (!tagged && (!tpas->type()->tag())) {
+                            stream << tabformat() << "typedef ";
+                            stream << fromtype_str(tpas) << " " << type_str(tpas);
+                            stream << "; " << " \n";
+                            cnt++;
+                        } else if (tagged && (tpas->type()->tag())) {
+                            stream << tabformat() << "BOOST_ASN_";
+                            stream << (tpas->type()->tag()->rule() == explicit_tags ? "EXPLICIT_TYPDEF(" : "IMPLICIT_TYPDEF(");
+                            stream << type_str(tpas) << ", " << fromtype_str(tpas) << ",  ";
+                            stream << tagged_str(tpas->type()->tag()) << ", " << tagged_class_str(tpas->type()->tag());
+                            stream << "); " << " \n";
+                            cnt++;
+                        }
+                    }
                 }
             }
-            if (!self->childs().empty())
+            if (cnt)
+                stream << "\n";
+        }
+
+        void fileout::execute_typedef_struct(std::ofstream& stream, basic_entity_ptr self) {
+            std::size_t cnt = 0;
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if (tpas && (tpas->type())) {
+                    if ((tpas->type()->isstruct()) || (tpas->type()->isstruct_of())) {
+                        if ((tpas->type()->tag())) {
+                            stream << tabformat() << "BOOST_ASN_";
+                            stream << (tpas->type()->tag()->rule() == explicit_tags ? "EXPLICIT_TYPDEF(" : "IMPLICIT_TYPDEF(");
+                            stream << type_str(tpas, true) << ", " << type_str(tpas) << ",  ";
+                            stream << tagged_str(tpas->type()->tag()) << ", " << tagged_class_str(tpas->type()->tag());
+                            stream << "); " << " \n";
+                            cnt++;
+                        }
+                    }
+                }
+            }
+            if (cnt)
                 stream << "\n";
         }
 
@@ -692,11 +744,11 @@ namespace x680 {
             scp = scp ? scp : self;
             switch (self->type()->builtin()) {
                 case t_CHOICE: stream << "\n";
-                    execute_archive_choice(stream, self, scp);
+                    exexecute_archive_choice_ber(stream, self, scp);
                     break;
                 case t_SET:
                 case t_SEQUENCE: stream << "\n";
-                    execute_archive_seqset(stream, self, scp);
+                    execute_archive_seqset_ber(stream, self, scp);
                     break;
                 default:
                 {
@@ -704,7 +756,7 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_archive_seqset(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
+        void fileout::execute_archive_seqset_ber(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
             scp = scp ? scp : self;
             stream << "\n" << tabformat(scp, 1) <<
                     "template<typename Archive> void serialize(Archive& arch){";
@@ -713,21 +765,21 @@ namespace x680 {
                 if ((tpas) && (tpas->as_named())) {
                     namedtypeassignment_entity_ptr named = tpas->as_named();
                     if (named->type()) {
-                        execute_archive_member(stream, named, scp);
+                        execute_archive_member_ber(stream, named, scp);
                     }
                 }
             }
             stream << "\n" << tabformat(scp, 1) << "}";
         }
 
-        void fileout::execute_archive_member(std::ofstream& stream, namedtypeassignment_entity_ptr self, basic_entity_ptr scp) {
+        void fileout::execute_archive_member_ber(std::ofstream& stream, namedtypeassignment_entity_ptr self, basic_entity_ptr scp) {
             if (self->type()) {
                 stream << "\n";
-                stream << tabformat(scp, 2) << archive_member_ber_str(self, self->name()) << ";";
+                stream << tabformat(scp, 2) << archive_member_ber_str(self, nameconvert(self->name())) << ";";
             }
         }
 
-        void fileout::execute_archive_choice(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
+        void fileout::exexecute_archive_choice_ber(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
             scp = scp ? scp : self;
             stream << "\n" << tabformat(scp, 1) <<
                     "template<typename Archive> void serialize(Archive& arch){";
@@ -738,21 +790,21 @@ namespace x680 {
             stream << "\n" << tabformat(scp, 3) <<
                     "switch(arch.test_class()){";
 
-            execute_archive_member_chi(stream, self, tcl_universal, false, scp);
-            execute_archive_member_chi(stream, self, tcl_application, false, scp);
-            execute_archive_member_chi(stream, self, tcl_context, false, scp);
-            execute_archive_member_chi(stream, self, tcl_private, false, scp);
-            execute_archive_member_chi(stream, self, tcl_universal, true, scp);
+            execute_archive_member_ber_chi(stream, self, tcl_universal, false, scp);
+            execute_archive_member_ber_chi(stream, self, tcl_application, false, scp);
+            execute_archive_member_ber_chi(stream, self, tcl_context, false, scp);
+            execute_archive_member_ber_chi(stream, self, tcl_private, false, scp);
+            execute_archive_member_ber_chi(stream, self, tcl_universal, true, scp);
             stream << "\n" << tabformat(scp, 2) << "} else {";
             stream << "\n" << tabformat(scp, 3) <<
                     "switch(type()){";
-            execute_archive_member_cho(stream, self, scp);
+            execute_archive_member_ber_cho(stream, self, scp);
             stream << "\n" << tabformat(scp, 3) << "}";
             stream << "\n" << tabformat(scp, 2) << "}";
             stream << "\n" << tabformat(scp, 1) << "}";
         }
 
-        void fileout::execute_archive_member_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag, basic_entity_ptr scp) {
+        void fileout::execute_archive_member_ber_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag, basic_entity_ptr scp) {
             scp = scp ? scp : self;
 
             if (notag) {
@@ -784,7 +836,7 @@ namespace x680 {
                                 stream << tagged_str(named->type()->tag()) << ":  { if (";
                                 std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
                                 stream << archive_member_ber_str(named, tmpval);
-                                stream << ") return; else free();}";
+                                stream << ") return; else free(); break;}";
                             }
                         } else {
                             if (notag) {
@@ -804,7 +856,7 @@ namespace x680 {
             stream << "\n" << tabformat(scp, 4) << "}";
         }
 
-        void fileout::execute_archive_member_cho(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
+        void fileout::execute_archive_member_ber_cho(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
             scp = scp ? scp : self;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
@@ -815,7 +867,7 @@ namespace x680 {
                         stream << choice_enum_str(self, (*it)) << ":  {";
                         std::string tmpval = "value<" + fromtype_str(named) + " > (false , " + choice_enum_str(self, (*it)) + ")";
                         stream << archive_member_ber_str(named, tmpval);
-                        stream << "; break;}";
+                        stream << "; break; break;}";
                     }
                 }
             }

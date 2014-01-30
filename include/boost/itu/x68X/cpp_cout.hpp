@@ -19,12 +19,15 @@ namespace x680 {
         bool dir_exists(const std::string& path);
         bool dir_create(const std::string& path, const std::string& outdir);
 
+        std::string type_str(typeassignment_entity_ptr self, bool native = false);
+        std::string fromtype_str(typeassignment_entity_ptr self);        
         std::string nameconvert(std::string name);
         std::string tabformat(basic_entity_ptr selft = basic_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
         std::string member_marker_str(const std::string& str, tagmarker_type self);        
         std::string seqof_str(typeassignment_entity_ptr self, const std::string& name);
         std::string choice_enum_str(typeassignment_entity_ptr self, basic_entity_ptr sub);
         std::string  tagged_str(tagged_ptr self);
+        std::string tagged_class_str(tagged_ptr self);
         std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name);       
         
 
@@ -50,8 +53,9 @@ namespace x680 {
             void execute_import(std::ofstream& stream, import_entity_ptr self);
             void execute_imports(std::ofstream& stream, module_entity_ptr self);
             void execute_struct_predeclare(std::ofstream& stream, basic_entity_ptr self);
-            void execute_typedef_simple(std::ofstream& stream, basic_entity_ptr self);
-            void execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self);
+            void execute_typedef_simple(std::ofstream& stream, basic_entity_ptr self, bool tagged);
+            void execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self, bool tagged);
+            void execute_typedef_struct(std::ofstream& stream, basic_entity_ptr self);
             void execute_typedef_decl_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
             void execute_typedef_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr(), bool endl = true);
             void execute_struct(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
@@ -69,11 +73,11 @@ namespace x680 {
             void execute_seqsetof(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
             
             void execute_archive_meth_decl(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_archive_seqset(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_archive_member(std::ofstream& stream, namedtypeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());             
-            void execute_archive_choice(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());       
-            void execute_archive_member_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag = false, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_archive_member_cho(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());           
+            void execute_archive_seqset_ber(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_archive_member_ber(std::ofstream& stream, namedtypeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());             
+            void exexecute_archive_choice_ber(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());       
+            void execute_archive_member_ber_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag = false, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_archive_member_ber_cho(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());           
             
             std::string path_;
             std::string outdir_;
