@@ -712,16 +712,19 @@ namespace x680 {
                 if ((tpas) && (tpas->as_named())) {
                     namedtypeassignment_entity_ptr named = tpas->as_named();
                     if (named->type()) {
-                        stream << "\n";
-                        if (!ischoice) {
-                            stream << tabformat(scp, 1) <<
-                                    member_marker_str(fromtype_str(named), named->marker()) <<
-                                    " " << nameconvert(named->name()) << ";";
-                        } else {
-                            stream << tabformat(scp, 1) <<
-                                    "BOOST_ASN_VALUE_CHOICE(" <<
-                                    nameconvert(named->name()) << ", " << fromtype_str(named) << ", " <<
-                                    type_str(self) << "_" << nameconvert(named->name()) << ");";
+                        tagmarker_type mkr = named->marker();
+                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                            stream << "\n";
+                            if (!ischoice) {
+                                stream << tabformat(scp, 1) <<
+                                        member_marker_str(fromtype_str(named), named->marker()) <<
+                                        " " << nameconvert(named->name()) << ";";
+                            } else {
+                                stream << tabformat(scp, 1) <<
+                                        "BOOST_ASN_VALUE_CHOICE(" <<
+                                        nameconvert(named->name()) << ", " << fromtype_str(named) << ", " <<
+                                        type_str(self) << "_" << nameconvert(named->name()) << ");";
+                            }
                         }
                     }
                 }
@@ -779,15 +782,18 @@ namespace x680 {
         }
 
         void fileout::execute_choice_enum(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
-
             scp = scp ? scp : self;
             stream << "\n" << tabformat(scp) <<
                     "enum " << type_str(self) << "__enum {";
             stream << "\n" << tabformat(scp, 1) <<
                     type_str(self) << "_null = 0, ";
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                stream << "\n" << tabformat(scp, 1) <<
+                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                    tagmarker_type mkr = (*it)->as_typeassigment()->as_named()->marker();
+                    if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
+                        stream << "\n" << tabformat(scp, 1) <<
                         choice_enum_str(self, (*it)) << ",";
+                }
             }
             stream << "} ";
             stream << "\n ";
@@ -899,7 +905,9 @@ namespace x680 {
                 if ((tpas) && (tpas->as_named())) {
                     namedtypeassignment_entity_ptr named = tpas->as_named();
                     if (named->type()) {
-                        execute_archive_ber_member(stream, named, scp);
+                        tagmarker_type mkr = named->marker();
+                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
+                            execute_archive_ber_member(stream, named, scp);
                     }
                 }
             }
@@ -964,20 +972,23 @@ namespace x680 {
                     namedtypeassignment_entity_ptr named = tpas->as_named();
 
                     if (named->type()) {
-                        if (named->type()->tag()) {
-                            if (cls == named->type()->tag()->_class()) {
-                                stream << "\n" << tabformat(scp, 6) << "case ";
-                                stream << tagged_str(named->type()->tag()) << ":  { if (";
-                                std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
-                                stream << archive_member_ber_str(named, tmpval);
-                                stream << ") return; else free(); break;}";
-                            }
-                        } else {
-                            if (notag) {
-                                stream << "\n" << tabformat(scp, 6) << " if (";
-                                std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
-                                stream << archive_member_ber_str(named, tmpval);
-                                stream << ") return; else free();";
+                        tagmarker_type mkr = named->marker();
+                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                            if (named->type()->tag()) {
+                                if (cls == named->type()->tag()->_class()) {
+                                    stream << "\n" << tabformat(scp, 6) << "case ";
+                                    stream << tagged_str(named->type()->tag()) << ":  { if (";
+                                    std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
+                                    stream << archive_member_ber_str(named, tmpval);
+                                    stream << ") return; else free(); break;}";
+                                }
+                            } else {
+                                if (notag) {
+                                    stream << "\n" << tabformat(scp, 6) << " if (";
+                                    std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
+                                    stream << archive_member_ber_str(named, tmpval);
+                                    stream << ") return; else free();";
+                                }
                             }
                         }
                     }
