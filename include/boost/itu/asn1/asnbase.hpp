@@ -77,7 +77,7 @@ namespace boost {\
         }\
 }\
 
-#define BOOST_ASN_CHOISE_REGESTRATE(regtype)\
+#define BOOST_ASN_CHOICE_REGESTRATE(regtype)\
 namespace boost {\
         namespace asn1 {\
             template<typename Archive>\
