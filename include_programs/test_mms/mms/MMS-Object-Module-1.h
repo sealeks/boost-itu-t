@@ -917,12 +917,12 @@ namespace MMS_Object_Module_1  {
 }
 
 
-BOOST_ASN_CHOISE_REGESTRATE(MMS_Object_Module_1::Modifier) 
-BOOST_ASN_CHOISE_REGESTRATE(MMS_Object_Module_1::AccessCondition) 
-BOOST_ASN_CHOISE_REGESTRATE(MMS_Object_Module_1::AccessCondition::user_type) 
-BOOST_ASN_CHOISE_REGESTRATE(MMS_Object_Module_1::Address) 
-BOOST_ASN_CHOISE_REGESTRATE(MMS_Object_Module_1::TypeDescription) 
-BOOST_ASN_CHOISE_REGESTRATE(MMS_Object_Module_1::EventTime) 
+BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::Modifier) 
+BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::AccessCondition) 
+BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::AccessCondition::user_type) 
+BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::Address) 
+BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::TypeDescription) 
+BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::EventTime) 
 
 #ifdef _MSC_VER
 #pragma warning(pop)
