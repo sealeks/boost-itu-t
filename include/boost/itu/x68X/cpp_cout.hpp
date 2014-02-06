@@ -23,6 +23,7 @@ namespace x680 {
         std::string fulltype_str(basic_entity_ptr self, bool withns = false);
         std::string fromtype_str(typeassignment_entity_ptr self);
         std::string fromtype_str(type_atom_ptr self);
+        value_atom_ptr value_skip_defined(value_atom_ptr self);
         std::string value_int_str(value_atom_ptr self);
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
         std::string nameconvert(std::string name);
@@ -33,6 +34,7 @@ namespace x680 {
         std::string tagged_str(tagged_ptr self);
         std::string tagged_class_str(tagged_ptr self);
         std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name);
+        std::string struct_meth_str(typeassignment_entity_ptr self, const std::string& tp);
 
         bool expressed_import(module_entity_ptr self, const std::string& name);
 
@@ -90,14 +92,16 @@ namespace x680 {
 
 
             void execute_member(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_declare(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            
+            void execute_declare_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+             void execute_declare_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
             
             void execute_declare_struct_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
             void execute_declare_struct_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
             
-            void execute_choice_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_choice_cpp(std::ofstream& stream, typeassignment_entity_ptr self);            
-            void execute_choice_enum(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_choice_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());           
+            void execute_choice_enum(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());            
+            void execute_choice_cpp(std::ofstream& stream, typeassignment_entity_ptr self); 
             
             void execute_seqset_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
             void execute_seqset_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
@@ -107,16 +111,20 @@ namespace x680 {
             void execute_seqsetof_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
             void execute_seqsetof_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
 
-            void execute_archive_meth_decl(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_archive_meth_hpp(std::ofstream& stream,  basic_entity_ptr scp = basic_entity_ptr());
+            void execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
 
-            void execute_archive_ber_seqset(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_archive_ber_member(std::ofstream& stream, namedtypeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_archive_ber_choice(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_archive_ber_member_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag = false, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_archive_ber_member_cho(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_archive_ber_seqset(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_ber_member(std::ofstream& stream, namedtypeassignment_entity_ptr self);
+            void execute_archive_ber_choice_chi(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_ber_choice_cho(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_ber_member_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag = false);
+            void execute_archive_ber_member_cho(std::ofstream& stream, typeassignment_entity_ptr self);
 
             std::size_t registrate_struct_choice(std::ofstream& stream, basic_entity_ptr self);
             std::size_t registrate_struct_set(std::ofstream& stream, basic_entity_ptr self);
+            std::size_t execute_struct_meth_hpp(std::ofstream& stream, basic_entity_ptr self);
+            
 
             template<typename Iter>
             void execute_assignments_hpp(std::ofstream& stream, basic_entity_ptr self, Iter beg, Iter end, basic_entity_ptr scp = basic_entity_ptr()) {
@@ -127,7 +135,7 @@ namespace x680 {
                         execute_typeassignment_hpp(stream, self, tpas, scp);
                     valueassignment_entity_ptr vpas = (*it)->as_valueassigment();
                     if (vpas) {
-                        execute_valueassignment_hpp(stream, vpas, scp);
+                        execute_valueassignment_hpp(stream, vpas);
                     }
                 }
             }
