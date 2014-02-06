@@ -2,6 +2,7 @@
 #define ___ISO8823_PRESENTATION
 
 #include <boost/itu/asn1/asnbase.hpp>
+#include <boost/itu/x69X/x690.hpp>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -103,19 +104,19 @@ namespace ISO8823_PRESENTATION {
     typedef Presentation_selector Responding_presentation_selector;  
 
 
-        const bitstring_type User_session_requirements_half_duplex = bitstring_type(true, 0);
-        const bitstring_type User_session_requirements_duplex = bitstring_type(true, 1);
-        const bitstring_type User_session_requirements_expedited_data = bitstring_type(true, 2);
-        const bitstring_type User_session_requirements_minor_synchronize = bitstring_type(true, 3);
-        const bitstring_type User_session_requirements_major_synchronize = bitstring_type(true, 4);
-        const bitstring_type User_session_requirements_resynchronize = bitstring_type(true, 5);
-        const bitstring_type User_session_requirements_activity_management = bitstring_type(true, 6);
-        const bitstring_type User_session_requirements_negotiated_release = bitstring_type(true, 7);
-        const bitstring_type User_session_requirements_capability_data = bitstring_type(true, 8);
-        const bitstring_type User_session_requirements_exceptions = bitstring_type(true, 9);
-        const bitstring_type User_session_requirements_typed_data = bitstring_type(true, 10);
-        const bitstring_type User_session_requirements_symmetric_synchronize = bitstring_type(true, 11);
-        const bitstring_type User_session_requirements_data_separation = bitstring_type(true, 12);
+        extern const bitstring_type User_session_requirements_half_duplex;
+        extern const bitstring_type User_session_requirements_duplex;
+        extern const bitstring_type User_session_requirements_expedited_data;
+        extern const bitstring_type User_session_requirements_minor_synchronize;
+        extern const bitstring_type User_session_requirements_major_synchronize;
+        extern const bitstring_type User_session_requirements_resynchronize;
+        extern const bitstring_type User_session_requirements_activity_management;
+        extern const bitstring_type User_session_requirements_negotiated_release;
+        extern const bitstring_type User_session_requirements_capability_data;
+        extern const bitstring_type User_session_requirements_exceptions;
+        extern const bitstring_type User_session_requirements_typed_data;
+        extern const bitstring_type User_session_requirements_symmetric_synchronize;
+        extern const bitstring_type User_session_requirements_data_separation;
 
         // sequence PDV-list
         struct PDV_list{
@@ -135,45 +136,7 @@ namespace ISO8823_PRESENTATION {
                 BOOST_ASN_VALUE_CHOICE(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned);
                 BOOST_ASN_VALUE_CHOICE(arbitrary, bitstring_type, presentation_data_values_type_arbitrary);
 
-                template<typename Archive> void serialize(Archive& arch){
-                    if (arch.__input__()){
-                        int __tag_id__ =arch.test_id();
-                        switch(arch.test_class()){
-                            case 0x0: {
-                                switch(__tag_id__){
-                                default:{}
-                                }
-                            }
-                            case 0x40: {
-                                switch(__tag_id__){
-                                default:{}
-                                }
-                            }
-                            case 0x80: {
-                                switch(__tag_id__){
-                                    case 0:  { if (BOOST_ASN_EXPLICIT_TAG(value<any_type > (true , presentation_data_values_type_single_ASN1_type), 0)) return; else free(); break;}
-                                    case 1:  { if (BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (true , presentation_data_values_type_octet_aligned), 1)) return; else free(); break;}
-                                    case 2:  { if (BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (true , presentation_data_values_type_arbitrary), 2)) return; else free(); break;}
-                                default:{}
-                                }
-                            }
-                            case 0xC0: {
-                                switch(__tag_id__){
-                                default:{}
-                                }
-                            }
-                            default: {
-                            }
-                        }
-                    } else {
-                        switch(type()){
-                            case presentation_data_values_type_single_ASN1_type:  {BOOST_ASN_EXPLICIT_TAG(value<any_type > (false , presentation_data_values_type_single_ASN1_type), 0); break; }
-                            case presentation_data_values_type_octet_aligned:  {BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (false , presentation_data_values_type_octet_aligned), 1); break; }
-                            case presentation_data_values_type_arbitrary:  {BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (false , presentation_data_values_type_arbitrary), 2); break; }
-                            default:{}
-                        }
-                    }
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             }; 
  
 
@@ -186,11 +149,7 @@ namespace ISO8823_PRESENTATION {
             Presentation_context_identifier presentation_context_identifier;
             presentation_data_values_type presentation_data_values;
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_BIND_TAG(transfer_syntax_name);
-                BOOST_ASN_BIND_TAG(presentation_context_identifier);
-                BOOST_ASN_CHOICE(presentation_data_values);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // choice User-data
@@ -207,52 +166,16 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_CHOICE(simply_encoded_data, Simply_encoded_data, User_data_simply_encoded_data);
             BOOST_ASN_VALUE_CHOICE(fully_encoded_data, Fully_encoded_data, User_data_fully_encoded_data);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                                case 0:  { if (BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Simply_encoded_data > (true , User_data_simply_encoded_data), 0)) return; else free(); break;}
-                                case 1:  { if (BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Fully_encoded_data > (true , User_data_fully_encoded_data), 1)) return; else free(); break;}
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case User_data_simply_encoded_data:  {BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Simply_encoded_data > (false , User_data_simply_encoded_data), 0); break; }
-                        case User_data_fully_encoded_data:  {BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Fully_encoded_data > (false , User_data_fully_encoded_data), 1); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
 
             struct Result_list_sequence_of{
 
-                static const int provider_reason_reason_not_specified = 0;
-                static const int provider_reason_abstract_syntax_not_supported = 1;
-                static const int provider_reason_proposed_transfer_syntaxes_not_supported = 2;
-                static const int provider_reason_local_limit_on_DCS_exceeded = 3;
+                static const int provider_reason_reason_not_specified;
+                static const int provider_reason_abstract_syntax_not_supported;
+                static const int provider_reason_proposed_transfer_syntaxes_not_supported;
+                static const int provider_reason_local_limit_on_DCS_exceeded;
 
 
                 Result_list_sequence_of() : result() {} 
@@ -265,34 +188,30 @@ namespace ISO8823_PRESENTATION {
                 BOOST_ASN_VALUE_FUNC_DECLARATE(int, provider_reason)
 
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(result, 0);
-                    BOOST_ASN_IMPLICIT_TAG(transfer_syntax_name, 1);
-                    BOOST_ASN_IMPLICIT_TAG(provider_reason, 2);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
-        const int Result_acceptance = 0;
-        const int Result_user_rejection = 1;
-        const int Result_provider_rejection = 2;
+        extern const int Result_acceptance;
+        extern const int Result_user_rejection;
+        extern const int Result_provider_rejection;
 
-        const int Provider_reason_reason_not_specified = 0;
-        const int Provider_reason_temporary_congestion = 1;
-        const int Provider_reason_local_limit_exceeded = 2;
-        const int Provider_reason_called_presentation_address_unknown = 3;
-        const int Provider_reason_protocol_version_not_supported = 4;
-        const int Provider_reason_default_context_not_supported = 5;
-        const int Provider_reason_user_data_not_readable = 6;
-        const int Provider_reason_no_PSAP_available = 7;
+        extern const int Provider_reason_reason_not_specified;
+        extern const int Provider_reason_temporary_congestion;
+        extern const int Provider_reason_local_limit_exceeded;
+        extern const int Provider_reason_called_presentation_address_unknown;
+        extern const int Provider_reason_protocol_version_not_supported;
+        extern const int Provider_reason_default_context_not_supported;
+        extern const int Provider_reason_user_data_not_readable;
+        extern const int Provider_reason_no_PSAP_available;
 
-        const bitstring_type Protocol_version_version_1 = bitstring_type(true, 0);
+        extern const bitstring_type Protocol_version_version_1;
 
-        const bitstring_type Protocol_options_nominated_context = bitstring_type(true, 0);
-        const bitstring_type Protocol_options_short_encoding = bitstring_type(true, 1);
-        const bitstring_type Protocol_options_packed_encoding_rules = bitstring_type(true, 2);
+        extern const bitstring_type Protocol_options_nominated_context;
+        extern const bitstring_type Protocol_options_short_encoding;
+        extern const bitstring_type Protocol_options_packed_encoding_rules;
 
-        const bitstring_type Presentation_requirements_context_management = bitstring_type(true, 0);
-        const bitstring_type Presentation_requirements_restoration = bitstring_type(true, 1);
+        extern const bitstring_type Presentation_requirements_context_management;
+        extern const bitstring_type Presentation_requirements_restoration;
 
 
             struct Presentation_context_identifier_list_sequence_of{
@@ -303,61 +222,56 @@ namespace ISO8823_PRESENTATION {
                 Presentation_context_identifier presentation_context_identifier;
                 Transfer_syntax_name transfer_syntax_name;
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_BIND_TAG(presentation_context_identifier);
-                    BOOST_ASN_BIND_TAG(transfer_syntax_name);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
         // set Mode-selector
         struct Mode_selector{
 
-            static const int mode_value_x410_1984_mode = 0;
-            static const int mode_value_normal_mode = 1;
+            static const int mode_value_x410_1984_mode;
+            static const int mode_value_normal_mode;
 
 
             Mode_selector() : mode_value() {} 
  
             int mode_value;
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(mode_value, 0);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
-        const int Event_identifier_cp_PPDU = 0;
-        const int Event_identifier_cpa_PPDU = 1;
-        const int Event_identifier_cpr_PPDU = 2;
-        const int Event_identifier_aru_PPDU = 3;
-        const int Event_identifier_arp_PPDU = 4;
-        const int Event_identifier_ac_PPDU = 5;
-        const int Event_identifier_aca_PPDU = 6;
-        const int Event_identifier_td_PPDU = 7;
-        const int Event_identifier_ttd_PPDU = 8;
-        const int Event_identifier_te_PPDU = 9;
-        const int Event_identifier_tc_PPDU = 10;
-        const int Event_identifier_tcc_PPDU = 11;
-        const int Event_identifier_rs_PPDU = 12;
-        const int Event_identifier_rsa_PPDU = 13;
-        const int Event_identifier_s_release_indication = 14;
-        const int Event_identifier_s_release_confirm = 15;
-        const int Event_identifier_s_token_give_indication = 16;
-        const int Event_identifier_s_token_please_indication = 17;
-        const int Event_identifier_s_control_give_indication = 18;
-        const int Event_identifier_s_sync_minor_indication = 19;
-        const int Event_identifier_s_sync_minor_confirm = 20;
-        const int Event_identifier_s_sync_major_indication = 21;
-        const int Event_identifier_s_sync_major_confirm = 22;
-        const int Event_identifier_s_p_exception_report_indication = 23;
-        const int Event_identifier_s_u_exception_report_indication = 24;
-        const int Event_identifier_s_activity_start_indication = 25;
-        const int Event_identifier_s_activity_resume_indication = 26;
-        const int Event_identifier_s_activity_interrupt_indication = 27;
-        const int Event_identifier_s_activity_interrupt_confirm = 28;
-        const int Event_identifier_s_activity_discard_indication = 29;
-        const int Event_identifier_s_activity_discard_confirm = 30;
-        const int Event_identifier_s_activity_end_indication = 31;
-        const int Event_identifier_s_activity_end_confirm = 32;
+        extern const int Event_identifier_cp_PPDU;
+        extern const int Event_identifier_cpa_PPDU;
+        extern const int Event_identifier_cpr_PPDU;
+        extern const int Event_identifier_aru_PPDU;
+        extern const int Event_identifier_arp_PPDU;
+        extern const int Event_identifier_ac_PPDU;
+        extern const int Event_identifier_aca_PPDU;
+        extern const int Event_identifier_td_PPDU;
+        extern const int Event_identifier_ttd_PPDU;
+        extern const int Event_identifier_te_PPDU;
+        extern const int Event_identifier_tc_PPDU;
+        extern const int Event_identifier_tcc_PPDU;
+        extern const int Event_identifier_rs_PPDU;
+        extern const int Event_identifier_rsa_PPDU;
+        extern const int Event_identifier_s_release_indication;
+        extern const int Event_identifier_s_release_confirm;
+        extern const int Event_identifier_s_token_give_indication;
+        extern const int Event_identifier_s_token_please_indication;
+        extern const int Event_identifier_s_control_give_indication;
+        extern const int Event_identifier_s_sync_minor_indication;
+        extern const int Event_identifier_s_sync_minor_confirm;
+        extern const int Event_identifier_s_sync_major_indication;
+        extern const int Event_identifier_s_sync_major_confirm;
+        extern const int Event_identifier_s_p_exception_report_indication;
+        extern const int Event_identifier_s_u_exception_report_indication;
+        extern const int Event_identifier_s_activity_start_indication;
+        extern const int Event_identifier_s_activity_resume_indication;
+        extern const int Event_identifier_s_activity_interrupt_indication;
+        extern const int Event_identifier_s_activity_interrupt_confirm;
+        extern const int Event_identifier_s_activity_discard_indication;
+        extern const int Event_identifier_s_activity_discard_confirm;
+        extern const int Event_identifier_s_activity_end_indication;
+        extern const int Event_identifier_s_activity_end_confirm;
 
         // sequence Default-context-name
         struct Default_context_name{
@@ -368,10 +282,7 @@ namespace ISO8823_PRESENTATION {
             Abstract_syntax_name abstract_syntax_name;
             Transfer_syntax_name transfer_syntax_name;
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(abstract_syntax_name, 0);
-                BOOST_ASN_IMPLICIT_TAG(transfer_syntax_name, 1);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
 
@@ -385,20 +296,16 @@ namespace ISO8823_PRESENTATION {
                 Abstract_syntax_name abstract_syntax_name;
                 transfer_syntax_name_list_type transfer_syntax_name_list;
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_BIND_TAG(presentation_context_identifier);
-                    BOOST_ASN_BIND_TAG(abstract_syntax_name);
-                    BOOST_ASN_BIND_TAG(transfer_syntax_name_list);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
-        const int Abort_reason_reason_not_specified = 0;
-        const int Abort_reason_unrecognized_ppdu = 1;
-        const int Abort_reason_unexpected_ppdu = 2;
-        const int Abort_reason_unexpected_session_service_primitive = 3;
-        const int Abort_reason_unrecognized_ppdu_parameter = 4;
-        const int Abort_reason_unexpected_ppdu_parameter = 5;
-        const int Abort_reason_invalid_ppdu_parameter_value = 6;
+        extern const int Abort_reason_reason_not_specified;
+        extern const int Abort_reason_unrecognized_ppdu;
+        extern const int Abort_reason_unexpected_ppdu;
+        extern const int Abort_reason_unexpected_session_service_primitive;
+        extern const int Abort_reason_unrecognized_ppdu_parameter;
+        extern const int Abort_reason_unexpected_ppdu_parameter;
+        extern const int Abort_reason_invalid_ppdu_parameter_value;
 
         // sequence RSA-PPDU
         struct RSA_PPDU{
@@ -411,10 +318,7 @@ namespace ISO8823_PRESENTATION {
 
             User_data user_data;
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
-                BOOST_ASN_CHOICE(user_data);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // sequence RS-PPDU
@@ -428,10 +332,7 @@ namespace ISO8823_PRESENTATION {
 
             User_data user_data;
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
-                BOOST_ASN_CHOICE(user_data);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // sequence ACA-PPDU
@@ -448,11 +349,7 @@ namespace ISO8823_PRESENTATION {
 
             User_data user_data;
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(presentation_context_addition_result_list, 0);
-                BOOST_ASN_IMPLICIT_TAG(presentation_context_deletion_result_list, 1);
-                BOOST_ASN_CHOICE(user_data);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // sequence AC-PPDU
@@ -469,11 +366,7 @@ namespace ISO8823_PRESENTATION {
 
             User_data user_data;
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(presentation_context_addition_list, 0);
-                BOOST_ASN_IMPLICIT_TAG(presentation_context_deletion_list, 1);
-                BOOST_ASN_CHOICE(user_data);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // choice Typed-data-type
@@ -492,45 +385,7 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_CHOICE(acaPPDU, ACA_PPDU, Typed_data_type_acaPPDU);
             BOOST_ASN_VALUE_CHOICE(ttdPPDU, User_data, Typed_data_type_ttdPPDU);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                                case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<AC_PPDU > (true , Typed_data_type_acPPDU), 0)) return; else free(); break;}
-                                case 1:  { if (BOOST_ASN_IMPLICIT_TAG(value<ACA_PPDU > (true , Typed_data_type_acaPPDU), 1)) return; else free(); break;}
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                                 if (BOOST_ASN_CHOICE(value<User_data > (true , Typed_data_type_ttdPPDU))) return; else free();
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case Typed_data_type_acPPDU:  {BOOST_ASN_IMPLICIT_TAG(value<AC_PPDU > (false , Typed_data_type_acPPDU), 0); break; }
-                        case Typed_data_type_acaPPDU:  {BOOST_ASN_IMPLICIT_TAG(value<ACA_PPDU > (false , Typed_data_type_acaPPDU), 1); break; }
-                        case Typed_data_type_ttdPPDU:  {BOOST_ASN_CHOICE(value<User_data > (false , Typed_data_type_ttdPPDU)); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
         // sequence ARP-PPDU
@@ -546,10 +401,7 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_FUNC_DECLARATE(Event_identifier, event_identifier)
 
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(provider_reason, 0);
-                BOOST_ASN_IMPLICIT_TAG(event_identifier, 1);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // choice ARU-PPDU
@@ -575,11 +427,7 @@ namespace ISO8823_PRESENTATION {
                 BOOST_ASN_VALUE_FUNC_DECLARATE(any_type, userdataAB)
 
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(abortReason, 0);
-                    BOOST_ASN_IMPLICIT_TAG(reflectedParameter, 1);
-                    BOOST_ASN_EXPLICIT_TAG(userdataAB, 2);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
@@ -593,10 +441,7 @@ namespace ISO8823_PRESENTATION {
 
                 User_data user_data;
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
-                    BOOST_ASN_CHOICE(user_data);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
@@ -606,43 +451,7 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_CHOICE(x400_mode_parameters, x400_mode_parameters_type, ARU_PPDU_x400_mode_parameters);
             BOOST_ASN_VALUE_CHOICE(normal_mode_parameters, normal_mode_parameters_type, ARU_PPDU_normal_mode_parameters);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                                case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<normal_mode_parameters_type > (true , ARU_PPDU_normal_mode_parameters), 0)) return; else free(); break;}
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                                 if (BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (true , ARU_PPDU_x400_mode_parameters))) return; else free();
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case ARU_PPDU_x400_mode_parameters:  {BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (false , ARU_PPDU_x400_mode_parameters)); break; }
-                        case ARU_PPDU_normal_mode_parameters:  {BOOST_ASN_IMPLICIT_TAG(value<normal_mode_parameters_type > (false , ARU_PPDU_normal_mode_parameters), 0); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
         // choice Abort-type
@@ -659,43 +468,7 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_CHOICE(aru_ppdu, ARU_PPDU, Abort_type_aru_ppdu);
             BOOST_ASN_VALUE_CHOICE(arp_ppdu, ARP_PPDU, Abort_type_arp_ppdu);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                                 if (BOOST_ASN_CHOICE(value<ARU_PPDU > (true , Abort_type_aru_ppdu))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<ARP_PPDU > (true , Abort_type_arp_ppdu))) return; else free();
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case Abort_type_aru_ppdu:  {BOOST_ASN_CHOICE(value<ARU_PPDU > (false , Abort_type_aru_ppdu)); break; }
-                        case Abort_type_arp_ppdu:  {BOOST_ASN_BIND_TAG(value<ARP_PPDU > (false , Abort_type_arp_ppdu)); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
         // choice CPR-PPDU
@@ -718,10 +491,7 @@ namespace ISO8823_PRESENTATION {
                 BOOST_ASN_VALUE_FUNC_DECLARATE(any_type, userDataRJ)
 
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(refuseReason, 0);
-                    BOOST_ASN_EXPLICIT_TAG(userDataRJ, 1);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
@@ -747,14 +517,7 @@ namespace ISO8823_PRESENTATION {
 
                 User_data user_data;
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
-                    BOOST_ASN_IMPLICIT_TAG(responding_presentation_selector, 3);
-                    BOOST_ASN_IMPLICIT_TAG(presentation_context_definition_result_list, 5);
-                    BOOST_ASN_IMPLICIT_TAG(default_context_result, 7);
-                    BOOST_ASN_IMPLICIT_TAG(provider_reason, 10);
-                    BOOST_ASN_CHOICE(user_data);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
@@ -764,43 +527,7 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_CHOICE(x400_mode_parameters, x400_mode_parameters_type, CPR_PPDU_x400_mode_parameters);
             BOOST_ASN_VALUE_CHOICE(normal_mode_parameters, normal_mode_parameters_type, CPR_PPDU_normal_mode_parameters);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                                 if (BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (true , CPR_PPDU_x400_mode_parameters))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<normal_mode_parameters_type > (true , CPR_PPDU_normal_mode_parameters))) return; else free();
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case CPR_PPDU_x400_mode_parameters:  {BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (false , CPR_PPDU_x400_mode_parameters)); break; }
-                        case CPR_PPDU_normal_mode_parameters:  {BOOST_ASN_BIND_TAG(value<normal_mode_parameters_type > (false , CPR_PPDU_normal_mode_parameters)); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
         // set CPA-PPDU
@@ -819,11 +546,7 @@ namespace ISO8823_PRESENTATION {
 
                 Reliable_Transfer_APDU::ConnectionData connectionDataAC;
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
-                    BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
-                    BOOST_ASN_CHOICE_TAG(connectionDataAC, 2);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
@@ -855,16 +578,7 @@ namespace ISO8823_PRESENTATION {
 
                 User_data user_data;
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
-                    BOOST_ASN_IMPLICIT_TAG(responding_presentation_selector, 3);
-                    BOOST_ASN_IMPLICIT_TAG(presentation_context_definition_result_list, 5);
-                    BOOST_ASN_IMPLICIT_TAG(presentation_requirements, 8);
-                    BOOST_ASN_IMPLICIT_TAG(user_session_requirements, 9);
-                    BOOST_ASN_EXPLICIT_TAG(protocol_options, 11);
-                    BOOST_ASN_EXPLICIT_TAG(responders_nominated_context, 13);
-                    BOOST_ASN_CHOICE(user_data);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
@@ -879,11 +593,7 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_FUNC_DECLARATE(normal_mode_parameters_type, normal_mode_parameters)
 
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(mode_selector, 0);
-                BOOST_ASN_IMPLICIT_TAG(x410_mode_parameters, 1);
-                BOOST_ASN_IMPLICIT_TAG(normal_mode_parameters, 2);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // set CP-type
@@ -891,8 +601,8 @@ namespace ISO8823_PRESENTATION {
 
             struct x410_mode_parameters_type{
 
-                static const int dialogueMode_monologue = 0;
-                static const int dialogueMode_twa = 1;
+                static const int dialogueMode_monologue;
+                static const int dialogueMode_twa;
 
 
                 x410_mode_parameters_type() : connectionDataRQ() {} 
@@ -911,13 +621,7 @@ namespace ISO8823_PRESENTATION {
                 BOOST_ASN_VALUE_FUNC_DECLARATE(int, applicationProtocol)
 
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
-                    BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
-                    BOOST_ASN_IMPLICIT_TAG(dialogueMode, 2);
-                    BOOST_ASN_CHOICE_TAG(connectionDataRQ, 3);
-                    BOOST_ASN_IMPLICIT_TAG(applicationProtocol, 4);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
@@ -955,18 +659,7 @@ namespace ISO8823_PRESENTATION {
 
                 User_data user_data;
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
-                    BOOST_ASN_IMPLICIT_TAG(calling_presentation_selector, 1);
-                    BOOST_ASN_IMPLICIT_TAG(called_presentation_selector, 2);
-                    BOOST_ASN_IMPLICIT_TAG(presentation_context_definition_list, 4);
-                    BOOST_ASN_IMPLICIT_TAG(default_context_name, 6);
-                    BOOST_ASN_IMPLICIT_TAG(presentation_requirements, 8);
-                    BOOST_ASN_IMPLICIT_TAG(user_session_requirements, 9);
-                    BOOST_ASN_EXPLICIT_TAG(protocol_options, 11);
-                    BOOST_ASN_EXPLICIT_TAG(initiators_nominated_context, 12);
-                    BOOST_ASN_CHOICE(user_data);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
@@ -981,28 +674,79 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_FUNC_DECLARATE(normal_mode_parameters_type, normal_mode_parameters)
 
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(mode_selector, 0);
-                BOOST_ASN_IMPLICIT_TAG(x410_mode_parameters, 1);
-                BOOST_ASN_IMPLICIT_TAG(normal_mode_parameters, 2);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
+    template<> void CP_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CP_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CP_type::x410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CP_type::x410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CPA_PPDU::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CPA_PPDU::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CPA_PPDU::x410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CPA_PPDU::x410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CPA_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CPA_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CPR_PPDU::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CPR_PPDU::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CPR_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CPR_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CPR_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CPR_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Abort_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Abort_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ARU_PPDU::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ARU_PPDU::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ARU_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ARU_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ARU_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ARU_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ARP_PPDU::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ARP_PPDU::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Typed_data_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Typed_data_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AC_PPDU::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AC_PPDU::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ACA_PPDU::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ACA_PPDU::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void RS_PPDU::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void RS_PPDU::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void RSA_PPDU::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void RSA_PPDU::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Context_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Context_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Default_context_name::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Default_context_name::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Mode_selector::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Mode_selector::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Result_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Result_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void User_data::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void User_data::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void PDV_list::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void PDV_list::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::input_coder& arch);
 } 
 
-    BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CP_type)
-    BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CP_type::x410_mode_parameters_type)
-    BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CPA_PPDU)
-    BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CPA_PPDU::x410_mode_parameters_type)
-    BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CPR_PPDU::x400_mode_parameters_type)
-    BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::ARU_PPDU::x400_mode_parameters_type)
-    BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::Mode_selector)
+BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CP_type)
+BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CP_type::x410_mode_parameters_type)
+BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CPA_PPDU)
+BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CPA_PPDU::x410_mode_parameters_type)
+BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CPR_PPDU::x400_mode_parameters_type)
+BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::ARU_PPDU::x400_mode_parameters_type)
+BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::Mode_selector)
 
-    BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::CPR_PPDU)
-    BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::Abort_type)
-    BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::ARU_PPDU)
-    BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::Typed_data_type)
-    BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::User_data)
-    BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::PDV_list::presentation_data_values_type)
+BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::CPR_PPDU)
+BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::Abort_type)
+BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::ARU_PPDU)
+BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::Typed_data_type)
+BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::User_data)
+BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::PDV_list::presentation_data_values_type)
 
 #endif  /*___ISO8823_PRESENTATION */
+

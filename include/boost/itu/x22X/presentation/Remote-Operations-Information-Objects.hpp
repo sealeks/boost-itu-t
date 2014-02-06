@@ -2,6 +2,7 @@
 #define ___REMOTE_OPERATIONS_INFORMATION_OBJECTS
 
 #include <boost/itu/asn1/asnbase.hpp>
+#include <boost/itu/x69X/x690.hpp>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -68,48 +69,14 @@ namespace Remote_Operations_Information_Objects {
             BOOST_ASN_VALUE_CHOICE(local, int, Code_local);
             BOOST_ASN_VALUE_CHOICE(global, oid_type, Code_global);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                                 if (BOOST_ASN_BIND_TAG(value<int > (true , Code_local))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<oid_type > (true , Code_global))) return; else free();
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case Code_local:  {BOOST_ASN_BIND_TAG(value<int > (false , Code_local)); break; }
-                        case Code_global:  {BOOST_ASN_BIND_TAG(value<oid_type > (false , Code_global)); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
+    template<> void Code::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Code::serialize(boost::asn1::x690::input_coder& arch);
 } 
 
-
-    BOOST_ASN_CHOICE_REGESTRATE(Remote_Operations_Information_Objects::Code)
+BOOST_ASN_CHOICE_REGESTRATE(Remote_Operations_Information_Objects::Code)
 
 #endif  /*___REMOTE_OPERATIONS_INFORMATION_OBJECTS */
+

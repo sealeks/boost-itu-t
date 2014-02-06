@@ -2,6 +2,7 @@
 #define ___REMOTE_OPERATIONS_USEFUL_DEFINITIONS
 
 #include <boost/itu/asn1/asnbase.hpp>
+#include <boost/itu/x69X/x690.hpp>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -61,5 +62,5 @@ namespace Remote_Operations_Useful_Definitions {
 } 
 
 
-
 #endif  /*___REMOTE_OPERATIONS_USEFUL_DEFINITIONS */
+
