@@ -2,6 +2,7 @@
 #define ___ACSE_1
 
 #include <boost/itu/asn1/asnbase.hpp>
+#include <boost/itu/x69X/x690.hpp>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -113,11 +114,9 @@ namespace ACSE_1 {
     BOOST_ASN_IMPLICIT_TYPEDEF(ACRP_apdu, ACRP_apdu_impl,  7, APPLICATION_CLASS);  
 
 
-    const boost::array<boost::asn1::oidindx_type, 5> acse_as_id_OID_ARR = { 2, 2, 1, 0, 1};
-    const boost::asn1::oid_type acse_as_id  = boost::asn1::oid_type(acse_as_id_OID_ARR );
+    extern const boost::asn1::oid_type acse_as_id;
 
-    const boost::array<boost::asn1::oidindx_type, 5> aCSE_id_OID_ARR = { 2, 2, 3, 1, 1};
-    const boost::asn1::oid_type aCSE_id  = boost::asn1::oid_type(aCSE_id_OID_ARR );
+    extern const boost::asn1::oid_type aCSE_id;
 
         // choice ACSE-apdu
         enum ACSE_apdu_enum {
@@ -145,61 +144,13 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_CHOICE(acrq, ACRQ_apdu, ACSE_apdu_acrq);
             BOOST_ASN_VALUE_CHOICE(acrp, ACRP_apdu, ACSE_apdu_acrp);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                                 if (BOOST_ASN_BIND_TAG(value<AARQ_apdu > (true , ACSE_apdu_aarq))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<AARE_apdu > (true , ACSE_apdu_aare))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<RLRQ_apdu > (true , ACSE_apdu_rlrq))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<RLRE_apdu > (true , ACSE_apdu_rlre))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<ABRT_apdu > (true , ACSE_apdu_abrt))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<A_DT_apdu > (true , ACSE_apdu_adt))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<ACRQ_apdu > (true , ACSE_apdu_acrq))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<ACRP_apdu > (true , ACSE_apdu_acrp))) return; else free();
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case ACSE_apdu_aarq:  {BOOST_ASN_BIND_TAG(value<AARQ_apdu > (false , ACSE_apdu_aarq)); break; }
-                        case ACSE_apdu_aare:  {BOOST_ASN_BIND_TAG(value<AARE_apdu > (false , ACSE_apdu_aare)); break; }
-                        case ACSE_apdu_rlrq:  {BOOST_ASN_BIND_TAG(value<RLRQ_apdu > (false , ACSE_apdu_rlrq)); break; }
-                        case ACSE_apdu_rlre:  {BOOST_ASN_BIND_TAG(value<RLRE_apdu > (false , ACSE_apdu_rlre)); break; }
-                        case ACSE_apdu_abrt:  {BOOST_ASN_BIND_TAG(value<ABRT_apdu > (false , ACSE_apdu_abrt)); break; }
-                        case ACSE_apdu_adt:  {BOOST_ASN_BIND_TAG(value<A_DT_apdu > (false , ACSE_apdu_adt)); break; }
-                        case ACSE_apdu_acrq:  {BOOST_ASN_BIND_TAG(value<ACRQ_apdu > (false , ACSE_apdu_acrq)); break; }
-                        case ACSE_apdu_acrp:  {BOOST_ASN_BIND_TAG(value<ACRP_apdu > (false , ACSE_apdu_acrp)); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
         // sequence AARQ-apdu
         struct AARQ_apdu_impl{
 
-            //static const bitstring_type protocol_version_version1 = bitstring_type(true, 0);
+            static const bitstring_type protocol_version_version1;
 
 
             AARQ_apdu_impl() : aSO_context_name() {} 
@@ -260,33 +211,13 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_FUNC_DECLARATE(Association_data, user_information)
 
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
-                BOOST_ASN_EXPLICIT_TAG(aSO_context_name, 1);
-                BOOST_ASN_CHOICE_TAG(called_AP_title, 2);
-                BOOST_ASN_CHOICE_TAG(called_AE_qualifier, 3);
-                BOOST_ASN_EXPLICIT_TAG(called_AP_invocation_identifier, 4);
-                BOOST_ASN_EXPLICIT_TAG(called_AE_invocation_identifier, 5);
-                BOOST_ASN_CHOICE_TAG(calling_AP_title, 6);
-                BOOST_ASN_CHOICE_TAG(calling_AE_qualifier, 7);
-                BOOST_ASN_EXPLICIT_TAG(calling_AP_invocation_identifier, 8);
-                BOOST_ASN_EXPLICIT_TAG(calling_AE_invocation_identifier, 9);
-                BOOST_ASN_IMPLICIT_TAG(sender_acse_requirements, 10);
-                BOOST_ASN_IMPLICIT_TAG(mechanism_name, 11);
-                BOOST_ASN_CHOICE_TAG(calling_authentication_value, 12);
-                BOOST_ASN_IMPLICIT_TAG(aSO_context_name_list, 13);
-                BOOST_ASN_IMPLICIT_TAG(implementation_information, 29);
-                BOOST_ASN_CHOICE_TAG(p_context_definition_list, 14);
-                BOOST_ASN_IMPLICIT_TAG(called_asoi_tag, 15);
-                BOOST_ASN_IMPLICIT_TAG(calling_asoi_tag, 16);
-                BOOST_ASN_IMPLICIT_TAG(user_information, 30);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // sequence AARE-apdu
         struct AARE_apdu_impl{
 
-            //static const bitstring_type protocol_version_version1 = bitstring_type(true, 0);
+            static const bitstring_type protocol_version_version1;
 
 
             AARE_apdu_impl() : aSO_context_name(), result(), result_source_diagnostic() {} 
@@ -337,25 +268,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_FUNC_DECLARATE(Association_data, user_information)
 
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
-                BOOST_ASN_EXPLICIT_TAG(aSO_context_name, 1);
-                BOOST_ASN_EXPLICIT_TAG(result, 2);
-                BOOST_ASN_CHOICE_TAG(result_source_diagnostic, 3);
-                BOOST_ASN_CHOICE_TAG(responding_AP_title, 4);
-                BOOST_ASN_CHOICE_TAG(responding_AE_qualifier, 5);
-                BOOST_ASN_EXPLICIT_TAG(responding_AP_invocation_identifier, 6);
-                BOOST_ASN_EXPLICIT_TAG(responding_AE_invocation_identifier, 7);
-                BOOST_ASN_IMPLICIT_TAG(responder_acse_requirements, 8);
-                BOOST_ASN_IMPLICIT_TAG(mechanism_name, 9);
-                BOOST_ASN_CHOICE_TAG(responding_authentication_value, 10);
-                BOOST_ASN_IMPLICIT_TAG(aSO_context_name_list, 11);
-                BOOST_ASN_IMPLICIT_TAG(implementation_information, 29);
-                BOOST_ASN_IMPLICIT_TAG(p_context_result_list, 12);
-                BOOST_ASN_IMPLICIT_TAG(called_asoi_tag, 13);
-                BOOST_ASN_IMPLICIT_TAG(calling_asoi_tag, 14);
-                BOOST_ASN_IMPLICIT_TAG(user_information, 30);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // sequence RLRQ-apdu
@@ -377,12 +290,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_FUNC_DECLARATE(Association_data, user_information)
 
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(reason, 0);
-                BOOST_ASN_CHOICE_TAG(aso_qualifier, 13);
-                BOOST_ASN_IMPLICIT_TAG(asoi_identifier, 14);
-                BOOST_ASN_IMPLICIT_TAG(user_information, 30);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // sequence RLRE-apdu
@@ -404,12 +312,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_FUNC_DECLARATE(Association_data, user_information)
 
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(reason, 0);
-                BOOST_ASN_CHOICE_TAG(aso_qualifier, 13);
-                BOOST_ASN_IMPLICIT_TAG(asoi_identifier, 14);
-                BOOST_ASN_IMPLICIT_TAG(user_information, 30);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // sequence ABRT-apdu
@@ -432,13 +335,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_FUNC_DECLARATE(Association_data, user_information)
 
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_IMPLICIT_TAG(abort_source, 0);
-                BOOST_ASN_IMPLICIT_TAG(abort_diagnostic, 1);
-                BOOST_ASN_CHOICE_TAG(aso_qualifier, 13);
-                BOOST_ASN_IMPLICIT_TAG(asoi_identifier, 14);
-                BOOST_ASN_IMPLICIT_TAG(user_information, 30);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // sequence A-DT-apdu
@@ -455,11 +352,7 @@ namespace ACSE_1 {
 
             boost::asn1::value_holder<User_Data> a_user_data;
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_CHOICE_TAG(aso_qualifier, 0);
-                BOOST_ASN_IMPLICIT_TAG(asoi_identifier, 1);
-                BOOST_ASN_CHOICE_TAG(a_user_data, 30);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // sequence ACRQ-apdu
@@ -487,14 +380,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_FUNC_DECLARATE(User_information, user_information)
 
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_CHOICE_TAG(aso_qualifier, 0);
-                BOOST_ASN_IMPLICIT_TAG(asoi_identifier, 1);
-                BOOST_ASN_IMPLICIT_TAG(aSO_context_name, 3);
-                BOOST_ASN_IMPLICIT_TAG(aSO_context_name_list, 4);
-                BOOST_ASN_CHOICE_TAG(p_context_definition_list, 5);
-                BOOST_ASN_IMPLICIT_TAG(user_information, 30);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // sequence ACRP-apdu
@@ -519,29 +405,23 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_FUNC_DECLARATE(User_information, user_information)
 
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_CHOICE_TAG(aso_qualifier, 0);
-                BOOST_ASN_IMPLICIT_TAG(asoi_identifier, 1);
-                BOOST_ASN_IMPLICIT_TAG(aSO_context_name, 3);
-                BOOST_ASN_IMPLICIT_TAG(p_context_result_list, 4);
-                BOOST_ASN_IMPLICIT_TAG(user_information, 30);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
-        const int ABRT_diagnostic_no_reason_given = 1;
-        const int ABRT_diagnostic_protocol_error = 2;
-        const int ABRT_diagnostic_authentication_mechanism_name_not_recognized = 3;
-        const int ABRT_diagnostic_authentication_mechanism_name_required = 4;
-        const int ABRT_diagnostic_authentication_failure = 5;
-        const int ABRT_diagnostic_authentication_required = 6;
+        extern const int ABRT_diagnostic_no_reason_given;
+        extern const int ABRT_diagnostic_protocol_error;
+        extern const int ABRT_diagnostic_authentication_mechanism_name_not_recognized;
+        extern const int ABRT_diagnostic_authentication_mechanism_name_required;
+        extern const int ABRT_diagnostic_authentication_failure;
+        extern const int ABRT_diagnostic_authentication_required;
 
-        const int ABRT_source_acse_service_user = 0;
-        const int ABRT_source_acse_service_provider = 1;
+        extern const int ABRT_source_acse_service_user;
+        extern const int ABRT_source_acse_service_provider;
 
-        const bitstring_type ACSE_requirements_authentication = bitstring_type(true, 0);
-        const bitstring_type ACSE_requirements_aSO_context_negotiation = bitstring_type(true, 1);
-        const bitstring_type ACSE_requirements_higher_level_association = bitstring_type(true, 2);
-        const bitstring_type ACSE_requirements_nested_association = bitstring_type(true, 3);
+        extern const bitstring_type ACSE_requirements_authentication;
+        extern const bitstring_type ACSE_requirements_aSO_context_negotiation;
+        extern const bitstring_type ACSE_requirements_higher_level_association;
+        extern const bitstring_type ACSE_requirements_nested_association;
 
         // choice AP-title
         enum AP_title_enum {
@@ -559,45 +439,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_CHOICE(ap_title_form2, AP_title_form2, AP_title_ap_title_form2);
             BOOST_ASN_VALUE_CHOICE(ap_title_form3, AP_title_form3, AP_title_ap_title_form3);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                                 if (BOOST_ASN_BIND_TAG(value<AP_title_form1 > (true , AP_title_ap_title_form1))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<AP_title_form2 > (true , AP_title_ap_title_form2))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<AP_title_form3 > (true , AP_title_ap_title_form3))) return; else free();
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case AP_title_ap_title_form1:  {BOOST_ASN_BIND_TAG(value<AP_title_form1 > (false , AP_title_ap_title_form1)); break; }
-                        case AP_title_ap_title_form2:  {BOOST_ASN_BIND_TAG(value<AP_title_form2 > (false , AP_title_ap_title_form2)); break; }
-                        case AP_title_ap_title_form3:  {BOOST_ASN_BIND_TAG(value<AP_title_form3 > (false , AP_title_ap_title_form3)); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
         // choice ASO-qualifier
@@ -616,45 +458,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_CHOICE(aso_qualifier_form2, ASO_qualifier_form2, ASO_qualifier_aso_qualifier_form2);
             BOOST_ASN_VALUE_CHOICE(aso_qualifier_form3, ASO_qualifier_form3, ASO_qualifier_aso_qualifier_form3);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                                 if (BOOST_ASN_BIND_TAG(value<ASO_qualifier_form1 > (true , ASO_qualifier_aso_qualifier_form1))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<ASO_qualifier_form2 > (true , ASO_qualifier_aso_qualifier_form2))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<ASO_qualifier_form3 > (true , ASO_qualifier_aso_qualifier_form3))) return; else free();
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case ASO_qualifier_aso_qualifier_form1:  {BOOST_ASN_BIND_TAG(value<ASO_qualifier_form1 > (false , ASO_qualifier_aso_qualifier_form1)); break; }
-                        case ASO_qualifier_aso_qualifier_form2:  {BOOST_ASN_BIND_TAG(value<ASO_qualifier_form2 > (false , ASO_qualifier_aso_qualifier_form2)); break; }
-                        case ASO_qualifier_aso_qualifier_form3:  {BOOST_ASN_BIND_TAG(value<ASO_qualifier_form3 > (false , ASO_qualifier_aso_qualifier_form3)); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
         // choice AE-title
@@ -671,43 +475,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_CHOICE(ae_title_form1, AE_title_form1, AE_title_ae_title_form1);
             BOOST_ASN_VALUE_CHOICE(ae_title_form2, AE_title_form2, AE_title_ae_title_form2);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                                 if (BOOST_ASN_BIND_TAG(value<AE_title_form1 > (true , AE_title_ae_title_form1))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<AE_title_form2 > (true , AE_title_ae_title_form2))) return; else free();
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case AE_title_ae_title_form1:  {BOOST_ASN_BIND_TAG(value<AE_title_form1 > (false , AE_title_ae_title_form1)); break; }
-                        case AE_title_ae_title_form2:  {BOOST_ASN_BIND_TAG(value<AE_title_form2 > (false , AE_title_ae_title_form2)); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
 
@@ -723,10 +491,7 @@ namespace ACSE_1 {
                 BOOST_ASN_VALUE_FUNC_DECLARATE(ASOI_identifier, identifier)
 
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_CHOICE_TAG(qualifier, 0);
-                    BOOST_ASN_EXPLICIT_TAG(identifier, 1);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
         // choice Syntactic-context-list
@@ -743,43 +508,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_CHOICE(context_list, Context_list, Syntactic_context_list_context_list);
             BOOST_ASN_VALUE_CHOICE(default_contact_list, Default_Context_List, Syntactic_context_list_default_contact_list);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                                case 0:  { if (BOOST_ASN_EXPLICIT_TAG(value<Context_list > (true , Syntactic_context_list_context_list), 0)) return; else free(); break;}
-                                case 1:  { if (BOOST_ASN_EXPLICIT_TAG(value<Default_Context_List > (true , Syntactic_context_list_default_contact_list), 1)) return; else free(); break;}
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case Syntactic_context_list_context_list:  {BOOST_ASN_EXPLICIT_TAG(value<Context_list > (false , Syntactic_context_list_context_list), 0); break; }
-                        case Syntactic_context_list_default_contact_list:  {BOOST_ASN_EXPLICIT_TAG(value<Default_Context_List > (false , Syntactic_context_list_default_contact_list), 1); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
 
@@ -793,11 +522,7 @@ namespace ACSE_1 {
                 boost::asn1::value_holder<Abstract_syntax_name> abstract_syntax;
                 boost::asn1::value_holder<transfer_syntaxes_type> transfer_syntaxes;
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_BIND_TAG(pci);
-                    BOOST_ASN_BIND_TAG(abstract_syntax);
-                    BOOST_ASN_BIND_TAG(transfer_syntaxes);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
@@ -811,19 +536,16 @@ namespace ACSE_1 {
 
                 boost::asn1::value_holder<Transfer_syntax_name> transfer_syntax_name;
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(abstract_syntax_name, 0);
-                    BOOST_ASN_IMPLICIT_TAG(transfer_syntax_name, 1);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
             struct P_context_result_list_sequence_of{
 
-                static const int provider_reason_reason_not_specified = 0;
-                static const int provider_reason_abstract_syntax_not_supported = 1;
-                static const int provider_reason_proposed_transfer_syntaxes_not_supported = 2;
-                static const int provider_reason_local_limit_on_DCS_exceeded = 3;
+                static const int provider_reason_reason_not_specified;
+                static const int provider_reason_abstract_syntax_not_supported;
+                static const int provider_reason_proposed_transfer_syntaxes_not_supported;
+                static const int provider_reason_local_limit_on_DCS_exceeded;
 
 
                 P_context_result_list_sequence_of() : result() {} 
@@ -836,20 +558,16 @@ namespace ACSE_1 {
                 BOOST_ASN_VALUE_FUNC_DECLARATE(int, provider_reason)
 
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_IMPLICIT_TAG(result, 0);
-                    BOOST_ASN_IMPLICIT_TAG(concrete_syntax_name, 1);
-                    BOOST_ASN_IMPLICIT_TAG(provider_reason, 2);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
-        const int Result_acceptance = 0;
-        const int Result_user_rejection = 1;
-        const int Result_provider_rejection = 2;
+        extern const int Result_acceptance;
+        extern const int Result_user_rejection;
+        extern const int Result_provider_rejection;
 
-        const int Associate_result_accepted = 0;
-        const int Associate_result_rejected_permanent = 1;
-        const int Associate_result_rejected_transient = 2;
+        extern const int Associate_result_accepted;
+        extern const int Associate_result_rejected_permanent;
+        extern const int Associate_result_rejected_transient;
 
         // choice Associate-source-diagnostic
         enum Associate_source_diagnostic_enum {
@@ -859,25 +577,25 @@ namespace ACSE_1 {
  
         struct Associate_source_diagnostic : public BOOST_ASN_CHOICE_STRUCT(Associate_source_diagnostic_enum) {
 
-            static const int acse_service_user_null = 0;
-            static const int acse_service_user_no_reason_given = 1;
-            static const int acse_service_user_application_context_name_not_supported = 2;
-            static const int acse_service_user_calling_AP_title_not_recognized = 3;
-            static const int acse_service_user_calling_AP_invocation_identifier_not_recognized = 4;
-            static const int acse_service_user_calling_AE_qualifier_not_recognized = 5;
-            static const int acse_service_user_calling_AE_invocation_identifier_not_recognized = 6;
-            static const int acse_service_user_called_AP_title_not_recognized = 7;
-            static const int acse_service_user_called_AP_invocation_identifier_not_recognized = 8;
-            static const int acse_service_user_called_AE_qualifier_not_recognized = 9;
-            static const int acse_service_user_called_AE_invocation_identifier_not_recognized = 10;
-            static const int acse_service_user_authentication_mechanism_name_not_recognized = 11;
-            static const int acse_service_user_authentication_mechanism_name_required = 12;
-            static const int acse_service_user_authentication_failure = 13;
-            static const int acse_service_user_authentication_required = 14;
+            static const int acse_service_user_null;
+            static const int acse_service_user_no_reason_given;
+            static const int acse_service_user_application_context_name_not_supported;
+            static const int acse_service_user_calling_AP_title_not_recognized;
+            static const int acse_service_user_calling_AP_invocation_identifier_not_recognized;
+            static const int acse_service_user_calling_AE_qualifier_not_recognized;
+            static const int acse_service_user_calling_AE_invocation_identifier_not_recognized;
+            static const int acse_service_user_called_AP_title_not_recognized;
+            static const int acse_service_user_called_AP_invocation_identifier_not_recognized;
+            static const int acse_service_user_called_AE_qualifier_not_recognized;
+            static const int acse_service_user_called_AE_invocation_identifier_not_recognized;
+            static const int acse_service_user_authentication_mechanism_name_not_recognized;
+            static const int acse_service_user_authentication_mechanism_name_required;
+            static const int acse_service_user_authentication_failure;
+            static const int acse_service_user_authentication_required;
 
-            static const int acse_service_provider_null = 0;
-            static const int acse_service_provider_no_reason_given = 1;
-            static const int acse_service_provider_no_common_acse_version = 2;
+            static const int acse_service_provider_null;
+            static const int acse_service_provider_no_reason_given;
+            static const int acse_service_provider_no_common_acse_version;
 
 
             Associate_source_diagnostic() :  BOOST_ASN_CHOICE_STRUCT(Associate_source_diagnostic_enum) () {}
@@ -885,43 +603,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_CHOICE(acse_service_user, int, Associate_source_diagnostic_acse_service_user);
             BOOST_ASN_VALUE_CHOICE(acse_service_provider, int, Associate_source_diagnostic_acse_service_provider);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                                case 1:  { if (BOOST_ASN_EXPLICIT_TAG(value<int > (true , Associate_source_diagnostic_acse_service_user), 1)) return; else free(); break;}
-                                case 2:  { if (BOOST_ASN_EXPLICIT_TAG(value<int > (true , Associate_source_diagnostic_acse_service_provider), 2)) return; else free(); break;}
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case Associate_source_diagnostic_acse_service_user:  {BOOST_ASN_EXPLICIT_TAG(value<int > (false , Associate_source_diagnostic_acse_service_user), 1); break; }
-                        case Associate_source_diagnostic_acse_service_provider:  {BOOST_ASN_EXPLICIT_TAG(value<int > (false , Associate_source_diagnostic_acse_service_provider), 2); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
         // choice User-Data
@@ -940,45 +622,7 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_CHOICE(simply_encoded_data, Simply_encoded_data, User_Data_simply_encoded_data);
             BOOST_ASN_VALUE_CHOICE(fully_encoded_data, PDV_list, User_Data_fully_encoded_data);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                                case 0:  { if (BOOST_ASN_EXPLICIT_TAG(value<PDV_list > (true , User_Data_fully_encoded_data), 0)) return; else free(); break;}
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                                 if (BOOST_ASN_BIND_TAG(value<User_information > (true , User_Data_user_information))) return; else free();
-                                 if (BOOST_ASN_BIND_TAG(value<Simply_encoded_data > (true , User_Data_simply_encoded_data))) return; else free();
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case User_Data_user_information:  {BOOST_ASN_BIND_TAG(value<User_information > (false , User_Data_user_information)); break; }
-                        case User_Data_simply_encoded_data:  {BOOST_ASN_BIND_TAG(value<Simply_encoded_data > (false , User_Data_simply_encoded_data)); break; }
-                        case User_Data_fully_encoded_data:  {BOOST_ASN_EXPLICIT_TAG(value<PDV_list > (false , User_Data_fully_encoded_data), 0); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
         // sequence PDV-list
@@ -999,45 +643,7 @@ namespace ACSE_1 {
                 BOOST_ASN_VALUE_CHOICE(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned);
                 BOOST_ASN_VALUE_CHOICE(arbitrary, bitstring_type, presentation_data_values_type_arbitrary);
 
-                template<typename Archive> void serialize(Archive& arch){
-                    if (arch.__input__()){
-                        int __tag_id__ =arch.test_id();
-                        switch(arch.test_class()){
-                            case 0x0: {
-                                switch(__tag_id__){
-                                default:{}
-                                }
-                            }
-                            case 0x40: {
-                                switch(__tag_id__){
-                                default:{}
-                                }
-                            }
-                            case 0x80: {
-                                switch(__tag_id__){
-                                    case 0:  { if (BOOST_ASN_EXPLICIT_TAG(value<any_type > (true , presentation_data_values_type_simple_ASN1_type), 0)) return; else free(); break;}
-                                    case 1:  { if (BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (true , presentation_data_values_type_octet_aligned), 1)) return; else free(); break;}
-                                    case 2:  { if (BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (true , presentation_data_values_type_arbitrary), 2)) return; else free(); break;}
-                                default:{}
-                                }
-                            }
-                            case 0xC0: {
-                                switch(__tag_id__){
-                                default:{}
-                                }
-                            }
-                            default: {
-                            }
-                        }
-                    } else {
-                        switch(type()){
-                            case presentation_data_values_type_simple_ASN1_type:  {BOOST_ASN_EXPLICIT_TAG(value<any_type > (false , presentation_data_values_type_simple_ASN1_type), 0); break; }
-                            case presentation_data_values_type_octet_aligned:  {BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (false , presentation_data_values_type_octet_aligned), 1); break; }
-                            case presentation_data_values_type_arbitrary:  {BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (false , presentation_data_values_type_arbitrary), 2); break; }
-                            default:{}
-                        }
-                    }
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             }; 
  
 
@@ -1050,11 +656,7 @@ namespace ACSE_1 {
             boost::asn1::value_holder<Presentation_context_identifier> presentation_context_identifier;
             boost::asn1::value_holder<presentation_data_values_type> presentation_data_values;
 
-            template<typename Archive> void serialize(Archive& arch){
-                BOOST_ASN_BIND_TAG(transfer_syntax_name);
-                BOOST_ASN_BIND_TAG(presentation_context_identifier);
-                BOOST_ASN_CHOICE(presentation_data_values);
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         };
  
         // choice Authentication-value
@@ -1075,10 +677,7 @@ namespace ACSE_1 {
                 boost::asn1::value_holder<any_type> other_mechanism_name;
                 boost::asn1::value_holder<any_type> other_mechanism_value;
 
-                template<typename Archive> void serialize(Archive& arch){
-                    BOOST_ASN_BIND_TAG(other_mechanism_name);
-                    BOOST_ASN_BIND_TAG(other_mechanism_value);
-                }
+                BOOST_ASN_ARCHIVE_FUNC;
             };
  
 
@@ -1090,68 +689,74 @@ namespace ACSE_1 {
             BOOST_ASN_VALUE_CHOICE(external, external_type, Authentication_value_external);
             BOOST_ASN_VALUE_CHOICE(other, other_type, Authentication_value_other);
 
-            template<typename Archive> void serialize(Archive& arch){
-                if (arch.__input__()){
-                    int __tag_id__ =arch.test_id();
-                    switch(arch.test_class()){
-                        case 0x0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x40: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        case 0x80: {
-                            switch(__tag_id__){
-                                case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<graphicstring_type > (true , Authentication_value_charstring), 0)) return; else free(); break;}
-                                case 1:  { if (BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (true , Authentication_value_bitstring), 1)) return; else free(); break;}
-                                case 2:  { if (BOOST_ASN_IMPLICIT_TAG(value<external_type > (true , Authentication_value_external), 2)) return; else free(); break;}
-                                case 3:  { if (BOOST_ASN_IMPLICIT_TAG(value<other_type > (true , Authentication_value_other), 3)) return; else free(); break;}
-                            default:{}
-                            }
-                        }
-                        case 0xC0: {
-                            switch(__tag_id__){
-                            default:{}
-                            }
-                        }
-                        default: {
-                        }
-                    }
-                } else {
-                    switch(type()){
-                        case Authentication_value_charstring:  {BOOST_ASN_IMPLICIT_TAG(value<graphicstring_type > (false , Authentication_value_charstring), 0); break; }
-                        case Authentication_value_bitstring:  {BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (false , Authentication_value_bitstring), 1); break; }
-                        case Authentication_value_external:  {BOOST_ASN_IMPLICIT_TAG(value<external_type > (false , Authentication_value_external), 2); break; }
-                        case Authentication_value_other:  {BOOST_ASN_IMPLICIT_TAG(value<other_type > (false , Authentication_value_other), 3); break; }
-                        default:{}
-                    }
-                }
-            }
+            BOOST_ASN_ARCHIVE_FUNC;
         }; 
  
-        const int Release_request_reason_normal = 0;
-        const int Release_request_reason_urgent = 1;
-        const int Release_request_reason_user_defined = 30;
+        extern const int Release_request_reason_normal;
+        extern const int Release_request_reason_urgent;
+        extern const int Release_request_reason_user_defined;
 
-        const int Release_response_reason_normal = 0;
-        const int Release_response_reason_not_finished = 1;
-        const int Release_response_reason_user_defined = 30;
+        extern const int Release_response_reason_normal;
+        extern const int Release_response_reason_not_finished;
+        extern const int Release_response_reason_user_defined;
 
+    template<> void ACSE_apdu::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ACSE_apdu::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AARQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AARQ_apdu_impl::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AARE_apdu_impl::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AARE_apdu_impl::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void RLRQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void RLRQ_apdu_impl::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void RLRE_apdu_impl::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void RLRE_apdu_impl::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ABRT_apdu_impl::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ABRT_apdu_impl::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void A_DT_apdu_impl::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void A_DT_apdu_impl::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ACRQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ACRQ_apdu_impl::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ACRP_apdu_impl::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ACRP_apdu_impl::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AP_title::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AP_title::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ASO_qualifier::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ASO_qualifier::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AE_title::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AE_title::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ASOI_tag_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ASOI_tag_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Syntactic_context_list::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Syntactic_context_list::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Context_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Context_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Default_Context_List_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Default_Context_List_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void P_context_result_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void P_context_result_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Associate_source_diagnostic::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Associate_source_diagnostic::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void User_Data::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void User_Data::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void PDV_list::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void PDV_list::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Authentication_value::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Authentication_value::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Authentication_value::other_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Authentication_value::other_type::serialize(boost::asn1::x690::input_coder& arch);
 } 
 
-
-    BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::ACSE_apdu)
-    BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::AP_title)
-    BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::ASO_qualifier)
-    BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::AE_title)
-    BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::Syntactic_context_list)
-    BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::Associate_source_diagnostic)
-    BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::User_Data)
-    BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::PDV_list::presentation_data_values_type)
-    BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::Authentication_value)
+BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::ACSE_apdu)
+BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::AP_title)
+BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::ASO_qualifier)
+BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::AE_title)
+BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::Syntactic_context_list)
+BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::Associate_source_diagnostic)
+BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::User_Data)
+BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::PDV_list::presentation_data_values_type)
+BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::Authentication_value)
 
 #endif  /*___ACSE_1 */
+

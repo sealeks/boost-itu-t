@@ -1,0 +1,141 @@
+--This module definition is trimmed for required definition of ACSE-1
+--Objective Systems Inc, www.obj-sys.com
+--itu-t (X.501:08/1997)
+InformationFramework {joint-iso-itu-t ds(5) module(1) informationFramework(1) 
+  3} DEFINITIONS ::=
+BEGIN
+
+IMPORTS
+  id-at, id-mr
+    FROM UsefulDefinitions {joint-iso-itu-t ds(5) module(1)
+      usefulDefinitions(0) 3}
+;
+
+-- naming data types 
+Name ::= CHOICE { -- only one possibility for now --rdnSequence  RDNSequence
+}
+
+DistinguishedName ::= RDNSequence
+
+RDNSequence ::= SEQUENCE OF RelativeDistinguishedName
+
+RelativeDistinguishedName ::=
+  SET SIZE (1..MAX) OF AttributeTypeAndDistinguishedValue
+
+AttributeTypeAndDistinguishedValue ::= SEQUENCE {
+  type                  ATTRIBUTE.&id({SupportedAttributes}),
+  value                 ATTRIBUTE.&Type({SupportedAttributes}{@type}),
+  primaryDistinguished  BOOLEAN DEFAULT TRUE,
+  valuesWithContext
+    SET SIZE (1..MAX) OF
+      SEQUENCE {distingAttrValue
+                  [0]  ATTRIBUTE.&Type({SupportedAttributes}{@type}) OPTIONAL,
+                contextList       SET SIZE (1..MAX) OF Context} OPTIONAL
+}
+
+Context ::= SEQUENCE {
+  contextType    CONTEXT.&id({SupportedContexts}),
+  contextValues
+    SET SIZE (1..MAX) OF CONTEXT.&Type({SupportedContexts}{@contextType}),
+  fallback       BOOLEAN DEFAULT FALSE
+}
+
+
+-- ATTRIBUTE information object class specification 
+ATTRIBUTE ::= CLASS {
+  &derivation            ATTRIBUTE OPTIONAL,
+  &Type                  OPTIONAL, -- either &Type or &derivation required 
+  &equality-match        MATCHING-RULE OPTIONAL,
+  &ordering-match        MATCHING-RULE OPTIONAL,
+  &substrings-match      MATCHING-RULE OPTIONAL,
+  &single-valued         BOOLEAN DEFAULT FALSE,
+  &collective            BOOLEAN DEFAULT FALSE,
+  -- operational extensions 
+  &no-user-modification  BOOLEAN DEFAULT FALSE,
+  &usage                 AttributeUsage DEFAULT userApplications,
+  &id                    OBJECT IDENTIFIER UNIQUE
+}
+WITH SYNTAX {
+  [SUBTYPE OF &derivation]
+  [WITH SYNTAX &Type]
+  [EQUALITY MATCHING RULE &equality-match]
+  [ORDERING MATCHING RULE &ordering-match]
+  [SUBSTRINGS MATCHING RULE &substrings-match]
+  [SINGLE VALUE &single-valued]
+  [COLLECTIVE &collective]
+  [NO USER MODIFICATION &no-user-modification]
+  [USAGE &usage]
+  ID &id
+}
+
+MATCHING-RULE ::= CLASS {
+  &ParentMatchingRules   OBJECT IDENTIFIER OPTIONAL,
+  &AssertionType         OPTIONAL,
+  &uniqueMatchIndicator  OBJECT IDENTIFIER OPTIONAL,
+  &id                    OBJECT IDENTIFIER UNIQUE
+}
+WITH SYNTAX {
+  [PARENT &ParentMatchingRules]
+  [SYNTAX &AssertionType]
+  [UNIQUE-MATCH-INDICATOR &uniqueMatchIndicator]
+  ID &id
+}
+
+AttributeUsage ::= ENUMERATED {
+  userApplications(0), directoryOperation(1), distributedOperation(2),
+  dSAOperation(3)}
+
+CONTEXT ::= CLASS {
+  &Type       ,
+  &Assertion  OPTIONAL,
+  &id         OBJECT IDENTIFIER UNIQUE
+}WITH SYNTAX {WITH SYNTAX &Type
+              [ASSERTED AS &Assertion]
+              ID &id
+}
+
+-- Definition of the following information object set is deferred, perhaps to standardized
+-- profiles or to protocol implementation conformance statements. The set is required to
+-- specify a table constraint on the values component of Attribute, the value component 
+-- of AttributeTypeAndValue, and the assertion component of AttributeValueAssertion.
+SupportedAttributes ATTRIBUTE ::=
+  {objectClass | aliasedEntryName, ...}
+
+-- attributes 
+objectClass ATTRIBUTE ::= {
+  WITH SYNTAX             OBJECT IDENTIFIER
+  EQUALITY MATCHING RULE  objectIdentifierMatch
+  ID                      id-at-objectClass
+}
+
+aliasedEntryName ATTRIBUTE ::= {
+  WITH SYNTAX             DistinguishedName
+  EQUALITY MATCHING RULE  distinguishedNameMatch
+  SINGLE VALUE            TRUE
+  ID                      id-at-aliasedEntryName
+}
+
+distinguishedNameMatch MATCHING-RULE ::= {
+  SYNTAX  DistinguishedName
+  ID      id-mr-distinguishedNameMatch
+}
+
+id-mr-distinguishedNameMatch OBJECT IDENTIFIER ::= {id-mr 1}
+id-mr-objectIdentifierMatch OBJECT IDENTIFIER ::= {id-mr 0}
+id-at-objectClass OBJECT IDENTIFIER ::= {id-at 0}
+id-at-aliasedEntryName OBJECT IDENTIFIER ::= {id-at 1}
+
+
+objectIdentifierMatch MATCHING-RULE ::= {
+  SYNTAX  OBJECT IDENTIFIER
+  ID      id-mr-objectIdentifierMatch
+}
+
+-- Definition of the following information object set is deferred, perhaps to standardized
+-- profiles or to protocol implementation conformance statements. The set is required to
+-- specify a table constraint on the context specifications
+SupportedContexts CONTEXT ::=
+  {...}
+
+
+END
