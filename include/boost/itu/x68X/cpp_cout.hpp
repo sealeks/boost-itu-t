@@ -64,6 +64,7 @@ namespace x680 {
             void execute_typedef_seqof(declare_vect& vct, basic_entity_ptr self);
             bool execute_typedef_seqof_impl(declare_vect& vct,  typeassignment_entity_ptr self);     
             void execute_typedef(std::ofstream& stream, const declare_vect& vct, bool remote =false,  basic_entity_ptr scp =  basic_entity_ptr());
+            void execute_typedef_native(std::ofstream& stream, basic_entity_ptr self, bool global = true, basic_entity_ptr scp =  basic_entity_ptr());
             
             void headerlock(std::ofstream& stream, std::string name);
             void bottomlock(std::ofstream& stream, std::string name);
@@ -80,9 +81,7 @@ namespace x680 {
             void execute_imports(std::ofstream& stream, module_entity_ptr self);
 
             void execute_struct_predeclare(std::ofstream& stream, basic_entity_ptr self);
-            void execute_typedef_native(std::ofstream& stream, basic_entity_ptr self, bool tagged);
-            void execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self, bool tagged);            
-            void execute_typedef_struct(std::ofstream& stream, basic_entity_ptr self);
+            void execute_typedef_simple_native(std::ofstream& stream, basic_entity_ptr self, bool tagged);
             void execute_typedef_decl_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
             void execute_typedef_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr(), bool endl = true);
             void execute_typedef_seqof_native(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp);

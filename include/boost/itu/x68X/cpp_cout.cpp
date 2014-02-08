@@ -510,11 +510,7 @@ namespace x680 {
             execute_struct_predeclare(stream, self);
             execute_typedef_decl_seqof(stream, self, self);
 
-
-            // expl X ::= INTEGER or X = [1] INEGER
-            execute_typedef_native(stream, self, false);
             execute_typedef_native(stream, self, true);
-            execute_typedef_seqof_native(stream, self, self);
 
             declare_vect vct;
             loaddecl(vct, self);
@@ -654,6 +650,16 @@ namespace x680 {
                 stream << "\n";
         }
 
+        void fileout::execute_typedef_native(std::ofstream& stream, basic_entity_ptr self, bool global, basic_entity_ptr scp) {
+            // expl X ::= INTEGER or X = [1] INEGER
+            if (global) {
+                execute_typedef_simple_native(stream, self, false);
+                execute_typedef_simple_native(stream, self, true);
+            }
+            execute_typedef_seqof_native(stream, self, scp);
+        }
+        
+
         void fileout::headerlock(std::ofstream& stream, std::string name) {
             name = nameconvert(name);
             boost::algorithm::to_upper(name);
@@ -731,7 +737,7 @@ namespace x680 {
                 stream << "\n";
         }
 
-        void fileout::execute_typedef_native(std::ofstream& stream, basic_entity_ptr self, bool tagged) {
+        void fileout::execute_typedef_simple_native(std::ofstream& stream, basic_entity_ptr self, bool tagged) {
             std::size_t cnt = 0;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
@@ -757,52 +763,7 @@ namespace x680 {
                 stream << "\n";
         }
 
-        void fileout::execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self, bool tagged) {
-            std::size_t cnt = 0;
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if (tpas && (tpas->type()) && (tpas->is_cpp_expressed())) {
-                    if (tpas->type()->isrefferrence()) {
-                        if (!tagged && (!tpas->type()->tag())) {
-                            stream << tabformat() << "typedef ";
-                            stream << fromtype_str(tpas) << " " << type_str(tpas);
-                            stream << "; " << " \n";
-                            cnt++;
-                        } else if (tagged && (tpas->type()->tag())) {
-                            stream << tabformat() << "BOOST_ASN_";
-                            stream << (tpas->type()->tag()->rule() == explicit_tags ? "EXPLICIT_TYPEDEF(" : "IMPLICIT_TYPEDEF(");
-                            stream << type_str(tpas) << ", " << fromtype_str(tpas) << ",  ";
-                            stream << tagged_str(tpas->type()->tag()) << ", " << tagged_class_str(tpas->type()->tag());
-                            stream << "); " << " \n";
-                            cnt++;
-                        }
-                    }
-                }
-            }
-            if (cnt)
-                stream << "\n";
-        }
 
-        void fileout::execute_typedef_struct(std::ofstream& stream, basic_entity_ptr self) {
-            std::size_t cnt = 0;
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if (tpas && (tpas->type()) && (tpas->is_cpp_expressed())) {
-                    if (tpas->type()->isstructure()) {
-                        if ((tpas->type()->tag())) {
-                            stream << tabformat() << "BOOST_ASN_";
-                            stream << (tpas->type()->tag()->rule() == explicit_tags ? "EXPLICIT_TYPEDEF(" : "IMPLICIT_TYPEDEF(");
-                            stream << type_str(tpas, true) << ", " << type_str(tpas) << ",  ";
-                            stream << tagged_str(tpas->type()->tag()) << ", " << tagged_class_str(tpas->type()->tag());
-                            stream << "); " << " \n";
-                            cnt++;
-                        }
-                    }
-                }
-            }
-            if (cnt)
-                stream << "\n";
-        }
 
         void fileout::execute_typedef_decl_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp) {
             scp = scp ? scp : self;
