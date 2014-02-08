@@ -138,7 +138,7 @@ namespace boost {\
                 void var  ## __assign ( type * vl ) { var  =  boost::shared_ptr< type >(vl)  ;} \
                 /*void var  ## __assign ( const type & vl ) { var  =  boost::shared_ptr< type >( new type (vl)) ;}*/
 
-
+#define BOOST_ASN_ARCHIVE_FUNC    template<typename Archive> void serialize(Archive& arch){};
 
 
 
