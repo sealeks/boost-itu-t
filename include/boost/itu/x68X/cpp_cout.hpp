@@ -14,14 +14,22 @@
 namespace x680 {
 
     namespace cpp {
+        
+        struct declare_atom;
+        typedef std::vector<declare_atom> declare_vect;
 
 
         bool dir_exists(const std::string& path);
         bool dir_create(const std::string& path, const std::string& outdir);
 
+        std::string correct_name(std::string vl);
         std::string type_str(typeassignment_entity_ptr self, bool native = false);
         std::string fulltype_str(basic_entity_ptr self, bool withns = false);
         std::string fromtype_str(typeassignment_entity_ptr self);
+        bool fromtype_remote(typeassignment_entity_ptr self);
+        declare_vect::iterator find_remote_reff(declare_vect& vct, const std::string& nm, declare_vect::iterator from);   
+        void resolve_remote_reff(declare_vect& vct);
+        bool sort_reff(declare_vect& vct);
         std::string fromtype_str(type_atom_ptr self);
         value_atom_ptr value_skip_defined(value_atom_ptr self);
         std::string value_int_str(value_atom_ptr self);
@@ -50,7 +58,13 @@ namespace x680 {
         private:
 
             void execute_module(module_entity_ptr self);
-
+            
+            void loaddecl(declare_vect& vct, basic_entity_ptr self);
+            void execute_typedef_reff(declare_vect& vct, basic_entity_ptr self);
+            void execute_typedef_seqof(declare_vect& vct, basic_entity_ptr self);
+            bool execute_typedef_seqof_impl(declare_vect& vct,  typeassignment_entity_ptr self);     
+            void execute_typedef(std::ofstream& stream, const declare_vect& vct, bool remote =false,  basic_entity_ptr scp =  basic_entity_ptr());
+            
             void headerlock(std::ofstream& stream, std::string name);
             void bottomlock(std::ofstream& stream, std::string name);
 
@@ -66,12 +80,15 @@ namespace x680 {
             void execute_imports(std::ofstream& stream, module_entity_ptr self);
 
             void execute_struct_predeclare(std::ofstream& stream, basic_entity_ptr self);
-            void execute_typedef_simple(std::ofstream& stream, basic_entity_ptr self, bool tagged);
-            void execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self, bool tagged);
+            void execute_typedef_native(std::ofstream& stream, basic_entity_ptr self, bool tagged);
+            void execute_typedef_reff(std::ofstream& stream, basic_entity_ptr self, bool tagged);            
             void execute_typedef_struct(std::ofstream& stream, basic_entity_ptr self);
             void execute_typedef_decl_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
             void execute_typedef_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr(), bool endl = true);
+            void execute_typedef_seqof_native(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp);
+            bool execute_typedef_seqof_native_impl(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp =  basic_entity_ptr());
             
+    
             void execute_typeassignment_hpp(std::ofstream& stream, basic_entity_ptr self, typeassignment_entity_ptr tpas, basic_entity_ptr scp = basic_entity_ptr());
             void execute_typeassignment_cpp(std::ofstream& stream, typeassignment_entity_ptr tpas);
 
