@@ -16,125 +16,196 @@ namespace ISO8823_PRESENTATION {
     const bitstring_type User_session_requirements_symmetric_synchronize = bitstring_type(true, 11);
     const bitstring_type User_session_requirements_data_separation = bitstring_type(true, 12);
 
-        // sequence PDV-list
+    // sequence PDV-list
 
-
-    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch){
-        switch(type()){
-                case presentation_data_values_type_single_ASN1_type:  {BOOST_ASN_EXPLICIT_TAG(value<any_type > (false , presentation_data_values_type_single_ASN1_type), 0); break; }
-                case presentation_data_values_type_octet_aligned:  {BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (false , presentation_data_values_type_octet_aligned), 1); break; }
-                case presentation_data_values_type_arbitrary:  {BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (false , presentation_data_values_type_arbitrary), 2); break; }
-                default:{}
+    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case presentation_data_values_type_single_ASN1_type:
+            {
+                BOOST_ASN_EXPLICIT_TAG(value<any_type > (false, presentation_data_values_type_single_ASN1_type), 0);
+                break;
+            }
+            case presentation_data_values_type_octet_aligned:
+            {
+                BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (false, presentation_data_values_type_octet_aligned), 1);
+                break;
+            }
+            case presentation_data_values_type_arbitrary:
+            {
+                BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (false, presentation_data_values_type_arbitrary), 2);
+                break;
+            }
+            default:
+            {
+            }
         }
     }
 
-    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::input_coder& arch){
-        int __tag_id__ =arch.test_id();
-        switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x80: {
-                    switch(__tag_id__){
-                        case 0:  { if (BOOST_ASN_EXPLICIT_TAG(value<any_type > (true , presentation_data_values_type_single_ASN1_type), 0)) return; else free(); break;}
-                        case 1:  { if (BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (true , presentation_data_values_type_octet_aligned), 1)) return; else free(); break;}
-                        case 2:  { if (BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (true , presentation_data_values_type_arbitrary), 2)) return; else free(); break;}
-                    default:{}
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    case 0:
+                    {
+                        if (BOOST_ASN_EXPLICIT_TAG(value<any_type > (true, presentation_data_values_type_single_ASN1_type), 0)) return;
+                        else free();
+                        break;
+                    }
+                    case 1:
+                    {
+                        if (BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (true, presentation_data_values_type_octet_aligned), 1)) return;
+                        else free();
+                        break;
+                    }
+                    case 2:
+                    {
+                        if (BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (true, presentation_data_values_type_arbitrary), 2)) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
                     }
                 }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                default: {
-                }
+            }
+            default:
+            {
+            }
         }
     }
 
- 
-
-    template<> void PDV_list::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void PDV_list::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_BIND_TAG(transfer_syntax_name);
         BOOST_ASN_BIND_TAG(presentation_context_identifier);
         BOOST_ASN_CHOICE(presentation_data_values);
     }
 
-    template<> void PDV_list::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void PDV_list::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_BIND_TAG(transfer_syntax_name);
         BOOST_ASN_BIND_TAG(presentation_context_identifier);
         BOOST_ASN_CHOICE(presentation_data_values);
     }
 
- 
-        // choice User-data
 
-    template<> void User_data::serialize(boost::asn1::x690::output_coder& arch){
-        switch(type()){
-                case User_data_simply_encoded_data:  {BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Simply_encoded_data > (false , User_data_simply_encoded_data), 0); break; }
-                case User_data_fully_encoded_data:  {BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Fully_encoded_data > (false , User_data_fully_encoded_data), 1); break; }
-                default:{}
+    // choice User-data
+
+    template<> void User_data::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case User_data_simply_encoded_data:
+            {
+                BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Simply_encoded_data > (false, User_data_simply_encoded_data), 0);
+                break;
+            }
+            case User_data_fully_encoded_data:
+            {
+                BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Fully_encoded_data > (false, User_data_fully_encoded_data), 1);
+                break;
+            }
+            default:
+            {
+            }
         }
     }
 
-    template<> void User_data::serialize(boost::asn1::x690::input_coder& arch){
-        int __tag_id__ =arch.test_id();
-        switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void User_data::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x40: {
-                    switch(__tag_id__){
-                        case 0:  { if (BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Simply_encoded_data > (true , User_data_simply_encoded_data), 0)) return; else free(); break;}
-                        case 1:  { if (BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Fully_encoded_data > (true , User_data_fully_encoded_data), 1)) return; else free(); break;}
-                    default:{}
+            }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    case 0:
+                    {
+                        if (BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Simply_encoded_data > (true, User_data_simply_encoded_data), 0)) return;
+                        else free();
+                        break;
+                    }
+                    case 1:
+                    {
+                        if (BOOST_ASN_IMPLICIT_APPLICATION_TAG(value<Fully_encoded_data > (true, User_data_fully_encoded_data), 1)) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
                     }
                 }
-                case 0x80: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                default: {
-                }
+            }
+            default:
+            {
+            }
         }
     }
 
- 
+
 
     const int Result_list_sequence_of::provider_reason_reason_not_specified = 0;
     const int Result_list_sequence_of::provider_reason_abstract_syntax_not_supported = 1;
     const int Result_list_sequence_of::provider_reason_proposed_transfer_syntaxes_not_supported = 2;
     const int Result_list_sequence_of::provider_reason_local_limit_on_DCS_exceeded = 3;
 
-
-    template<> void Result_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void Result_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(result, 0);
         BOOST_ASN_IMPLICIT_TAG(transfer_syntax_name, 1);
         BOOST_ASN_IMPLICIT_TAG(provider_reason, 2);
     }
 
-    template<> void Result_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void Result_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(result, 0);
         BOOST_ASN_IMPLICIT_TAG(transfer_syntax_name, 1);
         BOOST_ASN_IMPLICIT_TAG(provider_reason, 2);
     }
 
- 
+
     const int Result_acceptance = 0;
     const int Result_user_rejection = 1;
     const int Result_provider_rejection = 2;
@@ -157,33 +228,30 @@ namespace ISO8823_PRESENTATION {
     const bitstring_type Presentation_requirements_context_management = bitstring_type(true, 0);
     const bitstring_type Presentation_requirements_restoration = bitstring_type(true, 1);
 
-
-
-    template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_BIND_TAG(presentation_context_identifier);
         BOOST_ASN_BIND_TAG(transfer_syntax_name);
     }
 
-    template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_BIND_TAG(presentation_context_identifier);
         BOOST_ASN_BIND_TAG(transfer_syntax_name);
     }
 
- 
-        // set Mode-selector
+
+    // set Mode-selector
     const int Mode_selector::mode_value_x410_1984_mode = 0;
     const int Mode_selector::mode_value_normal_mode = 1;
 
-
-    template<> void Mode_selector::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void Mode_selector::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(mode_value, 0);
     }
 
-    template<> void Mode_selector::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void Mode_selector::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(mode_value, 0);
     }
 
- 
+
     const int Event_identifier_cp_PPDU = 0;
     const int Event_identifier_cpa_PPDU = 1;
     const int Event_identifier_cpr_PPDU = 2;
@@ -218,34 +286,31 @@ namespace ISO8823_PRESENTATION {
     const int Event_identifier_s_activity_end_indication = 31;
     const int Event_identifier_s_activity_end_confirm = 32;
 
-        // sequence Default-context-name
+    // sequence Default-context-name
 
-    template<> void Default_context_name::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void Default_context_name::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(abstract_syntax_name, 0);
         BOOST_ASN_IMPLICIT_TAG(transfer_syntax_name, 1);
     }
 
-    template<> void Default_context_name::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void Default_context_name::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(abstract_syntax_name, 0);
         BOOST_ASN_IMPLICIT_TAG(transfer_syntax_name, 1);
     }
 
- 
-
-
-    template<> void Context_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void Context_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_BIND_TAG(presentation_context_identifier);
         BOOST_ASN_BIND_TAG(abstract_syntax_name);
         BOOST_ASN_BIND_TAG(transfer_syntax_name_list);
     }
 
-    template<> void Context_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void Context_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_BIND_TAG(presentation_context_identifier);
         BOOST_ASN_BIND_TAG(abstract_syntax_name);
         BOOST_ASN_BIND_TAG(transfer_syntax_name_list);
     }
 
- 
+
     const int Abort_reason_reason_not_specified = 0;
     const int Abort_reason_unrecognized_ppdu = 1;
     const int Abort_reason_unexpected_ppdu = 2;
@@ -254,245 +319,327 @@ namespace ISO8823_PRESENTATION {
     const int Abort_reason_unexpected_ppdu_parameter = 5;
     const int Abort_reason_invalid_ppdu_parameter_value = 6;
 
-        // sequence RSA-PPDU
+    // sequence RSA-PPDU
 
-    template<> void RSA_PPDU::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void RSA_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
         BOOST_ASN_CHOICE(user_data);
     }
 
-    template<> void RSA_PPDU::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void RSA_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
         BOOST_ASN_CHOICE(user_data);
     }
 
- 
-        // sequence RS-PPDU
 
-    template<> void RS_PPDU::serialize(boost::asn1::x690::output_coder& arch){
+    // sequence RS-PPDU
+
+    template<> void RS_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
         BOOST_ASN_CHOICE(user_data);
     }
 
-    template<> void RS_PPDU::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void RS_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
         BOOST_ASN_CHOICE(user_data);
     }
 
- 
-        // sequence ACA-PPDU
 
-    template<> void ACA_PPDU::serialize(boost::asn1::x690::output_coder& arch){
+    // sequence ACA-PPDU
+
+    template<> void ACA_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_addition_result_list, 0);
         BOOST_ASN_IMPLICIT_TAG(presentation_context_deletion_result_list, 1);
         BOOST_ASN_CHOICE(user_data);
     }
 
-    template<> void ACA_PPDU::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void ACA_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_addition_result_list, 0);
         BOOST_ASN_IMPLICIT_TAG(presentation_context_deletion_result_list, 1);
         BOOST_ASN_CHOICE(user_data);
     }
 
- 
-        // sequence AC-PPDU
 
-    template<> void AC_PPDU::serialize(boost::asn1::x690::output_coder& arch){
+    // sequence AC-PPDU
+
+    template<> void AC_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_addition_list, 0);
         BOOST_ASN_IMPLICIT_TAG(presentation_context_deletion_list, 1);
         BOOST_ASN_CHOICE(user_data);
     }
 
-    template<> void AC_PPDU::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void AC_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_addition_list, 0);
         BOOST_ASN_IMPLICIT_TAG(presentation_context_deletion_list, 1);
         BOOST_ASN_CHOICE(user_data);
     }
 
- 
-        // choice Typed-data-type
 
-    template<> void Typed_data_type::serialize(boost::asn1::x690::output_coder& arch){
-        switch(type()){
-                case Typed_data_type_acPPDU:  {BOOST_ASN_IMPLICIT_TAG(value<AC_PPDU > (false , Typed_data_type_acPPDU), 0); break; }
-                case Typed_data_type_acaPPDU:  {BOOST_ASN_IMPLICIT_TAG(value<ACA_PPDU > (false , Typed_data_type_acaPPDU), 1); break; }
-                case Typed_data_type_ttdPPDU:  {BOOST_ASN_CHOICE(value<User_data > (false , Typed_data_type_ttdPPDU)); break; }
-                default:{}
+    // choice Typed-data-type
+
+    template<> void Typed_data_type::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case Typed_data_type_acPPDU:
+            {
+                BOOST_ASN_IMPLICIT_TAG(value<AC_PPDU > (false, Typed_data_type_acPPDU), 0);
+                break;
+            }
+            case Typed_data_type_acaPPDU:
+            {
+                BOOST_ASN_IMPLICIT_TAG(value<ACA_PPDU > (false, Typed_data_type_acaPPDU), 1);
+                break;
+            }
+            case Typed_data_type_ttdPPDU:
+            {
+                BOOST_ASN_CHOICE(value<User_data > (false, Typed_data_type_ttdPPDU));
+                break;
+            }
+            default:
+            {
+            }
         }
     }
 
-    template<> void Typed_data_type::serialize(boost::asn1::x690::input_coder& arch){
-        int __tag_id__ =arch.test_id();
-        switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void Typed_data_type::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x80: {
-                    switch(__tag_id__){
-                        case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<AC_PPDU > (true , Typed_data_type_acPPDU), 0)) return; else free(); break;}
-                        case 1:  { if (BOOST_ASN_IMPLICIT_TAG(value<ACA_PPDU > (true , Typed_data_type_acaPPDU), 1)) return; else free(); break;}
-                    default:{}
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    case 0:
+                    {
+                        if (BOOST_ASN_IMPLICIT_TAG(value<AC_PPDU > (true, Typed_data_type_acPPDU), 0)) return;
+                        else free();
+                        break;
+                    }
+                    case 1:
+                    {
+                        if (BOOST_ASN_IMPLICIT_TAG(value<ACA_PPDU > (true, Typed_data_type_acaPPDU), 1)) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
                     }
                 }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                default: {
-                         if (BOOST_ASN_CHOICE(value<User_data > (true , Typed_data_type_ttdPPDU))) return; else free();
-                }
+            }
+            default:
+            {
+                if (BOOST_ASN_CHOICE(value<User_data > (true, Typed_data_type_ttdPPDU))) return;
+                else free();
+            }
         }
     }
 
- 
-        // sequence ARP-PPDU
 
-    template<> void ARP_PPDU::serialize(boost::asn1::x690::output_coder& arch){
+    // sequence ARP-PPDU
+
+    template<> void ARP_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(provider_reason, 0);
         BOOST_ASN_IMPLICIT_TAG(event_identifier, 1);
     }
 
-    template<> void ARP_PPDU::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void ARP_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(provider_reason, 0);
         BOOST_ASN_IMPLICIT_TAG(event_identifier, 1);
     }
 
- 
-        // choice ARU-PPDU
 
+    // choice ARU-PPDU
 
-    template<> void ARU_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void ARU_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(abortReason, 0);
         BOOST_ASN_IMPLICIT_TAG(reflectedParameter, 1);
         BOOST_ASN_EXPLICIT_TAG(userdataAB, 2);
     }
 
-    template<> void ARU_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void ARU_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(abortReason, 0);
         BOOST_ASN_IMPLICIT_TAG(reflectedParameter, 1);
         BOOST_ASN_EXPLICIT_TAG(userdataAB, 2);
     }
 
- 
-
-
-    template<> void ARU_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void ARU_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
         BOOST_ASN_CHOICE(user_data);
     }
 
-    template<> void ARU_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void ARU_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
         BOOST_ASN_CHOICE(user_data);
     }
 
- 
-
-    template<> void ARU_PPDU::serialize(boost::asn1::x690::output_coder& arch){
-        switch(type()){
-                case ARU_PPDU_x400_mode_parameters:  {BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (false , ARU_PPDU_x400_mode_parameters)); break; }
-                case ARU_PPDU_normal_mode_parameters:  {BOOST_ASN_IMPLICIT_TAG(value<normal_mode_parameters_type > (false , ARU_PPDU_normal_mode_parameters), 0); break; }
-                default:{}
+    template<> void ARU_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case ARU_PPDU_x400_mode_parameters:
+            {
+                BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (false, ARU_PPDU_x400_mode_parameters));
+                break;
+            }
+            case ARU_PPDU_normal_mode_parameters:
+            {
+                BOOST_ASN_IMPLICIT_TAG(value<normal_mode_parameters_type > (false, ARU_PPDU_normal_mode_parameters), 0);
+                break;
+            }
+            default:
+            {
+            }
         }
     }
 
-    template<> void ARU_PPDU::serialize(boost::asn1::x690::input_coder& arch){
-        int __tag_id__ =arch.test_id();
-        switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void ARU_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x80: {
-                    switch(__tag_id__){
-                        case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<normal_mode_parameters_type > (true , ARU_PPDU_normal_mode_parameters), 0)) return; else free(); break;}
-                    default:{}
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    case 0:
+                    {
+                        if (BOOST_ASN_IMPLICIT_TAG(value<normal_mode_parameters_type > (true, ARU_PPDU_normal_mode_parameters), 0)) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
                     }
                 }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                default: {
-                         if (BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (true , ARU_PPDU_x400_mode_parameters))) return; else free();
-                }
+            }
+            default:
+            {
+                if (BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (true, ARU_PPDU_x400_mode_parameters))) return;
+                else free();
+            }
         }
     }
 
- 
-        // choice Abort-type
 
-    template<> void Abort_type::serialize(boost::asn1::x690::output_coder& arch){
-        switch(type()){
-                case Abort_type_aru_ppdu:  {BOOST_ASN_CHOICE(value<ARU_PPDU > (false , Abort_type_aru_ppdu)); break; }
-                case Abort_type_arp_ppdu:  {BOOST_ASN_BIND_TAG(value<ARP_PPDU > (false , Abort_type_arp_ppdu)); break; }
-                default:{}
+    // choice Abort-type
+
+    template<> void Abort_type::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case Abort_type_aru_ppdu:
+            {
+                BOOST_ASN_CHOICE(value<ARU_PPDU > (false, Abort_type_aru_ppdu));
+                break;
+            }
+            case Abort_type_arp_ppdu:
+            {
+                BOOST_ASN_BIND_TAG(value<ARP_PPDU > (false, Abort_type_arp_ppdu));
+                break;
+            }
+            default:
+            {
+            }
         }
     }
 
-    template<> void Abort_type::serialize(boost::asn1::x690::input_coder& arch){
-        int __tag_id__ =arch.test_id();
-        switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void Abort_type::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x80: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                default: {
-                         if (BOOST_ASN_CHOICE(value<ARU_PPDU > (true , Abort_type_aru_ppdu))) return; else free();
-                         if (BOOST_ASN_BIND_TAG(value<ARP_PPDU > (true , Abort_type_arp_ppdu))) return; else free();
-                }
+            }
+            default:
+            {
+                if (BOOST_ASN_CHOICE(value<ARU_PPDU > (true, Abort_type_aru_ppdu))) return;
+                else free();
+                if (BOOST_ASN_BIND_TAG(value<ARP_PPDU > (true, Abort_type_arp_ppdu))) return;
+                else free();
+            }
         }
     }
 
- 
-        // choice CPR-PPDU
 
+    // choice CPR-PPDU
 
-    template<> void CPR_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void CPR_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(refuseReason, 0);
         BOOST_ASN_EXPLICIT_TAG(userDataRJ, 1);
     }
 
-    template<> void CPR_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void CPR_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(refuseReason, 0);
         BOOST_ASN_EXPLICIT_TAG(userDataRJ, 1);
     }
 
- 
-
-
-    template<> void CPR_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void CPR_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
         BOOST_ASN_IMPLICIT_TAG(responding_presentation_selector, 3);
         BOOST_ASN_IMPLICIT_TAG(presentation_context_definition_result_list, 5);
@@ -501,7 +648,7 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_CHOICE(user_data);
     }
 
-    template<> void CPR_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void CPR_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
         BOOST_ASN_IMPLICIT_TAG(responding_presentation_selector, 3);
         BOOST_ASN_IMPLICIT_TAG(presentation_context_definition_result_list, 5);
@@ -510,66 +657,85 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_CHOICE(user_data);
     }
 
- 
-
-    template<> void CPR_PPDU::serialize(boost::asn1::x690::output_coder& arch){
-        switch(type()){
-                case CPR_PPDU_x400_mode_parameters:  {BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (false , CPR_PPDU_x400_mode_parameters)); break; }
-                case CPR_PPDU_normal_mode_parameters:  {BOOST_ASN_BIND_TAG(value<normal_mode_parameters_type > (false , CPR_PPDU_normal_mode_parameters)); break; }
-                default:{}
+    template<> void CPR_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case CPR_PPDU_x400_mode_parameters:
+            {
+                BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (false, CPR_PPDU_x400_mode_parameters));
+                break;
+            }
+            case CPR_PPDU_normal_mode_parameters:
+            {
+                BOOST_ASN_BIND_TAG(value<normal_mode_parameters_type > (false, CPR_PPDU_normal_mode_parameters));
+                break;
+            }
+            default:
+            {
+            }
         }
     }
 
-    template<> void CPR_PPDU::serialize(boost::asn1::x690::input_coder& arch){
-        int __tag_id__ =arch.test_id();
-        switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void CPR_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0x80: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
                 }
-                default: {
-                         if (BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (true , CPR_PPDU_x400_mode_parameters))) return; else free();
-                         if (BOOST_ASN_BIND_TAG(value<normal_mode_parameters_type > (true , CPR_PPDU_normal_mode_parameters))) return; else free();
-                }
+            }
+            default:
+            {
+                if (BOOST_ASN_BIND_TAG(value<x400_mode_parameters_type > (true, CPR_PPDU_x400_mode_parameters))) return;
+                else free();
+                if (BOOST_ASN_BIND_TAG(value<normal_mode_parameters_type > (true, CPR_PPDU_normal_mode_parameters))) return;
+                else free();
+            }
         }
     }
 
- 
-        // set CPA-PPDU
 
+    // set CPA-PPDU
 
-    template<> void CPA_PPDU::x410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void CPA_PPDU::x410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
         BOOST_ASN_CHOICE_TAG(connectionDataAC, 2);
     }
 
-    template<> void CPA_PPDU::x410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void CPA_PPDU::x410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
         BOOST_ASN_CHOICE_TAG(connectionDataAC, 2);
     }
 
- 
-
-
-    template<> void CPA_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void CPA_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
         BOOST_ASN_IMPLICIT_TAG(responding_presentation_selector, 3);
         BOOST_ASN_IMPLICIT_TAG(presentation_context_definition_result_list, 5);
@@ -580,7 +746,7 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_CHOICE(user_data);
     }
 
-    template<> void CPA_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void CPA_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
         BOOST_ASN_IMPLICIT_TAG(responding_presentation_selector, 3);
         BOOST_ASN_IMPLICIT_TAG(presentation_context_definition_result_list, 5);
@@ -591,28 +757,25 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_CHOICE(user_data);
     }
 
- 
-
-    template<> void CPA_PPDU::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void CPA_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(mode_selector, 0);
         BOOST_ASN_IMPLICIT_TAG(x410_mode_parameters, 1);
         BOOST_ASN_IMPLICIT_TAG(normal_mode_parameters, 2);
     }
 
-    template<> void CPA_PPDU::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void CPA_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(mode_selector, 0);
         BOOST_ASN_IMPLICIT_TAG(x410_mode_parameters, 1);
         BOOST_ASN_IMPLICIT_TAG(normal_mode_parameters, 2);
     }
 
- 
-        // set CP-type
+
+    // set CP-type
 
     const int CP_type::x410_mode_parameters_type::dialogueMode_monologue = 0;
     const int CP_type::x410_mode_parameters_type::dialogueMode_twa = 1;
 
-
-    template<> void CP_type::x410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void CP_type::x410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
         BOOST_ASN_IMPLICIT_TAG(dialogueMode, 2);
@@ -620,7 +783,7 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_IMPLICIT_TAG(applicationProtocol, 4);
     }
 
-    template<> void CP_type::x410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void CP_type::x410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
         BOOST_ASN_IMPLICIT_TAG(dialogueMode, 2);
@@ -628,10 +791,7 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_IMPLICIT_TAG(applicationProtocol, 4);
     }
 
- 
-
-
-    template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
         BOOST_ASN_IMPLICIT_TAG(calling_presentation_selector, 1);
         BOOST_ASN_IMPLICIT_TAG(called_presentation_selector, 2);
@@ -644,7 +804,7 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_CHOICE(user_data);
     }
 
-    template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
         BOOST_ASN_IMPLICIT_TAG(calling_presentation_selector, 1);
         BOOST_ASN_IMPLICIT_TAG(called_presentation_selector, 2);
@@ -657,19 +817,17 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_CHOICE(user_data);
     }
 
- 
-
-    template<> void CP_type::serialize(boost::asn1::x690::output_coder& arch){
+    template<> void CP_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(mode_selector, 0);
         BOOST_ASN_IMPLICIT_TAG(x410_mode_parameters, 1);
         BOOST_ASN_IMPLICIT_TAG(normal_mode_parameters, 2);
     }
 
-    template<> void CP_type::serialize(boost::asn1::x690::input_coder& arch){
+    template<> void CP_type::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(mode_selector, 0);
         BOOST_ASN_IMPLICIT_TAG(x410_mode_parameters, 1);
         BOOST_ASN_IMPLICIT_TAG(normal_mode_parameters, 2);
     }
 
- 
-} 
+
+}
