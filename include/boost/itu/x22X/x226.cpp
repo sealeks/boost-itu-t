@@ -112,38 +112,42 @@ namespace boost {
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            static void build_userdata(defined_context_set_ptr dcs, User_data& data) {
+            static void build_userdata(defined_context_set_ptr dcs, boost::shared_ptr<User_data>& data) {
+                if (dcs->contexts().empty())
+                    return;
+                data = boost::shared_ptr<User_data>(new User_data());
                 if (dcs->is_simple_encoding()) {
-                    data.simply_encoded_data__new();
-                }
-                else {
-                    data.fully_encoded_data__new();
+                    data->simply_encoded_data__new();
+                } else {
+                    data->fully_encoded_data__new();
                     for (defined_context_map::const_iterator it = dcs->contexts().begin(); it != dcs->contexts().end(); ++it) {
                         if (it->second->valid() && it->second->coder()->out()->size()) {
                             pdv_list_type pdv_lst;
                             pdv_lst.presentation_context_identifier = it->first;
                             pdv_lst.presentation_data_values.single_ASN1_type__new();
                             pdv_lst.presentation_data_values.single_ASN1_type()->tie(it->second->coder());
-                            data.fully_encoded_data()->push_back(pdv_lst);
+                            data->fully_encoded_data()->push_back(pdv_lst);
                         }
                     }
                 }
             }
 
-            static void parse_userdata(defined_context_set_ptr dcs, const User_data& data) {
+            static void parse_userdata(defined_context_set_ptr dcs, const boost::shared_ptr<User_data>& data) {
+                if (!data)
+                    return;
                 try {
-                    switch (data.type()) {
+                    switch (data->type()) {
                         case ISO8823_PRESENTATION::User_data_simply_encoded_data:
                         {
-                            if (!data.simply_encoded_data())
+                            if (!data->simply_encoded_data())
                                 throw error_code(ER_BEDSEQ);
                             return;
                         }
                         case ISO8823_PRESENTATION::User_data_fully_encoded_data:
                         {
-                            if (!data.fully_encoded_data())
+                            if (!data->fully_encoded_data())
                                 throw error_code(ER_BEDSEQ);
-                            const fulldata_type& values = *data.fully_encoded_data();
+                            const fulldata_type& values = *(data->fully_encoded_data());
                             for (fulldata_type::const_iterator it = values.begin(); it != values.end(); ++it) {
                                 if (dcs->exists(it->presentation_context_identifier)) {
                                     if (it->transfer_syntax_name) {
@@ -174,8 +178,7 @@ namespace boost {
                                         }
                                     }
 
-                                }
-                                else {
+                                } else {
                                     throw error_code(ER_PROTOCOL);
                                 }
                             }
@@ -185,11 +188,9 @@ namespace boost {
                         {
                         }
                     }
-                }
-                catch (const boost::system::system_error& cerr) {
+                }                catch (const boost::system::system_error& cerr) {
                     throw cerr;
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 throw error_code(ER_PROTOCOL);
             }
@@ -230,15 +231,14 @@ namespace boost {
 
             error_code presentation_socket::build_DT_type() {
                 try {
-                    User_data udt;
+                    boost::shared_ptr<User_data> udt;
                     build_userdata(dcs(), udt);
-                    udt.serialize(coder()->output());
+                    if (udt)
+                        udt->serialize(coder()->output());
                     return error_code();
-                }
-                catch (const boost::system::system_error& cerr) {
+                }                catch (const boost::system::system_error& cerr) {
                     return cerr.code();
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return ER_PROTOCOL;
             }
@@ -267,14 +267,13 @@ namespace boost {
                             cp.normal_mode_parameters->presentation_context_definition_list->push_back(ctx);
                         }
                     }
+                    cp.normal_mode_parameters->user_data__new();
                     build_userdata(dcs(), cp.normal_mode_parameters->user_data);
                     (coder()->output()) & cp;
                     return error_code();
-                }
-                catch (const boost::system::system_error& cerr) {
+                }                catch (const boost::system::system_error& cerr) {
                     return cerr.code();
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return ER_PROTOCOL;
             }
@@ -298,8 +297,7 @@ namespace boost {
                                                 if (ctxit != dcs()->contexts().end()) {
                                                     dcs()->remove_contex(ctxit->first);
                                                 }
-                                            }
-                                            else {
+                                            } else {
                                                 if ((it->transfer_syntax_name) && (ctxit != dcs()->contexts().end())) {
                                                     dcs()->transfer_syntax(ctxit->first, (*(it->transfer_syntax_name)));
                                                 }
@@ -314,7 +312,6 @@ namespace boost {
                                         dcs()->p_requirements(dcs()->p_requirements() &
                                                 (*(cpa.normal_mode_parameters->presentation_requirements)));
                                     }
-
                                     parse_userdata(dcs(), cpa.normal_mode_parameters->user_data);
                                     return error_code();
 
@@ -325,11 +322,9 @@ namespace boost {
                         {
                         }
                     }
-                }
-                catch (const boost::system::system_error& cerr) {
+                }                catch (const boost::system::system_error& cerr) {
                     return cerr.code();
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return ER_PROTOCOL;
             }
@@ -376,8 +371,7 @@ namespace boost {
                                 tmp.transfer_syntax_name__assign(new oid_type(to_transfer_syntax(dcs()->context(cid)->encoding())));
                                 cpa.normal_mode_parameters->presentation_context_definition_result_list->push_back(tmp);
                                 cpr.normal_mode_parameters()->presentation_context_definition_result_list->push_back(tmp);
-                            }
-                            else {
+                            } else {
                                 p_result_type tmp;
                                 tmp.result = 1;
                                 tmp.provider_reason__assign(0);
@@ -394,12 +388,10 @@ namespace boost {
                         }
                         (coder()->output()) & cpr;
                         return reject_negotiate;
-                    }
-                    else {
+                    } else {
                         return error_negotiate;
                     }
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return error_negotiate;
             }
@@ -409,8 +401,8 @@ namespace boost {
                     switch (check_response()) {
                         case dt_ppdu:
                         {
-                            User_data data;
-                            data.serialize(coder()->input());
+                            boost::shared_ptr<User_data> data(new User_data());
+                            data->serialize(coder()->input());
                             parse_userdata(dcs(), data);
                             return error_code();
 
@@ -419,11 +411,9 @@ namespace boost {
                         {
                         }
                     }
-                }
-                catch (const boost::system::system_error& cerr) {
+                }                catch (const boost::system::system_error& cerr) {
                     return cerr.code();
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 return ER_PROTOCOL;
             }
