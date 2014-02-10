@@ -456,7 +456,7 @@ namespace ISO_9506_MMS_1 {
             BOOST_ASN_VALUE_FUNC_DECLARATE(listOfModifiers_type, listOfModifiers)
 
             boost::asn1::value_holder<ConfirmedServiceRequest> service;
-            boost::shared_ptr<Request_Detail> service_ext;
+            boost::shared_ptr<Request_Detail> service_ext; // after extention
             BOOST_ASN_VALUE_FUNC_DECLARATE(Request_Detail, service_ext)
 
 
@@ -747,7 +747,7 @@ namespace ISO_9506_MMS_1 {
             Unconfirmed_PDU() : service() {} 
  
             boost::asn1::value_holder<UnconfirmedService> service;
-            boost::shared_ptr<Unconfirmed_Detail> service_ext;
+            boost::shared_ptr<Unconfirmed_Detail> service_ext; // after extention
             BOOST_ASN_VALUE_FUNC_DECLARATE(Unconfirmed_Detail, service_ext)
 
 
@@ -801,7 +801,7 @@ namespace ISO_9506_MMS_1 {
  
             boost::asn1::value_holder<Unsigned32> invokeID;
             boost::asn1::value_holder<ConfirmedServiceResponse> service;
-            boost::shared_ptr<Response_Detail> service_ext;
+            boost::shared_ptr<Response_Detail> service_ext; // after extention
             BOOST_ASN_VALUE_FUNC_DECLARATE(Response_Detail, service_ext)
 
 
@@ -1254,9 +1254,7 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr<visiblestring_type> additionalDescription;
             BOOST_ASN_VALUE_FUNC_DECLARATE(visiblestring_type, additionalDescription)
 
-            boost::shared_ptr<serviceSpecificInfo_type> serviceSpecificInfo;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(serviceSpecificInfo_type, serviceSpecificInfo)
-
+            boost::asn1::value_holder<serviceSpecificInfo_type> serviceSpecificInfo;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -1373,9 +1371,15 @@ namespace ISO_9506_MMS_1 {
                 boost::asn1::value_holder<Integer16> proposedVersionNumber;
                 boost::asn1::value_holder<MMS_Object_Module_1::ParameterSupportOptions> proposedParameterCBB;
                 boost::asn1::value_holder<MMS_Object_Module_1::ServiceSupportOptions> servicesSupportedCalling;
-                boost::asn1::value_holder<MMS_Object_Module_1::AdditionalSupportOptions> additionalSupportedCalling;
-                boost::asn1::value_holder<MMS_Object_Module_1::AdditionalCBBOptions> additionalCbbSupportedCalling;
-                boost::asn1::value_holder<visiblestring_type> privilegeClassIdentityCalling;
+                boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions> additionalSupportedCalling; // after extention
+                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AdditionalSupportOptions, additionalSupportedCalling)
+
+                boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions> additionalCbbSupportedCalling; // after extention
+                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AdditionalCBBOptions, additionalCbbSupportedCalling)
+
+                boost::shared_ptr<visiblestring_type> privilegeClassIdentityCalling; // after extention
+                BOOST_ASN_VALUE_FUNC_DECLARATE(visiblestring_type, privilegeClassIdentityCalling)
+
 
                 BOOST_ASN_ARCHIVE_FUNC;
             };
@@ -1410,9 +1414,15 @@ namespace ISO_9506_MMS_1 {
                 boost::asn1::value_holder<Integer16> negotiatedVersionNumber;
                 boost::asn1::value_holder<MMS_Object_Module_1::ParameterSupportOptions> negotiatedParameterCBB;
                 boost::asn1::value_holder<MMS_Object_Module_1::ServiceSupportOptions> servicesSupportedCalled;
-                boost::asn1::value_holder<MMS_Object_Module_1::AdditionalSupportOptions> additionalSupportedCalled;
-                boost::asn1::value_holder<MMS_Object_Module_1::AdditionalCBBOptions> additionalCbbSupportedCalled;
-                boost::asn1::value_holder<visiblestring_type> privilegeClassIdentityCalled;
+                boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions> additionalSupportedCalled; // after extention
+                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AdditionalSupportOptions, additionalSupportedCalled)
+
+                boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions> additionalCbbSupportedCalled; // after extention
+                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AdditionalCBBOptions, additionalCbbSupportedCalled)
+
+                boost::shared_ptr<visiblestring_type> privilegeClassIdentityCalled; // after extention
+                BOOST_ASN_VALUE_FUNC_DECLARATE(visiblestring_type, privilegeClassIdentityCalled)
+
 
                 BOOST_ASN_ARCHIVE_FUNC;
             };
@@ -1562,27 +1572,13 @@ namespace ISO_9506_MMS_1 {
 
                 accessControlListElements_type() {} 
  
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> readAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, readAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> storeAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, storeAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> writeAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, writeAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> loadAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, loadAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> executeAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, executeAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> deleteAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, deleteAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> editAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, editAccessCondition)
-
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> readAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> storeAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> writeAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> loadAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> executeAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> deleteAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> editAccessCondition;
 
                 BOOST_ASN_ARCHIVE_FUNC;
             };
@@ -1641,27 +1637,13 @@ namespace ISO_9506_MMS_1 {
 
                 accessControlListElements_type() {} 
  
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> readAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, readAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> storeAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, storeAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> writeAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, writeAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> loadAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, loadAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> executeAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, executeAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> deleteAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, deleteAccessCondition)
-
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> editAccessCondition;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, editAccessCondition)
-
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> readAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> storeAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> writeAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> loadAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> executeAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> deleteAccessCondition;
+                boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> editAccessCondition;
 
                 BOOST_ASN_ARCHIVE_FUNC;
             };
@@ -1704,9 +1686,7 @@ namespace ISO_9506_MMS_1 {
  
             boost::asn1::value_holder<Identifier> accessControlList;
             boost::asn1::value_holder<ObjectClass> objectClass;
-            boost::shared_ptr<ObjectName> continueAfter;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(ObjectName, continueAfter)
-
+            boost::asn1::value_holder<ObjectName> continueAfter;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -2271,9 +2251,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr<visiblestring_type> startLocation;
                 BOOST_ASN_VALUE_FUNC_DECLARATE(visiblestring_type, startLocation)
 
-                boost::shared_ptr<StartCount> startCount;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(StartCount, startCount)
-
+                boost::asn1::value_holder<StartCount> startCount;
 
                 BOOST_ASN_ARCHIVE_FUNC;
             };
@@ -2580,9 +2558,7 @@ namespace ISO_9506_MMS_1 {
             AlterProgramInvocationAttributes_Request() : programInvocation() {} 
  
             boost::asn1::value_holder<Identifier> programInvocation;
-            boost::shared_ptr<StartCount> startCount;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(StartCount, startCount)
-
+            boost::asn1::value_holder<StartCount> startCount;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -2627,9 +2603,7 @@ namespace ISO_9506_MMS_1 {
                 boost::asn1::value_holder<Identifier> domainName;
                 boost::asn1::value_holder<capabilities_type> capabilities;
                 boost::asn1::value_holder<bool> sharable;
-                boost::shared_ptr<LoadData> loadData;
-                BOOST_ASN_VALUE_FUNC_DECLARATE(LoadData, loadData)
-
+                boost::asn1::value_holder<LoadData> loadData;
 
                 BOOST_ASN_ARCHIVE_FUNC;
             };
@@ -3297,9 +3271,7 @@ namespace ISO_9506_MMS_1 {
 
             Read_Response() : listOfAccessResult() {} 
  
-            boost::shared_ptr<VariableAccessSpecification> variableAccessSpecification;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(VariableAccessSpecification, variableAccessSpecification)
-
+            boost::asn1::value_holder<VariableAccessSpecification> variableAccessSpecification;
             boost::asn1::value_holder<listOfAccessResult_type> listOfAccessResult;
 
             BOOST_ASN_ARCHIVE_FUNC;
@@ -3377,9 +3349,7 @@ namespace ISO_9506_MMS_1 {
             GetVariableAccessAttributes_Response() : mmsDeletable(), typeDescription() {} 
  
             boost::asn1::value_holder<bool> mmsDeletable;
-            boost::shared_ptr<MMS_Object_Module_1::Address> address;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::Address, address)
-
+            boost::asn1::value_holder<MMS_Object_Module_1::Address> address;
             boost::asn1::value_holder<MMS_Object_Module_1::TypeDescription> typeDescription;
             boost::shared_ptr<Identifier> accessControlList;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Identifier, accessControlList)
@@ -3400,9 +3370,7 @@ namespace ISO_9506_MMS_1 {
  
             boost::asn1::value_holder<ObjectName> variableName;
             boost::asn1::value_holder<MMS_Object_Module_1::Address> address;
-            boost::shared_ptr<TypeSpecification> typeSpecification;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(TypeSpecification, typeSpecification)
-
+            boost::asn1::value_holder<TypeSpecification> typeSpecification;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -3992,9 +3960,7 @@ namespace ISO_9506_MMS_1 {
                         success_type() : confirmedServiceResponse() {} 
  
                         boost::asn1::value_holder<ConfirmedServiceResponse> confirmedServiceResponse;
-                        boost::shared_ptr<Response_Detail> cs_Response_Detail;
-                        BOOST_ASN_VALUE_FUNC_DECLARATE(Response_Detail, cs_Response_Detail)
-
+                        boost::asn1::value_holder<Response_Detail> cs_Response_Detail;
 
                         BOOST_ASN_ARCHIVE_FUNC;
                     };
@@ -4128,9 +4094,7 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr<severityFilter_type> severityFilter;
             BOOST_ASN_VALUE_FUNC_DECLARATE(severityFilter_type, severityFilter)
 
-            boost::shared_ptr<ObjectName> continueAfter;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(ObjectName, continueAfter)
-
+            boost::asn1::value_holder<ObjectName> continueAfter;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -4170,12 +4134,8 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr<EN_Additional_Detail> displayEnhancement;
             BOOST_ASN_VALUE_FUNC_DECLARATE(EN_Additional_Detail, displayEnhancement)
 
-            boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::EventTime, timeOfLastTransitionToActive)
-
-            boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::EventTime, timeOfLastTransitionToIdle)
-
+            boost::asn1::value_holder<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive;
+            boost::asn1::value_holder<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -4236,9 +4196,7 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr<severityFilter_type> severityFilter;
             BOOST_ASN_VALUE_FUNC_DECLARATE(severityFilter_type, severityFilter)
 
-            boost::shared_ptr<ObjectName> continueAfter;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(ObjectName, continueAfter)
-
+            boost::asn1::value_holder<ObjectName> continueAfter;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -4282,18 +4240,10 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr<EE_State> enrollmentState;
             BOOST_ASN_VALUE_FUNC_DECLARATE(EE_State, enrollmentState)
 
-            boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::EventTime, timeOfLastTransitionToActive)
-
-            boost::shared_ptr<MMS_Object_Module_1::EventTime> timeActiveAcknowledged;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::EventTime, timeActiveAcknowledged)
-
-            boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::EventTime, timeOfLastTransitionToIdle)
-
-            boost::shared_ptr<MMS_Object_Module_1::EventTime> timeIdleAcknowledged;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::EventTime, timeIdleAcknowledged)
-
+            boost::asn1::value_holder<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive;
+            boost::asn1::value_holder<MMS_Object_Module_1::EventTime> timeActiveAcknowledged;
+            boost::asn1::value_holder<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle;
+            boost::asn1::value_holder<MMS_Object_Module_1::EventTime> timeIdleAcknowledged;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -4333,9 +4283,7 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr<bool> alarmSummaryReports;
             BOOST_ASN_VALUE_FUNC_DECLARATE(bool, alarmSummaryReports)
 
-            boost::shared_ptr<VariableSpecification> monitoredVariable;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(VariableSpecification, monitoredVariable)
-
+            boost::asn1::value_holder<VariableSpecification> monitoredVariable;
             boost::shared_ptr<Unsigned32> evaluationInterval;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Unsigned32, evaluationInterval)
 
@@ -4424,9 +4372,7 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr<bool> alarmSummaryReports;
             BOOST_ASN_VALUE_FUNC_DECLARATE(bool, alarmSummaryReports)
 
-            boost::shared_ptr<monitoredVariable_type> monitoredVariable;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(monitoredVariable_type, monitoredVariable)
-
+            boost::asn1::value_holder<monitoredVariable_type> monitoredVariable;
             boost::shared_ptr<Unsigned32> evaluationInterval;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Unsigned32, evaluationInterval)
 
@@ -4483,9 +4429,7 @@ namespace ISO_9506_MMS_1 {
 
             CS_GetEventConditionAttributes_Response() : displayEnhancement() {} 
  
-            boost::shared_ptr<groupPriorityOverride_type> groupPriorityOverride;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(groupPriorityOverride_type, groupPriorityOverride)
-
+            boost::asn1::value_holder<groupPriorityOverride_type> groupPriorityOverride;
             boost::shared_ptr<listOfReferencingECL_type> listOfReferencingECL;
             BOOST_ASN_VALUE_FUNC_DECLARATE(listOfReferencingECL_type, listOfReferencingECL)
 
@@ -4506,12 +4450,8 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr<bool> enabled;
             BOOST_ASN_VALUE_FUNC_DECLARATE(bool, enabled)
 
-            boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::EventTime, timeOfLastTransitionToActive)
-
-            boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::EventTime, timeOfLastTransitionToIdle)
-
+            boost::asn1::value_holder<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive;
+            boost::asn1::value_holder<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -4585,9 +4525,7 @@ namespace ISO_9506_MMS_1 {
             BOOST_ASN_VALUE_FUNC_DECLARATE(listOfModifier_type, listOfModifier)
 
             boost::asn1::value_holder<ConfirmedServiceRequest> confirmedServiceRequest;
-            boost::shared_ptr<Request_Detail> cs_extension;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(Request_Detail, cs_extension)
-
+            boost::asn1::value_holder<Request_Detail> cs_extension;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -4628,9 +4566,7 @@ namespace ISO_9506_MMS_1 {
 
             boost::asn1::value_holder<listOfModifier_type> listOfModifier;
             boost::asn1::value_holder<ConfirmedServiceRequest> confirmedServiceRequest;
-            boost::shared_ptr<Request_Detail> cs_extension;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(Request_Detail, cs_extension)
-
+            boost::asn1::value_holder<Request_Detail> cs_extension;
             boost::shared_ptr<Identifier> accessControlList;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Identifier, accessControlList)
 
@@ -4649,9 +4585,7 @@ namespace ISO_9506_MMS_1 {
             boost::asn1::value_holder<ObjectName> eventConditionName;
             boost::asn1::value_holder<MMS_Object_Module_1::Transitions> eventConditionTransitions;
             boost::asn1::value_holder<MMS_Object_Module_1::AlarmAckRule> alarmAcknowledgmentRule;
-            boost::shared_ptr<ObjectName> eventActionName;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(ObjectName, eventActionName)
-
+            boost::asn1::value_holder<ObjectName> eventActionName;
             boost::shared_ptr<MMS_Environment_1::ApplicationReference> clientApplication;
             BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Environment_1::ApplicationReference, clientApplication)
 
@@ -4722,15 +4656,9 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr<MMS_Environment_1::ApplicationReference> clientApplication;
             BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Environment_1::ApplicationReference, clientApplication)
 
-            boost::shared_ptr<ObjectName> eventConditionName;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(ObjectName, eventConditionName)
-
-            boost::shared_ptr<ObjectName> eventActionName;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(ObjectName, eventActionName)
-
-            boost::shared_ptr<ObjectName> continueAfter;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(ObjectName, continueAfter)
-
+            boost::asn1::value_holder<ObjectName> eventConditionName;
+            boost::asn1::value_holder<ObjectName> eventActionName;
+            boost::asn1::value_holder<ObjectName> continueAfter;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -4816,9 +4744,7 @@ namespace ISO_9506_MMS_1 {
  
             boost::asn1::value_holder<ObjectName> eventEnrollmentName;
             boost::asn1::value_holder<eventConditionName_type> eventConditionName;
-            boost::shared_ptr<eventActionName_type> eventActionName;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(eventActionName_type, eventActionName)
-
+            boost::asn1::value_holder<eventActionName_type> eventActionName;
             boost::shared_ptr<MMS_Environment_1::ApplicationReference> clientApplication;
             BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Environment_1::ApplicationReference, clientApplication)
 
@@ -5082,12 +5008,8 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr<bool> enabled;
             BOOST_ASN_VALUE_FUNC_DECLARATE(bool, enabled)
 
-            boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::EventTime, timeOfLastTransitionToActive)
-
-            boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::EventTime, timeOfLastTransitionToIdle)
-
+            boost::asn1::value_holder<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive;
+            boost::asn1::value_holder<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -5119,9 +5041,7 @@ namespace ISO_9506_MMS_1 {
  
             boost::asn1::value_holder<ObjectName> eventConditionListName;
             boost::asn1::value_holder<bool> enabled;
-            boost::shared_ptr<priorityChange_type> priorityChange;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(priorityChange_type, priorityChange)
-
+            boost::asn1::value_holder<priorityChange_type> priorityChange;
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -5184,12 +5104,8 @@ namespace ISO_9506_MMS_1 {
             ReadJournal_Request() : journalName() {} 
  
             boost::asn1::value_holder<ObjectName> journalName;
-            boost::shared_ptr<rangeStartSpecification_type> rangeStartSpecification;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(rangeStartSpecification_type, rangeStartSpecification)
-
-            boost::shared_ptr<rangeStopSpecification_type> rangeStopSpecification;
-            BOOST_ASN_VALUE_FUNC_DECLARATE(rangeStopSpecification_type, rangeStopSpecification)
-
+            boost::asn1::value_holder<rangeStartSpecification_type> rangeStartSpecification;
+            boost::asn1::value_holder<rangeStopSpecification_type> rangeStopSpecification;
             boost::shared_ptr<listOfVariables_type> listOfVariables;
             BOOST_ASN_VALUE_FUNC_DECLARATE(listOfVariables_type, listOfVariables)
 

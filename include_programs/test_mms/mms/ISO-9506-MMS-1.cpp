@@ -1096,17 +1096,17 @@ namespace ISO_9506_MMS_1 {
  
 
         template<> void ServiceError::serialize(boost::asn1::x690::output_coder& arch){
-            BOOST_ASN_EXPLICIT_TAG(errorClass, 0);
+            BOOST_ASN_CHOICE_TAG(errorClass, 0);
             BOOST_ASN_IMPLICIT_TAG(additionalCode, 1);
             BOOST_ASN_IMPLICIT_TAG(additionalDescription, 2);
-            BOOST_ASN_EXPLICIT_TAG(serviceSpecificInfo, 3);
+            BOOST_ASN_CHOICE_TAG(serviceSpecificInfo, 3);
         }
 
         template<> void ServiceError::serialize(boost::asn1::x690::input_coder& arch){
-            BOOST_ASN_EXPLICIT_TAG(errorClass, 0);
+            BOOST_ASN_CHOICE_TAG(errorClass, 0);
             BOOST_ASN_IMPLICIT_TAG(additionalCode, 1);
             BOOST_ASN_IMPLICIT_TAG(additionalDescription, 2);
-            BOOST_ASN_EXPLICIT_TAG(serviceSpecificInfo, 3);
+            BOOST_ASN_CHOICE_TAG(serviceSpecificInfo, 3);
         }
 
  
@@ -1729,12 +1729,12 @@ namespace ISO_9506_MMS_1 {
 
         template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::serialize(boost::asn1::x690::output_coder& arch){
             BOOST_ASN_CHOICE_TAG(objectClass, 0);
-            BOOST_ASN_EXPLICIT_TAG(objectScope, 1);
+            BOOST_ASN_CHOICE_TAG(objectScope, 1);
         }
 
         template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::serialize(boost::asn1::x690::input_coder& arch){
             BOOST_ASN_CHOICE_TAG(objectClass, 0);
-            BOOST_ASN_EXPLICIT_TAG(objectScope, 1);
+            BOOST_ASN_CHOICE_TAG(objectScope, 1);
         }
 
  
@@ -1986,13 +1986,13 @@ namespace ISO_9506_MMS_1 {
 
         template<> void GetNameList_Request::serialize(boost::asn1::x690::output_coder& arch){
             BOOST_ASN_CHOICE_TAG(objectClass, 0);
-            BOOST_ASN_EXPLICIT_TAG(objectScope, 1);
+            BOOST_ASN_CHOICE_TAG(objectScope, 1);
             BOOST_ASN_IMPLICIT_TAG(continueAfter, 2);
         }
 
         template<> void GetNameList_Request::serialize(boost::asn1::x690::input_coder& arch){
             BOOST_ASN_CHOICE_TAG(objectClass, 0);
-            BOOST_ASN_EXPLICIT_TAG(objectScope, 1);
+            BOOST_ASN_CHOICE_TAG(objectScope, 1);
             BOOST_ASN_IMPLICIT_TAG(continueAfter, 2);
         }
 
@@ -2735,13 +2735,13 @@ namespace ISO_9506_MMS_1 {
         template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::serialize(boost::asn1::x690::output_coder& arch){
             BOOST_ASN_IMPLICIT_TAG(controlledPI, 0);
             BOOST_ASN_IMPLICIT_TAG(programLocation, 1);
-            BOOST_ASN_EXPLICIT_TAG(runningMode, 2);
+            BOOST_ASN_CHOICE_TAG(runningMode, 2);
         }
 
         template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::serialize(boost::asn1::x690::input_coder& arch){
             BOOST_ASN_IMPLICIT_TAG(controlledPI, 0);
             BOOST_ASN_IMPLICIT_TAG(programLocation, 1);
-            BOOST_ASN_EXPLICIT_TAG(runningMode, 2);
+            BOOST_ASN_CHOICE_TAG(runningMode, 2);
         }
 
  
@@ -2790,7 +2790,7 @@ namespace ISO_9506_MMS_1 {
         template<> void CS_GetProgramInvocationAttributes_Response::control_type::serialize(boost::asn1::x690::output_coder& arch){
             switch(type()){
                 case control_type_controlling:  {BOOST_ASN_IMPLICIT_TAG(value<controlling_type > (false , control_type_controlling), 0); break; }
-                case control_type_controlled:  {BOOST_ASN_EXPLICIT_TAG(value<controlled_type > (false , control_type_controlled), 1); break; }
+                case control_type_controlled:  {BOOST_ASN_CHOICE_TAG(value<controlled_type > (false , control_type_controlled), 1); break; }
                 case control_type_normal:  {BOOST_ASN_IMPLICIT_TAG(value<null_type > (false , control_type_normal), 2); break; }
                 default:{}
             }
@@ -2812,7 +2812,7 @@ namespace ISO_9506_MMS_1 {
                 case 0x80: {
                     switch(__tag_id__){
                         case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<controlling_type > (true , control_type_controlling), 0)) return; else free(); break;}
-                        case 1:  { if (BOOST_ASN_EXPLICIT_TAG(value<controlled_type > (true , control_type_controlled), 1)) return; else free(); break;}
+                        case 1:  { if (BOOST_ASN_CHOICE_TAG(value<controlled_type > (true , control_type_controlled), 1)) return; else free(); break;}
                         case 2:  { if (BOOST_ASN_IMPLICIT_TAG(value<null_type > (true , control_type_normal), 2)) return; else free(); break;}
                     default:{}
                     }
@@ -2831,12 +2831,12 @@ namespace ISO_9506_MMS_1 {
 
         template<> void CS_GetProgramInvocationAttributes_Response::serialize(boost::asn1::x690::output_coder& arch){
             BOOST_ASN_IMPLICIT_TAG(errorCode, 0);
-            BOOST_ASN_EXPLICIT_TAG(control, 1);
+            BOOST_ASN_CHOICE_TAG(control, 1);
         }
 
         template<> void CS_GetProgramInvocationAttributes_Response::serialize(boost::asn1::x690::input_coder& arch){
             BOOST_ASN_IMPLICIT_TAG(errorCode, 0);
-            BOOST_ASN_EXPLICIT_TAG(control, 1);
+            BOOST_ASN_CHOICE_TAG(control, 1);
         }
 
  
@@ -5144,7 +5144,7 @@ namespace ISO_9506_MMS_1 {
             BOOST_ASN_IMPLICIT_TAG(priority, 2);
             BOOST_ASN_IMPLICIT_TAG(severity, 3);
             BOOST_ASN_IMPLICIT_TAG(alarmSummaryReports, 4);
-            BOOST_ASN_EXPLICIT_TAG(monitoredVariable, 6);
+            BOOST_ASN_CHOICE_TAG(monitoredVariable, 6);
             BOOST_ASN_IMPLICIT_TAG(evaluationInterval, 7);
             BOOST_ASN_IMPLICIT_TAG(accessControlList, 8);
         }
@@ -5155,7 +5155,7 @@ namespace ISO_9506_MMS_1 {
             BOOST_ASN_IMPLICIT_TAG(priority, 2);
             BOOST_ASN_IMPLICIT_TAG(severity, 3);
             BOOST_ASN_IMPLICIT_TAG(alarmSummaryReports, 4);
-            BOOST_ASN_EXPLICIT_TAG(monitoredVariable, 6);
+            BOOST_ASN_CHOICE_TAG(monitoredVariable, 6);
             BOOST_ASN_IMPLICIT_TAG(evaluationInterval, 7);
             BOOST_ASN_IMPLICIT_TAG(accessControlList, 8);
         }
@@ -5248,15 +5248,15 @@ namespace ISO_9506_MMS_1 {
  
 
         template<> void CS_GetEventConditionAttributes_Response::serialize(boost::asn1::x690::output_coder& arch){
-            BOOST_ASN_EXPLICIT_TAG(groupPriorityOverride, 0);
+            BOOST_ASN_CHOICE_TAG(groupPriorityOverride, 0);
             BOOST_ASN_IMPLICIT_TAG(listOfReferencingECL, 1);
-            BOOST_ASN_EXPLICIT_TAG(displayEnhancement, 2);
+            BOOST_ASN_CHOICE_TAG(displayEnhancement, 2);
         }
 
         template<> void CS_GetEventConditionAttributes_Response::serialize(boost::asn1::x690::input_coder& arch){
-            BOOST_ASN_EXPLICIT_TAG(groupPriorityOverride, 0);
+            BOOST_ASN_CHOICE_TAG(groupPriorityOverride, 0);
             BOOST_ASN_IMPLICIT_TAG(listOfReferencingECL, 1);
-            BOOST_ASN_EXPLICIT_TAG(displayEnhancement, 2);
+            BOOST_ASN_CHOICE_TAG(displayEnhancement, 2);
         }
 
  
@@ -5708,28 +5708,28 @@ namespace ISO_9506_MMS_1 {
 
         template<> void EEAttributes::serialize(boost::asn1::x690::output_coder& arch){
             BOOST_ASN_CHOICE_TAG(eventEnrollmentName, 0);
-            BOOST_ASN_EXPLICIT_TAG(eventConditionName, 1);
-            BOOST_ASN_EXPLICIT_TAG(eventActionName, 2);
+            BOOST_ASN_CHOICE_TAG(eventConditionName, 1);
+            BOOST_ASN_CHOICE_TAG(eventActionName, 2);
             BOOST_ASN_EXPLICIT_TAG(clientApplication, 3);
             BOOST_ASN_IMPLICIT_TAG(mmsDeletable, 4);
             BOOST_ASN_IMPLICIT_TAG(enrollmentClass, 5);
             BOOST_ASN_IMPLICIT_TAG(duration, 6);
             BOOST_ASN_IMPLICIT_TAG(invokeID, 7);
             BOOST_ASN_IMPLICIT_TAG(remainingAcceptableDelay, 8);
-            BOOST_ASN_EXPLICIT_TAG(displayEnhancement, 9);
+            BOOST_ASN_CHOICE_TAG(displayEnhancement, 9);
         }
 
         template<> void EEAttributes::serialize(boost::asn1::x690::input_coder& arch){
             BOOST_ASN_CHOICE_TAG(eventEnrollmentName, 0);
-            BOOST_ASN_EXPLICIT_TAG(eventConditionName, 1);
-            BOOST_ASN_EXPLICIT_TAG(eventActionName, 2);
+            BOOST_ASN_CHOICE_TAG(eventConditionName, 1);
+            BOOST_ASN_CHOICE_TAG(eventActionName, 2);
             BOOST_ASN_EXPLICIT_TAG(clientApplication, 3);
             BOOST_ASN_IMPLICIT_TAG(mmsDeletable, 4);
             BOOST_ASN_IMPLICIT_TAG(enrollmentClass, 5);
             BOOST_ASN_IMPLICIT_TAG(duration, 6);
             BOOST_ASN_IMPLICIT_TAG(invokeID, 7);
             BOOST_ASN_IMPLICIT_TAG(remainingAcceptableDelay, 8);
-            BOOST_ASN_EXPLICIT_TAG(displayEnhancement, 9);
+            BOOST_ASN_CHOICE_TAG(displayEnhancement, 9);
         }
 
  
@@ -5811,12 +5811,12 @@ namespace ISO_9506_MMS_1 {
  
 
         template<> void AlterEventEnrollment_Response::serialize(boost::asn1::x690::output_coder& arch){
-            BOOST_ASN_EXPLICIT_TAG(currentState, 0);
+            BOOST_ASN_CHOICE_TAG(currentState, 0);
             BOOST_ASN_CHOICE_TAG(transitionTime, 1);
         }
 
         template<> void AlterEventEnrollment_Response::serialize(boost::asn1::x690::input_coder& arch){
-            BOOST_ASN_EXPLICIT_TAG(currentState, 0);
+            BOOST_ASN_CHOICE_TAG(currentState, 0);
             BOOST_ASN_CHOICE_TAG(transitionTime, 1);
         }
 
@@ -6077,13 +6077,13 @@ namespace ISO_9506_MMS_1 {
         template<> void AlterEventConditionListMonitoring_Request::serialize(boost::asn1::x690::output_coder& arch){
             BOOST_ASN_CHOICE_TAG(eventConditionListName, 0);
             BOOST_ASN_IMPLICIT_TAG(enabled, 1);
-            BOOST_ASN_EXPLICIT_TAG(priorityChange, 2);
+            BOOST_ASN_CHOICE_TAG(priorityChange, 2);
         }
 
         template<> void AlterEventConditionListMonitoring_Request::serialize(boost::asn1::x690::input_coder& arch){
             BOOST_ASN_CHOICE_TAG(eventConditionListName, 0);
             BOOST_ASN_IMPLICIT_TAG(enabled, 1);
-            BOOST_ASN_EXPLICIT_TAG(priorityChange, 2);
+            BOOST_ASN_CHOICE_TAG(priorityChange, 2);
         }
 
  
@@ -6186,16 +6186,16 @@ namespace ISO_9506_MMS_1 {
 
         template<> void ReadJournal_Request::serialize(boost::asn1::x690::output_coder& arch){
             BOOST_ASN_CHOICE_TAG(journalName, 0);
-            BOOST_ASN_EXPLICIT_TAG(rangeStartSpecification, 1);
-            BOOST_ASN_EXPLICIT_TAG(rangeStopSpecification, 2);
+            BOOST_ASN_CHOICE_TAG(rangeStartSpecification, 1);
+            BOOST_ASN_CHOICE_TAG(rangeStopSpecification, 2);
             BOOST_ASN_IMPLICIT_TAG(listOfVariables, 4);
             BOOST_ASN_IMPLICIT_TAG(entryToStartAfter, 5);
         }
 
         template<> void ReadJournal_Request::serialize(boost::asn1::x690::input_coder& arch){
             BOOST_ASN_CHOICE_TAG(journalName, 0);
-            BOOST_ASN_EXPLICIT_TAG(rangeStartSpecification, 1);
-            BOOST_ASN_EXPLICIT_TAG(rangeStopSpecification, 2);
+            BOOST_ASN_CHOICE_TAG(rangeStartSpecification, 1);
+            BOOST_ASN_CHOICE_TAG(rangeStopSpecification, 2);
             BOOST_ASN_IMPLICIT_TAG(listOfVariables, 4);
             BOOST_ASN_IMPLICIT_TAG(entryToStartAfter, 5);
         }

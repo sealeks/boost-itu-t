@@ -259,7 +259,7 @@ namespace MMS_Object_Module_1 {
             switch(type()){
                 case AccessCondition_never:  {BOOST_ASN_IMPLICIT_TAG(value<null_type > (false , AccessCondition_never), 0); break; }
                 case AccessCondition_semaphore:  {BOOST_ASN_EXPLICIT_TAG(value<ISO_9506_MMS_1::Identifier > (false , AccessCondition_semaphore), 1); break; }
-                case AccessCondition_user:  {BOOST_ASN_EXPLICIT_TAG(value<user_type > (false , AccessCondition_user), 2); break; }
+                case AccessCondition_user:  {BOOST_ASN_CHOICE_TAG(value<user_type > (false , AccessCondition_user), 2); break; }
                 case AccessCondition_password:  {BOOST_ASN_CHOICE_TAG(value<ACSE_1::Authentication_value > (false , AccessCondition_password), 3); break; }
                 case AccessCondition_joint:  {BOOST_ASN_IMPLICIT_TAG(value<joint_type > (false , AccessCondition_joint), 4); break; }
                 case AccessCondition_alternate:  {BOOST_ASN_IMPLICIT_TAG(value<alternate_type > (false , AccessCondition_alternate), 5); break; }
@@ -284,7 +284,7 @@ namespace MMS_Object_Module_1 {
                     switch(__tag_id__){
                         case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<null_type > (true , AccessCondition_never), 0)) return; else free(); break;}
                         case 1:  { if (BOOST_ASN_EXPLICIT_TAG(value<ISO_9506_MMS_1::Identifier > (true , AccessCondition_semaphore), 1)) return; else free(); break;}
-                        case 2:  { if (BOOST_ASN_EXPLICIT_TAG(value<user_type > (true , AccessCondition_user), 2)) return; else free(); break;}
+                        case 2:  { if (BOOST_ASN_CHOICE_TAG(value<user_type > (true , AccessCondition_user), 2)) return; else free(); break;}
                         case 3:  { if (BOOST_ASN_CHOICE_TAG(value<ACSE_1::Authentication_value > (true , AccessCondition_password), 3)) return; else free(); break;}
                         case 4:  { if (BOOST_ASN_IMPLICIT_TAG(value<joint_type > (true , AccessCondition_joint), 4)) return; else free(); break;}
                         case 5:  { if (BOOST_ASN_IMPLICIT_TAG(value<alternate_type > (true , AccessCondition_alternate), 5)) return; else free(); break;}

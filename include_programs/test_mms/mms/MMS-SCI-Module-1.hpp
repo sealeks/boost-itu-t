@@ -209,7 +209,9 @@ namespace MMS_SCI_Module_1 {
             boost::asn1::value_holder<eventEnrollments_type> eventEnrollments;
             boost::asn1::value_holder<eventConditionLists_type> eventConditionLists;
             boost::asn1::value_holder<journals_type> journals;
-            boost::asn1::value_holder<selected_Program_Invocation_type> selected_Program_Invocation;
+            boost::shared_ptr<selected_Program_Invocation_type> selected_Program_Invocation; // after extention
+            BOOST_ASN_VALUE_FUNC_DECLARATE(selected_Program_Invocation_type, selected_Program_Invocation)
+
 
             BOOST_ASN_ARCHIVE_FUNC;
         };
@@ -249,27 +251,13 @@ namespace MMS_SCI_Module_1 {
                     details_type() : accessControl(), accessControlLists(), domains(), programInvocations(), unitControls(), unnamedVariables(), namedVariables(), namedVariableLists(), namedTypes(), dataExchanges(), semaphores(), operatorStations(), eventConditions(), eventActions(), eventEnrollments(), journals(), eventConditionLists() {} 
  
                     boost::asn1::value_holder<Access_Control_List_instance> accessControl;
-                    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> readAccessCondition;
-                    BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, readAccessCondition)
-
-                    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> storeAccessCondition;
-                    BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, storeAccessCondition)
-
-                    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> writeAccessCondition;
-                    BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, writeAccessCondition)
-
-                    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> loadAccessCondition;
-                    BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, loadAccessCondition)
-
-                    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> executeAccessCondition;
-                    BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, executeAccessCondition)
-
-                    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> deleteAccessCondition;
-                    BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, deleteAccessCondition)
-
-                    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> editAccessCondition;
-                    BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AccessCondition, editAccessCondition)
-
+                    boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> readAccessCondition;
+                    boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> storeAccessCondition;
+                    boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> writeAccessCondition;
+                    boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> loadAccessCondition;
+                    boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> executeAccessCondition;
+                    boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> deleteAccessCondition;
+                    boost::asn1::value_holder<MMS_Object_Module_1::AccessCondition> editAccessCondition;
                     boost::asn1::value_holder<accessControlLists_type> accessControlLists;
                     boost::asn1::value_holder<domains_type> domains;
                     boost::asn1::value_holder<programInvocations_type> programInvocations;
@@ -285,7 +273,9 @@ namespace MMS_SCI_Module_1 {
                     boost::asn1::value_holder<eventActions_type> eventActions;
                     boost::asn1::value_holder<eventEnrollments_type> eventEnrollments;
                     boost::asn1::value_holder<journals_type> journals;
-                    boost::asn1::value_holder<eventConditionLists_type> eventConditionLists;
+                    boost::shared_ptr<eventConditionLists_type> eventConditionLists; // after extention
+                    BOOST_ASN_VALUE_FUNC_DECLARATE(eventConditionLists_type, eventConditionLists)
+
 
                     BOOST_ASN_ARCHIVE_FUNC;
                 };
@@ -412,9 +402,13 @@ namespace MMS_SCI_Module_1 {
                     BOOST_ASN_VALUE_FUNC_DECLARATE(eventEnrollment_type, eventEnrollment)
 
                     boost::asn1::value_holder<ISO_9506_MMS_1::MMSString> executionArgument;
-                    boost::asn1::value_holder<MMS_Object_Module_1::Control_State> control;
-                    boost::asn1::value_holder<Program_Invocation_instance> controlling_Program_Invocation;
-                    boost::shared_ptr<controlled_Program_Invocations_type> controlled_Program_Invocations;
+                    boost::shared_ptr<MMS_Object_Module_1::Control_State> control; // after extention
+                    BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::Control_State, control)
+
+                    boost::shared_ptr<Program_Invocation_instance> controlling_Program_Invocation; // after extention
+                    BOOST_ASN_VALUE_FUNC_DECLARATE(Program_Invocation_instance, controlling_Program_Invocation)
+
+                    boost::shared_ptr<controlled_Program_Invocations_type> controlled_Program_Invocations; // after extention
                     BOOST_ASN_VALUE_FUNC_DECLARATE(controlled_Program_Invocations_type, controlled_Program_Invocations)
 
 
@@ -522,9 +516,7 @@ namespace MMS_SCI_Module_1 {
  
                     boost::asn1::value_holder<Access_Control_List_instance> accessControl;
                     boost::asn1::value_holder<MMS_Object_Module_1::TypeDescription> typeDescription;
-                    boost::shared_ptr<MMS_Object_Module_1::Address> address;
-                    BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::Address, address)
-
+                    boost::asn1::value_holder<MMS_Object_Module_1::Address> address;
                     boost::shared_ptr<visiblestring_type> meaning;
                     BOOST_ASN_VALUE_FUNC_DECLARATE(visiblestring_type, meaning)
 
@@ -912,9 +904,15 @@ namespace MMS_SCI_Module_1 {
                     boost::shared_ptr<int> evaluationInterval;
                     BOOST_ASN_VALUE_FUNC_DECLARATE(int, evaluationInterval)
 
-                    boost::asn1::value_holder<displayEnhancement_type> displayEnhancement;
-                    boost::asn1::value_holder<group_Priority_Override_type> group_Priority_Override;
-                    boost::asn1::value_holder<referencingEventConditionLists_type> referencingEventConditionLists;
+                    boost::shared_ptr<displayEnhancement_type> displayEnhancement; // after extention
+                    BOOST_ASN_VALUE_FUNC_DECLARATE(displayEnhancement_type, displayEnhancement)
+
+                    boost::shared_ptr<group_Priority_Override_type> group_Priority_Override; // after extention
+                    BOOST_ASN_VALUE_FUNC_DECLARATE(group_Priority_Override_type, group_Priority_Override)
+
+                    boost::shared_ptr<referencingEventConditionLists_type> referencingEventConditionLists; // after extention
+                    BOOST_ASN_VALUE_FUNC_DECLARATE(referencingEventConditionLists_type, referencingEventConditionLists)
+
 
                     BOOST_ASN_ARCHIVE_FUNC;
                 };
@@ -1060,7 +1058,9 @@ namespace MMS_SCI_Module_1 {
                     boost::shared_ptr<MMS_Object_Module_1::AlarmAckRule> aaRule;
                     BOOST_ASN_VALUE_FUNC_DECLARATE(MMS_Object_Module_1::AlarmAckRule, aaRule)
 
-                    boost::asn1::value_holder<displayEnhancement_type> displayEnhancement;
+                    boost::shared_ptr<displayEnhancement_type> displayEnhancement; // after extention
+                    BOOST_ASN_VALUE_FUNC_DECLARATE(displayEnhancement_type, displayEnhancement)
+
 
                     BOOST_ASN_ARCHIVE_FUNC;
                 };
