@@ -50,7 +50,7 @@ namespace x680 {
 
         public:
 
-            fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out", bool revrs = false, bool nohldr = false);
+            fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out", bool revrs = true, bool nohldr = true);
             virtual ~fileout();
 
             void execute();
@@ -143,18 +143,23 @@ namespace x680 {
             
 
             template<typename Iter>
-            void execute_assignments_hpp(std::ofstream& stream, basic_entity_ptr self, Iter beg, Iter end, basic_entity_ptr scp = basic_entity_ptr()) {
-                scp = scp ? scp : self;
+            void execute_typeassignments_hpp(std::ofstream& stream, basic_entity_ptr self, Iter beg, Iter end) {
                 for (Iter it = beg; it != end; ++it) {
                     typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                     if (tpas && (tpas->type()) && (tpas->is_cpp_expressed()))
-                        execute_typeassignment_hpp(stream, self, tpas, scp);
+                        execute_typeassignment_hpp(stream, self, tpas, self);
+                    }
+            }
+            
+            template<typename Iter>
+            void execute_valueassignments_hpp(std::ofstream& stream, basic_entity_ptr self, Iter beg, Iter end) {
+                for (Iter it = beg; it != end; ++it) {
                     valueassignment_entity_ptr vpas = (*it)->as_valueassigment();
                     if (vpas) {
                         execute_valueassignment_hpp(stream, vpas);
                     }
                 }
-            }
+            }            
             
             template<typename Iter>
             void execute_assignments_cpp(std::ofstream& stream, basic_entity_ptr self, Iter beg, Iter end, basic_entity_ptr scp = basic_entity_ptr()) {
