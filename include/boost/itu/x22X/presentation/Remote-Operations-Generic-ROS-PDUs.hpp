@@ -55,8 +55,6 @@ namespace Remote_Operations_Generic_ROS_PDUs {
 }
 
 
-#include <boost/itu/x22X/presentation/Remote-Operations-Information-Objects.hpp>
-
 namespace Remote_Operations_Generic_ROS_PDUs {
 
     // import   from  Remote-Operations-Information-Objects

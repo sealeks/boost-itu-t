@@ -663,6 +663,15 @@ namespace ISO8823_PRESENTATION {
 
         struct normal_mode_parameters_type {
 
+            struct extensions_type {
+
+                extensions_type() {
+                }
+
+
+                BOOST_ASN_ARCHIVE_FUNC;
+            };
+
             normal_mode_parameters_type() {
             }
 
@@ -693,6 +702,9 @@ namespace ISO8823_PRESENTATION {
             boost::shared_ptr<Presentation_context_identifier> initiators_nominated_context;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Presentation_context_identifier, initiators_nominated_context)
 
+            boost::shared_ptr<extensions_type> extensions;
+            BOOST_ASN_VALUE_FUNC_DECLARATE(extensions_type, extensions)
+
             boost::shared_ptr<User_data> user_data;
             BOOST_ASN_VALUE_FUNC_DECLARATE(User_data, user_data)
 
@@ -720,6 +732,8 @@ namespace ISO8823_PRESENTATION {
     template<> void CP_type::x410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CP_type::normal_mode_parameters_type::extensions_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CP_type::normal_mode_parameters_type::extensions_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CPA_PPDU::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CPA_PPDU::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CPA_PPDU::x410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);

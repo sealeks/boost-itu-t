@@ -65,7 +65,6 @@ namespace Reliable_Transfer_APDU {
 
 #include <boost/itu/x22X/presentation/Remote-Operations-Information-Objects.hpp>
 
-
 namespace Reliable_Transfer_APDU {
 
     // import   from  Remote-Operations-Information-Objects

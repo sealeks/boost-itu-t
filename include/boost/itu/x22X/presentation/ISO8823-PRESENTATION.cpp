@@ -791,6 +791,14 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_IMPLICIT_TAG(applicationProtocol, 4);
     }
 
+    template<> void CP_type::normal_mode_parameters_type::extensions_type::serialize(boost::asn1::x690::output_coder& arch) {
+        BOOST_ASN_EXTENTION;
+    }
+
+    template<> void CP_type::normal_mode_parameters_type::extensions_type::serialize(boost::asn1::x690::input_coder& arch) {
+        BOOST_ASN_EXTENTION;
+    }
+
     template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
         BOOST_ASN_IMPLICIT_TAG(calling_presentation_selector, 1);
@@ -801,6 +809,7 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_IMPLICIT_TAG(user_session_requirements, 9);
         BOOST_ASN_EXPLICIT_TAG(protocol_options, 11);
         BOOST_ASN_EXPLICIT_TAG(initiators_nominated_context, 12);
+        BOOST_ASN_EXPLICIT_TAG(extensions, 14);
         BOOST_ASN_CHOICE(user_data);
     }
 
@@ -814,6 +823,7 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_IMPLICIT_TAG(user_session_requirements, 9);
         BOOST_ASN_EXPLICIT_TAG(protocol_options, 11);
         BOOST_ASN_EXPLICIT_TAG(initiators_nominated_context, 12);
+        BOOST_ASN_EXPLICIT_TAG(extensions, 14);
         BOOST_ASN_CHOICE(user_data);
     }
 
