@@ -144,14 +144,14 @@ namespace x680 {
 
 
         friend bool operator==(const canonical_tag& ls, const canonical_tag& rs);
-        
-        friend bool operator!=(const canonical_tag& ls, const canonical_tag& rs);    
-        
+
+        friend bool operator!=(const canonical_tag& ls, const canonical_tag& rs);
+
         friend bool operator==(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);
-        
-        friend bool operator!=(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);         
-        
-        friend bool operator<(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);        
+
+        friend bool operator!=(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);
+
+        friend bool operator<(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs);
 
         bool operator<(const canonical_tag& other);
 
@@ -180,8 +180,8 @@ namespace x680 {
         defined_type builtin() const {
             return builtin_;
         }
-        
-        defined_type root_builtin();  
+
+        defined_type root_builtin();
 
         tagged_ptr tag() const {
             return tag_;
@@ -190,14 +190,14 @@ namespace x680 {
         void tag(tagged_ptr vl) {
             tag_ = vl;
         }
-        
+
         // canonical tag
-        canonical_tag_ptr cncl_tag();    
-        
+        canonical_tag_ptr cncl_tag();
+
         // preffix = textualy tagging
-        canonical_tag_ptr textualy_tag();       
-        
-        type_atom_ptr textualy_type();   
+        canonical_tag_ptr textualy_tag();
+
+        type_atom_ptr textualy_type();
 
         predefined_ptr predefined() {
             return predefined_;
@@ -218,27 +218,27 @@ namespace x680 {
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
         }
-        
-        virtual bool isrefferrence() const; 
 
-        bool issimplerefferrence();        
-        
-        bool isstruct() const;   
-        
-        bool isstruct_of() const;     
-        
-        bool isstructure() const;       
-        
+        virtual bool isrefferrence() const;
+
+        bool issimplerefferrence();
+
+        bool isstruct() const;
+
+        bool isstruct_of() const;
+
+        bool isstructure() const;
+
         bool isopen() const;
 
         bool isenum() const;
 
         bool istextualy_choice();
-        
-        bool isnotagged_choice();        
+
+        bool isnotagged_choice();
 
         bool isallways_explicit();
-        
+
 
         tagrule_type tagrule() const;
 
@@ -433,15 +433,78 @@ namespace x680 {
         bool named() const {
             return named_;
         }
-            
-        bool is_cpp_expressed() const{
-            return !has_arguments();
+
+        bool is_cpp_expressed() const {
+            return ((type()) && (!has_arguments()));
         }
 
-        bool islocaldeclare() const ;
- 
-        canonical_tag_vct cncl_tags();           
-   
+        defined_type builtin() const {
+            return type() ? type()->builtin() : t_NODEF;
+        }
+
+        defined_type root_builtin() {
+            return type() ? type()->root_builtin() : t_NODEF;
+        }
+
+        tagged_ptr tag() const {
+            return type() ? type()->tag() : tagged_ptr();
+        }
+
+        canonical_tag_ptr cncl_tag() {
+            return type() ? type()->cncl_tag() : canonical_tag_ptr();
+        }
+
+        // preffix = textualy tagging
+
+        canonical_tag_ptr textualy_tag() {
+            return type() ? type()->textualy_tag() : canonical_tag_ptr();
+        }
+
+        type_atom_ptr textualy_type() {
+            return type() ? type()->textualy_type() : type_atom_ptr();
+        }
+
+        predefined_ptr predefined() {
+            return type() ? type()->predefined() : predefined_ptr();
+        }
+
+        bool isrefferrence() const {
+            return (type() && (type()->isrefferrence()));
+        }
+
+        bool issimplerefferrence() {
+            return (type() && (type()->issimplerefferrence()));
+        }
+
+        bool isstruct() const {
+            return (type() && (type()->isstruct()));
+        }
+
+        bool isstruct_of() const {
+            return (type() && (type()->isstruct_of()));
+        }
+
+        bool isstructure() const {
+            return (type() && (type()->isstructure()));
+        }
+
+        bool isopen() const {
+            return (type() && (type()->isopen()));
+        }
+
+        bool isenum() const {
+            return (type() && (type()->isenum()));
+        }
+
+        bool istextualy_choice() {
+            return (type() && (type()->istextualy_choice()));
+        }
+
+
+        bool islocaldeclare() const;
+
+        canonical_tag_vct cncl_tags();
+
         namedtypeassignment_entity_ptr as_named();
 
 
@@ -454,10 +517,10 @@ namespace x680 {
         // protected:
 
         //   void resolve_predef();    
-        
+
         basic_entity_vector::iterator first_extention();
 
-        basic_entity_vector::iterator second_extention();        
+        basic_entity_vector::iterator second_extention();
 
     private:
 
@@ -469,7 +532,7 @@ namespace x680 {
 
         void post_resolve_autotag();
 
-        void post_resolve_check();        
+        void post_resolve_check();
 
         type_atom_ptr type_;
         bool named_;

@@ -239,11 +239,12 @@ namespace x680 {
     }
 
     bool type_atom::istextualy_choice() {
-        if ((builtin_ == t_CHOICE) && (!tag()))
-            return true;
-        if (!isrefferrence())
+        if (builtin_ == t_CHOICE)
+            return !tag();
+        if (!isrefferrence() || tag())
             return false;
-        //reff()-> resolve();
+        if (reff())
+            reff()-> resolve();
         if (reff() && (reff()->as_typeassigment())) {
             if (reff()->as_typeassigment()->type())
                 return reff()->as_typeassigment()->type()->istextualy_choice();
@@ -251,20 +252,6 @@ namespace x680 {
         return false;
     }
 
-    bool type_atom::isnotagged_choice() {
-        if (builtin_ == t_CHOICE)
-            return !tag();
-        if (!isrefferrence())
-            return false;
-        if (tag())
-            return false;        
-        reff()-> resolve();
-        if (reff() && (reff()->as_typeassigment())) {
-            if (reff()->as_typeassigment()->type())
-                return reff()->as_typeassigment()->type()->isnotagged_choice();
-        }
-        return false;
-    }    
 
 
     bool type_atom::isallways_explicit() {
@@ -578,7 +565,7 @@ namespace x680 {
     canonical_tag_vct typeassignment_entity::cncl_tags() {
         canonical_tag_vct tmp;
         if (type()) {
-            if (type()->isnotagged_choice()) {
+            if (type()->istextualy_choice()) {
                 if (type()->builtin() == t_CHOICE) {
                     if ((type()->tag()) && (type()->cncl_tag())) {
                             tmp.push_back(type()->cncl_tag());
@@ -736,7 +723,7 @@ namespace x680 {
             if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
                 type_atom_ptr tmptype = (*it)->as_typeassigment()->type();
                 if ((tmptype) && (!(tmptype->tag()))) {
-                    bool isallways_expl = ((tmptype->isnotagged_choice()) || (tmptype->isopen()) ||
+                    bool isallways_expl = ((tmptype->istextualy_choice()) || (tmptype->isopen()) ||
                             (tmptype->isdummy()));
                     tmptype-> tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++),
                             tcl_context, isallways_expl ? explicit_tags : implicit_tags));
@@ -750,7 +737,7 @@ namespace x680 {
                 if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
                     type_atom_ptr tmptype = (*it)->as_typeassigment()->type();
                     if ((tmptype) && (!(tmptype->tag()))) {
-                        bool isallways_expl = ((tmptype->isnotagged_choice()) || (tmptype->isopen()) ||
+                        bool isallways_expl = ((tmptype->istextualy_choice()) || (tmptype->isopen()) ||
                                 (tmptype->isdummy()));
                         tmptype-> tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++),
                                 tcl_context, isallways_expl ? explicit_tags : implicit_tags));
@@ -765,7 +752,7 @@ namespace x680 {
                 if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
                     type_atom_ptr tmptype = (*it)->as_typeassigment()->type();
                     if ((tmptype) && (!(tmptype->tag()))) {
-                        bool isallways_expl = ((tmptype->isnotagged_choice()) || (tmptype->isopen()) ||
+                        bool isallways_expl = ((tmptype->istextualy_choice()) || (tmptype->isopen()) ||
                                 (tmptype->isdummy()));
                         tmptype-> tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++),
                                 tcl_context, isallways_expl ? explicit_tags : implicit_tags));
