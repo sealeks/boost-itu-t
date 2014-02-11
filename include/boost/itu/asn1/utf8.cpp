@@ -30,6 +30,7 @@ DEALINGS IN THE SOFTWARE.
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <iterator>
 
 
 #if defined(__MINGW32__) && defined(_amd64_)
@@ -80,9 +81,9 @@ namespace boost {
                 else
                     return L"";
 #if defined(ASNUTF8_DEF_WCHAR16)
-                boost::asn1::utf8::utf8to16(val.begin(), end_it, back_inserter(unicodeline));
+                boost::asn1::utf8::utf8to16(val.begin(), end_it, std::back_inserter(unicodeline));
 #elif defined(ASNUTF8_DEF_WCHAR32)
-                boost::asn1::utf8::utf8to32(val.begin(), end_it, back_inserter(unicodeline));
+                boost::asn1::utf8::utf8to32(val.begin(), end_it, std::back_inserter(unicodeline));
 #else    
                 return L"?";
 #endif        
@@ -106,9 +107,9 @@ namespace boost {
                 else
                     return L"";
 #if defined(ASNUTF8_DEF_WCHAR16)
-                boost::asn1::utf8::utf8to16(val.begin(), end_it, back_inserter(unicodeline));
+                boost::asn1::utf8::utf8to16(val.begin(), end_it, std::back_inserter(unicodeline));
 #elif defined(ASNUTF8_DEF_WCHAR32)
-                boost::asn1::utf8::utf8to32(val.begin(), end_it, back_inserter(unicodeline));
+                boost::asn1::utf8::utf8to32(val.begin(), end_it, std::back_inserter(unicodeline));
 #else    
                 return false;
 #endif        
@@ -124,9 +125,9 @@ namespace boost {
             try {
                 std::string utf8line;
 #if defined(ASNUTF8_DEF_WCHAR16)      
-                boost::asn1::utf8::utf16to8(val.begin(), val.end(), back_inserter(utf8line));
+                boost::asn1::utf8::utf16to8(val.begin(), val.end(), std::back_inserter(utf8line));
 #elif defined(ASNUTF8_DEF_WCHAR32) 
-                boost::asn1::utf8::utf32to8(val.begin(), val.end(), back_inserter(utf8line));
+                boost::asn1::utf8::utf32to8(val.begin(), val.end(), std::back_inserter(utf8line));
 #else    
                 return L"?";
 #endif        
@@ -141,9 +142,9 @@ namespace boost {
             try {
                 std::string utf8line;
 #if defined(ASNUTF8_DEF_WCHAR16)      
-                boost::asn1::utf8::utf16to8(val.begin(), val.end(), back_inserter(utf8line));
+                boost::asn1::utf8::utf16to8(val.begin(), val.end(), std::back_inserter(utf8line));
 #elif defined(ASNUTF8_DEF_WCHAR32)
-                boost::asn1::utf8::utf32to8(val.begin(), val.end(), back_inserter(utf8line));
+                boost::asn1::utf8::utf32to8(val.begin(), val.end(), std::back_inserter(utf8line));
 #else    
                 return L"?";
 #endif        
@@ -160,9 +161,9 @@ namespace boost {
 
 #if defined(ASNUTF8_DEF_WCHAR16)    
                 std::string utf8line;
-                boost::asn1::utf8::utf16to8(val.begin(), val.end(), back_inserter(utf8line));
+                boost::asn1::utf8::utf16to8(val.begin(), val.end(), std::back_inserter(utf8line));
                 std::vector<boost::asn1::utf8::uint32_t> utf32line;
-                boost::asn1::utf8::utf8to32(utf8line.begin(), utf8line.end(), back_inserter(utf32line));
+                boost::asn1::utf8::utf8to32(utf8line.begin(), utf8line.end(), std::back_inserter(utf32line));
                 for (std::vector<boost::asn1::utf8::uint32_t>::const_iterator it = utf32line.begin(); it != utf32line.end(); ++it) {
                     std::copy(reinterpret_cast<const std::string::value_type*> (&(*it)), reinterpret_cast<const std::string::value_type*> (&(*it)) + 4, std::back_inserter(rslt));
 #ifndef BIG_ENDIAN_ARCHITECTURE                        
@@ -198,9 +199,9 @@ namespace boost {
                 }
 #elif defined(ASNUTF8_DEF_WCHAR32)
                 std::string utf8line;
-                boost::asn1::utf8::utf32to8(val.begin(), val.end(), back_inserter(utf8line));
+                boost::asn1::utf8::utf32to8(val.begin(), val.end(), std::back_inserter(utf8line));
                 std::vector<boost::asn1::utf8::uint16_t> utf16line;
-                boost::asn1::utf8::utf8to16(utf8line.begin(), utf8line.end(), back_inserter(utf16line));
+                boost::asn1::utf8::utf8to16(utf8line.begin(), utf8line.end(), std::back_inserter(utf16line));
                 for (std::vector<boost::asn1::utf8::uint16_t>::const_iterator it = utf16line.begin(); it != utf16line.end(); ++it) {
                     std::copy(reinterpret_cast<const std::string::value_type*> (&(*it)), reinterpret_cast<const std::string::value_type*> (&(*it)) + 2, std::back_inserter(rslt));
 #ifndef BIG_ENDIAN_ARCHITECTURE                          
@@ -239,8 +240,8 @@ namespace boost {
 #endif                        
                 }
                 std::string utf8line;
-                boost::asn1::utf8::utf32to8(utf32line.begin(), utf32line.end(), back_inserter(utf8line));
-                boost::asn1::utf8::utf8to16(utf32line.begin(), utf32line.end(), back_inserter(rslt));
+                boost::asn1::utf8::utf32to8(utf32line.begin(), utf32line.end(), std::back_inserter(utf8line));
+                boost::asn1::utf8::utf8to16(utf32line.begin(), utf32line.end(), std::back_inserter(rslt));
 #elif defined(ASNUTF8_DEF_WCHAR32)
                 std::size_t cnt = 0;
                 for (std::string::const_iterator it = val.begin(); it != val.end(); ++it) {
@@ -298,8 +299,8 @@ namespace boost {
 #endif             
                 }
                 std::vector<boost::asn1::utf8::uint8_t> utf8line;
-                boost::asn1::utf16to8(utf16line.begin(), utf16line.end(), back_inserter(utf8line));
-                boost::asn1::utf8to32(utf8line.begin(), utf8line.end(), back_inserter(rslt));
+                boost::asn1::utf16to8(utf16line.begin(), utf16line.end(), std::back_inserter(utf8line));
+                boost::asn1::utf8to32(utf8line.begin(), utf8line.end(), std::back_inserter(rslt));
 
 
 #else    
