@@ -835,16 +835,16 @@ namespace x680 {
         }
 
         void fileout::execute_import(std::ofstream& stream, module_entity_ptr mod, import_entity_ptr self) {
-
+            basic_entity_ptr scp;
             if (self->scope())
-                stream << "\n  // import   from  " << self->name();
+                stream << "\n    // import   from  " << self->name();
             else
                 stream << "\n";
             stream << "\n";
             stream << "\n";
             for (import_vector::iterator it = self->import().begin(); it != self->import().end(); ++it) {
                 if (expressed_import(mod, nameconvert(*it))) {
-                    stream << tabformat() << "using " << nameconvert(self->name())
+                    stream << tabformat(scp,1) << "using " << nameconvert(self->name())
                             << "::" << nameconvert(*it) << ";\n";
                 }
             }
