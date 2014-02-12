@@ -284,7 +284,7 @@ namespace x680 {
                 boost::static_pointer_cast<fromobjects_type_atom> (self()) : fromobjects_type_atom_ptr();
     }
 
-    void type_atom::resolve(basic_atom_ptr holder) {
+    void type_atom::resolve(basic_atom_ptr holder) {        
         resolve_reff();
         resolve_tag();
         resolve_predef();
