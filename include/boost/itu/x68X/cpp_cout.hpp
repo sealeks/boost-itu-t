@@ -94,11 +94,6 @@ namespace x680 {
 
             void execute_import(std::ofstream& stream, module_entity_ptr mod, import_entity_ptr self);
             void execute_imports(std::ofstream& stream, module_entity_ptr self);
-
-            void execute_typedef_simple_native(std::ofstream& stream, basic_entity_ptr self, bool tagged);
-            void execute_typedef_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr(), bool endl = true);
-            void execute_typedef_seqof_native(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp);
-            bool execute_typedef_seqof_native_impl(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp =  basic_entity_ptr());
             
     
             void execute_typeassignment_hpp(std::ofstream& stream,  typeassignment_entity_ptr tpas);
@@ -166,12 +161,13 @@ namespace x680 {
             
             template<typename Iter>
             void execute_valueassignments_hpp(std::ofstream& stream, Iter beg, Iter end) {
+                stream << "\n";
                 for (Iter it = beg; it != end; ++it) {
                     valueassignment_entity_ptr vpas = (*it)->as_valueassigment();
-                    if (vpas) {
+                    if (vpas)                      
                         execute_valueassignment_hpp(stream, vpas);
-                    }
                 }
+                stream << "\n";
             }            
             
             template<typename Iter>
