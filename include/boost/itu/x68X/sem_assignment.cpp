@@ -130,6 +130,7 @@ namespace x680 {
         int rslt = 0;
         basic_entity_ptr scp = scope();
         while (scp) {
+            if(!((scp->as_typeassigment()) && (scp->as_typeassigment()->isstruct_of())))
             rslt++;
             scp = scp->scope();
         }
