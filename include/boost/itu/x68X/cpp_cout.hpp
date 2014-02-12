@@ -127,13 +127,13 @@ namespace x680 {
             void execute_choice_enum(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());            
             void execute_choice_cpp(std::ofstream& stream, typeassignment_entity_ptr self); 
             
-            void execute_seqset_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_seqset_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_struct_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_struct_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
             
             void execute_ctor(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp);
             
-            void execute_seqsetof_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_seqsetof_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_structof_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_structof_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
 
             void execute_archive_meth_hpp(std::ofstream& stream,  basic_entity_ptr scp = basic_entity_ptr());
             void execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
