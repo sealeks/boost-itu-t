@@ -17,6 +17,7 @@ namespace x680 {
         
         struct declare_atom;
         typedef std::vector<declare_atom> declare_vect;
+        typedef std::vector<std::string> structdeclare_vect;
 
 
         bool dir_exists(const std::string& path);
@@ -34,7 +35,8 @@ namespace x680 {
         value_atom_ptr value_skip_defined(value_atom_ptr self);
         std::string value_int_str(value_atom_ptr self);
         std::string value_bool_str(value_atom_ptr self); 
-        std::string value_real_str(value_atom_ptr self);         
+        std::string value_real_str(value_atom_ptr self);    
+        std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self);
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
         std::string nameconvert(std::string name);
         std::string tabformat(basic_entity_ptr selft = basic_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
@@ -62,11 +64,18 @@ namespace x680 {
 
             void execute_module(module_entity_ptr self);
             
-            void loaddecl(declare_vect& vct, basic_entity_ptr self);
-            void execute_typedef_reff(declare_vect& vct, basic_entity_ptr self);
-            void execute_typedef_seqof(declare_vect& vct, basic_entity_ptr self);
-            bool execute_typedef_seqof_impl(declare_vect& vct,  typeassignment_entity_ptr self);     
+            void execute_predeclare(std::ofstream& stream, basic_entity_ptr self,  basic_entity_ptr scp =  basic_entity_ptr());
+            std::size_t load_predeclare(basic_entity_ptr self, structdeclare_vect& rslt);
+            std::size_t load_structof_predeclare(basic_entity_ptr self, structdeclare_vect& rslt);  
+            std::size_t load_struct_predeclare(basic_entity_ptr self, structdeclare_vect& rslt); 
+            
             void execute_typedef(std::ofstream& stream, const declare_vect& vct, bool remote =false,  basic_entity_ptr scp =  basic_entity_ptr());
+            void load_typedef(declare_vect& vct, basic_entity_ptr self);
+            void load_typedef_ref(declare_vect& vct, basic_entity_ptr self);
+            void load_typedef_structof(declare_vect& vct, basic_entity_ptr self);
+            bool load_typedef_structof_impl(declare_vect& vct,  typeassignment_entity_ptr self);     
+            
+            
             void execute_typedef_native(std::ofstream& stream, basic_entity_ptr self, bool global = true, basic_entity_ptr scp =  basic_entity_ptr());
             
             void headerlock(std::ofstream& stream, std::string name);
@@ -91,7 +100,7 @@ namespace x680 {
             bool execute_typedef_seqof_native_impl(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp =  basic_entity_ptr());
             
     
-            void execute_typeassignment_hpp(std::ofstream& stream, basic_entity_ptr self, typeassignment_entity_ptr tpas, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_typeassignment_hpp(std::ofstream& stream,  typeassignment_entity_ptr tpas);
             void execute_typeassignment_cpp(std::ofstream& stream, typeassignment_entity_ptr tpas);
 
             void execute_predefined_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
@@ -146,16 +155,16 @@ namespace x680 {
             
 
             template<typename Iter>
-            void execute_typeassignments_hpp(std::ofstream& stream, basic_entity_ptr self, Iter beg, Iter end) {
+            void execute_typeassignments_hpp(std::ofstream& stream, Iter beg, Iter end) {
                 for (Iter it = beg; it != end; ++it) {
                     typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                     if (tpas && (tpas->type()) && (tpas->is_cpp_expressed()))
-                        execute_typeassignment_hpp(stream, self, tpas, self);
+                        execute_typeassignment_hpp(stream, tpas);
                     }
             }
             
             template<typename Iter>
-            void execute_valueassignments_hpp(std::ofstream& stream, basic_entity_ptr self, Iter beg, Iter end) {
+            void execute_valueassignments_hpp(std::ofstream& stream, Iter beg, Iter end) {
                 for (Iter it = beg; it != end; ++it) {
                     valueassignment_entity_ptr vpas = (*it)->as_valueassigment();
                     if (vpas) {
@@ -165,8 +174,7 @@ namespace x680 {
             }            
             
             template<typename Iter>
-            void execute_assignments_cpp(std::ofstream& stream, basic_entity_ptr self, Iter beg, Iter end, basic_entity_ptr scp = basic_entity_ptr()) {
-                scp = scp ? scp : self;
+            void execute_assignments_cpp(std::ofstream& stream, Iter beg, Iter end) {
                 for (Iter it = beg; it != end; ++it) {
                     typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                     if (tpas && (tpas->type()) && (tpas->is_cpp_expressed()))
