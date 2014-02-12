@@ -602,13 +602,13 @@ namespace x680 {
 
         }
 
-        void fileout::execute_predeclare(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp) {
+        void fileout::execute_predeclare(std::ofstream& stream, basic_entity_ptr self) {
             // struct X1; ...
             structdeclare_vect vct;
             if (load_predeclare(self, vct)) {
                 stream << "\n";
                 for (structdeclare_vect::const_iterator it = vct.begin(); it != vct.end(); ++it)
-                    stream << "\n" << tabformat(scp, 1) << "struct " << *it << ";";
+                    stream << "\n" << tabformat(self, 1) << "struct " << *it << ";";
                 stream << "\n";
             }
         }
@@ -661,13 +661,13 @@ namespace x680 {
                 execute_typedef(stream, vct, false);
         }
 
-        void fileout::execute_typedef_native_local(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp) {
+        void fileout::execute_typedef_native_local(std::ofstream& stream, basic_entity_ptr self) {
             // expl X ::= INTEGER or X = [1] INEGER
             declare_vect vct;
             load_typedef_seqof_native(vct, self);
             if (!vct.empty()) {
                 stream << "\n";
-                execute_typedef(stream, vct, false, scp);
+                execute_typedef(stream, vct, false, self);
             }
         }
 
@@ -877,10 +877,8 @@ namespace x680 {
                         execute_struct_hpp(stream, tpas);
                         break;
                     case t_SEQUENCE_OF:
-                        execute_structof_hpp(stream, tpas, tpas);
-                        break;
                     case t_SET_OF:
-                        execute_structof_hpp(stream, tpas, tpas);
+                        execute_structof_hpp(stream, tpas);
                         break;
                     default:
                     {
@@ -926,25 +924,24 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_predefined_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
-            scp = scp ? scp : self;
+        void fileout::execute_predefined_hpp(std::ofstream& stream, typeassignment_entity_ptr self) {
             if (self->type()) {
                 predefined_ptr predef = self->predefined();
                 if (predef) {
                     switch (self->root_builtin()) {
                         case t_INTEGER:
                         {
-                            execute_predefined_int_hpp(stream, predef, self, scp);
+                            execute_predefined_int_hpp(stream, predef, self);
                             break;
                         }
                         case t_BIT_STRING:
                         {
-                            execute_predefined_bs_hpp(stream, predef, self, scp);
+                            execute_predefined_bs_hpp(stream, predef, self);
                             break;
                         }
                         case t_ENUMERATED:
                         {
-                            execute_predefined_int_hpp(stream, predef, self, scp);
+                            execute_predefined_int_hpp(stream, predef, self);
                         }
                         default:
                         {
@@ -1002,13 +999,13 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_predefined_int_hpp(std::ofstream& stream, predefined_ptr prdf, typeassignment_entity_ptr self, basic_entity_ptr scp) {
+        void fileout::execute_predefined_int_hpp(std::ofstream& stream, predefined_ptr prdf, typeassignment_entity_ptr self) {
             std::string pref = ((self->scope()) && (self->scope()->as_typeassigment())) ? "static " : "extern ";
             stream << "\n";
             for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {
                 valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
                 if (vlass) {
-                    stream << tabformat(scp) << pref << "const ";
+                    stream << tabformat(self) << pref << "const ";
                     stream << /*nameconvert(self->name())*/"int" << " ";
                     stream << nameconvert(self->name()) << "_" << nameconvert(vlass->name()) << ";\n";
                 }
@@ -1031,13 +1028,13 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_predefined_bs_hpp(std::ofstream& stream, predefined_ptr prdf, typeassignment_entity_ptr self, basic_entity_ptr scp) {
+        void fileout::execute_predefined_bs_hpp(std::ofstream& stream, predefined_ptr prdf, typeassignment_entity_ptr self) {
             std::string pref = ((self->scope()) && (self->scope()->as_typeassigment())) ? "static " : "extern ";
             stream << "\n";
             for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {
                 valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
                 if (vlass) {
-                    stream << tabformat(scp) << pref << "const ";
+                    stream << tabformat(self) << pref << "const ";
                     stream << /*nameconvert(self->name())*/"bitstring_type" << " ";
                     stream << nameconvert(self->name()) << "_" << nameconvert(vlass->name()) << ";\n";
                 }
@@ -1148,8 +1145,7 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_member(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
-            scp = scp ? scp : self;
+        void fileout::execute_member(std::ofstream& stream, typeassignment_entity_ptr self) {
             bool ischoice = (self->builtin() == t_CHOICE);
             bool afterextention = false;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
@@ -1164,17 +1160,17 @@ namespace x680 {
                             if (!ischoice) {
                                 if (afterextention && (mkr == mk_none))
                                     mkr = mk_optional;
-                                stream << tabformat(scp, 1) <<
+                                stream << tabformat(self, 1) <<
                                         member_marker_str(fromtype_str(named), mkr, noholder_) <<
                                         " " << nameconvert(named->name()) << ";" << (afterextention ? " // after extention" : "");
 
                                 if ((mkr == mk_optional) || (mkr == mk_default)) {
-                                    stream << "\n" << tabformat(scp, 1) << "BOOST_ASN_VALUE_FUNC_DECLARATE(";
+                                    stream << "\n" << tabformat(self, 1) << "BOOST_ASN_VALUE_FUNC_DECLARATE(";
                                     stream << fromtype_str(named) << ", " << nameconvert(named->name()) << ")\n";
 
                                 }
                             } else {
-                                stream << tabformat(scp, 1) <<
+                                stream << tabformat(self, 1) <<
                                         "BOOST_ASN_VALUE_CHOICE(" <<
                                         nameconvert(named->name()) << ", " << fromtype_str(named) << ", " <<
                                         type_str(self) << "_" << nameconvert(named->name()) << ");";
@@ -1189,12 +1185,11 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_declare_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
-            scp = scp ? scp : self;
+        void fileout::execute_declare_hpp(std::ofstream& stream, typeassignment_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if ((tpas) && (tpas->type()))
-                    execute_declare_struct_hpp(stream, tpas, self);
+                    execute_declare_struct_hpp(stream, tpas);
             }
         }
 
@@ -1206,20 +1201,19 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_declare_struct_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
-            scp = scp ? scp : self;
+        void fileout::execute_declare_struct_hpp(std::ofstream& stream, typeassignment_entity_ptr self) {
             if (self) {
                 switch (self->builtin()) {
                     case t_CHOICE: stream << "\n";
-                        execute_choice_hpp(stream, self, scp);
+                        execute_choice_hpp(stream, self);
                         break;
                     case t_SET:
                     case t_SEQUENCE: stream << "\n";
-                        execute_struct_hpp(stream, self, scp);
+                        execute_struct_hpp(stream, self);
                         break;
                     case t_SET_OF:
                     case t_SEQUENCE_OF:
-                        execute_structof_hpp(stream, self, scp);
+                        execute_structof_hpp(stream, self);
                         break;
                     default:
                     {
@@ -1249,29 +1243,28 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_choice_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
+        void fileout::execute_choice_hpp(std::ofstream& stream, typeassignment_entity_ptr self) {
 
-            scp = scp ? scp : self;
-            execute_choice_enum(stream, self, scp);
+            execute_choice_enum(stream, self);
 
-            stream << "\n" << tabformat(scp) <<
+            stream << "\n" << tabformat(self) <<
                     "struct " << type_str(self) << "";
             stream << " : " << "public BOOST_ASN_CHOICE_STRUCT(" << type_str(self) << "_enum) {\n";
 
 
-            execute_predeclare(stream, self, scp);
-            execute_declare_hpp(stream, self, scp);
-            execute_typedef_native_local(stream, self, scp);
+            execute_predeclare(stream, self);
+            execute_declare_hpp(stream, self);
+            execute_typedef_native_local(stream, self);
 
             execute_predefineds_hpp(stream, self);
 
-            execute_ctor(stream, self, scp);
+            execute_ctor(stream, self);
 
-            execute_member(stream, self, scp);
+            execute_member(stream, self);
 
-            execute_archive_meth_hpp(stream, scp);
+            execute_archive_meth_hpp(stream, self);
 
-            stream << "\n" << tabformat(scp) << "}; ";
+            stream << "\n" << tabformat(self) << "}; ";
             stream << "\n ";
         }
 
@@ -1286,17 +1279,16 @@ namespace x680 {
             stream << "\n ";
         }
 
-        void fileout::execute_choice_enum(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
-            scp = scp ? scp : self;
-            stream << "\n" << tabformat(scp) <<
+        void fileout::execute_choice_enum(std::ofstream& stream, typeassignment_entity_ptr self) {
+            stream << "\n" << tabformat(self) <<
                     "enum " << type_str(self) << "_enum {";
-            stream << "\n" << tabformat(scp, 1) <<
+            stream << "\n" << tabformat(self, 1) <<
                     type_str(self) << "_null = 0, ";
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
                     tagmarker_type mkr = (*it)->as_typeassigment()->as_named()->marker();
                     if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
-                        stream << "\n" << tabformat(scp, 1) <<
+                        stream << "\n" << tabformat(self, 1) <<
                         choice_enum_str(self, (*it)) << ",";
                 }
             }
@@ -1304,24 +1296,23 @@ namespace x680 {
             stream << "\n ";
         }
 
-        void fileout::execute_struct_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
+        void fileout::execute_struct_hpp(std::ofstream& stream, typeassignment_entity_ptr self) {
 
-            scp = scp ? scp : self;
-            stream << "\n" << tabformat(scp) <<
+            stream << "\n" << tabformat(self) <<
                     "struct " << type_str(self) << "{\n";
 
-            execute_predeclare(stream, self, scp);
+            execute_predeclare(stream, self);
             execute_declare_hpp(stream, self);
-            execute_typedef_native_local(stream, self, scp);
+            execute_typedef_native_local(stream, self);
             execute_predefineds_hpp(stream, self);
 
-            execute_ctor(stream, self, scp);
+            execute_ctor(stream, self);
 
-            execute_member(stream, self, scp);
+            execute_member(stream, self);
 
-            execute_archive_meth_hpp(stream, scp);
+            execute_archive_meth_hpp(stream, self);
 
-            stream << "\n" << tabformat(scp) << "};";
+            stream << "\n" << tabformat(self) << "};";
             stream << "\n ";
         }
 
@@ -1337,16 +1328,15 @@ namespace x680 {
             stream << "\n ";
         }
 
-        void fileout::execute_structof_hpp(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
-            scp = scp ? scp : self;
+        void fileout::execute_structof_hpp(std::ofstream& stream, typeassignment_entity_ptr self) {
             if (self && (self->type())) {
                 if ((self->isstruct_of()) && (!self->childs().empty())) {
                     typeassignment_entity_ptr cpas = self->childs().front()->as_typeassigment();
                     if (cpas) {
                         if (cpas->isstruct_of()) {
-                            execute_structof_hpp(stream, cpas, scp);
+                            execute_structof_hpp(stream, cpas);
                         } else if (cpas->isstruct()) {
-                            execute_declare_struct_hpp(stream, cpas, scp);
+                            execute_declare_struct_hpp(stream, cpas);
                         }
                     }
                 }
@@ -1368,14 +1358,13 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_ctor(std::ofstream& stream, typeassignment_entity_ptr self, basic_entity_ptr scp) {
-            scp = scp ? scp : self;
+        void fileout::execute_ctor(std::ofstream& stream, typeassignment_entity_ptr self) {
             if ((self) && (self->type())) {
                 switch (self->builtin()) {
                     case t_CHOICE:
                     {
                         stream << "\n";
-                        stream << "\n" << tabformat(scp, 1) << type_str(self) << "()";
+                        stream << "\n" << tabformat(self, 1) << type_str(self) << "()";
                         stream << " : " << " BOOST_ASN_CHOICE_STRUCT(" << type_str(self) << "_enum) () {}";
 
                         stream << "\n ";
@@ -1385,7 +1374,7 @@ namespace x680 {
                     case t_SEQUENCE:
                     {
                         stream << "\n";
-                        stream << "\n" << tabformat(scp, 1) << type_str(self) << "()";
+                        stream << "\n" << tabformat(self, 1) << type_str(self) << "()";
                         std::string tmpmbr = "";
                         for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                             typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
