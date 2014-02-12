@@ -131,7 +131,7 @@ namespace x680 {
             assignment_entity_ptr self = selft ? selft->as_assigment() : assignment_entity_ptr();
             std::string rslt = tab;
             std::size_t inten = self ? (self->level() + delt) : delt;
-            //if (inten > 0) inten--;
+            if (inten > 0) inten--;
             while (inten) {
                 rslt += tab;
                 inten--;
@@ -608,7 +608,7 @@ namespace x680 {
             if (load_predeclare(self, vct)) {
                 stream << "\n";
                 for (structdeclare_vect::const_iterator it = vct.begin(); it != vct.end(); ++it)
-                    stream << "\n" << tabformat(self, 1) << "struct " << *it << ";";
+                    stream << "\n" << tabformat(self,(self->as_typeassigment() ? 1 : 2)) << "struct " << *it << ";";
                 stream << "\n";
             }
         }
@@ -719,16 +719,16 @@ namespace x680 {
             for (declare_vect::const_iterator it = vct.begin(); it != vct.end(); ++it) {
                 if (it->remote_ == remote) {
                     switch (it->decl) {
-                        case declare_typedef: stream << "\n" << tabformat(scp, 1) << "typedef " << it->from_type << " " << it->typenam << ";";
+                        case declare_typedef: stream << "\n" << tabformat(scp, 2) << "typedef " << it->from_type << " " << it->typenam << ";";
                             break;
-                        case declare_seq: stream << "\n" << tabformat(scp, 1) << "typedef std::vector< " << it->from_type << " > " << it->typenam << ";";
+                        case declare_seq: stream << "\n" << tabformat(scp, 2) << "typedef std::vector< " << it->from_type << " > " << it->typenam << ";";
                             break;
-                        case declare_set: stream << "\n" << tabformat(scp, 1) << "typedef std::deque< " << it->from_type << " > " << it->typenam << ";";
+                        case declare_set: stream << "\n" << tabformat(scp, 2) << "typedef std::deque< " << it->from_type << " > " << it->typenam << ";";
                             break;
-                        case declare_explicit: stream << "\n" << tabformat(scp, 1) << "BOOST_ASN_EXPLICIT_TYPEDEF( "
+                        case declare_explicit: stream << "\n" << tabformat(scp, 2) << "BOOST_ASN_EXPLICIT_TYPEDEF( "
                                     << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";
                             break;
-                        case declare_implicit: stream << "\n" << tabformat(scp, 1) << "BOOST_ASN_IMPLICIT_TYPEDEF( "
+                        case declare_implicit: stream << "\n" << tabformat(scp, 2) << "BOOST_ASN_IMPLICIT_TYPEDEF( "
                                     << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";
                             break;
                         default:
@@ -835,7 +835,6 @@ namespace x680 {
         }
 
         void fileout::execute_import(std::ofstream& stream, module_entity_ptr mod, import_entity_ptr self) {
-            basic_entity_ptr scp;
             if (self->scope())
                 stream << "\n    // import   from  " << self->name();
             else
@@ -844,7 +843,7 @@ namespace x680 {
             stream << "\n";
             for (import_vector::iterator it = self->import().begin(); it != self->import().end(); ++it) {
                 if (expressed_import(mod, nameconvert(*it))) {
-                    stream << tabformat(scp,1) << "using " << nameconvert(self->name())
+                    stream << tabformat(self,2) << "using " << nameconvert(self->name())
                             << "::" << nameconvert(*it) << ";\n";
                 }
             }
@@ -1065,7 +1064,7 @@ namespace x680 {
                 case t_REAL:
                 case t_ENUMERATED:
                 {
-                    stream << "\n" << tabformat(scp, 1) << "extern const " << fromtype_str(self->type()) << " " << nameconvert(self->name()) << ";";
+                    stream << "\n" << tabformat(scp, 2) << "extern const " << fromtype_str(self->type()) << " " << nameconvert(self->name()) << ";";
 
                     break;
                 }
@@ -1074,7 +1073,7 @@ namespace x680 {
                 {
                     std::vector<std::string> rslt;
                     if (value_oid_str(self->value(), rslt)) {
-                        stream << "\n" << tabformat(scp, 1) << "extern const " << fromtype_str(self->type()) << " " << nameconvert(self->name()) << ";";
+                        stream << "\n" << tabformat(scp, 2) << "extern const " << fromtype_str(self->type()) << " " << nameconvert(self->name()) << ";";
                     }
                     break;
                 }
