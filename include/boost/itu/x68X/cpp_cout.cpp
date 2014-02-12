@@ -537,11 +537,10 @@ namespace x680 {
             execute_start_ns(stream, self);
 
             execute_standart_type(stream, self);
-
-            
+   
             execute_predeclare(stream, self);
 
-            execute_typedef_native(stream, self, true);
+            execute_typedef_native_global(stream, self);
 
             declare_vect vct;
             load_typedef(vct, self);
@@ -638,6 +637,8 @@ namespace x680 {
             }
             return rslt.size();
         }
+        
+
 
         std::size_t fileout::load_struct_predeclare(basic_entity_ptr self, structdeclare_vect& rslt) {
             for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
@@ -651,6 +652,76 @@ namespace x680 {
             }
             return rslt.size();
         }
+        
+        void fileout::execute_typedef_native_global(std::ofstream& stream, basic_entity_ptr self) {
+            // expl X ::= INTEGER or X = [1] INEGER
+            declare_vect vct;
+            load_typedef_simple_native(vct, self, false);
+            load_typedef_simple_native(vct, self, true);
+            load_typedef_seqof_native(vct, self);
+            if (!vct.empty()){
+                stream << "\n";
+                execute_typedef(stream, vct, false);
+            }
+        }
+        
+        void fileout::execute_typedef_native_local(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp) {
+            // expl X ::= INTEGER or X = [1] INEGER
+            declare_vect vct;         
+            load_typedef_seqof_native(vct, self);
+            if (!vct.empty()){
+                stream << "\n";
+                execute_typedef(stream, vct, false, scp);
+            }
+        }        
+        
+        
+        void fileout::load_typedef_simple_native(declare_vect& vct, basic_entity_ptr self, bool tagged) {
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if (tpas && (tpas->type()) && (tpas->issimplerefferrence()) && (tpas->is_cpp_expressed())) {
+                    if (!tagged && (!tpas->tag())) {
+                        vct.push_back(declare_atom(declare_typedef, type_str(tpas), fromtype_str(tpas), false));
+                    } else if (tagged && (tpas->tag())) {
+                        vct.push_back(declare_atom(((tpas->tag()->rule() == explicit_tags) ? declare_explicit : declare_implicit),
+                                type_str(tpas), fromtype_str(tpas), tagged_str(tpas->tag()), tagged_class_str(tpas->tag()), false));
+                    }
+                }
+            }
+        }
+        
+        void fileout::load_typedef_seqof_native(declare_vect& vct, basic_entity_ptr self) {
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if (tpas && (tpas->is_cpp_expressed())) {
+                    if ((tpas->isstruct_of())) {
+                        load_typedef_seqof_native(vct , tpas);
+                    }
+                }
+            }
+        }
+
+        bool fileout::load_typedef_seqof_native_impl(declare_vect& vct, typeassignment_entity_ptr self) {
+            if (!self->childs().empty()) {
+                typeassignment_entity_ptr cpas = self->childs().front()->as_typeassigment();
+                if (cpas && (cpas->type())) {
+                    if (cpas->issimplerefferrence()) {
+                        //stream << "\n" << tabformat(scp) << seqof_str(self, fromtype_str(cpas)) << type_str(self) << ";";
+                        vct.push_back(declare_atom(((cpas->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
+                                type_str(self), fromtype_str(cpas), false));
+                        return true;
+                    } else if ((cpas->isstruct_of())) {
+                        if (load_typedef_seqof_native_impl(vct, cpas)) {
+                            //stream << "\n" << tabformat(scp) << seqof_str(self, fromtype_str(cpas)) << type_str(self) << ";";                            
+                             vct.push_back(declare_atom(((cpas->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
+                                type_str(self), fromtype_str(cpas), false));
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }        
 
         void fileout::execute_typedef(std::ofstream& stream, const declare_vect& vct, bool remote, basic_entity_ptr scp) {
             stream << "\n";
@@ -678,6 +749,7 @@ namespace x680 {
             if (!vct.empty())
                 stream << "\n";
         }
+                
 
         void fileout::load_typedef(declare_vect& vct, basic_entity_ptr self) {
             load_typedef_ref(vct, self);
@@ -735,15 +807,7 @@ namespace x680 {
             return false;
         }
 
-        void fileout::execute_typedef_native(std::ofstream& stream, basic_entity_ptr self, bool global, basic_entity_ptr scp) {
-            // expl X ::= INTEGER or X = [1] INEGER
-            stream << "\n";
-            if (global) {
-                execute_typedef_simple_native(stream, self, false);
-                execute_typedef_simple_native(stream, self, true);
-            }
-            execute_typedef_seqof_native(stream, self, scp);
-        }
+
 
         void fileout::headerlock(std::ofstream& stream, std::string name) {
             name = nameconvert(name);
@@ -808,19 +872,6 @@ namespace x680 {
                     execute_import(stream, self, (*it)->as_import());
         }
 
-        void fileout::execute_struct_predeclare(std::ofstream& stream, basic_entity_ptr self) {
-            for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if (tpas && (tpas->type()) && (tpas->is_cpp_expressed())) {
-                    if ((tpas->type()) && (tpas->isstruct()))
-                        stream << tabformat() << "struct " << type_str(tpas) + "; " << " \n";
-                    //if (tpas->tag())
-                    //     stream << tabformat() << "struct " << type_str(tpas, true) + "; " << " \n";
-                }
-            }
-            if (!self->childs().empty())
-                stream << "\n";
-        }
 
         void fileout::execute_typedef_simple_native(std::ofstream& stream, basic_entity_ptr self, bool tagged) {
             std::size_t cnt = 0;
@@ -848,27 +899,8 @@ namespace x680 {
                 stream << "\n";
         }
 
-        void fileout::execute_typedef_decl_seqof(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp) {
-            scp = scp ? scp : self;
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if (tpas && (tpas->is_cpp_expressed())) {
-                    if ((tpas->isstruct_of()) && (!tpas->childs().empty())) {
-                        typeassignment_entity_ptr cpas = tpas->childs().front()->as_typeassigment();
-                        if (cpas && (cpas->type())) {
-                            if (cpas->isstruct_of()) {
-                                execute_typedef_decl_seqof(stream, tpas, scp);
-                            } else if (cpas->isstruct()) {
-                                stream << tabformat(scp);
-                                stream << "struct " << type_str(cpas) << ";";
-                                stream << "\n";
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
+        
         void fileout::execute_typedef_seqof_native(std::ofstream& stream, basic_entity_ptr self, basic_entity_ptr scp) {
             scp = scp ? scp : self;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
@@ -1335,7 +1367,6 @@ namespace x680 {
 
 
             execute_predeclare(stream, self, self);
-            //execute_typedef_decl_seqof(stream, self, scp);
             execute_declare_hpp(stream, self, scp);
             execute_typedef_seqof(stream, self, scp);
             execute_predefineds_hpp(stream, self);
@@ -1386,7 +1417,6 @@ namespace x680 {
                     "struct " << type_str(self) << "{\n";
 
             execute_predeclare(stream, self, self);
-            //execute_typedef_decl_seqof(stream, self, scp);
             execute_declare_hpp(stream, self);
             execute_typedef_seqof(stream, self, scp);
             execute_predefineds_hpp(stream, self);
