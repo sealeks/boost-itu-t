@@ -26,13 +26,15 @@ namespace x680 {
         std::string type_str(typeassignment_entity_ptr self, bool native = false);
         std::string fulltype_str(basic_entity_ptr self, bool withns = false);
         std::string fromtype_str(typeassignment_entity_ptr self);
+        std::string fromtype_str(type_atom_ptr self);        
         bool fromtype_remote(typeassignment_entity_ptr self);
         declare_vect::iterator find_remote_reff(declare_vect& vct, const std::string& nm, declare_vect::iterator from);   
         void resolve_remote_reff(declare_vect& vct);
         bool sort_reff(declare_vect& vct);
-        std::string fromtype_str(type_atom_ptr self);
         value_atom_ptr value_skip_defined(value_atom_ptr self);
         std::string value_int_str(value_atom_ptr self);
+        std::string value_bool_str(value_atom_ptr self); 
+        std::string value_real_str(value_atom_ptr self);         
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
         std::string nameconvert(std::string name);
         std::string tabformat(basic_entity_ptr selft = basic_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
@@ -43,6 +45,7 @@ namespace x680 {
         std::string tagged_class_str(tagged_ptr self);
         std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name);
         std::string struct_meth_str(typeassignment_entity_ptr self, const std::string& tp);
+        std::string nested_init_str(type_atom_ptr self, const std::string& nm);
 
         bool expressed_import(module_entity_ptr self, const std::string& name);
 
@@ -103,7 +106,7 @@ namespace x680 {
             void execute_predefined_bs_hpp(std::ofstream& stream, predefined_ptr prdf, typeassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
             void execute_predefined_bs_cpp(std::ofstream& stream, predefined_ptr prdf, typeassignment_entity_ptr self, typeassignment_entity_ptr ansec);
 
-            void execute_valueassignment_hpp(std::ofstream& stream, valueassignment_entity_ptr self, basic_entity_ptr scp = basic_entity_ptr());
+            void execute_valueassignment_hpp(std::ofstream& stream, valueassignment_entity_ptr self);
             void execute_valueassignment_cpp(std::ofstream& stream, valueassignment_entity_ptr self);
 
 

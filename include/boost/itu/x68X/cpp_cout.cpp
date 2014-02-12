@@ -225,6 +225,7 @@ namespace x680 {
         }
 
         std::string value_int_str(value_atom_ptr self) {
+            self = value_skip_defined(self);
             if (self && (self->as_number())) {
                 try {
                     return boost::lexical_cast<std::string > (self->as_number()->value());
@@ -232,11 +233,26 @@ namespace x680 {
                     return "???num???";
                 }
             }
-            if ((self->as_defined()) && (self->as_defined()->reff())) {
-                if (self->as_defined()->reff()->as_valueassigment())
-                    return value_int_str(self->as_defined()->reff()->as_valueassigment()->value());
-            }
             return "???num???";
+        }
+
+        std::string value_bool_str(value_atom_ptr self) {
+            self = value_skip_defined(self);
+            if (self && (self->as_bool()))
+                return self->as_bool()->value() ? "true" : "false";
+            return "???bool???";
+        }
+
+        std::string value_real_str(value_atom_ptr self) {
+            self = value_skip_defined(self);
+            if (self && (self->as_real())) {
+                try {
+                    return boost::lexical_cast<std::string > (self->as_real()->value());
+                } catch (boost::bad_lexical_cast) {
+                    return "???real???";
+                }
+            }
+            return "???real???";
         }
 
         value_atom_ptr value_skip_defined(value_atom_ptr self) {
@@ -291,6 +307,18 @@ namespace x680 {
             return "???type???";
         }
 
+        std::string fromtype_str(type_atom_ptr self) {
+            if (self) {
+                if (self->isrefferrence())
+                    return nameconvert(self->reff()->name());
+                else if (self->isstructure())
+                    return "???type???";
+                else
+                    return builtin_str(self->builtin());
+            }
+            return "???type???";
+        }
+
         bool fromtype_remote(typeassignment_entity_ptr self) {
             if (self->isrefferrence()) {
                 typeassignment_entity_ptr frtp = ((self->type()->reff()) && (self->type()->reff()->as_typeassigment())) ?
@@ -342,18 +370,6 @@ namespace x680 {
                 }
             }
             return true;
-        }
-
-        std::string fromtype_str(type_atom_ptr self) {
-            if (self) {
-                if (self->isrefferrence())
-                    return nameconvert(self->reff()->name());
-                else if (self->isstructure())
-                    return "???type???";
-                else
-                    return builtin_str(self->builtin());
-            }
-            return "???type???";
         }
 
         std::string member_marker_str(const std::string& str, tagmarker_type self, bool simple) {
@@ -442,6 +458,17 @@ namespace x680 {
             return "\n" + tabformat(basic_entity_ptr(), 2) + "template<> void " +
                     fulltype_str(self, false) + "::serialize(" +
                     tp + "& arch)";
+        }
+
+        std::string nested_init_str(type_atom_ptr self, const std::string& nm) {
+            type_atom_ptr next = self->textualy_type();
+            if ((!next) || (next == self) || (!next->reff()))
+                return ((next) && (next->tag()) && (next->isrefferrence())) ? (fromtype_str(next) + "(" + nm + ")") : nm;
+            if (!next->reff()->as_typeassigment())
+                return fromtype_str(next) + "(" + nm + ")";
+            if (!next->reff()->as_typeassigment()->type())
+                return fromtype_str(next) + "(" + nm + ")";
+            return fromtype_str(next) + "(" + nested_init_str(next->reff()->as_typeassigment()->type(), nm) + ")";
         }
 
         bool expressed_import(module_entity_ptr self, const std::string& name) {
@@ -1046,20 +1073,23 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_valueassignment_hpp(std::ofstream& stream, valueassignment_entity_ptr self, basic_entity_ptr scp) {
-            scp = scp ? scp : self;
+        void fileout::execute_valueassignment_hpp(std::ofstream& stream, valueassignment_entity_ptr self) {
+            basic_entity_ptr scp;
             switch (self->type()->root_builtin()) {
                 case t_INTEGER:
+                case t_BOOLEAN:
+                case t_REAL:
                 {
-                    stream << "\n" << tabformat(scp) << "extern const int" /*<< fromtype_str(self->type())*/ << ";";
+                    stream << "\n" << tabformat(scp) << "extern const " << fromtype_str(self->type()) << " " << nameconvert(self->name()) << ";";
                     stream << "\n";
                     break;
                 }
                 case t_OBJECT_IDENTIFIER:
+                case t_RELATIVE_OID:
                 {
                     std::vector<std::string> rslt;
                     if (value_oid_str(self->value(), rslt)) {
-                        stream << "\n" << tabformat(scp) << "extern const boost::asn1::oid_type " << nameconvert(self->name()) << ";";
+                        stream << "\n" << tabformat(scp) << "extern const " << fromtype_str(self->type()) << " " << nameconvert(self->name()) << ";";
                         stream << "\n";
                     }
                     break;
@@ -1074,14 +1104,32 @@ namespace x680 {
             switch (self->type()->root_builtin()) {
                 case t_INTEGER:
                 {
-                    stream << "\n" << tabformat() << "const int" << /*fromtype_str(self->type()) <<*/ " "
+                    stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
                             << nameconvert(self->name()) << " = "
-                            << value_int_str(self->value()) << ";";
+                            << nested_init_str(self->type(), value_int_str(self->value())) << ";";
+                    stream << "\n";
+                    break;
+                }
+                case t_BOOLEAN:
+                {
+                    stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
+                            << nameconvert(self->name()) << " = "
+                            << nested_init_str(self->type(), value_bool_str(self->value())) << ";";
+                    stream << "\n";
+                    break;
+                }
+                case t_REAL:
+                {
+                    stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
+                            << nameconvert(self->name()) << " = "
+                            << nested_init_str(self->type(), value_real_str(self->value())) << ";";
                     stream << "\n";
                     break;
                 }
                 case t_OBJECT_IDENTIFIER:
+                case t_RELATIVE_OID:
                 {
+                    bool roid = (self->type()->root_builtin() == t_RELATIVE_OID);
                     std::vector<std::string> rslt;
                     if (value_oid_str(self->value(), rslt)) {
                         stream << "\n" << tabformat() << "const boost::array<boost::asn1::oidindx_type, ";
@@ -1092,8 +1140,9 @@ namespace x680 {
                             stream << (*it);
                         }
                         stream << "};";
-                        stream << "\n" << tabformat() << "const boost::asn1::oid_type " << nameconvert(self->name());
-                        stream << "  = boost::asn1::oid_type(" << nameconvert(self->name()) << "_OID_ARR );";
+                        stream << "\n" << tabformat() << "const  " << fromtype_str(self->type()) << " " << nameconvert(self->name());
+                        stream << "  = ";
+                        stream << nested_init_str(self->type(), (roid ? "boost::asn1::reloid_type(" : "boost::asn1::oid_type(") + nameconvert(self->name()) + "_OID_ARR )") << ";";
                         stream << "\n";
                     }
                     break;
