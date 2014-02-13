@@ -16,8 +16,10 @@ namespace x680 {
     namespace cpp {
         
         struct declare_atom;
+        struct member_atom;
         typedef std::vector<declare_atom> declare_vect;
         typedef std::vector<std::string> structdeclare_vect;
+        typedef std::vector<member_atom> member_vect;
 
 
         bool dir_exists(const std::string& path);
@@ -72,8 +74,8 @@ namespace x680 {
             void execute_typedef_native_global(std::ofstream& stream, basic_entity_ptr self);
             void execute_typedef_native_local(std::ofstream& stream, basic_entity_ptr self);            
             void load_typedef_simple_native(declare_vect& vct, basic_entity_ptr self, bool tagged);            
-            void load_typedef_seqof_native(declare_vect& vct, basic_entity_ptr self);
-            bool load_typedef_seqof_native_impl(declare_vect& vct, typeassignment_entity_ptr self);
+            void load_typedef_structof_native(declare_vect& vct, basic_entity_ptr self);
+            bool load_typedef_structof_native_impl(declare_vect& vct, typeassignment_entity_ptr self);
             
             void execute_typedef(std::ofstream& stream, const declare_vect& vct, bool remote =false,  basic_entity_ptr scp =  basic_entity_ptr());
             void load_typedef(declare_vect& vct, basic_entity_ptr self);
@@ -138,7 +140,7 @@ namespace x680 {
             void execute_archive_meth_hpp(std::ofstream& stream,  basic_entity_ptr scp = basic_entity_ptr());
             void execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
 
-            void execute_archive_ber_seqset(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_ber_struct(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_archive_ber_member(std::ofstream& stream, namedtypeassignment_entity_ptr self);
             void execute_archive_ber_choice_chi(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_archive_ber_choice_cho(std::ofstream& stream, typeassignment_entity_ptr self);

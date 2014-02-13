@@ -19,7 +19,8 @@ namespace x680 {
 
         struct declare_atom {
 
-            declare_atom() {
+            declare_atom() : 
+            decl(declare_typedef), remote_(false){
             };
 
             declare_atom(declare_type decl_, const std::string& typenam_, const std::string& from_type_, bool rem = false) :
@@ -36,6 +37,27 @@ namespace x680 {
             std::string tag;
             std::string class_;
             bool remote_;
+
+        };
+        
+           struct member_atom {
+
+            member_atom(tagmarker_type mkr = mk_extention) :
+            marker(mkr), ischoice(false), afterextention(false) {
+            };
+
+            member_atom(tagmarker_type mkr, const std::string&name_, const std::string& typenam_,  tagged_ptr tag_ = tagged_ptr(), bool ischoice_ = false,  bool afterextention_ = false) :
+            marker(mkr), name(name_), typenam(typenam_),  tag(tag_),  ischoice(ischoice_),  afterextention(afterextention_) {
+            };
+
+
+
+            tagmarker_type marker;
+            std::string name;
+            std::string typenam;
+            tagged_ptr tag;
+            bool ischoice;
+            bool afterextention;
 
         };
 
@@ -625,7 +647,7 @@ namespace x680 {
                 if (tpas && (tpas->is_cpp_expressed())) {
                     if ((tpas->isstruct_of()) && (!tpas->childs().empty())) {
                         typeassignment_entity_ptr cpas = tpas->childs().front()->as_typeassigment();
-                        if (cpas && (cpas->type())) {
+                        if (cpas) {
                             if (cpas->isstruct_of()) {
                                 load_structof_predeclare(tpas, rslt);
                             } else if (cpas->isstruct()) {
@@ -641,8 +663,8 @@ namespace x680 {
         std::size_t fileout::load_struct_predeclare(basic_entity_ptr self, structdeclare_vect& rslt) {
             for (basic_entity_vector::const_iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if (tpas && (tpas->type()) && (tpas->is_cpp_expressed())) {
-                    if ((tpas->type()) && (tpas->isstruct()))
+                if (tpas && (tpas->is_cpp_expressed())) {
+                    if (tpas->isstruct())
                         rslt.push_back(type_str(tpas));
                     //if (tpas->tag())
                     //     stream << tabformat() << "struct " << type_str(tpas, true) + "; " << " \n";
@@ -656,7 +678,7 @@ namespace x680 {
             declare_vect vct;
             load_typedef_simple_native(vct, self, false);
             load_typedef_simple_native(vct, self, true);
-            load_typedef_seqof_native(vct, self);
+            load_typedef_structof_native(vct, self);
             if (!vct.empty())
                 execute_typedef(stream, vct, false);
         }
@@ -664,7 +686,7 @@ namespace x680 {
         void fileout::execute_typedef_native_local(std::ofstream& stream, basic_entity_ptr self) {
             // expl X ::= INTEGER or X = [1] INEGER
             declare_vect vct;
-            load_typedef_seqof_native(vct, self);
+            load_typedef_structof_native(vct, self);
             if (!vct.empty()) {
                 stream << "\n";
                 execute_typedef(stream, vct, false, self);
@@ -685,15 +707,15 @@ namespace x680 {
             }
         }
 
-        void fileout::load_typedef_seqof_native(declare_vect& vct, basic_entity_ptr self) {
+        void fileout::load_typedef_structof_native(declare_vect& vct, basic_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if (tpas && (tpas->is_cpp_expressed()) && (tpas->isstruct_of()))
-                    load_typedef_seqof_native_impl(vct, tpas);
+                    load_typedef_structof_native_impl(vct, tpas);
             }
         }
 
-        bool fileout::load_typedef_seqof_native_impl(declare_vect& vct, typeassignment_entity_ptr self) {
+        bool fileout::load_typedef_structof_native_impl(declare_vect& vct, typeassignment_entity_ptr self) {
             if (!self->childs().empty()) {
                 typeassignment_entity_ptr cpas = self->childs().front()->as_typeassigment();
                 if (cpas && (cpas->type())) {
@@ -702,7 +724,7 @@ namespace x680 {
                                 type_str(self), fromtype_str(cpas), false));
                         return true;
                     } else if ((cpas->isstruct_of())) {
-                        if (load_typedef_seqof_native_impl(vct, cpas)) {
+                        if (load_typedef_structof_native_impl(vct, cpas)) {
                             vct.push_back(declare_atom(((cpas->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
                                     type_str(self), fromtype_str(cpas), false));
                             return true;
@@ -712,6 +734,8 @@ namespace x680 {
             }
             return false;
         }
+        
+     
 
         void fileout::execute_typedef(std::ofstream& stream, const declare_vect& vct, bool remote, basic_entity_ptr scp) {
             if (!vct.empty())
@@ -1416,10 +1440,10 @@ namespace x680 {
 
                     stream << struct_meth_str(self, "boost::asn1::x690::output_coder");
                     stream << "{";
-                    execute_archive_ber_seqset(stream, self);
+                    execute_archive_ber_struct(stream, self);
                     stream << struct_meth_str(self, "boost::asn1::x690::input_coder");
                     stream << "{";
-                    execute_archive_ber_seqset(stream, self);
+                    execute_archive_ber_struct(stream, self);
 
                     break;
                 default:
@@ -1428,7 +1452,7 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_archive_ber_seqset(std::ofstream& stream, typeassignment_entity_ptr self) {
+        void fileout::execute_archive_ber_struct(std::ofstream& stream, typeassignment_entity_ptr self) {
             basic_entity_ptr scp;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
