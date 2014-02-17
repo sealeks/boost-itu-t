@@ -523,8 +523,8 @@ namespace x680 {
             }
             return false;
         }
-        
-        member_vect parese_membervct(const member_vect& vct, bool obligate){
+
+        member_vect parese_membervct(const member_vect& vct, bool obligate) {
             member_vect rslt;
             for (member_vect::const_iterator it = vct.begin(); it != vct.end(); ++it) {
                 if (it->marker != mk_extention) {
@@ -532,7 +532,7 @@ namespace x680 {
                         rslt.push_back(*it);
                 }
             }
-            return rslt;            
+            return rslt;
         }
 
 
@@ -709,6 +709,7 @@ namespace x680 {
             // expl X ::= INTEGER or X = [1] INEGER
             declare_vect vct;
             load_typedef_structof_native(vct, self);
+            load_typedef_structof(vct, self);
             if (!vct.empty()) {
                 stream << "\n";
                 execute_typedef(stream, vct, false, self);
@@ -1435,42 +1436,47 @@ namespace x680 {
                     {
                         stream << "\n";
                         stream << "\n" << tabformat(self, 1) << type_str(self) << "()";
-                        stream << " : " << " BOOST_ASN_CHOICE_STRUCT(" << type_str(self) << "_enum) () {}";
-                        stream << "\n ";
+                        stream << " : " << " BOOST_ASN_CHOICE_STRUCT(" << type_str(self) << "_enum) () {} \n";
+
+                        stream << tabformat(self, 1) << "template<typename T> ";
+                        stream << type_str(self) << "(boost::shared_ptr< T> vl, " << type_str(self) << "_enum enm) : \n";
+                        stream << tabformat(self, 2) << " BOOST_ASN_CHOICE_STRUCT(" << type_str(self) << "_enum) (vl, static_cast<int>(enm)) {} \n";
                         break;
                     }
                     case t_SET:
                     case t_SEQUENCE:
                     {
-                        
+
                         member_vect mmbr;
-                        load_member(mmbr, self); 
+                        load_member(mmbr, self);
                         member_vect oblig = parese_membervct(mmbr, true);
-                        member_vect nooblig =parese_membervct(mmbr, false);
-                        
+                        member_vect nooblig = parese_membervct(mmbr, false);
+
                         stream << "\n";
                         stream << "\n" << tabformat(self, 1) << type_str(self) << "(); \n";
-                        
-                        if (!oblig.empty()){
-                        stream << "\n" << tabformat(self, 1) << type_str(self) << "(";
-                           for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
-                               if (it!=oblig.begin())
+
+                        if (!oblig.empty()) {
+                            stream << "\n" << tabformat(self, 1) << type_str(self) << "(";
+                            for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
+                                if (it != oblig.begin())
                                     stream << ",\n " << tabformat(self, 2);
-                               stream  << "const "  << it->typenam << "&  __" << it->name;
-                           }
-                        stream   << ");\n";
+                                stream << "const " << it->typenam << "&  __" << it->name;
+                            }
+                            stream << ");\n";
                         }
-                     
-                        if (!nooblig.empty() && (nooblig.size()>oblig.size())){
-                        stream << "\n" << tabformat(self, 1) << type_str(self) << "(";
-                           for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
-                               if (it!=nooblig.begin())
+
+                        if (!nooblig.empty() && (nooblig.size() > oblig.size())) {
+                            stream << "\n" << tabformat(self, 1) << type_str(self) << "(";
+                            for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
+                                if (it != nooblig.begin())
                                     stream << ",\n " << tabformat(self, 2);
-                               stream <<   "boost::shared_ptr< " << it->typenam << ">  __"  << it->name;
-                           }
-                        stream   << ");\n";
-                        }                        
-                        
+                                stream << "boost::shared_ptr< " << it->typenam << ">  __" << it->name;
+                                if (it->afterextention)
+                                    stream << " = boost::shared_ptr< " << it->typenam << ">()";
+                            }
+                            stream << ");\n";
+                        }
+
                         break;
                     }
                     default:
@@ -1479,65 +1485,66 @@ namespace x680 {
                 }
             }
         }
-        
+
         void fileout::execute_ctor_cpp(std::ofstream& stream, typeassignment_entity_ptr self) {
             basic_entity_ptr scp;
             if ((self) && (self->type())) {
                 switch (self->builtin()) {
-                    case t_CHOICE:
-                    {
-                     /*   stream << "\n";
-                        stream << "\n" << tabformat(self, 1) << type_str(self) << "()";
-                        stream << " : " << " BOOST_ASN_CHOICE_STRUCT(" << type_str(self) << "_enum) () {}";
-                        stream << "\n ";*/
-                        break;
-                    }
                     case t_SET:
                     case t_SEQUENCE:
                     {
-                        
                         member_vect mmbr;
-                        load_member(mmbr, self); 
+                        load_member(mmbr, self);
                         member_vect oblig = parese_membervct(mmbr, true);
-                        member_vect nooblig =parese_membervct(mmbr, false);
-                        
+                        member_vect nooblig = parese_membervct(mmbr, false);
+
                         stream << "\n";
-                        stream << "\n" << tabformat( scp, 1) << fulltype_str(self, false) << "()";
-                        std::string tmpmbr = "";
-                        for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                            typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                            if ((tpas) && (tpas->as_named())) {
-                                namedtypeassignment_entity_ptr named = tpas->as_named();
-                                if (named->marker() == mk_none) {
-                                    if (tmpmbr.empty())
-                                        tmpmbr = " : " + nameconvert(named->name()) + "()";
-                                    else
-                                        tmpmbr = tmpmbr + ", " + nameconvert(named->name()) + "()";
-                                }
+                        stream << "\n" << tabformat(scp, 1) << fulltype_str(self, false) << "::" << type_str(self) << "()";
+                        if (!oblig.empty()) {
+                            stream << " : ";
+                            for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
+                                if (it != oblig.begin())
+                                    stream << ", ";
+                                stream << it->name << "()";
                             }
                         }
-                        stream << tmpmbr << " {} \n ";
-                        
-                        if (!oblig.empty()){
-                        stream << "\n" << tabformat( scp, 1) << fulltype_str(self, false) << "(";
-                           for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
-                               if (it!=oblig.begin())
-                                    stream << ",\n " << tabformat(scp, 2);
-                               stream  << "const "  << it->typenam << "&  __" << it->name;
-                           }
-                        stream   << ");\n";
+                        stream << " {}; \n ";
+
+                        if (!oblig.empty()) {
+                            stream << "\n" << tabformat(scp, 1) << fulltype_str(self, false) << "::" << type_str(self) << "(";
+                            for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
+                                if (it != oblig.begin())
+                                    stream << ",\n" << tabformat(scp, 2);
+                                stream << "const " << it->typenam << "&  __" << it->name;
+                            }
+                            stream << ") : \n";
+                            for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
+                                if (it != oblig.begin())
+                                    stream << ",\n";
+                                stream << tabformat(scp, 2) << it->name << "(__" << it->name << ")";
+                            }
+                            stream << " {}; \n ";
                         }
-                        
-                        if (!nooblig.empty() && (nooblig.size()>oblig.size())){
-                        stream << "\n" << tabformat( scp, 1) << fulltype_str(self, false)<< "(";
-                           for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
-                               if (it!=nooblig.begin())
-                                    stream << ",\n " << tabformat(scp, 2);
-                               stream <<   "boost::shared_ptr< " << it->typenam << ">  __"  << it->name;
-                           }
-                        stream   << ");\n";
-                        }                        
-                        
+
+                        if (!nooblig.empty() && (nooblig.size() > oblig.size())) {
+                            stream << "\n" << tabformat(scp, 1) << fulltype_str(self, false) << "::" << type_str(self) << "(";
+                            for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
+                                if (it != nooblig.begin())
+                                    stream << ",\n" << tabformat(scp, 2);
+                                stream << "boost::shared_ptr< " << it->typenam << ">  __" << it->name;
+                            }
+                            stream << ") : \n";
+                            for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
+                                if (it != nooblig.begin())
+                                    stream << ",\n";
+                                stream << tabformat(scp, 2) << it->name << "(";
+                                if (noholder_ && (it->marker == mk_none) && (!it->afterextention))
+                                    stream << "*";
+                                stream << "__" << it->name << ")";
+                            }
+                            stream << " {}; \n ";
+                        }
+
                         break;
                     }
                     default:
@@ -1545,7 +1552,7 @@ namespace x680 {
                     }
                 }
             }
-        }        
+        }
 
         void fileout::execute_archive_meth_hpp(std::ofstream& stream, basic_entity_ptr scp) {
             stream << "\n\n" << tabformat(scp, 1) << "BOOST_ASN_ARCHIVE_FUNC;";
