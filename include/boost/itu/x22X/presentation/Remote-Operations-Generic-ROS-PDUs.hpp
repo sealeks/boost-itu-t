@@ -40,8 +40,10 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     using boost::asn1::characterstring_type;
     using boost::asn1::any_type;
 
+
     struct Reject;
     struct InvokeId;
+
 
     typedef int GeneralProblem;
     typedef int InvokeProblem;
@@ -50,15 +52,13 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     typedef int RejectProblem;
 
 
-
-
 }
 
+#include <boost/itu/x22X/presentation/Remote-Operations-Information-Objects.hpp>
 
 namespace Remote_Operations_Generic_ROS_PDUs {
 
     // import   from  Remote-Operations-Information-Objects
-
 
 
 
@@ -74,6 +74,10 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     struct InvokeId : public BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) {
 
         InvokeId() : BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) () {
+        }
+
+        template<typename T > InvokeId(boost::shared_ptr< T> vl, InvokeId_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) (vl, static_cast<int> (enm)) {
         }
 
         BOOST_ASN_VALUE_CHOICE(present, int, InvokeId_present);
@@ -129,6 +133,8 @@ namespace Remote_Operations_Generic_ROS_PDUs {
 
     struct Reject {
 
+        struct problem_type;
+
         enum problem_type_enum {
 
             problem_type_null = 0,
@@ -143,6 +149,10 @@ namespace Remote_Operations_Generic_ROS_PDUs {
             problem_type() : BOOST_ASN_CHOICE_STRUCT(problem_type_enum) () {
             }
 
+            template<typename T > problem_type(boost::shared_ptr< T> vl, problem_type_enum enm) :
+                    BOOST_ASN_CHOICE_STRUCT(problem_type_enum) (vl, static_cast<int> (enm)) {
+            }
+
             BOOST_ASN_VALUE_CHOICE(general, GeneralProblem, problem_type_general);
             BOOST_ASN_VALUE_CHOICE(invoke, InvokeProblem, problem_type_invoke);
             BOOST_ASN_VALUE_CHOICE(returnResult, ReturnResultProblem, problem_type_returnResult);
@@ -151,8 +161,11 @@ namespace Remote_Operations_Generic_ROS_PDUs {
             BOOST_ASN_ARCHIVE_FUNC;
         };
 
-        Reject() : invokeId(), problem() {
-        }
+
+        Reject();
+
+        Reject(const InvokeId& __invokeId,
+                const problem_type& __problem);
 
         InvokeId invokeId;
         problem_type problem;

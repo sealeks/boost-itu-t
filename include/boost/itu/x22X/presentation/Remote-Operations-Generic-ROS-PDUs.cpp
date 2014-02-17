@@ -113,6 +113,15 @@ namespace Remote_Operations_Generic_ROS_PDUs {
 
     // sequence Reject
 
+    Reject::Reject() : invokeId(), problem() {
+    };
+
+    Reject::Reject(const InvokeId& __invokeId,
+            const problem_type& __problem) :
+    invokeId(__invokeId),
+    problem(__problem) {
+    };
+
     template<> void Reject::problem_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case problem_type_general:

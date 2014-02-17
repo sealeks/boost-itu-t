@@ -18,6 +18,23 @@ namespace ISO8823_PRESENTATION {
 
     // sequence PDV-list
 
+    PDV_list::PDV_list() : presentation_context_identifier(), presentation_data_values() {
+    };
+
+    PDV_list::PDV_list(const Presentation_context_identifier& __presentation_context_identifier,
+            const presentation_data_values_type& __presentation_data_values) :
+    presentation_context_identifier(__presentation_context_identifier),
+    presentation_data_values(__presentation_data_values) {
+    };
+
+    PDV_list::PDV_list(boost::shared_ptr< Transfer_syntax_name> __transfer_syntax_name,
+            boost::shared_ptr< Presentation_context_identifier> __presentation_context_identifier,
+            boost::shared_ptr< presentation_data_values_type> __presentation_data_values) :
+    transfer_syntax_name(__transfer_syntax_name),
+    presentation_context_identifier(*__presentation_context_identifier),
+    presentation_data_values(*__presentation_data_values) {
+    };
+
     template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case presentation_data_values_type_single_ASN1_type:
@@ -193,6 +210,21 @@ namespace ISO8823_PRESENTATION {
     const int Result_list_sequence_of::provider_reason_proposed_transfer_syntaxes_not_supported = 2;
     const int Result_list_sequence_of::provider_reason_local_limit_on_DCS_exceeded = 3;
 
+    Result_list_sequence_of::Result_list_sequence_of() : result() {
+    };
+
+    Result_list_sequence_of::Result_list_sequence_of(const Result& __result) :
+    result(__result) {
+    };
+
+    Result_list_sequence_of::Result_list_sequence_of(boost::shared_ptr< Result> __result,
+            boost::shared_ptr< Transfer_syntax_name> __transfer_syntax_name,
+            boost::shared_ptr< int> __provider_reason) :
+    result(*__result),
+    transfer_syntax_name(__transfer_syntax_name),
+    provider_reason(__provider_reason) {
+    };
+
     template<> void Result_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(result, 0);
         BOOST_ASN_IMPLICIT_TAG(transfer_syntax_name, 1);
@@ -228,6 +260,15 @@ namespace ISO8823_PRESENTATION {
     const bitstring_type Presentation_requirements_context_management = bitstring_type(true, 0);
     const bitstring_type Presentation_requirements_restoration = bitstring_type(true, 1);
 
+    Presentation_context_identifier_list_sequence_of::Presentation_context_identifier_list_sequence_of() : presentation_context_identifier(), transfer_syntax_name() {
+    };
+
+    Presentation_context_identifier_list_sequence_of::Presentation_context_identifier_list_sequence_of(const Presentation_context_identifier& __presentation_context_identifier,
+            const Transfer_syntax_name& __transfer_syntax_name) :
+    presentation_context_identifier(__presentation_context_identifier),
+    transfer_syntax_name(__transfer_syntax_name) {
+    };
+
     template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_BIND_TAG(presentation_context_identifier);
         BOOST_ASN_BIND_TAG(transfer_syntax_name);
@@ -242,6 +283,13 @@ namespace ISO8823_PRESENTATION {
     // set Mode-selector
     const int Mode_selector::mode_value_x410_1984_mode = 0;
     const int Mode_selector::mode_value_normal_mode = 1;
+
+    Mode_selector::Mode_selector() : mode_value() {
+    };
+
+    Mode_selector::Mode_selector(const int& __mode_value) :
+    mode_value(__mode_value) {
+    };
 
     template<> void Mode_selector::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(mode_value, 0);
@@ -288,6 +336,15 @@ namespace ISO8823_PRESENTATION {
 
     // sequence Default-context-name
 
+    Default_context_name::Default_context_name() : abstract_syntax_name(), transfer_syntax_name() {
+    };
+
+    Default_context_name::Default_context_name(const Abstract_syntax_name& __abstract_syntax_name,
+            const Transfer_syntax_name& __transfer_syntax_name) :
+    abstract_syntax_name(__abstract_syntax_name),
+    transfer_syntax_name(__transfer_syntax_name) {
+    };
+
     template<> void Default_context_name::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(abstract_syntax_name, 0);
         BOOST_ASN_IMPLICIT_TAG(transfer_syntax_name, 1);
@@ -297,6 +354,17 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_IMPLICIT_TAG(abstract_syntax_name, 0);
         BOOST_ASN_IMPLICIT_TAG(transfer_syntax_name, 1);
     }
+
+    Context_list_sequence_of::Context_list_sequence_of() : presentation_context_identifier(), abstract_syntax_name(), transfer_syntax_name_list() {
+    };
+
+    Context_list_sequence_of::Context_list_sequence_of(const Presentation_context_identifier& __presentation_context_identifier,
+            const Abstract_syntax_name& __abstract_syntax_name,
+            const transfer_syntax_name_list_type& __transfer_syntax_name_list) :
+    presentation_context_identifier(__presentation_context_identifier),
+    abstract_syntax_name(__abstract_syntax_name),
+    transfer_syntax_name_list(__transfer_syntax_name_list) {
+    };
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_BIND_TAG(presentation_context_identifier);
@@ -321,6 +389,15 @@ namespace ISO8823_PRESENTATION {
 
     // sequence RSA-PPDU
 
+    RSA_PPDU::RSA_PPDU() {
+    };
+
+    RSA_PPDU::RSA_PPDU(boost::shared_ptr< Presentation_context_identifier_list> __presentation_context_identifier_list,
+            boost::shared_ptr< User_data> __user_data) :
+    presentation_context_identifier_list(__presentation_context_identifier_list),
+    user_data(__user_data) {
+    };
+
     template<> void RSA_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
         BOOST_ASN_CHOICE(user_data);
@@ -334,6 +411,15 @@ namespace ISO8823_PRESENTATION {
 
     // sequence RS-PPDU
 
+    RS_PPDU::RS_PPDU() {
+    };
+
+    RS_PPDU::RS_PPDU(boost::shared_ptr< Presentation_context_identifier_list> __presentation_context_identifier_list,
+            boost::shared_ptr< User_data> __user_data) :
+    presentation_context_identifier_list(__presentation_context_identifier_list),
+    user_data(__user_data) {
+    };
+
     template<> void RS_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
         BOOST_ASN_CHOICE(user_data);
@@ -346,6 +432,17 @@ namespace ISO8823_PRESENTATION {
 
 
     // sequence ACA-PPDU
+
+    ACA_PPDU::ACA_PPDU() {
+    };
+
+    ACA_PPDU::ACA_PPDU(boost::shared_ptr< Presentation_context_addition_result_list> __presentation_context_addition_result_list,
+            boost::shared_ptr< Presentation_context_deletion_result_list> __presentation_context_deletion_result_list,
+            boost::shared_ptr< User_data> __user_data) :
+    presentation_context_addition_result_list(__presentation_context_addition_result_list),
+    presentation_context_deletion_result_list(__presentation_context_deletion_result_list),
+    user_data(__user_data) {
+    };
 
     template<> void ACA_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_addition_result_list, 0);
@@ -361,6 +458,17 @@ namespace ISO8823_PRESENTATION {
 
 
     // sequence AC-PPDU
+
+    AC_PPDU::AC_PPDU() {
+    };
+
+    AC_PPDU::AC_PPDU(boost::shared_ptr< Presentation_context_addition_list> __presentation_context_addition_list,
+            boost::shared_ptr< Presentation_context_deletion_list> __presentation_context_deletion_list,
+            boost::shared_ptr< User_data> __user_data) :
+    presentation_context_addition_list(__presentation_context_addition_list),
+    presentation_context_deletion_list(__presentation_context_deletion_list),
+    user_data(__user_data) {
+    };
 
     template<> void AC_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_addition_list, 0);
@@ -458,6 +566,15 @@ namespace ISO8823_PRESENTATION {
 
     // sequence ARP-PPDU
 
+    ARP_PPDU::ARP_PPDU() {
+    };
+
+    ARP_PPDU::ARP_PPDU(boost::shared_ptr< Abort_reason> __provider_reason,
+            boost::shared_ptr< Event_identifier> __event_identifier) :
+    provider_reason(__provider_reason),
+    event_identifier(__event_identifier) {
+    };
+
     template<> void ARP_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(provider_reason, 0);
         BOOST_ASN_IMPLICIT_TAG(event_identifier, 1);
@@ -471,6 +588,17 @@ namespace ISO8823_PRESENTATION {
 
     // choice ARU-PPDU
 
+    ARU_PPDU::x400_mode_parameters_type::x400_mode_parameters_type() {
+    };
+
+    ARU_PPDU::x400_mode_parameters_type::x400_mode_parameters_type(boost::shared_ptr< Reliable_Transfer_APDU::AbortReason> __abortReason,
+            boost::shared_ptr< bitstring_type> __reflectedParameter,
+            boost::shared_ptr< any_type> __userdataAB) :
+    abortReason(__abortReason),
+    reflectedParameter(__reflectedParameter),
+    userdataAB(__userdataAB) {
+    };
+
     template<> void ARU_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(abortReason, 0);
         BOOST_ASN_IMPLICIT_TAG(reflectedParameter, 1);
@@ -482,6 +610,15 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_IMPLICIT_TAG(reflectedParameter, 1);
         BOOST_ASN_EXPLICIT_TAG(userdataAB, 2);
     }
+
+    ARU_PPDU::normal_mode_parameters_type::normal_mode_parameters_type() {
+    };
+
+    ARU_PPDU::normal_mode_parameters_type::normal_mode_parameters_type(boost::shared_ptr< Presentation_context_identifier_list> __presentation_context_identifier_list,
+            boost::shared_ptr< User_data> __user_data) :
+    presentation_context_identifier_list(__presentation_context_identifier_list),
+    user_data(__user_data) {
+    };
 
     template<> void ARU_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(presentation_context_identifier_list, 0);
@@ -629,6 +766,15 @@ namespace ISO8823_PRESENTATION {
 
     // choice CPR-PPDU
 
+    CPR_PPDU::x400_mode_parameters_type::x400_mode_parameters_type() {
+    };
+
+    CPR_PPDU::x400_mode_parameters_type::x400_mode_parameters_type(boost::shared_ptr< Reliable_Transfer_APDU::RefuseReason> __refuseReason,
+            boost::shared_ptr< any_type> __userDataRJ) :
+    refuseReason(__refuseReason),
+    userDataRJ(__userDataRJ) {
+    };
+
     template<> void CPR_PPDU::x400_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(refuseReason, 0);
         BOOST_ASN_EXPLICIT_TAG(userDataRJ, 1);
@@ -638,6 +784,23 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_IMPLICIT_TAG(refuseReason, 0);
         BOOST_ASN_EXPLICIT_TAG(userDataRJ, 1);
     }
+
+    CPR_PPDU::normal_mode_parameters_type::normal_mode_parameters_type() {
+    };
+
+    CPR_PPDU::normal_mode_parameters_type::normal_mode_parameters_type(boost::shared_ptr< Protocol_version> __protocol_version,
+            boost::shared_ptr< Responding_presentation_selector> __responding_presentation_selector,
+            boost::shared_ptr< Presentation_context_definition_result_list> __presentation_context_definition_result_list,
+            boost::shared_ptr< Default_context_result> __default_context_result,
+            boost::shared_ptr< Provider_reason> __provider_reason,
+            boost::shared_ptr< User_data> __user_data) :
+    protocol_version(__protocol_version),
+    responding_presentation_selector(__responding_presentation_selector),
+    presentation_context_definition_result_list(__presentation_context_definition_result_list),
+    default_context_result(__default_context_result),
+    provider_reason(__provider_reason),
+    user_data(__user_data) {
+    };
 
     template<> void CPR_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
@@ -723,17 +886,68 @@ namespace ISO8823_PRESENTATION {
 
     // set CPA-PPDU
 
+    CPA_PPDU::CPA_PPDU() : mode_selector() {
+    };
+
+    CPA_PPDU::CPA_PPDU(const Mode_selector& __mode_selector) :
+    mode_selector(__mode_selector) {
+    };
+
+    CPA_PPDU::CPA_PPDU(boost::shared_ptr< Mode_selector> __mode_selector,
+            boost::shared_ptr< x410_mode_parameters_type> __x410_mode_parameters,
+            boost::shared_ptr< normal_mode_parameters_type> __normal_mode_parameters) :
+    mode_selector(*__mode_selector),
+    x410_mode_parameters(__x410_mode_parameters),
+    normal_mode_parameters(__normal_mode_parameters) {
+    };
+
+    CPA_PPDU::x410_mode_parameters_type::x410_mode_parameters_type() : connectionDataAC() {
+    };
+
+    CPA_PPDU::x410_mode_parameters_type::x410_mode_parameters_type(const Reliable_Transfer_APDU::ConnectionData& __connectionDataAC) :
+    connectionDataAC(__connectionDataAC) {
+    };
+
+    CPA_PPDU::x410_mode_parameters_type::x410_mode_parameters_type(boost::shared_ptr< int> __checkpointSize,
+            boost::shared_ptr< int> __windowSize,
+            boost::shared_ptr< Reliable_Transfer_APDU::ConnectionData> __connectionDataAC) :
+    checkpointSize(__checkpointSize),
+    windowSize(__windowSize),
+    connectionDataAC(*__connectionDataAC) {
+    };
+
     template<> void CPA_PPDU::x410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
-        BOOST_ASN_CHOICE_TAG(connectionDataAC, 2);
+        BOOST_ASN_EXPLICIT_TAG(connectionDataAC, 2);
     }
 
     template<> void CPA_PPDU::x410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
-        BOOST_ASN_CHOICE_TAG(connectionDataAC, 2);
+        BOOST_ASN_EXPLICIT_TAG(connectionDataAC, 2);
     }
+
+    CPA_PPDU::normal_mode_parameters_type::normal_mode_parameters_type() {
+    };
+
+    CPA_PPDU::normal_mode_parameters_type::normal_mode_parameters_type(boost::shared_ptr< Protocol_version> __protocol_version,
+            boost::shared_ptr< Responding_presentation_selector> __responding_presentation_selector,
+            boost::shared_ptr< Presentation_context_definition_result_list> __presentation_context_definition_result_list,
+            boost::shared_ptr< Presentation_requirements> __presentation_requirements,
+            boost::shared_ptr< User_session_requirements> __user_session_requirements,
+            boost::shared_ptr< Protocol_options> __protocol_options,
+            boost::shared_ptr< Presentation_context_identifier> __responders_nominated_context,
+            boost::shared_ptr< User_data> __user_data) :
+    protocol_version(__protocol_version),
+    responding_presentation_selector(__responding_presentation_selector),
+    presentation_context_definition_result_list(__presentation_context_definition_result_list),
+    presentation_requirements(__presentation_requirements),
+    user_session_requirements(__user_session_requirements),
+    protocol_options(__protocol_options),
+    responders_nominated_context(__responders_nominated_context),
+    user_data(__user_data) {
+    };
 
     template<> void CPA_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version, 0);
@@ -772,14 +986,49 @@ namespace ISO8823_PRESENTATION {
 
     // set CP-type
 
+    CP_type::CP_type() : mode_selector() {
+    };
+
+    CP_type::CP_type(const Mode_selector& __mode_selector) :
+    mode_selector(__mode_selector) {
+    };
+
+    CP_type::CP_type(boost::shared_ptr< Mode_selector> __mode_selector,
+            boost::shared_ptr< x410_mode_parameters_type> __x410_mode_parameters,
+            boost::shared_ptr< normal_mode_parameters_type> __normal_mode_parameters) :
+    mode_selector(*__mode_selector),
+    x410_mode_parameters(__x410_mode_parameters),
+    normal_mode_parameters(__normal_mode_parameters) {
+    };
+
+
     const int CP_type::x410_mode_parameters_type::dialogueMode_monologue = 0;
     const int CP_type::x410_mode_parameters_type::dialogueMode_twa = 1;
+
+    CP_type::x410_mode_parameters_type::x410_mode_parameters_type() : connectionDataRQ() {
+    };
+
+    CP_type::x410_mode_parameters_type::x410_mode_parameters_type(const Reliable_Transfer_APDU::ConnectionData& __connectionDataRQ) :
+    connectionDataRQ(__connectionDataRQ) {
+    };
+
+    CP_type::x410_mode_parameters_type::x410_mode_parameters_type(boost::shared_ptr< int> __checkpointSize,
+            boost::shared_ptr< int> __windowSize,
+            boost::shared_ptr< int> __dialogueMode,
+            boost::shared_ptr< Reliable_Transfer_APDU::ConnectionData> __connectionDataRQ,
+            boost::shared_ptr< int> __applicationProtocol) :
+    checkpointSize(__checkpointSize),
+    windowSize(__windowSize),
+    dialogueMode(__dialogueMode),
+    connectionDataRQ(*__connectionDataRQ),
+    applicationProtocol(__applicationProtocol) {
+    };
 
     template<> void CP_type::x410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
         BOOST_ASN_IMPLICIT_TAG(dialogueMode, 2);
-        BOOST_ASN_CHOICE_TAG(connectionDataRQ, 3);
+        BOOST_ASN_EXPLICIT_TAG(connectionDataRQ, 3);
         BOOST_ASN_IMPLICIT_TAG(applicationProtocol, 4);
     }
 
@@ -787,9 +1036,39 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
         BOOST_ASN_IMPLICIT_TAG(dialogueMode, 2);
-        BOOST_ASN_CHOICE_TAG(connectionDataRQ, 3);
+        BOOST_ASN_EXPLICIT_TAG(connectionDataRQ, 3);
         BOOST_ASN_IMPLICIT_TAG(applicationProtocol, 4);
     }
+
+    CP_type::normal_mode_parameters_type::normal_mode_parameters_type() {
+    };
+
+    CP_type::normal_mode_parameters_type::normal_mode_parameters_type(boost::shared_ptr< Protocol_version> __protocol_version,
+            boost::shared_ptr< Calling_presentation_selector> __calling_presentation_selector,
+            boost::shared_ptr< Called_presentation_selector> __called_presentation_selector,
+            boost::shared_ptr< Presentation_context_definition_list> __presentation_context_definition_list,
+            boost::shared_ptr< Default_context_name> __default_context_name,
+            boost::shared_ptr< Presentation_requirements> __presentation_requirements,
+            boost::shared_ptr< User_session_requirements> __user_session_requirements,
+            boost::shared_ptr< Protocol_options> __protocol_options,
+            boost::shared_ptr< Presentation_context_identifier> __initiators_nominated_context,
+            boost::shared_ptr< extensions_type> __extensions,
+            boost::shared_ptr< User_data> __user_data) :
+    protocol_version(__protocol_version),
+    calling_presentation_selector(__calling_presentation_selector),
+    called_presentation_selector(__called_presentation_selector),
+    presentation_context_definition_list(__presentation_context_definition_list),
+    default_context_name(__default_context_name),
+    presentation_requirements(__presentation_requirements),
+    user_session_requirements(__user_session_requirements),
+    protocol_options(__protocol_options),
+    initiators_nominated_context(__initiators_nominated_context),
+    extensions(__extensions),
+    user_data(__user_data) {
+    };
+
+    CP_type::normal_mode_parameters_type::extensions_type::extensions_type() {
+    };
 
     template<> void CP_type::normal_mode_parameters_type::extensions_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_EXTENTION;

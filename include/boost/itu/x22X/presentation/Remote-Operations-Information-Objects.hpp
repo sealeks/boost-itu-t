@@ -40,11 +40,11 @@ namespace Remote_Operations_Information_Objects {
     using boost::asn1::characterstring_type;
     using boost::asn1::any_type;
 
+
     struct Code;
 
+
     typedef int Priority;
-
-
 
 
 }
@@ -54,7 +54,6 @@ namespace Remote_Operations_Information_Objects {
 namespace Remote_Operations_Information_Objects {
 
     // import   from  Remote-Operations-Useful-Definitions
-
 
 
 
@@ -70,6 +69,10 @@ namespace Remote_Operations_Information_Objects {
     struct Code : public BOOST_ASN_CHOICE_STRUCT(Code_enum) {
 
         Code() : BOOST_ASN_CHOICE_STRUCT(Code_enum) () {
+        }
+
+        template<typename T > Code(boost::shared_ptr< T> vl, Code_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(Code_enum) (vl, static_cast<int> (enm)) {
         }
 
         BOOST_ASN_VALUE_CHOICE(local, int, Code_local);

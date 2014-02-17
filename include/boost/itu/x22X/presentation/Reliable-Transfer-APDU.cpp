@@ -84,6 +84,23 @@ namespace Reliable_Transfer_APDU {
 
     // sequence SessionConnectionIdentifier
 
+    SessionConnectionIdentifier::SessionConnectionIdentifier() : callingSSuserReference(), commonReference() {
+    };
+
+    SessionConnectionIdentifier::SessionConnectionIdentifier(const CallingSSuserReference& __callingSSuserReference,
+            const CommonReference& __commonReference) :
+    callingSSuserReference(__callingSSuserReference),
+    commonReference(__commonReference) {
+    };
+
+    SessionConnectionIdentifier::SessionConnectionIdentifier(boost::shared_ptr< CallingSSuserReference> __callingSSuserReference,
+            boost::shared_ptr< CommonReference> __commonReference,
+            boost::shared_ptr< AdditionalReferenceInformation> __additionalReferenceInformation) :
+    callingSSuserReference(*__callingSSuserReference),
+    commonReference(*__commonReference),
+    additionalReferenceInformation(__additionalReferenceInformation) {
+    };
+
     template<> void SessionConnectionIdentifier::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_CHOICE(callingSSuserReference);
         BOOST_ASN_BIND_TAG(commonReference);
@@ -173,6 +190,17 @@ namespace Reliable_Transfer_APDU {
 
     // set RTABapdu
 
+    RTABapdu::RTABapdu() {
+    };
+
+    RTABapdu::RTABapdu(boost::shared_ptr< AbortReason> __abortReason,
+            boost::shared_ptr< bitstring_type> __reflectedParameter,
+            boost::shared_ptr< any_type> __userdataAB) :
+    abortReason(__abortReason),
+    reflectedParameter(__reflectedParameter),
+    userdataAB(__userdataAB) {
+    };
+
     template<> void RTABapdu::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(abortReason, 0);
         BOOST_ASN_IMPLICIT_TAG(reflectedParameter, 1);
@@ -188,6 +216,15 @@ namespace Reliable_Transfer_APDU {
 
     // set RTORJapdu
 
+    RTORJapdu::RTORJapdu() {
+    };
+
+    RTORJapdu::RTORJapdu(boost::shared_ptr< RefuseReason> __refuseReason,
+            boost::shared_ptr< any_type> __userDataRJ) :
+    refuseReason(__refuseReason),
+    userDataRJ(__userDataRJ) {
+    };
+
     template<> void RTORJapdu::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(refuseReason, 0);
         BOOST_ASN_EXPLICIT_TAG(userDataRJ, 1);
@@ -201,16 +238,31 @@ namespace Reliable_Transfer_APDU {
 
     // set RTOACapdu
 
+    RTOACapdu::RTOACapdu() : connectionDataAC() {
+    };
+
+    RTOACapdu::RTOACapdu(const ConnectionData& __connectionDataAC) :
+    connectionDataAC(__connectionDataAC) {
+    };
+
+    RTOACapdu::RTOACapdu(boost::shared_ptr< int> __checkpointSize,
+            boost::shared_ptr< int> __windowSize,
+            boost::shared_ptr< ConnectionData> __connectionDataAC) :
+    checkpointSize(__checkpointSize),
+    windowSize(__windowSize),
+    connectionDataAC(*__connectionDataAC) {
+    };
+
     template<> void RTOACapdu::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
-        BOOST_ASN_CHOICE_TAG(connectionDataAC, 2);
+        BOOST_ASN_EXPLICIT_TAG(connectionDataAC, 2);
     }
 
     template<> void RTOACapdu::serialize(boost::asn1::x690::input_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
-        BOOST_ASN_CHOICE_TAG(connectionDataAC, 2);
+        BOOST_ASN_EXPLICIT_TAG(connectionDataAC, 2);
     }
 
 
@@ -218,11 +270,30 @@ namespace Reliable_Transfer_APDU {
     const int RTORQapdu::dialogueMode_monologue = 0;
     const int RTORQapdu::dialogueMode_twa = 1;
 
+    RTORQapdu::RTORQapdu() : connectionDataRQ() {
+    };
+
+    RTORQapdu::RTORQapdu(const ConnectionData& __connectionDataRQ) :
+    connectionDataRQ(__connectionDataRQ) {
+    };
+
+    RTORQapdu::RTORQapdu(boost::shared_ptr< int> __checkpointSize,
+            boost::shared_ptr< int> __windowSize,
+            boost::shared_ptr< int> __dialogueMode,
+            boost::shared_ptr< ConnectionData> __connectionDataRQ,
+            boost::shared_ptr< int> __applicationProtocol) :
+    checkpointSize(__checkpointSize),
+    windowSize(__windowSize),
+    dialogueMode(__dialogueMode),
+    connectionDataRQ(*__connectionDataRQ),
+    applicationProtocol(__applicationProtocol) {
+    };
+
     template<> void RTORQapdu::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
         BOOST_ASN_IMPLICIT_TAG(dialogueMode, 2);
-        BOOST_ASN_CHOICE_TAG(connectionDataRQ, 3);
+        BOOST_ASN_EXPLICIT_TAG(connectionDataRQ, 3);
         BOOST_ASN_IMPLICIT_TAG(applicationProtocol, 4);
     }
 
@@ -230,7 +301,7 @@ namespace Reliable_Transfer_APDU {
         BOOST_ASN_IMPLICIT_TAG(checkpointSize, 0);
         BOOST_ASN_IMPLICIT_TAG(windowSize, 1);
         BOOST_ASN_IMPLICIT_TAG(dialogueMode, 2);
-        BOOST_ASN_CHOICE_TAG(connectionDataRQ, 3);
+        BOOST_ASN_EXPLICIT_TAG(connectionDataRQ, 3);
         BOOST_ASN_IMPLICIT_TAG(applicationProtocol, 4);
     }
 
@@ -346,6 +417,6 @@ namespace Reliable_Transfer_APDU {
 
 
     const boost::array<boost::asn1::oidindx_type, 3> rTSE_abstract_syntax_OID_ARR = {2, 3, 2};
-    const boost::asn1::oid_type rTSE_abstract_syntax = boost::asn1::oid_type(rTSE_abstract_syntax_OID_ARR);
+    const oid_type rTSE_abstract_syntax = boost::asn1::oid_type(rTSE_abstract_syntax_OID_ARR);
 
 }

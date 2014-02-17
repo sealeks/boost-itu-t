@@ -42,10 +42,7 @@ namespace Remote_Operations_Useful_Definitions {
 
 
 
-
-
 }
-
 
 #include <boost/itu/x22X/presentation/Remote-Operations-Information-Objects.hpp>
 #include <boost/itu/x22X/presentation/Remote-Operations-Generic-ROS-PDUs.hpp>
@@ -60,7 +57,6 @@ namespace Remote_Operations_Useful_Definitions {
     // import   from  Remote-Operations-Generic-ROS-PDUs
 
     using Remote_Operations_Generic_ROS_PDUs::InvokeId;
-
 
 
 }

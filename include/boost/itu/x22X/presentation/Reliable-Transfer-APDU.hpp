@@ -40,6 +40,7 @@ namespace Reliable_Transfer_APDU {
     using boost::asn1::characterstring_type;
     using boost::asn1::any_type;
 
+
     struct RTSE_apdus;
     struct RTORQapdu;
     struct RTOACapdu;
@@ -49,6 +50,7 @@ namespace Reliable_Transfer_APDU {
     struct SessionConnectionIdentifier;
     struct CallingSSuserReference;
 
+
     typedef int RTTPapdu;
     typedef octetstring_type RTTRapdu;
     typedef int RefuseReason;
@@ -56,10 +58,7 @@ namespace Reliable_Transfer_APDU {
     typedef t61string_type AdditionalReferenceInformation;
     typedef int AbortReason;
 
-
-
-
-    extern const boost::asn1::oid_type rTSE_abstract_syntax;
+    extern const oid_type rTSE_abstract_syntax;
 
 }
 
@@ -68,7 +67,6 @@ namespace Reliable_Transfer_APDU {
 namespace Reliable_Transfer_APDU {
 
     // import   from  Remote-Operations-Information-Objects
-
 
 
 
@@ -95,6 +93,10 @@ namespace Reliable_Transfer_APDU {
         CallingSSuserReference() : BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) () {
         }
 
+        template<typename T > CallingSSuserReference(boost::shared_ptr< T> vl, CallingSSuserReference_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) (vl, static_cast<int> (enm)) {
+        }
+
         BOOST_ASN_VALUE_CHOICE(t61String, t61string_type, CallingSSuserReference_t61String);
         BOOST_ASN_VALUE_CHOICE(octetString, octetstring_type, CallingSSuserReference_octetString);
 
@@ -110,8 +112,14 @@ namespace Reliable_Transfer_APDU {
 
     struct SessionConnectionIdentifier {
 
-        SessionConnectionIdentifier() : callingSSuserReference(), commonReference() {
-        }
+        SessionConnectionIdentifier();
+
+        SessionConnectionIdentifier(const CallingSSuserReference& __callingSSuserReference,
+                const CommonReference& __commonReference);
+
+        SessionConnectionIdentifier(boost::shared_ptr< CallingSSuserReference> __callingSSuserReference,
+                boost::shared_ptr< CommonReference> __commonReference,
+                boost::shared_ptr< AdditionalReferenceInformation> __additionalReferenceInformation);
 
         CallingSSuserReference callingSSuserReference;
         CommonReference commonReference;
@@ -136,6 +144,10 @@ namespace Reliable_Transfer_APDU {
         ConnectionData() : BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) () {
         }
 
+        template<typename T > ConnectionData(boost::shared_ptr< T> vl, ConnectionData_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) (vl, static_cast<int> (enm)) {
+        }
+
         BOOST_ASN_VALUE_CHOICE(open, any_type, ConnectionData_open);
         BOOST_ASN_VALUE_CHOICE(recover, SessionConnectionIdentifier, ConnectionData_recover);
 
@@ -146,8 +158,11 @@ namespace Reliable_Transfer_APDU {
 
     struct RTABapdu {
 
-        RTABapdu() {
-        }
+        RTABapdu();
+
+        RTABapdu(boost::shared_ptr< AbortReason> __abortReason,
+                boost::shared_ptr< bitstring_type> __reflectedParameter,
+                boost::shared_ptr< any_type> __userdataAB);
 
         boost::shared_ptr<AbortReason> abortReason;
         BOOST_ASN_VALUE_FUNC_DECLARATE(AbortReason, abortReason)
@@ -166,8 +181,10 @@ namespace Reliable_Transfer_APDU {
 
     struct RTORJapdu {
 
-        RTORJapdu() {
-        }
+        RTORJapdu();
+
+        RTORJapdu(boost::shared_ptr< RefuseReason> __refuseReason,
+                boost::shared_ptr< any_type> __userDataRJ);
 
         boost::shared_ptr<RefuseReason> refuseReason;
         BOOST_ASN_VALUE_FUNC_DECLARATE(RefuseReason, refuseReason)
@@ -183,8 +200,13 @@ namespace Reliable_Transfer_APDU {
 
     struct RTOACapdu {
 
-        RTOACapdu() : connectionDataAC() {
-        }
+        RTOACapdu();
+
+        RTOACapdu(const ConnectionData& __connectionDataAC);
+
+        RTOACapdu(boost::shared_ptr< int> __checkpointSize,
+                boost::shared_ptr< int> __windowSize,
+                boost::shared_ptr< ConnectionData> __connectionDataAC);
 
         boost::shared_ptr<int> checkpointSize;
         BOOST_ASN_VALUE_FUNC_DECLARATE(int, checkpointSize)
@@ -204,8 +226,16 @@ namespace Reliable_Transfer_APDU {
         static const int dialogueMode_monologue;
         static const int dialogueMode_twa;
 
-        RTORQapdu() : connectionDataRQ() {
-        }
+
+        RTORQapdu();
+
+        RTORQapdu(const ConnectionData& __connectionDataRQ);
+
+        RTORQapdu(boost::shared_ptr< int> __checkpointSize,
+                boost::shared_ptr< int> __windowSize,
+                boost::shared_ptr< int> __dialogueMode,
+                boost::shared_ptr< ConnectionData> __connectionDataRQ,
+                boost::shared_ptr< int> __applicationProtocol);
 
         boost::shared_ptr<int> checkpointSize;
         BOOST_ASN_VALUE_FUNC_DECLARATE(int, checkpointSize)
@@ -240,6 +270,10 @@ namespace Reliable_Transfer_APDU {
     struct RTSE_apdus : public BOOST_ASN_CHOICE_STRUCT(RTSE_apdus_enum) {
 
         RTSE_apdus() : BOOST_ASN_CHOICE_STRUCT(RTSE_apdus_enum) () {
+        }
+
+        template<typename T > RTSE_apdus(boost::shared_ptr< T> vl, RTSE_apdus_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(RTSE_apdus_enum) (vl, static_cast<int> (enm)) {
         }
 
         BOOST_ASN_VALUE_CHOICE(rtorq_apdu, RTORQapdu, RTSE_apdus_rtorq_apdu);

@@ -40,6 +40,7 @@ namespace ISO8823_PRESENTATION {
     using boost::asn1::characterstring_type;
     using boost::asn1::any_type;
 
+
     struct CP_type;
     struct CPA_PPDU;
     struct CPR_PPDU;
@@ -55,10 +56,11 @@ namespace ISO8823_PRESENTATION {
     struct Mode_selector;
     struct User_data;
     struct PDV_list;
-
     struct Context_list_sequence_of;
     struct Presentation_context_identifier_list_sequence_of;
     struct Result_list_sequence_of;
+
+
     typedef int Abort_reason;
     typedef oid_type Abstract_syntax_name;
     typedef int Event_identifier;
@@ -72,10 +74,7 @@ namespace ISO8823_PRESENTATION {
     typedef oid_type Transfer_syntax_name;
     typedef octetstring_type Simply_encoded_data;
     typedef bitstring_type User_session_requirements;
-
-
-    typedef std::vector< int> Presentation_context_deletion_result_list;
-
+    typedef std::deque< int > Presentation_context_deletion_result_list;
 
     typedef User_data CPC_type;
     typedef Presentation_selector Called_presentation_selector;
@@ -92,10 +91,10 @@ namespace ISO8823_PRESENTATION {
     typedef Result_list Presentation_context_definition_result_list;
     typedef std::deque< PDV_list > Fully_encoded_data;
 
+
 }
 
-#include <boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp>
-
+#include "Reliable-Transfer-APDU.hpp"
 
 namespace ISO8823_PRESENTATION {
 
@@ -105,7 +104,6 @@ namespace ISO8823_PRESENTATION {
     using Reliable_Transfer_APDU::RTOACapdu;
     using Reliable_Transfer_APDU::RTORJapdu;
     using Reliable_Transfer_APDU::RTABapdu;
-
 
 
 
@@ -127,6 +125,8 @@ namespace ISO8823_PRESENTATION {
 
     struct PDV_list {
 
+        struct presentation_data_values_type;
+
         enum presentation_data_values_type_enum {
 
             presentation_data_values_type_null = 0,
@@ -140,6 +140,10 @@ namespace ISO8823_PRESENTATION {
             presentation_data_values_type() : BOOST_ASN_CHOICE_STRUCT(presentation_data_values_type_enum) () {
             }
 
+            template<typename T > presentation_data_values_type(boost::shared_ptr< T> vl, presentation_data_values_type_enum enm) :
+                    BOOST_ASN_CHOICE_STRUCT(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
+            }
+
             BOOST_ASN_VALUE_CHOICE(single_ASN1_type, any_type, presentation_data_values_type_single_ASN1_type);
             BOOST_ASN_VALUE_CHOICE(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned);
             BOOST_ASN_VALUE_CHOICE(arbitrary, bitstring_type, presentation_data_values_type_arbitrary);
@@ -147,8 +151,15 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_ARCHIVE_FUNC;
         };
 
-        PDV_list() : presentation_context_identifier(), presentation_data_values() {
-        }
+
+        PDV_list();
+
+        PDV_list(const Presentation_context_identifier& __presentation_context_identifier,
+                const presentation_data_values_type& __presentation_data_values);
+
+        PDV_list(boost::shared_ptr< Transfer_syntax_name> __transfer_syntax_name,
+                boost::shared_ptr< Presentation_context_identifier> __presentation_context_identifier,
+                boost::shared_ptr< presentation_data_values_type> __presentation_data_values);
 
         boost::shared_ptr<Transfer_syntax_name> transfer_syntax_name;
         BOOST_ASN_VALUE_FUNC_DECLARATE(Transfer_syntax_name, transfer_syntax_name)
@@ -173,6 +184,10 @@ namespace ISO8823_PRESENTATION {
         User_data() : BOOST_ASN_CHOICE_STRUCT(User_data_enum) () {
         }
 
+        template<typename T > User_data(boost::shared_ptr< T> vl, User_data_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(User_data_enum) (vl, static_cast<int> (enm)) {
+        }
+
         BOOST_ASN_VALUE_CHOICE(simply_encoded_data, Simply_encoded_data, User_data_simply_encoded_data);
         BOOST_ASN_VALUE_CHOICE(fully_encoded_data, Fully_encoded_data, User_data_fully_encoded_data);
 
@@ -186,8 +201,14 @@ namespace ISO8823_PRESENTATION {
         static const int provider_reason_proposed_transfer_syntaxes_not_supported;
         static const int provider_reason_local_limit_on_DCS_exceeded;
 
-        Result_list_sequence_of() : result() {
-        }
+
+        Result_list_sequence_of();
+
+        Result_list_sequence_of(const Result& __result);
+
+        Result_list_sequence_of(boost::shared_ptr< Result> __result,
+                boost::shared_ptr< Transfer_syntax_name> __transfer_syntax_name,
+                boost::shared_ptr< int> __provider_reason);
 
         Result result;
         boost::shared_ptr<Transfer_syntax_name> transfer_syntax_name;
@@ -224,8 +245,10 @@ namespace ISO8823_PRESENTATION {
 
     struct Presentation_context_identifier_list_sequence_of {
 
-        Presentation_context_identifier_list_sequence_of() : presentation_context_identifier(), transfer_syntax_name() {
-        }
+        Presentation_context_identifier_list_sequence_of();
+
+        Presentation_context_identifier_list_sequence_of(const Presentation_context_identifier& __presentation_context_identifier,
+                const Transfer_syntax_name& __transfer_syntax_name);
 
         Presentation_context_identifier presentation_context_identifier;
         Transfer_syntax_name transfer_syntax_name;
@@ -240,8 +263,10 @@ namespace ISO8823_PRESENTATION {
         static const int mode_value_x410_1984_mode;
         static const int mode_value_normal_mode;
 
-        Mode_selector() : mode_value() {
-        }
+
+        Mode_selector();
+
+        Mode_selector(const int& __mode_value);
 
         int mode_value;
 
@@ -286,8 +311,10 @@ namespace ISO8823_PRESENTATION {
 
     struct Default_context_name {
 
-        Default_context_name() : abstract_syntax_name(), transfer_syntax_name() {
-        }
+        Default_context_name();
+
+        Default_context_name(const Abstract_syntax_name& __abstract_syntax_name,
+                const Transfer_syntax_name& __transfer_syntax_name);
 
         Abstract_syntax_name abstract_syntax_name;
         Transfer_syntax_name transfer_syntax_name;
@@ -297,10 +324,13 @@ namespace ISO8823_PRESENTATION {
 
     struct Context_list_sequence_of {
 
-        typedef std::vector< Transfer_syntax_name> transfer_syntax_name_list_type;
+        typedef std::deque< Transfer_syntax_name > transfer_syntax_name_list_type;
 
-        Context_list_sequence_of() : presentation_context_identifier(), abstract_syntax_name(), transfer_syntax_name_list() {
-        }
+        Context_list_sequence_of();
+
+        Context_list_sequence_of(const Presentation_context_identifier& __presentation_context_identifier,
+                const Abstract_syntax_name& __abstract_syntax_name,
+                const transfer_syntax_name_list_type& __transfer_syntax_name_list);
 
         Presentation_context_identifier presentation_context_identifier;
         Abstract_syntax_name abstract_syntax_name;
@@ -321,8 +351,10 @@ namespace ISO8823_PRESENTATION {
 
     struct RSA_PPDU {
 
-        RSA_PPDU() {
-        }
+        RSA_PPDU();
+
+        RSA_PPDU(boost::shared_ptr< Presentation_context_identifier_list> __presentation_context_identifier_list,
+                boost::shared_ptr< User_data> __user_data);
 
         boost::shared_ptr<Presentation_context_identifier_list> presentation_context_identifier_list;
         BOOST_ASN_VALUE_FUNC_DECLARATE(Presentation_context_identifier_list, presentation_context_identifier_list)
@@ -338,8 +370,10 @@ namespace ISO8823_PRESENTATION {
 
     struct RS_PPDU {
 
-        RS_PPDU() {
-        }
+        RS_PPDU();
+
+        RS_PPDU(boost::shared_ptr< Presentation_context_identifier_list> __presentation_context_identifier_list,
+                boost::shared_ptr< User_data> __user_data);
 
         boost::shared_ptr<Presentation_context_identifier_list> presentation_context_identifier_list;
         BOOST_ASN_VALUE_FUNC_DECLARATE(Presentation_context_identifier_list, presentation_context_identifier_list)
@@ -355,8 +389,11 @@ namespace ISO8823_PRESENTATION {
 
     struct ACA_PPDU {
 
-        ACA_PPDU() {
-        }
+        ACA_PPDU();
+
+        ACA_PPDU(boost::shared_ptr< Presentation_context_addition_result_list> __presentation_context_addition_result_list,
+                boost::shared_ptr< Presentation_context_deletion_result_list> __presentation_context_deletion_result_list,
+                boost::shared_ptr< User_data> __user_data);
 
         boost::shared_ptr<Presentation_context_addition_result_list> presentation_context_addition_result_list;
         BOOST_ASN_VALUE_FUNC_DECLARATE(Presentation_context_addition_result_list, presentation_context_addition_result_list)
@@ -375,8 +412,11 @@ namespace ISO8823_PRESENTATION {
 
     struct AC_PPDU {
 
-        AC_PPDU() {
-        }
+        AC_PPDU();
+
+        AC_PPDU(boost::shared_ptr< Presentation_context_addition_list> __presentation_context_addition_list,
+                boost::shared_ptr< Presentation_context_deletion_list> __presentation_context_deletion_list,
+                boost::shared_ptr< User_data> __user_data);
 
         boost::shared_ptr<Presentation_context_addition_list> presentation_context_addition_list;
         BOOST_ASN_VALUE_FUNC_DECLARATE(Presentation_context_addition_list, presentation_context_addition_list)
@@ -406,6 +446,10 @@ namespace ISO8823_PRESENTATION {
         Typed_data_type() : BOOST_ASN_CHOICE_STRUCT(Typed_data_type_enum) () {
         }
 
+        template<typename T > Typed_data_type(boost::shared_ptr< T> vl, Typed_data_type_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(Typed_data_type_enum) (vl, static_cast<int> (enm)) {
+        }
+
         BOOST_ASN_VALUE_CHOICE(acPPDU, AC_PPDU, Typed_data_type_acPPDU);
         BOOST_ASN_VALUE_CHOICE(acaPPDU, ACA_PPDU, Typed_data_type_acaPPDU);
         BOOST_ASN_VALUE_CHOICE(ttdPPDU, User_data, Typed_data_type_ttdPPDU);
@@ -417,8 +461,10 @@ namespace ISO8823_PRESENTATION {
 
     struct ARP_PPDU {
 
-        ARP_PPDU() {
-        }
+        ARP_PPDU();
+
+        ARP_PPDU(boost::shared_ptr< Abort_reason> __provider_reason,
+                boost::shared_ptr< Event_identifier> __event_identifier);
 
         boost::shared_ptr<Abort_reason> provider_reason;
         BOOST_ASN_VALUE_FUNC_DECLARATE(Abort_reason, provider_reason)
@@ -441,10 +487,17 @@ namespace ISO8823_PRESENTATION {
 
     struct ARU_PPDU : public BOOST_ASN_CHOICE_STRUCT(ARU_PPDU_enum) {
 
+
+        struct x400_mode_parameters_type;
+        struct normal_mode_parameters_type;
+
         struct x400_mode_parameters_type {
 
-            x400_mode_parameters_type() {
-            }
+            x400_mode_parameters_type();
+
+            x400_mode_parameters_type(boost::shared_ptr< Reliable_Transfer_APDU::AbortReason> __abortReason,
+                    boost::shared_ptr< bitstring_type> __reflectedParameter,
+                    boost::shared_ptr< any_type> __userdataAB);
 
             boost::shared_ptr<Reliable_Transfer_APDU::AbortReason> abortReason;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Reliable_Transfer_APDU::AbortReason, abortReason)
@@ -461,8 +514,10 @@ namespace ISO8823_PRESENTATION {
 
         struct normal_mode_parameters_type {
 
-            normal_mode_parameters_type() {
-            }
+            normal_mode_parameters_type();
+
+            normal_mode_parameters_type(boost::shared_ptr< Presentation_context_identifier_list> __presentation_context_identifier_list,
+                    boost::shared_ptr< User_data> __user_data);
 
             boost::shared_ptr<Presentation_context_identifier_list> presentation_context_identifier_list;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Presentation_context_identifier_list, presentation_context_identifier_list)
@@ -475,6 +530,10 @@ namespace ISO8823_PRESENTATION {
         };
 
         ARU_PPDU() : BOOST_ASN_CHOICE_STRUCT(ARU_PPDU_enum) () {
+        }
+
+        template<typename T > ARU_PPDU(boost::shared_ptr< T> vl, ARU_PPDU_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(ARU_PPDU_enum) (vl, static_cast<int> (enm)) {
         }
 
         BOOST_ASN_VALUE_CHOICE(x400_mode_parameters, x400_mode_parameters_type, ARU_PPDU_x400_mode_parameters);
@@ -497,6 +556,10 @@ namespace ISO8823_PRESENTATION {
         Abort_type() : BOOST_ASN_CHOICE_STRUCT(Abort_type_enum) () {
         }
 
+        template<typename T > Abort_type(boost::shared_ptr< T> vl, Abort_type_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(Abort_type_enum) (vl, static_cast<int> (enm)) {
+        }
+
         BOOST_ASN_VALUE_CHOICE(aru_ppdu, ARU_PPDU, Abort_type_aru_ppdu);
         BOOST_ASN_VALUE_CHOICE(arp_ppdu, ARP_PPDU, Abort_type_arp_ppdu);
 
@@ -514,10 +577,16 @@ namespace ISO8823_PRESENTATION {
 
     struct CPR_PPDU : public BOOST_ASN_CHOICE_STRUCT(CPR_PPDU_enum) {
 
+
+        struct x400_mode_parameters_type;
+        struct normal_mode_parameters_type;
+
         struct x400_mode_parameters_type {
 
-            x400_mode_parameters_type() {
-            }
+            x400_mode_parameters_type();
+
+            x400_mode_parameters_type(boost::shared_ptr< Reliable_Transfer_APDU::RefuseReason> __refuseReason,
+                    boost::shared_ptr< any_type> __userDataRJ);
 
             boost::shared_ptr<Reliable_Transfer_APDU::RefuseReason> refuseReason;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Reliable_Transfer_APDU::RefuseReason, refuseReason)
@@ -531,8 +600,14 @@ namespace ISO8823_PRESENTATION {
 
         struct normal_mode_parameters_type {
 
-            normal_mode_parameters_type() {
-            }
+            normal_mode_parameters_type();
+
+            normal_mode_parameters_type(boost::shared_ptr< Protocol_version> __protocol_version,
+                    boost::shared_ptr< Responding_presentation_selector> __responding_presentation_selector,
+                    boost::shared_ptr< Presentation_context_definition_result_list> __presentation_context_definition_result_list,
+                    boost::shared_ptr< Default_context_result> __default_context_result,
+                    boost::shared_ptr< Provider_reason> __provider_reason,
+                    boost::shared_ptr< User_data> __user_data);
 
             boost::shared_ptr<Protocol_version> protocol_version;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Protocol_version, protocol_version)
@@ -559,6 +634,10 @@ namespace ISO8823_PRESENTATION {
         CPR_PPDU() : BOOST_ASN_CHOICE_STRUCT(CPR_PPDU_enum) () {
         }
 
+        template<typename T > CPR_PPDU(boost::shared_ptr< T> vl, CPR_PPDU_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(CPR_PPDU_enum) (vl, static_cast<int> (enm)) {
+        }
+
         BOOST_ASN_VALUE_CHOICE(x400_mode_parameters, x400_mode_parameters_type, CPR_PPDU_x400_mode_parameters);
         BOOST_ASN_VALUE_CHOICE(normal_mode_parameters, normal_mode_parameters_type, CPR_PPDU_normal_mode_parameters);
 
@@ -569,10 +648,18 @@ namespace ISO8823_PRESENTATION {
 
     struct CPA_PPDU {
 
+        struct x410_mode_parameters_type;
+        struct normal_mode_parameters_type;
+
         struct x410_mode_parameters_type {
 
-            x410_mode_parameters_type() : connectionDataAC() {
-            }
+            x410_mode_parameters_type();
+
+            x410_mode_parameters_type(const Reliable_Transfer_APDU::ConnectionData& __connectionDataAC);
+
+            x410_mode_parameters_type(boost::shared_ptr< int> __checkpointSize,
+                    boost::shared_ptr< int> __windowSize,
+                    boost::shared_ptr< Reliable_Transfer_APDU::ConnectionData> __connectionDataAC);
 
             boost::shared_ptr<int> checkpointSize;
             BOOST_ASN_VALUE_FUNC_DECLARATE(int, checkpointSize)
@@ -587,8 +674,16 @@ namespace ISO8823_PRESENTATION {
 
         struct normal_mode_parameters_type {
 
-            normal_mode_parameters_type() {
-            }
+            normal_mode_parameters_type();
+
+            normal_mode_parameters_type(boost::shared_ptr< Protocol_version> __protocol_version,
+                    boost::shared_ptr< Responding_presentation_selector> __responding_presentation_selector,
+                    boost::shared_ptr< Presentation_context_definition_result_list> __presentation_context_definition_result_list,
+                    boost::shared_ptr< Presentation_requirements> __presentation_requirements,
+                    boost::shared_ptr< User_session_requirements> __user_session_requirements,
+                    boost::shared_ptr< Protocol_options> __protocol_options,
+                    boost::shared_ptr< Presentation_context_identifier> __responders_nominated_context,
+                    boost::shared_ptr< User_data> __user_data);
 
             boost::shared_ptr<Protocol_version> protocol_version;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Protocol_version, protocol_version)
@@ -618,8 +713,14 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_ARCHIVE_FUNC;
         };
 
-        CPA_PPDU() : mode_selector() {
-        }
+
+        CPA_PPDU();
+
+        CPA_PPDU(const Mode_selector& __mode_selector);
+
+        CPA_PPDU(boost::shared_ptr< Mode_selector> __mode_selector,
+                boost::shared_ptr< x410_mode_parameters_type> __x410_mode_parameters,
+                boost::shared_ptr< normal_mode_parameters_type> __normal_mode_parameters);
 
         Mode_selector mode_selector;
         boost::shared_ptr<x410_mode_parameters_type> x410_mode_parameters;
@@ -636,13 +737,24 @@ namespace ISO8823_PRESENTATION {
 
     struct CP_type {
 
+        struct x410_mode_parameters_type;
+        struct normal_mode_parameters_type;
+
         struct x410_mode_parameters_type {
 
             static const int dialogueMode_monologue;
             static const int dialogueMode_twa;
 
-            x410_mode_parameters_type() : connectionDataRQ() {
-            }
+
+            x410_mode_parameters_type();
+
+            x410_mode_parameters_type(const Reliable_Transfer_APDU::ConnectionData& __connectionDataRQ);
+
+            x410_mode_parameters_type(boost::shared_ptr< int> __checkpointSize,
+                    boost::shared_ptr< int> __windowSize,
+                    boost::shared_ptr< int> __dialogueMode,
+                    boost::shared_ptr< Reliable_Transfer_APDU::ConnectionData> __connectionDataRQ,
+                    boost::shared_ptr< int> __applicationProtocol);
 
             boost::shared_ptr<int> checkpointSize;
             BOOST_ASN_VALUE_FUNC_DECLARATE(int, checkpointSize)
@@ -663,17 +775,30 @@ namespace ISO8823_PRESENTATION {
 
         struct normal_mode_parameters_type {
 
+            struct extensions_type;
+
             struct extensions_type {
 
-                extensions_type() {
-                }
+                extensions_type();
 
 
                 BOOST_ASN_ARCHIVE_FUNC;
             };
 
-            normal_mode_parameters_type() {
-            }
+
+            normal_mode_parameters_type();
+
+            normal_mode_parameters_type(boost::shared_ptr< Protocol_version> __protocol_version,
+                    boost::shared_ptr< Calling_presentation_selector> __calling_presentation_selector,
+                    boost::shared_ptr< Called_presentation_selector> __called_presentation_selector,
+                    boost::shared_ptr< Presentation_context_definition_list> __presentation_context_definition_list,
+                    boost::shared_ptr< Default_context_name> __default_context_name,
+                    boost::shared_ptr< Presentation_requirements> __presentation_requirements,
+                    boost::shared_ptr< User_session_requirements> __user_session_requirements,
+                    boost::shared_ptr< Protocol_options> __protocol_options,
+                    boost::shared_ptr< Presentation_context_identifier> __initiators_nominated_context,
+                    boost::shared_ptr< extensions_type> __extensions,
+                    boost::shared_ptr< User_data> __user_data);
 
             boost::shared_ptr<Protocol_version> protocol_version;
             BOOST_ASN_VALUE_FUNC_DECLARATE(Protocol_version, protocol_version)
@@ -712,8 +837,14 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_ARCHIVE_FUNC;
         };
 
-        CP_type() : mode_selector() {
-        }
+
+        CP_type();
+
+        CP_type(const Mode_selector& __mode_selector);
+
+        CP_type(boost::shared_ptr< Mode_selector> __mode_selector,
+                boost::shared_ptr< x410_mode_parameters_type> __x410_mode_parameters,
+                boost::shared_ptr< normal_mode_parameters_type> __normal_mode_parameters);
 
         Mode_selector mode_selector;
         boost::shared_ptr<x410_mode_parameters_type> x410_mode_parameters;
