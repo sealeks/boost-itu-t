@@ -52,6 +52,7 @@ namespace x680 {
         std::string nested_init_str(type_atom_ptr self, const std::string& nm);
 
         bool expressed_import(module_entity_ptr self, const std::string& name);
+        member_vect parese_membervct(const member_vect& vct, bool obligate);
 
         class fileout {
 
@@ -81,7 +82,9 @@ namespace x680 {
             void load_typedef(declare_vect& vct, basic_entity_ptr self);
             void load_typedef_ref(declare_vect& vct, basic_entity_ptr self);
             void load_typedef_structof(declare_vect& vct, basic_entity_ptr self);
-            bool load_typedef_structof_impl(declare_vect& vct,  typeassignment_entity_ptr self);     
+            bool load_typedef_structof_impl(declare_vect& vct,  typeassignment_entity_ptr self);   
+            
+            void load_member(member_vect& vct, typeassignment_entity_ptr self);
                      
             void headerlock(std::ofstream& stream, std::string name);
             void bottomlock(std::ofstream& stream, std::string name);
@@ -132,7 +135,8 @@ namespace x680 {
             void execute_struct_hpp(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_struct_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
             
-            void execute_ctor(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_ctor_hpp(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_ctor_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
             
             void execute_structof_hpp(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_structof_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
