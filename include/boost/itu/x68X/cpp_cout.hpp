@@ -34,6 +34,7 @@ namespace x680 {
         declare_vect::iterator find_remote_reff(declare_vect& vct, const std::string& nm, declare_vect::iterator from);   
         void resolve_remote_reff(declare_vect& vct);
         bool sort_reff(declare_vect& vct);
+        bool default_supported(typeassignment_entity_ptr self);
         value_atom_ptr value_skip_defined(value_atom_ptr self);
         std::string value_int_str(value_atom_ptr self);
         std::string value_bool_str(value_atom_ptr self); 
@@ -52,7 +53,8 @@ namespace x680 {
         std::string nested_init_str(type_atom_ptr self, const std::string& nm);
 
         bool expressed_import(module_entity_ptr self, const std::string& name);
-        member_vect parese_membervct(const member_vect& vct, bool obligate);
+        member_vect parse_membervct(const member_vect& vct, bool obligate);
+        member_vect parse_default_membervct(const member_vect& vct);
 
         class fileout {
 

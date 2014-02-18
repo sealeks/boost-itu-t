@@ -46,8 +46,9 @@ namespace x680 {
             marker(mkr), ischoice(false), afterextention(false) {
             };
 
-            member_atom(tagmarker_type mkr, const std::string&name_, const std::string& typenam_, const std::string& enm_ = "", tagged_ptr tag_ = tagged_ptr(), bool ischoice_ = false, bool afterextention_ = false) :
-            marker(mkr), name(name_), typenam(typenam_), enm(enm_), tag(tag_), ischoice(ischoice_), afterextention(afterextention_) {
+            member_atom(tagmarker_type mkr, const std::string&name_, const std::string& typenam_, const std::string& enm_ = "", 
+            typeassignment_entity_ptr typ_ = typeassignment_entity_ptr(), bool ischoice_ = false, bool afterextention_ = false) :
+            marker(mkr), name(name_), typenam(typenam_), enm(enm_), typ(typ_), ischoice(ischoice_), afterextention(afterextention_) {
             };
 
 
@@ -57,7 +58,7 @@ namespace x680 {
             std::string name;
             std::string typenam;
             std::string enm;
-            tagged_ptr tag;
+            typeassignment_entity_ptr typ;
             bool ischoice;
             bool afterextention;
 
@@ -411,6 +412,19 @@ namespace x680 {
             return true;
         }
 
+        bool default_supported(typeassignment_entity_ptr self) {
+            switch (self->root_builtin()) {
+                case t_INTEGER:
+                case t_BOOLEAN:
+                case t_REAL:
+                case t_ENUMERATED:
+                case t_OBJECT_IDENTIFIER:
+                case t_RELATIVE_OID: return true;
+                default: return false;
+            }
+            return false;
+        }
+
         std::string member_marker_str(const std::string& str, tagmarker_type self, bool simple) {
             switch (self) {
                 case mk_default:
@@ -524,7 +538,7 @@ namespace x680 {
             return false;
         }
 
-        member_vect parese_membervct(const member_vect& vct, bool obligate) {
+        member_vect parse_membervct(const member_vect& vct, bool obligate) {
             member_vect rslt;
             for (member_vect::const_iterator it = vct.begin(); it != vct.end(); ++it) {
                 if (it->marker != mk_extention) {
@@ -534,6 +548,15 @@ namespace x680 {
             }
             return rslt;
         }
+
+        member_vect parse_default_membervct(const member_vect& vct) {
+            member_vect rslt;
+            for (member_vect::const_iterator it = vct.begin(); it != vct.end(); ++it) {
+                if (it->marker == mk_default)
+                    rslt.push_back(*it);
+            }
+            return rslt;
+        }        
 
 
 
@@ -848,10 +871,12 @@ namespace x680 {
                     namedtypeassignment_entity_ptr named = tpas->as_named();
                     tagmarker_type mkr = named->marker();
                     if (named->type()) {
+                        if ((mkr==mk_default) && (!default_supported(named)))
+                            mkr = mk_optional;                           
                         if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
                             vct.push_back(member_atom(mkr, nameconvert(named->name()), fromtype_str(named),
                                 ((self->builtin() == t_CHOICE) ? (type_str(self) + "_" + nameconvert(named->name())) : ""),
-                                named->tag(), named->istextualy_choice(), afterextention));
+                                named, named->istextualy_choice(), afterextention));
                     }
                     if (mkr == mk_extention) {
                         vct.push_back(member_atom());
@@ -1223,7 +1248,6 @@ namespace x680 {
                     namedtypeassignment_entity_ptr named = tpas->as_named();
                     tagmarker_type mkr = named->marker();
                     if (named->type()) {
-                        //mkr = ((named->istextualy_choice()) || (named->builtin() == t_CHOICE)) ? mk_none : named->marker();
                         if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
                             stream << "\n";
                             if (!ischoice) {
@@ -1449,8 +1473,8 @@ namespace x680 {
 
                         member_vect mmbr;
                         load_member(mmbr, self);
-                        member_vect oblig = parese_membervct(mmbr, true);
-                        member_vect nooblig = parese_membervct(mmbr, false);
+                        member_vect oblig = parse_membervct(mmbr, true);
+                        member_vect nooblig = parse_membervct(mmbr, false);
 
                         stream << "\n";
                         stream << "\n" << tabformat(self, 1) << type_str(self) << "(); \n";
@@ -1495,8 +1519,8 @@ namespace x680 {
                     {
                         member_vect mmbr;
                         load_member(mmbr, self);
-                        member_vect oblig = parese_membervct(mmbr, true);
-                        member_vect nooblig = parese_membervct(mmbr, false);
+                        member_vect oblig = parse_membervct(mmbr, true);
+                        member_vect nooblig = parse_membervct(mmbr, false);
 
                         stream << "\n";
                         stream << "\n" << tabformat(scp, 1) << fulltype_str(self, false) << "::" << type_str(self) << "()";
