@@ -232,7 +232,7 @@ namespace x680 {
                     return type_str(ppas)+(ppas->builtin() == t_SEQUENCE_OF ? "_sequence_of" : "_set_of");
                 return nameconvert(self->islocaldeclare() ? (self->name() + "_type") : self->name()) + postfix;
             } else
-                return nameconvert(self->name());
+                return self->islocaldefined() ?  builtin_str(self->builtin()) : nameconvert(self->name());
             return "";
         }
 
@@ -766,12 +766,12 @@ namespace x680 {
                 typeassignment_entity_ptr cpas = self->childs().front()->as_typeassigment();
                 if (cpas && (cpas->type())) {
                     if (cpas->issimplerefferrence()) {
-                        vct.push_back(declare_atom(((cpas->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
+                        vct.push_back(declare_atom(((self->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
                                 type_str(self), fromtype_str(cpas), false));
                         return true;
                     } else if ((cpas->isstruct_of())) {
                         if (load_typedef_structof_native_impl(vct, cpas)) {
-                            vct.push_back(declare_atom(((cpas->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
+                            vct.push_back(declare_atom(((self->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
                                     type_str(self), fromtype_str(cpas), false));
                             return true;
                         }
@@ -848,12 +848,12 @@ namespace x680 {
                 typeassignment_entity_ptr cpas = self->childs().front()->as_typeassigment();
                 if (cpas && (cpas->type())) {
                     if ((!cpas->issimplerefferrence()) && (!cpas->isstruct_of())) {
-                        vct.push_back(declare_atom(((cpas->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
+                        vct.push_back(declare_atom(((self->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
                                 type_str(self), fromtype_str(cpas), fromtype_remote(cpas)));
                         return true;
                     } else if ((cpas->isstruct_of())) {
                         if (load_typedef_structof_impl(vct, cpas)) {
-                            vct.push_back(declare_atom(((cpas->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
+                            vct.push_back(declare_atom(((self->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
                                     type_str(self), fromtype_str(cpas), fromtype_remote(cpas)));
                             return true;
                         }
@@ -1094,30 +1094,29 @@ namespace x680 {
         }
 
         void fileout::execute_predefined_int_hpp(std::ofstream& stream, predefined_ptr prdf, typeassignment_entity_ptr self) {
-            std::string pref = ((self->scope()) && (self->scope()->as_typeassigment())) ? "static " : "extern ";
+            std::string pref = ((self->scope()) && (self->scope()->as_typeassigment())) ? "static " : "extern ";          
             stream << "\n";
             for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {
                 valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
                 if (vlass) {
                     stream << tabformat(self) << pref << "const ";
-                    stream << /*nameconvert(self->name())*/"int" << " ";
-                    stream << nameconvert(self->name()) << "_" << nameconvert(vlass->name()) << ";\n";
+                    stream << type_str(self) << " ";
+                    stream << (self->islocaldefined() ? "" : (nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << ";\n";
                 }
             }
         }
 
         void fileout::execute_predefined_int_cpp(std::ofstream& stream, predefined_ptr prdf, typeassignment_entity_ptr self, typeassignment_entity_ptr ansec) {
-            bool local = ((self->scope()) && (self->scope()->as_typeassigment()));
             stream << "\n";
             for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {
                 valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
                 if (vlass) {
                     stream << tabformat() << "const ";
-                    stream << /*nameconvert(self->name())*/"int" << " ";
-                    if (local && ansec)
+                    stream << type_str(self) << " ";
+                    if ((self->islocaldefined()) && ansec)
                         stream << fulltype_str(ansec, false) << "::";
-                    stream << nameconvert(self->name()) << "_" << nameconvert(vlass->name()) << " = ";
-                    stream << value_int_str(vlass->value()) << ";\n";
+                    stream << (self->islocaldefined() ? "" : (nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << " = ";
+                    stream << nested_init_str(self->type(), value_int_str(vlass->value())) << ";\n";
                 }
             }
         }
@@ -1129,24 +1128,23 @@ namespace x680 {
                 valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
                 if (vlass) {
                     stream << tabformat(self) << pref << "const ";
-                    stream << /*nameconvert(self->name())*/"bitstring_type" << " ";
-                    stream << nameconvert(self->name()) << "_" << nameconvert(vlass->name()) << ";\n";
+                    stream << type_str(self) << " ";
+                    stream << (self->islocaldefined() ? "" : (nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << ";\n";
                 }
             }
         }
 
         void fileout::execute_predefined_bs_cpp(std::ofstream& stream, predefined_ptr prdf, typeassignment_entity_ptr self, typeassignment_entity_ptr ansec) {
-            bool local = ((self->scope()) && (self->scope()->as_typeassigment()));
             stream << "\n";
             for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {
                 valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
                 if (vlass) {
                     stream << tabformat() << "const ";
-                    stream << /*nameconvert(self->name())*/"bitstring_type" << " ";
-                    if (local && ansec)
+                    stream << type_str(self) << " ";
+                    if ((self->islocaldefined()) && ansec)
                         stream << fulltype_str(ansec, false) << "::";
-                    stream << nameconvert(self->name()) << "_" << nameconvert(vlass->name()) << " = ";
-                    stream << "bitstring_type(true, " << value_int_str(vlass->value()) << ");\n";
+                    stream << (self->islocaldefined() ? "" : (nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << " = ";
+                    stream <<nested_init_str(self->type(),  "bitstring_type(true, " + value_int_str(vlass->value()) + ")") << ";\n";
                 }
             }
         }
@@ -1241,40 +1239,29 @@ namespace x680 {
 
         void fileout::execute_member(std::ofstream& stream, typeassignment_entity_ptr self) {
             bool ischoice = (self->builtin() == t_CHOICE);
-            bool afterextention = false;
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if ((tpas) && (tpas->as_named())) {
-                    namedtypeassignment_entity_ptr named = tpas->as_named();
-                    tagmarker_type mkr = named->marker();
-                    if (named->type()) {
-                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
-                            stream << "\n";
-                            if (!ischoice) {
-                                if (afterextention && (mkr == mk_none))
-                                    mkr = mk_optional;
-                                stream << tabformat(self, 1) <<
-                                        member_marker_str(fromtype_str(named), mkr, noholder_) <<
-                                        " " << nameconvert(named->name()) << ";" << (afterextention ? " // after extention" : "");
-
-                                if ((mkr == mk_optional) || (mkr == mk_default)) {
-                                    stream << "\n" << tabformat(self, 1) << "BOOST_ASN_VALUE_FUNC_DECLARATE(";
-                                    stream << fromtype_str(named) << ", " << nameconvert(named->name()) << ")\n";
-
-                                }
-                            } else {
-                                stream << tabformat(self, 1) <<
-                                        "BOOST_ASN_VALUE_CHOICE(" <<
-                                        nameconvert(named->name()) << ", " << fromtype_str(named) << ", " <<
-                                        type_str(self) << "_" << nameconvert(named->name()) << ");";
-                            }
+            member_vect mmbr;
+            load_member(mmbr, self);     
+            for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                tagmarker_type mkr = it->marker;
+                if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                    stream << "\n";
+                    if (!ischoice) {
+                        if (it->afterextention && (mkr == mk_none))
+                            mkr = mk_optional;
+                        stream << tabformat(self, 1) <<
+                                member_marker_str(it->typenam, mkr, noholder_) <<
+                                " " << it->name << ";" << (it->afterextention ? " // after extention" : "");
+                        if ((mkr == mk_optional) || (mkr == mk_default)) {
+                            stream << "\n" << tabformat(self, 1) << "BOOST_ASN_VALUE_FUNC_DECLARATE(";
+                            stream << it->typenam << ", " << it->name << ")\n";
                         }
+                    } else {
+                        stream << tabformat(self, 1) <<
+                                "BOOST_ASN_VALUE_CHOICE(" <<
+                                it->name << ", " << it->typenam << ", " <<
+                                type_str(self) << "_" << it->name << ");";
                     }
-                    if (mkr == mk_extention)
-                        afterextention = true;
                 }
-                if ((*it)->as_extention())
-                    afterextention = true;
             }
         }
 
