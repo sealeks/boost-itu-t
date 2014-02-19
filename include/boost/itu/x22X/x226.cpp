@@ -246,7 +246,7 @@ namespace boost {
             error_code presentation_socket::build_CP_type() {
                 try {
                     CP_type cp;
-                    cp.mode_selector.mode_value = mode_type::mode_value_normal_mode;
+                    cp.mode_selector.mode_value = mode_type::normal_mode;
                     cp.normal_mode_parameters__new();
                     if (!option().called().empty())
                         cp.normal_mode_parameters->called_presentation_selector__assign(new cd_selector_type(option().called()));
@@ -285,7 +285,7 @@ namespace boost {
                         {
                             CPA_type cpa;
                             (coder()->input()) & cpa;
-                            if (cpa.mode_selector.mode_value == mode_type::mode_value_normal_mode) {
+                            if (cpa.mode_selector.mode_value == mode_type::normal_mode) {
                                 if (cpa.normal_mode_parameters) {
 
                                     if ((cpa.normal_mode_parameters->presentation_context_definition_result_list) &&
@@ -343,7 +343,7 @@ namespace boost {
                     cpa.normal_mode_parameters__new();
                     cpr.normal_mode_parameters__new();
 
-                    if (cp.mode_selector.mode_value == mode_type::mode_value_normal_mode && cp.normal_mode_parameters) {
+                    if (cp.mode_selector.mode_value == mode_type::normal_mode && cp.normal_mode_parameters) {
 
                         option().called(cp.normal_mode_parameters->called_presentation_selector ?
                                 *(cp.normal_mode_parameters->called_presentation_selector) : octet_sequnce());
