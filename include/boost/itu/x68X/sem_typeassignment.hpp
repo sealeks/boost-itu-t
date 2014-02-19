@@ -502,6 +502,8 @@ namespace x680 {
 
 
         bool islocaldeclare() const;
+        
+        bool islocaldefined() const;
 
         canonical_tag_vct cncl_tags();
 

@@ -561,6 +561,12 @@ namespace x680 {
             return (type()->isstructure());
         return false;
     }
+    
+    bool typeassignment_entity::islocaldefined() const {
+        if (scope() && (scope()->as_typeassigment()) && (type()))
+            return true;
+        return false;
+    }
 
     canonical_tag_vct typeassignment_entity::cncl_tags() {
         canonical_tag_vct tmp;
