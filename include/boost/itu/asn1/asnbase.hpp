@@ -130,6 +130,9 @@ namespace boost {\
 #define BOOST_ASN_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
 
 #define BOOST_ASN_VALUE_CHOICE(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; void nm ## __new () { set<tp>( enm );}; void nm ## __new ( tp * vl) { set<tp>( vl, enm );};
+#define BOOST_ASN_VALUE_OPTIONL_DECL(nm ,tp ) boost::shared_ptr< tp >& nm ## __ptr ()  {return nm;}; void nm ( const tp & vl);
+#define BOOST_ASN_VALUE_HOLDER_DECL(nm ,tp ) boost::shared_ptr< tp >& nm ## __ptr ()  {return nm;}; tp & nm ();
+#define BOOST_ASN_VALUE_DEFAULT_DECL(nm ,tp ) boost::shared_ptr< tp >& nm ## __ptr ()  {return nm;}; const tp & nm () const ;  void nm (const tp &);
 
 #define BOOST_ASN_VALUE_FUNC_DECLARATE( type, var)    boost::shared_ptr< type > var  ## __new () { return var = boost::asn1::simple_build_type<type>();} \
                void  var ##  __free() { var = boost::shared_ptr< type >() ;} \
@@ -1219,6 +1222,14 @@ namespace boost {
             class_type type() const {
                 return TYPE;
             }
+            
+            friend bool operator==(const implicit_typedef<T, Tag,ID, TYPE>& ls, const implicit_typedef<T, Tag,ID, TYPE>& rs)  {
+                return (ls.value_==rs.value_);
+            }
+            
+            friend bool operator!=(const implicit_typedef<T, Tag,ID, TYPE>& ls, const implicit_typedef<T, Tag,ID, TYPE>& rs)  {
+                return (ls.value_!=rs.value_);
+            }
 
 
         private:
@@ -1284,7 +1295,13 @@ namespace boost {
                 return TYPE;
             }
 
-
+            friend bool operator==(const explicit_typedef<T, Tag,ID, TYPE>& ls, const explicit_typedef<T, Tag,ID, TYPE>& rs) {
+                return (ls.value_==rs.value_);
+            }
+            
+            friend bool operator!=(const explicit_typedef<T, Tag,ID, TYPE>& ls, const explicit_typedef<T, Tag,ID, TYPE>& rs)  {
+                return (ls.value_!=rs.value_);
+            }
 
         private:
             boost::shared_ptr<T> value_;
@@ -1437,8 +1454,13 @@ namespace boost {
             value_holder() : internal_(new T()) {
             }
 
-            explicit value_holder(const T & vl) : internal_(new T(vl)) {
+            explicit value_holder(const T & vl) : 
+            internal_(new T(vl)) {
             }
+            
+            explicit value_holder(boost::shared_ptr<T> vl) :
+            internal_(vl ? vl : new T()) {
+            }            
 
             T& operator*() const {
                 return *internal_;
@@ -1447,6 +1469,49 @@ namespace boost {
             T& operator=(const T & vl) {
                 internal_ = boost::shared_ptr<T > (new T(vl));
                 return *internal_;
+            }
+            
+            boost::shared_ptr<T>& get_shared(){
+                return internal_;
+            }
+            
+            T * operator-> () const {
+                return internal_.get();
+            }
+
+
+        private:
+
+            boost::shared_ptr<T> internal_;
+        };
+        
+        
+        
+        template<typename T, const T& DT>
+        struct default_holder {
+
+            default_holder()  {
+            }
+
+            explicit default_holder(const T & vl) : 
+            internal_( vl!=DT ?  new T(vl) : boost::shared_ptr<T>()) {
+            }
+            
+            explicit default_holder(boost::shared_ptr<T> vl) :
+                internal_(vl ? (((*vl)!=DT) ? vl : boost::shared_ptr<T>()): vl) {
+            }            
+            
+            const T& operator*() const {
+                return internal_ ? *internal_ : DT;
+            }
+
+            const T& operator=(const T & vl) {
+                internal_ = (vl!=DT) ?  boost::shared_ptr<T > (new T(vl)) : boost::shared_ptr<T>();
+                return internal_ ?  *internal_ : DT;
+            }
+            
+            boost::shared_ptr<T>& get_shared(){
+                return internal_;
             }
 
             T * operator-> () const {
@@ -1457,7 +1522,7 @@ namespace boost {
         private:
 
             boost::shared_ptr<T> internal_;
-        };
+        };        
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1473,6 +1538,12 @@ namespace boost {
         inline bool bind_basic(Archive & arch, value_holder<T>& vl) {
             return bind_basic(arch, *vl);
         }
+ 
+        template<typename Archive, typename T, const T& DT>
+        inline bool bind_basic(Archive & arch, default_holder<T, DT>& vl) {
+            return bind_basic(arch, vl.get_shared());
+        }
+        
 
         template<typename Archive, typename T>
         inline bool bind_basic(Archive & arch, boost::shared_ptr<T>& vl) {
@@ -1520,7 +1591,12 @@ namespace boost {
         inline bool bind_explicit(Archive & arch, value_holder<T>& vl, id_type id, class_type type = CONTEXT_CLASS) {
             return bind_explicit(arch, *vl, id, type);
         }
-
+        
+        template<typename Archive, typename T,  const T& DT>
+        inline bool bind_explicit(Archive & arch, default_holder<T, DT>& vl, id_type id, class_type type = CONTEXT_CLASS) {
+            return bind_explicit(arch, vl.get_shared(), id, type);
+        }        
+        
         template<typename Archive, typename T>
         inline bool bind_explicit(Archive & arch, boost::shared_ptr<T>& vl, id_type id, class_type type = CONTEXT_CLASS) {
             std::size_t tst = arch.size();
@@ -1567,6 +1643,11 @@ namespace boost {
         inline bool bind_implicit(Archive & arch, value_holder<T>& vl, id_type id, class_type type = CONTEXT_CLASS) {
             return bind_implicit(arch, *vl, id, type);
         }
+        
+        template<typename Archive, typename T, const T& DT>
+        inline bool bind_implicit(Archive & arch, default_holder<T, DT>& vl, id_type id, class_type type = CONTEXT_CLASS) {
+            return bind_implicit(arch, vl.get_shared(), id, type);
+        }        
 
         template<typename Archive, typename T>
         inline bool bind_implicit(Archive & arch, boost::shared_ptr<T>& vl, id_type id, class_type type = CONTEXT_CLASS) {
@@ -1621,7 +1702,12 @@ namespace boost {
         inline bool bind_choice(Archive & arch, value_holder<T>& vl) {
             return bind_choice(arch, *vl);
         }
-
+        
+        template<typename Archive, typename T, const T& DT>
+        inline bool bind_choice(Archive & arch, default_holder<T,  DT>& vl) {
+            return bind_choice(arch, vl.get_shared());
+        }        
+                
         template<typename Archive, typename T>
         inline bool bind_choice(Archive & arch, boost::shared_ptr< T >& vl) {
             if (!vl) {
