@@ -74,27 +74,27 @@ namespace ISO8823_PRESENTATION {
     typedef oid_type Transfer_syntax_name;
     typedef octetstring_type Simply_encoded_data;
     typedef bitstring_type User_session_requirements;
-    typedef std::deque< int > Presentation_context_deletion_result_list;
+    typedef std::vector< int > Presentation_context_deletion_result_list;
 
     typedef User_data CPC_type;
     typedef Presentation_selector Called_presentation_selector;
     typedef Presentation_selector Calling_presentation_selector;
     typedef Result Default_context_result;
     typedef Presentation_selector Responding_presentation_selector;
-    typedef std::deque< Context_list_sequence_of > Context_list;
+    typedef std::vector< Context_list_sequence_of > Context_list;
     typedef Context_list Presentation_context_definition_list;
     typedef Context_list Presentation_context_addition_list;
-    typedef std::deque< Presentation_context_identifier > Presentation_context_deletion_list;
-    typedef std::deque< Presentation_context_identifier_list_sequence_of > Presentation_context_identifier_list;
-    typedef std::deque< Result_list_sequence_of > Result_list;
+    typedef std::vector< Presentation_context_identifier > Presentation_context_deletion_list;
+    typedef std::vector< Presentation_context_identifier_list_sequence_of > Presentation_context_identifier_list;
+    typedef std::vector< Result_list_sequence_of > Result_list;
     typedef Result_list Presentation_context_addition_result_list;
     typedef Result_list Presentation_context_definition_result_list;
-    typedef std::deque< PDV_list > Fully_encoded_data;
+    typedef std::vector< PDV_list > Fully_encoded_data;
 
 
 }
 
-#include "Reliable-Transfer-APDU.hpp"
+#include <boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp>
 
 namespace ISO8823_PRESENTATION {
 
@@ -107,19 +107,19 @@ namespace ISO8823_PRESENTATION {
 
 
 
-    extern const bitstring_type User_session_requirements_half_duplex;
-    extern const bitstring_type User_session_requirements_duplex;
-    extern const bitstring_type User_session_requirements_expedited_data;
-    extern const bitstring_type User_session_requirements_minor_synchronize;
-    extern const bitstring_type User_session_requirements_major_synchronize;
-    extern const bitstring_type User_session_requirements_resynchronize;
-    extern const bitstring_type User_session_requirements_activity_management;
-    extern const bitstring_type User_session_requirements_negotiated_release;
-    extern const bitstring_type User_session_requirements_capability_data;
-    extern const bitstring_type User_session_requirements_exceptions;
-    extern const bitstring_type User_session_requirements_typed_data;
-    extern const bitstring_type User_session_requirements_symmetric_synchronize;
-    extern const bitstring_type User_session_requirements_data_separation;
+    extern const User_session_requirements User_session_requirements_half_duplex;
+    extern const User_session_requirements User_session_requirements_duplex;
+    extern const User_session_requirements User_session_requirements_expedited_data;
+    extern const User_session_requirements User_session_requirements_minor_synchronize;
+    extern const User_session_requirements User_session_requirements_major_synchronize;
+    extern const User_session_requirements User_session_requirements_resynchronize;
+    extern const User_session_requirements User_session_requirements_activity_management;
+    extern const User_session_requirements User_session_requirements_negotiated_release;
+    extern const User_session_requirements User_session_requirements_capability_data;
+    extern const User_session_requirements User_session_requirements_exceptions;
+    extern const User_session_requirements User_session_requirements_typed_data;
+    extern const User_session_requirements User_session_requirements_symmetric_synchronize;
+    extern const User_session_requirements User_session_requirements_data_separation;
 
     // sequence PDV-list
 
@@ -196,10 +196,10 @@ namespace ISO8823_PRESENTATION {
 
     struct Result_list_sequence_of {
 
-        static const int provider_reason_reason_not_specified;
-        static const int provider_reason_abstract_syntax_not_supported;
-        static const int provider_reason_proposed_transfer_syntaxes_not_supported;
-        static const int provider_reason_local_limit_on_DCS_exceeded;
+        static const int reason_not_specified;
+        static const int abstract_syntax_not_supported;
+        static const int proposed_transfer_syntaxes_not_supported;
+        static const int local_limit_on_DCS_exceeded;
 
 
         Result_list_sequence_of();
@@ -221,27 +221,27 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_ARCHIVE_FUNC;
     };
 
-    extern const int Result_acceptance;
-    extern const int Result_user_rejection;
-    extern const int Result_provider_rejection;
+    extern const Result Result_acceptance;
+    extern const Result Result_user_rejection;
+    extern const Result Result_provider_rejection;
 
-    extern const int Provider_reason_reason_not_specified;
-    extern const int Provider_reason_temporary_congestion;
-    extern const int Provider_reason_local_limit_exceeded;
-    extern const int Provider_reason_called_presentation_address_unknown;
-    extern const int Provider_reason_protocol_version_not_supported;
-    extern const int Provider_reason_default_context_not_supported;
-    extern const int Provider_reason_user_data_not_readable;
-    extern const int Provider_reason_no_PSAP_available;
+    extern const Provider_reason Provider_reason_reason_not_specified;
+    extern const Provider_reason Provider_reason_temporary_congestion;
+    extern const Provider_reason Provider_reason_local_limit_exceeded;
+    extern const Provider_reason Provider_reason_called_presentation_address_unknown;
+    extern const Provider_reason Provider_reason_protocol_version_not_supported;
+    extern const Provider_reason Provider_reason_default_context_not_supported;
+    extern const Provider_reason Provider_reason_user_data_not_readable;
+    extern const Provider_reason Provider_reason_no_PSAP_available;
 
-    extern const bitstring_type Protocol_version_version_1;
+    extern const Protocol_version Protocol_version_version_1;
 
-    extern const bitstring_type Protocol_options_nominated_context;
-    extern const bitstring_type Protocol_options_short_encoding;
-    extern const bitstring_type Protocol_options_packed_encoding_rules;
+    extern const Protocol_options Protocol_options_nominated_context;
+    extern const Protocol_options Protocol_options_short_encoding;
+    extern const Protocol_options Protocol_options_packed_encoding_rules;
 
-    extern const bitstring_type Presentation_requirements_context_management;
-    extern const bitstring_type Presentation_requirements_restoration;
+    extern const Presentation_requirements Presentation_requirements_context_management;
+    extern const Presentation_requirements Presentation_requirements_restoration;
 
     struct Presentation_context_identifier_list_sequence_of {
 
@@ -260,8 +260,8 @@ namespace ISO8823_PRESENTATION {
 
     struct Mode_selector {
 
-        static const int mode_value_x410_1984_mode;
-        static const int mode_value_normal_mode;
+        static const int x410_1984_mode;
+        static const int normal_mode;
 
 
         Mode_selector();
@@ -273,39 +273,39 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_ARCHIVE_FUNC;
     };
 
-    extern const int Event_identifier_cp_PPDU;
-    extern const int Event_identifier_cpa_PPDU;
-    extern const int Event_identifier_cpr_PPDU;
-    extern const int Event_identifier_aru_PPDU;
-    extern const int Event_identifier_arp_PPDU;
-    extern const int Event_identifier_ac_PPDU;
-    extern const int Event_identifier_aca_PPDU;
-    extern const int Event_identifier_td_PPDU;
-    extern const int Event_identifier_ttd_PPDU;
-    extern const int Event_identifier_te_PPDU;
-    extern const int Event_identifier_tc_PPDU;
-    extern const int Event_identifier_tcc_PPDU;
-    extern const int Event_identifier_rs_PPDU;
-    extern const int Event_identifier_rsa_PPDU;
-    extern const int Event_identifier_s_release_indication;
-    extern const int Event_identifier_s_release_confirm;
-    extern const int Event_identifier_s_token_give_indication;
-    extern const int Event_identifier_s_token_please_indication;
-    extern const int Event_identifier_s_control_give_indication;
-    extern const int Event_identifier_s_sync_minor_indication;
-    extern const int Event_identifier_s_sync_minor_confirm;
-    extern const int Event_identifier_s_sync_major_indication;
-    extern const int Event_identifier_s_sync_major_confirm;
-    extern const int Event_identifier_s_p_exception_report_indication;
-    extern const int Event_identifier_s_u_exception_report_indication;
-    extern const int Event_identifier_s_activity_start_indication;
-    extern const int Event_identifier_s_activity_resume_indication;
-    extern const int Event_identifier_s_activity_interrupt_indication;
-    extern const int Event_identifier_s_activity_interrupt_confirm;
-    extern const int Event_identifier_s_activity_discard_indication;
-    extern const int Event_identifier_s_activity_discard_confirm;
-    extern const int Event_identifier_s_activity_end_indication;
-    extern const int Event_identifier_s_activity_end_confirm;
+    extern const Event_identifier Event_identifier_cp_PPDU;
+    extern const Event_identifier Event_identifier_cpa_PPDU;
+    extern const Event_identifier Event_identifier_cpr_PPDU;
+    extern const Event_identifier Event_identifier_aru_PPDU;
+    extern const Event_identifier Event_identifier_arp_PPDU;
+    extern const Event_identifier Event_identifier_ac_PPDU;
+    extern const Event_identifier Event_identifier_aca_PPDU;
+    extern const Event_identifier Event_identifier_td_PPDU;
+    extern const Event_identifier Event_identifier_ttd_PPDU;
+    extern const Event_identifier Event_identifier_te_PPDU;
+    extern const Event_identifier Event_identifier_tc_PPDU;
+    extern const Event_identifier Event_identifier_tcc_PPDU;
+    extern const Event_identifier Event_identifier_rs_PPDU;
+    extern const Event_identifier Event_identifier_rsa_PPDU;
+    extern const Event_identifier Event_identifier_s_release_indication;
+    extern const Event_identifier Event_identifier_s_release_confirm;
+    extern const Event_identifier Event_identifier_s_token_give_indication;
+    extern const Event_identifier Event_identifier_s_token_please_indication;
+    extern const Event_identifier Event_identifier_s_control_give_indication;
+    extern const Event_identifier Event_identifier_s_sync_minor_indication;
+    extern const Event_identifier Event_identifier_s_sync_minor_confirm;
+    extern const Event_identifier Event_identifier_s_sync_major_indication;
+    extern const Event_identifier Event_identifier_s_sync_major_confirm;
+    extern const Event_identifier Event_identifier_s_p_exception_report_indication;
+    extern const Event_identifier Event_identifier_s_u_exception_report_indication;
+    extern const Event_identifier Event_identifier_s_activity_start_indication;
+    extern const Event_identifier Event_identifier_s_activity_resume_indication;
+    extern const Event_identifier Event_identifier_s_activity_interrupt_indication;
+    extern const Event_identifier Event_identifier_s_activity_interrupt_confirm;
+    extern const Event_identifier Event_identifier_s_activity_discard_indication;
+    extern const Event_identifier Event_identifier_s_activity_discard_confirm;
+    extern const Event_identifier Event_identifier_s_activity_end_indication;
+    extern const Event_identifier Event_identifier_s_activity_end_confirm;
 
     // sequence Default-context-name
 
@@ -324,7 +324,7 @@ namespace ISO8823_PRESENTATION {
 
     struct Context_list_sequence_of {
 
-        typedef std::deque< Transfer_syntax_name > transfer_syntax_name_list_type;
+        typedef std::vector< Transfer_syntax_name > transfer_syntax_name_list_type;
 
         Context_list_sequence_of();
 
@@ -339,13 +339,13 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_ARCHIVE_FUNC;
     };
 
-    extern const int Abort_reason_reason_not_specified;
-    extern const int Abort_reason_unrecognized_ppdu;
-    extern const int Abort_reason_unexpected_ppdu;
-    extern const int Abort_reason_unexpected_session_service_primitive;
-    extern const int Abort_reason_unrecognized_ppdu_parameter;
-    extern const int Abort_reason_unexpected_ppdu_parameter;
-    extern const int Abort_reason_invalid_ppdu_parameter_value;
+    extern const Abort_reason Abort_reason_reason_not_specified;
+    extern const Abort_reason Abort_reason_unrecognized_ppdu;
+    extern const Abort_reason Abort_reason_unexpected_ppdu;
+    extern const Abort_reason Abort_reason_unexpected_session_service_primitive;
+    extern const Abort_reason Abort_reason_unrecognized_ppdu_parameter;
+    extern const Abort_reason Abort_reason_unexpected_ppdu_parameter;
+    extern const Abort_reason Abort_reason_invalid_ppdu_parameter_value;
 
     // sequence RSA-PPDU
 
@@ -742,8 +742,8 @@ namespace ISO8823_PRESENTATION {
 
         struct x410_mode_parameters_type {
 
-            static const int dialogueMode_monologue;
-            static const int dialogueMode_twa;
+            static const int monologue;
+            static const int twa;
 
 
             x410_mode_parameters_type();

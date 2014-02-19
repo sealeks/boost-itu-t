@@ -2,14 +2,14 @@
 
 namespace Reliable_Transfer_APDU {
 
-    const int AbortReason_localSystemProblem = 0;
-    const int AbortReason_invalidParameter = 1;
-    const int AbortReason_unrecognizedActivity = 2;
-    const int AbortReason_temporaryProblem = 3;
-    const int AbortReason_protocolError = 4;
-    const int AbortReason_permanentProblem = 5;
-    const int AbortReason_userError = 6;
-    const int AbortReason_transferCompleted = 7;
+    const AbortReason AbortReason_localSystemProblem = 0;
+    const AbortReason AbortReason_invalidParameter = 1;
+    const AbortReason AbortReason_unrecognizedActivity = 2;
+    const AbortReason AbortReason_temporaryProblem = 3;
+    const AbortReason AbortReason_protocolError = 4;
+    const AbortReason AbortReason_permanentProblem = 5;
+    const AbortReason AbortReason_userError = 6;
+    const AbortReason AbortReason_transferCompleted = 7;
 
     // choice CallingSSuserReference
 
@@ -77,10 +77,10 @@ namespace Reliable_Transfer_APDU {
     }
 
 
-    const int RefuseReason_rtsBusy = 0;
-    const int RefuseReason_cannotRecover = 1;
-    const int RefuseReason_validationFailure = 2;
-    const int RefuseReason_unacceptableDialogueMode = 3;
+    const RefuseReason RefuseReason_rtsBusy = 0;
+    const RefuseReason RefuseReason_cannotRecover = 1;
+    const RefuseReason RefuseReason_validationFailure = 2;
+    const RefuseReason RefuseReason_unacceptableDialogueMode = 3;
 
     // sequence SessionConnectionIdentifier
 
@@ -267,8 +267,8 @@ namespace Reliable_Transfer_APDU {
 
 
     // set RTORQapdu
-    const int RTORQapdu::dialogueMode_monologue = 0;
-    const int RTORQapdu::dialogueMode_twa = 1;
+    const int RTORQapdu::monologue = 0;
+    const int RTORQapdu::twa = 1;
 
     RTORQapdu::RTORQapdu() : connectionDataRQ() {
     };

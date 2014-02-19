@@ -68,48 +68,48 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     }
 
 
-    const int RejectProblem_general_unrecognizedPDU = 0;
-    const int RejectProblem_general_mistypedPDU = 1;
-    const int RejectProblem_general_badlyStructuredPDU = 2;
-    const int RejectProblem_invoke_duplicateInvocation = 10;
-    const int RejectProblem_invoke_unrecognizedOperation = 11;
-    const int RejectProblem_invoke_mistypedArgument = 12;
-    const int RejectProblem_invoke_resourceLimitation = 13;
-    const int RejectProblem_invoke_releaseInProgress = 14;
-    const int RejectProblem_invoke_unrecognizedLinkedId = 15;
-    const int RejectProblem_invoke_linkedResponseUnexpected = 16;
-    const int RejectProblem_invoke_unexpectedLinkedOperation = 17;
-    const int RejectProblem_returnResult_unrecognizedInvocation = 20;
-    const int RejectProblem_returnResult_resultResponseUnexpected = 21;
-    const int RejectProblem_returnResult_mistypedResult = 22;
-    const int RejectProblem_returnError_unrecognizedInvocation = 30;
-    const int RejectProblem_returnError_errorResponseUnexpected = 31;
-    const int RejectProblem_returnError_unrecognizedError = 32;
-    const int RejectProblem_returnError_unexpectedError = 33;
-    const int RejectProblem_returnError_mistypedParameter = 34;
+    const RejectProblem RejectProblem_general_unrecognizedPDU = 0;
+    const RejectProblem RejectProblem_general_mistypedPDU = 1;
+    const RejectProblem RejectProblem_general_badlyStructuredPDU = 2;
+    const RejectProblem RejectProblem_invoke_duplicateInvocation = 10;
+    const RejectProblem RejectProblem_invoke_unrecognizedOperation = 11;
+    const RejectProblem RejectProblem_invoke_mistypedArgument = 12;
+    const RejectProblem RejectProblem_invoke_resourceLimitation = 13;
+    const RejectProblem RejectProblem_invoke_releaseInProgress = 14;
+    const RejectProblem RejectProblem_invoke_unrecognizedLinkedId = 15;
+    const RejectProblem RejectProblem_invoke_linkedResponseUnexpected = 16;
+    const RejectProblem RejectProblem_invoke_unexpectedLinkedOperation = 17;
+    const RejectProblem RejectProblem_returnResult_unrecognizedInvocation = 20;
+    const RejectProblem RejectProblem_returnResult_resultResponseUnexpected = 21;
+    const RejectProblem RejectProblem_returnResult_mistypedResult = 22;
+    const RejectProblem RejectProblem_returnError_unrecognizedInvocation = 30;
+    const RejectProblem RejectProblem_returnError_errorResponseUnexpected = 31;
+    const RejectProblem RejectProblem_returnError_unrecognizedError = 32;
+    const RejectProblem RejectProblem_returnError_unexpectedError = 33;
+    const RejectProblem RejectProblem_returnError_mistypedParameter = 34;
 
-    const int ReturnErrorProblem_unrecognizedInvocation = 0;
-    const int ReturnErrorProblem_errorResponseUnexpected = 1;
-    const int ReturnErrorProblem_unrecognizedError = 2;
-    const int ReturnErrorProblem_unexpectedError = 3;
-    const int ReturnErrorProblem_mistypedParameter = 4;
+    const ReturnErrorProblem ReturnErrorProblem_unrecognizedInvocation = 0;
+    const ReturnErrorProblem ReturnErrorProblem_errorResponseUnexpected = 1;
+    const ReturnErrorProblem ReturnErrorProblem_unrecognizedError = 2;
+    const ReturnErrorProblem ReturnErrorProblem_unexpectedError = 3;
+    const ReturnErrorProblem ReturnErrorProblem_mistypedParameter = 4;
 
-    const int ReturnResultProblem_unrecognizedInvocation = 0;
-    const int ReturnResultProblem_resultResponseUnexpected = 1;
-    const int ReturnResultProblem_mistypedResult = 2;
+    const ReturnResultProblem ReturnResultProblem_unrecognizedInvocation = 0;
+    const ReturnResultProblem ReturnResultProblem_resultResponseUnexpected = 1;
+    const ReturnResultProblem ReturnResultProblem_mistypedResult = 2;
 
-    const int InvokeProblem_duplicateInvocation = 0;
-    const int InvokeProblem_unrecognizedOperation = 1;
-    const int InvokeProblem_mistypedArgument = 2;
-    const int InvokeProblem_resourceLimitation = 3;
-    const int InvokeProblem_releaseInProgress = 4;
-    const int InvokeProblem_unrecognizedLinkedId = 5;
-    const int InvokeProblem_linkedResponseUnexpected = 6;
-    const int InvokeProblem_unexpectedLinkedOperation = 7;
+    const InvokeProblem InvokeProblem_duplicateInvocation = 0;
+    const InvokeProblem InvokeProblem_unrecognizedOperation = 1;
+    const InvokeProblem InvokeProblem_mistypedArgument = 2;
+    const InvokeProblem InvokeProblem_resourceLimitation = 3;
+    const InvokeProblem InvokeProblem_releaseInProgress = 4;
+    const InvokeProblem InvokeProblem_unrecognizedLinkedId = 5;
+    const InvokeProblem InvokeProblem_linkedResponseUnexpected = 6;
+    const InvokeProblem InvokeProblem_unexpectedLinkedOperation = 7;
 
-    const int GeneralProblem_unrecognizedPDU = 0;
-    const int GeneralProblem_mistypedPDU = 1;
-    const int GeneralProblem_badlyStructuredPDU = 2;
+    const GeneralProblem GeneralProblem_unrecognizedPDU = 0;
+    const GeneralProblem GeneralProblem_mistypedPDU = 1;
+    const GeneralProblem GeneralProblem_badlyStructuredPDU = 2;
 
     // sequence Reject
 

@@ -2,19 +2,19 @@
 
 namespace ISO8823_PRESENTATION {
 
-    const bitstring_type User_session_requirements_half_duplex = bitstring_type(true, 0);
-    const bitstring_type User_session_requirements_duplex = bitstring_type(true, 1);
-    const bitstring_type User_session_requirements_expedited_data = bitstring_type(true, 2);
-    const bitstring_type User_session_requirements_minor_synchronize = bitstring_type(true, 3);
-    const bitstring_type User_session_requirements_major_synchronize = bitstring_type(true, 4);
-    const bitstring_type User_session_requirements_resynchronize = bitstring_type(true, 5);
-    const bitstring_type User_session_requirements_activity_management = bitstring_type(true, 6);
-    const bitstring_type User_session_requirements_negotiated_release = bitstring_type(true, 7);
-    const bitstring_type User_session_requirements_capability_data = bitstring_type(true, 8);
-    const bitstring_type User_session_requirements_exceptions = bitstring_type(true, 9);
-    const bitstring_type User_session_requirements_typed_data = bitstring_type(true, 10);
-    const bitstring_type User_session_requirements_symmetric_synchronize = bitstring_type(true, 11);
-    const bitstring_type User_session_requirements_data_separation = bitstring_type(true, 12);
+    const User_session_requirements User_session_requirements_half_duplex = bitstring_type(true, 0);
+    const User_session_requirements User_session_requirements_duplex = bitstring_type(true, 1);
+    const User_session_requirements User_session_requirements_expedited_data = bitstring_type(true, 2);
+    const User_session_requirements User_session_requirements_minor_synchronize = bitstring_type(true, 3);
+    const User_session_requirements User_session_requirements_major_synchronize = bitstring_type(true, 4);
+    const User_session_requirements User_session_requirements_resynchronize = bitstring_type(true, 5);
+    const User_session_requirements User_session_requirements_activity_management = bitstring_type(true, 6);
+    const User_session_requirements User_session_requirements_negotiated_release = bitstring_type(true, 7);
+    const User_session_requirements User_session_requirements_capability_data = bitstring_type(true, 8);
+    const User_session_requirements User_session_requirements_exceptions = bitstring_type(true, 9);
+    const User_session_requirements User_session_requirements_typed_data = bitstring_type(true, 10);
+    const User_session_requirements User_session_requirements_symmetric_synchronize = bitstring_type(true, 11);
+    const User_session_requirements User_session_requirements_data_separation = bitstring_type(true, 12);
 
     // sequence PDV-list
 
@@ -205,10 +205,10 @@ namespace ISO8823_PRESENTATION {
 
 
 
-    const int Result_list_sequence_of::provider_reason_reason_not_specified = 0;
-    const int Result_list_sequence_of::provider_reason_abstract_syntax_not_supported = 1;
-    const int Result_list_sequence_of::provider_reason_proposed_transfer_syntaxes_not_supported = 2;
-    const int Result_list_sequence_of::provider_reason_local_limit_on_DCS_exceeded = 3;
+    const int Result_list_sequence_of::reason_not_specified = 0;
+    const int Result_list_sequence_of::abstract_syntax_not_supported = 1;
+    const int Result_list_sequence_of::proposed_transfer_syntaxes_not_supported = 2;
+    const int Result_list_sequence_of::local_limit_on_DCS_exceeded = 3;
 
     Result_list_sequence_of::Result_list_sequence_of() : result() {
     };
@@ -238,27 +238,27 @@ namespace ISO8823_PRESENTATION {
     }
 
 
-    const int Result_acceptance = 0;
-    const int Result_user_rejection = 1;
-    const int Result_provider_rejection = 2;
+    const Result Result_acceptance = 0;
+    const Result Result_user_rejection = 1;
+    const Result Result_provider_rejection = 2;
 
-    const int Provider_reason_reason_not_specified = 0;
-    const int Provider_reason_temporary_congestion = 1;
-    const int Provider_reason_local_limit_exceeded = 2;
-    const int Provider_reason_called_presentation_address_unknown = 3;
-    const int Provider_reason_protocol_version_not_supported = 4;
-    const int Provider_reason_default_context_not_supported = 5;
-    const int Provider_reason_user_data_not_readable = 6;
-    const int Provider_reason_no_PSAP_available = 7;
+    const Provider_reason Provider_reason_reason_not_specified = 0;
+    const Provider_reason Provider_reason_temporary_congestion = 1;
+    const Provider_reason Provider_reason_local_limit_exceeded = 2;
+    const Provider_reason Provider_reason_called_presentation_address_unknown = 3;
+    const Provider_reason Provider_reason_protocol_version_not_supported = 4;
+    const Provider_reason Provider_reason_default_context_not_supported = 5;
+    const Provider_reason Provider_reason_user_data_not_readable = 6;
+    const Provider_reason Provider_reason_no_PSAP_available = 7;
 
-    const bitstring_type Protocol_version_version_1 = bitstring_type(true, 0);
+    const Protocol_version Protocol_version_version_1 = bitstring_type(true, 0);
 
-    const bitstring_type Protocol_options_nominated_context = bitstring_type(true, 0);
-    const bitstring_type Protocol_options_short_encoding = bitstring_type(true, 1);
-    const bitstring_type Protocol_options_packed_encoding_rules = bitstring_type(true, 2);
+    const Protocol_options Protocol_options_nominated_context = bitstring_type(true, 0);
+    const Protocol_options Protocol_options_short_encoding = bitstring_type(true, 1);
+    const Protocol_options Protocol_options_packed_encoding_rules = bitstring_type(true, 2);
 
-    const bitstring_type Presentation_requirements_context_management = bitstring_type(true, 0);
-    const bitstring_type Presentation_requirements_restoration = bitstring_type(true, 1);
+    const Presentation_requirements Presentation_requirements_context_management = bitstring_type(true, 0);
+    const Presentation_requirements Presentation_requirements_restoration = bitstring_type(true, 1);
 
     Presentation_context_identifier_list_sequence_of::Presentation_context_identifier_list_sequence_of() : presentation_context_identifier(), transfer_syntax_name() {
     };
@@ -281,8 +281,8 @@ namespace ISO8823_PRESENTATION {
 
 
     // set Mode-selector
-    const int Mode_selector::mode_value_x410_1984_mode = 0;
-    const int Mode_selector::mode_value_normal_mode = 1;
+    const int Mode_selector::x410_1984_mode = 0;
+    const int Mode_selector::normal_mode = 1;
 
     Mode_selector::Mode_selector() : mode_value() {
     };
@@ -300,39 +300,39 @@ namespace ISO8823_PRESENTATION {
     }
 
 
-    const int Event_identifier_cp_PPDU = 0;
-    const int Event_identifier_cpa_PPDU = 1;
-    const int Event_identifier_cpr_PPDU = 2;
-    const int Event_identifier_aru_PPDU = 3;
-    const int Event_identifier_arp_PPDU = 4;
-    const int Event_identifier_ac_PPDU = 5;
-    const int Event_identifier_aca_PPDU = 6;
-    const int Event_identifier_td_PPDU = 7;
-    const int Event_identifier_ttd_PPDU = 8;
-    const int Event_identifier_te_PPDU = 9;
-    const int Event_identifier_tc_PPDU = 10;
-    const int Event_identifier_tcc_PPDU = 11;
-    const int Event_identifier_rs_PPDU = 12;
-    const int Event_identifier_rsa_PPDU = 13;
-    const int Event_identifier_s_release_indication = 14;
-    const int Event_identifier_s_release_confirm = 15;
-    const int Event_identifier_s_token_give_indication = 16;
-    const int Event_identifier_s_token_please_indication = 17;
-    const int Event_identifier_s_control_give_indication = 18;
-    const int Event_identifier_s_sync_minor_indication = 19;
-    const int Event_identifier_s_sync_minor_confirm = 20;
-    const int Event_identifier_s_sync_major_indication = 21;
-    const int Event_identifier_s_sync_major_confirm = 22;
-    const int Event_identifier_s_p_exception_report_indication = 23;
-    const int Event_identifier_s_u_exception_report_indication = 24;
-    const int Event_identifier_s_activity_start_indication = 25;
-    const int Event_identifier_s_activity_resume_indication = 26;
-    const int Event_identifier_s_activity_interrupt_indication = 27;
-    const int Event_identifier_s_activity_interrupt_confirm = 28;
-    const int Event_identifier_s_activity_discard_indication = 29;
-    const int Event_identifier_s_activity_discard_confirm = 30;
-    const int Event_identifier_s_activity_end_indication = 31;
-    const int Event_identifier_s_activity_end_confirm = 32;
+    const Event_identifier Event_identifier_cp_PPDU = 0;
+    const Event_identifier Event_identifier_cpa_PPDU = 1;
+    const Event_identifier Event_identifier_cpr_PPDU = 2;
+    const Event_identifier Event_identifier_aru_PPDU = 3;
+    const Event_identifier Event_identifier_arp_PPDU = 4;
+    const Event_identifier Event_identifier_ac_PPDU = 5;
+    const Event_identifier Event_identifier_aca_PPDU = 6;
+    const Event_identifier Event_identifier_td_PPDU = 7;
+    const Event_identifier Event_identifier_ttd_PPDU = 8;
+    const Event_identifier Event_identifier_te_PPDU = 9;
+    const Event_identifier Event_identifier_tc_PPDU = 10;
+    const Event_identifier Event_identifier_tcc_PPDU = 11;
+    const Event_identifier Event_identifier_rs_PPDU = 12;
+    const Event_identifier Event_identifier_rsa_PPDU = 13;
+    const Event_identifier Event_identifier_s_release_indication = 14;
+    const Event_identifier Event_identifier_s_release_confirm = 15;
+    const Event_identifier Event_identifier_s_token_give_indication = 16;
+    const Event_identifier Event_identifier_s_token_please_indication = 17;
+    const Event_identifier Event_identifier_s_control_give_indication = 18;
+    const Event_identifier Event_identifier_s_sync_minor_indication = 19;
+    const Event_identifier Event_identifier_s_sync_minor_confirm = 20;
+    const Event_identifier Event_identifier_s_sync_major_indication = 21;
+    const Event_identifier Event_identifier_s_sync_major_confirm = 22;
+    const Event_identifier Event_identifier_s_p_exception_report_indication = 23;
+    const Event_identifier Event_identifier_s_u_exception_report_indication = 24;
+    const Event_identifier Event_identifier_s_activity_start_indication = 25;
+    const Event_identifier Event_identifier_s_activity_resume_indication = 26;
+    const Event_identifier Event_identifier_s_activity_interrupt_indication = 27;
+    const Event_identifier Event_identifier_s_activity_interrupt_confirm = 28;
+    const Event_identifier Event_identifier_s_activity_discard_indication = 29;
+    const Event_identifier Event_identifier_s_activity_discard_confirm = 30;
+    const Event_identifier Event_identifier_s_activity_end_indication = 31;
+    const Event_identifier Event_identifier_s_activity_end_confirm = 32;
 
     // sequence Default-context-name
 
@@ -379,13 +379,13 @@ namespace ISO8823_PRESENTATION {
     }
 
 
-    const int Abort_reason_reason_not_specified = 0;
-    const int Abort_reason_unrecognized_ppdu = 1;
-    const int Abort_reason_unexpected_ppdu = 2;
-    const int Abort_reason_unexpected_session_service_primitive = 3;
-    const int Abort_reason_unrecognized_ppdu_parameter = 4;
-    const int Abort_reason_unexpected_ppdu_parameter = 5;
-    const int Abort_reason_invalid_ppdu_parameter_value = 6;
+    const Abort_reason Abort_reason_reason_not_specified = 0;
+    const Abort_reason Abort_reason_unrecognized_ppdu = 1;
+    const Abort_reason Abort_reason_unexpected_ppdu = 2;
+    const Abort_reason Abort_reason_unexpected_session_service_primitive = 3;
+    const Abort_reason Abort_reason_unrecognized_ppdu_parameter = 4;
+    const Abort_reason Abort_reason_unexpected_ppdu_parameter = 5;
+    const Abort_reason Abort_reason_invalid_ppdu_parameter_value = 6;
 
     // sequence RSA-PPDU
 
@@ -1002,8 +1002,8 @@ namespace ISO8823_PRESENTATION {
     };
 
 
-    const int CP_type::x410_mode_parameters_type::dialogueMode_monologue = 0;
-    const int CP_type::x410_mode_parameters_type::dialogueMode_twa = 1;
+    const int CP_type::x410_mode_parameters_type::monologue = 0;
+    const int CP_type::x410_mode_parameters_type::twa = 1;
 
     CP_type::x410_mode_parameters_type::x410_mode_parameters_type() : connectionDataRQ() {
     };

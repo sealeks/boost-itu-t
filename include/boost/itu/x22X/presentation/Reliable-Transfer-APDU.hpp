@@ -70,14 +70,14 @@ namespace Reliable_Transfer_APDU {
 
 
 
-    extern const int AbortReason_localSystemProblem;
-    extern const int AbortReason_invalidParameter;
-    extern const int AbortReason_unrecognizedActivity;
-    extern const int AbortReason_temporaryProblem;
-    extern const int AbortReason_protocolError;
-    extern const int AbortReason_permanentProblem;
-    extern const int AbortReason_userError;
-    extern const int AbortReason_transferCompleted;
+    extern const AbortReason AbortReason_localSystemProblem;
+    extern const AbortReason AbortReason_invalidParameter;
+    extern const AbortReason AbortReason_unrecognizedActivity;
+    extern const AbortReason AbortReason_temporaryProblem;
+    extern const AbortReason AbortReason_protocolError;
+    extern const AbortReason AbortReason_permanentProblem;
+    extern const AbortReason AbortReason_userError;
+    extern const AbortReason AbortReason_transferCompleted;
 
     // choice CallingSSuserReference
 
@@ -103,10 +103,10 @@ namespace Reliable_Transfer_APDU {
         BOOST_ASN_ARCHIVE_FUNC;
     };
 
-    extern const int RefuseReason_rtsBusy;
-    extern const int RefuseReason_cannotRecover;
-    extern const int RefuseReason_validationFailure;
-    extern const int RefuseReason_unacceptableDialogueMode;
+    extern const RefuseReason RefuseReason_rtsBusy;
+    extern const RefuseReason RefuseReason_cannotRecover;
+    extern const RefuseReason RefuseReason_validationFailure;
+    extern const RefuseReason RefuseReason_unacceptableDialogueMode;
 
     // sequence SessionConnectionIdentifier
 
@@ -223,8 +223,8 @@ namespace Reliable_Transfer_APDU {
 
     struct RTORQapdu {
 
-        static const int dialogueMode_monologue;
-        static const int dialogueMode_twa;
+        static const int monologue;
+        static const int twa;
 
 
         RTORQapdu();
