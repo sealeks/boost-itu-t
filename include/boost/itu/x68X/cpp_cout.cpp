@@ -46,8 +46,8 @@ namespace x680 {
             marker(mkr), ischoice(false), afterextention(false) {
             };
 
-            member_atom(tagmarker_type mkr, const std::string&name_, const std::string& typenam_, const std::string& enm_ = "", 
-            typeassignment_entity_ptr typ_ = typeassignment_entity_ptr(), bool ischoice_ = false, bool afterextention_ = false) :
+            member_atom(tagmarker_type mkr, const std::string&name_, const std::string& typenam_, const std::string& enm_ = "",
+                    typeassignment_entity_ptr typ_ = typeassignment_entity_ptr(), bool ischoice_ = false, bool afterextention_ = false) :
             marker(mkr), name(name_), typenam(typenam_), enm(enm_), typ(typ_), ischoice(ischoice_), afterextention(afterextention_) {
             };
 
@@ -232,7 +232,7 @@ namespace x680 {
                     return type_str(ppas)+(ppas->builtin() == t_SEQUENCE_OF ? "_sequence_of" : "_set_of");
                 return nameconvert(self->islocaldeclare() ? (self->name() + "_type") : self->name()) + postfix;
             } else
-                return self->islocaldefined() ?  builtin_str(self->builtin()) : nameconvert(self->name());
+                return self->islocaldefined() ? builtin_str(self->builtin()) : nameconvert(self->name());
             return "";
         }
 
@@ -256,6 +256,13 @@ namespace x680 {
             if ((ppas->type()) && (!ppas->isstruct_of()))
                 return type_str(self->as_typeassigment());
             return "";
+        }
+
+        std::string fullpathtype_str(typeassignment_entity_ptr self, typeassignment_entity_ptr root, std::string tp) {
+            if (self->islocaldeclare()) {
+                return fulltype_str(root, false) + "::" + tp;
+            } else
+                return fromtype_str(self);
         }
 
         std::string value_int_str(value_atom_ptr self) {
@@ -556,7 +563,7 @@ namespace x680 {
                     rslt.push_back(*it);
             }
             return rslt;
-        }        
+        }
 
 
 
@@ -871,8 +878,8 @@ namespace x680 {
                     namedtypeassignment_entity_ptr named = tpas->as_named();
                     tagmarker_type mkr = named->marker();
                     if (named->type()) {
-                        if ((mkr==mk_default) && (!default_supported(named)))
-                            mkr = mk_optional;                           
+                        if ((mkr == mk_default) && (!default_supported(named)))
+                            mkr = mk_optional;
                         if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
                             vct.push_back(member_atom(mkr, nameconvert(named->name()), fromtype_str(named),
                                 ((self->builtin() == t_CHOICE) ? (type_str(self) + "_" + nameconvert(named->name())) : ""),
@@ -1094,7 +1101,7 @@ namespace x680 {
         }
 
         void fileout::execute_predefined_int_hpp(std::ofstream& stream, predefined_ptr prdf, typeassignment_entity_ptr self) {
-            std::string pref = ((self->scope()) && (self->scope()->as_typeassigment())) ? "static " : "extern ";          
+            std::string pref = ((self->scope()) && (self->scope()->as_typeassigment())) ? "static " : "extern ";
             stream << "\n";
             for (basic_entity_vector::const_iterator it = prdf->values().begin(); it != prdf->values().end(); ++it) {
                 valueassignment_entity_ptr vlass = (*it)->as_valueassigment();
@@ -1144,7 +1151,7 @@ namespace x680 {
                     if ((self->islocaldefined()) && ansec)
                         stream << fulltype_str(ansec, false) << "::";
                     stream << (self->islocaldefined() ? "" : (nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << " = ";
-                    stream <<nested_init_str(self->type(),  "bitstring_type(true, " + value_int_str(vlass->value()) + ")") << ";\n";
+                    stream << nested_init_str(self->type(), "bitstring_type(true, " + value_int_str(vlass->value()) + ")") << ";\n";
                 }
             }
         }
@@ -1237,23 +1244,24 @@ namespace x680 {
             }
         }
 
-        void fileout::execute_member(std::ofstream& stream, typeassignment_entity_ptr self) {
+        void fileout::execute_access_member_hpp(std::ofstream& stream, typeassignment_entity_ptr self) {
             bool ischoice = (self->builtin() == t_CHOICE);
             member_vect mmbr;
-            load_member(mmbr, self);     
+            load_member(mmbr, self);
             for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
-                tagmarker_type mkr = it->marker;
+                tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
                 if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
                     stream << "\n";
                     if (!ischoice) {
-                        if (it->afterextention && (mkr == mk_none))
-                            mkr = mk_optional;
-                        stream << tabformat(self, 1) <<
-                                member_marker_str(it->typenam, mkr, noholder_) <<
-                                " " << it->name << ";" << (it->afterextention ? " // after extention" : "");
-                        if ((mkr == mk_optional) || (mkr == mk_default)) {
-                            stream << "\n" << tabformat(self, 1) << "BOOST_ASN_VALUE_FUNC_DECLARATE(";
-                            stream << it->typenam << ", " << it->name << ")\n";
+                        switch (mkr) {
+                            case mk_none: stream << tabformat(self, 1) << "BOOST_ASN_VALUE_HOLDER" << (noholder_ ? "N": "H") << "_DECL(" << it->name << ", " << it->typenam << ");";
+                                break;
+                            case mk_optional:
+                            case mk_default: stream << tabformat(self, 1) << "BOOST_ASN_VALUE_OPTIONAL_DECL(" << it->name << ", " << it->typenam << ");";
+                                break;
+                            default:
+                            {
+                            }
                         }
                     } else {
                         stream << tabformat(self, 1) <<
@@ -1261,6 +1269,62 @@ namespace x680 {
                                 it->name << ", " << it->typenam << ", " <<
                                 type_str(self) << "_" << it->name << ");";
                     }
+                }
+            }
+        }
+
+        void fileout::execute_access_member_cpp(std::ofstream& stream, typeassignment_entity_ptr self) {
+            if (self->builtin() == t_CHOICE)
+                return;
+            member_vect mmbr;
+            load_member(mmbr, self);
+            for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
+                if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                    stream << "\n";
+                    switch (mkr) {
+                        case mk_none: stream << "\n" << tabformat(basic_entity_ptr(), 2) << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                                    fulltype_str(self, false) << "::" << it->name << "(){ return " << (noholder_ ? "" : "*") << it->name << "_ ;}\n";
+                            stream << "\n" << tabformat(basic_entity_ptr(), 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                                    fulltype_str(self, false) << "::" << it->name << "() const { return " << (noholder_ ? "" : "*") << it->name << "_ ;}\n";
+                            stream << "\n" << tabformat(basic_entity_ptr(), 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                                    "( const " << it->typenam << "& vl){ " << it->name << "_ =vl ;}\n";
+                            if (!noholder_) {
+                                stream << "\n" << tabformat(basic_entity_ptr(), 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                                        "( boost::shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
+                            }
+                            break;
+                        case mk_optional:
+                        case mk_default: /*stream << "\n" << tabformat(basic_entity_ptr(), 2) << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                                    fulltype_str(self, false) << "::" << it->name << "__reff (){ return *" << it->name << "_ ;}\n";
+                            stream << "\n"  << tabformat(basic_entity_ptr(), 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                                    fulltype_str(self, false) << "::" << it->name << "__reff () const { return *" << it->name << "_ ;}\n";*/
+                            stream << "\n" << tabformat(basic_entity_ptr(), 2) << "void " << fulltype_str(self, false) << "::" <<
+                                    it->name << "( const " << it->typenam << "& vl){ " << it->name << "_ = boost::shared_ptr<" <<
+                                    it->typenam << ">(new " << it->typenam << "(vl)) ;}\n";
+                            break;
+                        default:
+                        {
+                        }
+                    }
+                }
+            }
+        }
+
+        void fileout::execute_member(std::ofstream& stream, typeassignment_entity_ptr self) {
+            if (self->builtin() == t_CHOICE)
+                return;
+            member_vect mmbr;
+            load_member(mmbr, self);
+            if (!mmbr.empty())
+                stream << "\n\n" << tabformat(self, 1) << "private:\n";
+            for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
+                if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                    stream << "\n";
+                    stream << tabformat(self, 1) <<
+                            member_marker_str(it->typenam, mkr, noholder_) <<
+                            " " << it->name << "_;" << (it->afterextention ? " // after extention" : "");
                 }
             }
         }
@@ -1340,10 +1404,11 @@ namespace x680 {
 
             execute_ctor_hpp(stream, self);
 
-            execute_member(stream, self);
+            execute_access_member_hpp(stream, self);
 
             execute_archive_meth_hpp(stream, self);
 
+            //execute_member(stream, self);
             stream << "\n" << tabformat(self) << "}; ";
             stream << "\n ";
         }
@@ -1390,9 +1455,11 @@ namespace x680 {
 
             execute_ctor_hpp(stream, self);
 
-            execute_member(stream, self);
+            execute_access_member_hpp(stream, self);
 
             execute_archive_meth_hpp(stream, self);
+
+            execute_member(stream, self);
 
             stream << "\n" << tabformat(self) << "};";
             stream << "\n ";
@@ -1406,6 +1473,8 @@ namespace x680 {
             execute_declare_cpp(stream, self);
 
             execute_archive_meth_cpp(stream, self);
+
+            execute_access_member_cpp(stream, self);
 
             stream << "\n ";
         }
@@ -1516,7 +1585,7 @@ namespace x680 {
                             for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
                                 if (it != oblig.begin())
                                     stream << ", ";
-                                stream << it->name << "()";
+                                stream << it->name << "_()";
                             }
                         }
                         stream << " {}; \n ";
@@ -1532,7 +1601,7 @@ namespace x680 {
                             for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
                                 if (it != oblig.begin())
                                     stream << ",\n";
-                                stream << tabformat(scp, 2) << it->name << "(__" << it->name << ")";
+                                stream << tabformat(scp, 2) << it->name << "_(__" << it->name << ")";
                             }
                             stream << " {}; \n ";
                         }
@@ -1548,7 +1617,7 @@ namespace x680 {
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
                                 if (it != nooblig.begin())
                                     stream << ",\n";
-                                stream << tabformat(scp, 2) << it->name << "(";
+                                stream << tabformat(scp, 2) << it->name << "_(";
                                 if (noholder_ && (it->marker == mk_none) && (!it->afterextention))
                                     stream << "*";
                                 stream << "__" << it->name << ")";
@@ -1621,7 +1690,7 @@ namespace x680 {
             basic_entity_ptr scp;
             if (self->type()) {
                 stream << "\n";
-                stream << tabformat(scp, 3) << archive_member_ber_str(self, nameconvert(self->name())) << ";";
+                stream << tabformat(scp, 3) << archive_member_ber_str(self, nameconvert(self->name() + "_")) << ";";
             }
         }
 
