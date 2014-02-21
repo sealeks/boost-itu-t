@@ -47,7 +47,7 @@ namespace x680 {
             };
 
             member_atom(tagmarker_type mkr, const std::string&name_, const std::string& typenam_, const std::string& enm_ = "",
-                    typeassignment_entity_ptr typ_ = typeassignment_entity_ptr(), bool ischoice_ = false, bool afterextention_ = false) :
+                    namedtypeassignment_entity_ptr typ_ = namedtypeassignment_entity_ptr(), bool ischoice_ = false, bool afterextention_ = false) :
             marker(mkr), name(name_), typenam(typenam_), enm(enm_), typ(typ_), ischoice(ischoice_), afterextention(afterextention_) {
             };
 
@@ -58,7 +58,7 @@ namespace x680 {
             std::string name;
             std::string typenam;
             std::string enm;
-            typeassignment_entity_ptr typ;
+            namedtypeassignment_entity_ptr typ;
             bool ischoice;
             bool afterextention;
 
@@ -149,7 +149,9 @@ namespace x680 {
                 "    using  boost::asn1::external_type;\n"
                 "    using  boost::asn1::embeded_type;\n"
                 "    using  boost::asn1::characterstring_type;\n"
-                "    using  boost::asn1::any_type;\n";
+                "    using  boost::asn1::any_type;\n"
+                "    using  boost::asn1::value_holder;\n"
+                "    using  boost::asn1::default_holder;\n";
 
         std::string correct_name(std::string vl) {
             const std::set<std::string>& base = token_base();
@@ -296,6 +298,13 @@ namespace x680 {
             return "???real???";
         }
 
+        std::string value_bs_str(value_atom_ptr self) {
+            self = value_skip_defined(self);
+            if (self->as_assign())
+                return nameconvert(self->as_assign()->name());
+            return "???bitnum???";
+        }
+
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self) {
             if (tp && self && (self->as_defined()) && (self->as_defined()->reff()))
                 return fromtype_str(tp) + "_" + nameconvert(self->as_defined()->reff()->name());
@@ -338,6 +347,26 @@ namespace x680 {
                 }
             }
             return !rslt.empty();
+        }
+
+        std::string valueassmnt_str(valueassignment_entity_ptr self) {
+            return valueassmnt_str(self->type(), self->value(), nameconvert(self->name()));
+        }
+
+        std::string valueassmnt_str(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm) {
+            switch (tp->root_builtin()) {
+                case t_INTEGER: return nested_init_str(tp, value_int_str(vl));
+                case t_BOOLEAN: return nested_init_str(tp, value_bool_str(vl));
+                case t_REAL: return nested_init_str(tp, value_real_str(vl));
+                case t_BIT_STRING: return nested_init_str(tp, value_bs_str(vl));
+                case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl));
+                case t_OBJECT_IDENTIFIER: return nested_init_str(tp, "boost::asn1::oid_type(" + nm + "_OID_ARR )");
+                case t_RELATIVE_OID: return nested_init_str(tp, "boost::asn1::reloid_type(" + nm + "_OID_ARR )");
+                default:
+                {
+                }
+            }
+            return "";
         }
 
         std::string fromtype_str(typeassignment_entity_ptr self) {
@@ -424,6 +453,7 @@ namespace x680 {
                 case t_INTEGER:
                 case t_BOOLEAN:
                 case t_REAL:
+                    //case t_BIT_STRING:
                 case t_ENUMERATED:
                 case t_OBJECT_IDENTIFIER:
                 case t_RELATIVE_OID: return true;
@@ -432,16 +462,19 @@ namespace x680 {
             return false;
         }
 
-        std::string member_marker_str(const std::string& str, tagmarker_type self, bool simple) {
+        std::string member_marker_str(const std::string& str, tagmarker_type self, const std::string& dflt, bool simple) {
             switch (self) {
                 case mk_default:
+                {
+                    return "default_holder<" + str + ", " + dflt + ">";
+                }
                 case mk_optional:
                 {
                     return "boost::shared_ptr<" + str + ">";
                 }
                 default:
                 {
-                    return simple ? str : ("boost::asn1::value_holder<" + str + ">");
+                    return simple ? str : ("value_holder<" + str + ">");
                 }
             }
             return str;
@@ -1184,62 +1217,60 @@ namespace x680 {
         }
 
         void fileout::execute_valueassignment_cpp(std::ofstream& stream, valueassignment_entity_ptr self) {
-            switch (self->type()->root_builtin()) {
-                case t_INTEGER:
-                {
-                    stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
-                            << nameconvert(self->name()) << " = "
-                            << nested_init_str(self->type(), value_int_str(self->value())) << ";";
-                    stream << "\n";
-                    break;
-                }
-                case t_BOOLEAN:
-                {
-                    stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
-                            << nameconvert(self->name()) << " = "
-                            << nested_init_str(self->type(), value_bool_str(self->value())) << ";";
-                    stream << "\n";
-                    break;
-                }
-                case t_REAL:
-                {
-                    stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
-                            << nameconvert(self->name()) << " = "
-                            << nested_init_str(self->type(), value_real_str(self->value())) << ";";
-                    stream << "\n";
-                    break;
-                }
-                case t_ENUMERATED:
-                {
-                    stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
-                            << nameconvert(self->name()) << " = "
-                            << nested_init_str(self->type(), value_enum_str(self->type(), self->value())) << ";";
-                    stream << "\n";
-                    break;
-                }
-                case t_OBJECT_IDENTIFIER:
-                case t_RELATIVE_OID:
-                {
-                    bool roid = (self->type()->root_builtin() == t_RELATIVE_OID);
-                    std::vector<std::string> rslt;
-                    if (value_oid_str(self->value(), rslt)) {
-                        stream << "\n" << tabformat() << "const boost::array<boost::asn1::oidindx_type, ";
-                        stream << rslt.size() << "> " << nameconvert(self->name()) << "_OID_ARR = { ";
-                        for (std::vector<std::string>::const_iterator it = rslt.begin(); it != rslt.end(); ++it) {
-                            if (it != rslt.begin())
-                                stream << ", ";
-                            stream << (*it);
-                        }
-                        stream << "};";
-                        stream << "\n" << tabformat() << "const  " << fromtype_str(self->type()) << " " << nameconvert(self->name());
-                        stream << "  = ";
-                        stream << nested_init_str(self->type(), (roid ? "boost::asn1::reloid_type(" : "boost::asn1::oid_type(") + nameconvert(self->name()) + "_OID_ARR )") << ";";
-                        stream << "\n";
+            bool decl = true;
+            if ((self->type()->root_builtin() == t_OBJECT_IDENTIFIER) || (self->type()->root_builtin() == t_RELATIVE_OID)) {
+                decl = false;
+                std::vector<std::string> rslt;
+                if (value_oid_str(self->value(), rslt)) {
+                    decl = true;
+                    stream << "\n" << tabformat() << "const boost::array<boost::asn1::oidindx_type, ";
+                    stream << rslt.size() << "> " << nameconvert(self->name()) << "_OID_ARR = { ";
+                    for (std::vector<std::string>::const_iterator it = rslt.begin(); it != rslt.end(); ++it) {
+                        if (it != rslt.begin())
+                            stream << ", ";
+                        stream << (*it);
                     }
-                    break;
+                    stream << "};";
                 }
-                default:
-                {
+            }
+            if (decl) {
+                switch (self->type()->root_builtin()) {
+                    case t_INTEGER:
+                    case t_BOOLEAN:
+                    case t_REAL:
+                    case t_ENUMERATED:
+                    case t_OBJECT_IDENTIFIER:
+                    case t_RELATIVE_OID:
+                    {
+                        stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
+                                << nameconvert(self->name()) << " = " << valueassmnt_str(self) << ";\n";
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+        }
+
+        void fileout::execute_defaultassignment_cpp(std::ofstream& stream, namedtypeassignment_entity_ptr self, typeassignment_entity_ptr ansec) {
+            if ((self->type()) && (self->_default()) && ansec) {
+                switch (self->type()->root_builtin()) {
+                    case t_INTEGER:
+                    case t_BOOLEAN:
+                    case t_REAL:
+                    case t_ENUMERATED:
+                    case t_BIT_STRING:
+                    case t_OBJECT_IDENTIFIER:
+                    case t_RELATIVE_OID:
+                    {
+                        stream << "\n" << tabformat() << "const " << fromtype_str(self) << " " << fulltype_str(ansec, false) << "::"
+                                << nameconvert(self->name()) << "__default = " << valueassmnt_str(self->type(), self->_default()) << ";\n";
+                        break;
+                    }
+                    default:
+                    {
+                    }
                 }
             }
         }
@@ -1256,8 +1287,9 @@ namespace x680 {
                         switch (mkr) {
                             case mk_none: stream << tabformat(self, 1) << "BOOST_ASN_VALUE_HOLDER" << (noholder_ ? "N": "H") << "_DECL(" << it->name << ", " << it->typenam << ");";
                                 break;
-                            case mk_optional:
-                            case mk_default: stream << tabformat(self, 1) << "BOOST_ASN_VALUE_OPTIONAL_DECL(" << it->name << ", " << it->typenam << ");";
+                            case mk_optional: stream << tabformat(self, 1) << "BOOST_ASN_VALUE_OPTIONAL_DECL(" << it->name << ", " << it->typenam << ");";
+                                break;
+                            case mk_default: stream << tabformat(self, 1) << "BOOST_ASN_VALUE_DEFAULT_DECL(" << it->name << ", " << it->typenam << ");";
                                 break;
                             default:
                             {
@@ -1276,6 +1308,7 @@ namespace x680 {
         void fileout::execute_access_member_cpp(std::ofstream& stream, typeassignment_entity_ptr self) {
             if (self->builtin() == t_CHOICE)
                 return;
+            basic_entity_ptr scp;
             member_vect mmbr;
             load_member(mmbr, self);
             for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
@@ -1283,25 +1316,33 @@ namespace x680 {
                 if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
                     stream << "\n";
                     switch (mkr) {
-                        case mk_none: stream << "\n" << tabformat(basic_entity_ptr(), 2) << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                        case mk_none:
+                            stream << "\n" << tabformat(scp, 2) << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
                                     fulltype_str(self, false) << "::" << it->name << "(){ return " << (noholder_ ? "" : "*") << it->name << "_ ;}\n";
-                            stream << "\n" << tabformat(basic_entity_ptr(), 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                            stream << "\n" << tabformat(scp, 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
                                     fulltype_str(self, false) << "::" << it->name << "() const { return " << (noholder_ ? "" : "*") << it->name << "_ ;}\n";
-                            stream << "\n" << tabformat(basic_entity_ptr(), 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                            stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
                                     "( const " << it->typenam << "& vl){ " << it->name << "_ =vl ;}\n";
                             if (!noholder_) {
-                                stream << "\n" << tabformat(basic_entity_ptr(), 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                                stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
                                         "( boost::shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
                             }
                             break;
                         case mk_optional:
-                        case mk_default: /*stream << "\n" << tabformat(basic_entity_ptr(), 2) << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
-                                    fulltype_str(self, false) << "::" << it->name << "__reff (){ return *" << it->name << "_ ;}\n";
-                            stream << "\n"  << tabformat(basic_entity_ptr(), 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
-                                    fulltype_str(self, false) << "::" << it->name << "__reff () const { return *" << it->name << "_ ;}\n";*/
-                            stream << "\n" << tabformat(basic_entity_ptr(), 2) << "void " << fulltype_str(self, false) << "::" <<
+                            stream << "\n" << tabformat(scp, 2) << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                                    fulltype_str(self, false) << "::" << it->name << "__new (){ return " << it->name << "_ = boost::shared_ptr<" <<
+                                    it->typenam << ">(new " << it->typenam << "()) ;}\n";
+                            stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" <<
                                     it->name << "( const " << it->typenam << "& vl){ " << it->name << "_ = boost::shared_ptr<" <<
                                     it->typenam << ">(new " << it->typenam << "(vl)) ;}\n";
+                            break;
+                        case mk_default:
+                            stream << "\n" << tabformat(scp, 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                                    fulltype_str(self, false) << "::" << it->name << "() const { return *" << it->name << "_ ;}\n";
+                            stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                                    "( const " << it->typenam << "& vl){ " << it->name << "_ =vl ;}\n";
+                            stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                                    "( boost::shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
                             break;
                         default:
                         {
@@ -1323,7 +1364,7 @@ namespace x680 {
                 if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
                     stream << "\n";
                     stream << tabformat(self, 1) <<
-                            member_marker_str(it->typenam, mkr, noholder_) <<
+                            member_marker_str(it->typenam, mkr, ((mkr == mk_default) ? (it->name + "__default") : ""), noholder_) <<
                             " " << it->name << "_;" << (it->afterextention ? " // after extention" : "");
                 }
             }
@@ -1453,6 +1494,8 @@ namespace x680 {
             execute_typedef_native_local(stream, self);
             execute_predefineds_hpp(stream, self);
 
+            execute_default_hpp(stream, self);
+
             execute_ctor_hpp(stream, self);
 
             execute_access_member_hpp(stream, self);
@@ -1471,6 +1514,8 @@ namespace x680 {
 
             execute_ctor_cpp(stream, self);
             execute_declare_cpp(stream, self);
+
+            execute_default_cpp(stream, self);
 
             execute_archive_meth_cpp(stream, self);
 
@@ -1629,6 +1674,54 @@ namespace x680 {
                     }
                     default:
                     {
+                    }
+                }
+            }
+        }
+
+        void fileout::execute_default_hpp(std::ofstream& stream, typeassignment_entity_ptr self) {
+            if ((self) && (self->type())) {
+                switch (self->builtin()) {
+                    case t_SET:
+                    case t_SEQUENCE:
+                    {
+                        member_vect mmbr;
+                        load_member(mmbr, self);
+                        for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                            tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
+                            if (mkr == mk_default) {
+                                stream << "\n" << tabformat(self, 1) << "static const " << fromtype_str(it->typ) << " " << it->name << "__default;";
+                            }
+                        }
+                        break;
+                    }
+                    default:
+                    {
+
+                    }
+                }
+            }
+        }
+
+        void fileout::execute_default_cpp(std::ofstream& stream, typeassignment_entity_ptr self) {
+            if ((self) && (self->type())) {
+                switch (self->builtin()) {
+                    case t_SET:
+                    case t_SEQUENCE:
+                    {
+                        member_vect mmbr;
+                        load_member(mmbr, self);
+                        for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                            tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
+                            if (mkr == mk_default) {
+                                execute_defaultassignment_cpp(stream, it->typ, self);
+                            }
+                        }
+                        break;
+                    }
+                    default:
+                    {
+
                     }
                 }
             }

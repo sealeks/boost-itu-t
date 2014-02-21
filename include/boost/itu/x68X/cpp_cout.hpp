@@ -40,11 +40,14 @@ namespace x680 {
         std::string value_int_str(value_atom_ptr self);
         std::string value_bool_str(value_atom_ptr self);
         std::string value_real_str(value_atom_ptr self);
+        std::string value_bs_str(value_atom_ptr self);
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self);
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
+        std::string valueassmnt_str(valueassignment_entity_ptr self);
+        std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "");
         std::string nameconvert(std::string name);
         std::string tabformat(basic_entity_ptr selft = basic_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
-        std::string member_marker_str(const std::string& str, tagmarker_type self, bool simple = false);
+        std::string member_marker_str(const std::string& str, tagmarker_type self, const std::string& dflt="" , bool simple = false);
         std::string seqof_str(typeassignment_entity_ptr self, const std::string& name);
         std::string choice_enum_str(typeassignment_entity_ptr self, basic_entity_ptr sub);
         std::string tagged_str(tagged_ptr self);
@@ -61,7 +64,7 @@ namespace x680 {
 
         public:
 
-            fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out", bool revrs = true, bool nohldr = true);
+            fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out", bool revrs = false, bool nohldr = false);
             virtual ~fileout();
 
             void execute();
@@ -121,6 +124,7 @@ namespace x680 {
 
             void execute_valueassignment_hpp(std::ofstream& stream, valueassignment_entity_ptr self);
             void execute_valueassignment_cpp(std::ofstream& stream, valueassignment_entity_ptr self);
+            void execute_defaultassignment_cpp(std::ofstream& stream, namedtypeassignment_entity_ptr self, typeassignment_entity_ptr ansec);
 
 
             void execute_access_member_hpp(std::ofstream& stream, typeassignment_entity_ptr self);
@@ -142,6 +146,9 @@ namespace x680 {
 
             void execute_ctor_hpp(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_ctor_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
+            
+            void execute_default_hpp(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_default_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
 
             void execute_structof_hpp(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_structof_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
