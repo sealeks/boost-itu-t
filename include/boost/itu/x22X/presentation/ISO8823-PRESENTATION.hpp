@@ -167,6 +167,8 @@ namespace ISO8823_PRESENTATION {
 
             };
 
+            static const Protocol_version protocol_version__default;
+            static const Protocol_options protocol_options__default;
 
             normal_mode_parameters_type();
 
@@ -182,14 +184,14 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< extensions_type> __extensions,
                     boost::shared_ptr< User_data> __user_data);
 
-            BOOST_ASN_VALUE_OPTIONAL_DECL(protocol_version, Protocol_version);
+            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version);
             BOOST_ASN_VALUE_OPTIONAL_DECL(calling_presentation_selector, Calling_presentation_selector);
             BOOST_ASN_VALUE_OPTIONAL_DECL(called_presentation_selector, Called_presentation_selector);
             BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_definition_list, Presentation_context_definition_list);
             BOOST_ASN_VALUE_OPTIONAL_DECL(default_context_name, Default_context_name);
             BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_requirements, Presentation_requirements);
             BOOST_ASN_VALUE_OPTIONAL_DECL(user_session_requirements, User_session_requirements);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(protocol_options, Protocol_options);
+            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_options, Protocol_options);
             BOOST_ASN_VALUE_OPTIONAL_DECL(initiators_nominated_context, Presentation_context_identifier);
             BOOST_ASN_VALUE_OPTIONAL_DECL(extensions, extensions_type);
             BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
@@ -198,14 +200,14 @@ namespace ISO8823_PRESENTATION {
 
         private:
 
-            boost::shared_ptr<Protocol_version> protocol_version_;
+            default_holder<Protocol_version, protocol_version__default> protocol_version_;
             boost::shared_ptr<Calling_presentation_selector> calling_presentation_selector_;
             boost::shared_ptr<Called_presentation_selector> called_presentation_selector_;
             boost::shared_ptr<Presentation_context_definition_list> presentation_context_definition_list_;
             boost::shared_ptr<Default_context_name> default_context_name_;
             boost::shared_ptr<Presentation_requirements> presentation_requirements_;
             boost::shared_ptr<User_session_requirements> user_session_requirements_;
-            boost::shared_ptr<Protocol_options> protocol_options_;
+            default_holder<Protocol_options, protocol_options__default> protocol_options_;
             boost::shared_ptr<Presentation_context_identifier> initiators_nominated_context_;
             boost::shared_ptr<extensions_type> extensions_;
             boost::shared_ptr<User_data> user_data_;
@@ -268,6 +270,9 @@ namespace ISO8823_PRESENTATION {
 
         struct normal_mode_parameters_type {
 
+            static const Protocol_version protocol_version__default;
+            static const Protocol_options protocol_options__default;
+
             normal_mode_parameters_type();
 
             normal_mode_parameters_type(boost::shared_ptr< Protocol_version> __protocol_version,
@@ -279,12 +284,12 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< Presentation_context_identifier> __responders_nominated_context,
                     boost::shared_ptr< User_data> __user_data);
 
-            BOOST_ASN_VALUE_OPTIONAL_DECL(protocol_version, Protocol_version);
+            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version);
             BOOST_ASN_VALUE_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector);
             BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list);
             BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_requirements, Presentation_requirements);
             BOOST_ASN_VALUE_OPTIONAL_DECL(user_session_requirements, User_session_requirements);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(protocol_options, Protocol_options);
+            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_options, Protocol_options);
             BOOST_ASN_VALUE_OPTIONAL_DECL(responders_nominated_context, Presentation_context_identifier);
             BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
 
@@ -292,12 +297,12 @@ namespace ISO8823_PRESENTATION {
 
         private:
 
-            boost::shared_ptr<Protocol_version> protocol_version_;
+            default_holder<Protocol_version, protocol_version__default> protocol_version_;
             boost::shared_ptr<Responding_presentation_selector> responding_presentation_selector_;
             boost::shared_ptr<Presentation_context_definition_result_list> presentation_context_definition_result_list_;
             boost::shared_ptr<Presentation_requirements> presentation_requirements_;
             boost::shared_ptr<User_session_requirements> user_session_requirements_;
-            boost::shared_ptr<Protocol_options> protocol_options_;
+            default_holder<Protocol_options, protocol_options__default> protocol_options_;
             boost::shared_ptr<Presentation_context_identifier> responders_nominated_context_;
             boost::shared_ptr<User_data> user_data_;
         };
@@ -359,6 +364,8 @@ namespace ISO8823_PRESENTATION {
 
         struct normal_mode_parameters_type {
 
+            static const Protocol_version protocol_version__default;
+
             normal_mode_parameters_type();
 
             normal_mode_parameters_type(boost::shared_ptr< Protocol_version> __protocol_version,
@@ -368,7 +375,7 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< Provider_reason> __provider_reason,
                     boost::shared_ptr< User_data> __user_data);
 
-            BOOST_ASN_VALUE_OPTIONAL_DECL(protocol_version, Protocol_version);
+            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version);
             BOOST_ASN_VALUE_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector);
             BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list);
             BOOST_ASN_VALUE_OPTIONAL_DECL(default_context_result, Default_context_result);
@@ -379,7 +386,7 @@ namespace ISO8823_PRESENTATION {
 
         private:
 
-            boost::shared_ptr<Protocol_version> protocol_version_;
+            default_holder<Protocol_version, protocol_version__default> protocol_version_;
             boost::shared_ptr<Responding_presentation_selector> responding_presentation_selector_;
             boost::shared_ptr<Presentation_context_definition_result_list> presentation_context_definition_result_list_;
             boost::shared_ptr<Default_context_result> default_context_result_;

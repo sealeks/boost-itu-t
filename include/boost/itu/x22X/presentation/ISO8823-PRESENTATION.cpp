@@ -162,6 +162,11 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_EXTENTION;
     }
 
+
+    const Protocol_version CP_type::normal_mode_parameters_type::protocol_version__default = Protocol_version(Protocol_version_version_1);
+
+    const Protocol_options CP_type::normal_mode_parameters_type::protocol_options__default = Protocol_options();
+
     template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version_, 0);
         BOOST_ASN_IMPLICIT_TAG(calling_presentation_selector_, 1);
@@ -190,12 +195,16 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_CHOICE(user_data_);
     }
 
-    boost::shared_ptr<Protocol_version> CP_type::normal_mode_parameters_type::protocol_version__new() {
-        return protocol_version_ = boost::shared_ptr<Protocol_version>(new Protocol_version());
+    const Protocol_version& CP_type::normal_mode_parameters_type::protocol_version() const {
+        return *protocol_version_;
     }
 
     void CP_type::normal_mode_parameters_type::protocol_version(const Protocol_version& vl) {
-        protocol_version_ = boost::shared_ptr<Protocol_version>(new Protocol_version(vl));
+        protocol_version_ = vl;
+    }
+
+    void CP_type::normal_mode_parameters_type::protocol_version(boost::shared_ptr< Protocol_version> vl) {
+        protocol_version_ = vl;
     }
 
     boost::shared_ptr<Calling_presentation_selector> CP_type::normal_mode_parameters_type::calling_presentation_selector__new() {
@@ -246,12 +255,16 @@ namespace ISO8823_PRESENTATION {
         user_session_requirements_ = boost::shared_ptr<User_session_requirements>(new User_session_requirements(vl));
     }
 
-    boost::shared_ptr<Protocol_options> CP_type::normal_mode_parameters_type::protocol_options__new() {
-        return protocol_options_ = boost::shared_ptr<Protocol_options>(new Protocol_options());
+    const Protocol_options& CP_type::normal_mode_parameters_type::protocol_options() const {
+        return *protocol_options_;
     }
 
     void CP_type::normal_mode_parameters_type::protocol_options(const Protocol_options& vl) {
-        protocol_options_ = boost::shared_ptr<Protocol_options>(new Protocol_options(vl));
+        protocol_options_ = vl;
+    }
+
+    void CP_type::normal_mode_parameters_type::protocol_options(boost::shared_ptr< Protocol_options> vl) {
+        protocol_options_ = vl;
     }
 
     boost::shared_ptr<Presentation_context_identifier> CP_type::normal_mode_parameters_type::initiators_nominated_context__new() {
@@ -432,6 +445,10 @@ namespace ISO8823_PRESENTATION {
     user_data_(__user_data) {
     };
 
+    const Protocol_version CPA_PPDU::normal_mode_parameters_type::protocol_version__default = Protocol_version(Protocol_version_version_1);
+
+    const Protocol_options CPA_PPDU::normal_mode_parameters_type::protocol_options__default = Protocol_options();
+
     template<> void CPA_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version_, 0);
         BOOST_ASN_IMPLICIT_TAG(responding_presentation_selector_, 3);
@@ -454,12 +471,16 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_CHOICE(user_data_);
     }
 
-    boost::shared_ptr<Protocol_version> CPA_PPDU::normal_mode_parameters_type::protocol_version__new() {
-        return protocol_version_ = boost::shared_ptr<Protocol_version>(new Protocol_version());
+    const Protocol_version& CPA_PPDU::normal_mode_parameters_type::protocol_version() const {
+        return *protocol_version_;
     }
 
     void CPA_PPDU::normal_mode_parameters_type::protocol_version(const Protocol_version& vl) {
-        protocol_version_ = boost::shared_ptr<Protocol_version>(new Protocol_version(vl));
+        protocol_version_ = vl;
+    }
+
+    void CPA_PPDU::normal_mode_parameters_type::protocol_version(boost::shared_ptr< Protocol_version> vl) {
+        protocol_version_ = vl;
     }
 
     boost::shared_ptr<Responding_presentation_selector> CPA_PPDU::normal_mode_parameters_type::responding_presentation_selector__new() {
@@ -494,12 +515,16 @@ namespace ISO8823_PRESENTATION {
         user_session_requirements_ = boost::shared_ptr<User_session_requirements>(new User_session_requirements(vl));
     }
 
-    boost::shared_ptr<Protocol_options> CPA_PPDU::normal_mode_parameters_type::protocol_options__new() {
-        return protocol_options_ = boost::shared_ptr<Protocol_options>(new Protocol_options());
+    const Protocol_options& CPA_PPDU::normal_mode_parameters_type::protocol_options() const {
+        return *protocol_options_;
     }
 
     void CPA_PPDU::normal_mode_parameters_type::protocol_options(const Protocol_options& vl) {
-        protocol_options_ = boost::shared_ptr<Protocol_options>(new Protocol_options(vl));
+        protocol_options_ = vl;
+    }
+
+    void CPA_PPDU::normal_mode_parameters_type::protocol_options(boost::shared_ptr< Protocol_options> vl) {
+        protocol_options_ = vl;
     }
 
     boost::shared_ptr<Presentation_context_identifier> CPA_PPDU::normal_mode_parameters_type::responders_nominated_context__new() {
@@ -617,6 +642,8 @@ namespace ISO8823_PRESENTATION {
     user_data_(__user_data) {
     };
 
+    const Protocol_version CPR_PPDU::normal_mode_parameters_type::protocol_version__default = Protocol_version(Protocol_version_version_1);
+
     template<> void CPR_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version_, 0);
         BOOST_ASN_IMPLICIT_TAG(responding_presentation_selector_, 3);
@@ -635,12 +662,16 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_CHOICE(user_data_);
     }
 
-    boost::shared_ptr<Protocol_version> CPR_PPDU::normal_mode_parameters_type::protocol_version__new() {
-        return protocol_version_ = boost::shared_ptr<Protocol_version>(new Protocol_version());
+    const Protocol_version& CPR_PPDU::normal_mode_parameters_type::protocol_version() const {
+        return *protocol_version_;
     }
 
     void CPR_PPDU::normal_mode_parameters_type::protocol_version(const Protocol_version& vl) {
-        protocol_version_ = boost::shared_ptr<Protocol_version>(new Protocol_version(vl));
+        protocol_version_ = vl;
+    }
+
+    void CPR_PPDU::normal_mode_parameters_type::protocol_version(boost::shared_ptr< Protocol_version> vl) {
+        protocol_version_ = vl;
     }
 
     boost::shared_ptr<Responding_presentation_selector> CPR_PPDU::normal_mode_parameters_type::responding_presentation_selector__new() {
