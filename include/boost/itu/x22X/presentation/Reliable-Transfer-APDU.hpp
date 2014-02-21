@@ -39,6 +39,8 @@ namespace Reliable_Transfer_APDU {
     using boost::asn1::embeded_type;
     using boost::asn1::characterstring_type;
     using boost::asn1::any_type;
+    using boost::asn1::value_holder;
+    using boost::asn1::default_holder;
 
 
     struct RTSE_apdus;
@@ -69,197 +71,6 @@ namespace Reliable_Transfer_APDU {
     // import   from  Remote-Operations-Information-Objects
 
 
-
-    extern const AbortReason AbortReason_localSystemProblem;
-    extern const AbortReason AbortReason_invalidParameter;
-    extern const AbortReason AbortReason_unrecognizedActivity;
-    extern const AbortReason AbortReason_temporaryProblem;
-    extern const AbortReason AbortReason_protocolError;
-    extern const AbortReason AbortReason_permanentProblem;
-    extern const AbortReason AbortReason_userError;
-    extern const AbortReason AbortReason_transferCompleted;
-
-    // choice CallingSSuserReference
-
-    enum CallingSSuserReference_enum {
-
-        CallingSSuserReference_null = 0,
-        CallingSSuserReference_t61String,
-        CallingSSuserReference_octetString,
-    };
-
-    struct CallingSSuserReference : public BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) {
-
-        CallingSSuserReference() : BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) () {
-        }
-
-        template<typename T > CallingSSuserReference(boost::shared_ptr< T> vl, CallingSSuserReference_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) (vl, static_cast<int> (enm)) {
-        }
-
-        BOOST_ASN_VALUE_CHOICE(t61String, t61string_type, CallingSSuserReference_t61String);
-        BOOST_ASN_VALUE_CHOICE(octetString, octetstring_type, CallingSSuserReference_octetString);
-
-        BOOST_ASN_ARCHIVE_FUNC;
-    };
-
-    extern const RefuseReason RefuseReason_rtsBusy;
-    extern const RefuseReason RefuseReason_cannotRecover;
-    extern const RefuseReason RefuseReason_validationFailure;
-    extern const RefuseReason RefuseReason_unacceptableDialogueMode;
-
-    // sequence SessionConnectionIdentifier
-
-    struct SessionConnectionIdentifier {
-
-        SessionConnectionIdentifier();
-
-        SessionConnectionIdentifier(const CallingSSuserReference& __callingSSuserReference,
-                const CommonReference& __commonReference);
-
-        SessionConnectionIdentifier(boost::shared_ptr< CallingSSuserReference> __callingSSuserReference,
-                boost::shared_ptr< CommonReference> __commonReference,
-                boost::shared_ptr< AdditionalReferenceInformation> __additionalReferenceInformation);
-
-        BOOST_ASN_VALUE_HOLDERN_DECL(callingSSuserReference, CallingSSuserReference);
-        BOOST_ASN_VALUE_HOLDERN_DECL(commonReference, CommonReference);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(additionalReferenceInformation, AdditionalReferenceInformation);
-
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        CallingSSuserReference callingSSuserReference_;
-        CommonReference commonReference_;
-        boost::shared_ptr<AdditionalReferenceInformation> additionalReferenceInformation_;
-    };
-
-    // choice ConnectionData
-
-    enum ConnectionData_enum {
-
-        ConnectionData_null = 0,
-        ConnectionData_open,
-        ConnectionData_recover,
-    };
-
-    struct ConnectionData : public BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) {
-
-        ConnectionData() : BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) () {
-        }
-
-        template<typename T > ConnectionData(boost::shared_ptr< T> vl, ConnectionData_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) (vl, static_cast<int> (enm)) {
-        }
-
-        BOOST_ASN_VALUE_CHOICE(open, any_type, ConnectionData_open);
-        BOOST_ASN_VALUE_CHOICE(recover, SessionConnectionIdentifier, ConnectionData_recover);
-
-        BOOST_ASN_ARCHIVE_FUNC;
-    };
-
-    // set RTABapdu
-
-    struct RTABapdu {
-
-        RTABapdu();
-
-        RTABapdu(boost::shared_ptr< AbortReason> __abortReason,
-                boost::shared_ptr< bitstring_type> __reflectedParameter,
-                boost::shared_ptr< any_type> __userdataAB);
-
-        BOOST_ASN_VALUE_OPTIONAL_DECL(abortReason, AbortReason);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(reflectedParameter, bitstring_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(userdataAB, any_type);
-
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<AbortReason> abortReason_;
-        boost::shared_ptr<bitstring_type> reflectedParameter_;
-        boost::shared_ptr<any_type> userdataAB_;
-    };
-
-    // set RTORJapdu
-
-    struct RTORJapdu {
-
-        RTORJapdu();
-
-        RTORJapdu(boost::shared_ptr< RefuseReason> __refuseReason,
-                boost::shared_ptr< any_type> __userDataRJ);
-
-        BOOST_ASN_VALUE_OPTIONAL_DECL(refuseReason, RefuseReason);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(userDataRJ, any_type);
-
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<RefuseReason> refuseReason_;
-        boost::shared_ptr<any_type> userDataRJ_;
-    };
-
-    // set RTOACapdu
-
-    struct RTOACapdu {
-
-        RTOACapdu();
-
-        RTOACapdu(const ConnectionData& __connectionDataAC);
-
-        RTOACapdu(boost::shared_ptr< int> __checkpointSize,
-                boost::shared_ptr< int> __windowSize,
-                boost::shared_ptr< ConnectionData> __connectionDataAC);
-
-        BOOST_ASN_VALUE_OPTIONAL_DECL(checkpointSize, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(windowSize, int);
-        BOOST_ASN_VALUE_HOLDERN_DECL(connectionDataAC, ConnectionData);
-
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<int> checkpointSize_;
-        boost::shared_ptr<int> windowSize_;
-        ConnectionData connectionDataAC_;
-    };
-
-    // set RTORQapdu
-
-    struct RTORQapdu {
-
-        static const int monologue;
-        static const int twa;
-
-
-        RTORQapdu();
-
-        RTORQapdu(const ConnectionData& __connectionDataRQ);
-
-        RTORQapdu(boost::shared_ptr< int> __checkpointSize,
-                boost::shared_ptr< int> __windowSize,
-                boost::shared_ptr< int> __dialogueMode,
-                boost::shared_ptr< ConnectionData> __connectionDataRQ,
-                boost::shared_ptr< int> __applicationProtocol);
-
-        BOOST_ASN_VALUE_OPTIONAL_DECL(checkpointSize, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(windowSize, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(dialogueMode, int);
-        BOOST_ASN_VALUE_HOLDERN_DECL(connectionDataRQ, ConnectionData);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(applicationProtocol, int);
-
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<int> checkpointSize_;
-        boost::shared_ptr<int> windowSize_;
-        boost::shared_ptr<int> dialogueMode_;
-        ConnectionData connectionDataRQ_;
-        boost::shared_ptr<int> applicationProtocol_;
-    };
 
     // choice RTSE-apdus
 
@@ -292,6 +103,203 @@ namespace Reliable_Transfer_APDU {
 
         BOOST_ASN_ARCHIVE_FUNC;
     };
+
+    // set RTORQapdu
+
+    struct RTORQapdu {
+
+        static const int monologue;
+        static const int twa;
+
+        static const int checkpointSize__default;
+        static const int windowSize__default;
+        static const int dialogueMode__default;
+
+        RTORQapdu();
+
+        RTORQapdu(const ConnectionData& __connectionDataRQ);
+
+        RTORQapdu(boost::shared_ptr< int> __checkpointSize,
+                boost::shared_ptr< int> __windowSize,
+                boost::shared_ptr< int> __dialogueMode,
+                boost::shared_ptr< ConnectionData> __connectionDataRQ,
+                boost::shared_ptr< int> __applicationProtocol);
+
+        BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int);
+        BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int);
+        BOOST_ASN_VALUE_DEFAULT_DECL(dialogueMode, int);
+        BOOST_ASN_VALUE_HOLDERH_DECL(connectionDataRQ, ConnectionData);
+        BOOST_ASN_VALUE_OPTIONAL_DECL(applicationProtocol, int);
+
+        BOOST_ASN_ARCHIVE_FUNC;
+
+    private:
+
+        default_holder<int, checkpointSize__default> checkpointSize_;
+        default_holder<int, windowSize__default> windowSize_;
+        default_holder<int, dialogueMode__default> dialogueMode_;
+        value_holder<ConnectionData> connectionDataRQ_;
+        boost::shared_ptr<int> applicationProtocol_;
+    };
+
+    // set RTOACapdu
+
+    struct RTOACapdu {
+
+        static const int checkpointSize__default;
+        static const int windowSize__default;
+
+        RTOACapdu();
+
+        RTOACapdu(const ConnectionData& __connectionDataAC);
+
+        RTOACapdu(boost::shared_ptr< int> __checkpointSize,
+                boost::shared_ptr< int> __windowSize,
+                boost::shared_ptr< ConnectionData> __connectionDataAC);
+
+        BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int);
+        BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int);
+        BOOST_ASN_VALUE_HOLDERH_DECL(connectionDataAC, ConnectionData);
+
+        BOOST_ASN_ARCHIVE_FUNC;
+
+    private:
+
+        default_holder<int, checkpointSize__default> checkpointSize_;
+        default_holder<int, windowSize__default> windowSize_;
+        value_holder<ConnectionData> connectionDataAC_;
+    };
+
+    // set RTORJapdu
+
+    struct RTORJapdu {
+
+        RTORJapdu();
+
+        RTORJapdu(boost::shared_ptr< RefuseReason> __refuseReason,
+                boost::shared_ptr< any_type> __userDataRJ);
+
+        BOOST_ASN_VALUE_OPTIONAL_DECL(refuseReason, RefuseReason);
+        BOOST_ASN_VALUE_OPTIONAL_DECL(userDataRJ, any_type);
+
+        BOOST_ASN_ARCHIVE_FUNC;
+
+    private:
+
+        boost::shared_ptr<RefuseReason> refuseReason_;
+        boost::shared_ptr<any_type> userDataRJ_;
+    };
+
+    // set RTABapdu
+
+    struct RTABapdu {
+
+        RTABapdu();
+
+        RTABapdu(boost::shared_ptr< AbortReason> __abortReason,
+                boost::shared_ptr< bitstring_type> __reflectedParameter,
+                boost::shared_ptr< any_type> __userdataAB);
+
+        BOOST_ASN_VALUE_OPTIONAL_DECL(abortReason, AbortReason);
+        BOOST_ASN_VALUE_OPTIONAL_DECL(reflectedParameter, bitstring_type);
+        BOOST_ASN_VALUE_OPTIONAL_DECL(userdataAB, any_type);
+
+        BOOST_ASN_ARCHIVE_FUNC;
+
+    private:
+
+        boost::shared_ptr<AbortReason> abortReason_;
+        boost::shared_ptr<bitstring_type> reflectedParameter_;
+        boost::shared_ptr<any_type> userdataAB_;
+    };
+
+    // choice ConnectionData
+
+    enum ConnectionData_enum {
+
+        ConnectionData_null = 0,
+        ConnectionData_open,
+        ConnectionData_recover,
+    };
+
+    struct ConnectionData : public BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) {
+
+        ConnectionData() : BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) () {
+        }
+
+        template<typename T > ConnectionData(boost::shared_ptr< T> vl, ConnectionData_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) (vl, static_cast<int> (enm)) {
+        }
+
+        BOOST_ASN_VALUE_CHOICE(open, any_type, ConnectionData_open);
+        BOOST_ASN_VALUE_CHOICE(recover, SessionConnectionIdentifier, ConnectionData_recover);
+
+        BOOST_ASN_ARCHIVE_FUNC;
+    };
+
+    // sequence SessionConnectionIdentifier
+
+    struct SessionConnectionIdentifier {
+
+        SessionConnectionIdentifier();
+
+        SessionConnectionIdentifier(const CallingSSuserReference& __callingSSuserReference,
+                const CommonReference& __commonReference);
+
+        SessionConnectionIdentifier(boost::shared_ptr< CallingSSuserReference> __callingSSuserReference,
+                boost::shared_ptr< CommonReference> __commonReference,
+                boost::shared_ptr< AdditionalReferenceInformation> __additionalReferenceInformation);
+
+        BOOST_ASN_VALUE_HOLDERH_DECL(callingSSuserReference, CallingSSuserReference);
+        BOOST_ASN_VALUE_HOLDERH_DECL(commonReference, CommonReference);
+        BOOST_ASN_VALUE_OPTIONAL_DECL(additionalReferenceInformation, AdditionalReferenceInformation);
+
+        BOOST_ASN_ARCHIVE_FUNC;
+
+    private:
+
+        value_holder<CallingSSuserReference> callingSSuserReference_;
+        value_holder<CommonReference> commonReference_;
+        boost::shared_ptr<AdditionalReferenceInformation> additionalReferenceInformation_;
+    };
+
+    extern const RefuseReason RefuseReason_rtsBusy;
+    extern const RefuseReason RefuseReason_cannotRecover;
+    extern const RefuseReason RefuseReason_validationFailure;
+    extern const RefuseReason RefuseReason_unacceptableDialogueMode;
+
+    // choice CallingSSuserReference
+
+    enum CallingSSuserReference_enum {
+
+        CallingSSuserReference_null = 0,
+        CallingSSuserReference_t61String,
+        CallingSSuserReference_octetString,
+    };
+
+    struct CallingSSuserReference : public BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) {
+
+        CallingSSuserReference() : BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) () {
+        }
+
+        template<typename T > CallingSSuserReference(boost::shared_ptr< T> vl, CallingSSuserReference_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) (vl, static_cast<int> (enm)) {
+        }
+
+        BOOST_ASN_VALUE_CHOICE(t61String, t61string_type, CallingSSuserReference_t61String);
+        BOOST_ASN_VALUE_CHOICE(octetString, octetstring_type, CallingSSuserReference_octetString);
+
+        BOOST_ASN_ARCHIVE_FUNC;
+    };
+
+    extern const AbortReason AbortReason_localSystemProblem;
+    extern const AbortReason AbortReason_invalidParameter;
+    extern const AbortReason AbortReason_unrecognizedActivity;
+    extern const AbortReason AbortReason_temporaryProblem;
+    extern const AbortReason AbortReason_protocolError;
+    extern const AbortReason AbortReason_permanentProblem;
+    extern const AbortReason AbortReason_userError;
+    extern const AbortReason AbortReason_transferCompleted;
 
     template<> void RTSE_apdus::serialize(boost::asn1::x690::output_coder& arch);
     template<> void RTSE_apdus::serialize(boost::asn1::x690::input_coder& arch);

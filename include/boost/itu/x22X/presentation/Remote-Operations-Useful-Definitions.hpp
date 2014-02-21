@@ -39,13 +39,15 @@ namespace Remote_Operations_Useful_Definitions {
     using boost::asn1::embeded_type;
     using boost::asn1::characterstring_type;
     using boost::asn1::any_type;
+    using boost::asn1::value_holder;
+    using boost::asn1::default_holder;
 
 
 
 }
 
-#include <boost/itu/x22X/presentation/Remote-Operations-Information-Objects.hpp>
-#include <boost/itu/x22X/presentation/Remote-Operations-Generic-ROS-PDUs.hpp>
+#include "Remote-Operations-Information-Objects.hpp"
+#include "Remote-Operations-Generic-ROS-PDUs.hpp"
 
 namespace Remote_Operations_Useful_Definitions {
 

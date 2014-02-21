@@ -39,6 +39,8 @@ namespace Remote_Operations_Information_Objects {
     using boost::asn1::embeded_type;
     using boost::asn1::characterstring_type;
     using boost::asn1::any_type;
+    using boost::asn1::value_holder;
+    using boost::asn1::default_holder;
 
 
     struct Code;

@@ -39,6 +39,8 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     using boost::asn1::embeded_type;
     using boost::asn1::characterstring_type;
     using boost::asn1::any_type;
+    using boost::asn1::value_holder;
+    using boost::asn1::default_holder;
 
 
     struct Reject;
@@ -61,73 +63,6 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     // import   from  Remote-Operations-Information-Objects
 
 
-
-    // choice InvokeId
-
-    enum InvokeId_enum {
-
-        InvokeId_null = 0,
-        InvokeId_present,
-        InvokeId_absent,
-    };
-
-    struct InvokeId : public BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) {
-
-        InvokeId() : BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) () {
-        }
-
-        template<typename T > InvokeId(boost::shared_ptr< T> vl, InvokeId_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) (vl, static_cast<int> (enm)) {
-        }
-
-        BOOST_ASN_VALUE_CHOICE(present, int, InvokeId_present);
-        BOOST_ASN_VALUE_CHOICE(absent, null_type, InvokeId_absent);
-
-        BOOST_ASN_ARCHIVE_FUNC;
-    };
-
-    extern const RejectProblem RejectProblem_general_unrecognizedPDU;
-    extern const RejectProblem RejectProblem_general_mistypedPDU;
-    extern const RejectProblem RejectProblem_general_badlyStructuredPDU;
-    extern const RejectProblem RejectProblem_invoke_duplicateInvocation;
-    extern const RejectProblem RejectProblem_invoke_unrecognizedOperation;
-    extern const RejectProblem RejectProblem_invoke_mistypedArgument;
-    extern const RejectProblem RejectProblem_invoke_resourceLimitation;
-    extern const RejectProblem RejectProblem_invoke_releaseInProgress;
-    extern const RejectProblem RejectProblem_invoke_unrecognizedLinkedId;
-    extern const RejectProblem RejectProblem_invoke_linkedResponseUnexpected;
-    extern const RejectProblem RejectProblem_invoke_unexpectedLinkedOperation;
-    extern const RejectProblem RejectProblem_returnResult_unrecognizedInvocation;
-    extern const RejectProblem RejectProblem_returnResult_resultResponseUnexpected;
-    extern const RejectProblem RejectProblem_returnResult_mistypedResult;
-    extern const RejectProblem RejectProblem_returnError_unrecognizedInvocation;
-    extern const RejectProblem RejectProblem_returnError_errorResponseUnexpected;
-    extern const RejectProblem RejectProblem_returnError_unrecognizedError;
-    extern const RejectProblem RejectProblem_returnError_unexpectedError;
-    extern const RejectProblem RejectProblem_returnError_mistypedParameter;
-
-    extern const ReturnErrorProblem ReturnErrorProblem_unrecognizedInvocation;
-    extern const ReturnErrorProblem ReturnErrorProblem_errorResponseUnexpected;
-    extern const ReturnErrorProblem ReturnErrorProblem_unrecognizedError;
-    extern const ReturnErrorProblem ReturnErrorProblem_unexpectedError;
-    extern const ReturnErrorProblem ReturnErrorProblem_mistypedParameter;
-
-    extern const ReturnResultProblem ReturnResultProblem_unrecognizedInvocation;
-    extern const ReturnResultProblem ReturnResultProblem_resultResponseUnexpected;
-    extern const ReturnResultProblem ReturnResultProblem_mistypedResult;
-
-    extern const InvokeProblem InvokeProblem_duplicateInvocation;
-    extern const InvokeProblem InvokeProblem_unrecognizedOperation;
-    extern const InvokeProblem InvokeProblem_mistypedArgument;
-    extern const InvokeProblem InvokeProblem_resourceLimitation;
-    extern const InvokeProblem InvokeProblem_releaseInProgress;
-    extern const InvokeProblem InvokeProblem_unrecognizedLinkedId;
-    extern const InvokeProblem InvokeProblem_linkedResponseUnexpected;
-    extern const InvokeProblem InvokeProblem_unexpectedLinkedOperation;
-
-    extern const GeneralProblem GeneralProblem_unrecognizedPDU;
-    extern const GeneralProblem GeneralProblem_mistypedPDU;
-    extern const GeneralProblem GeneralProblem_badlyStructuredPDU;
 
     // sequence Reject
 
@@ -167,15 +102,82 @@ namespace Remote_Operations_Generic_ROS_PDUs {
         Reject(const InvokeId& __invokeId,
                 const problem_type& __problem);
 
-        BOOST_ASN_VALUE_HOLDERN_DECL(invokeId, InvokeId);
-        BOOST_ASN_VALUE_HOLDERN_DECL(problem, problem_type);
+        BOOST_ASN_VALUE_HOLDERH_DECL(invokeId, InvokeId);
+        BOOST_ASN_VALUE_HOLDERH_DECL(problem, problem_type);
 
         BOOST_ASN_ARCHIVE_FUNC;
 
     private:
 
-        InvokeId invokeId_;
-        problem_type problem_;
+        value_holder<InvokeId> invokeId_;
+        value_holder<problem_type> problem_;
+    };
+
+    extern const GeneralProblem GeneralProblem_unrecognizedPDU;
+    extern const GeneralProblem GeneralProblem_mistypedPDU;
+    extern const GeneralProblem GeneralProblem_badlyStructuredPDU;
+
+    extern const InvokeProblem InvokeProblem_duplicateInvocation;
+    extern const InvokeProblem InvokeProblem_unrecognizedOperation;
+    extern const InvokeProblem InvokeProblem_mistypedArgument;
+    extern const InvokeProblem InvokeProblem_resourceLimitation;
+    extern const InvokeProblem InvokeProblem_releaseInProgress;
+    extern const InvokeProblem InvokeProblem_unrecognizedLinkedId;
+    extern const InvokeProblem InvokeProblem_linkedResponseUnexpected;
+    extern const InvokeProblem InvokeProblem_unexpectedLinkedOperation;
+
+    extern const ReturnResultProblem ReturnResultProblem_unrecognizedInvocation;
+    extern const ReturnResultProblem ReturnResultProblem_resultResponseUnexpected;
+    extern const ReturnResultProblem ReturnResultProblem_mistypedResult;
+
+    extern const ReturnErrorProblem ReturnErrorProblem_unrecognizedInvocation;
+    extern const ReturnErrorProblem ReturnErrorProblem_errorResponseUnexpected;
+    extern const ReturnErrorProblem ReturnErrorProblem_unrecognizedError;
+    extern const ReturnErrorProblem ReturnErrorProblem_unexpectedError;
+    extern const ReturnErrorProblem ReturnErrorProblem_mistypedParameter;
+
+    extern const RejectProblem RejectProblem_general_unrecognizedPDU;
+    extern const RejectProblem RejectProblem_general_mistypedPDU;
+    extern const RejectProblem RejectProblem_general_badlyStructuredPDU;
+    extern const RejectProblem RejectProblem_invoke_duplicateInvocation;
+    extern const RejectProblem RejectProblem_invoke_unrecognizedOperation;
+    extern const RejectProblem RejectProblem_invoke_mistypedArgument;
+    extern const RejectProblem RejectProblem_invoke_resourceLimitation;
+    extern const RejectProblem RejectProblem_invoke_releaseInProgress;
+    extern const RejectProblem RejectProblem_invoke_unrecognizedLinkedId;
+    extern const RejectProblem RejectProblem_invoke_linkedResponseUnexpected;
+    extern const RejectProblem RejectProblem_invoke_unexpectedLinkedOperation;
+    extern const RejectProblem RejectProblem_returnResult_unrecognizedInvocation;
+    extern const RejectProblem RejectProblem_returnResult_resultResponseUnexpected;
+    extern const RejectProblem RejectProblem_returnResult_mistypedResult;
+    extern const RejectProblem RejectProblem_returnError_unrecognizedInvocation;
+    extern const RejectProblem RejectProblem_returnError_errorResponseUnexpected;
+    extern const RejectProblem RejectProblem_returnError_unrecognizedError;
+    extern const RejectProblem RejectProblem_returnError_unexpectedError;
+    extern const RejectProblem RejectProblem_returnError_mistypedParameter;
+
+    // choice InvokeId
+
+    enum InvokeId_enum {
+
+        InvokeId_null = 0,
+        InvokeId_present,
+        InvokeId_absent,
+    };
+
+    struct InvokeId : public BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) {
+
+        InvokeId() : BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) () {
+        }
+
+        template<typename T > InvokeId(boost::shared_ptr< T> vl, InvokeId_enum enm) :
+                BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) (vl, static_cast<int> (enm)) {
+        }
+
+        BOOST_ASN_VALUE_CHOICE(present, int, InvokeId_present);
+        BOOST_ASN_VALUE_CHOICE(absent, null_type, InvokeId_absent);
+
+        BOOST_ASN_ARCHIVE_FUNC;
     };
 
     template<> void Reject::serialize(boost::asn1::x690::output_coder& arch);
