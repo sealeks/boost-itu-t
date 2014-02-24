@@ -1,8 +1,9 @@
 /*  * File:   main.cpp
  * Author: sealeks@mail.ru
  *
- * Created on 27 Р  Р Р‹Р  Р’ВµР  Р вЂ¦Р РЋРІР‚С™Р РЋР РЏР  Р’В±Р РЋР вЂљР РЋР Р‰ 2012 Р  РЎвЂ“., 15:58
+ * Created on 27 Р В  Р В Р вЂ№Р В  Р вЂ™Р’ВµР В  Р В РІР‚В¦Р В Р Р‹Р Р†Р вЂљРЎв„ўР В Р Р‹Р В Р РЏР В  Р вЂ™Р’В±Р В Р Р‹Р В РІР‚С™Р В Р Р‹Р В Р вЂ° 2012 Р В  Р РЋРІР‚вЂњ., 15:58
  */
+
 
 #include <cstdlib>
 #include <iostream>
@@ -183,18 +184,20 @@ private:
 
         }
     }
+    
+    
 
     void handle_idenify_response(boost::shared_ptr<identify_operation_type> rslt) {
         if (rslt->response()) {
 
-            std::cout << "Vendor: " << (*(rslt->response()->vendorName)) << " Model: " << (*(rslt->response()->modelName)) << " Rev: " << (*(rslt->response()->revision)) << std::endl;
+            std::cout << "Vendor: " << rslt->response()->vendorName() << " Model: " << rslt->response()->modelName() << " Rev: " << rslt->response()->revision() << std::endl;
 
             boost::shared_ptr<getnamelist_operation_type > operation =
                     boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type());
 
             operation->request_new();
-            operation->request()->objectClass->basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_domain));
-            operation->request()->objectScope->vmdSpecific__new();
+            operation->request()->objectClass().basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_domain));
+            operation->request()->objectScope().vmdSpecific__new();
 
             socket_.async_confirm_request(operation,
                     boost::bind(&client::handle_domainlist_response, this, operation));
@@ -208,7 +211,7 @@ private:
     void handle_domainlist_response(boost::shared_ptr<getnamelist_operation_type> rslt) {
         if (rslt->response()) {
 
-            domain = rslt->response()->listOfIdentifier->operator [](0);
+            domain = rslt->response()->listOfIdentifier().operator [](0);
 
             std::cout << " domain name: " << domain << std::endl;
 
@@ -218,8 +221,8 @@ private:
                     boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type());
 
             operation->request_new();
-            operation->request()->objectClass->basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_namedVariable));
-            operation->request()->objectScope->domainSpecific__new(new MMS::Identifier(domain));
+            operation->request()->objectClass().basicObjectClass(new int(MMS::ObjectClass::basicObjectClass_namedVariable));
+            operation->request()->objectScope().domainSpecific__new(new MMS::Identifier(domain));
 
             socket_.async_confirm_request(operation,
                     boost::bind(&client::handle_variablelist_response, this, operation));
@@ -236,20 +239,20 @@ private:
             std::string last;
 
             typedef MMS::GetNameList_Response::listOfIdentifier_type namedlist_type;
-            for (namedlist_type::iterator it = rslt->response()->listOfIdentifier->begin(); it != rslt->response()->listOfIdentifier->end(); ++it) {
+            for (namedlist_type::iterator it = rslt->response()->listOfIdentifier().begin(); it != rslt->response()->listOfIdentifier().end(); ++it) {
                 fulllist.push_back((*it));
                 last = (*it);
             }
 
-            if ((!domain.empty()) && ((!rslt->response()->moreFollows) || (*(rslt->response()->moreFollows)))) {
+            if ((!domain.empty()) && ((!rslt->response()->moreFollows()) || ((rslt->response()->moreFollows())))) {
 
                 boost::shared_ptr<getnamelist_operation_type > operation =
                         boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type());
 
                 operation->request_new();
-                operation->request()->objectClass->basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_namedVariable));
-                operation->request()->objectScope->domainSpecific__new(new MMS::Identifier(domain));
-                operation->request()->continueAfter__assign(new MMS::Identifier(last));
+                operation->request()->objectClass().basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_namedVariable));
+                operation->request()->objectScope().domainSpecific__new(new MMS::Identifier(domain));
+                operation->request()->continueAfter(new MMS::Identifier(last));
                 //operation->request()->continueAfter = MMS::Identifier(last));                
 
                 socket_.async_confirm_request(operation,
@@ -275,8 +278,8 @@ private:
                 operation->request_new();
                 operation->request()->name__new();
                 operation->request()->name()->domain_specific__new();
-                operation->request()->name()->domain_specific()->domainID = domain;
-                operation->request()->name()->domain_specific()->itemID = fulllist[fullcnt];
+                operation->request()->name()->domain_specific()->domainID(domain);
+                operation->request()->name()->domain_specific()->itemID(fulllist[fullcnt]);
 
                 socket_.async_confirm_request(operation,
                         boost::bind(&client::handle_accesslist_response, this, operation));
@@ -289,12 +292,13 @@ private:
         }
     }
 
+    
     void handle_accesslist_response(boost::shared_ptr<getvaraccess_operation_type> rslt) {
         if (rslt->response()) {
 
             //std::cout << "access var name: " <<     (int)( rslt->response()->typeDescription->type() )  << std::endl; 
 
-            if ((int) (rslt->response()->typeDescription->type()) > (int) (MMSO::TypeDescription_structure))
+            if ((int) (rslt->response()->typeDescription().type()) > (int) (MMSO::TypeDescription_structure))
                 simplelist.push_back(fulllist[fullcnt]);
 
 
@@ -308,8 +312,8 @@ private:
                 operation->request_new();
                 operation->request()->name__new();
                 operation->request()->name()->domain_specific__new();
-                operation->request()->name()->domain_specific()->domainID = domain;
-                operation->request()->name()->domain_specific()->itemID = fulllist[fullcnt];
+                operation->request()->name()->domain_specific()->domainID(domain);
+                operation->request()->name()->domain_specific()->itemID(fulllist[fullcnt]);
 
                 socket_.async_confirm_request(operation,
                         boost::bind(&client::handle_accesslist_response, this, operation));
@@ -330,17 +334,17 @@ private:
                 if (!(simplecnt < simplelist.size())) return;
 
                 operationl->request_new();
-                operationl->request()->variableAccessSpecification->listOfVariable__new();
+                operationl->request()->variableAccessSpecification().listOfVariable__new();
 
 
                 MMS::VariableAccessSpecification::listOfVariable_type_sequence_of vacs;
 
-                vacs.variableSpecification->name__new();
-                vacs.variableSpecification->name()->domain_specific__new();
-                vacs.variableSpecification->name()->domain_specific()->domainID = domain;
-                vacs.variableSpecification->name()->domain_specific()->itemID = simplelist[simplecnt];
+                vacs.variableSpecification().name__new();
+                vacs.variableSpecification().name()->domain_specific__new();
+                vacs.variableSpecification().name()->domain_specific()->domainID(domain);
+                vacs.variableSpecification().name()->domain_specific()->itemID( simplelist[simplecnt]);
 
-                operationl->request()->variableAccessSpecification->listOfVariable()->push_back(vacs);
+                operationl->request()->variableAccessSpecification().listOfVariable()->push_back(vacs);
 
 
 

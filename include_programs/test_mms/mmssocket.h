@@ -9,7 +9,7 @@
 #define	MMSSOCKET_H
 
 #include <boost/itu/x22X/x227.hpp>
-#include "mms/MMS-SCI-Module-1.h"
+#include "mms/MMS-SCI-Module-1.hpp"
 
 
 namespace prot9506 {
@@ -357,8 +357,8 @@ namespace prot9506 {
                         case MMS::MMSpdu_confirmed_ResponsePDU:
                         {
                             const MMS::Confirmed_ResponsePDU& mmsresp = *mms.confirmed_ResponsePDU();
-                            if (*(mmsresp.invokeID) == operation_->invokeid()) {
-                                const MMS::ConfirmedServiceResponse& confirmresp = *mmsresp.service;
+                            if ((mmsresp.invokeID()) == operation_->invokeid()) {
+                                const MMS::ConfirmedServiceResponse& confirmresp = mmsresp.service();
                                 if (confirmresp.type() == operation_->rspid()) {
                                     operation_->response(confirmresp.get< RSP > (operation_->rspid()));
                                 }
@@ -374,8 +374,8 @@ namespace prot9506 {
                         case MMS::MMSpdu_confirmed_ErrorPDU:
                         {
                             const MMS::Confirmed_ErrorPDU& mmsresp = *mms.confirmed_ErrorPDU();
-                            if (*(mmsresp.invokeID) == operation_->invokeid()) {
-                                operation_->serviceerror(boost::shared_ptr<MMS::ServiceError > (new MMS::ServiceError(*mmsresp.serviceError)));
+                            if ((mmsresp.invokeID()) == operation_->invokeid()) {
+                                operation_->serviceerror(boost::shared_ptr<MMS::ServiceError > (new MMS::ServiceError(mmsresp.serviceError())));
                             }
                             else {
                                 operation_->setunexpetedIvoke();
@@ -426,8 +426,8 @@ namespace prot9506 {
             mms.confirmed_RequestPDU__new();
             MMS::Confirmed_RequestPDU& cfpdu = *mms.confirmed_RequestPDU();
             operation->invokeid(invoke_id());
-            cfpdu.invokeID = operation->invokeid();
-            cfpdu.service->set(operation->request(), operation->reqid());
+            cfpdu.invokeID (operation->invokeid());
+            cfpdu.service().set(operation->request(), operation->reqid());
             mmsdcs()->set(mms);
 
 
