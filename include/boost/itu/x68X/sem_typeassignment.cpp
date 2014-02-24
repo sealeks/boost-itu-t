@@ -176,6 +176,8 @@ namespace x680 {
         }
         return canonical_tag_ptr();
     }
+    
+   
 
     type_atom_ptr type_atom::textualy_type() {
         if (!tag()) {
@@ -192,6 +194,13 @@ namespace x680 {
         }
         return type_atom_ptr();
     }
+    
+    type_atom_ptr type_atom::untagged_type() {
+       type_atom_ptr rslt(new type_atom(*this));
+       rslt->tag(tagged_ptr());
+        return rslt;
+    }  
+      
 
     bool type_atom::isrefferrence() const {
          return (((builtin_ == t_Reference) 
@@ -240,7 +249,7 @@ namespace x680 {
 
     bool type_atom::istextualy_choice() {
         if (builtin_ == t_CHOICE)
-            return !tag();
+                return !tag();
         if (!isrefferrence() || tag())
             return false;
         if (reff())
@@ -554,6 +563,15 @@ namespace x680 {
         if (scope())
             return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
+    }
+
+    bool typeassignment_entity::isdefined_choice() {
+        if (islocaldefined()) {
+            if (tag()) {
+                return (type() && type()->untagged_type() && (type()->untagged_type() ->istextualy_choice()));
+            }
+        }
+        return ((istextualy_choice()) | (type()->builtin() == t_CHOICE));
     }
 
     bool typeassignment_entity::islocaldeclare() const {

@@ -298,9 +298,34 @@ namespace x680 {
             return "???real???";
         }
 
+        std::string value_reff_str(defined_value_atom_ptr self) {
+            if ((self->reff()) && (self->reff()->as_valueassigment())){
+                std::string rslt;
+                typeassignment_entity_ptr tp =self->reff()->as_valueassigment()->scope() ? 
+                    self->reff()->as_valueassigment()->scope()->as_typeassigment() : typeassignment_entity_ptr();
+                if (tp && (!tp->islocaldefined()))
+                    rslt= nameconvert(tp->name()) + "_";
+                return rslt +nameconvert(self->reff()->as_valueassigment()->name());
+            }
+            return "???reff???";    
+        }
+
         std::string value_bs_str(value_atom_ptr self) {
             self = value_skip_defined(self);
-            if (self->as_assign())
+            if (self->as_empty()){
+                return "";
+            } else if (self->as_list()){
+                std::string rslt;
+                for (value_vct::const_iterator it = self->as_list()->values().begin(); it != self->as_list()->values().end(); ++it) {
+                    if (it!=self->as_list()->values().begin())
+                        rslt = " | ";
+                    if ((*it)->as_defined())
+                        rslt +=value_reff_str((*it)->as_defined());
+                    else
+                        rslt += "???expr???";
+                }
+                return rslt;
+            } else if (self->as_assign())
                 return nameconvert(self->as_assign()->name());
             return "???bitnum???";
         }
@@ -308,7 +333,7 @@ namespace x680 {
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self) {
             if (tp && self && (self->as_defined()) && (self->as_defined()->reff()))
                 return fromtype_str(tp) + "_" + nameconvert(self->as_defined()->reff()->name());
-            return "enum???";
+            return "???enum???";
         }
 
         value_atom_ptr value_skip_defined(value_atom_ptr self) {
@@ -453,7 +478,7 @@ namespace x680 {
                 case t_INTEGER:
                 case t_BOOLEAN:
                 case t_REAL:
-                    //case t_BIT_STRING:
+                case t_BIT_STRING:
                 case t_ENUMERATED:
                 case t_OBJECT_IDENTIFIER:
                 case t_RELATIVE_OID: return true;
@@ -514,7 +539,7 @@ namespace x680 {
         }
 
         std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name) {
-            if ((self->istextualy_choice()) || (self->builtin() == t_CHOICE)) {
+            if ((self->isdefined_choice())) {
                 if (self->tag()) {
                     switch (self->tag()->_class()) {
                         case tcl_application: return "BOOST_ASN_CHOICE_APPLICATION_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
@@ -1329,7 +1354,7 @@ namespace x680 {
                             }
                             break;
                         case mk_optional:
-                            stream << "\n" << tabformat(scp, 2) << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                            stream << "\n" << tabformat(scp, 2) << "boost::shared_ptr<" <<fullpathtype_str(it->typ, self, it->typenam) << "> " <<
                                     fulltype_str(self, false) << "::" << it->name << "__new (){ return " << it->name << "_ = boost::shared_ptr<" <<
                                     it->typenam << ">(new " << it->typenam << "()) ;}\n";
                             stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" <<

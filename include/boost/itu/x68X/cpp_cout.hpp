@@ -40,6 +40,7 @@ namespace x680 {
         std::string value_int_str(value_atom_ptr self);
         std::string value_bool_str(value_atom_ptr self);
         std::string value_real_str(value_atom_ptr self);
+        std::string value_reff_str(defined_value_atom_ptr self);        
         std::string value_bs_str(value_atom_ptr self);
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self);
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);

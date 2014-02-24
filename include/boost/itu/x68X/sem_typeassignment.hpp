@@ -199,6 +199,8 @@ namespace x680 {
 
         type_atom_ptr textualy_type();
 
+        type_atom_ptr untagged_type();
+
         predefined_ptr predefined() {
             return predefined_;
         }
@@ -234,8 +236,6 @@ namespace x680 {
         bool isenum() const;
 
         bool istextualy_choice();
-
-        bool isnotagged_choice();
 
         bool isallways_explicit();
 
@@ -500,9 +500,10 @@ namespace x680 {
             return (type() && (type()->istextualy_choice()));
         }
 
+        bool isdefined_choice();
 
         bool islocaldeclare() const;
-        
+
         bool islocaldefined() const;
 
         canonical_tag_vct cncl_tags();
