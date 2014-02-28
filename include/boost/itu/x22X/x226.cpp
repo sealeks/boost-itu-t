@@ -249,7 +249,7 @@ namespace boost {
                 try {
                     CP_type request_pdu;
 
-                    request_pdu.mode_selector().mode_value(mode_type::normal_mode);
+                    request_pdu.mode_selector().mode_value(mode_type::mode_value_normal_mode);
 
                     CP_type::normal_mode_parameters_type& request_parameters = *request_pdu.normal_mode_parameters__new();                   
                     definition_list_type& request_list = * request_parameters.presentation_context_definition_list__new();
@@ -291,7 +291,7 @@ namespace boost {
                             CPA_type accept_pdu;
                             (coder()->input()) & accept_pdu;
 
-                            if (accept_pdu.mode_selector().mode_value() == mode_type::normal_mode) {
+                            if (accept_pdu.mode_selector().mode_value() == mode_type::mode_value_normal_mode) {
                                 if (accept_pdu.normal_mode_parameters()) {
 
                                     CPA_type::normal_mode_parameters_type& accept_parameters = *accept_pdu.normal_mode_parameters();
@@ -354,7 +354,7 @@ namespace boost {
                     CPA_type::normal_mode_parameters_type& accept_parameters = *accept_pdu.normal_mode_parameters__new();
                     CPR_type::normal_mode_parameters_type& reject_parameters = *reject_pdu.normal_mode_parameters__new();
 
-                    if (respond_pdu.mode_selector().mode_value() == mode_type::normal_mode && respond_pdu.normal_mode_parameters()) {
+                    if (respond_pdu.mode_selector().mode_value() == mode_type::mode_value_normal_mode && respond_pdu.normal_mode_parameters()) {
 
                         CP_type::normal_mode_parameters_type& respond_parameters = *respond_pdu.normal_mode_parameters();
 
