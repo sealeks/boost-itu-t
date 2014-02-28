@@ -134,13 +134,17 @@ namespace boost {\
 
 #define BOOST_ASN_VALUE_OPTIONAL_DECL(nm ,tp )  boost::shared_ptr< tp >& nm () { return nm ## _; };  const boost::shared_ptr< tp >& nm () const { return nm ## _; } \
                          void nm  (boost::shared_ptr< tp > vl) {nm ## _ = vl;}; void nm  ( tp *  vl) {nm ## _ = boost::shared_ptr< tp >(vl);}; void nm ( const tp & vl); \
-                         boost::shared_ptr< tp> nm ## __new  (); void nm ## __free  () {nm ## _ = boost::shared_ptr< tp>();};
+                         boost::shared_ptr< tp> nm ## __new  (); void nm ## __free  () {nm ## _ = boost::shared_ptr< tp>();}; \
+                         private: boost::shared_ptr< tp > nm ## _ ; public:                         
 
-#define BOOST_ASN_VALUE_HOLDERH_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); 
+#define BOOST_ASN_VALUE_HOLDERH_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
+                         private: boost::asn1::value_holder< tp > nm ## _ ; public: 
 
-#define BOOST_ASN_VALUE_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm  () const; 
+#define BOOST_ASN_VALUE_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm  () const; \
+                         private:  tp  nm ## _ ; public: 
 
-#define BOOST_ASN_VALUE_DEFAULT_DECL(nm ,tp )    void nm ( const tp & vl);  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); 
+#define BOOST_ASN_VALUE_DEFAULT_DECL(nm ,tp, dflt )    void nm ( const tp & vl);  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
+                         private: boost::asn1::default_holder<tp  , dflt> nm ## _ ; public: 
 
 #define BOOST_ASN_VALUE_FUNC_DECLARATE( type, var)    boost::shared_ptr< type > var  ## __new () { return var = boost::asn1::simple_build_type<type>();} \
                void  var ##  __free() { var = boost::shared_ptr< type >() ;} \
