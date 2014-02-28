@@ -117,13 +117,13 @@ namespace Reliable_Transfer_APDU {
 
         RTORQapdu();
 
-        RTORQapdu(const ConnectionData& a__connectionDataRQ);
+        RTORQapdu(const ConnectionData& arg__connectionDataRQ);
 
-        RTORQapdu(boost::shared_ptr< int> a__checkpointSize,
-                boost::shared_ptr< int> a__windowSize,
-                boost::shared_ptr< int> a__dialogueMode,
-                boost::shared_ptr< ConnectionData> a__connectionDataRQ,
-                boost::shared_ptr< int> a__applicationProtocol);
+        RTORQapdu(boost::shared_ptr< int> arg__checkpointSize,
+                boost::shared_ptr< int> arg__windowSize,
+                boost::shared_ptr< int> arg__dialogueMode,
+                boost::shared_ptr< ConnectionData> arg__connectionDataRQ,
+                boost::shared_ptr< int> arg__applicationProtocol);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int);
         BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int);
@@ -151,11 +151,11 @@ namespace Reliable_Transfer_APDU {
 
         RTOACapdu();
 
-        RTOACapdu(const ConnectionData& a__connectionDataAC);
+        RTOACapdu(const ConnectionData& arg__connectionDataAC);
 
-        RTOACapdu(boost::shared_ptr< int> a__checkpointSize,
-                boost::shared_ptr< int> a__windowSize,
-                boost::shared_ptr< ConnectionData> a__connectionDataAC);
+        RTOACapdu(boost::shared_ptr< int> arg__checkpointSize,
+                boost::shared_ptr< int> arg__windowSize,
+                boost::shared_ptr< ConnectionData> arg__connectionDataAC);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int);
         BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int);
@@ -176,8 +176,8 @@ namespace Reliable_Transfer_APDU {
 
         RTORJapdu();
 
-        RTORJapdu(boost::shared_ptr< RefuseReason> a__refuseReason,
-                boost::shared_ptr< any_type> a__userDataRJ);
+        RTORJapdu(boost::shared_ptr< RefuseReason> arg__refuseReason,
+                boost::shared_ptr< any_type> arg__userDataRJ);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(refuseReason, RefuseReason);
         BOOST_ASN_VALUE_OPTIONAL_DECL(userDataRJ, any_type);
@@ -196,9 +196,9 @@ namespace Reliable_Transfer_APDU {
 
         RTABapdu();
 
-        RTABapdu(boost::shared_ptr< AbortReason> a__abortReason,
-                boost::shared_ptr< bitstring_type> a__reflectedParameter,
-                boost::shared_ptr< any_type> a__userdataAB);
+        RTABapdu(boost::shared_ptr< AbortReason> arg__abortReason,
+                boost::shared_ptr< bitstring_type> arg__reflectedParameter,
+                boost::shared_ptr< any_type> arg__userdataAB);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(abortReason, AbortReason);
         BOOST_ASN_VALUE_OPTIONAL_DECL(reflectedParameter, bitstring_type);
@@ -243,12 +243,12 @@ namespace Reliable_Transfer_APDU {
 
         SessionConnectionIdentifier();
 
-        SessionConnectionIdentifier(const CallingSSuserReference& a__callingSSuserReference,
-                const CommonReference& a__commonReference);
+        SessionConnectionIdentifier(const CallingSSuserReference& arg__callingSSuserReference,
+                const CommonReference& arg__commonReference);
 
-        SessionConnectionIdentifier(boost::shared_ptr< CallingSSuserReference> a__callingSSuserReference,
-                boost::shared_ptr< CommonReference> a__commonReference,
-                boost::shared_ptr< AdditionalReferenceInformation> a__additionalReferenceInformation);
+        SessionConnectionIdentifier(boost::shared_ptr< CallingSSuserReference> arg__callingSSuserReference,
+                boost::shared_ptr< CommonReference> arg__commonReference,
+                boost::shared_ptr< AdditionalReferenceInformation> arg__additionalReferenceInformation);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(callingSSuserReference, CallingSSuserReference);
         BOOST_ASN_VALUE_HOLDERH_DECL(commonReference, CommonReference);

@@ -99,8 +99,8 @@ namespace Remote_Operations_Generic_ROS_PDUs {
 
         Reject();
 
-        Reject(const InvokeId& a__invokeId,
-                const problem_type& a__problem);
+        Reject(const InvokeId& arg__invokeId,
+                const problem_type& arg__problem);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(invokeId, InvokeId);
         BOOST_ASN_VALUE_HOLDERH_DECL(problem, problem_type);
