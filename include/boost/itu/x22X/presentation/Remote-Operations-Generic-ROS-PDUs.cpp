@@ -7,10 +7,10 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     Reject::Reject() : invokeId_(), problem_() {
     };
 
-    Reject::Reject(const InvokeId& __invokeId,
-            const problem_type& __problem) :
-    invokeId_(__invokeId),
-    problem_(__problem) {
+    Reject::Reject(const InvokeId& a__invokeId,
+            const problem_type& a__problem) :
+    invokeId_(a__invokeId),
+    problem_(a__problem) {
     };
 
     template<> void Reject::problem_type::serialize(boost::asn1::x690::output_coder& arch) {
