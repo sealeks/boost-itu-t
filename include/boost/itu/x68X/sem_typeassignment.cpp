@@ -252,8 +252,8 @@ namespace x680 {
                 return !tag();
         if (!isrefferrence() || tag())
             return false;
-        if (reff())
-            reff()-> resolve();
+       /// if (reff())
+        //    reff()-> resolve();
         if (reff() && (reff()->as_typeassigment())) {
             if (reff()->as_typeassigment()->type())
                 return reff()->as_typeassigment()->type()->istextualy_choice();
@@ -571,7 +571,7 @@ namespace x680 {
                 return (type() && type()->untagged_type() && (type()->untagged_type() ->istextualy_choice()));
             }
         }
-        return ((istextualy_choice()) | (type()->builtin() == t_CHOICE));
+        return (type()  && ((istextualy_choice()) || (type()->builtin() == t_CHOICE)));
     }
 
     bool typeassignment_entity::islocaldeclare() const {
@@ -613,6 +613,17 @@ namespace x680 {
         }
     return tmp;
 }    
+    
+    typeassignment_entity_ptr typeassignment_entity::superfluous_assignment(module_entity_ptr mod) {
+        if (type() && (!tag()) && (type()->reff()) && mod){
+            typeassignment_entity_ptr rf = ((type()->reff()) && (type()->reff()->as_typeassigment())) ?
+                type()->reff()->as_typeassigment() : typeassignment_entity_ptr();
+            if (rf && (rf->moduleref()==mod)){
+                return rf;
+            }
+        } 
+        return typeassignment_entity_ptr();
+    }
 
     namedtypeassignment_entity_ptr typeassignment_entity::as_named() {
         return named() ?

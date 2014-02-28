@@ -507,8 +507,11 @@ namespace x680 {
         bool islocaldefined() const;
 
         canonical_tag_vct cncl_tags();
+            
+        typeassignment_entity_ptr superfluous_assignment(module_entity_ptr mod);
 
         namedtypeassignment_entity_ptr as_named();
+        
 
 
         /////        
