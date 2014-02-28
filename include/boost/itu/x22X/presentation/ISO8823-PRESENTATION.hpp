@@ -135,21 +135,13 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< Reliable_Transfer_APDU::ConnectionData> arg__connectionDataRQ,
                     boost::shared_ptr< int> arg__applicationProtocol);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int);
-            BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int);
-            BOOST_ASN_VALUE_DEFAULT_DECL(dialogueMode, int);
+            BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
+            BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
+            BOOST_ASN_VALUE_DEFAULT_DECL(dialogueMode, int, dialogueMode__default);
             BOOST_ASN_VALUE_HOLDERH_DECL(connectionDataRQ, Reliable_Transfer_APDU::ConnectionData);
             BOOST_ASN_VALUE_OPTIONAL_DECL(applicationProtocol, int);
 
             BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            default_holder<int, checkpointSize__default> checkpointSize_;
-            default_holder<int, windowSize__default> windowSize_;
-            default_holder<int, dialogueMode__default> dialogueMode_;
-            value_holder<Reliable_Transfer_APDU::ConnectionData> connectionDataRQ_;
-            boost::shared_ptr<int> applicationProtocol_;
         };
 
         struct normal_mode_parameters_type {
@@ -162,9 +154,6 @@ namespace ISO8823_PRESENTATION {
 
 
                 BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
             };
 
             static const Protocol_version protocol_version__default;
@@ -184,33 +173,19 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< extensions_type> arg__extensions,
                     boost::shared_ptr< User_data> arg__user_data);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version);
+            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version, protocol_version__default);
             BOOST_ASN_VALUE_OPTIONAL_DECL(calling_presentation_selector, Calling_presentation_selector);
             BOOST_ASN_VALUE_OPTIONAL_DECL(called_presentation_selector, Called_presentation_selector);
             BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_definition_list, Presentation_context_definition_list);
             BOOST_ASN_VALUE_OPTIONAL_DECL(default_context_name, Default_context_name);
             BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_requirements, Presentation_requirements);
             BOOST_ASN_VALUE_OPTIONAL_DECL(user_session_requirements, User_session_requirements);
-            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_options, Protocol_options);
+            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_options, Protocol_options, protocol_options__default);
             BOOST_ASN_VALUE_OPTIONAL_DECL(initiators_nominated_context, Presentation_context_identifier);
             BOOST_ASN_VALUE_OPTIONAL_DECL(extensions, extensions_type);
             BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
 
             BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            default_holder<Protocol_version, protocol_version__default> protocol_version_;
-            boost::shared_ptr<Calling_presentation_selector> calling_presentation_selector_;
-            boost::shared_ptr<Called_presentation_selector> called_presentation_selector_;
-            boost::shared_ptr<Presentation_context_definition_list> presentation_context_definition_list_;
-            boost::shared_ptr<Default_context_name> default_context_name_;
-            boost::shared_ptr<Presentation_requirements> presentation_requirements_;
-            boost::shared_ptr<User_session_requirements> user_session_requirements_;
-            default_holder<Protocol_options, protocol_options__default> protocol_options_;
-            boost::shared_ptr<Presentation_context_identifier> initiators_nominated_context_;
-            boost::shared_ptr<extensions_type> extensions_;
-            boost::shared_ptr<User_data> user_data_;
         };
 
 
@@ -227,12 +202,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_OPTIONAL_DECL(normal_mode_parameters, normal_mode_parameters_type);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Mode_selector> mode_selector_;
-        boost::shared_ptr<x410_mode_parameters_type> x410_mode_parameters_;
-        boost::shared_ptr<normal_mode_parameters_type> normal_mode_parameters_;
     };
 
     // set CPA-PPDU
@@ -255,17 +224,11 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< int> arg__windowSize,
                     boost::shared_ptr< Reliable_Transfer_APDU::ConnectionData> arg__connectionDataAC);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int);
-            BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int);
+            BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
+            BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
             BOOST_ASN_VALUE_HOLDERH_DECL(connectionDataAC, Reliable_Transfer_APDU::ConnectionData);
 
             BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            default_holder<int, checkpointSize__default> checkpointSize_;
-            default_holder<int, windowSize__default> windowSize_;
-            value_holder<Reliable_Transfer_APDU::ConnectionData> connectionDataAC_;
         };
 
         struct normal_mode_parameters_type {
@@ -284,27 +247,16 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< Presentation_context_identifier> arg__responders_nominated_context,
                     boost::shared_ptr< User_data> arg__user_data);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version);
+            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version, protocol_version__default);
             BOOST_ASN_VALUE_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector);
             BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list);
             BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_requirements, Presentation_requirements);
             BOOST_ASN_VALUE_OPTIONAL_DECL(user_session_requirements, User_session_requirements);
-            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_options, Protocol_options);
+            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_options, Protocol_options, protocol_options__default);
             BOOST_ASN_VALUE_OPTIONAL_DECL(responders_nominated_context, Presentation_context_identifier);
             BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
 
             BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            default_holder<Protocol_version, protocol_version__default> protocol_version_;
-            boost::shared_ptr<Responding_presentation_selector> responding_presentation_selector_;
-            boost::shared_ptr<Presentation_context_definition_result_list> presentation_context_definition_result_list_;
-            boost::shared_ptr<Presentation_requirements> presentation_requirements_;
-            boost::shared_ptr<User_session_requirements> user_session_requirements_;
-            default_holder<Protocol_options, protocol_options__default> protocol_options_;
-            boost::shared_ptr<Presentation_context_identifier> responders_nominated_context_;
-            boost::shared_ptr<User_data> user_data_;
         };
 
 
@@ -321,12 +273,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_OPTIONAL_DECL(normal_mode_parameters, normal_mode_parameters_type);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Mode_selector> mode_selector_;
-        boost::shared_ptr<x410_mode_parameters_type> x410_mode_parameters_;
-        boost::shared_ptr<normal_mode_parameters_type> normal_mode_parameters_;
     };
 
     // choice CPR-PPDU
@@ -355,11 +301,6 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_OPTIONAL_DECL(userDataRJ, any_type);
 
             BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            boost::shared_ptr<Reliable_Transfer_APDU::RefuseReason> refuseReason_;
-            boost::shared_ptr<any_type> userDataRJ_;
         };
 
         struct normal_mode_parameters_type {
@@ -375,7 +316,7 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< Provider_reason> arg__provider_reason,
                     boost::shared_ptr< User_data> arg__user_data);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version);
+            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version, protocol_version__default);
             BOOST_ASN_VALUE_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector);
             BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list);
             BOOST_ASN_VALUE_OPTIONAL_DECL(default_context_result, Default_context_result);
@@ -383,15 +324,6 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
 
             BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            default_holder<Protocol_version, protocol_version__default> protocol_version_;
-            boost::shared_ptr<Responding_presentation_selector> responding_presentation_selector_;
-            boost::shared_ptr<Presentation_context_definition_result_list> presentation_context_definition_result_list_;
-            boost::shared_ptr<Default_context_result> default_context_result_;
-            boost::shared_ptr<Provider_reason> provider_reason_;
-            boost::shared_ptr<User_data> user_data_;
         };
 
         CPR_PPDU() : BOOST_ASN_CHOICE_STRUCT(CPR_PPDU_enum) () {
@@ -459,12 +391,6 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_OPTIONAL_DECL(userdataAB, any_type);
 
             BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            boost::shared_ptr<Reliable_Transfer_APDU::AbortReason> abortReason_;
-            boost::shared_ptr<bitstring_type> reflectedParameter_;
-            boost::shared_ptr<any_type> userdataAB_;
         };
 
         struct normal_mode_parameters_type {
@@ -478,11 +404,6 @@ namespace ISO8823_PRESENTATION {
             BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
 
             BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            boost::shared_ptr<Presentation_context_identifier_list> presentation_context_identifier_list_;
-            boost::shared_ptr<User_data> user_data_;
         };
 
         ARU_PPDU() : BOOST_ASN_CHOICE_STRUCT(ARU_PPDU_enum) () {
@@ -511,11 +432,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_OPTIONAL_DECL(event_identifier, Event_identifier);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Abort_reason> provider_reason_;
-        boost::shared_ptr<Event_identifier> event_identifier_;
     };
 
     // choice Typed-data-type
@@ -559,12 +475,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Presentation_context_addition_list> presentation_context_addition_list_;
-        boost::shared_ptr<Presentation_context_deletion_list> presentation_context_deletion_list_;
-        boost::shared_ptr<User_data> user_data_;
     };
 
     // sequence ACA-PPDU
@@ -582,12 +492,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Presentation_context_addition_result_list> presentation_context_addition_result_list_;
-        boost::shared_ptr<Presentation_context_deletion_result_list> presentation_context_deletion_result_list_;
-        boost::shared_ptr<User_data> user_data_;
     };
 
     // sequence RS-PPDU
@@ -603,11 +507,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Presentation_context_identifier_list> presentation_context_identifier_list_;
-        boost::shared_ptr<User_data> user_data_;
     };
 
     // sequence RSA-PPDU
@@ -623,11 +522,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Presentation_context_identifier_list> presentation_context_identifier_list_;
-        boost::shared_ptr<User_data> user_data_;
     };
 
     extern const Abort_reason Abort_reason_reason_not_specified;
@@ -654,12 +548,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_HOLDERH_DECL(transfer_syntax_name_list, transfer_syntax_name_list_type);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Presentation_context_identifier> presentation_context_identifier_;
-        value_holder<Abstract_syntax_name> abstract_syntax_name_;
-        value_holder<transfer_syntax_name_list_type> transfer_syntax_name_list_;
     };
 
     // sequence Default-context-name
@@ -675,11 +563,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_HOLDERH_DECL(transfer_syntax_name, Transfer_syntax_name);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Abstract_syntax_name> abstract_syntax_name_;
-        value_holder<Transfer_syntax_name> transfer_syntax_name_;
     };
 
     extern const Event_identifier Event_identifier_cp_PPDU;
@@ -731,10 +614,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_HOLDERH_DECL(mode_value, int);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<int> mode_value_;
     };
 
     struct Presentation_context_identifier_list_sequence_of {
@@ -748,11 +627,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_HOLDERH_DECL(transfer_syntax_name, Transfer_syntax_name);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Presentation_context_identifier> presentation_context_identifier_;
-        value_holder<Transfer_syntax_name> transfer_syntax_name_;
     };
 
     extern const Presentation_requirements Presentation_requirements_context_management;
@@ -798,12 +672,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_OPTIONAL_DECL(provider_reason, int);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Result> result_;
-        boost::shared_ptr<Transfer_syntax_name> transfer_syntax_name_;
-        boost::shared_ptr<int> provider_reason_;
     };
 
     // choice User-data
@@ -875,12 +743,6 @@ namespace ISO8823_PRESENTATION {
         BOOST_ASN_VALUE_HOLDERH_DECL(presentation_data_values, presentation_data_values_type);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Transfer_syntax_name> transfer_syntax_name_;
-        value_holder<Presentation_context_identifier> presentation_context_identifier_;
-        value_holder<presentation_data_values_type> presentation_data_values_;
     };
 
     extern const User_session_requirements User_session_requirements_half_duplex;

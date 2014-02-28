@@ -106,11 +106,6 @@ namespace Remote_Operations_Generic_ROS_PDUs {
         BOOST_ASN_VALUE_HOLDERH_DECL(problem, problem_type);
 
         BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<InvokeId> invokeId_;
-        value_holder<problem_type> problem_;
     };
 
     extern const GeneralProblem GeneralProblem_unrecognizedPDU;
