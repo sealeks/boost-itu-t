@@ -117,56 +117,56 @@ namespace ACSE_1 {
 
 
     // sequence AARQ-apdu
-    const bitstring_type AARQ_apdu_impl::version1 = bitstring_type(true, 0);
+    const bitstring_type AARQ_apdu_impl::protocol_version_version1 = bitstring_type(true, 0);
 
     AARQ_apdu_impl::AARQ_apdu_impl() : aSO_context_name_() {
     };
 
-    AARQ_apdu_impl::AARQ_apdu_impl(const ASO_context_name& __aSO_context_name) :
-    aSO_context_name_(__aSO_context_name) {
+    AARQ_apdu_impl::AARQ_apdu_impl(const ASO_context_name& arg__aSO_context_name) :
+    aSO_context_name_(arg__aSO_context_name) {
     };
 
-    AARQ_apdu_impl::AARQ_apdu_impl(boost::shared_ptr< bitstring_type> __protocol_version,
-            boost::shared_ptr< ASO_context_name> __aSO_context_name,
-            boost::shared_ptr< AP_title> __called_AP_title,
-            boost::shared_ptr< AE_qualifier> __called_AE_qualifier,
-            boost::shared_ptr< AP_invocation_identifier> __called_AP_invocation_identifier,
-            boost::shared_ptr< AE_invocation_identifier> __called_AE_invocation_identifier,
-            boost::shared_ptr< AP_title> __calling_AP_title,
-            boost::shared_ptr< AE_qualifier> __calling_AE_qualifier,
-            boost::shared_ptr< AP_invocation_identifier> __calling_AP_invocation_identifier,
-            boost::shared_ptr< AE_invocation_identifier> __calling_AE_invocation_identifier,
-            boost::shared_ptr< ACSE_requirements> __sender_acse_requirements,
-            boost::shared_ptr< Mechanism_name> __mechanism_name,
-            boost::shared_ptr< Authentication_value> __calling_authentication_value,
-            boost::shared_ptr< ASO_context_name_list> __aSO_context_name_list,
-            boost::shared_ptr< Implementation_data> __implementation_information,
-            boost::shared_ptr< Syntactic_context_list> __p_context_definition_list,
-            boost::shared_ptr< ASOI_tag> __called_asoi_tag,
-            boost::shared_ptr< ASOI_tag> __calling_asoi_tag,
-            boost::shared_ptr< Association_data> __user_information) :
-    protocol_version_(__protocol_version),
-    aSO_context_name_(__aSO_context_name),
-    called_AP_title_(__called_AP_title),
-    called_AE_qualifier_(__called_AE_qualifier),
-    called_AP_invocation_identifier_(__called_AP_invocation_identifier),
-    called_AE_invocation_identifier_(__called_AE_invocation_identifier),
-    calling_AP_title_(__calling_AP_title),
-    calling_AE_qualifier_(__calling_AE_qualifier),
-    calling_AP_invocation_identifier_(__calling_AP_invocation_identifier),
-    calling_AE_invocation_identifier_(__calling_AE_invocation_identifier),
-    sender_acse_requirements_(__sender_acse_requirements),
-    mechanism_name_(__mechanism_name),
-    calling_authentication_value_(__calling_authentication_value),
-    aSO_context_name_list_(__aSO_context_name_list),
-    implementation_information_(__implementation_information),
-    p_context_definition_list_(__p_context_definition_list),
-    called_asoi_tag_(__called_asoi_tag),
-    calling_asoi_tag_(__calling_asoi_tag),
-    user_information_(__user_information) {
+    AARQ_apdu_impl::AARQ_apdu_impl(boost::shared_ptr< bitstring_type> arg__protocol_version,
+            boost::shared_ptr< ASO_context_name> arg__aSO_context_name,
+            boost::shared_ptr< AP_title> arg__called_AP_title,
+            boost::shared_ptr< AE_qualifier> arg__called_AE_qualifier,
+            boost::shared_ptr< AP_invocation_identifier> arg__called_AP_invocation_identifier,
+            boost::shared_ptr< AE_invocation_identifier> arg__called_AE_invocation_identifier,
+            boost::shared_ptr< AP_title> arg__calling_AP_title,
+            boost::shared_ptr< AE_qualifier> arg__calling_AE_qualifier,
+            boost::shared_ptr< AP_invocation_identifier> arg__calling_AP_invocation_identifier,
+            boost::shared_ptr< AE_invocation_identifier> arg__calling_AE_invocation_identifier,
+            boost::shared_ptr< ACSE_requirements> arg__sender_acse_requirements,
+            boost::shared_ptr< Mechanism_name> arg__mechanism_name,
+            boost::shared_ptr< Authentication_value> arg__calling_authentication_value,
+            boost::shared_ptr< ASO_context_name_list> arg__aSO_context_name_list,
+            boost::shared_ptr< Implementation_data> arg__implementation_information,
+            boost::shared_ptr< Syntactic_context_list> arg__p_context_definition_list,
+            boost::shared_ptr< ASOI_tag> arg__called_asoi_tag,
+            boost::shared_ptr< ASOI_tag> arg__calling_asoi_tag,
+            boost::shared_ptr< Association_data> arg__user_information) :
+    protocol_version_(arg__protocol_version),
+    aSO_context_name_(arg__aSO_context_name),
+    called_AP_title_(arg__called_AP_title),
+    called_AE_qualifier_(arg__called_AE_qualifier),
+    called_AP_invocation_identifier_(arg__called_AP_invocation_identifier),
+    called_AE_invocation_identifier_(arg__called_AE_invocation_identifier),
+    calling_AP_title_(arg__calling_AP_title),
+    calling_AE_qualifier_(arg__calling_AE_qualifier),
+    calling_AP_invocation_identifier_(arg__calling_AP_invocation_identifier),
+    calling_AE_invocation_identifier_(arg__calling_AE_invocation_identifier),
+    sender_acse_requirements_(arg__sender_acse_requirements),
+    mechanism_name_(arg__mechanism_name),
+    calling_authentication_value_(arg__calling_authentication_value),
+    aSO_context_name_list_(arg__aSO_context_name_list),
+    implementation_information_(arg__implementation_information),
+    p_context_definition_list_(arg__p_context_definition_list),
+    called_asoi_tag_(arg__called_asoi_tag),
+    calling_asoi_tag_(arg__calling_asoi_tag),
+    user_information_(arg__user_information) {
     };
 
-    const bitstring_type AARQ_apdu_impl::protocol_version__default = version1;
+    const bitstring_type AARQ_apdu_impl::protocol_version__default = protocol_version_version1;
 
     template<> void AARQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version_, 0);
@@ -378,56 +378,56 @@ namespace ACSE_1 {
 
 
     // sequence AARE-apdu
-    const bitstring_type AARE_apdu_impl::version1 = bitstring_type(true, 0);
+    const bitstring_type AARE_apdu_impl::protocol_version_version1 = bitstring_type(true, 0);
 
     AARE_apdu_impl::AARE_apdu_impl() : aSO_context_name_(), result_(), result_source_diagnostic_() {
     };
 
-    AARE_apdu_impl::AARE_apdu_impl(const ASO_context_name& __aSO_context_name,
-            const Associate_result& __result,
-            const Associate_source_diagnostic& __result_source_diagnostic) :
-    aSO_context_name_(__aSO_context_name),
-    result_(__result),
-    result_source_diagnostic_(__result_source_diagnostic) {
+    AARE_apdu_impl::AARE_apdu_impl(const ASO_context_name& arg__aSO_context_name,
+            const Associate_result& arg__result,
+            const Associate_source_diagnostic& arg__result_source_diagnostic) :
+    aSO_context_name_(arg__aSO_context_name),
+    result_(arg__result),
+    result_source_diagnostic_(arg__result_source_diagnostic) {
     };
 
-    AARE_apdu_impl::AARE_apdu_impl(boost::shared_ptr< bitstring_type> __protocol_version,
-            boost::shared_ptr< ASO_context_name> __aSO_context_name,
-            boost::shared_ptr< Associate_result> __result,
-            boost::shared_ptr< Associate_source_diagnostic> __result_source_diagnostic,
-            boost::shared_ptr< AP_title> __responding_AP_title,
-            boost::shared_ptr< AE_qualifier> __responding_AE_qualifier,
-            boost::shared_ptr< AP_invocation_identifier> __responding_AP_invocation_identifier,
-            boost::shared_ptr< AE_invocation_identifier> __responding_AE_invocation_identifier,
-            boost::shared_ptr< ACSE_requirements> __responder_acse_requirements,
-            boost::shared_ptr< Mechanism_name> __mechanism_name,
-            boost::shared_ptr< Authentication_value> __responding_authentication_value,
-            boost::shared_ptr< ASO_context_name_list> __aSO_context_name_list,
-            boost::shared_ptr< Implementation_data> __implementation_information,
-            boost::shared_ptr< P_context_result_list> __p_context_result_list,
-            boost::shared_ptr< ASOI_tag> __called_asoi_tag,
-            boost::shared_ptr< ASOI_tag> __calling_asoi_tag,
-            boost::shared_ptr< Association_data> __user_information) :
-    protocol_version_(__protocol_version),
-    aSO_context_name_(__aSO_context_name),
-    result_(__result),
-    result_source_diagnostic_(__result_source_diagnostic),
-    responding_AP_title_(__responding_AP_title),
-    responding_AE_qualifier_(__responding_AE_qualifier),
-    responding_AP_invocation_identifier_(__responding_AP_invocation_identifier),
-    responding_AE_invocation_identifier_(__responding_AE_invocation_identifier),
-    responder_acse_requirements_(__responder_acse_requirements),
-    mechanism_name_(__mechanism_name),
-    responding_authentication_value_(__responding_authentication_value),
-    aSO_context_name_list_(__aSO_context_name_list),
-    implementation_information_(__implementation_information),
-    p_context_result_list_(__p_context_result_list),
-    called_asoi_tag_(__called_asoi_tag),
-    calling_asoi_tag_(__calling_asoi_tag),
-    user_information_(__user_information) {
+    AARE_apdu_impl::AARE_apdu_impl(boost::shared_ptr< bitstring_type> arg__protocol_version,
+            boost::shared_ptr< ASO_context_name> arg__aSO_context_name,
+            boost::shared_ptr< Associate_result> arg__result,
+            boost::shared_ptr< Associate_source_diagnostic> arg__result_source_diagnostic,
+            boost::shared_ptr< AP_title> arg__responding_AP_title,
+            boost::shared_ptr< AE_qualifier> arg__responding_AE_qualifier,
+            boost::shared_ptr< AP_invocation_identifier> arg__responding_AP_invocation_identifier,
+            boost::shared_ptr< AE_invocation_identifier> arg__responding_AE_invocation_identifier,
+            boost::shared_ptr< ACSE_requirements> arg__responder_acse_requirements,
+            boost::shared_ptr< Mechanism_name> arg__mechanism_name,
+            boost::shared_ptr< Authentication_value> arg__responding_authentication_value,
+            boost::shared_ptr< ASO_context_name_list> arg__aSO_context_name_list,
+            boost::shared_ptr< Implementation_data> arg__implementation_information,
+            boost::shared_ptr< P_context_result_list> arg__p_context_result_list,
+            boost::shared_ptr< ASOI_tag> arg__called_asoi_tag,
+            boost::shared_ptr< ASOI_tag> arg__calling_asoi_tag,
+            boost::shared_ptr< Association_data> arg__user_information) :
+    protocol_version_(arg__protocol_version),
+    aSO_context_name_(arg__aSO_context_name),
+    result_(arg__result),
+    result_source_diagnostic_(arg__result_source_diagnostic),
+    responding_AP_title_(arg__responding_AP_title),
+    responding_AE_qualifier_(arg__responding_AE_qualifier),
+    responding_AP_invocation_identifier_(arg__responding_AP_invocation_identifier),
+    responding_AE_invocation_identifier_(arg__responding_AE_invocation_identifier),
+    responder_acse_requirements_(arg__responder_acse_requirements),
+    mechanism_name_(arg__mechanism_name),
+    responding_authentication_value_(arg__responding_authentication_value),
+    aSO_context_name_list_(arg__aSO_context_name_list),
+    implementation_information_(arg__implementation_information),
+    p_context_result_list_(arg__p_context_result_list),
+    called_asoi_tag_(arg__called_asoi_tag),
+    calling_asoi_tag_(arg__calling_asoi_tag),
+    user_information_(arg__user_information) {
     };
 
-    const bitstring_type AARE_apdu_impl::protocol_version__default = version1;
+    const bitstring_type AARE_apdu_impl::protocol_version__default = protocol_version_version1;
 
     template<> void AARE_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         BOOST_ASN_IMPLICIT_TAG(protocol_version_, 0);
@@ -639,14 +639,14 @@ namespace ACSE_1 {
     RLRQ_apdu_impl::RLRQ_apdu_impl() {
     };
 
-    RLRQ_apdu_impl::RLRQ_apdu_impl(boost::shared_ptr< Release_request_reason> __reason,
-            boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-            boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-            boost::shared_ptr< Association_data> __user_information) :
-    reason_(__reason),
-    aso_qualifier_(__aso_qualifier),
-    asoi_identifier_(__asoi_identifier),
-    user_information_(__user_information) {
+    RLRQ_apdu_impl::RLRQ_apdu_impl(boost::shared_ptr< Release_request_reason> arg__reason,
+            boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+            boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+            boost::shared_ptr< Association_data> arg__user_information) :
+    reason_(arg__reason),
+    aso_qualifier_(arg__aso_qualifier),
+    asoi_identifier_(arg__asoi_identifier),
+    user_information_(arg__user_information) {
     };
 
     template<> void RLRQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
@@ -701,14 +701,14 @@ namespace ACSE_1 {
     RLRE_apdu_impl::RLRE_apdu_impl() {
     };
 
-    RLRE_apdu_impl::RLRE_apdu_impl(boost::shared_ptr< Release_response_reason> __reason,
-            boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-            boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-            boost::shared_ptr< Association_data> __user_information) :
-    reason_(__reason),
-    aso_qualifier_(__aso_qualifier),
-    asoi_identifier_(__asoi_identifier),
-    user_information_(__user_information) {
+    RLRE_apdu_impl::RLRE_apdu_impl(boost::shared_ptr< Release_response_reason> arg__reason,
+            boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+            boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+            boost::shared_ptr< Association_data> arg__user_information) :
+    reason_(arg__reason),
+    aso_qualifier_(arg__aso_qualifier),
+    asoi_identifier_(arg__asoi_identifier),
+    user_information_(arg__user_information) {
     };
 
     template<> void RLRE_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
@@ -763,20 +763,20 @@ namespace ACSE_1 {
     ABRT_apdu_impl::ABRT_apdu_impl() : abort_source_() {
     };
 
-    ABRT_apdu_impl::ABRT_apdu_impl(const ABRT_source& __abort_source) :
-    abort_source_(__abort_source) {
+    ABRT_apdu_impl::ABRT_apdu_impl(const ABRT_source& arg__abort_source) :
+    abort_source_(arg__abort_source) {
     };
 
-    ABRT_apdu_impl::ABRT_apdu_impl(boost::shared_ptr< ABRT_source> __abort_source,
-            boost::shared_ptr< ABRT_diagnostic> __abort_diagnostic,
-            boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-            boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-            boost::shared_ptr< Association_data> __user_information) :
-    abort_source_(__abort_source),
-    abort_diagnostic_(__abort_diagnostic),
-    aso_qualifier_(__aso_qualifier),
-    asoi_identifier_(__asoi_identifier),
-    user_information_(__user_information) {
+    ABRT_apdu_impl::ABRT_apdu_impl(boost::shared_ptr< ABRT_source> arg__abort_source,
+            boost::shared_ptr< ABRT_diagnostic> arg__abort_diagnostic,
+            boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+            boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+            boost::shared_ptr< Association_data> arg__user_information) :
+    abort_source_(arg__abort_source),
+    abort_diagnostic_(arg__abort_diagnostic),
+    aso_qualifier_(arg__aso_qualifier),
+    asoi_identifier_(arg__asoi_identifier),
+    user_information_(arg__user_information) {
     };
 
     template<> void ABRT_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
@@ -849,16 +849,16 @@ namespace ACSE_1 {
     A_DT_apdu_impl::A_DT_apdu_impl() : a_user_data_() {
     };
 
-    A_DT_apdu_impl::A_DT_apdu_impl(const User_Data& __a_user_data) :
-    a_user_data_(__a_user_data) {
+    A_DT_apdu_impl::A_DT_apdu_impl(const User_Data& arg__a_user_data) :
+    a_user_data_(arg__a_user_data) {
     };
 
-    A_DT_apdu_impl::A_DT_apdu_impl(boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-            boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-            boost::shared_ptr< User_Data> __a_user_data) :
-    aso_qualifier_(__aso_qualifier),
-    asoi_identifier_(__asoi_identifier),
-    a_user_data_(__a_user_data) {
+    A_DT_apdu_impl::A_DT_apdu_impl(boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+            boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+            boost::shared_ptr< User_Data> arg__a_user_data) :
+    aso_qualifier_(arg__aso_qualifier),
+    asoi_identifier_(arg__asoi_identifier),
+    a_user_data_(arg__a_user_data) {
     };
 
     template<> void A_DT_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
@@ -911,18 +911,18 @@ namespace ACSE_1 {
     ACRQ_apdu_impl::ACRQ_apdu_impl() {
     };
 
-    ACRQ_apdu_impl::ACRQ_apdu_impl(boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-            boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-            boost::shared_ptr< ASO_context_name> __aSO_context_name,
-            boost::shared_ptr< ASO_context_name_list> __aSO_context_name_list,
-            boost::shared_ptr< Syntactic_context_list> __p_context_definition_list,
-            boost::shared_ptr< User_information> __user_information) :
-    aso_qualifier_(__aso_qualifier),
-    asoi_identifier_(__asoi_identifier),
-    aSO_context_name_(__aSO_context_name),
-    aSO_context_name_list_(__aSO_context_name_list),
-    p_context_definition_list_(__p_context_definition_list),
-    user_information_(__user_information) {
+    ACRQ_apdu_impl::ACRQ_apdu_impl(boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+            boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+            boost::shared_ptr< ASO_context_name> arg__aSO_context_name,
+            boost::shared_ptr< ASO_context_name_list> arg__aSO_context_name_list,
+            boost::shared_ptr< Syntactic_context_list> arg__p_context_definition_list,
+            boost::shared_ptr< User_information> arg__user_information) :
+    aso_qualifier_(arg__aso_qualifier),
+    asoi_identifier_(arg__asoi_identifier),
+    aSO_context_name_(arg__aSO_context_name),
+    aSO_context_name_list_(arg__aSO_context_name_list),
+    p_context_definition_list_(arg__p_context_definition_list),
+    user_information_(arg__user_information) {
     };
 
     template<> void ACRQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
@@ -997,16 +997,16 @@ namespace ACSE_1 {
     ACRP_apdu_impl::ACRP_apdu_impl() {
     };
 
-    ACRP_apdu_impl::ACRP_apdu_impl(boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-            boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-            boost::shared_ptr< ASO_context_name_list> __aSO_context_name,
-            boost::shared_ptr< P_context_result_list> __p_context_result_list,
-            boost::shared_ptr< User_information> __user_information) :
-    aso_qualifier_(__aso_qualifier),
-    asoi_identifier_(__asoi_identifier),
-    aSO_context_name_(__aSO_context_name),
-    p_context_result_list_(__p_context_result_list),
-    user_information_(__user_information) {
+    ACRP_apdu_impl::ACRP_apdu_impl(boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+            boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+            boost::shared_ptr< ASO_context_name_list> arg__aSO_context_name,
+            boost::shared_ptr< P_context_result_list> arg__p_context_result_list,
+            boost::shared_ptr< User_information> arg__user_information) :
+    aso_qualifier_(arg__aso_qualifier),
+    asoi_identifier_(arg__asoi_identifier),
+    aSO_context_name_(arg__aSO_context_name),
+    p_context_result_list_(arg__p_context_result_list),
+    user_information_(arg__user_information) {
     };
 
     template<> void ACRP_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
@@ -1295,10 +1295,10 @@ namespace ACSE_1 {
     ASOI_tag_sequence_of::ASOI_tag_sequence_of() {
     };
 
-    ASOI_tag_sequence_of::ASOI_tag_sequence_of(boost::shared_ptr< ASO_qualifier> __qualifier,
-            boost::shared_ptr< ASOI_identifier> __identifier) :
-    qualifier_(__qualifier),
-    identifier_(__identifier) {
+    ASOI_tag_sequence_of::ASOI_tag_sequence_of(boost::shared_ptr< ASO_qualifier> arg__qualifier,
+            boost::shared_ptr< ASOI_identifier> arg__identifier) :
+    qualifier_(arg__qualifier),
+    identifier_(arg__identifier) {
     };
 
     template<> void ASOI_tag_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
@@ -1404,12 +1404,12 @@ namespace ACSE_1 {
     Context_list_sequence_of::Context_list_sequence_of() : pci_(), abstract_syntax_(), transfer_syntaxes_() {
     };
 
-    Context_list_sequence_of::Context_list_sequence_of(const Presentation_context_identifier& __pci,
-            const Abstract_syntax_name& __abstract_syntax,
-            const transfer_syntaxes_type& __transfer_syntaxes) :
-    pci_(__pci),
-    abstract_syntax_(__abstract_syntax),
-    transfer_syntaxes_(__transfer_syntaxes) {
+    Context_list_sequence_of::Context_list_sequence_of(const Presentation_context_identifier& arg__pci,
+            const Abstract_syntax_name& arg__abstract_syntax,
+            const transfer_syntaxes_type& arg__transfer_syntaxes) :
+    pci_(arg__pci),
+    abstract_syntax_(arg__abstract_syntax),
+    transfer_syntaxes_(arg__transfer_syntaxes) {
     };
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
@@ -1475,14 +1475,14 @@ namespace ACSE_1 {
     Default_Context_List_sequence_of::Default_Context_List_sequence_of() : transfer_syntax_name_() {
     };
 
-    Default_Context_List_sequence_of::Default_Context_List_sequence_of(const Transfer_syntax_name& __transfer_syntax_name) :
-    transfer_syntax_name_(__transfer_syntax_name) {
+    Default_Context_List_sequence_of::Default_Context_List_sequence_of(const Transfer_syntax_name& arg__transfer_syntax_name) :
+    transfer_syntax_name_(arg__transfer_syntax_name) {
     };
 
-    Default_Context_List_sequence_of::Default_Context_List_sequence_of(boost::shared_ptr< Abstract_syntax_name> __abstract_syntax_name,
-            boost::shared_ptr< Transfer_syntax_name> __transfer_syntax_name) :
-    abstract_syntax_name_(__abstract_syntax_name),
-    transfer_syntax_name_(__transfer_syntax_name) {
+    Default_Context_List_sequence_of::Default_Context_List_sequence_of(boost::shared_ptr< Abstract_syntax_name> arg__abstract_syntax_name,
+            boost::shared_ptr< Transfer_syntax_name> arg__transfer_syntax_name) :
+    abstract_syntax_name_(arg__abstract_syntax_name),
+    transfer_syntax_name_(arg__transfer_syntax_name) {
     };
 
     template<> void Default_Context_List_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
@@ -1521,24 +1521,24 @@ namespace ACSE_1 {
 
 
 
-    const int P_context_result_list_sequence_of::reason_not_specified = 0;
-    const int P_context_result_list_sequence_of::abstract_syntax_not_supported = 1;
-    const int P_context_result_list_sequence_of::proposed_transfer_syntaxes_not_supported = 2;
-    const int P_context_result_list_sequence_of::local_limit_on_DCS_exceeded = 3;
+    const int P_context_result_list_sequence_of::provider_reason_reason_not_specified = 0;
+    const int P_context_result_list_sequence_of::provider_reason_abstract_syntax_not_supported = 1;
+    const int P_context_result_list_sequence_of::provider_reason_proposed_transfer_syntaxes_not_supported = 2;
+    const int P_context_result_list_sequence_of::provider_reason_local_limit_on_DCS_exceeded = 3;
 
     P_context_result_list_sequence_of::P_context_result_list_sequence_of() : result_() {
     };
 
-    P_context_result_list_sequence_of::P_context_result_list_sequence_of(const Result& __result) :
-    result_(__result) {
+    P_context_result_list_sequence_of::P_context_result_list_sequence_of(const Result& arg__result) :
+    result_(arg__result) {
     };
 
-    P_context_result_list_sequence_of::P_context_result_list_sequence_of(boost::shared_ptr< Result> __result,
-            boost::shared_ptr< Concrete_syntax_name> __concrete_syntax_name,
-            boost::shared_ptr< int> __provider_reason) :
-    result_(__result),
-    concrete_syntax_name_(__concrete_syntax_name),
-    provider_reason_(__provider_reason) {
+    P_context_result_list_sequence_of::P_context_result_list_sequence_of(boost::shared_ptr< Result> arg__result,
+            boost::shared_ptr< Concrete_syntax_name> arg__concrete_syntax_name,
+            boost::shared_ptr< int> arg__provider_reason) :
+    result_(arg__result),
+    concrete_syntax_name_(arg__concrete_syntax_name),
+    provider_reason_(arg__provider_reason) {
     };
 
     template<> void P_context_result_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
@@ -1595,25 +1595,25 @@ namespace ACSE_1 {
     const Associate_result Associate_result_rejected_transient = 2;
 
     // choice Associate-source-diagnostic
-    const int Associate_source_diagnostic::null = 0;
-    const int Associate_source_diagnostic::no_reason_given = 1;
-    const int Associate_source_diagnostic::application_context_name_not_supported = 2;
-    const int Associate_source_diagnostic::calling_AP_title_not_recognized = 3;
-    const int Associate_source_diagnostic::calling_AP_invocation_identifier_not_recognized = 4;
-    const int Associate_source_diagnostic::calling_AE_qualifier_not_recognized = 5;
-    const int Associate_source_diagnostic::calling_AE_invocation_identifier_not_recognized = 6;
-    const int Associate_source_diagnostic::called_AP_title_not_recognized = 7;
-    const int Associate_source_diagnostic::called_AP_invocation_identifier_not_recognized = 8;
-    const int Associate_source_diagnostic::called_AE_qualifier_not_recognized = 9;
-    const int Associate_source_diagnostic::called_AE_invocation_identifier_not_recognized = 10;
-    const int Associate_source_diagnostic::authentication_mechanism_name_not_recognized = 11;
-    const int Associate_source_diagnostic::authentication_mechanism_name_required = 12;
-    const int Associate_source_diagnostic::authentication_failure = 13;
-    const int Associate_source_diagnostic::authentication_required = 14;
+    const int Associate_source_diagnostic::acse_service_user_null = 0;
+    const int Associate_source_diagnostic::acse_service_user_no_reason_given = 1;
+    const int Associate_source_diagnostic::acse_service_user_application_context_name_not_supported = 2;
+    const int Associate_source_diagnostic::acse_service_user_calling_AP_title_not_recognized = 3;
+    const int Associate_source_diagnostic::acse_service_user_calling_AP_invocation_identifier_not_recognized = 4;
+    const int Associate_source_diagnostic::acse_service_user_calling_AE_qualifier_not_recognized = 5;
+    const int Associate_source_diagnostic::acse_service_user_calling_AE_invocation_identifier_not_recognized = 6;
+    const int Associate_source_diagnostic::acse_service_user_called_AP_title_not_recognized = 7;
+    const int Associate_source_diagnostic::acse_service_user_called_AP_invocation_identifier_not_recognized = 8;
+    const int Associate_source_diagnostic::acse_service_user_called_AE_qualifier_not_recognized = 9;
+    const int Associate_source_diagnostic::acse_service_user_called_AE_invocation_identifier_not_recognized = 10;
+    const int Associate_source_diagnostic::acse_service_user_authentication_mechanism_name_not_recognized = 11;
+    const int Associate_source_diagnostic::acse_service_user_authentication_mechanism_name_required = 12;
+    const int Associate_source_diagnostic::acse_service_user_authentication_failure = 13;
+    const int Associate_source_diagnostic::acse_service_user_authentication_required = 14;
 
-    //const int Associate_source_diagnostic::null = 0;
-    //const int Associate_source_diagnostic::no_reason_given = 1;
-    const int Associate_source_diagnostic::no_common_acse_version = 2;
+    const int Associate_source_diagnostic::acse_service_provider_null = 0;
+    const int Associate_source_diagnostic::acse_service_provider_no_reason_given = 1;
+    const int Associate_source_diagnostic::acse_service_provider_no_common_acse_version = 2;
 
     template<> void Associate_source_diagnostic::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1769,18 +1769,18 @@ namespace ACSE_1 {
     PDV_list::PDV_list() : presentation_context_identifier_(), presentation_data_values_() {
     };
 
-    PDV_list::PDV_list(const Presentation_context_identifier& __presentation_context_identifier,
-            const presentation_data_values_type& __presentation_data_values) :
-    presentation_context_identifier_(__presentation_context_identifier),
-    presentation_data_values_(__presentation_data_values) {
+    PDV_list::PDV_list(const Presentation_context_identifier& arg__presentation_context_identifier,
+            const presentation_data_values_type& arg__presentation_data_values) :
+    presentation_context_identifier_(arg__presentation_context_identifier),
+    presentation_data_values_(arg__presentation_data_values) {
     };
 
-    PDV_list::PDV_list(boost::shared_ptr< Transfer_syntax_name> __transfer_syntax_name,
-            boost::shared_ptr< Presentation_context_identifier> __presentation_context_identifier,
-            boost::shared_ptr< presentation_data_values_type> __presentation_data_values) :
-    transfer_syntax_name_(__transfer_syntax_name),
-    presentation_context_identifier_(__presentation_context_identifier),
-    presentation_data_values_(__presentation_data_values) {
+    PDV_list::PDV_list(boost::shared_ptr< Transfer_syntax_name> arg__transfer_syntax_name,
+            boost::shared_ptr< Presentation_context_identifier> arg__presentation_context_identifier,
+            boost::shared_ptr< presentation_data_values_type> arg__presentation_data_values) :
+    transfer_syntax_name_(arg__transfer_syntax_name),
+    presentation_context_identifier_(arg__presentation_context_identifier),
+    presentation_data_values_(arg__presentation_data_values) {
     };
 
     template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -1923,10 +1923,10 @@ namespace ACSE_1 {
     Authentication_value::other_type::other_type() : other_mechanism_name_(), other_mechanism_value_() {
     };
 
-    Authentication_value::other_type::other_type(const any_type& __other_mechanism_name,
-            const any_type& __other_mechanism_value) :
-    other_mechanism_name_(__other_mechanism_name),
-    other_mechanism_value_(__other_mechanism_value) {
+    Authentication_value::other_type::other_type(const any_type& arg__other_mechanism_name,
+            const any_type& arg__other_mechanism_value) :
+    other_mechanism_name_(arg__other_mechanism_name),
+    other_mechanism_value_(arg__other_mechanism_value) {
     };
 
     template<> void Authentication_value::other_type::serialize(boost::asn1::x690::output_coder& arch) {

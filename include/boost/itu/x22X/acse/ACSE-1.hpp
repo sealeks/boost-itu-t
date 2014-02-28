@@ -160,33 +160,33 @@ namespace ACSE_1 {
 
     struct AARQ_apdu_impl {
 
-        static const bitstring_type version1;
+        static const bitstring_type protocol_version_version1;
 
         static const bitstring_type protocol_version__default;
 
         AARQ_apdu_impl();
 
-        AARQ_apdu_impl(const ASO_context_name& __aSO_context_name);
+        AARQ_apdu_impl(const ASO_context_name& arg__aSO_context_name);
 
-        AARQ_apdu_impl(boost::shared_ptr< bitstring_type> __protocol_version,
-                boost::shared_ptr< ASO_context_name> __aSO_context_name,
-                boost::shared_ptr< AP_title> __called_AP_title,
-                boost::shared_ptr< AE_qualifier> __called_AE_qualifier,
-                boost::shared_ptr< AP_invocation_identifier> __called_AP_invocation_identifier,
-                boost::shared_ptr< AE_invocation_identifier> __called_AE_invocation_identifier,
-                boost::shared_ptr< AP_title> __calling_AP_title,
-                boost::shared_ptr< AE_qualifier> __calling_AE_qualifier,
-                boost::shared_ptr< AP_invocation_identifier> __calling_AP_invocation_identifier,
-                boost::shared_ptr< AE_invocation_identifier> __calling_AE_invocation_identifier,
-                boost::shared_ptr< ACSE_requirements> __sender_acse_requirements,
-                boost::shared_ptr< Mechanism_name> __mechanism_name,
-                boost::shared_ptr< Authentication_value> __calling_authentication_value,
-                boost::shared_ptr< ASO_context_name_list> __aSO_context_name_list,
-                boost::shared_ptr< Implementation_data> __implementation_information,
-                boost::shared_ptr< Syntactic_context_list> __p_context_definition_list,
-                boost::shared_ptr< ASOI_tag> __called_asoi_tag,
-                boost::shared_ptr< ASOI_tag> __calling_asoi_tag,
-                boost::shared_ptr< Association_data> __user_information);
+        AARQ_apdu_impl(boost::shared_ptr< bitstring_type> arg__protocol_version,
+                boost::shared_ptr< ASO_context_name> arg__aSO_context_name,
+                boost::shared_ptr< AP_title> arg__called_AP_title,
+                boost::shared_ptr< AE_qualifier> arg__called_AE_qualifier,
+                boost::shared_ptr< AP_invocation_identifier> arg__called_AP_invocation_identifier,
+                boost::shared_ptr< AE_invocation_identifier> arg__called_AE_invocation_identifier,
+                boost::shared_ptr< AP_title> arg__calling_AP_title,
+                boost::shared_ptr< AE_qualifier> arg__calling_AE_qualifier,
+                boost::shared_ptr< AP_invocation_identifier> arg__calling_AP_invocation_identifier,
+                boost::shared_ptr< AE_invocation_identifier> arg__calling_AE_invocation_identifier,
+                boost::shared_ptr< ACSE_requirements> arg__sender_acse_requirements,
+                boost::shared_ptr< Mechanism_name> arg__mechanism_name,
+                boost::shared_ptr< Authentication_value> arg__calling_authentication_value,
+                boost::shared_ptr< ASO_context_name_list> arg__aSO_context_name_list,
+                boost::shared_ptr< Implementation_data> arg__implementation_information,
+                boost::shared_ptr< Syntactic_context_list> arg__p_context_definition_list,
+                boost::shared_ptr< ASOI_tag> arg__called_asoi_tag,
+                boost::shared_ptr< ASOI_tag> arg__calling_asoi_tag,
+                boost::shared_ptr< Association_data> arg__user_information);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, bitstring_type);
         BOOST_ASN_VALUE_HOLDERH_DECL(aSO_context_name, ASO_context_name);
@@ -237,33 +237,33 @@ namespace ACSE_1 {
 
     struct AARE_apdu_impl {
 
-        static const bitstring_type version1;
+        static const bitstring_type protocol_version_version1;
 
         static const bitstring_type protocol_version__default;
 
         AARE_apdu_impl();
 
-        AARE_apdu_impl(const ASO_context_name& __aSO_context_name,
-                const Associate_result& __result,
-                const Associate_source_diagnostic& __result_source_diagnostic);
+        AARE_apdu_impl(const ASO_context_name& arg__aSO_context_name,
+                const Associate_result& arg__result,
+                const Associate_source_diagnostic& arg__result_source_diagnostic);
 
-        AARE_apdu_impl(boost::shared_ptr< bitstring_type> __protocol_version,
-                boost::shared_ptr< ASO_context_name> __aSO_context_name,
-                boost::shared_ptr< Associate_result> __result,
-                boost::shared_ptr< Associate_source_diagnostic> __result_source_diagnostic,
-                boost::shared_ptr< AP_title> __responding_AP_title,
-                boost::shared_ptr< AE_qualifier> __responding_AE_qualifier,
-                boost::shared_ptr< AP_invocation_identifier> __responding_AP_invocation_identifier,
-                boost::shared_ptr< AE_invocation_identifier> __responding_AE_invocation_identifier,
-                boost::shared_ptr< ACSE_requirements> __responder_acse_requirements,
-                boost::shared_ptr< Mechanism_name> __mechanism_name,
-                boost::shared_ptr< Authentication_value> __responding_authentication_value,
-                boost::shared_ptr< ASO_context_name_list> __aSO_context_name_list,
-                boost::shared_ptr< Implementation_data> __implementation_information,
-                boost::shared_ptr< P_context_result_list> __p_context_result_list,
-                boost::shared_ptr< ASOI_tag> __called_asoi_tag,
-                boost::shared_ptr< ASOI_tag> __calling_asoi_tag,
-                boost::shared_ptr< Association_data> __user_information);
+        AARE_apdu_impl(boost::shared_ptr< bitstring_type> arg__protocol_version,
+                boost::shared_ptr< ASO_context_name> arg__aSO_context_name,
+                boost::shared_ptr< Associate_result> arg__result,
+                boost::shared_ptr< Associate_source_diagnostic> arg__result_source_diagnostic,
+                boost::shared_ptr< AP_title> arg__responding_AP_title,
+                boost::shared_ptr< AE_qualifier> arg__responding_AE_qualifier,
+                boost::shared_ptr< AP_invocation_identifier> arg__responding_AP_invocation_identifier,
+                boost::shared_ptr< AE_invocation_identifier> arg__responding_AE_invocation_identifier,
+                boost::shared_ptr< ACSE_requirements> arg__responder_acse_requirements,
+                boost::shared_ptr< Mechanism_name> arg__mechanism_name,
+                boost::shared_ptr< Authentication_value> arg__responding_authentication_value,
+                boost::shared_ptr< ASO_context_name_list> arg__aSO_context_name_list,
+                boost::shared_ptr< Implementation_data> arg__implementation_information,
+                boost::shared_ptr< P_context_result_list> arg__p_context_result_list,
+                boost::shared_ptr< ASOI_tag> arg__called_asoi_tag,
+                boost::shared_ptr< ASOI_tag> arg__calling_asoi_tag,
+                boost::shared_ptr< Association_data> arg__user_information);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, bitstring_type);
         BOOST_ASN_VALUE_HOLDERH_DECL(aSO_context_name, ASO_context_name);
@@ -312,10 +312,10 @@ namespace ACSE_1 {
 
         RLRQ_apdu_impl();
 
-        RLRQ_apdu_impl(boost::shared_ptr< Release_request_reason> __reason,
-                boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-                boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-                boost::shared_ptr< Association_data> __user_information);
+        RLRQ_apdu_impl(boost::shared_ptr< Release_request_reason> arg__reason,
+                boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+                boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+                boost::shared_ptr< Association_data> arg__user_information);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(reason, Release_request_reason);
         BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
@@ -338,10 +338,10 @@ namespace ACSE_1 {
 
         RLRE_apdu_impl();
 
-        RLRE_apdu_impl(boost::shared_ptr< Release_response_reason> __reason,
-                boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-                boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-                boost::shared_ptr< Association_data> __user_information);
+        RLRE_apdu_impl(boost::shared_ptr< Release_response_reason> arg__reason,
+                boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+                boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+                boost::shared_ptr< Association_data> arg__user_information);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(reason, Release_response_reason);
         BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
@@ -364,13 +364,13 @@ namespace ACSE_1 {
 
         ABRT_apdu_impl();
 
-        ABRT_apdu_impl(const ABRT_source& __abort_source);
+        ABRT_apdu_impl(const ABRT_source& arg__abort_source);
 
-        ABRT_apdu_impl(boost::shared_ptr< ABRT_source> __abort_source,
-                boost::shared_ptr< ABRT_diagnostic> __abort_diagnostic,
-                boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-                boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-                boost::shared_ptr< Association_data> __user_information);
+        ABRT_apdu_impl(boost::shared_ptr< ABRT_source> arg__abort_source,
+                boost::shared_ptr< ABRT_diagnostic> arg__abort_diagnostic,
+                boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+                boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+                boost::shared_ptr< Association_data> arg__user_information);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(abort_source, ABRT_source);
         BOOST_ASN_VALUE_OPTIONAL_DECL(abort_diagnostic, ABRT_diagnostic);
@@ -395,11 +395,11 @@ namespace ACSE_1 {
 
         A_DT_apdu_impl();
 
-        A_DT_apdu_impl(const User_Data& __a_user_data);
+        A_DT_apdu_impl(const User_Data& arg__a_user_data);
 
-        A_DT_apdu_impl(boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-                boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-                boost::shared_ptr< User_Data> __a_user_data);
+        A_DT_apdu_impl(boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+                boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+                boost::shared_ptr< User_Data> arg__a_user_data);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
@@ -420,12 +420,12 @@ namespace ACSE_1 {
 
         ACRQ_apdu_impl();
 
-        ACRQ_apdu_impl(boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-                boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-                boost::shared_ptr< ASO_context_name> __aSO_context_name,
-                boost::shared_ptr< ASO_context_name_list> __aSO_context_name_list,
-                boost::shared_ptr< Syntactic_context_list> __p_context_definition_list,
-                boost::shared_ptr< User_information> __user_information);
+        ACRQ_apdu_impl(boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+                boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+                boost::shared_ptr< ASO_context_name> arg__aSO_context_name,
+                boost::shared_ptr< ASO_context_name_list> arg__aSO_context_name_list,
+                boost::shared_ptr< Syntactic_context_list> arg__p_context_definition_list,
+                boost::shared_ptr< User_information> arg__user_information);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
@@ -452,11 +452,11 @@ namespace ACSE_1 {
 
         ACRP_apdu_impl();
 
-        ACRP_apdu_impl(boost::shared_ptr< ASO_qualifier> __aso_qualifier,
-                boost::shared_ptr< ASOI_identifier> __asoi_identifier,
-                boost::shared_ptr< ASO_context_name_list> __aSO_context_name,
-                boost::shared_ptr< P_context_result_list> __p_context_result_list,
-                boost::shared_ptr< User_information> __user_information);
+        ACRP_apdu_impl(boost::shared_ptr< ASO_qualifier> arg__aso_qualifier,
+                boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
+                boost::shared_ptr< ASO_context_name_list> arg__aSO_context_name,
+                boost::shared_ptr< P_context_result_list> arg__p_context_result_list,
+                boost::shared_ptr< User_information> arg__user_information);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
@@ -570,8 +570,8 @@ namespace ACSE_1 {
 
         ASOI_tag_sequence_of();
 
-        ASOI_tag_sequence_of(boost::shared_ptr< ASO_qualifier> __qualifier,
-                boost::shared_ptr< ASOI_identifier> __identifier);
+        ASOI_tag_sequence_of(boost::shared_ptr< ASO_qualifier> arg__qualifier,
+                boost::shared_ptr< ASOI_identifier> arg__identifier);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(qualifier, ASO_qualifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(identifier, ASOI_identifier);
@@ -612,11 +612,12 @@ namespace ACSE_1 {
 
         typedef std::vector< Transfer_syntax_name > transfer_syntaxes_type;
 
+
         Context_list_sequence_of();
 
-        Context_list_sequence_of(const Presentation_context_identifier& __pci,
-                const Abstract_syntax_name& __abstract_syntax,
-                const transfer_syntaxes_type& __transfer_syntaxes);
+        Context_list_sequence_of(const Presentation_context_identifier& arg__pci,
+                const Abstract_syntax_name& arg__abstract_syntax,
+                const transfer_syntaxes_type& arg__transfer_syntaxes);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(pci, Presentation_context_identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(abstract_syntax, Abstract_syntax_name);
@@ -635,10 +636,10 @@ namespace ACSE_1 {
 
         Default_Context_List_sequence_of();
 
-        Default_Context_List_sequence_of(const Transfer_syntax_name& __transfer_syntax_name);
+        Default_Context_List_sequence_of(const Transfer_syntax_name& arg__transfer_syntax_name);
 
-        Default_Context_List_sequence_of(boost::shared_ptr< Abstract_syntax_name> __abstract_syntax_name,
-                boost::shared_ptr< Transfer_syntax_name> __transfer_syntax_name);
+        Default_Context_List_sequence_of(boost::shared_ptr< Abstract_syntax_name> arg__abstract_syntax_name,
+                boost::shared_ptr< Transfer_syntax_name> arg__transfer_syntax_name);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(abstract_syntax_name, Abstract_syntax_name);
         BOOST_ASN_VALUE_HOLDERH_DECL(transfer_syntax_name, Transfer_syntax_name);
@@ -653,19 +654,19 @@ namespace ACSE_1 {
 
     struct P_context_result_list_sequence_of {
 
-        static const int reason_not_specified;
-        static const int abstract_syntax_not_supported;
-        static const int proposed_transfer_syntaxes_not_supported;
-        static const int local_limit_on_DCS_exceeded;
+        static const int provider_reason_reason_not_specified;
+        static const int provider_reason_abstract_syntax_not_supported;
+        static const int provider_reason_proposed_transfer_syntaxes_not_supported;
+        static const int provider_reason_local_limit_on_DCS_exceeded;
 
 
         P_context_result_list_sequence_of();
 
-        P_context_result_list_sequence_of(const Result& __result);
+        P_context_result_list_sequence_of(const Result& arg__result);
 
-        P_context_result_list_sequence_of(boost::shared_ptr< Result> __result,
-                boost::shared_ptr< Concrete_syntax_name> __concrete_syntax_name,
-                boost::shared_ptr< int> __provider_reason);
+        P_context_result_list_sequence_of(boost::shared_ptr< Result> arg__result,
+                boost::shared_ptr< Concrete_syntax_name> arg__concrete_syntax_name,
+                boost::shared_ptr< int> arg__provider_reason);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(result, Result);
         BOOST_ASN_VALUE_OPTIONAL_DECL(concrete_syntax_name, Concrete_syntax_name);
@@ -699,25 +700,25 @@ namespace ACSE_1 {
 
     struct Associate_source_diagnostic : public BOOST_ASN_CHOICE_STRUCT(Associate_source_diagnostic_enum) {
 
-        static const int null;
-        static const int no_reason_given;
-        static const int application_context_name_not_supported;
-        static const int calling_AP_title_not_recognized;
-        static const int calling_AP_invocation_identifier_not_recognized;
-        static const int calling_AE_qualifier_not_recognized;
-        static const int calling_AE_invocation_identifier_not_recognized;
-        static const int called_AP_title_not_recognized;
-        static const int called_AP_invocation_identifier_not_recognized;
-        static const int called_AE_qualifier_not_recognized;
-        static const int called_AE_invocation_identifier_not_recognized;
-        static const int authentication_mechanism_name_not_recognized;
-        static const int authentication_mechanism_name_required;
-        static const int authentication_failure;
-        static const int authentication_required;
+        static const int acse_service_user_null;
+        static const int acse_service_user_no_reason_given;
+        static const int acse_service_user_application_context_name_not_supported;
+        static const int acse_service_user_calling_AP_title_not_recognized;
+        static const int acse_service_user_calling_AP_invocation_identifier_not_recognized;
+        static const int acse_service_user_calling_AE_qualifier_not_recognized;
+        static const int acse_service_user_calling_AE_invocation_identifier_not_recognized;
+        static const int acse_service_user_called_AP_title_not_recognized;
+        static const int acse_service_user_called_AP_invocation_identifier_not_recognized;
+        static const int acse_service_user_called_AE_qualifier_not_recognized;
+        static const int acse_service_user_called_AE_invocation_identifier_not_recognized;
+        static const int acse_service_user_authentication_mechanism_name_not_recognized;
+        static const int acse_service_user_authentication_mechanism_name_required;
+        static const int acse_service_user_authentication_failure;
+        static const int acse_service_user_authentication_required;
 
-        //static const int null;
-        //static const int no_reason_given;
-        static const int no_common_acse_version;
+        static const int acse_service_provider_null;
+        static const int acse_service_provider_no_reason_given;
+        static const int acse_service_provider_no_common_acse_version;
 
         Associate_source_diagnostic() : BOOST_ASN_CHOICE_STRUCT(Associate_source_diagnostic_enum) () {
         }
@@ -791,12 +792,12 @@ namespace ACSE_1 {
 
         PDV_list();
 
-        PDV_list(const Presentation_context_identifier& __presentation_context_identifier,
-                const presentation_data_values_type& __presentation_data_values);
+        PDV_list(const Presentation_context_identifier& arg__presentation_context_identifier,
+                const presentation_data_values_type& arg__presentation_data_values);
 
-        PDV_list(boost::shared_ptr< Transfer_syntax_name> __transfer_syntax_name,
-                boost::shared_ptr< Presentation_context_identifier> __presentation_context_identifier,
-                boost::shared_ptr< presentation_data_values_type> __presentation_data_values);
+        PDV_list(boost::shared_ptr< Transfer_syntax_name> arg__transfer_syntax_name,
+                boost::shared_ptr< Presentation_context_identifier> arg__presentation_context_identifier,
+                boost::shared_ptr< presentation_data_values_type> arg__presentation_data_values);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(transfer_syntax_name, Transfer_syntax_name);
         BOOST_ASN_VALUE_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
@@ -831,8 +832,8 @@ namespace ACSE_1 {
 
             other_type();
 
-            other_type(const any_type& __other_mechanism_name,
-                    const any_type& __other_mechanism_value);
+            other_type(const any_type& arg__other_mechanism_name,
+                    const any_type& arg__other_mechanism_value);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(other_mechanism_name, any_type);
             BOOST_ASN_VALUE_HOLDERH_DECL(other_mechanism_value, any_type);
