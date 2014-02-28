@@ -307,7 +307,7 @@ namespace x680 {
                 std::string rslt;
                 typeassignment_entity_ptr tp = self->reff()->as_valueassigment()->scope() ?
                         self->reff()->as_valueassigment()->scope()->as_typeassigment() : typeassignment_entity_ptr();
-                if (tp && (!tp->islocaldefined()))
+                if (tp /*&& (!tp->islocaldefined())*/)
                     rslt = nameconvert(tp->name()) + "_";
                 return rslt + nameconvert(self->reff()->as_valueassigment()->name());
             }
@@ -454,9 +454,11 @@ namespace x680 {
 
         std::string fromtype_str(type_atom_ptr self) {
             if (self) {
-                if (self->isrefferrence())
-                    return nameconvert(self->reff()->name());
-                else if (self->isstructure())
+                if ((self->reff()) && (self->reff()->as_typeassigment()) && (self->isrefferrence())) {
+                    module_entity_ptr fmd = self->reff()->as_typeassigment()->moduleref();
+                    return (fmd && (fmd != self->moduleref())) ? (nameconvert(fmd->name()) + "::" + nameconvert(self->reff()->name()))
+                            : nameconvert(self->reff()->name());
+                } else if (self->isstructure())
                     return "???type???";
                 else
                     return builtin_str(self->builtin());

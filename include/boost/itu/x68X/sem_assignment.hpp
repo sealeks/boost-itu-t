@@ -922,6 +922,10 @@ namespace x680 {
             return reff_;
         }
 
+        module_entity_ptr moduleref() {
+            return scope() ? scope()->moduleref() : module_entity_ptr();
+        }
+
         void reff(basic_entity_ptr vl) {
             reff_ = vl;
         }
