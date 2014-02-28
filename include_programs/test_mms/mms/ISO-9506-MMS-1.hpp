@@ -457,13 +457,13 @@ namespace ISO_9506_MMS_1 {
 
         Confirmed_RequestPDU();
 
-        Confirmed_RequestPDU(const Unsigned32& __invokeID,
-                const ConfirmedServiceRequest& __service);
+        Confirmed_RequestPDU(const Unsigned32& arg__invokeID,
+                const ConfirmedServiceRequest& arg__service);
 
-        Confirmed_RequestPDU(boost::shared_ptr< Unsigned32> __invokeID,
-                boost::shared_ptr< listOfModifiers_type> __listOfModifiers,
-                boost::shared_ptr< ConfirmedServiceRequest> __service,
-                boost::shared_ptr< Request_Detail> __service_ext = boost::shared_ptr< Request_Detail>());
+        Confirmed_RequestPDU(boost::shared_ptr< Unsigned32> arg__invokeID,
+                boost::shared_ptr< listOfModifiers_type> arg__listOfModifiers,
+                boost::shared_ptr< ConfirmedServiceRequest> arg__service,
+                boost::shared_ptr< Request_Detail> arg__service_ext = boost::shared_ptr< Request_Detail>());
 
         BOOST_ASN_VALUE_HOLDERH_DECL(invokeID, Unsigned32);
         BOOST_ASN_VALUE_OPTIONAL_DECL(listOfModifiers, listOfModifiers_type);
@@ -780,10 +780,10 @@ namespace ISO_9506_MMS_1 {
 
         Unconfirmed_PDU();
 
-        Unconfirmed_PDU(const UnconfirmedService& __service);
+        Unconfirmed_PDU(const UnconfirmedService& arg__service);
 
-        Unconfirmed_PDU(boost::shared_ptr< UnconfirmedService> __service,
-                boost::shared_ptr< Unconfirmed_Detail> __service_ext = boost::shared_ptr< Unconfirmed_Detail>());
+        Unconfirmed_PDU(boost::shared_ptr< UnconfirmedService> arg__service,
+                boost::shared_ptr< Unconfirmed_Detail> arg__service_ext = boost::shared_ptr< Unconfirmed_Detail>());
 
         BOOST_ASN_VALUE_HOLDERH_DECL(service, UnconfirmedService);
         BOOST_ASN_VALUE_OPTIONAL_DECL(service_ext, Unconfirmed_Detail);
@@ -852,12 +852,12 @@ namespace ISO_9506_MMS_1 {
 
         Confirmed_ResponsePDU();
 
-        Confirmed_ResponsePDU(const Unsigned32& __invokeID,
-                const ConfirmedServiceResponse& __service);
+        Confirmed_ResponsePDU(const Unsigned32& arg__invokeID,
+                const ConfirmedServiceResponse& arg__service);
 
-        Confirmed_ResponsePDU(boost::shared_ptr< Unsigned32> __invokeID,
-                boost::shared_ptr< ConfirmedServiceResponse> __service,
-                boost::shared_ptr< Response_Detail> __service_ext = boost::shared_ptr< Response_Detail>());
+        Confirmed_ResponsePDU(boost::shared_ptr< Unsigned32> arg__invokeID,
+                boost::shared_ptr< ConfirmedServiceResponse> arg__service,
+                boost::shared_ptr< Response_Detail> arg__service_ext = boost::shared_ptr< Response_Detail>());
 
         BOOST_ASN_VALUE_HOLDERH_DECL(invokeID, Unsigned32);
         BOOST_ASN_VALUE_HOLDERH_DECL(service, ConfirmedServiceResponse);
@@ -1162,12 +1162,12 @@ namespace ISO_9506_MMS_1 {
 
         Confirmed_ErrorPDU();
 
-        Confirmed_ErrorPDU(const Unsigned32& __invokeID,
-                const ServiceError& __serviceError);
+        Confirmed_ErrorPDU(const Unsigned32& arg__invokeID,
+                const ServiceError& arg__serviceError);
 
-        Confirmed_ErrorPDU(boost::shared_ptr< Unsigned32> __invokeID,
-                boost::shared_ptr< Unsigned32> __modifierPosition,
-                boost::shared_ptr< ServiceError> __serviceError);
+        Confirmed_ErrorPDU(boost::shared_ptr< Unsigned32> arg__invokeID,
+                boost::shared_ptr< Unsigned32> arg__modifierPosition,
+                boost::shared_ptr< ServiceError> arg__serviceError);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(invokeID, Unsigned32);
         BOOST_ASN_VALUE_OPTIONAL_DECL(modifierPosition, Unsigned32);
@@ -1350,12 +1350,12 @@ namespace ISO_9506_MMS_1 {
 
         ServiceError();
 
-        ServiceError(const errorClass_type& __errorClass);
+        ServiceError(const errorClass_type& arg__errorClass);
 
-        ServiceError(boost::shared_ptr< errorClass_type> __errorClass,
-                boost::shared_ptr< int> __additionalCode,
-                boost::shared_ptr< visiblestring_type> __additionalDescription,
-                boost::shared_ptr< serviceSpecificInfo_type> __serviceSpecificInfo);
+        ServiceError(boost::shared_ptr< errorClass_type> arg__errorClass,
+                boost::shared_ptr< int> arg__additionalCode,
+                boost::shared_ptr< visiblestring_type> arg__additionalDescription,
+                boost::shared_ptr< serviceSpecificInfo_type> arg__serviceSpecificInfo);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(errorClass, errorClass_type);
         BOOST_ASN_VALUE_OPTIONAL_DECL(additionalCode, int);
@@ -1427,8 +1427,8 @@ namespace ISO_9506_MMS_1 {
 
             domain_specific_type();
 
-            domain_specific_type(const Identifier& __domainID,
-                    const Identifier& __itemID);
+            domain_specific_type(const Identifier& arg__domainID,
+                    const Identifier& arg__itemID);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(domainID, Identifier);
             BOOST_ASN_VALUE_HOLDERH_DECL(itemID, Identifier);
@@ -1507,16 +1507,16 @@ namespace ISO_9506_MMS_1 {
 
             initRequestDetail_type();
 
-            initRequestDetail_type(const Integer16& __proposedVersionNumber,
-                    const MMS_Object_Module_1::ParameterSupportOptions& __proposedParameterCBB,
-                    const MMS_Object_Module_1::ServiceSupportOptions& __servicesSupportedCalling);
+            initRequestDetail_type(const Integer16& arg__proposedVersionNumber,
+                    const MMS_Object_Module_1::ParameterSupportOptions& arg__proposedParameterCBB,
+                    const MMS_Object_Module_1::ServiceSupportOptions& arg__servicesSupportedCalling);
 
-            initRequestDetail_type(boost::shared_ptr< Integer16> __proposedVersionNumber,
-                    boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> __proposedParameterCBB,
-                    boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> __servicesSupportedCalling,
-                    boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> __additionalSupportedCalling = boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions>(),
-                    boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> __additionalCbbSupportedCalling = boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
-                    boost::shared_ptr< visiblestring_type> __privilegeClassIdentityCalling = boost::shared_ptr< visiblestring_type>());
+            initRequestDetail_type(boost::shared_ptr< Integer16> arg__proposedVersionNumber,
+                    boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> arg__proposedParameterCBB,
+                    boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> arg__servicesSupportedCalling,
+                    boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalling = boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions>(),
+                    boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalling = boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
+                    boost::shared_ptr< visiblestring_type> arg__privilegeClassIdentityCalling = boost::shared_ptr< visiblestring_type>());
 
             BOOST_ASN_VALUE_HOLDERH_DECL(proposedVersionNumber, Integer16);
             BOOST_ASN_VALUE_HOLDERH_DECL(proposedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions);
@@ -1540,15 +1540,15 @@ namespace ISO_9506_MMS_1 {
 
         Initiate_RequestPDU();
 
-        Initiate_RequestPDU(const Integer16& __proposedMaxServOutstandingCalling,
-                const Integer16& __proposedMaxServOutstandingCalled,
-                const initRequestDetail_type& __initRequestDetail);
+        Initiate_RequestPDU(const Integer16& arg__proposedMaxServOutstandingCalling,
+                const Integer16& arg__proposedMaxServOutstandingCalled,
+                const initRequestDetail_type& arg__initRequestDetail);
 
-        Initiate_RequestPDU(boost::shared_ptr< Integer32> __localDetailCalling,
-                boost::shared_ptr< Integer16> __proposedMaxServOutstandingCalling,
-                boost::shared_ptr< Integer16> __proposedMaxServOutstandingCalled,
-                boost::shared_ptr< Integer8> __proposedDataStructureNestingLevel,
-                boost::shared_ptr< initRequestDetail_type> __initRequestDetail);
+        Initiate_RequestPDU(boost::shared_ptr< Integer32> arg__localDetailCalling,
+                boost::shared_ptr< Integer16> arg__proposedMaxServOutstandingCalling,
+                boost::shared_ptr< Integer16> arg__proposedMaxServOutstandingCalled,
+                boost::shared_ptr< Integer8> arg__proposedDataStructureNestingLevel,
+                boost::shared_ptr< initRequestDetail_type> arg__initRequestDetail);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(localDetailCalling, Integer32);
         BOOST_ASN_VALUE_HOLDERH_DECL(proposedMaxServOutstandingCalling, Integer16);
@@ -1577,16 +1577,16 @@ namespace ISO_9506_MMS_1 {
 
             initResponseDetail_type();
 
-            initResponseDetail_type(const Integer16& __negotiatedVersionNumber,
-                    const MMS_Object_Module_1::ParameterSupportOptions& __negotiatedParameterCBB,
-                    const MMS_Object_Module_1::ServiceSupportOptions& __servicesSupportedCalled);
+            initResponseDetail_type(const Integer16& arg__negotiatedVersionNumber,
+                    const MMS_Object_Module_1::ParameterSupportOptions& arg__negotiatedParameterCBB,
+                    const MMS_Object_Module_1::ServiceSupportOptions& arg__servicesSupportedCalled);
 
-            initResponseDetail_type(boost::shared_ptr< Integer16> __negotiatedVersionNumber,
-                    boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> __negotiatedParameterCBB,
-                    boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> __servicesSupportedCalled,
-                    boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> __additionalSupportedCalled = boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions>(),
-                    boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> __additionalCbbSupportedCalled = boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
-                    boost::shared_ptr< visiblestring_type> __privilegeClassIdentityCalled = boost::shared_ptr< visiblestring_type>());
+            initResponseDetail_type(boost::shared_ptr< Integer16> arg__negotiatedVersionNumber,
+                    boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> arg__negotiatedParameterCBB,
+                    boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> arg__servicesSupportedCalled,
+                    boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalled = boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions>(),
+                    boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalled = boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
+                    boost::shared_ptr< visiblestring_type> arg__privilegeClassIdentityCalled = boost::shared_ptr< visiblestring_type>());
 
             BOOST_ASN_VALUE_HOLDERH_DECL(negotiatedVersionNumber, Integer16);
             BOOST_ASN_VALUE_HOLDERH_DECL(negotiatedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions);
@@ -1610,15 +1610,15 @@ namespace ISO_9506_MMS_1 {
 
         Initiate_ResponsePDU();
 
-        Initiate_ResponsePDU(const Integer16& __negotiatedMaxServOutstandingCalling,
-                const Integer16& __negotiatedMaxServOutstandingCalled,
-                const initResponseDetail_type& __initResponseDetail);
+        Initiate_ResponsePDU(const Integer16& arg__negotiatedMaxServOutstandingCalling,
+                const Integer16& arg__negotiatedMaxServOutstandingCalled,
+                const initResponseDetail_type& arg__initResponseDetail);
 
-        Initiate_ResponsePDU(boost::shared_ptr< Integer32> __localDetailCalled,
-                boost::shared_ptr< Integer16> __negotiatedMaxServOutstandingCalling,
-                boost::shared_ptr< Integer16> __negotiatedMaxServOutstandingCalled,
-                boost::shared_ptr< Integer8> __negotiatedDataStructureNestingLevel,
-                boost::shared_ptr< initResponseDetail_type> __initResponseDetail);
+        Initiate_ResponsePDU(boost::shared_ptr< Integer32> arg__localDetailCalled,
+                boost::shared_ptr< Integer16> arg__negotiatedMaxServOutstandingCalling,
+                boost::shared_ptr< Integer16> arg__negotiatedMaxServOutstandingCalled,
+                boost::shared_ptr< Integer8> arg__negotiatedDataStructureNestingLevel,
+                boost::shared_ptr< initResponseDetail_type> arg__initResponseDetail);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(localDetailCalled, Integer32);
         BOOST_ASN_VALUE_HOLDERH_DECL(negotiatedMaxServOutstandingCalling, Integer16);
@@ -1643,8 +1643,8 @@ namespace ISO_9506_MMS_1 {
 
         Cancel_ErrorPDU();
 
-        Cancel_ErrorPDU(const Unsigned32& __originalInvokeID,
-                const ServiceError& __serviceError);
+        Cancel_ErrorPDU(const Unsigned32& arg__originalInvokeID,
+                const ServiceError& arg__serviceError);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(originalInvokeID, Unsigned32);
         BOOST_ASN_VALUE_HOLDERH_DECL(serviceError, ServiceError);
@@ -1760,10 +1760,10 @@ namespace ISO_9506_MMS_1 {
 
         RejectPDU();
 
-        RejectPDU(const rejectReason_type& __rejectReason);
+        RejectPDU(const rejectReason_type& arg__rejectReason);
 
-        RejectPDU(boost::shared_ptr< Unsigned32> __originalInvokeID,
-                boost::shared_ptr< rejectReason_type> __rejectReason);
+        RejectPDU(boost::shared_ptr< Unsigned32> arg__originalInvokeID,
+                boost::shared_ptr< rejectReason_type> arg__rejectReason);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(originalInvokeID, Unsigned32);
         BOOST_ASN_VALUE_HOLDERH_DECL(rejectReason, rejectReason_type);
@@ -1786,13 +1786,13 @@ namespace ISO_9506_MMS_1 {
 
             accessControlListElements_type();
 
-            accessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __readAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __storeAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __writeAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __loadAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __executeAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __deleteAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __editAccessCondition);
+            accessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__storeAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__writeAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__loadAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__executeAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__deleteAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__editAccessCondition);
 
             BOOST_ASN_VALUE_OPTIONAL_DECL(readAccessCondition, MMS_Object_Module_1::AccessCondition);
             BOOST_ASN_VALUE_OPTIONAL_DECL(storeAccessCondition, MMS_Object_Module_1::AccessCondition);
@@ -1818,8 +1818,8 @@ namespace ISO_9506_MMS_1 {
 
         DefineAccessControlList_Request();
 
-        DefineAccessControlList_Request(const Identifier& __accessControlListName,
-                const accessControlListElements_type& __accessControlListElements);
+        DefineAccessControlList_Request(const Identifier& arg__accessControlListName,
+                const accessControlListElements_type& arg__accessControlListElements);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(accessControlListName, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(accessControlListElements, accessControlListElements_type);
@@ -1851,8 +1851,8 @@ namespace ISO_9506_MMS_1 {
 
             namedObject_type();
 
-            namedObject_type(const ObjectClass& __objectClass,
-                    const ObjectName& __objectName);
+            namedObject_type(const ObjectClass& arg__objectClass,
+                    const ObjectName& arg__objectName);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
             BOOST_ASN_VALUE_HOLDERH_DECL(objectName, ObjectName);
@@ -1890,13 +1890,13 @@ namespace ISO_9506_MMS_1 {
 
             accessControlListElements_type();
 
-            accessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __readAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __storeAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __writeAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __loadAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __executeAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __deleteAccessCondition,
-                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __editAccessCondition);
+            accessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__storeAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__writeAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__loadAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__executeAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__deleteAccessCondition,
+                    boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__editAccessCondition);
 
             BOOST_ASN_VALUE_OPTIONAL_DECL(readAccessCondition, MMS_Object_Module_1::AccessCondition);
             BOOST_ASN_VALUE_OPTIONAL_DECL(storeAccessCondition, MMS_Object_Module_1::AccessCondition);
@@ -1923,8 +1923,8 @@ namespace ISO_9506_MMS_1 {
 
             references_type_sequence_of();
 
-            references_type_sequence_of(const ObjectClass& __objectClass,
-                    const int& __objectCount);
+            references_type_sequence_of(const ObjectClass& arg__objectClass,
+                    const int& arg__objectCount);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
             BOOST_ASN_VALUE_HOLDERH_DECL(objectCount, int);
@@ -1944,16 +1944,16 @@ namespace ISO_9506_MMS_1 {
 
         GetAccessControlListAttributes_Response();
 
-        GetAccessControlListAttributes_Response(const Identifier& __name,
-                const accessControlListElements_type& __accessControlListElements,
-                const bool& __vMDuse,
-                const references_type& __references);
+        GetAccessControlListAttributes_Response(const Identifier& arg__name,
+                const accessControlListElements_type& arg__accessControlListElements,
+                const bool& arg__vMDuse,
+                const references_type& arg__references);
 
-        GetAccessControlListAttributes_Response(boost::shared_ptr< Identifier> __name,
-                boost::shared_ptr< accessControlListElements_type> __accessControlListElements,
-                boost::shared_ptr< bool> __vMDuse,
-                boost::shared_ptr< references_type> __references,
-                boost::shared_ptr< Identifier> __accessControlList);
+        GetAccessControlListAttributes_Response(boost::shared_ptr< Identifier> arg__name,
+                boost::shared_ptr< accessControlListElements_type> arg__accessControlListElements,
+                boost::shared_ptr< bool> arg__vMDuse,
+                boost::shared_ptr< references_type> arg__references,
+                boost::shared_ptr< Identifier> arg__accessControlList);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(accessControlListElements, accessControlListElements_type);
@@ -1978,12 +1978,12 @@ namespace ISO_9506_MMS_1 {
 
         ReportAccessControlledObjects_Request();
 
-        ReportAccessControlledObjects_Request(const Identifier& __accessControlList,
-                const ObjectClass& __objectClass);
+        ReportAccessControlledObjects_Request(const Identifier& arg__accessControlList,
+                const ObjectClass& arg__objectClass);
 
-        ReportAccessControlledObjects_Request(boost::shared_ptr< Identifier> __accessControlList,
-                boost::shared_ptr< ObjectClass> __objectClass,
-                boost::shared_ptr< ObjectName> __continueAfter);
+        ReportAccessControlledObjects_Request(boost::shared_ptr< Identifier> arg__accessControlList,
+                boost::shared_ptr< ObjectClass> arg__objectClass,
+                boost::shared_ptr< ObjectName> arg__continueAfter);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(accessControlList, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
@@ -2008,10 +2008,10 @@ namespace ISO_9506_MMS_1 {
 
         ReportAccessControlledObjects_Response();
 
-        ReportAccessControlledObjects_Response(const listOfNames_type& __listOfNames);
+        ReportAccessControlledObjects_Response(const listOfNames_type& arg__listOfNames);
 
-        ReportAccessControlledObjects_Response(boost::shared_ptr< listOfNames_type> __listOfNames,
-                boost::shared_ptr< bool> __moreFollows);
+        ReportAccessControlledObjects_Response(boost::shared_ptr< listOfNames_type> arg__listOfNames,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfNames, listOfNames_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -2079,8 +2079,8 @@ namespace ISO_9506_MMS_1 {
 
                 listOfObjects_type();
 
-                listOfObjects_type(const ObjectClass& __objectClass,
-                        const objectScope_type& __objectScope);
+                listOfObjects_type(const ObjectClass& arg__objectClass,
+                        const objectScope_type& arg__objectScope);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
                 BOOST_ASN_VALUE_HOLDERH_DECL(objectScope, objectScope_type);
@@ -2109,8 +2109,8 @@ namespace ISO_9506_MMS_1 {
 
         ChangeAccessControl_Request();
 
-        ChangeAccessControl_Request(const scopeOfChange_type& __scopeOfChange,
-                const Identifier& __accessControlListName);
+        ChangeAccessControl_Request(const scopeOfChange_type& arg__scopeOfChange,
+                const Identifier& arg__accessControlListName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(scopeOfChange, scopeOfChange_type);
         BOOST_ASN_VALUE_HOLDERH_DECL(accessControlListName, Identifier);
@@ -2129,8 +2129,8 @@ namespace ISO_9506_MMS_1 {
 
         ChangeAccessControl_Response();
 
-        ChangeAccessControl_Response(const Unsigned32& __numberMatched,
-                const Unsigned32& __numberChanged);
+        ChangeAccessControl_Response(const Unsigned32& arg__numberMatched,
+                const Unsigned32& arg__numberChanged);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(numberMatched, Unsigned32);
         BOOST_ASN_VALUE_HOLDERH_DECL(numberChanged, Unsigned32);
@@ -2160,12 +2160,12 @@ namespace ISO_9506_MMS_1 {
 
         StatusResponse();
 
-        StatusResponse(const int& __vmdLogicalStatus,
-                const int& __vmdPhysicalStatus);
+        StatusResponse(const int& arg__vmdLogicalStatus,
+                const int& arg__vmdPhysicalStatus);
 
-        StatusResponse(boost::shared_ptr< int> __vmdLogicalStatus,
-                boost::shared_ptr< int> __vmdPhysicalStatus,
-                boost::shared_ptr< bitstring_type> __localDetail);
+        StatusResponse(boost::shared_ptr< int> arg__vmdLogicalStatus,
+                boost::shared_ptr< int> arg__vmdPhysicalStatus,
+                boost::shared_ptr< bitstring_type> arg__localDetail);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(vmdLogicalStatus, int);
         BOOST_ASN_VALUE_HOLDERH_DECL(vmdPhysicalStatus, int);
@@ -2224,14 +2224,14 @@ namespace ISO_9506_MMS_1 {
 
             fullResponse_type();
 
-            fullResponse_type(const OperationState& __operationState,
-                    const ExtendedStatus& __extendedStatus,
-                    const selectedProgramInvocation_type& __selectedProgramInvocation);
+            fullResponse_type(const OperationState& arg__operationState,
+                    const ExtendedStatus& arg__extendedStatus,
+                    const selectedProgramInvocation_type& arg__selectedProgramInvocation);
 
-            fullResponse_type(boost::shared_ptr< OperationState> __operationState,
-                    boost::shared_ptr< ExtendedStatus> __extendedStatus,
-                    boost::shared_ptr< ExtendedStatus> __extendedStatusMask,
-                    boost::shared_ptr< selectedProgramInvocation_type> __selectedProgramInvocation);
+            fullResponse_type(boost::shared_ptr< OperationState> arg__operationState,
+                    boost::shared_ptr< ExtendedStatus> arg__extendedStatus,
+                    boost::shared_ptr< ExtendedStatus> arg__extendedStatusMask,
+                    boost::shared_ptr< selectedProgramInvocation_type> arg__selectedProgramInvocation);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(operationState, OperationState);
             BOOST_ASN_VALUE_HOLDERH_DECL(extendedStatus, ExtendedStatus);
@@ -2306,12 +2306,12 @@ namespace ISO_9506_MMS_1 {
 
         GetNameList_Request();
 
-        GetNameList_Request(const ObjectClass& __objectClass,
-                const objectScope_type& __objectScope);
+        GetNameList_Request(const ObjectClass& arg__objectClass,
+                const objectScope_type& arg__objectScope);
 
-        GetNameList_Request(boost::shared_ptr< ObjectClass> __objectClass,
-                boost::shared_ptr< objectScope_type> __objectScope,
-                boost::shared_ptr< Identifier> __continueAfter);
+        GetNameList_Request(boost::shared_ptr< ObjectClass> arg__objectClass,
+                boost::shared_ptr< objectScope_type> arg__objectScope,
+                boost::shared_ptr< Identifier> arg__continueAfter);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
         BOOST_ASN_VALUE_HOLDERH_DECL(objectScope, objectScope_type);
@@ -2336,10 +2336,10 @@ namespace ISO_9506_MMS_1 {
 
         GetNameList_Response();
 
-        GetNameList_Response(const listOfIdentifier_type& __listOfIdentifier);
+        GetNameList_Response(const listOfIdentifier_type& arg__listOfIdentifier);
 
-        GetNameList_Response(boost::shared_ptr< listOfIdentifier_type> __listOfIdentifier,
-                boost::shared_ptr< bool> __moreFollows);
+        GetNameList_Response(boost::shared_ptr< listOfIdentifier_type> arg__listOfIdentifier,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfIdentifier, listOfIdentifier_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -2361,14 +2361,14 @@ namespace ISO_9506_MMS_1 {
 
         Identify_Response();
 
-        Identify_Response(const MMSString& __vendorName,
-                const MMSString& __modelName,
-                const MMSString& __revision);
+        Identify_Response(const MMSString& arg__vendorName,
+                const MMSString& arg__modelName,
+                const MMSString& arg__revision);
 
-        Identify_Response(boost::shared_ptr< MMSString> __vendorName,
-                boost::shared_ptr< MMSString> __modelName,
-                boost::shared_ptr< MMSString> __revision,
-                boost::shared_ptr< listOfAbstractSyntaxes_type> __listOfAbstractSyntaxes);
+        Identify_Response(boost::shared_ptr< MMSString> arg__vendorName,
+                boost::shared_ptr< MMSString> arg__modelName,
+                boost::shared_ptr< MMSString> arg__revision,
+                boost::shared_ptr< listOfAbstractSyntaxes_type> arg__listOfAbstractSyntaxes);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(vendorName, MMSString);
         BOOST_ASN_VALUE_HOLDERH_DECL(modelName, MMSString);
@@ -2391,9 +2391,9 @@ namespace ISO_9506_MMS_1 {
 
         Rename_Request();
 
-        Rename_Request(const ObjectClass& __objectClass,
-                const ObjectName& __currentName,
-                const Identifier& __newIdentifier);
+        Rename_Request(const ObjectClass& arg__objectClass,
+                const ObjectName& arg__currentName,
+                const Identifier& arg__newIdentifier);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
         BOOST_ASN_VALUE_HOLDERH_DECL(currentName, ObjectName);
@@ -2414,7 +2414,7 @@ namespace ISO_9506_MMS_1 {
 
         GetCapabilityList_Request();
 
-        GetCapabilityList_Request(boost::shared_ptr< MMSString> __continueAfter);
+        GetCapabilityList_Request(boost::shared_ptr< MMSString> arg__continueAfter);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, MMSString);
 
@@ -2435,10 +2435,10 @@ namespace ISO_9506_MMS_1 {
 
         GetCapabilityList_Response();
 
-        GetCapabilityList_Response(const listOfCapabilities_type& __listOfCapabilities);
+        GetCapabilityList_Response(const listOfCapabilities_type& arg__listOfCapabilities);
 
-        GetCapabilityList_Response(boost::shared_ptr< listOfCapabilities_type> __listOfCapabilities,
-                boost::shared_ptr< bool> __moreFollows);
+        GetCapabilityList_Response(boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -2460,9 +2460,9 @@ namespace ISO_9506_MMS_1 {
 
         InitiateDownloadSequence_Request();
 
-        InitiateDownloadSequence_Request(const Identifier& __domainName,
-                const listOfCapabilities_type& __listOfCapabilities,
-                const bool& __sharable);
+        InitiateDownloadSequence_Request(const Identifier& arg__domainName,
+                const listOfCapabilities_type& arg__listOfCapabilities,
+                const bool& arg__sharable);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
@@ -2485,10 +2485,10 @@ namespace ISO_9506_MMS_1 {
 
         DownloadSegment_Response();
 
-        DownloadSegment_Response(const LoadData& __loadData);
+        DownloadSegment_Response(const LoadData& arg__loadData);
 
-        DownloadSegment_Response(boost::shared_ptr< LoadData> __loadData,
-                boost::shared_ptr< bool> __moreFollows);
+        DownloadSegment_Response(boost::shared_ptr< LoadData> arg__loadData,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(loadData, LoadData);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -2533,10 +2533,10 @@ namespace ISO_9506_MMS_1 {
 
         TerminateDownloadSequence_Request();
 
-        TerminateDownloadSequence_Request(const Identifier& __domainName);
+        TerminateDownloadSequence_Request(const Identifier& arg__domainName);
 
-        TerminateDownloadSequence_Request(boost::shared_ptr< Identifier> __domainName,
-                boost::shared_ptr< ServiceError> __discard);
+        TerminateDownloadSequence_Request(boost::shared_ptr< Identifier> arg__domainName,
+                boost::shared_ptr< ServiceError> arg__discard);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(discard, ServiceError);
@@ -2558,8 +2558,8 @@ namespace ISO_9506_MMS_1 {
 
         InitiateUploadSequence_Response();
 
-        InitiateUploadSequence_Response(const Integer32& __ulsmID,
-                const listOfCapabilities_type& __listOfCapabilities);
+        InitiateUploadSequence_Response(const Integer32& arg__ulsmID,
+                const listOfCapabilities_type& arg__listOfCapabilities);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(ulsmID, Integer32);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
@@ -2580,10 +2580,10 @@ namespace ISO_9506_MMS_1 {
 
         UploadSegment_Response();
 
-        UploadSegment_Response(const LoadData& __loadData);
+        UploadSegment_Response(const LoadData& arg__loadData);
 
-        UploadSegment_Response(boost::shared_ptr< LoadData> __loadData,
-                boost::shared_ptr< bool> __moreFollows);
+        UploadSegment_Response(boost::shared_ptr< LoadData> arg__loadData,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(loadData, LoadData);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -2605,14 +2605,14 @@ namespace ISO_9506_MMS_1 {
 
         RequestDomainDownload_Request();
 
-        RequestDomainDownload_Request(const Identifier& __domainName,
-                const bool& __sharable,
-                const FileName& __fileName);
+        RequestDomainDownload_Request(const Identifier& arg__domainName,
+                const bool& arg__sharable,
+                const FileName& arg__fileName);
 
-        RequestDomainDownload_Request(boost::shared_ptr< Identifier> __domainName,
-                boost::shared_ptr< listOfCapabilities_type> __listOfCapabilities,
-                boost::shared_ptr< bool> __sharable,
-                boost::shared_ptr< FileName> __fileName);
+        RequestDomainDownload_Request(boost::shared_ptr< Identifier> arg__domainName,
+                boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+                boost::shared_ptr< bool> arg__sharable,
+                boost::shared_ptr< FileName> arg__fileName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(listOfCapabilities, listOfCapabilities_type);
@@ -2635,8 +2635,8 @@ namespace ISO_9506_MMS_1 {
 
         RequestDomainUpload_Request();
 
-        RequestDomainUpload_Request(const Identifier& __domainName,
-                const FileName& __fileName);
+        RequestDomainUpload_Request(const Identifier& arg__domainName,
+                const FileName& arg__fileName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(fileName, FileName);
@@ -2658,15 +2658,15 @@ namespace ISO_9506_MMS_1 {
 
         LoadDomainContent_Request();
 
-        LoadDomainContent_Request(const Identifier& __domainName,
-                const bool& __sharable,
-                const FileName& __fileName);
+        LoadDomainContent_Request(const Identifier& arg__domainName,
+                const bool& arg__sharable,
+                const FileName& arg__fileName);
 
-        LoadDomainContent_Request(boost::shared_ptr< Identifier> __domainName,
-                boost::shared_ptr< listOfCapabilities_type> __listOfCapabilities,
-                boost::shared_ptr< bool> __sharable,
-                boost::shared_ptr< FileName> __fileName,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __thirdParty);
+        LoadDomainContent_Request(boost::shared_ptr< Identifier> arg__domainName,
+                boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+                boost::shared_ptr< bool> arg__sharable,
+                boost::shared_ptr< FileName> arg__fileName,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__thirdParty);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(listOfCapabilities, listOfCapabilities_type);
@@ -2691,12 +2691,12 @@ namespace ISO_9506_MMS_1 {
 
         StoreDomainContent_Request();
 
-        StoreDomainContent_Request(const Identifier& __domainName,
-                const FileName& __fileName);
+        StoreDomainContent_Request(const Identifier& arg__domainName,
+                const FileName& arg__fileName);
 
-        StoreDomainContent_Request(boost::shared_ptr< Identifier> __domainName,
-                boost::shared_ptr< FileName> __fileName,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __thirdParty);
+        StoreDomainContent_Request(boost::shared_ptr< Identifier> arg__domainName,
+                boost::shared_ptr< FileName> arg__fileName,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__thirdParty);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(fileName, FileName);
@@ -2721,20 +2721,20 @@ namespace ISO_9506_MMS_1 {
 
         GetDomainAttributes_Response();
 
-        GetDomainAttributes_Response(const listOfCapabilities_type& __listOfCapabilities,
-                const MMS_Object_Module_1::DomainState& __state,
-                const bool& __mmsDeletable,
-                const bool& __sharable,
-                const listOfProgramInvocations_type& __listOfProgramInvocations,
-                const Integer8& __uploadInProgress);
+        GetDomainAttributes_Response(const listOfCapabilities_type& arg__listOfCapabilities,
+                const MMS_Object_Module_1::DomainState& arg__state,
+                const bool& arg__mmsDeletable,
+                const bool& arg__sharable,
+                const listOfProgramInvocations_type& arg__listOfProgramInvocations,
+                const Integer8& arg__uploadInProgress);
 
-        GetDomainAttributes_Response(boost::shared_ptr< listOfCapabilities_type> __listOfCapabilities,
-                boost::shared_ptr< MMS_Object_Module_1::DomainState> __state,
-                boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< bool> __sharable,
-                boost::shared_ptr< listOfProgramInvocations_type> __listOfProgramInvocations,
-                boost::shared_ptr< Integer8> __uploadInProgress,
-                boost::shared_ptr< Identifier> __accessControlList);
+        GetDomainAttributes_Response(boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+                boost::shared_ptr< MMS_Object_Module_1::DomainState> arg__state,
+                boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< bool> arg__sharable,
+                boost::shared_ptr< listOfProgramInvocations_type> arg__listOfProgramInvocations,
+                boost::shared_ptr< Integer8> arg__uploadInProgress,
+                boost::shared_ptr< Identifier> arg__accessControlList);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
         BOOST_ASN_VALUE_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState);
@@ -2767,13 +2767,13 @@ namespace ISO_9506_MMS_1 {
 
         CreateProgramInvocation_Request();
 
-        CreateProgramInvocation_Request(const Identifier& __programInvocationName,
-                const listOfDomainNames_type& __listOfDomainNames);
+        CreateProgramInvocation_Request(const Identifier& arg__programInvocationName,
+                const listOfDomainNames_type& arg__listOfDomainNames);
 
-        CreateProgramInvocation_Request(boost::shared_ptr< Identifier> __programInvocationName,
-                boost::shared_ptr< listOfDomainNames_type> __listOfDomainNames,
-                boost::shared_ptr< bool> __reusable,
-                boost::shared_ptr< bool> __monitorType);
+        CreateProgramInvocation_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
+                boost::shared_ptr< listOfDomainNames_type> arg__listOfDomainNames,
+                boost::shared_ptr< bool> arg__reusable,
+                boost::shared_ptr< bool> arg__monitorType);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfDomainNames, listOfDomainNames_type);
@@ -2827,10 +2827,10 @@ namespace ISO_9506_MMS_1 {
 
         Start_Request();
 
-        Start_Request(const Identifier& __programInvocationName);
+        Start_Request(const Identifier& arg__programInvocationName);
 
-        Start_Request(boost::shared_ptr< Identifier> __programInvocationName,
-                boost::shared_ptr< executionArgument_type> __executionArgument);
+        Start_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
+                boost::shared_ptr< executionArgument_type> arg__executionArgument);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(executionArgument, executionArgument_type);
@@ -2861,8 +2861,8 @@ namespace ISO_9506_MMS_1 {
 
             controlling_type();
 
-            controlling_type(boost::shared_ptr< visiblestring_type> __startLocation,
-                    boost::shared_ptr< StartCount> __startCount);
+            controlling_type(boost::shared_ptr< visiblestring_type> arg__startLocation,
+                    boost::shared_ptr< StartCount> arg__startCount);
 
             BOOST_ASN_VALUE_OPTIONAL_DECL(startLocation, visiblestring_type);
             BOOST_ASN_VALUE_OPTIONAL_DECL(startCount, StartCount);
@@ -2920,7 +2920,7 @@ namespace ISO_9506_MMS_1 {
 
         Stop_Request();
 
-        Stop_Request(const Identifier& __programInvocationName);
+        Stop_Request(const Identifier& arg__programInvocationName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
 
@@ -2964,10 +2964,10 @@ namespace ISO_9506_MMS_1 {
 
         Resume_Request();
 
-        Resume_Request(const Identifier& __programInvocationName);
+        Resume_Request(const Identifier& arg__programInvocationName);
 
-        Resume_Request(boost::shared_ptr< Identifier> __programInvocationName,
-                boost::shared_ptr< executionArgument_type> __executionArgument);
+        Resume_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
+                boost::shared_ptr< executionArgument_type> arg__executionArgument);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(executionArgument, executionArgument_type);
@@ -3023,7 +3023,7 @@ namespace ISO_9506_MMS_1 {
 
             controlling_type();
 
-            controlling_type(const modeType_type& __modeType);
+            controlling_type(const modeType_type& arg__modeType);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(modeType, modeType_type);
 
@@ -3053,7 +3053,7 @@ namespace ISO_9506_MMS_1 {
 
         Reset_Request();
 
-        Reset_Request(const Identifier& __programInvocationName);
+        Reset_Request(const Identifier& arg__programInvocationName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
 
@@ -3070,7 +3070,7 @@ namespace ISO_9506_MMS_1 {
 
         Kill_Request();
 
-        Kill_Request(const Identifier& __programInvocationName);
+        Kill_Request(const Identifier& arg__programInvocationName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
 
@@ -3118,20 +3118,20 @@ namespace ISO_9506_MMS_1 {
 
         GetProgramInvocationAttributes_Response();
 
-        GetProgramInvocationAttributes_Response(const MMS_Object_Module_1::ProgramInvocationState& __state,
-                const listOfDomainNames_type& __listOfDomainNames,
-                const bool& __mmsDeletable,
-                const bool& __reusable,
-                const bool& __monitor,
-                const executionArgument_type& __executionArgument);
+        GetProgramInvocationAttributes_Response(const MMS_Object_Module_1::ProgramInvocationState& arg__state,
+                const listOfDomainNames_type& arg__listOfDomainNames,
+                const bool& arg__mmsDeletable,
+                const bool& arg__reusable,
+                const bool& arg__monitor,
+                const executionArgument_type& arg__executionArgument);
 
-        GetProgramInvocationAttributes_Response(boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> __state,
-                boost::shared_ptr< listOfDomainNames_type> __listOfDomainNames,
-                boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< bool> __reusable,
-                boost::shared_ptr< bool> __monitor,
-                boost::shared_ptr< executionArgument_type> __executionArgument,
-                boost::shared_ptr< Identifier> __accessControlList);
+        GetProgramInvocationAttributes_Response(boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> arg__state,
+                boost::shared_ptr< listOfDomainNames_type> arg__listOfDomainNames,
+                boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< bool> arg__reusable,
+                boost::shared_ptr< bool> arg__monitor,
+                boost::shared_ptr< executionArgument_type> arg__executionArgument,
+                boost::shared_ptr< Identifier> arg__accessControlList);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(state, MMS_Object_Module_1::ProgramInvocationState);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfDomainNames, listOfDomainNames_type);
@@ -3209,12 +3209,12 @@ namespace ISO_9506_MMS_1 {
 
                 controlling_type();
 
-                controlling_type(const controlledPI_type& __controlledPI,
-                        const runningMode_type& __runningMode);
+                controlling_type(const controlledPI_type& arg__controlledPI,
+                        const runningMode_type& arg__runningMode);
 
-                controlling_type(boost::shared_ptr< controlledPI_type> __controlledPI,
-                        boost::shared_ptr< visiblestring_type> __programLocation,
-                        boost::shared_ptr< runningMode_type> __runningMode);
+                controlling_type(boost::shared_ptr< controlledPI_type> arg__controlledPI,
+                        boost::shared_ptr< visiblestring_type> arg__programLocation,
+                        boost::shared_ptr< runningMode_type> arg__runningMode);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(controlledPI, controlledPI_type);
                 BOOST_ASN_VALUE_OPTIONAL_DECL(programLocation, visiblestring_type);
@@ -3268,8 +3268,8 @@ namespace ISO_9506_MMS_1 {
 
         CS_GetProgramInvocationAttributes_Response();
 
-        CS_GetProgramInvocationAttributes_Response(const int& __errorCode,
-                const control_type& __control);
+        CS_GetProgramInvocationAttributes_Response(const int& arg__errorCode,
+                const control_type& arg__control);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(errorCode, int);
         BOOST_ASN_VALUE_HOLDERH_DECL(control, control_type);
@@ -3291,8 +3291,8 @@ namespace ISO_9506_MMS_1 {
 
         Select_Request();
 
-        Select_Request(boost::shared_ptr< Identifier> __controlling,
-                boost::shared_ptr< controlled_type> __controlled);
+        Select_Request(boost::shared_ptr< Identifier> arg__controlling,
+                boost::shared_ptr< controlled_type> arg__controlled);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(controlling, Identifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(controlled, controlled_type);
@@ -3311,10 +3311,10 @@ namespace ISO_9506_MMS_1 {
 
         AlterProgramInvocationAttributes_Request();
 
-        AlterProgramInvocationAttributes_Request(const Identifier& __programInvocation);
+        AlterProgramInvocationAttributes_Request(const Identifier& arg__programInvocation);
 
-        AlterProgramInvocationAttributes_Request(boost::shared_ptr< Identifier> __programInvocation,
-                boost::shared_ptr< StartCount> __startCount);
+        AlterProgramInvocationAttributes_Request(boost::shared_ptr< Identifier> arg__programInvocation,
+                boost::shared_ptr< StartCount> arg__startCount);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocation, Identifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(startCount, StartCount);
@@ -3337,14 +3337,14 @@ namespace ISO_9506_MMS_1 {
 
         ReconfigureProgramInvocation_Request();
 
-        ReconfigureProgramInvocation_Request(const Identifier& __oldProgramInvocationName,
-                const domainsToAdd_type& __domainsToAdd,
-                const domainsToRemove_type& __domainsToRemove);
+        ReconfigureProgramInvocation_Request(const Identifier& arg__oldProgramInvocationName,
+                const domainsToAdd_type& arg__domainsToAdd,
+                const domainsToRemove_type& arg__domainsToRemove);
 
-        ReconfigureProgramInvocation_Request(boost::shared_ptr< Identifier> __oldProgramInvocationName,
-                boost::shared_ptr< Identifier> __newProgramInvocationName,
-                boost::shared_ptr< domainsToAdd_type> __domainsToAdd,
-                boost::shared_ptr< domainsToRemove_type> __domainsToRemove);
+        ReconfigureProgramInvocation_Request(boost::shared_ptr< Identifier> arg__oldProgramInvocationName,
+                boost::shared_ptr< Identifier> arg__newProgramInvocationName,
+                boost::shared_ptr< domainsToAdd_type> arg__domainsToAdd,
+                boost::shared_ptr< domainsToRemove_type> arg__domainsToRemove);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(oldProgramInvocationName, Identifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(newProgramInvocationName, Identifier);
@@ -3386,14 +3386,14 @@ namespace ISO_9506_MMS_1 {
 
             beginDomainDef_type();
 
-            beginDomainDef_type(const Identifier& __domainName,
-                    const capabilities_type& __capabilities,
-                    const bool& __sharable);
+            beginDomainDef_type(const Identifier& arg__domainName,
+                    const capabilities_type& arg__capabilities,
+                    const bool& arg__sharable);
 
-            beginDomainDef_type(boost::shared_ptr< Identifier> __domainName,
-                    boost::shared_ptr< capabilities_type> __capabilities,
-                    boost::shared_ptr< bool> __sharable,
-                    boost::shared_ptr< LoadData> __loadData);
+            beginDomainDef_type(boost::shared_ptr< Identifier> arg__domainName,
+                    boost::shared_ptr< capabilities_type> arg__capabilities,
+                    boost::shared_ptr< bool> arg__sharable,
+                    boost::shared_ptr< LoadData> arg__loadData);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
             BOOST_ASN_VALUE_HOLDERH_DECL(capabilities, capabilities_type);
@@ -3414,8 +3414,8 @@ namespace ISO_9506_MMS_1 {
 
             continueDomainDef_type();
 
-            continueDomainDef_type(const Identifier& __domainName,
-                    const LoadData& __loadData);
+            continueDomainDef_type(const Identifier& arg__domainName,
+                    const LoadData& arg__loadData);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
             BOOST_ASN_VALUE_HOLDERH_DECL(loadData, LoadData);
@@ -3436,14 +3436,14 @@ namespace ISO_9506_MMS_1 {
 
             piDefinition_type();
 
-            piDefinition_type(const Identifier& __piName,
-                    const listOfDomains_type& __listOfDomains);
+            piDefinition_type(const Identifier& arg__piName,
+                    const listOfDomains_type& arg__listOfDomains);
 
-            piDefinition_type(boost::shared_ptr< Identifier> __piName,
-                    boost::shared_ptr< listOfDomains_type> __listOfDomains,
-                    boost::shared_ptr< bool> __reusable,
-                    boost::shared_ptr< bool> __monitorType,
-                    boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> __pIState);
+            piDefinition_type(boost::shared_ptr< Identifier> arg__piName,
+                    boost::shared_ptr< listOfDomains_type> arg__listOfDomains,
+                    boost::shared_ptr< bool> arg__reusable,
+                    boost::shared_ptr< bool> arg__monitorType,
+                    boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> arg__pIState);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(piName, Identifier);
             BOOST_ASN_VALUE_HOLDERH_DECL(listOfDomains, listOfDomains_type);
@@ -3511,10 +3511,10 @@ namespace ISO_9506_MMS_1 {
 
         UnitControlLoadSegment_Response();
 
-        UnitControlLoadSegment_Response(const controlElements_type& __controlElements);
+        UnitControlLoadSegment_Response(const controlElements_type& arg__controlElements);
 
-        UnitControlLoadSegment_Response(boost::shared_ptr< controlElements_type> __controlElements,
-                boost::shared_ptr< bool> __moreFollows);
+        UnitControlLoadSegment_Response(boost::shared_ptr< controlElements_type> arg__controlElements,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(controlElements, controlElements_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -3560,10 +3560,10 @@ namespace ISO_9506_MMS_1 {
 
         UnitControlUpload_Request();
 
-        UnitControlUpload_Request(const Identifier& __unitControlName);
+        UnitControlUpload_Request(const Identifier& arg__unitControlName);
 
-        UnitControlUpload_Request(boost::shared_ptr< Identifier> __unitControlName,
-                boost::shared_ptr< continueAfter_type> __continueAfter);
+        UnitControlUpload_Request(boost::shared_ptr< Identifier> arg__unitControlName,
+                boost::shared_ptr< continueAfter_type> arg__continueAfter);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(unitControlName, Identifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, continueAfter_type);
@@ -3613,10 +3613,10 @@ namespace ISO_9506_MMS_1 {
 
         UnitControlUpload_Response();
 
-        UnitControlUpload_Response(const controlElements_type& __controlElements);
+        UnitControlUpload_Response(const controlElements_type& arg__controlElements);
 
-        UnitControlUpload_Response(boost::shared_ptr< controlElements_type> __controlElements,
-                boost::shared_ptr< nextElement_type> __nextElement);
+        UnitControlUpload_Response(boost::shared_ptr< controlElements_type> arg__controlElements,
+                boost::shared_ptr< nextElement_type> arg__nextElement);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(controlElements, controlElements_type);
         BOOST_ASN_VALUE_OPTIONAL_DECL(nextElement, nextElement_type);
@@ -3662,10 +3662,10 @@ namespace ISO_9506_MMS_1 {
 
         StartUnitControl_Request();
 
-        StartUnitControl_Request(const Identifier& __unitControlName);
+        StartUnitControl_Request(const Identifier& arg__unitControlName);
 
-        StartUnitControl_Request(boost::shared_ptr< Identifier> __unitControlName,
-                boost::shared_ptr< executionArgument_type> __executionArgument);
+        StartUnitControl_Request(boost::shared_ptr< Identifier> arg__unitControlName,
+                boost::shared_ptr< executionArgument_type> arg__executionArgument);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(unitControlName, Identifier);
         BOOST_ASN_VALUE_OPTIONAL_DECL(executionArgument, executionArgument_type);
@@ -3684,8 +3684,8 @@ namespace ISO_9506_MMS_1 {
 
         StartUnitControl_Error();
 
-        StartUnitControl_Error(const Identifier& __programInvocationName,
-                const MMS_Object_Module_1::ProgramInvocationState& __programInvocationState);
+        StartUnitControl_Error(const Identifier& arg__programInvocationName,
+                const MMS_Object_Module_1::ProgramInvocationState& arg__programInvocationState);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
@@ -3704,8 +3704,8 @@ namespace ISO_9506_MMS_1 {
 
         StopUnitControl_Error();
 
-        StopUnitControl_Error(const Identifier& __programInvocationName,
-                const MMS_Object_Module_1::ProgramInvocationState& __programInvocationState);
+        StopUnitControl_Error(const Identifier& arg__programInvocationName,
+                const MMS_Object_Module_1::ProgramInvocationState& arg__programInvocationState);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
@@ -3728,9 +3728,9 @@ namespace ISO_9506_MMS_1 {
 
         CreateUnitControl_Request();
 
-        CreateUnitControl_Request(const Identifier& __unitControl,
-                const domains_type& __domains,
-                const programInvocations_type& __programInvocations);
+        CreateUnitControl_Request(const Identifier& arg__unitControl,
+                const domains_type& arg__domains,
+                const programInvocations_type& arg__programInvocations);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(unitControl, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
@@ -3755,9 +3755,9 @@ namespace ISO_9506_MMS_1 {
 
         AddToUnitControl_Request();
 
-        AddToUnitControl_Request(const Identifier& __unitControl,
-                const domains_type& __domains,
-                const programInvocations_type& __programInvocations);
+        AddToUnitControl_Request(const Identifier& arg__unitControl,
+                const domains_type& arg__domains,
+                const programInvocations_type& arg__programInvocations);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(unitControl, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
@@ -3782,9 +3782,9 @@ namespace ISO_9506_MMS_1 {
 
         RemoveFromUnitControl_Request();
 
-        RemoveFromUnitControl_Request(const Identifier& __unitControl,
-                const domains_type& __domains,
-                const programInvocations_type& __programInvocations);
+        RemoveFromUnitControl_Request(const Identifier& arg__unitControl,
+                const domains_type& arg__domains,
+                const programInvocations_type& arg__programInvocations);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(unitControl, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
@@ -3809,8 +3809,8 @@ namespace ISO_9506_MMS_1 {
 
         GetUnitControlAttributes_Response();
 
-        GetUnitControlAttributes_Response(const domains_type& __domains,
-                const programInvocations_type& __programInvocations);
+        GetUnitControlAttributes_Response(const domains_type& arg__domains,
+                const programInvocations_type& arg__programInvocations);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
         BOOST_ASN_VALUE_HOLDERH_DECL(programInvocations, programInvocations_type);
@@ -3829,12 +3829,12 @@ namespace ISO_9506_MMS_1 {
 
         LoadUnitControlFromFile_Request();
 
-        LoadUnitControlFromFile_Request(const Identifier& __unitControlName,
-                const FileName& __fileName);
+        LoadUnitControlFromFile_Request(const Identifier& arg__unitControlName,
+                const FileName& arg__fileName);
 
-        LoadUnitControlFromFile_Request(boost::shared_ptr< Identifier> __unitControlName,
-                boost::shared_ptr< FileName> __fileName,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __thirdParty);
+        LoadUnitControlFromFile_Request(boost::shared_ptr< Identifier> arg__unitControlName,
+                boost::shared_ptr< FileName> arg__fileName,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__thirdParty);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(unitControlName, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(fileName, FileName);
@@ -3881,12 +3881,12 @@ namespace ISO_9506_MMS_1 {
 
         StoreUnitControlToFile_Request();
 
-        StoreUnitControlToFile_Request(const Identifier& __unitControlName,
-                const FileName& __fileName);
+        StoreUnitControlToFile_Request(const Identifier& arg__unitControlName,
+                const FileName& arg__fileName);
 
-        StoreUnitControlToFile_Request(boost::shared_ptr< Identifier> __unitControlName,
-                boost::shared_ptr< FileName> __fileName,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __thirdParty);
+        StoreUnitControlToFile_Request(boost::shared_ptr< Identifier> arg__unitControlName,
+                boost::shared_ptr< FileName> arg__fileName,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__thirdParty);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(unitControlName, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(fileName, FileName);
@@ -3965,8 +3965,8 @@ namespace ISO_9506_MMS_1 {
 
             named_type();
 
-            named_type(const Identifier& __componentName,
-                    const AlternateAccessSelection& __access);
+            named_type(const Identifier& arg__componentName,
+                    const AlternateAccessSelection& arg__access);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(componentName, Identifier);
             BOOST_ASN_VALUE_HOLDERH_DECL(access, AlternateAccessSelection);
@@ -4029,8 +4029,8 @@ namespace ISO_9506_MMS_1 {
 
                     indexRange_type();
 
-                    indexRange_type(const Unsigned32& __lowIndex,
-                            const Unsigned32& __numberOfElements);
+                    indexRange_type(const Unsigned32& arg__lowIndex,
+                            const Unsigned32& arg__numberOfElements);
 
                     BOOST_ASN_VALUE_HOLDERH_DECL(lowIndex, Unsigned32);
                     BOOST_ASN_VALUE_HOLDERH_DECL(numberOfElements, Unsigned32);
@@ -4061,8 +4061,8 @@ namespace ISO_9506_MMS_1 {
 
             selectAlternateAccess_type();
 
-            selectAlternateAccess_type(const accessSelection_type& __accessSelection,
-                    const AlternateAccess& __alternateAccess);
+            selectAlternateAccess_type(const accessSelection_type& arg__accessSelection,
+                    const AlternateAccess& arg__alternateAccess);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(accessSelection, accessSelection_type);
             BOOST_ASN_VALUE_HOLDERH_DECL(alternateAccess, AlternateAccess);
@@ -4093,8 +4093,8 @@ namespace ISO_9506_MMS_1 {
 
                 indexRange_type();
 
-                indexRange_type(const Unsigned32& __lowIndex,
-                        const Unsigned32& __numberOfElements);
+                indexRange_type(const Unsigned32& arg__lowIndex,
+                        const Unsigned32& arg__numberOfElements);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(lowIndex, Unsigned32);
                 BOOST_ASN_VALUE_HOLDERH_DECL(numberOfElements, Unsigned32);
@@ -4245,10 +4245,10 @@ namespace ISO_9506_MMS_1 {
 
             listOfVariable_type_sequence_of();
 
-            listOfVariable_type_sequence_of(const VariableSpecification& __variableSpecification);
+            listOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification);
 
-            listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> __variableSpecification,
-                    boost::shared_ptr< AlternateAccess> __alternateAccess);
+            listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
+                    boost::shared_ptr< AlternateAccess> arg__alternateAccess);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(variableSpecification, VariableSpecification);
             BOOST_ASN_VALUE_OPTIONAL_DECL(alternateAccess, AlternateAccess);
@@ -4299,8 +4299,8 @@ namespace ISO_9506_MMS_1 {
 
             variableDescription_type();
 
-            variableDescription_type(const MMS_Object_Module_1::Address& __address,
-                    const TypeSpecification& __typeSpecification);
+            variableDescription_type(const MMS_Object_Module_1::Address& arg__address,
+                    const TypeSpecification& arg__typeSpecification);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(address, MMS_Object_Module_1::Address);
             BOOST_ASN_VALUE_HOLDERH_DECL(typeSpecification, TypeSpecification);
@@ -4337,10 +4337,10 @@ namespace ISO_9506_MMS_1 {
 
         Read_Request();
 
-        Read_Request(const VariableAccessSpecification& __variableAccessSpecification);
+        Read_Request(const VariableAccessSpecification& arg__variableAccessSpecification);
 
-        Read_Request(boost::shared_ptr< bool> __specificationWithResult,
-                boost::shared_ptr< VariableAccessSpecification> __variableAccessSpecification);
+        Read_Request(boost::shared_ptr< bool> arg__specificationWithResult,
+                boost::shared_ptr< VariableAccessSpecification> arg__variableAccessSpecification);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(specificationWithResult, bool);
         BOOST_ASN_VALUE_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
@@ -4362,10 +4362,10 @@ namespace ISO_9506_MMS_1 {
 
         Read_Response();
 
-        Read_Response(const listOfAccessResult_type& __listOfAccessResult);
+        Read_Response(const listOfAccessResult_type& arg__listOfAccessResult);
 
-        Read_Response(boost::shared_ptr< VariableAccessSpecification> __variableAccessSpecification,
-                boost::shared_ptr< listOfAccessResult_type> __listOfAccessResult);
+        Read_Response(boost::shared_ptr< VariableAccessSpecification> arg__variableAccessSpecification,
+                boost::shared_ptr< listOfAccessResult_type> arg__listOfAccessResult);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(variableAccessSpecification, VariableAccessSpecification);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfAccessResult, listOfAccessResult_type);
@@ -4387,8 +4387,8 @@ namespace ISO_9506_MMS_1 {
 
         Write_Request();
 
-        Write_Request(const VariableAccessSpecification& __variableAccessSpecification,
-                const listOfData_type& __listOfData);
+        Write_Request(const VariableAccessSpecification& arg__variableAccessSpecification,
+                const listOfData_type& arg__listOfData);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfData, listOfData_type);
@@ -4432,8 +4432,8 @@ namespace ISO_9506_MMS_1 {
 
         InformationReport();
 
-        InformationReport(const VariableAccessSpecification& __variableAccessSpecification,
-                const listOfAccessResult_type& __listOfAccessResult);
+        InformationReport(const VariableAccessSpecification& arg__variableAccessSpecification,
+                const listOfAccessResult_type& arg__listOfAccessResult);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfAccessResult, listOfAccessResult_type);
@@ -4476,14 +4476,14 @@ namespace ISO_9506_MMS_1 {
 
         GetVariableAccessAttributes_Response();
 
-        GetVariableAccessAttributes_Response(const bool& __mmsDeletable,
-                const MMS_Object_Module_1::TypeDescription& __typeDescription);
+        GetVariableAccessAttributes_Response(const bool& arg__mmsDeletable,
+                const MMS_Object_Module_1::TypeDescription& arg__typeDescription);
 
-        GetVariableAccessAttributes_Response(boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< MMS_Object_Module_1::Address> __address,
-                boost::shared_ptr< MMS_Object_Module_1::TypeDescription> __typeDescription,
-                boost::shared_ptr< Identifier> __accessControlList,
-                boost::shared_ptr< visiblestring_type> __meaning);
+        GetVariableAccessAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< MMS_Object_Module_1::Address> arg__address,
+                boost::shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
+                boost::shared_ptr< Identifier> arg__accessControlList,
+                boost::shared_ptr< visiblestring_type> arg__meaning);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
         BOOST_ASN_VALUE_OPTIONAL_DECL(address, MMS_Object_Module_1::Address);
@@ -4508,12 +4508,12 @@ namespace ISO_9506_MMS_1 {
 
         DefineNamedVariable_Request();
 
-        DefineNamedVariable_Request(const ObjectName& __variableName,
-                const MMS_Object_Module_1::Address& __address);
+        DefineNamedVariable_Request(const ObjectName& arg__variableName,
+                const MMS_Object_Module_1::Address& arg__address);
 
-        DefineNamedVariable_Request(boost::shared_ptr< ObjectName> __variableName,
-                boost::shared_ptr< MMS_Object_Module_1::Address> __address,
-                boost::shared_ptr< TypeSpecification> __typeSpecification);
+        DefineNamedVariable_Request(boost::shared_ptr< ObjectName> arg__variableName,
+                boost::shared_ptr< MMS_Object_Module_1::Address> arg__address,
+                boost::shared_ptr< TypeSpecification> arg__typeSpecification);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(variableName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(address, MMS_Object_Module_1::Address);
@@ -4543,9 +4543,9 @@ namespace ISO_9506_MMS_1 {
 
         DeleteVariableAccess_Request();
 
-        DeleteVariableAccess_Request(boost::shared_ptr< int> __scopeOfDelete,
-                boost::shared_ptr< listOfName_type> __listOfName,
-                boost::shared_ptr< Identifier> __domainName);
+        DeleteVariableAccess_Request(boost::shared_ptr< int> arg__scopeOfDelete,
+                boost::shared_ptr< listOfName_type> arg__listOfName,
+                boost::shared_ptr< Identifier> arg__domainName);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(scopeOfDelete, int);
         BOOST_ASN_VALUE_OPTIONAL_DECL(listOfName, listOfName_type);
@@ -4566,8 +4566,8 @@ namespace ISO_9506_MMS_1 {
 
         DeleteVariableAccess_Response();
 
-        DeleteVariableAccess_Response(const Unsigned32& __numberMatched,
-                const Unsigned32& __numberDeleted);
+        DeleteVariableAccess_Response(const Unsigned32& arg__numberMatched,
+                const Unsigned32& arg__numberDeleted);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(numberMatched, Unsigned32);
         BOOST_ASN_VALUE_HOLDERH_DECL(numberDeleted, Unsigned32);
@@ -4590,10 +4590,10 @@ namespace ISO_9506_MMS_1 {
 
             listOfVariable_type_sequence_of();
 
-            listOfVariable_type_sequence_of(const VariableSpecification& __variableSpecification);
+            listOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification);
 
-            listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> __variableSpecification,
-                    boost::shared_ptr< AlternateAccess> __alternateAccess);
+            listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
+                    boost::shared_ptr< AlternateAccess> arg__alternateAccess);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(variableSpecification, VariableSpecification);
             BOOST_ASN_VALUE_OPTIONAL_DECL(alternateAccess, AlternateAccess);
@@ -4613,8 +4613,8 @@ namespace ISO_9506_MMS_1 {
 
         DefineNamedVariableList_Request();
 
-        DefineNamedVariableList_Request(const ObjectName& __variableListName,
-                const listOfVariable_type& __listOfVariable);
+        DefineNamedVariableList_Request(const ObjectName& arg__variableListName,
+                const listOfVariable_type& arg__listOfVariable);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(variableListName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfVariable, listOfVariable_type);
@@ -4637,10 +4637,10 @@ namespace ISO_9506_MMS_1 {
 
             listOfVariable_type_sequence_of();
 
-            listOfVariable_type_sequence_of(const VariableSpecification& __variableSpecification);
+            listOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification);
 
-            listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> __variableSpecification,
-                    boost::shared_ptr< AlternateAccess> __alternateAccess);
+            listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
+                    boost::shared_ptr< AlternateAccess> arg__alternateAccess);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(variableSpecification, VariableSpecification);
             BOOST_ASN_VALUE_OPTIONAL_DECL(alternateAccess, AlternateAccess);
@@ -4660,12 +4660,12 @@ namespace ISO_9506_MMS_1 {
 
         GetNamedVariableListAttributes_Response();
 
-        GetNamedVariableListAttributes_Response(const bool& __mmsDeletable,
-                const listOfVariable_type& __listOfVariable);
+        GetNamedVariableListAttributes_Response(const bool& arg__mmsDeletable,
+                const listOfVariable_type& arg__listOfVariable);
 
-        GetNamedVariableListAttributes_Response(boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< listOfVariable_type> __listOfVariable,
-                boost::shared_ptr< Identifier> __accessControlList);
+        GetNamedVariableListAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< listOfVariable_type> arg__listOfVariable,
+                boost::shared_ptr< Identifier> arg__accessControlList);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfVariable, listOfVariable_type);
@@ -4695,9 +4695,9 @@ namespace ISO_9506_MMS_1 {
 
         DeleteNamedVariableList_Request();
 
-        DeleteNamedVariableList_Request(boost::shared_ptr< int> __scopeOfDelete,
-                boost::shared_ptr< listOfVariableListName_type> __listOfVariableListName,
-                boost::shared_ptr< Identifier> __domainName);
+        DeleteNamedVariableList_Request(boost::shared_ptr< int> arg__scopeOfDelete,
+                boost::shared_ptr< listOfVariableListName_type> arg__listOfVariableListName,
+                boost::shared_ptr< Identifier> arg__domainName);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(scopeOfDelete, int);
         BOOST_ASN_VALUE_OPTIONAL_DECL(listOfVariableListName, listOfVariableListName_type);
@@ -4718,8 +4718,8 @@ namespace ISO_9506_MMS_1 {
 
         DeleteNamedVariableList_Response();
 
-        DeleteNamedVariableList_Response(const Unsigned32& __numberMatched,
-                const Unsigned32& __numberDeleted);
+        DeleteNamedVariableList_Response(const Unsigned32& arg__numberMatched,
+                const Unsigned32& arg__numberDeleted);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(numberMatched, Unsigned32);
         BOOST_ASN_VALUE_HOLDERH_DECL(numberDeleted, Unsigned32);
@@ -4738,8 +4738,8 @@ namespace ISO_9506_MMS_1 {
 
         DefineNamedType_Request();
 
-        DefineNamedType_Request(const ObjectName& __typeName,
-                const TypeSpecification& __typeSpecification);
+        DefineNamedType_Request(const ObjectName& arg__typeName,
+                const TypeSpecification& arg__typeSpecification);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(typeName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(typeSpecification, TypeSpecification);
@@ -4758,13 +4758,13 @@ namespace ISO_9506_MMS_1 {
 
         GetNamedTypeAttributes_Response();
 
-        GetNamedTypeAttributes_Response(const bool& __mmsDeletable,
-                const TypeSpecification& __typeSpecification);
+        GetNamedTypeAttributes_Response(const bool& arg__mmsDeletable,
+                const TypeSpecification& arg__typeSpecification);
 
-        GetNamedTypeAttributes_Response(boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< TypeSpecification> __typeSpecification,
-                boost::shared_ptr< Identifier> __accessControlList,
-                boost::shared_ptr< visiblestring_type> __meaning);
+        GetNamedTypeAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< TypeSpecification> arg__typeSpecification,
+                boost::shared_ptr< Identifier> arg__accessControlList,
+                boost::shared_ptr< visiblestring_type> arg__meaning);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
         BOOST_ASN_VALUE_HOLDERH_DECL(typeSpecification, TypeSpecification);
@@ -4796,9 +4796,9 @@ namespace ISO_9506_MMS_1 {
 
         DeleteNamedType_Request();
 
-        DeleteNamedType_Request(boost::shared_ptr< int> __scopeOfDelete,
-                boost::shared_ptr< listOfTypeName_type> __listOfTypeName,
-                boost::shared_ptr< Identifier> __domainName);
+        DeleteNamedType_Request(boost::shared_ptr< int> arg__scopeOfDelete,
+                boost::shared_ptr< listOfTypeName_type> arg__listOfTypeName,
+                boost::shared_ptr< Identifier> arg__domainName);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(scopeOfDelete, int);
         BOOST_ASN_VALUE_OPTIONAL_DECL(listOfTypeName, listOfTypeName_type);
@@ -4819,8 +4819,8 @@ namespace ISO_9506_MMS_1 {
 
         DeleteNamedType_Response();
 
-        DeleteNamedType_Response(const Unsigned32& __numberMatched,
-                const Unsigned32& __numberDeleted);
+        DeleteNamedType_Response(const Unsigned32& arg__numberMatched,
+                const Unsigned32& arg__numberDeleted);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(numberMatched, Unsigned32);
         BOOST_ASN_VALUE_HOLDERH_DECL(numberDeleted, Unsigned32);
@@ -4842,8 +4842,8 @@ namespace ISO_9506_MMS_1 {
 
         ExchangeData_Request();
 
-        ExchangeData_Request(const ObjectName& __dataExchangeName,
-                const listOfRequestData_type& __listOfRequestData);
+        ExchangeData_Request(const ObjectName& arg__dataExchangeName,
+                const listOfRequestData_type& arg__listOfRequestData);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(dataExchangeName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfRequestData, listOfRequestData_type);
@@ -4865,7 +4865,7 @@ namespace ISO_9506_MMS_1 {
 
         ExchangeData_Response();
 
-        ExchangeData_Response(const listOfResponseData_type& __listOfResponseData);
+        ExchangeData_Response(const listOfResponseData_type& arg__listOfResponseData);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfResponseData, listOfResponseData_type);
 
@@ -4885,15 +4885,15 @@ namespace ISO_9506_MMS_1 {
 
         GetDataExchangeAttributes_Response();
 
-        GetDataExchangeAttributes_Response(const bool& __inUse,
-                const listOfRequestTypeDescriptions_type& __listOfRequestTypeDescriptions,
-                const listOfResponseTypeDescriptions_type& __listOfResponseTypeDescriptions);
+        GetDataExchangeAttributes_Response(const bool& arg__inUse,
+                const listOfRequestTypeDescriptions_type& arg__listOfRequestTypeDescriptions,
+                const listOfResponseTypeDescriptions_type& arg__listOfResponseTypeDescriptions);
 
-        GetDataExchangeAttributes_Response(boost::shared_ptr< bool> __inUse,
-                boost::shared_ptr< listOfRequestTypeDescriptions_type> __listOfRequestTypeDescriptions,
-                boost::shared_ptr< listOfResponseTypeDescriptions_type> __listOfResponseTypeDescriptions,
-                boost::shared_ptr< Identifier> __programInvocation,
-                boost::shared_ptr< Identifier> __accessControlList);
+        GetDataExchangeAttributes_Response(boost::shared_ptr< bool> arg__inUse,
+                boost::shared_ptr< listOfRequestTypeDescriptions_type> arg__listOfRequestTypeDescriptions,
+                boost::shared_ptr< listOfResponseTypeDescriptions_type> arg__listOfResponseTypeDescriptions,
+                boost::shared_ptr< Identifier> arg__programInvocation,
+                boost::shared_ptr< Identifier> arg__accessControlList);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(inUse, bool);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfRequestTypeDescriptions, listOfRequestTypeDescriptions_type);
@@ -4921,16 +4921,16 @@ namespace ISO_9506_MMS_1 {
 
         TakeControl_Request();
 
-        TakeControl_Request(const ObjectName& __semaphoreName);
+        TakeControl_Request(const ObjectName& arg__semaphoreName);
 
-        TakeControl_Request(boost::shared_ptr< ObjectName> __semaphoreName,
-                boost::shared_ptr< Identifier> __namedToken,
-                boost::shared_ptr< MMS_Object_Module_1::Priority> __priority,
-                boost::shared_ptr< Unsigned32> __acceptableDelay,
-                boost::shared_ptr< Unsigned32> __controlTimeOut,
-                boost::shared_ptr< bool> __abortOnTimeOut,
-                boost::shared_ptr< bool> __relinquishIfConnectionLost,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __applicationToPreempt);
+        TakeControl_Request(boost::shared_ptr< ObjectName> arg__semaphoreName,
+                boost::shared_ptr< Identifier> arg__namedToken,
+                boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
+                boost::shared_ptr< Unsigned32> arg__acceptableDelay,
+                boost::shared_ptr< Unsigned32> arg__controlTimeOut,
+                boost::shared_ptr< bool> arg__abortOnTimeOut,
+                boost::shared_ptr< bool> arg__relinquishIfConnectionLost,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__applicationToPreempt);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(namedToken, Identifier);
@@ -4985,10 +4985,10 @@ namespace ISO_9506_MMS_1 {
 
         RelinquishControl_Request();
 
-        RelinquishControl_Request(const ObjectName& __semaphoreName);
+        RelinquishControl_Request(const ObjectName& arg__semaphoreName);
 
-        RelinquishControl_Request(boost::shared_ptr< ObjectName> __semaphoreName,
-                boost::shared_ptr< Identifier> __namedToken);
+        RelinquishControl_Request(boost::shared_ptr< ObjectName> arg__semaphoreName,
+                boost::shared_ptr< Identifier> arg__namedToken);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(namedToken, Identifier);
@@ -5007,8 +5007,8 @@ namespace ISO_9506_MMS_1 {
 
         DefineSemaphore_Request();
 
-        DefineSemaphore_Request(const ObjectName& __semaphoreName,
-                const Unsigned16& __numberOfTokens);
+        DefineSemaphore_Request(const ObjectName& arg__semaphoreName,
+                const Unsigned16& arg__numberOfTokens);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(numberOfTokens, Unsigned16);
@@ -5031,18 +5031,18 @@ namespace ISO_9506_MMS_1 {
 
         ReportSemaphoreStatus_Response();
 
-        ReportSemaphoreStatus_Response(const bool& __mmsDeletable,
-                const int& __classV,
-                const Unsigned16& __numberOfTokens,
-                const Unsigned16& __numberOfOwnedTokens,
-                const Unsigned16& __numberOfHungTokens);
+        ReportSemaphoreStatus_Response(const bool& arg__mmsDeletable,
+                const int& arg__classV,
+                const Unsigned16& arg__numberOfTokens,
+                const Unsigned16& arg__numberOfOwnedTokens,
+                const Unsigned16& arg__numberOfHungTokens);
 
-        ReportSemaphoreStatus_Response(boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< int> __classV,
-                boost::shared_ptr< Unsigned16> __numberOfTokens,
-                boost::shared_ptr< Unsigned16> __numberOfOwnedTokens,
-                boost::shared_ptr< Unsigned16> __numberOfHungTokens,
-                boost::shared_ptr< Identifier> __accessControlList);
+        ReportSemaphoreStatus_Response(boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< int> arg__classV,
+                boost::shared_ptr< Unsigned16> arg__numberOfTokens,
+                boost::shared_ptr< Unsigned16> arg__numberOfOwnedTokens,
+                boost::shared_ptr< Unsigned16> arg__numberOfHungTokens,
+                boost::shared_ptr< Identifier> arg__accessControlList);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
         BOOST_ASN_VALUE_HOLDERH_DECL(classV, int);
@@ -5069,10 +5069,10 @@ namespace ISO_9506_MMS_1 {
 
         ReportPoolSemaphoreStatus_Request();
 
-        ReportPoolSemaphoreStatus_Request(const ObjectName& __semaphoreName);
+        ReportPoolSemaphoreStatus_Request(const ObjectName& arg__semaphoreName);
 
-        ReportPoolSemaphoreStatus_Request(boost::shared_ptr< ObjectName> __semaphoreName,
-                boost::shared_ptr< Identifier> __nameToStartAfter);
+        ReportPoolSemaphoreStatus_Request(boost::shared_ptr< ObjectName> arg__semaphoreName,
+                boost::shared_ptr< Identifier> arg__nameToStartAfter);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(nameToStartAfter, Identifier);
@@ -5123,10 +5123,10 @@ namespace ISO_9506_MMS_1 {
 
         ReportPoolSemaphoreStatus_Response();
 
-        ReportPoolSemaphoreStatus_Response(const listOfNamedTokens_type& __listOfNamedTokens);
+        ReportPoolSemaphoreStatus_Response(const listOfNamedTokens_type& arg__listOfNamedTokens);
 
-        ReportPoolSemaphoreStatus_Response(boost::shared_ptr< listOfNamedTokens_type> __listOfNamedTokens,
-                boost::shared_ptr< bool> __moreFollows);
+        ReportPoolSemaphoreStatus_Response(boost::shared_ptr< listOfNamedTokens_type> arg__listOfNamedTokens,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfNamedTokens, listOfNamedTokens_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -5150,12 +5150,12 @@ namespace ISO_9506_MMS_1 {
 
         ReportSemaphoreEntryStatus_Request();
 
-        ReportSemaphoreEntryStatus_Request(const ObjectName& __semaphoreName,
-                const int& __state);
+        ReportSemaphoreEntryStatus_Request(const ObjectName& arg__semaphoreName,
+                const int& arg__state);
 
-        ReportSemaphoreEntryStatus_Request(boost::shared_ptr< ObjectName> __semaphoreName,
-                boost::shared_ptr< int> __state,
-                boost::shared_ptr< octetstring_type> __entryIDToStartAfter);
+        ReportSemaphoreEntryStatus_Request(boost::shared_ptr< ObjectName> arg__semaphoreName,
+                boost::shared_ptr< int> arg__state,
+                boost::shared_ptr< octetstring_type> arg__entryIDToStartAfter);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(state, int);
@@ -5180,10 +5180,10 @@ namespace ISO_9506_MMS_1 {
 
         ReportSemaphoreEntryStatus_Response();
 
-        ReportSemaphoreEntryStatus_Response(const listOfSemaphoreEntry_type& __listOfSemaphoreEntry);
+        ReportSemaphoreEntryStatus_Response(const listOfSemaphoreEntry_type& arg__listOfSemaphoreEntry);
 
-        ReportSemaphoreEntryStatus_Response(boost::shared_ptr< listOfSemaphoreEntry_type> __listOfSemaphoreEntry,
-                boost::shared_ptr< bool> __moreFollows);
+        ReportSemaphoreEntryStatus_Response(boost::shared_ptr< listOfSemaphoreEntry_type> arg__listOfSemaphoreEntry,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfSemaphoreEntry, listOfSemaphoreEntry_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -5208,18 +5208,18 @@ namespace ISO_9506_MMS_1 {
 
         SemaphoreEntry();
 
-        SemaphoreEntry(const octetstring_type& __entryID,
-                const int& __entryClass,
-                const MMS_Environment_1::ApplicationReference& __applicationReference);
+        SemaphoreEntry(const octetstring_type& arg__entryID,
+                const int& arg__entryClass,
+                const MMS_Environment_1::ApplicationReference& arg__applicationReference);
 
-        SemaphoreEntry(boost::shared_ptr< octetstring_type> __entryID,
-                boost::shared_ptr< int> __entryClass,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __applicationReference,
-                boost::shared_ptr< Identifier> __namedToken,
-                boost::shared_ptr< MMS_Object_Module_1::Priority> __priority,
-                boost::shared_ptr< Unsigned32> __remainingTimeOut,
-                boost::shared_ptr< bool> __abortOnTimeOut,
-                boost::shared_ptr< bool> __relinquishIfConnectionLost);
+        SemaphoreEntry(boost::shared_ptr< octetstring_type> arg__entryID,
+                boost::shared_ptr< int> arg__entryClass,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__applicationReference,
+                boost::shared_ptr< Identifier> arg__namedToken,
+                boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
+                boost::shared_ptr< Unsigned32> arg__remainingTimeOut,
+                boost::shared_ptr< bool> arg__abortOnTimeOut,
+                boost::shared_ptr< bool> arg__relinquishIfConnectionLost);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(entryID, octetstring_type);
         BOOST_ASN_VALUE_HOLDERH_DECL(entryClass, int);
@@ -5253,15 +5253,15 @@ namespace ISO_9506_MMS_1 {
 
         AttachToSemaphore();
 
-        AttachToSemaphore(const ObjectName& __semaphoreName);
+        AttachToSemaphore(const ObjectName& arg__semaphoreName);
 
-        AttachToSemaphore(boost::shared_ptr< ObjectName> __semaphoreName,
-                boost::shared_ptr< Identifier> __namedToken,
-                boost::shared_ptr< MMS_Object_Module_1::Priority> __priority,
-                boost::shared_ptr< Unsigned32> __acceptableDelay,
-                boost::shared_ptr< Unsigned32> __controlTimeOut,
-                boost::shared_ptr< bool> __abortOnTimeOut,
-                boost::shared_ptr< bool> __relinquishIfConnectionLost);
+        AttachToSemaphore(boost::shared_ptr< ObjectName> arg__semaphoreName,
+                boost::shared_ptr< Identifier> arg__namedToken,
+                boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
+                boost::shared_ptr< Unsigned32> arg__acceptableDelay,
+                boost::shared_ptr< Unsigned32> arg__controlTimeOut,
+                boost::shared_ptr< bool> arg__abortOnTimeOut,
+                boost::shared_ptr< bool> arg__relinquishIfConnectionLost);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(namedToken, Identifier);
@@ -5294,12 +5294,12 @@ namespace ISO_9506_MMS_1 {
 
         Input_Request();
 
-        Input_Request(const Identifier& __operatorStationName);
+        Input_Request(const Identifier& arg__operatorStationName);
 
-        Input_Request(boost::shared_ptr< Identifier> __operatorStationName,
-                boost::shared_ptr< bool> __echo,
-                boost::shared_ptr< listOfPromptData_type> __listOfPromptData,
-                boost::shared_ptr< Unsigned32> __inputTimeOut);
+        Input_Request(boost::shared_ptr< Identifier> arg__operatorStationName,
+                boost::shared_ptr< bool> arg__echo,
+                boost::shared_ptr< listOfPromptData_type> arg__listOfPromptData,
+                boost::shared_ptr< Unsigned32> arg__inputTimeOut);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(operatorStationName, Identifier);
         BOOST_ASN_VALUE_DEFAULT_DECL(echo, bool);
@@ -5325,8 +5325,8 @@ namespace ISO_9506_MMS_1 {
 
         Output_Request();
 
-        Output_Request(const Identifier& __operatorStationName,
-                const listOfOutputData_type& __listOfOutputData);
+        Output_Request(const Identifier& arg__operatorStationName,
+                const listOfOutputData_type& arg__listOfOutputData);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(operatorStationName, Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfOutputData, listOfOutputData_type);
@@ -5345,10 +5345,10 @@ namespace ISO_9506_MMS_1 {
 
         TriggerEvent_Request();
 
-        TriggerEvent_Request(const ObjectName& __eventConditionName);
+        TriggerEvent_Request(const ObjectName& arg__eventConditionName);
 
-        TriggerEvent_Request(boost::shared_ptr< ObjectName> __eventConditionName,
-                boost::shared_ptr< MMS_Object_Module_1::Priority> __priority);
+        TriggerEvent_Request(boost::shared_ptr< ObjectName> arg__eventConditionName,
+                boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(priority, MMS_Object_Module_1::Priority);
@@ -5388,10 +5388,10 @@ namespace ISO_9506_MMS_1 {
 
                     success_type();
 
-                    success_type(const ConfirmedServiceResponse& __confirmedServiceResponse);
+                    success_type(const ConfirmedServiceResponse& arg__confirmedServiceResponse);
 
-                    success_type(boost::shared_ptr< ConfirmedServiceResponse> __confirmedServiceResponse,
-                            boost::shared_ptr< Response_Detail> __cs_Response_Detail);
+                    success_type(boost::shared_ptr< ConfirmedServiceResponse> arg__confirmedServiceResponse,
+                            boost::shared_ptr< Response_Detail> arg__cs_Response_Detail);
 
                     BOOST_ASN_VALUE_HOLDERH_DECL(confirmedServiceResponse, ConfirmedServiceResponse);
                     BOOST_ASN_VALUE_OPTIONAL_DECL(cs_Response_Detail, Response_Detail);
@@ -5408,10 +5408,10 @@ namespace ISO_9506_MMS_1 {
 
                     failure_type();
 
-                    failure_type(const ServiceError& __serviceError);
+                    failure_type(const ServiceError& arg__serviceError);
 
-                    failure_type(boost::shared_ptr< Unsigned32> __modifierPosition,
-                            boost::shared_ptr< ServiceError> __serviceError);
+                    failure_type(boost::shared_ptr< Unsigned32> arg__modifierPosition,
+                            boost::shared_ptr< ServiceError> arg__serviceError);
 
                     BOOST_ASN_VALUE_OPTIONAL_DECL(modifierPosition, Unsigned32);
                     BOOST_ASN_VALUE_HOLDERH_DECL(serviceError, ServiceError);
@@ -5440,8 +5440,8 @@ namespace ISO_9506_MMS_1 {
 
             actionResult_type();
 
-            actionResult_type(const ObjectName& __eventActionName,
-                    const successOrFailure_type& __successOrFailure);
+            actionResult_type(const ObjectName& arg__eventActionName,
+                    const successOrFailure_type& arg__successOrFailure);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(eventActionName, ObjectName);
             BOOST_ASN_VALUE_HOLDERH_DECL(successOrFailure, successOrFailure_type);
@@ -5458,19 +5458,19 @@ namespace ISO_9506_MMS_1 {
 
         EventNotification();
 
-        EventNotification(const ObjectName& __eventEnrollmentName,
-                const ObjectName& __eventConditionName,
-                const MMS_Object_Module_1::Severity& __severity,
-                const MMS_Object_Module_1::EventTime& __transitionTime);
+        EventNotification(const ObjectName& arg__eventEnrollmentName,
+                const ObjectName& arg__eventConditionName,
+                const MMS_Object_Module_1::Severity& arg__severity,
+                const MMS_Object_Module_1::EventTime& arg__transitionTime);
 
-        EventNotification(boost::shared_ptr< ObjectName> __eventEnrollmentName,
-                boost::shared_ptr< ObjectName> __eventConditionName,
-                boost::shared_ptr< MMS_Object_Module_1::Severity> __severity,
-                boost::shared_ptr< MMS_Object_Module_1::EC_State> __currentState,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __transitionTime,
-                boost::shared_ptr< bool> __notificationLost,
-                boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> __alarmAcknowledgmentRule,
-                boost::shared_ptr< actionResult_type> __actionResult);
+        EventNotification(boost::shared_ptr< ObjectName> arg__eventEnrollmentName,
+                boost::shared_ptr< ObjectName> arg__eventConditionName,
+                boost::shared_ptr< MMS_Object_Module_1::Severity> arg__severity,
+                boost::shared_ptr< MMS_Object_Module_1::EC_State> arg__currentState,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__transitionTime,
+                boost::shared_ptr< bool> arg__notificationLost,
+                boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule,
+                boost::shared_ptr< actionResult_type> arg__actionResult);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
@@ -5527,9 +5527,9 @@ namespace ISO_9506_MMS_1 {
 
         AcknowledgeEventNotification_Request();
 
-        AcknowledgeEventNotification_Request(const ObjectName& __eventEnrollmentName,
-                const MMS_Object_Module_1::EC_State& __acknowledgedState,
-                const MMS_Object_Module_1::EventTime& __timeOfAcknowledgedTransition);
+        AcknowledgeEventNotification_Request(const ObjectName& arg__eventEnrollmentName,
+                const MMS_Object_Module_1::EC_State& arg__acknowledgedState,
+                const MMS_Object_Module_1::EventTime& arg__timeOfAcknowledgedTransition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(acknowledgedState, MMS_Object_Module_1::EC_State);
@@ -5554,8 +5554,8 @@ namespace ISO_9506_MMS_1 {
 
             severityFilter_type();
 
-            severityFilter_type(const Unsigned8& __mostSevere,
-                    const Unsigned8& __leastSevere);
+            severityFilter_type(const Unsigned8& arg__mostSevere,
+                    const Unsigned8& arg__leastSevere);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(mostSevere, Unsigned8);
             BOOST_ASN_VALUE_HOLDERH_DECL(leastSevere, Unsigned8);
@@ -5578,11 +5578,11 @@ namespace ISO_9506_MMS_1 {
 
         GetAlarmSummary_Request();
 
-        GetAlarmSummary_Request(boost::shared_ptr< bool> __enrollmentsOnly,
-                boost::shared_ptr< bool> __activeAlarmsOnly,
-                boost::shared_ptr< int> __acknowledgementFilter,
-                boost::shared_ptr< severityFilter_type> __severityFilter,
-                boost::shared_ptr< ObjectName> __continueAfter);
+        GetAlarmSummary_Request(boost::shared_ptr< bool> arg__enrollmentsOnly,
+                boost::shared_ptr< bool> arg__activeAlarmsOnly,
+                boost::shared_ptr< int> arg__acknowledgementFilter,
+                boost::shared_ptr< severityFilter_type> arg__severityFilter,
+                boost::shared_ptr< ObjectName> arg__continueAfter);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(enrollmentsOnly, bool);
         BOOST_ASN_VALUE_DEFAULT_DECL(activeAlarmsOnly, bool);
@@ -5611,10 +5611,10 @@ namespace ISO_9506_MMS_1 {
 
         GetAlarmSummary_Response();
 
-        GetAlarmSummary_Response(const listOfAlarmSummary_type& __listOfAlarmSummary);
+        GetAlarmSummary_Response(const listOfAlarmSummary_type& arg__listOfAlarmSummary);
 
-        GetAlarmSummary_Response(boost::shared_ptr< listOfAlarmSummary_type> __listOfAlarmSummary,
-                boost::shared_ptr< bool> __moreFollows);
+        GetAlarmSummary_Response(boost::shared_ptr< listOfAlarmSummary_type> arg__listOfAlarmSummary,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfAlarmSummary, listOfAlarmSummary_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -5639,18 +5639,18 @@ namespace ISO_9506_MMS_1 {
 
         AlarmSummary();
 
-        AlarmSummary(const ObjectName& __eventConditionName,
-                const Unsigned8& __severity,
-                const MMS_Object_Module_1::EC_State& __currentState,
-                const int& __unacknowledgedState);
+        AlarmSummary(const ObjectName& arg__eventConditionName,
+                const Unsigned8& arg__severity,
+                const MMS_Object_Module_1::EC_State& arg__currentState,
+                const int& arg__unacknowledgedState);
 
-        AlarmSummary(boost::shared_ptr< ObjectName> __eventConditionName,
-                boost::shared_ptr< Unsigned8> __severity,
-                boost::shared_ptr< MMS_Object_Module_1::EC_State> __currentState,
-                boost::shared_ptr< int> __unacknowledgedState,
-                boost::shared_ptr< EN_Additional_Detail> __displayEnhancement,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __timeOfLastTransitionToActive,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __timeOfLastTransitionToIdle);
+        AlarmSummary(boost::shared_ptr< ObjectName> arg__eventConditionName,
+                boost::shared_ptr< Unsigned8> arg__severity,
+                boost::shared_ptr< MMS_Object_Module_1::EC_State> arg__currentState,
+                boost::shared_ptr< int> arg__unacknowledgedState,
+                boost::shared_ptr< EN_Additional_Detail> arg__displayEnhancement,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToActive,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(severity, Unsigned8);
@@ -5709,8 +5709,8 @@ namespace ISO_9506_MMS_1 {
 
             severityFilter_type();
 
-            severityFilter_type(const Unsigned8& __mostSevere,
-                    const Unsigned8& __leastSevere);
+            severityFilter_type(const Unsigned8& arg__mostSevere,
+                    const Unsigned8& arg__leastSevere);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(mostSevere, Unsigned8);
             BOOST_ASN_VALUE_HOLDERH_DECL(leastSevere, Unsigned8);
@@ -5733,11 +5733,11 @@ namespace ISO_9506_MMS_1 {
 
         GetAlarmEnrollmentSummary_Request();
 
-        GetAlarmEnrollmentSummary_Request(boost::shared_ptr< bool> __enrollmentsOnly,
-                boost::shared_ptr< bool> __activeAlarmsOnly,
-                boost::shared_ptr< int> __acknowledgementFilter,
-                boost::shared_ptr< severityFilter_type> __severityFilter,
-                boost::shared_ptr< ObjectName> __continueAfter);
+        GetAlarmEnrollmentSummary_Request(boost::shared_ptr< bool> arg__enrollmentsOnly,
+                boost::shared_ptr< bool> arg__activeAlarmsOnly,
+                boost::shared_ptr< int> arg__acknowledgementFilter,
+                boost::shared_ptr< severityFilter_type> arg__severityFilter,
+                boost::shared_ptr< ObjectName> arg__continueAfter);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(enrollmentsOnly, bool);
         BOOST_ASN_VALUE_DEFAULT_DECL(activeAlarmsOnly, bool);
@@ -5766,10 +5766,10 @@ namespace ISO_9506_MMS_1 {
 
         GetAlarmEnrollmentSummary_Response();
 
-        GetAlarmEnrollmentSummary_Response(const listOfAlarmEnrollmentSummary_type& __listOfAlarmEnrollmentSummary);
+        GetAlarmEnrollmentSummary_Response(const listOfAlarmEnrollmentSummary_type& arg__listOfAlarmEnrollmentSummary);
 
-        GetAlarmEnrollmentSummary_Response(boost::shared_ptr< listOfAlarmEnrollmentSummary_type> __listOfAlarmEnrollmentSummary,
-                boost::shared_ptr< bool> __moreFollows);
+        GetAlarmEnrollmentSummary_Response(boost::shared_ptr< listOfAlarmEnrollmentSummary_type> arg__listOfAlarmEnrollmentSummary,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfAlarmEnrollmentSummary, listOfAlarmEnrollmentSummary_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -5790,23 +5790,23 @@ namespace ISO_9506_MMS_1 {
 
         AlarmEnrollmentSummary();
 
-        AlarmEnrollmentSummary(const ObjectName& __eventEnrollmentName,
-                const Unsigned8& __severity,
-                const MMS_Object_Module_1::EC_State& __currentState,
-                const MMS_Object_Module_1::AlarmAckRule& __alarmAcknowledgmentRule);
+        AlarmEnrollmentSummary(const ObjectName& arg__eventEnrollmentName,
+                const Unsigned8& arg__severity,
+                const MMS_Object_Module_1::EC_State& arg__currentState,
+                const MMS_Object_Module_1::AlarmAckRule& arg__alarmAcknowledgmentRule);
 
-        AlarmEnrollmentSummary(boost::shared_ptr< ObjectName> __eventEnrollmentName,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __clientApplication,
-                boost::shared_ptr< Unsigned8> __severity,
-                boost::shared_ptr< MMS_Object_Module_1::EC_State> __currentState,
-                boost::shared_ptr< EN_Additional_Detail> __displayEnhancement,
-                boost::shared_ptr< bool> __notificationLost,
-                boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> __alarmAcknowledgmentRule,
-                boost::shared_ptr< EE_State> __enrollmentState,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __timeOfLastTransitionToActive,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __timeActiveAcknowledged,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __timeOfLastTransitionToIdle,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __timeIdleAcknowledged);
+        AlarmEnrollmentSummary(boost::shared_ptr< ObjectName> arg__eventEnrollmentName,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
+                boost::shared_ptr< Unsigned8> arg__severity,
+                boost::shared_ptr< MMS_Object_Module_1::EC_State> arg__currentState,
+                boost::shared_ptr< EN_Additional_Detail> arg__displayEnhancement,
+                boost::shared_ptr< bool> arg__notificationLost,
+                boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule,
+                boost::shared_ptr< EE_State> arg__enrollmentState,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToActive,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeActiveAcknowledged,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeIdleAcknowledged);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
@@ -5845,14 +5845,14 @@ namespace ISO_9506_MMS_1 {
 
         AttachToEventCondition();
 
-        AttachToEventCondition(const ObjectName& __eventEnrollmentName,
-                const ObjectName& __eventConditionName,
-                const MMS_Object_Module_1::Transitions& __causingTransitions);
+        AttachToEventCondition(const ObjectName& arg__eventEnrollmentName,
+                const ObjectName& arg__eventConditionName,
+                const MMS_Object_Module_1::Transitions& arg__causingTransitions);
 
-        AttachToEventCondition(boost::shared_ptr< ObjectName> __eventEnrollmentName,
-                boost::shared_ptr< ObjectName> __eventConditionName,
-                boost::shared_ptr< MMS_Object_Module_1::Transitions> __causingTransitions,
-                boost::shared_ptr< Unsigned32> __acceptableDelay);
+        AttachToEventCondition(boost::shared_ptr< ObjectName> arg__eventEnrollmentName,
+                boost::shared_ptr< ObjectName> arg__eventConditionName,
+                boost::shared_ptr< MMS_Object_Module_1::Transitions> arg__causingTransitions,
+                boost::shared_ptr< Unsigned32> arg__acceptableDelay);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
@@ -5878,16 +5878,16 @@ namespace ISO_9506_MMS_1 {
 
         DefineEventCondition_Request();
 
-        DefineEventCondition_Request(const ObjectName& __eventConditionName,
-                const MMS_Object_Module_1::EC_Class& __classV);
+        DefineEventCondition_Request(const ObjectName& arg__eventConditionName,
+                const MMS_Object_Module_1::EC_Class& arg__classV);
 
-        DefineEventCondition_Request(boost::shared_ptr< ObjectName> __eventConditionName,
-                boost::shared_ptr< MMS_Object_Module_1::EC_Class> __classV,
-                boost::shared_ptr< MMS_Object_Module_1::Priority> __priority,
-                boost::shared_ptr< Unsigned8> __severity,
-                boost::shared_ptr< bool> __alarmSummaryReports,
-                boost::shared_ptr< VariableSpecification> __monitoredVariable,
-                boost::shared_ptr< Unsigned32> __evaluationInterval);
+        DefineEventCondition_Request(boost::shared_ptr< ObjectName> arg__eventConditionName,
+                boost::shared_ptr< MMS_Object_Module_1::EC_Class> arg__classV,
+                boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
+                boost::shared_ptr< Unsigned8> arg__severity,
+                boost::shared_ptr< bool> arg__alarmSummaryReports,
+                boost::shared_ptr< VariableSpecification> arg__monitoredVariable,
+                boost::shared_ptr< Unsigned32> arg__evaluationInterval);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(classV, MMS_Object_Module_1::EC_Class);
@@ -6003,16 +6003,16 @@ namespace ISO_9506_MMS_1 {
 
         GetEventConditionAttributes_Response();
 
-        GetEventConditionAttributes_Response(const MMS_Object_Module_1::EC_Class& __classV);
+        GetEventConditionAttributes_Response(const MMS_Object_Module_1::EC_Class& arg__classV);
 
-        GetEventConditionAttributes_Response(boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< MMS_Object_Module_1::EC_Class> __classV,
-                boost::shared_ptr< MMS_Object_Module_1::Priority> __priority,
-                boost::shared_ptr< Unsigned8> __severity,
-                boost::shared_ptr< bool> __alarmSummaryReports,
-                boost::shared_ptr< monitoredVariable_type> __monitoredVariable,
-                boost::shared_ptr< Unsigned32> __evaluationInterval,
-                boost::shared_ptr< Identifier> __accessControlList);
+        GetEventConditionAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< MMS_Object_Module_1::EC_Class> arg__classV,
+                boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
+                boost::shared_ptr< Unsigned8> arg__severity,
+                boost::shared_ptr< bool> arg__alarmSummaryReports,
+                boost::shared_ptr< monitoredVariable_type> arg__monitoredVariable,
+                boost::shared_ptr< Unsigned32> arg__evaluationInterval,
+                boost::shared_ptr< Identifier> arg__accessControlList);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(mmsDeletable, bool);
         BOOST_ASN_VALUE_HOLDERH_DECL(classV, MMS_Object_Module_1::EC_Class);
@@ -6097,11 +6097,11 @@ namespace ISO_9506_MMS_1 {
 
         CS_GetEventConditionAttributes_Response();
 
-        CS_GetEventConditionAttributes_Response(const displayEnhancement_type& __displayEnhancement);
+        CS_GetEventConditionAttributes_Response(const displayEnhancement_type& arg__displayEnhancement);
 
-        CS_GetEventConditionAttributes_Response(boost::shared_ptr< groupPriorityOverride_type> __groupPriorityOverride,
-                boost::shared_ptr< listOfReferencingECL_type> __listOfReferencingECL,
-                boost::shared_ptr< displayEnhancement_type> __displayEnhancement);
+        CS_GetEventConditionAttributes_Response(boost::shared_ptr< groupPriorityOverride_type> arg__groupPriorityOverride,
+                boost::shared_ptr< listOfReferencingECL_type> arg__listOfReferencingECL,
+                boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(groupPriorityOverride, groupPriorityOverride_type);
         BOOST_ASN_VALUE_OPTIONAL_DECL(listOfReferencingECL, listOfReferencingECL_type);
@@ -6122,14 +6122,14 @@ namespace ISO_9506_MMS_1 {
 
         ReportEventConditionStatus_Response();
 
-        ReportEventConditionStatus_Response(const MMS_Object_Module_1::EC_State& __currentState,
-                const Unsigned32& __numberOfEventEnrollments);
+        ReportEventConditionStatus_Response(const MMS_Object_Module_1::EC_State& arg__currentState,
+                const Unsigned32& arg__numberOfEventEnrollments);
 
-        ReportEventConditionStatus_Response(boost::shared_ptr< MMS_Object_Module_1::EC_State> __currentState,
-                boost::shared_ptr< Unsigned32> __numberOfEventEnrollments,
-                boost::shared_ptr< bool> __enabled,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __timeOfLastTransitionToActive,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __timeOfLastTransitionToIdle);
+        ReportEventConditionStatus_Response(boost::shared_ptr< MMS_Object_Module_1::EC_State> arg__currentState,
+                boost::shared_ptr< Unsigned32> arg__numberOfEventEnrollments,
+                boost::shared_ptr< bool> arg__enabled,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToActive,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
         BOOST_ASN_VALUE_HOLDERH_DECL(numberOfEventEnrollments, Unsigned32);
@@ -6154,13 +6154,13 @@ namespace ISO_9506_MMS_1 {
 
         AlterEventConditionMonitoring_Request();
 
-        AlterEventConditionMonitoring_Request(const ObjectName& __eventConditionName);
+        AlterEventConditionMonitoring_Request(const ObjectName& arg__eventConditionName);
 
-        AlterEventConditionMonitoring_Request(boost::shared_ptr< ObjectName> __eventConditionName,
-                boost::shared_ptr< bool> __enabled,
-                boost::shared_ptr< MMS_Object_Module_1::Priority> __priority,
-                boost::shared_ptr< bool> __alarmSummaryReports,
-                boost::shared_ptr< Unsigned32> __evaluationInterval);
+        AlterEventConditionMonitoring_Request(boost::shared_ptr< ObjectName> arg__eventConditionName,
+                boost::shared_ptr< bool> arg__enabled,
+                boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
+                boost::shared_ptr< bool> arg__alarmSummaryReports,
+                boost::shared_ptr< Unsigned32> arg__evaluationInterval);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(enabled, bool);
@@ -6212,7 +6212,7 @@ namespace ISO_9506_MMS_1 {
 
         CS_AlterEventConditionMonitoring_Request();
 
-        CS_AlterEventConditionMonitoring_Request(boost::shared_ptr< changeDisplay_type> __changeDisplay);
+        CS_AlterEventConditionMonitoring_Request(boost::shared_ptr< changeDisplay_type> arg__changeDisplay);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(changeDisplay, changeDisplay_type);
 
@@ -6231,13 +6231,13 @@ namespace ISO_9506_MMS_1 {
 
         DefineEventAction_Request();
 
-        DefineEventAction_Request(const ObjectName& __eventActionName,
-                const ConfirmedServiceRequest& __confirmedServiceRequest);
+        DefineEventAction_Request(const ObjectName& arg__eventActionName,
+                const ConfirmedServiceRequest& arg__confirmedServiceRequest);
 
-        DefineEventAction_Request(boost::shared_ptr< ObjectName> __eventActionName,
-                boost::shared_ptr< listOfModifier_type> __listOfModifier,
-                boost::shared_ptr< ConfirmedServiceRequest> __confirmedServiceRequest,
-                boost::shared_ptr< Request_Detail> __cs_extension);
+        DefineEventAction_Request(boost::shared_ptr< ObjectName> arg__eventActionName,
+                boost::shared_ptr< listOfModifier_type> arg__listOfModifier,
+                boost::shared_ptr< ConfirmedServiceRequest> arg__confirmedServiceRequest,
+                boost::shared_ptr< Request_Detail> arg__cs_extension);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventActionName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(listOfModifier, listOfModifier_type);
@@ -6295,14 +6295,14 @@ namespace ISO_9506_MMS_1 {
 
         GetEventActionAttributes_Response();
 
-        GetEventActionAttributes_Response(const listOfModifier_type& __listOfModifier,
-                const ConfirmedServiceRequest& __confirmedServiceRequest);
+        GetEventActionAttributes_Response(const listOfModifier_type& arg__listOfModifier,
+                const ConfirmedServiceRequest& arg__confirmedServiceRequest);
 
-        GetEventActionAttributes_Response(boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< listOfModifier_type> __listOfModifier,
-                boost::shared_ptr< ConfirmedServiceRequest> __confirmedServiceRequest,
-                boost::shared_ptr< Request_Detail> __cs_extension,
-                boost::shared_ptr< Identifier> __accessControlList);
+        GetEventActionAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< listOfModifier_type> arg__listOfModifier,
+                boost::shared_ptr< ConfirmedServiceRequest> arg__confirmedServiceRequest,
+                boost::shared_ptr< Request_Detail> arg__cs_extension,
+                boost::shared_ptr< Identifier> arg__accessControlList);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(mmsDeletable, bool);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfModifier, listOfModifier_type);
@@ -6327,17 +6327,17 @@ namespace ISO_9506_MMS_1 {
 
         DefineEventEnrollment_Request();
 
-        DefineEventEnrollment_Request(const ObjectName& __eventEnrollmentName,
-                const ObjectName& __eventConditionName,
-                const MMS_Object_Module_1::Transitions& __eventConditionTransitions,
-                const MMS_Object_Module_1::AlarmAckRule& __alarmAcknowledgmentRule);
+        DefineEventEnrollment_Request(const ObjectName& arg__eventEnrollmentName,
+                const ObjectName& arg__eventConditionName,
+                const MMS_Object_Module_1::Transitions& arg__eventConditionTransitions,
+                const MMS_Object_Module_1::AlarmAckRule& arg__alarmAcknowledgmentRule);
 
-        DefineEventEnrollment_Request(boost::shared_ptr< ObjectName> __eventEnrollmentName,
-                boost::shared_ptr< ObjectName> __eventConditionName,
-                boost::shared_ptr< MMS_Object_Module_1::Transitions> __eventConditionTransitions,
-                boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> __alarmAcknowledgmentRule,
-                boost::shared_ptr< ObjectName> __eventActionName,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __clientApplication);
+        DefineEventEnrollment_Request(boost::shared_ptr< ObjectName> arg__eventEnrollmentName,
+                boost::shared_ptr< ObjectName> arg__eventConditionName,
+                boost::shared_ptr< MMS_Object_Module_1::Transitions> arg__eventConditionTransitions,
+                boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule,
+                boost::shared_ptr< ObjectName> arg__eventActionName,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
@@ -6429,12 +6429,12 @@ namespace ISO_9506_MMS_1 {
 
         GetEventEnrollmentAttributes_Request();
 
-        GetEventEnrollmentAttributes_Request(boost::shared_ptr< int> __scopeOfRequest,
-                boost::shared_ptr< eventEnrollmentNames_type> __eventEnrollmentNames,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __clientApplication,
-                boost::shared_ptr< ObjectName> __eventConditionName,
-                boost::shared_ptr< ObjectName> __eventActionName,
-                boost::shared_ptr< ObjectName> __continueAfter);
+        GetEventEnrollmentAttributes_Request(boost::shared_ptr< int> arg__scopeOfRequest,
+                boost::shared_ptr< eventEnrollmentNames_type> arg__eventEnrollmentNames,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
+                boost::shared_ptr< ObjectName> arg__eventConditionName,
+                boost::shared_ptr< ObjectName> arg__eventActionName,
+                boost::shared_ptr< ObjectName> arg__continueAfter);
 
         BOOST_ASN_VALUE_DEFAULT_DECL(scopeOfRequest, int);
         BOOST_ASN_VALUE_OPTIONAL_DECL(eventEnrollmentNames, eventEnrollmentNames_type);
@@ -6465,10 +6465,10 @@ namespace ISO_9506_MMS_1 {
 
         GetEventEnrollmentAttributes_Response();
 
-        GetEventEnrollmentAttributes_Response(const listOfEEAttributes_type& __listOfEEAttributes);
+        GetEventEnrollmentAttributes_Response(const listOfEEAttributes_type& arg__listOfEEAttributes);
 
-        GetEventEnrollmentAttributes_Response(boost::shared_ptr< listOfEEAttributes_type> __listOfEEAttributes,
-                boost::shared_ptr< bool> __moreFollows);
+        GetEventEnrollmentAttributes_Response(boost::shared_ptr< listOfEEAttributes_type> arg__listOfEEAttributes,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfEEAttributes, listOfEEAttributes_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -6562,21 +6562,21 @@ namespace ISO_9506_MMS_1 {
 
         EEAttributes();
 
-        EEAttributes(const ObjectName& __eventEnrollmentName,
-                const eventConditionName_type& __eventConditionName,
-                const MMS_Object_Module_1::EE_Class& __enrollmentClass,
-                const displayEnhancement_type& __displayEnhancement);
+        EEAttributes(const ObjectName& arg__eventEnrollmentName,
+                const eventConditionName_type& arg__eventConditionName,
+                const MMS_Object_Module_1::EE_Class& arg__enrollmentClass,
+                const displayEnhancement_type& arg__displayEnhancement);
 
-        EEAttributes(boost::shared_ptr< ObjectName> __eventEnrollmentName,
-                boost::shared_ptr< eventConditionName_type> __eventConditionName,
-                boost::shared_ptr< eventActionName_type> __eventActionName,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __clientApplication,
-                boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< MMS_Object_Module_1::EE_Class> __enrollmentClass,
-                boost::shared_ptr< MMS_Object_Module_1::EE_Duration> __duration,
-                boost::shared_ptr< Unsigned32> __invokeID,
-                boost::shared_ptr< Unsigned32> __remainingAcceptableDelay,
-                boost::shared_ptr< displayEnhancement_type> __displayEnhancement);
+        EEAttributes(boost::shared_ptr< ObjectName> arg__eventEnrollmentName,
+                boost::shared_ptr< eventConditionName_type> arg__eventConditionName,
+                boost::shared_ptr< eventActionName_type> arg__eventActionName,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
+                boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< MMS_Object_Module_1::EE_Class> arg__enrollmentClass,
+                boost::shared_ptr< MMS_Object_Module_1::EE_Duration> arg__duration,
+                boost::shared_ptr< Unsigned32> arg__invokeID,
+                boost::shared_ptr< Unsigned32> arg__remainingAcceptableDelay,
+                boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, eventConditionName_type);
@@ -6613,15 +6613,15 @@ namespace ISO_9506_MMS_1 {
 
         ReportEventEnrollmentStatus_Response();
 
-        ReportEventEnrollmentStatus_Response(const MMS_Object_Module_1::Transitions& __eventConditionTransitions,
-                const MMS_Object_Module_1::EE_Duration& __duration,
-                const EE_State& __currentState);
+        ReportEventEnrollmentStatus_Response(const MMS_Object_Module_1::Transitions& arg__eventConditionTransitions,
+                const MMS_Object_Module_1::EE_Duration& arg__duration,
+                const EE_State& arg__currentState);
 
-        ReportEventEnrollmentStatus_Response(boost::shared_ptr< MMS_Object_Module_1::Transitions> __eventConditionTransitions,
-                boost::shared_ptr< bool> __notificationLost,
-                boost::shared_ptr< MMS_Object_Module_1::EE_Duration> __duration,
-                boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> __alarmAcknowledgmentRule,
-                boost::shared_ptr< EE_State> __currentState);
+        ReportEventEnrollmentStatus_Response(boost::shared_ptr< MMS_Object_Module_1::Transitions> arg__eventConditionTransitions,
+                boost::shared_ptr< bool> arg__notificationLost,
+                boost::shared_ptr< MMS_Object_Module_1::EE_Duration> arg__duration,
+                boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule,
+                boost::shared_ptr< EE_State> arg__currentState);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
         BOOST_ASN_VALUE_DEFAULT_DECL(notificationLost, bool);
@@ -6646,11 +6646,11 @@ namespace ISO_9506_MMS_1 {
 
         AlterEventEnrollment_Request();
 
-        AlterEventEnrollment_Request(const ObjectName& __eventEnrollmentName);
+        AlterEventEnrollment_Request(const ObjectName& arg__eventEnrollmentName);
 
-        AlterEventEnrollment_Request(boost::shared_ptr< ObjectName> __eventEnrollmentName,
-                boost::shared_ptr< MMS_Object_Module_1::Transitions> __eventConditionTransitions,
-                boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> __alarmAcknowledgmentRule);
+        AlterEventEnrollment_Request(boost::shared_ptr< ObjectName> arg__eventEnrollmentName,
+                boost::shared_ptr< MMS_Object_Module_1::Transitions> arg__eventConditionTransitions,
+                boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
@@ -6696,8 +6696,8 @@ namespace ISO_9506_MMS_1 {
 
         AlterEventEnrollment_Response();
 
-        AlterEventEnrollment_Response(const currentState_type& __currentState,
-                const MMS_Object_Module_1::EventTime& __transitionTime);
+        AlterEventEnrollment_Response(const currentState_type& arg__currentState,
+                const MMS_Object_Module_1::EventTime& arg__transitionTime);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(currentState, currentState_type);
         BOOST_ASN_VALUE_HOLDERH_DECL(transitionTime, MMS_Object_Module_1::EventTime);
@@ -6743,7 +6743,7 @@ namespace ISO_9506_MMS_1 {
 
         CS_AlterEventEnrollment_Request();
 
-        CS_AlterEventEnrollment_Request(boost::shared_ptr< changeDisplay_type> __changeDisplay);
+        CS_AlterEventEnrollment_Request(boost::shared_ptr< changeDisplay_type> arg__changeDisplay);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(changeDisplay, changeDisplay_type);
 
@@ -6774,12 +6774,12 @@ namespace ISO_9506_MMS_1 {
 
         DefineEventConditionList_Request();
 
-        DefineEventConditionList_Request(const ObjectName& __eventConditionListName,
-                const listOfEventConditionName_type& __listOfEventConditionName);
+        DefineEventConditionList_Request(const ObjectName& arg__eventConditionListName,
+                const listOfEventConditionName_type& arg__listOfEventConditionName);
 
-        DefineEventConditionList_Request(boost::shared_ptr< ObjectName> __eventConditionListName,
-                boost::shared_ptr< listOfEventConditionName_type> __listOfEventConditionName,
-                boost::shared_ptr< listOfEventConditionListName_type> __listOfEventConditionListName);
+        DefineEventConditionList_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
+                boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
+                boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionListName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
@@ -6804,12 +6804,12 @@ namespace ISO_9506_MMS_1 {
 
         AddEventConditionListReference_Request();
 
-        AddEventConditionListReference_Request(const ObjectName& __eventConditionListName,
-                const listOfEventConditionName_type& __listOfEventConditionName);
+        AddEventConditionListReference_Request(const ObjectName& arg__eventConditionListName,
+                const listOfEventConditionName_type& arg__listOfEventConditionName);
 
-        AddEventConditionListReference_Request(boost::shared_ptr< ObjectName> __eventConditionListName,
-                boost::shared_ptr< listOfEventConditionName_type> __listOfEventConditionName,
-                boost::shared_ptr< listOfEventConditionListName_type> __listOfEventConditionListName);
+        AddEventConditionListReference_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
+                boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
+                boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionListName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
@@ -6834,9 +6834,9 @@ namespace ISO_9506_MMS_1 {
 
         RemoveEventConditionListReference_Request();
 
-        RemoveEventConditionListReference_Request(const ObjectName& __eventConditionListName,
-                const listOfEventConditionName_type& __listOfEventConditionName,
-                const listOfEventConditionListName_type& __listOfEventConditionListName);
+        RemoveEventConditionListReference_Request(const ObjectName& arg__eventConditionListName,
+                const listOfEventConditionName_type& arg__listOfEventConditionName,
+                const listOfEventConditionListName_type& arg__listOfEventConditionListName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionListName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
@@ -6885,10 +6885,10 @@ namespace ISO_9506_MMS_1 {
 
         GetEventConditionListAttributes_Response();
 
-        GetEventConditionListAttributes_Response(const listOfEventConditionName_type& __listOfEventConditionName);
+        GetEventConditionListAttributes_Response(const listOfEventConditionName_type& arg__listOfEventConditionName);
 
-        GetEventConditionListAttributes_Response(boost::shared_ptr< listOfEventConditionName_type> __listOfEventConditionName,
-                boost::shared_ptr< listOfEventConditionListName_type> __listOfEventConditionListName);
+        GetEventConditionListAttributes_Response(boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
+                boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
         BOOST_ASN_VALUE_OPTIONAL_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
@@ -6907,10 +6907,10 @@ namespace ISO_9506_MMS_1 {
 
         ReportEventConditionListStatus_Request();
 
-        ReportEventConditionListStatus_Request(const ObjectName& __eventConditionListName);
+        ReportEventConditionListStatus_Request(const ObjectName& arg__eventConditionListName);
 
-        ReportEventConditionListStatus_Request(boost::shared_ptr< ObjectName> __eventConditionListName,
-                boost::shared_ptr< Identifier> __continueAfter);
+        ReportEventConditionListStatus_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
+                boost::shared_ptr< Identifier> arg__continueAfter);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionListName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, Identifier);
@@ -6933,10 +6933,10 @@ namespace ISO_9506_MMS_1 {
 
         ReportEventConditionListStatus_Response();
 
-        ReportEventConditionListStatus_Response(const listOfEventConditionStatus_type& __listOfEventConditionStatus);
+        ReportEventConditionListStatus_Response(const listOfEventConditionStatus_type& arg__listOfEventConditionStatus);
 
-        ReportEventConditionListStatus_Response(boost::shared_ptr< listOfEventConditionStatus_type> __listOfEventConditionStatus,
-                boost::shared_ptr< bool> __moreFollows);
+        ReportEventConditionListStatus_Response(boost::shared_ptr< listOfEventConditionStatus_type> arg__listOfEventConditionStatus,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionStatus, listOfEventConditionStatus_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -6955,16 +6955,16 @@ namespace ISO_9506_MMS_1 {
 
         EventConditionStatus();
 
-        EventConditionStatus(const ObjectName& __eventConditionName,
-                const MMS_Object_Module_1::EC_State& __currentState,
-                const Unsigned32& __numberOfEventEnrollments);
+        EventConditionStatus(const ObjectName& arg__eventConditionName,
+                const MMS_Object_Module_1::EC_State& arg__currentState,
+                const Unsigned32& arg__numberOfEventEnrollments);
 
-        EventConditionStatus(boost::shared_ptr< ObjectName> __eventConditionName,
-                boost::shared_ptr< MMS_Object_Module_1::EC_State> __currentState,
-                boost::shared_ptr< Unsigned32> __numberOfEventEnrollments,
-                boost::shared_ptr< bool> __enabled,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __timeOfLastTransitionToActive,
-                boost::shared_ptr< MMS_Object_Module_1::EventTime> __timeOfLastTransitionToIdle);
+        EventConditionStatus(boost::shared_ptr< ObjectName> arg__eventConditionName,
+                boost::shared_ptr< MMS_Object_Module_1::EC_State> arg__currentState,
+                boost::shared_ptr< Unsigned32> arg__numberOfEventEnrollments,
+                boost::shared_ptr< bool> arg__enabled,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToActive,
+                boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
@@ -7016,12 +7016,12 @@ namespace ISO_9506_MMS_1 {
 
         AlterEventConditionListMonitoring_Request();
 
-        AlterEventConditionListMonitoring_Request(const ObjectName& __eventConditionListName,
-                const bool& __enabled);
+        AlterEventConditionListMonitoring_Request(const ObjectName& arg__eventConditionListName,
+                const bool& arg__enabled);
 
-        AlterEventConditionListMonitoring_Request(boost::shared_ptr< ObjectName> __eventConditionListName,
-                boost::shared_ptr< bool> __enabled,
-                boost::shared_ptr< priorityChange_type> __priorityChange);
+        AlterEventConditionListMonitoring_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
+                boost::shared_ptr< bool> arg__enabled,
+                boost::shared_ptr< priorityChange_type> arg__priorityChange);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionListName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(enabled, bool);
@@ -7092,8 +7092,8 @@ namespace ISO_9506_MMS_1 {
 
             entryToStartAfter_type();
 
-            entryToStartAfter_type(const TimeOfDay& __timeSpecification,
-                    const octetstring_type& __entrySpecification);
+            entryToStartAfter_type(const TimeOfDay& arg__timeSpecification,
+                    const octetstring_type& arg__entrySpecification);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(timeSpecification, TimeOfDay);
             BOOST_ASN_VALUE_HOLDERH_DECL(entrySpecification, octetstring_type);
@@ -7113,13 +7113,13 @@ namespace ISO_9506_MMS_1 {
 
         ReadJournal_Request();
 
-        ReadJournal_Request(const ObjectName& __journalName);
+        ReadJournal_Request(const ObjectName& arg__journalName);
 
-        ReadJournal_Request(boost::shared_ptr< ObjectName> __journalName,
-                boost::shared_ptr< rangeStartSpecification_type> __rangeStartSpecification,
-                boost::shared_ptr< rangeStopSpecification_type> __rangeStopSpecification,
-                boost::shared_ptr< listOfVariables_type> __listOfVariables,
-                boost::shared_ptr< entryToStartAfter_type> __entryToStartAfter);
+        ReadJournal_Request(boost::shared_ptr< ObjectName> arg__journalName,
+                boost::shared_ptr< rangeStartSpecification_type> arg__rangeStartSpecification,
+                boost::shared_ptr< rangeStopSpecification_type> arg__rangeStopSpecification,
+                boost::shared_ptr< listOfVariables_type> arg__listOfVariables,
+                boost::shared_ptr< entryToStartAfter_type> arg__entryToStartAfter);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(journalName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(rangeStartSpecification, rangeStartSpecification_type);
@@ -7148,10 +7148,10 @@ namespace ISO_9506_MMS_1 {
 
         ReadJournal_Response();
 
-        ReadJournal_Response(const listOfJournalEntry_type& __listOfJournalEntry);
+        ReadJournal_Response(const listOfJournalEntry_type& arg__listOfJournalEntry);
 
-        ReadJournal_Response(boost::shared_ptr< listOfJournalEntry_type> __listOfJournalEntry,
-                boost::shared_ptr< bool> __moreFollows);
+        ReadJournal_Response(boost::shared_ptr< listOfJournalEntry_type> arg__listOfJournalEntry,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfJournalEntry, listOfJournalEntry_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -7170,9 +7170,9 @@ namespace ISO_9506_MMS_1 {
 
         JournalEntry();
 
-        JournalEntry(const octetstring_type& __entryIdentifier,
-                const MMS_Environment_1::ApplicationReference& __originatingApplication,
-                const EntryContent& __entryContent);
+        JournalEntry(const octetstring_type& arg__entryIdentifier,
+                const MMS_Environment_1::ApplicationReference& arg__originatingApplication,
+                const EntryContent& arg__entryContent);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(entryIdentifier, octetstring_type);
         BOOST_ASN_VALUE_HOLDERH_DECL(originatingApplication, MMS_Environment_1::ApplicationReference);
@@ -7196,8 +7196,8 @@ namespace ISO_9506_MMS_1 {
 
         WriteJournal_Request();
 
-        WriteJournal_Request(const ObjectName& __journalName,
-                const listOfJournalEntry_type& __listOfJournalEntry);
+        WriteJournal_Request(const ObjectName& arg__journalName,
+                const listOfJournalEntry_type& arg__listOfJournalEntry);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(journalName, ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfJournalEntry, listOfJournalEntry_type);
@@ -7220,10 +7220,10 @@ namespace ISO_9506_MMS_1 {
 
             limitSpecification_type();
 
-            limitSpecification_type(const TimeOfDay& __limitingTime);
+            limitSpecification_type(const TimeOfDay& arg__limitingTime);
 
-            limitSpecification_type(boost::shared_ptr< TimeOfDay> __limitingTime,
-                    boost::shared_ptr< octetstring_type> __limitingEntry);
+            limitSpecification_type(boost::shared_ptr< TimeOfDay> arg__limitingTime,
+                    boost::shared_ptr< octetstring_type> arg__limitingEntry);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(limitingTime, TimeOfDay);
             BOOST_ASN_VALUE_OPTIONAL_DECL(limitingEntry, octetstring_type);
@@ -7239,10 +7239,10 @@ namespace ISO_9506_MMS_1 {
 
         InitializeJournal_Request();
 
-        InitializeJournal_Request(const ObjectName& __journalName);
+        InitializeJournal_Request(const ObjectName& arg__journalName);
 
-        InitializeJournal_Request(boost::shared_ptr< ObjectName> __journalName,
-                boost::shared_ptr< limitSpecification_type> __limitSpecification);
+        InitializeJournal_Request(boost::shared_ptr< ObjectName> arg__journalName,
+                boost::shared_ptr< limitSpecification_type> arg__limitSpecification);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(journalName, ObjectName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(limitSpecification, limitSpecification_type);
@@ -7261,12 +7261,12 @@ namespace ISO_9506_MMS_1 {
 
         ReportJournalStatus_Response();
 
-        ReportJournalStatus_Response(const Unsigned32& __currentEntries,
-                const bool& __mmsDeletable);
+        ReportJournalStatus_Response(const Unsigned32& arg__currentEntries,
+                const bool& arg__mmsDeletable);
 
-        ReportJournalStatus_Response(boost::shared_ptr< Unsigned32> __currentEntries,
-                boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< Identifier> __accessControlList);
+        ReportJournalStatus_Response(boost::shared_ptr< Unsigned32> arg__currentEntries,
+                boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< Identifier> arg__accessControlList);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(currentEntries, Unsigned32);
         BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
@@ -7287,7 +7287,7 @@ namespace ISO_9506_MMS_1 {
 
         CreateJournal_Request();
 
-        CreateJournal_Request(const ObjectName& __journalName);
+        CreateJournal_Request(const ObjectName& arg__journalName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(journalName, ObjectName);
 
@@ -7304,7 +7304,7 @@ namespace ISO_9506_MMS_1 {
 
         DeleteJournal_Request();
 
-        DeleteJournal_Request(const ObjectName& __journalName);
+        DeleteJournal_Request(const ObjectName& arg__journalName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(journalName, ObjectName);
 
@@ -7341,8 +7341,8 @@ namespace ISO_9506_MMS_1 {
 
                     event_type();
 
-                    event_type(const ObjectName& __eventConditionName,
-                            const MMS_Object_Module_1::EC_State& __currentState);
+                    event_type(const ObjectName& arg__eventConditionName,
+                            const MMS_Object_Module_1::EC_State& arg__currentState);
 
                     BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
                     BOOST_ASN_VALUE_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
@@ -7362,8 +7362,8 @@ namespace ISO_9506_MMS_1 {
 
                 data_type();
 
-                data_type(boost::shared_ptr< event_type> __event,
-                        boost::shared_ptr< listOfVariables_type> __listOfVariables);
+                data_type(boost::shared_ptr< event_type> arg__event,
+                        boost::shared_ptr< listOfVariables_type> arg__listOfVariables);
 
                 BOOST_ASN_VALUE_OPTIONAL_DECL(event, event_type);
                 BOOST_ASN_VALUE_OPTIONAL_DECL(listOfVariables, listOfVariables_type);
@@ -7392,8 +7392,8 @@ namespace ISO_9506_MMS_1 {
 
         EntryContent();
 
-        EntryContent(const TimeOfDay& __occurrenceTime,
-                const entryForm_type& __entryForm);
+        EntryContent(const TimeOfDay& arg__occurrenceTime,
+                const entryForm_type& arg__entryForm);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(occurrenceTime, TimeOfDay);
         BOOST_ASN_VALUE_HOLDERH_DECL(entryForm, entryForm_type);

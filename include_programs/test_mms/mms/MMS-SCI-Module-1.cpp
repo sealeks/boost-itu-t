@@ -7,10 +7,10 @@ namespace MMS_SCI_Module_1 {
     SCI_Information::SCI_Information() : partOne_(), partTwo_() {
     };
 
-    SCI_Information::SCI_Information(const VMD_File& __partOne,
-            const Service_and_Parameter_CBBs& __partTwo) :
-    partOne_(__partOne),
-    partTwo_(__partTwo) {
+    SCI_Information::SCI_Information(const VMD_File& arg__partOne,
+            const Service_and_Parameter_CBBs& arg__partTwo) :
+    partOne_(arg__partOne),
+    partTwo_(arg__partTwo) {
     };
 
     template<> void SCI_Information::serialize(boost::asn1::x690::output_coder& arch) {
@@ -61,114 +61,114 @@ namespace MMS_SCI_Module_1 {
     VMD_File::VMD_File() : executiveFunction_(), vendorName_(), modelName_(), revision_(), abstractSyntaxes_(), accessControl_(), logicalStatus_(), capabilities_(), physicalStatus_(), local_detail_(), accessControlLists_(), domains_(), programInvocations_(), unitControls_(), unnamedVariables_(), namedVariables_(), namedVariableLists_(), namedTypes_(), dataExchanges_(), semaphores_(), operatorStations_(), eventConditions_(), eventActions_(), eventEnrollments_(), eventConditionLists_(), journals_() {
     };
 
-    VMD_File::VMD_File(const MMS_Environment_1::ApplicationReference& __executiveFunction,
-            const ISO_9506_MMS_1::MMSString& __vendorName,
-            const ISO_9506_MMS_1::MMSString& __modelName,
-            const ISO_9506_MMS_1::MMSString& __revision,
-            const oid_type& __abstractSyntaxes,
-            const Access_Control_List_instance& __accessControl,
-            const MMS_Object_Module_1::LogicalStatus& __logicalStatus,
-            const capabilities_type& __capabilities,
-            const MMS_Object_Module_1::PhysicalStatus& __physicalStatus,
-            const bitstring_type& __local_detail,
-            const accessControlLists_type& __accessControlLists,
-            const domains_type& __domains,
-            const programInvocations_type& __programInvocations,
-            const unitControls_type& __unitControls,
-            const unnamedVariables_type& __unnamedVariables,
-            const namedVariables_type& __namedVariables,
-            const namedVariableLists_type& __namedVariableLists,
-            const namedTypes_type& __namedTypes,
-            const dataExchanges_type& __dataExchanges,
-            const semaphores_type& __semaphores,
-            const operatorStations_type& __operatorStations,
-            const eventConditions_type& __eventConditions,
-            const eventActions_type& __eventActions,
-            const eventEnrollments_type& __eventEnrollments,
-            const eventConditionLists_type& __eventConditionLists,
-            const journals_type& __journals) :
-    executiveFunction_(__executiveFunction),
-    vendorName_(__vendorName),
-    modelName_(__modelName),
-    revision_(__revision),
-    abstractSyntaxes_(__abstractSyntaxes),
-    accessControl_(__accessControl),
-    logicalStatus_(__logicalStatus),
-    capabilities_(__capabilities),
-    physicalStatus_(__physicalStatus),
-    local_detail_(__local_detail),
-    accessControlLists_(__accessControlLists),
-    domains_(__domains),
-    programInvocations_(__programInvocations),
-    unitControls_(__unitControls),
-    unnamedVariables_(__unnamedVariables),
-    namedVariables_(__namedVariables),
-    namedVariableLists_(__namedVariableLists),
-    namedTypes_(__namedTypes),
-    dataExchanges_(__dataExchanges),
-    semaphores_(__semaphores),
-    operatorStations_(__operatorStations),
-    eventConditions_(__eventConditions),
-    eventActions_(__eventActions),
-    eventEnrollments_(__eventEnrollments),
-    eventConditionLists_(__eventConditionLists),
-    journals_(__journals) {
+    VMD_File::VMD_File(const MMS_Environment_1::ApplicationReference& arg__executiveFunction,
+            const ISO_9506_MMS_1::MMSString& arg__vendorName,
+            const ISO_9506_MMS_1::MMSString& arg__modelName,
+            const ISO_9506_MMS_1::MMSString& arg__revision,
+            const oid_type& arg__abstractSyntaxes,
+            const Access_Control_List_instance& arg__accessControl,
+            const MMS_Object_Module_1::LogicalStatus& arg__logicalStatus,
+            const capabilities_type& arg__capabilities,
+            const MMS_Object_Module_1::PhysicalStatus& arg__physicalStatus,
+            const bitstring_type& arg__local_detail,
+            const accessControlLists_type& arg__accessControlLists,
+            const domains_type& arg__domains,
+            const programInvocations_type& arg__programInvocations,
+            const unitControls_type& arg__unitControls,
+            const unnamedVariables_type& arg__unnamedVariables,
+            const namedVariables_type& arg__namedVariables,
+            const namedVariableLists_type& arg__namedVariableLists,
+            const namedTypes_type& arg__namedTypes,
+            const dataExchanges_type& arg__dataExchanges,
+            const semaphores_type& arg__semaphores,
+            const operatorStations_type& arg__operatorStations,
+            const eventConditions_type& arg__eventConditions,
+            const eventActions_type& arg__eventActions,
+            const eventEnrollments_type& arg__eventEnrollments,
+            const eventConditionLists_type& arg__eventConditionLists,
+            const journals_type& arg__journals) :
+    executiveFunction_(arg__executiveFunction),
+    vendorName_(arg__vendorName),
+    modelName_(arg__modelName),
+    revision_(arg__revision),
+    abstractSyntaxes_(arg__abstractSyntaxes),
+    accessControl_(arg__accessControl),
+    logicalStatus_(arg__logicalStatus),
+    capabilities_(arg__capabilities),
+    physicalStatus_(arg__physicalStatus),
+    local_detail_(arg__local_detail),
+    accessControlLists_(arg__accessControlLists),
+    domains_(arg__domains),
+    programInvocations_(arg__programInvocations),
+    unitControls_(arg__unitControls),
+    unnamedVariables_(arg__unnamedVariables),
+    namedVariables_(arg__namedVariables),
+    namedVariableLists_(arg__namedVariableLists),
+    namedTypes_(arg__namedTypes),
+    dataExchanges_(arg__dataExchanges),
+    semaphores_(arg__semaphores),
+    operatorStations_(arg__operatorStations),
+    eventConditions_(arg__eventConditions),
+    eventActions_(arg__eventActions),
+    eventEnrollments_(arg__eventEnrollments),
+    eventConditionLists_(arg__eventConditionLists),
+    journals_(arg__journals) {
     };
 
-    VMD_File::VMD_File(boost::shared_ptr< MMS_Environment_1::ApplicationReference> __executiveFunction,
-            boost::shared_ptr< ISO_9506_MMS_1::MMSString> __vendorName,
-            boost::shared_ptr< ISO_9506_MMS_1::MMSString> __modelName,
-            boost::shared_ptr< ISO_9506_MMS_1::MMSString> __revision,
-            boost::shared_ptr< oid_type> __abstractSyntaxes,
-            boost::shared_ptr< Access_Control_List_instance> __accessControl,
-            boost::shared_ptr< MMS_Object_Module_1::LogicalStatus> __logicalStatus,
-            boost::shared_ptr< capabilities_type> __capabilities,
-            boost::shared_ptr< MMS_Object_Module_1::PhysicalStatus> __physicalStatus,
-            boost::shared_ptr< bitstring_type> __local_detail,
-            boost::shared_ptr< accessControlLists_type> __accessControlLists,
-            boost::shared_ptr< domains_type> __domains,
-            boost::shared_ptr< programInvocations_type> __programInvocations,
-            boost::shared_ptr< unitControls_type> __unitControls,
-            boost::shared_ptr< unnamedVariables_type> __unnamedVariables,
-            boost::shared_ptr< namedVariables_type> __namedVariables,
-            boost::shared_ptr< namedVariableLists_type> __namedVariableLists,
-            boost::shared_ptr< namedTypes_type> __namedTypes,
-            boost::shared_ptr< dataExchanges_type> __dataExchanges,
-            boost::shared_ptr< semaphores_type> __semaphores,
-            boost::shared_ptr< operatorStations_type> __operatorStations,
-            boost::shared_ptr< eventConditions_type> __eventConditions,
-            boost::shared_ptr< eventActions_type> __eventActions,
-            boost::shared_ptr< eventEnrollments_type> __eventEnrollments,
-            boost::shared_ptr< eventConditionLists_type> __eventConditionLists,
-            boost::shared_ptr< journals_type> __journals,
-            boost::shared_ptr< selected_Program_Invocation_type> __selected_Program_Invocation) :
-    executiveFunction_(__executiveFunction),
-    vendorName_(__vendorName),
-    modelName_(__modelName),
-    revision_(__revision),
-    abstractSyntaxes_(__abstractSyntaxes),
-    accessControl_(__accessControl),
-    logicalStatus_(__logicalStatus),
-    capabilities_(__capabilities),
-    physicalStatus_(__physicalStatus),
-    local_detail_(__local_detail),
-    accessControlLists_(__accessControlLists),
-    domains_(__domains),
-    programInvocations_(__programInvocations),
-    unitControls_(__unitControls),
-    unnamedVariables_(__unnamedVariables),
-    namedVariables_(__namedVariables),
-    namedVariableLists_(__namedVariableLists),
-    namedTypes_(__namedTypes),
-    dataExchanges_(__dataExchanges),
-    semaphores_(__semaphores),
-    operatorStations_(__operatorStations),
-    eventConditions_(__eventConditions),
-    eventActions_(__eventActions),
-    eventEnrollments_(__eventEnrollments),
-    eventConditionLists_(__eventConditionLists),
-    journals_(__journals),
-    selected_Program_Invocation_(__selected_Program_Invocation) {
+    VMD_File::VMD_File(boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__executiveFunction,
+            boost::shared_ptr< ISO_9506_MMS_1::MMSString> arg__vendorName,
+            boost::shared_ptr< ISO_9506_MMS_1::MMSString> arg__modelName,
+            boost::shared_ptr< ISO_9506_MMS_1::MMSString> arg__revision,
+            boost::shared_ptr< oid_type> arg__abstractSyntaxes,
+            boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+            boost::shared_ptr< MMS_Object_Module_1::LogicalStatus> arg__logicalStatus,
+            boost::shared_ptr< capabilities_type> arg__capabilities,
+            boost::shared_ptr< MMS_Object_Module_1::PhysicalStatus> arg__physicalStatus,
+            boost::shared_ptr< bitstring_type> arg__local_detail,
+            boost::shared_ptr< accessControlLists_type> arg__accessControlLists,
+            boost::shared_ptr< domains_type> arg__domains,
+            boost::shared_ptr< programInvocations_type> arg__programInvocations,
+            boost::shared_ptr< unitControls_type> arg__unitControls,
+            boost::shared_ptr< unnamedVariables_type> arg__unnamedVariables,
+            boost::shared_ptr< namedVariables_type> arg__namedVariables,
+            boost::shared_ptr< namedVariableLists_type> arg__namedVariableLists,
+            boost::shared_ptr< namedTypes_type> arg__namedTypes,
+            boost::shared_ptr< dataExchanges_type> arg__dataExchanges,
+            boost::shared_ptr< semaphores_type> arg__semaphores,
+            boost::shared_ptr< operatorStations_type> arg__operatorStations,
+            boost::shared_ptr< eventConditions_type> arg__eventConditions,
+            boost::shared_ptr< eventActions_type> arg__eventActions,
+            boost::shared_ptr< eventEnrollments_type> arg__eventEnrollments,
+            boost::shared_ptr< eventConditionLists_type> arg__eventConditionLists,
+            boost::shared_ptr< journals_type> arg__journals,
+            boost::shared_ptr< selected_Program_Invocation_type> arg__selected_Program_Invocation) :
+    executiveFunction_(arg__executiveFunction),
+    vendorName_(arg__vendorName),
+    modelName_(arg__modelName),
+    revision_(arg__revision),
+    abstractSyntaxes_(arg__abstractSyntaxes),
+    accessControl_(arg__accessControl),
+    logicalStatus_(arg__logicalStatus),
+    capabilities_(arg__capabilities),
+    physicalStatus_(arg__physicalStatus),
+    local_detail_(arg__local_detail),
+    accessControlLists_(arg__accessControlLists),
+    domains_(arg__domains),
+    programInvocations_(arg__programInvocations),
+    unitControls_(arg__unitControls),
+    unnamedVariables_(arg__unnamedVariables),
+    namedVariables_(arg__namedVariables),
+    namedVariableLists_(arg__namedVariableLists),
+    namedTypes_(arg__namedTypes),
+    dataExchanges_(arg__dataExchanges),
+    semaphores_(arg__semaphores),
+    operatorStations_(arg__operatorStations),
+    eventConditions_(arg__eventConditions),
+    eventActions_(arg__eventActions),
+    eventEnrollments_(arg__eventEnrollments),
+    eventConditionLists_(arg__eventConditionLists),
+    journals_(arg__journals),
+    selected_Program_Invocation_(arg__selected_Program_Invocation) {
     };
 
     template<> void VMD_File::selected_Program_Invocation_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -734,97 +734,97 @@ namespace MMS_SCI_Module_1 {
     Access_Control_List_instance::Access_Control_List_instance() : name_(), definition_() {
     };
 
-    Access_Control_List_instance::Access_Control_List_instance(const ISO_9506_MMS_1::Identifier& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Access_Control_List_instance::Access_Control_List_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Access_Control_List_instance::definition_type::details_type::details_type() : accessControl_(), accessControlLists_(), domains_(), programInvocations_(), unitControls_(), unnamedVariables_(), namedVariables_(), namedVariableLists_(), namedTypes_(), dataExchanges_(), semaphores_(), operatorStations_(), eventConditions_(), eventActions_(), eventEnrollments_(), journals_() {
     };
 
-    Access_Control_List_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const accessControlLists_type& __accessControlLists,
-            const domains_type& __domains,
-            const programInvocations_type& __programInvocations,
-            const unitControls_type& __unitControls,
-            const unnamedVariables_type& __unnamedVariables,
-            const namedVariables_type& __namedVariables,
-            const namedVariableLists_type& __namedVariableLists,
-            const namedTypes_type& __namedTypes,
-            const dataExchanges_type& __dataExchanges,
-            const semaphores_type& __semaphores,
-            const operatorStations_type& __operatorStations,
-            const eventConditions_type& __eventConditions,
-            const eventActions_type& __eventActions,
-            const eventEnrollments_type& __eventEnrollments,
-            const journals_type& __journals) :
-    accessControl_(__accessControl),
-    accessControlLists_(__accessControlLists),
-    domains_(__domains),
-    programInvocations_(__programInvocations),
-    unitControls_(__unitControls),
-    unnamedVariables_(__unnamedVariables),
-    namedVariables_(__namedVariables),
-    namedVariableLists_(__namedVariableLists),
-    namedTypes_(__namedTypes),
-    dataExchanges_(__dataExchanges),
-    semaphores_(__semaphores),
-    operatorStations_(__operatorStations),
-    eventConditions_(__eventConditions),
-    eventActions_(__eventActions),
-    eventEnrollments_(__eventEnrollments),
-    journals_(__journals) {
+    Access_Control_List_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const accessControlLists_type& arg__accessControlLists,
+            const domains_type& arg__domains,
+            const programInvocations_type& arg__programInvocations,
+            const unitControls_type& arg__unitControls,
+            const unnamedVariables_type& arg__unnamedVariables,
+            const namedVariables_type& arg__namedVariables,
+            const namedVariableLists_type& arg__namedVariableLists,
+            const namedTypes_type& arg__namedTypes,
+            const dataExchanges_type& arg__dataExchanges,
+            const semaphores_type& arg__semaphores,
+            const operatorStations_type& arg__operatorStations,
+            const eventConditions_type& arg__eventConditions,
+            const eventActions_type& arg__eventActions,
+            const eventEnrollments_type& arg__eventEnrollments,
+            const journals_type& arg__journals) :
+    accessControl_(arg__accessControl),
+    accessControlLists_(arg__accessControlLists),
+    domains_(arg__domains),
+    programInvocations_(arg__programInvocations),
+    unitControls_(arg__unitControls),
+    unnamedVariables_(arg__unnamedVariables),
+    namedVariables_(arg__namedVariables),
+    namedVariableLists_(arg__namedVariableLists),
+    namedTypes_(arg__namedTypes),
+    dataExchanges_(arg__dataExchanges),
+    semaphores_(arg__semaphores),
+    operatorStations_(arg__operatorStations),
+    eventConditions_(arg__eventConditions),
+    eventActions_(arg__eventActions),
+    eventEnrollments_(arg__eventEnrollments),
+    journals_(arg__journals) {
     };
 
-    Access_Control_List_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __readAccessCondition,
-            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __storeAccessCondition,
-            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __writeAccessCondition,
-            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __loadAccessCondition,
-            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __executeAccessCondition,
-            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __deleteAccessCondition,
-            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __editAccessCondition,
-            boost::shared_ptr< accessControlLists_type> __accessControlLists,
-            boost::shared_ptr< domains_type> __domains,
-            boost::shared_ptr< programInvocations_type> __programInvocations,
-            boost::shared_ptr< unitControls_type> __unitControls,
-            boost::shared_ptr< unnamedVariables_type> __unnamedVariables,
-            boost::shared_ptr< namedVariables_type> __namedVariables,
-            boost::shared_ptr< namedVariableLists_type> __namedVariableLists,
-            boost::shared_ptr< namedTypes_type> __namedTypes,
-            boost::shared_ptr< dataExchanges_type> __dataExchanges,
-            boost::shared_ptr< semaphores_type> __semaphores,
-            boost::shared_ptr< operatorStations_type> __operatorStations,
-            boost::shared_ptr< eventConditions_type> __eventConditions,
-            boost::shared_ptr< eventActions_type> __eventActions,
-            boost::shared_ptr< eventEnrollments_type> __eventEnrollments,
-            boost::shared_ptr< journals_type> __journals,
-            boost::shared_ptr< eventConditionLists_type> __eventConditionLists) :
-    accessControl_(__accessControl),
-    readAccessCondition_(__readAccessCondition),
-    storeAccessCondition_(__storeAccessCondition),
-    writeAccessCondition_(__writeAccessCondition),
-    loadAccessCondition_(__loadAccessCondition),
-    executeAccessCondition_(__executeAccessCondition),
-    deleteAccessCondition_(__deleteAccessCondition),
-    editAccessCondition_(__editAccessCondition),
-    accessControlLists_(__accessControlLists),
-    domains_(__domains),
-    programInvocations_(__programInvocations),
-    unitControls_(__unitControls),
-    unnamedVariables_(__unnamedVariables),
-    namedVariables_(__namedVariables),
-    namedVariableLists_(__namedVariableLists),
-    namedTypes_(__namedTypes),
-    dataExchanges_(__dataExchanges),
-    semaphores_(__semaphores),
-    operatorStations_(__operatorStations),
-    eventConditions_(__eventConditions),
-    eventActions_(__eventActions),
-    eventEnrollments_(__eventEnrollments),
-    journals_(__journals),
-    eventConditionLists_(__eventConditionLists) {
+    Access_Control_List_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
+            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__storeAccessCondition,
+            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__writeAccessCondition,
+            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__loadAccessCondition,
+            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__executeAccessCondition,
+            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__deleteAccessCondition,
+            boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__editAccessCondition,
+            boost::shared_ptr< accessControlLists_type> arg__accessControlLists,
+            boost::shared_ptr< domains_type> arg__domains,
+            boost::shared_ptr< programInvocations_type> arg__programInvocations,
+            boost::shared_ptr< unitControls_type> arg__unitControls,
+            boost::shared_ptr< unnamedVariables_type> arg__unnamedVariables,
+            boost::shared_ptr< namedVariables_type> arg__namedVariables,
+            boost::shared_ptr< namedVariableLists_type> arg__namedVariableLists,
+            boost::shared_ptr< namedTypes_type> arg__namedTypes,
+            boost::shared_ptr< dataExchanges_type> arg__dataExchanges,
+            boost::shared_ptr< semaphores_type> arg__semaphores,
+            boost::shared_ptr< operatorStations_type> arg__operatorStations,
+            boost::shared_ptr< eventConditions_type> arg__eventConditions,
+            boost::shared_ptr< eventActions_type> arg__eventActions,
+            boost::shared_ptr< eventEnrollments_type> arg__eventEnrollments,
+            boost::shared_ptr< journals_type> arg__journals,
+            boost::shared_ptr< eventConditionLists_type> arg__eventConditionLists) :
+    accessControl_(arg__accessControl),
+    readAccessCondition_(arg__readAccessCondition),
+    storeAccessCondition_(arg__storeAccessCondition),
+    writeAccessCondition_(arg__writeAccessCondition),
+    loadAccessCondition_(arg__loadAccessCondition),
+    executeAccessCondition_(arg__executeAccessCondition),
+    deleteAccessCondition_(arg__deleteAccessCondition),
+    editAccessCondition_(arg__editAccessCondition),
+    accessControlLists_(arg__accessControlLists),
+    domains_(arg__domains),
+    programInvocations_(arg__programInvocations),
+    unitControls_(arg__unitControls),
+    unnamedVariables_(arg__unnamedVariables),
+    namedVariables_(arg__namedVariables),
+    namedVariableLists_(arg__namedVariableLists),
+    namedTypes_(arg__namedTypes),
+    dataExchanges_(arg__dataExchanges),
+    semaphores_(arg__semaphores),
+    operatorStations_(arg__operatorStations),
+    eventConditions_(arg__eventConditions),
+    eventActions_(arg__eventActions),
+    eventEnrollments_(arg__eventEnrollments),
+    journals_(arg__journals),
+    eventConditionLists_(arg__eventConditionLists) {
     };
 
     template<> void Access_Control_List_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -1322,39 +1322,39 @@ namespace MMS_SCI_Module_1 {
     Domain_instance::Domain_instance() : name_(), definition_() {
     };
 
-    Domain_instance::Domain_instance(const ISO_9506_MMS_1::Identifier& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Domain_instance::Domain_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Domain_instance::definition_type::details_type::details_type() : capabilities_(), state_(), accessControl_(), sharable_(), programInvocations_(), namedVariables_(), namedVariableLists_(), namedTypes_(), eventConditions_(), eventActions_(), eventEnrollments_(), eventConditionLists_() {
     };
 
-    Domain_instance::definition_type::details_type::details_type(const capabilities_type& __capabilities,
-            const MMS_Object_Module_1::DomainState& __state,
-            const Access_Control_List_instance& __accessControl,
-            const bool& __sharable,
-            const programInvocations_type& __programInvocations,
-            const namedVariables_type& __namedVariables,
-            const namedVariableLists_type& __namedVariableLists,
-            const namedTypes_type& __namedTypes,
-            const eventConditions_type& __eventConditions,
-            const eventActions_type& __eventActions,
-            const eventEnrollments_type& __eventEnrollments,
-            const eventConditionLists_type& __eventConditionLists) :
-    capabilities_(__capabilities),
-    state_(__state),
-    accessControl_(__accessControl),
-    sharable_(__sharable),
-    programInvocations_(__programInvocations),
-    namedVariables_(__namedVariables),
-    namedVariableLists_(__namedVariableLists),
-    namedTypes_(__namedTypes),
-    eventConditions_(__eventConditions),
-    eventActions_(__eventActions),
-    eventEnrollments_(__eventEnrollments),
-    eventConditionLists_(__eventConditionLists) {
+    Domain_instance::definition_type::details_type::details_type(const capabilities_type& arg__capabilities,
+            const MMS_Object_Module_1::DomainState& arg__state,
+            const Access_Control_List_instance& arg__accessControl,
+            const bool& arg__sharable,
+            const programInvocations_type& arg__programInvocations,
+            const namedVariables_type& arg__namedVariables,
+            const namedVariableLists_type& arg__namedVariableLists,
+            const namedTypes_type& arg__namedTypes,
+            const eventConditions_type& arg__eventConditions,
+            const eventActions_type& arg__eventActions,
+            const eventEnrollments_type& arg__eventEnrollments,
+            const eventConditionLists_type& arg__eventConditionLists) :
+    capabilities_(arg__capabilities),
+    state_(arg__state),
+    accessControl_(arg__accessControl),
+    sharable_(arg__sharable),
+    programInvocations_(arg__programInvocations),
+    namedVariables_(arg__namedVariables),
+    namedVariableLists_(arg__namedVariableLists),
+    namedTypes_(arg__namedTypes),
+    eventConditions_(arg__eventConditions),
+    eventActions_(arg__eventActions),
+    eventEnrollments_(arg__eventEnrollments),
+    eventConditionLists_(arg__eventConditionLists) {
     };
 
     template<> void Domain_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -1698,53 +1698,53 @@ namespace MMS_SCI_Module_1 {
     Program_Invocation_instance::Program_Invocation_instance() : name_(), definition_() {
     };
 
-    Program_Invocation_instance::Program_Invocation_instance(const ISO_9506_MMS_1::Identifier& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Program_Invocation_instance::Program_Invocation_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Program_Invocation_instance::definition_type::details_type::details_type() : programInvocationState_(), domains_(), accessControl_(), reusable_(), monitor_(), executionArgument_() {
     };
 
-    Program_Invocation_instance::definition_type::details_type::details_type(const MMS_Object_Module_1::ProgramInvocationState& __programInvocationState,
-            const domains_type& __domains,
-            const accessControl_type& __accessControl,
-            const bool& __reusable,
-            const bool& __monitor,
-            const ISO_9506_MMS_1::MMSString& __executionArgument) :
-    programInvocationState_(__programInvocationState),
-    domains_(__domains),
-    accessControl_(__accessControl),
-    reusable_(__reusable),
-    monitor_(__monitor),
-    executionArgument_(__executionArgument) {
+    Program_Invocation_instance::definition_type::details_type::details_type(const MMS_Object_Module_1::ProgramInvocationState& arg__programInvocationState,
+            const domains_type& arg__domains,
+            const accessControl_type& arg__accessControl,
+            const bool& arg__reusable,
+            const bool& arg__monitor,
+            const ISO_9506_MMS_1::MMSString& arg__executionArgument) :
+    programInvocationState_(arg__programInvocationState),
+    domains_(arg__domains),
+    accessControl_(arg__accessControl),
+    reusable_(arg__reusable),
+    monitor_(arg__monitor),
+    executionArgument_(arg__executionArgument) {
     };
 
-    Program_Invocation_instance::definition_type::details_type::details_type(boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> __programInvocationState,
-            boost::shared_ptr< domains_type> __domains,
-            boost::shared_ptr< accessControl_type> __accessControl,
-            boost::shared_ptr< bool> __reusable,
-            boost::shared_ptr< bool> __monitor,
-            boost::shared_ptr< eventCondition_type> __eventCondition,
-            boost::shared_ptr< eventAction_type> __eventAction,
-            boost::shared_ptr< eventEnrollment_type> __eventEnrollment,
-            boost::shared_ptr< ISO_9506_MMS_1::MMSString> __executionArgument,
-            boost::shared_ptr< MMS_Object_Module_1::Control_State> __control,
-            boost::shared_ptr< Program_Invocation_instance> __controlling_Program_Invocation,
-            boost::shared_ptr< controlled_Program_Invocations_type> __controlled_Program_Invocations) :
-    programInvocationState_(__programInvocationState),
-    domains_(__domains),
-    accessControl_(__accessControl),
-    reusable_(__reusable),
-    monitor_(__monitor),
-    eventCondition_(__eventCondition),
-    eventAction_(__eventAction),
-    eventEnrollment_(__eventEnrollment),
-    executionArgument_(__executionArgument),
-    control_(__control),
-    controlling_Program_Invocation_(__controlling_Program_Invocation),
-    controlled_Program_Invocations_(__controlled_Program_Invocations) {
+    Program_Invocation_instance::definition_type::details_type::details_type(boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> arg__programInvocationState,
+            boost::shared_ptr< domains_type> arg__domains,
+            boost::shared_ptr< accessControl_type> arg__accessControl,
+            boost::shared_ptr< bool> arg__reusable,
+            boost::shared_ptr< bool> arg__monitor,
+            boost::shared_ptr< eventCondition_type> arg__eventCondition,
+            boost::shared_ptr< eventAction_type> arg__eventAction,
+            boost::shared_ptr< eventEnrollment_type> arg__eventEnrollment,
+            boost::shared_ptr< ISO_9506_MMS_1::MMSString> arg__executionArgument,
+            boost::shared_ptr< MMS_Object_Module_1::Control_State> arg__control,
+            boost::shared_ptr< Program_Invocation_instance> arg__controlling_Program_Invocation,
+            boost::shared_ptr< controlled_Program_Invocations_type> arg__controlled_Program_Invocations) :
+    programInvocationState_(arg__programInvocationState),
+    domains_(arg__domains),
+    accessControl_(arg__accessControl),
+    reusable_(arg__reusable),
+    monitor_(arg__monitor),
+    eventCondition_(arg__eventCondition),
+    eventAction_(arg__eventAction),
+    eventEnrollment_(arg__eventEnrollment),
+    executionArgument_(arg__executionArgument),
+    control_(arg__control),
+    controlling_Program_Invocation_(arg__controlling_Program_Invocation),
+    controlled_Program_Invocations_(arg__controlled_Program_Invocations) {
     };
 
     template<> void Program_Invocation_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -2042,21 +2042,21 @@ namespace MMS_SCI_Module_1 {
     Unit_Control_instance::Unit_Control_instance() : name_(), definition_() {
     };
 
-    Unit_Control_instance::Unit_Control_instance(const ISO_9506_MMS_1::Identifier& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Unit_Control_instance::Unit_Control_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Unit_Control_instance::definition_type::details_type::details_type() : accessControl_(), domains_(), programInvocations_() {
     };
 
-    Unit_Control_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const domains_type& __domains,
-            const programInvocations_type& __programInvocations) :
-    accessControl_(__accessControl),
-    domains_(__domains),
-    programInvocations_(__programInvocations) {
+    Unit_Control_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const domains_type& arg__domains,
+            const programInvocations_type& arg__programInvocations) :
+    accessControl_(arg__accessControl),
+    domains_(arg__domains),
+    programInvocations_(arg__programInvocations) {
     };
 
     template<> void Unit_Control_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -2238,12 +2238,12 @@ namespace MMS_SCI_Module_1 {
     Unnamed_Variable_instance::Unnamed_Variable_instance() : address_(), accessControl_(), typeDescription_() {
     };
 
-    Unnamed_Variable_instance::Unnamed_Variable_instance(const MMS_Object_Module_1::Address& __address,
-            const Access_Control_List_instance& __accessControl,
-            const MMS_Object_Module_1::TypeDescription& __typeDescription) :
-    address_(__address),
-    accessControl_(__accessControl),
-    typeDescription_(__typeDescription) {
+    Unnamed_Variable_instance::Unnamed_Variable_instance(const MMS_Object_Module_1::Address& arg__address,
+            const Access_Control_List_instance& arg__accessControl,
+            const MMS_Object_Module_1::TypeDescription& arg__typeDescription) :
+    address_(arg__address),
+    accessControl_(arg__accessControl),
+    typeDescription_(arg__typeDescription) {
     };
 
     template<> void Unnamed_Variable_instance::serialize(boost::asn1::x690::output_coder& arch) {
@@ -2312,29 +2312,29 @@ namespace MMS_SCI_Module_1 {
     Named_Variable_instance::Named_Variable_instance() : name_(), definition_() {
     };
 
-    Named_Variable_instance::Named_Variable_instance(const ISO_9506_MMS_1::ObjectName& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Named_Variable_instance::Named_Variable_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Named_Variable_instance::definition_type::details_type::details_type() : accessControl_(), typeDescription_() {
     };
 
-    Named_Variable_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const MMS_Object_Module_1::TypeDescription& __typeDescription) :
-    accessControl_(__accessControl),
-    typeDescription_(__typeDescription) {
+    Named_Variable_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const MMS_Object_Module_1::TypeDescription& arg__typeDescription) :
+    accessControl_(arg__accessControl),
+    typeDescription_(arg__typeDescription) {
     };
 
-    Named_Variable_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-            boost::shared_ptr< MMS_Object_Module_1::TypeDescription> __typeDescription,
-            boost::shared_ptr< MMS_Object_Module_1::Address> __address,
-            boost::shared_ptr< visiblestring_type> __meaning) :
-    accessControl_(__accessControl),
-    typeDescription_(__typeDescription),
-    address_(__address),
-    meaning_(__meaning) {
+    Named_Variable_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+            boost::shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
+            boost::shared_ptr< MMS_Object_Module_1::Address> arg__address,
+            boost::shared_ptr< visiblestring_type> arg__meaning) :
+    accessControl_(arg__accessControl),
+    typeDescription_(arg__typeDescription),
+    address_(arg__address),
+    meaning_(arg__meaning) {
     };
 
     template<> void Named_Variable_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -2518,19 +2518,19 @@ namespace MMS_SCI_Module_1 {
     Named_Variable_List_instance::Named_Variable_List_instance() : name_(), definition_() {
     };
 
-    Named_Variable_List_instance::Named_Variable_List_instance(const ISO_9506_MMS_1::ObjectName& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Named_Variable_List_instance::Named_Variable_List_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Named_Variable_List_instance::definition_type::details_type::details_type() : accessControl_(), listOfVariables_() {
     };
 
-    Named_Variable_List_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const listOfVariables_type& __listOfVariables) :
-    accessControl_(__accessControl),
-    listOfVariables_(__listOfVariables) {
+    Named_Variable_List_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const listOfVariables_type& arg__listOfVariables) :
+    accessControl_(arg__accessControl),
+    listOfVariables_(arg__listOfVariables) {
     };
 
     template<> void Named_Variable_List_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -2694,12 +2694,12 @@ namespace MMS_SCI_Module_1 {
     Variable_List_Item_instance::Variable_List_Item_instance() {
     };
 
-    Variable_List_Item_instance::Variable_List_Item_instance(boost::shared_ptr< Unnamed_Variable_instance> __unnamedItem,
-            boost::shared_ptr< Named_Variable_instance> __namedItem,
-            boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> __alternateAccess) :
-    unnamedItem_(__unnamedItem),
-    namedItem_(__namedItem),
-    alternateAccess_(__alternateAccess) {
+    Variable_List_Item_instance::Variable_List_Item_instance(boost::shared_ptr< Unnamed_Variable_instance> arg__unnamedItem,
+            boost::shared_ptr< Named_Variable_instance> arg__namedItem,
+            boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> arg__alternateAccess) :
+    unnamedItem_(arg__unnamedItem),
+    namedItem_(arg__namedItem),
+    alternateAccess_(arg__alternateAccess) {
     };
 
     template<> void Variable_List_Item_instance::serialize(boost::asn1::x690::output_coder& arch) {
@@ -2744,27 +2744,27 @@ namespace MMS_SCI_Module_1 {
     Named_Type_instance::Named_Type_instance() : name_(), definition_() {
     };
 
-    Named_Type_instance::Named_Type_instance(const ISO_9506_MMS_1::ObjectName& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Named_Type_instance::Named_Type_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Named_Type_instance::definition_type::details_type::details_type() : accessControl_(), typeDescription_() {
     };
 
-    Named_Type_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const MMS_Object_Module_1::TypeDescription& __typeDescription) :
-    accessControl_(__accessControl),
-    typeDescription_(__typeDescription) {
+    Named_Type_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const MMS_Object_Module_1::TypeDescription& arg__typeDescription) :
+    accessControl_(arg__accessControl),
+    typeDescription_(arg__typeDescription) {
     };
 
-    Named_Type_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-            boost::shared_ptr< MMS_Object_Module_1::TypeDescription> __typeDescription,
-            boost::shared_ptr< visiblestring_type> __meaning) :
-    accessControl_(__accessControl),
-    typeDescription_(__typeDescription),
-    meaning_(__meaning) {
+    Named_Type_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+            boost::shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
+            boost::shared_ptr< visiblestring_type> arg__meaning) :
+    accessControl_(arg__accessControl),
+    typeDescription_(arg__typeDescription),
+    meaning_(arg__meaning) {
     };
 
     template<> void Named_Type_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -2938,35 +2938,35 @@ namespace MMS_SCI_Module_1 {
     Data_Exchange_instance::Data_Exchange_instance() : name_(), definition_() {
     };
 
-    Data_Exchange_instance::Data_Exchange_instance(const ISO_9506_MMS_1::Identifier& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Data_Exchange_instance::Data_Exchange_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Data_Exchange_instance::definition_type::details_type::details_type() : accessControl_(), request_(), response_(), linked_() {
     };
 
-    Data_Exchange_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const request_type& __request,
-            const response_type& __response,
-            const bool& __linked) :
-    accessControl_(__accessControl),
-    request_(__request),
-    response_(__response),
-    linked_(__linked) {
+    Data_Exchange_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const request_type& arg__request,
+            const response_type& arg__response,
+            const bool& arg__linked) :
+    accessControl_(arg__accessControl),
+    request_(arg__request),
+    response_(arg__response),
+    linked_(arg__linked) {
     };
 
-    Data_Exchange_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-            boost::shared_ptr< request_type> __request,
-            boost::shared_ptr< response_type> __response,
-            boost::shared_ptr< bool> __linked,
-            boost::shared_ptr< Program_Invocation_instance> __programInvocation) :
-    accessControl_(__accessControl),
-    request_(__request),
-    response_(__response),
-    linked_(__linked),
-    programInvocation_(__programInvocation) {
+    Data_Exchange_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+            boost::shared_ptr< request_type> arg__request,
+            boost::shared_ptr< response_type> arg__response,
+            boost::shared_ptr< bool> arg__linked,
+            boost::shared_ptr< Program_Invocation_instance> arg__programInvocation) :
+    accessControl_(arg__accessControl),
+    request_(arg__request),
+    response_(arg__response),
+    linked_(arg__linked),
+    programInvocation_(arg__programInvocation) {
     };
 
     template<> void Data_Exchange_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -3176,10 +3176,10 @@ namespace MMS_SCI_Module_1 {
     Semaphore_instance::Semaphore_instance() : name_(), definition_() {
     };
 
-    Semaphore_instance::Semaphore_instance(const ISO_9506_MMS_1::Identifier& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Semaphore_instance::Semaphore_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
 
@@ -3190,24 +3190,24 @@ namespace MMS_SCI_Module_1 {
     Semaphore_instance::definition_type::details_type::details_type() : accessControl_(), classV_(), eventCondition_() {
     };
 
-    Semaphore_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const enumerated_type& __classV,
-            const Event_Condition_instance& __eventCondition) :
-    accessControl_(__accessControl),
-    classV_(__classV),
-    eventCondition_(__eventCondition) {
+    Semaphore_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const enumerated_type& arg__classV,
+            const Event_Condition_instance& arg__eventCondition) :
+    accessControl_(arg__accessControl),
+    classV_(arg__classV),
+    eventCondition_(arg__eventCondition) {
     };
 
-    Semaphore_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-            boost::shared_ptr< enumerated_type> __classV,
-            boost::shared_ptr< int> __numberOfTokens,
-            boost::shared_ptr< namedTokens_type> __namedTokens,
-            boost::shared_ptr< Event_Condition_instance> __eventCondition) :
-    accessControl_(__accessControl),
-    classV_(__classV),
-    numberOfTokens_(__numberOfTokens),
-    namedTokens_(__namedTokens),
-    eventCondition_(__eventCondition) {
+    Semaphore_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+            boost::shared_ptr< enumerated_type> arg__classV,
+            boost::shared_ptr< int> arg__numberOfTokens,
+            boost::shared_ptr< namedTokens_type> arg__namedTokens,
+            boost::shared_ptr< Event_Condition_instance> arg__eventCondition) :
+    accessControl_(arg__accessControl),
+    classV_(arg__classV),
+    numberOfTokens_(arg__numberOfTokens),
+    namedTokens_(arg__namedTokens),
+    eventCondition_(arg__eventCondition) {
     };
 
     template<> void Semaphore_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -3409,10 +3409,10 @@ namespace MMS_SCI_Module_1 {
     Operator_Station_instance::Operator_Station_instance() : name_(), definition_() {
     };
 
-    Operator_Station_instance::Operator_Station_instance(const ISO_9506_MMS_1::Identifier& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Operator_Station_instance::Operator_Station_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
 
@@ -3424,10 +3424,10 @@ namespace MMS_SCI_Module_1 {
     Operator_Station_instance::definition_type::details_type::details_type() : accessControl_(), stationType_() {
     };
 
-    Operator_Station_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const enumerated_type& __stationType) :
-    accessControl_(__accessControl),
-    stationType_(__stationType) {
+    Operator_Station_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const enumerated_type& arg__stationType) :
+    accessControl_(arg__accessControl),
+    stationType_(arg__stationType) {
     };
 
     template<> void Operator_Station_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -3591,55 +3591,55 @@ namespace MMS_SCI_Module_1 {
     Event_Condition_instance::Event_Condition_instance() : name_(), definition_() {
     };
 
-    Event_Condition_instance::Event_Condition_instance(const ISO_9506_MMS_1::ObjectName& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Event_Condition_instance::Event_Condition_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Event_Condition_instance::definition_type::details_type::details_type() : accessControl_(), ecClass_(), ecState_(), priority_(), severity_(), eventEnrollments_() {
     };
 
-    Event_Condition_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const MMS_Object_Module_1::EC_Class& __ecClass,
-            const MMS_Object_Module_1::EC_State& __ecState,
-            const MMS_Object_Module_1::Priority& __priority,
-            const MMS_Object_Module_1::Severity& __severity,
-            const eventEnrollments_type& __eventEnrollments) :
-    accessControl_(__accessControl),
-    ecClass_(__ecClass),
-    ecState_(__ecState),
-    priority_(__priority),
-    severity_(__severity),
-    eventEnrollments_(__eventEnrollments) {
+    Event_Condition_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const MMS_Object_Module_1::EC_Class& arg__ecClass,
+            const MMS_Object_Module_1::EC_State& arg__ecState,
+            const MMS_Object_Module_1::Priority& arg__priority,
+            const MMS_Object_Module_1::Severity& arg__severity,
+            const eventEnrollments_type& arg__eventEnrollments) :
+    accessControl_(arg__accessControl),
+    ecClass_(arg__ecClass),
+    ecState_(arg__ecState),
+    priority_(arg__priority),
+    severity_(arg__severity),
+    eventEnrollments_(arg__eventEnrollments) {
     };
 
-    Event_Condition_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-            boost::shared_ptr< MMS_Object_Module_1::EC_Class> __ecClass,
-            boost::shared_ptr< MMS_Object_Module_1::EC_State> __ecState,
-            boost::shared_ptr< MMS_Object_Module_1::Priority> __priority,
-            boost::shared_ptr< MMS_Object_Module_1::Severity> __severity,
-            boost::shared_ptr< eventEnrollments_type> __eventEnrollments,
-            boost::shared_ptr< bool> __enabled,
-            boost::shared_ptr< bool> __alarmSummaryReports,
-            boost::shared_ptr< monitoredVariable_type> __monitoredVariable,
-            boost::shared_ptr< int> __evaluationInterval,
-            boost::shared_ptr< displayEnhancement_type> __displayEnhancement,
-            boost::shared_ptr< group_Priority_Override_type> __group_Priority_Override,
-            boost::shared_ptr< referencingEventConditionLists_type> __referencingEventConditionLists) :
-    accessControl_(__accessControl),
-    ecClass_(__ecClass),
-    ecState_(__ecState),
-    priority_(__priority),
-    severity_(__severity),
-    eventEnrollments_(__eventEnrollments),
-    enabled_(__enabled),
-    alarmSummaryReports_(__alarmSummaryReports),
-    monitoredVariable_(__monitoredVariable),
-    evaluationInterval_(__evaluationInterval),
-    displayEnhancement_(__displayEnhancement),
-    group_Priority_Override_(__group_Priority_Override),
-    referencingEventConditionLists_(__referencingEventConditionLists) {
+    Event_Condition_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+            boost::shared_ptr< MMS_Object_Module_1::EC_Class> arg__ecClass,
+            boost::shared_ptr< MMS_Object_Module_1::EC_State> arg__ecState,
+            boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
+            boost::shared_ptr< MMS_Object_Module_1::Severity> arg__severity,
+            boost::shared_ptr< eventEnrollments_type> arg__eventEnrollments,
+            boost::shared_ptr< bool> arg__enabled,
+            boost::shared_ptr< bool> arg__alarmSummaryReports,
+            boost::shared_ptr< monitoredVariable_type> arg__monitoredVariable,
+            boost::shared_ptr< int> arg__evaluationInterval,
+            boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement,
+            boost::shared_ptr< group_Priority_Override_type> arg__group_Priority_Override,
+            boost::shared_ptr< referencingEventConditionLists_type> arg__referencingEventConditionLists) :
+    accessControl_(arg__accessControl),
+    ecClass_(arg__ecClass),
+    ecState_(arg__ecState),
+    priority_(arg__priority),
+    severity_(arg__severity),
+    eventEnrollments_(arg__eventEnrollments),
+    enabled_(arg__enabled),
+    alarmSummaryReports_(arg__alarmSummaryReports),
+    monitoredVariable_(arg__monitoredVariable),
+    evaluationInterval_(arg__evaluationInterval),
+    displayEnhancement_(arg__displayEnhancement),
+    group_Priority_Override_(arg__group_Priority_Override),
+    referencingEventConditionLists_(arg__referencingEventConditionLists) {
     };
 
     template<> void Event_Condition_instance::definition_type::details_type::monitoredVariable_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -4182,23 +4182,23 @@ namespace MMS_SCI_Module_1 {
     Event_Action_instance::Event_Action_instance() : name_(), definition_() {
     };
 
-    Event_Action_instance::Event_Action_instance(const ISO_9506_MMS_1::ObjectName& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Event_Action_instance::Event_Action_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Event_Action_instance::definition_type::details_type::details_type() : accessControl_(), confirmedServiceRequest_(), modifiers_(), eventEnrollments_() {
     };
 
-    Event_Action_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const ISO_9506_MMS_1::ConfirmedServiceRequest& __confirmedServiceRequest,
-            const modifiers_type& __modifiers,
-            const eventEnrollments_type& __eventEnrollments) :
-    accessControl_(__accessControl),
-    confirmedServiceRequest_(__confirmedServiceRequest),
-    modifiers_(__modifiers),
-    eventEnrollments_(__eventEnrollments) {
+    Event_Action_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const ISO_9506_MMS_1::ConfirmedServiceRequest& arg__confirmedServiceRequest,
+            const modifiers_type& arg__modifiers,
+            const eventEnrollments_type& arg__eventEnrollments) :
+    accessControl_(arg__accessControl),
+    confirmedServiceRequest_(arg__confirmedServiceRequest),
+    modifiers_(arg__modifiers),
+    eventEnrollments_(arg__eventEnrollments) {
     };
 
     template<> void Event_Action_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -4398,45 +4398,45 @@ namespace MMS_SCI_Module_1 {
     Event_Enrollment_instance::Event_Enrollment_instance() : name_(), definition_() {
     };
 
-    Event_Enrollment_instance::Event_Enrollment_instance(const ISO_9506_MMS_1::ObjectName& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Event_Enrollment_instance::Event_Enrollment_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Event_Enrollment_instance::definition_type::details_type::details_type() : accessControl_(), eeClass_(), eventCondition_(), ecTransitions_() {
     };
 
-    Event_Enrollment_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const MMS_Object_Module_1::EE_Class& __eeClass,
-            const Event_Condition_instance& __eventCondition,
-            const MMS_Object_Module_1::Transitions& __ecTransitions) :
-    accessControl_(__accessControl),
-    eeClass_(__eeClass),
-    eventCondition_(__eventCondition),
-    ecTransitions_(__ecTransitions) {
+    Event_Enrollment_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const MMS_Object_Module_1::EE_Class& arg__eeClass,
+            const Event_Condition_instance& arg__eventCondition,
+            const MMS_Object_Module_1::Transitions& arg__ecTransitions) :
+    accessControl_(arg__accessControl),
+    eeClass_(arg__eeClass),
+    eventCondition_(arg__eventCondition),
+    ecTransitions_(arg__ecTransitions) {
     };
 
-    Event_Enrollment_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-            boost::shared_ptr< MMS_Object_Module_1::EE_Class> __eeClass,
-            boost::shared_ptr< Event_Condition_instance> __eventCondition,
-            boost::shared_ptr< MMS_Object_Module_1::Transitions> __ecTransitions,
-            boost::shared_ptr< remainingDelay_type> __remainingDelay,
-            boost::shared_ptr< Event_Action_instance> __eventAction,
-            boost::shared_ptr< MMS_Object_Module_1::EE_Duration> __duration,
-            boost::shared_ptr< MMS_Environment_1::ApplicationReference> __clientApplication,
-            boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> __aaRule,
-            boost::shared_ptr< displayEnhancement_type> __displayEnhancement) :
-    accessControl_(__accessControl),
-    eeClass_(__eeClass),
-    eventCondition_(__eventCondition),
-    ecTransitions_(__ecTransitions),
-    remainingDelay_(__remainingDelay),
-    eventAction_(__eventAction),
-    duration_(__duration),
-    clientApplication_(__clientApplication),
-    aaRule_(__aaRule),
-    displayEnhancement_(__displayEnhancement) {
+    Event_Enrollment_instance::definition_type::details_type::details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+            boost::shared_ptr< MMS_Object_Module_1::EE_Class> arg__eeClass,
+            boost::shared_ptr< Event_Condition_instance> arg__eventCondition,
+            boost::shared_ptr< MMS_Object_Module_1::Transitions> arg__ecTransitions,
+            boost::shared_ptr< remainingDelay_type> arg__remainingDelay,
+            boost::shared_ptr< Event_Action_instance> arg__eventAction,
+            boost::shared_ptr< MMS_Object_Module_1::EE_Duration> arg__duration,
+            boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
+            boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__aaRule,
+            boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement) :
+    accessControl_(arg__accessControl),
+    eeClass_(arg__eeClass),
+    eventCondition_(arg__eventCondition),
+    ecTransitions_(arg__ecTransitions),
+    remainingDelay_(arg__remainingDelay),
+    eventAction_(arg__eventAction),
+    duration_(arg__duration),
+    clientApplication_(arg__clientApplication),
+    aaRule_(arg__aaRule),
+    displayEnhancement_(arg__displayEnhancement) {
     };
 
     template<> void Event_Enrollment_instance::definition_type::details_type::remainingDelay_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -4851,23 +4851,23 @@ namespace MMS_SCI_Module_1 {
     Event_Condition_List_instance::Event_Condition_List_instance() : name_(), definition_() {
     };
 
-    Event_Condition_List_instance::Event_Condition_List_instance(const ISO_9506_MMS_1::ObjectName& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Event_Condition_List_instance::Event_Condition_List_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Event_Condition_List_instance::definition_type::details_type::details_type() : accessControl_(), eventConditions_(), eventConditionLists_(), referencingEventConditionLists_() {
     };
 
-    Event_Condition_List_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const eventConditions_type& __eventConditions,
-            const eventConditionLists_type& __eventConditionLists,
-            const referencingEventConditionLists_type& __referencingEventConditionLists) :
-    accessControl_(__accessControl),
-    eventConditions_(__eventConditions),
-    eventConditionLists_(__eventConditionLists),
-    referencingEventConditionLists_(__referencingEventConditionLists) {
+    Event_Condition_List_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const eventConditions_type& arg__eventConditions,
+            const eventConditionLists_type& arg__eventConditionLists,
+            const referencingEventConditionLists_type& arg__referencingEventConditionLists) :
+    accessControl_(arg__accessControl),
+    eventConditions_(arg__eventConditions),
+    eventConditionLists_(arg__eventConditionLists),
+    referencingEventConditionLists_(arg__referencingEventConditionLists) {
     };
 
     template<> void Event_Condition_List_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -5067,19 +5067,19 @@ namespace MMS_SCI_Module_1 {
     Journal_instance::Journal_instance() : name_(), definition_() {
     };
 
-    Journal_instance::Journal_instance(const ISO_9506_MMS_1::ObjectName& __name,
-            const definition_type& __definition) :
-    name_(__name),
-    definition_(__definition) {
+    Journal_instance::Journal_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+            const definition_type& arg__definition) :
+    name_(arg__name),
+    definition_(arg__definition) {
     };
 
     Journal_instance::definition_type::details_type::details_type() : accessControl_(), entries_() {
     };
 
-    Journal_instance::definition_type::details_type::details_type(const Access_Control_List_instance& __accessControl,
-            const entries_type& __entries) :
-    accessControl_(__accessControl),
-    entries_(__entries) {
+    Journal_instance::definition_type::details_type::details_type(const Access_Control_List_instance& arg__accessControl,
+            const entries_type& arg__entries) :
+    accessControl_(arg__accessControl),
+    entries_(arg__entries) {
     };
 
     template<> void Journal_instance::definition_type::details_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -5246,47 +5246,47 @@ namespace MMS_SCI_Module_1 {
     Journal_Entry_instance::Journal_Entry_instance() : journal_(), entry_(), clientApplication_(), timeStamp_(), orderOfReceipt_(), informationType_() {
     };
 
-    Journal_Entry_instance::Journal_Entry_instance(const Journal_instance& __journal,
-            const octetstring_type& __entry,
-            const MMS_Environment_1::ApplicationReference& __clientApplication,
-            const ISO_9506_MMS_1::TimeOfDay& __timeStamp,
-            const int& __orderOfReceipt,
-            const enumerated_type& __informationType) :
-    journal_(__journal),
-    entry_(__entry),
-    clientApplication_(__clientApplication),
-    timeStamp_(__timeStamp),
-    orderOfReceipt_(__orderOfReceipt),
-    informationType_(__informationType) {
+    Journal_Entry_instance::Journal_Entry_instance(const Journal_instance& arg__journal,
+            const octetstring_type& arg__entry,
+            const MMS_Environment_1::ApplicationReference& arg__clientApplication,
+            const ISO_9506_MMS_1::TimeOfDay& arg__timeStamp,
+            const int& arg__orderOfReceipt,
+            const enumerated_type& arg__informationType) :
+    journal_(arg__journal),
+    entry_(arg__entry),
+    clientApplication_(arg__clientApplication),
+    timeStamp_(arg__timeStamp),
+    orderOfReceipt_(arg__orderOfReceipt),
+    informationType_(arg__informationType) {
     };
 
-    Journal_Entry_instance::Journal_Entry_instance(boost::shared_ptr< Journal_instance> __journal,
-            boost::shared_ptr< octetstring_type> __entry,
-            boost::shared_ptr< MMS_Environment_1::ApplicationReference> __clientApplication,
-            boost::shared_ptr< ISO_9506_MMS_1::TimeOfDay> __timeStamp,
-            boost::shared_ptr< int> __orderOfReceipt,
-            boost::shared_ptr< enumerated_type> __informationType,
-            boost::shared_ptr< ISO_9506_MMS_1::MMS255String> __textComment,
-            boost::shared_ptr< eventTransitionRecord_type> __eventTransitionRecord,
-            boost::shared_ptr< journalVariables_type> __journalVariables) :
-    journal_(__journal),
-    entry_(__entry),
-    clientApplication_(__clientApplication),
-    timeStamp_(__timeStamp),
-    orderOfReceipt_(__orderOfReceipt),
-    informationType_(__informationType),
-    textComment_(__textComment),
-    eventTransitionRecord_(__eventTransitionRecord),
-    journalVariables_(__journalVariables) {
+    Journal_Entry_instance::Journal_Entry_instance(boost::shared_ptr< Journal_instance> arg__journal,
+            boost::shared_ptr< octetstring_type> arg__entry,
+            boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
+            boost::shared_ptr< ISO_9506_MMS_1::TimeOfDay> arg__timeStamp,
+            boost::shared_ptr< int> arg__orderOfReceipt,
+            boost::shared_ptr< enumerated_type> arg__informationType,
+            boost::shared_ptr< ISO_9506_MMS_1::MMS255String> arg__textComment,
+            boost::shared_ptr< eventTransitionRecord_type> arg__eventTransitionRecord,
+            boost::shared_ptr< journalVariables_type> arg__journalVariables) :
+    journal_(arg__journal),
+    entry_(arg__entry),
+    clientApplication_(arg__clientApplication),
+    timeStamp_(arg__timeStamp),
+    orderOfReceipt_(arg__orderOfReceipt),
+    informationType_(arg__informationType),
+    textComment_(arg__textComment),
+    eventTransitionRecord_(arg__eventTransitionRecord),
+    journalVariables_(arg__journalVariables) {
     };
 
     Journal_Entry_instance::eventTransitionRecord_type::eventTransitionRecord_type() : name_(), currentState_() {
     };
 
-    Journal_Entry_instance::eventTransitionRecord_type::eventTransitionRecord_type(const ISO_9506_MMS_1::ObjectName& __name,
-            const MMS_Object_Module_1::EC_State& __currentState) :
-    name_(__name),
-    currentState_(__currentState) {
+    Journal_Entry_instance::eventTransitionRecord_type::eventTransitionRecord_type(const ISO_9506_MMS_1::ObjectName& arg__name,
+            const MMS_Object_Module_1::EC_State& arg__currentState) :
+    name_(arg__name),
+    currentState_(arg__currentState) {
     };
 
     template<> void Journal_Entry_instance::eventTransitionRecord_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -5334,10 +5334,10 @@ namespace MMS_SCI_Module_1 {
     Journal_Entry_instance::journalVariables_type_sequence_of::journalVariables_type_sequence_of() : variableTag_(), valueSpecification_() {
     };
 
-    Journal_Entry_instance::journalVariables_type_sequence_of::journalVariables_type_sequence_of(const ISO_9506_MMS_1::MMS255String& __variableTag,
-            const ISO_9506_MMS_1::Data& __valueSpecification) :
-    variableTag_(__variableTag),
-    valueSpecification_(__valueSpecification) {
+    Journal_Entry_instance::journalVariables_type_sequence_of::journalVariables_type_sequence_of(const ISO_9506_MMS_1::MMS255String& arg__variableTag,
+            const ISO_9506_MMS_1::Data& arg__valueSpecification) :
+    variableTag_(arg__variableTag),
+    valueSpecification_(arg__valueSpecification) {
     };
 
     template<> void Journal_Entry_instance::journalVariables_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
@@ -5532,40 +5532,40 @@ namespace MMS_SCI_Module_1 {
     Service_and_Parameter_CBBs::Service_and_Parameter_CBBs() : services_Client_(), services_Server_(), parameters_(), nest_(), extendedServices_Client_(), extendedServices_Server_(), extendedParameters_(), generalManagement_(), vMDSupport_(), domainManagement_(), programInvocation_(), variableAccess_(), dataParameters_(), semaphoreManagement_(), operatorCommunication_(), errors_(), fileManagement_() {
     };
 
-    Service_and_Parameter_CBBs::Service_and_Parameter_CBBs(const MMS_Object_Module_1::ServiceSupportOptions& __services_Client,
-            const MMS_Object_Module_1::ServiceSupportOptions& __services_Server,
-            const MMS_Object_Module_1::ParameterSupportOptions& __parameters,
-            const int& __nest,
-            const MMS_Object_Module_1::AdditionalSupportOptions& __extendedServices_Client,
-            const MMS_Object_Module_1::AdditionalSupportOptions& __extendedServices_Server,
-            const MMS_Object_Module_1::AdditionalCBBOptions& __extendedParameters,
-            const GeneralManagementParameters& __generalManagement,
-            const VMDSupportParameters& __vMDSupport,
-            const DomainManagementParameters& __domainManagement,
-            const ProgramInvocationManagementParameters& __programInvocation,
-            const VariableAccessParameters& __variableAccess,
-            const DataParameters& __dataParameters,
-            const SemaphoreManagementParameters& __semaphoreManagement,
-            const OperatorCommunicationParameters& __operatorCommunication,
-            const ErrorParameters& __errors,
-            const FileManagementParameters& __fileManagement) :
-    services_Client_(__services_Client),
-    services_Server_(__services_Server),
-    parameters_(__parameters),
-    nest_(__nest),
-    extendedServices_Client_(__extendedServices_Client),
-    extendedServices_Server_(__extendedServices_Server),
-    extendedParameters_(__extendedParameters),
-    generalManagement_(__generalManagement),
-    vMDSupport_(__vMDSupport),
-    domainManagement_(__domainManagement),
-    programInvocation_(__programInvocation),
-    variableAccess_(__variableAccess),
-    dataParameters_(__dataParameters),
-    semaphoreManagement_(__semaphoreManagement),
-    operatorCommunication_(__operatorCommunication),
-    errors_(__errors),
-    fileManagement_(__fileManagement) {
+    Service_and_Parameter_CBBs::Service_and_Parameter_CBBs(const MMS_Object_Module_1::ServiceSupportOptions& arg__services_Client,
+            const MMS_Object_Module_1::ServiceSupportOptions& arg__services_Server,
+            const MMS_Object_Module_1::ParameterSupportOptions& arg__parameters,
+            const int& arg__nest,
+            const MMS_Object_Module_1::AdditionalSupportOptions& arg__extendedServices_Client,
+            const MMS_Object_Module_1::AdditionalSupportOptions& arg__extendedServices_Server,
+            const MMS_Object_Module_1::AdditionalCBBOptions& arg__extendedParameters,
+            const GeneralManagementParameters& arg__generalManagement,
+            const VMDSupportParameters& arg__vMDSupport,
+            const DomainManagementParameters& arg__domainManagement,
+            const ProgramInvocationManagementParameters& arg__programInvocation,
+            const VariableAccessParameters& arg__variableAccess,
+            const DataParameters& arg__dataParameters,
+            const SemaphoreManagementParameters& arg__semaphoreManagement,
+            const OperatorCommunicationParameters& arg__operatorCommunication,
+            const ErrorParameters& arg__errors,
+            const FileManagementParameters& arg__fileManagement) :
+    services_Client_(arg__services_Client),
+    services_Server_(arg__services_Server),
+    parameters_(arg__parameters),
+    nest_(arg__nest),
+    extendedServices_Client_(arg__extendedServices_Client),
+    extendedServices_Server_(arg__extendedServices_Server),
+    extendedParameters_(arg__extendedParameters),
+    generalManagement_(arg__generalManagement),
+    vMDSupport_(arg__vMDSupport),
+    domainManagement_(arg__domainManagement),
+    programInvocation_(arg__programInvocation),
+    variableAccess_(arg__variableAccess),
+    dataParameters_(arg__dataParameters),
+    semaphoreManagement_(arg__semaphoreManagement),
+    operatorCommunication_(arg__operatorCommunication),
+    errors_(arg__errors),
+    fileManagement_(arg__fileManagement) {
     };
 
     template<> void Service_and_Parameter_CBBs::serialize(boost::asn1::x690::output_coder& arch) {
@@ -5886,21 +5886,21 @@ namespace MMS_SCI_Module_1 {
     GeneralManagementParameters::GeneralManagementParameters() : localDetail_(), supportForTime_(), granularityOfTime_() {
     };
 
-    GeneralManagementParameters::GeneralManagementParameters(const ISO_9506_MMS_1::MMSString& __localDetail,
-            const supportForTime_type& __supportForTime,
-            const int& __granularityOfTime) :
-    localDetail_(__localDetail),
-    supportForTime_(__supportForTime),
-    granularityOfTime_(__granularityOfTime) {
+    GeneralManagementParameters::GeneralManagementParameters(const ISO_9506_MMS_1::MMSString& arg__localDetail,
+            const supportForTime_type& arg__supportForTime,
+            const int& arg__granularityOfTime) :
+    localDetail_(arg__localDetail),
+    supportForTime_(arg__supportForTime),
+    granularityOfTime_(arg__granularityOfTime) {
     };
 
     GeneralManagementParameters::supportForTime_type::supportForTime_type() : timeOfDay_(), timeSequence_() {
     };
 
-    GeneralManagementParameters::supportForTime_type::supportForTime_type(const bool& __timeOfDay,
-            const bool& __timeSequence) :
-    timeOfDay_(__timeOfDay),
-    timeSequence_(__timeSequence) {
+    GeneralManagementParameters::supportForTime_type::supportForTime_type(const bool& arg__timeOfDay,
+            const bool& arg__timeSequence) :
+    timeOfDay_(arg__timeOfDay),
+    timeSequence_(arg__timeSequence) {
     };
 
     template<> void GeneralManagementParameters::supportForTime_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -6011,10 +6011,10 @@ namespace MMS_SCI_Module_1 {
     VMDSupportParameters::VMDSupportParameters() : localDetail_(), extendedDerivation_() {
     };
 
-    VMDSupportParameters::VMDSupportParameters(const ISO_9506_MMS_1::MMSString& __localDetail,
-            const ISO_9506_MMS_1::MMSString& __extendedDerivation) :
-    localDetail_(__localDetail),
-    extendedDerivation_(__extendedDerivation) {
+    VMDSupportParameters::VMDSupportParameters(const ISO_9506_MMS_1::MMSString& arg__localDetail,
+            const ISO_9506_MMS_1::MMSString& arg__extendedDerivation) :
+    localDetail_(arg__localDetail),
+    extendedDerivation_(arg__extendedDerivation) {
     };
 
     template<> void VMDSupportParameters::serialize(boost::asn1::x690::output_coder& arch) {
@@ -6065,12 +6065,12 @@ namespace MMS_SCI_Module_1 {
     DomainManagementParameters::DomainManagementParameters() : loadDataOctet_(), loadDataSyntax_(), maxUploads_() {
     };
 
-    DomainManagementParameters::DomainManagementParameters(const ISO_9506_MMS_1::MMSString& __loadDataOctet,
-            const loadDataSyntax_type& __loadDataSyntax,
-            const int& __maxUploads) :
-    loadDataOctet_(__loadDataOctet),
-    loadDataSyntax_(__loadDataSyntax),
-    maxUploads_(__maxUploads) {
+    DomainManagementParameters::DomainManagementParameters(const ISO_9506_MMS_1::MMSString& arg__loadDataOctet,
+            const loadDataSyntax_type& arg__loadDataSyntax,
+            const int& arg__maxUploads) :
+    loadDataOctet_(arg__loadDataOctet),
+    loadDataSyntax_(arg__loadDataSyntax),
+    maxUploads_(arg__maxUploads) {
     };
 
     template<> void DomainManagementParameters::serialize(boost::asn1::x690::output_coder& arch) {
@@ -6139,16 +6139,16 @@ namespace MMS_SCI_Module_1 {
     ProgramInvocationManagementParameters::ProgramInvocationManagementParameters() : executionArgMaxSize_(), executionArgParseRules_(), executionArgSyntaxes_(), programLoction_(), stepMode_() {
     };
 
-    ProgramInvocationManagementParameters::ProgramInvocationManagementParameters(const int& __executionArgMaxSize,
-            const ISO_9506_MMS_1::MMSString& __executionArgParseRules,
-            const executionArgSyntaxes_type& __executionArgSyntaxes,
-            const ISO_9506_MMS_1::MMSString& __programLoction,
-            const bool& __stepMode) :
-    executionArgMaxSize_(__executionArgMaxSize),
-    executionArgParseRules_(__executionArgParseRules),
-    executionArgSyntaxes_(__executionArgSyntaxes),
-    programLoction_(__programLoction),
-    stepMode_(__stepMode) {
+    ProgramInvocationManagementParameters::ProgramInvocationManagementParameters(const int& arg__executionArgMaxSize,
+            const ISO_9506_MMS_1::MMSString& arg__executionArgParseRules,
+            const executionArgSyntaxes_type& arg__executionArgSyntaxes,
+            const ISO_9506_MMS_1::MMSString& arg__programLoction,
+            const bool& arg__stepMode) :
+    executionArgMaxSize_(arg__executionArgMaxSize),
+    executionArgParseRules_(arg__executionArgParseRules),
+    executionArgSyntaxes_(arg__executionArgSyntaxes),
+    programLoction_(arg__programLoction),
+    stepMode_(arg__stepMode) {
     };
 
     template<> void ProgramInvocationManagementParameters::serialize(boost::asn1::x690::output_coder& arch) {
@@ -6253,12 +6253,12 @@ namespace MMS_SCI_Module_1 {
     VariableAccessParameters::VariableAccessParameters() : uninterruptibleAccess_(), singleMode_(), unnamedMode_() {
     };
 
-    VariableAccessParameters::VariableAccessParameters(const ISO_9506_MMS_1::MMSString& __uninterruptibleAccess,
-            const bool& __singleMode,
-            const bool& __unnamedMode) :
-    uninterruptibleAccess_(__uninterruptibleAccess),
-    singleMode_(__singleMode),
-    unnamedMode_(__unnamedMode) {
+    VariableAccessParameters::VariableAccessParameters(const ISO_9506_MMS_1::MMSString& arg__uninterruptibleAccess,
+            const bool& arg__singleMode,
+            const bool& arg__unnamedMode) :
+    uninterruptibleAccess_(arg__uninterruptibleAccess),
+    singleMode_(arg__singleMode),
+    unnamedMode_(arg__unnamedMode) {
     };
 
     template<> void VariableAccessParameters::serialize(boost::asn1::x690::output_coder& arch) {
@@ -6327,33 +6327,33 @@ namespace MMS_SCI_Module_1 {
     DataParameters::DataParameters() {
     };
 
-    DataParameters::DataParameters(boost::shared_ptr< int> __bit_string,
-            boost::shared_ptr< int> __integer,
-            boost::shared_ptr< int> __unsignedV,
-            boost::shared_ptr< floating_point_type> __floating_point,
-            boost::shared_ptr< int> __octet_string,
-            boost::shared_ptr< int> __visible_string,
-            boost::shared_ptr< bool> __binary_time,
-            boost::shared_ptr< int> __bcd,
-            boost::shared_ptr< int> __mmsString) :
-    bit_string_(__bit_string),
-    integer_(__integer),
-    unsignedV_(__unsignedV),
-    floating_point_(__floating_point),
-    octet_string_(__octet_string),
-    visible_string_(__visible_string),
-    binary_time_(__binary_time),
-    bcd_(__bcd),
-    mmsString_(__mmsString) {
+    DataParameters::DataParameters(boost::shared_ptr< int> arg__bit_string,
+            boost::shared_ptr< int> arg__integer,
+            boost::shared_ptr< int> arg__unsignedV,
+            boost::shared_ptr< floating_point_type> arg__floating_point,
+            boost::shared_ptr< int> arg__octet_string,
+            boost::shared_ptr< int> arg__visible_string,
+            boost::shared_ptr< bool> arg__binary_time,
+            boost::shared_ptr< int> arg__bcd,
+            boost::shared_ptr< int> arg__mmsString) :
+    bit_string_(arg__bit_string),
+    integer_(arg__integer),
+    unsignedV_(arg__unsignedV),
+    floating_point_(arg__floating_point),
+    octet_string_(arg__octet_string),
+    visible_string_(arg__visible_string),
+    binary_time_(arg__binary_time),
+    bcd_(arg__bcd),
+    mmsString_(arg__mmsString) {
     };
 
     DataParameters::floating_point_type::floating_point_type() : total_(), exponent_() {
     };
 
-    DataParameters::floating_point_type::floating_point_type(const int& __total,
-            const int& __exponent) :
-    total_(__total),
-    exponent_(__exponent) {
+    DataParameters::floating_point_type::floating_point_type(const int& arg__total,
+            const int& arg__exponent) :
+    total_(arg__total),
+    exponent_(arg__exponent) {
     };
 
     template<> void DataParameters::floating_point_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -6500,8 +6500,8 @@ namespace MMS_SCI_Module_1 {
     SemaphoreManagementParameters::SemaphoreManagementParameters() : algorithm_() {
     };
 
-    SemaphoreManagementParameters::SemaphoreManagementParameters(const ISO_9506_MMS_1::MMSString& __algorithm) :
-    algorithm_(__algorithm) {
+    SemaphoreManagementParameters::SemaphoreManagementParameters(const ISO_9506_MMS_1::MMSString& arg__algorithm) :
+    algorithm_(arg__algorithm) {
     };
 
     template<> void SemaphoreManagementParameters::serialize(boost::asn1::x690::output_coder& arch) {
@@ -6534,8 +6534,8 @@ namespace MMS_SCI_Module_1 {
     OperatorCommunicationParameters::OperatorCommunicationParameters() : input_time_out_() {
     };
 
-    OperatorCommunicationParameters::OperatorCommunicationParameters(const int& __input_time_out) :
-    input_time_out_(__input_time_out) {
+    OperatorCommunicationParameters::OperatorCommunicationParameters(const int& arg__input_time_out) :
+    input_time_out_(arg__input_time_out) {
     };
 
     template<> void OperatorCommunicationParameters::serialize(boost::asn1::x690::output_coder& arch) {
@@ -6568,19 +6568,19 @@ namespace MMS_SCI_Module_1 {
     ErrorParameters::ErrorParameters() : additionalCode_(), additionalDetial_() {
     };
 
-    ErrorParameters::ErrorParameters(const ISO_9506_MMS_1::MMSString& __additionalCode,
-            const additionalDetial_type& __additionalDetial) :
-    additionalCode_(__additionalCode),
-    additionalDetial_(__additionalDetial) {
+    ErrorParameters::ErrorParameters(const ISO_9506_MMS_1::MMSString& arg__additionalCode,
+            const additionalDetial_type& arg__additionalDetial) :
+    additionalCode_(arg__additionalCode),
+    additionalDetial_(arg__additionalDetial) {
     };
 
     ErrorParameters::additionalDetial_type::additionalDetial_type() : size_(), syntax_() {
     };
 
-    ErrorParameters::additionalDetial_type::additionalDetial_type(const int& __size,
-            const ISO_9506_MMS_1::MMSString& __syntax) :
-    size_(__size),
-    syntax_(__syntax) {
+    ErrorParameters::additionalDetial_type::additionalDetial_type(const int& arg__size,
+            const ISO_9506_MMS_1::MMSString& arg__syntax) :
+    size_(arg__size),
+    syntax_(arg__syntax) {
     };
 
     template<> void ErrorParameters::additionalDetial_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -6673,8 +6673,8 @@ namespace MMS_SCI_Module_1 {
     FileManagementParameters::FileManagementParameters() : fileName_() {
     };
 
-    FileManagementParameters::FileManagementParameters(const ISO_9506_MMS_1::MMSString& __fileName) :
-    fileName_(__fileName) {
+    FileManagementParameters::FileManagementParameters(const ISO_9506_MMS_1::MMSString& arg__fileName) :
+    fileName_(arg__fileName) {
     };
 
     template<> void FileManagementParameters::serialize(boost::asn1::x690::output_coder& arch) {

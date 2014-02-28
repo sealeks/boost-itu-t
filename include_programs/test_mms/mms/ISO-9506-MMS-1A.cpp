@@ -7,18 +7,18 @@ namespace ISO_9506_MMS_1A {
     ObtainFile_Request::ObtainFile_Request() : sourceFile_(), destinationFile_() {
     };
 
-    ObtainFile_Request::ObtainFile_Request(const ISO_9506_MMS_1::FileName& __sourceFile,
-            const ISO_9506_MMS_1::FileName& __destinationFile) :
-    sourceFile_(__sourceFile),
-    destinationFile_(__destinationFile) {
+    ObtainFile_Request::ObtainFile_Request(const ISO_9506_MMS_1::FileName& arg__sourceFile,
+            const ISO_9506_MMS_1::FileName& arg__destinationFile) :
+    sourceFile_(arg__sourceFile),
+    destinationFile_(arg__destinationFile) {
     };
 
-    ObtainFile_Request::ObtainFile_Request(boost::shared_ptr< MMS_Environment_1::ApplicationReference> __sourceFileServer,
-            boost::shared_ptr< ISO_9506_MMS_1::FileName> __sourceFile,
-            boost::shared_ptr< ISO_9506_MMS_1::FileName> __destinationFile) :
-    sourceFileServer_(__sourceFileServer),
-    sourceFile_(__sourceFile),
-    destinationFile_(__destinationFile) {
+    ObtainFile_Request::ObtainFile_Request(boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__sourceFileServer,
+            boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__sourceFile,
+            boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__destinationFile) :
+    sourceFileServer_(arg__sourceFileServer),
+    sourceFile_(arg__sourceFile),
+    destinationFile_(arg__destinationFile) {
     };
 
     template<> void ObtainFile_Request::serialize(boost::asn1::x690::output_coder& arch) {
@@ -82,10 +82,10 @@ namespace ISO_9506_MMS_1A {
     FileOpen_Request::FileOpen_Request() : fileName_(), initialPosition_() {
     };
 
-    FileOpen_Request::FileOpen_Request(const ISO_9506_MMS_1::FileName& __fileName,
-            const ISO_9506_MMS_1::Unsigned32& __initialPosition) :
-    fileName_(__fileName),
-    initialPosition_(__initialPosition) {
+    FileOpen_Request::FileOpen_Request(const ISO_9506_MMS_1::FileName& arg__fileName,
+            const ISO_9506_MMS_1::Unsigned32& arg__initialPosition) :
+    fileName_(arg__fileName),
+    initialPosition_(arg__initialPosition) {
     };
 
     template<> void FileOpen_Request::serialize(boost::asn1::x690::output_coder& arch) {
@@ -136,10 +136,10 @@ namespace ISO_9506_MMS_1A {
     FileOpen_Response::FileOpen_Response() : frsmID_(), fileAttributes_() {
     };
 
-    FileOpen_Response::FileOpen_Response(const ISO_9506_MMS_1::Integer32& __frsmID,
-            const FileAttributes& __fileAttributes) :
-    frsmID_(__frsmID),
-    fileAttributes_(__fileAttributes) {
+    FileOpen_Response::FileOpen_Response(const ISO_9506_MMS_1::Integer32& arg__frsmID,
+            const FileAttributes& arg__fileAttributes) :
+    frsmID_(arg__frsmID),
+    fileAttributes_(arg__fileAttributes) {
     };
 
     template<> void FileOpen_Response::serialize(boost::asn1::x690::output_coder& arch) {
@@ -190,14 +190,14 @@ namespace ISO_9506_MMS_1A {
     FileRead_Response::FileRead_Response() : fileData_() {
     };
 
-    FileRead_Response::FileRead_Response(const octetstring_type& __fileData) :
-    fileData_(__fileData) {
+    FileRead_Response::FileRead_Response(const octetstring_type& arg__fileData) :
+    fileData_(arg__fileData) {
     };
 
-    FileRead_Response::FileRead_Response(boost::shared_ptr< octetstring_type> __fileData,
-            boost::shared_ptr< bool> __moreFollows) :
-    fileData_(__fileData),
-    moreFollows_(__moreFollows) {
+    FileRead_Response::FileRead_Response(boost::shared_ptr< octetstring_type> arg__fileData,
+            boost::shared_ptr< bool> arg__moreFollows) :
+    fileData_(arg__fileData),
+    moreFollows_(arg__moreFollows) {
     };
 
     const bool FileRead_Response::moreFollows__default = true;
@@ -246,10 +246,10 @@ namespace ISO_9506_MMS_1A {
     FileRename_Request::FileRename_Request() : currentFileName_(), newFileName_() {
     };
 
-    FileRename_Request::FileRename_Request(const ISO_9506_MMS_1::FileName& __currentFileName,
-            const ISO_9506_MMS_1::FileName& __newFileName) :
-    currentFileName_(__currentFileName),
-    newFileName_(__newFileName) {
+    FileRename_Request::FileRename_Request(const ISO_9506_MMS_1::FileName& arg__currentFileName,
+            const ISO_9506_MMS_1::FileName& arg__newFileName) :
+    currentFileName_(arg__currentFileName),
+    newFileName_(arg__newFileName) {
     };
 
     template<> void FileRename_Request::serialize(boost::asn1::x690::output_coder& arch) {
@@ -303,10 +303,10 @@ namespace ISO_9506_MMS_1A {
     FileDirectory_Request::FileDirectory_Request() {
     };
 
-    FileDirectory_Request::FileDirectory_Request(boost::shared_ptr< ISO_9506_MMS_1::FileName> __fileSpecification,
-            boost::shared_ptr< ISO_9506_MMS_1::FileName> __continueAfter) :
-    fileSpecification_(__fileSpecification),
-    continueAfter_(__continueAfter) {
+    FileDirectory_Request::FileDirectory_Request(boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__fileSpecification,
+            boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__continueAfter) :
+    fileSpecification_(arg__fileSpecification),
+    continueAfter_(arg__continueAfter) {
     };
 
     template<> void FileDirectory_Request::serialize(boost::asn1::x690::output_coder& arch) {
@@ -341,14 +341,14 @@ namespace ISO_9506_MMS_1A {
     FileDirectory_Response::FileDirectory_Response() : listOfDirectoryEntry_() {
     };
 
-    FileDirectory_Response::FileDirectory_Response(const listOfDirectoryEntry_type& __listOfDirectoryEntry) :
-    listOfDirectoryEntry_(__listOfDirectoryEntry) {
+    FileDirectory_Response::FileDirectory_Response(const listOfDirectoryEntry_type& arg__listOfDirectoryEntry) :
+    listOfDirectoryEntry_(arg__listOfDirectoryEntry) {
     };
 
-    FileDirectory_Response::FileDirectory_Response(boost::shared_ptr< listOfDirectoryEntry_type> __listOfDirectoryEntry,
-            boost::shared_ptr< bool> __moreFollows) :
-    listOfDirectoryEntry_(__listOfDirectoryEntry),
-    moreFollows_(__moreFollows) {
+    FileDirectory_Response::FileDirectory_Response(boost::shared_ptr< listOfDirectoryEntry_type> arg__listOfDirectoryEntry,
+            boost::shared_ptr< bool> arg__moreFollows) :
+    listOfDirectoryEntry_(arg__listOfDirectoryEntry),
+    moreFollows_(arg__moreFollows) {
     };
 
     const bool FileDirectory_Response::moreFollows__default = false;
@@ -397,10 +397,10 @@ namespace ISO_9506_MMS_1A {
     DirectoryEntry::DirectoryEntry() : fileName_(), fileAttributes_() {
     };
 
-    DirectoryEntry::DirectoryEntry(const ISO_9506_MMS_1::FileName& __fileName,
-            const FileAttributes& __fileAttributes) :
-    fileName_(__fileName),
-    fileAttributes_(__fileAttributes) {
+    DirectoryEntry::DirectoryEntry(const ISO_9506_MMS_1::FileName& arg__fileName,
+            const FileAttributes& arg__fileAttributes) :
+    fileName_(arg__fileName),
+    fileAttributes_(arg__fileAttributes) {
     };
 
     template<> void DirectoryEntry::serialize(boost::asn1::x690::output_coder& arch) {
@@ -451,14 +451,14 @@ namespace ISO_9506_MMS_1A {
     FileAttributes::FileAttributes() : sizeOfFile_() {
     };
 
-    FileAttributes::FileAttributes(const ISO_9506_MMS_1::Unsigned32& __sizeOfFile) :
-    sizeOfFile_(__sizeOfFile) {
+    FileAttributes::FileAttributes(const ISO_9506_MMS_1::Unsigned32& arg__sizeOfFile) :
+    sizeOfFile_(arg__sizeOfFile) {
     };
 
-    FileAttributes::FileAttributes(boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> __sizeOfFile,
-            boost::shared_ptr< gentime_type> __lastModified) :
-    sizeOfFile_(__sizeOfFile),
-    lastModified_(__lastModified) {
+    FileAttributes::FileAttributes(boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__sizeOfFile,
+            boost::shared_ptr< gentime_type> arg__lastModified) :
+    sizeOfFile_(arg__sizeOfFile),
+    lastModified_(arg__lastModified) {
     };
 
     template<> void FileAttributes::serialize(boost::asn1::x690::output_coder& arch) {
@@ -498,16 +498,16 @@ namespace ISO_9506_MMS_1A {
     ScatteredAccessDescription_sequence_of::ScatteredAccessDescription_sequence_of() : variableSpecification_() {
     };
 
-    ScatteredAccessDescription_sequence_of::ScatteredAccessDescription_sequence_of(const ISO_9506_MMS_1::VariableSpecification& __variableSpecification) :
-    variableSpecification_(__variableSpecification) {
+    ScatteredAccessDescription_sequence_of::ScatteredAccessDescription_sequence_of(const ISO_9506_MMS_1::VariableSpecification& arg__variableSpecification) :
+    variableSpecification_(arg__variableSpecification) {
     };
 
-    ScatteredAccessDescription_sequence_of::ScatteredAccessDescription_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> __componentName,
-            boost::shared_ptr< ISO_9506_MMS_1::VariableSpecification> __variableSpecification,
-            boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> __alternateAccess) :
-    componentName_(__componentName),
-    variableSpecification_(__variableSpecification),
-    alternateAccess_(__alternateAccess) {
+    ScatteredAccessDescription_sequence_of::ScatteredAccessDescription_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
+            boost::shared_ptr< ISO_9506_MMS_1::VariableSpecification> arg__variableSpecification,
+            boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> arg__alternateAccess) :
+    componentName_(arg__componentName),
+    variableSpecification_(arg__variableSpecification),
+    alternateAccess_(arg__alternateAccess) {
     };
 
     template<> void ScatteredAccessDescription_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
@@ -560,10 +560,10 @@ namespace ISO_9506_MMS_1A {
     DefineScatteredAccess_Request::DefineScatteredAccess_Request() : scatteredAccessName_(), scatteredAccessDescription_() {
     };
 
-    DefineScatteredAccess_Request::DefineScatteredAccess_Request(const ISO_9506_MMS_1::ObjectName& __scatteredAccessName,
-            const ScatteredAccessDescription& __scatteredAccessDescription) :
-    scatteredAccessName_(__scatteredAccessName),
-    scatteredAccessDescription_(__scatteredAccessDescription) {
+    DefineScatteredAccess_Request::DefineScatteredAccess_Request(const ISO_9506_MMS_1::ObjectName& arg__scatteredAccessName,
+            const ScatteredAccessDescription& arg__scatteredAccessDescription) :
+    scatteredAccessName_(arg__scatteredAccessName),
+    scatteredAccessDescription_(arg__scatteredAccessDescription) {
     };
 
     template<> void DefineScatteredAccess_Request::serialize(boost::asn1::x690::output_coder& arch) {
@@ -614,18 +614,18 @@ namespace ISO_9506_MMS_1A {
     GetScatteredAccessAttributes_Response::GetScatteredAccessAttributes_Response() : mmsDeletable_(), scatteredAccessDescription_() {
     };
 
-    GetScatteredAccessAttributes_Response::GetScatteredAccessAttributes_Response(const bool& __mmsDeletable,
-            const ScatteredAccessDescription& __scatteredAccessDescription) :
-    mmsDeletable_(__mmsDeletable),
-    scatteredAccessDescription_(__scatteredAccessDescription) {
+    GetScatteredAccessAttributes_Response::GetScatteredAccessAttributes_Response(const bool& arg__mmsDeletable,
+            const ScatteredAccessDescription& arg__scatteredAccessDescription) :
+    mmsDeletable_(arg__mmsDeletable),
+    scatteredAccessDescription_(arg__scatteredAccessDescription) {
     };
 
-    GetScatteredAccessAttributes_Response::GetScatteredAccessAttributes_Response(boost::shared_ptr< bool> __mmsDeletable,
-            boost::shared_ptr< ScatteredAccessDescription> __scatteredAccessDescription,
-            boost::shared_ptr< ISO_9506_MMS_1::Identifier> __accessControlList) :
-    mmsDeletable_(__mmsDeletable),
-    scatteredAccessDescription_(__scatteredAccessDescription),
-    accessControlList_(__accessControlList) {
+    GetScatteredAccessAttributes_Response::GetScatteredAccessAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
+            boost::shared_ptr< ScatteredAccessDescription> arg__scatteredAccessDescription,
+            boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__accessControlList) :
+    mmsDeletable_(arg__mmsDeletable),
+    scatteredAccessDescription_(arg__scatteredAccessDescription),
+    accessControlList_(arg__accessControlList) {
     };
 
     template<> void GetScatteredAccessAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {

@@ -138,8 +138,8 @@ namespace MMS_Object_Module_1 {
 
         ModifierStep();
 
-        ModifierStep(const int& __modifierID,
-                const Modifier& __modifier);
+        ModifierStep(const int& arg__modifierID,
+                const Modifier& arg__modifier);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(modifierID, int);
         BOOST_ASN_VALUE_HOLDERH_DECL(modifier, Modifier);
@@ -479,12 +479,12 @@ namespace MMS_Object_Module_1 {
 
             array_type();
 
-            array_type(const ISO_9506_MMS_1::Unsigned32& __numberOfElements,
-                    const ISO_9506_MMS_1::TypeSpecification& __elementType);
+            array_type(const ISO_9506_MMS_1::Unsigned32& arg__numberOfElements,
+                    const ISO_9506_MMS_1::TypeSpecification& arg__elementType);
 
-            array_type(boost::shared_ptr< bool> __packed,
-                    boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> __numberOfElements,
-                    boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> __elementType);
+            array_type(boost::shared_ptr< bool> arg__packed,
+                    boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__numberOfElements,
+                    boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__elementType);
 
             BOOST_ASN_VALUE_DEFAULT_DECL(packed, bool);
             BOOST_ASN_VALUE_HOLDERH_DECL(numberOfElements, ISO_9506_MMS_1::Unsigned32);
@@ -507,10 +507,10 @@ namespace MMS_Object_Module_1 {
 
                 components_type_sequence_of();
 
-                components_type_sequence_of(const ISO_9506_MMS_1::TypeSpecification& __componentType);
+                components_type_sequence_of(const ISO_9506_MMS_1::TypeSpecification& arg__componentType);
 
-                components_type_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> __componentName,
-                        boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> __componentType);
+                components_type_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
+                        boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__componentType);
 
                 BOOST_ASN_VALUE_OPTIONAL_DECL(componentName, ISO_9506_MMS_1::Identifier);
                 BOOST_ASN_VALUE_HOLDERH_DECL(componentType, ISO_9506_MMS_1::TypeSpecification);
@@ -531,10 +531,10 @@ namespace MMS_Object_Module_1 {
 
             structure_type();
 
-            structure_type(const components_type& __components);
+            structure_type(const components_type& arg__components);
 
-            structure_type(boost::shared_ptr< bool> __packed,
-                    boost::shared_ptr< components_type> __components);
+            structure_type(boost::shared_ptr< bool> arg__packed,
+                    boost::shared_ptr< components_type> arg__components);
 
             BOOST_ASN_VALUE_DEFAULT_DECL(packed, bool);
             BOOST_ASN_VALUE_HOLDERH_DECL(components, components_type);
@@ -551,8 +551,8 @@ namespace MMS_Object_Module_1 {
 
             floating_point_type();
 
-            floating_point_type(const ISO_9506_MMS_1::Unsigned8& __format_width,
-                    const ISO_9506_MMS_1::Unsigned8& __exponent_width);
+            floating_point_type(const ISO_9506_MMS_1::Unsigned8& arg__format_width,
+                    const ISO_9506_MMS_1::Unsigned8& arg__exponent_width);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(format_width, ISO_9506_MMS_1::Unsigned8);
             BOOST_ASN_VALUE_HOLDERH_DECL(exponent_width, ISO_9506_MMS_1::Unsigned8);
@@ -648,8 +648,8 @@ namespace MMS_Object_Module_1 {
 
         Journal_Variable();
 
-        Journal_Variable(const ISO_9506_MMS_1::MMS255String& __variableTag,
-                const ISO_9506_MMS_1::Data& __valueSpecification);
+        Journal_Variable(const ISO_9506_MMS_1::MMS255String& arg__variableTag,
+                const ISO_9506_MMS_1::Data& arg__valueSpecification);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(variableTag, ISO_9506_MMS_1::MMS255String);
         BOOST_ASN_VALUE_HOLDERH_DECL(valueSpecification, ISO_9506_MMS_1::Data);

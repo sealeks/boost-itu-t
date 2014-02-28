@@ -102,12 +102,12 @@ namespace ISO_9506_MMS_1A {
 
         ObtainFile_Request();
 
-        ObtainFile_Request(const ISO_9506_MMS_1::FileName& __sourceFile,
-                const ISO_9506_MMS_1::FileName& __destinationFile);
+        ObtainFile_Request(const ISO_9506_MMS_1::FileName& arg__sourceFile,
+                const ISO_9506_MMS_1::FileName& arg__destinationFile);
 
-        ObtainFile_Request(boost::shared_ptr< MMS_Environment_1::ApplicationReference> __sourceFileServer,
-                boost::shared_ptr< ISO_9506_MMS_1::FileName> __sourceFile,
-                boost::shared_ptr< ISO_9506_MMS_1::FileName> __destinationFile);
+        ObtainFile_Request(boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__sourceFileServer,
+                boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__sourceFile,
+                boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__destinationFile);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(sourceFileServer, MMS_Environment_1::ApplicationReference);
         BOOST_ASN_VALUE_HOLDERH_DECL(sourceFile, ISO_9506_MMS_1::FileName);
@@ -131,8 +131,8 @@ namespace ISO_9506_MMS_1A {
 
         FileOpen_Request();
 
-        FileOpen_Request(const ISO_9506_MMS_1::FileName& __fileName,
-                const ISO_9506_MMS_1::Unsigned32& __initialPosition);
+        FileOpen_Request(const ISO_9506_MMS_1::FileName& arg__fileName,
+                const ISO_9506_MMS_1::Unsigned32& arg__initialPosition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(fileName, ISO_9506_MMS_1::FileName);
         BOOST_ASN_VALUE_HOLDERH_DECL(initialPosition, ISO_9506_MMS_1::Unsigned32);
@@ -151,8 +151,8 @@ namespace ISO_9506_MMS_1A {
 
         FileOpen_Response();
 
-        FileOpen_Response(const ISO_9506_MMS_1::Integer32& __frsmID,
-                const FileAttributes& __fileAttributes);
+        FileOpen_Response(const ISO_9506_MMS_1::Integer32& arg__frsmID,
+                const FileAttributes& arg__fileAttributes);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(frsmID, ISO_9506_MMS_1::Integer32);
         BOOST_ASN_VALUE_HOLDERH_DECL(fileAttributes, FileAttributes);
@@ -173,10 +173,10 @@ namespace ISO_9506_MMS_1A {
 
         FileRead_Response();
 
-        FileRead_Response(const octetstring_type& __fileData);
+        FileRead_Response(const octetstring_type& arg__fileData);
 
-        FileRead_Response(boost::shared_ptr< octetstring_type> __fileData,
-                boost::shared_ptr< bool> __moreFollows);
+        FileRead_Response(boost::shared_ptr< octetstring_type> arg__fileData,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(fileData, octetstring_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -195,8 +195,8 @@ namespace ISO_9506_MMS_1A {
 
         FileRename_Request();
 
-        FileRename_Request(const ISO_9506_MMS_1::FileName& __currentFileName,
-                const ISO_9506_MMS_1::FileName& __newFileName);
+        FileRename_Request(const ISO_9506_MMS_1::FileName& arg__currentFileName,
+                const ISO_9506_MMS_1::FileName& arg__newFileName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(currentFileName, ISO_9506_MMS_1::FileName);
         BOOST_ASN_VALUE_HOLDERH_DECL(newFileName, ISO_9506_MMS_1::FileName);
@@ -218,8 +218,8 @@ namespace ISO_9506_MMS_1A {
 
         FileDirectory_Request();
 
-        FileDirectory_Request(boost::shared_ptr< ISO_9506_MMS_1::FileName> __fileSpecification,
-                boost::shared_ptr< ISO_9506_MMS_1::FileName> __continueAfter);
+        FileDirectory_Request(boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__fileSpecification,
+                boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__continueAfter);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(fileSpecification, ISO_9506_MMS_1::FileName);
         BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, ISO_9506_MMS_1::FileName);
@@ -242,10 +242,10 @@ namespace ISO_9506_MMS_1A {
 
         FileDirectory_Response();
 
-        FileDirectory_Response(const listOfDirectoryEntry_type& __listOfDirectoryEntry);
+        FileDirectory_Response(const listOfDirectoryEntry_type& arg__listOfDirectoryEntry);
 
-        FileDirectory_Response(boost::shared_ptr< listOfDirectoryEntry_type> __listOfDirectoryEntry,
-                boost::shared_ptr< bool> __moreFollows);
+        FileDirectory_Response(boost::shared_ptr< listOfDirectoryEntry_type> arg__listOfDirectoryEntry,
+                boost::shared_ptr< bool> arg__moreFollows);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(listOfDirectoryEntry, listOfDirectoryEntry_type);
         BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
@@ -264,8 +264,8 @@ namespace ISO_9506_MMS_1A {
 
         DirectoryEntry();
 
-        DirectoryEntry(const ISO_9506_MMS_1::FileName& __fileName,
-                const FileAttributes& __fileAttributes);
+        DirectoryEntry(const ISO_9506_MMS_1::FileName& arg__fileName,
+                const FileAttributes& arg__fileAttributes);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(fileName, ISO_9506_MMS_1::FileName);
         BOOST_ASN_VALUE_HOLDERH_DECL(fileAttributes, FileAttributes);
@@ -284,10 +284,10 @@ namespace ISO_9506_MMS_1A {
 
         FileAttributes();
 
-        FileAttributes(const ISO_9506_MMS_1::Unsigned32& __sizeOfFile);
+        FileAttributes(const ISO_9506_MMS_1::Unsigned32& arg__sizeOfFile);
 
-        FileAttributes(boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> __sizeOfFile,
-                boost::shared_ptr< gentime_type> __lastModified);
+        FileAttributes(boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__sizeOfFile,
+                boost::shared_ptr< gentime_type> arg__lastModified);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(sizeOfFile, ISO_9506_MMS_1::Unsigned32);
         BOOST_ASN_VALUE_OPTIONAL_DECL(lastModified, gentime_type);
@@ -304,11 +304,11 @@ namespace ISO_9506_MMS_1A {
 
         ScatteredAccessDescription_sequence_of();
 
-        ScatteredAccessDescription_sequence_of(const ISO_9506_MMS_1::VariableSpecification& __variableSpecification);
+        ScatteredAccessDescription_sequence_of(const ISO_9506_MMS_1::VariableSpecification& arg__variableSpecification);
 
-        ScatteredAccessDescription_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> __componentName,
-                boost::shared_ptr< ISO_9506_MMS_1::VariableSpecification> __variableSpecification,
-                boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> __alternateAccess);
+        ScatteredAccessDescription_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
+                boost::shared_ptr< ISO_9506_MMS_1::VariableSpecification> arg__variableSpecification,
+                boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> arg__alternateAccess);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(componentName, ISO_9506_MMS_1::Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(variableSpecification, ISO_9506_MMS_1::VariableSpecification);
@@ -329,8 +329,8 @@ namespace ISO_9506_MMS_1A {
 
         DefineScatteredAccess_Request();
 
-        DefineScatteredAccess_Request(const ISO_9506_MMS_1::ObjectName& __scatteredAccessName,
-                const ScatteredAccessDescription& __scatteredAccessDescription);
+        DefineScatteredAccess_Request(const ISO_9506_MMS_1::ObjectName& arg__scatteredAccessName,
+                const ScatteredAccessDescription& arg__scatteredAccessDescription);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(scatteredAccessName, ISO_9506_MMS_1::ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(scatteredAccessDescription, ScatteredAccessDescription);
@@ -349,12 +349,12 @@ namespace ISO_9506_MMS_1A {
 
         GetScatteredAccessAttributes_Response();
 
-        GetScatteredAccessAttributes_Response(const bool& __mmsDeletable,
-                const ScatteredAccessDescription& __scatteredAccessDescription);
+        GetScatteredAccessAttributes_Response(const bool& arg__mmsDeletable,
+                const ScatteredAccessDescription& arg__scatteredAccessDescription);
 
-        GetScatteredAccessAttributes_Response(boost::shared_ptr< bool> __mmsDeletable,
-                boost::shared_ptr< ScatteredAccessDescription> __scatteredAccessDescription,
-                boost::shared_ptr< ISO_9506_MMS_1::Identifier> __accessControlList);
+        GetScatteredAccessAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
+                boost::shared_ptr< ScatteredAccessDescription> arg__scatteredAccessDescription,
+                boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__accessControlList);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
         BOOST_ASN_VALUE_HOLDERH_DECL(scatteredAccessDescription, ScatteredAccessDescription);

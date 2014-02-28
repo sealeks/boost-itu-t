@@ -135,8 +135,8 @@ namespace MMS_SCI_Module_1 {
 
         SCI_Information();
 
-        SCI_Information(const VMD_File& __partOne,
-                const Service_and_Parameter_CBBs& __partTwo);
+        SCI_Information(const VMD_File& arg__partOne,
+                const Service_and_Parameter_CBBs& arg__partTwo);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(partOne, VMD_File);
         BOOST_ASN_VALUE_HOLDERH_DECL(partTwo, Service_and_Parameter_CBBs);
@@ -200,60 +200,60 @@ namespace MMS_SCI_Module_1 {
 
         VMD_File();
 
-        VMD_File(const MMS_Environment_1::ApplicationReference& __executiveFunction,
-                const ISO_9506_MMS_1::MMSString& __vendorName,
-                const ISO_9506_MMS_1::MMSString& __modelName,
-                const ISO_9506_MMS_1::MMSString& __revision,
-                const oid_type& __abstractSyntaxes,
-                const Access_Control_List_instance& __accessControl,
-                const MMS_Object_Module_1::LogicalStatus& __logicalStatus,
-                const capabilities_type& __capabilities,
-                const MMS_Object_Module_1::PhysicalStatus& __physicalStatus,
-                const bitstring_type& __local_detail,
-                const accessControlLists_type& __accessControlLists,
-                const domains_type& __domains,
-                const programInvocations_type& __programInvocations,
-                const unitControls_type& __unitControls,
-                const unnamedVariables_type& __unnamedVariables,
-                const namedVariables_type& __namedVariables,
-                const namedVariableLists_type& __namedVariableLists,
-                const namedTypes_type& __namedTypes,
-                const dataExchanges_type& __dataExchanges,
-                const semaphores_type& __semaphores,
-                const operatorStations_type& __operatorStations,
-                const eventConditions_type& __eventConditions,
-                const eventActions_type& __eventActions,
-                const eventEnrollments_type& __eventEnrollments,
-                const eventConditionLists_type& __eventConditionLists,
-                const journals_type& __journals);
+        VMD_File(const MMS_Environment_1::ApplicationReference& arg__executiveFunction,
+                const ISO_9506_MMS_1::MMSString& arg__vendorName,
+                const ISO_9506_MMS_1::MMSString& arg__modelName,
+                const ISO_9506_MMS_1::MMSString& arg__revision,
+                const oid_type& arg__abstractSyntaxes,
+                const Access_Control_List_instance& arg__accessControl,
+                const MMS_Object_Module_1::LogicalStatus& arg__logicalStatus,
+                const capabilities_type& arg__capabilities,
+                const MMS_Object_Module_1::PhysicalStatus& arg__physicalStatus,
+                const bitstring_type& arg__local_detail,
+                const accessControlLists_type& arg__accessControlLists,
+                const domains_type& arg__domains,
+                const programInvocations_type& arg__programInvocations,
+                const unitControls_type& arg__unitControls,
+                const unnamedVariables_type& arg__unnamedVariables,
+                const namedVariables_type& arg__namedVariables,
+                const namedVariableLists_type& arg__namedVariableLists,
+                const namedTypes_type& arg__namedTypes,
+                const dataExchanges_type& arg__dataExchanges,
+                const semaphores_type& arg__semaphores,
+                const operatorStations_type& arg__operatorStations,
+                const eventConditions_type& arg__eventConditions,
+                const eventActions_type& arg__eventActions,
+                const eventEnrollments_type& arg__eventEnrollments,
+                const eventConditionLists_type& arg__eventConditionLists,
+                const journals_type& arg__journals);
 
-        VMD_File(boost::shared_ptr< MMS_Environment_1::ApplicationReference> __executiveFunction,
-                boost::shared_ptr< ISO_9506_MMS_1::MMSString> __vendorName,
-                boost::shared_ptr< ISO_9506_MMS_1::MMSString> __modelName,
-                boost::shared_ptr< ISO_9506_MMS_1::MMSString> __revision,
-                boost::shared_ptr< oid_type> __abstractSyntaxes,
-                boost::shared_ptr< Access_Control_List_instance> __accessControl,
-                boost::shared_ptr< MMS_Object_Module_1::LogicalStatus> __logicalStatus,
-                boost::shared_ptr< capabilities_type> __capabilities,
-                boost::shared_ptr< MMS_Object_Module_1::PhysicalStatus> __physicalStatus,
-                boost::shared_ptr< bitstring_type> __local_detail,
-                boost::shared_ptr< accessControlLists_type> __accessControlLists,
-                boost::shared_ptr< domains_type> __domains,
-                boost::shared_ptr< programInvocations_type> __programInvocations,
-                boost::shared_ptr< unitControls_type> __unitControls,
-                boost::shared_ptr< unnamedVariables_type> __unnamedVariables,
-                boost::shared_ptr< namedVariables_type> __namedVariables,
-                boost::shared_ptr< namedVariableLists_type> __namedVariableLists,
-                boost::shared_ptr< namedTypes_type> __namedTypes,
-                boost::shared_ptr< dataExchanges_type> __dataExchanges,
-                boost::shared_ptr< semaphores_type> __semaphores,
-                boost::shared_ptr< operatorStations_type> __operatorStations,
-                boost::shared_ptr< eventConditions_type> __eventConditions,
-                boost::shared_ptr< eventActions_type> __eventActions,
-                boost::shared_ptr< eventEnrollments_type> __eventEnrollments,
-                boost::shared_ptr< eventConditionLists_type> __eventConditionLists,
-                boost::shared_ptr< journals_type> __journals,
-                boost::shared_ptr< selected_Program_Invocation_type> __selected_Program_Invocation = boost::shared_ptr< selected_Program_Invocation_type>());
+        VMD_File(boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__executiveFunction,
+                boost::shared_ptr< ISO_9506_MMS_1::MMSString> arg__vendorName,
+                boost::shared_ptr< ISO_9506_MMS_1::MMSString> arg__modelName,
+                boost::shared_ptr< ISO_9506_MMS_1::MMSString> arg__revision,
+                boost::shared_ptr< oid_type> arg__abstractSyntaxes,
+                boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+                boost::shared_ptr< MMS_Object_Module_1::LogicalStatus> arg__logicalStatus,
+                boost::shared_ptr< capabilities_type> arg__capabilities,
+                boost::shared_ptr< MMS_Object_Module_1::PhysicalStatus> arg__physicalStatus,
+                boost::shared_ptr< bitstring_type> arg__local_detail,
+                boost::shared_ptr< accessControlLists_type> arg__accessControlLists,
+                boost::shared_ptr< domains_type> arg__domains,
+                boost::shared_ptr< programInvocations_type> arg__programInvocations,
+                boost::shared_ptr< unitControls_type> arg__unitControls,
+                boost::shared_ptr< unnamedVariables_type> arg__unnamedVariables,
+                boost::shared_ptr< namedVariables_type> arg__namedVariables,
+                boost::shared_ptr< namedVariableLists_type> arg__namedVariableLists,
+                boost::shared_ptr< namedTypes_type> arg__namedTypes,
+                boost::shared_ptr< dataExchanges_type> arg__dataExchanges,
+                boost::shared_ptr< semaphores_type> arg__semaphores,
+                boost::shared_ptr< operatorStations_type> arg__operatorStations,
+                boost::shared_ptr< eventConditions_type> arg__eventConditions,
+                boost::shared_ptr< eventActions_type> arg__eventActions,
+                boost::shared_ptr< eventEnrollments_type> arg__eventEnrollments,
+                boost::shared_ptr< eventConditionLists_type> arg__eventConditionLists,
+                boost::shared_ptr< journals_type> arg__journals,
+                boost::shared_ptr< selected_Program_Invocation_type> arg__selected_Program_Invocation = boost::shared_ptr< selected_Program_Invocation_type>());
 
         BOOST_ASN_VALUE_HOLDERH_DECL(executiveFunction, MMS_Environment_1::ApplicationReference);
         BOOST_ASN_VALUE_HOLDERH_DECL(vendorName, ISO_9506_MMS_1::MMSString);
@@ -356,47 +356,47 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const accessControlLists_type& __accessControlLists,
-                        const domains_type& __domains,
-                        const programInvocations_type& __programInvocations,
-                        const unitControls_type& __unitControls,
-                        const unnamedVariables_type& __unnamedVariables,
-                        const namedVariables_type& __namedVariables,
-                        const namedVariableLists_type& __namedVariableLists,
-                        const namedTypes_type& __namedTypes,
-                        const dataExchanges_type& __dataExchanges,
-                        const semaphores_type& __semaphores,
-                        const operatorStations_type& __operatorStations,
-                        const eventConditions_type& __eventConditions,
-                        const eventActions_type& __eventActions,
-                        const eventEnrollments_type& __eventEnrollments,
-                        const journals_type& __journals);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const accessControlLists_type& arg__accessControlLists,
+                        const domains_type& arg__domains,
+                        const programInvocations_type& arg__programInvocations,
+                        const unitControls_type& arg__unitControls,
+                        const unnamedVariables_type& arg__unnamedVariables,
+                        const namedVariables_type& arg__namedVariables,
+                        const namedVariableLists_type& arg__namedVariableLists,
+                        const namedTypes_type& arg__namedTypes,
+                        const dataExchanges_type& arg__dataExchanges,
+                        const semaphores_type& arg__semaphores,
+                        const operatorStations_type& arg__operatorStations,
+                        const eventConditions_type& arg__eventConditions,
+                        const eventActions_type& arg__eventActions,
+                        const eventEnrollments_type& arg__eventEnrollments,
+                        const journals_type& arg__journals);
 
-                details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __readAccessCondition,
-                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __storeAccessCondition,
-                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __writeAccessCondition,
-                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __loadAccessCondition,
-                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __executeAccessCondition,
-                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __deleteAccessCondition,
-                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> __editAccessCondition,
-                        boost::shared_ptr< accessControlLists_type> __accessControlLists,
-                        boost::shared_ptr< domains_type> __domains,
-                        boost::shared_ptr< programInvocations_type> __programInvocations,
-                        boost::shared_ptr< unitControls_type> __unitControls,
-                        boost::shared_ptr< unnamedVariables_type> __unnamedVariables,
-                        boost::shared_ptr< namedVariables_type> __namedVariables,
-                        boost::shared_ptr< namedVariableLists_type> __namedVariableLists,
-                        boost::shared_ptr< namedTypes_type> __namedTypes,
-                        boost::shared_ptr< dataExchanges_type> __dataExchanges,
-                        boost::shared_ptr< semaphores_type> __semaphores,
-                        boost::shared_ptr< operatorStations_type> __operatorStations,
-                        boost::shared_ptr< eventConditions_type> __eventConditions,
-                        boost::shared_ptr< eventActions_type> __eventActions,
-                        boost::shared_ptr< eventEnrollments_type> __eventEnrollments,
-                        boost::shared_ptr< journals_type> __journals,
-                        boost::shared_ptr< eventConditionLists_type> __eventConditionLists = boost::shared_ptr< eventConditionLists_type>());
+                details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
+                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__storeAccessCondition,
+                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__writeAccessCondition,
+                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__loadAccessCondition,
+                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__executeAccessCondition,
+                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__deleteAccessCondition,
+                        boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__editAccessCondition,
+                        boost::shared_ptr< accessControlLists_type> arg__accessControlLists,
+                        boost::shared_ptr< domains_type> arg__domains,
+                        boost::shared_ptr< programInvocations_type> arg__programInvocations,
+                        boost::shared_ptr< unitControls_type> arg__unitControls,
+                        boost::shared_ptr< unnamedVariables_type> arg__unnamedVariables,
+                        boost::shared_ptr< namedVariables_type> arg__namedVariables,
+                        boost::shared_ptr< namedVariableLists_type> arg__namedVariableLists,
+                        boost::shared_ptr< namedTypes_type> arg__namedTypes,
+                        boost::shared_ptr< dataExchanges_type> arg__dataExchanges,
+                        boost::shared_ptr< semaphores_type> arg__semaphores,
+                        boost::shared_ptr< operatorStations_type> arg__operatorStations,
+                        boost::shared_ptr< eventConditions_type> arg__eventConditions,
+                        boost::shared_ptr< eventActions_type> arg__eventActions,
+                        boost::shared_ptr< eventEnrollments_type> arg__eventEnrollments,
+                        boost::shared_ptr< journals_type> arg__journals,
+                        boost::shared_ptr< eventConditionLists_type> arg__eventConditionLists = boost::shared_ptr< eventConditionLists_type>());
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_OPTIONAL_DECL(readAccessCondition, MMS_Object_Module_1::AccessCondition);
@@ -469,8 +469,8 @@ namespace MMS_SCI_Module_1 {
 
         Access_Control_List_instance();
 
-        Access_Control_List_instance(const ISO_9506_MMS_1::Identifier& __name,
-                const definition_type& __definition);
+        Access_Control_List_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -516,18 +516,18 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const capabilities_type& __capabilities,
-                        const MMS_Object_Module_1::DomainState& __state,
-                        const Access_Control_List_instance& __accessControl,
-                        const bool& __sharable,
-                        const programInvocations_type& __programInvocations,
-                        const namedVariables_type& __namedVariables,
-                        const namedVariableLists_type& __namedVariableLists,
-                        const namedTypes_type& __namedTypes,
-                        const eventConditions_type& __eventConditions,
-                        const eventActions_type& __eventActions,
-                        const eventEnrollments_type& __eventEnrollments,
-                        const eventConditionLists_type& __eventConditionLists);
+                details_type(const capabilities_type& arg__capabilities,
+                        const MMS_Object_Module_1::DomainState& arg__state,
+                        const Access_Control_List_instance& arg__accessControl,
+                        const bool& arg__sharable,
+                        const programInvocations_type& arg__programInvocations,
+                        const namedVariables_type& arg__namedVariables,
+                        const namedVariableLists_type& arg__namedVariableLists,
+                        const namedTypes_type& arg__namedTypes,
+                        const eventConditions_type& arg__eventConditions,
+                        const eventActions_type& arg__eventActions,
+                        const eventEnrollments_type& arg__eventEnrollments,
+                        const eventConditionLists_type& arg__eventConditionLists);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(capabilities, capabilities_type);
                 BOOST_ASN_VALUE_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState);
@@ -576,8 +576,8 @@ namespace MMS_SCI_Module_1 {
 
         Domain_instance();
 
-        Domain_instance(const ISO_9506_MMS_1::Identifier& __name,
-                const definition_type& __definition);
+        Domain_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -620,25 +620,25 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const MMS_Object_Module_1::ProgramInvocationState& __programInvocationState,
-                        const domains_type& __domains,
-                        const accessControl_type& __accessControl,
-                        const bool& __reusable,
-                        const bool& __monitor,
-                        const ISO_9506_MMS_1::MMSString& __executionArgument);
+                details_type(const MMS_Object_Module_1::ProgramInvocationState& arg__programInvocationState,
+                        const domains_type& arg__domains,
+                        const accessControl_type& arg__accessControl,
+                        const bool& arg__reusable,
+                        const bool& arg__monitor,
+                        const ISO_9506_MMS_1::MMSString& arg__executionArgument);
 
-                details_type(boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> __programInvocationState,
-                        boost::shared_ptr< domains_type> __domains,
-                        boost::shared_ptr< accessControl_type> __accessControl,
-                        boost::shared_ptr< bool> __reusable,
-                        boost::shared_ptr< bool> __monitor,
-                        boost::shared_ptr< eventCondition_type> __eventCondition,
-                        boost::shared_ptr< eventAction_type> __eventAction,
-                        boost::shared_ptr< eventEnrollment_type> __eventEnrollment,
-                        boost::shared_ptr< ISO_9506_MMS_1::MMSString> __executionArgument,
-                        boost::shared_ptr< MMS_Object_Module_1::Control_State> __control = boost::shared_ptr< MMS_Object_Module_1::Control_State>(),
-                        boost::shared_ptr< Program_Invocation_instance> __controlling_Program_Invocation = boost::shared_ptr< Program_Invocation_instance>(),
-                        boost::shared_ptr< controlled_Program_Invocations_type> __controlled_Program_Invocations = boost::shared_ptr< controlled_Program_Invocations_type>());
+                details_type(boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> arg__programInvocationState,
+                        boost::shared_ptr< domains_type> arg__domains,
+                        boost::shared_ptr< accessControl_type> arg__accessControl,
+                        boost::shared_ptr< bool> arg__reusable,
+                        boost::shared_ptr< bool> arg__monitor,
+                        boost::shared_ptr< eventCondition_type> arg__eventCondition,
+                        boost::shared_ptr< eventAction_type> arg__eventAction,
+                        boost::shared_ptr< eventEnrollment_type> arg__eventEnrollment,
+                        boost::shared_ptr< ISO_9506_MMS_1::MMSString> arg__executionArgument,
+                        boost::shared_ptr< MMS_Object_Module_1::Control_State> arg__control = boost::shared_ptr< MMS_Object_Module_1::Control_State>(),
+                        boost::shared_ptr< Program_Invocation_instance> arg__controlling_Program_Invocation = boost::shared_ptr< Program_Invocation_instance>(),
+                        boost::shared_ptr< controlled_Program_Invocations_type> arg__controlled_Program_Invocations = boost::shared_ptr< controlled_Program_Invocations_type>());
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
                 BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
@@ -687,8 +687,8 @@ namespace MMS_SCI_Module_1 {
 
         Program_Invocation_instance();
 
-        Program_Invocation_instance(const ISO_9506_MMS_1::Identifier& __name,
-                const definition_type& __definition);
+        Program_Invocation_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -727,9 +727,9 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const domains_type& __domains,
-                        const programInvocations_type& __programInvocations);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const domains_type& arg__domains,
+                        const programInvocations_type& arg__programInvocations);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
@@ -760,8 +760,8 @@ namespace MMS_SCI_Module_1 {
 
         Unit_Control_instance();
 
-        Unit_Control_instance(const ISO_9506_MMS_1::Identifier& __name,
-                const definition_type& __definition);
+        Unit_Control_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -780,9 +780,9 @@ namespace MMS_SCI_Module_1 {
 
         Unnamed_Variable_instance();
 
-        Unnamed_Variable_instance(const MMS_Object_Module_1::Address& __address,
-                const Access_Control_List_instance& __accessControl,
-                const MMS_Object_Module_1::TypeDescription& __typeDescription);
+        Unnamed_Variable_instance(const MMS_Object_Module_1::Address& arg__address,
+                const Access_Control_List_instance& arg__accessControl,
+                const MMS_Object_Module_1::TypeDescription& arg__typeDescription);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(address, MMS_Object_Module_1::Address);
         BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
@@ -819,13 +819,13 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const MMS_Object_Module_1::TypeDescription& __typeDescription);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const MMS_Object_Module_1::TypeDescription& arg__typeDescription);
 
-                details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-                        boost::shared_ptr< MMS_Object_Module_1::TypeDescription> __typeDescription,
-                        boost::shared_ptr< MMS_Object_Module_1::Address> __address,
-                        boost::shared_ptr< visiblestring_type> __meaning);
+                details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+                        boost::shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
+                        boost::shared_ptr< MMS_Object_Module_1::Address> arg__address,
+                        boost::shared_ptr< visiblestring_type> arg__meaning);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
@@ -858,8 +858,8 @@ namespace MMS_SCI_Module_1 {
 
         Named_Variable_instance();
 
-        Named_Variable_instance(const ISO_9506_MMS_1::ObjectName& __name,
-                const definition_type& __definition);
+        Named_Variable_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -897,8 +897,8 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const listOfVariables_type& __listOfVariables);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const listOfVariables_type& arg__listOfVariables);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(listOfVariables, listOfVariables_type);
@@ -927,8 +927,8 @@ namespace MMS_SCI_Module_1 {
 
         Named_Variable_List_instance();
 
-        Named_Variable_List_instance(const ISO_9506_MMS_1::ObjectName& __name,
-                const definition_type& __definition);
+        Named_Variable_List_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -947,9 +947,9 @@ namespace MMS_SCI_Module_1 {
 
         Variable_List_Item_instance();
 
-        Variable_List_Item_instance(boost::shared_ptr< Unnamed_Variable_instance> __unnamedItem,
-                boost::shared_ptr< Named_Variable_instance> __namedItem,
-                boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> __alternateAccess);
+        Variable_List_Item_instance(boost::shared_ptr< Unnamed_Variable_instance> arg__unnamedItem,
+                boost::shared_ptr< Named_Variable_instance> arg__namedItem,
+                boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> arg__alternateAccess);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(unnamedItem, Unnamed_Variable_instance);
         BOOST_ASN_VALUE_OPTIONAL_DECL(namedItem, Named_Variable_instance);
@@ -986,12 +986,12 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const MMS_Object_Module_1::TypeDescription& __typeDescription);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const MMS_Object_Module_1::TypeDescription& arg__typeDescription);
 
-                details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-                        boost::shared_ptr< MMS_Object_Module_1::TypeDescription> __typeDescription,
-                        boost::shared_ptr< visiblestring_type> __meaning);
+                details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+                        boost::shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
+                        boost::shared_ptr< visiblestring_type> arg__meaning);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
@@ -1022,8 +1022,8 @@ namespace MMS_SCI_Module_1 {
 
         Named_Type_instance();
 
-        Named_Type_instance(const ISO_9506_MMS_1::ObjectName& __name,
-                const definition_type& __definition);
+        Named_Type_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -1061,16 +1061,16 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const request_type& __request,
-                        const response_type& __response,
-                        const bool& __linked);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const request_type& arg__request,
+                        const response_type& arg__response,
+                        const bool& arg__linked);
 
-                details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-                        boost::shared_ptr< request_type> __request,
-                        boost::shared_ptr< response_type> __response,
-                        boost::shared_ptr< bool> __linked,
-                        boost::shared_ptr< Program_Invocation_instance> __programInvocation);
+                details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+                        boost::shared_ptr< request_type> arg__request,
+                        boost::shared_ptr< response_type> arg__response,
+                        boost::shared_ptr< bool> arg__linked,
+                        boost::shared_ptr< Program_Invocation_instance> arg__programInvocation);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(request, request_type);
@@ -1105,8 +1105,8 @@ namespace MMS_SCI_Module_1 {
 
         Data_Exchange_instance();
 
-        Data_Exchange_instance(const ISO_9506_MMS_1::Identifier& __name,
-                const definition_type& __definition);
+        Data_Exchange_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -1147,15 +1147,15 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const enumerated_type& __classV,
-                        const Event_Condition_instance& __eventCondition);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const enumerated_type& arg__classV,
+                        const Event_Condition_instance& arg__eventCondition);
 
-                details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-                        boost::shared_ptr< enumerated_type> __classV,
-                        boost::shared_ptr< int> __numberOfTokens,
-                        boost::shared_ptr< namedTokens_type> __namedTokens,
-                        boost::shared_ptr< Event_Condition_instance> __eventCondition);
+                details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+                        boost::shared_ptr< enumerated_type> arg__classV,
+                        boost::shared_ptr< int> arg__numberOfTokens,
+                        boost::shared_ptr< namedTokens_type> arg__namedTokens,
+                        boost::shared_ptr< Event_Condition_instance> arg__eventCondition);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(classV, enumerated_type);
@@ -1190,8 +1190,8 @@ namespace MMS_SCI_Module_1 {
 
         Semaphore_instance();
 
-        Semaphore_instance(const ISO_9506_MMS_1::Identifier& __name,
-                const definition_type& __definition);
+        Semaphore_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -1231,8 +1231,8 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const enumerated_type& __stationType);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const enumerated_type& arg__stationType);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(stationType, enumerated_type);
@@ -1261,8 +1261,8 @@ namespace MMS_SCI_Module_1 {
 
         Operator_Station_instance();
 
-        Operator_Station_instance(const ISO_9506_MMS_1::Identifier& __name,
-                const definition_type& __definition);
+        Operator_Station_instance(const ISO_9506_MMS_1::Identifier& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -1377,26 +1377,26 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const MMS_Object_Module_1::EC_Class& __ecClass,
-                        const MMS_Object_Module_1::EC_State& __ecState,
-                        const MMS_Object_Module_1::Priority& __priority,
-                        const MMS_Object_Module_1::Severity& __severity,
-                        const eventEnrollments_type& __eventEnrollments);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const MMS_Object_Module_1::EC_Class& arg__ecClass,
+                        const MMS_Object_Module_1::EC_State& arg__ecState,
+                        const MMS_Object_Module_1::Priority& arg__priority,
+                        const MMS_Object_Module_1::Severity& arg__severity,
+                        const eventEnrollments_type& arg__eventEnrollments);
 
-                details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-                        boost::shared_ptr< MMS_Object_Module_1::EC_Class> __ecClass,
-                        boost::shared_ptr< MMS_Object_Module_1::EC_State> __ecState,
-                        boost::shared_ptr< MMS_Object_Module_1::Priority> __priority,
-                        boost::shared_ptr< MMS_Object_Module_1::Severity> __severity,
-                        boost::shared_ptr< eventEnrollments_type> __eventEnrollments,
-                        boost::shared_ptr< bool> __enabled,
-                        boost::shared_ptr< bool> __alarmSummaryReports,
-                        boost::shared_ptr< monitoredVariable_type> __monitoredVariable,
-                        boost::shared_ptr< int> __evaluationInterval,
-                        boost::shared_ptr< displayEnhancement_type> __displayEnhancement = boost::shared_ptr< displayEnhancement_type>(),
-                        boost::shared_ptr< group_Priority_Override_type> __group_Priority_Override = boost::shared_ptr< group_Priority_Override_type>(),
-                        boost::shared_ptr< referencingEventConditionLists_type> __referencingEventConditionLists = boost::shared_ptr< referencingEventConditionLists_type>());
+                details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+                        boost::shared_ptr< MMS_Object_Module_1::EC_Class> arg__ecClass,
+                        boost::shared_ptr< MMS_Object_Module_1::EC_State> arg__ecState,
+                        boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
+                        boost::shared_ptr< MMS_Object_Module_1::Severity> arg__severity,
+                        boost::shared_ptr< eventEnrollments_type> arg__eventEnrollments,
+                        boost::shared_ptr< bool> arg__enabled,
+                        boost::shared_ptr< bool> arg__alarmSummaryReports,
+                        boost::shared_ptr< monitoredVariable_type> arg__monitoredVariable,
+                        boost::shared_ptr< int> arg__evaluationInterval,
+                        boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement = boost::shared_ptr< displayEnhancement_type>(),
+                        boost::shared_ptr< group_Priority_Override_type> arg__group_Priority_Override = boost::shared_ptr< group_Priority_Override_type>(),
+                        boost::shared_ptr< referencingEventConditionLists_type> arg__referencingEventConditionLists = boost::shared_ptr< referencingEventConditionLists_type>());
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(ecClass, MMS_Object_Module_1::EC_Class);
@@ -1447,8 +1447,8 @@ namespace MMS_SCI_Module_1 {
 
         Event_Condition_instance();
 
-        Event_Condition_instance(const ISO_9506_MMS_1::ObjectName& __name,
-                const definition_type& __definition);
+        Event_Condition_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -1487,10 +1487,10 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const ISO_9506_MMS_1::ConfirmedServiceRequest& __confirmedServiceRequest,
-                        const modifiers_type& __modifiers,
-                        const eventEnrollments_type& __eventEnrollments);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const ISO_9506_MMS_1::ConfirmedServiceRequest& arg__confirmedServiceRequest,
+                        const modifiers_type& arg__modifiers,
+                        const eventEnrollments_type& arg__eventEnrollments);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(confirmedServiceRequest, ISO_9506_MMS_1::ConfirmedServiceRequest);
@@ -1523,8 +1523,8 @@ namespace MMS_SCI_Module_1 {
 
         Event_Action_instance();
 
-        Event_Action_instance(const ISO_9506_MMS_1::ObjectName& __name,
-                const definition_type& __definition);
+        Event_Action_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -1609,21 +1609,21 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const MMS_Object_Module_1::EE_Class& __eeClass,
-                        const Event_Condition_instance& __eventCondition,
-                        const MMS_Object_Module_1::Transitions& __ecTransitions);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const MMS_Object_Module_1::EE_Class& arg__eeClass,
+                        const Event_Condition_instance& arg__eventCondition,
+                        const MMS_Object_Module_1::Transitions& arg__ecTransitions);
 
-                details_type(boost::shared_ptr< Access_Control_List_instance> __accessControl,
-                        boost::shared_ptr< MMS_Object_Module_1::EE_Class> __eeClass,
-                        boost::shared_ptr< Event_Condition_instance> __eventCondition,
-                        boost::shared_ptr< MMS_Object_Module_1::Transitions> __ecTransitions,
-                        boost::shared_ptr< remainingDelay_type> __remainingDelay,
-                        boost::shared_ptr< Event_Action_instance> __eventAction,
-                        boost::shared_ptr< MMS_Object_Module_1::EE_Duration> __duration,
-                        boost::shared_ptr< MMS_Environment_1::ApplicationReference> __clientApplication,
-                        boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> __aaRule,
-                        boost::shared_ptr< displayEnhancement_type> __displayEnhancement = boost::shared_ptr< displayEnhancement_type>());
+                details_type(boost::shared_ptr< Access_Control_List_instance> arg__accessControl,
+                        boost::shared_ptr< MMS_Object_Module_1::EE_Class> arg__eeClass,
+                        boost::shared_ptr< Event_Condition_instance> arg__eventCondition,
+                        boost::shared_ptr< MMS_Object_Module_1::Transitions> arg__ecTransitions,
+                        boost::shared_ptr< remainingDelay_type> arg__remainingDelay,
+                        boost::shared_ptr< Event_Action_instance> arg__eventAction,
+                        boost::shared_ptr< MMS_Object_Module_1::EE_Duration> arg__duration,
+                        boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
+                        boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__aaRule,
+                        boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement = boost::shared_ptr< displayEnhancement_type>());
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(eeClass, MMS_Object_Module_1::EE_Class);
@@ -1668,8 +1668,8 @@ namespace MMS_SCI_Module_1 {
 
         Event_Enrollment_instance();
 
-        Event_Enrollment_instance(const ISO_9506_MMS_1::ObjectName& __name,
-                const definition_type& __definition);
+        Event_Enrollment_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -1709,10 +1709,10 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const eventConditions_type& __eventConditions,
-                        const eventConditionLists_type& __eventConditionLists,
-                        const referencingEventConditionLists_type& __referencingEventConditionLists);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const eventConditions_type& arg__eventConditions,
+                        const eventConditionLists_type& arg__eventConditionLists,
+                        const referencingEventConditionLists_type& arg__referencingEventConditionLists);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(eventConditions, eventConditions_type);
@@ -1745,8 +1745,8 @@ namespace MMS_SCI_Module_1 {
 
         Event_Condition_List_instance();
 
-        Event_Condition_List_instance(const ISO_9506_MMS_1::ObjectName& __name,
-                const definition_type& __definition);
+        Event_Condition_List_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -1784,8 +1784,8 @@ namespace MMS_SCI_Module_1 {
 
                 details_type();
 
-                details_type(const Access_Control_List_instance& __accessControl,
-                        const entries_type& __entries);
+                details_type(const Access_Control_List_instance& arg__accessControl,
+                        const entries_type& arg__entries);
 
                 BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 BOOST_ASN_VALUE_HOLDERH_DECL(entries, entries_type);
@@ -1814,8 +1814,8 @@ namespace MMS_SCI_Module_1 {
 
         Journal_instance();
 
-        Journal_instance(const ISO_9506_MMS_1::ObjectName& __name,
-                const definition_type& __definition);
+        Journal_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
+                const definition_type& arg__definition);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
         BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
@@ -1839,8 +1839,8 @@ namespace MMS_SCI_Module_1 {
 
             eventTransitionRecord_type();
 
-            eventTransitionRecord_type(const ISO_9506_MMS_1::ObjectName& __name,
-                    const MMS_Object_Module_1::EC_State& __currentState);
+            eventTransitionRecord_type(const ISO_9506_MMS_1::ObjectName& arg__name,
+                    const MMS_Object_Module_1::EC_State& arg__currentState);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
             BOOST_ASN_VALUE_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
@@ -1857,8 +1857,8 @@ namespace MMS_SCI_Module_1 {
 
             journalVariables_type_sequence_of();
 
-            journalVariables_type_sequence_of(const ISO_9506_MMS_1::MMS255String& __variableTag,
-                    const ISO_9506_MMS_1::Data& __valueSpecification);
+            journalVariables_type_sequence_of(const ISO_9506_MMS_1::MMS255String& arg__variableTag,
+                    const ISO_9506_MMS_1::Data& arg__valueSpecification);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(variableTag, ISO_9506_MMS_1::MMS255String);
             BOOST_ASN_VALUE_HOLDERH_DECL(valueSpecification, ISO_9506_MMS_1::Data);
@@ -1882,22 +1882,22 @@ namespace MMS_SCI_Module_1 {
 
         Journal_Entry_instance();
 
-        Journal_Entry_instance(const Journal_instance& __journal,
-                const octetstring_type& __entry,
-                const MMS_Environment_1::ApplicationReference& __clientApplication,
-                const ISO_9506_MMS_1::TimeOfDay& __timeStamp,
-                const int& __orderOfReceipt,
-                const enumerated_type& __informationType);
+        Journal_Entry_instance(const Journal_instance& arg__journal,
+                const octetstring_type& arg__entry,
+                const MMS_Environment_1::ApplicationReference& arg__clientApplication,
+                const ISO_9506_MMS_1::TimeOfDay& arg__timeStamp,
+                const int& arg__orderOfReceipt,
+                const enumerated_type& arg__informationType);
 
-        Journal_Entry_instance(boost::shared_ptr< Journal_instance> __journal,
-                boost::shared_ptr< octetstring_type> __entry,
-                boost::shared_ptr< MMS_Environment_1::ApplicationReference> __clientApplication,
-                boost::shared_ptr< ISO_9506_MMS_1::TimeOfDay> __timeStamp,
-                boost::shared_ptr< int> __orderOfReceipt,
-                boost::shared_ptr< enumerated_type> __informationType,
-                boost::shared_ptr< ISO_9506_MMS_1::MMS255String> __textComment,
-                boost::shared_ptr< eventTransitionRecord_type> __eventTransitionRecord,
-                boost::shared_ptr< journalVariables_type> __journalVariables);
+        Journal_Entry_instance(boost::shared_ptr< Journal_instance> arg__journal,
+                boost::shared_ptr< octetstring_type> arg__entry,
+                boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
+                boost::shared_ptr< ISO_9506_MMS_1::TimeOfDay> arg__timeStamp,
+                boost::shared_ptr< int> arg__orderOfReceipt,
+                boost::shared_ptr< enumerated_type> arg__informationType,
+                boost::shared_ptr< ISO_9506_MMS_1::MMS255String> arg__textComment,
+                boost::shared_ptr< eventTransitionRecord_type> arg__eventTransitionRecord,
+                boost::shared_ptr< journalVariables_type> arg__journalVariables);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(journal, Journal_instance);
         BOOST_ASN_VALUE_HOLDERH_DECL(entry, octetstring_type);
@@ -1930,23 +1930,23 @@ namespace MMS_SCI_Module_1 {
 
         Service_and_Parameter_CBBs();
 
-        Service_and_Parameter_CBBs(const MMS_Object_Module_1::ServiceSupportOptions& __services_Client,
-                const MMS_Object_Module_1::ServiceSupportOptions& __services_Server,
-                const MMS_Object_Module_1::ParameterSupportOptions& __parameters,
-                const int& __nest,
-                const MMS_Object_Module_1::AdditionalSupportOptions& __extendedServices_Client,
-                const MMS_Object_Module_1::AdditionalSupportOptions& __extendedServices_Server,
-                const MMS_Object_Module_1::AdditionalCBBOptions& __extendedParameters,
-                const GeneralManagementParameters& __generalManagement,
-                const VMDSupportParameters& __vMDSupport,
-                const DomainManagementParameters& __domainManagement,
-                const ProgramInvocationManagementParameters& __programInvocation,
-                const VariableAccessParameters& __variableAccess,
-                const DataParameters& __dataParameters,
-                const SemaphoreManagementParameters& __semaphoreManagement,
-                const OperatorCommunicationParameters& __operatorCommunication,
-                const ErrorParameters& __errors,
-                const FileManagementParameters& __fileManagement);
+        Service_and_Parameter_CBBs(const MMS_Object_Module_1::ServiceSupportOptions& arg__services_Client,
+                const MMS_Object_Module_1::ServiceSupportOptions& arg__services_Server,
+                const MMS_Object_Module_1::ParameterSupportOptions& arg__parameters,
+                const int& arg__nest,
+                const MMS_Object_Module_1::AdditionalSupportOptions& arg__extendedServices_Client,
+                const MMS_Object_Module_1::AdditionalSupportOptions& arg__extendedServices_Server,
+                const MMS_Object_Module_1::AdditionalCBBOptions& arg__extendedParameters,
+                const GeneralManagementParameters& arg__generalManagement,
+                const VMDSupportParameters& arg__vMDSupport,
+                const DomainManagementParameters& arg__domainManagement,
+                const ProgramInvocationManagementParameters& arg__programInvocation,
+                const VariableAccessParameters& arg__variableAccess,
+                const DataParameters& arg__dataParameters,
+                const SemaphoreManagementParameters& arg__semaphoreManagement,
+                const OperatorCommunicationParameters& arg__operatorCommunication,
+                const ErrorParameters& arg__errors,
+                const FileManagementParameters& arg__fileManagement);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(services_Client, MMS_Object_Module_1::ServiceSupportOptions);
         BOOST_ASN_VALUE_HOLDERH_DECL(services_Server, MMS_Object_Module_1::ServiceSupportOptions);
@@ -1999,8 +1999,8 @@ namespace MMS_SCI_Module_1 {
 
             supportForTime_type();
 
-            supportForTime_type(const bool& __timeOfDay,
-                    const bool& __timeSequence);
+            supportForTime_type(const bool& arg__timeOfDay,
+                    const bool& arg__timeSequence);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(timeOfDay, bool);
             BOOST_ASN_VALUE_HOLDERH_DECL(timeSequence, bool);
@@ -2016,9 +2016,9 @@ namespace MMS_SCI_Module_1 {
 
         GeneralManagementParameters();
 
-        GeneralManagementParameters(const ISO_9506_MMS_1::MMSString& __localDetail,
-                const supportForTime_type& __supportForTime,
-                const int& __granularityOfTime);
+        GeneralManagementParameters(const ISO_9506_MMS_1::MMSString& arg__localDetail,
+                const supportForTime_type& arg__supportForTime,
+                const int& arg__granularityOfTime);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(localDetail, ISO_9506_MMS_1::MMSString);
         BOOST_ASN_VALUE_HOLDERH_DECL(supportForTime, supportForTime_type);
@@ -2039,8 +2039,8 @@ namespace MMS_SCI_Module_1 {
 
         VMDSupportParameters();
 
-        VMDSupportParameters(const ISO_9506_MMS_1::MMSString& __localDetail,
-                const ISO_9506_MMS_1::MMSString& __extendedDerivation);
+        VMDSupportParameters(const ISO_9506_MMS_1::MMSString& arg__localDetail,
+                const ISO_9506_MMS_1::MMSString& arg__extendedDerivation);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(localDetail, ISO_9506_MMS_1::MMSString);
         BOOST_ASN_VALUE_HOLDERH_DECL(extendedDerivation, ISO_9506_MMS_1::MMSString);
@@ -2062,9 +2062,9 @@ namespace MMS_SCI_Module_1 {
 
         DomainManagementParameters();
 
-        DomainManagementParameters(const ISO_9506_MMS_1::MMSString& __loadDataOctet,
-                const loadDataSyntax_type& __loadDataSyntax,
-                const int& __maxUploads);
+        DomainManagementParameters(const ISO_9506_MMS_1::MMSString& arg__loadDataOctet,
+                const loadDataSyntax_type& arg__loadDataSyntax,
+                const int& arg__maxUploads);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(loadDataOctet, ISO_9506_MMS_1::MMSString);
         BOOST_ASN_VALUE_HOLDERH_DECL(loadDataSyntax, loadDataSyntax_type);
@@ -2088,11 +2088,11 @@ namespace MMS_SCI_Module_1 {
 
         ProgramInvocationManagementParameters();
 
-        ProgramInvocationManagementParameters(const int& __executionArgMaxSize,
-                const ISO_9506_MMS_1::MMSString& __executionArgParseRules,
-                const executionArgSyntaxes_type& __executionArgSyntaxes,
-                const ISO_9506_MMS_1::MMSString& __programLoction,
-                const bool& __stepMode);
+        ProgramInvocationManagementParameters(const int& arg__executionArgMaxSize,
+                const ISO_9506_MMS_1::MMSString& arg__executionArgParseRules,
+                const executionArgSyntaxes_type& arg__executionArgSyntaxes,
+                const ISO_9506_MMS_1::MMSString& arg__programLoction,
+                const bool& arg__stepMode);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(executionArgMaxSize, int);
         BOOST_ASN_VALUE_HOLDERH_DECL(executionArgParseRules, ISO_9506_MMS_1::MMSString);
@@ -2117,9 +2117,9 @@ namespace MMS_SCI_Module_1 {
 
         VariableAccessParameters();
 
-        VariableAccessParameters(const ISO_9506_MMS_1::MMSString& __uninterruptibleAccess,
-                const bool& __singleMode,
-                const bool& __unnamedMode);
+        VariableAccessParameters(const ISO_9506_MMS_1::MMSString& arg__uninterruptibleAccess,
+                const bool& arg__singleMode,
+                const bool& arg__unnamedMode);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(uninterruptibleAccess, ISO_9506_MMS_1::MMSString);
         BOOST_ASN_VALUE_HOLDERH_DECL(singleMode, bool);
@@ -2144,8 +2144,8 @@ namespace MMS_SCI_Module_1 {
 
             floating_point_type();
 
-            floating_point_type(const int& __total,
-                    const int& __exponent);
+            floating_point_type(const int& arg__total,
+                    const int& arg__exponent);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(total, int);
             BOOST_ASN_VALUE_HOLDERH_DECL(exponent, int);
@@ -2161,15 +2161,15 @@ namespace MMS_SCI_Module_1 {
 
         DataParameters();
 
-        DataParameters(boost::shared_ptr< int> __bit_string,
-                boost::shared_ptr< int> __integer,
-                boost::shared_ptr< int> __unsignedV,
-                boost::shared_ptr< floating_point_type> __floating_point,
-                boost::shared_ptr< int> __octet_string,
-                boost::shared_ptr< int> __visible_string,
-                boost::shared_ptr< bool> __binary_time,
-                boost::shared_ptr< int> __bcd,
-                boost::shared_ptr< int> __mmsString);
+        DataParameters(boost::shared_ptr< int> arg__bit_string,
+                boost::shared_ptr< int> arg__integer,
+                boost::shared_ptr< int> arg__unsignedV,
+                boost::shared_ptr< floating_point_type> arg__floating_point,
+                boost::shared_ptr< int> arg__octet_string,
+                boost::shared_ptr< int> arg__visible_string,
+                boost::shared_ptr< bool> arg__binary_time,
+                boost::shared_ptr< int> arg__bcd,
+                boost::shared_ptr< int> arg__mmsString);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(bit_string, int);
         BOOST_ASN_VALUE_OPTIONAL_DECL(integer, int);
@@ -2202,7 +2202,7 @@ namespace MMS_SCI_Module_1 {
 
         SemaphoreManagementParameters();
 
-        SemaphoreManagementParameters(const ISO_9506_MMS_1::MMSString& __algorithm);
+        SemaphoreManagementParameters(const ISO_9506_MMS_1::MMSString& arg__algorithm);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(algorithm, ISO_9506_MMS_1::MMSString);
 
@@ -2219,7 +2219,7 @@ namespace MMS_SCI_Module_1 {
 
         OperatorCommunicationParameters();
 
-        OperatorCommunicationParameters(const int& __input_time_out);
+        OperatorCommunicationParameters(const int& arg__input_time_out);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(input_time_out, int);
 
@@ -2240,8 +2240,8 @@ namespace MMS_SCI_Module_1 {
 
             additionalDetial_type();
 
-            additionalDetial_type(const int& __size,
-                    const ISO_9506_MMS_1::MMSString& __syntax);
+            additionalDetial_type(const int& arg__size,
+                    const ISO_9506_MMS_1::MMSString& arg__syntax);
 
             BOOST_ASN_VALUE_HOLDERH_DECL(size, int);
             BOOST_ASN_VALUE_HOLDERH_DECL(syntax, ISO_9506_MMS_1::MMSString);
@@ -2257,8 +2257,8 @@ namespace MMS_SCI_Module_1 {
 
         ErrorParameters();
 
-        ErrorParameters(const ISO_9506_MMS_1::MMSString& __additionalCode,
-                const additionalDetial_type& __additionalDetial);
+        ErrorParameters(const ISO_9506_MMS_1::MMSString& arg__additionalCode,
+                const additionalDetial_type& arg__additionalDetial);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(additionalCode, ISO_9506_MMS_1::MMSString);
         BOOST_ASN_VALUE_HOLDERH_DECL(additionalDetial, additionalDetial_type);
@@ -2277,7 +2277,7 @@ namespace MMS_SCI_Module_1 {
 
         FileManagementParameters();
 
-        FileManagementParameters(const ISO_9506_MMS_1::MMSString& __fileName);
+        FileManagementParameters(const ISO_9506_MMS_1::MMSString& arg__fileName);
 
         BOOST_ASN_VALUE_HOLDERH_DECL(fileName, ISO_9506_MMS_1::MMSString);
 

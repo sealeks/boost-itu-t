@@ -63,10 +63,10 @@ namespace MMS_Environment_1 {
 
         ApplicationReference();
 
-        ApplicationReference(boost::shared_ptr< ACSE_1::AP_title> __ap_title,
-                boost::shared_ptr< ACSE_1::AP_invocation_identifier> __ap_invocation_id,
-                boost::shared_ptr< ACSE_1::AE_qualifier> __ae_qualifier,
-                boost::shared_ptr< ACSE_1::AE_invocation_identifier> __ae_invocation_id);
+        ApplicationReference(boost::shared_ptr< ACSE_1::AP_title> arg__ap_title,
+                boost::shared_ptr< ACSE_1::AP_invocation_identifier> arg__ap_invocation_id,
+                boost::shared_ptr< ACSE_1::AE_qualifier> arg__ae_qualifier,
+                boost::shared_ptr< ACSE_1::AE_invocation_identifier> arg__ae_invocation_id);
 
         BOOST_ASN_VALUE_OPTIONAL_DECL(ap_title, ACSE_1::AP_title);
         BOOST_ASN_VALUE_OPTIONAL_DECL(ap_invocation_id, ACSE_1::AP_invocation_identifier);
