@@ -163,6 +163,10 @@ namespace x680 {
             return correct_name(name);
         }
 
+        std::string argumentname(std::string name) {
+            return "arg__" + name;
+        }
+
         std::string tabformat(basic_entity_ptr selft, std::size_t delt, const std::string& tab) {
             assignment_entity_ptr self = selft ? selft->as_assigment() : assignment_entity_ptr();
             std::string rslt = tab;
@@ -299,32 +303,72 @@ namespace x680 {
         }
 
         std::string value_reff_str(defined_value_atom_ptr self) {
-            if ((self->reff()) && (self->reff()->as_valueassigment())){
+            if ((self->reff()) && (self->reff()->as_valueassigment())) {
                 std::string rslt;
-                typeassignment_entity_ptr tp =self->reff()->as_valueassigment()->scope() ? 
-                    self->reff()->as_valueassigment()->scope()->as_typeassigment() : typeassignment_entity_ptr();
+                typeassignment_entity_ptr tp = self->reff()->as_valueassigment()->scope() ?
+                        self->reff()->as_valueassigment()->scope()->as_typeassigment() : typeassignment_entity_ptr();
                 if (tp && (!tp->islocaldefined()))
-                    rslt= nameconvert(tp->name()) + "_";
-                return rslt +nameconvert(self->reff()->as_valueassigment()->name());
+                    rslt = nameconvert(tp->name()) + "_";
+                return rslt + nameconvert(self->reff()->as_valueassigment()->name());
             }
-            return "???reff???";    
+            return "???reff???";
+        }
+
+        std::string value_bs_bstr_str(strvalue_atom_ptr self) {
+            std::size_t cnt = 0;
+            std::string src = self->value();
+            uint64_t numrsl = 0;
+            for (std::string::const_iterator it = src.begin(); it != src.end(); ++it) {
+                numrsl <<= 1;
+                numrsl |= (((*it) == '1') ? 0x1 : 0x0);
+                cnt++;
+            }
+            if (!cnt)
+                return "";
+            if (cnt <= 8)
+                return "static_cast<uint8_t>(" + boost::lexical_cast<std::string > (numrsl) + "), " + boost::lexical_cast<std::string >(8 - cnt);
+            if (cnt <= 16)
+                return "static_cast<uint16_t>(" + boost::lexical_cast<std::string > (numrsl) + "), " + boost::lexical_cast<std::string >(16 - cnt);
+            if (cnt <= 32)
+                return "static_cast<uint32_t>(" + boost::lexical_cast<std::string > (numrsl) + "), " + boost::lexical_cast<std::string >(32 - cnt);
+            if (cnt <= 64)
+                return "static_cast<uint64_t>(" + boost::lexical_cast<std::string > (numrsl) + "), " + boost::lexical_cast<std::string >(64 - cnt);
+            return "???bstr???";
+        }
+
+        std::string value_bs_hstr_str(strvalue_atom_ptr self) {
+            std::string src = self->value();
+            std::size_t cnt = src.size()*8;
+            if (cnt <= 32)
+                return "0x" + src + ", " + boost::lexical_cast<std::string >(32 - cnt);
+            return "???bstr???";
+        }
+
+        std::string value_bs_str_str(strvalue_atom_ptr self) {
+            if (self->valtype() == v_bstring)
+                return "boost::asn1::bitstring_type(" + value_bs_bstr_str(self) + ")";
+            else if (self->valtype() == v_hstring)
+                return "boost::asn1::bitstring_type(" + value_bs_hstr_str(self) + ")";
+            return "???bstr???";
         }
 
         std::string value_bs_str(value_atom_ptr self) {
             self = value_skip_defined(self);
-            if (self->as_empty()){
+            if (self->as_empty()) {
                 return "";
-            } else if (self->as_list()){
+            } else if (self->as_list()) {
                 std::string rslt;
                 for (value_vct::const_iterator it = self->as_list()->values().begin(); it != self->as_list()->values().end(); ++it) {
-                    if (it!=self->as_list()->values().begin())
+                    if (it != self->as_list()->values().begin())
                         rslt = " | ";
                     if ((*it)->as_defined())
-                        rslt +=value_reff_str((*it)->as_defined());
+                        rslt += value_reff_str((*it)->as_defined());
                     else
                         rslt += "???expr???";
                 }
                 return rslt;
+            } else if (self->as_cstr()) {
+                return value_bs_str_str(self->as_cstr());
             } else if (self->as_assign())
                 return nameconvert(self->as_assign()->name());
             return "???bitnum???";
@@ -801,6 +845,7 @@ namespace x680 {
             if (!vct.empty()) {
                 stream << "\n";
                 execute_typedef(stream, vct, false, self);
+                execute_typedef(stream, vct, true, self);
             }
         }
 
@@ -1003,6 +1048,12 @@ namespace x680 {
             stream << "\n";
             for (import_vector::iterator it = self->import().begin(); it != self->import().end(); ++it) {
                 if (expressed_import(mod, nameconvert(*it))) {
+                    basic_entity_ptr tas = self->find_by_name(*it);
+                    typeassignment_entity_ptr tpas = tas ? tas->as_typeassigment() : typeassignment_entity_ptr();
+                    /*if (tpas &&  tpas->superfluous_assignment(mod))
+                            stream << tabformat(self, 2) << "typedef " << nameconvert(tpas->superfluous_assignment(mod)->name())
+                            << "::" << nameconvert(*it) << ";   \\superfuous\n ";
+                    else */
                     stream << tabformat(self, 2) << "using " << nameconvert(self->name())
                             << "::" << nameconvert(*it) << ";\n";
                 }
@@ -1166,7 +1217,7 @@ namespace x680 {
                 if (vlass) {
                     stream << tabformat(self) << pref << "const ";
                     stream << type_str(self) << " ";
-                    stream << (self->islocaldefined() ? "" : (nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << ";\n";
+                    stream << (/*self->islocaldefined() ? "" : */(nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << ";\n";
                 }
             }
         }
@@ -1180,7 +1231,7 @@ namespace x680 {
                     stream << type_str(self) << " ";
                     if ((self->islocaldefined()) && ansec)
                         stream << fulltype_str(ansec, false) << "::";
-                    stream << (self->islocaldefined() ? "" : (nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << " = ";
+                    stream << (/*self->islocaldefined() ? "" :*/ (nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << " = ";
                     stream << nested_init_str(self->type(), value_int_str(vlass->value())) << ";\n";
                 }
             }
@@ -1194,7 +1245,7 @@ namespace x680 {
                 if (vlass) {
                     stream << tabformat(self) << pref << "const ";
                     stream << type_str(self) << " ";
-                    stream << (self->islocaldefined() ? "" : (nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << ";\n";
+                    stream << (/*self->islocaldefined() ? "" : */(nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << ";\n";
                 }
             }
         }
@@ -1208,7 +1259,7 @@ namespace x680 {
                     stream << type_str(self) << " ";
                     if ((self->islocaldefined()) && ansec)
                         stream << fulltype_str(ansec, false) << "::";
-                    stream << (self->islocaldefined() ? "" : (nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << " = ";
+                    stream << (/*self->islocaldefined() ? "" : */(nameconvert(self->name()) + "_")) << nameconvert(vlass->name()) << " = ";
                     stream << nested_init_str(self->type(), "bitstring_type(true, " + value_int_str(vlass->value()) + ")") << ";\n";
                 }
             }
@@ -1354,7 +1405,7 @@ namespace x680 {
                             }
                             break;
                         case mk_optional:
-                            stream << "\n" << tabformat(scp, 2) << "boost::shared_ptr<" <<fullpathtype_str(it->typ, self, it->typenam) << "> " <<
+                            stream << "\n" << tabformat(scp, 2) << "boost::shared_ptr<" << fullpathtype_str(it->typ, self, it->typenam) << "> " <<
                                     fulltype_str(self, false) << "::" << it->name << "__new (){ return " << it->name << "_ = boost::shared_ptr<" <<
                                     it->typenam << ">(new " << it->typenam << "()) ;}\n";
                             stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" <<
@@ -1610,7 +1661,7 @@ namespace x680 {
                             for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
                                 if (it != oblig.begin())
                                     stream << ",\n " << tabformat(self, 2);
-                                stream << "const " << it->typenam << "&  __" << it->name;
+                                stream << "const " << it->typenam << "&  " << argumentname(it->name);
                             }
                             stream << ");\n";
                         }
@@ -1620,7 +1671,7 @@ namespace x680 {
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
                                 if (it != nooblig.begin())
                                     stream << ",\n " << tabformat(self, 2);
-                                stream << "boost::shared_ptr< " << it->typenam << ">  __" << it->name;
+                                stream << "boost::shared_ptr< " << it->typenam << ">  " << argumentname(it->name);
                                 if (it->afterextention)
                                     stream << " = boost::shared_ptr< " << it->typenam << ">()";
                             }
@@ -1665,13 +1716,13 @@ namespace x680 {
                             for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
                                 if (it != oblig.begin())
                                     stream << ",\n" << tabformat(scp, 2);
-                                stream << "const " << it->typenam << "&  __" << it->name;
+                                stream << "const " << it->typenam << "&  " << argumentname(it->name);
                             }
                             stream << ") : \n";
                             for (member_vect::const_iterator it = oblig.begin(); it != oblig.end(); ++it) {
                                 if (it != oblig.begin())
                                     stream << ",\n";
-                                stream << tabformat(scp, 2) << it->name << "_(__" << it->name << ")";
+                                stream << tabformat(scp, 2) << it->name << "_(" << argumentname(it->name) << ")";
                             }
                             stream << " {}; \n ";
                         }
@@ -1681,7 +1732,7 @@ namespace x680 {
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
                                 if (it != nooblig.begin())
                                     stream << ",\n" << tabformat(scp, 2);
-                                stream << "boost::shared_ptr< " << it->typenam << ">  __" << it->name;
+                                stream << "boost::shared_ptr< " << it->typenam << ">  " << argumentname(it->name);
                             }
                             stream << ") : \n";
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
@@ -1690,7 +1741,7 @@ namespace x680 {
                                 stream << tabformat(scp, 2) << it->name << "_(";
                                 if (noholder_ && (it->marker == mk_none) && (!it->afterextention))
                                     stream << "*";
-                                stream << "__" << it->name << ")";
+                                stream << argumentname(it->name) << ")";
                             }
                             stream << " {}; \n ";
                         }
@@ -1808,7 +1859,7 @@ namespace x680 {
             basic_entity_ptr scp;
             if (self->type()) {
                 stream << "\n";
-                stream << tabformat(scp, 3) << archive_member_ber_str(self, nameconvert(self->name() + "_")) << ";";
+                stream << tabformat(scp, 3) << archive_member_ber_str(self, nameconvert(self->name()) + "_") << ";";
             }
         }
 

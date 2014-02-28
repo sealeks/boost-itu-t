@@ -40,15 +40,19 @@ namespace x680 {
         std::string value_int_str(value_atom_ptr self);
         std::string value_bool_str(value_atom_ptr self);
         std::string value_real_str(value_atom_ptr self);
-        std::string value_reff_str(defined_value_atom_ptr self);        
+        std::string value_reff_str(defined_value_atom_ptr self);
+        std::string value_bs_bstr_str(strvalue_atom_ptr self);
+        std::string value_bs_hstr_str(strvalue_atom_ptr self);
+        std::string value_bs_str_str(strvalue_atom_ptr self);
         std::string value_bs_str(value_atom_ptr self);
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self);
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
         std::string valueassmnt_str(valueassignment_entity_ptr self);
         std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "");
         std::string nameconvert(std::string name);
+        std::string argumentname(std::string name);
         std::string tabformat(basic_entity_ptr selft = basic_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
-        std::string member_marker_str(const std::string& str, tagmarker_type self, const std::string& dflt="" , bool simple = false);
+        std::string member_marker_str(const std::string& str, tagmarker_type self, const std::string& dflt = "", bool simple = false);
         std::string seqof_str(typeassignment_entity_ptr self, const std::string& name);
         std::string choice_enum_str(typeassignment_entity_ptr self, basic_entity_ptr sub);
         std::string tagged_str(tagged_ptr self);
@@ -147,7 +151,7 @@ namespace x680 {
 
             void execute_ctor_hpp(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_ctor_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
-            
+
             void execute_default_hpp(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_default_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
 
