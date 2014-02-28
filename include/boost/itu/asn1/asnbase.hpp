@@ -1586,6 +1586,11 @@ namespace boost {
             return bind_basic(arch, *vl);
         }
 
+        template<typename Archive, typename T, T DT>
+        inline bool bind_basic(Archive & arch, default_holder<T, DT>& vl) {
+            return bind_basic(arch, vl.get_shared());
+        }
+
         template<typename Archive, typename T, const T& DT>
         inline bool bind_basic(Archive & arch, default_holder<T, DT>& vl) {
             return bind_basic(arch, vl.get_shared());
@@ -1638,6 +1643,11 @@ namespace boost {
             return bind_explicit(arch, *vl, id, type);
         }
 
+        template<typename Archive, typename T, T DT>
+        inline bool bind_explicit(Archive & arch, default_holder<T, DT>& vl, id_type id, class_type type = CONTEXT_CLASS) {
+            return bind_explicit(arch, vl.get_shared(), id, type);
+        }
+
         template<typename Archive, typename T, const T& DT>
         inline bool bind_explicit(Archive & arch, default_holder<T, DT>& vl, id_type id, class_type type = CONTEXT_CLASS) {
             return bind_explicit(arch, vl.get_shared(), id, type);
@@ -1688,6 +1698,11 @@ namespace boost {
         template<typename Archive, typename T>
         inline bool bind_implicit(Archive & arch, value_holder<T>& vl, id_type id, class_type type = CONTEXT_CLASS) {
             return bind_implicit(arch, *vl, id, type);
+        }
+
+        template<typename Archive, typename T, T DT>
+        inline bool bind_implicit(Archive & arch, default_holder<T, DT>& vl, id_type id, class_type type = CONTEXT_CLASS) {
+            return bind_implicit(arch, vl.get_shared(), id, type);
         }
 
         template<typename Archive, typename T, const T& DT>
@@ -1747,6 +1762,11 @@ namespace boost {
         template<typename Archive, typename T>
         inline bool bind_choice(Archive & arch, value_holder<T>& vl) {
             return bind_choice(arch, *vl);
+        }
+
+        template<typename Archive, typename T, T DT>
+        inline bool bind_choice(Archive & arch, default_holder<T, DT>& vl) {
+            return bind_choice(arch, vl.get_shared());
         }
 
         template<typename Archive, typename T, const T& DT>
