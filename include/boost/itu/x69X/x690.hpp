@@ -66,6 +66,7 @@ namespace boost {
             //  size_class
 
             class size_class {
+
             public:
 
                 size_class() : size_(0), undefsize_(true) {
@@ -252,6 +253,7 @@ namespace boost {
             ///  archiver                
 
             class output_coder : public boost::itu::base_output_coder {
+
                 typedef std::pair<iterator_type, iterator_type> iterator_pair;
 
                 struct tlv_info {
@@ -333,7 +335,7 @@ namespace boost {
                 template<typename T>
                 void operator&(const std::deque<T >& vl) {
                     *this << vl;
-                }                  
+                }
 
                 iterator_type addtag(const tag& tg, bool settype);
 
@@ -380,8 +382,7 @@ namespace boost {
                 if ((stream.canonical())) {
                     stream.add(to_x690_cast(size_class()), it);
                     stream.add(octet_sequnce(2, 0));
-                }
-                else
+                } else
                     stream.add(to_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
@@ -412,8 +413,7 @@ namespace boost {
                 if (stream.canonical()) {
                     stream.add(to_x690_cast(size_class()), it);
                     stream.add(octet_sequnce(2, 0));
-                }
-                else
+                } else
                     stream.add(to_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
@@ -435,8 +435,7 @@ namespace boost {
                 if (stream.canonical()) {
                     stream.add(to_x690_cast(size_class()), it);
                     stream.add(octet_sequnce(2, 0));
-                }
-                else
+                } else
                     stream.add(to_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
@@ -458,8 +457,7 @@ namespace boost {
                 if (stream.canonical()) {
                     stream.add(to_x690_cast(size_class()), it);
                     stream.add(octet_sequnce(2, 0));
-                }
-                else
+                } else
                     stream.add(to_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
@@ -505,8 +503,7 @@ namespace boost {
                 if (!lentype) {
                     stream.add(val);
                     return;
-                }
-                else {
+                } else {
 
                     typedef typename T::const_iterator const_iterator_type;
                     typedef typename T::difference_type difference_type;
@@ -515,11 +512,10 @@ namespace boost {
                     while (it != val.end()) {
                         stream.addtag(tag(tag_traits<T>::number()), false);
                         difference_type diff = std::distance(it, val.end());
-                        if (diff >static_cast<difference_type>( CER_STRING_MAX_SIZE)) {
-                            diff = static_cast<difference_type>( CER_STRING_MAX_SIZE);
+                        if (diff >static_cast<difference_type> (CER_STRING_MAX_SIZE)) {
+                            diff = static_cast<difference_type> (CER_STRING_MAX_SIZE);
                             stream.add(to_x690_cast(size_class(static_cast<std::size_t> (diff))));
-                        }
-                        else {
+                        } else {
                             stream.add(to_x690_cast(size_class(static_cast<std::size_t> (diff))));
                         }
                         stream.add(octet_sequnce(it, it + diff));
@@ -552,8 +548,7 @@ namespace boost {
                 if (construct) {
                     stream.add(to_x690_cast(size_class()), it);
                     stream.add(octet_sequnce(2, 0));
-                }
-                else
+                } else
                     stream.add(to_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
@@ -844,7 +839,7 @@ namespace boost {
                 template<typename T>
                 void operator&(const std::deque<T >& vl) {
                     *this >> vl;
-                }                            
+                }
 
                 tag test_tl(size_class& sz);
 
@@ -993,8 +988,7 @@ namespace boost {
                             boost::asn1::bind_element(stream, tmp);
                             const_cast<std::vector<T>*> (&(vl.value()))->push_back(tmp);
                         }
-                    }
-                    else {
+                    } else {
                         std::size_t sz = tmpsize.size();
                         while ((beg - stream.size()) < sz) {
                             T tmp;
@@ -1018,8 +1012,7 @@ namespace boost {
                             boost::asn1::bind_element(stream, tmp);
                             const_cast<std::deque<T>*> (&(vl.value()))->push_back(tmp);
                         }
-                    }
-                    else {
+                    } else {
                         std::size_t sz = tmpsize.size();
                         while ((beg - stream.size()) < sz) {
                             T tmp;
@@ -1065,8 +1058,7 @@ namespace boost {
                             }
                             stream.pop_stack();
                             return true;
-                        }
-                        else {
+                        } else {
                             std::size_t sz = 0;
                             if (boost::itu::find_eof(stream.buffers(), stream.buffers().begin(), sz)) {
                                 octet_sequnce data;
@@ -1077,8 +1069,7 @@ namespace boost {
                             }
                             return false;
                         }
-                    }
-                    else {
+                    } else {
                         if (tmptag.constructed()) {
                             while (!stream.buffers().empty()) {
                                 if (!stringtype_reader(stream, vl, tag_traits<T>::number(), 0)) {
@@ -1087,8 +1078,7 @@ namespace boost {
                                 stream.pop_stack();
                             }
                             return false;
-                        }
-                        else {
+                        } else {
                             octet_sequnce data;
                             if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, tmpsize.size())) {
                                 vl.insert(vl.end(), data.begin(), data.end());
@@ -1203,6 +1193,33 @@ namespace boost {
 
 
         }
+
+        template<> void external_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void external_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void external_type::encoding_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void external_type::encoding_type::serialize(boost::asn1::x690::input_coder& arch);
+
+        template<> void embeded_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void embeded_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void embeded_type::identification_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void embeded_type::identification_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void embeded_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void embeded_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void embeded_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void embeded_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch);
+
+
+        template<> void characterstring_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void characterstring_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void characterstring_type::identification_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void characterstring_type::identification_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void characterstring_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void characterstring_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void characterstring_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void characterstring_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch);
+
+
+
     }
 }
 

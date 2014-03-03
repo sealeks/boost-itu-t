@@ -1820,8 +1820,7 @@ namespace boost {
 
         struct external_type {
 
-            //start==============================================================
-            //It is  INTERNAL CHOICE
+            struct encoding_type;
 
             enum encoding_type_enum {
 
@@ -1836,321 +1835,115 @@ namespace boost {
                 encoding_type() : ITU_T_CHOICE(encoding_type_enum) () {
                 }
 
-                ITU_T_CHOICES_DECL(single_ASN1_type, any_type, encoding_type_single_ASN1_type)
-                ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, encoding_type_octet_aligned)
-                ITU_T_CHOICES_DECL(arbitrary, bitstring_type, encoding_type_arbitrary)
-
-                        template<typename Archive> void serialize(Archive & arch) {
-
-                    if (arch.__input__()) {
-                        int __tag_id__ = arch.test_id();
-                        switch (arch.test_class()) {
-                            case 0x0:
-                            {
-                                switch (__tag_id__) {
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            case 0x40:
-                            {
-                                switch (__tag_id__) {
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            case 0xC0:
-                            {
-                                switch (__tag_id__) {
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            case 0x80:
-                            {
-                                switch (__tag_id__) {
-                                    case 0:
-                                    {
-                                        if (ITU_T_EXPLICIT_TAG(value<any_type > (true, encoding_type_single_ASN1_type), 0)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 1:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, encoding_type_octet_aligned), 1)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 2:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, encoding_type_arbitrary), 2)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            default:
-                            {
-                                ;
-                            }
-                        }
-                    } else {
-                        switch (type()) {
-                            case encoding_type_single_ASN1_type:
-                            {
-                                ITU_T_EXPLICIT_TAG(value<any_type > (false, encoding_type_single_ASN1_type), 0);
-                                break;
-                            }
-                            case encoding_type_octet_aligned:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, encoding_type_octet_aligned), 1);
-                                break;
-                            }
-                            case encoding_type_arbitrary:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, encoding_type_arbitrary), 2);
-                                break;
-                            }
-                            default:
-                            {
-                            }
-                        }
-                    }
+                template<typename T > encoding_type(boost::shared_ptr< T> vl, encoding_type_enum enm) :
+                        ITU_T_CHOICE(encoding_type_enum) (vl, static_cast<int> (enm)) {
                 }
+
+                ITU_T_CHOICES_DECL(single_ASN1_type, any_type, encoding_type_single_ASN1_type); // primitive
+                ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, encoding_type_octet_aligned); // primitive
+                ITU_T_CHOICES_DECL(arbitrary, bitstring_type, encoding_type_arbitrary); // primitive
+
+                ITU_T_ARCHIVE_FUNC;
             };
 
 
-            boost::shared_ptr<oid_type > direct_reference; //  OPTIONAL
-            ITU_T_FUNC_DECLARATE(oid_type, direct_reference)
+            external_type();
 
-            boost::shared_ptr<int > indirect_reference; //  OPTIONAL
-            ITU_T_FUNC_DECLARATE(int, indirect_reference)
+            external_type(const encoding_type& arg__encoding);
 
-            boost::shared_ptr<objectdescriptor_type > data_value_descriptor; //  OPTIONAL
-            ITU_T_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
+            external_type(boost::shared_ptr< oid_type> arg__direct_reference,
+                    boost::shared_ptr< int> arg__indirect_reference,
+                    boost::shared_ptr< objectdescriptor_type> arg__data_value_descriptor,
+                    boost::shared_ptr< encoding_type> arg__encoding);
 
-            boost::asn1::value_holder<encoding_type > encoding;
+            ITU_T_OPTIONAL_DECL(direct_reference, oid_type);
+            ITU_T_OPTIONAL_DECL(indirect_reference, int);
+            ITU_T_OPTIONAL_DECL(data_value_descriptor, objectdescriptor_type);
+            ITU_T_HOLDERH_DECL(encoding, encoding_type);
 
-            external_type() : encoding() {
-            }
-
-            template<typename Archive> void serialize(Archive & arch) {
-
-                ITU_T_BIND_TAG(direct_reference);
-                ITU_T_BIND_TAG(indirect_reference);
-                ITU_T_BIND_TAG(data_value_descriptor);
-                ITU_T_BIND_CHOICE(encoding);
-            }
+            ITU_T_ARCHIVE_FUNC;
         };
 
         ITU_T_INTERNAL_REGESTRATE(external_type, TYPE_EXTERNAL)
 
+
         /////////////////////////////////////////////////////////////////////////////////////////////////   
 
+
         struct embeded_type {
+
+            struct identification_type;
 
             enum identification_type_enum {
 
                 identification_type_null = 0,
-                identification_type_syntaxes_type,
-                identification_type_syntax_type,
-                identification_type_presentation_context_id_type,
-                identification_type_context_negotiation_type,
-                identification_type_transfer_syntax_type,
-                identification_type_fixed_type,
+                identification_type_syntaxes,
+                identification_type_syntax,
+                identification_type_presentation_context_id,
+                identification_type_context_negotiation,
+                identification_type_transfer_syntax,
+                identification_type_fixed,
             };
 
             struct identification_type : public ITU_T_CHOICE(identification_type_enum) {
 
+
+                struct syntaxes_type;
+                struct context_negotiation_type;
+
                 struct syntaxes_type {
 
-                    oid_type abstract;
-                    oid_type transfer;
+                    syntaxes_type();
 
-                    syntaxes_type() : abstract(), transfer() {
-                    }
+                    syntaxes_type(const oid_type& arg__abstract,
+                            const oid_type& arg__transfer);
 
-                    template<typename Archive> void serialize(Archive & arch) {
+                    ITU_T_HOLDERH_DECL(abstract, oid_type);
+                    ITU_T_HOLDERH_DECL(transfer, oid_type);
 
-                        ITU_T_IMPLICIT_TAG(abstract, 0);
-                        ITU_T_IMPLICIT_TAG(transfer, 1);
-                    }
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
                 struct context_negotiation_type {
 
-                    int presentation_context_id;
-                    oid_type transfer_syntax;
+                    context_negotiation_type();
 
-                    context_negotiation_type() : presentation_context_id(), transfer_syntax() {
-                    }
+                    context_negotiation_type(const int& arg__presentation_context_id,
+                            const oid_type& arg__transfer_syntax);
 
-                    template<typename Archive> void serialize(Archive & arch) {
+                    ITU_T_HOLDERH_DECL(presentation_context_id, int);
+                    ITU_T_HOLDERH_DECL(transfer_syntax, oid_type);
 
-                        ITU_T_IMPLICIT_TAG(presentation_context_id, 0);
-                        ITU_T_IMPLICIT_TAG(transfer_syntax, 1);
-                    }
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
                 identification_type() : ITU_T_CHOICE(identification_type_enum) () {
                 }
 
-                ITU_T_CHOICES_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
-                ITU_T_CHOICES_DECL(syntax, oid_type, identification_type_syntax_type)
-                ITU_T_CHOICES_DECL(presentation_context_id, int, identification_type_presentation_context_id_type)
-                ITU_T_CHOICES_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
-                ITU_T_CHOICES_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
-                ITU_T_CHOICES_DECL(fixed, null_type, identification_type_fixed_type)
-
-                        template<typename Archive> void serialize(Archive & arch) {
-
-                    if (arch.__input__()) {
-                        int __tag_id__ = arch.test_id();
-                        switch (arch.test_class()) {
-                            case 0x0:
-                            {
-                                switch (__tag_id__) {
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            case 0x40:
-                            {
-                                switch (__tag_id__) {
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            case 0xC0:
-                            {
-                                switch (__tag_id__) {
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            case 0x80:
-                            {
-                                switch (__tag_id__) {
-                                    case 0:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<syntaxes_type > (true, identification_type_syntaxes_type), 0)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 1:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_syntax_type), 1)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 2:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<int > (true, identification_type_presentation_context_id_type), 2)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 3:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (true, identification_type_context_negotiation_type), 3)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 4:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_transfer_syntax_type), 4)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 5:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, identification_type_fixed_type), 5)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            default:
-                            {
-                                ;
-                            }
-                        }
-                    } else {
-                        switch (type()) {
-                            case identification_type_syntaxes_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<syntaxes_type > (false, identification_type_syntaxes_type), 0);
-                                break;
-                            }
-                            case identification_type_syntax_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_syntax_type), 1);
-                                break;
-                            }
-                            case identification_type_presentation_context_id_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<int > (false, identification_type_presentation_context_id_type), 2);
-                                break;
-                            }
-                            case identification_type_context_negotiation_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (false, identification_type_context_negotiation_type), 3);
-                                break;
-                            }
-                            case identification_type_transfer_syntax_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_transfer_syntax_type), 4);
-                                break;
-                            }
-                            case identification_type_fixed_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<null_type > (false, identification_type_fixed_type), 5);
-                                break;
-                            }
-                            default:
-                            {
-                            }
-                        }
-                    }
+                template<typename T > identification_type(boost::shared_ptr< T> vl, identification_type_enum enm) :
+                        ITU_T_CHOICE(identification_type_enum) (vl, static_cast<int> (enm)) {
                 }
+
+                ITU_T_CHOICEC_DECL(syntaxes, syntaxes_type, identification_type_syntaxes);
+                ITU_T_CHOICES_DECL(syntax, oid_type, identification_type_syntax); // primitive
+                ITU_T_CHOICES_DECL(presentation_context_id, int, identification_type_presentation_context_id); // primitive
+                ITU_T_CHOICEC_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation);
+                ITU_T_CHOICES_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax); // primitive
+                ITU_T_CHOICES_DECL(fixed, null_type, identification_type_fixed); // primitive
+
+                ITU_T_ARCHIVE_FUNC;
             };
 
 
+            embeded_type();
 
+            embeded_type(const identification_type& arg__identification,
+                    const octetstring_type& arg__data_value);
 
-            identification_type identification;
-            boost::shared_ptr< objectdescriptor_type> data_value_descriptor; //  OPTIONAL
-            ITU_T_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
+            ITU_T_HOLDERH_DECL(identification, identification_type);
+            ITU_T_HOLDERH_DECL(data_value, octetstring_type);
 
-            octetstring_type data_value;
-
-            embeded_type() : identification(), data_value() {
-            }
-
-            template<typename Archive> void serialize(Archive & arch) {
-
-                ITU_T_BIND_CHOICE(identification);
-                ITU_T_IMPLICIT_TAG(data_value, 1); //  ????
-            }
+            ITU_T_ARCHIVE_FUNC;
         };
 
         ITU_T_INTERNAL_REGESTRATE(embeded_type, TYPE_EMBEDDED_PDV)
@@ -2162,208 +1955,88 @@ namespace boost {
 
         struct characterstring_type {
 
+            struct identification_type;
+
             enum identification_type_enum {
 
                 identification_type_null = 0,
-                identification_type_syntaxes_type,
-                identification_type_syntax_type,
-                identification_type_presentation_context_id_type,
-                identification_type_context_negotiation_type,
-                identification_type_transfer_syntax_type,
-                identification_type_fixed_type,
+                identification_type_syntaxes,
+                identification_type_syntax,
+                identification_type_presentation_context_id,
+                identification_type_context_negotiation,
+                identification_type_transfer_syntax,
+                identification_type_fixed,
             };
 
             struct identification_type : public ITU_T_CHOICE(identification_type_enum) {
 
+
+                struct syntaxes_type;
+                struct context_negotiation_type;
+
                 struct syntaxes_type {
 
-                    oid_type abstract;
-                    oid_type transfer;
+                    syntaxes_type();
 
-                    syntaxes_type() : abstract(), transfer() {
-                    }
+                    syntaxes_type(const oid_type& arg__abstract,
+                            const oid_type& arg__transfer);
 
-                    template<typename Archive> void serialize(Archive & arch) {
+                    ITU_T_HOLDERH_DECL(abstract, oid_type);
+                    ITU_T_HOLDERH_DECL(transfer, oid_type);
 
-                        ITU_T_IMPLICIT_TAG(abstract, 0);
-                        ITU_T_IMPLICIT_TAG(transfer, 1);
-                    }
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
                 struct context_negotiation_type {
 
-                    int presentation_context_id;
-                    oid_type transfer_syntax;
+                    context_negotiation_type();
 
-                    context_negotiation_type() : presentation_context_id(), transfer_syntax() {
-                    }
+                    context_negotiation_type(const int& arg__presentation_context_id,
+                            const oid_type& arg__transfer_syntax);
 
-                    template<typename Archive> void serialize(Archive & arch) {
+                    ITU_T_HOLDERH_DECL(presentation_context_id, int);
+                    ITU_T_HOLDERH_DECL(transfer_syntax, oid_type);
 
-                        ITU_T_IMPLICIT_TAG(presentation_context_id, 0);
-                        ITU_T_IMPLICIT_TAG(transfer_syntax, 1);
-                    }
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
                 identification_type() : ITU_T_CHOICE(identification_type_enum) () {
                 }
 
-                ITU_T_CHOICES_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
-                ITU_T_CHOICES_DECL(syntax, oid_type, identification_type_syntax_type)
-                ITU_T_CHOICES_DECL(presentation_context_id, int, identification_type_presentation_context_id_type)
-                ITU_T_CHOICES_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
-                ITU_T_CHOICES_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
-                ITU_T_CHOICES_DECL(fixed, null_type, identification_type_fixed_type)
-
-                        template<typename Archive> void serialize(Archive & arch) {
-
-                    if (arch.__input__()) {
-                        int __tag_id__ = arch.test_id();
-                        switch (arch.test_class()) {
-                            case 0x0:
-                            {
-                                switch (__tag_id__) {
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            case 0x40:
-                            {
-                                switch (__tag_id__) {
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            case 0xC0:
-                            {
-                                switch (__tag_id__) {
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            case 0x80:
-                            {
-                                switch (__tag_id__) {
-                                    case 0:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<syntaxes_type > (true, identification_type_syntaxes_type), 0)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 1:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_syntax_type), 1)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 2:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<int > (true, identification_type_presentation_context_id_type), 2)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 3:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (true, identification_type_context_negotiation_type), 3)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 4:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_transfer_syntax_type), 4)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    case 5:
-                                    {
-                                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, identification_type_fixed_type), 5)) return;
-                                        else free();
-                                        break;
-                                    }
-                                    default:
-                                    {
-                                    }
-                                }
-                                ;
-                            }
-                            default:
-                            {
-                                ;
-                            }
-                        }
-                    } else {
-                        switch (type()) {
-                            case identification_type_syntaxes_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<syntaxes_type > (false, identification_type_syntaxes_type), 0);
-                                break;
-                            }
-                            case identification_type_syntax_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_syntax_type), 1);
-                                break;
-                            }
-                            case identification_type_presentation_context_id_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<int > (false, identification_type_presentation_context_id_type), 2);
-                                break;
-                            }
-                            case identification_type_context_negotiation_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (false, identification_type_context_negotiation_type), 3);
-                                break;
-                            }
-                            case identification_type_transfer_syntax_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_transfer_syntax_type), 4);
-                                break;
-                            }
-                            case identification_type_fixed_type:
-                            {
-                                ITU_T_IMPLICIT_TAG(value<null_type > (false, identification_type_fixed_type), 5);
-                                break;
-                            }
-                            default:
-                            {
-                            }
-                        }
-                    }
+                template<typename T > identification_type(boost::shared_ptr< T> vl, identification_type_enum enm) :
+                        ITU_T_CHOICE(identification_type_enum) (vl, static_cast<int> (enm)) {
                 }
+
+                ITU_T_CHOICEC_DECL(syntaxes, syntaxes_type, identification_type_syntaxes);
+                ITU_T_CHOICES_DECL(syntax, oid_type, identification_type_syntax); // primitive
+                ITU_T_CHOICES_DECL(presentation_context_id, int, identification_type_presentation_context_id); // primitive
+                ITU_T_CHOICEC_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation);
+                ITU_T_CHOICES_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax); // primitive
+                ITU_T_CHOICES_DECL(fixed, null_type, identification_type_fixed); // primitive
+
+                ITU_T_ARCHIVE_FUNC;
             };
 
 
+            characterstring_type();
 
+            characterstring_type(const identification_type& arg__identification,
+                    const octetstring_type& arg__string_value);
 
-            identification_type identification;
-            boost::shared_ptr<objectdescriptor_type > data_value_descriptor; //  OPTIONAL
-            ITU_T_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
+            ITU_T_HOLDERH_DECL(identification, identification_type);
+            ITU_T_HOLDERH_DECL(string_value, octetstring_type);
 
-            octetstring_type string_value;
-
-            characterstring_type() : identification(), string_value() {
-            }
-
-            template<typename Archive> void serialize(Archive & arch) {
-
-                ITU_T_BIND_CHOICE(identification);
-                ITU_T_IMPLICIT_TAG(data_value_descriptor, 1);
-                ITU_T_IMPLICIT_TAG(string_value, 2);
-            }
+            ITU_T_ARCHIVE_FUNC;
         };
 
         ITU_T_INTERNAL_REGESTRATE(characterstring_type, TYPE_CHARACTERSTRING)
 
-
     }
 }
 
-
+ITU_T_CHOICE_REGESTRATE(boost::asn1::external_type::encoding_type)
+ITU_T_CHOICE_REGESTRATE(boost::asn1::embeded_type::identification_type);
+ITU_T_CHOICE_REGESTRATE(boost::asn1::characterstring_type::identification_type);
 
 #ifdef _MSC_VER
 #pragma warning(pop)

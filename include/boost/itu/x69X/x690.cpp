@@ -64,8 +64,7 @@ namespace boost {
                 if (val.simpleid()) {
                     src.push_back(static_cast<octet_type> (val.simpleid()));
                     return 1;
-                }
-                else {
+                } else {
                     id_type id_ = val.id();
                     octet_sequnce tmp;
                     src.push_back(static_cast<octet_type> (0x1F | val.mask()));
@@ -97,8 +96,7 @@ namespace boost {
                     if (val.size() < MAX_SIMPLELENGTH_SIZE) {
                         src.push_back(static_cast<octet_type> (static_cast<octet_type> (val.size())));
                         return 1;
-                    }
-                    else {
+                    } else {
                         octet_sequnce tmp;
                         size_type vl = val.size();
                         while (vl) {
@@ -109,8 +107,7 @@ namespace boost {
                         endian_push_pack(tmp, src);
                         return (src.size() + 1);
                     }
-                }
-                else {
+                } else {
                     src.push_back(static_cast<octet_type> (static_cast<octet_type> (UNDEF_BLOCK_SIZE)));
                     return 1;
                 }
@@ -327,8 +324,7 @@ namespace boost {
                     stream.add(octet_sequnce(1, static_cast<octet_type> (val.unusebits() % 8)));
                     stream.add(val);
                     return;
-                }
-                else {
+                } else {
 
                     typedef bitstring_type::const_iterator const_iterator_type;
                     typedef bitstring_type::difference_type difference_type;
@@ -342,8 +338,7 @@ namespace boost {
                             diff = static_cast<difference_type> (CER_STRING_MAX_SIZE - 1);
                             stream.add(to_x690_cast(size_class(static_cast<std::size_t> (diff + 1))));
                             stream.add(octet_sequnce(1, static_cast<octet_type> (0)));
-                        }
-                        else {
+                        } else {
                             stream.add(to_x690_cast(size_class(static_cast<std::size_t> (diff + 1))));
                             stream.add(octet_sequnce(1, static_cast<octet_type> (val.unusebits() % 8)));
                         }
@@ -637,8 +632,7 @@ namespace boost {
                     if ((s1[0] & '\x1F') != '\x1F') {
                         val = tag(s1[0] & '\x1F', s1[0] & '\xE0');
                         return 1;
-                    }
-                    else {
+                    } else {
                         octet_sequnce s2;
                         if (find_marked_sequece(src, bit, s2, beg + 1) && (!s2.empty()) && (s2.size() <= (sizeof (id_type)))) {
                             id_type tmp = 0;
@@ -662,8 +656,7 @@ namespace boost {
                     if (!(s1[0] & '\x80')) {
                         val = size_class(s1[0] & '\x7F');
                         return 1;
-                    }
-                    else {
+                    } else {
                         if ((s1[0] != '\x80')) {
                             std::size_t szblk = static_cast<std::size_t> (s1[0] & '\x7F');
                             octet_sequnce s2;
@@ -675,8 +668,7 @@ namespace boost {
                                         return 0;
                                     val = size_class(bodysize);
                                     return s2.size();
-                                }
-                                else {
+                                } else {
                                     std::size_t bodysize = 0;
                                     if (!from_x690_cast<std::size_t > (bodysize, s2))
                                         return 0;
@@ -684,8 +676,7 @@ namespace boost {
                                     return 1 + s2.size();
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             val = size_class();
                             return 1;
                         }
@@ -739,8 +730,7 @@ namespace boost {
             static bool from_x690_real_cast_decimal(T& vl, const octet_sequnce& val) {
                 try {
                     vl = boost::lexical_cast<T > (std::string(val.begin(), val.end()));
-                }
-                catch (boost::bad_lexical_cast &) {
+                } catch (boost::bad_lexical_cast &) {
                     vl = std::numeric_limits<T>::quiet_NaN();
                 }
                 return true;
@@ -768,8 +758,7 @@ namespace boost {
                         {
                             if (val.size() > 1) {
                                 exp_sz = static_cast<std::size_t> (*reinterpret_cast<uint8_t*> (val[1]));
-                            }
-                            else
+                            } else
                                 return false;
                             break;
                         }
@@ -828,8 +817,7 @@ namespace boost {
                 if (val.empty()) {
                     vl = 0;
                     return true;
-                }
-                else {
+                } else {
                     switch (val[0] & '\xC0') {
                         case 0: return from_x690_real_cast_decimal(vl, val);
                         case '\x40': return from_x690_real_cast_special(vl, val);
@@ -844,8 +832,7 @@ namespace boost {
                 if (val.empty()) {
                     vl = 0;
                     return true;
-                }
-                else {
+                } else {
                     switch (val[0] & '\xC0') {
                         case 0: return from_x690_real_cast_decimal(vl, val);
                         case '\x40': return from_x690_real_cast_special(vl, val);
@@ -860,8 +847,7 @@ namespace boost {
                 if (val.empty()) {
                     vl = 0;
                     return true;
-                }
-                else {
+                } else {
                     switch (val[0] & '\xC0') {
                         case 0: return from_x690_real_cast_decimal(vl, val);
                         case '\x40': return from_x690_real_cast_special(vl, val);
@@ -926,8 +912,7 @@ namespace boost {
                     val = (val << 7) | (static_cast<oidindx_type> (*reinterpret_cast<const uint8_t*> (&(*its))) & '\x7F');
                     if (((*its) & '\x80')) {
                         ++its;
-                    }
-                    else {
+                    } else {
                         ++its;
                         return true;
                     }
@@ -956,13 +941,11 @@ namespace boost {
                         if (tmp < 40) {
                             val.push_back(0);
                             val.push_back(tmp);
-                        }
-                        else {
+                        } else {
                             if (tmp < 80) {
                                 val.push_back(1);
                                 val.push_back(tmp - 40);
-                            }
-                            else {
+                            } else {
                                 val.push_back(2);
                                 val.push_back(tmp - 80);
                             }
@@ -1278,8 +1261,7 @@ namespace boost {
                             if (rsltsz.undefsize()) {
                                 if (!next(next_test))
                                     return false;
-                            }
-                            else
+                            } else
                                 next_test += (szsize + sztag);
 
                             pop_front(szsize + sztag);
@@ -1291,8 +1273,7 @@ namespace boost {
                             return true;
                         }
                         return false;
-                    }
-                    else {
+                    } else {
                         if (!sztag)
                             return false;
                         std::size_t next_test = 0;
@@ -1306,8 +1287,7 @@ namespace boost {
                                 (stack_.top().sizeinfo.size - next_test) : 0;
                             size_test += next_test;
                             pop_front(next_test);
-                        }
-                        else {
+                        } else {
 
                             size_test += next_test;
                             if (!boost::itu::splice_frontlist(buffers(), next_test, size_tlv))
@@ -1326,8 +1306,7 @@ namespace boost {
                             pop_front(2);
                         else
                             std::cout << "NEED FIND EOF, EOF NOT FOUND: " << std::endl;
-                    }
-                    else {
+                    } else {
                         pop_front(stack_.top().sizeinfo.size);
                     }
                     stack_.pop();
@@ -1352,16 +1331,14 @@ namespace boost {
                                     return false;
                                 sz += 2;
                                 return true;
-                            }
-                            else {
+                            } else {
                                 std::size_t rsltsz = 0;
                                 if (boost::itu::find_eof(buffers(), buffers().begin(), rsltsz, sz)) {
                                     sz += (szsize + sztag + rsltsz);
                                     return true;
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             sz += (szsize + sztag + tmpsize.size());
                             return true;
                         }
@@ -1371,6 +1348,746 @@ namespace boost {
             }
 
 
+        }
+
+        external_type::external_type() : encoding_() {
+        };
+
+        external_type::external_type(const encoding_type& arg__encoding) :
+        encoding_(arg__encoding) {
+        };
+
+        external_type::external_type(boost::shared_ptr< oid_type> arg__direct_reference,
+                boost::shared_ptr< int> arg__indirect_reference,
+                boost::shared_ptr< objectdescriptor_type> arg__data_value_descriptor,
+                boost::shared_ptr< encoding_type> arg__encoding) :
+        direct_reference_(arg__direct_reference),
+        indirect_reference_(arg__indirect_reference),
+        data_value_descriptor_(arg__data_value_descriptor),
+        encoding_(arg__encoding) {
+        };
+
+        void external_type::encoding_type::single_ASN1_type(const any_type& vl) {
+            set<any_type>(new any_type(vl), encoding_type_single_ASN1_type);
+        }
+
+        void external_type::encoding_type::octet_aligned(const octetstring_type& vl) {
+            set<octetstring_type>(new octetstring_type(vl), encoding_type_octet_aligned);
+        }
+
+        void external_type::encoding_type::arbitrary(const bitstring_type& vl) {
+            set<bitstring_type>(new bitstring_type(vl), encoding_type_arbitrary);
+        }
+
+        template<> void external_type::encoding_type::serialize(boost::asn1::x690::output_coder& arch) {
+            switch (type()) {
+                case encoding_type_single_ASN1_type:
+                {
+                    ITU_T_EXPLICIT_TAG(value<any_type > (false, encoding_type_single_ASN1_type), 0);
+                    break;
+                }
+                case encoding_type_octet_aligned:
+                {
+                    ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, encoding_type_octet_aligned), 1);
+                    break;
+                }
+                case encoding_type_arbitrary:
+                {
+                    ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, encoding_type_arbitrary), 2);
+                    break;
+                }
+                default:
+                {
+                }
+            }
+        }
+
+        template<> void external_type::encoding_type::serialize(boost::asn1::x690::input_coder& arch) {
+            int __tag_id__ = arch.test_id();
+            switch (arch.test_class()) {
+                case 0x0:
+                {
+                    switch (__tag_id__) {
+                        default:
+                        {
+                        }
+                    }
+                }
+                case 0x40:
+                {
+                    switch (__tag_id__) {
+                        default:
+                        {
+                        }
+                    }
+                }
+                case 0x80:
+                {
+                    switch (__tag_id__) {
+                        case 0:
+                        {
+                            if (ITU_T_EXPLICIT_TAG(value<any_type > (true, encoding_type_single_ASN1_type), 0)) return;
+                            else free();
+                            break;
+                        }
+                        case 1:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, encoding_type_octet_aligned), 1)) return;
+                            else free();
+                            break;
+                        }
+                        case 2:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, encoding_type_arbitrary), 2)) return;
+                            else free();
+                            break;
+                        }
+                        default:
+                        {
+                        }
+                    }
+                }
+                case 0xC0:
+                {
+                    switch (__tag_id__) {
+                        default:
+                        {
+                        }
+                    }
+                }
+                default:
+                {
+                }
+            }
+        }
+
+        template<> void external_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_BIND_TAG(direct_reference_);
+            ITU_T_BIND_TAG(indirect_reference_);
+            ITU_T_BIND_TAG(data_value_descriptor_);
+            ITU_T_BIND_CHOICE(encoding_);
+        }
+
+        template<> void external_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_BIND_TAG(direct_reference_);
+            ITU_T_BIND_TAG(indirect_reference_);
+            ITU_T_BIND_TAG(data_value_descriptor_);
+            ITU_T_BIND_CHOICE(encoding_);
+        }
+
+        boost::shared_ptr<oid_type> external_type::direct_reference__new() {
+            return direct_reference_ = boost::shared_ptr<oid_type>(new oid_type());
+        }
+
+        void external_type::direct_reference(const oid_type& vl) {
+            direct_reference_ = boost::shared_ptr<oid_type>(new oid_type(vl));
+        }
+
+        boost::shared_ptr<int> external_type::indirect_reference__new() {
+            return indirect_reference_ = boost::shared_ptr<int>(new int());
+        }
+
+        void external_type::indirect_reference(const int& vl) {
+            indirect_reference_ = boost::shared_ptr<int>(new int(vl));
+        }
+
+        boost::shared_ptr<objectdescriptor_type> external_type::data_value_descriptor__new() {
+            return data_value_descriptor_ = boost::shared_ptr<objectdescriptor_type>(new objectdescriptor_type());
+        }
+
+        void external_type::data_value_descriptor(const objectdescriptor_type& vl) {
+            data_value_descriptor_ = boost::shared_ptr<objectdescriptor_type>(new objectdescriptor_type(vl));
+        }
+
+        external_type::encoding_type& external_type::encoding() {
+            return *encoding_;
+        }
+
+        const external_type::encoding_type& external_type::encoding() const {
+            return *encoding_;
+        }
+
+        void external_type::encoding(const encoding_type& vl) {
+            encoding_ = vl;
+        }
+
+        void external_type::encoding(boost::shared_ptr< encoding_type> vl) {
+            encoding_ = vl;
+        }
+
+
+        //////////////////////////////////////////////////////////
+
+        embeded_type::embeded_type() : identification_(), data_value_() {
+        };
+
+        embeded_type::embeded_type(const identification_type& arg__identification,
+                const octetstring_type& arg__data_value) :
+        identification_(arg__identification),
+        data_value_(arg__data_value) {
+        };
+
+        embeded_type::identification_type::syntaxes_type::syntaxes_type() : abstract_(), transfer_() {
+        };
+
+        embeded_type::identification_type::syntaxes_type::syntaxes_type(const oid_type& arg__abstract,
+                const oid_type& arg__transfer) :
+        abstract_(arg__abstract),
+        transfer_(arg__transfer) {
+        };
+
+        template<> void embeded_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_IMPLICIT_TAG(abstract_, 0);
+            ITU_T_IMPLICIT_TAG(transfer_, 1);
+        }
+
+        template<> void embeded_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_IMPLICIT_TAG(abstract_, 0);
+            ITU_T_IMPLICIT_TAG(transfer_, 1);
+        }
+
+        oid_type& embeded_type::identification_type::syntaxes_type::abstract() {
+            return *abstract_;
+        }
+
+        const oid_type& embeded_type::identification_type::syntaxes_type::abstract() const {
+            return *abstract_;
+        }
+
+        void embeded_type::identification_type::syntaxes_type::abstract(const oid_type& vl) {
+            abstract_ = vl;
+        }
+
+        void embeded_type::identification_type::syntaxes_type::abstract(boost::shared_ptr< oid_type> vl) {
+            abstract_ = vl;
+        }
+
+        oid_type& embeded_type::identification_type::syntaxes_type::transfer() {
+            return *transfer_;
+        }
+
+        const oid_type& embeded_type::identification_type::syntaxes_type::transfer() const {
+            return *transfer_;
+        }
+
+        void embeded_type::identification_type::syntaxes_type::transfer(const oid_type& vl) {
+            transfer_ = vl;
+        }
+
+        void embeded_type::identification_type::syntaxes_type::transfer(boost::shared_ptr< oid_type> vl) {
+            transfer_ = vl;
+        }
+
+        embeded_type::identification_type::context_negotiation_type::context_negotiation_type() : presentation_context_id_(), transfer_syntax_() {
+        };
+
+        embeded_type::identification_type::context_negotiation_type::context_negotiation_type(const int& arg__presentation_context_id,
+                const oid_type& arg__transfer_syntax) :
+        presentation_context_id_(arg__presentation_context_id),
+        transfer_syntax_(arg__transfer_syntax) {
+        };
+
+        template<> void embeded_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+        }
+
+        template<> void embeded_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+        }
+
+        int& embeded_type::identification_type::context_negotiation_type::presentation_context_id() {
+            return *presentation_context_id_;
+        }
+
+        const int& embeded_type::identification_type::context_negotiation_type::presentation_context_id() const {
+            return *presentation_context_id_;
+        }
+
+        void embeded_type::identification_type::context_negotiation_type::presentation_context_id(const int& vl) {
+            presentation_context_id_ = vl;
+        }
+
+        void embeded_type::identification_type::context_negotiation_type::presentation_context_id(boost::shared_ptr< int> vl) {
+            presentation_context_id_ = vl;
+        }
+
+        oid_type& embeded_type::identification_type::context_negotiation_type::transfer_syntax() {
+            return *transfer_syntax_;
+        }
+
+        const oid_type& embeded_type::identification_type::context_negotiation_type::transfer_syntax() const {
+            return *transfer_syntax_;
+        }
+
+        void embeded_type::identification_type::context_negotiation_type::transfer_syntax(const oid_type& vl) {
+            transfer_syntax_ = vl;
+        }
+
+        void embeded_type::identification_type::context_negotiation_type::transfer_syntax(boost::shared_ptr< oid_type> vl) {
+            transfer_syntax_ = vl;
+        }
+
+        void embeded_type::identification_type::syntax(const oid_type& vl) {
+            set<oid_type>(new oid_type(vl), identification_type_syntax);
+        }
+
+        void embeded_type::identification_type::presentation_context_id(const int& vl) {
+            set<int>(new int(vl), identification_type_presentation_context_id);
+        }
+
+        void embeded_type::identification_type::transfer_syntax(const oid_type& vl) {
+            set<oid_type>(new oid_type(vl), identification_type_transfer_syntax);
+        }
+
+        void embeded_type::identification_type::fixed(const null_type& vl) {
+            set<null_type>(new null_type(vl), identification_type_fixed);
+        }
+
+        template<> void embeded_type::identification_type::serialize(boost::asn1::x690::output_coder& arch) {
+            switch (type()) {
+                case identification_type_syntaxes:
+                {
+                    ITU_T_IMPLICIT_TAG(value<syntaxes_type > (false, identification_type_syntaxes), 0);
+                    break;
+                }
+                case identification_type_syntax:
+                {
+                    ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_syntax), 1);
+                    break;
+                }
+                case identification_type_presentation_context_id:
+                {
+                    ITU_T_IMPLICIT_TAG(value<int > (false, identification_type_presentation_context_id), 2);
+                    break;
+                }
+                case identification_type_context_negotiation:
+                {
+                    ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (false, identification_type_context_negotiation), 3);
+                    break;
+                }
+                case identification_type_transfer_syntax:
+                {
+                    ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_transfer_syntax), 4);
+                    break;
+                }
+                case identification_type_fixed:
+                {
+                    ITU_T_IMPLICIT_TAG(value<null_type > (false, identification_type_fixed), 5);
+                    break;
+                }
+                default:
+                {
+                }
+            }
+        }
+
+        template<> void embeded_type::identification_type::serialize(boost::asn1::x690::input_coder& arch) {
+            int __tag_id__ = arch.test_id();
+            switch (arch.test_class()) {
+                case 0x0:
+                {
+                    switch (__tag_id__) {
+                        default:
+                        {
+                        }
+                    }
+                }
+                case 0x40:
+                {
+                    switch (__tag_id__) {
+                        default:
+                        {
+                        }
+                    }
+                }
+                case 0x80:
+                {
+                    switch (__tag_id__) {
+                        case 0:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<syntaxes_type > (true, identification_type_syntaxes), 0)) return;
+                            else free();
+                            break;
+                        }
+                        case 1:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_syntax), 1)) return;
+                            else free();
+                            break;
+                        }
+                        case 2:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<int > (true, identification_type_presentation_context_id), 2)) return;
+                            else free();
+                            break;
+                        }
+                        case 3:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (true, identification_type_context_negotiation), 3)) return;
+                            else free();
+                            break;
+                        }
+                        case 4:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_transfer_syntax), 4)) return;
+                            else free();
+                            break;
+                        }
+                        case 5:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<null_type > (true, identification_type_fixed), 5)) return;
+                            else free();
+                            break;
+                        }
+                        default:
+                        {
+                        }
+                    }
+                }
+                case 0xC0:
+                {
+                    switch (__tag_id__) {
+                        default:
+                        {
+                        }
+                    }
+                }
+                default:
+                {
+                }
+            }
+        }
+
+        template<> void embeded_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_CHOICE_TAG(identification_, 0);
+            ITU_T_IMPLICIT_TAG(data_value_, 1);
+        }
+
+        template<> void embeded_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_CHOICE_TAG(identification_, 0);
+            ITU_T_IMPLICIT_TAG(data_value_, 1);
+        }
+
+        embeded_type::identification_type& embeded_type::identification() {
+            return *identification_;
+        }
+
+        const embeded_type::identification_type& embeded_type::identification() const {
+            return *identification_;
+        }
+
+        void embeded_type::identification(const identification_type& vl) {
+            identification_ = vl;
+        }
+
+        void embeded_type::identification(boost::shared_ptr< identification_type> vl) {
+            identification_ = vl;
+        }
+
+        octetstring_type& embeded_type::data_value() {
+            return *data_value_;
+        }
+
+        const octetstring_type& embeded_type::data_value() const {
+            return *data_value_;
+        }
+
+        void embeded_type::data_value(const octetstring_type& vl) {
+            data_value_ = vl;
+        }
+
+        void embeded_type::data_value(boost::shared_ptr< octetstring_type> vl) {
+            data_value_ = vl;
+        }
+
+
+
+        //////////////////////////////////////////////////////////////
+
+        characterstring_type::characterstring_type() : identification_(), string_value_() {
+        };
+
+        characterstring_type::characterstring_type(const identification_type& arg__identification,
+                const octetstring_type& arg__string_value) :
+        identification_(arg__identification),
+        string_value_(arg__string_value) {
+        };
+
+        characterstring_type::identification_type::syntaxes_type::syntaxes_type() : abstract_(), transfer_() {
+        };
+
+        characterstring_type::identification_type::syntaxes_type::syntaxes_type(const oid_type& arg__abstract,
+                const oid_type& arg__transfer) :
+        abstract_(arg__abstract),
+        transfer_(arg__transfer) {
+        };
+
+        template<> void characterstring_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_IMPLICIT_TAG(abstract_, 0);
+            ITU_T_IMPLICIT_TAG(transfer_, 1);
+        }
+
+        template<> void characterstring_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_IMPLICIT_TAG(abstract_, 0);
+            ITU_T_IMPLICIT_TAG(transfer_, 1);
+        }
+
+        oid_type& characterstring_type::identification_type::syntaxes_type::abstract() {
+            return *abstract_;
+        }
+
+        const oid_type& characterstring_type::identification_type::syntaxes_type::abstract() const {
+            return *abstract_;
+        }
+
+        void characterstring_type::identification_type::syntaxes_type::abstract(const oid_type& vl) {
+            abstract_ = vl;
+        }
+
+        void characterstring_type::identification_type::syntaxes_type::abstract(boost::shared_ptr< oid_type> vl) {
+            abstract_ = vl;
+        }
+
+        oid_type& characterstring_type::identification_type::syntaxes_type::transfer() {
+            return *transfer_;
+        }
+
+        const oid_type& characterstring_type::identification_type::syntaxes_type::transfer() const {
+            return *transfer_;
+        }
+
+        void characterstring_type::identification_type::syntaxes_type::transfer(const oid_type& vl) {
+            transfer_ = vl;
+        }
+
+        void characterstring_type::identification_type::syntaxes_type::transfer(boost::shared_ptr< oid_type> vl) {
+            transfer_ = vl;
+        }
+
+        characterstring_type::identification_type::context_negotiation_type::context_negotiation_type() : presentation_context_id_(), transfer_syntax_() {
+        };
+
+        characterstring_type::identification_type::context_negotiation_type::context_negotiation_type(const int& arg__presentation_context_id,
+                const oid_type& arg__transfer_syntax) :
+        presentation_context_id_(arg__presentation_context_id),
+        transfer_syntax_(arg__transfer_syntax) {
+        };
+
+        template<> void characterstring_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+        }
+
+        template<> void characterstring_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+        }
+
+        int& characterstring_type::identification_type::context_negotiation_type::presentation_context_id() {
+            return *presentation_context_id_;
+        }
+
+        const int& characterstring_type::identification_type::context_negotiation_type::presentation_context_id() const {
+            return *presentation_context_id_;
+        }
+
+        void characterstring_type::identification_type::context_negotiation_type::presentation_context_id(const int& vl) {
+            presentation_context_id_ = vl;
+        }
+
+        void characterstring_type::identification_type::context_negotiation_type::presentation_context_id(boost::shared_ptr< int> vl) {
+            presentation_context_id_ = vl;
+        }
+
+        oid_type& characterstring_type::identification_type::context_negotiation_type::transfer_syntax() {
+            return *transfer_syntax_;
+        }
+
+        const oid_type& characterstring_type::identification_type::context_negotiation_type::transfer_syntax() const {
+            return *transfer_syntax_;
+        }
+
+        void characterstring_type::identification_type::context_negotiation_type::transfer_syntax(const oid_type& vl) {
+            transfer_syntax_ = vl;
+        }
+
+        void characterstring_type::identification_type::context_negotiation_type::transfer_syntax(boost::shared_ptr< oid_type> vl) {
+            transfer_syntax_ = vl;
+        }
+
+        void characterstring_type::identification_type::syntax(const oid_type& vl) {
+            set<oid_type>(new oid_type(vl), identification_type_syntax);
+        }
+
+        void characterstring_type::identification_type::presentation_context_id(const int& vl) {
+            set<int>(new int(vl), identification_type_presentation_context_id);
+        }
+
+        void characterstring_type::identification_type::transfer_syntax(const oid_type& vl) {
+            set<oid_type>(new oid_type(vl), identification_type_transfer_syntax);
+        }
+
+        void characterstring_type::identification_type::fixed(const null_type& vl) {
+            set<null_type>(new null_type(vl), identification_type_fixed);
+        }
+
+        template<> void characterstring_type::identification_type::serialize(boost::asn1::x690::output_coder& arch) {
+            switch (type()) {
+                case identification_type_syntaxes:
+                {
+                    ITU_T_IMPLICIT_TAG(value<syntaxes_type > (false, identification_type_syntaxes), 0);
+                    break;
+                }
+                case identification_type_syntax:
+                {
+                    ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_syntax), 1);
+                    break;
+                }
+                case identification_type_presentation_context_id:
+                {
+                    ITU_T_IMPLICIT_TAG(value<int > (false, identification_type_presentation_context_id), 2);
+                    break;
+                }
+                case identification_type_context_negotiation:
+                {
+                    ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (false, identification_type_context_negotiation), 3);
+                    break;
+                }
+                case identification_type_transfer_syntax:
+                {
+                    ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_transfer_syntax), 4);
+                    break;
+                }
+                case identification_type_fixed:
+                {
+                    ITU_T_IMPLICIT_TAG(value<null_type > (false, identification_type_fixed), 5);
+                    break;
+                }
+                default:
+                {
+                }
+            }
+        }
+
+        template<> void characterstring_type::identification_type::serialize(boost::asn1::x690::input_coder& arch) {
+            int __tag_id__ = arch.test_id();
+            switch (arch.test_class()) {
+                case 0x0:
+                {
+                    switch (__tag_id__) {
+                        default:
+                        {
+                        }
+                    }
+                }
+                case 0x40:
+                {
+                    switch (__tag_id__) {
+                        default:
+                        {
+                        }
+                    }
+                }
+                case 0x80:
+                {
+                    switch (__tag_id__) {
+                        case 0:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<syntaxes_type > (true, identification_type_syntaxes), 0)) return;
+                            else free();
+                            break;
+                        }
+                        case 1:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_syntax), 1)) return;
+                            else free();
+                            break;
+                        }
+                        case 2:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<int > (true, identification_type_presentation_context_id), 2)) return;
+                            else free();
+                            break;
+                        }
+                        case 3:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (true, identification_type_context_negotiation), 3)) return;
+                            else free();
+                            break;
+                        }
+                        case 4:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_transfer_syntax), 4)) return;
+                            else free();
+                            break;
+                        }
+                        case 5:
+                        {
+                            if (ITU_T_IMPLICIT_TAG(value<null_type > (true, identification_type_fixed), 5)) return;
+                            else free();
+                            break;
+                        }
+                        default:
+                        {
+                        }
+                    }
+                }
+                case 0xC0:
+                {
+                    switch (__tag_id__) {
+                        default:
+                        {
+                        }
+                    }
+                }
+                default:
+                {
+                }
+            }
+        }
+
+        template<> void characterstring_type::serialize(boost::asn1::x690::output_coder& arch) {
+            ITU_T_CHOICE_TAG(identification_, 0);
+            ITU_T_IMPLICIT_TAG(string_value_, 1);
+        }
+
+        template<> void characterstring_type::serialize(boost::asn1::x690::input_coder& arch) {
+            ITU_T_CHOICE_TAG(identification_, 0);
+            ITU_T_IMPLICIT_TAG(string_value_, 1);
+        }
+
+        characterstring_type::identification_type& characterstring_type::identification() {
+            return *identification_;
+        }
+
+        const characterstring_type::identification_type& characterstring_type::identification() const {
+            return *identification_;
+        }
+
+        void characterstring_type::identification(const identification_type& vl) {
+            identification_ = vl;
+        }
+
+        void characterstring_type::identification(boost::shared_ptr< identification_type> vl) {
+            identification_ = vl;
+        }
+
+        octetstring_type& characterstring_type::string_value() {
+            return *string_value_;
+        }
+
+        const octetstring_type& characterstring_type::string_value() const {
+            return *string_value_;
+        }
+
+        void characterstring_type::string_value(const octetstring_type& vl) {
+            string_value_ = vl;
+        }
+
+        void characterstring_type::string_value(boost::shared_ptr< octetstring_type> vl) {
+            string_value_ = vl;
         }
 
     }
