@@ -178,7 +178,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_EXPLICIT_TAG(protocol_options_, 11);
         ITU_T_EXPLICIT_TAG(initiators_nominated_context_, 12);
         ITU_T_EXPLICIT_TAG(extensions_, 14);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     template<> void CP_type::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
@@ -192,7 +192,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_EXPLICIT_TAG(protocol_options_, 11);
         ITU_T_EXPLICIT_TAG(initiators_nominated_context_, 12);
         ITU_T_EXPLICIT_TAG(extensions_, 14);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     const Protocol_version& CP_type::normal_mode_parameters_type::protocol_version() const {
@@ -457,7 +457,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_IMPLICIT_TAG(user_session_requirements_, 9);
         ITU_T_EXPLICIT_TAG(protocol_options_, 11);
         ITU_T_EXPLICIT_TAG(responders_nominated_context_, 13);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     template<> void CPA_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
@@ -468,7 +468,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_IMPLICIT_TAG(user_session_requirements_, 9);
         ITU_T_EXPLICIT_TAG(protocol_options_, 11);
         ITU_T_EXPLICIT_TAG(responders_nominated_context_, 13);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     const Protocol_version& CPA_PPDU::normal_mode_parameters_type::protocol_version() const {
@@ -650,7 +650,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_IMPLICIT_TAG(presentation_context_definition_result_list_, 5);
         ITU_T_IMPLICIT_TAG(default_context_result_, 7);
         ITU_T_IMPLICIT_TAG(provider_reason_, 10);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     template<> void CPR_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
@@ -659,7 +659,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_IMPLICIT_TAG(presentation_context_definition_result_list_, 5);
         ITU_T_IMPLICIT_TAG(default_context_result_, 7);
         ITU_T_IMPLICIT_TAG(provider_reason_, 10);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     const Protocol_version& CPR_PPDU::normal_mode_parameters_type::protocol_version() const {
@@ -784,7 +784,7 @@ namespace ISO8823_PRESENTATION {
         switch (type()) {
             case Abort_type_aru_ppdu:
             {
-                ITU_T_CHOICE(value<ARU_PPDU > (false, Abort_type_aru_ppdu));
+                ITU_T_BIND_CHOICE(value<ARU_PPDU > (false, Abort_type_aru_ppdu));
                 break;
             }
             case Abort_type_arp_ppdu:
@@ -835,7 +835,7 @@ namespace ISO8823_PRESENTATION {
             }
             default:
             {
-                if (ITU_T_CHOICE(value<ARU_PPDU > (true, Abort_type_aru_ppdu))) return;
+                if (ITU_T_BIND_CHOICE(value<ARU_PPDU > (true, Abort_type_aru_ppdu))) return;
                 else free();
                 if (ITU_T_BIND_TAG(value<ARP_PPDU > (true, Abort_type_arp_ppdu))) return;
                 else free();
@@ -904,12 +904,12 @@ namespace ISO8823_PRESENTATION {
 
     template<> void ARU_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(presentation_context_identifier_list_, 0);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     template<> void ARU_PPDU::normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(presentation_context_identifier_list_, 0);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     boost::shared_ptr<Presentation_context_identifier_list> ARU_PPDU::normal_mode_parameters_type::presentation_context_identifier_list__new() {
@@ -1050,7 +1050,7 @@ namespace ISO8823_PRESENTATION {
             }
             case Typed_data_type_ttdPPDU:
             {
-                ITU_T_CHOICE(value<User_data > (false, Typed_data_type_ttdPPDU));
+                ITU_T_BIND_CHOICE(value<User_data > (false, Typed_data_type_ttdPPDU));
                 break;
             }
             default:
@@ -1108,7 +1108,7 @@ namespace ISO8823_PRESENTATION {
             }
             default:
             {
-                if (ITU_T_CHOICE(value<User_data > (true, Typed_data_type_ttdPPDU))) return;
+                if (ITU_T_BIND_CHOICE(value<User_data > (true, Typed_data_type_ttdPPDU))) return;
                 else free();
             }
         }
@@ -1131,13 +1131,13 @@ namespace ISO8823_PRESENTATION {
     template<> void AC_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(presentation_context_addition_list_, 0);
         ITU_T_IMPLICIT_TAG(presentation_context_deletion_list_, 1);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     template<> void AC_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(presentation_context_addition_list_, 0);
         ITU_T_IMPLICIT_TAG(presentation_context_deletion_list_, 1);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     boost::shared_ptr<Presentation_context_addition_list> AC_PPDU::presentation_context_addition_list__new() {
@@ -1181,13 +1181,13 @@ namespace ISO8823_PRESENTATION {
     template<> void ACA_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(presentation_context_addition_result_list_, 0);
         ITU_T_IMPLICIT_TAG(presentation_context_deletion_result_list_, 1);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     template<> void ACA_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(presentation_context_addition_result_list_, 0);
         ITU_T_IMPLICIT_TAG(presentation_context_deletion_result_list_, 1);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     boost::shared_ptr<Presentation_context_addition_result_list> ACA_PPDU::presentation_context_addition_result_list__new() {
@@ -1228,12 +1228,12 @@ namespace ISO8823_PRESENTATION {
 
     template<> void RS_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(presentation_context_identifier_list_, 0);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     template<> void RS_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(presentation_context_identifier_list_, 0);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     boost::shared_ptr<Presentation_context_identifier_list> RS_PPDU::presentation_context_identifier_list__new() {
@@ -1266,12 +1266,12 @@ namespace ISO8823_PRESENTATION {
 
     template<> void RSA_PPDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(presentation_context_identifier_list_, 0);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     template<> void RSA_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(presentation_context_identifier_list_, 0);
-        ITU_T_CHOICE(user_data_);
+        ITU_T_BIND_CHOICE(user_data_);
     }
 
     boost::shared_ptr<Presentation_context_identifier_list> RSA_PPDU::presentation_context_identifier_list__new() {
@@ -1812,13 +1812,13 @@ namespace ISO8823_PRESENTATION {
     template<> void PDV_list::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(transfer_syntax_name_);
         ITU_T_BIND_TAG(presentation_context_identifier_);
-        ITU_T_CHOICE(presentation_data_values_);
+        ITU_T_BIND_CHOICE(presentation_data_values_);
     }
 
     template<> void PDV_list::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_TAG(transfer_syntax_name_);
         ITU_T_BIND_TAG(presentation_context_identifier_);
-        ITU_T_CHOICE(presentation_data_values_);
+        ITU_T_BIND_CHOICE(presentation_data_values_);
     }
 
     boost::shared_ptr<Transfer_syntax_name> PDV_list::transfer_syntax_name__new() {

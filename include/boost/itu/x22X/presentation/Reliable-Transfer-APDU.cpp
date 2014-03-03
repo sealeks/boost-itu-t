@@ -477,13 +477,13 @@ namespace Reliable_Transfer_APDU {
     };
 
     template<> void SessionConnectionIdentifier::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_CHOICE(callingSSuserReference_);
+        ITU_T_BIND_CHOICE(callingSSuserReference_);
         ITU_T_BIND_TAG(commonReference_);
         ITU_T_IMPLICIT_TAG(additionalReferenceInformation_, 0);
     }
 
     template<> void SessionConnectionIdentifier::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_CHOICE(callingSSuserReference_);
+        ITU_T_BIND_CHOICE(callingSSuserReference_);
         ITU_T_BIND_TAG(commonReference_);
         ITU_T_IMPLICIT_TAG(additionalReferenceInformation_, 0);
     }

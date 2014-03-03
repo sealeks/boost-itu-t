@@ -107,13 +107,13 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     }
 
     template<> void Reject::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_CHOICE(invokeId_);
-        ITU_T_CHOICE(problem_);
+        ITU_T_BIND_CHOICE(invokeId_);
+        ITU_T_BIND_CHOICE(problem_);
     }
 
     template<> void Reject::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_CHOICE(invokeId_);
-        ITU_T_CHOICE(problem_);
+        ITU_T_BIND_CHOICE(invokeId_);
+        ITU_T_BIND_CHOICE(problem_);
     }
 
     InvokeId& Reject::invokeId() {
