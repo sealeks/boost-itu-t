@@ -126,7 +126,7 @@ namespace boost {\
 
 #define ITU_T_EXTENTION   arch.resetextention();
 
-#define ITU_T_STRUCT(enm)  boost::asn1::___asn__choice__base__< enm> 
+#define ITU_T_CHOICE(enm)  boost::asn1::___asn__choice__base__< enm> 
 #define ITU_T_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
 
 #define ITU_T_CHOICES_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; void nm ( const tp&  vl); \
@@ -1831,9 +1831,9 @@ namespace boost {
                 encoding_type_arbitrary,
             };
 
-            struct encoding_type : public ITU_T_STRUCT(encoding_type_enum) {
+            struct encoding_type : public ITU_T_CHOICE(encoding_type_enum) {
 
-                encoding_type() : ITU_T_STRUCT(encoding_type_enum) () {
+                encoding_type() : ITU_T_CHOICE(encoding_type_enum) () {
                 }
 
                 ITU_T_CHOICES_DECL(single_ASN1_type, any_type, encoding_type_single_ASN1_type)
@@ -1970,7 +1970,7 @@ namespace boost {
                 identification_type_fixed_type,
             };
 
-            struct identification_type : public ITU_T_STRUCT(identification_type_enum) {
+            struct identification_type : public ITU_T_CHOICE(identification_type_enum) {
 
                 struct syntaxes_type {
 
@@ -2002,7 +2002,7 @@ namespace boost {
                     }
                 };
 
-                identification_type() : ITU_T_STRUCT(identification_type_enum) () {
+                identification_type() : ITU_T_CHOICE(identification_type_enum) () {
                 }
 
                 ITU_T_CHOICES_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
@@ -2173,7 +2173,7 @@ namespace boost {
                 identification_type_fixed_type,
             };
 
-            struct identification_type : public ITU_T_STRUCT(identification_type_enum) {
+            struct identification_type : public ITU_T_CHOICE(identification_type_enum) {
 
                 struct syntaxes_type {
 
@@ -2205,7 +2205,7 @@ namespace boost {
                     }
                 };
 
-                identification_type() : ITU_T_STRUCT(identification_type_enum) () {
+                identification_type() : ITU_T_CHOICE(identification_type_enum) () {
                 }
 
                 ITU_T_CHOICES_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
