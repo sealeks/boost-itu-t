@@ -129,24 +129,24 @@ namespace boost {\
 #define ITU_T_CHOICE_STRUCT(enm)  boost::asn1::___asn__choice__base__< enm> 
 #define ITU_T_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
 
-#define ITU_T_VALUE_CHOICE(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; \
+#define ITU_T_CHOICE_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; \
                          boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);}; boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
 
-#define ITU_T_VALUE_OPTIONAL_DECL(nm ,tp )  boost::shared_ptr< tp >& nm () { return nm ## _; };  const boost::shared_ptr< tp >& nm () const { return nm ## _; } \
+#define ITU_T_OPTIONAL_DECL(nm ,tp )  boost::shared_ptr< tp >& nm () { return nm ## _; };  const boost::shared_ptr< tp >& nm () const { return nm ## _; } \
                          void nm  (boost::shared_ptr< tp > vl) {nm ## _ = vl;}; void nm  ( tp *  vl) {nm ## _ = boost::shared_ptr< tp >(vl);}; void nm ( const tp & vl); \
                          boost::shared_ptr< tp> nm ## __new  (); void nm ## __free  () {nm ## _ = boost::shared_ptr< tp>();}; \
                          private: boost::shared_ptr< tp > nm ## _ ; public:                         
 
-#define ITU_T_VALUE_HOLDERH_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
+#define ITU_T_HOLDERH_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
                          private: boost::asn1::value_holder< tp > nm ## _ ; public: 
 
-#define ITU_T_VALUE_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm  () const; \
+#define ITU_T_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm  () const; \
                          private:  tp  nm ## _ ; public: 
 
-#define ITU_T_VALUE_DEFAULT_DECL(nm ,tp, dflt )    void nm ( const tp & vl);  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
+#define ITU_T_DEFAULTH_DECL(nm ,tp, dflt )    void nm ( const tp & vl);  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
                          private: boost::asn1::default_holder<tp  , dflt> nm ## _ ; public: 
 
-#define ITU_T_VALUE_FUNC_DECLARATE( type, var)    boost::shared_ptr< type > var  ## __new () { return var = boost::asn1::simple_build_type<type>();} \
+#define ITU_T_FUNC_DECLARATE( type, var)    boost::shared_ptr< type > var  ## __new () { return var = boost::asn1::simple_build_type<type>();} \
                void  var ##  __free() { var = boost::shared_ptr< type >() ;} \
                 boost::shared_ptr< type > var  ## __get_or_create () { return var  ? var  : (var = boost::asn1::simple_build_type<type>() );} \
                 void var  ## __assign ( boost::shared_ptr< type > vl ) { var  =  vl ;} \
@@ -1833,9 +1833,9 @@ namespace boost {
                 encoding_type() : ITU_T_CHOICE_STRUCT(encoding_type_enum) () {
                 }
 
-                ITU_T_VALUE_CHOICE(single_ASN1_type, any_type, encoding_type_single_ASN1_type)
-                ITU_T_VALUE_CHOICE(octet_aligned, octetstring_type, encoding_type_octet_aligned)
-                ITU_T_VALUE_CHOICE(arbitrary, bitstring_type, encoding_type_arbitrary)
+                ITU_T_CHOICE_DECL(single_ASN1_type, any_type, encoding_type_single_ASN1_type)
+                ITU_T_CHOICE_DECL(octet_aligned, octetstring_type, encoding_type_octet_aligned)
+                ITU_T_CHOICE_DECL(arbitrary, bitstring_type, encoding_type_arbitrary)
 
                         template<typename Archive> void serialize(Archive & arch) {
 
@@ -1928,13 +1928,13 @@ namespace boost {
 
 
             boost::shared_ptr<oid_type > direct_reference; //  OPTIONAL
-            ITU_T_VALUE_FUNC_DECLARATE(oid_type, direct_reference)
+            ITU_T_FUNC_DECLARATE(oid_type, direct_reference)
 
             boost::shared_ptr<int > indirect_reference; //  OPTIONAL
-            ITU_T_VALUE_FUNC_DECLARATE(int, indirect_reference)
+            ITU_T_FUNC_DECLARATE(int, indirect_reference)
 
             boost::shared_ptr<objectdescriptor_type > data_value_descriptor; //  OPTIONAL
-            ITU_T_VALUE_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
+            ITU_T_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
 
             boost::asn1::value_holder<encoding_type > encoding;
 
@@ -2002,12 +2002,12 @@ namespace boost {
                 identification_type() : ITU_T_CHOICE_STRUCT(identification_type_enum) () {
                 }
 
-                ITU_T_VALUE_CHOICE(syntaxes, syntaxes_type, identification_type_syntaxes_type)
-                ITU_T_VALUE_CHOICE(syntax, oid_type, identification_type_syntax_type)
-                ITU_T_VALUE_CHOICE(presentation_context_id, int, identification_type_presentation_context_id_type)
-                ITU_T_VALUE_CHOICE(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
-                ITU_T_VALUE_CHOICE(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
-                ITU_T_VALUE_CHOICE(fixed, null_type, identification_type_fixed_type)
+                ITU_T_CHOICE_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
+                ITU_T_CHOICE_DECL(syntax, oid_type, identification_type_syntax_type)
+                ITU_T_CHOICE_DECL(presentation_context_id, int, identification_type_presentation_context_id_type)
+                ITU_T_CHOICE_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
+                ITU_T_CHOICE_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
+                ITU_T_CHOICE_DECL(fixed, null_type, identification_type_fixed_type)
 
                         template<typename Archive> void serialize(Archive & arch) {
 
@@ -2136,7 +2136,7 @@ namespace boost {
 
             identification_type identification;
             boost::shared_ptr< objectdescriptor_type> data_value_descriptor; //  OPTIONAL
-            ITU_T_VALUE_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
+            ITU_T_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
 
             octetstring_type data_value;
 
@@ -2205,12 +2205,12 @@ namespace boost {
                 identification_type() : ITU_T_CHOICE_STRUCT(identification_type_enum) () {
                 }
 
-                ITU_T_VALUE_CHOICE(syntaxes, syntaxes_type, identification_type_syntaxes_type)
-                ITU_T_VALUE_CHOICE(syntax, oid_type, identification_type_syntax_type)
-                ITU_T_VALUE_CHOICE(presentation_context_id, int, identification_type_presentation_context_id_type)
-                ITU_T_VALUE_CHOICE(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
-                ITU_T_VALUE_CHOICE(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
-                ITU_T_VALUE_CHOICE(fixed, null_type, identification_type_fixed_type)
+                ITU_T_CHOICE_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
+                ITU_T_CHOICE_DECL(syntax, oid_type, identification_type_syntax_type)
+                ITU_T_CHOICE_DECL(presentation_context_id, int, identification_type_presentation_context_id_type)
+                ITU_T_CHOICE_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
+                ITU_T_CHOICE_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
+                ITU_T_CHOICE_DECL(fixed, null_type, identification_type_fixed_type)
 
                         template<typename Archive> void serialize(Archive & arch) {
 
@@ -2339,7 +2339,7 @@ namespace boost {
 
             identification_type identification;
             boost::shared_ptr<objectdescriptor_type > data_value_descriptor; //  OPTIONAL
-            ITU_T_VALUE_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
+            ITU_T_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
 
             octetstring_type string_value;
 
