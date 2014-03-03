@@ -594,7 +594,7 @@ namespace x680 {
                         default: return "ITU_T_CHOICE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
                     }
                 } else
-                    return "ITU_T_CHOICE(" + name + ")";
+                    return "ITU_T_BIND_CHOICE(" + name + ")";
             } else {
                 if (self->tag()) {
                     if (self->tag()->rule() == implicit_tags) {
@@ -1512,7 +1512,7 @@ namespace x680 {
 
             stream << "\n" << tabformat(self) <<
                     "struct " << type_str(self) << "";
-            stream << " : " << "public ITU_T_CHOICE_STRUCT(" << type_str(self) << "_enum) {\n";
+            stream << " : " << "public ITU_T_STRUCT(" << type_str(self) << "_enum) {\n";
 
 
             execute_predeclare(stream, self);
@@ -1639,11 +1639,11 @@ namespace x680 {
                     {
                         stream << "\n";
                         stream << "\n" << tabformat(self, 1) << type_str(self) << "()";
-                        stream << " : " << " ITU_T_CHOICE_STRUCT(" << type_str(self) << "_enum) () {} \n";
+                        stream << " : " << " ITU_T_STRUCT(" << type_str(self) << "_enum) () {} \n";
 
                         stream << tabformat(self, 1) << "template<typename T> ";
                         stream << type_str(self) << "(boost::shared_ptr< T> vl, " << type_str(self) << "_enum enm) : \n";
-                        stream << tabformat(self, 2) << " ITU_T_CHOICE_STRUCT(" << type_str(self) << "_enum) (vl, static_cast<int>(enm)) {} \n";
+                        stream << tabformat(self, 2) << " ITU_T_STRUCT(" << type_str(self) << "_enum) (vl, static_cast<int>(enm)) {} \n";
                         break;
                     }
                     case t_SET:
