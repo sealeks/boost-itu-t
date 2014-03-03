@@ -157,13 +157,13 @@ namespace MMS_SCI_Module_1 {
             selected_Program_Invocation_type_noneSelected,
         };
 
-        struct selected_Program_Invocation_type : public ITU_T_STRUCT(selected_Program_Invocation_type_enum) {
+        struct selected_Program_Invocation_type : public ITU_T_CHOICE(selected_Program_Invocation_type_enum) {
 
-            selected_Program_Invocation_type() : ITU_T_STRUCT(selected_Program_Invocation_type_enum) () {
+            selected_Program_Invocation_type() : ITU_T_CHOICE(selected_Program_Invocation_type_enum) () {
             }
 
             template<typename T > selected_Program_Invocation_type(boost::shared_ptr< T> vl, selected_Program_Invocation_type_enum enm) :
-                    ITU_T_STRUCT(selected_Program_Invocation_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(selected_Program_Invocation_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICEC_DECL(selectedProgram, Program_Invocation_instance, selected_Program_Invocation_type_selectedProgram);
@@ -294,7 +294,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -391,11 +391,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -429,7 +429,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -478,11 +478,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -516,7 +516,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -569,11 +569,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -607,7 +607,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -631,11 +631,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -686,7 +686,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -711,11 +711,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -749,7 +749,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -770,11 +770,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -825,7 +825,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -848,11 +848,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -886,7 +886,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -918,11 +918,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -956,7 +956,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -990,11 +990,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -1028,7 +1028,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -1051,11 +1051,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -1089,7 +1089,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -1108,13 +1108,13 @@ namespace MMS_SCI_Module_1 {
                     monitoredVariable_type_unspecified,
                 };
 
-                struct monitoredVariable_type : public ITU_T_STRUCT(monitoredVariable_type_enum) {
+                struct monitoredVariable_type : public ITU_T_CHOICE(monitoredVariable_type_enum) {
 
-                    monitoredVariable_type() : ITU_T_STRUCT(monitoredVariable_type_enum) () {
+                    monitoredVariable_type() : ITU_T_CHOICE(monitoredVariable_type_enum) () {
                     }
 
                     template<typename T > monitoredVariable_type(boost::shared_ptr< T> vl, monitoredVariable_type_enum enm) :
-                            ITU_T_STRUCT(monitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_CHOICE(monitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
                     ITU_T_CHOICEC_DECL(named, Named_Variable_instance, monitoredVariable_type_named);
@@ -1132,13 +1132,13 @@ namespace MMS_SCI_Module_1 {
                     displayEnhancement_type_none,
                 };
 
-                struct displayEnhancement_type : public ITU_T_STRUCT(displayEnhancement_type_enum) {
+                struct displayEnhancement_type : public ITU_T_CHOICE(displayEnhancement_type_enum) {
 
-                    displayEnhancement_type() : ITU_T_STRUCT(displayEnhancement_type_enum) () {
+                    displayEnhancement_type() : ITU_T_CHOICE(displayEnhancement_type_enum) () {
                     }
 
                     template<typename T > displayEnhancement_type(boost::shared_ptr< T> vl, displayEnhancement_type_enum enm) :
-                            ITU_T_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_CHOICE(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
                     ITU_T_CHOICES_DECL(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text); // primitive
@@ -1155,13 +1155,13 @@ namespace MMS_SCI_Module_1 {
                     group_Priority_Override_type_undefined,
                 };
 
-                struct group_Priority_Override_type : public ITU_T_STRUCT(group_Priority_Override_type_enum) {
+                struct group_Priority_Override_type : public ITU_T_CHOICE(group_Priority_Override_type_enum) {
 
-                    group_Priority_Override_type() : ITU_T_STRUCT(group_Priority_Override_type_enum) () {
+                    group_Priority_Override_type() : ITU_T_CHOICE(group_Priority_Override_type_enum) () {
                     }
 
                     template<typename T > group_Priority_Override_type(boost::shared_ptr< T> vl, group_Priority_Override_type_enum enm) :
-                            ITU_T_STRUCT(group_Priority_Override_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_CHOICE(group_Priority_Override_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
                     ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, group_Priority_Override_type_priority); // primitive
@@ -1216,11 +1216,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -1254,7 +1254,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -1280,11 +1280,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -1318,7 +1318,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -1335,13 +1335,13 @@ namespace MMS_SCI_Module_1 {
                     remainingDelay_type_forever,
                 };
 
-                struct remainingDelay_type : public ITU_T_STRUCT(remainingDelay_type_enum) {
+                struct remainingDelay_type : public ITU_T_CHOICE(remainingDelay_type_enum) {
 
-                    remainingDelay_type() : ITU_T_STRUCT(remainingDelay_type_enum) () {
+                    remainingDelay_type() : ITU_T_CHOICE(remainingDelay_type_enum) () {
                     }
 
                     template<typename T > remainingDelay_type(boost::shared_ptr< T> vl, remainingDelay_type_enum enm) :
-                            ITU_T_STRUCT(remainingDelay_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_CHOICE(remainingDelay_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
                     ITU_T_CHOICES_DECL(time, int, remainingDelay_type_time); // primitive
@@ -1358,13 +1358,13 @@ namespace MMS_SCI_Module_1 {
                     displayEnhancement_type_none,
                 };
 
-                struct displayEnhancement_type : public ITU_T_STRUCT(displayEnhancement_type_enum) {
+                struct displayEnhancement_type : public ITU_T_CHOICE(displayEnhancement_type_enum) {
 
-                    displayEnhancement_type() : ITU_T_STRUCT(displayEnhancement_type_enum) () {
+                    displayEnhancement_type() : ITU_T_CHOICE(displayEnhancement_type_enum) () {
                     }
 
                     template<typename T > displayEnhancement_type(boost::shared_ptr< T> vl, displayEnhancement_type_enum enm) :
-                            ITU_T_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_CHOICE(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
                     ITU_T_CHOICES_DECL(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text); // primitive
@@ -1407,11 +1407,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -1445,7 +1445,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -1472,11 +1472,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -1510,7 +1510,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_CHOICE(definition_type_enum) {
 
 
             struct details_type;
@@ -1531,11 +1531,11 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_CHOICE(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive

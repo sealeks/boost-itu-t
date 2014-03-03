@@ -156,13 +156,13 @@ namespace MMS_Object_Module_1 {
         Modifier_semaphoreModifier,
     };
 
-    struct Modifier : public ITU_T_STRUCT(Modifier_enum) {
+    struct Modifier : public ITU_T_CHOICE(Modifier_enum) {
 
-        Modifier() : ITU_T_STRUCT(Modifier_enum) () {
+        Modifier() : ITU_T_CHOICE(Modifier_enum) () {
         }
 
         template<typename T > Modifier(boost::shared_ptr< T> vl, Modifier_enum enm) :
-                ITU_T_STRUCT(Modifier_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(Modifier_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICEC_DECL(eventModifier, ISO_9506_MMS_1::AttachToEventCondition, Modifier_eventModifier);
@@ -323,7 +323,7 @@ namespace MMS_Object_Module_1 {
         AccessCondition_alternate,
     };
 
-    struct AccessCondition : public ITU_T_STRUCT(AccessCondition_enum) {
+    struct AccessCondition : public ITU_T_CHOICE(AccessCondition_enum) {
 
 
         struct user_type;
@@ -335,13 +335,13 @@ namespace MMS_Object_Module_1 {
             user_type_none,
         };
 
-        struct user_type : public ITU_T_STRUCT(user_type_enum) {
+        struct user_type : public ITU_T_CHOICE(user_type_enum) {
 
-            user_type() : ITU_T_STRUCT(user_type_enum) () {
+            user_type() : ITU_T_CHOICE(user_type_enum) () {
             }
 
             template<typename T > user_type(boost::shared_ptr< T> vl, user_type_enum enm) :
-                    ITU_T_STRUCT(user_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(user_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICEC_DECL(association, MMS_Environment_1::ApplicationReference, user_type_association);
@@ -355,11 +355,11 @@ namespace MMS_Object_Module_1 {
         typedef std::vector< AccessCondition > joint_type;
         typedef std::vector< AccessCondition > alternate_type;
 
-        AccessCondition() : ITU_T_STRUCT(AccessCondition_enum) () {
+        AccessCondition() : ITU_T_CHOICE(AccessCondition_enum) () {
         }
 
         template<typename T > AccessCondition(boost::shared_ptr< T> vl, AccessCondition_enum enm) :
-                ITU_T_STRUCT(AccessCondition_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(AccessCondition_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(never, null_type, AccessCondition_never); // primitive
@@ -424,13 +424,13 @@ namespace MMS_Object_Module_1 {
         Address_unconstrainedAddress,
     };
 
-    struct Address : public ITU_T_STRUCT(Address_enum) {
+    struct Address : public ITU_T_CHOICE(Address_enum) {
 
-        Address() : ITU_T_STRUCT(Address_enum) () {
+        Address() : ITU_T_CHOICE(Address_enum) () {
         }
 
         template<typename T > Address(boost::shared_ptr< T> vl, Address_enum enm) :
-                ITU_T_STRUCT(Address_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(Address_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(numericAddress, ISO_9506_MMS_1::Unsigned32, Address_numericAddress); // primitive
@@ -461,7 +461,7 @@ namespace MMS_Object_Module_1 {
         TypeDescription_mMSString,
     };
 
-    struct TypeDescription : public ITU_T_STRUCT(TypeDescription_enum) {
+    struct TypeDescription : public ITU_T_CHOICE(TypeDescription_enum) {
 
 
         struct array_type;
@@ -539,11 +539,11 @@ namespace MMS_Object_Module_1 {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        TypeDescription() : ITU_T_STRUCT(TypeDescription_enum) () {
+        TypeDescription() : ITU_T_CHOICE(TypeDescription_enum) () {
         }
 
         template<typename T > TypeDescription(boost::shared_ptr< T> vl, TypeDescription_enum enm) :
-                ITU_T_STRUCT(TypeDescription_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(TypeDescription_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICEC_DECL(array, array_type, TypeDescription_array);
@@ -581,13 +581,13 @@ namespace MMS_Object_Module_1 {
         EventTime_undefined,
     };
 
-    struct EventTime : public ITU_T_STRUCT(EventTime_enum) {
+    struct EventTime : public ITU_T_CHOICE(EventTime_enum) {
 
-        EventTime() : ITU_T_STRUCT(EventTime_enum) () {
+        EventTime() : ITU_T_CHOICE(EventTime_enum) () {
         }
 
         template<typename T > EventTime(boost::shared_ptr< T> vl, EventTime_enum enm) :
-                ITU_T_STRUCT(EventTime_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(EventTime_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(timeOfDay, ISO_9506_MMS_1::TimeOfDay, EventTime_timeOfDay); // primitive
