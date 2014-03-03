@@ -244,7 +244,7 @@ private:
                 last = (*it);
             }
 
-            if ((!domain.empty()) && ((!rslt->response()->moreFollows()) || ((rslt->response()->moreFollows())))) {
+            if ((!domain.empty()) && (rslt->response()->moreFollows())) {
 
                 boost::shared_ptr<getnamelist_operation_type > operation =
                         boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type());
