@@ -100,11 +100,10 @@ namespace x680 {
     }
 
     bool operator<(const canonical_tag_ptr& ls, const canonical_tag_ptr& rs) {
-         if ((!ls) || (!rs))
-            return false;      
-        return (*ls) < (*rs);         
+        if ((!ls) || (!rs))
+            return false;
+        return (*ls) < (*rs);
     }
-        
 
     bool canonical_tag::operator<(const canonical_tag& other) {
         if (class_ != other.class_)
@@ -164,7 +163,6 @@ namespace x680 {
         return canonical_tag_ptr();
     }
 
-
     canonical_tag_ptr type_atom::textualy_tag() {
         if (type_atom_ptr ptmp = textualy_type()) {
             if ((ptmp->tag()->number()->root())
@@ -176,8 +174,6 @@ namespace x680 {
         }
         return canonical_tag_ptr();
     }
-    
-   
 
     type_atom_ptr type_atom::textualy_type() {
         if (!tag()) {
@@ -194,65 +190,65 @@ namespace x680 {
         }
         return type_atom_ptr();
     }
-    
+
     type_atom_ptr type_atom::untagged_type() {
-       type_atom_ptr rslt(new type_atom(*this));
-       rslt->tag(tagged_ptr());
+        type_atom_ptr rslt(new type_atom(*this));
+        rslt->tag(tagged_ptr());
         return rslt;
-    }  
-      
+    }
 
     bool type_atom::isrefferrence() const {
-         return (((builtin_ == t_Reference) 
-                 ||   (builtin_ ==t_TypeFromObject)
-                 || (builtin_ ==t_ValueSetFromObjects)) && (reff()));
-    }   
-    
+        return (((builtin_ == t_Reference)
+                || (builtin_ == t_TypeFromObject)
+                || (builtin_ == t_ValueSetFromObjects)) && (reff()));
+    }
 
-    
     bool type_atom::issimplerefferrence() {
-        switch(builtin_){
-           case t_SEQUENCE: 
-           case t_SEQUENCE_OF: 
-           case t_SET: 
-           case t_SET_OF: 
-           case t_CHOICE:
-           case t_Selection:
-           case t_Instance_Of: 
-           case t_RELATIVE_OID_IRI: 
-           case t_Reference:
-           case t_TypeFromObject: 
-           case t_ValueSetFromObjects: return false;
-            default:{}}
-         return true;
-    }     
-    
-     bool type_atom::isstruct() const {
-         return (((builtin_ == t_CHOICE) || (builtin_ == t_SET)  || (builtin_ == t_SEQUENCE)));
-     }
-     
-     bool type_atom::isstruct_of() const {
-         return ( (builtin_ == t_SET_OF)  || (builtin_ == t_SEQUENCE_OF));
-     }   
-     
-     bool type_atom::isstructure() const {
-         return ((isstruct()) || (isstruct_of()));
-     }       
-     
+        switch (builtin_) {
+            case t_SEQUENCE:
+            case t_SEQUENCE_OF:
+            case t_SET:
+            case t_SET_OF:
+            case t_CHOICE:
+            case t_Selection:
+            case t_Instance_Of:
+            case t_RELATIVE_OID_IRI:    
+            case t_Reference:
+            case t_TypeFromObject:
+            case t_ValueSetFromObjects: return false;
+            default:
+            {
+            }
+        }
+        return true;
+    }
+
+    bool type_atom::isstruct() const {
+        return (((builtin_ == t_CHOICE) || (builtin_ == t_SET) || (builtin_ == t_SEQUENCE)));
+    }
+
+    bool type_atom::isstruct_of() const {
+        return ( (builtin_ == t_SET_OF) || (builtin_ == t_SEQUENCE_OF));
+    }
+
+    bool type_atom::isstructure() const {
+        return ((isstruct()) || (isstruct_of()));
+    }
+
     bool type_atom::isopen() const {
         return ((builtin_ == t_ClassField) || (builtin_ == t_ANY));
     }
 
     bool type_atom::isenum() const {
-        return ((isrefferrence())  && (!tag_) && (constraints_.empty()));
+        return ((isrefferrence()) && (!tag_) && (constraints_.empty()));
     }
 
     bool type_atom::istextualy_choice() {
         if (builtin_ == t_CHOICE)
-                return !tag();
+            return !tag();
         if (!isrefferrence() || tag())
             return false;
-       /// if (reff())
+        /// if (reff())
         //    reff()-> resolve();
         if (reff() && (reff()->as_typeassigment())) {
             if (reff()->as_typeassigment()->type())
@@ -261,11 +257,31 @@ namespace x680 {
         return false;
     }
 
-
-
     bool type_atom::isallways_explicit() {
         return (((istextualy_choice()) || (isopen()) ||
                 (isdummy())) && (tag()));
+    }
+
+    bool type_atom::isprimitive() {
+        switch (this->root_builtin()) {
+            case t_SEQUENCE:
+            case t_SEQUENCE_OF:
+            case t_SET:
+            case t_SET_OF:
+            case t_CHOICE:
+            case t_Selection:
+            case t_Instance_Of:
+            case t_RELATIVE_OID_IRI:
+            case t_Reference:
+            case t_ANY:
+            case t_CHARACTER_STRING:
+            case t_TypeFromObject:
+            case t_ValueSetFromObjects: return false;
+            default:
+            {
+            }
+        }
+        return true;
     }
 
     tagrule_type type_atom::tagrule() const {
@@ -293,7 +309,7 @@ namespace x680 {
                 boost::static_pointer_cast<fromobjects_type_atom> (self()) : fromobjects_type_atom_ptr();
     }
 
-    void type_atom::resolve(basic_atom_ptr holder) {        
+    void type_atom::resolve(basic_atom_ptr holder) {
         resolve_reff();
         resolve_tag();
         resolve_predef();
@@ -500,13 +516,13 @@ namespace x680 {
         if (object())
             object()->resolve();
         if (object()->reff()) {
-            assignment_entity_ptr tmpasmt=object()->reff()->as_assigment(); 
+            assignment_entity_ptr tmpasmt = object()->reff()->as_assigment();
             if (tmpasmt) {
                 if (tmpasmt->find_component(field_->expectedname())) {
                     reff(tmpasmt->find_component(field_->expectedname()));
                 }
             }
-        }        
+        }
         resolve_tag();
         resolve_predef();
         resolve_constraints();
@@ -571,7 +587,7 @@ namespace x680 {
                 return (type() && type()->untagged_type() && (type()->untagged_type() ->istextualy_choice()));
             }
         }
-        return (type()  && ((istextualy_choice()) || (type()->builtin() == t_CHOICE)));
+        return (type() && ((istextualy_choice()) || (type()->builtin() == t_CHOICE)));
     }
 
     bool typeassignment_entity::islocaldeclare() const {
@@ -579,7 +595,7 @@ namespace x680 {
             return (type()->isstructure());
         return false;
     }
-    
+
     bool typeassignment_entity::islocaldefined() const {
         if (scope() && (scope()->as_typeassigment()) && (type()))
             return true;
@@ -592,7 +608,7 @@ namespace x680 {
             if (type()->istextualy_choice()) {
                 if (type()->builtin() == t_CHOICE) {
                     if ((type()->tag()) && (type()->cncl_tag())) {
-                            tmp.push_back(type()->cncl_tag());
+                        tmp.push_back(type()->cncl_tag());
                     } else {
                         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                             if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
@@ -604,24 +620,24 @@ namespace x680 {
                     }
                 } else {
                     if ((type()->reff()) && (type()->reff()->as_typeassigment()))
-                        tmp=type()->reff()->as_typeassigment()->cncl_tags();
+                        tmp = type()->reff()->as_typeassigment()->cncl_tags();
                 }
             } else {
                 if (type()->cncl_tag())
                     tmp.push_back(type()->cncl_tag());
             }
         }
-    return tmp;
-}    
-    
+        return tmp;
+    }
+
     typeassignment_entity_ptr typeassignment_entity::superfluous_assignment(module_entity_ptr mod) {
-        if (type() && (!tag()) && (type()->reff()) && mod){
+        if (type() && (!tag()) && (type()->reff()) && mod) {
             typeassignment_entity_ptr rf = ((type()->reff()) && (type()->reff()->as_typeassigment())) ?
-                type()->reff()->as_typeassigment() : typeassignment_entity_ptr();
-            if (rf && (rf->moduleref()==mod)){
+                    type()->reff()->as_typeassigment() : typeassignment_entity_ptr();
+            if (rf && (rf->moduleref() == mod)) {
                 return rf;
             }
-        } 
+        }
         return typeassignment_entity_ptr();
     }
 
@@ -639,11 +655,10 @@ namespace x680 {
         post_resolve_child();
 
     }
-    
 
     basic_entity_vector::iterator typeassignment_entity::first_extention() {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it)
-            if (((*it)->as_typeassigment()) && 
+            if (((*it)->as_typeassigment()) &&
                     ((*it)->as_typeassigment()->as_named()) &&
                     ((*it)->as_typeassigment()->as_named()->marker() == mk_extention))
                 return (++it);
@@ -654,13 +669,13 @@ namespace x680 {
         basic_entity_vector::iterator fit = first_extention();
         if (fit != childs().end()) {
             for (basic_entity_vector::iterator it = fit; it != childs().end(); ++it)
-            if (((*it)->as_typeassigment()) && 
-                    ((*it)->as_typeassigment()->as_named()) &&
-                    ((*it)->as_typeassigment()->as_named()->marker() == mk_extention))
+                if (((*it)->as_typeassigment()) &&
+                        ((*it)->as_typeassigment()->as_named()) &&
+                        ((*it)->as_typeassigment()->as_named()->marker() == mk_extention))
                     return (++it);
         }
         return childs().end();
-    }        
+    }
 
     void typeassignment_entity::post_resolve_child() {
         bool autotag = is_resolve_autotag();
@@ -733,7 +748,7 @@ namespace x680 {
             if (type()->tagrule() == automatic_tags) {
                 for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                     namedtypeassignment_entity_ptr tmpel = ((*it)->as_typeassigment() && (*it)->as_typeassigment()->as_named()) ?
-                        (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr() ;                    
+                            (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr();
                     if ((tmpel) && (tmpel->type()) && (tmpel->type()->tag()) &&
                             (tmpel->marker() != mk_components_of)) {
                         if ((tmpel->type()->textualy_tag()) /*|| (num++ > 3)*/) {
@@ -799,7 +814,6 @@ namespace x680 {
         }
     }
 
-
     void typeassignment_entity::post_resolve_check() {
         if ((type()) && (!childs().empty())) {
             if ((type()->builtin() == t_SEQUENCE) || ((type()->builtin() == t_SET))) {
@@ -811,7 +825,7 @@ namespace x680 {
                         if (tmpel->type()->cncl_tag()) {
                             if (tmpset.find(tmpel->type()->cncl_tag()) != tmpset.end())
                                 referenceerror_throw("Tagging of structured type is ambiguous :", tmpel->name());
-                            tmpset.insert(tmpel->type()->cncl_tag());                           
+                            tmpset.insert(tmpel->type()->cncl_tag());
                         } else {
                             canonical_tag_vct tmpelmts = tmpel->cncl_tags();
                             if (!tmpelmts.empty()) {

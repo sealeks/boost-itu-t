@@ -238,6 +238,8 @@ namespace x680 {
         bool istextualy_choice();
 
         bool isallways_explicit();
+        
+        bool isprimitive();        
 
 
         tagrule_type tagrule() const;
@@ -499,6 +501,10 @@ namespace x680 {
         bool istextualy_choice() {
             return (type() && (type()->istextualy_choice()));
         }
+        
+        bool isprimitive() {
+            return (type() && (type()->isprimitive()));
+        }        
 
         bool isdefined_choice();
 
