@@ -8,12 +8,12 @@ namespace Remote_Operations_Information_Objects {
         switch (type()) {
             case Code_local:
             {
-                BOOST_ASN_BIND_TAG(value<int > (false, Code_local));
+                ITU_T_BIND_TAG(value<int > (false, Code_local));
                 break;
             }
             case Code_global:
             {
-                BOOST_ASN_BIND_TAG(value<oid_type > (false, Code_global));
+                ITU_T_BIND_TAG(value<oid_type > (false, Code_global));
                 break;
             }
             default:
@@ -59,9 +59,9 @@ namespace Remote_Operations_Information_Objects {
             }
             default:
             {
-                if (BOOST_ASN_BIND_TAG(value<int > (true, Code_local))) return;
+                if (ITU_T_BIND_TAG(value<int > (true, Code_local))) return;
                 else free();
-                if (BOOST_ASN_BIND_TAG(value<oid_type > (true, Code_global))) return;
+                if (ITU_T_BIND_TAG(value<oid_type > (true, Code_global))) return;
                 else free();
             }
         }

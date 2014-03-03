@@ -85,23 +85,23 @@ namespace Reliable_Transfer_APDU {
         RTSE_apdus_rtab_apdu,
     };
 
-    struct RTSE_apdus : public BOOST_ASN_CHOICE_STRUCT(RTSE_apdus_enum) {
+    struct RTSE_apdus : public ITU_T_CHOICE_STRUCT(RTSE_apdus_enum) {
 
-        RTSE_apdus() : BOOST_ASN_CHOICE_STRUCT(RTSE_apdus_enum) () {
+        RTSE_apdus() : ITU_T_CHOICE_STRUCT(RTSE_apdus_enum) () {
         }
 
         template<typename T > RTSE_apdus(boost::shared_ptr< T> vl, RTSE_apdus_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(RTSE_apdus_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(RTSE_apdus_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(rtorq_apdu, RTORQapdu, RTSE_apdus_rtorq_apdu);
-        BOOST_ASN_VALUE_CHOICE(rtoac_apdu, RTOACapdu, RTSE_apdus_rtoac_apdu);
-        BOOST_ASN_VALUE_CHOICE(rtorj_apdu, RTORJapdu, RTSE_apdus_rtorj_apdu);
-        BOOST_ASN_VALUE_CHOICE(rttp_apdu, RTTPapdu, RTSE_apdus_rttp_apdu);
-        BOOST_ASN_VALUE_CHOICE(rttr_apdu, RTTRapdu, RTSE_apdus_rttr_apdu);
-        BOOST_ASN_VALUE_CHOICE(rtab_apdu, RTABapdu, RTSE_apdus_rtab_apdu);
+        ITU_T_VALUE_CHOICE(rtorq_apdu, RTORQapdu, RTSE_apdus_rtorq_apdu);
+        ITU_T_VALUE_CHOICE(rtoac_apdu, RTOACapdu, RTSE_apdus_rtoac_apdu);
+        ITU_T_VALUE_CHOICE(rtorj_apdu, RTORJapdu, RTSE_apdus_rtorj_apdu);
+        ITU_T_VALUE_CHOICE(rttp_apdu, RTTPapdu, RTSE_apdus_rttp_apdu);
+        ITU_T_VALUE_CHOICE(rttr_apdu, RTTRapdu, RTSE_apdus_rttr_apdu);
+        ITU_T_VALUE_CHOICE(rtab_apdu, RTABapdu, RTSE_apdus_rtab_apdu);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // set RTORQapdu
@@ -125,13 +125,13 @@ namespace Reliable_Transfer_APDU {
                 boost::shared_ptr< ConnectionData> arg__connectionDataRQ,
                 boost::shared_ptr< int> arg__applicationProtocol);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
-        BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
-        BOOST_ASN_VALUE_DEFAULT_DECL(dialogueMode, int, dialogueMode__default);
-        BOOST_ASN_VALUE_HOLDERH_DECL(connectionDataRQ, ConnectionData);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(applicationProtocol, int);
+        ITU_T_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
+        ITU_T_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
+        ITU_T_VALUE_DEFAULT_DECL(dialogueMode, int, dialogueMode__default);
+        ITU_T_VALUE_HOLDERH_DECL(connectionDataRQ, ConnectionData);
+        ITU_T_VALUE_OPTIONAL_DECL(applicationProtocol, int);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // set RTOACapdu
@@ -149,11 +149,11 @@ namespace Reliable_Transfer_APDU {
                 boost::shared_ptr< int> arg__windowSize,
                 boost::shared_ptr< ConnectionData> arg__connectionDataAC);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
-        BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
-        BOOST_ASN_VALUE_HOLDERH_DECL(connectionDataAC, ConnectionData);
+        ITU_T_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
+        ITU_T_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
+        ITU_T_VALUE_HOLDERH_DECL(connectionDataAC, ConnectionData);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // set RTORJapdu
@@ -165,10 +165,10 @@ namespace Reliable_Transfer_APDU {
         RTORJapdu(boost::shared_ptr< RefuseReason> arg__refuseReason,
                 boost::shared_ptr< any_type> arg__userDataRJ);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(refuseReason, RefuseReason);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(userDataRJ, any_type);
+        ITU_T_VALUE_OPTIONAL_DECL(refuseReason, RefuseReason);
+        ITU_T_VALUE_OPTIONAL_DECL(userDataRJ, any_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // set RTABapdu
@@ -181,11 +181,11 @@ namespace Reliable_Transfer_APDU {
                 boost::shared_ptr< bitstring_type> arg__reflectedParameter,
                 boost::shared_ptr< any_type> arg__userdataAB);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(abortReason, AbortReason);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(reflectedParameter, bitstring_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(userdataAB, any_type);
+        ITU_T_VALUE_OPTIONAL_DECL(abortReason, AbortReason);
+        ITU_T_VALUE_OPTIONAL_DECL(reflectedParameter, bitstring_type);
+        ITU_T_VALUE_OPTIONAL_DECL(userdataAB, any_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice ConnectionData
@@ -197,19 +197,19 @@ namespace Reliable_Transfer_APDU {
         ConnectionData_recover,
     };
 
-    struct ConnectionData : public BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) {
+    struct ConnectionData : public ITU_T_CHOICE_STRUCT(ConnectionData_enum) {
 
-        ConnectionData() : BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) () {
+        ConnectionData() : ITU_T_CHOICE_STRUCT(ConnectionData_enum) () {
         }
 
         template<typename T > ConnectionData(boost::shared_ptr< T> vl, ConnectionData_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(ConnectionData_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(ConnectionData_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(open, any_type, ConnectionData_open);
-        BOOST_ASN_VALUE_CHOICE(recover, SessionConnectionIdentifier, ConnectionData_recover);
+        ITU_T_VALUE_CHOICE(open, any_type, ConnectionData_open);
+        ITU_T_VALUE_CHOICE(recover, SessionConnectionIdentifier, ConnectionData_recover);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence SessionConnectionIdentifier
@@ -225,11 +225,11 @@ namespace Reliable_Transfer_APDU {
                 boost::shared_ptr< CommonReference> arg__commonReference,
                 boost::shared_ptr< AdditionalReferenceInformation> arg__additionalReferenceInformation);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(callingSSuserReference, CallingSSuserReference);
-        BOOST_ASN_VALUE_HOLDERH_DECL(commonReference, CommonReference);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(additionalReferenceInformation, AdditionalReferenceInformation);
+        ITU_T_VALUE_HOLDERH_DECL(callingSSuserReference, CallingSSuserReference);
+        ITU_T_VALUE_HOLDERH_DECL(commonReference, CommonReference);
+        ITU_T_VALUE_OPTIONAL_DECL(additionalReferenceInformation, AdditionalReferenceInformation);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const RefuseReason RefuseReason_rtsBusy;
@@ -246,19 +246,19 @@ namespace Reliable_Transfer_APDU {
         CallingSSuserReference_octetString,
     };
 
-    struct CallingSSuserReference : public BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) {
+    struct CallingSSuserReference : public ITU_T_CHOICE_STRUCT(CallingSSuserReference_enum) {
 
-        CallingSSuserReference() : BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) () {
+        CallingSSuserReference() : ITU_T_CHOICE_STRUCT(CallingSSuserReference_enum) () {
         }
 
         template<typename T > CallingSSuserReference(boost::shared_ptr< T> vl, CallingSSuserReference_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(CallingSSuserReference_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(CallingSSuserReference_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(t61String, t61string_type, CallingSSuserReference_t61String);
-        BOOST_ASN_VALUE_CHOICE(octetString, octetstring_type, CallingSSuserReference_octetString);
+        ITU_T_VALUE_CHOICE(t61String, t61string_type, CallingSSuserReference_t61String);
+        ITU_T_VALUE_CHOICE(octetString, octetstring_type, CallingSSuserReference_octetString);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const AbortReason AbortReason_localSystemProblem;
@@ -288,14 +288,14 @@ namespace Reliable_Transfer_APDU {
     template<> void CallingSSuserReference::serialize(boost::asn1::x690::input_coder& arch);
 }
 
-BOOST_ASN_SET_REGESTRATE(Reliable_Transfer_APDU::RTORQapdu)
-BOOST_ASN_SET_REGESTRATE(Reliable_Transfer_APDU::RTOACapdu)
-BOOST_ASN_SET_REGESTRATE(Reliable_Transfer_APDU::RTORJapdu)
-BOOST_ASN_SET_REGESTRATE(Reliable_Transfer_APDU::RTABapdu)
+ITU_T_SET_REGESTRATE(Reliable_Transfer_APDU::RTORQapdu)
+ITU_T_SET_REGESTRATE(Reliable_Transfer_APDU::RTOACapdu)
+ITU_T_SET_REGESTRATE(Reliable_Transfer_APDU::RTORJapdu)
+ITU_T_SET_REGESTRATE(Reliable_Transfer_APDU::RTABapdu)
 
-BOOST_ASN_CHOICE_REGESTRATE(Reliable_Transfer_APDU::RTSE_apdus)
-BOOST_ASN_CHOICE_REGESTRATE(Reliable_Transfer_APDU::ConnectionData)
-BOOST_ASN_CHOICE_REGESTRATE(Reliable_Transfer_APDU::CallingSSuserReference)
+ITU_T_CHOICE_REGESTRATE(Reliable_Transfer_APDU::RTSE_apdus)
+ITU_T_CHOICE_REGESTRATE(Reliable_Transfer_APDU::ConnectionData)
+ITU_T_CHOICE_REGESTRATE(Reliable_Transfer_APDU::CallingSSuserReference)
 
 #endif  /*___RELIABLE_TRANSFER_APDU */
 

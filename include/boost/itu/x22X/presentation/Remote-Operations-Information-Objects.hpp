@@ -68,26 +68,26 @@ namespace Remote_Operations_Information_Objects {
         Code_global,
     };
 
-    struct Code : public BOOST_ASN_CHOICE_STRUCT(Code_enum) {
+    struct Code : public ITU_T_CHOICE_STRUCT(Code_enum) {
 
-        Code() : BOOST_ASN_CHOICE_STRUCT(Code_enum) () {
+        Code() : ITU_T_CHOICE_STRUCT(Code_enum) () {
         }
 
         template<typename T > Code(boost::shared_ptr< T> vl, Code_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Code_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(Code_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(local, int, Code_local);
-        BOOST_ASN_VALUE_CHOICE(global, oid_type, Code_global);
+        ITU_T_VALUE_CHOICE(local, int, Code_local);
+        ITU_T_VALUE_CHOICE(global, oid_type, Code_global);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     template<> void Code::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Code::serialize(boost::asn1::x690::input_coder& arch);
 }
 
-BOOST_ASN_CHOICE_REGESTRATE(Remote_Operations_Information_Objects::Code)
+ITU_T_CHOICE_REGESTRATE(Remote_Operations_Information_Objects::Code)
 
 #endif  /*___REMOTE_OPERATIONS_INFORMATION_OBJECTS */
 

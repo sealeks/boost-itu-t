@@ -79,21 +79,21 @@ namespace Remote_Operations_Generic_ROS_PDUs {
             problem_type_returnError,
         };
 
-        struct problem_type : public BOOST_ASN_CHOICE_STRUCT(problem_type_enum) {
+        struct problem_type : public ITU_T_CHOICE_STRUCT(problem_type_enum) {
 
-            problem_type() : BOOST_ASN_CHOICE_STRUCT(problem_type_enum) () {
+            problem_type() : ITU_T_CHOICE_STRUCT(problem_type_enum) () {
             }
 
             template<typename T > problem_type(boost::shared_ptr< T> vl, problem_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(problem_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE_STRUCT(problem_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(general, GeneralProblem, problem_type_general);
-            BOOST_ASN_VALUE_CHOICE(invoke, InvokeProblem, problem_type_invoke);
-            BOOST_ASN_VALUE_CHOICE(returnResult, ReturnResultProblem, problem_type_returnResult);
-            BOOST_ASN_VALUE_CHOICE(returnError, ReturnErrorProblem, problem_type_returnError);
+            ITU_T_VALUE_CHOICE(general, GeneralProblem, problem_type_general);
+            ITU_T_VALUE_CHOICE(invoke, InvokeProblem, problem_type_invoke);
+            ITU_T_VALUE_CHOICE(returnResult, ReturnResultProblem, problem_type_returnResult);
+            ITU_T_VALUE_CHOICE(returnError, ReturnErrorProblem, problem_type_returnError);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -102,10 +102,10 @@ namespace Remote_Operations_Generic_ROS_PDUs {
         Reject(const InvokeId& arg__invokeId,
                 const problem_type& arg__problem);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(invokeId, InvokeId);
-        BOOST_ASN_VALUE_HOLDERH_DECL(problem, problem_type);
+        ITU_T_VALUE_HOLDERH_DECL(invokeId, InvokeId);
+        ITU_T_VALUE_HOLDERH_DECL(problem, problem_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const GeneralProblem GeneralProblem_unrecognizedPDU;
@@ -160,19 +160,19 @@ namespace Remote_Operations_Generic_ROS_PDUs {
         InvokeId_absent,
     };
 
-    struct InvokeId : public BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) {
+    struct InvokeId : public ITU_T_CHOICE_STRUCT(InvokeId_enum) {
 
-        InvokeId() : BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) () {
+        InvokeId() : ITU_T_CHOICE_STRUCT(InvokeId_enum) () {
         }
 
         template<typename T > InvokeId(boost::shared_ptr< T> vl, InvokeId_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(InvokeId_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(InvokeId_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(present, int, InvokeId_present);
-        BOOST_ASN_VALUE_CHOICE(absent, null_type, InvokeId_absent);
+        ITU_T_VALUE_CHOICE(present, int, InvokeId_present);
+        ITU_T_VALUE_CHOICE(absent, null_type, InvokeId_absent);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     template<> void Reject::serialize(boost::asn1::x690::output_coder& arch);
@@ -183,8 +183,8 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     template<> void InvokeId::serialize(boost::asn1::x690::input_coder& arch);
 }
 
-BOOST_ASN_CHOICE_REGESTRATE(Remote_Operations_Generic_ROS_PDUs::Reject::problem_type)
-BOOST_ASN_CHOICE_REGESTRATE(Remote_Operations_Generic_ROS_PDUs::InvokeId)
+ITU_T_CHOICE_REGESTRATE(Remote_Operations_Generic_ROS_PDUs::Reject::problem_type)
+ITU_T_CHOICE_REGESTRATE(Remote_Operations_Generic_ROS_PDUs::InvokeId)
 
 #endif  /*___REMOTE_OPERATIONS_GENERIC_ROS_PDUS */
 

@@ -135,13 +135,13 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< Reliable_Transfer_APDU::ConnectionData> arg__connectionDataRQ,
                     boost::shared_ptr< int> arg__applicationProtocol);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
-            BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
-            BOOST_ASN_VALUE_DEFAULT_DECL(dialogueMode, int, dialogueMode__default);
-            BOOST_ASN_VALUE_HOLDERH_DECL(connectionDataRQ, Reliable_Transfer_APDU::ConnectionData);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(applicationProtocol, int);
+            ITU_T_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
+            ITU_T_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
+            ITU_T_VALUE_DEFAULT_DECL(dialogueMode, int, dialogueMode__default);
+            ITU_T_VALUE_HOLDERH_DECL(connectionDataRQ, Reliable_Transfer_APDU::ConnectionData);
+            ITU_T_VALUE_OPTIONAL_DECL(applicationProtocol, int);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct normal_mode_parameters_type {
@@ -153,7 +153,7 @@ namespace ISO8823_PRESENTATION {
                 extensions_type();
 
 
-                BOOST_ASN_ARCHIVE_FUNC;
+                ITU_T_ARCHIVE_FUNC;
             };
 
             static const Protocol_version protocol_version__default;
@@ -173,19 +173,19 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< extensions_type> arg__extensions,
                     boost::shared_ptr< User_data> arg__user_data);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version, protocol_version__default);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(calling_presentation_selector, Calling_presentation_selector);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(called_presentation_selector, Called_presentation_selector);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_definition_list, Presentation_context_definition_list);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(default_context_name, Default_context_name);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_requirements, Presentation_requirements);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(user_session_requirements, User_session_requirements);
-            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_options, Protocol_options, protocol_options__default);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(initiators_nominated_context, Presentation_context_identifier);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(extensions, extensions_type);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
+            ITU_T_VALUE_DEFAULT_DECL(protocol_version, Protocol_version, protocol_version__default);
+            ITU_T_VALUE_OPTIONAL_DECL(calling_presentation_selector, Calling_presentation_selector);
+            ITU_T_VALUE_OPTIONAL_DECL(called_presentation_selector, Called_presentation_selector);
+            ITU_T_VALUE_OPTIONAL_DECL(presentation_context_definition_list, Presentation_context_definition_list);
+            ITU_T_VALUE_OPTIONAL_DECL(default_context_name, Default_context_name);
+            ITU_T_VALUE_OPTIONAL_DECL(presentation_requirements, Presentation_requirements);
+            ITU_T_VALUE_OPTIONAL_DECL(user_session_requirements, User_session_requirements);
+            ITU_T_VALUE_DEFAULT_DECL(protocol_options, Protocol_options, protocol_options__default);
+            ITU_T_VALUE_OPTIONAL_DECL(initiators_nominated_context, Presentation_context_identifier);
+            ITU_T_VALUE_OPTIONAL_DECL(extensions, extensions_type);
+            ITU_T_VALUE_OPTIONAL_DECL(user_data, User_data);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -197,11 +197,11 @@ namespace ISO8823_PRESENTATION {
                 boost::shared_ptr< x410_mode_parameters_type> arg__x410_mode_parameters,
                 boost::shared_ptr< normal_mode_parameters_type> arg__normal_mode_parameters);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(mode_selector, Mode_selector);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(x410_mode_parameters, x410_mode_parameters_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(normal_mode_parameters, normal_mode_parameters_type);
+        ITU_T_VALUE_HOLDERH_DECL(mode_selector, Mode_selector);
+        ITU_T_VALUE_OPTIONAL_DECL(x410_mode_parameters, x410_mode_parameters_type);
+        ITU_T_VALUE_OPTIONAL_DECL(normal_mode_parameters, normal_mode_parameters_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // set CPA-PPDU
@@ -224,11 +224,11 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< int> arg__windowSize,
                     boost::shared_ptr< Reliable_Transfer_APDU::ConnectionData> arg__connectionDataAC);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
-            BOOST_ASN_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
-            BOOST_ASN_VALUE_HOLDERH_DECL(connectionDataAC, Reliable_Transfer_APDU::ConnectionData);
+            ITU_T_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
+            ITU_T_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
+            ITU_T_VALUE_HOLDERH_DECL(connectionDataAC, Reliable_Transfer_APDU::ConnectionData);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct normal_mode_parameters_type {
@@ -247,16 +247,16 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< Presentation_context_identifier> arg__responders_nominated_context,
                     boost::shared_ptr< User_data> arg__user_data);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version, protocol_version__default);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_requirements, Presentation_requirements);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(user_session_requirements, User_session_requirements);
-            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_options, Protocol_options, protocol_options__default);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(responders_nominated_context, Presentation_context_identifier);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
+            ITU_T_VALUE_DEFAULT_DECL(protocol_version, Protocol_version, protocol_version__default);
+            ITU_T_VALUE_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector);
+            ITU_T_VALUE_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list);
+            ITU_T_VALUE_OPTIONAL_DECL(presentation_requirements, Presentation_requirements);
+            ITU_T_VALUE_OPTIONAL_DECL(user_session_requirements, User_session_requirements);
+            ITU_T_VALUE_DEFAULT_DECL(protocol_options, Protocol_options, protocol_options__default);
+            ITU_T_VALUE_OPTIONAL_DECL(responders_nominated_context, Presentation_context_identifier);
+            ITU_T_VALUE_OPTIONAL_DECL(user_data, User_data);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -268,11 +268,11 @@ namespace ISO8823_PRESENTATION {
                 boost::shared_ptr< x410_mode_parameters_type> arg__x410_mode_parameters,
                 boost::shared_ptr< normal_mode_parameters_type> arg__normal_mode_parameters);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(mode_selector, Mode_selector);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(x410_mode_parameters, x410_mode_parameters_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(normal_mode_parameters, normal_mode_parameters_type);
+        ITU_T_VALUE_HOLDERH_DECL(mode_selector, Mode_selector);
+        ITU_T_VALUE_OPTIONAL_DECL(x410_mode_parameters, x410_mode_parameters_type);
+        ITU_T_VALUE_OPTIONAL_DECL(normal_mode_parameters, normal_mode_parameters_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice CPR-PPDU
@@ -284,7 +284,7 @@ namespace ISO8823_PRESENTATION {
         CPR_PPDU_normal_mode_parameters,
     };
 
-    struct CPR_PPDU : public BOOST_ASN_CHOICE_STRUCT(CPR_PPDU_enum) {
+    struct CPR_PPDU : public ITU_T_CHOICE_STRUCT(CPR_PPDU_enum) {
 
 
         struct x400_mode_parameters_type;
@@ -297,10 +297,10 @@ namespace ISO8823_PRESENTATION {
             x400_mode_parameters_type(boost::shared_ptr< Reliable_Transfer_APDU::RefuseReason> arg__refuseReason,
                     boost::shared_ptr< any_type> arg__userDataRJ);
 
-            BOOST_ASN_VALUE_OPTIONAL_DECL(refuseReason, Reliable_Transfer_APDU::RefuseReason);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(userDataRJ, any_type);
+            ITU_T_VALUE_OPTIONAL_DECL(refuseReason, Reliable_Transfer_APDU::RefuseReason);
+            ITU_T_VALUE_OPTIONAL_DECL(userDataRJ, any_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct normal_mode_parameters_type {
@@ -316,27 +316,27 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< Provider_reason> arg__provider_reason,
                     boost::shared_ptr< User_data> arg__user_data);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, Protocol_version, protocol_version__default);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(default_context_result, Default_context_result);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(provider_reason, Provider_reason);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
+            ITU_T_VALUE_DEFAULT_DECL(protocol_version, Protocol_version, protocol_version__default);
+            ITU_T_VALUE_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector);
+            ITU_T_VALUE_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list);
+            ITU_T_VALUE_OPTIONAL_DECL(default_context_result, Default_context_result);
+            ITU_T_VALUE_OPTIONAL_DECL(provider_reason, Provider_reason);
+            ITU_T_VALUE_OPTIONAL_DECL(user_data, User_data);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        CPR_PPDU() : BOOST_ASN_CHOICE_STRUCT(CPR_PPDU_enum) () {
+        CPR_PPDU() : ITU_T_CHOICE_STRUCT(CPR_PPDU_enum) () {
         }
 
         template<typename T > CPR_PPDU(boost::shared_ptr< T> vl, CPR_PPDU_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(CPR_PPDU_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(CPR_PPDU_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(x400_mode_parameters, x400_mode_parameters_type, CPR_PPDU_x400_mode_parameters);
-        BOOST_ASN_VALUE_CHOICE(normal_mode_parameters, normal_mode_parameters_type, CPR_PPDU_normal_mode_parameters);
+        ITU_T_VALUE_CHOICE(x400_mode_parameters, x400_mode_parameters_type, CPR_PPDU_x400_mode_parameters);
+        ITU_T_VALUE_CHOICE(normal_mode_parameters, normal_mode_parameters_type, CPR_PPDU_normal_mode_parameters);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice Abort-type
@@ -348,19 +348,19 @@ namespace ISO8823_PRESENTATION {
         Abort_type_arp_ppdu,
     };
 
-    struct Abort_type : public BOOST_ASN_CHOICE_STRUCT(Abort_type_enum) {
+    struct Abort_type : public ITU_T_CHOICE_STRUCT(Abort_type_enum) {
 
-        Abort_type() : BOOST_ASN_CHOICE_STRUCT(Abort_type_enum) () {
+        Abort_type() : ITU_T_CHOICE_STRUCT(Abort_type_enum) () {
         }
 
         template<typename T > Abort_type(boost::shared_ptr< T> vl, Abort_type_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Abort_type_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(Abort_type_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(aru_ppdu, ARU_PPDU, Abort_type_aru_ppdu);
-        BOOST_ASN_VALUE_CHOICE(arp_ppdu, ARP_PPDU, Abort_type_arp_ppdu);
+        ITU_T_VALUE_CHOICE(aru_ppdu, ARU_PPDU, Abort_type_aru_ppdu);
+        ITU_T_VALUE_CHOICE(arp_ppdu, ARP_PPDU, Abort_type_arp_ppdu);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice ARU-PPDU
@@ -372,7 +372,7 @@ namespace ISO8823_PRESENTATION {
         ARU_PPDU_normal_mode_parameters,
     };
 
-    struct ARU_PPDU : public BOOST_ASN_CHOICE_STRUCT(ARU_PPDU_enum) {
+    struct ARU_PPDU : public ITU_T_CHOICE_STRUCT(ARU_PPDU_enum) {
 
 
         struct x400_mode_parameters_type;
@@ -386,11 +386,11 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< bitstring_type> arg__reflectedParameter,
                     boost::shared_ptr< any_type> arg__userdataAB);
 
-            BOOST_ASN_VALUE_OPTIONAL_DECL(abortReason, Reliable_Transfer_APDU::AbortReason);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(reflectedParameter, bitstring_type);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(userdataAB, any_type);
+            ITU_T_VALUE_OPTIONAL_DECL(abortReason, Reliable_Transfer_APDU::AbortReason);
+            ITU_T_VALUE_OPTIONAL_DECL(reflectedParameter, bitstring_type);
+            ITU_T_VALUE_OPTIONAL_DECL(userdataAB, any_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct normal_mode_parameters_type {
@@ -400,23 +400,23 @@ namespace ISO8823_PRESENTATION {
             normal_mode_parameters_type(boost::shared_ptr< Presentation_context_identifier_list> arg__presentation_context_identifier_list,
                     boost::shared_ptr< User_data> arg__user_data);
 
-            BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
+            ITU_T_VALUE_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list);
+            ITU_T_VALUE_OPTIONAL_DECL(user_data, User_data);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        ARU_PPDU() : BOOST_ASN_CHOICE_STRUCT(ARU_PPDU_enum) () {
+        ARU_PPDU() : ITU_T_CHOICE_STRUCT(ARU_PPDU_enum) () {
         }
 
         template<typename T > ARU_PPDU(boost::shared_ptr< T> vl, ARU_PPDU_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(ARU_PPDU_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(ARU_PPDU_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(x400_mode_parameters, x400_mode_parameters_type, ARU_PPDU_x400_mode_parameters);
-        BOOST_ASN_VALUE_CHOICE(normal_mode_parameters, normal_mode_parameters_type, ARU_PPDU_normal_mode_parameters);
+        ITU_T_VALUE_CHOICE(x400_mode_parameters, x400_mode_parameters_type, ARU_PPDU_x400_mode_parameters);
+        ITU_T_VALUE_CHOICE(normal_mode_parameters, normal_mode_parameters_type, ARU_PPDU_normal_mode_parameters);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ARP-PPDU
@@ -428,10 +428,10 @@ namespace ISO8823_PRESENTATION {
         ARP_PPDU(boost::shared_ptr< Abort_reason> arg__provider_reason,
                 boost::shared_ptr< Event_identifier> arg__event_identifier);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(provider_reason, Abort_reason);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(event_identifier, Event_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(provider_reason, Abort_reason);
+        ITU_T_VALUE_OPTIONAL_DECL(event_identifier, Event_identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice Typed-data-type
@@ -444,20 +444,20 @@ namespace ISO8823_PRESENTATION {
         Typed_data_type_ttdPPDU,
     };
 
-    struct Typed_data_type : public BOOST_ASN_CHOICE_STRUCT(Typed_data_type_enum) {
+    struct Typed_data_type : public ITU_T_CHOICE_STRUCT(Typed_data_type_enum) {
 
-        Typed_data_type() : BOOST_ASN_CHOICE_STRUCT(Typed_data_type_enum) () {
+        Typed_data_type() : ITU_T_CHOICE_STRUCT(Typed_data_type_enum) () {
         }
 
         template<typename T > Typed_data_type(boost::shared_ptr< T> vl, Typed_data_type_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Typed_data_type_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(Typed_data_type_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(acPPDU, AC_PPDU, Typed_data_type_acPPDU);
-        BOOST_ASN_VALUE_CHOICE(acaPPDU, ACA_PPDU, Typed_data_type_acaPPDU);
-        BOOST_ASN_VALUE_CHOICE(ttdPPDU, User_data, Typed_data_type_ttdPPDU);
+        ITU_T_VALUE_CHOICE(acPPDU, AC_PPDU, Typed_data_type_acPPDU);
+        ITU_T_VALUE_CHOICE(acaPPDU, ACA_PPDU, Typed_data_type_acaPPDU);
+        ITU_T_VALUE_CHOICE(ttdPPDU, User_data, Typed_data_type_ttdPPDU);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AC-PPDU
@@ -470,11 +470,11 @@ namespace ISO8823_PRESENTATION {
                 boost::shared_ptr< Presentation_context_deletion_list> arg__presentation_context_deletion_list,
                 boost::shared_ptr< User_data> arg__user_data);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_addition_list, Presentation_context_addition_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_deletion_list, Presentation_context_deletion_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
+        ITU_T_VALUE_OPTIONAL_DECL(presentation_context_addition_list, Presentation_context_addition_list);
+        ITU_T_VALUE_OPTIONAL_DECL(presentation_context_deletion_list, Presentation_context_deletion_list);
+        ITU_T_VALUE_OPTIONAL_DECL(user_data, User_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ACA-PPDU
@@ -487,11 +487,11 @@ namespace ISO8823_PRESENTATION {
                 boost::shared_ptr< Presentation_context_deletion_result_list> arg__presentation_context_deletion_result_list,
                 boost::shared_ptr< User_data> arg__user_data);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_addition_result_list, Presentation_context_addition_result_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_deletion_result_list, Presentation_context_deletion_result_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
+        ITU_T_VALUE_OPTIONAL_DECL(presentation_context_addition_result_list, Presentation_context_addition_result_list);
+        ITU_T_VALUE_OPTIONAL_DECL(presentation_context_deletion_result_list, Presentation_context_deletion_result_list);
+        ITU_T_VALUE_OPTIONAL_DECL(user_data, User_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence RS-PPDU
@@ -503,10 +503,10 @@ namespace ISO8823_PRESENTATION {
         RS_PPDU(boost::shared_ptr< Presentation_context_identifier_list> arg__presentation_context_identifier_list,
                 boost::shared_ptr< User_data> arg__user_data);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
+        ITU_T_VALUE_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list);
+        ITU_T_VALUE_OPTIONAL_DECL(user_data, User_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence RSA-PPDU
@@ -518,10 +518,10 @@ namespace ISO8823_PRESENTATION {
         RSA_PPDU(boost::shared_ptr< Presentation_context_identifier_list> arg__presentation_context_identifier_list,
                 boost::shared_ptr< User_data> arg__user_data);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_data, User_data);
+        ITU_T_VALUE_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list);
+        ITU_T_VALUE_OPTIONAL_DECL(user_data, User_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const Abort_reason Abort_reason_reason_not_specified;
@@ -543,11 +543,11 @@ namespace ISO8823_PRESENTATION {
                 const Abstract_syntax_name& arg__abstract_syntax_name,
                 const transfer_syntax_name_list_type& arg__transfer_syntax_name_list);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(abstract_syntax_name, Abstract_syntax_name);
-        BOOST_ASN_VALUE_HOLDERH_DECL(transfer_syntax_name_list, transfer_syntax_name_list_type);
+        ITU_T_VALUE_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
+        ITU_T_VALUE_HOLDERH_DECL(abstract_syntax_name, Abstract_syntax_name);
+        ITU_T_VALUE_HOLDERH_DECL(transfer_syntax_name_list, transfer_syntax_name_list_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Default-context-name
@@ -559,10 +559,10 @@ namespace ISO8823_PRESENTATION {
         Default_context_name(const Abstract_syntax_name& arg__abstract_syntax_name,
                 const Transfer_syntax_name& arg__transfer_syntax_name);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(abstract_syntax_name, Abstract_syntax_name);
-        BOOST_ASN_VALUE_HOLDERH_DECL(transfer_syntax_name, Transfer_syntax_name);
+        ITU_T_VALUE_HOLDERH_DECL(abstract_syntax_name, Abstract_syntax_name);
+        ITU_T_VALUE_HOLDERH_DECL(transfer_syntax_name, Transfer_syntax_name);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const Event_identifier Event_identifier_cp_PPDU;
@@ -611,9 +611,9 @@ namespace ISO8823_PRESENTATION {
 
         Mode_selector(const int& arg__mode_value);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(mode_value, int);
+        ITU_T_VALUE_HOLDERH_DECL(mode_value, int);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     struct Presentation_context_identifier_list_sequence_of {
@@ -623,10 +623,10 @@ namespace ISO8823_PRESENTATION {
         Presentation_context_identifier_list_sequence_of(const Presentation_context_identifier& arg__presentation_context_identifier,
                 const Transfer_syntax_name& arg__transfer_syntax_name);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(transfer_syntax_name, Transfer_syntax_name);
+        ITU_T_VALUE_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
+        ITU_T_VALUE_HOLDERH_DECL(transfer_syntax_name, Transfer_syntax_name);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const Presentation_requirements Presentation_requirements_context_management;
@@ -667,11 +667,11 @@ namespace ISO8823_PRESENTATION {
                 boost::shared_ptr< Transfer_syntax_name> arg__transfer_syntax_name,
                 boost::shared_ptr< int> arg__provider_reason);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(result, Result);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(transfer_syntax_name, Transfer_syntax_name);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(provider_reason, int);
+        ITU_T_VALUE_HOLDERH_DECL(result, Result);
+        ITU_T_VALUE_OPTIONAL_DECL(transfer_syntax_name, Transfer_syntax_name);
+        ITU_T_VALUE_OPTIONAL_DECL(provider_reason, int);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice User-data
@@ -683,19 +683,19 @@ namespace ISO8823_PRESENTATION {
         User_data_fully_encoded_data,
     };
 
-    struct User_data : public BOOST_ASN_CHOICE_STRUCT(User_data_enum) {
+    struct User_data : public ITU_T_CHOICE_STRUCT(User_data_enum) {
 
-        User_data() : BOOST_ASN_CHOICE_STRUCT(User_data_enum) () {
+        User_data() : ITU_T_CHOICE_STRUCT(User_data_enum) () {
         }
 
         template<typename T > User_data(boost::shared_ptr< T> vl, User_data_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(User_data_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(User_data_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(simply_encoded_data, Simply_encoded_data, User_data_simply_encoded_data);
-        BOOST_ASN_VALUE_CHOICE(fully_encoded_data, Fully_encoded_data, User_data_fully_encoded_data);
+        ITU_T_VALUE_CHOICE(simply_encoded_data, Simply_encoded_data, User_data_simply_encoded_data);
+        ITU_T_VALUE_CHOICE(fully_encoded_data, Fully_encoded_data, User_data_fully_encoded_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence PDV-list
@@ -712,20 +712,20 @@ namespace ISO8823_PRESENTATION {
             presentation_data_values_type_arbitrary,
         };
 
-        struct presentation_data_values_type : public BOOST_ASN_CHOICE_STRUCT(presentation_data_values_type_enum) {
+        struct presentation_data_values_type : public ITU_T_CHOICE_STRUCT(presentation_data_values_type_enum) {
 
-            presentation_data_values_type() : BOOST_ASN_CHOICE_STRUCT(presentation_data_values_type_enum) () {
+            presentation_data_values_type() : ITU_T_CHOICE_STRUCT(presentation_data_values_type_enum) () {
             }
 
             template<typename T > presentation_data_values_type(boost::shared_ptr< T> vl, presentation_data_values_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE_STRUCT(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(single_ASN1_type, any_type, presentation_data_values_type_single_ASN1_type);
-            BOOST_ASN_VALUE_CHOICE(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned);
-            BOOST_ASN_VALUE_CHOICE(arbitrary, bitstring_type, presentation_data_values_type_arbitrary);
+            ITU_T_VALUE_CHOICE(single_ASN1_type, any_type, presentation_data_values_type_single_ASN1_type);
+            ITU_T_VALUE_CHOICE(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned);
+            ITU_T_VALUE_CHOICE(arbitrary, bitstring_type, presentation_data_values_type_arbitrary);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -738,11 +738,11 @@ namespace ISO8823_PRESENTATION {
                 boost::shared_ptr< Presentation_context_identifier> arg__presentation_context_identifier,
                 boost::shared_ptr< presentation_data_values_type> arg__presentation_data_values);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(transfer_syntax_name, Transfer_syntax_name);
-        BOOST_ASN_VALUE_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(presentation_data_values, presentation_data_values_type);
+        ITU_T_VALUE_OPTIONAL_DECL(transfer_syntax_name, Transfer_syntax_name);
+        ITU_T_VALUE_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
+        ITU_T_VALUE_HOLDERH_DECL(presentation_data_values, presentation_data_values_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const User_session_requirements User_session_requirements_half_duplex;
@@ -817,20 +817,20 @@ namespace ISO8823_PRESENTATION {
     template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::input_coder& arch);
 }
 
-BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CP_type)
-BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CP_type::x410_mode_parameters_type)
-BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CPA_PPDU)
-BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CPA_PPDU::x410_mode_parameters_type)
-BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::CPR_PPDU::x400_mode_parameters_type)
-BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::ARU_PPDU::x400_mode_parameters_type)
-BOOST_ASN_SET_REGESTRATE(ISO8823_PRESENTATION::Mode_selector)
+ITU_T_SET_REGESTRATE(ISO8823_PRESENTATION::CP_type)
+ITU_T_SET_REGESTRATE(ISO8823_PRESENTATION::CP_type::x410_mode_parameters_type)
+ITU_T_SET_REGESTRATE(ISO8823_PRESENTATION::CPA_PPDU)
+ITU_T_SET_REGESTRATE(ISO8823_PRESENTATION::CPA_PPDU::x410_mode_parameters_type)
+ITU_T_SET_REGESTRATE(ISO8823_PRESENTATION::CPR_PPDU::x400_mode_parameters_type)
+ITU_T_SET_REGESTRATE(ISO8823_PRESENTATION::ARU_PPDU::x400_mode_parameters_type)
+ITU_T_SET_REGESTRATE(ISO8823_PRESENTATION::Mode_selector)
 
-BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::CPR_PPDU)
-BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::Abort_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::ARU_PPDU)
-BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::Typed_data_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::User_data)
-BOOST_ASN_CHOICE_REGESTRATE(ISO8823_PRESENTATION::PDV_list::presentation_data_values_type)
+ITU_T_CHOICE_REGESTRATE(ISO8823_PRESENTATION::CPR_PPDU)
+ITU_T_CHOICE_REGESTRATE(ISO8823_PRESENTATION::Abort_type)
+ITU_T_CHOICE_REGESTRATE(ISO8823_PRESENTATION::ARU_PPDU)
+ITU_T_CHOICE_REGESTRATE(ISO8823_PRESENTATION::Typed_data_type)
+ITU_T_CHOICE_REGESTRATE(ISO8823_PRESENTATION::User_data)
+ITU_T_CHOICE_REGESTRATE(ISO8823_PRESENTATION::PDV_list::presentation_data_values_type)
 
 #endif  /*___ISO8823_PRESENTATION */
 

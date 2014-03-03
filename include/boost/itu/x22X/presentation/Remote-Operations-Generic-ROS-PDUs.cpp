@@ -17,22 +17,22 @@ namespace Remote_Operations_Generic_ROS_PDUs {
         switch (type()) {
             case problem_type_general:
             {
-                BOOST_ASN_IMPLICIT_TAG(value<GeneralProblem > (false, problem_type_general), 0);
+                ITU_T_IMPLICIT_TAG(value<GeneralProblem > (false, problem_type_general), 0);
                 break;
             }
             case problem_type_invoke:
             {
-                BOOST_ASN_IMPLICIT_TAG(value<InvokeProblem > (false, problem_type_invoke), 1);
+                ITU_T_IMPLICIT_TAG(value<InvokeProblem > (false, problem_type_invoke), 1);
                 break;
             }
             case problem_type_returnResult:
             {
-                BOOST_ASN_IMPLICIT_TAG(value<ReturnResultProblem > (false, problem_type_returnResult), 2);
+                ITU_T_IMPLICIT_TAG(value<ReturnResultProblem > (false, problem_type_returnResult), 2);
                 break;
             }
             case problem_type_returnError:
             {
-                BOOST_ASN_IMPLICIT_TAG(value<ReturnErrorProblem > (false, problem_type_returnError), 3);
+                ITU_T_IMPLICIT_TAG(value<ReturnErrorProblem > (false, problem_type_returnError), 3);
                 break;
             }
             default:
@@ -65,25 +65,25 @@ namespace Remote_Operations_Generic_ROS_PDUs {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (BOOST_ASN_IMPLICIT_TAG(value<GeneralProblem > (true, problem_type_general), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<GeneralProblem > (true, problem_type_general), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (BOOST_ASN_IMPLICIT_TAG(value<InvokeProblem > (true, problem_type_invoke), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<InvokeProblem > (true, problem_type_invoke), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (BOOST_ASN_IMPLICIT_TAG(value<ReturnResultProblem > (true, problem_type_returnResult), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<ReturnResultProblem > (true, problem_type_returnResult), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (BOOST_ASN_IMPLICIT_TAG(value<ReturnErrorProblem > (true, problem_type_returnError), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<ReturnErrorProblem > (true, problem_type_returnError), 3)) return;
                         else free();
                         break;
                     }
@@ -107,13 +107,13 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     }
 
     template<> void Reject::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_CHOICE(invokeId_);
-        BOOST_ASN_CHOICE(problem_);
+        ITU_T_CHOICE(invokeId_);
+        ITU_T_CHOICE(problem_);
     }
 
     template<> void Reject::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_CHOICE(invokeId_);
-        BOOST_ASN_CHOICE(problem_);
+        ITU_T_CHOICE(invokeId_);
+        ITU_T_CHOICE(problem_);
     }
 
     InvokeId& Reject::invokeId() {
@@ -198,12 +198,12 @@ namespace Remote_Operations_Generic_ROS_PDUs {
         switch (type()) {
             case InvokeId_present:
             {
-                BOOST_ASN_BIND_TAG(value<int > (false, InvokeId_present));
+                ITU_T_BIND_TAG(value<int > (false, InvokeId_present));
                 break;
             }
             case InvokeId_absent:
             {
-                BOOST_ASN_BIND_TAG(value<null_type > (false, InvokeId_absent));
+                ITU_T_BIND_TAG(value<null_type > (false, InvokeId_absent));
                 break;
             }
             default:
@@ -249,9 +249,9 @@ namespace Remote_Operations_Generic_ROS_PDUs {
             }
             default:
             {
-                if (BOOST_ASN_BIND_TAG(value<int > (true, InvokeId_present))) return;
+                if (ITU_T_BIND_TAG(value<int > (true, InvokeId_present))) return;
                 else free();
-                if (BOOST_ASN_BIND_TAG(value<null_type > (true, InvokeId_absent))) return;
+                if (ITU_T_BIND_TAG(value<null_type > (true, InvokeId_absent))) return;
                 else free();
             }
         }
