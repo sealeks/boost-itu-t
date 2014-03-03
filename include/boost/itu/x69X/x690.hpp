@@ -1193,6 +1193,7 @@ namespace boost {
 
 
         }
+        
 
         template<> void external_type::serialize(boost::asn1::x690::output_coder& arch);
         template<> void external_type::serialize(boost::asn1::x690::input_coder& arch);

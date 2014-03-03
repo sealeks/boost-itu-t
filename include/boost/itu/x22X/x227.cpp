@@ -95,10 +95,10 @@ namespace boost {
 
                     if ((it->second->abstract_syntax() != ACSE_OID) && (it->second->coder()->out())) {
                         boost::asn1::external_type userdata;
-                        userdata.indirect_reference__assign(new context_id_type(it->first));
-                        userdata.direct_reference__assign(new boost::asn1::oid_type(to_transfer_syntax(it->second->coder()->rule())));
-                        userdata.encoding->single_ASN1_type__new();
-                        userdata.encoding->single_ASN1_type()->bind(*(it->second->coder()->out()));
+                        userdata.indirect_reference(context_id_type(it->first));
+                        userdata.direct_reference(boost::asn1::oid_type(to_transfer_syntax(it->second->coder()->rule())));
+                        userdata.encoding().single_ASN1_type__new();
+                        userdata.encoding().single_ASN1_type()->bind(*(it->second->coder()->out()));
                         it->second->coder()->clear();
                         if (!areq->user_information())
                             areq->user_information__new();
@@ -131,7 +131,7 @@ namespace boost {
                                     for (defined_context_map::iterator it = dcs()->contexts().begin(); it != dcs()->contexts().end(); ++it) {
                                         if ((it->second->abstract_syntax() != ACSE_OID) && (cntxt_cnt < aresp->user_information()->size())) {
                                             boost::asn1::external_type& ext = aresp->user_information()->operator [](cntxt_cnt);
-                                            ext.encoding->single_ASN1_type()->bind(*(it->second->coder()->in()));
+                                            ext.encoding().single_ASN1_type()->bind(*(it->second->coder()->in()));
                                         }
                                     }
                                 }
