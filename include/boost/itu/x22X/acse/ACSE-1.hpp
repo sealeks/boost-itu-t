@@ -93,14 +93,14 @@ namespace ACSE_1 {
     typedef int Release_response_reason;
     typedef std::vector< external_type > Association_data;
 
-    BOOST_ASN_IMPLICIT_TYPEDEF(AARQ_apdu, AARQ_apdu_impl, 0, APPLICATION_CLASS);
-    BOOST_ASN_IMPLICIT_TYPEDEF(AARE_apdu, AARE_apdu_impl, 1, APPLICATION_CLASS);
-    BOOST_ASN_IMPLICIT_TYPEDEF(RLRQ_apdu, RLRQ_apdu_impl, 2, APPLICATION_CLASS);
-    BOOST_ASN_IMPLICIT_TYPEDEF(RLRE_apdu, RLRE_apdu_impl, 3, APPLICATION_CLASS);
-    BOOST_ASN_IMPLICIT_TYPEDEF(ABRT_apdu, ABRT_apdu_impl, 4, APPLICATION_CLASS);
-    BOOST_ASN_IMPLICIT_TYPEDEF(A_DT_apdu, A_DT_apdu_impl, 5, APPLICATION_CLASS);
-    BOOST_ASN_IMPLICIT_TYPEDEF(ACRQ_apdu, ACRQ_apdu_impl, 6, APPLICATION_CLASS);
-    BOOST_ASN_IMPLICIT_TYPEDEF(ACRP_apdu, ACRP_apdu_impl, 7, APPLICATION_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(AARQ_apdu, AARQ_apdu_impl, 0, APPLICATION_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(AARE_apdu, AARE_apdu_impl, 1, APPLICATION_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(RLRQ_apdu, RLRQ_apdu_impl, 2, APPLICATION_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(RLRE_apdu, RLRE_apdu_impl, 3, APPLICATION_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(ABRT_apdu, ABRT_apdu_impl, 4, APPLICATION_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(A_DT_apdu, A_DT_apdu_impl, 5, APPLICATION_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(ACRQ_apdu, ACRQ_apdu_impl, 6, APPLICATION_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(ACRP_apdu, ACRP_apdu_impl, 7, APPLICATION_CLASS);
     typedef ASO_context_name Application_context_name;
     typedef ASO_qualifier AE_qualifier;
     typedef Transfer_syntax_name Concrete_syntax_name;
@@ -135,25 +135,25 @@ namespace ACSE_1 {
         ACSE_apdu_acrp,
     };
 
-    struct ACSE_apdu : public BOOST_ASN_CHOICE_STRUCT(ACSE_apdu_enum) {
+    struct ACSE_apdu : public ITU_T_CHOICE_STRUCT(ACSE_apdu_enum) {
 
-        ACSE_apdu() : BOOST_ASN_CHOICE_STRUCT(ACSE_apdu_enum) () {
+        ACSE_apdu() : ITU_T_CHOICE_STRUCT(ACSE_apdu_enum) () {
         }
 
         template<typename T > ACSE_apdu(boost::shared_ptr< T> vl, ACSE_apdu_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(ACSE_apdu_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(ACSE_apdu_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(aarq, AARQ_apdu, ACSE_apdu_aarq);
-        BOOST_ASN_VALUE_CHOICE(aare, AARE_apdu, ACSE_apdu_aare);
-        BOOST_ASN_VALUE_CHOICE(rlrq, RLRQ_apdu, ACSE_apdu_rlrq);
-        BOOST_ASN_VALUE_CHOICE(rlre, RLRE_apdu, ACSE_apdu_rlre);
-        BOOST_ASN_VALUE_CHOICE(abrt, ABRT_apdu, ACSE_apdu_abrt);
-        BOOST_ASN_VALUE_CHOICE(adt, A_DT_apdu, ACSE_apdu_adt);
-        BOOST_ASN_VALUE_CHOICE(acrq, ACRQ_apdu, ACSE_apdu_acrq);
-        BOOST_ASN_VALUE_CHOICE(acrp, ACRP_apdu, ACSE_apdu_acrp);
+        ITU_T_VALUE_CHOICE(aarq, AARQ_apdu, ACSE_apdu_aarq);
+        ITU_T_VALUE_CHOICE(aare, AARE_apdu, ACSE_apdu_aare);
+        ITU_T_VALUE_CHOICE(rlrq, RLRQ_apdu, ACSE_apdu_rlrq);
+        ITU_T_VALUE_CHOICE(rlre, RLRE_apdu, ACSE_apdu_rlre);
+        ITU_T_VALUE_CHOICE(abrt, ABRT_apdu, ACSE_apdu_abrt);
+        ITU_T_VALUE_CHOICE(adt, A_DT_apdu, ACSE_apdu_adt);
+        ITU_T_VALUE_CHOICE(acrq, ACRQ_apdu, ACSE_apdu_acrq);
+        ITU_T_VALUE_CHOICE(acrp, ACRP_apdu, ACSE_apdu_acrp);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AARQ-apdu
@@ -188,27 +188,27 @@ namespace ACSE_1 {
                 boost::shared_ptr< ASOI_tag> arg__calling_asoi_tag,
                 boost::shared_ptr< Association_data> arg__user_information);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, bitstring_type, protocol_version__default);
-        BOOST_ASN_VALUE_HOLDERH_DECL(aSO_context_name, ASO_context_name);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(called_AP_title, AP_title);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(called_AE_qualifier, AE_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(called_AP_invocation_identifier, AP_invocation_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(called_AE_invocation_identifier, AE_invocation_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(calling_AP_title, AP_title);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(calling_AE_qualifier, AE_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(calling_AP_invocation_identifier, AP_invocation_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(calling_AE_invocation_identifier, AE_invocation_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(sender_acse_requirements, ACSE_requirements);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(mechanism_name, Mechanism_name);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(calling_authentication_value, Authentication_value);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aSO_context_name_list, ASO_context_name_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(implementation_information, Implementation_data);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(p_context_definition_list, Syntactic_context_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(called_asoi_tag, ASOI_tag);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(calling_asoi_tag, ASOI_tag);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_information, Association_data);
+        ITU_T_VALUE_DEFAULT_DECL(protocol_version, bitstring_type, protocol_version__default);
+        ITU_T_VALUE_HOLDERH_DECL(aSO_context_name, ASO_context_name);
+        ITU_T_VALUE_OPTIONAL_DECL(called_AP_title, AP_title);
+        ITU_T_VALUE_OPTIONAL_DECL(called_AE_qualifier, AE_qualifier);
+        ITU_T_VALUE_OPTIONAL_DECL(called_AP_invocation_identifier, AP_invocation_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(called_AE_invocation_identifier, AE_invocation_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(calling_AP_title, AP_title);
+        ITU_T_VALUE_OPTIONAL_DECL(calling_AE_qualifier, AE_qualifier);
+        ITU_T_VALUE_OPTIONAL_DECL(calling_AP_invocation_identifier, AP_invocation_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(calling_AE_invocation_identifier, AE_invocation_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(sender_acse_requirements, ACSE_requirements);
+        ITU_T_VALUE_OPTIONAL_DECL(mechanism_name, Mechanism_name);
+        ITU_T_VALUE_OPTIONAL_DECL(calling_authentication_value, Authentication_value);
+        ITU_T_VALUE_OPTIONAL_DECL(aSO_context_name_list, ASO_context_name_list);
+        ITU_T_VALUE_OPTIONAL_DECL(implementation_information, Implementation_data);
+        ITU_T_VALUE_OPTIONAL_DECL(p_context_definition_list, Syntactic_context_list);
+        ITU_T_VALUE_OPTIONAL_DECL(called_asoi_tag, ASOI_tag);
+        ITU_T_VALUE_OPTIONAL_DECL(calling_asoi_tag, ASOI_tag);
+        ITU_T_VALUE_OPTIONAL_DECL(user_information, Association_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AARE-apdu
@@ -243,25 +243,25 @@ namespace ACSE_1 {
                 boost::shared_ptr< ASOI_tag> arg__calling_asoi_tag,
                 boost::shared_ptr< Association_data> arg__user_information);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(protocol_version, bitstring_type, protocol_version__default);
-        BOOST_ASN_VALUE_HOLDERH_DECL(aSO_context_name, ASO_context_name);
-        BOOST_ASN_VALUE_HOLDERH_DECL(result, Associate_result);
-        BOOST_ASN_VALUE_HOLDERH_DECL(result_source_diagnostic, Associate_source_diagnostic);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(responding_AP_title, AP_title);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(responding_AE_qualifier, AE_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(responding_AP_invocation_identifier, AP_invocation_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(responding_AE_invocation_identifier, AE_invocation_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(responder_acse_requirements, ACSE_requirements);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(mechanism_name, Mechanism_name);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(responding_authentication_value, Authentication_value);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aSO_context_name_list, ASO_context_name_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(implementation_information, Implementation_data);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(p_context_result_list, P_context_result_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(called_asoi_tag, ASOI_tag);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(calling_asoi_tag, ASOI_tag);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_information, Association_data);
+        ITU_T_VALUE_DEFAULT_DECL(protocol_version, bitstring_type, protocol_version__default);
+        ITU_T_VALUE_HOLDERH_DECL(aSO_context_name, ASO_context_name);
+        ITU_T_VALUE_HOLDERH_DECL(result, Associate_result);
+        ITU_T_VALUE_HOLDERH_DECL(result_source_diagnostic, Associate_source_diagnostic);
+        ITU_T_VALUE_OPTIONAL_DECL(responding_AP_title, AP_title);
+        ITU_T_VALUE_OPTIONAL_DECL(responding_AE_qualifier, AE_qualifier);
+        ITU_T_VALUE_OPTIONAL_DECL(responding_AP_invocation_identifier, AP_invocation_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(responding_AE_invocation_identifier, AE_invocation_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(responder_acse_requirements, ACSE_requirements);
+        ITU_T_VALUE_OPTIONAL_DECL(mechanism_name, Mechanism_name);
+        ITU_T_VALUE_OPTIONAL_DECL(responding_authentication_value, Authentication_value);
+        ITU_T_VALUE_OPTIONAL_DECL(aSO_context_name_list, ASO_context_name_list);
+        ITU_T_VALUE_OPTIONAL_DECL(implementation_information, Implementation_data);
+        ITU_T_VALUE_OPTIONAL_DECL(p_context_result_list, P_context_result_list);
+        ITU_T_VALUE_OPTIONAL_DECL(called_asoi_tag, ASOI_tag);
+        ITU_T_VALUE_OPTIONAL_DECL(calling_asoi_tag, ASOI_tag);
+        ITU_T_VALUE_OPTIONAL_DECL(user_information, Association_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence RLRQ-apdu
@@ -275,12 +275,12 @@ namespace ACSE_1 {
                 boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 boost::shared_ptr< Association_data> arg__user_information);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(reason, Release_request_reason);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_information, Association_data);
+        ITU_T_VALUE_OPTIONAL_DECL(reason, Release_request_reason);
+        ITU_T_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
+        ITU_T_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(user_information, Association_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence RLRE-apdu
@@ -294,12 +294,12 @@ namespace ACSE_1 {
                 boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 boost::shared_ptr< Association_data> arg__user_information);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(reason, Release_response_reason);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_information, Association_data);
+        ITU_T_VALUE_OPTIONAL_DECL(reason, Release_response_reason);
+        ITU_T_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
+        ITU_T_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(user_information, Association_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ABRT-apdu
@@ -316,13 +316,13 @@ namespace ACSE_1 {
                 boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 boost::shared_ptr< Association_data> arg__user_information);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(abort_source, ABRT_source);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(abort_diagnostic, ABRT_diagnostic);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_information, Association_data);
+        ITU_T_VALUE_HOLDERH_DECL(abort_source, ABRT_source);
+        ITU_T_VALUE_OPTIONAL_DECL(abort_diagnostic, ABRT_diagnostic);
+        ITU_T_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
+        ITU_T_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(user_information, Association_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence A-DT-apdu
@@ -337,11 +337,11 @@ namespace ACSE_1 {
                 boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 boost::shared_ptr< User_Data> arg__a_user_data);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(a_user_data, User_Data);
+        ITU_T_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
+        ITU_T_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
+        ITU_T_VALUE_HOLDERH_DECL(a_user_data, User_Data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ACRQ-apdu
@@ -357,14 +357,14 @@ namespace ACSE_1 {
                 boost::shared_ptr< Syntactic_context_list> arg__p_context_definition_list,
                 boost::shared_ptr< User_information> arg__user_information);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aSO_context_name, ASO_context_name);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aSO_context_name_list, ASO_context_name_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(p_context_definition_list, Syntactic_context_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_information, User_information);
+        ITU_T_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
+        ITU_T_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(aSO_context_name, ASO_context_name);
+        ITU_T_VALUE_OPTIONAL_DECL(aSO_context_name_list, ASO_context_name_list);
+        ITU_T_VALUE_OPTIONAL_DECL(p_context_definition_list, Syntactic_context_list);
+        ITU_T_VALUE_OPTIONAL_DECL(user_information, User_information);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ACRP-apdu
@@ -379,13 +379,13 @@ namespace ACSE_1 {
                 boost::shared_ptr< P_context_result_list> arg__p_context_result_list,
                 boost::shared_ptr< User_information> arg__user_information);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(aSO_context_name, ASO_context_name_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(p_context_result_list, P_context_result_list);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(user_information, User_information);
+        ITU_T_VALUE_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
+        ITU_T_VALUE_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(aSO_context_name, ASO_context_name_list);
+        ITU_T_VALUE_OPTIONAL_DECL(p_context_result_list, P_context_result_list);
+        ITU_T_VALUE_OPTIONAL_DECL(user_information, User_information);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const ABRT_diagnostic ABRT_diagnostic_no_reason_given;
@@ -413,20 +413,20 @@ namespace ACSE_1 {
         AP_title_ap_title_form3,
     };
 
-    struct AP_title : public BOOST_ASN_CHOICE_STRUCT(AP_title_enum) {
+    struct AP_title : public ITU_T_CHOICE_STRUCT(AP_title_enum) {
 
-        AP_title() : BOOST_ASN_CHOICE_STRUCT(AP_title_enum) () {
+        AP_title() : ITU_T_CHOICE_STRUCT(AP_title_enum) () {
         }
 
         template<typename T > AP_title(boost::shared_ptr< T> vl, AP_title_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(AP_title_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(AP_title_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(ap_title_form1, AP_title_form1, AP_title_ap_title_form1);
-        BOOST_ASN_VALUE_CHOICE(ap_title_form2, AP_title_form2, AP_title_ap_title_form2);
-        BOOST_ASN_VALUE_CHOICE(ap_title_form3, AP_title_form3, AP_title_ap_title_form3);
+        ITU_T_VALUE_CHOICE(ap_title_form1, AP_title_form1, AP_title_ap_title_form1);
+        ITU_T_VALUE_CHOICE(ap_title_form2, AP_title_form2, AP_title_ap_title_form2);
+        ITU_T_VALUE_CHOICE(ap_title_form3, AP_title_form3, AP_title_ap_title_form3);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice ASO-qualifier
@@ -439,20 +439,20 @@ namespace ACSE_1 {
         ASO_qualifier_aso_qualifier_form3,
     };
 
-    struct ASO_qualifier : public BOOST_ASN_CHOICE_STRUCT(ASO_qualifier_enum) {
+    struct ASO_qualifier : public ITU_T_CHOICE_STRUCT(ASO_qualifier_enum) {
 
-        ASO_qualifier() : BOOST_ASN_CHOICE_STRUCT(ASO_qualifier_enum) () {
+        ASO_qualifier() : ITU_T_CHOICE_STRUCT(ASO_qualifier_enum) () {
         }
 
         template<typename T > ASO_qualifier(boost::shared_ptr< T> vl, ASO_qualifier_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(ASO_qualifier_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(ASO_qualifier_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(aso_qualifier_form1, ASO_qualifier_form1, ASO_qualifier_aso_qualifier_form1);
-        BOOST_ASN_VALUE_CHOICE(aso_qualifier_form2, ASO_qualifier_form2, ASO_qualifier_aso_qualifier_form2);
-        BOOST_ASN_VALUE_CHOICE(aso_qualifier_form3, ASO_qualifier_form3, ASO_qualifier_aso_qualifier_form3);
+        ITU_T_VALUE_CHOICE(aso_qualifier_form1, ASO_qualifier_form1, ASO_qualifier_aso_qualifier_form1);
+        ITU_T_VALUE_CHOICE(aso_qualifier_form2, ASO_qualifier_form2, ASO_qualifier_aso_qualifier_form2);
+        ITU_T_VALUE_CHOICE(aso_qualifier_form3, ASO_qualifier_form3, ASO_qualifier_aso_qualifier_form3);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice AE-title
@@ -464,19 +464,19 @@ namespace ACSE_1 {
         AE_title_ae_title_form2,
     };
 
-    struct AE_title : public BOOST_ASN_CHOICE_STRUCT(AE_title_enum) {
+    struct AE_title : public ITU_T_CHOICE_STRUCT(AE_title_enum) {
 
-        AE_title() : BOOST_ASN_CHOICE_STRUCT(AE_title_enum) () {
+        AE_title() : ITU_T_CHOICE_STRUCT(AE_title_enum) () {
         }
 
         template<typename T > AE_title(boost::shared_ptr< T> vl, AE_title_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(AE_title_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(AE_title_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(ae_title_form1, AE_title_form1, AE_title_ae_title_form1);
-        BOOST_ASN_VALUE_CHOICE(ae_title_form2, AE_title_form2, AE_title_ae_title_form2);
+        ITU_T_VALUE_CHOICE(ae_title_form1, AE_title_form1, AE_title_ae_title_form1);
+        ITU_T_VALUE_CHOICE(ae_title_form2, AE_title_form2, AE_title_ae_title_form2);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     struct ASOI_tag_sequence_of {
@@ -486,10 +486,10 @@ namespace ACSE_1 {
         ASOI_tag_sequence_of(boost::shared_ptr< ASO_qualifier> arg__qualifier,
                 boost::shared_ptr< ASOI_identifier> arg__identifier);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(qualifier, ASO_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(identifier, ASOI_identifier);
+        ITU_T_VALUE_OPTIONAL_DECL(qualifier, ASO_qualifier);
+        ITU_T_VALUE_OPTIONAL_DECL(identifier, ASOI_identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice Syntactic-context-list
@@ -501,19 +501,19 @@ namespace ACSE_1 {
         Syntactic_context_list_default_contact_list,
     };
 
-    struct Syntactic_context_list : public BOOST_ASN_CHOICE_STRUCT(Syntactic_context_list_enum) {
+    struct Syntactic_context_list : public ITU_T_CHOICE_STRUCT(Syntactic_context_list_enum) {
 
-        Syntactic_context_list() : BOOST_ASN_CHOICE_STRUCT(Syntactic_context_list_enum) () {
+        Syntactic_context_list() : ITU_T_CHOICE_STRUCT(Syntactic_context_list_enum) () {
         }
 
         template<typename T > Syntactic_context_list(boost::shared_ptr< T> vl, Syntactic_context_list_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Syntactic_context_list_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(Syntactic_context_list_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(context_list, Context_list, Syntactic_context_list_context_list);
-        BOOST_ASN_VALUE_CHOICE(default_contact_list, Default_Context_List, Syntactic_context_list_default_contact_list);
+        ITU_T_VALUE_CHOICE(context_list, Context_list, Syntactic_context_list_context_list);
+        ITU_T_VALUE_CHOICE(default_contact_list, Default_Context_List, Syntactic_context_list_default_contact_list);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     struct Context_list_sequence_of {
@@ -527,11 +527,11 @@ namespace ACSE_1 {
                 const Abstract_syntax_name& arg__abstract_syntax,
                 const transfer_syntaxes_type& arg__transfer_syntaxes);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(pci, Presentation_context_identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(abstract_syntax, Abstract_syntax_name);
-        BOOST_ASN_VALUE_HOLDERH_DECL(transfer_syntaxes, transfer_syntaxes_type);
+        ITU_T_VALUE_HOLDERH_DECL(pci, Presentation_context_identifier);
+        ITU_T_VALUE_HOLDERH_DECL(abstract_syntax, Abstract_syntax_name);
+        ITU_T_VALUE_HOLDERH_DECL(transfer_syntaxes, transfer_syntaxes_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     struct Default_Context_List_sequence_of {
@@ -543,10 +543,10 @@ namespace ACSE_1 {
         Default_Context_List_sequence_of(boost::shared_ptr< Abstract_syntax_name> arg__abstract_syntax_name,
                 boost::shared_ptr< Transfer_syntax_name> arg__transfer_syntax_name);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(abstract_syntax_name, Abstract_syntax_name);
-        BOOST_ASN_VALUE_HOLDERH_DECL(transfer_syntax_name, Transfer_syntax_name);
+        ITU_T_VALUE_OPTIONAL_DECL(abstract_syntax_name, Abstract_syntax_name);
+        ITU_T_VALUE_HOLDERH_DECL(transfer_syntax_name, Transfer_syntax_name);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     struct P_context_result_list_sequence_of {
@@ -565,11 +565,11 @@ namespace ACSE_1 {
                 boost::shared_ptr< Concrete_syntax_name> arg__concrete_syntax_name,
                 boost::shared_ptr< int> arg__provider_reason);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(result, Result);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(concrete_syntax_name, Concrete_syntax_name);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(provider_reason, int);
+        ITU_T_VALUE_HOLDERH_DECL(result, Result);
+        ITU_T_VALUE_OPTIONAL_DECL(concrete_syntax_name, Concrete_syntax_name);
+        ITU_T_VALUE_OPTIONAL_DECL(provider_reason, int);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const Result Result_acceptance;
@@ -589,7 +589,7 @@ namespace ACSE_1 {
         Associate_source_diagnostic_acse_service_provider,
     };
 
-    struct Associate_source_diagnostic : public BOOST_ASN_CHOICE_STRUCT(Associate_source_diagnostic_enum) {
+    struct Associate_source_diagnostic : public ITU_T_CHOICE_STRUCT(Associate_source_diagnostic_enum) {
 
         static const int acse_service_user_null;
         static const int acse_service_user_no_reason_given;
@@ -611,17 +611,17 @@ namespace ACSE_1 {
         static const int acse_service_provider_no_reason_given;
         static const int acse_service_provider_no_common_acse_version;
 
-        Associate_source_diagnostic() : BOOST_ASN_CHOICE_STRUCT(Associate_source_diagnostic_enum) () {
+        Associate_source_diagnostic() : ITU_T_CHOICE_STRUCT(Associate_source_diagnostic_enum) () {
         }
 
         template<typename T > Associate_source_diagnostic(boost::shared_ptr< T> vl, Associate_source_diagnostic_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Associate_source_diagnostic_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(Associate_source_diagnostic_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(acse_service_user, int, Associate_source_diagnostic_acse_service_user);
-        BOOST_ASN_VALUE_CHOICE(acse_service_provider, int, Associate_source_diagnostic_acse_service_provider);
+        ITU_T_VALUE_CHOICE(acse_service_user, int, Associate_source_diagnostic_acse_service_user);
+        ITU_T_VALUE_CHOICE(acse_service_provider, int, Associate_source_diagnostic_acse_service_provider);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice User-Data
@@ -634,20 +634,20 @@ namespace ACSE_1 {
         User_Data_fully_encoded_data,
     };
 
-    struct User_Data : public BOOST_ASN_CHOICE_STRUCT(User_Data_enum) {
+    struct User_Data : public ITU_T_CHOICE_STRUCT(User_Data_enum) {
 
-        User_Data() : BOOST_ASN_CHOICE_STRUCT(User_Data_enum) () {
+        User_Data() : ITU_T_CHOICE_STRUCT(User_Data_enum) () {
         }
 
         template<typename T > User_Data(boost::shared_ptr< T> vl, User_Data_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(User_Data_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(User_Data_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(user_information, User_information, User_Data_user_information);
-        BOOST_ASN_VALUE_CHOICE(simply_encoded_data, Simply_encoded_data, User_Data_simply_encoded_data);
-        BOOST_ASN_VALUE_CHOICE(fully_encoded_data, PDV_list, User_Data_fully_encoded_data);
+        ITU_T_VALUE_CHOICE(user_information, User_information, User_Data_user_information);
+        ITU_T_VALUE_CHOICE(simply_encoded_data, Simply_encoded_data, User_Data_simply_encoded_data);
+        ITU_T_VALUE_CHOICE(fully_encoded_data, PDV_list, User_Data_fully_encoded_data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence PDV-list
@@ -664,20 +664,20 @@ namespace ACSE_1 {
             presentation_data_values_type_arbitrary,
         };
 
-        struct presentation_data_values_type : public BOOST_ASN_CHOICE_STRUCT(presentation_data_values_type_enum) {
+        struct presentation_data_values_type : public ITU_T_CHOICE_STRUCT(presentation_data_values_type_enum) {
 
-            presentation_data_values_type() : BOOST_ASN_CHOICE_STRUCT(presentation_data_values_type_enum) () {
+            presentation_data_values_type() : ITU_T_CHOICE_STRUCT(presentation_data_values_type_enum) () {
             }
 
             template<typename T > presentation_data_values_type(boost::shared_ptr< T> vl, presentation_data_values_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE_STRUCT(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(simple_ASN1_type, any_type, presentation_data_values_type_simple_ASN1_type);
-            BOOST_ASN_VALUE_CHOICE(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned);
-            BOOST_ASN_VALUE_CHOICE(arbitrary, bitstring_type, presentation_data_values_type_arbitrary);
+            ITU_T_VALUE_CHOICE(simple_ASN1_type, any_type, presentation_data_values_type_simple_ASN1_type);
+            ITU_T_VALUE_CHOICE(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned);
+            ITU_T_VALUE_CHOICE(arbitrary, bitstring_type, presentation_data_values_type_arbitrary);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -690,11 +690,11 @@ namespace ACSE_1 {
                 boost::shared_ptr< Presentation_context_identifier> arg__presentation_context_identifier,
                 boost::shared_ptr< presentation_data_values_type> arg__presentation_data_values);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(transfer_syntax_name, Transfer_syntax_name);
-        BOOST_ASN_VALUE_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(presentation_data_values, presentation_data_values_type);
+        ITU_T_VALUE_OPTIONAL_DECL(transfer_syntax_name, Transfer_syntax_name);
+        ITU_T_VALUE_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
+        ITU_T_VALUE_HOLDERH_DECL(presentation_data_values, presentation_data_values_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice Authentication-value
@@ -708,7 +708,7 @@ namespace ACSE_1 {
         Authentication_value_other,
     };
 
-    struct Authentication_value : public BOOST_ASN_CHOICE_STRUCT(Authentication_value_enum) {
+    struct Authentication_value : public ITU_T_CHOICE_STRUCT(Authentication_value_enum) {
 
 
         struct other_type;
@@ -720,25 +720,25 @@ namespace ACSE_1 {
             other_type(const any_type& arg__other_mechanism_name,
                     const any_type& arg__other_mechanism_value);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(other_mechanism_name, any_type);
-            BOOST_ASN_VALUE_HOLDERH_DECL(other_mechanism_value, any_type);
+            ITU_T_VALUE_HOLDERH_DECL(other_mechanism_name, any_type);
+            ITU_T_VALUE_HOLDERH_DECL(other_mechanism_value, any_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        Authentication_value() : BOOST_ASN_CHOICE_STRUCT(Authentication_value_enum) () {
+        Authentication_value() : ITU_T_CHOICE_STRUCT(Authentication_value_enum) () {
         }
 
         template<typename T > Authentication_value(boost::shared_ptr< T> vl, Authentication_value_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Authentication_value_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE_STRUCT(Authentication_value_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(charstring, graphicstring_type, Authentication_value_charstring);
-        BOOST_ASN_VALUE_CHOICE(bitstring, bitstring_type, Authentication_value_bitstring);
-        BOOST_ASN_VALUE_CHOICE(external, external_type, Authentication_value_external);
-        BOOST_ASN_VALUE_CHOICE(other, other_type, Authentication_value_other);
+        ITU_T_VALUE_CHOICE(charstring, graphicstring_type, Authentication_value_charstring);
+        ITU_T_VALUE_CHOICE(bitstring, bitstring_type, Authentication_value_bitstring);
+        ITU_T_VALUE_CHOICE(external, external_type, Authentication_value_external);
+        ITU_T_VALUE_CHOICE(other, other_type, Authentication_value_other);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const Release_request_reason Release_request_reason_normal;
@@ -797,15 +797,15 @@ namespace ACSE_1 {
     template<> void Authentication_value::other_type::serialize(boost::asn1::x690::input_coder& arch);
 }
 
-BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::ACSE_apdu)
-BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::AP_title)
-BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::ASO_qualifier)
-BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::AE_title)
-BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::Syntactic_context_list)
-BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::Associate_source_diagnostic)
-BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::User_Data)
-BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::PDV_list::presentation_data_values_type)
-BOOST_ASN_CHOICE_REGESTRATE(ACSE_1::Authentication_value)
+ITU_T_CHOICE_REGESTRATE(ACSE_1::ACSE_apdu)
+ITU_T_CHOICE_REGESTRATE(ACSE_1::AP_title)
+ITU_T_CHOICE_REGESTRATE(ACSE_1::ASO_qualifier)
+ITU_T_CHOICE_REGESTRATE(ACSE_1::AE_title)
+ITU_T_CHOICE_REGESTRATE(ACSE_1::Syntactic_context_list)
+ITU_T_CHOICE_REGESTRATE(ACSE_1::Associate_source_diagnostic)
+ITU_T_CHOICE_REGESTRATE(ACSE_1::User_Data)
+ITU_T_CHOICE_REGESTRATE(ACSE_1::PDV_list::presentation_data_values_type)
+ITU_T_CHOICE_REGESTRATE(ACSE_1::Authentication_value)
 
 #endif  /*___ACSE_1 */
 
