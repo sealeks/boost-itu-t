@@ -135,13 +135,13 @@ namespace ACSE_1 {
         ACSE_apdu_acrp,
     };
 
-    struct ACSE_apdu : public ITU_T_CHOICE_STRUCT(ACSE_apdu_enum) {
+    struct ACSE_apdu : public ITU_T_STRUCT(ACSE_apdu_enum) {
 
-        ACSE_apdu() : ITU_T_CHOICE_STRUCT(ACSE_apdu_enum) () {
+        ACSE_apdu() : ITU_T_STRUCT(ACSE_apdu_enum) () {
         }
 
         template<typename T > ACSE_apdu(boost::shared_ptr< T> vl, ACSE_apdu_enum enm) :
-                ITU_T_CHOICE_STRUCT(ACSE_apdu_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(ACSE_apdu_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICE_DECL(aarq, AARQ_apdu, ACSE_apdu_aarq);
@@ -413,13 +413,13 @@ namespace ACSE_1 {
         AP_title_ap_title_form3,
     };
 
-    struct AP_title : public ITU_T_CHOICE_STRUCT(AP_title_enum) {
+    struct AP_title : public ITU_T_STRUCT(AP_title_enum) {
 
-        AP_title() : ITU_T_CHOICE_STRUCT(AP_title_enum) () {
+        AP_title() : ITU_T_STRUCT(AP_title_enum) () {
         }
 
         template<typename T > AP_title(boost::shared_ptr< T> vl, AP_title_enum enm) :
-                ITU_T_CHOICE_STRUCT(AP_title_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(AP_title_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICE_DECL(ap_title_form1, AP_title_form1, AP_title_ap_title_form1);
@@ -439,13 +439,13 @@ namespace ACSE_1 {
         ASO_qualifier_aso_qualifier_form3,
     };
 
-    struct ASO_qualifier : public ITU_T_CHOICE_STRUCT(ASO_qualifier_enum) {
+    struct ASO_qualifier : public ITU_T_STRUCT(ASO_qualifier_enum) {
 
-        ASO_qualifier() : ITU_T_CHOICE_STRUCT(ASO_qualifier_enum) () {
+        ASO_qualifier() : ITU_T_STRUCT(ASO_qualifier_enum) () {
         }
 
         template<typename T > ASO_qualifier(boost::shared_ptr< T> vl, ASO_qualifier_enum enm) :
-                ITU_T_CHOICE_STRUCT(ASO_qualifier_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(ASO_qualifier_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICE_DECL(aso_qualifier_form1, ASO_qualifier_form1, ASO_qualifier_aso_qualifier_form1);
@@ -464,13 +464,13 @@ namespace ACSE_1 {
         AE_title_ae_title_form2,
     };
 
-    struct AE_title : public ITU_T_CHOICE_STRUCT(AE_title_enum) {
+    struct AE_title : public ITU_T_STRUCT(AE_title_enum) {
 
-        AE_title() : ITU_T_CHOICE_STRUCT(AE_title_enum) () {
+        AE_title() : ITU_T_STRUCT(AE_title_enum) () {
         }
 
         template<typename T > AE_title(boost::shared_ptr< T> vl, AE_title_enum enm) :
-                ITU_T_CHOICE_STRUCT(AE_title_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(AE_title_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICE_DECL(ae_title_form1, AE_title_form1, AE_title_ae_title_form1);
@@ -501,13 +501,13 @@ namespace ACSE_1 {
         Syntactic_context_list_default_contact_list,
     };
 
-    struct Syntactic_context_list : public ITU_T_CHOICE_STRUCT(Syntactic_context_list_enum) {
+    struct Syntactic_context_list : public ITU_T_STRUCT(Syntactic_context_list_enum) {
 
-        Syntactic_context_list() : ITU_T_CHOICE_STRUCT(Syntactic_context_list_enum) () {
+        Syntactic_context_list() : ITU_T_STRUCT(Syntactic_context_list_enum) () {
         }
 
         template<typename T > Syntactic_context_list(boost::shared_ptr< T> vl, Syntactic_context_list_enum enm) :
-                ITU_T_CHOICE_STRUCT(Syntactic_context_list_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(Syntactic_context_list_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICE_DECL(context_list, Context_list, Syntactic_context_list_context_list);
@@ -589,7 +589,7 @@ namespace ACSE_1 {
         Associate_source_diagnostic_acse_service_provider,
     };
 
-    struct Associate_source_diagnostic : public ITU_T_CHOICE_STRUCT(Associate_source_diagnostic_enum) {
+    struct Associate_source_diagnostic : public ITU_T_STRUCT(Associate_source_diagnostic_enum) {
 
         static const int acse_service_user_null;
         static const int acse_service_user_no_reason_given;
@@ -611,11 +611,11 @@ namespace ACSE_1 {
         static const int acse_service_provider_no_reason_given;
         static const int acse_service_provider_no_common_acse_version;
 
-        Associate_source_diagnostic() : ITU_T_CHOICE_STRUCT(Associate_source_diagnostic_enum) () {
+        Associate_source_diagnostic() : ITU_T_STRUCT(Associate_source_diagnostic_enum) () {
         }
 
         template<typename T > Associate_source_diagnostic(boost::shared_ptr< T> vl, Associate_source_diagnostic_enum enm) :
-                ITU_T_CHOICE_STRUCT(Associate_source_diagnostic_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(Associate_source_diagnostic_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICE_DECL(acse_service_user, int, Associate_source_diagnostic_acse_service_user);
@@ -634,13 +634,13 @@ namespace ACSE_1 {
         User_Data_fully_encoded_data,
     };
 
-    struct User_Data : public ITU_T_CHOICE_STRUCT(User_Data_enum) {
+    struct User_Data : public ITU_T_STRUCT(User_Data_enum) {
 
-        User_Data() : ITU_T_CHOICE_STRUCT(User_Data_enum) () {
+        User_Data() : ITU_T_STRUCT(User_Data_enum) () {
         }
 
         template<typename T > User_Data(boost::shared_ptr< T> vl, User_Data_enum enm) :
-                ITU_T_CHOICE_STRUCT(User_Data_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(User_Data_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICE_DECL(user_information, User_information, User_Data_user_information);
@@ -664,13 +664,13 @@ namespace ACSE_1 {
             presentation_data_values_type_arbitrary,
         };
 
-        struct presentation_data_values_type : public ITU_T_CHOICE_STRUCT(presentation_data_values_type_enum) {
+        struct presentation_data_values_type : public ITU_T_STRUCT(presentation_data_values_type_enum) {
 
-            presentation_data_values_type() : ITU_T_CHOICE_STRUCT(presentation_data_values_type_enum) () {
+            presentation_data_values_type() : ITU_T_STRUCT(presentation_data_values_type_enum) () {
             }
 
             template<typename T > presentation_data_values_type(boost::shared_ptr< T> vl, presentation_data_values_type_enum enm) :
-                    ITU_T_CHOICE_STRUCT(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICE_DECL(simple_ASN1_type, any_type, presentation_data_values_type_simple_ASN1_type);
@@ -708,7 +708,7 @@ namespace ACSE_1 {
         Authentication_value_other,
     };
 
-    struct Authentication_value : public ITU_T_CHOICE_STRUCT(Authentication_value_enum) {
+    struct Authentication_value : public ITU_T_STRUCT(Authentication_value_enum) {
 
 
         struct other_type;
@@ -726,11 +726,11 @@ namespace ACSE_1 {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        Authentication_value() : ITU_T_CHOICE_STRUCT(Authentication_value_enum) () {
+        Authentication_value() : ITU_T_STRUCT(Authentication_value_enum) () {
         }
 
         template<typename T > Authentication_value(boost::shared_ptr< T> vl, Authentication_value_enum enm) :
-                ITU_T_CHOICE_STRUCT(Authentication_value_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(Authentication_value_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICE_DECL(charstring, graphicstring_type, Authentication_value_charstring);

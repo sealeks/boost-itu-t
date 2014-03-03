@@ -1868,13 +1868,13 @@ namespace ACSE_1 {
     template<> void PDV_list::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(transfer_syntax_name_);
         ITU_T_BIND_TAG(presentation_context_identifier_);
-        ITU_T_CHOICE(presentation_data_values_);
+        ITU_T_BIND_CHOICE(presentation_data_values_);
     }
 
     template<> void PDV_list::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_TAG(transfer_syntax_name_);
         ITU_T_BIND_TAG(presentation_context_identifier_);
-        ITU_T_CHOICE(presentation_data_values_);
+        ITU_T_BIND_CHOICE(presentation_data_values_);
     }
 
     boost::shared_ptr<Transfer_syntax_name> PDV_list::transfer_syntax_name__new() {
