@@ -588,32 +588,32 @@ namespace x680 {
             if ((self->isdefined_choice())) {
                 if (self->tag()) {
                     switch (self->tag()->_class()) {
-                        case tcl_application: return "ITU_ASN1_CHOICE_APPLICATION_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                        case tcl_universal: return "ITU_ASN1_CHOICE_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                        case tcl_private: return "ITU_ASN1_CHOICE_PRIVATE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                        default: return "ITU_ASN1_CHOICE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                        case tcl_application: return "ITU_T_CHOICE_APPLICATION_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                        case tcl_universal: return "ITU_T_CHOICE_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                        case tcl_private: return "ITU_T_CHOICE_PRIVATE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                        default: return "ITU_T_CHOICE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
                     }
                 } else
-                    return "ITU_ASN1_CHOICE(" + name + ")";
+                    return "ITU_T_CHOICE(" + name + ")";
             } else {
                 if (self->tag()) {
                     if (self->tag()->rule() == implicit_tags) {
                         switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_ASN1_IMPLICIT_APPLICATION_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_ASN1_IMPLICIT_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_ASN1_IMPLICIT_PRIVATE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_ASN1_IMPLICIT_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_application: return "ITU_T_IMPLICIT_APPLICATION_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_universal: return "ITU_T_IMPLICIT_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_private: return "ITU_T_IMPLICIT_PRIVATE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                            default: return "ITU_T_IMPLICIT_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
                         }
                     } else {
                         switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_ASN1_EXPLICIT_APPLICATION_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_ASN1_EXPLICIT_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_ASN1_EXPLICIT_PRIVATE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_ASN1_EXPLICIT_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_application: return "ITU_T_EXPLICIT_APPLICATION_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_universal: return "ITU_T_EXPLICIT_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_private: return "ITU_T_EXPLICIT_PRIVATE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                            default: return "ITU_T_EXPLICIT_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
                         }
                     }
                 } else
-                    return "ITU_ASN1_BIND_TAG(" + name + ")";
+                    return "ITU_T_BIND_TAG(" + name + ")";
             }
             return "";
         }
@@ -905,10 +905,10 @@ namespace x680 {
                             break;
                         case declare_set: stream << "\n" << tabformat(scp, 2) << "typedef std::deque< " << it->from_type << " > " << it->typenam << ";";
                             break;
-                        case declare_explicit: stream << "\n" << tabformat(scp, 2) << "ITU_ASN1_EXPLICIT_TYPEDEF( "
+                        case declare_explicit: stream << "\n" << tabformat(scp, 2) << "ITU_T_EXPLICIT_TYPEDEF( "
                                     << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";
                             break;
-                        case declare_implicit: stream << "\n" << tabformat(scp, 2) << "ITU_ASN1_IMPLICIT_TYPEDEF( "
+                        case declare_implicit: stream << "\n" << tabformat(scp, 2) << "ITU_T_IMPLICIT_TYPEDEF( "
                                     << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";
                             break;
                         default:
@@ -1363,11 +1363,11 @@ namespace x680 {
                     stream << "\n";
                     if (!ischoice) {
                         switch (mkr) {
-                            case mk_none: stream << tabformat(self, 1) << "ITU_ASN1_VALUE_HOLDER" << (noholder_ ? "N": "H") << "_DECL(" << it->name << ", " << it->typenam << ");";
+                            case mk_none: stream << tabformat(self, 1) << "ITU_T_VALUE_HOLDER" << (noholder_ ? "N": "H") << "_DECL(" << it->name << ", " << it->typenam << ");";
                                 break;
-                            case mk_optional: stream << tabformat(self, 1) << "ITU_ASN1_VALUE_OPTIONAL_DECL(" << it->name << ", " << it->typenam << ");";
+                            case mk_optional: stream << tabformat(self, 1) << "ITU_T_VALUE_OPTIONAL_DECL(" << it->name << ", " << it->typenam << ");";
                                 break;
-                            case mk_default: stream << tabformat(self, 1) << "ITU_ASN1_VALUE_DEFAULT_DECL(" << it->name << ", " << it->typenam <<", "  << (it->name + "__default") << ");";
+                            case mk_default: stream << tabformat(self, 1) << "ITU_T_VALUE_DEFAULT_DECL(" << it->name << ", " << it->typenam <<", "  << (it->name + "__default") << ");";
                                 break;
                             default:
                             {
@@ -1375,7 +1375,7 @@ namespace x680 {
                         }
                     } else {
                         stream << tabformat(self, 1) <<
-                                "ITU_ASN1_VALUE_CHOICE(" <<
+                                "ITU_T_VALUE_CHOICE(" <<
                                 it->name << ", " << it->typenam << ", " <<
                                 type_str(self) << "_" << it->name << ");";
                     }
@@ -1512,7 +1512,7 @@ namespace x680 {
 
             stream << "\n" << tabformat(self) <<
                     "struct " << type_str(self) << "";
-            stream << " : " << "public ITU_ASN1_CHOICE_STRUCT(" << type_str(self) << "_enum) {\n";
+            stream << " : " << "public ITU_T_CHOICE_STRUCT(" << type_str(self) << "_enum) {\n";
 
 
             execute_predeclare(stream, self);
@@ -1639,11 +1639,11 @@ namespace x680 {
                     {
                         stream << "\n";
                         stream << "\n" << tabformat(self, 1) << type_str(self) << "()";
-                        stream << " : " << " ITU_ASN1_CHOICE_STRUCT(" << type_str(self) << "_enum) () {} \n";
+                        stream << " : " << " ITU_T_CHOICE_STRUCT(" << type_str(self) << "_enum) () {} \n";
 
                         stream << tabformat(self, 1) << "template<typename T> ";
                         stream << type_str(self) << "(boost::shared_ptr< T> vl, " << type_str(self) << "_enum enm) : \n";
-                        stream << tabformat(self, 2) << " ITU_ASN1_CHOICE_STRUCT(" << type_str(self) << "_enum) (vl, static_cast<int>(enm)) {} \n";
+                        stream << tabformat(self, 2) << " ITU_T_CHOICE_STRUCT(" << type_str(self) << "_enum) (vl, static_cast<int>(enm)) {} \n";
                         break;
                     }
                     case t_SET:
@@ -1806,7 +1806,7 @@ namespace x680 {
         }
 
         void fileout::execute_archive_meth_hpp(std::ofstream& stream, basic_entity_ptr scp) {
-            stream << "\n\n" << tabformat(scp, 1) << "ITU_ASN1_ARCHIVE_FUNC;";
+            stream << "\n\n" << tabformat(scp, 1) << "ITU_T_ARCHIVE_FUNC;";
         }
 
         void fileout::execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self) {
@@ -1847,10 +1847,10 @@ namespace x680 {
                         if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
                             execute_archive_ber_member(stream, named);
                     } else if (mkr == mk_extention)
-                        stream << "\n" << tabformat(scp, 3) << "ITU_ASN1_EXTENTION" << ";";
+                        stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";
                 }
                 if ((*it)->as_extention())
-                    stream << "\n" << tabformat(scp, 3) << "ITU_ASN1_EXTENTION" << ";";
+                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";
             }
             stream << "\n";
             stream << tabformat(scp, 2) << "}";
@@ -1972,7 +1972,7 @@ namespace x680 {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if (tpas && (tpas->isstructure()) && (tpas->is_cpp_expressed())) {
                     if (tpas->builtin() == t_CHOICE) {
-                        stream << "\n" << "ITU_ASN1_CHOICE_REGESTRATE(";
+                        stream << "\n" << "ITU_T_CHOICE_REGESTRATE(";
                         stream << fulltype_str(tpas, true);
                         stream << ")";
                         cnt++;
@@ -1989,7 +1989,7 @@ namespace x680 {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if (tpas && (tpas->isstructure()) && (tpas->is_cpp_expressed())) {
                     if (tpas->builtin() == t_SET) {
-                        stream << "\n" << "ITU_ASN1_SET_REGESTRATE(";
+                        stream << "\n" << "ITU_T_SET_REGESTRATE(";
                         stream << fulltype_str(tpas, true);
                         stream << ")";
                         cnt++;

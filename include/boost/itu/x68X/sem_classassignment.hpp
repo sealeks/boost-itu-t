@@ -3,8 +3,8 @@
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
 
-#ifndef         _ITU_ASN1_SEM_CLASSASSIGNMENT_IMPLEMENTATIUON_H_
-#define	_ITU_ASN1_SEM_CLASSASSIGNMENT_IMPLEMENTATIUON_H_
+#ifndef         _ITU_T_SEM_CLASSASSIGNMENT_IMPLEMENTATIUON_H_
+#define	_ITU_T_SEM_CLASSASSIGNMENT_IMPLEMENTATIUON_H_
 
 #include <boost/itu/x68X/sem_assignment.hpp>
 
