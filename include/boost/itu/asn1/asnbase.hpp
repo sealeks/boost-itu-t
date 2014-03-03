@@ -118,7 +118,7 @@ namespace boost {\
 #define ITU_T_EXPLICIT_APPLICATION_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)  
 #define ITU_T_EXPLICIT_PRIVATE_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
 #define ITU_T_EXPLICIT_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::UNIVERSAL_CLASS)
-#define ITU_T_CHOICE(var)    boost::asn1::bind_choice(arch, var)
+#define ITU_T_BIND_CHOICE(var)    boost::asn1::bind_choice(arch, var)
 #define ITU_T_CHOICE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::CONTEXT_CLASS)
 #define ITU_T_CHOICE_APPLICATION_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
 #define ITU_T_CHOICE_PRIVATE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
@@ -126,7 +126,7 @@ namespace boost {\
 
 #define ITU_T_EXTENTION   arch.resetextention();
 
-#define ITU_T_CHOICE_STRUCT(enm)  boost::asn1::___asn__choice__base__< enm> 
+#define ITU_T_STRUCT(enm)  boost::asn1::___asn__choice__base__< enm> 
 #define ITU_T_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
 
 #define ITU_T_CHOICE_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; \
@@ -1828,9 +1828,9 @@ namespace boost {
                 encoding_type_arbitrary,
             };
 
-            struct encoding_type : public ITU_T_CHOICE_STRUCT(encoding_type_enum) {
+            struct encoding_type : public ITU_T_STRUCT(encoding_type_enum) {
 
-                encoding_type() : ITU_T_CHOICE_STRUCT(encoding_type_enum) () {
+                encoding_type() : ITU_T_STRUCT(encoding_type_enum) () {
                 }
 
                 ITU_T_CHOICE_DECL(single_ASN1_type, any_type, encoding_type_single_ASN1_type)
@@ -1946,7 +1946,7 @@ namespace boost {
                 ITU_T_BIND_TAG(direct_reference);
                 ITU_T_BIND_TAG(indirect_reference);
                 ITU_T_BIND_TAG(data_value_descriptor);
-                ITU_T_CHOICE(encoding);
+                ITU_T_BIND_CHOICE(encoding);
             }
         };
 
@@ -1967,7 +1967,7 @@ namespace boost {
                 identification_type_fixed_type,
             };
 
-            struct identification_type : public ITU_T_CHOICE_STRUCT(identification_type_enum) {
+            struct identification_type : public ITU_T_STRUCT(identification_type_enum) {
 
                 struct syntaxes_type {
 
@@ -1999,7 +1999,7 @@ namespace boost {
                     }
                 };
 
-                identification_type() : ITU_T_CHOICE_STRUCT(identification_type_enum) () {
+                identification_type() : ITU_T_STRUCT(identification_type_enum) () {
                 }
 
                 ITU_T_CHOICE_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
@@ -2145,7 +2145,7 @@ namespace boost {
 
             template<typename Archive> void serialize(Archive & arch) {
 
-                ITU_T_CHOICE(identification);
+                ITU_T_BIND_CHOICE(identification);
                 ITU_T_IMPLICIT_TAG(data_value, 1); //  ????
             }
         };
@@ -2170,7 +2170,7 @@ namespace boost {
                 identification_type_fixed_type,
             };
 
-            struct identification_type : public ITU_T_CHOICE_STRUCT(identification_type_enum) {
+            struct identification_type : public ITU_T_STRUCT(identification_type_enum) {
 
                 struct syntaxes_type {
 
@@ -2202,7 +2202,7 @@ namespace boost {
                     }
                 };
 
-                identification_type() : ITU_T_CHOICE_STRUCT(identification_type_enum) () {
+                identification_type() : ITU_T_STRUCT(identification_type_enum) () {
                 }
 
                 ITU_T_CHOICE_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
@@ -2348,7 +2348,7 @@ namespace boost {
 
             template<typename Archive> void serialize(Archive & arch) {
 
-                ITU_T_CHOICE(identification);
+                ITU_T_BIND_CHOICE(identification);
                 ITU_T_IMPLICIT_TAG(data_value_descriptor, 1);
                 ITU_T_IMPLICIT_TAG(string_value, 2);
             }
