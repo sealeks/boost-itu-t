@@ -85,13 +85,13 @@ namespace Reliable_Transfer_APDU {
         RTSE_apdus_rtab_apdu,
     };
 
-    struct RTSE_apdus : public ITU_T_STRUCT(RTSE_apdus_enum) {
+    struct RTSE_apdus : public ITU_T_CHOICE(RTSE_apdus_enum) {
 
-        RTSE_apdus() : ITU_T_STRUCT(RTSE_apdus_enum) () {
+        RTSE_apdus() : ITU_T_CHOICE(RTSE_apdus_enum) () {
         }
 
         template<typename T > RTSE_apdus(boost::shared_ptr< T> vl, RTSE_apdus_enum enm) :
-                ITU_T_STRUCT(RTSE_apdus_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(RTSE_apdus_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICEC_DECL(rtorq_apdu, RTORQapdu, RTSE_apdus_rtorq_apdu);
@@ -197,13 +197,13 @@ namespace Reliable_Transfer_APDU {
         ConnectionData_recover,
     };
 
-    struct ConnectionData : public ITU_T_STRUCT(ConnectionData_enum) {
+    struct ConnectionData : public ITU_T_CHOICE(ConnectionData_enum) {
 
-        ConnectionData() : ITU_T_STRUCT(ConnectionData_enum) () {
+        ConnectionData() : ITU_T_CHOICE(ConnectionData_enum) () {
         }
 
         template<typename T > ConnectionData(boost::shared_ptr< T> vl, ConnectionData_enum enm) :
-                ITU_T_STRUCT(ConnectionData_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(ConnectionData_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(open, any_type, ConnectionData_open); // primitive
@@ -246,13 +246,13 @@ namespace Reliable_Transfer_APDU {
         CallingSSuserReference_octetString,
     };
 
-    struct CallingSSuserReference : public ITU_T_STRUCT(CallingSSuserReference_enum) {
+    struct CallingSSuserReference : public ITU_T_CHOICE(CallingSSuserReference_enum) {
 
-        CallingSSuserReference() : ITU_T_STRUCT(CallingSSuserReference_enum) () {
+        CallingSSuserReference() : ITU_T_CHOICE(CallingSSuserReference_enum) () {
         }
 
         template<typename T > CallingSSuserReference(boost::shared_ptr< T> vl, CallingSSuserReference_enum enm) :
-                ITU_T_STRUCT(CallingSSuserReference_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(CallingSSuserReference_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(t61String, t61string_type, CallingSSuserReference_t61String); // primitive

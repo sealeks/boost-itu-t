@@ -68,13 +68,13 @@ namespace Remote_Operations_Information_Objects {
         Code_global,
     };
 
-    struct Code : public ITU_T_STRUCT(Code_enum) {
+    struct Code : public ITU_T_CHOICE(Code_enum) {
 
-        Code() : ITU_T_STRUCT(Code_enum) () {
+        Code() : ITU_T_CHOICE(Code_enum) () {
         }
 
         template<typename T > Code(boost::shared_ptr< T> vl, Code_enum enm) :
-                ITU_T_STRUCT(Code_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(Code_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(local, int, Code_local); // primitive

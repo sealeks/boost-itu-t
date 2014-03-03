@@ -284,7 +284,7 @@ namespace ISO8823_PRESENTATION {
         CPR_PPDU_normal_mode_parameters,
     };
 
-    struct CPR_PPDU : public ITU_T_STRUCT(CPR_PPDU_enum) {
+    struct CPR_PPDU : public ITU_T_CHOICE(CPR_PPDU_enum) {
 
 
         struct x400_mode_parameters_type;
@@ -326,11 +326,11 @@ namespace ISO8823_PRESENTATION {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        CPR_PPDU() : ITU_T_STRUCT(CPR_PPDU_enum) () {
+        CPR_PPDU() : ITU_T_CHOICE(CPR_PPDU_enum) () {
         }
 
         template<typename T > CPR_PPDU(boost::shared_ptr< T> vl, CPR_PPDU_enum enm) :
-                ITU_T_STRUCT(CPR_PPDU_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(CPR_PPDU_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICEC_DECL(x400_mode_parameters, x400_mode_parameters_type, CPR_PPDU_x400_mode_parameters);
@@ -348,13 +348,13 @@ namespace ISO8823_PRESENTATION {
         Abort_type_arp_ppdu,
     };
 
-    struct Abort_type : public ITU_T_STRUCT(Abort_type_enum) {
+    struct Abort_type : public ITU_T_CHOICE(Abort_type_enum) {
 
-        Abort_type() : ITU_T_STRUCT(Abort_type_enum) () {
+        Abort_type() : ITU_T_CHOICE(Abort_type_enum) () {
         }
 
         template<typename T > Abort_type(boost::shared_ptr< T> vl, Abort_type_enum enm) :
-                ITU_T_STRUCT(Abort_type_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(Abort_type_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICEC_DECL(aru_ppdu, ARU_PPDU, Abort_type_aru_ppdu);
@@ -372,7 +372,7 @@ namespace ISO8823_PRESENTATION {
         ARU_PPDU_normal_mode_parameters,
     };
 
-    struct ARU_PPDU : public ITU_T_STRUCT(ARU_PPDU_enum) {
+    struct ARU_PPDU : public ITU_T_CHOICE(ARU_PPDU_enum) {
 
 
         struct x400_mode_parameters_type;
@@ -406,11 +406,11 @@ namespace ISO8823_PRESENTATION {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        ARU_PPDU() : ITU_T_STRUCT(ARU_PPDU_enum) () {
+        ARU_PPDU() : ITU_T_CHOICE(ARU_PPDU_enum) () {
         }
 
         template<typename T > ARU_PPDU(boost::shared_ptr< T> vl, ARU_PPDU_enum enm) :
-                ITU_T_STRUCT(ARU_PPDU_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(ARU_PPDU_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICEC_DECL(x400_mode_parameters, x400_mode_parameters_type, ARU_PPDU_x400_mode_parameters);
@@ -444,13 +444,13 @@ namespace ISO8823_PRESENTATION {
         Typed_data_type_ttdPPDU,
     };
 
-    struct Typed_data_type : public ITU_T_STRUCT(Typed_data_type_enum) {
+    struct Typed_data_type : public ITU_T_CHOICE(Typed_data_type_enum) {
 
-        Typed_data_type() : ITU_T_STRUCT(Typed_data_type_enum) () {
+        Typed_data_type() : ITU_T_CHOICE(Typed_data_type_enum) () {
         }
 
         template<typename T > Typed_data_type(boost::shared_ptr< T> vl, Typed_data_type_enum enm) :
-                ITU_T_STRUCT(Typed_data_type_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(Typed_data_type_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICEC_DECL(acPPDU, AC_PPDU, Typed_data_type_acPPDU);
@@ -683,13 +683,13 @@ namespace ISO8823_PRESENTATION {
         User_data_fully_encoded_data,
     };
 
-    struct User_data : public ITU_T_STRUCT(User_data_enum) {
+    struct User_data : public ITU_T_CHOICE(User_data_enum) {
 
-        User_data() : ITU_T_STRUCT(User_data_enum) () {
+        User_data() : ITU_T_CHOICE(User_data_enum) () {
         }
 
         template<typename T > User_data(boost::shared_ptr< T> vl, User_data_enum enm) :
-                ITU_T_STRUCT(User_data_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(User_data_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(simply_encoded_data, Simply_encoded_data, User_data_simply_encoded_data); // primitive
@@ -712,13 +712,13 @@ namespace ISO8823_PRESENTATION {
             presentation_data_values_type_arbitrary,
         };
 
-        struct presentation_data_values_type : public ITU_T_STRUCT(presentation_data_values_type_enum) {
+        struct presentation_data_values_type : public ITU_T_CHOICE(presentation_data_values_type_enum) {
 
-            presentation_data_values_type() : ITU_T_STRUCT(presentation_data_values_type_enum) () {
+            presentation_data_values_type() : ITU_T_CHOICE(presentation_data_values_type_enum) () {
             }
 
             template<typename T > presentation_data_values_type(boost::shared_ptr< T> vl, presentation_data_values_type_enum enm) :
-                    ITU_T_STRUCT(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(single_ASN1_type, any_type, presentation_data_values_type_single_ASN1_type); // primitive

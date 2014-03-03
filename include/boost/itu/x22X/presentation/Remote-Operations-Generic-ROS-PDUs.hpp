@@ -79,13 +79,13 @@ namespace Remote_Operations_Generic_ROS_PDUs {
             problem_type_returnError,
         };
 
-        struct problem_type : public ITU_T_STRUCT(problem_type_enum) {
+        struct problem_type : public ITU_T_CHOICE(problem_type_enum) {
 
-            problem_type() : ITU_T_STRUCT(problem_type_enum) () {
+            problem_type() : ITU_T_CHOICE(problem_type_enum) () {
             }
 
             template<typename T > problem_type(boost::shared_ptr< T> vl, problem_type_enum enm) :
-                    ITU_T_STRUCT(problem_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_CHOICE(problem_type_enum) (vl, static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(general, GeneralProblem, problem_type_general); // primitive
@@ -160,13 +160,13 @@ namespace Remote_Operations_Generic_ROS_PDUs {
         InvokeId_absent,
     };
 
-    struct InvokeId : public ITU_T_STRUCT(InvokeId_enum) {
+    struct InvokeId : public ITU_T_CHOICE(InvokeId_enum) {
 
-        InvokeId() : ITU_T_STRUCT(InvokeId_enum) () {
+        InvokeId() : ITU_T_CHOICE(InvokeId_enum) () {
         }
 
         template<typename T > InvokeId(boost::shared_ptr< T> vl, InvokeId_enum enm) :
-                ITU_T_STRUCT(InvokeId_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_CHOICE(InvokeId_enum) (vl, static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(present, int, InvokeId_present); // primitive
