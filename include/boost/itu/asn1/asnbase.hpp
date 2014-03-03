@@ -149,12 +149,6 @@ namespace boost {\
 #define ITU_T_DEFAULTH_DECL(nm ,tp, dflt )    void nm ( const tp & vl);  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
                          private: boost::asn1::default_holder<tp  , dflt> nm ## _ ; public: 
 
-#define ITU_T_FUNC_DECLARATE( type, var)    boost::shared_ptr< type > var  ## __new () { return var = boost::asn1::simple_build_type<type>();} \
-               void  var ##  __free() { var = boost::shared_ptr< type >() ;} \
-                boost::shared_ptr< type > var  ## __get_or_create () { return var  ? var  : (var = boost::asn1::simple_build_type<type>() );} \
-                void var  ## __assign ( boost::shared_ptr< type > vl ) { var  =  vl ;} \
-                void var  ## __assign ( type * vl ) { var  =  boost::shared_ptr< type >(vl)  ;} \
-                /*void var  ## __assign ( const type & vl ) { var  =  boost::shared_ptr< type >( new type (vl)) ;}*/
 
 #define ITU_T_ARCHIVE_FUNC    template<typename Archive> void serialize(Archive& arch){};
 
