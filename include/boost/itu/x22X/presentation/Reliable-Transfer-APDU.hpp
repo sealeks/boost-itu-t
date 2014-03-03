@@ -94,12 +94,12 @@ namespace Reliable_Transfer_APDU {
                 ITU_T_CHOICE_STRUCT(RTSE_apdus_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_VALUE_CHOICE(rtorq_apdu, RTORQapdu, RTSE_apdus_rtorq_apdu);
-        ITU_T_VALUE_CHOICE(rtoac_apdu, RTOACapdu, RTSE_apdus_rtoac_apdu);
-        ITU_T_VALUE_CHOICE(rtorj_apdu, RTORJapdu, RTSE_apdus_rtorj_apdu);
-        ITU_T_VALUE_CHOICE(rttp_apdu, RTTPapdu, RTSE_apdus_rttp_apdu);
-        ITU_T_VALUE_CHOICE(rttr_apdu, RTTRapdu, RTSE_apdus_rttr_apdu);
-        ITU_T_VALUE_CHOICE(rtab_apdu, RTABapdu, RTSE_apdus_rtab_apdu);
+        ITU_T_CHOICE_DECL(rtorq_apdu, RTORQapdu, RTSE_apdus_rtorq_apdu);
+        ITU_T_CHOICE_DECL(rtoac_apdu, RTOACapdu, RTSE_apdus_rtoac_apdu);
+        ITU_T_CHOICE_DECL(rtorj_apdu, RTORJapdu, RTSE_apdus_rtorj_apdu);
+        ITU_T_CHOICE_DECL(rttp_apdu, RTTPapdu, RTSE_apdus_rttp_apdu);
+        ITU_T_CHOICE_DECL(rttr_apdu, RTTRapdu, RTSE_apdus_rttr_apdu);
+        ITU_T_CHOICE_DECL(rtab_apdu, RTABapdu, RTSE_apdus_rtab_apdu);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -125,11 +125,11 @@ namespace Reliable_Transfer_APDU {
                 boost::shared_ptr< ConnectionData> arg__connectionDataRQ,
                 boost::shared_ptr< int> arg__applicationProtocol);
 
-        ITU_T_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
-        ITU_T_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
-        ITU_T_VALUE_DEFAULT_DECL(dialogueMode, int, dialogueMode__default);
-        ITU_T_VALUE_HOLDERH_DECL(connectionDataRQ, ConnectionData);
-        ITU_T_VALUE_OPTIONAL_DECL(applicationProtocol, int);
+        ITU_T_DEFAULTH_DECL(checkpointSize, int, checkpointSize__default);
+        ITU_T_DEFAULTH_DECL(windowSize, int, windowSize__default);
+        ITU_T_DEFAULTH_DECL(dialogueMode, int, dialogueMode__default);
+        ITU_T_HOLDERH_DECL(connectionDataRQ, ConnectionData);
+        ITU_T_OPTIONAL_DECL(applicationProtocol, int);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -149,9 +149,9 @@ namespace Reliable_Transfer_APDU {
                 boost::shared_ptr< int> arg__windowSize,
                 boost::shared_ptr< ConnectionData> arg__connectionDataAC);
 
-        ITU_T_VALUE_DEFAULT_DECL(checkpointSize, int, checkpointSize__default);
-        ITU_T_VALUE_DEFAULT_DECL(windowSize, int, windowSize__default);
-        ITU_T_VALUE_HOLDERH_DECL(connectionDataAC, ConnectionData);
+        ITU_T_DEFAULTH_DECL(checkpointSize, int, checkpointSize__default);
+        ITU_T_DEFAULTH_DECL(windowSize, int, windowSize__default);
+        ITU_T_HOLDERH_DECL(connectionDataAC, ConnectionData);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -165,8 +165,8 @@ namespace Reliable_Transfer_APDU {
         RTORJapdu(boost::shared_ptr< RefuseReason> arg__refuseReason,
                 boost::shared_ptr< any_type> arg__userDataRJ);
 
-        ITU_T_VALUE_OPTIONAL_DECL(refuseReason, RefuseReason);
-        ITU_T_VALUE_OPTIONAL_DECL(userDataRJ, any_type);
+        ITU_T_OPTIONAL_DECL(refuseReason, RefuseReason);
+        ITU_T_OPTIONAL_DECL(userDataRJ, any_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -181,9 +181,9 @@ namespace Reliable_Transfer_APDU {
                 boost::shared_ptr< bitstring_type> arg__reflectedParameter,
                 boost::shared_ptr< any_type> arg__userdataAB);
 
-        ITU_T_VALUE_OPTIONAL_DECL(abortReason, AbortReason);
-        ITU_T_VALUE_OPTIONAL_DECL(reflectedParameter, bitstring_type);
-        ITU_T_VALUE_OPTIONAL_DECL(userdataAB, any_type);
+        ITU_T_OPTIONAL_DECL(abortReason, AbortReason);
+        ITU_T_OPTIONAL_DECL(reflectedParameter, bitstring_type);
+        ITU_T_OPTIONAL_DECL(userdataAB, any_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -206,8 +206,8 @@ namespace Reliable_Transfer_APDU {
                 ITU_T_CHOICE_STRUCT(ConnectionData_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_VALUE_CHOICE(open, any_type, ConnectionData_open);
-        ITU_T_VALUE_CHOICE(recover, SessionConnectionIdentifier, ConnectionData_recover);
+        ITU_T_CHOICE_DECL(open, any_type, ConnectionData_open);
+        ITU_T_CHOICE_DECL(recover, SessionConnectionIdentifier, ConnectionData_recover);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -225,9 +225,9 @@ namespace Reliable_Transfer_APDU {
                 boost::shared_ptr< CommonReference> arg__commonReference,
                 boost::shared_ptr< AdditionalReferenceInformation> arg__additionalReferenceInformation);
 
-        ITU_T_VALUE_HOLDERH_DECL(callingSSuserReference, CallingSSuserReference);
-        ITU_T_VALUE_HOLDERH_DECL(commonReference, CommonReference);
-        ITU_T_VALUE_OPTIONAL_DECL(additionalReferenceInformation, AdditionalReferenceInformation);
+        ITU_T_HOLDERH_DECL(callingSSuserReference, CallingSSuserReference);
+        ITU_T_HOLDERH_DECL(commonReference, CommonReference);
+        ITU_T_OPTIONAL_DECL(additionalReferenceInformation, AdditionalReferenceInformation);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -255,8 +255,8 @@ namespace Reliable_Transfer_APDU {
                 ITU_T_CHOICE_STRUCT(CallingSSuserReference_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_VALUE_CHOICE(t61String, t61string_type, CallingSSuserReference_t61String);
-        ITU_T_VALUE_CHOICE(octetString, octetstring_type, CallingSSuserReference_octetString);
+        ITU_T_CHOICE_DECL(t61String, t61string_type, CallingSSuserReference_t61String);
+        ITU_T_CHOICE_DECL(octetString, octetstring_type, CallingSSuserReference_octetString);
 
         ITU_T_ARCHIVE_FUNC;
     };
