@@ -4,6 +4,22 @@ namespace ISO_9506_MMS_1 {
 
     // choice MMSpdu
 
+    void MMSpdu::cancel_RequestPDU(const Cancel_RequestPDU& vl) {
+        set<Cancel_RequestPDU>(new Cancel_RequestPDU(vl), MMSpdu_cancel_RequestPDU);
+    }
+
+    void MMSpdu::cancel_ResponsePDU(const Cancel_ResponsePDU& vl) {
+        set<Cancel_ResponsePDU>(new Cancel_ResponsePDU(vl), MMSpdu_cancel_ResponsePDU);
+    }
+
+    void MMSpdu::conclude_RequestPDU(const Conclude_RequestPDU& vl) {
+        set<Conclude_RequestPDU>(new Conclude_RequestPDU(vl), MMSpdu_conclude_RequestPDU);
+    }
+
+    void MMSpdu::conclude_ResponsePDU(const Conclude_ResponsePDU& vl) {
+        set<Conclude_ResponsePDU>(new Conclude_ResponsePDU(vl), MMSpdu_conclude_ResponsePDU);
+    }
+
     template<> void MMSpdu::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case MMSpdu_confirmed_RequestPDU:
@@ -295,6 +311,58 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice ConfirmedServiceRequest
+
+    void ConfirmedServiceRequest::status(const Status_Request& vl) {
+        set<Status_Request>(new Status_Request(vl), ConfirmedServiceRequest_status);
+    }
+
+    void ConfirmedServiceRequest::identify(const Identify_Request& vl) {
+        set<Identify_Request>(new Identify_Request(vl), ConfirmedServiceRequest_identify);
+    }
+
+    void ConfirmedServiceRequest::downloadSegment(const DownloadSegment_Request& vl) {
+        set<DownloadSegment_Request>(new DownloadSegment_Request(vl), ConfirmedServiceRequest_downloadSegment);
+    }
+
+    void ConfirmedServiceRequest::initiateUploadSequence(const InitiateUploadSequence_Request& vl) {
+        set<InitiateUploadSequence_Request>(new InitiateUploadSequence_Request(vl), ConfirmedServiceRequest_initiateUploadSequence);
+    }
+
+    void ConfirmedServiceRequest::uploadSegment(const UploadSegment_Request& vl) {
+        set<UploadSegment_Request>(new UploadSegment_Request(vl), ConfirmedServiceRequest_uploadSegment);
+    }
+
+    void ConfirmedServiceRequest::terminateUploadSequence(const TerminateUploadSequence_Request& vl) {
+        set<TerminateUploadSequence_Request>(new TerminateUploadSequence_Request(vl), ConfirmedServiceRequest_terminateUploadSequence);
+    }
+
+    void ConfirmedServiceRequest::deleteDomain(const DeleteDomain_Request& vl) {
+        set<DeleteDomain_Request>(new DeleteDomain_Request(vl), ConfirmedServiceRequest_deleteDomain);
+    }
+
+    void ConfirmedServiceRequest::getDomainAttributes(const GetDomainAttributes_Request& vl) {
+        set<GetDomainAttributes_Request>(new GetDomainAttributes_Request(vl), ConfirmedServiceRequest_getDomainAttributes);
+    }
+
+    void ConfirmedServiceRequest::deleteProgramInvocation(const DeleteProgramInvocation_Request& vl) {
+        set<DeleteProgramInvocation_Request>(new DeleteProgramInvocation_Request(vl), ConfirmedServiceRequest_deleteProgramInvocation);
+    }
+
+    void ConfirmedServiceRequest::getProgramInvocationAttributes(const GetProgramInvocationAttributes_Request& vl) {
+        set<GetProgramInvocationAttributes_Request>(new GetProgramInvocationAttributes_Request(vl), ConfirmedServiceRequest_getProgramInvocationAttributes);
+    }
+
+    void ConfirmedServiceRequest::fileRead(const ISO_9506_MMS_1A::FileRead_Request& vl) {
+        set<ISO_9506_MMS_1A::FileRead_Request>(new ISO_9506_MMS_1A::FileRead_Request(vl), ConfirmedServiceRequest_fileRead);
+    }
+
+    void ConfirmedServiceRequest::fileClose(const ISO_9506_MMS_1A::FileClose_Request& vl) {
+        set<ISO_9506_MMS_1A::FileClose_Request>(new ISO_9506_MMS_1A::FileClose_Request(vl), ConfirmedServiceRequest_fileClose);
+    }
+
+    void ConfirmedServiceRequest::deleteAccessControlList(const DeleteAccessControlList_Request& vl) {
+        set<DeleteAccessControlList_Request>(new DeleteAccessControlList_Request(vl), ConfirmedServiceRequest_deleteAccessControlList);
+    }
 
     template<> void ConfirmedServiceRequest::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1294,6 +1362,34 @@ namespace ISO_9506_MMS_1 {
 
     // choice AdditionalService-Request
 
+    void AdditionalService_Request::vMDStop(const VMDStop_Request& vl) {
+        set<VMDStop_Request>(new VMDStop_Request(vl), AdditionalService_Request_vMDStop);
+    }
+
+    void AdditionalService_Request::vMDReset(const VMDReset_Request& vl) {
+        set<VMDReset_Request>(new VMDReset_Request(vl), AdditionalService_Request_vMDReset);
+    }
+
+    void AdditionalService_Request::initiateUCLoad(const InitiateUnitControlLoad_Request& vl) {
+        set<InitiateUnitControlLoad_Request>(new InitiateUnitControlLoad_Request(vl), AdditionalService_Request_initiateUCLoad);
+    }
+
+    void AdditionalService_Request::uCLoad(const UnitControlLoadSegment_Request& vl) {
+        set<UnitControlLoadSegment_Request>(new UnitControlLoadSegment_Request(vl), AdditionalService_Request_uCLoad);
+    }
+
+    void AdditionalService_Request::stopUC(const StopUnitControl_Request& vl) {
+        set<StopUnitControl_Request>(new StopUnitControl_Request(vl), AdditionalService_Request_stopUC);
+    }
+
+    void AdditionalService_Request::getUCAttributes(const GetUnitControlAttributes_Request& vl) {
+        set<GetUnitControlAttributes_Request>(new GetUnitControlAttributes_Request(vl), AdditionalService_Request_getUCAttributes);
+    }
+
+    void AdditionalService_Request::deleteUC(const DeleteUnitControl_Request& vl) {
+        set<DeleteUnitControl_Request>(new DeleteUnitControl_Request(vl), AdditionalService_Request_deleteUC);
+    }
+
     template<> void AdditionalService_Request::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case AdditionalService_Request_vMDStop:
@@ -1599,6 +1695,14 @@ namespace ISO_9506_MMS_1 {
 
     // choice Request-Detail
 
+    void Request_Detail::otherRequests(const null_type& vl) {
+        set<null_type>(new null_type(vl), Request_Detail_otherRequests);
+    }
+
+    void Request_Detail::createProgramInvocation(const CS_CreateProgramInvocation_Request& vl) {
+        set<CS_CreateProgramInvocation_Request>(new CS_CreateProgramInvocation_Request(vl), Request_Detail_createProgramInvocation);
+    }
+
     template<> void Request_Detail::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case Request_Detail_otherRequests:
@@ -1872,6 +1976,10 @@ namespace ISO_9506_MMS_1 {
 
     // choice Unconfirmed-Detail
 
+    void Unconfirmed_Detail::otherRequests(const null_type& vl) {
+        set<null_type>(new null_type(vl), Unconfirmed_Detail_otherRequests);
+    }
+
     template<> void Unconfirmed_Detail::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case Unconfirmed_Detail_otherRequests:
@@ -2015,6 +2123,186 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice ConfirmedServiceResponse
+
+    void ConfirmedServiceResponse::rename(const Rename_Response& vl) {
+        set<Rename_Response>(new Rename_Response(vl), ConfirmedServiceResponse_rename);
+    }
+
+    void ConfirmedServiceResponse::defineNamedVariable(const DefineNamedVariable_Response& vl) {
+        set<DefineNamedVariable_Response>(new DefineNamedVariable_Response(vl), ConfirmedServiceResponse_defineNamedVariable);
+    }
+
+    void ConfirmedServiceResponse::defineScatteredAccess(const ISO_9506_MMS_1A::DefineScatteredAccess_Response& vl) {
+        set<ISO_9506_MMS_1A::DefineScatteredAccess_Response>(new ISO_9506_MMS_1A::DefineScatteredAccess_Response(vl), ConfirmedServiceResponse_defineScatteredAccess);
+    }
+
+    void ConfirmedServiceResponse::defineNamedVariableList(const DefineNamedVariableList_Response& vl) {
+        set<DefineNamedVariableList_Response>(new DefineNamedVariableList_Response(vl), ConfirmedServiceResponse_defineNamedVariableList);
+    }
+
+    void ConfirmedServiceResponse::defineNamedType(const DefineNamedType_Response& vl) {
+        set<DefineNamedType_Response>(new DefineNamedType_Response(vl), ConfirmedServiceResponse_defineNamedType);
+    }
+
+    void ConfirmedServiceResponse::input(const Input_Response& vl) {
+        set<Input_Response>(new Input_Response(vl), ConfirmedServiceResponse_input);
+    }
+
+    void ConfirmedServiceResponse::output(const Output_Response& vl) {
+        set<Output_Response>(new Output_Response(vl), ConfirmedServiceResponse_output);
+    }
+
+    void ConfirmedServiceResponse::relinquishControl(const RelinquishControl_Response& vl) {
+        set<RelinquishControl_Response>(new RelinquishControl_Response(vl), ConfirmedServiceResponse_relinquishControl);
+    }
+
+    void ConfirmedServiceResponse::defineSemaphore(const DefineSemaphore_Response& vl) {
+        set<DefineSemaphore_Response>(new DefineSemaphore_Response(vl), ConfirmedServiceResponse_defineSemaphore);
+    }
+
+    void ConfirmedServiceResponse::deleteSemaphore(const DeleteSemaphore_Response& vl) {
+        set<DeleteSemaphore_Response>(new DeleteSemaphore_Response(vl), ConfirmedServiceResponse_deleteSemaphore);
+    }
+
+    void ConfirmedServiceResponse::initiateDownloadSequence(const InitiateDownloadSequence_Response& vl) {
+        set<InitiateDownloadSequence_Response>(new InitiateDownloadSequence_Response(vl), ConfirmedServiceResponse_initiateDownloadSequence);
+    }
+
+    void ConfirmedServiceResponse::terminateDownloadSequence(const TerminateDownloadSequence_Response& vl) {
+        set<TerminateDownloadSequence_Response>(new TerminateDownloadSequence_Response(vl), ConfirmedServiceResponse_terminateDownloadSequence);
+    }
+
+    void ConfirmedServiceResponse::terminateUploadSequence(const TerminateUploadSequence_Response& vl) {
+        set<TerminateUploadSequence_Response>(new TerminateUploadSequence_Response(vl), ConfirmedServiceResponse_terminateUploadSequence);
+    }
+
+    void ConfirmedServiceResponse::requestDomainDownload(const RequestDomainDownload_Response& vl) {
+        set<RequestDomainDownload_Response>(new RequestDomainDownload_Response(vl), ConfirmedServiceResponse_requestDomainDownload);
+    }
+
+    void ConfirmedServiceResponse::requestDomainUpload(const RequestDomainUpload_Response& vl) {
+        set<RequestDomainUpload_Response>(new RequestDomainUpload_Response(vl), ConfirmedServiceResponse_requestDomainUpload);
+    }
+
+    void ConfirmedServiceResponse::loadDomainContent(const LoadDomainContent_Response& vl) {
+        set<LoadDomainContent_Response>(new LoadDomainContent_Response(vl), ConfirmedServiceResponse_loadDomainContent);
+    }
+
+    void ConfirmedServiceResponse::storeDomainContent(const StoreDomainContent_Response& vl) {
+        set<StoreDomainContent_Response>(new StoreDomainContent_Response(vl), ConfirmedServiceResponse_storeDomainContent);
+    }
+
+    void ConfirmedServiceResponse::deleteDomain(const DeleteDomain_Response& vl) {
+        set<DeleteDomain_Response>(new DeleteDomain_Response(vl), ConfirmedServiceResponse_deleteDomain);
+    }
+
+    void ConfirmedServiceResponse::createProgramInvocation(const CreateProgramInvocation_Response& vl) {
+        set<CreateProgramInvocation_Response>(new CreateProgramInvocation_Response(vl), ConfirmedServiceResponse_createProgramInvocation);
+    }
+
+    void ConfirmedServiceResponse::deleteProgramInvocation(const DeleteProgramInvocation_Response& vl) {
+        set<DeleteProgramInvocation_Response>(new DeleteProgramInvocation_Response(vl), ConfirmedServiceResponse_deleteProgramInvocation);
+    }
+
+    void ConfirmedServiceResponse::start(const Start_Response& vl) {
+        set<Start_Response>(new Start_Response(vl), ConfirmedServiceResponse_start);
+    }
+
+    void ConfirmedServiceResponse::stop(const Stop_Response& vl) {
+        set<Stop_Response>(new Stop_Response(vl), ConfirmedServiceResponse_stop);
+    }
+
+    void ConfirmedServiceResponse::resume(const Resume_Response& vl) {
+        set<Resume_Response>(new Resume_Response(vl), ConfirmedServiceResponse_resume);
+    }
+
+    void ConfirmedServiceResponse::reset(const Reset_Response& vl) {
+        set<Reset_Response>(new Reset_Response(vl), ConfirmedServiceResponse_reset);
+    }
+
+    void ConfirmedServiceResponse::kill(const Kill_Response& vl) {
+        set<Kill_Response>(new Kill_Response(vl), ConfirmedServiceResponse_kill);
+    }
+
+    void ConfirmedServiceResponse::obtainFile(const ISO_9506_MMS_1A::ObtainFile_Response& vl) {
+        set<ISO_9506_MMS_1A::ObtainFile_Response>(new ISO_9506_MMS_1A::ObtainFile_Response(vl), ConfirmedServiceResponse_obtainFile);
+    }
+
+    void ConfirmedServiceResponse::defineEventCondition(const DefineEventCondition_Response& vl) {
+        set<DefineEventCondition_Response>(new DefineEventCondition_Response(vl), ConfirmedServiceResponse_defineEventCondition);
+    }
+
+    void ConfirmedServiceResponse::deleteEventCondition(const DeleteEventCondition_Response& vl) {
+        set<DeleteEventCondition_Response>(new DeleteEventCondition_Response(vl), ConfirmedServiceResponse_deleteEventCondition);
+    }
+
+    void ConfirmedServiceResponse::alterEventConditionMonitoring(const AlterEventConditionMonitoring_Response& vl) {
+        set<AlterEventConditionMonitoring_Response>(new AlterEventConditionMonitoring_Response(vl), ConfirmedServiceResponse_alterEventConditionMonitoring);
+    }
+
+    void ConfirmedServiceResponse::triggerEvent(const TriggerEvent_Response& vl) {
+        set<TriggerEvent_Response>(new TriggerEvent_Response(vl), ConfirmedServiceResponse_triggerEvent);
+    }
+
+    void ConfirmedServiceResponse::defineEventAction(const DefineEventAction_Response& vl) {
+        set<DefineEventAction_Response>(new DefineEventAction_Response(vl), ConfirmedServiceResponse_defineEventAction);
+    }
+
+    void ConfirmedServiceResponse::deleteEventAction(const DeleteEventAction_Response& vl) {
+        set<DeleteEventAction_Response>(new DeleteEventAction_Response(vl), ConfirmedServiceResponse_deleteEventAction);
+    }
+
+    void ConfirmedServiceResponse::reportEventActionStatus(const ReportEventActionStatus_Response& vl) {
+        set<ReportEventActionStatus_Response>(new ReportEventActionStatus_Response(vl), ConfirmedServiceResponse_reportEventActionStatus);
+    }
+
+    void ConfirmedServiceResponse::defineEventEnrollment(const DefineEventEnrollment_Response& vl) {
+        set<DefineEventEnrollment_Response>(new DefineEventEnrollment_Response(vl), ConfirmedServiceResponse_defineEventEnrollment);
+    }
+
+    void ConfirmedServiceResponse::deleteEventEnrollment(const DeleteEventEnrollment_Response& vl) {
+        set<DeleteEventEnrollment_Response>(new DeleteEventEnrollment_Response(vl), ConfirmedServiceResponse_deleteEventEnrollment);
+    }
+
+    void ConfirmedServiceResponse::acknowledgeEventNotification(const AcknowledgeEventNotification_Response& vl) {
+        set<AcknowledgeEventNotification_Response>(new AcknowledgeEventNotification_Response(vl), ConfirmedServiceResponse_acknowledgeEventNotification);
+    }
+
+    void ConfirmedServiceResponse::writeJournal(const WriteJournal_Response& vl) {
+        set<WriteJournal_Response>(new WriteJournal_Response(vl), ConfirmedServiceResponse_writeJournal);
+    }
+
+    void ConfirmedServiceResponse::initializeJournal(const InitializeJournal_Response& vl) {
+        set<InitializeJournal_Response>(new InitializeJournal_Response(vl), ConfirmedServiceResponse_initializeJournal);
+    }
+
+    void ConfirmedServiceResponse::createJournal(const CreateJournal_Response& vl) {
+        set<CreateJournal_Response>(new CreateJournal_Response(vl), ConfirmedServiceResponse_createJournal);
+    }
+
+    void ConfirmedServiceResponse::deleteJournal(const DeleteJournal_Response& vl) {
+        set<DeleteJournal_Response>(new DeleteJournal_Response(vl), ConfirmedServiceResponse_deleteJournal);
+    }
+
+    void ConfirmedServiceResponse::fileClose(const ISO_9506_MMS_1A::FileClose_Response& vl) {
+        set<ISO_9506_MMS_1A::FileClose_Response>(new ISO_9506_MMS_1A::FileClose_Response(vl), ConfirmedServiceResponse_fileClose);
+    }
+
+    void ConfirmedServiceResponse::fileRename(const ISO_9506_MMS_1A::FileRename_Response& vl) {
+        set<ISO_9506_MMS_1A::FileRename_Response>(new ISO_9506_MMS_1A::FileRename_Response(vl), ConfirmedServiceResponse_fileRename);
+    }
+
+    void ConfirmedServiceResponse::fileDelete(const ISO_9506_MMS_1A::FileDelete_Response& vl) {
+        set<ISO_9506_MMS_1A::FileDelete_Response>(new ISO_9506_MMS_1A::FileDelete_Response(vl), ConfirmedServiceResponse_fileDelete);
+    }
+
+    void ConfirmedServiceResponse::defineAccessControlList(const DefineAccessControlList_Response& vl) {
+        set<DefineAccessControlList_Response>(new DefineAccessControlList_Response(vl), ConfirmedServiceResponse_defineAccessControlList);
+    }
+
+    void ConfirmedServiceResponse::deleteAccessControlList(const DeleteAccessControlList_Response& vl) {
+        set<DeleteAccessControlList_Response>(new DeleteAccessControlList_Response(vl), ConfirmedServiceResponse_deleteAccessControlList);
+    }
 
     template<> void ConfirmedServiceResponse::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -3003,6 +3291,74 @@ namespace ISO_9506_MMS_1 {
 
     // choice AdditionalService-Response
 
+    void AdditionalService_Response::vMDStop(const VMDStop_Response& vl) {
+        set<VMDStop_Response>(new VMDStop_Response(vl), AdditionalService_Response_vMDStop);
+    }
+
+    void AdditionalService_Response::select(const Select_Response& vl) {
+        set<Select_Response>(new Select_Response(vl), AdditionalService_Response_select);
+    }
+
+    void AdditionalService_Response::alterPI(const AlterProgramInvocationAttributes_Response& vl) {
+        set<AlterProgramInvocationAttributes_Response>(new AlterProgramInvocationAttributes_Response(vl), AdditionalService_Response_alterPI);
+    }
+
+    void AdditionalService_Response::initiateUCLoad(const InitiateUnitControlLoad_Response& vl) {
+        set<InitiateUnitControlLoad_Response>(new InitiateUnitControlLoad_Response(vl), AdditionalService_Response_initiateUCLoad);
+    }
+
+    void AdditionalService_Response::startUC(const StartUnitControl_Response& vl) {
+        set<StartUnitControl_Response>(new StartUnitControl_Response(vl), AdditionalService_Response_startUC);
+    }
+
+    void AdditionalService_Response::stopUC(const StopUnitControl_Response& vl) {
+        set<StopUnitControl_Response>(new StopUnitControl_Response(vl), AdditionalService_Response_stopUC);
+    }
+
+    void AdditionalService_Response::createUC(const CreateUnitControl_Response& vl) {
+        set<CreateUnitControl_Response>(new CreateUnitControl_Response(vl), AdditionalService_Response_createUC);
+    }
+
+    void AdditionalService_Response::addToUC(const AddToUnitControl_Response& vl) {
+        set<AddToUnitControl_Response>(new AddToUnitControl_Response(vl), AdditionalService_Response_addToUC);
+    }
+
+    void AdditionalService_Response::removeFromUC(const RemoveFromUnitControl_Response& vl) {
+        set<RemoveFromUnitControl_Response>(new RemoveFromUnitControl_Response(vl), AdditionalService_Response_removeFromUC);
+    }
+
+    void AdditionalService_Response::loadUCFromFile(const LoadUnitControlFromFile_Response& vl) {
+        set<LoadUnitControlFromFile_Response>(new LoadUnitControlFromFile_Response(vl), AdditionalService_Response_loadUCFromFile);
+    }
+
+    void AdditionalService_Response::storeUCToFile(const StoreUnitControlToFile_Response& vl) {
+        set<StoreUnitControlToFile_Response>(new StoreUnitControlToFile_Response(vl), AdditionalService_Response_storeUCToFile);
+    }
+
+    void AdditionalService_Response::deleteUC(const DeleteUnitControl_Response& vl) {
+        set<DeleteUnitControl_Response>(new DeleteUnitControl_Response(vl), AdditionalService_Response_deleteUC);
+    }
+
+    void AdditionalService_Response::defineECL(const DefineEventConditionList_Response& vl) {
+        set<DefineEventConditionList_Response>(new DefineEventConditionList_Response(vl), AdditionalService_Response_defineECL);
+    }
+
+    void AdditionalService_Response::deleteECL(const DeleteEventConditionList_Response& vl) {
+        set<DeleteEventConditionList_Response>(new DeleteEventConditionList_Response(vl), AdditionalService_Response_deleteECL);
+    }
+
+    void AdditionalService_Response::addECLReference(const AddEventConditionListReference_Response& vl) {
+        set<AddEventConditionListReference_Response>(new AddEventConditionListReference_Response(vl), AdditionalService_Response_addECLReference);
+    }
+
+    void AdditionalService_Response::removeECLReference(const RemoveEventConditionListReference_Response& vl) {
+        set<RemoveEventConditionListReference_Response>(new RemoveEventConditionListReference_Response(vl), AdditionalService_Response_removeECLReference);
+    }
+
+    void AdditionalService_Response::alterECLMonitoring(const AlterEventConditionListMonitoring_Response& vl) {
+        set<AlterEventConditionListMonitoring_Response>(new AlterEventConditionListMonitoring_Response(vl), AdditionalService_Response_alterECLMonitoring);
+    }
+
     template<> void AdditionalService_Response::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case AdditionalService_Response_vMDStop:
@@ -3308,6 +3664,10 @@ namespace ISO_9506_MMS_1 {
 
     // choice Response-Detail
 
+    void Response_Detail::otherRequests(const null_type& vl) {
+        set<null_type>(new null_type(vl), Response_Detail_otherRequests);
+    }
+
     template<> void Response_Detail::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case Response_Detail_otherRequests:
@@ -3562,6 +3922,58 @@ namespace ISO_9506_MMS_1 {
     const int ServiceError::errorClass_type::file_duplicate_filename = 8;
     const int ServiceError::errorClass_type::file_insufficient_space_in_filestore = 9;
 
+    void ServiceError::errorClass_type::vmd_state(const int& vl) {
+        set<int>(new int(vl), errorClass_type_vmd_state);
+    }
+
+    void ServiceError::errorClass_type::application_reference(const int& vl) {
+        set<int>(new int(vl), errorClass_type_application_reference);
+    }
+
+    void ServiceError::errorClass_type::definition(const int& vl) {
+        set<int>(new int(vl), errorClass_type_definition);
+    }
+
+    void ServiceError::errorClass_type::resource(const int& vl) {
+        set<int>(new int(vl), errorClass_type_resource);
+    }
+
+    void ServiceError::errorClass_type::service(const int& vl) {
+        set<int>(new int(vl), errorClass_type_service);
+    }
+
+    void ServiceError::errorClass_type::service_preempt(const int& vl) {
+        set<int>(new int(vl), errorClass_type_service_preempt);
+    }
+
+    void ServiceError::errorClass_type::time_resolution(const int& vl) {
+        set<int>(new int(vl), errorClass_type_time_resolution);
+    }
+
+    void ServiceError::errorClass_type::access(const int& vl) {
+        set<int>(new int(vl), errorClass_type_access);
+    }
+
+    void ServiceError::errorClass_type::initiate(const int& vl) {
+        set<int>(new int(vl), errorClass_type_initiate);
+    }
+
+    void ServiceError::errorClass_type::conclude(const int& vl) {
+        set<int>(new int(vl), errorClass_type_conclude);
+    }
+
+    void ServiceError::errorClass_type::cancel(const int& vl) {
+        set<int>(new int(vl), errorClass_type_cancel);
+    }
+
+    void ServiceError::errorClass_type::file(const int& vl) {
+        set<int>(new int(vl), errorClass_type_file);
+    }
+
+    void ServiceError::errorClass_type::others(const int& vl) {
+        set<int>(new int(vl), errorClass_type_others);
+    }
+
     template<> void ServiceError::errorClass_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case errorClass_type_vmd_state:
@@ -3752,6 +4164,46 @@ namespace ISO_9506_MMS_1 {
             {
             }
         }
+    }
+
+    void ServiceError::serviceSpecificInfo_type::obtainFile(const ISO_9506_MMS_1A::ObtainFile_Error& vl) {
+        set<ISO_9506_MMS_1A::ObtainFile_Error>(new ISO_9506_MMS_1A::ObtainFile_Error(vl), serviceSpecificInfo_type_obtainFile);
+    }
+
+    void ServiceError::serviceSpecificInfo_type::start(const Start_Error& vl) {
+        set<Start_Error>(new Start_Error(vl), serviceSpecificInfo_type_start);
+    }
+
+    void ServiceError::serviceSpecificInfo_type::stop(const Stop_Error& vl) {
+        set<Stop_Error>(new Stop_Error(vl), serviceSpecificInfo_type_stop);
+    }
+
+    void ServiceError::serviceSpecificInfo_type::resume(const Resume_Error& vl) {
+        set<Resume_Error>(new Resume_Error(vl), serviceSpecificInfo_type_resume);
+    }
+
+    void ServiceError::serviceSpecificInfo_type::reset(const Reset_Error& vl) {
+        set<Reset_Error>(new Reset_Error(vl), serviceSpecificInfo_type_reset);
+    }
+
+    void ServiceError::serviceSpecificInfo_type::deleteVariableAccess(const DeleteVariableAccess_Error& vl) {
+        set<DeleteVariableAccess_Error>(new DeleteVariableAccess_Error(vl), serviceSpecificInfo_type_deleteVariableAccess);
+    }
+
+    void ServiceError::serviceSpecificInfo_type::deleteNamedVariableList(const DeleteNamedVariableList_Error& vl) {
+        set<DeleteNamedVariableList_Error>(new DeleteNamedVariableList_Error(vl), serviceSpecificInfo_type_deleteNamedVariableList);
+    }
+
+    void ServiceError::serviceSpecificInfo_type::deleteNamedType(const DeleteNamedType_Error& vl) {
+        set<DeleteNamedType_Error>(new DeleteNamedType_Error(vl), serviceSpecificInfo_type_deleteNamedType);
+    }
+
+    void ServiceError::serviceSpecificInfo_type::fileRename(const ISO_9506_MMS_1A::FileRename_Error& vl) {
+        set<ISO_9506_MMS_1A::FileRename_Error>(new ISO_9506_MMS_1A::FileRename_Error(vl), serviceSpecificInfo_type_fileRename);
+    }
+
+    void ServiceError::serviceSpecificInfo_type::changeAccessControl(const ChangeAccessControl_Error& vl) {
+        set<ChangeAccessControl_Error>(new ChangeAccessControl_Error(vl), serviceSpecificInfo_type_changeAccessControl);
     }
 
     template<> void ServiceError::serviceSpecificInfo_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -4185,6 +4637,14 @@ namespace ISO_9506_MMS_1 {
         itemID_ = vl;
     }
 
+    void ObjectName::vmd_specific(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), ObjectName_vmd_specific);
+    }
+
+    void ObjectName::aa_specific(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), ObjectName_aa_specific);
+    }
+
     template<> void ObjectName::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case ObjectName_vmd_specific:
@@ -4286,6 +4746,14 @@ namespace ISO_9506_MMS_1 {
 
     const int ObjectClass::csObjectClass_eventConditionList = 0;
     const int ObjectClass::csObjectClass_unitControl = 1;
+
+    void ObjectClass::basicObjectClass(const int& vl) {
+        set<int>(new int(vl), ObjectClass_basicObjectClass);
+    }
+
+    void ObjectClass::csObjectClass(const int& vl) {
+        set<int>(new int(vl), ObjectClass_csObjectClass);
+    }
 
     template<> void ObjectClass::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -4929,6 +5397,50 @@ namespace ISO_9506_MMS_1 {
     const int RejectPDU::rejectReason_type::conclude_errorPDU_invalid_serviceError = 1;
     const int RejectPDU::rejectReason_type::conclude_errorPDU_value_out_of_range = 2;
 
+    void RejectPDU::rejectReason_type::confirmed_requestPDU(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_confirmed_requestPDU);
+    }
+
+    void RejectPDU::rejectReason_type::confirmed_responsePDU(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_confirmed_responsePDU);
+    }
+
+    void RejectPDU::rejectReason_type::confirmed_errorPDU(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_confirmed_errorPDU);
+    }
+
+    void RejectPDU::rejectReason_type::unconfirmedPDU(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_unconfirmedPDU);
+    }
+
+    void RejectPDU::rejectReason_type::pdu_error(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_pdu_error);
+    }
+
+    void RejectPDU::rejectReason_type::cancel_requestPDU(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_cancel_requestPDU);
+    }
+
+    void RejectPDU::rejectReason_type::cancel_responsePDU(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_cancel_responsePDU);
+    }
+
+    void RejectPDU::rejectReason_type::cancel_errorPDU(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_cancel_errorPDU);
+    }
+
+    void RejectPDU::rejectReason_type::conclude_requestPDU(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_conclude_requestPDU);
+    }
+
+    void RejectPDU::rejectReason_type::conclude_responsePDU(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_conclude_responsePDU);
+    }
+
+    void RejectPDU::rejectReason_type::conclude_errorPDU(const int& vl) {
+        set<int>(new int(vl), rejectReason_type_conclude_errorPDU);
+    }
+
     template<> void RejectPDU::rejectReason_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case rejectReason_type_confirmed_requestPDU:
@@ -5334,6 +5846,14 @@ namespace ISO_9506_MMS_1 {
 
     void GetAccessControlListAttributes_Request::namedObject_type::objectName(boost::shared_ptr< ObjectName> vl) {
         objectName_ = vl;
+    }
+
+    void GetAccessControlListAttributes_Request::accessControlListName(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), GetAccessControlListAttributes_Request_accessControlListName);
+    }
+
+    void GetAccessControlListAttributes_Request::vMD(const null_type& vl) {
+        set<null_type>(new null_type(vl), GetAccessControlListAttributes_Request_vMD);
     }
 
     template<> void GetAccessControlListAttributes_Request::serialize(boost::asn1::x690::output_coder& arch) {
@@ -5829,6 +6349,18 @@ namespace ISO_9506_MMS_1 {
     objectScope_(arg__objectScope) {
     };
 
+    void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::aa_specific(const null_type& vl) {
+        set<null_type>(new null_type(vl), objectScope_type_aa_specific);
+    }
+
+    void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), objectScope_type_domain);
+    }
+
+    void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::vmd(const null_type& vl) {
+        set<null_type>(new null_type(vl), objectScope_type_vmd);
+    }
+
     template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case objectScope_type_specific:
@@ -5962,6 +6494,10 @@ namespace ISO_9506_MMS_1 {
 
     void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope(boost::shared_ptr< objectScope_type> vl) {
         objectScope_ = vl;
+    }
+
+    void ChangeAccessControl_Request::scopeOfChange_type::vMDOnly(const null_type& vl) {
+        set<null_type>(new null_type(vl), scopeOfChange_type_vMDOnly);
     }
 
     template<> void ChangeAccessControl_Request::scopeOfChange_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -6236,6 +6772,14 @@ namespace ISO_9506_MMS_1 {
     selectedProgramInvocation_(arg__selectedProgramInvocation) {
     };
 
+    void CS_Status_Response::fullResponse_type::selectedProgramInvocation_type::programInvocation(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), selectedProgramInvocation_type_programInvocation);
+    }
+
+    void CS_Status_Response::fullResponse_type::selectedProgramInvocation_type::noneSelected(const null_type& vl) {
+        set<null_type>(new null_type(vl), selectedProgramInvocation_type_noneSelected);
+    }
+
     template<> void CS_Status_Response::fullResponse_type::selectedProgramInvocation_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case selectedProgramInvocation_type_programInvocation:
@@ -6384,6 +6928,10 @@ namespace ISO_9506_MMS_1 {
         selectedProgramInvocation_ = vl;
     }
 
+    void CS_Status_Response::noExtraResponse(const null_type& vl) {
+        set<null_type>(new null_type(vl), CS_Status_Response_noExtraResponse);
+    }
+
     template<> void CS_Status_Response::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case CS_Status_Response_fullResponse:
@@ -6478,6 +7026,18 @@ namespace ISO_9506_MMS_1 {
     objectScope_(arg__objectScope),
     continueAfter_(arg__continueAfter) {
     };
+
+    void GetNameList_Request::objectScope_type::vmdSpecific(const null_type& vl) {
+        set<null_type>(new null_type(vl), objectScope_type_vmdSpecific);
+    }
+
+    void GetNameList_Request::objectScope_type::domainSpecific(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), objectScope_type_domainSpecific);
+    }
+
+    void GetNameList_Request::objectScope_type::aaSpecific(const null_type& vl) {
+        set<null_type>(new null_type(vl), objectScope_type_aaSpecific);
+    }
 
     template<> void GetNameList_Request::objectScope_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -7051,6 +7611,18 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice LoadData
+
+    void LoadData::non_coded(const octetstring_type& vl) {
+        set<octetstring_type>(new octetstring_type(vl), LoadData_non_coded);
+    }
+
+    void LoadData::coded(const external_type& vl) {
+        set<external_type>(new external_type(vl), LoadData_coded);
+    }
+
+    void LoadData::embedded(const embeded_type& vl) {
+        set<embeded_type>(new embeded_type(vl), LoadData_embedded);
+    }
 
     template<> void LoadData::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -7882,6 +8454,18 @@ namespace ISO_9506_MMS_1 {
     executionArgument_(arg__executionArgument) {
     };
 
+    void Start_Request::executionArgument_type::simpleString(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), executionArgument_type_simpleString);
+    }
+
+    void Start_Request::executionArgument_type::encodedString(const external_type& vl) {
+        set<external_type>(new external_type(vl), executionArgument_type_encodedString);
+    }
+
+    void Start_Request::executionArgument_type::embeddedString(const embeded_type& vl) {
+        set<embeded_type>(new embeded_type(vl), executionArgument_type_embeddedString);
+    }
+
     template<> void Start_Request::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case executionArgument_type_simpleString:
@@ -8028,6 +8612,10 @@ namespace ISO_9506_MMS_1 {
         startCount_ = boost::shared_ptr<StartCount>(new StartCount(vl));
     }
 
+    void CS_Start_Request_impl::normal(const null_type& vl) {
+        set<null_type>(new null_type(vl), CS_Start_Request_impl_normal);
+    }
+
     template<> void CS_Start_Request_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case CS_Start_Request_impl_normal:
@@ -8093,6 +8681,18 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice StartCount
+
+    void StartCount::noLimit(const null_type& vl) {
+        set<null_type>(new null_type(vl), StartCount_noLimit);
+    }
+
+    void StartCount::cycleCount(const int& vl) {
+        set<int>(new int(vl), StartCount_cycleCount);
+    }
+
+    void StartCount::stepCount(const int& vl) {
+        set<int>(new int(vl), StartCount_stepCount);
+    }
 
     template<> void StartCount::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -8226,6 +8826,18 @@ namespace ISO_9506_MMS_1 {
     executionArgument_(arg__executionArgument) {
     };
 
+    void Resume_Request::executionArgument_type::simpleString(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), executionArgument_type_simpleString);
+    }
+
+    void Resume_Request::executionArgument_type::encodedString(const external_type& vl) {
+        set<external_type>(new external_type(vl), executionArgument_type_encodedString);
+    }
+
+    void Resume_Request::executionArgument_type::enmbeddedString(const embeded_type& vl) {
+        set<embeded_type>(new embeded_type(vl), executionArgument_type_enmbeddedString);
+    }
+
     template<> void Resume_Request::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case executionArgument_type_simpleString:
@@ -8344,6 +8956,10 @@ namespace ISO_9506_MMS_1 {
     modeType_(arg__modeType) {
     };
 
+    void CS_Resume_Request_impl::controlling_type::modeType_type::continueMode(const null_type& vl) {
+        set<null_type>(new null_type(vl), modeType_type_continueMode);
+    }
+
     template<> void CS_Resume_Request_impl::controlling_type::modeType_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case modeType_type_continueMode:
@@ -8437,6 +9053,10 @@ namespace ISO_9506_MMS_1 {
 
     void CS_Resume_Request_impl::controlling_type::modeType(boost::shared_ptr< modeType_type> vl) {
         modeType_ = vl;
+    }
+
+    void CS_Resume_Request_impl::normal(const null_type& vl) {
+        set<null_type>(new null_type(vl), CS_Resume_Request_impl_normal);
     }
 
     template<> void CS_Resume_Request_impl::serialize(boost::asn1::x690::output_coder& arch) {
@@ -8605,6 +9225,18 @@ namespace ISO_9506_MMS_1 {
     executionArgument_(arg__executionArgument),
     accessControlList_(arg__accessControlList) {
     };
+
+    void GetProgramInvocationAttributes_Response::executionArgument_type::simpleString(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), executionArgument_type_simpleString);
+    }
+
+    void GetProgramInvocationAttributes_Response::executionArgument_type::encodedString(const external_type& vl) {
+        set<external_type>(new external_type(vl), executionArgument_type_encodedString);
+    }
+
+    void GetProgramInvocationAttributes_Response::executionArgument_type::enmbeddedString(const embeded_type& vl) {
+        set<embeded_type>(new embeded_type(vl), executionArgument_type_enmbeddedString);
+    }
 
     template<> void GetProgramInvocationAttributes_Response::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -8833,6 +9465,18 @@ namespace ISO_9506_MMS_1 {
     runningMode_(arg__runningMode) {
     };
 
+    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::freeRunning(const null_type& vl) {
+        set<null_type>(new null_type(vl), runningMode_type_freeRunning);
+    }
+
+    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::cycleLimited(const int& vl) {
+        set<int>(new int(vl), runningMode_type_cycleLimited);
+    }
+
+    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::stepLimited(const int& vl) {
+        set<int>(new int(vl), runningMode_type_stepLimited);
+    }
+
     template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case runningMode_type_freeRunning:
@@ -8967,6 +9611,14 @@ namespace ISO_9506_MMS_1 {
         runningMode_ = vl;
     }
 
+    void CS_GetProgramInvocationAttributes_Response::control_type::controlled_type::controllingPI(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), controlled_type_controllingPI);
+    }
+
+    void CS_GetProgramInvocationAttributes_Response::control_type::controlled_type::none(const null_type& vl) {
+        set<null_type>(new null_type(vl), controlled_type_none);
+    }
+
     template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlled_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case controlled_type_controllingPI:
@@ -9036,6 +9688,10 @@ namespace ISO_9506_MMS_1 {
             {
             }
         }
+    }
+
+    void CS_GetProgramInvocationAttributes_Response::control_type::normal(const null_type& vl) {
+        set<null_type>(new null_type(vl), control_type_normal);
     }
 
     template<> void CS_GetProgramInvocationAttributes_Response::control_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -9588,6 +10244,10 @@ namespace ISO_9506_MMS_1 {
         pIState_ = boost::shared_ptr<MMS_Object_Module_1::ProgramInvocationState>(new MMS_Object_Module_1::ProgramInvocationState(vl));
     }
 
+    void ControlElement::endDomainDef(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), ControlElement_endDomainDef);
+    }
+
     template<> void ControlElement::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case ControlElement_beginDomainDef:
@@ -9683,6 +10343,14 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice InitiateUnitControl-Error
+
+    void InitiateUnitControl_Error::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), InitiateUnitControl_Error_domain);
+    }
+
+    void InitiateUnitControl_Error::programInvocation(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), InitiateUnitControl_Error_programInvocation);
+    }
 
     template<> void InitiateUnitControl_Error::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9827,6 +10495,18 @@ namespace ISO_9506_MMS_1 {
     continueAfter_(arg__continueAfter) {
     };
 
+    void UnitControlUpload_Request::continueAfter_type::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), continueAfter_type_domain);
+    }
+
+    void UnitControlUpload_Request::continueAfter_type::ulsmID(const int& vl) {
+        set<int>(new int(vl), continueAfter_type_ulsmID);
+    }
+
+    void UnitControlUpload_Request::continueAfter_type::programInvocation(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), continueAfter_type_programInvocation);
+    }
+
     template<> void UnitControlUpload_Request::continueAfter_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case continueAfter_type_domain:
@@ -9959,6 +10639,18 @@ namespace ISO_9506_MMS_1 {
     nextElement_(arg__nextElement) {
     };
 
+    void UnitControlUpload_Response::nextElement_type::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), nextElement_type_domain);
+    }
+
+    void UnitControlUpload_Response::nextElement_type::ulsmID(const int& vl) {
+        set<int>(new int(vl), nextElement_type_ulsmID);
+    }
+
+    void UnitControlUpload_Response::nextElement_type::programInvocation(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), nextElement_type_programInvocation);
+    }
+
     template<> void UnitControlUpload_Response::nextElement_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case nextElement_type_domain:
@@ -10090,6 +10782,18 @@ namespace ISO_9506_MMS_1 {
     unitControlName_(arg__unitControlName),
     executionArgument_(arg__executionArgument) {
     };
+
+    void StartUnitControl_Request::executionArgument_type::simpleString(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), executionArgument_type_simpleString);
+    }
+
+    void StartUnitControl_Request::executionArgument_type::encodedString(const external_type& vl) {
+        set<external_type>(new external_type(vl), executionArgument_type_encodedString);
+    }
+
+    void StartUnitControl_Request::executionArgument_type::enmbeddedString(const embeded_type& vl) {
+        set<embeded_type>(new embeded_type(vl), executionArgument_type_enmbeddedString);
+    }
 
     template<> void StartUnitControl_Request::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -10658,6 +11362,18 @@ namespace ISO_9506_MMS_1 {
 
     // choice LoadUnitControlFromFile-Error
 
+    void LoadUnitControlFromFile_Error::none(const null_type& vl) {
+        set<null_type>(new null_type(vl), LoadUnitControlFromFile_Error_none);
+    }
+
+    void LoadUnitControlFromFile_Error::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), LoadUnitControlFromFile_Error_domain);
+    }
+
+    void LoadUnitControlFromFile_Error::programInvocation(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), LoadUnitControlFromFile_Error_programInvocation);
+    }
+
     template<> void LoadUnitControlFromFile_Error::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case LoadUnitControlFromFile_Error_none:
@@ -10814,6 +11530,14 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice DeleteUnitControl-Error
+
+    void DeleteUnitControl_Error::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), DeleteUnitControl_Error_domain);
+    }
+
+    void DeleteUnitControl_Error::programInvocation(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), DeleteUnitControl_Error_programInvocation);
+    }
 
     template<> void DeleteUnitControl_Error::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -11137,6 +11861,18 @@ namespace ISO_9506_MMS_1 {
         numberOfElements_ = vl;
     }
 
+    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::component(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), accessSelection_type_component);
+    }
+
+    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::index(const Unsigned32& vl) {
+        set<Unsigned32>(new Unsigned32(vl), accessSelection_type_index);
+    }
+
+    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::allElements(const null_type& vl) {
+        set<null_type>(new null_type(vl), accessSelection_type_allElements);
+    }
+
     template<> void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case accessSelection_type_component:
@@ -11323,6 +12059,18 @@ namespace ISO_9506_MMS_1 {
         numberOfElements_ = vl;
     }
 
+    void AlternateAccessSelection::selectAccess_type::component(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), selectAccess_type_component);
+    }
+
+    void AlternateAccessSelection::selectAccess_type::index(const Unsigned32& vl) {
+        set<Unsigned32>(new Unsigned32(vl), selectAccess_type_index);
+    }
+
+    void AlternateAccessSelection::selectAccess_type::allElements(const null_type& vl) {
+        set<null_type>(new null_type(vl), selectAccess_type_allElements);
+    }
+
     template<> void AlternateAccessSelection::selectAccess_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case selectAccess_type_component:
@@ -11486,6 +12234,10 @@ namespace ISO_9506_MMS_1 {
 
     // choice AccessResult
 
+    void AccessResult::failure(const DataAccessError& vl) {
+        set<DataAccessError>(new DataAccessError(vl), AccessResult_failure);
+    }
+
     template<> void AccessResult::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case AccessResult_failure:
@@ -11555,6 +12307,58 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice Data
+
+    void Data::boolean(const bool& vl) {
+        set<bool>(new bool(vl), Data_boolean);
+    }
+
+    void Data::bit_string(const bitstring_type& vl) {
+        set<bitstring_type>(new bitstring_type(vl), Data_bit_string);
+    }
+
+    void Data::integer(const int& vl) {
+        set<int>(new int(vl), Data_integer);
+    }
+
+    void Data::unsignedV(const int& vl) {
+        set<int>(new int(vl), Data_unsignedV);
+    }
+
+    void Data::floating_point(const FloatingPoint& vl) {
+        set<FloatingPoint>(new FloatingPoint(vl), Data_floating_point);
+    }
+
+    void Data::octet_string(const octetstring_type& vl) {
+        set<octetstring_type>(new octetstring_type(vl), Data_octet_string);
+    }
+
+    void Data::visible_string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), Data_visible_string);
+    }
+
+    void Data::generalized_time(const gentime_type& vl) {
+        set<gentime_type>(new gentime_type(vl), Data_generalized_time);
+    }
+
+    void Data::binary_time(const TimeOfDay& vl) {
+        set<TimeOfDay>(new TimeOfDay(vl), Data_binary_time);
+    }
+
+    void Data::bcd(const int& vl) {
+        set<int>(new int(vl), Data_bcd);
+    }
+
+    void Data::booleanArray(const bitstring_type& vl) {
+        set<bitstring_type>(new bitstring_type(vl), Data_booleanArray);
+    }
+
+    void Data::objId(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), Data_objId);
+    }
+
+    void Data::mMSString(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), Data_mMSString);
+    }
 
     template<> void Data::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -11958,6 +12762,10 @@ namespace ISO_9506_MMS_1 {
         typeSpecification_ = vl;
     }
 
+    void VariableSpecification::invalidated(const null_type& vl) {
+        set<null_type>(new null_type(vl), VariableSpecification_invalidated);
+    }
+
     template<> void VariableSpecification::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case VariableSpecification_name:
@@ -12220,6 +13028,14 @@ namespace ISO_9506_MMS_1 {
 
     void Write_Request::listOfData(boost::shared_ptr< listOfData_type> vl) {
         listOfData_ = vl;
+    }
+
+    void Write_Response_sequence_of::failure(const DataAccessError& vl) {
+        set<DataAccessError>(new DataAccessError(vl), Write_Response_sequence_of_failure);
+    }
+
+    void Write_Response_sequence_of::success(const null_type& vl) {
+        set<null_type>(new null_type(vl), Write_Response_sequence_of_success);
     }
 
     template<> void Write_Response_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
@@ -13620,6 +14436,14 @@ namespace ISO_9506_MMS_1 {
 
     // choice TakeControl-Response
 
+    void TakeControl_Response::noResult(const null_type& vl) {
+        set<null_type>(new null_type(vl), TakeControl_Response_noResult);
+    }
+
+    void TakeControl_Response::namedToken(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), TakeControl_Response_namedToken);
+    }
+
     template<> void TakeControl_Response::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case TakeControl_Response_noResult:
@@ -14000,6 +14824,18 @@ namespace ISO_9506_MMS_1 {
     listOfNamedTokens_(arg__listOfNamedTokens),
     moreFollows_(arg__moreFollows) {
     };
+
+    void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::freeNamedToken(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), listOfNamedTokens_type_sequence_of_freeNamedToken);
+    }
+
+    void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::ownedNamedToken(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), listOfNamedTokens_type_sequence_of_ownedNamedToken);
+    }
+
+    void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::hungNamedToken(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), listOfNamedTokens_type_sequence_of_hungNamedToken);
+    }
 
     template<> void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -15095,6 +15931,18 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-EventNotification
 
+    void CS_EventNotification_impl::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), CS_EventNotification_impl_string);
+    }
+
+    void CS_EventNotification_impl::index(const int& vl) {
+        set<int>(new int(vl), CS_EventNotification_impl_index);
+    }
+
+    void CS_EventNotification_impl::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), CS_EventNotification_impl_noEnhancement);
+    }
+
     template<> void CS_EventNotification_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case CS_EventNotification_impl_string:
@@ -15596,6 +16444,18 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice EN-Additional-Detail
+
+    void EN_Additional_Detail_impl::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), EN_Additional_Detail_impl_string);
+    }
+
+    void EN_Additional_Detail_impl::index(const int& vl) {
+        set<int>(new int(vl), EN_Additional_Detail_impl_index);
+    }
+
+    void EN_Additional_Detail_impl::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), EN_Additional_Detail_impl_noEnhancement);
+    }
 
     template<> void EN_Additional_Detail_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -16313,6 +17173,18 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-DefineEventCondition-Request
 
+    void CS_DefineEventCondition_Request_impl::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), CS_DefineEventCondition_Request_impl_string);
+    }
+
+    void CS_DefineEventCondition_Request_impl::index(const int& vl) {
+        set<int>(new int(vl), CS_DefineEventCondition_Request_impl_index);
+    }
+
+    void CS_DefineEventCondition_Request_impl::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), CS_DefineEventCondition_Request_impl_noEnhancement);
+    }
+
     template<> void CS_DefineEventCondition_Request_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case CS_DefineEventCondition_Request_impl_string:
@@ -16393,6 +17265,18 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice DeleteEventCondition-Request
+
+    void DeleteEventCondition_Request::aa_specific(const null_type& vl) {
+        set<null_type>(new null_type(vl), DeleteEventCondition_Request_aa_specific);
+    }
+
+    void DeleteEventCondition_Request::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), DeleteEventCondition_Request_domain);
+    }
+
+    void DeleteEventCondition_Request::vmd(const null_type& vl) {
+        set<null_type>(new null_type(vl), DeleteEventCondition_Request_vmd);
+    }
 
     template<> void DeleteEventCondition_Request::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -16514,6 +17398,10 @@ namespace ISO_9506_MMS_1 {
     evaluationInterval_(arg__evaluationInterval),
     accessControlList_(arg__accessControlList) {
     };
+
+    void GetEventConditionAttributes_Response::monitoredVariable_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), monitoredVariable_type_undefined);
+    }
 
     template<> void GetEventConditionAttributes_Response::monitoredVariable_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -16723,6 +17611,14 @@ namespace ISO_9506_MMS_1 {
     displayEnhancement_(arg__displayEnhancement) {
     };
 
+    void CS_GetEventConditionAttributes_Response::groupPriorityOverride_type::priority(const MMS_Object_Module_1::Priority& vl) {
+        set<MMS_Object_Module_1::Priority>(new MMS_Object_Module_1::Priority(vl), groupPriorityOverride_type_priority);
+    }
+
+    void CS_GetEventConditionAttributes_Response::groupPriorityOverride_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), groupPriorityOverride_type_undefined);
+    }
+
     template<> void CS_GetEventConditionAttributes_Response::groupPriorityOverride_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case groupPriorityOverride_type_priority:
@@ -16792,6 +17688,18 @@ namespace ISO_9506_MMS_1 {
             {
             }
         }
+    }
+
+    void CS_GetEventConditionAttributes_Response::displayEnhancement_type::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), displayEnhancement_type_string);
+    }
+
+    void CS_GetEventConditionAttributes_Response::displayEnhancement_type::index(const int& vl) {
+        set<int>(new int(vl), displayEnhancement_type_index);
+    }
+
+    void CS_GetEventConditionAttributes_Response::displayEnhancement_type::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), displayEnhancement_type_noEnhancement);
     }
 
     template<> void CS_GetEventConditionAttributes_Response::displayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -17112,6 +18020,18 @@ namespace ISO_9506_MMS_1 {
     changeDisplay_(arg__changeDisplay) {
     };
 
+    void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), changeDisplay_type_string);
+    }
+
+    void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::index(const int& vl) {
+        set<int>(new int(vl), changeDisplay_type_index);
+    }
+
+    void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), changeDisplay_type_noEnhancement);
+    }
+
     template<> void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case changeDisplay_type_string:
@@ -17296,6 +18216,18 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice DeleteEventAction-Request
+
+    void DeleteEventAction_Request::aa_specific(const null_type& vl) {
+        set<null_type>(new null_type(vl), DeleteEventAction_Request_aa_specific);
+    }
+
+    void DeleteEventAction_Request::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), DeleteEventAction_Request_domain);
+    }
+
+    void DeleteEventAction_Request::vmd(const null_type& vl) {
+        set<null_type>(new null_type(vl), DeleteEventAction_Request_vmd);
+    }
 
     template<> void DeleteEventAction_Request::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -17622,6 +18554,18 @@ namespace ISO_9506_MMS_1 {
 
 
     // choice CS-DefineEventEnrollment-Request
+
+    void CS_DefineEventEnrollment_Request_impl::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), CS_DefineEventEnrollment_Request_impl_string);
+    }
+
+    void CS_DefineEventEnrollment_Request_impl::index(const int& vl) {
+        set<int>(new int(vl), CS_DefineEventEnrollment_Request_impl_index);
+    }
+
+    void CS_DefineEventEnrollment_Request_impl::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), CS_DefineEventEnrollment_Request_impl_noEnhancement);
+    }
 
     template<> void CS_DefineEventEnrollment_Request_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -17976,6 +18920,10 @@ namespace ISO_9506_MMS_1 {
     displayEnhancement_(arg__displayEnhancement) {
     };
 
+    void EEAttributes::eventConditionName_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), eventConditionName_type_undefined);
+    }
+
     template<> void EEAttributes::eventConditionName_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case eventConditionName_type_eventCondition:
@@ -18047,6 +18995,10 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
+    void EEAttributes::eventActionName_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), eventActionName_type_undefined);
+    }
+
     template<> void EEAttributes::eventActionName_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case eventActionName_type_eventAction:
@@ -18116,6 +19068,18 @@ namespace ISO_9506_MMS_1 {
             {
             }
         }
+    }
+
+    void EEAttributes::displayEnhancement_type::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), displayEnhancement_type_string);
+    }
+
+    void EEAttributes::displayEnhancement_type::index(const int& vl) {
+        set<int>(new int(vl), displayEnhancement_type_index);
+    }
+
+    void EEAttributes::displayEnhancement_type::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), displayEnhancement_type_noEnhancement);
     }
 
     template<> void EEAttributes::displayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -18533,6 +19497,14 @@ namespace ISO_9506_MMS_1 {
     transitionTime_(arg__transitionTime) {
     };
 
+    void AlterEventEnrollment_Response::currentState_type::state(const EE_State& vl) {
+        set<EE_State>(new EE_State(vl), currentState_type_state);
+    }
+
+    void AlterEventEnrollment_Response::currentState_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), currentState_type_undefined);
+    }
+
     template<> void AlterEventEnrollment_Response::currentState_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case currentState_type_state:
@@ -18655,6 +19627,18 @@ namespace ISO_9506_MMS_1 {
     CS_AlterEventEnrollment_Request::CS_AlterEventEnrollment_Request(boost::shared_ptr< changeDisplay_type> arg__changeDisplay) :
     changeDisplay_(arg__changeDisplay) {
     };
+
+    void CS_AlterEventEnrollment_Request::changeDisplay_type::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), changeDisplay_type_string);
+    }
+
+    void CS_AlterEventEnrollment_Request::changeDisplay_type::index(const int& vl) {
+        set<int>(new int(vl), changeDisplay_type_index);
+    }
+
+    void CS_AlterEventEnrollment_Request::changeDisplay_type::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), changeDisplay_type_noEnhancement);
+    }
 
     template<> void CS_AlterEventEnrollment_Request::changeDisplay_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -19350,6 +20334,14 @@ namespace ISO_9506_MMS_1 {
     priorityChange_(arg__priorityChange) {
     };
 
+    void AlterEventConditionListMonitoring_Request::priorityChange_type::priorityValue(const int& vl) {
+        set<int>(new int(vl), priorityChange_type_priorityValue);
+    }
+
+    void AlterEventConditionListMonitoring_Request::priorityChange_type::priorityReset(const null_type& vl) {
+        set<null_type>(new null_type(vl), priorityChange_type_priorityReset);
+    }
+
     template<> void AlterEventConditionListMonitoring_Request::priorityChange_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case priorityChange_type_priorityValue:
@@ -19495,6 +20487,14 @@ namespace ISO_9506_MMS_1 {
     entryToStartAfter_(arg__entryToStartAfter) {
     };
 
+    void ReadJournal_Request::rangeStartSpecification_type::startingTime(const TimeOfDay& vl) {
+        set<TimeOfDay>(new TimeOfDay(vl), rangeStartSpecification_type_startingTime);
+    }
+
+    void ReadJournal_Request::rangeStartSpecification_type::startingEntry(const octetstring_type& vl) {
+        set<octetstring_type>(new octetstring_type(vl), rangeStartSpecification_type_startingEntry);
+    }
+
     template<> void ReadJournal_Request::rangeStartSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case rangeStartSpecification_type_startingTime:
@@ -19564,6 +20564,14 @@ namespace ISO_9506_MMS_1 {
             {
             }
         }
+    }
+
+    void ReadJournal_Request::rangeStopSpecification_type::endingTime(const TimeOfDay& vl) {
+        set<TimeOfDay>(new TimeOfDay(vl), rangeStopSpecification_type_endingTime);
+    }
+
+    void ReadJournal_Request::rangeStopSpecification_type::numberOfEntries(const Integer32& vl) {
+        set<Integer32>(new Integer32(vl), rangeStopSpecification_type_numberOfEntries);
     }
 
     template<> void ReadJournal_Request::rangeStopSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -20269,6 +21277,10 @@ namespace ISO_9506_MMS_1 {
 
     void EntryContent::entryForm_type::data_type::listOfVariables(const listOfVariables_type& vl) {
         listOfVariables_ = boost::shared_ptr<listOfVariables_type>(new listOfVariables_type(vl));
+    }
+
+    void EntryContent::entryForm_type::annotation(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), entryForm_type_annotation);
     }
 
     template<> void EntryContent::entryForm_type::serialize(boost::asn1::x690::output_coder& arch) {

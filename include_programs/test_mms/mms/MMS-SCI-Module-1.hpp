@@ -166,8 +166,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(selected_Program_Invocation_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(selectedProgram, Program_Invocation_instance, selected_Program_Invocation_type_selectedProgram);
-            ITU_T_CHOICE_DECL(noneSelected, null_type, selected_Program_Invocation_type_noneSelected);
+            ITU_T_CHOICEC_DECL(selectedProgram, Program_Invocation_instance, selected_Program_Invocation_type_selectedProgram);
+            ITU_T_CHOICES_DECL(noneSelected, null_type, selected_Program_Invocation_type_noneSelected); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -398,8 +398,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -485,8 +485,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -576,8 +576,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -638,8 +638,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -718,8 +718,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -777,8 +777,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -855,8 +855,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -925,8 +925,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -997,8 +997,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1058,8 +1058,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1117,9 +1117,9 @@ namespace MMS_SCI_Module_1 {
                             ITU_T_STRUCT(monitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    ITU_T_CHOICE_DECL(named, Named_Variable_instance, monitoredVariable_type_named);
-                    ITU_T_CHOICE_DECL(unnamed, Unnamed_Variable_instance, monitoredVariable_type_unnamed);
-                    ITU_T_CHOICE_DECL(unspecified, null_type, monitoredVariable_type_unspecified);
+                    ITU_T_CHOICEC_DECL(named, Named_Variable_instance, monitoredVariable_type_named);
+                    ITU_T_CHOICEC_DECL(unnamed, Unnamed_Variable_instance, monitoredVariable_type_unnamed);
+                    ITU_T_CHOICES_DECL(unspecified, null_type, monitoredVariable_type_unspecified); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
                 };
@@ -1141,9 +1141,9 @@ namespace MMS_SCI_Module_1 {
                             ITU_T_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    ITU_T_CHOICE_DECL(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text);
-                    ITU_T_CHOICE_DECL(number, int, displayEnhancement_type_number);
-                    ITU_T_CHOICE_DECL(none, null_type, displayEnhancement_type_none);
+                    ITU_T_CHOICES_DECL(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text); // primitive
+                    ITU_T_CHOICES_DECL(number, int, displayEnhancement_type_number); // primitive
+                    ITU_T_CHOICES_DECL(none, null_type, displayEnhancement_type_none); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
                 };
@@ -1164,8 +1164,8 @@ namespace MMS_SCI_Module_1 {
                             ITU_T_STRUCT(group_Priority_Override_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    ITU_T_CHOICE_DECL(priority, MMS_Object_Module_1::Priority, group_Priority_Override_type_priority);
-                    ITU_T_CHOICE_DECL(undefined, null_type, group_Priority_Override_type_undefined);
+                    ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, group_Priority_Override_type_priority); // primitive
+                    ITU_T_CHOICES_DECL(undefined, null_type, group_Priority_Override_type_undefined); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
                 };
@@ -1223,8 +1223,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1287,8 +1287,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1344,8 +1344,8 @@ namespace MMS_SCI_Module_1 {
                             ITU_T_STRUCT(remainingDelay_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    ITU_T_CHOICE_DECL(time, int, remainingDelay_type_time);
-                    ITU_T_CHOICE_DECL(forever, null_type, remainingDelay_type_forever);
+                    ITU_T_CHOICES_DECL(time, int, remainingDelay_type_time); // primitive
+                    ITU_T_CHOICES_DECL(forever, null_type, remainingDelay_type_forever); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
                 };
@@ -1367,9 +1367,9 @@ namespace MMS_SCI_Module_1 {
                             ITU_T_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    ITU_T_CHOICE_DECL(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text);
-                    ITU_T_CHOICE_DECL(number, int, displayEnhancement_type_number);
-                    ITU_T_CHOICE_DECL(none, null_type, displayEnhancement_type_none);
+                    ITU_T_CHOICES_DECL(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text); // primitive
+                    ITU_T_CHOICES_DECL(number, int, displayEnhancement_type_number); // primitive
+                    ITU_T_CHOICES_DECL(none, null_type, displayEnhancement_type_none); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
                 };
@@ -1414,8 +1414,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1479,8 +1479,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1538,8 +1538,8 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
-            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
+            ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
+            ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
             ITU_T_ARCHIVE_FUNC;
         };

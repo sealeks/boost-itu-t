@@ -431,20 +431,20 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(MMSpdu_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(confirmed_RequestPDU, Confirmed_RequestPDU, MMSpdu_confirmed_RequestPDU);
-        ITU_T_CHOICES_DECL(confirmed_ResponsePDU, Confirmed_ResponsePDU, MMSpdu_confirmed_ResponsePDU);
-        ITU_T_CHOICES_DECL(confirmed_ErrorPDU, Confirmed_ErrorPDU, MMSpdu_confirmed_ErrorPDU);
-        ITU_T_CHOICES_DECL(unconfirmed_PDU, Unconfirmed_PDU, MMSpdu_unconfirmed_PDU);
-        ITU_T_CHOICES_DECL(rejectPDU, RejectPDU, MMSpdu_rejectPDU);
-        ITU_T_CHOICES_DECL(cancel_RequestPDU, Cancel_RequestPDU, MMSpdu_cancel_RequestPDU);
-        ITU_T_CHOICES_DECL(cancel_ResponsePDU, Cancel_ResponsePDU, MMSpdu_cancel_ResponsePDU);
-        ITU_T_CHOICES_DECL(cancel_ErrorPDU, Cancel_ErrorPDU, MMSpdu_cancel_ErrorPDU);
-        ITU_T_CHOICES_DECL(initiate_RequestPDU, Initiate_RequestPDU, MMSpdu_initiate_RequestPDU);
-        ITU_T_CHOICES_DECL(initiate_ResponsePDU, Initiate_ResponsePDU, MMSpdu_initiate_ResponsePDU);
-        ITU_T_CHOICES_DECL(initiate_ErrorPDU, Initiate_ErrorPDU, MMSpdu_initiate_ErrorPDU);
-        ITU_T_CHOICES_DECL(conclude_RequestPDU, Conclude_RequestPDU, MMSpdu_conclude_RequestPDU);
-        ITU_T_CHOICES_DECL(conclude_ResponsePDU, Conclude_ResponsePDU, MMSpdu_conclude_ResponsePDU);
-        ITU_T_CHOICES_DECL(conclude_ErrorPDU, Conclude_ErrorPDU, MMSpdu_conclude_ErrorPDU);
+        ITU_T_CHOICEC_DECL(confirmed_RequestPDU, Confirmed_RequestPDU, MMSpdu_confirmed_RequestPDU);
+        ITU_T_CHOICEC_DECL(confirmed_ResponsePDU, Confirmed_ResponsePDU, MMSpdu_confirmed_ResponsePDU);
+        ITU_T_CHOICEC_DECL(confirmed_ErrorPDU, Confirmed_ErrorPDU, MMSpdu_confirmed_ErrorPDU);
+        ITU_T_CHOICEC_DECL(unconfirmed_PDU, Unconfirmed_PDU, MMSpdu_unconfirmed_PDU);
+        ITU_T_CHOICEC_DECL(rejectPDU, RejectPDU, MMSpdu_rejectPDU);
+        ITU_T_CHOICES_DECL(cancel_RequestPDU, Cancel_RequestPDU, MMSpdu_cancel_RequestPDU); // primitive
+        ITU_T_CHOICES_DECL(cancel_ResponsePDU, Cancel_ResponsePDU, MMSpdu_cancel_ResponsePDU); // primitive
+        ITU_T_CHOICEC_DECL(cancel_ErrorPDU, Cancel_ErrorPDU, MMSpdu_cancel_ErrorPDU);
+        ITU_T_CHOICEC_DECL(initiate_RequestPDU, Initiate_RequestPDU, MMSpdu_initiate_RequestPDU);
+        ITU_T_CHOICEC_DECL(initiate_ResponsePDU, Initiate_ResponsePDU, MMSpdu_initiate_ResponsePDU);
+        ITU_T_CHOICEC_DECL(initiate_ErrorPDU, Initiate_ErrorPDU, MMSpdu_initiate_ErrorPDU);
+        ITU_T_CHOICES_DECL(conclude_RequestPDU, Conclude_RequestPDU, MMSpdu_conclude_RequestPDU); // primitive
+        ITU_T_CHOICES_DECL(conclude_ResponsePDU, Conclude_ResponsePDU, MMSpdu_conclude_ResponsePDU); // primitive
+        ITU_T_CHOICEC_DECL(conclude_ErrorPDU, Conclude_ErrorPDU, MMSpdu_conclude_ErrorPDU);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -575,92 +575,92 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(ConfirmedServiceRequest_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(status, Status_Request, ConfirmedServiceRequest_status);
-        ITU_T_CHOICES_DECL(getNameList, GetNameList_Request, ConfirmedServiceRequest_getNameList);
-        ITU_T_CHOICES_DECL(identify, Identify_Request, ConfirmedServiceRequest_identify);
-        ITU_T_CHOICES_DECL(rename, Rename_Request, ConfirmedServiceRequest_rename);
-        ITU_T_CHOICES_DECL(read, Read_Request, ConfirmedServiceRequest_read);
-        ITU_T_CHOICES_DECL(write, Write_Request, ConfirmedServiceRequest_write);
-        ITU_T_CHOICES_DECL(getVariableAccessAttributes, GetVariableAccessAttributes_Request, ConfirmedServiceRequest_getVariableAccessAttributes);
-        ITU_T_CHOICES_DECL(defineNamedVariable, DefineNamedVariable_Request, ConfirmedServiceRequest_defineNamedVariable);
-        ITU_T_CHOICES_DECL(defineScatteredAccess, ISO_9506_MMS_1A::DefineScatteredAccess_Request, ConfirmedServiceRequest_defineScatteredAccess);
-        ITU_T_CHOICES_DECL(getScatteredAccessAttributes, ObjectName, ConfirmedServiceRequest_getScatteredAccessAttributes);
-        ITU_T_CHOICES_DECL(deleteVariableAccess, DeleteVariableAccess_Request, ConfirmedServiceRequest_deleteVariableAccess);
-        ITU_T_CHOICES_DECL(defineNamedVariableList, DefineNamedVariableList_Request, ConfirmedServiceRequest_defineNamedVariableList);
-        ITU_T_CHOICES_DECL(getNamedVariableListAttributes, GetNamedVariableListAttributes_Request, ConfirmedServiceRequest_getNamedVariableListAttributes);
-        ITU_T_CHOICES_DECL(deleteNamedVariableList, DeleteNamedVariableList_Request, ConfirmedServiceRequest_deleteNamedVariableList);
-        ITU_T_CHOICES_DECL(defineNamedType, DefineNamedType_Request, ConfirmedServiceRequest_defineNamedType);
-        ITU_T_CHOICES_DECL(getNamedTypeAttributes, GetNamedTypeAttributes_Request, ConfirmedServiceRequest_getNamedTypeAttributes);
-        ITU_T_CHOICES_DECL(deleteNamedType, DeleteNamedType_Request, ConfirmedServiceRequest_deleteNamedType);
-        ITU_T_CHOICES_DECL(input, Input_Request, ConfirmedServiceRequest_input);
-        ITU_T_CHOICES_DECL(output, Output_Request, ConfirmedServiceRequest_output);
-        ITU_T_CHOICES_DECL(takeControl, TakeControl_Request, ConfirmedServiceRequest_takeControl);
-        ITU_T_CHOICES_DECL(relinquishControl, RelinquishControl_Request, ConfirmedServiceRequest_relinquishControl);
-        ITU_T_CHOICES_DECL(defineSemaphore, DefineSemaphore_Request, ConfirmedServiceRequest_defineSemaphore);
-        ITU_T_CHOICES_DECL(deleteSemaphore, DeleteSemaphore_Request, ConfirmedServiceRequest_deleteSemaphore);
-        ITU_T_CHOICES_DECL(reportSemaphoreStatus, ReportSemaphoreStatus_Request, ConfirmedServiceRequest_reportSemaphoreStatus);
-        ITU_T_CHOICES_DECL(reportPoolSemaphoreStatus, ReportPoolSemaphoreStatus_Request, ConfirmedServiceRequest_reportPoolSemaphoreStatus);
-        ITU_T_CHOICES_DECL(reportSemaphoreEntryStatus, ReportSemaphoreEntryStatus_Request, ConfirmedServiceRequest_reportSemaphoreEntryStatus);
-        ITU_T_CHOICES_DECL(initiateDownloadSequence, InitiateDownloadSequence_Request, ConfirmedServiceRequest_initiateDownloadSequence);
-        ITU_T_CHOICES_DECL(downloadSegment, DownloadSegment_Request, ConfirmedServiceRequest_downloadSegment);
-        ITU_T_CHOICES_DECL(terminateDownloadSequence, TerminateDownloadSequence_Request, ConfirmedServiceRequest_terminateDownloadSequence);
-        ITU_T_CHOICES_DECL(initiateUploadSequence, InitiateUploadSequence_Request, ConfirmedServiceRequest_initiateUploadSequence);
-        ITU_T_CHOICES_DECL(uploadSegment, UploadSegment_Request, ConfirmedServiceRequest_uploadSegment);
-        ITU_T_CHOICES_DECL(terminateUploadSequence, TerminateUploadSequence_Request, ConfirmedServiceRequest_terminateUploadSequence);
-        ITU_T_CHOICES_DECL(requestDomainDownload, RequestDomainDownload_Request, ConfirmedServiceRequest_requestDomainDownload);
-        ITU_T_CHOICES_DECL(requestDomainUpload, RequestDomainUpload_Request, ConfirmedServiceRequest_requestDomainUpload);
-        ITU_T_CHOICES_DECL(loadDomainContent, LoadDomainContent_Request, ConfirmedServiceRequest_loadDomainContent);
-        ITU_T_CHOICES_DECL(storeDomainContent, StoreDomainContent_Request, ConfirmedServiceRequest_storeDomainContent);
-        ITU_T_CHOICES_DECL(deleteDomain, DeleteDomain_Request, ConfirmedServiceRequest_deleteDomain);
-        ITU_T_CHOICES_DECL(getDomainAttributes, GetDomainAttributes_Request, ConfirmedServiceRequest_getDomainAttributes);
-        ITU_T_CHOICES_DECL(createProgramInvocation, CreateProgramInvocation_Request, ConfirmedServiceRequest_createProgramInvocation);
-        ITU_T_CHOICES_DECL(deleteProgramInvocation, DeleteProgramInvocation_Request, ConfirmedServiceRequest_deleteProgramInvocation);
-        ITU_T_CHOICES_DECL(start, Start_Request, ConfirmedServiceRequest_start);
-        ITU_T_CHOICES_DECL(stop, Stop_Request, ConfirmedServiceRequest_stop);
-        ITU_T_CHOICES_DECL(resume, Resume_Request, ConfirmedServiceRequest_resume);
-        ITU_T_CHOICES_DECL(reset, Reset_Request, ConfirmedServiceRequest_reset);
-        ITU_T_CHOICES_DECL(kill, Kill_Request, ConfirmedServiceRequest_kill);
-        ITU_T_CHOICES_DECL(getProgramInvocationAttributes, GetProgramInvocationAttributes_Request, ConfirmedServiceRequest_getProgramInvocationAttributes);
-        ITU_T_CHOICES_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Request, ConfirmedServiceRequest_obtainFile);
-        ITU_T_CHOICES_DECL(defineEventCondition, DefineEventCondition_Request, ConfirmedServiceRequest_defineEventCondition);
-        ITU_T_CHOICES_DECL(deleteEventCondition, DeleteEventCondition_Request, ConfirmedServiceRequest_deleteEventCondition);
-        ITU_T_CHOICES_DECL(getEventConditionAttributes, GetEventConditionAttributes_Request, ConfirmedServiceRequest_getEventConditionAttributes);
-        ITU_T_CHOICES_DECL(reportEventConditionStatus, ReportEventConditionStatus_Request, ConfirmedServiceRequest_reportEventConditionStatus);
-        ITU_T_CHOICES_DECL(alterEventConditionMonitoring, AlterEventConditionMonitoring_Request, ConfirmedServiceRequest_alterEventConditionMonitoring);
-        ITU_T_CHOICES_DECL(triggerEvent, TriggerEvent_Request, ConfirmedServiceRequest_triggerEvent);
-        ITU_T_CHOICES_DECL(defineEventAction, DefineEventAction_Request, ConfirmedServiceRequest_defineEventAction);
-        ITU_T_CHOICES_DECL(deleteEventAction, DeleteEventAction_Request, ConfirmedServiceRequest_deleteEventAction);
-        ITU_T_CHOICES_DECL(getEventActionAttributes, GetEventActionAttributes_Request, ConfirmedServiceRequest_getEventActionAttributes);
-        ITU_T_CHOICES_DECL(reportEventActionStatus, ReportEventActionStatus_Request, ConfirmedServiceRequest_reportEventActionStatus);
-        ITU_T_CHOICES_DECL(defineEventEnrollment, DefineEventEnrollment_Request, ConfirmedServiceRequest_defineEventEnrollment);
-        ITU_T_CHOICES_DECL(deleteEventEnrollment, DeleteEventEnrollment_Request, ConfirmedServiceRequest_deleteEventEnrollment);
-        ITU_T_CHOICES_DECL(alterEventEnrollment, AlterEventEnrollment_Request, ConfirmedServiceRequest_alterEventEnrollment);
-        ITU_T_CHOICES_DECL(reportEventEnrollmentStatus, ReportEventEnrollmentStatus_Request, ConfirmedServiceRequest_reportEventEnrollmentStatus);
-        ITU_T_CHOICES_DECL(getEventEnrollmentAttributes, GetEventEnrollmentAttributes_Request, ConfirmedServiceRequest_getEventEnrollmentAttributes);
-        ITU_T_CHOICES_DECL(acknowledgeEventNotification, AcknowledgeEventNotification_Request, ConfirmedServiceRequest_acknowledgeEventNotification);
-        ITU_T_CHOICES_DECL(getAlarmSummary, GetAlarmSummary_Request, ConfirmedServiceRequest_getAlarmSummary);
-        ITU_T_CHOICES_DECL(getAlarmEnrollmentSummary, GetAlarmEnrollmentSummary_Request, ConfirmedServiceRequest_getAlarmEnrollmentSummary);
-        ITU_T_CHOICES_DECL(readJournal, ReadJournal_Request, ConfirmedServiceRequest_readJournal);
-        ITU_T_CHOICES_DECL(writeJournal, WriteJournal_Request, ConfirmedServiceRequest_writeJournal);
-        ITU_T_CHOICES_DECL(initializeJournal, InitializeJournal_Request, ConfirmedServiceRequest_initializeJournal);
-        ITU_T_CHOICES_DECL(reportJournalStatus, ReportJournalStatus_Request, ConfirmedServiceRequest_reportJournalStatus);
-        ITU_T_CHOICES_DECL(createJournal, CreateJournal_Request, ConfirmedServiceRequest_createJournal);
-        ITU_T_CHOICES_DECL(deleteJournal, DeleteJournal_Request, ConfirmedServiceRequest_deleteJournal);
-        ITU_T_CHOICES_DECL(getCapabilityList, GetCapabilityList_Request, ConfirmedServiceRequest_getCapabilityList);
-        ITU_T_CHOICES_DECL(fileOpen, ISO_9506_MMS_1A::FileOpen_Request, ConfirmedServiceRequest_fileOpen);
-        ITU_T_CHOICES_DECL(fileRead, Integer32, ConfirmedServiceRequest_fileRead);
-        ITU_T_CHOICES_DECL(fileClose, Integer32, ConfirmedServiceRequest_fileClose);
-        ITU_T_CHOICES_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Request, ConfirmedServiceRequest_fileRename);
-        ITU_T_CHOICES_DECL(fileDelete, FileName, ConfirmedServiceRequest_fileDelete);
-        ITU_T_CHOICES_DECL(fileDirectory, ISO_9506_MMS_1A::FileDirectory_Request, ConfirmedServiceRequest_fileDirectory);
-        ITU_T_CHOICES_DECL(additionalService, AdditionalService_Request, ConfirmedServiceRequest_additionalService);
-        ITU_T_CHOICES_DECL(getDataExchangeAttributes, GetDataExchangeAttributes_Request, ConfirmedServiceRequest_getDataExchangeAttributes);
-        ITU_T_CHOICES_DECL(exchangeData, ExchangeData_Request, ConfirmedServiceRequest_exchangeData);
-        ITU_T_CHOICES_DECL(defineAccessControlList, DefineAccessControlList_Request, ConfirmedServiceRequest_defineAccessControlList);
-        ITU_T_CHOICES_DECL(getAccessControlListAttributes, GetAccessControlListAttributes_Request, ConfirmedServiceRequest_getAccessControlListAttributes);
-        ITU_T_CHOICES_DECL(reportAccessControlledObjects, ReportAccessControlledObjects_Request, ConfirmedServiceRequest_reportAccessControlledObjects);
-        ITU_T_CHOICES_DECL(deleteAccessControlList, DeleteAccessControlList_Request, ConfirmedServiceRequest_deleteAccessControlList);
-        ITU_T_CHOICES_DECL(changeAccessControl, ChangeAccessControl_Request, ConfirmedServiceRequest_changeAccessControl);
+        ITU_T_CHOICES_DECL(status, Status_Request, ConfirmedServiceRequest_status); // primitive
+        ITU_T_CHOICEC_DECL(getNameList, GetNameList_Request, ConfirmedServiceRequest_getNameList);
+        ITU_T_CHOICES_DECL(identify, Identify_Request, ConfirmedServiceRequest_identify); // primitive
+        ITU_T_CHOICEC_DECL(rename, Rename_Request, ConfirmedServiceRequest_rename);
+        ITU_T_CHOICEC_DECL(read, Read_Request, ConfirmedServiceRequest_read);
+        ITU_T_CHOICEC_DECL(write, Write_Request, ConfirmedServiceRequest_write);
+        ITU_T_CHOICEC_DECL(getVariableAccessAttributes, GetVariableAccessAttributes_Request, ConfirmedServiceRequest_getVariableAccessAttributes);
+        ITU_T_CHOICEC_DECL(defineNamedVariable, DefineNamedVariable_Request, ConfirmedServiceRequest_defineNamedVariable);
+        ITU_T_CHOICEC_DECL(defineScatteredAccess, ISO_9506_MMS_1A::DefineScatteredAccess_Request, ConfirmedServiceRequest_defineScatteredAccess);
+        ITU_T_CHOICEC_DECL(getScatteredAccessAttributes, ObjectName, ConfirmedServiceRequest_getScatteredAccessAttributes);
+        ITU_T_CHOICEC_DECL(deleteVariableAccess, DeleteVariableAccess_Request, ConfirmedServiceRequest_deleteVariableAccess);
+        ITU_T_CHOICEC_DECL(defineNamedVariableList, DefineNamedVariableList_Request, ConfirmedServiceRequest_defineNamedVariableList);
+        ITU_T_CHOICEC_DECL(getNamedVariableListAttributes, GetNamedVariableListAttributes_Request, ConfirmedServiceRequest_getNamedVariableListAttributes);
+        ITU_T_CHOICEC_DECL(deleteNamedVariableList, DeleteNamedVariableList_Request, ConfirmedServiceRequest_deleteNamedVariableList);
+        ITU_T_CHOICEC_DECL(defineNamedType, DefineNamedType_Request, ConfirmedServiceRequest_defineNamedType);
+        ITU_T_CHOICEC_DECL(getNamedTypeAttributes, GetNamedTypeAttributes_Request, ConfirmedServiceRequest_getNamedTypeAttributes);
+        ITU_T_CHOICEC_DECL(deleteNamedType, DeleteNamedType_Request, ConfirmedServiceRequest_deleteNamedType);
+        ITU_T_CHOICEC_DECL(input, Input_Request, ConfirmedServiceRequest_input);
+        ITU_T_CHOICEC_DECL(output, Output_Request, ConfirmedServiceRequest_output);
+        ITU_T_CHOICEC_DECL(takeControl, TakeControl_Request, ConfirmedServiceRequest_takeControl);
+        ITU_T_CHOICEC_DECL(relinquishControl, RelinquishControl_Request, ConfirmedServiceRequest_relinquishControl);
+        ITU_T_CHOICEC_DECL(defineSemaphore, DefineSemaphore_Request, ConfirmedServiceRequest_defineSemaphore);
+        ITU_T_CHOICEC_DECL(deleteSemaphore, DeleteSemaphore_Request, ConfirmedServiceRequest_deleteSemaphore);
+        ITU_T_CHOICEC_DECL(reportSemaphoreStatus, ReportSemaphoreStatus_Request, ConfirmedServiceRequest_reportSemaphoreStatus);
+        ITU_T_CHOICEC_DECL(reportPoolSemaphoreStatus, ReportPoolSemaphoreStatus_Request, ConfirmedServiceRequest_reportPoolSemaphoreStatus);
+        ITU_T_CHOICEC_DECL(reportSemaphoreEntryStatus, ReportSemaphoreEntryStatus_Request, ConfirmedServiceRequest_reportSemaphoreEntryStatus);
+        ITU_T_CHOICEC_DECL(initiateDownloadSequence, InitiateDownloadSequence_Request, ConfirmedServiceRequest_initiateDownloadSequence);
+        ITU_T_CHOICES_DECL(downloadSegment, DownloadSegment_Request, ConfirmedServiceRequest_downloadSegment); // primitive
+        ITU_T_CHOICEC_DECL(terminateDownloadSequence, TerminateDownloadSequence_Request, ConfirmedServiceRequest_terminateDownloadSequence);
+        ITU_T_CHOICES_DECL(initiateUploadSequence, InitiateUploadSequence_Request, ConfirmedServiceRequest_initiateUploadSequence); // primitive
+        ITU_T_CHOICES_DECL(uploadSegment, UploadSegment_Request, ConfirmedServiceRequest_uploadSegment); // primitive
+        ITU_T_CHOICES_DECL(terminateUploadSequence, TerminateUploadSequence_Request, ConfirmedServiceRequest_terminateUploadSequence); // primitive
+        ITU_T_CHOICEC_DECL(requestDomainDownload, RequestDomainDownload_Request, ConfirmedServiceRequest_requestDomainDownload);
+        ITU_T_CHOICEC_DECL(requestDomainUpload, RequestDomainUpload_Request, ConfirmedServiceRequest_requestDomainUpload);
+        ITU_T_CHOICEC_DECL(loadDomainContent, LoadDomainContent_Request, ConfirmedServiceRequest_loadDomainContent);
+        ITU_T_CHOICEC_DECL(storeDomainContent, StoreDomainContent_Request, ConfirmedServiceRequest_storeDomainContent);
+        ITU_T_CHOICES_DECL(deleteDomain, DeleteDomain_Request, ConfirmedServiceRequest_deleteDomain); // primitive
+        ITU_T_CHOICES_DECL(getDomainAttributes, GetDomainAttributes_Request, ConfirmedServiceRequest_getDomainAttributes); // primitive
+        ITU_T_CHOICEC_DECL(createProgramInvocation, CreateProgramInvocation_Request, ConfirmedServiceRequest_createProgramInvocation);
+        ITU_T_CHOICES_DECL(deleteProgramInvocation, DeleteProgramInvocation_Request, ConfirmedServiceRequest_deleteProgramInvocation); // primitive
+        ITU_T_CHOICEC_DECL(start, Start_Request, ConfirmedServiceRequest_start);
+        ITU_T_CHOICEC_DECL(stop, Stop_Request, ConfirmedServiceRequest_stop);
+        ITU_T_CHOICEC_DECL(resume, Resume_Request, ConfirmedServiceRequest_resume);
+        ITU_T_CHOICEC_DECL(reset, Reset_Request, ConfirmedServiceRequest_reset);
+        ITU_T_CHOICEC_DECL(kill, Kill_Request, ConfirmedServiceRequest_kill);
+        ITU_T_CHOICES_DECL(getProgramInvocationAttributes, GetProgramInvocationAttributes_Request, ConfirmedServiceRequest_getProgramInvocationAttributes); // primitive
+        ITU_T_CHOICEC_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Request, ConfirmedServiceRequest_obtainFile);
+        ITU_T_CHOICEC_DECL(defineEventCondition, DefineEventCondition_Request, ConfirmedServiceRequest_defineEventCondition);
+        ITU_T_CHOICEC_DECL(deleteEventCondition, DeleteEventCondition_Request, ConfirmedServiceRequest_deleteEventCondition);
+        ITU_T_CHOICEC_DECL(getEventConditionAttributes, GetEventConditionAttributes_Request, ConfirmedServiceRequest_getEventConditionAttributes);
+        ITU_T_CHOICEC_DECL(reportEventConditionStatus, ReportEventConditionStatus_Request, ConfirmedServiceRequest_reportEventConditionStatus);
+        ITU_T_CHOICEC_DECL(alterEventConditionMonitoring, AlterEventConditionMonitoring_Request, ConfirmedServiceRequest_alterEventConditionMonitoring);
+        ITU_T_CHOICEC_DECL(triggerEvent, TriggerEvent_Request, ConfirmedServiceRequest_triggerEvent);
+        ITU_T_CHOICEC_DECL(defineEventAction, DefineEventAction_Request, ConfirmedServiceRequest_defineEventAction);
+        ITU_T_CHOICEC_DECL(deleteEventAction, DeleteEventAction_Request, ConfirmedServiceRequest_deleteEventAction);
+        ITU_T_CHOICEC_DECL(getEventActionAttributes, GetEventActionAttributes_Request, ConfirmedServiceRequest_getEventActionAttributes);
+        ITU_T_CHOICEC_DECL(reportEventActionStatus, ReportEventActionStatus_Request, ConfirmedServiceRequest_reportEventActionStatus);
+        ITU_T_CHOICEC_DECL(defineEventEnrollment, DefineEventEnrollment_Request, ConfirmedServiceRequest_defineEventEnrollment);
+        ITU_T_CHOICEC_DECL(deleteEventEnrollment, DeleteEventEnrollment_Request, ConfirmedServiceRequest_deleteEventEnrollment);
+        ITU_T_CHOICEC_DECL(alterEventEnrollment, AlterEventEnrollment_Request, ConfirmedServiceRequest_alterEventEnrollment);
+        ITU_T_CHOICEC_DECL(reportEventEnrollmentStatus, ReportEventEnrollmentStatus_Request, ConfirmedServiceRequest_reportEventEnrollmentStatus);
+        ITU_T_CHOICEC_DECL(getEventEnrollmentAttributes, GetEventEnrollmentAttributes_Request, ConfirmedServiceRequest_getEventEnrollmentAttributes);
+        ITU_T_CHOICEC_DECL(acknowledgeEventNotification, AcknowledgeEventNotification_Request, ConfirmedServiceRequest_acknowledgeEventNotification);
+        ITU_T_CHOICEC_DECL(getAlarmSummary, GetAlarmSummary_Request, ConfirmedServiceRequest_getAlarmSummary);
+        ITU_T_CHOICEC_DECL(getAlarmEnrollmentSummary, GetAlarmEnrollmentSummary_Request, ConfirmedServiceRequest_getAlarmEnrollmentSummary);
+        ITU_T_CHOICEC_DECL(readJournal, ReadJournal_Request, ConfirmedServiceRequest_readJournal);
+        ITU_T_CHOICEC_DECL(writeJournal, WriteJournal_Request, ConfirmedServiceRequest_writeJournal);
+        ITU_T_CHOICEC_DECL(initializeJournal, InitializeJournal_Request, ConfirmedServiceRequest_initializeJournal);
+        ITU_T_CHOICEC_DECL(reportJournalStatus, ReportJournalStatus_Request, ConfirmedServiceRequest_reportJournalStatus);
+        ITU_T_CHOICEC_DECL(createJournal, CreateJournal_Request, ConfirmedServiceRequest_createJournal);
+        ITU_T_CHOICEC_DECL(deleteJournal, DeleteJournal_Request, ConfirmedServiceRequest_deleteJournal);
+        ITU_T_CHOICEC_DECL(getCapabilityList, GetCapabilityList_Request, ConfirmedServiceRequest_getCapabilityList);
+        ITU_T_CHOICEC_DECL(fileOpen, ISO_9506_MMS_1A::FileOpen_Request, ConfirmedServiceRequest_fileOpen);
+        ITU_T_CHOICES_DECL(fileRead, Integer32, ConfirmedServiceRequest_fileRead); // primitive
+        ITU_T_CHOICES_DECL(fileClose, Integer32, ConfirmedServiceRequest_fileClose); // primitive
+        ITU_T_CHOICEC_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Request, ConfirmedServiceRequest_fileRename);
+        ITU_T_CHOICEC_DECL(fileDelete, FileName, ConfirmedServiceRequest_fileDelete);
+        ITU_T_CHOICEC_DECL(fileDirectory, ISO_9506_MMS_1A::FileDirectory_Request, ConfirmedServiceRequest_fileDirectory);
+        ITU_T_CHOICEC_DECL(additionalService, AdditionalService_Request, ConfirmedServiceRequest_additionalService);
+        ITU_T_CHOICEC_DECL(getDataExchangeAttributes, GetDataExchangeAttributes_Request, ConfirmedServiceRequest_getDataExchangeAttributes);
+        ITU_T_CHOICEC_DECL(exchangeData, ExchangeData_Request, ConfirmedServiceRequest_exchangeData);
+        ITU_T_CHOICEC_DECL(defineAccessControlList, DefineAccessControlList_Request, ConfirmedServiceRequest_defineAccessControlList);
+        ITU_T_CHOICEC_DECL(getAccessControlListAttributes, GetAccessControlListAttributes_Request, ConfirmedServiceRequest_getAccessControlListAttributes);
+        ITU_T_CHOICEC_DECL(reportAccessControlledObjects, ReportAccessControlledObjects_Request, ConfirmedServiceRequest_reportAccessControlledObjects);
+        ITU_T_CHOICES_DECL(deleteAccessControlList, DeleteAccessControlList_Request, ConfirmedServiceRequest_deleteAccessControlList); // primitive
+        ITU_T_CHOICEC_DECL(changeAccessControl, ChangeAccessControl_Request, ConfirmedServiceRequest_changeAccessControl);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -704,29 +704,29 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(AdditionalService_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(vMDStop, VMDStop_Request, AdditionalService_Request_vMDStop);
-        ITU_T_CHOICES_DECL(vMDReset, VMDReset_Request, AdditionalService_Request_vMDReset);
-        ITU_T_CHOICES_DECL(select, Select_Request, AdditionalService_Request_select);
-        ITU_T_CHOICES_DECL(alterPI, AlterProgramInvocationAttributes_Request, AdditionalService_Request_alterPI);
-        ITU_T_CHOICES_DECL(initiateUCLoad, InitiateUnitControlLoad_Request, AdditionalService_Request_initiateUCLoad);
-        ITU_T_CHOICES_DECL(uCLoad, UnitControlLoadSegment_Request, AdditionalService_Request_uCLoad);
-        ITU_T_CHOICES_DECL(uCUpload, UnitControlUpload_Request, AdditionalService_Request_uCUpload);
-        ITU_T_CHOICES_DECL(startUC, StartUnitControl_Request, AdditionalService_Request_startUC);
-        ITU_T_CHOICES_DECL(stopUC, StopUnitControl_Request, AdditionalService_Request_stopUC);
-        ITU_T_CHOICES_DECL(createUC, CreateUnitControl_Request, AdditionalService_Request_createUC);
-        ITU_T_CHOICES_DECL(addToUC, AddToUnitControl_Request, AdditionalService_Request_addToUC);
-        ITU_T_CHOICES_DECL(removeFromUC, RemoveFromUnitControl_Request, AdditionalService_Request_removeFromUC);
-        ITU_T_CHOICES_DECL(getUCAttributes, GetUnitControlAttributes_Request, AdditionalService_Request_getUCAttributes);
-        ITU_T_CHOICES_DECL(loadUCFromFile, LoadUnitControlFromFile_Request, AdditionalService_Request_loadUCFromFile);
-        ITU_T_CHOICES_DECL(storeUCToFile, StoreUnitControlToFile_Request, AdditionalService_Request_storeUCToFile);
-        ITU_T_CHOICES_DECL(deleteUC, DeleteUnitControl_Request, AdditionalService_Request_deleteUC);
-        ITU_T_CHOICES_DECL(defineECL, DefineEventConditionList_Request, AdditionalService_Request_defineECL);
-        ITU_T_CHOICES_DECL(deleteECL, DeleteEventConditionList_Request, AdditionalService_Request_deleteECL);
-        ITU_T_CHOICES_DECL(addECLReference, AddEventConditionListReference_Request, AdditionalService_Request_addECLReference);
-        ITU_T_CHOICES_DECL(removeECLReference, RemoveEventConditionListReference_Request, AdditionalService_Request_removeECLReference);
-        ITU_T_CHOICES_DECL(getECLAttributes, GetEventConditionListAttributes_Request, AdditionalService_Request_getECLAttributes);
-        ITU_T_CHOICES_DECL(reportECLStatus, ReportEventConditionListStatus_Request, AdditionalService_Request_reportECLStatus);
-        ITU_T_CHOICES_DECL(alterECLMonitoring, AlterEventConditionListMonitoring_Request, AdditionalService_Request_alterECLMonitoring);
+        ITU_T_CHOICES_DECL(vMDStop, VMDStop_Request, AdditionalService_Request_vMDStop); // primitive
+        ITU_T_CHOICES_DECL(vMDReset, VMDReset_Request, AdditionalService_Request_vMDReset); // primitive
+        ITU_T_CHOICEC_DECL(select, Select_Request, AdditionalService_Request_select);
+        ITU_T_CHOICEC_DECL(alterPI, AlterProgramInvocationAttributes_Request, AdditionalService_Request_alterPI);
+        ITU_T_CHOICES_DECL(initiateUCLoad, InitiateUnitControlLoad_Request, AdditionalService_Request_initiateUCLoad); // primitive
+        ITU_T_CHOICES_DECL(uCLoad, UnitControlLoadSegment_Request, AdditionalService_Request_uCLoad); // primitive
+        ITU_T_CHOICEC_DECL(uCUpload, UnitControlUpload_Request, AdditionalService_Request_uCUpload);
+        ITU_T_CHOICEC_DECL(startUC, StartUnitControl_Request, AdditionalService_Request_startUC);
+        ITU_T_CHOICES_DECL(stopUC, StopUnitControl_Request, AdditionalService_Request_stopUC); // primitive
+        ITU_T_CHOICEC_DECL(createUC, CreateUnitControl_Request, AdditionalService_Request_createUC);
+        ITU_T_CHOICEC_DECL(addToUC, AddToUnitControl_Request, AdditionalService_Request_addToUC);
+        ITU_T_CHOICEC_DECL(removeFromUC, RemoveFromUnitControl_Request, AdditionalService_Request_removeFromUC);
+        ITU_T_CHOICES_DECL(getUCAttributes, GetUnitControlAttributes_Request, AdditionalService_Request_getUCAttributes); // primitive
+        ITU_T_CHOICEC_DECL(loadUCFromFile, LoadUnitControlFromFile_Request, AdditionalService_Request_loadUCFromFile);
+        ITU_T_CHOICEC_DECL(storeUCToFile, StoreUnitControlToFile_Request, AdditionalService_Request_storeUCToFile);
+        ITU_T_CHOICES_DECL(deleteUC, DeleteUnitControl_Request, AdditionalService_Request_deleteUC); // primitive
+        ITU_T_CHOICEC_DECL(defineECL, DefineEventConditionList_Request, AdditionalService_Request_defineECL);
+        ITU_T_CHOICEC_DECL(deleteECL, DeleteEventConditionList_Request, AdditionalService_Request_deleteECL);
+        ITU_T_CHOICEC_DECL(addECLReference, AddEventConditionListReference_Request, AdditionalService_Request_addECLReference);
+        ITU_T_CHOICEC_DECL(removeECLReference, RemoveEventConditionListReference_Request, AdditionalService_Request_removeECLReference);
+        ITU_T_CHOICEC_DECL(getECLAttributes, GetEventConditionListAttributes_Request, AdditionalService_Request_getECLAttributes);
+        ITU_T_CHOICEC_DECL(reportECLStatus, ReportEventConditionListStatus_Request, AdditionalService_Request_reportECLStatus);
+        ITU_T_CHOICEC_DECL(alterECLMonitoring, AlterEventConditionListMonitoring_Request, AdditionalService_Request_alterECLMonitoring);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -755,14 +755,14 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(Request_Detail_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(otherRequests, null_type, Request_Detail_otherRequests);
-        ITU_T_CHOICES_DECL(createProgramInvocation, CS_CreateProgramInvocation_Request, Request_Detail_createProgramInvocation);
-        ITU_T_CHOICES_DECL(start, CS_Start_Request, Request_Detail_start);
-        ITU_T_CHOICES_DECL(resume, CS_Resume_Request, Request_Detail_resume);
-        ITU_T_CHOICES_DECL(defineEventCondition, CS_DefineEventCondition_Request, Request_Detail_defineEventCondition);
-        ITU_T_CHOICES_DECL(alterEventConditionMonitoring, CS_AlterEventConditionMonitoring_Request, Request_Detail_alterEventConditionMonitoring);
-        ITU_T_CHOICES_DECL(defineEventEnrollment, CS_DefineEventEnrollment_Request, Request_Detail_defineEventEnrollment);
-        ITU_T_CHOICES_DECL(alterEventEnrollment, CS_AlterEventEnrollment_Request, Request_Detail_alterEventEnrollment);
+        ITU_T_CHOICES_DECL(otherRequests, null_type, Request_Detail_otherRequests); // primitive
+        ITU_T_CHOICES_DECL(createProgramInvocation, CS_CreateProgramInvocation_Request, Request_Detail_createProgramInvocation); // primitive
+        ITU_T_CHOICEC_DECL(start, CS_Start_Request, Request_Detail_start);
+        ITU_T_CHOICEC_DECL(resume, CS_Resume_Request, Request_Detail_resume);
+        ITU_T_CHOICEC_DECL(defineEventCondition, CS_DefineEventCondition_Request, Request_Detail_defineEventCondition);
+        ITU_T_CHOICEC_DECL(alterEventConditionMonitoring, CS_AlterEventConditionMonitoring_Request, Request_Detail_alterEventConditionMonitoring);
+        ITU_T_CHOICEC_DECL(defineEventEnrollment, CS_DefineEventEnrollment_Request, Request_Detail_defineEventEnrollment);
+        ITU_T_CHOICEC_DECL(alterEventEnrollment, CS_AlterEventEnrollment_Request, Request_Detail_alterEventEnrollment);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -803,9 +803,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(UnconfirmedService_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(informationReport, InformationReport, UnconfirmedService_informationReport);
-        ITU_T_CHOICES_DECL(unsolicitedStatus, UnsolicitedStatus, UnconfirmedService_unsolicitedStatus);
-        ITU_T_CHOICES_DECL(eventNotification, EventNotification, UnconfirmedService_eventNotification);
+        ITU_T_CHOICEC_DECL(informationReport, InformationReport, UnconfirmedService_informationReport);
+        ITU_T_CHOICEC_DECL(unsolicitedStatus, UnsolicitedStatus, UnconfirmedService_unsolicitedStatus);
+        ITU_T_CHOICEC_DECL(eventNotification, EventNotification, UnconfirmedService_eventNotification);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -828,8 +828,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(Unconfirmed_Detail_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(otherRequests, null_type, Unconfirmed_Detail_otherRequests);
-        ITU_T_CHOICES_DECL(eventNotification, CS_EventNotification, Unconfirmed_Detail_eventNotification);
+        ITU_T_CHOICES_DECL(otherRequests, null_type, Unconfirmed_Detail_otherRequests); // primitive
+        ITU_T_CHOICEC_DECL(eventNotification, CS_EventNotification, Unconfirmed_Detail_eventNotification);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -955,91 +955,91 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(ConfirmedServiceResponse_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(status, Status_Response, ConfirmedServiceResponse_status);
-        ITU_T_CHOICES_DECL(getNameList, GetNameList_Response, ConfirmedServiceResponse_getNameList);
-        ITU_T_CHOICES_DECL(identify, Identify_Response, ConfirmedServiceResponse_identify);
-        ITU_T_CHOICES_DECL(rename, Rename_Response, ConfirmedServiceResponse_rename);
-        ITU_T_CHOICES_DECL(read, Read_Response, ConfirmedServiceResponse_read);
-        ITU_T_CHOICES_DECL(getVariableAccessAttributes, GetVariableAccessAttributes_Response, ConfirmedServiceResponse_getVariableAccessAttributes);
-        ITU_T_CHOICES_DECL(defineNamedVariable, DefineNamedVariable_Response, ConfirmedServiceResponse_defineNamedVariable);
-        ITU_T_CHOICES_DECL(defineScatteredAccess, ISO_9506_MMS_1A::DefineScatteredAccess_Response, ConfirmedServiceResponse_defineScatteredAccess);
-        ITU_T_CHOICES_DECL(getScatteredAccessAttributes, ISO_9506_MMS_1A::GetScatteredAccessAttributes_Response, ConfirmedServiceResponse_getScatteredAccessAttributes);
-        ITU_T_CHOICES_DECL(deleteVariableAccess, DeleteVariableAccess_Response, ConfirmedServiceResponse_deleteVariableAccess);
-        ITU_T_CHOICES_DECL(defineNamedVariableList, DefineNamedVariableList_Response, ConfirmedServiceResponse_defineNamedVariableList);
-        ITU_T_CHOICES_DECL(getNamedVariableListAttributes, GetNamedVariableListAttributes_Response, ConfirmedServiceResponse_getNamedVariableListAttributes);
-        ITU_T_CHOICES_DECL(deleteNamedVariableList, DeleteNamedVariableList_Response, ConfirmedServiceResponse_deleteNamedVariableList);
-        ITU_T_CHOICES_DECL(defineNamedType, DefineNamedType_Response, ConfirmedServiceResponse_defineNamedType);
-        ITU_T_CHOICES_DECL(getNamedTypeAttributes, GetNamedTypeAttributes_Response, ConfirmedServiceResponse_getNamedTypeAttributes);
-        ITU_T_CHOICES_DECL(deleteNamedType, DeleteNamedType_Response, ConfirmedServiceResponse_deleteNamedType);
-        ITU_T_CHOICES_DECL(input, Input_Response, ConfirmedServiceResponse_input);
-        ITU_T_CHOICES_DECL(output, Output_Response, ConfirmedServiceResponse_output);
-        ITU_T_CHOICES_DECL(takeControl, TakeControl_Response, ConfirmedServiceResponse_takeControl);
-        ITU_T_CHOICES_DECL(relinquishControl, RelinquishControl_Response, ConfirmedServiceResponse_relinquishControl);
-        ITU_T_CHOICES_DECL(defineSemaphore, DefineSemaphore_Response, ConfirmedServiceResponse_defineSemaphore);
-        ITU_T_CHOICES_DECL(deleteSemaphore, DeleteSemaphore_Response, ConfirmedServiceResponse_deleteSemaphore);
-        ITU_T_CHOICES_DECL(reportSemaphoreStatus, ReportSemaphoreStatus_Response, ConfirmedServiceResponse_reportSemaphoreStatus);
-        ITU_T_CHOICES_DECL(reportPoolSemaphoreStatus, ReportPoolSemaphoreStatus_Response, ConfirmedServiceResponse_reportPoolSemaphoreStatus);
-        ITU_T_CHOICES_DECL(reportSemaphoreEntryStatus, ReportSemaphoreEntryStatus_Response, ConfirmedServiceResponse_reportSemaphoreEntryStatus);
-        ITU_T_CHOICES_DECL(initiateDownloadSequence, InitiateDownloadSequence_Response, ConfirmedServiceResponse_initiateDownloadSequence);
-        ITU_T_CHOICES_DECL(downloadSegment, DownloadSegment_Response, ConfirmedServiceResponse_downloadSegment);
-        ITU_T_CHOICES_DECL(terminateDownloadSequence, TerminateDownloadSequence_Response, ConfirmedServiceResponse_terminateDownloadSequence);
-        ITU_T_CHOICES_DECL(initiateUploadSequence, InitiateUploadSequence_Response, ConfirmedServiceResponse_initiateUploadSequence);
-        ITU_T_CHOICES_DECL(uploadSegment, UploadSegment_Response, ConfirmedServiceResponse_uploadSegment);
-        ITU_T_CHOICES_DECL(terminateUploadSequence, TerminateUploadSequence_Response, ConfirmedServiceResponse_terminateUploadSequence);
-        ITU_T_CHOICES_DECL(requestDomainDownload, RequestDomainDownload_Response, ConfirmedServiceResponse_requestDomainDownload);
-        ITU_T_CHOICES_DECL(requestDomainUpload, RequestDomainUpload_Response, ConfirmedServiceResponse_requestDomainUpload);
-        ITU_T_CHOICES_DECL(loadDomainContent, LoadDomainContent_Response, ConfirmedServiceResponse_loadDomainContent);
-        ITU_T_CHOICES_DECL(storeDomainContent, StoreDomainContent_Response, ConfirmedServiceResponse_storeDomainContent);
-        ITU_T_CHOICES_DECL(deleteDomain, DeleteDomain_Response, ConfirmedServiceResponse_deleteDomain);
-        ITU_T_CHOICES_DECL(getDomainAttributes, GetDomainAttributes_Response, ConfirmedServiceResponse_getDomainAttributes);
-        ITU_T_CHOICES_DECL(createProgramInvocation, CreateProgramInvocation_Response, ConfirmedServiceResponse_createProgramInvocation);
-        ITU_T_CHOICES_DECL(deleteProgramInvocation, DeleteProgramInvocation_Response, ConfirmedServiceResponse_deleteProgramInvocation);
-        ITU_T_CHOICES_DECL(start, Start_Response, ConfirmedServiceResponse_start);
-        ITU_T_CHOICES_DECL(stop, Stop_Response, ConfirmedServiceResponse_stop);
-        ITU_T_CHOICES_DECL(resume, Resume_Response, ConfirmedServiceResponse_resume);
-        ITU_T_CHOICES_DECL(reset, Reset_Response, ConfirmedServiceResponse_reset);
-        ITU_T_CHOICES_DECL(kill, Kill_Response, ConfirmedServiceResponse_kill);
-        ITU_T_CHOICES_DECL(getProgramInvocationAttributes, GetProgramInvocationAttributes_Response, ConfirmedServiceResponse_getProgramInvocationAttributes);
-        ITU_T_CHOICES_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Response, ConfirmedServiceResponse_obtainFile);
-        ITU_T_CHOICES_DECL(defineEventCondition, DefineEventCondition_Response, ConfirmedServiceResponse_defineEventCondition);
-        ITU_T_CHOICES_DECL(deleteEventCondition, DeleteEventCondition_Response, ConfirmedServiceResponse_deleteEventCondition);
-        ITU_T_CHOICES_DECL(getEventConditionAttributes, GetEventConditionAttributes_Response, ConfirmedServiceResponse_getEventConditionAttributes);
-        ITU_T_CHOICES_DECL(reportEventConditionStatus, ReportEventConditionStatus_Response, ConfirmedServiceResponse_reportEventConditionStatus);
-        ITU_T_CHOICES_DECL(alterEventConditionMonitoring, AlterEventConditionMonitoring_Response, ConfirmedServiceResponse_alterEventConditionMonitoring);
-        ITU_T_CHOICES_DECL(triggerEvent, TriggerEvent_Response, ConfirmedServiceResponse_triggerEvent);
-        ITU_T_CHOICES_DECL(defineEventAction, DefineEventAction_Response, ConfirmedServiceResponse_defineEventAction);
-        ITU_T_CHOICES_DECL(deleteEventAction, DeleteEventAction_Response, ConfirmedServiceResponse_deleteEventAction);
-        ITU_T_CHOICES_DECL(getEventActionAttributes, GetEventActionAttributes_Response, ConfirmedServiceResponse_getEventActionAttributes);
-        ITU_T_CHOICES_DECL(reportEventActionStatus, ReportEventActionStatus_Response, ConfirmedServiceResponse_reportEventActionStatus);
-        ITU_T_CHOICES_DECL(defineEventEnrollment, DefineEventEnrollment_Response, ConfirmedServiceResponse_defineEventEnrollment);
-        ITU_T_CHOICES_DECL(deleteEventEnrollment, DeleteEventEnrollment_Response, ConfirmedServiceResponse_deleteEventEnrollment);
-        ITU_T_CHOICES_DECL(alterEventEnrollment, AlterEventEnrollment_Response, ConfirmedServiceResponse_alterEventEnrollment);
-        ITU_T_CHOICES_DECL(reportEventEnrollmentStatus, ReportEventEnrollmentStatus_Response, ConfirmedServiceResponse_reportEventEnrollmentStatus);
-        ITU_T_CHOICES_DECL(getEventEnrollmentAttributes, GetEventEnrollmentAttributes_Response, ConfirmedServiceResponse_getEventEnrollmentAttributes);
-        ITU_T_CHOICES_DECL(acknowledgeEventNotification, AcknowledgeEventNotification_Response, ConfirmedServiceResponse_acknowledgeEventNotification);
-        ITU_T_CHOICES_DECL(getAlarmSummary, GetAlarmSummary_Response, ConfirmedServiceResponse_getAlarmSummary);
-        ITU_T_CHOICES_DECL(getAlarmEnrollmentSummary, GetAlarmEnrollmentSummary_Response, ConfirmedServiceResponse_getAlarmEnrollmentSummary);
-        ITU_T_CHOICES_DECL(readJournal, ReadJournal_Response, ConfirmedServiceResponse_readJournal);
-        ITU_T_CHOICES_DECL(writeJournal, WriteJournal_Response, ConfirmedServiceResponse_writeJournal);
-        ITU_T_CHOICES_DECL(initializeJournal, InitializeJournal_Response, ConfirmedServiceResponse_initializeJournal);
-        ITU_T_CHOICES_DECL(reportJournalStatus, ReportJournalStatus_Response, ConfirmedServiceResponse_reportJournalStatus);
-        ITU_T_CHOICES_DECL(createJournal, CreateJournal_Response, ConfirmedServiceResponse_createJournal);
-        ITU_T_CHOICES_DECL(deleteJournal, DeleteJournal_Response, ConfirmedServiceResponse_deleteJournal);
-        ITU_T_CHOICES_DECL(getCapabilityList, GetCapabilityList_Response, ConfirmedServiceResponse_getCapabilityList);
-        ITU_T_CHOICES_DECL(fileOpen, ISO_9506_MMS_1A::FileOpen_Response, ConfirmedServiceResponse_fileOpen);
-        ITU_T_CHOICES_DECL(fileRead, ISO_9506_MMS_1A::FileRead_Response, ConfirmedServiceResponse_fileRead);
-        ITU_T_CHOICES_DECL(fileClose, ISO_9506_MMS_1A::FileClose_Response, ConfirmedServiceResponse_fileClose);
-        ITU_T_CHOICES_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Response, ConfirmedServiceResponse_fileRename);
-        ITU_T_CHOICES_DECL(fileDelete, ISO_9506_MMS_1A::FileDelete_Response, ConfirmedServiceResponse_fileDelete);
-        ITU_T_CHOICES_DECL(fileDirectory, ISO_9506_MMS_1A::FileDirectory_Response, ConfirmedServiceResponse_fileDirectory);
-        ITU_T_CHOICES_DECL(additionalService, AdditionalService_Response, ConfirmedServiceResponse_additionalService);
-        ITU_T_CHOICES_DECL(getDataExchangeAttributes, GetDataExchangeAttributes_Response, ConfirmedServiceResponse_getDataExchangeAttributes);
-        ITU_T_CHOICES_DECL(exchangeData, ExchangeData_Response, ConfirmedServiceResponse_exchangeData);
-        ITU_T_CHOICES_DECL(defineAccessControlList, DefineAccessControlList_Response, ConfirmedServiceResponse_defineAccessControlList);
-        ITU_T_CHOICES_DECL(getAccessControlListAttributes, GetAccessControlListAttributes_Response, ConfirmedServiceResponse_getAccessControlListAttributes);
-        ITU_T_CHOICES_DECL(reportAccessControlledObjects, ReportAccessControlledObjects_Response, ConfirmedServiceResponse_reportAccessControlledObjects);
-        ITU_T_CHOICES_DECL(deleteAccessControlList, DeleteAccessControlList_Response, ConfirmedServiceResponse_deleteAccessControlList);
-        ITU_T_CHOICES_DECL(changeAccessControl, ChangeAccessControl_Response, ConfirmedServiceResponse_changeAccessControl);
+        ITU_T_CHOICEC_DECL(status, Status_Response, ConfirmedServiceResponse_status);
+        ITU_T_CHOICEC_DECL(getNameList, GetNameList_Response, ConfirmedServiceResponse_getNameList);
+        ITU_T_CHOICEC_DECL(identify, Identify_Response, ConfirmedServiceResponse_identify);
+        ITU_T_CHOICES_DECL(rename, Rename_Response, ConfirmedServiceResponse_rename); // primitive
+        ITU_T_CHOICEC_DECL(read, Read_Response, ConfirmedServiceResponse_read);
+        ITU_T_CHOICEC_DECL(getVariableAccessAttributes, GetVariableAccessAttributes_Response, ConfirmedServiceResponse_getVariableAccessAttributes);
+        ITU_T_CHOICES_DECL(defineNamedVariable, DefineNamedVariable_Response, ConfirmedServiceResponse_defineNamedVariable); // primitive
+        ITU_T_CHOICES_DECL(defineScatteredAccess, ISO_9506_MMS_1A::DefineScatteredAccess_Response, ConfirmedServiceResponse_defineScatteredAccess); // primitive
+        ITU_T_CHOICEC_DECL(getScatteredAccessAttributes, ISO_9506_MMS_1A::GetScatteredAccessAttributes_Response, ConfirmedServiceResponse_getScatteredAccessAttributes);
+        ITU_T_CHOICEC_DECL(deleteVariableAccess, DeleteVariableAccess_Response, ConfirmedServiceResponse_deleteVariableAccess);
+        ITU_T_CHOICES_DECL(defineNamedVariableList, DefineNamedVariableList_Response, ConfirmedServiceResponse_defineNamedVariableList); // primitive
+        ITU_T_CHOICEC_DECL(getNamedVariableListAttributes, GetNamedVariableListAttributes_Response, ConfirmedServiceResponse_getNamedVariableListAttributes);
+        ITU_T_CHOICEC_DECL(deleteNamedVariableList, DeleteNamedVariableList_Response, ConfirmedServiceResponse_deleteNamedVariableList);
+        ITU_T_CHOICES_DECL(defineNamedType, DefineNamedType_Response, ConfirmedServiceResponse_defineNamedType); // primitive
+        ITU_T_CHOICEC_DECL(getNamedTypeAttributes, GetNamedTypeAttributes_Response, ConfirmedServiceResponse_getNamedTypeAttributes);
+        ITU_T_CHOICEC_DECL(deleteNamedType, DeleteNamedType_Response, ConfirmedServiceResponse_deleteNamedType);
+        ITU_T_CHOICES_DECL(input, Input_Response, ConfirmedServiceResponse_input); // primitive
+        ITU_T_CHOICES_DECL(output, Output_Response, ConfirmedServiceResponse_output); // primitive
+        ITU_T_CHOICEC_DECL(takeControl, TakeControl_Response, ConfirmedServiceResponse_takeControl);
+        ITU_T_CHOICES_DECL(relinquishControl, RelinquishControl_Response, ConfirmedServiceResponse_relinquishControl); // primitive
+        ITU_T_CHOICES_DECL(defineSemaphore, DefineSemaphore_Response, ConfirmedServiceResponse_defineSemaphore); // primitive
+        ITU_T_CHOICES_DECL(deleteSemaphore, DeleteSemaphore_Response, ConfirmedServiceResponse_deleteSemaphore); // primitive
+        ITU_T_CHOICEC_DECL(reportSemaphoreStatus, ReportSemaphoreStatus_Response, ConfirmedServiceResponse_reportSemaphoreStatus);
+        ITU_T_CHOICEC_DECL(reportPoolSemaphoreStatus, ReportPoolSemaphoreStatus_Response, ConfirmedServiceResponse_reportPoolSemaphoreStatus);
+        ITU_T_CHOICEC_DECL(reportSemaphoreEntryStatus, ReportSemaphoreEntryStatus_Response, ConfirmedServiceResponse_reportSemaphoreEntryStatus);
+        ITU_T_CHOICES_DECL(initiateDownloadSequence, InitiateDownloadSequence_Response, ConfirmedServiceResponse_initiateDownloadSequence); // primitive
+        ITU_T_CHOICEC_DECL(downloadSegment, DownloadSegment_Response, ConfirmedServiceResponse_downloadSegment);
+        ITU_T_CHOICES_DECL(terminateDownloadSequence, TerminateDownloadSequence_Response, ConfirmedServiceResponse_terminateDownloadSequence); // primitive
+        ITU_T_CHOICEC_DECL(initiateUploadSequence, InitiateUploadSequence_Response, ConfirmedServiceResponse_initiateUploadSequence);
+        ITU_T_CHOICEC_DECL(uploadSegment, UploadSegment_Response, ConfirmedServiceResponse_uploadSegment);
+        ITU_T_CHOICES_DECL(terminateUploadSequence, TerminateUploadSequence_Response, ConfirmedServiceResponse_terminateUploadSequence); // primitive
+        ITU_T_CHOICES_DECL(requestDomainDownload, RequestDomainDownload_Response, ConfirmedServiceResponse_requestDomainDownload); // primitive
+        ITU_T_CHOICES_DECL(requestDomainUpload, RequestDomainUpload_Response, ConfirmedServiceResponse_requestDomainUpload); // primitive
+        ITU_T_CHOICES_DECL(loadDomainContent, LoadDomainContent_Response, ConfirmedServiceResponse_loadDomainContent); // primitive
+        ITU_T_CHOICES_DECL(storeDomainContent, StoreDomainContent_Response, ConfirmedServiceResponse_storeDomainContent); // primitive
+        ITU_T_CHOICES_DECL(deleteDomain, DeleteDomain_Response, ConfirmedServiceResponse_deleteDomain); // primitive
+        ITU_T_CHOICEC_DECL(getDomainAttributes, GetDomainAttributes_Response, ConfirmedServiceResponse_getDomainAttributes);
+        ITU_T_CHOICES_DECL(createProgramInvocation, CreateProgramInvocation_Response, ConfirmedServiceResponse_createProgramInvocation); // primitive
+        ITU_T_CHOICES_DECL(deleteProgramInvocation, DeleteProgramInvocation_Response, ConfirmedServiceResponse_deleteProgramInvocation); // primitive
+        ITU_T_CHOICES_DECL(start, Start_Response, ConfirmedServiceResponse_start); // primitive
+        ITU_T_CHOICES_DECL(stop, Stop_Response, ConfirmedServiceResponse_stop); // primitive
+        ITU_T_CHOICES_DECL(resume, Resume_Response, ConfirmedServiceResponse_resume); // primitive
+        ITU_T_CHOICES_DECL(reset, Reset_Response, ConfirmedServiceResponse_reset); // primitive
+        ITU_T_CHOICES_DECL(kill, Kill_Response, ConfirmedServiceResponse_kill); // primitive
+        ITU_T_CHOICEC_DECL(getProgramInvocationAttributes, GetProgramInvocationAttributes_Response, ConfirmedServiceResponse_getProgramInvocationAttributes);
+        ITU_T_CHOICES_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Response, ConfirmedServiceResponse_obtainFile); // primitive
+        ITU_T_CHOICES_DECL(defineEventCondition, DefineEventCondition_Response, ConfirmedServiceResponse_defineEventCondition); // primitive
+        ITU_T_CHOICES_DECL(deleteEventCondition, DeleteEventCondition_Response, ConfirmedServiceResponse_deleteEventCondition); // primitive
+        ITU_T_CHOICEC_DECL(getEventConditionAttributes, GetEventConditionAttributes_Response, ConfirmedServiceResponse_getEventConditionAttributes);
+        ITU_T_CHOICEC_DECL(reportEventConditionStatus, ReportEventConditionStatus_Response, ConfirmedServiceResponse_reportEventConditionStatus);
+        ITU_T_CHOICES_DECL(alterEventConditionMonitoring, AlterEventConditionMonitoring_Response, ConfirmedServiceResponse_alterEventConditionMonitoring); // primitive
+        ITU_T_CHOICES_DECL(triggerEvent, TriggerEvent_Response, ConfirmedServiceResponse_triggerEvent); // primitive
+        ITU_T_CHOICES_DECL(defineEventAction, DefineEventAction_Response, ConfirmedServiceResponse_defineEventAction); // primitive
+        ITU_T_CHOICES_DECL(deleteEventAction, DeleteEventAction_Response, ConfirmedServiceResponse_deleteEventAction); // primitive
+        ITU_T_CHOICEC_DECL(getEventActionAttributes, GetEventActionAttributes_Response, ConfirmedServiceResponse_getEventActionAttributes);
+        ITU_T_CHOICES_DECL(reportEventActionStatus, ReportEventActionStatus_Response, ConfirmedServiceResponse_reportEventActionStatus); // primitive
+        ITU_T_CHOICES_DECL(defineEventEnrollment, DefineEventEnrollment_Response, ConfirmedServiceResponse_defineEventEnrollment); // primitive
+        ITU_T_CHOICES_DECL(deleteEventEnrollment, DeleteEventEnrollment_Response, ConfirmedServiceResponse_deleteEventEnrollment); // primitive
+        ITU_T_CHOICEC_DECL(alterEventEnrollment, AlterEventEnrollment_Response, ConfirmedServiceResponse_alterEventEnrollment);
+        ITU_T_CHOICEC_DECL(reportEventEnrollmentStatus, ReportEventEnrollmentStatus_Response, ConfirmedServiceResponse_reportEventEnrollmentStatus);
+        ITU_T_CHOICEC_DECL(getEventEnrollmentAttributes, GetEventEnrollmentAttributes_Response, ConfirmedServiceResponse_getEventEnrollmentAttributes);
+        ITU_T_CHOICES_DECL(acknowledgeEventNotification, AcknowledgeEventNotification_Response, ConfirmedServiceResponse_acknowledgeEventNotification); // primitive
+        ITU_T_CHOICEC_DECL(getAlarmSummary, GetAlarmSummary_Response, ConfirmedServiceResponse_getAlarmSummary);
+        ITU_T_CHOICEC_DECL(getAlarmEnrollmentSummary, GetAlarmEnrollmentSummary_Response, ConfirmedServiceResponse_getAlarmEnrollmentSummary);
+        ITU_T_CHOICEC_DECL(readJournal, ReadJournal_Response, ConfirmedServiceResponse_readJournal);
+        ITU_T_CHOICES_DECL(writeJournal, WriteJournal_Response, ConfirmedServiceResponse_writeJournal); // primitive
+        ITU_T_CHOICES_DECL(initializeJournal, InitializeJournal_Response, ConfirmedServiceResponse_initializeJournal); // primitive
+        ITU_T_CHOICEC_DECL(reportJournalStatus, ReportJournalStatus_Response, ConfirmedServiceResponse_reportJournalStatus);
+        ITU_T_CHOICES_DECL(createJournal, CreateJournal_Response, ConfirmedServiceResponse_createJournal); // primitive
+        ITU_T_CHOICES_DECL(deleteJournal, DeleteJournal_Response, ConfirmedServiceResponse_deleteJournal); // primitive
+        ITU_T_CHOICEC_DECL(getCapabilityList, GetCapabilityList_Response, ConfirmedServiceResponse_getCapabilityList);
+        ITU_T_CHOICEC_DECL(fileOpen, ISO_9506_MMS_1A::FileOpen_Response, ConfirmedServiceResponse_fileOpen);
+        ITU_T_CHOICEC_DECL(fileRead, ISO_9506_MMS_1A::FileRead_Response, ConfirmedServiceResponse_fileRead);
+        ITU_T_CHOICES_DECL(fileClose, ISO_9506_MMS_1A::FileClose_Response, ConfirmedServiceResponse_fileClose); // primitive
+        ITU_T_CHOICES_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Response, ConfirmedServiceResponse_fileRename); // primitive
+        ITU_T_CHOICES_DECL(fileDelete, ISO_9506_MMS_1A::FileDelete_Response, ConfirmedServiceResponse_fileDelete); // primitive
+        ITU_T_CHOICEC_DECL(fileDirectory, ISO_9506_MMS_1A::FileDirectory_Response, ConfirmedServiceResponse_fileDirectory);
+        ITU_T_CHOICEC_DECL(additionalService, AdditionalService_Response, ConfirmedServiceResponse_additionalService);
+        ITU_T_CHOICEC_DECL(getDataExchangeAttributes, GetDataExchangeAttributes_Response, ConfirmedServiceResponse_getDataExchangeAttributes);
+        ITU_T_CHOICEC_DECL(exchangeData, ExchangeData_Response, ConfirmedServiceResponse_exchangeData);
+        ITU_T_CHOICES_DECL(defineAccessControlList, DefineAccessControlList_Response, ConfirmedServiceResponse_defineAccessControlList); // primitive
+        ITU_T_CHOICEC_DECL(getAccessControlListAttributes, GetAccessControlListAttributes_Response, ConfirmedServiceResponse_getAccessControlListAttributes);
+        ITU_T_CHOICEC_DECL(reportAccessControlledObjects, ReportAccessControlledObjects_Response, ConfirmedServiceResponse_reportAccessControlledObjects);
+        ITU_T_CHOICES_DECL(deleteAccessControlList, DeleteAccessControlList_Response, ConfirmedServiceResponse_deleteAccessControlList); // primitive
+        ITU_T_CHOICEC_DECL(changeAccessControl, ChangeAccessControl_Response, ConfirmedServiceResponse_changeAccessControl);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1083,29 +1083,29 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(AdditionalService_Response_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(vMDStop, VMDStop_Response, AdditionalService_Response_vMDStop);
-        ITU_T_CHOICES_DECL(vMDReset, VMDReset_Response, AdditionalService_Response_vMDReset);
-        ITU_T_CHOICES_DECL(select, Select_Response, AdditionalService_Response_select);
-        ITU_T_CHOICES_DECL(alterPI, AlterProgramInvocationAttributes_Response, AdditionalService_Response_alterPI);
-        ITU_T_CHOICES_DECL(initiateUCLoad, InitiateUnitControlLoad_Response, AdditionalService_Response_initiateUCLoad);
-        ITU_T_CHOICES_DECL(uCLoad, UnitControlLoadSegment_Response, AdditionalService_Response_uCLoad);
-        ITU_T_CHOICES_DECL(uCUpload, UnitControlUpload_Response, AdditionalService_Response_uCUpload);
-        ITU_T_CHOICES_DECL(startUC, StartUnitControl_Response, AdditionalService_Response_startUC);
-        ITU_T_CHOICES_DECL(stopUC, StopUnitControl_Response, AdditionalService_Response_stopUC);
-        ITU_T_CHOICES_DECL(createUC, CreateUnitControl_Response, AdditionalService_Response_createUC);
-        ITU_T_CHOICES_DECL(addToUC, AddToUnitControl_Response, AdditionalService_Response_addToUC);
-        ITU_T_CHOICES_DECL(removeFromUC, RemoveFromUnitControl_Response, AdditionalService_Response_removeFromUC);
-        ITU_T_CHOICES_DECL(getUCAttributes, GetUnitControlAttributes_Response, AdditionalService_Response_getUCAttributes);
-        ITU_T_CHOICES_DECL(loadUCFromFile, LoadUnitControlFromFile_Response, AdditionalService_Response_loadUCFromFile);
-        ITU_T_CHOICES_DECL(storeUCToFile, StoreUnitControlToFile_Response, AdditionalService_Response_storeUCToFile);
-        ITU_T_CHOICES_DECL(deleteUC, DeleteUnitControl_Response, AdditionalService_Response_deleteUC);
-        ITU_T_CHOICES_DECL(defineECL, DefineEventConditionList_Response, AdditionalService_Response_defineECL);
-        ITU_T_CHOICES_DECL(deleteECL, DeleteEventConditionList_Response, AdditionalService_Response_deleteECL);
-        ITU_T_CHOICES_DECL(addECLReference, AddEventConditionListReference_Response, AdditionalService_Response_addECLReference);
-        ITU_T_CHOICES_DECL(removeECLReference, RemoveEventConditionListReference_Response, AdditionalService_Response_removeECLReference);
-        ITU_T_CHOICES_DECL(getECLAttributes, GetEventConditionListAttributes_Response, AdditionalService_Response_getECLAttributes);
-        ITU_T_CHOICES_DECL(reportECLStatus, ReportEventConditionListStatus_Response, AdditionalService_Response_reportECLStatus);
-        ITU_T_CHOICES_DECL(alterECLMonitoring, AlterEventConditionListMonitoring_Response, AdditionalService_Response_alterECLMonitoring);
+        ITU_T_CHOICES_DECL(vMDStop, VMDStop_Response, AdditionalService_Response_vMDStop); // primitive
+        ITU_T_CHOICEC_DECL(vMDReset, VMDReset_Response, AdditionalService_Response_vMDReset);
+        ITU_T_CHOICES_DECL(select, Select_Response, AdditionalService_Response_select); // primitive
+        ITU_T_CHOICES_DECL(alterPI, AlterProgramInvocationAttributes_Response, AdditionalService_Response_alterPI); // primitive
+        ITU_T_CHOICES_DECL(initiateUCLoad, InitiateUnitControlLoad_Response, AdditionalService_Response_initiateUCLoad); // primitive
+        ITU_T_CHOICEC_DECL(uCLoad, UnitControlLoadSegment_Response, AdditionalService_Response_uCLoad);
+        ITU_T_CHOICEC_DECL(uCUpload, UnitControlUpload_Response, AdditionalService_Response_uCUpload);
+        ITU_T_CHOICES_DECL(startUC, StartUnitControl_Response, AdditionalService_Response_startUC); // primitive
+        ITU_T_CHOICES_DECL(stopUC, StopUnitControl_Response, AdditionalService_Response_stopUC); // primitive
+        ITU_T_CHOICES_DECL(createUC, CreateUnitControl_Response, AdditionalService_Response_createUC); // primitive
+        ITU_T_CHOICES_DECL(addToUC, AddToUnitControl_Response, AdditionalService_Response_addToUC); // primitive
+        ITU_T_CHOICES_DECL(removeFromUC, RemoveFromUnitControl_Response, AdditionalService_Response_removeFromUC); // primitive
+        ITU_T_CHOICEC_DECL(getUCAttributes, GetUnitControlAttributes_Response, AdditionalService_Response_getUCAttributes);
+        ITU_T_CHOICES_DECL(loadUCFromFile, LoadUnitControlFromFile_Response, AdditionalService_Response_loadUCFromFile); // primitive
+        ITU_T_CHOICES_DECL(storeUCToFile, StoreUnitControlToFile_Response, AdditionalService_Response_storeUCToFile); // primitive
+        ITU_T_CHOICES_DECL(deleteUC, DeleteUnitControl_Response, AdditionalService_Response_deleteUC); // primitive
+        ITU_T_CHOICES_DECL(defineECL, DefineEventConditionList_Response, AdditionalService_Response_defineECL); // primitive
+        ITU_T_CHOICES_DECL(deleteECL, DeleteEventConditionList_Response, AdditionalService_Response_deleteECL); // primitive
+        ITU_T_CHOICES_DECL(addECLReference, AddEventConditionListReference_Response, AdditionalService_Response_addECLReference); // primitive
+        ITU_T_CHOICES_DECL(removeECLReference, RemoveEventConditionListReference_Response, AdditionalService_Response_removeECLReference); // primitive
+        ITU_T_CHOICEC_DECL(getECLAttributes, GetEventConditionListAttributes_Response, AdditionalService_Response_getECLAttributes);
+        ITU_T_CHOICEC_DECL(reportECLStatus, ReportEventConditionListStatus_Response, AdditionalService_Response_reportECLStatus);
+        ITU_T_CHOICES_DECL(alterECLMonitoring, AlterEventConditionListMonitoring_Response, AdditionalService_Response_alterECLMonitoring); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1130,10 +1130,10 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(Response_Detail_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(otherRequests, null_type, Response_Detail_otherRequests);
-        ITU_T_CHOICES_DECL(status, CS_Status_Response, Response_Detail_status);
-        ITU_T_CHOICES_DECL(getProgramInvocationAttributes, CS_GetProgramInvocationAttributes_Response, Response_Detail_getProgramInvocationAttributes);
-        ITU_T_CHOICES_DECL(getEventConditionAttributes, CS_GetEventConditionAttributes_Response, Response_Detail_getEventConditionAttributes);
+        ITU_T_CHOICES_DECL(otherRequests, null_type, Response_Detail_otherRequests); // primitive
+        ITU_T_CHOICEC_DECL(status, CS_Status_Response, Response_Detail_status);
+        ITU_T_CHOICEC_DECL(getProgramInvocationAttributes, CS_GetProgramInvocationAttributes_Response, Response_Detail_getProgramInvocationAttributes);
+        ITU_T_CHOICEC_DECL(getEventConditionAttributes, CS_GetEventConditionAttributes_Response, Response_Detail_getEventConditionAttributes);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1264,19 +1264,19 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(errorClass_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(vmd_state, int, errorClass_type_vmd_state);
-            ITU_T_CHOICES_DECL(application_reference, int, errorClass_type_application_reference);
-            ITU_T_CHOICES_DECL(definition, int, errorClass_type_definition);
-            ITU_T_CHOICES_DECL(resource, int, errorClass_type_resource);
-            ITU_T_CHOICES_DECL(service, int, errorClass_type_service);
-            ITU_T_CHOICES_DECL(service_preempt, int, errorClass_type_service_preempt);
-            ITU_T_CHOICES_DECL(time_resolution, int, errorClass_type_time_resolution);
-            ITU_T_CHOICES_DECL(access, int, errorClass_type_access);
-            ITU_T_CHOICES_DECL(initiate, int, errorClass_type_initiate);
-            ITU_T_CHOICES_DECL(conclude, int, errorClass_type_conclude);
-            ITU_T_CHOICES_DECL(cancel, int, errorClass_type_cancel);
-            ITU_T_CHOICES_DECL(file, int, errorClass_type_file);
-            ITU_T_CHOICES_DECL(others, int, errorClass_type_others);
+            ITU_T_CHOICES_DECL(vmd_state, int, errorClass_type_vmd_state); // primitive
+            ITU_T_CHOICES_DECL(application_reference, int, errorClass_type_application_reference); // primitive
+            ITU_T_CHOICES_DECL(definition, int, errorClass_type_definition); // primitive
+            ITU_T_CHOICES_DECL(resource, int, errorClass_type_resource); // primitive
+            ITU_T_CHOICES_DECL(service, int, errorClass_type_service); // primitive
+            ITU_T_CHOICES_DECL(service_preempt, int, errorClass_type_service_preempt); // primitive
+            ITU_T_CHOICES_DECL(time_resolution, int, errorClass_type_time_resolution); // primitive
+            ITU_T_CHOICES_DECL(access, int, errorClass_type_access); // primitive
+            ITU_T_CHOICES_DECL(initiate, int, errorClass_type_initiate); // primitive
+            ITU_T_CHOICES_DECL(conclude, int, errorClass_type_conclude); // primitive
+            ITU_T_CHOICES_DECL(cancel, int, errorClass_type_cancel); // primitive
+            ITU_T_CHOICES_DECL(file, int, errorClass_type_file); // primitive
+            ITU_T_CHOICES_DECL(others, int, errorClass_type_others); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1307,18 +1307,18 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(serviceSpecificInfo_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Error, serviceSpecificInfo_type_obtainFile);
-            ITU_T_CHOICES_DECL(start, Start_Error, serviceSpecificInfo_type_start);
-            ITU_T_CHOICES_DECL(stop, Stop_Error, serviceSpecificInfo_type_stop);
-            ITU_T_CHOICES_DECL(resume, Resume_Error, serviceSpecificInfo_type_resume);
-            ITU_T_CHOICES_DECL(reset, Reset_Error, serviceSpecificInfo_type_reset);
-            ITU_T_CHOICES_DECL(deleteVariableAccess, DeleteVariableAccess_Error, serviceSpecificInfo_type_deleteVariableAccess);
-            ITU_T_CHOICES_DECL(deleteNamedVariableList, DeleteNamedVariableList_Error, serviceSpecificInfo_type_deleteNamedVariableList);
-            ITU_T_CHOICES_DECL(deleteNamedType, DeleteNamedType_Error, serviceSpecificInfo_type_deleteNamedType);
-            ITU_T_CHOICES_DECL(defineEventEnrollment_Error, DefineEventEnrollment_Error, serviceSpecificInfo_type_defineEventEnrollment_Error);
-            ITU_T_CHOICES_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Error, serviceSpecificInfo_type_fileRename);
-            ITU_T_CHOICES_DECL(additionalService, AdditionalService_Error, serviceSpecificInfo_type_additionalService);
-            ITU_T_CHOICES_DECL(changeAccessControl, ChangeAccessControl_Error, serviceSpecificInfo_type_changeAccessControl);
+            ITU_T_CHOICES_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Error, serviceSpecificInfo_type_obtainFile); // primitive
+            ITU_T_CHOICES_DECL(start, Start_Error, serviceSpecificInfo_type_start); // primitive
+            ITU_T_CHOICES_DECL(stop, Stop_Error, serviceSpecificInfo_type_stop); // primitive
+            ITU_T_CHOICES_DECL(resume, Resume_Error, serviceSpecificInfo_type_resume); // primitive
+            ITU_T_CHOICES_DECL(reset, Reset_Error, serviceSpecificInfo_type_reset); // primitive
+            ITU_T_CHOICES_DECL(deleteVariableAccess, DeleteVariableAccess_Error, serviceSpecificInfo_type_deleteVariableAccess); // primitive
+            ITU_T_CHOICES_DECL(deleteNamedVariableList, DeleteNamedVariableList_Error, serviceSpecificInfo_type_deleteNamedVariableList); // primitive
+            ITU_T_CHOICES_DECL(deleteNamedType, DeleteNamedType_Error, serviceSpecificInfo_type_deleteNamedType); // primitive
+            ITU_T_CHOICEC_DECL(defineEventEnrollment_Error, DefineEventEnrollment_Error, serviceSpecificInfo_type_defineEventEnrollment_Error);
+            ITU_T_CHOICES_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Error, serviceSpecificInfo_type_fileRename); // primitive
+            ITU_T_CHOICEC_DECL(additionalService, AdditionalService_Error, serviceSpecificInfo_type_additionalService);
+            ITU_T_CHOICES_DECL(changeAccessControl, ChangeAccessControl_Error, serviceSpecificInfo_type_changeAccessControl); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1365,14 +1365,14 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(AdditionalService_Error_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(defineEcl, DefineEventConditionList_Error, AdditionalService_Error_defineEcl);
-        ITU_T_CHOICES_DECL(addECLReference, AddEventConditionListReference_Error, AdditionalService_Error_addECLReference);
-        ITU_T_CHOICES_DECL(removeECLReference, RemoveEventConditionListReference_Error, AdditionalService_Error_removeECLReference);
-        ITU_T_CHOICES_DECL(initiateUC, InitiateUnitControl_Error, AdditionalService_Error_initiateUC);
-        ITU_T_CHOICES_DECL(startUC, StartUnitControl_Error, AdditionalService_Error_startUC);
-        ITU_T_CHOICES_DECL(stopUC, StopUnitControl_Error, AdditionalService_Error_stopUC);
-        ITU_T_CHOICES_DECL(deleteUC, DeleteUnitControl_Error, AdditionalService_Error_deleteUC);
-        ITU_T_CHOICES_DECL(loadUCFromFile, LoadUnitControlFromFile_Error, AdditionalService_Error_loadUCFromFile);
+        ITU_T_CHOICEC_DECL(defineEcl, DefineEventConditionList_Error, AdditionalService_Error_defineEcl);
+        ITU_T_CHOICEC_DECL(addECLReference, AddEventConditionListReference_Error, AdditionalService_Error_addECLReference);
+        ITU_T_CHOICEC_DECL(removeECLReference, RemoveEventConditionListReference_Error, AdditionalService_Error_removeECLReference);
+        ITU_T_CHOICEC_DECL(initiateUC, InitiateUnitControl_Error, AdditionalService_Error_initiateUC);
+        ITU_T_CHOICEC_DECL(startUC, StartUnitControl_Error, AdditionalService_Error_startUC);
+        ITU_T_CHOICEC_DECL(stopUC, StopUnitControl_Error, AdditionalService_Error_stopUC);
+        ITU_T_CHOICEC_DECL(deleteUC, DeleteUnitControl_Error, AdditionalService_Error_deleteUC);
+        ITU_T_CHOICEC_DECL(loadUCFromFile, LoadUnitControlFromFile_Error, AdditionalService_Error_loadUCFromFile);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1412,9 +1412,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(ObjectName_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(vmd_specific, Identifier, ObjectName_vmd_specific);
-        ITU_T_CHOICES_DECL(domain_specific, domain_specific_type, ObjectName_domain_specific);
-        ITU_T_CHOICES_DECL(aa_specific, Identifier, ObjectName_aa_specific);
+        ITU_T_CHOICES_DECL(vmd_specific, Identifier, ObjectName_vmd_specific); // primitive
+        ITU_T_CHOICEC_DECL(domain_specific, domain_specific_type, ObjectName_domain_specific);
+        ITU_T_CHOICES_DECL(aa_specific, Identifier, ObjectName_aa_specific); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1455,8 +1455,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(ObjectClass_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(basicObjectClass, int, ObjectClass_basicObjectClass);
-        ITU_T_CHOICES_DECL(csObjectClass, int, ObjectClass_csObjectClass);
+        ITU_T_CHOICES_DECL(basicObjectClass, int, ObjectClass_basicObjectClass); // primitive
+        ITU_T_CHOICES_DECL(csObjectClass, int, ObjectClass_csObjectClass); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1667,17 +1667,17 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(rejectReason_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(confirmed_requestPDU, int, rejectReason_type_confirmed_requestPDU);
-            ITU_T_CHOICES_DECL(confirmed_responsePDU, int, rejectReason_type_confirmed_responsePDU);
-            ITU_T_CHOICES_DECL(confirmed_errorPDU, int, rejectReason_type_confirmed_errorPDU);
-            ITU_T_CHOICES_DECL(unconfirmedPDU, int, rejectReason_type_unconfirmedPDU);
-            ITU_T_CHOICES_DECL(pdu_error, int, rejectReason_type_pdu_error);
-            ITU_T_CHOICES_DECL(cancel_requestPDU, int, rejectReason_type_cancel_requestPDU);
-            ITU_T_CHOICES_DECL(cancel_responsePDU, int, rejectReason_type_cancel_responsePDU);
-            ITU_T_CHOICES_DECL(cancel_errorPDU, int, rejectReason_type_cancel_errorPDU);
-            ITU_T_CHOICES_DECL(conclude_requestPDU, int, rejectReason_type_conclude_requestPDU);
-            ITU_T_CHOICES_DECL(conclude_responsePDU, int, rejectReason_type_conclude_responsePDU);
-            ITU_T_CHOICES_DECL(conclude_errorPDU, int, rejectReason_type_conclude_errorPDU);
+            ITU_T_CHOICES_DECL(confirmed_requestPDU, int, rejectReason_type_confirmed_requestPDU); // primitive
+            ITU_T_CHOICES_DECL(confirmed_responsePDU, int, rejectReason_type_confirmed_responsePDU); // primitive
+            ITU_T_CHOICES_DECL(confirmed_errorPDU, int, rejectReason_type_confirmed_errorPDU); // primitive
+            ITU_T_CHOICES_DECL(unconfirmedPDU, int, rejectReason_type_unconfirmedPDU); // primitive
+            ITU_T_CHOICES_DECL(pdu_error, int, rejectReason_type_pdu_error); // primitive
+            ITU_T_CHOICES_DECL(cancel_requestPDU, int, rejectReason_type_cancel_requestPDU); // primitive
+            ITU_T_CHOICES_DECL(cancel_responsePDU, int, rejectReason_type_cancel_responsePDU); // primitive
+            ITU_T_CHOICES_DECL(cancel_errorPDU, int, rejectReason_type_cancel_errorPDU); // primitive
+            ITU_T_CHOICES_DECL(conclude_requestPDU, int, rejectReason_type_conclude_requestPDU); // primitive
+            ITU_T_CHOICES_DECL(conclude_responsePDU, int, rejectReason_type_conclude_responsePDU); // primitive
+            ITU_T_CHOICES_DECL(conclude_errorPDU, int, rejectReason_type_conclude_errorPDU); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1772,9 +1772,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(GetAccessControlListAttributes_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(accessControlListName, Identifier, GetAccessControlListAttributes_Request_accessControlListName);
-        ITU_T_CHOICES_DECL(vMD, null_type, GetAccessControlListAttributes_Request_vMD);
-        ITU_T_CHOICES_DECL(namedObject, namedObject_type, GetAccessControlListAttributes_Request_namedObject);
+        ITU_T_CHOICES_DECL(accessControlListName, Identifier, GetAccessControlListAttributes_Request_accessControlListName); // primitive
+        ITU_T_CHOICES_DECL(vMD, null_type, GetAccessControlListAttributes_Request_vMD); // primitive
+        ITU_T_CHOICEC_DECL(namedObject, namedObject_type, GetAccessControlListAttributes_Request_namedObject);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1934,10 +1934,10 @@ namespace ISO_9506_MMS_1 {
                             ITU_T_STRUCT(objectScope_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    ITU_T_CHOICES_DECL(specific, specific_type, objectScope_type_specific);
-                    ITU_T_CHOICES_DECL(aa_specific, null_type, objectScope_type_aa_specific);
-                    ITU_T_CHOICES_DECL(domain, Identifier, objectScope_type_domain);
-                    ITU_T_CHOICES_DECL(vmd, null_type, objectScope_type_vmd);
+                    ITU_T_CHOICEC_DECL(specific, specific_type, objectScope_type_specific);
+                    ITU_T_CHOICES_DECL(aa_specific, null_type, objectScope_type_aa_specific); // primitive
+                    ITU_T_CHOICES_DECL(domain, Identifier, objectScope_type_domain); // primitive
+                    ITU_T_CHOICES_DECL(vmd, null_type, objectScope_type_vmd); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
                 };
@@ -1961,8 +1961,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(scopeOfChange_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(vMDOnly, null_type, scopeOfChange_type_vMDOnly);
-            ITU_T_CHOICES_DECL(listOfObjects, listOfObjects_type, scopeOfChange_type_listOfObjects);
+            ITU_T_CHOICES_DECL(vMDOnly, null_type, scopeOfChange_type_vMDOnly); // primitive
+            ITU_T_CHOICEC_DECL(listOfObjects, listOfObjects_type, scopeOfChange_type_listOfObjects);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2059,8 +2059,8 @@ namespace ISO_9506_MMS_1 {
                         ITU_T_STRUCT(selectedProgramInvocation_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICES_DECL(programInvocation, Identifier, selectedProgramInvocation_type_programInvocation);
-                ITU_T_CHOICES_DECL(noneSelected, null_type, selectedProgramInvocation_type_noneSelected);
+                ITU_T_CHOICES_DECL(programInvocation, Identifier, selectedProgramInvocation_type_programInvocation); // primitive
+                ITU_T_CHOICES_DECL(noneSelected, null_type, selectedProgramInvocation_type_noneSelected); // primitive
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -2093,8 +2093,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(CS_Status_Response_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(fullResponse, fullResponse_type, CS_Status_Response_fullResponse);
-        ITU_T_CHOICES_DECL(noExtraResponse, null_type, CS_Status_Response_noExtraResponse);
+        ITU_T_CHOICEC_DECL(fullResponse, fullResponse_type, CS_Status_Response_fullResponse);
+        ITU_T_CHOICES_DECL(noExtraResponse, null_type, CS_Status_Response_noExtraResponse); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2134,9 +2134,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(objectScope_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(vmdSpecific, null_type, objectScope_type_vmdSpecific);
-            ITU_T_CHOICES_DECL(domainSpecific, Identifier, objectScope_type_domainSpecific);
-            ITU_T_CHOICES_DECL(aaSpecific, null_type, objectScope_type_aaSpecific);
+            ITU_T_CHOICES_DECL(vmdSpecific, null_type, objectScope_type_vmdSpecific); // primitive
+            ITU_T_CHOICES_DECL(domainSpecific, Identifier, objectScope_type_domainSpecific); // primitive
+            ITU_T_CHOICES_DECL(aaSpecific, null_type, objectScope_type_aaSpecific); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2314,9 +2314,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(LoadData_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(non_coded, octetstring_type, LoadData_non_coded);
-        ITU_T_CHOICES_DECL(coded, external_type, LoadData_coded);
-        ITU_T_CHOICES_DECL(embedded, embeded_type, LoadData_embedded);
+        ITU_T_CHOICES_DECL(non_coded, octetstring_type, LoadData_non_coded); // primitive
+        ITU_T_CHOICES_DECL(coded, external_type, LoadData_coded); // primitive
+        ITU_T_CHOICES_DECL(embedded, embeded_type, LoadData_embedded); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2553,9 +2553,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString);
-            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString);
-            ITU_T_CHOICES_DECL(embeddedString, embeded_type, executionArgument_type_embeddedString);
+            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString); // primitive
+            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString); // primitive
+            ITU_T_CHOICES_DECL(embeddedString, embeded_type, executionArgument_type_embeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2608,8 +2608,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(CS_Start_Request_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(normal, null_type, CS_Start_Request_impl_normal);
-        ITU_T_CHOICES_DECL(controlling, controlling_type, CS_Start_Request_impl_controlling);
+        ITU_T_CHOICES_DECL(normal, null_type, CS_Start_Request_impl_normal); // primitive
+        ITU_T_CHOICEC_DECL(controlling, controlling_type, CS_Start_Request_impl_controlling);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2633,9 +2633,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(StartCount_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(noLimit, null_type, StartCount_noLimit);
-        ITU_T_CHOICES_DECL(cycleCount, int, StartCount_cycleCount);
-        ITU_T_CHOICES_DECL(stepCount, int, StartCount_stepCount);
+        ITU_T_CHOICES_DECL(noLimit, null_type, StartCount_noLimit); // primitive
+        ITU_T_CHOICES_DECL(cycleCount, int, StartCount_cycleCount); // primitive
+        ITU_T_CHOICES_DECL(stepCount, int, StartCount_stepCount); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2676,9 +2676,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString);
-            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString);
-            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString);
+            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString); // primitive
+            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString); // primitive
+            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2731,8 +2731,8 @@ namespace ISO_9506_MMS_1 {
                         ITU_T_STRUCT(modeType_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICES_DECL(continueMode, null_type, modeType_type_continueMode);
-                ITU_T_CHOICES_DECL(changeMode, StartCount, modeType_type_changeMode);
+                ITU_T_CHOICES_DECL(continueMode, null_type, modeType_type_continueMode); // primitive
+                ITU_T_CHOICEC_DECL(changeMode, StartCount, modeType_type_changeMode);
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -2754,8 +2754,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(CS_Resume_Request_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(normal, null_type, CS_Resume_Request_impl_normal);
-        ITU_T_CHOICES_DECL(controlling, controlling_type, CS_Resume_Request_impl_controlling);
+        ITU_T_CHOICES_DECL(normal, null_type, CS_Resume_Request_impl_normal); // primitive
+        ITU_T_CHOICEC_DECL(controlling, controlling_type, CS_Resume_Request_impl_controlling);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2809,9 +2809,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString);
-            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString);
-            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString);
+            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString); // primitive
+            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString); // primitive
+            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2890,9 +2890,9 @@ namespace ISO_9506_MMS_1 {
                             ITU_T_STRUCT(runningMode_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    ITU_T_CHOICES_DECL(freeRunning, null_type, runningMode_type_freeRunning);
-                    ITU_T_CHOICES_DECL(cycleLimited, int, runningMode_type_cycleLimited);
-                    ITU_T_CHOICES_DECL(stepLimited, int, runningMode_type_stepLimited);
+                    ITU_T_CHOICES_DECL(freeRunning, null_type, runningMode_type_freeRunning); // primitive
+                    ITU_T_CHOICES_DECL(cycleLimited, int, runningMode_type_cycleLimited); // primitive
+                    ITU_T_CHOICES_DECL(stepLimited, int, runningMode_type_stepLimited); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
                 };
@@ -2934,8 +2934,8 @@ namespace ISO_9506_MMS_1 {
                         ITU_T_STRUCT(controlled_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICES_DECL(controllingPI, Identifier, controlled_type_controllingPI);
-                ITU_T_CHOICES_DECL(none, null_type, controlled_type_none);
+                ITU_T_CHOICES_DECL(controllingPI, Identifier, controlled_type_controllingPI); // primitive
+                ITU_T_CHOICES_DECL(none, null_type, controlled_type_none); // primitive
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -2947,9 +2947,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(control_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(controlling, controlling_type, control_type_controlling);
-            ITU_T_CHOICES_DECL(controlled, controlled_type, control_type_controlled);
-            ITU_T_CHOICES_DECL(normal, null_type, control_type_normal);
+            ITU_T_CHOICEC_DECL(controlling, controlling_type, control_type_controlling);
+            ITU_T_CHOICEC_DECL(controlled, controlled_type, control_type_controlled);
+            ITU_T_CHOICES_DECL(normal, null_type, control_type_normal); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3116,10 +3116,10 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(ControlElement_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(beginDomainDef, beginDomainDef_type, ControlElement_beginDomainDef);
-        ITU_T_CHOICES_DECL(continueDomainDef, continueDomainDef_type, ControlElement_continueDomainDef);
-        ITU_T_CHOICES_DECL(endDomainDef, Identifier, ControlElement_endDomainDef);
-        ITU_T_CHOICES_DECL(piDefinition, piDefinition_type, ControlElement_piDefinition);
+        ITU_T_CHOICEC_DECL(beginDomainDef, beginDomainDef_type, ControlElement_beginDomainDef);
+        ITU_T_CHOICEC_DECL(continueDomainDef, continueDomainDef_type, ControlElement_continueDomainDef);
+        ITU_T_CHOICES_DECL(endDomainDef, Identifier, ControlElement_endDomainDef); // primitive
+        ITU_T_CHOICEC_DECL(piDefinition, piDefinition_type, ControlElement_piDefinition);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3142,8 +3142,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(InitiateUnitControl_Error_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(domain, Identifier, InitiateUnitControl_Error_domain);
-        ITU_T_CHOICES_DECL(programInvocation, Identifier, InitiateUnitControl_Error_programInvocation);
+        ITU_T_CHOICES_DECL(domain, Identifier, InitiateUnitControl_Error_domain); // primitive
+        ITU_T_CHOICES_DECL(programInvocation, Identifier, InitiateUnitControl_Error_programInvocation); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3192,9 +3192,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(continueAfter_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(domain, Identifier, continueAfter_type_domain);
-            ITU_T_CHOICES_DECL(ulsmID, int, continueAfter_type_ulsmID);
-            ITU_T_CHOICES_DECL(programInvocation, Identifier, continueAfter_type_programInvocation);
+            ITU_T_CHOICES_DECL(domain, Identifier, continueAfter_type_domain); // primitive
+            ITU_T_CHOICES_DECL(ulsmID, int, continueAfter_type_ulsmID); // primitive
+            ITU_T_CHOICES_DECL(programInvocation, Identifier, continueAfter_type_programInvocation); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3236,9 +3236,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(nextElement_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(domain, Identifier, nextElement_type_domain);
-            ITU_T_CHOICES_DECL(ulsmID, int, nextElement_type_ulsmID);
-            ITU_T_CHOICES_DECL(programInvocation, Identifier, nextElement_type_programInvocation);
+            ITU_T_CHOICES_DECL(domain, Identifier, nextElement_type_domain); // primitive
+            ITU_T_CHOICES_DECL(ulsmID, int, nextElement_type_ulsmID); // primitive
+            ITU_T_CHOICES_DECL(programInvocation, Identifier, nextElement_type_programInvocation); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3284,9 +3284,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString);
-            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString);
-            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString);
+            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString); // primitive
+            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString); // primitive
+            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3456,9 +3456,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(LoadUnitControlFromFile_Error_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(none, null_type, LoadUnitControlFromFile_Error_none);
-        ITU_T_CHOICES_DECL(domain, Identifier, LoadUnitControlFromFile_Error_domain);
-        ITU_T_CHOICES_DECL(programInvocation, Identifier, LoadUnitControlFromFile_Error_programInvocation);
+        ITU_T_CHOICES_DECL(none, null_type, LoadUnitControlFromFile_Error_none); // primitive
+        ITU_T_CHOICES_DECL(domain, Identifier, LoadUnitControlFromFile_Error_domain); // primitive
+        ITU_T_CHOICES_DECL(programInvocation, Identifier, LoadUnitControlFromFile_Error_programInvocation); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3501,8 +3501,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(DeleteUnitControl_Error_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(domain, Identifier, DeleteUnitControl_Error_domain);
-        ITU_T_CHOICES_DECL(programInvocation, Identifier, DeleteUnitControl_Error_programInvocation);
+        ITU_T_CHOICES_DECL(domain, Identifier, DeleteUnitControl_Error_domain); // primitive
+        ITU_T_CHOICES_DECL(programInvocation, Identifier, DeleteUnitControl_Error_programInvocation); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3525,8 +3525,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(TypeSpecification_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(typeName, ObjectName, TypeSpecification_typeName);
-        ITU_T_CHOICES_DECL(typeDescription, MMS_Object_Module_1::TypeDescription, TypeSpecification_typeDescription);
+        ITU_T_CHOICEC_DECL(typeName, ObjectName, TypeSpecification_typeName);
+        ITU_T_CHOICEC_DECL(typeDescription, MMS_Object_Module_1::TypeDescription, TypeSpecification_typeDescription);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3563,8 +3563,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(AlternateAccess_sequence_of_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(unnamed, AlternateAccessSelection, AlternateAccess_sequence_of_unnamed);
-        ITU_T_CHOICES_DECL(named, named_type, AlternateAccess_sequence_of_named);
+        ITU_T_CHOICEC_DECL(unnamed, AlternateAccessSelection, AlternateAccess_sequence_of_unnamed);
+        ITU_T_CHOICEC_DECL(named, named_type, AlternateAccess_sequence_of_named);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3622,10 +3622,10 @@ namespace ISO_9506_MMS_1 {
                         ITU_T_STRUCT(accessSelection_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICES_DECL(component, Identifier, accessSelection_type_component);
-                ITU_T_CHOICES_DECL(index, Unsigned32, accessSelection_type_index);
-                ITU_T_CHOICES_DECL(indexRange, indexRange_type, accessSelection_type_indexRange);
-                ITU_T_CHOICES_DECL(allElements, null_type, accessSelection_type_allElements);
+                ITU_T_CHOICES_DECL(component, Identifier, accessSelection_type_component); // primitive
+                ITU_T_CHOICES_DECL(index, Unsigned32, accessSelection_type_index); // primitive
+                ITU_T_CHOICEC_DECL(indexRange, indexRange_type, accessSelection_type_indexRange);
+                ITU_T_CHOICES_DECL(allElements, null_type, accessSelection_type_allElements); // primitive
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -3676,10 +3676,10 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(selectAccess_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(component, Identifier, selectAccess_type_component);
-            ITU_T_CHOICES_DECL(index, Unsigned32, selectAccess_type_index);
-            ITU_T_CHOICES_DECL(indexRange, indexRange_type, selectAccess_type_indexRange);
-            ITU_T_CHOICES_DECL(allElements, null_type, selectAccess_type_allElements);
+            ITU_T_CHOICES_DECL(component, Identifier, selectAccess_type_component); // primitive
+            ITU_T_CHOICES_DECL(index, Unsigned32, selectAccess_type_index); // primitive
+            ITU_T_CHOICEC_DECL(indexRange, indexRange_type, selectAccess_type_indexRange);
+            ITU_T_CHOICES_DECL(allElements, null_type, selectAccess_type_allElements); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3691,8 +3691,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(AlternateAccessSelection_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(selectAlternateAccess, selectAlternateAccess_type, AlternateAccessSelection_selectAlternateAccess);
-        ITU_T_CHOICES_DECL(selectAccess, selectAccess_type, AlternateAccessSelection_selectAccess);
+        ITU_T_CHOICEC_DECL(selectAlternateAccess, selectAlternateAccess_type, AlternateAccessSelection_selectAlternateAccess);
+        ITU_T_CHOICEC_DECL(selectAccess, selectAccess_type, AlternateAccessSelection_selectAccess);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3715,8 +3715,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(AccessResult_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(failure, DataAccessError, AccessResult_failure);
-        ITU_T_CHOICES_DECL(success, Data, AccessResult_success);
+        ITU_T_CHOICES_DECL(failure, DataAccessError, AccessResult_failure); // primitive
+        ITU_T_CHOICEC_DECL(success, Data, AccessResult_success);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3757,21 +3757,21 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(Data_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(array, array_type, Data_array);
-        ITU_T_CHOICES_DECL(structure, structure_type, Data_structure);
-        ITU_T_CHOICES_DECL(boolean, bool, Data_boolean);
-        ITU_T_CHOICES_DECL(bit_string, bitstring_type, Data_bit_string);
-        ITU_T_CHOICES_DECL(integer, int, Data_integer);
-        ITU_T_CHOICES_DECL(unsignedV, int, Data_unsignedV);
-        ITU_T_CHOICES_DECL(floating_point, FloatingPoint, Data_floating_point);
-        ITU_T_CHOICES_DECL(octet_string, octetstring_type, Data_octet_string);
-        ITU_T_CHOICES_DECL(visible_string, visiblestring_type, Data_visible_string);
-        ITU_T_CHOICES_DECL(generalized_time, gentime_type, Data_generalized_time);
-        ITU_T_CHOICES_DECL(binary_time, TimeOfDay, Data_binary_time);
-        ITU_T_CHOICES_DECL(bcd, int, Data_bcd);
-        ITU_T_CHOICES_DECL(booleanArray, bitstring_type, Data_booleanArray);
-        ITU_T_CHOICES_DECL(objId, oid_type, Data_objId);
-        ITU_T_CHOICES_DECL(mMSString, MMSString, Data_mMSString);
+        ITU_T_CHOICEC_DECL(array, array_type, Data_array);
+        ITU_T_CHOICEC_DECL(structure, structure_type, Data_structure);
+        ITU_T_CHOICES_DECL(boolean, bool, Data_boolean); // primitive
+        ITU_T_CHOICES_DECL(bit_string, bitstring_type, Data_bit_string); // primitive
+        ITU_T_CHOICES_DECL(integer, int, Data_integer); // primitive
+        ITU_T_CHOICES_DECL(unsignedV, int, Data_unsignedV); // primitive
+        ITU_T_CHOICES_DECL(floating_point, FloatingPoint, Data_floating_point); // primitive
+        ITU_T_CHOICES_DECL(octet_string, octetstring_type, Data_octet_string); // primitive
+        ITU_T_CHOICES_DECL(visible_string, visiblestring_type, Data_visible_string); // primitive
+        ITU_T_CHOICES_DECL(generalized_time, gentime_type, Data_generalized_time); // primitive
+        ITU_T_CHOICES_DECL(binary_time, TimeOfDay, Data_binary_time); // primitive
+        ITU_T_CHOICES_DECL(bcd, int, Data_bcd); // primitive
+        ITU_T_CHOICES_DECL(booleanArray, bitstring_type, Data_booleanArray); // primitive
+        ITU_T_CHOICES_DECL(objId, oid_type, Data_objId); // primitive
+        ITU_T_CHOICES_DECL(mMSString, MMSString, Data_mMSString); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3829,8 +3829,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(VariableAccessSpecification_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(listOfVariable, listOfVariable_type, VariableAccessSpecification_listOfVariable);
-        ITU_T_CHOICES_DECL(variableListName, ObjectName, VariableAccessSpecification_variableListName);
+        ITU_T_CHOICEC_DECL(listOfVariable, listOfVariable_type, VariableAccessSpecification_listOfVariable);
+        ITU_T_CHOICEC_DECL(variableListName, ObjectName, VariableAccessSpecification_variableListName);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3872,11 +3872,11 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(VariableSpecification_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(name, ObjectName, VariableSpecification_name);
-        ITU_T_CHOICES_DECL(address, MMS_Object_Module_1::Address, VariableSpecification_address);
-        ITU_T_CHOICES_DECL(variableDescription, variableDescription_type, VariableSpecification_variableDescription);
-        ITU_T_CHOICES_DECL(scatteredAccessDescription, ISO_9506_MMS_1A::ScatteredAccessDescription, VariableSpecification_scatteredAccessDescription);
-        ITU_T_CHOICES_DECL(invalidated, null_type, VariableSpecification_invalidated);
+        ITU_T_CHOICEC_DECL(name, ObjectName, VariableSpecification_name);
+        ITU_T_CHOICEC_DECL(address, MMS_Object_Module_1::Address, VariableSpecification_address);
+        ITU_T_CHOICEC_DECL(variableDescription, variableDescription_type, VariableSpecification_variableDescription);
+        ITU_T_CHOICEC_DECL(scatteredAccessDescription, ISO_9506_MMS_1A::ScatteredAccessDescription, VariableSpecification_scatteredAccessDescription);
+        ITU_T_CHOICES_DECL(invalidated, null_type, VariableSpecification_invalidated); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3954,8 +3954,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(Write_Response_sequence_of_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(failure, DataAccessError, Write_Response_sequence_of_failure);
-        ITU_T_CHOICES_DECL(success, null_type, Write_Response_sequence_of_success);
+        ITU_T_CHOICES_DECL(failure, DataAccessError, Write_Response_sequence_of_failure); // primitive
+        ITU_T_CHOICES_DECL(success, null_type, Write_Response_sequence_of_success); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3996,8 +3996,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(GetVariableAccessAttributes_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(name, ObjectName, GetVariableAccessAttributes_Request_name);
-        ITU_T_CHOICES_DECL(address, MMS_Object_Module_1::Address, GetVariableAccessAttributes_Request_address);
+        ITU_T_CHOICEC_DECL(name, ObjectName, GetVariableAccessAttributes_Request_name);
+        ITU_T_CHOICEC_DECL(address, MMS_Object_Module_1::Address, GetVariableAccessAttributes_Request_address);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4397,8 +4397,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(TakeControl_Response_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(noResult, null_type, TakeControl_Response_noResult);
-        ITU_T_CHOICES_DECL(namedToken, Identifier, TakeControl_Response_namedToken);
+        ITU_T_CHOICES_DECL(noResult, null_type, TakeControl_Response_noResult); // primitive
+        ITU_T_CHOICES_DECL(namedToken, Identifier, TakeControl_Response_namedToken); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4508,9 +4508,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(listOfNamedTokens_type_sequence_of_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(freeNamedToken, Identifier, listOfNamedTokens_type_sequence_of_freeNamedToken);
-            ITU_T_CHOICES_DECL(ownedNamedToken, Identifier, listOfNamedTokens_type_sequence_of_ownedNamedToken);
-            ITU_T_CHOICES_DECL(hungNamedToken, Identifier, listOfNamedTokens_type_sequence_of_hungNamedToken);
+            ITU_T_CHOICES_DECL(freeNamedToken, Identifier, listOfNamedTokens_type_sequence_of_freeNamedToken); // primitive
+            ITU_T_CHOICES_DECL(ownedNamedToken, Identifier, listOfNamedTokens_type_sequence_of_ownedNamedToken); // primitive
+            ITU_T_CHOICES_DECL(hungNamedToken, Identifier, listOfNamedTokens_type_sequence_of_hungNamedToken); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -4767,8 +4767,8 @@ namespace ISO_9506_MMS_1 {
                         ITU_T_STRUCT(successOrFailure_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICES_DECL(success, success_type, successOrFailure_type_success);
-                ITU_T_CHOICES_DECL(failure, failure_type, successOrFailure_type_failure);
+                ITU_T_CHOICEC_DECL(success, success_type, successOrFailure_type_success);
+                ITU_T_CHOICEC_DECL(failure, failure_type, successOrFailure_type_failure);
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -4834,9 +4834,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(CS_EventNotification_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(string, visiblestring_type, CS_EventNotification_impl_string);
-        ITU_T_CHOICES_DECL(index, int, CS_EventNotification_impl_index);
-        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_EventNotification_impl_noEnhancement);
+        ITU_T_CHOICES_DECL(string, visiblestring_type, CS_EventNotification_impl_string); // primitive
+        ITU_T_CHOICES_DECL(index, int, CS_EventNotification_impl_index); // primitive
+        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_EventNotification_impl_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4978,9 +4978,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(EN_Additional_Detail_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(string, visiblestring_type, EN_Additional_Detail_impl_string);
-        ITU_T_CHOICES_DECL(index, int, EN_Additional_Detail_impl_index);
-        ITU_T_CHOICES_DECL(noEnhancement, null_type, EN_Additional_Detail_impl_noEnhancement);
+        ITU_T_CHOICES_DECL(string, visiblestring_type, EN_Additional_Detail_impl_string); // primitive
+        ITU_T_CHOICES_DECL(index, int, EN_Additional_Detail_impl_index); // primitive
+        ITU_T_CHOICES_DECL(noEnhancement, null_type, EN_Additional_Detail_impl_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5165,9 +5165,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(CS_DefineEventCondition_Request_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(string, visiblestring_type, CS_DefineEventCondition_Request_impl_string);
-        ITU_T_CHOICES_DECL(index, int, CS_DefineEventCondition_Request_impl_index);
-        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_DefineEventCondition_Request_impl_noEnhancement);
+        ITU_T_CHOICES_DECL(string, visiblestring_type, CS_DefineEventCondition_Request_impl_string); // primitive
+        ITU_T_CHOICES_DECL(index, int, CS_DefineEventCondition_Request_impl_index); // primitive
+        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_DefineEventCondition_Request_impl_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5196,10 +5196,10 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(DeleteEventCondition_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(specific, specific_type, DeleteEventCondition_Request_specific);
-        ITU_T_CHOICES_DECL(aa_specific, null_type, DeleteEventCondition_Request_aa_specific);
-        ITU_T_CHOICES_DECL(domain, Identifier, DeleteEventCondition_Request_domain);
-        ITU_T_CHOICES_DECL(vmd, null_type, DeleteEventCondition_Request_vmd);
+        ITU_T_CHOICEC_DECL(specific, specific_type, DeleteEventCondition_Request_specific);
+        ITU_T_CHOICES_DECL(aa_specific, null_type, DeleteEventCondition_Request_aa_specific); // primitive
+        ITU_T_CHOICES_DECL(domain, Identifier, DeleteEventCondition_Request_domain); // primitive
+        ITU_T_CHOICES_DECL(vmd, null_type, DeleteEventCondition_Request_vmd); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5226,8 +5226,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(monitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(variableReference, VariableSpecification, monitoredVariable_type_variableReference);
-            ITU_T_CHOICES_DECL(undefined, null_type, monitoredVariable_type_undefined);
+            ITU_T_CHOICEC_DECL(variableReference, VariableSpecification, monitoredVariable_type_variableReference);
+            ITU_T_CHOICES_DECL(undefined, null_type, monitoredVariable_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5285,8 +5285,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(groupPriorityOverride_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, groupPriorityOverride_type_priority);
-            ITU_T_CHOICES_DECL(undefined, null_type, groupPriorityOverride_type_undefined);
+            ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, groupPriorityOverride_type_priority); // primitive
+            ITU_T_CHOICES_DECL(undefined, null_type, groupPriorityOverride_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5308,9 +5308,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, displayEnhancement_type_string);
-            ITU_T_CHOICES_DECL(index, int, displayEnhancement_type_index);
-            ITU_T_CHOICES_DECL(noEnhancement, null_type, displayEnhancement_type_noEnhancement);
+            ITU_T_CHOICES_DECL(string, visiblestring_type, displayEnhancement_type_string); // primitive
+            ITU_T_CHOICES_DECL(index, int, displayEnhancement_type_index); // primitive
+            ITU_T_CHOICES_DECL(noEnhancement, null_type, displayEnhancement_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5405,9 +5405,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(changeDisplay_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, changeDisplay_type_string);
-            ITU_T_CHOICES_DECL(index, int, changeDisplay_type_index);
-            ITU_T_CHOICES_DECL(noEnhancement, null_type, changeDisplay_type_noEnhancement);
+            ITU_T_CHOICES_DECL(string, visiblestring_type, changeDisplay_type_string); // primitive
+            ITU_T_CHOICES_DECL(index, int, changeDisplay_type_index); // primitive
+            ITU_T_CHOICES_DECL(noEnhancement, null_type, changeDisplay_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5470,10 +5470,10 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(DeleteEventAction_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(specific, specific_type, DeleteEventAction_Request_specific);
-        ITU_T_CHOICES_DECL(aa_specific, null_type, DeleteEventAction_Request_aa_specific);
-        ITU_T_CHOICES_DECL(domain, Identifier, DeleteEventAction_Request_domain);
-        ITU_T_CHOICES_DECL(vmd, null_type, DeleteEventAction_Request_vmd);
+        ITU_T_CHOICEC_DECL(specific, specific_type, DeleteEventAction_Request_specific);
+        ITU_T_CHOICES_DECL(aa_specific, null_type, DeleteEventAction_Request_aa_specific); // primitive
+        ITU_T_CHOICES_DECL(domain, Identifier, DeleteEventAction_Request_domain); // primitive
+        ITU_T_CHOICES_DECL(vmd, null_type, DeleteEventAction_Request_vmd); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5552,9 +5552,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(CS_DefineEventEnrollment_Request_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(string, visiblestring_type, CS_DefineEventEnrollment_Request_impl_string);
-        ITU_T_CHOICES_DECL(index, int, CS_DefineEventEnrollment_Request_impl_index);
-        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_DefineEventEnrollment_Request_impl_noEnhancement);
+        ITU_T_CHOICES_DECL(string, visiblestring_type, CS_DefineEventEnrollment_Request_impl_string); // primitive
+        ITU_T_CHOICES_DECL(index, int, CS_DefineEventEnrollment_Request_impl_index); // primitive
+        ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_DefineEventEnrollment_Request_impl_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5582,9 +5582,9 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(DeleteEventEnrollment_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(specific, specific_type, DeleteEventEnrollment_Request_specific);
-        ITU_T_CHOICES_DECL(ec, ObjectName, DeleteEventEnrollment_Request_ec);
-        ITU_T_CHOICES_DECL(ea, ObjectName, DeleteEventEnrollment_Request_ea);
+        ITU_T_CHOICEC_DECL(specific, specific_type, DeleteEventEnrollment_Request_specific);
+        ITU_T_CHOICEC_DECL(ec, ObjectName, DeleteEventEnrollment_Request_ec);
+        ITU_T_CHOICEC_DECL(ea, ObjectName, DeleteEventEnrollment_Request_ea);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5666,8 +5666,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(eventConditionName_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(eventCondition, ObjectName, eventConditionName_type_eventCondition);
-            ITU_T_CHOICES_DECL(undefined, null_type, eventConditionName_type_undefined);
+            ITU_T_CHOICEC_DECL(eventCondition, ObjectName, eventConditionName_type_eventCondition);
+            ITU_T_CHOICES_DECL(undefined, null_type, eventConditionName_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5688,8 +5688,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(eventActionName_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(eventAction, ObjectName, eventActionName_type_eventAction);
-            ITU_T_CHOICES_DECL(undefined, null_type, eventActionName_type_undefined);
+            ITU_T_CHOICEC_DECL(eventAction, ObjectName, eventActionName_type_eventAction);
+            ITU_T_CHOICES_DECL(undefined, null_type, eventActionName_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5711,9 +5711,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, displayEnhancement_type_string);
-            ITU_T_CHOICES_DECL(index, int, displayEnhancement_type_index);
-            ITU_T_CHOICES_DECL(noEnhancement, null_type, displayEnhancement_type_noEnhancement);
+            ITU_T_CHOICES_DECL(string, visiblestring_type, displayEnhancement_type_string); // primitive
+            ITU_T_CHOICES_DECL(index, int, displayEnhancement_type_index); // primitive
+            ITU_T_CHOICES_DECL(noEnhancement, null_type, displayEnhancement_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5821,8 +5821,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(currentState_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(state, EE_State, currentState_type_state);
-            ITU_T_CHOICES_DECL(undefined, null_type, currentState_type_undefined);
+            ITU_T_CHOICES_DECL(state, EE_State, currentState_type_state); // primitive
+            ITU_T_CHOICES_DECL(undefined, null_type, currentState_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5862,9 +5862,9 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(changeDisplay_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, changeDisplay_type_string);
-            ITU_T_CHOICES_DECL(index, int, changeDisplay_type_index);
-            ITU_T_CHOICES_DECL(noEnhancement, null_type, changeDisplay_type_noEnhancement);
+            ITU_T_CHOICES_DECL(string, visiblestring_type, changeDisplay_type_string); // primitive
+            ITU_T_CHOICES_DECL(index, int, changeDisplay_type_index); // primitive
+            ITU_T_CHOICES_DECL(noEnhancement, null_type, changeDisplay_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5976,8 +5976,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_STRUCT(RemoveEventConditionListReference_Error_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(eventCondition, ObjectName, RemoveEventConditionListReference_Error_eventCondition);
-        ITU_T_CHOICES_DECL(eventConditionList, ObjectName, RemoveEventConditionListReference_Error_eventConditionList);
+        ITU_T_CHOICEC_DECL(eventCondition, ObjectName, RemoveEventConditionListReference_Error_eventCondition);
+        ITU_T_CHOICEC_DECL(eventConditionList, ObjectName, RemoveEventConditionListReference_Error_eventConditionList);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6090,8 +6090,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(priorityChange_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(priorityValue, int, priorityChange_type_priorityValue);
-            ITU_T_CHOICES_DECL(priorityReset, null_type, priorityChange_type_priorityReset);
+            ITU_T_CHOICES_DECL(priorityValue, int, priorityChange_type_priorityValue); // primitive
+            ITU_T_CHOICES_DECL(priorityReset, null_type, priorityChange_type_priorityReset); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -6137,8 +6137,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(rangeStartSpecification_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(startingTime, TimeOfDay, rangeStartSpecification_type_startingTime);
-            ITU_T_CHOICES_DECL(startingEntry, octetstring_type, rangeStartSpecification_type_startingEntry);
+            ITU_T_CHOICES_DECL(startingTime, TimeOfDay, rangeStartSpecification_type_startingTime); // primitive
+            ITU_T_CHOICES_DECL(startingEntry, octetstring_type, rangeStartSpecification_type_startingEntry); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -6159,8 +6159,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(rangeStopSpecification_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(endingTime, TimeOfDay, rangeStopSpecification_type_endingTime);
-            ITU_T_CHOICES_DECL(numberOfEntries, Integer32, rangeStopSpecification_type_numberOfEntries);
+            ITU_T_CHOICES_DECL(endingTime, TimeOfDay, rangeStopSpecification_type_endingTime); // primitive
+            ITU_T_CHOICES_DECL(numberOfEntries, Integer32, rangeStopSpecification_type_numberOfEntries); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -6397,8 +6397,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_STRUCT(entryForm_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(data, data_type, entryForm_type_data);
-            ITU_T_CHOICES_DECL(annotation, MMSString, entryForm_type_annotation);
+            ITU_T_CHOICEC_DECL(data, data_type, entryForm_type_data);
+            ITU_T_CHOICES_DECL(annotation, MMSString, entryForm_type_annotation); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };

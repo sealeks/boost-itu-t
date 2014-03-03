@@ -288,6 +288,10 @@ namespace MMS_Object_Module_1 {
 
     // choice AccessCondition
 
+    void AccessCondition::user_type::none(const null_type& vl) {
+        set<null_type>(new null_type(vl), user_type_none);
+    }
+
     template<> void AccessCondition::user_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case user_type_association:
@@ -349,6 +353,14 @@ namespace MMS_Object_Module_1 {
                 else free();
             }
         }
+    }
+
+    void AccessCondition::never(const null_type& vl) {
+        set<null_type>(new null_type(vl), AccessCondition_never);
+    }
+
+    void AccessCondition::semaphore(const ISO_9506_MMS_1::Identifier& vl) {
+        set<ISO_9506_MMS_1::Identifier>(new ISO_9506_MMS_1::Identifier(vl), AccessCondition_semaphore);
     }
 
     template<> void AccessCondition::serialize(boost::asn1::x690::output_coder& arch) {
@@ -510,6 +522,18 @@ namespace MMS_Object_Module_1 {
     const Running_Mode Running_Mode_step_limited = 2;
 
     // choice Address
+
+    void Address::numericAddress(const ISO_9506_MMS_1::Unsigned32& vl) {
+        set<ISO_9506_MMS_1::Unsigned32>(new ISO_9506_MMS_1::Unsigned32(vl), Address_numericAddress);
+    }
+
+    void Address::symbolicAddress(const ISO_9506_MMS_1::MMSString& vl) {
+        set<ISO_9506_MMS_1::MMSString>(new ISO_9506_MMS_1::MMSString(vl), Address_symbolicAddress);
+    }
+
+    void Address::unconstrainedAddress(const octetstring_type& vl) {
+        set<octetstring_type>(new octetstring_type(vl), Address_unconstrainedAddress);
+    }
 
     template<> void Address::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -823,6 +847,50 @@ namespace MMS_Object_Module_1 {
         exponent_width_ = vl;
     }
 
+    void TypeDescription::boolean(const null_type& vl) {
+        set<null_type>(new null_type(vl), TypeDescription_boolean);
+    }
+
+    void TypeDescription::bit_string(const ISO_9506_MMS_1::Integer32& vl) {
+        set<ISO_9506_MMS_1::Integer32>(new ISO_9506_MMS_1::Integer32(vl), TypeDescription_bit_string);
+    }
+
+    void TypeDescription::integer(const ISO_9506_MMS_1::Unsigned8& vl) {
+        set<ISO_9506_MMS_1::Unsigned8>(new ISO_9506_MMS_1::Unsigned8(vl), TypeDescription_integer);
+    }
+
+    void TypeDescription::unsignedV(const ISO_9506_MMS_1::Unsigned8& vl) {
+        set<ISO_9506_MMS_1::Unsigned8>(new ISO_9506_MMS_1::Unsigned8(vl), TypeDescription_unsignedV);
+    }
+
+    void TypeDescription::octet_string(const ISO_9506_MMS_1::Integer32& vl) {
+        set<ISO_9506_MMS_1::Integer32>(new ISO_9506_MMS_1::Integer32(vl), TypeDescription_octet_string);
+    }
+
+    void TypeDescription::visible_string(const ISO_9506_MMS_1::Integer32& vl) {
+        set<ISO_9506_MMS_1::Integer32>(new ISO_9506_MMS_1::Integer32(vl), TypeDescription_visible_string);
+    }
+
+    void TypeDescription::generalized_time(const null_type& vl) {
+        set<null_type>(new null_type(vl), TypeDescription_generalized_time);
+    }
+
+    void TypeDescription::binary_time(const bool& vl) {
+        set<bool>(new bool(vl), TypeDescription_binary_time);
+    }
+
+    void TypeDescription::bcd(const ISO_9506_MMS_1::Unsigned8& vl) {
+        set<ISO_9506_MMS_1::Unsigned8>(new ISO_9506_MMS_1::Unsigned8(vl), TypeDescription_bcd);
+    }
+
+    void TypeDescription::objId(const null_type& vl) {
+        set<null_type>(new null_type(vl), TypeDescription_objId);
+    }
+
+    void TypeDescription::mMSString(const ISO_9506_MMS_1::Integer32& vl) {
+        set<ISO_9506_MMS_1::Integer32>(new ISO_9506_MMS_1::Integer32(vl), TypeDescription_mMSString);
+    }
+
     template<> void TypeDescription::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case TypeDescription_array:
@@ -1039,6 +1107,18 @@ namespace MMS_Object_Module_1 {
     const Severity normalSeverity = 64;
 
     // choice EventTime
+
+    void EventTime::timeOfDay(const ISO_9506_MMS_1::TimeOfDay& vl) {
+        set<ISO_9506_MMS_1::TimeOfDay>(new ISO_9506_MMS_1::TimeOfDay(vl), EventTime_timeOfDay);
+    }
+
+    void EventTime::timeSequenceIdentifier(const ISO_9506_MMS_1::Unsigned32& vl) {
+        set<ISO_9506_MMS_1::Unsigned32>(new ISO_9506_MMS_1::Unsigned32(vl), EventTime_timeSequenceIdentifier);
+    }
+
+    void EventTime::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), EventTime_undefined);
+    }
 
     template<> void EventTime::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {

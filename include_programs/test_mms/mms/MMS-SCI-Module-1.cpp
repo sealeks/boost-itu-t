@@ -171,6 +171,10 @@ namespace MMS_SCI_Module_1 {
     selected_Program_Invocation_(arg__selected_Program_Invocation) {
     };
 
+    void VMD_File::selected_Program_Invocation_type::noneSelected(const null_type& vl) {
+        set<null_type>(new null_type(vl), selected_Program_Invocation_type_noneSelected);
+    }
+
     template<> void VMD_File::selected_Program_Invocation_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case selected_Program_Invocation_type_selectedProgram:
@@ -1203,6 +1207,10 @@ namespace MMS_SCI_Module_1 {
         eventConditionLists_ = boost::shared_ptr<eventConditionLists_type>(new eventConditionLists_type(vl));
     }
 
+    void Access_Control_List_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Access_Control_List_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -1579,6 +1587,10 @@ namespace MMS_SCI_Module_1 {
         eventConditionLists_ = vl;
     }
 
+    void Domain_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Domain_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -1923,6 +1935,10 @@ namespace MMS_SCI_Module_1 {
         controlled_Program_Invocations_ = boost::shared_ptr<controlled_Program_Invocations_type>(new controlled_Program_Invocations_type(vl));
     }
 
+    void Program_Invocation_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Program_Invocation_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -2117,6 +2133,10 @@ namespace MMS_SCI_Module_1 {
 
     void Unit_Control_instance::definition_type::details_type::programInvocations(boost::shared_ptr< programInvocations_type> vl) {
         programInvocations_ = vl;
+    }
+
+    void Unit_Control_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
     }
 
     template<> void Unit_Control_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -2399,6 +2419,10 @@ namespace MMS_SCI_Module_1 {
         meaning_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type(vl));
     }
 
+    void Named_Variable_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Named_Variable_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -2573,6 +2597,10 @@ namespace MMS_SCI_Module_1 {
 
     void Named_Variable_List_instance::definition_type::details_type::listOfVariables(boost::shared_ptr< listOfVariables_type> vl) {
         listOfVariables_ = vl;
+    }
+
+    void Named_Variable_List_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
     }
 
     template<> void Named_Variable_List_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -2819,6 +2847,10 @@ namespace MMS_SCI_Module_1 {
         meaning_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type(vl));
     }
 
+    void Named_Type_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Named_Type_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -3057,6 +3089,10 @@ namespace MMS_SCI_Module_1 {
         programInvocation_ = boost::shared_ptr<Program_Invocation_instance>(new Program_Invocation_instance(vl));
     }
 
+    void Data_Exchange_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Data_Exchange_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -3290,6 +3326,10 @@ namespace MMS_SCI_Module_1 {
         eventCondition_ = vl;
     }
 
+    void Semaphore_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Semaphore_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -3472,6 +3512,10 @@ namespace MMS_SCI_Module_1 {
         stationType_ = vl;
     }
 
+    void Operator_Station_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Operator_Station_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -3642,6 +3686,10 @@ namespace MMS_SCI_Module_1 {
     referencingEventConditionLists_(arg__referencingEventConditionLists) {
     };
 
+    void Event_Condition_instance::definition_type::details_type::monitoredVariable_type::unspecified(const null_type& vl) {
+        set<null_type>(new null_type(vl), monitoredVariable_type_unspecified);
+    }
+
     template<> void Event_Condition_instance::definition_type::details_type::monitoredVariable_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case monitoredVariable_type_named:
@@ -3724,6 +3772,18 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    void Event_Condition_instance::definition_type::details_type::displayEnhancement_type::text(const ISO_9506_MMS_1::MMSString& vl) {
+        set<ISO_9506_MMS_1::MMSString>(new ISO_9506_MMS_1::MMSString(vl), displayEnhancement_type_text);
+    }
+
+    void Event_Condition_instance::definition_type::details_type::displayEnhancement_type::number(const int& vl) {
+        set<int>(new int(vl), displayEnhancement_type_number);
+    }
+
+    void Event_Condition_instance::definition_type::details_type::displayEnhancement_type::none(const null_type& vl) {
+        set<null_type>(new null_type(vl), displayEnhancement_type_none);
+    }
+
     template<> void Event_Condition_instance::definition_type::details_type::displayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case displayEnhancement_type_text:
@@ -3804,6 +3864,14 @@ namespace MMS_SCI_Module_1 {
             {
             }
         }
+    }
+
+    void Event_Condition_instance::definition_type::details_type::group_Priority_Override_type::priority(const MMS_Object_Module_1::Priority& vl) {
+        set<MMS_Object_Module_1::Priority>(new MMS_Object_Module_1::Priority(vl), group_Priority_Override_type_priority);
+    }
+
+    void Event_Condition_instance::definition_type::details_type::group_Priority_Override_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), group_Priority_Override_type_undefined);
     }
 
     template<> void Event_Condition_instance::definition_type::details_type::group_Priority_Override_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -4063,6 +4131,10 @@ namespace MMS_SCI_Module_1 {
         referencingEventConditionLists_ = boost::shared_ptr<referencingEventConditionLists_type>(new referencingEventConditionLists_type(vl));
     }
 
+    void Event_Condition_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Event_Condition_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -4279,6 +4351,10 @@ namespace MMS_SCI_Module_1 {
         eventEnrollments_ = vl;
     }
 
+    void Event_Action_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Event_Action_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -4439,6 +4515,14 @@ namespace MMS_SCI_Module_1 {
     displayEnhancement_(arg__displayEnhancement) {
     };
 
+    void Event_Enrollment_instance::definition_type::details_type::remainingDelay_type::time(const int& vl) {
+        set<int>(new int(vl), remainingDelay_type_time);
+    }
+
+    void Event_Enrollment_instance::definition_type::details_type::remainingDelay_type::forever(const null_type& vl) {
+        set<null_type>(new null_type(vl), remainingDelay_type_forever);
+    }
+
     template<> void Event_Enrollment_instance::definition_type::details_type::remainingDelay_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case remainingDelay_type_time:
@@ -4508,6 +4592,18 @@ namespace MMS_SCI_Module_1 {
             {
             }
         }
+    }
+
+    void Event_Enrollment_instance::definition_type::details_type::displayEnhancement_type::text(const ISO_9506_MMS_1::MMSString& vl) {
+        set<ISO_9506_MMS_1::MMSString>(new ISO_9506_MMS_1::MMSString(vl), displayEnhancement_type_text);
+    }
+
+    void Event_Enrollment_instance::definition_type::details_type::displayEnhancement_type::number(const int& vl) {
+        set<int>(new int(vl), displayEnhancement_type_number);
+    }
+
+    void Event_Enrollment_instance::definition_type::details_type::displayEnhancement_type::none(const null_type& vl) {
+        set<null_type>(new null_type(vl), displayEnhancement_type_none);
     }
 
     template<> void Event_Enrollment_instance::definition_type::details_type::displayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -4732,6 +4828,10 @@ namespace MMS_SCI_Module_1 {
         displayEnhancement_ = boost::shared_ptr<displayEnhancement_type>(new displayEnhancement_type(vl));
     }
 
+    void Event_Enrollment_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Event_Enrollment_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -4948,6 +5048,10 @@ namespace MMS_SCI_Module_1 {
         referencingEventConditionLists_ = vl;
     }
 
+    void Event_Condition_List_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
+    }
+
     template<> void Event_Condition_List_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case definition_type_reference:
@@ -5122,6 +5226,10 @@ namespace MMS_SCI_Module_1 {
 
     void Journal_instance::definition_type::details_type::entries(boost::shared_ptr< entries_type> vl) {
         entries_ = vl;
+    }
+
+    void Journal_instance::definition_type::reference(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), definition_type_reference);
     }
 
     template<> void Journal_instance::definition_type::serialize(boost::asn1::x690::output_coder& arch) {

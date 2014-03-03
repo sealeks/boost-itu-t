@@ -165,8 +165,8 @@ namespace MMS_Object_Module_1 {
                 ITU_T_STRUCT(Modifier_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(eventModifier, ISO_9506_MMS_1::AttachToEventCondition, Modifier_eventModifier);
-        ITU_T_CHOICE_DECL(semaphoreModifier, ISO_9506_MMS_1::AttachToSemaphore, Modifier_semaphoreModifier);
+        ITU_T_CHOICEC_DECL(eventModifier, ISO_9506_MMS_1::AttachToEventCondition, Modifier_eventModifier);
+        ITU_T_CHOICEC_DECL(semaphoreModifier, ISO_9506_MMS_1::AttachToSemaphore, Modifier_semaphoreModifier);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -344,8 +344,8 @@ namespace MMS_Object_Module_1 {
                     ITU_T_STRUCT(user_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(association, MMS_Environment_1::ApplicationReference, user_type_association);
-            ITU_T_CHOICE_DECL(none, null_type, user_type_none);
+            ITU_T_CHOICEC_DECL(association, MMS_Environment_1::ApplicationReference, user_type_association);
+            ITU_T_CHOICES_DECL(none, null_type, user_type_none); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -362,12 +362,12 @@ namespace MMS_Object_Module_1 {
                 ITU_T_STRUCT(AccessCondition_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(never, null_type, AccessCondition_never);
-        ITU_T_CHOICE_DECL(semaphore, ISO_9506_MMS_1::Identifier, AccessCondition_semaphore);
-        ITU_T_CHOICE_DECL(user, user_type, AccessCondition_user);
-        ITU_T_CHOICE_DECL(password, ACSE_1::Authentication_value, AccessCondition_password);
-        ITU_T_CHOICE_DECL(joint, joint_type, AccessCondition_joint);
-        ITU_T_CHOICE_DECL(alternate, alternate_type, AccessCondition_alternate);
+        ITU_T_CHOICES_DECL(never, null_type, AccessCondition_never); // primitive
+        ITU_T_CHOICES_DECL(semaphore, ISO_9506_MMS_1::Identifier, AccessCondition_semaphore); // primitive
+        ITU_T_CHOICEC_DECL(user, user_type, AccessCondition_user);
+        ITU_T_CHOICEC_DECL(password, ACSE_1::Authentication_value, AccessCondition_password);
+        ITU_T_CHOICEC_DECL(joint, joint_type, AccessCondition_joint);
+        ITU_T_CHOICEC_DECL(alternate, alternate_type, AccessCondition_alternate);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -433,9 +433,9 @@ namespace MMS_Object_Module_1 {
                 ITU_T_STRUCT(Address_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(numericAddress, ISO_9506_MMS_1::Unsigned32, Address_numericAddress);
-        ITU_T_CHOICE_DECL(symbolicAddress, ISO_9506_MMS_1::MMSString, Address_symbolicAddress);
-        ITU_T_CHOICE_DECL(unconstrainedAddress, octetstring_type, Address_unconstrainedAddress);
+        ITU_T_CHOICES_DECL(numericAddress, ISO_9506_MMS_1::Unsigned32, Address_numericAddress); // primitive
+        ITU_T_CHOICES_DECL(symbolicAddress, ISO_9506_MMS_1::MMSString, Address_symbolicAddress); // primitive
+        ITU_T_CHOICES_DECL(unconstrainedAddress, octetstring_type, Address_unconstrainedAddress); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -546,20 +546,20 @@ namespace MMS_Object_Module_1 {
                 ITU_T_STRUCT(TypeDescription_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(array, array_type, TypeDescription_array);
-        ITU_T_CHOICE_DECL(structure, structure_type, TypeDescription_structure);
-        ITU_T_CHOICE_DECL(boolean, null_type, TypeDescription_boolean);
-        ITU_T_CHOICE_DECL(bit_string, ISO_9506_MMS_1::Integer32, TypeDescription_bit_string);
-        ITU_T_CHOICE_DECL(integer, ISO_9506_MMS_1::Unsigned8, TypeDescription_integer);
-        ITU_T_CHOICE_DECL(unsignedV, ISO_9506_MMS_1::Unsigned8, TypeDescription_unsignedV);
-        ITU_T_CHOICE_DECL(floating_point, floating_point_type, TypeDescription_floating_point);
-        ITU_T_CHOICE_DECL(octet_string, ISO_9506_MMS_1::Integer32, TypeDescription_octet_string);
-        ITU_T_CHOICE_DECL(visible_string, ISO_9506_MMS_1::Integer32, TypeDescription_visible_string);
-        ITU_T_CHOICE_DECL(generalized_time, null_type, TypeDescription_generalized_time);
-        ITU_T_CHOICE_DECL(binary_time, bool, TypeDescription_binary_time);
-        ITU_T_CHOICE_DECL(bcd, ISO_9506_MMS_1::Unsigned8, TypeDescription_bcd);
-        ITU_T_CHOICE_DECL(objId, null_type, TypeDescription_objId);
-        ITU_T_CHOICE_DECL(mMSString, ISO_9506_MMS_1::Integer32, TypeDescription_mMSString);
+        ITU_T_CHOICEC_DECL(array, array_type, TypeDescription_array);
+        ITU_T_CHOICEC_DECL(structure, structure_type, TypeDescription_structure);
+        ITU_T_CHOICES_DECL(boolean, null_type, TypeDescription_boolean); // primitive
+        ITU_T_CHOICES_DECL(bit_string, ISO_9506_MMS_1::Integer32, TypeDescription_bit_string); // primitive
+        ITU_T_CHOICES_DECL(integer, ISO_9506_MMS_1::Unsigned8, TypeDescription_integer); // primitive
+        ITU_T_CHOICES_DECL(unsignedV, ISO_9506_MMS_1::Unsigned8, TypeDescription_unsignedV); // primitive
+        ITU_T_CHOICEC_DECL(floating_point, floating_point_type, TypeDescription_floating_point);
+        ITU_T_CHOICES_DECL(octet_string, ISO_9506_MMS_1::Integer32, TypeDescription_octet_string); // primitive
+        ITU_T_CHOICES_DECL(visible_string, ISO_9506_MMS_1::Integer32, TypeDescription_visible_string); // primitive
+        ITU_T_CHOICES_DECL(generalized_time, null_type, TypeDescription_generalized_time); // primitive
+        ITU_T_CHOICES_DECL(binary_time, bool, TypeDescription_binary_time); // primitive
+        ITU_T_CHOICES_DECL(bcd, ISO_9506_MMS_1::Unsigned8, TypeDescription_bcd); // primitive
+        ITU_T_CHOICES_DECL(objId, null_type, TypeDescription_objId); // primitive
+        ITU_T_CHOICES_DECL(mMSString, ISO_9506_MMS_1::Integer32, TypeDescription_mMSString); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -590,9 +590,9 @@ namespace MMS_Object_Module_1 {
                 ITU_T_STRUCT(EventTime_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(timeOfDay, ISO_9506_MMS_1::TimeOfDay, EventTime_timeOfDay);
-        ITU_T_CHOICE_DECL(timeSequenceIdentifier, ISO_9506_MMS_1::Unsigned32, EventTime_timeSequenceIdentifier);
-        ITU_T_CHOICE_DECL(undefined, null_type, EventTime_undefined);
+        ITU_T_CHOICES_DECL(timeOfDay, ISO_9506_MMS_1::TimeOfDay, EventTime_timeOfDay); // primitive
+        ITU_T_CHOICES_DECL(timeSequenceIdentifier, ISO_9506_MMS_1::Unsigned32, EventTime_timeSequenceIdentifier); // primitive
+        ITU_T_CHOICES_DECL(undefined, null_type, EventTime_undefined); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
