@@ -129,7 +129,10 @@ namespace boost {\
 #define ITU_T_STRUCT(enm)  boost::asn1::___asn__choice__base__< enm> 
 #define ITU_T_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
 
-#define ITU_T_CHOICE_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; \
+#define ITU_T_CHOICES_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; void nm ( const tp&  vl); \
+                         boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);}; boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
+
+#define ITU_T_CHOICEC_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; \
                          boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);}; boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
 
 #define ITU_T_OPTIONAL_DECL(nm ,tp )  boost::shared_ptr< tp >& nm () { return nm ## _; };  const boost::shared_ptr< tp >& nm () const { return nm ## _; } \
@@ -1833,9 +1836,9 @@ namespace boost {
                 encoding_type() : ITU_T_STRUCT(encoding_type_enum) () {
                 }
 
-                ITU_T_CHOICE_DECL(single_ASN1_type, any_type, encoding_type_single_ASN1_type)
-                ITU_T_CHOICE_DECL(octet_aligned, octetstring_type, encoding_type_octet_aligned)
-                ITU_T_CHOICE_DECL(arbitrary, bitstring_type, encoding_type_arbitrary)
+                ITU_T_CHOICES_DECL(single_ASN1_type, any_type, encoding_type_single_ASN1_type)
+                ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, encoding_type_octet_aligned)
+                ITU_T_CHOICES_DECL(arbitrary, bitstring_type, encoding_type_arbitrary)
 
                         template<typename Archive> void serialize(Archive & arch) {
 
@@ -2002,12 +2005,12 @@ namespace boost {
                 identification_type() : ITU_T_STRUCT(identification_type_enum) () {
                 }
 
-                ITU_T_CHOICE_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
-                ITU_T_CHOICE_DECL(syntax, oid_type, identification_type_syntax_type)
-                ITU_T_CHOICE_DECL(presentation_context_id, int, identification_type_presentation_context_id_type)
-                ITU_T_CHOICE_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
-                ITU_T_CHOICE_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
-                ITU_T_CHOICE_DECL(fixed, null_type, identification_type_fixed_type)
+                ITU_T_CHOICES_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
+                ITU_T_CHOICES_DECL(syntax, oid_type, identification_type_syntax_type)
+                ITU_T_CHOICES_DECL(presentation_context_id, int, identification_type_presentation_context_id_type)
+                ITU_T_CHOICES_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
+                ITU_T_CHOICES_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
+                ITU_T_CHOICES_DECL(fixed, null_type, identification_type_fixed_type)
 
                         template<typename Archive> void serialize(Archive & arch) {
 
@@ -2205,12 +2208,12 @@ namespace boost {
                 identification_type() : ITU_T_STRUCT(identification_type_enum) () {
                 }
 
-                ITU_T_CHOICE_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
-                ITU_T_CHOICE_DECL(syntax, oid_type, identification_type_syntax_type)
-                ITU_T_CHOICE_DECL(presentation_context_id, int, identification_type_presentation_context_id_type)
-                ITU_T_CHOICE_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
-                ITU_T_CHOICE_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
-                ITU_T_CHOICE_DECL(fixed, null_type, identification_type_fixed_type)
+                ITU_T_CHOICES_DECL(syntaxes, syntaxes_type, identification_type_syntaxes_type)
+                ITU_T_CHOICES_DECL(syntax, oid_type, identification_type_syntax_type)
+                ITU_T_CHOICES_DECL(presentation_context_id, int, identification_type_presentation_context_id_type)
+                ITU_T_CHOICES_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
+                ITU_T_CHOICES_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
+                ITU_T_CHOICES_DECL(fixed, null_type, identification_type_fixed_type)
 
                         template<typename Archive> void serialize(Archive & arch) {
 
