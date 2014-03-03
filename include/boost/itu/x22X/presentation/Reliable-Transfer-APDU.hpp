@@ -94,12 +94,12 @@ namespace Reliable_Transfer_APDU {
                 ITU_T_STRUCT(RTSE_apdus_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(rtorq_apdu, RTORQapdu, RTSE_apdus_rtorq_apdu);
-        ITU_T_CHOICE_DECL(rtoac_apdu, RTOACapdu, RTSE_apdus_rtoac_apdu);
-        ITU_T_CHOICE_DECL(rtorj_apdu, RTORJapdu, RTSE_apdus_rtorj_apdu);
-        ITU_T_CHOICE_DECL(rttp_apdu, RTTPapdu, RTSE_apdus_rttp_apdu);
-        ITU_T_CHOICE_DECL(rttr_apdu, RTTRapdu, RTSE_apdus_rttr_apdu);
-        ITU_T_CHOICE_DECL(rtab_apdu, RTABapdu, RTSE_apdus_rtab_apdu);
+        ITU_T_CHOICEC_DECL(rtorq_apdu, RTORQapdu, RTSE_apdus_rtorq_apdu);
+        ITU_T_CHOICEC_DECL(rtoac_apdu, RTOACapdu, RTSE_apdus_rtoac_apdu);
+        ITU_T_CHOICEC_DECL(rtorj_apdu, RTORJapdu, RTSE_apdus_rtorj_apdu);
+        ITU_T_CHOICES_DECL(rttp_apdu, RTTPapdu, RTSE_apdus_rttp_apdu); // primitive
+        ITU_T_CHOICES_DECL(rttr_apdu, RTTRapdu, RTSE_apdus_rttr_apdu); // primitive
+        ITU_T_CHOICEC_DECL(rtab_apdu, RTABapdu, RTSE_apdus_rtab_apdu);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -206,8 +206,8 @@ namespace Reliable_Transfer_APDU {
                 ITU_T_STRUCT(ConnectionData_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(open, any_type, ConnectionData_open);
-        ITU_T_CHOICE_DECL(recover, SessionConnectionIdentifier, ConnectionData_recover);
+        ITU_T_CHOICES_DECL(open, any_type, ConnectionData_open); // primitive
+        ITU_T_CHOICEC_DECL(recover, SessionConnectionIdentifier, ConnectionData_recover);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -255,8 +255,8 @@ namespace Reliable_Transfer_APDU {
                 ITU_T_STRUCT(CallingSSuserReference_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(t61String, t61string_type, CallingSSuserReference_t61String);
-        ITU_T_CHOICE_DECL(octetString, octetstring_type, CallingSSuserReference_octetString);
+        ITU_T_CHOICES_DECL(t61String, t61string_type, CallingSSuserReference_t61String); // primitive
+        ITU_T_CHOICES_DECL(octetString, octetstring_type, CallingSSuserReference_octetString); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };

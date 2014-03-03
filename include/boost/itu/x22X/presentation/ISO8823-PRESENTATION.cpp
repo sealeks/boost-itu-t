@@ -1636,6 +1636,10 @@ namespace ISO8823_PRESENTATION {
 
     // choice User-data
 
+    void User_data::simply_encoded_data(const Simply_encoded_data& vl) {
+        set<Simply_encoded_data>(new Simply_encoded_data(vl), User_data_simply_encoded_data);
+    }
+
     template<> void User_data::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case User_data_simply_encoded_data:
@@ -1726,6 +1730,18 @@ namespace ISO8823_PRESENTATION {
     presentation_context_identifier_(arg__presentation_context_identifier),
     presentation_data_values_(arg__presentation_data_values) {
     };
+
+    void PDV_list::presentation_data_values_type::single_ASN1_type(const any_type& vl) {
+        set<any_type>(new any_type(vl), presentation_data_values_type_single_ASN1_type);
+    }
+
+    void PDV_list::presentation_data_values_type::octet_aligned(const octetstring_type& vl) {
+        set<octetstring_type>(new octetstring_type(vl), presentation_data_values_type_octet_aligned);
+    }
+
+    void PDV_list::presentation_data_values_type::arbitrary(const bitstring_type& vl) {
+        set<bitstring_type>(new bitstring_type(vl), presentation_data_values_type_arbitrary);
+    }
 
     template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {

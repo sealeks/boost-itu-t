@@ -88,10 +88,10 @@ namespace Remote_Operations_Generic_ROS_PDUs {
                     ITU_T_STRUCT(problem_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(general, GeneralProblem, problem_type_general);
-            ITU_T_CHOICE_DECL(invoke, InvokeProblem, problem_type_invoke);
-            ITU_T_CHOICE_DECL(returnResult, ReturnResultProblem, problem_type_returnResult);
-            ITU_T_CHOICE_DECL(returnError, ReturnErrorProblem, problem_type_returnError);
+            ITU_T_CHOICES_DECL(general, GeneralProblem, problem_type_general); // primitive
+            ITU_T_CHOICES_DECL(invoke, InvokeProblem, problem_type_invoke); // primitive
+            ITU_T_CHOICES_DECL(returnResult, ReturnResultProblem, problem_type_returnResult); // primitive
+            ITU_T_CHOICES_DECL(returnError, ReturnErrorProblem, problem_type_returnError); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -169,8 +169,8 @@ namespace Remote_Operations_Generic_ROS_PDUs {
                 ITU_T_STRUCT(InvokeId_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(present, int, InvokeId_present);
-        ITU_T_CHOICE_DECL(absent, null_type, InvokeId_absent);
+        ITU_T_CHOICES_DECL(present, int, InvokeId_present); // primitive
+        ITU_T_CHOICES_DECL(absent, null_type, InvokeId_absent); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };

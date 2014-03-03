@@ -333,8 +333,8 @@ namespace ISO8823_PRESENTATION {
                 ITU_T_STRUCT(CPR_PPDU_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(x400_mode_parameters, x400_mode_parameters_type, CPR_PPDU_x400_mode_parameters);
-        ITU_T_CHOICE_DECL(normal_mode_parameters, normal_mode_parameters_type, CPR_PPDU_normal_mode_parameters);
+        ITU_T_CHOICEC_DECL(x400_mode_parameters, x400_mode_parameters_type, CPR_PPDU_x400_mode_parameters);
+        ITU_T_CHOICEC_DECL(normal_mode_parameters, normal_mode_parameters_type, CPR_PPDU_normal_mode_parameters);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -357,8 +357,8 @@ namespace ISO8823_PRESENTATION {
                 ITU_T_STRUCT(Abort_type_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(aru_ppdu, ARU_PPDU, Abort_type_aru_ppdu);
-        ITU_T_CHOICE_DECL(arp_ppdu, ARP_PPDU, Abort_type_arp_ppdu);
+        ITU_T_CHOICEC_DECL(aru_ppdu, ARU_PPDU, Abort_type_aru_ppdu);
+        ITU_T_CHOICEC_DECL(arp_ppdu, ARP_PPDU, Abort_type_arp_ppdu);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -413,8 +413,8 @@ namespace ISO8823_PRESENTATION {
                 ITU_T_STRUCT(ARU_PPDU_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(x400_mode_parameters, x400_mode_parameters_type, ARU_PPDU_x400_mode_parameters);
-        ITU_T_CHOICE_DECL(normal_mode_parameters, normal_mode_parameters_type, ARU_PPDU_normal_mode_parameters);
+        ITU_T_CHOICEC_DECL(x400_mode_parameters, x400_mode_parameters_type, ARU_PPDU_x400_mode_parameters);
+        ITU_T_CHOICEC_DECL(normal_mode_parameters, normal_mode_parameters_type, ARU_PPDU_normal_mode_parameters);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -453,9 +453,9 @@ namespace ISO8823_PRESENTATION {
                 ITU_T_STRUCT(Typed_data_type_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(acPPDU, AC_PPDU, Typed_data_type_acPPDU);
-        ITU_T_CHOICE_DECL(acaPPDU, ACA_PPDU, Typed_data_type_acaPPDU);
-        ITU_T_CHOICE_DECL(ttdPPDU, User_data, Typed_data_type_ttdPPDU);
+        ITU_T_CHOICEC_DECL(acPPDU, AC_PPDU, Typed_data_type_acPPDU);
+        ITU_T_CHOICEC_DECL(acaPPDU, ACA_PPDU, Typed_data_type_acaPPDU);
+        ITU_T_CHOICEC_DECL(ttdPPDU, User_data, Typed_data_type_ttdPPDU);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -692,8 +692,8 @@ namespace ISO8823_PRESENTATION {
                 ITU_T_STRUCT(User_data_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(simply_encoded_data, Simply_encoded_data, User_data_simply_encoded_data);
-        ITU_T_CHOICE_DECL(fully_encoded_data, Fully_encoded_data, User_data_fully_encoded_data);
+        ITU_T_CHOICES_DECL(simply_encoded_data, Simply_encoded_data, User_data_simply_encoded_data); // primitive
+        ITU_T_CHOICEC_DECL(fully_encoded_data, Fully_encoded_data, User_data_fully_encoded_data);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -721,9 +721,9 @@ namespace ISO8823_PRESENTATION {
                     ITU_T_STRUCT(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(single_ASN1_type, any_type, presentation_data_values_type_single_ASN1_type);
-            ITU_T_CHOICE_DECL(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned);
-            ITU_T_CHOICE_DECL(arbitrary, bitstring_type, presentation_data_values_type_arbitrary);
+            ITU_T_CHOICES_DECL(single_ASN1_type, any_type, presentation_data_values_type_single_ASN1_type); // primitive
+            ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned); // primitive
+            ITU_T_CHOICES_DECL(arbitrary, bitstring_type, presentation_data_values_type_arbitrary); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };

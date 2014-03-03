@@ -13,6 +13,22 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     problem_(arg__problem) {
     };
 
+    void Reject::problem_type::general(const GeneralProblem& vl) {
+        set<GeneralProblem>(new GeneralProblem(vl), problem_type_general);
+    }
+
+    void Reject::problem_type::invoke(const InvokeProblem& vl) {
+        set<InvokeProblem>(new InvokeProblem(vl), problem_type_invoke);
+    }
+
+    void Reject::problem_type::returnResult(const ReturnResultProblem& vl) {
+        set<ReturnResultProblem>(new ReturnResultProblem(vl), problem_type_returnResult);
+    }
+
+    void Reject::problem_type::returnError(const ReturnErrorProblem& vl) {
+        set<ReturnErrorProblem>(new ReturnErrorProblem(vl), problem_type_returnError);
+    }
+
     template<> void Reject::problem_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case problem_type_general:
@@ -193,6 +209,14 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     const RejectProblem RejectProblem_returnError_mistypedParameter = 34;
 
     // choice InvokeId
+
+    void InvokeId::present(const int& vl) {
+        set<int>(new int(vl), InvokeId_present);
+    }
+
+    void InvokeId::absent(const null_type& vl) {
+        set<null_type>(new null_type(vl), InvokeId_absent);
+    }
 
     template<> void InvokeId::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {

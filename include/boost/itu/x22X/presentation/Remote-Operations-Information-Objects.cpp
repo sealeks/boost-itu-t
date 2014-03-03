@@ -4,6 +4,14 @@ namespace Remote_Operations_Information_Objects {
 
     // choice Code
 
+    void Code::local(const int& vl) {
+        set<int>(new int(vl), Code_local);
+    }
+
+    void Code::global(const oid_type& vl) {
+        set<oid_type>(new oid_type(vl), Code_global);
+    }
+
     template<> void Code::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case Code_local:

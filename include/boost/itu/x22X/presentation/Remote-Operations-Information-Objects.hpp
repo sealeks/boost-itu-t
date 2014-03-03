@@ -77,8 +77,8 @@ namespace Remote_Operations_Information_Objects {
                 ITU_T_STRUCT(Code_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(local, int, Code_local);
-        ITU_T_CHOICE_DECL(global, oid_type, Code_global);
+        ITU_T_CHOICES_DECL(local, int, Code_local); // primitive
+        ITU_T_CHOICES_DECL(global, oid_type, Code_global); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };

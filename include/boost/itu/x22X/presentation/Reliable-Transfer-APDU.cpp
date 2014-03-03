@@ -7,6 +7,14 @@ namespace Reliable_Transfer_APDU {
 
     // choice RTSE-apdus
 
+    void RTSE_apdus::rttp_apdu(const RTTPapdu& vl) {
+        set<RTTPapdu>(new RTTPapdu(vl), RTSE_apdus_rttp_apdu);
+    }
+
+    void RTSE_apdus::rttr_apdu(const RTTRapdu& vl) {
+        set<RTTRapdu>(new RTTRapdu(vl), RTSE_apdus_rttr_apdu);
+    }
+
     template<> void RTSE_apdus::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case RTSE_apdus_rtorq_apdu:
@@ -385,6 +393,10 @@ namespace Reliable_Transfer_APDU {
 
     // choice ConnectionData
 
+    void ConnectionData::open(const any_type& vl) {
+        set<any_type>(new any_type(vl), ConnectionData_open);
+    }
+
     template<> void ConnectionData::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case ConnectionData_open:
@@ -535,6 +547,14 @@ namespace Reliable_Transfer_APDU {
     const RefuseReason RefuseReason_unacceptableDialogueMode = 3;
 
     // choice CallingSSuserReference
+
+    void CallingSSuserReference::t61String(const t61string_type& vl) {
+        set<t61string_type>(new t61string_type(vl), CallingSSuserReference_t61String);
+    }
+
+    void CallingSSuserReference::octetString(const octetstring_type& vl) {
+        set<octetstring_type>(new octetstring_type(vl), CallingSSuserReference_octetString);
+    }
 
     template<> void CallingSSuserReference::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
