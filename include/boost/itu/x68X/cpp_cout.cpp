@@ -1363,11 +1363,11 @@ namespace x680 {
                     stream << "\n";
                     if (!ischoice) {
                         switch (mkr) {
-                            case mk_none: stream << tabformat(self, 1) << "ITU_T_VALUE_HOLDER" << (noholder_ ? "N": "H") << "_DECL(" << it->name << ", " << it->typenam << ");";
+                            case mk_none: stream << tabformat(self, 1) << "ITU_T_HOLDER" << (noholder_ ? "N": "H") << "_DECL(" << it->name << ", " << it->typenam << ");";
                                 break;
-                            case mk_optional: stream << tabformat(self, 1) << "ITU_T_VALUE_OPTIONAL_DECL(" << it->name << ", " << it->typenam << ");";
+                            case mk_optional: stream << tabformat(self, 1) << "ITU_T_OPTIONAL_DECL(" << it->name << ", " << it->typenam << ");";
                                 break;
-                            case mk_default: stream << tabformat(self, 1) << "ITU_T_VALUE_DEFAULT_DECL(" << it->name << ", " << it->typenam <<", "  << (it->name + "__default") << ");";
+                            case mk_default: stream << tabformat(self, 1) << "ITU_T_DEFAULTH_DECL(" << it->name << ", " << it->typenam <<", "  << (it->name + "__default") << ");";
                                 break;
                             default:
                             {
@@ -1375,7 +1375,7 @@ namespace x680 {
                         }
                     } else {
                         stream << tabformat(self, 1) <<
-                                "ITU_T_VALUE_CHOICE(" <<
+                                "ITU_T_CHOICE_DECL(" <<
                                 it->name << ", " << it->typenam << ", " <<
                                 type_str(self) << "_" << it->name << ");";
                     }
