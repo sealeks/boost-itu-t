@@ -651,7 +651,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_DECL(fileRead, Integer32, ConfirmedServiceRequest_fileRead);
         ITU_T_CHOICE_DECL(fileClose, Integer32, ConfirmedServiceRequest_fileClose);
         ITU_T_CHOICE_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Request, ConfirmedServiceRequest_fileRename);
-        ITU_T_CHOICE_DECL(fileDelete, FileName , ConfirmedServiceRequest_fileDelete);
+        ITU_T_CHOICE_DECL(fileDelete, FileName, ConfirmedServiceRequest_fileDelete);
         ITU_T_CHOICE_DECL(fileDirectory, ISO_9506_MMS_1A::FileDirectory_Request, ConfirmedServiceRequest_fileDirectory);
         ITU_T_CHOICE_DECL(additionalService, AdditionalService_Request, ConfirmedServiceRequest_additionalService);
         ITU_T_CHOICE_DECL(getDataExchangeAttributes, GetDataExchangeAttributes_Request, ConfirmedServiceRequest_getDataExchangeAttributes);
