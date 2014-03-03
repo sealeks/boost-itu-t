@@ -109,17 +109,11 @@ namespace ISO_9506_MMS_1A {
                 boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__sourceFile,
                 boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__destinationFile);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(sourceFileServer, MMS_Environment_1::ApplicationReference);
-        BOOST_ASN_VALUE_HOLDERH_DECL(sourceFile, ISO_9506_MMS_1::FileName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(destinationFile, ISO_9506_MMS_1::FileName);
+        ITU_T_OPTIONAL_DECL(sourceFileServer, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(sourceFile, ISO_9506_MMS_1::FileName);
+        ITU_T_HOLDERH_DECL(destinationFile, ISO_9506_MMS_1::FileName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<MMS_Environment_1::ApplicationReference> sourceFileServer_;
-        value_holder<ISO_9506_MMS_1::FileName> sourceFile_;
-        value_holder<ISO_9506_MMS_1::FileName> destinationFile_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const ObtainFile_Error ObtainFile_Error_source_file;
@@ -134,15 +128,10 @@ namespace ISO_9506_MMS_1A {
         FileOpen_Request(const ISO_9506_MMS_1::FileName& arg__fileName,
                 const ISO_9506_MMS_1::Unsigned32& arg__initialPosition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileName, ISO_9506_MMS_1::FileName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(initialPosition, ISO_9506_MMS_1::Unsigned32);
+        ITU_T_HOLDERH_DECL(fileName, ISO_9506_MMS_1::FileName);
+        ITU_T_HOLDERH_DECL(initialPosition, ISO_9506_MMS_1::Unsigned32);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::FileName> fileName_;
-        value_holder<ISO_9506_MMS_1::Unsigned32> initialPosition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence FileOpen-Response
@@ -154,15 +143,10 @@ namespace ISO_9506_MMS_1A {
         FileOpen_Response(const ISO_9506_MMS_1::Integer32& arg__frsmID,
                 const FileAttributes& arg__fileAttributes);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(frsmID, ISO_9506_MMS_1::Integer32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileAttributes, FileAttributes);
+        ITU_T_HOLDERH_DECL(frsmID, ISO_9506_MMS_1::Integer32);
+        ITU_T_HOLDERH_DECL(fileAttributes, FileAttributes);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::Integer32> frsmID_;
-        value_holder<FileAttributes> fileAttributes_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence FileRead-Response
@@ -178,15 +162,10 @@ namespace ISO_9506_MMS_1A {
         FileRead_Response(boost::shared_ptr< octetstring_type> arg__fileData,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileData, octetstring_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(fileData, octetstring_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<octetstring_type> fileData_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence FileRename-Request
@@ -198,15 +177,10 @@ namespace ISO_9506_MMS_1A {
         FileRename_Request(const ISO_9506_MMS_1::FileName& arg__currentFileName,
                 const ISO_9506_MMS_1::FileName& arg__newFileName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(currentFileName, ISO_9506_MMS_1::FileName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(newFileName, ISO_9506_MMS_1::FileName);
+        ITU_T_HOLDERH_DECL(currentFileName, ISO_9506_MMS_1::FileName);
+        ITU_T_HOLDERH_DECL(newFileName, ISO_9506_MMS_1::FileName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::FileName> currentFileName_;
-        value_holder<ISO_9506_MMS_1::FileName> newFileName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const FileRename_Error FileRename_Error_source_file;
@@ -221,15 +195,10 @@ namespace ISO_9506_MMS_1A {
         FileDirectory_Request(boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__fileSpecification,
                 boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__continueAfter);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(fileSpecification, ISO_9506_MMS_1::FileName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, ISO_9506_MMS_1::FileName);
+        ITU_T_OPTIONAL_DECL(fileSpecification, ISO_9506_MMS_1::FileName);
+        ITU_T_OPTIONAL_DECL(continueAfter, ISO_9506_MMS_1::FileName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<ISO_9506_MMS_1::FileName> fileSpecification_;
-        boost::shared_ptr<ISO_9506_MMS_1::FileName> continueAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence FileDirectory-Response
@@ -247,15 +216,10 @@ namespace ISO_9506_MMS_1A {
         FileDirectory_Response(boost::shared_ptr< listOfDirectoryEntry_type> arg__listOfDirectoryEntry,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfDirectoryEntry, listOfDirectoryEntry_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfDirectoryEntry, listOfDirectoryEntry_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfDirectoryEntry_type> listOfDirectoryEntry_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DirectoryEntry
@@ -267,15 +231,10 @@ namespace ISO_9506_MMS_1A {
         DirectoryEntry(const ISO_9506_MMS_1::FileName& arg__fileName,
                 const FileAttributes& arg__fileAttributes);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileName, ISO_9506_MMS_1::FileName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileAttributes, FileAttributes);
+        ITU_T_HOLDERH_DECL(fileName, ISO_9506_MMS_1::FileName);
+        ITU_T_HOLDERH_DECL(fileAttributes, FileAttributes);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::FileName> fileName_;
-        value_holder<FileAttributes> fileAttributes_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence FileAttributes
@@ -289,15 +248,10 @@ namespace ISO_9506_MMS_1A {
         FileAttributes(boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__sizeOfFile,
                 boost::shared_ptr< gentime_type> arg__lastModified);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(sizeOfFile, ISO_9506_MMS_1::Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(lastModified, gentime_type);
+        ITU_T_HOLDERH_DECL(sizeOfFile, ISO_9506_MMS_1::Unsigned32);
+        ITU_T_OPTIONAL_DECL(lastModified, gentime_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::Unsigned32> sizeOfFile_;
-        boost::shared_ptr<gentime_type> lastModified_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     struct ScatteredAccessDescription_sequence_of {
@@ -310,17 +264,11 @@ namespace ISO_9506_MMS_1A {
                 boost::shared_ptr< ISO_9506_MMS_1::VariableSpecification> arg__variableSpecification,
                 boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> arg__alternateAccess);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(componentName, ISO_9506_MMS_1::Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(variableSpecification, ISO_9506_MMS_1::VariableSpecification);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(alternateAccess, ISO_9506_MMS_1::AlternateAccess);
+        ITU_T_OPTIONAL_DECL(componentName, ISO_9506_MMS_1::Identifier);
+        ITU_T_HOLDERH_DECL(variableSpecification, ISO_9506_MMS_1::VariableSpecification);
+        ITU_T_OPTIONAL_DECL(alternateAccess, ISO_9506_MMS_1::AlternateAccess);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<ISO_9506_MMS_1::Identifier> componentName_;
-        value_holder<ISO_9506_MMS_1::VariableSpecification> variableSpecification_;
-        boost::shared_ptr<ISO_9506_MMS_1::AlternateAccess> alternateAccess_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DefineScatteredAccess-Request
@@ -332,15 +280,10 @@ namespace ISO_9506_MMS_1A {
         DefineScatteredAccess_Request(const ISO_9506_MMS_1::ObjectName& arg__scatteredAccessName,
                 const ScatteredAccessDescription& arg__scatteredAccessDescription);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(scatteredAccessName, ISO_9506_MMS_1::ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(scatteredAccessDescription, ScatteredAccessDescription);
+        ITU_T_HOLDERH_DECL(scatteredAccessName, ISO_9506_MMS_1::ObjectName);
+        ITU_T_HOLDERH_DECL(scatteredAccessDescription, ScatteredAccessDescription);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::ObjectName> scatteredAccessName_;
-        value_holder<ScatteredAccessDescription> scatteredAccessDescription_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetScatteredAccessAttributes-Response
@@ -356,17 +299,11 @@ namespace ISO_9506_MMS_1A {
                 boost::shared_ptr< ScatteredAccessDescription> arg__scatteredAccessDescription,
                 boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__accessControlList);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(scatteredAccessDescription, ScatteredAccessDescription);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, ISO_9506_MMS_1::Identifier);
+        ITU_T_HOLDERH_DECL(mmsDeletable, bool);
+        ITU_T_HOLDERH_DECL(scatteredAccessDescription, ScatteredAccessDescription);
+        ITU_T_OPTIONAL_DECL(accessControlList, ISO_9506_MMS_1::Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<bool> mmsDeletable_;
-        value_holder<ScatteredAccessDescription> scatteredAccessDescription_;
-        boost::shared_ptr<ISO_9506_MMS_1::Identifier> accessControlList_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     template<> void ObtainFile_Request::serialize(boost::asn1::x690::output_coder& arch);

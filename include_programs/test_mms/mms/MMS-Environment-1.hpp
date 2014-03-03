@@ -68,19 +68,12 @@ namespace MMS_Environment_1 {
                 boost::shared_ptr< ACSE_1::AE_qualifier> arg__ae_qualifier,
                 boost::shared_ptr< ACSE_1::AE_invocation_identifier> arg__ae_invocation_id);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(ap_title, ACSE_1::AP_title);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(ap_invocation_id, ACSE_1::AP_invocation_identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(ae_qualifier, ACSE_1::AE_qualifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(ae_invocation_id, ACSE_1::AE_invocation_identifier);
+        ITU_T_OPTIONAL_DECL(ap_title, ACSE_1::AP_title);
+        ITU_T_OPTIONAL_DECL(ap_invocation_id, ACSE_1::AP_invocation_identifier);
+        ITU_T_OPTIONAL_DECL(ae_qualifier, ACSE_1::AE_qualifier);
+        ITU_T_OPTIONAL_DECL(ae_invocation_id, ACSE_1::AE_invocation_identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<ACSE_1::AP_title> ap_title_;
-        boost::shared_ptr<ACSE_1::AP_invocation_identifier> ap_invocation_id_;
-        boost::shared_ptr<ACSE_1::AE_qualifier> ae_qualifier_;
-        boost::shared_ptr<ACSE_1::AE_invocation_identifier> ae_invocation_id_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     template<> void ApplicationReference::serialize(boost::asn1::x690::output_coder& arch);

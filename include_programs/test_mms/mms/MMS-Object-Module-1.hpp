@@ -70,8 +70,8 @@ namespace MMS_Object_Module_1 {
     typedef bitstring_type Transitions;
     typedef int EE_Duration;
     typedef int AlarmAckRule;
-    BOOST_ASN_IMPLICIT_TYPEDEF(LogicalStatus, int, 0, CONTEXT_CLASS);
-    BOOST_ASN_IMPLICIT_TYPEDEF(PhysicalStatus, int, 1, CONTEXT_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(LogicalStatus, int, 0, CONTEXT_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(PhysicalStatus, int, 1, CONTEXT_CLASS);
 
     extern const Priority normalPriority;
     extern const Severity normalSeverity;
@@ -141,15 +141,10 @@ namespace MMS_Object_Module_1 {
         ModifierStep(const int& arg__modifierID,
                 const Modifier& arg__modifier);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(modifierID, int);
-        BOOST_ASN_VALUE_HOLDERH_DECL(modifier, Modifier);
+        ITU_T_HOLDERH_DECL(modifierID, int);
+        ITU_T_HOLDERH_DECL(modifier, Modifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<int> modifierID_;
-        value_holder<Modifier> modifier_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice Modifier
@@ -161,19 +156,19 @@ namespace MMS_Object_Module_1 {
         Modifier_semaphoreModifier,
     };
 
-    struct Modifier : public BOOST_ASN_CHOICE_STRUCT(Modifier_enum) {
+    struct Modifier : public ITU_T_STRUCT(Modifier_enum) {
 
-        Modifier() : BOOST_ASN_CHOICE_STRUCT(Modifier_enum) () {
+        Modifier() : ITU_T_STRUCT(Modifier_enum) () {
         }
 
         template<typename T > Modifier(boost::shared_ptr< T> vl, Modifier_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Modifier_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(Modifier_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(eventModifier, ISO_9506_MMS_1::AttachToEventCondition, Modifier_eventModifier);
-        BOOST_ASN_VALUE_CHOICE(semaphoreModifier, ISO_9506_MMS_1::AttachToSemaphore, Modifier_semaphoreModifier);
+        ITU_T_CHOICE_DECL(eventModifier, ISO_9506_MMS_1::AttachToEventCondition, Modifier_eventModifier);
+        ITU_T_CHOICE_DECL(semaphoreModifier, ISO_9506_MMS_1::AttachToSemaphore, Modifier_semaphoreModifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const ServiceSupportOptions ServiceSupportOptions_status;
@@ -328,7 +323,7 @@ namespace MMS_Object_Module_1 {
         AccessCondition_alternate,
     };
 
-    struct AccessCondition : public BOOST_ASN_CHOICE_STRUCT(AccessCondition_enum) {
+    struct AccessCondition : public ITU_T_STRUCT(AccessCondition_enum) {
 
 
         struct user_type;
@@ -340,19 +335,19 @@ namespace MMS_Object_Module_1 {
             user_type_none,
         };
 
-        struct user_type : public BOOST_ASN_CHOICE_STRUCT(user_type_enum) {
+        struct user_type : public ITU_T_STRUCT(user_type_enum) {
 
-            user_type() : BOOST_ASN_CHOICE_STRUCT(user_type_enum) () {
+            user_type() : ITU_T_STRUCT(user_type_enum) () {
             }
 
             template<typename T > user_type(boost::shared_ptr< T> vl, user_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(user_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(user_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(association, MMS_Environment_1::ApplicationReference, user_type_association);
-            BOOST_ASN_VALUE_CHOICE(none, null_type, user_type_none);
+            ITU_T_CHOICE_DECL(association, MMS_Environment_1::ApplicationReference, user_type_association);
+            ITU_T_CHOICE_DECL(none, null_type, user_type_none);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -360,21 +355,21 @@ namespace MMS_Object_Module_1 {
         typedef std::vector< AccessCondition > joint_type;
         typedef std::vector< AccessCondition > alternate_type;
 
-        AccessCondition() : BOOST_ASN_CHOICE_STRUCT(AccessCondition_enum) () {
+        AccessCondition() : ITU_T_STRUCT(AccessCondition_enum) () {
         }
 
         template<typename T > AccessCondition(boost::shared_ptr< T> vl, AccessCondition_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(AccessCondition_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(AccessCondition_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(never, null_type, AccessCondition_never);
-        BOOST_ASN_VALUE_CHOICE(semaphore, ISO_9506_MMS_1::Identifier, AccessCondition_semaphore);
-        BOOST_ASN_VALUE_CHOICE(user, user_type, AccessCondition_user);
-        BOOST_ASN_VALUE_CHOICE(password, ACSE_1::Authentication_value, AccessCondition_password);
-        BOOST_ASN_VALUE_CHOICE(joint, joint_type, AccessCondition_joint);
-        BOOST_ASN_VALUE_CHOICE(alternate, alternate_type, AccessCondition_alternate);
+        ITU_T_CHOICE_DECL(never, null_type, AccessCondition_never);
+        ITU_T_CHOICE_DECL(semaphore, ISO_9506_MMS_1::Identifier, AccessCondition_semaphore);
+        ITU_T_CHOICE_DECL(user, user_type, AccessCondition_user);
+        ITU_T_CHOICE_DECL(password, ACSE_1::Authentication_value, AccessCondition_password);
+        ITU_T_CHOICE_DECL(joint, joint_type, AccessCondition_joint);
+        ITU_T_CHOICE_DECL(alternate, alternate_type, AccessCondition_alternate);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const DomainState DomainState_non_existent;
@@ -429,20 +424,20 @@ namespace MMS_Object_Module_1 {
         Address_unconstrainedAddress,
     };
 
-    struct Address : public BOOST_ASN_CHOICE_STRUCT(Address_enum) {
+    struct Address : public ITU_T_STRUCT(Address_enum) {
 
-        Address() : BOOST_ASN_CHOICE_STRUCT(Address_enum) () {
+        Address() : ITU_T_STRUCT(Address_enum) () {
         }
 
         template<typename T > Address(boost::shared_ptr< T> vl, Address_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Address_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(Address_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(numericAddress, ISO_9506_MMS_1::Unsigned32, Address_numericAddress);
-        BOOST_ASN_VALUE_CHOICE(symbolicAddress, ISO_9506_MMS_1::MMSString, Address_symbolicAddress);
-        BOOST_ASN_VALUE_CHOICE(unconstrainedAddress, octetstring_type, Address_unconstrainedAddress);
+        ITU_T_CHOICE_DECL(numericAddress, ISO_9506_MMS_1::Unsigned32, Address_numericAddress);
+        ITU_T_CHOICE_DECL(symbolicAddress, ISO_9506_MMS_1::MMSString, Address_symbolicAddress);
+        ITU_T_CHOICE_DECL(unconstrainedAddress, octetstring_type, Address_unconstrainedAddress);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice TypeDescription
@@ -466,7 +461,7 @@ namespace MMS_Object_Module_1 {
         TypeDescription_mMSString,
     };
 
-    struct TypeDescription : public BOOST_ASN_CHOICE_STRUCT(TypeDescription_enum) {
+    struct TypeDescription : public ITU_T_STRUCT(TypeDescription_enum) {
 
 
         struct array_type;
@@ -486,17 +481,11 @@ namespace MMS_Object_Module_1 {
                     boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__numberOfElements,
                     boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__elementType);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(packed, bool);
-            BOOST_ASN_VALUE_HOLDERH_DECL(numberOfElements, ISO_9506_MMS_1::Unsigned32);
-            BOOST_ASN_VALUE_HOLDERH_DECL(elementType, ISO_9506_MMS_1::TypeSpecification);
+            ITU_T_DEFAULTH_DECL(packed, bool, packed__default);
+            ITU_T_HOLDERH_DECL(numberOfElements, ISO_9506_MMS_1::Unsigned32);
+            ITU_T_HOLDERH_DECL(elementType, ISO_9506_MMS_1::TypeSpecification);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            default_holder<bool, packed__default> packed_;
-            value_holder<ISO_9506_MMS_1::Unsigned32> numberOfElements_;
-            value_holder<ISO_9506_MMS_1::TypeSpecification> elementType_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct structure_type {
@@ -512,15 +501,10 @@ namespace MMS_Object_Module_1 {
                 components_type_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
                         boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__componentType);
 
-                BOOST_ASN_VALUE_OPTIONAL_DECL(componentName, ISO_9506_MMS_1::Identifier);
-                BOOST_ASN_VALUE_HOLDERH_DECL(componentType, ISO_9506_MMS_1::TypeSpecification);
+                ITU_T_OPTIONAL_DECL(componentName, ISO_9506_MMS_1::Identifier);
+                ITU_T_HOLDERH_DECL(componentType, ISO_9506_MMS_1::TypeSpecification);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                boost::shared_ptr<ISO_9506_MMS_1::Identifier> componentName_;
-                value_holder<ISO_9506_MMS_1::TypeSpecification> componentType_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
 
@@ -536,15 +520,10 @@ namespace MMS_Object_Module_1 {
             structure_type(boost::shared_ptr< bool> arg__packed,
                     boost::shared_ptr< components_type> arg__components);
 
-            BOOST_ASN_VALUE_DEFAULT_DECL(packed, bool);
-            BOOST_ASN_VALUE_HOLDERH_DECL(components, components_type);
+            ITU_T_DEFAULTH_DECL(packed, bool, packed__default);
+            ITU_T_HOLDERH_DECL(components, components_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            default_holder<bool, packed__default> packed_;
-            value_holder<components_type> components_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct floating_point_type {
@@ -554,40 +533,35 @@ namespace MMS_Object_Module_1 {
             floating_point_type(const ISO_9506_MMS_1::Unsigned8& arg__format_width,
                     const ISO_9506_MMS_1::Unsigned8& arg__exponent_width);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(format_width, ISO_9506_MMS_1::Unsigned8);
-            BOOST_ASN_VALUE_HOLDERH_DECL(exponent_width, ISO_9506_MMS_1::Unsigned8);
+            ITU_T_HOLDERH_DECL(format_width, ISO_9506_MMS_1::Unsigned8);
+            ITU_T_HOLDERH_DECL(exponent_width, ISO_9506_MMS_1::Unsigned8);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<ISO_9506_MMS_1::Unsigned8> format_width_;
-            value_holder<ISO_9506_MMS_1::Unsigned8> exponent_width_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        TypeDescription() : BOOST_ASN_CHOICE_STRUCT(TypeDescription_enum) () {
+        TypeDescription() : ITU_T_STRUCT(TypeDescription_enum) () {
         }
 
         template<typename T > TypeDescription(boost::shared_ptr< T> vl, TypeDescription_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(TypeDescription_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(TypeDescription_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(array, array_type, TypeDescription_array);
-        BOOST_ASN_VALUE_CHOICE(structure, structure_type, TypeDescription_structure);
-        BOOST_ASN_VALUE_CHOICE(boolean, null_type, TypeDescription_boolean);
-        BOOST_ASN_VALUE_CHOICE(bit_string, ISO_9506_MMS_1::Integer32, TypeDescription_bit_string);
-        BOOST_ASN_VALUE_CHOICE(integer, ISO_9506_MMS_1::Unsigned8, TypeDescription_integer);
-        BOOST_ASN_VALUE_CHOICE(unsignedV, ISO_9506_MMS_1::Unsigned8, TypeDescription_unsignedV);
-        BOOST_ASN_VALUE_CHOICE(floating_point, floating_point_type, TypeDescription_floating_point);
-        BOOST_ASN_VALUE_CHOICE(octet_string, ISO_9506_MMS_1::Integer32, TypeDescription_octet_string);
-        BOOST_ASN_VALUE_CHOICE(visible_string, ISO_9506_MMS_1::Integer32, TypeDescription_visible_string);
-        BOOST_ASN_VALUE_CHOICE(generalized_time, null_type, TypeDescription_generalized_time);
-        BOOST_ASN_VALUE_CHOICE(binary_time, bool, TypeDescription_binary_time);
-        BOOST_ASN_VALUE_CHOICE(bcd, ISO_9506_MMS_1::Unsigned8, TypeDescription_bcd);
-        BOOST_ASN_VALUE_CHOICE(objId, null_type, TypeDescription_objId);
-        BOOST_ASN_VALUE_CHOICE(mMSString, ISO_9506_MMS_1::Integer32, TypeDescription_mMSString);
+        ITU_T_CHOICE_DECL(array, array_type, TypeDescription_array);
+        ITU_T_CHOICE_DECL(structure, structure_type, TypeDescription_structure);
+        ITU_T_CHOICE_DECL(boolean, null_type, TypeDescription_boolean);
+        ITU_T_CHOICE_DECL(bit_string, ISO_9506_MMS_1::Integer32, TypeDescription_bit_string);
+        ITU_T_CHOICE_DECL(integer, ISO_9506_MMS_1::Unsigned8, TypeDescription_integer);
+        ITU_T_CHOICE_DECL(unsignedV, ISO_9506_MMS_1::Unsigned8, TypeDescription_unsignedV);
+        ITU_T_CHOICE_DECL(floating_point, floating_point_type, TypeDescription_floating_point);
+        ITU_T_CHOICE_DECL(octet_string, ISO_9506_MMS_1::Integer32, TypeDescription_octet_string);
+        ITU_T_CHOICE_DECL(visible_string, ISO_9506_MMS_1::Integer32, TypeDescription_visible_string);
+        ITU_T_CHOICE_DECL(generalized_time, null_type, TypeDescription_generalized_time);
+        ITU_T_CHOICE_DECL(binary_time, bool, TypeDescription_binary_time);
+        ITU_T_CHOICE_DECL(bcd, ISO_9506_MMS_1::Unsigned8, TypeDescription_bcd);
+        ITU_T_CHOICE_DECL(objId, null_type, TypeDescription_objId);
+        ITU_T_CHOICE_DECL(mMSString, ISO_9506_MMS_1::Integer32, TypeDescription_mMSString);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const EC_Class EC_Class_network_triggered;
@@ -607,20 +581,20 @@ namespace MMS_Object_Module_1 {
         EventTime_undefined,
     };
 
-    struct EventTime : public BOOST_ASN_CHOICE_STRUCT(EventTime_enum) {
+    struct EventTime : public ITU_T_STRUCT(EventTime_enum) {
 
-        EventTime() : BOOST_ASN_CHOICE_STRUCT(EventTime_enum) () {
+        EventTime() : ITU_T_STRUCT(EventTime_enum) () {
         }
 
         template<typename T > EventTime(boost::shared_ptr< T> vl, EventTime_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(EventTime_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(EventTime_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(timeOfDay, ISO_9506_MMS_1::TimeOfDay, EventTime_timeOfDay);
-        BOOST_ASN_VALUE_CHOICE(timeSequenceIdentifier, ISO_9506_MMS_1::Unsigned32, EventTime_timeSequenceIdentifier);
-        BOOST_ASN_VALUE_CHOICE(undefined, null_type, EventTime_undefined);
+        ITU_T_CHOICE_DECL(timeOfDay, ISO_9506_MMS_1::TimeOfDay, EventTime_timeOfDay);
+        ITU_T_CHOICE_DECL(timeSequenceIdentifier, ISO_9506_MMS_1::Unsigned32, EventTime_timeSequenceIdentifier);
+        ITU_T_CHOICE_DECL(undefined, null_type, EventTime_undefined);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const EE_Class EE_Class_modifier;
@@ -651,15 +625,10 @@ namespace MMS_Object_Module_1 {
         Journal_Variable(const ISO_9506_MMS_1::MMS255String& arg__variableTag,
                 const ISO_9506_MMS_1::Data& arg__valueSpecification);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(variableTag, ISO_9506_MMS_1::MMS255String);
-        BOOST_ASN_VALUE_HOLDERH_DECL(valueSpecification, ISO_9506_MMS_1::Data);
+        ITU_T_HOLDERH_DECL(variableTag, ISO_9506_MMS_1::MMS255String);
+        ITU_T_HOLDERH_DECL(valueSpecification, ISO_9506_MMS_1::Data);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::MMS255String> variableTag_;
-        value_holder<ISO_9506_MMS_1::Data> valueSpecification_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     template<> void ModifierStep::serialize(boost::asn1::x690::output_coder& arch);
@@ -688,12 +657,12 @@ namespace MMS_Object_Module_1 {
     template<> void Journal_Variable::serialize(boost::asn1::x690::input_coder& arch);
 }
 
-BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::Modifier)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::AccessCondition)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::AccessCondition::user_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::Address)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::TypeDescription)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_Object_Module_1::EventTime)
+ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::Modifier)
+ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::AccessCondition)
+ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::AccessCondition::user_type)
+ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::Address)
+ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::TypeDescription)
+ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::EventTime)
 
 #endif  /*___MMS_OBJECT_MODULE_1 */
 

@@ -22,15 +22,15 @@ namespace ISO_9506_MMS_1A {
     };
 
     template<> void ObtainFile_Request::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(sourceFileServer_, 0);
-        BOOST_ASN_IMPLICIT_TAG(sourceFile_, 1);
-        BOOST_ASN_IMPLICIT_TAG(destinationFile_, 2);
+        ITU_T_IMPLICIT_TAG(sourceFileServer_, 0);
+        ITU_T_IMPLICIT_TAG(sourceFile_, 1);
+        ITU_T_IMPLICIT_TAG(destinationFile_, 2);
     }
 
     template<> void ObtainFile_Request::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(sourceFileServer_, 0);
-        BOOST_ASN_IMPLICIT_TAG(sourceFile_, 1);
-        BOOST_ASN_IMPLICIT_TAG(destinationFile_, 2);
+        ITU_T_IMPLICIT_TAG(sourceFileServer_, 0);
+        ITU_T_IMPLICIT_TAG(sourceFile_, 1);
+        ITU_T_IMPLICIT_TAG(destinationFile_, 2);
     }
 
     boost::shared_ptr<MMS_Environment_1::ApplicationReference> ObtainFile_Request::sourceFileServer__new() {
@@ -89,13 +89,13 @@ namespace ISO_9506_MMS_1A {
     };
 
     template<> void FileOpen_Request::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(fileName_, 0);
-        BOOST_ASN_IMPLICIT_TAG(initialPosition_, 1);
+        ITU_T_IMPLICIT_TAG(fileName_, 0);
+        ITU_T_IMPLICIT_TAG(initialPosition_, 1);
     }
 
     template<> void FileOpen_Request::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(fileName_, 0);
-        BOOST_ASN_IMPLICIT_TAG(initialPosition_, 1);
+        ITU_T_IMPLICIT_TAG(fileName_, 0);
+        ITU_T_IMPLICIT_TAG(initialPosition_, 1);
     }
 
     ISO_9506_MMS_1::FileName& FileOpen_Request::fileName() {
@@ -143,13 +143,13 @@ namespace ISO_9506_MMS_1A {
     };
 
     template<> void FileOpen_Response::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(frsmID_, 0);
-        BOOST_ASN_IMPLICIT_TAG(fileAttributes_, 1);
+        ITU_T_IMPLICIT_TAG(frsmID_, 0);
+        ITU_T_IMPLICIT_TAG(fileAttributes_, 1);
     }
 
     template<> void FileOpen_Response::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(frsmID_, 0);
-        BOOST_ASN_IMPLICIT_TAG(fileAttributes_, 1);
+        ITU_T_IMPLICIT_TAG(frsmID_, 0);
+        ITU_T_IMPLICIT_TAG(fileAttributes_, 1);
     }
 
     ISO_9506_MMS_1::Integer32& FileOpen_Response::frsmID() {
@@ -203,13 +203,13 @@ namespace ISO_9506_MMS_1A {
     const bool FileRead_Response::moreFollows__default = true;
 
     template<> void FileRead_Response::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(fileData_, 0);
-        BOOST_ASN_IMPLICIT_TAG(moreFollows_, 1);
+        ITU_T_IMPLICIT_TAG(fileData_, 0);
+        ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
     template<> void FileRead_Response::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(fileData_, 0);
-        BOOST_ASN_IMPLICIT_TAG(moreFollows_, 1);
+        ITU_T_IMPLICIT_TAG(fileData_, 0);
+        ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
     octetstring_type& FileRead_Response::fileData() {
@@ -253,13 +253,13 @@ namespace ISO_9506_MMS_1A {
     };
 
     template<> void FileRename_Request::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(currentFileName_, 0);
-        BOOST_ASN_IMPLICIT_TAG(newFileName_, 1);
+        ITU_T_IMPLICIT_TAG(currentFileName_, 0);
+        ITU_T_IMPLICIT_TAG(newFileName_, 1);
     }
 
     template<> void FileRename_Request::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(currentFileName_, 0);
-        BOOST_ASN_IMPLICIT_TAG(newFileName_, 1);
+        ITU_T_IMPLICIT_TAG(currentFileName_, 0);
+        ITU_T_IMPLICIT_TAG(newFileName_, 1);
     }
 
     ISO_9506_MMS_1::FileName& FileRename_Request::currentFileName() {
@@ -310,13 +310,13 @@ namespace ISO_9506_MMS_1A {
     };
 
     template<> void FileDirectory_Request::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(fileSpecification_, 0);
-        BOOST_ASN_IMPLICIT_TAG(continueAfter_, 1);
+        ITU_T_IMPLICIT_TAG(fileSpecification_, 0);
+        ITU_T_IMPLICIT_TAG(continueAfter_, 1);
     }
 
     template<> void FileDirectory_Request::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(fileSpecification_, 0);
-        BOOST_ASN_IMPLICIT_TAG(continueAfter_, 1);
+        ITU_T_IMPLICIT_TAG(fileSpecification_, 0);
+        ITU_T_IMPLICIT_TAG(continueAfter_, 1);
     }
 
     boost::shared_ptr<ISO_9506_MMS_1::FileName> FileDirectory_Request::fileSpecification__new() {
@@ -354,13 +354,13 @@ namespace ISO_9506_MMS_1A {
     const bool FileDirectory_Response::moreFollows__default = false;
 
     template<> void FileDirectory_Response::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_EXPLICIT_TAG(listOfDirectoryEntry_, 0);
-        BOOST_ASN_IMPLICIT_TAG(moreFollows_, 1);
+        ITU_T_EXPLICIT_TAG(listOfDirectoryEntry_, 0);
+        ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
     template<> void FileDirectory_Response::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_EXPLICIT_TAG(listOfDirectoryEntry_, 0);
-        BOOST_ASN_IMPLICIT_TAG(moreFollows_, 1);
+        ITU_T_EXPLICIT_TAG(listOfDirectoryEntry_, 0);
+        ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
     FileDirectory_Response::listOfDirectoryEntry_type& FileDirectory_Response::listOfDirectoryEntry() {
@@ -404,13 +404,13 @@ namespace ISO_9506_MMS_1A {
     };
 
     template<> void DirectoryEntry::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(fileName_, 0);
-        BOOST_ASN_IMPLICIT_TAG(fileAttributes_, 1);
+        ITU_T_IMPLICIT_TAG(fileName_, 0);
+        ITU_T_IMPLICIT_TAG(fileAttributes_, 1);
     }
 
     template<> void DirectoryEntry::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(fileName_, 0);
-        BOOST_ASN_IMPLICIT_TAG(fileAttributes_, 1);
+        ITU_T_IMPLICIT_TAG(fileName_, 0);
+        ITU_T_IMPLICIT_TAG(fileAttributes_, 1);
     }
 
     ISO_9506_MMS_1::FileName& DirectoryEntry::fileName() {
@@ -462,13 +462,13 @@ namespace ISO_9506_MMS_1A {
     };
 
     template<> void FileAttributes::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(sizeOfFile_, 0);
-        BOOST_ASN_IMPLICIT_TAG(lastModified_, 1);
+        ITU_T_IMPLICIT_TAG(sizeOfFile_, 0);
+        ITU_T_IMPLICIT_TAG(lastModified_, 1);
     }
 
     template<> void FileAttributes::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(sizeOfFile_, 0);
-        BOOST_ASN_IMPLICIT_TAG(lastModified_, 1);
+        ITU_T_IMPLICIT_TAG(sizeOfFile_, 0);
+        ITU_T_IMPLICIT_TAG(lastModified_, 1);
     }
 
     ISO_9506_MMS_1::Unsigned32& FileAttributes::sizeOfFile() {
@@ -511,15 +511,15 @@ namespace ISO_9506_MMS_1A {
     };
 
     template<> void ScatteredAccessDescription_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(componentName_, 0);
-        BOOST_ASN_CHOICE_TAG(variableSpecification_, 1);
-        BOOST_ASN_IMPLICIT_TAG(alternateAccess_, 2);
+        ITU_T_IMPLICIT_TAG(componentName_, 0);
+        ITU_T_CHOICE_TAG(variableSpecification_, 1);
+        ITU_T_IMPLICIT_TAG(alternateAccess_, 2);
     }
 
     template<> void ScatteredAccessDescription_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(componentName_, 0);
-        BOOST_ASN_CHOICE_TAG(variableSpecification_, 1);
-        BOOST_ASN_IMPLICIT_TAG(alternateAccess_, 2);
+        ITU_T_IMPLICIT_TAG(componentName_, 0);
+        ITU_T_CHOICE_TAG(variableSpecification_, 1);
+        ITU_T_IMPLICIT_TAG(alternateAccess_, 2);
     }
 
     boost::shared_ptr<ISO_9506_MMS_1::Identifier> ScatteredAccessDescription_sequence_of::componentName__new() {
@@ -567,13 +567,13 @@ namespace ISO_9506_MMS_1A {
     };
 
     template<> void DefineScatteredAccess_Request::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_CHOICE_TAG(scatteredAccessName_, 0);
-        BOOST_ASN_IMPLICIT_TAG(scatteredAccessDescription_, 1);
+        ITU_T_CHOICE_TAG(scatteredAccessName_, 0);
+        ITU_T_IMPLICIT_TAG(scatteredAccessDescription_, 1);
     }
 
     template<> void DefineScatteredAccess_Request::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_CHOICE_TAG(scatteredAccessName_, 0);
-        BOOST_ASN_IMPLICIT_TAG(scatteredAccessDescription_, 1);
+        ITU_T_CHOICE_TAG(scatteredAccessName_, 0);
+        ITU_T_IMPLICIT_TAG(scatteredAccessDescription_, 1);
     }
 
     ISO_9506_MMS_1::ObjectName& DefineScatteredAccess_Request::scatteredAccessName() {
@@ -629,15 +629,15 @@ namespace ISO_9506_MMS_1A {
     };
 
     template<> void GetScatteredAccessAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(mmsDeletable_, 0);
-        BOOST_ASN_IMPLICIT_TAG(scatteredAccessDescription_, 1);
-        BOOST_ASN_IMPLICIT_TAG(accessControlList_, 2);
+        ITU_T_IMPLICIT_TAG(mmsDeletable_, 0);
+        ITU_T_IMPLICIT_TAG(scatteredAccessDescription_, 1);
+        ITU_T_IMPLICIT_TAG(accessControlList_, 2);
     }
 
     template<> void GetScatteredAccessAttributes_Response::serialize(boost::asn1::x690::input_coder& arch) {
-        BOOST_ASN_IMPLICIT_TAG(mmsDeletable_, 0);
-        BOOST_ASN_IMPLICIT_TAG(scatteredAccessDescription_, 1);
-        BOOST_ASN_IMPLICIT_TAG(accessControlList_, 2);
+        ITU_T_IMPLICIT_TAG(mmsDeletable_, 0);
+        ITU_T_IMPLICIT_TAG(scatteredAccessDescription_, 1);
+        ITU_T_IMPLICIT_TAG(accessControlList_, 2);
     }
 
     bool& GetScatteredAccessAttributes_Response::mmsDeletable() {

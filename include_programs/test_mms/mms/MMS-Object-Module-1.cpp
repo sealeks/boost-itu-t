@@ -19,86 +19,134 @@ namespace MMS_Object_Module_1 {
     const VMDState VMDState_motion_paused = 4;
     const VMDState VMDState_manualInterventionRequired = 5;
 
-        // sequence ModifierStep
+    // sequence ModifierStep
 
-    ModifierStep::ModifierStep() : modifierID_(), modifier_() {}; 
- 
-    ModifierStep::ModifierStep(const int&  arg__modifierID,
-        const Modifier&  arg__modifier) : 
-        modifierID_(arg__modifierID),
-        modifier_(arg__modifier) {}; 
- 
+    ModifierStep::ModifierStep() : modifierID_(), modifier_() {
+    };
 
-        template<> void ModifierStep::serialize(boost::asn1::x690::output_coder& arch){
-            BOOST_ASN_BIND_TAG(modifierID_);
-            BOOST_ASN_CHOICE(modifier_);
-        }
+    ModifierStep::ModifierStep(const int& arg__modifierID,
+            const Modifier& arg__modifier) :
+    modifierID_(arg__modifierID),
+    modifier_(arg__modifier) {
+    };
 
-        template<> void ModifierStep::serialize(boost::asn1::x690::input_coder& arch){
-            BOOST_ASN_BIND_TAG(modifierID_);
-            BOOST_ASN_CHOICE(modifier_);
-        }
+    template<> void ModifierStep::serialize(boost::asn1::x690::output_coder& arch) {
+        ITU_T_BIND_TAG(modifierID_);
+        ITU_T_BIND_CHOICE(modifier_);
+    }
+
+    template<> void ModifierStep::serialize(boost::asn1::x690::input_coder& arch) {
+        ITU_T_BIND_TAG(modifierID_);
+        ITU_T_BIND_CHOICE(modifier_);
+    }
+
+    int& ModifierStep::modifierID() {
+        return *modifierID_;
+    }
+
+    const int& ModifierStep::modifierID() const {
+        return *modifierID_;
+    }
+
+    void ModifierStep::modifierID(const int& vl) {
+        modifierID_ = vl;
+    }
+
+    void ModifierStep::modifierID(boost::shared_ptr< int> vl) {
+        modifierID_ = vl;
+    }
+
+    Modifier& ModifierStep::modifier() {
+        return *modifier_;
+    }
+
+    const Modifier& ModifierStep::modifier() const {
+        return *modifier_;
+    }
+
+    void ModifierStep::modifier(const Modifier& vl) {
+        modifier_ = vl;
+    }
+
+    void ModifierStep::modifier(boost::shared_ptr< Modifier> vl) {
+        modifier_ = vl;
+    }
 
 
-        int& ModifierStep::modifierID(){ return *modifierID_ ;}
+    // choice Modifier
 
-        const int& ModifierStep::modifierID() const { return *modifierID_ ;}
-
-        void ModifierStep::modifierID( const int& vl){ modifierID_ =vl ;}
-
-        void ModifierStep::modifierID( boost::shared_ptr< int>  vl){ modifierID_ =vl ;}
-
-
-        Modifier& ModifierStep::modifier(){ return *modifier_ ;}
-
-        const Modifier& ModifierStep::modifier() const { return *modifier_ ;}
-
-        void ModifierStep::modifier( const Modifier& vl){ modifier_ =vl ;}
-
-        void ModifierStep::modifier( boost::shared_ptr< Modifier>  vl){ modifier_ =vl ;}
-
- 
-        // choice Modifier
-
-        template<> void Modifier::serialize(boost::asn1::x690::output_coder& arch){
-            switch(type()){
-                case Modifier_eventModifier:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::AttachToEventCondition > (false , Modifier_eventModifier), 0); break; }
-                case Modifier_semaphoreModifier:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::AttachToSemaphore > (false , Modifier_semaphoreModifier), 1); break; }
-                default:{}
+    template<> void Modifier::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case Modifier_eventModifier:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::AttachToEventCondition > (false, Modifier_eventModifier), 0);
+                break;
+            }
+            case Modifier_semaphoreModifier:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::AttachToSemaphore > (false, Modifier_semaphoreModifier), 1);
+                break;
+            }
+            default:
+            {
             }
         }
+    }
 
-        template<> void Modifier::serialize(boost::asn1::x690::input_coder& arch){
-            int __tag_id__ =arch.test_id();
-            switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void Modifier::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
-                }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                case 0x80: {
-                    switch(__tag_id__){
-                        case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::AttachToEventCondition > (true , Modifier_eventModifier), 0)) return; else free(); break;}
-                        case 1:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::AttachToSemaphore > (true , Modifier_semaphoreModifier), 1)) return; else free(); break;}
-                    default:{}
-                    }
-                }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                default: {
                 }
             }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    case 0:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::AttachToEventCondition > (true, Modifier_eventModifier), 0)) return;
+                        else free();
+                        break;
+                    }
+                    case 1:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::AttachToSemaphore > (true, Modifier_semaphoreModifier), 1)) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+            }
         }
+    }
 
- 
+
     const ServiceSupportOptions ServiceSupportOptions_status = bitstring_type(true, 0);
     const ServiceSupportOptions ServiceSupportOptions_getNameList = bitstring_type(true, 1);
     const ServiceSupportOptions ServiceSupportOptions_identify = bitstring_type(true, 2);
@@ -238,96 +286,187 @@ namespace MMS_Object_Module_1 {
     const AdditionalCBBOptions AdditionalCBBOptions_dei = bitstring_type(true, 1);
     const AdditionalCBBOptions AdditionalCBBOptions_recl = bitstring_type(true, 2);
 
-        // choice AccessCondition
+    // choice AccessCondition
 
-
-        template<> void AccessCondition::user_type::serialize(boost::asn1::x690::output_coder& arch){
-            switch(type()){
-                case user_type_association:  {BOOST_ASN_BIND_TAG(value<MMS_Environment_1::ApplicationReference > (false , user_type_association)); break; }
-                case user_type_none:  {BOOST_ASN_BIND_TAG(value<null_type > (false , user_type_none)); break; }
-                default:{}
+    template<> void AccessCondition::user_type::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case user_type_association:
+            {
+                ITU_T_BIND_TAG(value<MMS_Environment_1::ApplicationReference > (false, user_type_association));
+                break;
+            }
+            case user_type_none:
+            {
+                ITU_T_BIND_TAG(value<null_type > (false, user_type_none));
+                break;
+            }
+            default:
+            {
             }
         }
+    }
 
-        template<> void AccessCondition::user_type::serialize(boost::asn1::x690::input_coder& arch){
-            int __tag_id__ =arch.test_id();
-            switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void AccessCondition::user_type::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
-                }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                case 0x80: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                default: {
-                         if (BOOST_ASN_BIND_TAG(value<MMS_Environment_1::ApplicationReference > (true , user_type_association))) return; else free();
-                         if (BOOST_ASN_BIND_TAG(value<null_type > (true , user_type_none))) return; else free();
                 }
             }
-        }
-
- 
-
-        template<> void AccessCondition::serialize(boost::asn1::x690::output_coder& arch){
-            switch(type()){
-                case AccessCondition_never:  {BOOST_ASN_IMPLICIT_TAG(value<null_type > (false , AccessCondition_never), 0); break; }
-                case AccessCondition_semaphore:  {BOOST_ASN_EXPLICIT_TAG(value<ISO_9506_MMS_1::Identifier > (false , AccessCondition_semaphore), 1); break; }
-                case AccessCondition_user:  {BOOST_ASN_CHOICE_TAG(value<user_type > (false , AccessCondition_user), 2); break; }
-                case AccessCondition_password:  {BOOST_ASN_CHOICE_TAG(value<ACSE_1::Authentication_value > (false , AccessCondition_password), 3); break; }
-                case AccessCondition_joint:  {BOOST_ASN_IMPLICIT_TAG(value<joint_type > (false , AccessCondition_joint), 4); break; }
-                case AccessCondition_alternate:  {BOOST_ASN_IMPLICIT_TAG(value<alternate_type > (false , AccessCondition_alternate), 5); break; }
-                default:{}
-            }
-        }
-
-        template<> void AccessCondition::serialize(boost::asn1::x690::input_coder& arch){
-            int __tag_id__ =arch.test_id();
-            switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
-                }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                case 0x80: {
-                    switch(__tag_id__){
-                        case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<null_type > (true , AccessCondition_never), 0)) return; else free(); break;}
-                        case 1:  { if (BOOST_ASN_EXPLICIT_TAG(value<ISO_9506_MMS_1::Identifier > (true , AccessCondition_semaphore), 1)) return; else free(); break;}
-                        case 2:  { if (BOOST_ASN_CHOICE_TAG(value<user_type > (true , AccessCondition_user), 2)) return; else free(); break;}
-                        case 3:  { if (BOOST_ASN_CHOICE_TAG(value<ACSE_1::Authentication_value > (true , AccessCondition_password), 3)) return; else free(); break;}
-                        case 4:  { if (BOOST_ASN_IMPLICIT_TAG(value<joint_type > (true , AccessCondition_joint), 4)) return; else free(); break;}
-                        case 5:  { if (BOOST_ASN_IMPLICIT_TAG(value<alternate_type > (true , AccessCondition_alternate), 5)) return; else free(); break;}
-                    default:{}
-                    }
-                }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                default: {
                 }
             }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+                if (ITU_T_BIND_TAG(value<MMS_Environment_1::ApplicationReference > (true, user_type_association))) return;
+                else free();
+                if (ITU_T_BIND_TAG(value<null_type > (true, user_type_none))) return;
+                else free();
+            }
         }
+    }
 
- 
+    template<> void AccessCondition::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case AccessCondition_never:
+            {
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, AccessCondition_never), 0);
+                break;
+            }
+            case AccessCondition_semaphore:
+            {
+                ITU_T_EXPLICIT_TAG(value<ISO_9506_MMS_1::Identifier > (false, AccessCondition_semaphore), 1);
+                break;
+            }
+            case AccessCondition_user:
+            {
+                ITU_T_CHOICE_TAG(value<user_type > (false, AccessCondition_user), 2);
+                break;
+            }
+            case AccessCondition_password:
+            {
+                ITU_T_CHOICE_TAG(value<ACSE_1::Authentication_value > (false, AccessCondition_password), 3);
+                break;
+            }
+            case AccessCondition_joint:
+            {
+                ITU_T_IMPLICIT_TAG(value<joint_type > (false, AccessCondition_joint), 4);
+                break;
+            }
+            case AccessCondition_alternate:
+            {
+                ITU_T_IMPLICIT_TAG(value<alternate_type > (false, AccessCondition_alternate), 5);
+                break;
+            }
+            default:
+            {
+            }
+        }
+    }
+
+    template<> void AccessCondition::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    case 0:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, AccessCondition_never), 0)) return;
+                        else free();
+                        break;
+                    }
+                    case 1:
+                    {
+                        if (ITU_T_EXPLICIT_TAG(value<ISO_9506_MMS_1::Identifier > (true, AccessCondition_semaphore), 1)) return;
+                        else free();
+                        break;
+                    }
+                    case 2:
+                    {
+                        if (ITU_T_CHOICE_TAG(value<user_type > (true, AccessCondition_user), 2)) return;
+                        else free();
+                        break;
+                    }
+                    case 3:
+                    {
+                        if (ITU_T_CHOICE_TAG(value<ACSE_1::Authentication_value > (true, AccessCondition_password), 3)) return;
+                        else free();
+                        break;
+                    }
+                    case 4:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<joint_type > (true, AccessCondition_joint), 4)) return;
+                        else free();
+                        break;
+                    }
+                    case 5:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<alternate_type > (true, AccessCondition_alternate), 5)) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+            }
+        }
+    }
+
+
     const DomainState DomainState_non_existent = 0;
     const DomainState DomainState_loading = 1;
     const DomainState DomainState_ready = 2;
@@ -370,290 +509,524 @@ namespace MMS_Object_Module_1 {
     const Running_Mode Running_Mode_cycle_limited = 1;
     const Running_Mode Running_Mode_step_limited = 2;
 
-        // choice Address
+    // choice Address
 
-        template<> void Address::serialize(boost::asn1::x690::output_coder& arch){
-            switch(type()){
-                case Address_numericAddress:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned32 > (false , Address_numericAddress), 0); break; }
-                case Address_symbolicAddress:  {BOOST_ASN_EXPLICIT_TAG(value<ISO_9506_MMS_1::MMSString > (false , Address_symbolicAddress), 1); break; }
-                case Address_unconstrainedAddress:  {BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (false , Address_unconstrainedAddress), 2); break; }
-                default:{}
+    template<> void Address::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case Address_numericAddress:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned32 > (false, Address_numericAddress), 0);
+                break;
+            }
+            case Address_symbolicAddress:
+            {
+                ITU_T_EXPLICIT_TAG(value<ISO_9506_MMS_1::MMSString > (false, Address_symbolicAddress), 1);
+                break;
+            }
+            case Address_unconstrainedAddress:
+            {
+                ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, Address_unconstrainedAddress), 2);
+                break;
+            }
+            default:
+            {
             }
         }
+    }
 
-        template<> void Address::serialize(boost::asn1::x690::input_coder& arch){
-            int __tag_id__ =arch.test_id();
-            switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void Address::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
-                }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                case 0x80: {
-                    switch(__tag_id__){
-                        case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned32 > (true , Address_numericAddress), 0)) return; else free(); break;}
-                        case 1:  { if (BOOST_ASN_EXPLICIT_TAG(value<ISO_9506_MMS_1::MMSString > (true , Address_symbolicAddress), 1)) return; else free(); break;}
-                        case 2:  { if (BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (true , Address_unconstrainedAddress), 2)) return; else free(); break;}
-                    default:{}
-                    }
-                }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                default: {
                 }
             }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    case 0:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned32 > (true, Address_numericAddress), 0)) return;
+                        else free();
+                        break;
+                    }
+                    case 1:
+                    {
+                        if (ITU_T_EXPLICIT_TAG(value<ISO_9506_MMS_1::MMSString > (true, Address_symbolicAddress), 1)) return;
+                        else free();
+                        break;
+                    }
+                    case 2:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, Address_unconstrainedAddress), 2)) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+            }
         }
-
- 
-        // choice TypeDescription
+    }
 
 
-    TypeDescription::array_type::array_type() : numberOfElements_(), elementType_() {}; 
- 
-    TypeDescription::array_type::array_type(const ISO_9506_MMS_1::Unsigned32&  arg__numberOfElements,
-        const ISO_9506_MMS_1::TypeSpecification&  arg__elementType) : 
-        numberOfElements_(arg__numberOfElements),
-        elementType_(arg__elementType) {}; 
- 
-    TypeDescription::array_type::array_type(boost::shared_ptr< bool>  arg__packed,
-        boost::shared_ptr< ISO_9506_MMS_1::Unsigned32>  arg__numberOfElements,
-        boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification>  arg__elementType) : 
-        packed_(arg__packed),
-        numberOfElements_(arg__numberOfElements),
-        elementType_(arg__elementType) {}; 
- 
+    // choice TypeDescription
+
+    TypeDescription::array_type::array_type() : numberOfElements_(), elementType_() {
+    };
+
+    TypeDescription::array_type::array_type(const ISO_9506_MMS_1::Unsigned32& arg__numberOfElements,
+            const ISO_9506_MMS_1::TypeSpecification& arg__elementType) :
+    numberOfElements_(arg__numberOfElements),
+    elementType_(arg__elementType) {
+    };
+
+    TypeDescription::array_type::array_type(boost::shared_ptr< bool> arg__packed,
+            boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__numberOfElements,
+            boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__elementType) :
+    packed_(arg__packed),
+    numberOfElements_(arg__numberOfElements),
+    elementType_(arg__elementType) {
+    };
+
     const bool TypeDescription::array_type::packed__default = false;
 
+    template<> void TypeDescription::array_type::serialize(boost::asn1::x690::output_coder& arch) {
+        ITU_T_IMPLICIT_TAG(packed_, 0);
+        ITU_T_IMPLICIT_TAG(numberOfElements_, 1);
+        ITU_T_CHOICE_TAG(elementType_, 2);
+    }
 
-        template<> void TypeDescription::array_type::serialize(boost::asn1::x690::output_coder& arch){
-            BOOST_ASN_IMPLICIT_TAG(packed_, 0);
-            BOOST_ASN_IMPLICIT_TAG(numberOfElements_, 1);
-            BOOST_ASN_CHOICE_TAG(elementType_, 2);
-        }
+    template<> void TypeDescription::array_type::serialize(boost::asn1::x690::input_coder& arch) {
+        ITU_T_IMPLICIT_TAG(packed_, 0);
+        ITU_T_IMPLICIT_TAG(numberOfElements_, 1);
+        ITU_T_CHOICE_TAG(elementType_, 2);
+    }
 
-        template<> void TypeDescription::array_type::serialize(boost::asn1::x690::input_coder& arch){
-            BOOST_ASN_IMPLICIT_TAG(packed_, 0);
-            BOOST_ASN_IMPLICIT_TAG(numberOfElements_, 1);
-            BOOST_ASN_CHOICE_TAG(elementType_, 2);
-        }
+    const bool& TypeDescription::array_type::packed() const {
+        return *packed_;
+    }
+
+    void TypeDescription::array_type::packed(const bool& vl) {
+        packed_ = vl;
+    }
+
+    void TypeDescription::array_type::packed(boost::shared_ptr< bool> vl) {
+        packed_ = vl;
+    }
+
+    ISO_9506_MMS_1::Unsigned32& TypeDescription::array_type::numberOfElements() {
+        return *numberOfElements_;
+    }
+
+    const ISO_9506_MMS_1::Unsigned32& TypeDescription::array_type::numberOfElements() const {
+        return *numberOfElements_;
+    }
+
+    void TypeDescription::array_type::numberOfElements(const ISO_9506_MMS_1::Unsigned32& vl) {
+        numberOfElements_ = vl;
+    }
+
+    void TypeDescription::array_type::numberOfElements(boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> vl) {
+        numberOfElements_ = vl;
+    }
+
+    ISO_9506_MMS_1::TypeSpecification& TypeDescription::array_type::elementType() {
+        return *elementType_;
+    }
+
+    const ISO_9506_MMS_1::TypeSpecification& TypeDescription::array_type::elementType() const {
+        return *elementType_;
+    }
+
+    void TypeDescription::array_type::elementType(const ISO_9506_MMS_1::TypeSpecification& vl) {
+        elementType_ = vl;
+    }
+
+    void TypeDescription::array_type::elementType(boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> vl) {
+        elementType_ = vl;
+    }
+
+    TypeDescription::structure_type::structure_type() : components_() {
+    };
+
+    TypeDescription::structure_type::structure_type(const components_type& arg__components) :
+    components_(arg__components) {
+    };
+
+    TypeDescription::structure_type::structure_type(boost::shared_ptr< bool> arg__packed,
+            boost::shared_ptr< components_type> arg__components) :
+    packed_(arg__packed),
+    components_(arg__components) {
+    };
+
+    TypeDescription::structure_type::components_type_sequence_of::components_type_sequence_of() : componentType_() {
+    };
+
+    TypeDescription::structure_type::components_type_sequence_of::components_type_sequence_of(const ISO_9506_MMS_1::TypeSpecification& arg__componentType) :
+    componentType_(arg__componentType) {
+    };
+
+    TypeDescription::structure_type::components_type_sequence_of::components_type_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
+            boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__componentType) :
+    componentName_(arg__componentName),
+    componentType_(arg__componentType) {
+    };
+
+    template<> void TypeDescription::structure_type::components_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
+        ITU_T_IMPLICIT_TAG(componentName_, 0);
+        ITU_T_CHOICE_TAG(componentType_, 1);
+    }
+
+    template<> void TypeDescription::structure_type::components_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
+        ITU_T_IMPLICIT_TAG(componentName_, 0);
+        ITU_T_CHOICE_TAG(componentType_, 1);
+    }
+
+    boost::shared_ptr<ISO_9506_MMS_1::Identifier> TypeDescription::structure_type::components_type_sequence_of::componentName__new() {
+        return componentName_ = boost::shared_ptr<ISO_9506_MMS_1::Identifier>(new ISO_9506_MMS_1::Identifier());
+    }
+
+    void TypeDescription::structure_type::components_type_sequence_of::componentName(const ISO_9506_MMS_1::Identifier& vl) {
+        componentName_ = boost::shared_ptr<ISO_9506_MMS_1::Identifier>(new ISO_9506_MMS_1::Identifier(vl));
+    }
+
+    ISO_9506_MMS_1::TypeSpecification& TypeDescription::structure_type::components_type_sequence_of::componentType() {
+        return *componentType_;
+    }
+
+    const ISO_9506_MMS_1::TypeSpecification& TypeDescription::structure_type::components_type_sequence_of::componentType() const {
+        return *componentType_;
+    }
+
+    void TypeDescription::structure_type::components_type_sequence_of::componentType(const ISO_9506_MMS_1::TypeSpecification& vl) {
+        componentType_ = vl;
+    }
+
+    void TypeDescription::structure_type::components_type_sequence_of::componentType(boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> vl) {
+        componentType_ = vl;
+    }
 
 
-        const bool& TypeDescription::array_type::packed() const { return *packed_ ;}
-
-        void TypeDescription::array_type::packed( const bool& vl){ packed_ =vl ;}
-
-        void TypeDescription::array_type::packed( boost::shared_ptr< bool>  vl){ packed_ =vl ;}
-
-
-        ISO_9506_MMS_1::Unsigned32& TypeDescription::array_type::numberOfElements(){ return *numberOfElements_ ;}
-
-        const ISO_9506_MMS_1::Unsigned32& TypeDescription::array_type::numberOfElements() const { return *numberOfElements_ ;}
-
-        void TypeDescription::array_type::numberOfElements( const ISO_9506_MMS_1::Unsigned32& vl){ numberOfElements_ =vl ;}
-
-        void TypeDescription::array_type::numberOfElements( boost::shared_ptr< ISO_9506_MMS_1::Unsigned32>  vl){ numberOfElements_ =vl ;}
-
-
-        ISO_9506_MMS_1::TypeSpecification& TypeDescription::array_type::elementType(){ return *elementType_ ;}
-
-        const ISO_9506_MMS_1::TypeSpecification& TypeDescription::array_type::elementType() const { return *elementType_ ;}
-
-        void TypeDescription::array_type::elementType( const ISO_9506_MMS_1::TypeSpecification& vl){ elementType_ =vl ;}
-
-        void TypeDescription::array_type::elementType( boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification>  vl){ elementType_ =vl ;}
-
- 
-
-
-    TypeDescription::structure_type::structure_type() : components_() {}; 
- 
-    TypeDescription::structure_type::structure_type(const components_type&  arg__components) : 
-        components_(arg__components) {}; 
- 
-    TypeDescription::structure_type::structure_type(boost::shared_ptr< bool>  arg__packed,
-        boost::shared_ptr< components_type>  arg__components) : 
-        packed_(arg__packed),
-        components_(arg__components) {}; 
- 
-
-
-    TypeDescription::structure_type::components_type_sequence_of::components_type_sequence_of() : componentType_() {}; 
- 
-    TypeDescription::structure_type::components_type_sequence_of::components_type_sequence_of(const ISO_9506_MMS_1::TypeSpecification&  arg__componentType) : 
-        componentType_(arg__componentType) {}; 
- 
-    TypeDescription::structure_type::components_type_sequence_of::components_type_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier>  arg__componentName,
-        boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification>  arg__componentType) : 
-        componentName_(arg__componentName),
-        componentType_(arg__componentType) {}; 
- 
-
-        template<> void TypeDescription::structure_type::components_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch){
-            BOOST_ASN_IMPLICIT_TAG(componentName_, 0);
-            BOOST_ASN_CHOICE_TAG(componentType_, 1);
-        }
-
-        template<> void TypeDescription::structure_type::components_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch){
-            BOOST_ASN_IMPLICIT_TAG(componentName_, 0);
-            BOOST_ASN_CHOICE_TAG(componentType_, 1);
-        }
-
-
-        boost::shared_ptr<ISO_9506_MMS_1::Identifier> TypeDescription::structure_type::components_type_sequence_of::componentName__new (){ return componentName_ = boost::shared_ptr<ISO_9506_MMS_1::Identifier>(new ISO_9506_MMS_1::Identifier()) ;}
-
-        void TypeDescription::structure_type::components_type_sequence_of::componentName( const ISO_9506_MMS_1::Identifier& vl){ componentName_ = boost::shared_ptr<ISO_9506_MMS_1::Identifier>(new ISO_9506_MMS_1::Identifier(vl)) ;}
-
-
-        ISO_9506_MMS_1::TypeSpecification& TypeDescription::structure_type::components_type_sequence_of::componentType(){ return *componentType_ ;}
-
-        const ISO_9506_MMS_1::TypeSpecification& TypeDescription::structure_type::components_type_sequence_of::componentType() const { return *componentType_ ;}
-
-        void TypeDescription::structure_type::components_type_sequence_of::componentType( const ISO_9506_MMS_1::TypeSpecification& vl){ componentType_ =vl ;}
-
-        void TypeDescription::structure_type::components_type_sequence_of::componentType( boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification>  vl){ componentType_ =vl ;}
-
- 
     const bool TypeDescription::structure_type::packed__default = false;
 
+    template<> void TypeDescription::structure_type::serialize(boost::asn1::x690::output_coder& arch) {
+        ITU_T_IMPLICIT_TAG(packed_, 0);
+        ITU_T_IMPLICIT_TAG(components_, 1);
+    }
 
-        template<> void TypeDescription::structure_type::serialize(boost::asn1::x690::output_coder& arch){
-            BOOST_ASN_IMPLICIT_TAG(packed_, 0);
-            BOOST_ASN_IMPLICIT_TAG(components_, 1);
-        }
+    template<> void TypeDescription::structure_type::serialize(boost::asn1::x690::input_coder& arch) {
+        ITU_T_IMPLICIT_TAG(packed_, 0);
+        ITU_T_IMPLICIT_TAG(components_, 1);
+    }
 
-        template<> void TypeDescription::structure_type::serialize(boost::asn1::x690::input_coder& arch){
-            BOOST_ASN_IMPLICIT_TAG(packed_, 0);
-            BOOST_ASN_IMPLICIT_TAG(components_, 1);
-        }
+    const bool& TypeDescription::structure_type::packed() const {
+        return *packed_;
+    }
 
+    void TypeDescription::structure_type::packed(const bool& vl) {
+        packed_ = vl;
+    }
 
-        const bool& TypeDescription::structure_type::packed() const { return *packed_ ;}
+    void TypeDescription::structure_type::packed(boost::shared_ptr< bool> vl) {
+        packed_ = vl;
+    }
 
-        void TypeDescription::structure_type::packed( const bool& vl){ packed_ =vl ;}
+    TypeDescription::structure_type::components_type& TypeDescription::structure_type::components() {
+        return *components_;
+    }
 
-        void TypeDescription::structure_type::packed( boost::shared_ptr< bool>  vl){ packed_ =vl ;}
+    const TypeDescription::structure_type::components_type& TypeDescription::structure_type::components() const {
+        return *components_;
+    }
 
+    void TypeDescription::structure_type::components(const components_type& vl) {
+        components_ = vl;
+    }
 
-        TypeDescription::structure_type::components_type& TypeDescription::structure_type::components(){ return *components_ ;}
+    void TypeDescription::structure_type::components(boost::shared_ptr< components_type> vl) {
+        components_ = vl;
+    }
 
-        const TypeDescription::structure_type::components_type& TypeDescription::structure_type::components() const { return *components_ ;}
+    TypeDescription::floating_point_type::floating_point_type() : format_width_(), exponent_width_() {
+    };
 
-        void TypeDescription::structure_type::components( const components_type& vl){ components_ =vl ;}
+    TypeDescription::floating_point_type::floating_point_type(const ISO_9506_MMS_1::Unsigned8& arg__format_width,
+            const ISO_9506_MMS_1::Unsigned8& arg__exponent_width) :
+    format_width_(arg__format_width),
+    exponent_width_(arg__exponent_width) {
+    };
 
-        void TypeDescription::structure_type::components( boost::shared_ptr< components_type>  vl){ components_ =vl ;}
+    template<> void TypeDescription::floating_point_type::serialize(boost::asn1::x690::output_coder& arch) {
+        ITU_T_BIND_TAG(format_width_);
+        ITU_T_BIND_TAG(exponent_width_);
+    }
 
- 
+    template<> void TypeDescription::floating_point_type::serialize(boost::asn1::x690::input_coder& arch) {
+        ITU_T_BIND_TAG(format_width_);
+        ITU_T_BIND_TAG(exponent_width_);
+    }
 
+    ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::format_width() {
+        return *format_width_;
+    }
 
-    TypeDescription::floating_point_type::floating_point_type() : format_width_(), exponent_width_() {}; 
- 
-    TypeDescription::floating_point_type::floating_point_type(const ISO_9506_MMS_1::Unsigned8&  arg__format_width,
-        const ISO_9506_MMS_1::Unsigned8&  arg__exponent_width) : 
-        format_width_(arg__format_width),
-        exponent_width_(arg__exponent_width) {}; 
- 
+    const ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::format_width() const {
+        return *format_width_;
+    }
 
-        template<> void TypeDescription::floating_point_type::serialize(boost::asn1::x690::output_coder& arch){
-            BOOST_ASN_BIND_TAG(format_width_);
-            BOOST_ASN_BIND_TAG(exponent_width_);
-        }
+    void TypeDescription::floating_point_type::format_width(const ISO_9506_MMS_1::Unsigned8& vl) {
+        format_width_ = vl;
+    }
 
-        template<> void TypeDescription::floating_point_type::serialize(boost::asn1::x690::input_coder& arch){
-            BOOST_ASN_BIND_TAG(format_width_);
-            BOOST_ASN_BIND_TAG(exponent_width_);
-        }
+    void TypeDescription::floating_point_type::format_width(boost::shared_ptr< ISO_9506_MMS_1::Unsigned8> vl) {
+        format_width_ = vl;
+    }
 
+    ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::exponent_width() {
+        return *exponent_width_;
+    }
 
-        ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::format_width(){ return *format_width_ ;}
+    const ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::exponent_width() const {
+        return *exponent_width_;
+    }
 
-        const ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::format_width() const { return *format_width_ ;}
+    void TypeDescription::floating_point_type::exponent_width(const ISO_9506_MMS_1::Unsigned8& vl) {
+        exponent_width_ = vl;
+    }
 
-        void TypeDescription::floating_point_type::format_width( const ISO_9506_MMS_1::Unsigned8& vl){ format_width_ =vl ;}
+    void TypeDescription::floating_point_type::exponent_width(boost::shared_ptr< ISO_9506_MMS_1::Unsigned8> vl) {
+        exponent_width_ = vl;
+    }
 
-        void TypeDescription::floating_point_type::format_width( boost::shared_ptr< ISO_9506_MMS_1::Unsigned8>  vl){ format_width_ =vl ;}
-
-
-        ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::exponent_width(){ return *exponent_width_ ;}
-
-        const ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::exponent_width() const { return *exponent_width_ ;}
-
-        void TypeDescription::floating_point_type::exponent_width( const ISO_9506_MMS_1::Unsigned8& vl){ exponent_width_ =vl ;}
-
-        void TypeDescription::floating_point_type::exponent_width( boost::shared_ptr< ISO_9506_MMS_1::Unsigned8>  vl){ exponent_width_ =vl ;}
-
- 
-
-        template<> void TypeDescription::serialize(boost::asn1::x690::output_coder& arch){
-            switch(type()){
-                case TypeDescription_array:  {BOOST_ASN_IMPLICIT_TAG(value<array_type > (false , TypeDescription_array), 1); break; }
-                case TypeDescription_structure:  {BOOST_ASN_IMPLICIT_TAG(value<structure_type > (false , TypeDescription_structure), 2); break; }
-                case TypeDescription_boolean:  {BOOST_ASN_IMPLICIT_TAG(value<null_type > (false , TypeDescription_boolean), 3); break; }
-                case TypeDescription_bit_string:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (false , TypeDescription_bit_string), 4); break; }
-                case TypeDescription_integer:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (false , TypeDescription_integer), 5); break; }
-                case TypeDescription_unsignedV:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (false , TypeDescription_unsignedV), 6); break; }
-                case TypeDescription_floating_point:  {BOOST_ASN_IMPLICIT_TAG(value<floating_point_type > (false , TypeDescription_floating_point), 7); break; }
-                case TypeDescription_octet_string:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (false , TypeDescription_octet_string), 9); break; }
-                case TypeDescription_visible_string:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (false , TypeDescription_visible_string), 10); break; }
-                case TypeDescription_generalized_time:  {BOOST_ASN_IMPLICIT_TAG(value<null_type > (false , TypeDescription_generalized_time), 11); break; }
-                case TypeDescription_binary_time:  {BOOST_ASN_IMPLICIT_TAG(value<bool > (false , TypeDescription_binary_time), 12); break; }
-                case TypeDescription_bcd:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (false , TypeDescription_bcd), 13); break; }
-                case TypeDescription_objId:  {BOOST_ASN_IMPLICIT_TAG(value<null_type > (false , TypeDescription_objId), 15); break; }
-                case TypeDescription_mMSString:  {BOOST_ASN_EXPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (false , TypeDescription_mMSString), 16); break; }
-                default:{}
+    template<> void TypeDescription::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case TypeDescription_array:
+            {
+                ITU_T_IMPLICIT_TAG(value<array_type > (false, TypeDescription_array), 1);
+                break;
+            }
+            case TypeDescription_structure:
+            {
+                ITU_T_IMPLICIT_TAG(value<structure_type > (false, TypeDescription_structure), 2);
+                break;
+            }
+            case TypeDescription_boolean:
+            {
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, TypeDescription_boolean), 3);
+                break;
+            }
+            case TypeDescription_bit_string:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_bit_string), 4);
+                break;
+            }
+            case TypeDescription_integer:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (false, TypeDescription_integer), 5);
+                break;
+            }
+            case TypeDescription_unsignedV:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (false, TypeDescription_unsignedV), 6);
+                break;
+            }
+            case TypeDescription_floating_point:
+            {
+                ITU_T_IMPLICIT_TAG(value<floating_point_type > (false, TypeDescription_floating_point), 7);
+                break;
+            }
+            case TypeDescription_octet_string:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_octet_string), 9);
+                break;
+            }
+            case TypeDescription_visible_string:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_visible_string), 10);
+                break;
+            }
+            case TypeDescription_generalized_time:
+            {
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, TypeDescription_generalized_time), 11);
+                break;
+            }
+            case TypeDescription_binary_time:
+            {
+                ITU_T_IMPLICIT_TAG(value<bool > (false, TypeDescription_binary_time), 12);
+                break;
+            }
+            case TypeDescription_bcd:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (false, TypeDescription_bcd), 13);
+                break;
+            }
+            case TypeDescription_objId:
+            {
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, TypeDescription_objId), 15);
+                break;
+            }
+            case TypeDescription_mMSString:
+            {
+                ITU_T_EXPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_mMSString), 16);
+                break;
+            }
+            default:
+            {
             }
         }
+    }
 
-        template<> void TypeDescription::serialize(boost::asn1::x690::input_coder& arch){
-            int __tag_id__ =arch.test_id();
-            switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void TypeDescription::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
-                }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                case 0x80: {
-                    switch(__tag_id__){
-                        case 1:  { if (BOOST_ASN_IMPLICIT_TAG(value<array_type > (true , TypeDescription_array), 1)) return; else free(); break;}
-                        case 2:  { if (BOOST_ASN_IMPLICIT_TAG(value<structure_type > (true , TypeDescription_structure), 2)) return; else free(); break;}
-                        case 3:  { if (BOOST_ASN_IMPLICIT_TAG(value<null_type > (true , TypeDescription_boolean), 3)) return; else free(); break;}
-                        case 4:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (true , TypeDescription_bit_string), 4)) return; else free(); break;}
-                        case 5:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (true , TypeDescription_integer), 5)) return; else free(); break;}
-                        case 6:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (true , TypeDescription_unsignedV), 6)) return; else free(); break;}
-                        case 7:  { if (BOOST_ASN_IMPLICIT_TAG(value<floating_point_type > (true , TypeDescription_floating_point), 7)) return; else free(); break;}
-                        case 9:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (true , TypeDescription_octet_string), 9)) return; else free(); break;}
-                        case 10:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (true , TypeDescription_visible_string), 10)) return; else free(); break;}
-                        case 11:  { if (BOOST_ASN_IMPLICIT_TAG(value<null_type > (true , TypeDescription_generalized_time), 11)) return; else free(); break;}
-                        case 12:  { if (BOOST_ASN_IMPLICIT_TAG(value<bool > (true , TypeDescription_binary_time), 12)) return; else free(); break;}
-                        case 13:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (true , TypeDescription_bcd), 13)) return; else free(); break;}
-                        case 15:  { if (BOOST_ASN_IMPLICIT_TAG(value<null_type > (true , TypeDescription_objId), 15)) return; else free(); break;}
-                        case 16:  { if (BOOST_ASN_EXPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (true , TypeDescription_mMSString), 16)) return; else free(); break;}
-                    default:{}
-                    }
-                }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                default: {
                 }
             }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    case 1:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<array_type > (true, TypeDescription_array), 1)) return;
+                        else free();
+                        break;
+                    }
+                    case 2:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<structure_type > (true, TypeDescription_structure), 2)) return;
+                        else free();
+                        break;
+                    }
+                    case 3:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, TypeDescription_boolean), 3)) return;
+                        else free();
+                        break;
+                    }
+                    case 4:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_bit_string), 4)) return;
+                        else free();
+                        break;
+                    }
+                    case 5:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (true, TypeDescription_integer), 5)) return;
+                        else free();
+                        break;
+                    }
+                    case 6:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (true, TypeDescription_unsignedV), 6)) return;
+                        else free();
+                        break;
+                    }
+                    case 7:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<floating_point_type > (true, TypeDescription_floating_point), 7)) return;
+                        else free();
+                        break;
+                    }
+                    case 9:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_octet_string), 9)) return;
+                        else free();
+                        break;
+                    }
+                    case 10:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_visible_string), 10)) return;
+                        else free();
+                        break;
+                    }
+                    case 11:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, TypeDescription_generalized_time), 11)) return;
+                        else free();
+                        break;
+                    }
+                    case 12:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<bool > (true, TypeDescription_binary_time), 12)) return;
+                        else free();
+                        break;
+                    }
+                    case 13:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned8 > (true, TypeDescription_bcd), 13)) return;
+                        else free();
+                        break;
+                    }
+                    case 15:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, TypeDescription_objId), 15)) return;
+                        else free();
+                        break;
+                    }
+                    case 16:
+                    {
+                        if (ITU_T_EXPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_mMSString), 16)) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+            }
         }
+    }
 
- 
+
     const Priority normalPriority = 64;
 
     const EC_Class EC_Class_network_triggered = 0;
@@ -665,49 +1038,91 @@ namespace MMS_Object_Module_1 {
 
     const Severity normalSeverity = 64;
 
-        // choice EventTime
+    // choice EventTime
 
-        template<> void EventTime::serialize(boost::asn1::x690::output_coder& arch){
-            switch(type()){
-                case EventTime_timeOfDay:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::TimeOfDay > (false , EventTime_timeOfDay), 0); break; }
-                case EventTime_timeSequenceIdentifier:  {BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned32 > (false , EventTime_timeSequenceIdentifier), 1); break; }
-                case EventTime_undefined:  {BOOST_ASN_IMPLICIT_TAG(value<null_type > (false , EventTime_undefined), 2); break; }
-                default:{}
+    template<> void EventTime::serialize(boost::asn1::x690::output_coder& arch) {
+        switch (type()) {
+            case EventTime_timeOfDay:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::TimeOfDay > (false, EventTime_timeOfDay), 0);
+                break;
+            }
+            case EventTime_timeSequenceIdentifier:
+            {
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned32 > (false, EventTime_timeSequenceIdentifier), 1);
+                break;
+            }
+            case EventTime_undefined:
+            {
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, EventTime_undefined), 2);
+                break;
+            }
+            default:
+            {
             }
         }
+    }
 
-        template<> void EventTime::serialize(boost::asn1::x690::input_coder& arch){
-            int __tag_id__ =arch.test_id();
-            switch(arch.test_class()){
-                case 0x0: {
-                    switch(__tag_id__){
-                    default:{}
+    template<> void EventTime::serialize(boost::asn1::x690::input_coder& arch) {
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
                     }
-                }
-                case 0x40: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                case 0x80: {
-                    switch(__tag_id__){
-                        case 0:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::TimeOfDay > (true , EventTime_timeOfDay), 0)) return; else free(); break;}
-                        case 1:  { if (BOOST_ASN_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned32 > (true , EventTime_timeSequenceIdentifier), 1)) return; else free(); break;}
-                        case 2:  { if (BOOST_ASN_IMPLICIT_TAG(value<null_type > (true , EventTime_undefined), 2)) return; else free(); break;}
-                    default:{}
-                    }
-                }
-                case 0xC0: {
-                    switch(__tag_id__){
-                    default:{}
-                    }
-                }
-                default: {
                 }
             }
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0x80:
+            {
+                switch (__tag_id__) {
+                    case 0:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::TimeOfDay > (true, EventTime_timeOfDay), 0)) return;
+                        else free();
+                        break;
+                    }
+                    case 1:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Unsigned32 > (true, EventTime_timeSequenceIdentifier), 1)) return;
+                        else free();
+                        break;
+                    }
+                    case 2:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, EventTime_undefined), 2)) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+            case 0xC0:
+            {
+                switch (__tag_id__) {
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+            }
         }
+    }
 
- 
+
     const EE_Class EE_Class_modifier = 0;
     const EE_Class EE_Class_notification = 1;
 
@@ -727,52 +1142,67 @@ namespace MMS_Object_Module_1 {
     const AlarmAckRule AlarmAckRule_ack_active = 2;
     const AlarmAckRule AlarmAckRule_ack_all = 3;
 
-        // sequence Journal-Variable
+    // sequence Journal-Variable
 
-    Journal_Variable::Journal_Variable() : variableTag_(), valueSpecification_() {}; 
- 
-    Journal_Variable::Journal_Variable(const ISO_9506_MMS_1::MMS255String&  arg__variableTag,
-        const ISO_9506_MMS_1::Data&  arg__valueSpecification) : 
-        variableTag_(arg__variableTag),
-        valueSpecification_(arg__valueSpecification) {}; 
- 
+    Journal_Variable::Journal_Variable() : variableTag_(), valueSpecification_() {
+    };
 
-        template<> void Journal_Variable::serialize(boost::asn1::x690::output_coder& arch){
-            BOOST_ASN_BIND_TAG(variableTag_);
-            BOOST_ASN_CHOICE(valueSpecification_);
-        }
+    Journal_Variable::Journal_Variable(const ISO_9506_MMS_1::MMS255String& arg__variableTag,
+            const ISO_9506_MMS_1::Data& arg__valueSpecification) :
+    variableTag_(arg__variableTag),
+    valueSpecification_(arg__valueSpecification) {
+    };
 
-        template<> void Journal_Variable::serialize(boost::asn1::x690::input_coder& arch){
-            BOOST_ASN_BIND_TAG(variableTag_);
-            BOOST_ASN_CHOICE(valueSpecification_);
-        }
+    template<> void Journal_Variable::serialize(boost::asn1::x690::output_coder& arch) {
+        ITU_T_BIND_TAG(variableTag_);
+        ITU_T_BIND_CHOICE(valueSpecification_);
+    }
+
+    template<> void Journal_Variable::serialize(boost::asn1::x690::input_coder& arch) {
+        ITU_T_BIND_TAG(variableTag_);
+        ITU_T_BIND_CHOICE(valueSpecification_);
+    }
+
+    ISO_9506_MMS_1::MMS255String& Journal_Variable::variableTag() {
+        return *variableTag_;
+    }
+
+    const ISO_9506_MMS_1::MMS255String& Journal_Variable::variableTag() const {
+        return *variableTag_;
+    }
+
+    void Journal_Variable::variableTag(const ISO_9506_MMS_1::MMS255String& vl) {
+        variableTag_ = vl;
+    }
+
+    void Journal_Variable::variableTag(boost::shared_ptr< ISO_9506_MMS_1::MMS255String> vl) {
+        variableTag_ = vl;
+    }
+
+    ISO_9506_MMS_1::Data& Journal_Variable::valueSpecification() {
+        return *valueSpecification_;
+    }
+
+    const ISO_9506_MMS_1::Data& Journal_Variable::valueSpecification() const {
+        return *valueSpecification_;
+    }
+
+    void Journal_Variable::valueSpecification(const ISO_9506_MMS_1::Data& vl) {
+        valueSpecification_ = vl;
+    }
+
+    void Journal_Variable::valueSpecification(boost::shared_ptr< ISO_9506_MMS_1::Data> vl) {
+        valueSpecification_ = vl;
+    }
 
 
-        ISO_9506_MMS_1::MMS255String& Journal_Variable::variableTag(){ return *variableTag_ ;}
+    const boost::array<boost::asn1::oidindx_type, 6> mMSNamedVariable_OID_ARR = {1, 0, 9506, 1, 5, 1};
+    const oid_type mMSNamedVariable = boost::asn1::oid_type(mMSNamedVariable_OID_ARR);
 
-        const ISO_9506_MMS_1::MMS255String& Journal_Variable::variableTag() const { return *variableTag_ ;}
+    const boost::array<boost::asn1::oidindx_type, 6> mMSAccessControlList_OID_ARR = {1, 0, 9506, 1, 5, 2};
+    const oid_type mMSAccessControlList = boost::asn1::oid_type(mMSAccessControlList_OID_ARR);
 
-        void Journal_Variable::variableTag( const ISO_9506_MMS_1::MMS255String& vl){ variableTag_ =vl ;}
+    const boost::array<boost::asn1::oidindx_type, 6> mMSEventCondition_OID_ARR = {1, 0, 9506, 1, 5, 3};
+    const oid_type mMSEventCondition = boost::asn1::oid_type(mMSEventCondition_OID_ARR);
 
-        void Journal_Variable::variableTag( boost::shared_ptr< ISO_9506_MMS_1::MMS255String>  vl){ variableTag_ =vl ;}
-
-
-        ISO_9506_MMS_1::Data& Journal_Variable::valueSpecification(){ return *valueSpecification_ ;}
-
-        const ISO_9506_MMS_1::Data& Journal_Variable::valueSpecification() const { return *valueSpecification_ ;}
-
-        void Journal_Variable::valueSpecification( const ISO_9506_MMS_1::Data& vl){ valueSpecification_ =vl ;}
-
-        void Journal_Variable::valueSpecification( boost::shared_ptr< ISO_9506_MMS_1::Data>  vl){ valueSpecification_ =vl ;}
-
- 
-    const boost::array<boost::asn1::oidindx_type, 6> mMSNamedVariable_OID_ARR = { 1, 0, 9506, 1, 5, 1};
-    const oid_type mMSNamedVariable = boost::asn1::oid_type(mMSNamedVariable_OID_ARR );
-
-    const boost::array<boost::asn1::oidindx_type, 6> mMSAccessControlList_OID_ARR = { 1, 0, 9506, 1, 5, 2};
-    const oid_type mMSAccessControlList = boost::asn1::oid_type(mMSAccessControlList_OID_ARR );
-
-    const boost::array<boost::asn1::oidindx_type, 6> mMSEventCondition_OID_ARR = { 1, 0, 9506, 1, 5, 3};
-    const oid_type mMSEventCondition = boost::asn1::oid_type(mMSEventCondition_OID_ARR );
-
-} 
+}

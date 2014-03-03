@@ -138,15 +138,10 @@ namespace MMS_SCI_Module_1 {
         SCI_Information(const VMD_File& arg__partOne,
                 const Service_and_Parameter_CBBs& arg__partTwo);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(partOne, VMD_File);
-        BOOST_ASN_VALUE_HOLDERH_DECL(partTwo, Service_and_Parameter_CBBs);
+        ITU_T_HOLDERH_DECL(partOne, VMD_File);
+        ITU_T_HOLDERH_DECL(partTwo, Service_and_Parameter_CBBs);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<VMD_File> partOne_;
-        value_holder<Service_and_Parameter_CBBs> partTwo_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence VMD-File
@@ -162,19 +157,19 @@ namespace MMS_SCI_Module_1 {
             selected_Program_Invocation_type_noneSelected,
         };
 
-        struct selected_Program_Invocation_type : public BOOST_ASN_CHOICE_STRUCT(selected_Program_Invocation_type_enum) {
+        struct selected_Program_Invocation_type : public ITU_T_STRUCT(selected_Program_Invocation_type_enum) {
 
-            selected_Program_Invocation_type() : BOOST_ASN_CHOICE_STRUCT(selected_Program_Invocation_type_enum) () {
+            selected_Program_Invocation_type() : ITU_T_STRUCT(selected_Program_Invocation_type_enum) () {
             }
 
             template<typename T > selected_Program_Invocation_type(boost::shared_ptr< T> vl, selected_Program_Invocation_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(selected_Program_Invocation_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(selected_Program_Invocation_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(selectedProgram, Program_Invocation_instance, selected_Program_Invocation_type_selectedProgram);
-            BOOST_ASN_VALUE_CHOICE(noneSelected, null_type, selected_Program_Invocation_type_noneSelected);
+            ITU_T_CHOICE_DECL(selectedProgram, Program_Invocation_instance, selected_Program_Invocation_type_selectedProgram);
+            ITU_T_CHOICE_DECL(noneSelected, null_type, selected_Program_Invocation_type_noneSelected);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -255,65 +250,35 @@ namespace MMS_SCI_Module_1 {
                 boost::shared_ptr< journals_type> arg__journals,
                 boost::shared_ptr< selected_Program_Invocation_type> arg__selected_Program_Invocation = boost::shared_ptr< selected_Program_Invocation_type>());
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(executiveFunction, MMS_Environment_1::ApplicationReference);
-        BOOST_ASN_VALUE_HOLDERH_DECL(vendorName, ISO_9506_MMS_1::MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(modelName, ISO_9506_MMS_1::MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(revision, ISO_9506_MMS_1::MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(abstractSyntaxes, oid_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-        BOOST_ASN_VALUE_HOLDERH_DECL(logicalStatus, MMS_Object_Module_1::LogicalStatus);
-        BOOST_ASN_VALUE_HOLDERH_DECL(capabilities, capabilities_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(physicalStatus, MMS_Object_Module_1::PhysicalStatus);
-        BOOST_ASN_VALUE_HOLDERH_DECL(local_detail, bitstring_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(accessControlLists, accessControlLists_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocations, programInvocations_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(unitControls, unitControls_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(unnamedVariables, unnamedVariables_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(namedVariables, namedVariables_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(namedVariableLists, namedVariableLists_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(namedTypes, namedTypes_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(dataExchanges, dataExchanges_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(semaphores, semaphores_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(operatorStations, operatorStations_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditions, eventConditions_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventActions, eventActions_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollments, eventEnrollments_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionLists, eventConditionLists_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(journals, journals_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(selected_Program_Invocation, selected_Program_Invocation_type);
+        ITU_T_HOLDERH_DECL(executiveFunction, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(vendorName, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(modelName, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(revision, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(abstractSyntaxes, oid_type);
+        ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+        ITU_T_HOLDERH_DECL(logicalStatus, MMS_Object_Module_1::LogicalStatus);
+        ITU_T_HOLDERH_DECL(capabilities, capabilities_type);
+        ITU_T_HOLDERH_DECL(physicalStatus, MMS_Object_Module_1::PhysicalStatus);
+        ITU_T_HOLDERH_DECL(local_detail, bitstring_type);
+        ITU_T_HOLDERH_DECL(accessControlLists, accessControlLists_type);
+        ITU_T_HOLDERH_DECL(domains, domains_type);
+        ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
+        ITU_T_HOLDERH_DECL(unitControls, unitControls_type);
+        ITU_T_HOLDERH_DECL(unnamedVariables, unnamedVariables_type);
+        ITU_T_HOLDERH_DECL(namedVariables, namedVariables_type);
+        ITU_T_HOLDERH_DECL(namedVariableLists, namedVariableLists_type);
+        ITU_T_HOLDERH_DECL(namedTypes, namedTypes_type);
+        ITU_T_HOLDERH_DECL(dataExchanges, dataExchanges_type);
+        ITU_T_HOLDERH_DECL(semaphores, semaphores_type);
+        ITU_T_HOLDERH_DECL(operatorStations, operatorStations_type);
+        ITU_T_HOLDERH_DECL(eventConditions, eventConditions_type);
+        ITU_T_HOLDERH_DECL(eventActions, eventActions_type);
+        ITU_T_HOLDERH_DECL(eventEnrollments, eventEnrollments_type);
+        ITU_T_HOLDERH_DECL(eventConditionLists, eventConditionLists_type);
+        ITU_T_HOLDERH_DECL(journals, journals_type);
+        ITU_T_OPTIONAL_DECL(selected_Program_Invocation, selected_Program_Invocation_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<MMS_Environment_1::ApplicationReference> executiveFunction_;
-        value_holder<ISO_9506_MMS_1::MMSString> vendorName_;
-        value_holder<ISO_9506_MMS_1::MMSString> modelName_;
-        value_holder<ISO_9506_MMS_1::MMSString> revision_;
-        value_holder<oid_type> abstractSyntaxes_;
-        value_holder<Access_Control_List_instance> accessControl_;
-        value_holder<MMS_Object_Module_1::LogicalStatus> logicalStatus_;
-        value_holder<capabilities_type> capabilities_;
-        value_holder<MMS_Object_Module_1::PhysicalStatus> physicalStatus_;
-        value_holder<bitstring_type> local_detail_;
-        value_holder<accessControlLists_type> accessControlLists_;
-        value_holder<domains_type> domains_;
-        value_holder<programInvocations_type> programInvocations_;
-        value_holder<unitControls_type> unitControls_;
-        value_holder<unnamedVariables_type> unnamedVariables_;
-        value_holder<namedVariables_type> namedVariables_;
-        value_holder<namedVariableLists_type> namedVariableLists_;
-        value_holder<namedTypes_type> namedTypes_;
-        value_holder<dataExchanges_type> dataExchanges_;
-        value_holder<semaphores_type> semaphores_;
-        value_holder<operatorStations_type> operatorStations_;
-        value_holder<eventConditions_type> eventConditions_;
-        value_holder<eventActions_type> eventActions_;
-        value_holder<eventEnrollments_type> eventEnrollments_;
-        value_holder<eventConditionLists_type> eventConditionLists_;
-        value_holder<journals_type> journals_;
-        boost::shared_ptr<selected_Program_Invocation_type> selected_Program_Invocation_; // after extention
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Access-Control-List-instance
@@ -329,7 +294,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -398,72 +363,45 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< journals_type> arg__journals,
                         boost::shared_ptr< eventConditionLists_type> arg__eventConditionLists = boost::shared_ptr< eventConditionLists_type>());
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(readAccessCondition, MMS_Object_Module_1::AccessCondition);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(storeAccessCondition, MMS_Object_Module_1::AccessCondition);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(writeAccessCondition, MMS_Object_Module_1::AccessCondition);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(loadAccessCondition, MMS_Object_Module_1::AccessCondition);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(executeAccessCondition, MMS_Object_Module_1::AccessCondition);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(deleteAccessCondition, MMS_Object_Module_1::AccessCondition);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(editAccessCondition, MMS_Object_Module_1::AccessCondition);
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControlLists, accessControlLists_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(programInvocations, programInvocations_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(unitControls, unitControls_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(unnamedVariables, unnamedVariables_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(namedVariables, namedVariables_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(namedVariableLists, namedVariableLists_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(namedTypes, namedTypes_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(dataExchanges, dataExchanges_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(semaphores, semaphores_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(operatorStations, operatorStations_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventConditions, eventConditions_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventActions, eventActions_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollments, eventEnrollments_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(journals, journals_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(eventConditionLists, eventConditionLists_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_OPTIONAL_DECL(readAccessCondition, MMS_Object_Module_1::AccessCondition);
+                ITU_T_OPTIONAL_DECL(storeAccessCondition, MMS_Object_Module_1::AccessCondition);
+                ITU_T_OPTIONAL_DECL(writeAccessCondition, MMS_Object_Module_1::AccessCondition);
+                ITU_T_OPTIONAL_DECL(loadAccessCondition, MMS_Object_Module_1::AccessCondition);
+                ITU_T_OPTIONAL_DECL(executeAccessCondition, MMS_Object_Module_1::AccessCondition);
+                ITU_T_OPTIONAL_DECL(deleteAccessCondition, MMS_Object_Module_1::AccessCondition);
+                ITU_T_OPTIONAL_DECL(editAccessCondition, MMS_Object_Module_1::AccessCondition);
+                ITU_T_HOLDERH_DECL(accessControlLists, accessControlLists_type);
+                ITU_T_HOLDERH_DECL(domains, domains_type);
+                ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
+                ITU_T_HOLDERH_DECL(unitControls, unitControls_type);
+                ITU_T_HOLDERH_DECL(unnamedVariables, unnamedVariables_type);
+                ITU_T_HOLDERH_DECL(namedVariables, namedVariables_type);
+                ITU_T_HOLDERH_DECL(namedVariableLists, namedVariableLists_type);
+                ITU_T_HOLDERH_DECL(namedTypes, namedTypes_type);
+                ITU_T_HOLDERH_DECL(dataExchanges, dataExchanges_type);
+                ITU_T_HOLDERH_DECL(semaphores, semaphores_type);
+                ITU_T_HOLDERH_DECL(operatorStations, operatorStations_type);
+                ITU_T_HOLDERH_DECL(eventConditions, eventConditions_type);
+                ITU_T_HOLDERH_DECL(eventActions, eventActions_type);
+                ITU_T_HOLDERH_DECL(eventEnrollments, eventEnrollments_type);
+                ITU_T_HOLDERH_DECL(journals, journals_type);
+                ITU_T_OPTIONAL_DECL(eventConditionLists, eventConditionLists_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> readAccessCondition_;
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> storeAccessCondition_;
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> writeAccessCondition_;
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> loadAccessCondition_;
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> executeAccessCondition_;
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> deleteAccessCondition_;
-                boost::shared_ptr<MMS_Object_Module_1::AccessCondition> editAccessCondition_;
-                value_holder<accessControlLists_type> accessControlLists_;
-                value_holder<domains_type> domains_;
-                value_holder<programInvocations_type> programInvocations_;
-                value_holder<unitControls_type> unitControls_;
-                value_holder<unnamedVariables_type> unnamedVariables_;
-                value_holder<namedVariables_type> namedVariables_;
-                value_holder<namedVariableLists_type> namedVariableLists_;
-                value_holder<namedTypes_type> namedTypes_;
-                value_holder<dataExchanges_type> dataExchanges_;
-                value_holder<semaphores_type> semaphores_;
-                value_holder<operatorStations_type> operatorStations_;
-                value_holder<eventConditions_type> eventConditions_;
-                value_holder<eventActions_type> eventActions_;
-                value_holder<eventEnrollments_type> eventEnrollments_;
-                value_holder<journals_type> journals_;
-                boost::shared_ptr<eventConditionLists_type> eventConditionLists_; // after extention
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -472,15 +410,10 @@ namespace MMS_SCI_Module_1 {
         Access_Control_List_instance(const ISO_9506_MMS_1::Identifier& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::Identifier> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Domain-instance
@@ -496,7 +429,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -529,48 +462,33 @@ namespace MMS_SCI_Module_1 {
                         const eventEnrollments_type& arg__eventEnrollments,
                         const eventConditionLists_type& arg__eventConditionLists);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(capabilities, capabilities_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState);
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(sharable, bool);
-                BOOST_ASN_VALUE_HOLDERH_DECL(programInvocations, programInvocations_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(namedVariables, namedVariables_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(namedVariableLists, namedVariableLists_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(namedTypes, namedTypes_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventConditions, eventConditions_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventActions, eventActions_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollments, eventEnrollments_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionLists, eventConditionLists_type);
+                ITU_T_HOLDERH_DECL(capabilities, capabilities_type);
+                ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(sharable, bool);
+                ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
+                ITU_T_HOLDERH_DECL(namedVariables, namedVariables_type);
+                ITU_T_HOLDERH_DECL(namedVariableLists, namedVariableLists_type);
+                ITU_T_HOLDERH_DECL(namedTypes, namedTypes_type);
+                ITU_T_HOLDERH_DECL(eventConditions, eventConditions_type);
+                ITU_T_HOLDERH_DECL(eventActions, eventActions_type);
+                ITU_T_HOLDERH_DECL(eventEnrollments, eventEnrollments_type);
+                ITU_T_HOLDERH_DECL(eventConditionLists, eventConditionLists_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<capabilities_type> capabilities_;
-                value_holder<MMS_Object_Module_1::DomainState> state_;
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<bool> sharable_;
-                value_holder<programInvocations_type> programInvocations_;
-                value_holder<namedVariables_type> namedVariables_;
-                value_holder<namedVariableLists_type> namedVariableLists_;
-                value_holder<namedTypes_type> namedTypes_;
-                value_holder<eventConditions_type> eventConditions_;
-                value_holder<eventActions_type> eventActions_;
-                value_holder<eventEnrollments_type> eventEnrollments_;
-                value_holder<eventConditionLists_type> eventConditionLists_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -579,15 +497,10 @@ namespace MMS_SCI_Module_1 {
         Domain_instance(const ISO_9506_MMS_1::Identifier& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::Identifier> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Program-Invocation-instance
@@ -603,7 +516,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -640,48 +553,33 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< Program_Invocation_instance> arg__controlling_Program_Invocation = boost::shared_ptr< Program_Invocation_instance>(),
                         boost::shared_ptr< controlled_Program_Invocations_type> arg__controlled_Program_Invocations = boost::shared_ptr< controlled_Program_Invocations_type>());
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
-                BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, accessControl_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(reusable, bool);
-                BOOST_ASN_VALUE_HOLDERH_DECL(monitor, bool);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(eventCondition, eventCondition_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(eventAction, eventAction_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(eventEnrollment, eventEnrollment_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(executionArgument, ISO_9506_MMS_1::MMSString);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(control, MMS_Object_Module_1::Control_State);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(controlling_Program_Invocation, Program_Invocation_instance);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(controlled_Program_Invocations, controlled_Program_Invocations_type);
+                ITU_T_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
+                ITU_T_HOLDERH_DECL(domains, domains_type);
+                ITU_T_HOLDERH_DECL(accessControl, accessControl_type);
+                ITU_T_HOLDERH_DECL(reusable, bool);
+                ITU_T_HOLDERH_DECL(monitor, bool);
+                ITU_T_OPTIONAL_DECL(eventCondition, eventCondition_type);
+                ITU_T_OPTIONAL_DECL(eventAction, eventAction_type);
+                ITU_T_OPTIONAL_DECL(eventEnrollment, eventEnrollment_type);
+                ITU_T_HOLDERH_DECL(executionArgument, ISO_9506_MMS_1::MMSString);
+                ITU_T_OPTIONAL_DECL(control, MMS_Object_Module_1::Control_State);
+                ITU_T_OPTIONAL_DECL(controlling_Program_Invocation, Program_Invocation_instance);
+                ITU_T_OPTIONAL_DECL(controlled_Program_Invocations, controlled_Program_Invocations_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<MMS_Object_Module_1::ProgramInvocationState> programInvocationState_;
-                value_holder<domains_type> domains_;
-                value_holder<accessControl_type> accessControl_;
-                value_holder<bool> reusable_;
-                value_holder<bool> monitor_;
-                boost::shared_ptr<eventCondition_type> eventCondition_;
-                boost::shared_ptr<eventAction_type> eventAction_;
-                boost::shared_ptr<eventEnrollment_type> eventEnrollment_;
-                value_holder<ISO_9506_MMS_1::MMSString> executionArgument_;
-                boost::shared_ptr<MMS_Object_Module_1::Control_State> control_; // after extention
-                boost::shared_ptr<Program_Invocation_instance> controlling_Program_Invocation_; // after extention
-                boost::shared_ptr<controlled_Program_Invocations_type> controlled_Program_Invocations_; // after extention
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -690,15 +588,10 @@ namespace MMS_SCI_Module_1 {
         Program_Invocation_instance(const ISO_9506_MMS_1::Identifier& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::Identifier> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Unit-Control-instance
@@ -714,7 +607,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -731,30 +624,24 @@ namespace MMS_SCI_Module_1 {
                         const domains_type& arg__domains,
                         const programInvocations_type& arg__programInvocations);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(programInvocations, programInvocations_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(domains, domains_type);
+                ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<domains_type> domains_;
-                value_holder<programInvocations_type> programInvocations_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -763,15 +650,10 @@ namespace MMS_SCI_Module_1 {
         Unit_Control_instance(const ISO_9506_MMS_1::Identifier& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::Identifier> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Unnamed-Variable-instance
@@ -784,17 +666,11 @@ namespace MMS_SCI_Module_1 {
                 const Access_Control_List_instance& arg__accessControl,
                 const MMS_Object_Module_1::TypeDescription& arg__typeDescription);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(address, MMS_Object_Module_1::Address);
-        BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-        BOOST_ASN_VALUE_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
+        ITU_T_HOLDERH_DECL(address, MMS_Object_Module_1::Address);
+        ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+        ITU_T_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<MMS_Object_Module_1::Address> address_;
-        value_holder<Access_Control_List_instance> accessControl_;
-        value_holder<MMS_Object_Module_1::TypeDescription> typeDescription_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Named-Variable-instance
@@ -810,7 +686,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -827,32 +703,25 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< MMS_Object_Module_1::Address> arg__address,
                         boost::shared_ptr< visiblestring_type> arg__meaning);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(address, MMS_Object_Module_1::Address);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(meaning, visiblestring_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
+                ITU_T_OPTIONAL_DECL(address, MMS_Object_Module_1::Address);
+                ITU_T_OPTIONAL_DECL(meaning, visiblestring_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<MMS_Object_Module_1::TypeDescription> typeDescription_;
-                boost::shared_ptr<MMS_Object_Module_1::Address> address_;
-                boost::shared_ptr<visiblestring_type> meaning_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -861,15 +730,10 @@ namespace MMS_SCI_Module_1 {
         Named_Variable_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::ObjectName> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Named-Variable-List-instance
@@ -885,7 +749,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -900,28 +764,23 @@ namespace MMS_SCI_Module_1 {
                 details_type(const Access_Control_List_instance& arg__accessControl,
                         const listOfVariables_type& arg__listOfVariables);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(listOfVariables, listOfVariables_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(listOfVariables, listOfVariables_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<listOfVariables_type> listOfVariables_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -930,15 +789,10 @@ namespace MMS_SCI_Module_1 {
         Named_Variable_List_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::ObjectName> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Variable-List-Item-instance
@@ -951,17 +805,11 @@ namespace MMS_SCI_Module_1 {
                 boost::shared_ptr< Named_Variable_instance> arg__namedItem,
                 boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> arg__alternateAccess);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(unnamedItem, Unnamed_Variable_instance);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(namedItem, Named_Variable_instance);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(alternateAccess, ISO_9506_MMS_1::AlternateAccess);
+        ITU_T_OPTIONAL_DECL(unnamedItem, Unnamed_Variable_instance);
+        ITU_T_OPTIONAL_DECL(namedItem, Named_Variable_instance);
+        ITU_T_OPTIONAL_DECL(alternateAccess, ISO_9506_MMS_1::AlternateAccess);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Unnamed_Variable_instance> unnamedItem_;
-        boost::shared_ptr<Named_Variable_instance> namedItem_;
-        boost::shared_ptr<ISO_9506_MMS_1::AlternateAccess> alternateAccess_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Named-Type-instance
@@ -977,7 +825,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -993,30 +841,24 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< MMS_Object_Module_1::TypeDescription> arg__typeDescription,
                         boost::shared_ptr< visiblestring_type> arg__meaning);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(meaning, visiblestring_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
+                ITU_T_OPTIONAL_DECL(meaning, visiblestring_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<MMS_Object_Module_1::TypeDescription> typeDescription_;
-                boost::shared_ptr<visiblestring_type> meaning_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1025,15 +867,10 @@ namespace MMS_SCI_Module_1 {
         Named_Type_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::ObjectName> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Data-Exchange-instance
@@ -1049,7 +886,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -1072,34 +909,26 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< bool> arg__linked,
                         boost::shared_ptr< Program_Invocation_instance> arg__programInvocation);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(request, request_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(response, response_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(linked, bool);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(programInvocation, Program_Invocation_instance);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(request, request_type);
+                ITU_T_HOLDERH_DECL(response, response_type);
+                ITU_T_HOLDERH_DECL(linked, bool);
+                ITU_T_OPTIONAL_DECL(programInvocation, Program_Invocation_instance);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<request_type> request_;
-                value_holder<response_type> response_;
-                value_holder<bool> linked_;
-                boost::shared_ptr<Program_Invocation_instance> programInvocation_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1108,15 +937,10 @@ namespace MMS_SCI_Module_1 {
         Data_Exchange_instance(const ISO_9506_MMS_1::Identifier& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::Identifier> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Semaphore-instance
@@ -1132,7 +956,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -1157,34 +981,26 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< namedTokens_type> arg__namedTokens,
                         boost::shared_ptr< Event_Condition_instance> arg__eventCondition);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(classV, enumerated_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(numberOfTokens, int);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(namedTokens, namedTokens_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventCondition, Event_Condition_instance);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(classV, enumerated_type);
+                ITU_T_OPTIONAL_DECL(numberOfTokens, int);
+                ITU_T_OPTIONAL_DECL(namedTokens, namedTokens_type);
+                ITU_T_HOLDERH_DECL(eventCondition, Event_Condition_instance);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<enumerated_type> classV_;
-                boost::shared_ptr<int> numberOfTokens_;
-                boost::shared_ptr<namedTokens_type> namedTokens_;
-                value_holder<Event_Condition_instance> eventCondition_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1193,15 +1009,10 @@ namespace MMS_SCI_Module_1 {
         Semaphore_instance(const ISO_9506_MMS_1::Identifier& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::Identifier> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Operator-Station-instance
@@ -1217,7 +1028,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -1234,28 +1045,23 @@ namespace MMS_SCI_Module_1 {
                 details_type(const Access_Control_List_instance& arg__accessControl,
                         const enumerated_type& arg__stationType);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(stationType, enumerated_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(stationType, enumerated_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<enumerated_type> stationType_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1264,15 +1070,10 @@ namespace MMS_SCI_Module_1 {
         Operator_Station_instance(const ISO_9506_MMS_1::Identifier& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::Identifier);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::Identifier> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Event-Condition-instance
@@ -1288,7 +1089,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -1307,20 +1108,20 @@ namespace MMS_SCI_Module_1 {
                     monitoredVariable_type_unspecified,
                 };
 
-                struct monitoredVariable_type : public BOOST_ASN_CHOICE_STRUCT(monitoredVariable_type_enum) {
+                struct monitoredVariable_type : public ITU_T_STRUCT(monitoredVariable_type_enum) {
 
-                    monitoredVariable_type() : BOOST_ASN_CHOICE_STRUCT(monitoredVariable_type_enum) () {
+                    monitoredVariable_type() : ITU_T_STRUCT(monitoredVariable_type_enum) () {
                     }
 
                     template<typename T > monitoredVariable_type(boost::shared_ptr< T> vl, monitoredVariable_type_enum enm) :
-                            BOOST_ASN_CHOICE_STRUCT(monitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_STRUCT(monitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    BOOST_ASN_VALUE_CHOICE(named, Named_Variable_instance, monitoredVariable_type_named);
-                    BOOST_ASN_VALUE_CHOICE(unnamed, Unnamed_Variable_instance, monitoredVariable_type_unnamed);
-                    BOOST_ASN_VALUE_CHOICE(unspecified, null_type, monitoredVariable_type_unspecified);
+                    ITU_T_CHOICE_DECL(named, Named_Variable_instance, monitoredVariable_type_named);
+                    ITU_T_CHOICE_DECL(unnamed, Unnamed_Variable_instance, monitoredVariable_type_unnamed);
+                    ITU_T_CHOICE_DECL(unspecified, null_type, monitoredVariable_type_unspecified);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
                 enum displayEnhancement_type_enum {
@@ -1331,20 +1132,20 @@ namespace MMS_SCI_Module_1 {
                     displayEnhancement_type_none,
                 };
 
-                struct displayEnhancement_type : public BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) {
+                struct displayEnhancement_type : public ITU_T_STRUCT(displayEnhancement_type_enum) {
 
-                    displayEnhancement_type() : BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) () {
+                    displayEnhancement_type() : ITU_T_STRUCT(displayEnhancement_type_enum) () {
                     }
 
                     template<typename T > displayEnhancement_type(boost::shared_ptr< T> vl, displayEnhancement_type_enum enm) :
-                            BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    BOOST_ASN_VALUE_CHOICE(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text);
-                    BOOST_ASN_VALUE_CHOICE(number, int, displayEnhancement_type_number);
-                    BOOST_ASN_VALUE_CHOICE(none, null_type, displayEnhancement_type_none);
+                    ITU_T_CHOICE_DECL(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text);
+                    ITU_T_CHOICE_DECL(number, int, displayEnhancement_type_number);
+                    ITU_T_CHOICE_DECL(none, null_type, displayEnhancement_type_none);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
                 enum group_Priority_Override_type_enum {
@@ -1354,19 +1155,19 @@ namespace MMS_SCI_Module_1 {
                     group_Priority_Override_type_undefined,
                 };
 
-                struct group_Priority_Override_type : public BOOST_ASN_CHOICE_STRUCT(group_Priority_Override_type_enum) {
+                struct group_Priority_Override_type : public ITU_T_STRUCT(group_Priority_Override_type_enum) {
 
-                    group_Priority_Override_type() : BOOST_ASN_CHOICE_STRUCT(group_Priority_Override_type_enum) () {
+                    group_Priority_Override_type() : ITU_T_STRUCT(group_Priority_Override_type_enum) () {
                     }
 
                     template<typename T > group_Priority_Override_type(boost::shared_ptr< T> vl, group_Priority_Override_type_enum enm) :
-                            BOOST_ASN_CHOICE_STRUCT(group_Priority_Override_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_STRUCT(group_Priority_Override_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    BOOST_ASN_VALUE_CHOICE(priority, MMS_Object_Module_1::Priority, group_Priority_Override_type_priority);
-                    BOOST_ASN_VALUE_CHOICE(undefined, null_type, group_Priority_Override_type_undefined);
+                    ITU_T_CHOICE_DECL(priority, MMS_Object_Module_1::Priority, group_Priority_Override_type_priority);
+                    ITU_T_CHOICE_DECL(undefined, null_type, group_Priority_Override_type_undefined);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
 
@@ -1398,50 +1199,34 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< group_Priority_Override_type> arg__group_Priority_Override = boost::shared_ptr< group_Priority_Override_type>(),
                         boost::shared_ptr< referencingEventConditionLists_type> arg__referencingEventConditionLists = boost::shared_ptr< referencingEventConditionLists_type>());
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(ecClass, MMS_Object_Module_1::EC_Class);
-                BOOST_ASN_VALUE_HOLDERH_DECL(ecState, MMS_Object_Module_1::EC_State);
-                BOOST_ASN_VALUE_HOLDERH_DECL(priority, MMS_Object_Module_1::Priority);
-                BOOST_ASN_VALUE_HOLDERH_DECL(severity, MMS_Object_Module_1::Severity);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollments, eventEnrollments_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(enabled, bool);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(alarmSummaryReports, bool);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(monitoredVariable, monitoredVariable_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(evaluationInterval, int);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(displayEnhancement, displayEnhancement_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(group_Priority_Override, group_Priority_Override_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(referencingEventConditionLists, referencingEventConditionLists_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(ecClass, MMS_Object_Module_1::EC_Class);
+                ITU_T_HOLDERH_DECL(ecState, MMS_Object_Module_1::EC_State);
+                ITU_T_HOLDERH_DECL(priority, MMS_Object_Module_1::Priority);
+                ITU_T_HOLDERH_DECL(severity, MMS_Object_Module_1::Severity);
+                ITU_T_HOLDERH_DECL(eventEnrollments, eventEnrollments_type);
+                ITU_T_OPTIONAL_DECL(enabled, bool);
+                ITU_T_OPTIONAL_DECL(alarmSummaryReports, bool);
+                ITU_T_OPTIONAL_DECL(monitoredVariable, monitoredVariable_type);
+                ITU_T_OPTIONAL_DECL(evaluationInterval, int);
+                ITU_T_OPTIONAL_DECL(displayEnhancement, displayEnhancement_type);
+                ITU_T_OPTIONAL_DECL(group_Priority_Override, group_Priority_Override_type);
+                ITU_T_OPTIONAL_DECL(referencingEventConditionLists, referencingEventConditionLists_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<MMS_Object_Module_1::EC_Class> ecClass_;
-                value_holder<MMS_Object_Module_1::EC_State> ecState_;
-                value_holder<MMS_Object_Module_1::Priority> priority_;
-                value_holder<MMS_Object_Module_1::Severity> severity_;
-                value_holder<eventEnrollments_type> eventEnrollments_;
-                boost::shared_ptr<bool> enabled_;
-                boost::shared_ptr<bool> alarmSummaryReports_;
-                boost::shared_ptr<monitoredVariable_type> monitoredVariable_;
-                boost::shared_ptr<int> evaluationInterval_;
-                boost::shared_ptr<displayEnhancement_type> displayEnhancement_; // after extention
-                boost::shared_ptr<group_Priority_Override_type> group_Priority_Override_; // after extention
-                boost::shared_ptr<referencingEventConditionLists_type> referencingEventConditionLists_; // after extention
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1450,15 +1235,10 @@ namespace MMS_SCI_Module_1 {
         Event_Condition_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::ObjectName> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Event-Action-instance
@@ -1474,7 +1254,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -1492,32 +1272,25 @@ namespace MMS_SCI_Module_1 {
                         const modifiers_type& arg__modifiers,
                         const eventEnrollments_type& arg__eventEnrollments);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(confirmedServiceRequest, ISO_9506_MMS_1::ConfirmedServiceRequest);
-                BOOST_ASN_VALUE_HOLDERH_DECL(modifiers, modifiers_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollments, eventEnrollments_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(confirmedServiceRequest, ISO_9506_MMS_1::ConfirmedServiceRequest);
+                ITU_T_HOLDERH_DECL(modifiers, modifiers_type);
+                ITU_T_HOLDERH_DECL(eventEnrollments, eventEnrollments_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<ISO_9506_MMS_1::ConfirmedServiceRequest> confirmedServiceRequest_;
-                value_holder<modifiers_type> modifiers_;
-                value_holder<eventEnrollments_type> eventEnrollments_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1526,15 +1299,10 @@ namespace MMS_SCI_Module_1 {
         Event_Action_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::ObjectName> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Event-Enrollment-instance
@@ -1550,7 +1318,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -1567,19 +1335,19 @@ namespace MMS_SCI_Module_1 {
                     remainingDelay_type_forever,
                 };
 
-                struct remainingDelay_type : public BOOST_ASN_CHOICE_STRUCT(remainingDelay_type_enum) {
+                struct remainingDelay_type : public ITU_T_STRUCT(remainingDelay_type_enum) {
 
-                    remainingDelay_type() : BOOST_ASN_CHOICE_STRUCT(remainingDelay_type_enum) () {
+                    remainingDelay_type() : ITU_T_STRUCT(remainingDelay_type_enum) () {
                     }
 
                     template<typename T > remainingDelay_type(boost::shared_ptr< T> vl, remainingDelay_type_enum enm) :
-                            BOOST_ASN_CHOICE_STRUCT(remainingDelay_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_STRUCT(remainingDelay_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    BOOST_ASN_VALUE_CHOICE(time, int, remainingDelay_type_time);
-                    BOOST_ASN_VALUE_CHOICE(forever, null_type, remainingDelay_type_forever);
+                    ITU_T_CHOICE_DECL(time, int, remainingDelay_type_time);
+                    ITU_T_CHOICE_DECL(forever, null_type, remainingDelay_type_forever);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
                 enum displayEnhancement_type_enum {
@@ -1590,20 +1358,20 @@ namespace MMS_SCI_Module_1 {
                     displayEnhancement_type_none,
                 };
 
-                struct displayEnhancement_type : public BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) {
+                struct displayEnhancement_type : public ITU_T_STRUCT(displayEnhancement_type_enum) {
 
-                    displayEnhancement_type() : BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) () {
+                    displayEnhancement_type() : ITU_T_STRUCT(displayEnhancement_type_enum) () {
                     }
 
                     template<typename T > displayEnhancement_type(boost::shared_ptr< T> vl, displayEnhancement_type_enum enm) :
-                            BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    BOOST_ASN_VALUE_CHOICE(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text);
-                    BOOST_ASN_VALUE_CHOICE(number, int, displayEnhancement_type_number);
-                    BOOST_ASN_VALUE_CHOICE(none, null_type, displayEnhancement_type_none);
+                    ITU_T_CHOICE_DECL(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text);
+                    ITU_T_CHOICE_DECL(number, int, displayEnhancement_type_number);
+                    ITU_T_CHOICE_DECL(none, null_type, displayEnhancement_type_none);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
 
@@ -1625,44 +1393,31 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__aaRule,
                         boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement = boost::shared_ptr< displayEnhancement_type>());
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eeClass, MMS_Object_Module_1::EE_Class);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventCondition, Event_Condition_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(ecTransitions, MMS_Object_Module_1::Transitions);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(remainingDelay, remainingDelay_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(eventAction, Event_Action_instance);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(duration, MMS_Object_Module_1::EE_Duration);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(aaRule, MMS_Object_Module_1::AlarmAckRule);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(displayEnhancement, displayEnhancement_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(eeClass, MMS_Object_Module_1::EE_Class);
+                ITU_T_HOLDERH_DECL(eventCondition, Event_Condition_instance);
+                ITU_T_HOLDERH_DECL(ecTransitions, MMS_Object_Module_1::Transitions);
+                ITU_T_OPTIONAL_DECL(remainingDelay, remainingDelay_type);
+                ITU_T_OPTIONAL_DECL(eventAction, Event_Action_instance);
+                ITU_T_OPTIONAL_DECL(duration, MMS_Object_Module_1::EE_Duration);
+                ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
+                ITU_T_OPTIONAL_DECL(aaRule, MMS_Object_Module_1::AlarmAckRule);
+                ITU_T_OPTIONAL_DECL(displayEnhancement, displayEnhancement_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<MMS_Object_Module_1::EE_Class> eeClass_;
-                value_holder<Event_Condition_instance> eventCondition_;
-                value_holder<MMS_Object_Module_1::Transitions> ecTransitions_;
-                boost::shared_ptr<remainingDelay_type> remainingDelay_;
-                boost::shared_ptr<Event_Action_instance> eventAction_;
-                boost::shared_ptr<MMS_Object_Module_1::EE_Duration> duration_;
-                boost::shared_ptr<MMS_Environment_1::ApplicationReference> clientApplication_;
-                boost::shared_ptr<MMS_Object_Module_1::AlarmAckRule> aaRule_;
-                boost::shared_ptr<displayEnhancement_type> displayEnhancement_; // after extention
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1671,15 +1426,10 @@ namespace MMS_SCI_Module_1 {
         Event_Enrollment_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::ObjectName> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Event-Condition-List-instance
@@ -1695,7 +1445,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -1714,32 +1464,25 @@ namespace MMS_SCI_Module_1 {
                         const eventConditionLists_type& arg__eventConditionLists,
                         const referencingEventConditionLists_type& arg__referencingEventConditionLists);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventConditions, eventConditions_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionLists, eventConditionLists_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(referencingEventConditionLists, referencingEventConditionLists_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(eventConditions, eventConditions_type);
+                ITU_T_HOLDERH_DECL(eventConditionLists, eventConditionLists_type);
+                ITU_T_HOLDERH_DECL(referencingEventConditionLists, referencingEventConditionLists_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<eventConditions_type> eventConditions_;
-                value_holder<eventConditionLists_type> eventConditionLists_;
-                value_holder<referencingEventConditionLists_type> referencingEventConditionLists_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1748,15 +1491,10 @@ namespace MMS_SCI_Module_1 {
         Event_Condition_List_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::ObjectName> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Journal-instance
@@ -1772,7 +1510,7 @@ namespace MMS_SCI_Module_1 {
             definition_type_details,
         };
 
-        struct definition_type : public BOOST_ASN_CHOICE_STRUCT(definition_type_enum) {
+        struct definition_type : public ITU_T_STRUCT(definition_type_enum) {
 
 
             struct details_type;
@@ -1787,28 +1525,23 @@ namespace MMS_SCI_Module_1 {
                 details_type(const Access_Control_List_instance& arg__accessControl,
                         const entries_type& arg__entries);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                BOOST_ASN_VALUE_HOLDERH_DECL(entries, entries_type);
+                ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
+                ITU_T_HOLDERH_DECL(entries, entries_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Access_Control_List_instance> accessControl_;
-                value_holder<entries_type> entries_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            definition_type() : BOOST_ASN_CHOICE_STRUCT(definition_type_enum) () {
+            definition_type() : ITU_T_STRUCT(definition_type_enum) () {
             }
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(reference, oid_type, definition_type_reference);
-            BOOST_ASN_VALUE_CHOICE(details, details_type, definition_type_details);
+            ITU_T_CHOICE_DECL(reference, oid_type, definition_type_reference);
+            ITU_T_CHOICE_DECL(details, details_type, definition_type_details);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1817,15 +1550,10 @@ namespace MMS_SCI_Module_1 {
         Journal_instance(const ISO_9506_MMS_1::ObjectName& arg__name,
                 const definition_type& arg__definition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(definition, definition_type);
+        ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
+        ITU_T_HOLDERH_DECL(definition, definition_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::ObjectName> name_;
-        value_holder<definition_type> definition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Journal-Entry-instance
@@ -1842,15 +1570,10 @@ namespace MMS_SCI_Module_1 {
             eventTransitionRecord_type(const ISO_9506_MMS_1::ObjectName& arg__name,
                     const MMS_Object_Module_1::EC_State& arg__currentState);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
-            BOOST_ASN_VALUE_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
+            ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
+            ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<ISO_9506_MMS_1::ObjectName> name_;
-            value_holder<MMS_Object_Module_1::EC_State> currentState_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct journalVariables_type_sequence_of {
@@ -1860,15 +1583,10 @@ namespace MMS_SCI_Module_1 {
             journalVariables_type_sequence_of(const ISO_9506_MMS_1::MMS255String& arg__variableTag,
                     const ISO_9506_MMS_1::Data& arg__valueSpecification);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(variableTag, ISO_9506_MMS_1::MMS255String);
-            BOOST_ASN_VALUE_HOLDERH_DECL(valueSpecification, ISO_9506_MMS_1::Data);
+            ITU_T_HOLDERH_DECL(variableTag, ISO_9506_MMS_1::MMS255String);
+            ITU_T_HOLDERH_DECL(valueSpecification, ISO_9506_MMS_1::Data);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<ISO_9506_MMS_1::MMS255String> variableTag_;
-            value_holder<ISO_9506_MMS_1::Data> valueSpecification_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1899,29 +1617,17 @@ namespace MMS_SCI_Module_1 {
                 boost::shared_ptr< eventTransitionRecord_type> arg__eventTransitionRecord,
                 boost::shared_ptr< journalVariables_type> arg__journalVariables);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(journal, Journal_instance);
-        BOOST_ASN_VALUE_HOLDERH_DECL(entry, octetstring_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
-        BOOST_ASN_VALUE_HOLDERH_DECL(timeStamp, ISO_9506_MMS_1::TimeOfDay);
-        BOOST_ASN_VALUE_HOLDERH_DECL(orderOfReceipt, int);
-        BOOST_ASN_VALUE_HOLDERH_DECL(informationType, enumerated_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(textComment, ISO_9506_MMS_1::MMS255String);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(eventTransitionRecord, eventTransitionRecord_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(journalVariables, journalVariables_type);
+        ITU_T_HOLDERH_DECL(journal, Journal_instance);
+        ITU_T_HOLDERH_DECL(entry, octetstring_type);
+        ITU_T_HOLDERH_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(timeStamp, ISO_9506_MMS_1::TimeOfDay);
+        ITU_T_HOLDERH_DECL(orderOfReceipt, int);
+        ITU_T_HOLDERH_DECL(informationType, enumerated_type);
+        ITU_T_OPTIONAL_DECL(textComment, ISO_9506_MMS_1::MMS255String);
+        ITU_T_OPTIONAL_DECL(eventTransitionRecord, eventTransitionRecord_type);
+        ITU_T_OPTIONAL_DECL(journalVariables, journalVariables_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Journal_instance> journal_;
-        value_holder<octetstring_type> entry_;
-        value_holder<MMS_Environment_1::ApplicationReference> clientApplication_;
-        value_holder<ISO_9506_MMS_1::TimeOfDay> timeStamp_;
-        value_holder<int> orderOfReceipt_;
-        value_holder<enumerated_type> informationType_;
-        boost::shared_ptr<ISO_9506_MMS_1::MMS255String> textComment_;
-        boost::shared_ptr<eventTransitionRecord_type> eventTransitionRecord_;
-        boost::shared_ptr<journalVariables_type> journalVariables_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Service-and-Parameter-CBBs
@@ -1948,45 +1654,25 @@ namespace MMS_SCI_Module_1 {
                 const ErrorParameters& arg__errors,
                 const FileManagementParameters& arg__fileManagement);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(services_Client, MMS_Object_Module_1::ServiceSupportOptions);
-        BOOST_ASN_VALUE_HOLDERH_DECL(services_Server, MMS_Object_Module_1::ServiceSupportOptions);
-        BOOST_ASN_VALUE_HOLDERH_DECL(parameters, MMS_Object_Module_1::ParameterSupportOptions);
-        BOOST_ASN_VALUE_HOLDERH_DECL(nest, int);
-        BOOST_ASN_VALUE_HOLDERH_DECL(extendedServices_Client, MMS_Object_Module_1::AdditionalSupportOptions);
-        BOOST_ASN_VALUE_HOLDERH_DECL(extendedServices_Server, MMS_Object_Module_1::AdditionalSupportOptions);
-        BOOST_ASN_VALUE_HOLDERH_DECL(extendedParameters, MMS_Object_Module_1::AdditionalCBBOptions);
-        BOOST_ASN_VALUE_HOLDERH_DECL(generalManagement, GeneralManagementParameters);
-        BOOST_ASN_VALUE_HOLDERH_DECL(vMDSupport, VMDSupportParameters);
-        BOOST_ASN_VALUE_HOLDERH_DECL(domainManagement, DomainManagementParameters);
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocation, ProgramInvocationManagementParameters);
-        BOOST_ASN_VALUE_HOLDERH_DECL(variableAccess, VariableAccessParameters);
-        BOOST_ASN_VALUE_HOLDERH_DECL(dataParameters, DataParameters);
-        BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreManagement, SemaphoreManagementParameters);
-        BOOST_ASN_VALUE_HOLDERH_DECL(operatorCommunication, OperatorCommunicationParameters);
-        BOOST_ASN_VALUE_HOLDERH_DECL(errors, ErrorParameters);
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileManagement, FileManagementParameters);
+        ITU_T_HOLDERH_DECL(services_Client, MMS_Object_Module_1::ServiceSupportOptions);
+        ITU_T_HOLDERH_DECL(services_Server, MMS_Object_Module_1::ServiceSupportOptions);
+        ITU_T_HOLDERH_DECL(parameters, MMS_Object_Module_1::ParameterSupportOptions);
+        ITU_T_HOLDERH_DECL(nest, int);
+        ITU_T_HOLDERH_DECL(extendedServices_Client, MMS_Object_Module_1::AdditionalSupportOptions);
+        ITU_T_HOLDERH_DECL(extendedServices_Server, MMS_Object_Module_1::AdditionalSupportOptions);
+        ITU_T_HOLDERH_DECL(extendedParameters, MMS_Object_Module_1::AdditionalCBBOptions);
+        ITU_T_HOLDERH_DECL(generalManagement, GeneralManagementParameters);
+        ITU_T_HOLDERH_DECL(vMDSupport, VMDSupportParameters);
+        ITU_T_HOLDERH_DECL(domainManagement, DomainManagementParameters);
+        ITU_T_HOLDERH_DECL(programInvocation, ProgramInvocationManagementParameters);
+        ITU_T_HOLDERH_DECL(variableAccess, VariableAccessParameters);
+        ITU_T_HOLDERH_DECL(dataParameters, DataParameters);
+        ITU_T_HOLDERH_DECL(semaphoreManagement, SemaphoreManagementParameters);
+        ITU_T_HOLDERH_DECL(operatorCommunication, OperatorCommunicationParameters);
+        ITU_T_HOLDERH_DECL(errors, ErrorParameters);
+        ITU_T_HOLDERH_DECL(fileManagement, FileManagementParameters);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<MMS_Object_Module_1::ServiceSupportOptions> services_Client_;
-        value_holder<MMS_Object_Module_1::ServiceSupportOptions> services_Server_;
-        value_holder<MMS_Object_Module_1::ParameterSupportOptions> parameters_;
-        value_holder<int> nest_;
-        value_holder<MMS_Object_Module_1::AdditionalSupportOptions> extendedServices_Client_;
-        value_holder<MMS_Object_Module_1::AdditionalSupportOptions> extendedServices_Server_;
-        value_holder<MMS_Object_Module_1::AdditionalCBBOptions> extendedParameters_;
-        value_holder<GeneralManagementParameters> generalManagement_;
-        value_holder<VMDSupportParameters> vMDSupport_;
-        value_holder<DomainManagementParameters> domainManagement_;
-        value_holder<ProgramInvocationManagementParameters> programInvocation_;
-        value_holder<VariableAccessParameters> variableAccess_;
-        value_holder<DataParameters> dataParameters_;
-        value_holder<SemaphoreManagementParameters> semaphoreManagement_;
-        value_holder<OperatorCommunicationParameters> operatorCommunication_;
-        value_holder<ErrorParameters> errors_;
-        value_holder<FileManagementParameters> fileManagement_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GeneralManagementParameters
@@ -2002,15 +1688,10 @@ namespace MMS_SCI_Module_1 {
             supportForTime_type(const bool& arg__timeOfDay,
                     const bool& arg__timeSequence);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(timeOfDay, bool);
-            BOOST_ASN_VALUE_HOLDERH_DECL(timeSequence, bool);
+            ITU_T_HOLDERH_DECL(timeOfDay, bool);
+            ITU_T_HOLDERH_DECL(timeSequence, bool);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<bool> timeOfDay_;
-            value_holder<bool> timeSequence_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -2020,17 +1701,11 @@ namespace MMS_SCI_Module_1 {
                 const supportForTime_type& arg__supportForTime,
                 const int& arg__granularityOfTime);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(localDetail, ISO_9506_MMS_1::MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(supportForTime, supportForTime_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(granularityOfTime, int);
+        ITU_T_HOLDERH_DECL(localDetail, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(supportForTime, supportForTime_type);
+        ITU_T_HOLDERH_DECL(granularityOfTime, int);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::MMSString> localDetail_;
-        value_holder<supportForTime_type> supportForTime_;
-        value_holder<int> granularityOfTime_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence VMDSupportParameters
@@ -2042,15 +1717,10 @@ namespace MMS_SCI_Module_1 {
         VMDSupportParameters(const ISO_9506_MMS_1::MMSString& arg__localDetail,
                 const ISO_9506_MMS_1::MMSString& arg__extendedDerivation);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(localDetail, ISO_9506_MMS_1::MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(extendedDerivation, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(localDetail, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(extendedDerivation, ISO_9506_MMS_1::MMSString);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::MMSString> localDetail_;
-        value_holder<ISO_9506_MMS_1::MMSString> extendedDerivation_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DomainManagementParameters
@@ -2066,17 +1736,11 @@ namespace MMS_SCI_Module_1 {
                 const loadDataSyntax_type& arg__loadDataSyntax,
                 const int& arg__maxUploads);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(loadDataOctet, ISO_9506_MMS_1::MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(loadDataSyntax, loadDataSyntax_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(maxUploads, int);
+        ITU_T_HOLDERH_DECL(loadDataOctet, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(loadDataSyntax, loadDataSyntax_type);
+        ITU_T_HOLDERH_DECL(maxUploads, int);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::MMSString> loadDataOctet_;
-        value_holder<loadDataSyntax_type> loadDataSyntax_;
-        value_holder<int> maxUploads_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ProgramInvocationManagementParameters
@@ -2094,21 +1758,13 @@ namespace MMS_SCI_Module_1 {
                 const ISO_9506_MMS_1::MMSString& arg__programLoction,
                 const bool& arg__stepMode);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(executionArgMaxSize, int);
-        BOOST_ASN_VALUE_HOLDERH_DECL(executionArgParseRules, ISO_9506_MMS_1::MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(executionArgSyntaxes, executionArgSyntaxes_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(programLoction, ISO_9506_MMS_1::MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(stepMode, bool);
+        ITU_T_HOLDERH_DECL(executionArgMaxSize, int);
+        ITU_T_HOLDERH_DECL(executionArgParseRules, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(executionArgSyntaxes, executionArgSyntaxes_type);
+        ITU_T_HOLDERH_DECL(programLoction, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(stepMode, bool);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<int> executionArgMaxSize_;
-        value_holder<ISO_9506_MMS_1::MMSString> executionArgParseRules_;
-        value_holder<executionArgSyntaxes_type> executionArgSyntaxes_;
-        value_holder<ISO_9506_MMS_1::MMSString> programLoction_;
-        value_holder<bool> stepMode_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence VariableAccessParameters
@@ -2121,17 +1777,11 @@ namespace MMS_SCI_Module_1 {
                 const bool& arg__singleMode,
                 const bool& arg__unnamedMode);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(uninterruptibleAccess, ISO_9506_MMS_1::MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(singleMode, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(unnamedMode, bool);
+        ITU_T_HOLDERH_DECL(uninterruptibleAccess, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(singleMode, bool);
+        ITU_T_HOLDERH_DECL(unnamedMode, bool);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::MMSString> uninterruptibleAccess_;
-        value_holder<bool> singleMode_;
-        value_holder<bool> unnamedMode_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DataParameters
@@ -2147,15 +1797,10 @@ namespace MMS_SCI_Module_1 {
             floating_point_type(const int& arg__total,
                     const int& arg__exponent);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(total, int);
-            BOOST_ASN_VALUE_HOLDERH_DECL(exponent, int);
+            ITU_T_HOLDERH_DECL(total, int);
+            ITU_T_HOLDERH_DECL(exponent, int);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<int> total_;
-            value_holder<int> exponent_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -2171,29 +1816,17 @@ namespace MMS_SCI_Module_1 {
                 boost::shared_ptr< int> arg__bcd,
                 boost::shared_ptr< int> arg__mmsString);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(bit_string, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(integer, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(unsignedV, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(floating_point, floating_point_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(octet_string, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(visible_string, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(binary_time, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(bcd, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(mmsString, int);
+        ITU_T_OPTIONAL_DECL(bit_string, int);
+        ITU_T_OPTIONAL_DECL(integer, int);
+        ITU_T_OPTIONAL_DECL(unsignedV, int);
+        ITU_T_OPTIONAL_DECL(floating_point, floating_point_type);
+        ITU_T_OPTIONAL_DECL(octet_string, int);
+        ITU_T_OPTIONAL_DECL(visible_string, int);
+        ITU_T_OPTIONAL_DECL(binary_time, bool);
+        ITU_T_OPTIONAL_DECL(bcd, int);
+        ITU_T_OPTIONAL_DECL(mmsString, int);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<int> bit_string_;
-        boost::shared_ptr<int> integer_;
-        boost::shared_ptr<int> unsignedV_;
-        boost::shared_ptr<floating_point_type> floating_point_;
-        boost::shared_ptr<int> octet_string_;
-        boost::shared_ptr<int> visible_string_;
-        boost::shared_ptr<bool> binary_time_;
-        boost::shared_ptr<int> bcd_;
-        boost::shared_ptr<int> mmsString_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence SemaphoreManagementParameters
@@ -2204,13 +1837,9 @@ namespace MMS_SCI_Module_1 {
 
         SemaphoreManagementParameters(const ISO_9506_MMS_1::MMSString& arg__algorithm);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(algorithm, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(algorithm, ISO_9506_MMS_1::MMSString);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::MMSString> algorithm_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence OperatorCommunicationParameters
@@ -2221,13 +1850,9 @@ namespace MMS_SCI_Module_1 {
 
         OperatorCommunicationParameters(const int& arg__input_time_out);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(input_time_out, int);
+        ITU_T_HOLDERH_DECL(input_time_out, int);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<int> input_time_out_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ErrorParameters
@@ -2243,15 +1868,10 @@ namespace MMS_SCI_Module_1 {
             additionalDetial_type(const int& arg__size,
                     const ISO_9506_MMS_1::MMSString& arg__syntax);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(size, int);
-            BOOST_ASN_VALUE_HOLDERH_DECL(syntax, ISO_9506_MMS_1::MMSString);
+            ITU_T_HOLDERH_DECL(size, int);
+            ITU_T_HOLDERH_DECL(syntax, ISO_9506_MMS_1::MMSString);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<int> size_;
-            value_holder<ISO_9506_MMS_1::MMSString> syntax_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -2260,15 +1880,10 @@ namespace MMS_SCI_Module_1 {
         ErrorParameters(const ISO_9506_MMS_1::MMSString& arg__additionalCode,
                 const additionalDetial_type& arg__additionalDetial);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(additionalCode, ISO_9506_MMS_1::MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(additionalDetial, additionalDetial_type);
+        ITU_T_HOLDERH_DECL(additionalCode, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(additionalDetial, additionalDetial_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::MMSString> additionalCode_;
-        value_holder<additionalDetial_type> additionalDetial_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence FileManagementParameters
@@ -2279,13 +1894,9 @@ namespace MMS_SCI_Module_1 {
 
         FileManagementParameters(const ISO_9506_MMS_1::MMSString& arg__fileName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileName, ISO_9506_MMS_1::MMSString);
+        ITU_T_HOLDERH_DECL(fileName, ISO_9506_MMS_1::MMSString);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ISO_9506_MMS_1::MMSString> fileName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     template<> void SCI_Information::serialize(boost::asn1::x690::output_coder& arch);
@@ -2434,27 +2045,27 @@ namespace MMS_SCI_Module_1 {
     template<> void FileManagementParameters::serialize(boost::asn1::x690::input_coder& arch);
 }
 
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::VMD_File::selected_Program_Invocation_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Access_Control_List_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Domain_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Program_Invocation_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Unit_Control_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Named_Variable_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Named_Variable_List_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Named_Type_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Data_Exchange_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Semaphore_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Operator_Station_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_instance::definition_type::details_type::monitoredVariable_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_instance::definition_type::details_type::displayEnhancement_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_instance::definition_type::details_type::group_Priority_Override_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Action_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Enrollment_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Enrollment_instance::definition_type::details_type::remainingDelay_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Enrollment_instance::definition_type::details_type::displayEnhancement_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_List_instance::definition_type)
-BOOST_ASN_CHOICE_REGESTRATE(MMS_SCI_Module_1::Journal_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::VMD_File::selected_Program_Invocation_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Access_Control_List_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Domain_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Program_Invocation_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Unit_Control_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Named_Variable_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Named_Variable_List_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Named_Type_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Data_Exchange_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Semaphore_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Operator_Station_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_instance::definition_type::details_type::monitoredVariable_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_instance::definition_type::details_type::displayEnhancement_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_instance::definition_type::details_type::group_Priority_Override_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Action_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Enrollment_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Enrollment_instance::definition_type::details_type::remainingDelay_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Enrollment_instance::definition_type::details_type::displayEnhancement_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_List_instance::definition_type)
+ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Journal_instance::definition_type)
 
 #endif  /*___MMS_SCI_MODULE_1 */
 

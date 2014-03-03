@@ -306,8 +306,8 @@ namespace ISO_9506_MMS_1 {
     typedef Identifier DeleteDomain_Request;
     typedef Identifier GetDomainAttributes_Request;
     typedef Identifier DeleteProgramInvocation_Request;
-    BOOST_ASN_EXPLICIT_TYPEDEF(CS_Start_Request, CS_Start_Request_impl, 0, CONTEXT_CLASS);
-    BOOST_ASN_EXPLICIT_TYPEDEF(CS_Resume_Request, CS_Resume_Request_impl, 0, CONTEXT_CLASS);
+    ITU_T_EXPLICIT_TYPEDEF(CS_Start_Request, CS_Start_Request_impl, 0, CONTEXT_CLASS);
+    ITU_T_EXPLICIT_TYPEDEF(CS_Resume_Request, CS_Resume_Request_impl, 0, CONTEXT_CLASS);
     typedef Identifier GetProgramInvocationAttributes_Request;
     typedef Identifier InitiateUnitControlLoad_Request;
     typedef Identifier UnitControlLoadSegment_Request;
@@ -323,9 +323,9 @@ namespace ISO_9506_MMS_1 {
     typedef ObjectName DeleteSemaphore_Request;
     typedef ObjectName ReportSemaphoreStatus_Request;
     typedef MMSString Input_Response;
-    BOOST_ASN_EXPLICIT_TYPEDEF(CS_EventNotification, CS_EventNotification_impl, 0, CONTEXT_CLASS);
-    BOOST_ASN_EXPLICIT_TYPEDEF(EN_Additional_Detail, EN_Additional_Detail_impl, 0, CONTEXT_CLASS);
-    BOOST_ASN_EXPLICIT_TYPEDEF(CS_DefineEventCondition_Request, CS_DefineEventCondition_Request_impl, 0, CONTEXT_CLASS);
+    ITU_T_EXPLICIT_TYPEDEF(CS_EventNotification, CS_EventNotification_impl, 0, CONTEXT_CLASS);
+    ITU_T_EXPLICIT_TYPEDEF(EN_Additional_Detail, EN_Additional_Detail_impl, 0, CONTEXT_CLASS);
+    ITU_T_EXPLICIT_TYPEDEF(CS_DefineEventCondition_Request, CS_DefineEventCondition_Request_impl, 0, CONTEXT_CLASS);
     typedef Unsigned32 DeleteEventCondition_Response;
     typedef ObjectName GetEventConditionAttributes_Request;
     typedef ObjectName ReportEventConditionStatus_Request;
@@ -334,7 +334,7 @@ namespace ISO_9506_MMS_1 {
     typedef ObjectName ReportEventActionStatus_Request;
     typedef Unsigned32 ReportEventActionStatus_Response;
     typedef ObjectName DefineEventEnrollment_Error;
-    BOOST_ASN_EXPLICIT_TYPEDEF(CS_DefineEventEnrollment_Request, CS_DefineEventEnrollment_Request_impl, 0, CONTEXT_CLASS);
+    ITU_T_EXPLICIT_TYPEDEF(CS_DefineEventEnrollment_Request, CS_DefineEventEnrollment_Request_impl, 0, CONTEXT_CLASS);
     typedef Unsigned32 DeleteEventEnrollment_Response;
     typedef ObjectName ReportEventEnrollmentStatus_Request;
     typedef ObjectName DefineEventConditionList_Error;
@@ -422,31 +422,31 @@ namespace ISO_9506_MMS_1 {
         MMSpdu_conclude_ErrorPDU,
     };
 
-    struct MMSpdu : public BOOST_ASN_CHOICE_STRUCT(MMSpdu_enum) {
+    struct MMSpdu : public ITU_T_STRUCT(MMSpdu_enum) {
 
-        MMSpdu() : BOOST_ASN_CHOICE_STRUCT(MMSpdu_enum) () {
+        MMSpdu() : ITU_T_STRUCT(MMSpdu_enum) () {
         }
 
         template<typename T > MMSpdu(boost::shared_ptr< T> vl, MMSpdu_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(MMSpdu_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(MMSpdu_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(confirmed_RequestPDU, Confirmed_RequestPDU, MMSpdu_confirmed_RequestPDU);
-        BOOST_ASN_VALUE_CHOICE(confirmed_ResponsePDU, Confirmed_ResponsePDU, MMSpdu_confirmed_ResponsePDU);
-        BOOST_ASN_VALUE_CHOICE(confirmed_ErrorPDU, Confirmed_ErrorPDU, MMSpdu_confirmed_ErrorPDU);
-        BOOST_ASN_VALUE_CHOICE(unconfirmed_PDU, Unconfirmed_PDU, MMSpdu_unconfirmed_PDU);
-        BOOST_ASN_VALUE_CHOICE(rejectPDU, RejectPDU, MMSpdu_rejectPDU);
-        BOOST_ASN_VALUE_CHOICE(cancel_RequestPDU, Cancel_RequestPDU, MMSpdu_cancel_RequestPDU);
-        BOOST_ASN_VALUE_CHOICE(cancel_ResponsePDU, Cancel_ResponsePDU, MMSpdu_cancel_ResponsePDU);
-        BOOST_ASN_VALUE_CHOICE(cancel_ErrorPDU, Cancel_ErrorPDU, MMSpdu_cancel_ErrorPDU);
-        BOOST_ASN_VALUE_CHOICE(initiate_RequestPDU, Initiate_RequestPDU, MMSpdu_initiate_RequestPDU);
-        BOOST_ASN_VALUE_CHOICE(initiate_ResponsePDU, Initiate_ResponsePDU, MMSpdu_initiate_ResponsePDU);
-        BOOST_ASN_VALUE_CHOICE(initiate_ErrorPDU, Initiate_ErrorPDU, MMSpdu_initiate_ErrorPDU);
-        BOOST_ASN_VALUE_CHOICE(conclude_RequestPDU, Conclude_RequestPDU, MMSpdu_conclude_RequestPDU);
-        BOOST_ASN_VALUE_CHOICE(conclude_ResponsePDU, Conclude_ResponsePDU, MMSpdu_conclude_ResponsePDU);
-        BOOST_ASN_VALUE_CHOICE(conclude_ErrorPDU, Conclude_ErrorPDU, MMSpdu_conclude_ErrorPDU);
+        ITU_T_CHOICE_DECL(confirmed_RequestPDU, Confirmed_RequestPDU, MMSpdu_confirmed_RequestPDU);
+        ITU_T_CHOICE_DECL(confirmed_ResponsePDU, Confirmed_ResponsePDU, MMSpdu_confirmed_ResponsePDU);
+        ITU_T_CHOICE_DECL(confirmed_ErrorPDU, Confirmed_ErrorPDU, MMSpdu_confirmed_ErrorPDU);
+        ITU_T_CHOICE_DECL(unconfirmed_PDU, Unconfirmed_PDU, MMSpdu_unconfirmed_PDU);
+        ITU_T_CHOICE_DECL(rejectPDU, RejectPDU, MMSpdu_rejectPDU);
+        ITU_T_CHOICE_DECL(cancel_RequestPDU, Cancel_RequestPDU, MMSpdu_cancel_RequestPDU);
+        ITU_T_CHOICE_DECL(cancel_ResponsePDU, Cancel_ResponsePDU, MMSpdu_cancel_ResponsePDU);
+        ITU_T_CHOICE_DECL(cancel_ErrorPDU, Cancel_ErrorPDU, MMSpdu_cancel_ErrorPDU);
+        ITU_T_CHOICE_DECL(initiate_RequestPDU, Initiate_RequestPDU, MMSpdu_initiate_RequestPDU);
+        ITU_T_CHOICE_DECL(initiate_ResponsePDU, Initiate_ResponsePDU, MMSpdu_initiate_ResponsePDU);
+        ITU_T_CHOICE_DECL(initiate_ErrorPDU, Initiate_ErrorPDU, MMSpdu_initiate_ErrorPDU);
+        ITU_T_CHOICE_DECL(conclude_RequestPDU, Conclude_RequestPDU, MMSpdu_conclude_RequestPDU);
+        ITU_T_CHOICE_DECL(conclude_ResponsePDU, Conclude_ResponsePDU, MMSpdu_conclude_ResponsePDU);
+        ITU_T_CHOICE_DECL(conclude_ErrorPDU, Conclude_ErrorPDU, MMSpdu_conclude_ErrorPDU);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Confirmed-RequestPDU
@@ -465,19 +465,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ConfirmedServiceRequest> arg__service,
                 boost::shared_ptr< Request_Detail> arg__service_ext = boost::shared_ptr< Request_Detail>());
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(invokeID, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfModifiers, listOfModifiers_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(service, ConfirmedServiceRequest);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(service_ext, Request_Detail);
+        ITU_T_HOLDERH_DECL(invokeID, Unsigned32);
+        ITU_T_OPTIONAL_DECL(listOfModifiers, listOfModifiers_type);
+        ITU_T_HOLDERH_DECL(service, ConfirmedServiceRequest);
+        ITU_T_OPTIONAL_DECL(service_ext, Request_Detail);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Unsigned32> invokeID_;
-        boost::shared_ptr<listOfModifiers_type> listOfModifiers_;
-        value_holder<ConfirmedServiceRequest> service_;
-        boost::shared_ptr<Request_Detail> service_ext_; // after extention
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice ConfirmedServiceRequest
@@ -573,103 +566,103 @@ namespace ISO_9506_MMS_1 {
         ConfirmedServiceRequest_changeAccessControl,
     };
 
-    struct ConfirmedServiceRequest : public BOOST_ASN_CHOICE_STRUCT(ConfirmedServiceRequest_enum) {
+    struct ConfirmedServiceRequest : public ITU_T_STRUCT(ConfirmedServiceRequest_enum) {
 
-        ConfirmedServiceRequest() : BOOST_ASN_CHOICE_STRUCT(ConfirmedServiceRequest_enum) () {
+        ConfirmedServiceRequest() : ITU_T_STRUCT(ConfirmedServiceRequest_enum) () {
         }
 
         template<typename T > ConfirmedServiceRequest(boost::shared_ptr< T> vl, ConfirmedServiceRequest_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(ConfirmedServiceRequest_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(ConfirmedServiceRequest_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(status, Status_Request, ConfirmedServiceRequest_status);
-        BOOST_ASN_VALUE_CHOICE(getNameList, GetNameList_Request, ConfirmedServiceRequest_getNameList);
-        BOOST_ASN_VALUE_CHOICE(identify, Identify_Request, ConfirmedServiceRequest_identify);
-        BOOST_ASN_VALUE_CHOICE(rename, Rename_Request, ConfirmedServiceRequest_rename);
-        BOOST_ASN_VALUE_CHOICE(read, Read_Request, ConfirmedServiceRequest_read);
-        BOOST_ASN_VALUE_CHOICE(write, Write_Request, ConfirmedServiceRequest_write);
-        BOOST_ASN_VALUE_CHOICE(getVariableAccessAttributes, GetVariableAccessAttributes_Request, ConfirmedServiceRequest_getVariableAccessAttributes);
-        BOOST_ASN_VALUE_CHOICE(defineNamedVariable, DefineNamedVariable_Request, ConfirmedServiceRequest_defineNamedVariable);
-        BOOST_ASN_VALUE_CHOICE(defineScatteredAccess, ObjectName, ConfirmedServiceRequest_defineScatteredAccess);
-        BOOST_ASN_VALUE_CHOICE(getScatteredAccessAttributes, ObjectName, ConfirmedServiceRequest_getScatteredAccessAttributes);
-        BOOST_ASN_VALUE_CHOICE(deleteVariableAccess, DeleteVariableAccess_Request, ConfirmedServiceRequest_deleteVariableAccess);
-        BOOST_ASN_VALUE_CHOICE(defineNamedVariableList, DefineNamedVariableList_Request, ConfirmedServiceRequest_defineNamedVariableList);
-        BOOST_ASN_VALUE_CHOICE(getNamedVariableListAttributes, GetNamedVariableListAttributes_Request, ConfirmedServiceRequest_getNamedVariableListAttributes);
-        BOOST_ASN_VALUE_CHOICE(deleteNamedVariableList, DeleteNamedVariableList_Request, ConfirmedServiceRequest_deleteNamedVariableList);
-        BOOST_ASN_VALUE_CHOICE(defineNamedType, DefineNamedType_Request, ConfirmedServiceRequest_defineNamedType);
-        BOOST_ASN_VALUE_CHOICE(getNamedTypeAttributes, GetNamedTypeAttributes_Request, ConfirmedServiceRequest_getNamedTypeAttributes);
-        BOOST_ASN_VALUE_CHOICE(deleteNamedType, DeleteNamedType_Request, ConfirmedServiceRequest_deleteNamedType);
-        BOOST_ASN_VALUE_CHOICE(input, Input_Request, ConfirmedServiceRequest_input);
-        BOOST_ASN_VALUE_CHOICE(output, Output_Request, ConfirmedServiceRequest_output);
-        BOOST_ASN_VALUE_CHOICE(takeControl, TakeControl_Request, ConfirmedServiceRequest_takeControl);
-        BOOST_ASN_VALUE_CHOICE(relinquishControl, RelinquishControl_Request, ConfirmedServiceRequest_relinquishControl);
-        BOOST_ASN_VALUE_CHOICE(defineSemaphore, DefineSemaphore_Request, ConfirmedServiceRequest_defineSemaphore);
-        BOOST_ASN_VALUE_CHOICE(deleteSemaphore, DeleteSemaphore_Request, ConfirmedServiceRequest_deleteSemaphore);
-        BOOST_ASN_VALUE_CHOICE(reportSemaphoreStatus, ReportSemaphoreStatus_Request, ConfirmedServiceRequest_reportSemaphoreStatus);
-        BOOST_ASN_VALUE_CHOICE(reportPoolSemaphoreStatus, ReportPoolSemaphoreStatus_Request, ConfirmedServiceRequest_reportPoolSemaphoreStatus);
-        BOOST_ASN_VALUE_CHOICE(reportSemaphoreEntryStatus, ReportSemaphoreEntryStatus_Request, ConfirmedServiceRequest_reportSemaphoreEntryStatus);
-        BOOST_ASN_VALUE_CHOICE(initiateDownloadSequence, InitiateDownloadSequence_Request, ConfirmedServiceRequest_initiateDownloadSequence);
-        BOOST_ASN_VALUE_CHOICE(downloadSegment, DownloadSegment_Request, ConfirmedServiceRequest_downloadSegment);
-        BOOST_ASN_VALUE_CHOICE(terminateDownloadSequence, TerminateDownloadSequence_Request, ConfirmedServiceRequest_terminateDownloadSequence);
-        BOOST_ASN_VALUE_CHOICE(initiateUploadSequence, InitiateUploadSequence_Request, ConfirmedServiceRequest_initiateUploadSequence);
-        BOOST_ASN_VALUE_CHOICE(uploadSegment, UploadSegment_Request, ConfirmedServiceRequest_uploadSegment);
-        BOOST_ASN_VALUE_CHOICE(terminateUploadSequence, TerminateUploadSequence_Request, ConfirmedServiceRequest_terminateUploadSequence);
-        BOOST_ASN_VALUE_CHOICE(requestDomainDownload, RequestDomainDownload_Request, ConfirmedServiceRequest_requestDomainDownload);
-        BOOST_ASN_VALUE_CHOICE(requestDomainUpload, RequestDomainUpload_Request, ConfirmedServiceRequest_requestDomainUpload);
-        BOOST_ASN_VALUE_CHOICE(loadDomainContent, LoadDomainContent_Request, ConfirmedServiceRequest_loadDomainContent);
-        BOOST_ASN_VALUE_CHOICE(storeDomainContent, StoreDomainContent_Request, ConfirmedServiceRequest_storeDomainContent);
-        BOOST_ASN_VALUE_CHOICE(deleteDomain, DeleteDomain_Request, ConfirmedServiceRequest_deleteDomain);
-        BOOST_ASN_VALUE_CHOICE(getDomainAttributes, GetDomainAttributes_Request, ConfirmedServiceRequest_getDomainAttributes);
-        BOOST_ASN_VALUE_CHOICE(createProgramInvocation, CreateProgramInvocation_Request, ConfirmedServiceRequest_createProgramInvocation);
-        BOOST_ASN_VALUE_CHOICE(deleteProgramInvocation, DeleteProgramInvocation_Request, ConfirmedServiceRequest_deleteProgramInvocation);
-        BOOST_ASN_VALUE_CHOICE(start, Start_Request, ConfirmedServiceRequest_start);
-        BOOST_ASN_VALUE_CHOICE(stop, Stop_Request, ConfirmedServiceRequest_stop);
-        BOOST_ASN_VALUE_CHOICE(resume, Resume_Request, ConfirmedServiceRequest_resume);
-        BOOST_ASN_VALUE_CHOICE(reset, Reset_Request, ConfirmedServiceRequest_reset);
-        BOOST_ASN_VALUE_CHOICE(kill, Kill_Request, ConfirmedServiceRequest_kill);
-        BOOST_ASN_VALUE_CHOICE(getProgramInvocationAttributes, GetProgramInvocationAttributes_Request, ConfirmedServiceRequest_getProgramInvocationAttributes);
-        BOOST_ASN_VALUE_CHOICE(obtainFile, ISO_9506_MMS_1A::ObtainFile_Request, ConfirmedServiceRequest_obtainFile);
-        BOOST_ASN_VALUE_CHOICE(defineEventCondition, DefineEventCondition_Request, ConfirmedServiceRequest_defineEventCondition);
-        BOOST_ASN_VALUE_CHOICE(deleteEventCondition, DeleteEventCondition_Request, ConfirmedServiceRequest_deleteEventCondition);
-        BOOST_ASN_VALUE_CHOICE(getEventConditionAttributes, GetEventConditionAttributes_Request, ConfirmedServiceRequest_getEventConditionAttributes);
-        BOOST_ASN_VALUE_CHOICE(reportEventConditionStatus, ReportEventConditionStatus_Request, ConfirmedServiceRequest_reportEventConditionStatus);
-        BOOST_ASN_VALUE_CHOICE(alterEventConditionMonitoring, AlterEventConditionMonitoring_Request, ConfirmedServiceRequest_alterEventConditionMonitoring);
-        BOOST_ASN_VALUE_CHOICE(triggerEvent, TriggerEvent_Request, ConfirmedServiceRequest_triggerEvent);
-        BOOST_ASN_VALUE_CHOICE(defineEventAction, DefineEventAction_Request, ConfirmedServiceRequest_defineEventAction);
-        BOOST_ASN_VALUE_CHOICE(deleteEventAction, DeleteEventAction_Request, ConfirmedServiceRequest_deleteEventAction);
-        BOOST_ASN_VALUE_CHOICE(getEventActionAttributes, GetEventActionAttributes_Request, ConfirmedServiceRequest_getEventActionAttributes);
-        BOOST_ASN_VALUE_CHOICE(reportEventActionStatus, ReportEventActionStatus_Request, ConfirmedServiceRequest_reportEventActionStatus);
-        BOOST_ASN_VALUE_CHOICE(defineEventEnrollment, DefineEventEnrollment_Request, ConfirmedServiceRequest_defineEventEnrollment);
-        BOOST_ASN_VALUE_CHOICE(deleteEventEnrollment, DeleteEventEnrollment_Request, ConfirmedServiceRequest_deleteEventEnrollment);
-        BOOST_ASN_VALUE_CHOICE(alterEventEnrollment, AlterEventEnrollment_Request, ConfirmedServiceRequest_alterEventEnrollment);
-        BOOST_ASN_VALUE_CHOICE(reportEventEnrollmentStatus, ReportEventEnrollmentStatus_Request, ConfirmedServiceRequest_reportEventEnrollmentStatus);
-        BOOST_ASN_VALUE_CHOICE(getEventEnrollmentAttributes, GetEventEnrollmentAttributes_Request, ConfirmedServiceRequest_getEventEnrollmentAttributes);
-        BOOST_ASN_VALUE_CHOICE(acknowledgeEventNotification, AcknowledgeEventNotification_Request, ConfirmedServiceRequest_acknowledgeEventNotification);
-        BOOST_ASN_VALUE_CHOICE(getAlarmSummary, GetAlarmSummary_Request, ConfirmedServiceRequest_getAlarmSummary);
-        BOOST_ASN_VALUE_CHOICE(getAlarmEnrollmentSummary, GetAlarmEnrollmentSummary_Request, ConfirmedServiceRequest_getAlarmEnrollmentSummary);
-        BOOST_ASN_VALUE_CHOICE(readJournal, ReadJournal_Request, ConfirmedServiceRequest_readJournal);
-        BOOST_ASN_VALUE_CHOICE(writeJournal, WriteJournal_Request, ConfirmedServiceRequest_writeJournal);
-        BOOST_ASN_VALUE_CHOICE(initializeJournal, InitializeJournal_Request, ConfirmedServiceRequest_initializeJournal);
-        BOOST_ASN_VALUE_CHOICE(reportJournalStatus, ReportJournalStatus_Request, ConfirmedServiceRequest_reportJournalStatus);
-        BOOST_ASN_VALUE_CHOICE(createJournal, CreateJournal_Request, ConfirmedServiceRequest_createJournal);
-        BOOST_ASN_VALUE_CHOICE(deleteJournal, DeleteJournal_Request, ConfirmedServiceRequest_deleteJournal);
-        BOOST_ASN_VALUE_CHOICE(getCapabilityList, GetCapabilityList_Request, ConfirmedServiceRequest_getCapabilityList);
-        BOOST_ASN_VALUE_CHOICE(fileOpen, ISO_9506_MMS_1A::FileOpen_Request, ConfirmedServiceRequest_fileOpen);
-        BOOST_ASN_VALUE_CHOICE(fileRead, Integer32, ConfirmedServiceRequest_fileRead);
-        BOOST_ASN_VALUE_CHOICE(fileClose, Integer32, ConfirmedServiceRequest_fileClose);
-        BOOST_ASN_VALUE_CHOICE(fileRename, ISO_9506_MMS_1A::FileRename_Request, ConfirmedServiceRequest_fileRename);
-        BOOST_ASN_VALUE_CHOICE(fileDelete, FileName, ConfirmedServiceRequest_fileDelete);
-        BOOST_ASN_VALUE_CHOICE(fileDirectory, ISO_9506_MMS_1A::FileDirectory_Request, ConfirmedServiceRequest_fileDirectory);
-        BOOST_ASN_VALUE_CHOICE(additionalService, AdditionalService_Request, ConfirmedServiceRequest_additionalService);
-        BOOST_ASN_VALUE_CHOICE(getDataExchangeAttributes, GetDataExchangeAttributes_Request, ConfirmedServiceRequest_getDataExchangeAttributes);
-        BOOST_ASN_VALUE_CHOICE(exchangeData, ExchangeData_Request, ConfirmedServiceRequest_exchangeData);
-        BOOST_ASN_VALUE_CHOICE(defineAccessControlList, DefineAccessControlList_Request, ConfirmedServiceRequest_defineAccessControlList);
-        BOOST_ASN_VALUE_CHOICE(getAccessControlListAttributes, GetAccessControlListAttributes_Request, ConfirmedServiceRequest_getAccessControlListAttributes);
-        BOOST_ASN_VALUE_CHOICE(reportAccessControlledObjects, ReportAccessControlledObjects_Request, ConfirmedServiceRequest_reportAccessControlledObjects);
-        BOOST_ASN_VALUE_CHOICE(deleteAccessControlList, DeleteAccessControlList_Request, ConfirmedServiceRequest_deleteAccessControlList);
-        BOOST_ASN_VALUE_CHOICE(changeAccessControl, ChangeAccessControl_Request, ConfirmedServiceRequest_changeAccessControl);
+        ITU_T_CHOICE_DECL(status, Status_Request, ConfirmedServiceRequest_status);
+        ITU_T_CHOICE_DECL(getNameList, GetNameList_Request, ConfirmedServiceRequest_getNameList);
+        ITU_T_CHOICE_DECL(identify, Identify_Request, ConfirmedServiceRequest_identify);
+        ITU_T_CHOICE_DECL(rename, Rename_Request, ConfirmedServiceRequest_rename);
+        ITU_T_CHOICE_DECL(read, Read_Request, ConfirmedServiceRequest_read);
+        ITU_T_CHOICE_DECL(write, Write_Request, ConfirmedServiceRequest_write);
+        ITU_T_CHOICE_DECL(getVariableAccessAttributes, GetVariableAccessAttributes_Request, ConfirmedServiceRequest_getVariableAccessAttributes);
+        ITU_T_CHOICE_DECL(defineNamedVariable, DefineNamedVariable_Request, ConfirmedServiceRequest_defineNamedVariable);
+        ITU_T_CHOICE_DECL(defineScatteredAccess, ISO_9506_MMS_1A::DefineScatteredAccess_Request, ConfirmedServiceRequest_defineScatteredAccess);
+        ITU_T_CHOICE_DECL(getScatteredAccessAttributes, ObjectName, ConfirmedServiceRequest_getScatteredAccessAttributes);
+        ITU_T_CHOICE_DECL(deleteVariableAccess, DeleteVariableAccess_Request, ConfirmedServiceRequest_deleteVariableAccess);
+        ITU_T_CHOICE_DECL(defineNamedVariableList, DefineNamedVariableList_Request, ConfirmedServiceRequest_defineNamedVariableList);
+        ITU_T_CHOICE_DECL(getNamedVariableListAttributes, GetNamedVariableListAttributes_Request, ConfirmedServiceRequest_getNamedVariableListAttributes);
+        ITU_T_CHOICE_DECL(deleteNamedVariableList, DeleteNamedVariableList_Request, ConfirmedServiceRequest_deleteNamedVariableList);
+        ITU_T_CHOICE_DECL(defineNamedType, DefineNamedType_Request, ConfirmedServiceRequest_defineNamedType);
+        ITU_T_CHOICE_DECL(getNamedTypeAttributes, GetNamedTypeAttributes_Request, ConfirmedServiceRequest_getNamedTypeAttributes);
+        ITU_T_CHOICE_DECL(deleteNamedType, DeleteNamedType_Request, ConfirmedServiceRequest_deleteNamedType);
+        ITU_T_CHOICE_DECL(input, Input_Request, ConfirmedServiceRequest_input);
+        ITU_T_CHOICE_DECL(output, Output_Request, ConfirmedServiceRequest_output);
+        ITU_T_CHOICE_DECL(takeControl, TakeControl_Request, ConfirmedServiceRequest_takeControl);
+        ITU_T_CHOICE_DECL(relinquishControl, RelinquishControl_Request, ConfirmedServiceRequest_relinquishControl);
+        ITU_T_CHOICE_DECL(defineSemaphore, DefineSemaphore_Request, ConfirmedServiceRequest_defineSemaphore);
+        ITU_T_CHOICE_DECL(deleteSemaphore, DeleteSemaphore_Request, ConfirmedServiceRequest_deleteSemaphore);
+        ITU_T_CHOICE_DECL(reportSemaphoreStatus, ReportSemaphoreStatus_Request, ConfirmedServiceRequest_reportSemaphoreStatus);
+        ITU_T_CHOICE_DECL(reportPoolSemaphoreStatus, ReportPoolSemaphoreStatus_Request, ConfirmedServiceRequest_reportPoolSemaphoreStatus);
+        ITU_T_CHOICE_DECL(reportSemaphoreEntryStatus, ReportSemaphoreEntryStatus_Request, ConfirmedServiceRequest_reportSemaphoreEntryStatus);
+        ITU_T_CHOICE_DECL(initiateDownloadSequence, InitiateDownloadSequence_Request, ConfirmedServiceRequest_initiateDownloadSequence);
+        ITU_T_CHOICE_DECL(downloadSegment, DownloadSegment_Request, ConfirmedServiceRequest_downloadSegment);
+        ITU_T_CHOICE_DECL(terminateDownloadSequence, TerminateDownloadSequence_Request, ConfirmedServiceRequest_terminateDownloadSequence);
+        ITU_T_CHOICE_DECL(initiateUploadSequence, InitiateUploadSequence_Request, ConfirmedServiceRequest_initiateUploadSequence);
+        ITU_T_CHOICE_DECL(uploadSegment, UploadSegment_Request, ConfirmedServiceRequest_uploadSegment);
+        ITU_T_CHOICE_DECL(terminateUploadSequence, TerminateUploadSequence_Request, ConfirmedServiceRequest_terminateUploadSequence);
+        ITU_T_CHOICE_DECL(requestDomainDownload, RequestDomainDownload_Request, ConfirmedServiceRequest_requestDomainDownload);
+        ITU_T_CHOICE_DECL(requestDomainUpload, RequestDomainUpload_Request, ConfirmedServiceRequest_requestDomainUpload);
+        ITU_T_CHOICE_DECL(loadDomainContent, LoadDomainContent_Request, ConfirmedServiceRequest_loadDomainContent);
+        ITU_T_CHOICE_DECL(storeDomainContent, StoreDomainContent_Request, ConfirmedServiceRequest_storeDomainContent);
+        ITU_T_CHOICE_DECL(deleteDomain, DeleteDomain_Request, ConfirmedServiceRequest_deleteDomain);
+        ITU_T_CHOICE_DECL(getDomainAttributes, GetDomainAttributes_Request, ConfirmedServiceRequest_getDomainAttributes);
+        ITU_T_CHOICE_DECL(createProgramInvocation, CreateProgramInvocation_Request, ConfirmedServiceRequest_createProgramInvocation);
+        ITU_T_CHOICE_DECL(deleteProgramInvocation, DeleteProgramInvocation_Request, ConfirmedServiceRequest_deleteProgramInvocation);
+        ITU_T_CHOICE_DECL(start, Start_Request, ConfirmedServiceRequest_start);
+        ITU_T_CHOICE_DECL(stop, Stop_Request, ConfirmedServiceRequest_stop);
+        ITU_T_CHOICE_DECL(resume, Resume_Request, ConfirmedServiceRequest_resume);
+        ITU_T_CHOICE_DECL(reset, Reset_Request, ConfirmedServiceRequest_reset);
+        ITU_T_CHOICE_DECL(kill, Kill_Request, ConfirmedServiceRequest_kill);
+        ITU_T_CHOICE_DECL(getProgramInvocationAttributes, GetProgramInvocationAttributes_Request, ConfirmedServiceRequest_getProgramInvocationAttributes);
+        ITU_T_CHOICE_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Request, ConfirmedServiceRequest_obtainFile);
+        ITU_T_CHOICE_DECL(defineEventCondition, DefineEventCondition_Request, ConfirmedServiceRequest_defineEventCondition);
+        ITU_T_CHOICE_DECL(deleteEventCondition, DeleteEventCondition_Request, ConfirmedServiceRequest_deleteEventCondition);
+        ITU_T_CHOICE_DECL(getEventConditionAttributes, GetEventConditionAttributes_Request, ConfirmedServiceRequest_getEventConditionAttributes);
+        ITU_T_CHOICE_DECL(reportEventConditionStatus, ReportEventConditionStatus_Request, ConfirmedServiceRequest_reportEventConditionStatus);
+        ITU_T_CHOICE_DECL(alterEventConditionMonitoring, AlterEventConditionMonitoring_Request, ConfirmedServiceRequest_alterEventConditionMonitoring);
+        ITU_T_CHOICE_DECL(triggerEvent, TriggerEvent_Request, ConfirmedServiceRequest_triggerEvent);
+        ITU_T_CHOICE_DECL(defineEventAction, DefineEventAction_Request, ConfirmedServiceRequest_defineEventAction);
+        ITU_T_CHOICE_DECL(deleteEventAction, DeleteEventAction_Request, ConfirmedServiceRequest_deleteEventAction);
+        ITU_T_CHOICE_DECL(getEventActionAttributes, GetEventActionAttributes_Request, ConfirmedServiceRequest_getEventActionAttributes);
+        ITU_T_CHOICE_DECL(reportEventActionStatus, ReportEventActionStatus_Request, ConfirmedServiceRequest_reportEventActionStatus);
+        ITU_T_CHOICE_DECL(defineEventEnrollment, DefineEventEnrollment_Request, ConfirmedServiceRequest_defineEventEnrollment);
+        ITU_T_CHOICE_DECL(deleteEventEnrollment, DeleteEventEnrollment_Request, ConfirmedServiceRequest_deleteEventEnrollment);
+        ITU_T_CHOICE_DECL(alterEventEnrollment, AlterEventEnrollment_Request, ConfirmedServiceRequest_alterEventEnrollment);
+        ITU_T_CHOICE_DECL(reportEventEnrollmentStatus, ReportEventEnrollmentStatus_Request, ConfirmedServiceRequest_reportEventEnrollmentStatus);
+        ITU_T_CHOICE_DECL(getEventEnrollmentAttributes, GetEventEnrollmentAttributes_Request, ConfirmedServiceRequest_getEventEnrollmentAttributes);
+        ITU_T_CHOICE_DECL(acknowledgeEventNotification, AcknowledgeEventNotification_Request, ConfirmedServiceRequest_acknowledgeEventNotification);
+        ITU_T_CHOICE_DECL(getAlarmSummary, GetAlarmSummary_Request, ConfirmedServiceRequest_getAlarmSummary);
+        ITU_T_CHOICE_DECL(getAlarmEnrollmentSummary, GetAlarmEnrollmentSummary_Request, ConfirmedServiceRequest_getAlarmEnrollmentSummary);
+        ITU_T_CHOICE_DECL(readJournal, ReadJournal_Request, ConfirmedServiceRequest_readJournal);
+        ITU_T_CHOICE_DECL(writeJournal, WriteJournal_Request, ConfirmedServiceRequest_writeJournal);
+        ITU_T_CHOICE_DECL(initializeJournal, InitializeJournal_Request, ConfirmedServiceRequest_initializeJournal);
+        ITU_T_CHOICE_DECL(reportJournalStatus, ReportJournalStatus_Request, ConfirmedServiceRequest_reportJournalStatus);
+        ITU_T_CHOICE_DECL(createJournal, CreateJournal_Request, ConfirmedServiceRequest_createJournal);
+        ITU_T_CHOICE_DECL(deleteJournal, DeleteJournal_Request, ConfirmedServiceRequest_deleteJournal);
+        ITU_T_CHOICE_DECL(getCapabilityList, GetCapabilityList_Request, ConfirmedServiceRequest_getCapabilityList);
+        ITU_T_CHOICE_DECL(fileOpen, ISO_9506_MMS_1A::FileOpen_Request, ConfirmedServiceRequest_fileOpen);
+        ITU_T_CHOICE_DECL(fileRead, Integer32, ConfirmedServiceRequest_fileRead);
+        ITU_T_CHOICE_DECL(fileClose, Integer32, ConfirmedServiceRequest_fileClose);
+        ITU_T_CHOICE_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Request, ConfirmedServiceRequest_fileRename);
+        ITU_T_CHOICE_DECL(fileDelete, FileName , ConfirmedServiceRequest_fileDelete);
+        ITU_T_CHOICE_DECL(fileDirectory, ISO_9506_MMS_1A::FileDirectory_Request, ConfirmedServiceRequest_fileDirectory);
+        ITU_T_CHOICE_DECL(additionalService, AdditionalService_Request, ConfirmedServiceRequest_additionalService);
+        ITU_T_CHOICE_DECL(getDataExchangeAttributes, GetDataExchangeAttributes_Request, ConfirmedServiceRequest_getDataExchangeAttributes);
+        ITU_T_CHOICE_DECL(exchangeData, ExchangeData_Request, ConfirmedServiceRequest_exchangeData);
+        ITU_T_CHOICE_DECL(defineAccessControlList, DefineAccessControlList_Request, ConfirmedServiceRequest_defineAccessControlList);
+        ITU_T_CHOICE_DECL(getAccessControlListAttributes, GetAccessControlListAttributes_Request, ConfirmedServiceRequest_getAccessControlListAttributes);
+        ITU_T_CHOICE_DECL(reportAccessControlledObjects, ReportAccessControlledObjects_Request, ConfirmedServiceRequest_reportAccessControlledObjects);
+        ITU_T_CHOICE_DECL(deleteAccessControlList, DeleteAccessControlList_Request, ConfirmedServiceRequest_deleteAccessControlList);
+        ITU_T_CHOICE_DECL(changeAccessControl, ChangeAccessControl_Request, ConfirmedServiceRequest_changeAccessControl);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice AdditionalService-Request
@@ -702,40 +695,40 @@ namespace ISO_9506_MMS_1 {
         AdditionalService_Request_alterECLMonitoring,
     };
 
-    struct AdditionalService_Request : public BOOST_ASN_CHOICE_STRUCT(AdditionalService_Request_enum) {
+    struct AdditionalService_Request : public ITU_T_STRUCT(AdditionalService_Request_enum) {
 
-        AdditionalService_Request() : BOOST_ASN_CHOICE_STRUCT(AdditionalService_Request_enum) () {
+        AdditionalService_Request() : ITU_T_STRUCT(AdditionalService_Request_enum) () {
         }
 
         template<typename T > AdditionalService_Request(boost::shared_ptr< T> vl, AdditionalService_Request_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(AdditionalService_Request_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(AdditionalService_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(vMDStop, VMDStop_Request, AdditionalService_Request_vMDStop);
-        BOOST_ASN_VALUE_CHOICE(vMDReset, VMDReset_Request, AdditionalService_Request_vMDReset);
-        BOOST_ASN_VALUE_CHOICE(select, Select_Request, AdditionalService_Request_select);
-        BOOST_ASN_VALUE_CHOICE(alterPI, AlterProgramInvocationAttributes_Request, AdditionalService_Request_alterPI);
-        BOOST_ASN_VALUE_CHOICE(initiateUCLoad, InitiateUnitControlLoad_Request, AdditionalService_Request_initiateUCLoad);
-        BOOST_ASN_VALUE_CHOICE(uCLoad, UnitControlLoadSegment_Request, AdditionalService_Request_uCLoad);
-        BOOST_ASN_VALUE_CHOICE(uCUpload, UnitControlUpload_Request, AdditionalService_Request_uCUpload);
-        BOOST_ASN_VALUE_CHOICE(startUC, StartUnitControl_Request, AdditionalService_Request_startUC);
-        BOOST_ASN_VALUE_CHOICE(stopUC, StopUnitControl_Request, AdditionalService_Request_stopUC);
-        BOOST_ASN_VALUE_CHOICE(createUC, CreateUnitControl_Request, AdditionalService_Request_createUC);
-        BOOST_ASN_VALUE_CHOICE(addToUC, AddToUnitControl_Request, AdditionalService_Request_addToUC);
-        BOOST_ASN_VALUE_CHOICE(removeFromUC, RemoveFromUnitControl_Request, AdditionalService_Request_removeFromUC);
-        BOOST_ASN_VALUE_CHOICE(getUCAttributes, GetUnitControlAttributes_Request, AdditionalService_Request_getUCAttributes);
-        BOOST_ASN_VALUE_CHOICE(loadUCFromFile, LoadUnitControlFromFile_Request, AdditionalService_Request_loadUCFromFile);
-        BOOST_ASN_VALUE_CHOICE(storeUCToFile, StoreUnitControlToFile_Request, AdditionalService_Request_storeUCToFile);
-        BOOST_ASN_VALUE_CHOICE(deleteUC, DeleteUnitControl_Request, AdditionalService_Request_deleteUC);
-        BOOST_ASN_VALUE_CHOICE(defineECL, DefineEventConditionList_Request, AdditionalService_Request_defineECL);
-        BOOST_ASN_VALUE_CHOICE(deleteECL, DeleteEventConditionList_Request, AdditionalService_Request_deleteECL);
-        BOOST_ASN_VALUE_CHOICE(addECLReference, AddEventConditionListReference_Request, AdditionalService_Request_addECLReference);
-        BOOST_ASN_VALUE_CHOICE(removeECLReference, RemoveEventConditionListReference_Request, AdditionalService_Request_removeECLReference);
-        BOOST_ASN_VALUE_CHOICE(getECLAttributes, GetEventConditionListAttributes_Request, AdditionalService_Request_getECLAttributes);
-        BOOST_ASN_VALUE_CHOICE(reportECLStatus, ReportEventConditionListStatus_Request, AdditionalService_Request_reportECLStatus);
-        BOOST_ASN_VALUE_CHOICE(alterECLMonitoring, AlterEventConditionListMonitoring_Request, AdditionalService_Request_alterECLMonitoring);
+        ITU_T_CHOICE_DECL(vMDStop, VMDStop_Request, AdditionalService_Request_vMDStop);
+        ITU_T_CHOICE_DECL(vMDReset, VMDReset_Request, AdditionalService_Request_vMDReset);
+        ITU_T_CHOICE_DECL(select, Select_Request, AdditionalService_Request_select);
+        ITU_T_CHOICE_DECL(alterPI, AlterProgramInvocationAttributes_Request, AdditionalService_Request_alterPI);
+        ITU_T_CHOICE_DECL(initiateUCLoad, InitiateUnitControlLoad_Request, AdditionalService_Request_initiateUCLoad);
+        ITU_T_CHOICE_DECL(uCLoad, UnitControlLoadSegment_Request, AdditionalService_Request_uCLoad);
+        ITU_T_CHOICE_DECL(uCUpload, UnitControlUpload_Request, AdditionalService_Request_uCUpload);
+        ITU_T_CHOICE_DECL(startUC, StartUnitControl_Request, AdditionalService_Request_startUC);
+        ITU_T_CHOICE_DECL(stopUC, StopUnitControl_Request, AdditionalService_Request_stopUC);
+        ITU_T_CHOICE_DECL(createUC, CreateUnitControl_Request, AdditionalService_Request_createUC);
+        ITU_T_CHOICE_DECL(addToUC, AddToUnitControl_Request, AdditionalService_Request_addToUC);
+        ITU_T_CHOICE_DECL(removeFromUC, RemoveFromUnitControl_Request, AdditionalService_Request_removeFromUC);
+        ITU_T_CHOICE_DECL(getUCAttributes, GetUnitControlAttributes_Request, AdditionalService_Request_getUCAttributes);
+        ITU_T_CHOICE_DECL(loadUCFromFile, LoadUnitControlFromFile_Request, AdditionalService_Request_loadUCFromFile);
+        ITU_T_CHOICE_DECL(storeUCToFile, StoreUnitControlToFile_Request, AdditionalService_Request_storeUCToFile);
+        ITU_T_CHOICE_DECL(deleteUC, DeleteUnitControl_Request, AdditionalService_Request_deleteUC);
+        ITU_T_CHOICE_DECL(defineECL, DefineEventConditionList_Request, AdditionalService_Request_defineECL);
+        ITU_T_CHOICE_DECL(deleteECL, DeleteEventConditionList_Request, AdditionalService_Request_deleteECL);
+        ITU_T_CHOICE_DECL(addECLReference, AddEventConditionListReference_Request, AdditionalService_Request_addECLReference);
+        ITU_T_CHOICE_DECL(removeECLReference, RemoveEventConditionListReference_Request, AdditionalService_Request_removeECLReference);
+        ITU_T_CHOICE_DECL(getECLAttributes, GetEventConditionListAttributes_Request, AdditionalService_Request_getECLAttributes);
+        ITU_T_CHOICE_DECL(reportECLStatus, ReportEventConditionListStatus_Request, AdditionalService_Request_reportECLStatus);
+        ITU_T_CHOICE_DECL(alterECLMonitoring, AlterEventConditionListMonitoring_Request, AdditionalService_Request_alterECLMonitoring);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice Request-Detail
@@ -753,25 +746,25 @@ namespace ISO_9506_MMS_1 {
         Request_Detail_alterEventEnrollment,
     };
 
-    struct Request_Detail : public BOOST_ASN_CHOICE_STRUCT(Request_Detail_enum) {
+    struct Request_Detail : public ITU_T_STRUCT(Request_Detail_enum) {
 
-        Request_Detail() : BOOST_ASN_CHOICE_STRUCT(Request_Detail_enum) () {
+        Request_Detail() : ITU_T_STRUCT(Request_Detail_enum) () {
         }
 
         template<typename T > Request_Detail(boost::shared_ptr< T> vl, Request_Detail_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Request_Detail_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(Request_Detail_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(otherRequests, null_type, Request_Detail_otherRequests);
-        BOOST_ASN_VALUE_CHOICE(createProgramInvocation, CS_CreateProgramInvocation_Request, Request_Detail_createProgramInvocation);
-        BOOST_ASN_VALUE_CHOICE(start, CS_Start_Request, Request_Detail_start);
-        BOOST_ASN_VALUE_CHOICE(resume, CS_Resume_Request, Request_Detail_resume);
-        BOOST_ASN_VALUE_CHOICE(defineEventCondition, CS_DefineEventCondition_Request, Request_Detail_defineEventCondition);
-        BOOST_ASN_VALUE_CHOICE(alterEventConditionMonitoring, CS_AlterEventConditionMonitoring_Request, Request_Detail_alterEventConditionMonitoring);
-        BOOST_ASN_VALUE_CHOICE(defineEventEnrollment, CS_DefineEventEnrollment_Request, Request_Detail_defineEventEnrollment);
-        BOOST_ASN_VALUE_CHOICE(alterEventEnrollment, CS_AlterEventEnrollment_Request, Request_Detail_alterEventEnrollment);
+        ITU_T_CHOICE_DECL(otherRequests, null_type, Request_Detail_otherRequests);
+        ITU_T_CHOICE_DECL(createProgramInvocation, CS_CreateProgramInvocation_Request, Request_Detail_createProgramInvocation);
+        ITU_T_CHOICE_DECL(start, CS_Start_Request, Request_Detail_start);
+        ITU_T_CHOICE_DECL(resume, CS_Resume_Request, Request_Detail_resume);
+        ITU_T_CHOICE_DECL(defineEventCondition, CS_DefineEventCondition_Request, Request_Detail_defineEventCondition);
+        ITU_T_CHOICE_DECL(alterEventConditionMonitoring, CS_AlterEventConditionMonitoring_Request, Request_Detail_alterEventConditionMonitoring);
+        ITU_T_CHOICE_DECL(defineEventEnrollment, CS_DefineEventEnrollment_Request, Request_Detail_defineEventEnrollment);
+        ITU_T_CHOICE_DECL(alterEventEnrollment, CS_AlterEventEnrollment_Request, Request_Detail_alterEventEnrollment);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Unconfirmed-PDU
@@ -785,15 +778,10 @@ namespace ISO_9506_MMS_1 {
         Unconfirmed_PDU(boost::shared_ptr< UnconfirmedService> arg__service,
                 boost::shared_ptr< Unconfirmed_Detail> arg__service_ext = boost::shared_ptr< Unconfirmed_Detail>());
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(service, UnconfirmedService);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(service_ext, Unconfirmed_Detail);
+        ITU_T_HOLDERH_DECL(service, UnconfirmedService);
+        ITU_T_OPTIONAL_DECL(service_ext, Unconfirmed_Detail);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<UnconfirmedService> service_;
-        boost::shared_ptr<Unconfirmed_Detail> service_ext_; // after extention
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice UnconfirmedService
@@ -806,20 +794,20 @@ namespace ISO_9506_MMS_1 {
         UnconfirmedService_eventNotification,
     };
 
-    struct UnconfirmedService : public BOOST_ASN_CHOICE_STRUCT(UnconfirmedService_enum) {
+    struct UnconfirmedService : public ITU_T_STRUCT(UnconfirmedService_enum) {
 
-        UnconfirmedService() : BOOST_ASN_CHOICE_STRUCT(UnconfirmedService_enum) () {
+        UnconfirmedService() : ITU_T_STRUCT(UnconfirmedService_enum) () {
         }
 
         template<typename T > UnconfirmedService(boost::shared_ptr< T> vl, UnconfirmedService_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(UnconfirmedService_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(UnconfirmedService_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(informationReport, InformationReport, UnconfirmedService_informationReport);
-        BOOST_ASN_VALUE_CHOICE(unsolicitedStatus, UnsolicitedStatus, UnconfirmedService_unsolicitedStatus);
-        BOOST_ASN_VALUE_CHOICE(eventNotification, EventNotification, UnconfirmedService_eventNotification);
+        ITU_T_CHOICE_DECL(informationReport, InformationReport, UnconfirmedService_informationReport);
+        ITU_T_CHOICE_DECL(unsolicitedStatus, UnsolicitedStatus, UnconfirmedService_unsolicitedStatus);
+        ITU_T_CHOICE_DECL(eventNotification, EventNotification, UnconfirmedService_eventNotification);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice Unconfirmed-Detail
@@ -831,19 +819,19 @@ namespace ISO_9506_MMS_1 {
         Unconfirmed_Detail_eventNotification,
     };
 
-    struct Unconfirmed_Detail : public BOOST_ASN_CHOICE_STRUCT(Unconfirmed_Detail_enum) {
+    struct Unconfirmed_Detail : public ITU_T_STRUCT(Unconfirmed_Detail_enum) {
 
-        Unconfirmed_Detail() : BOOST_ASN_CHOICE_STRUCT(Unconfirmed_Detail_enum) () {
+        Unconfirmed_Detail() : ITU_T_STRUCT(Unconfirmed_Detail_enum) () {
         }
 
         template<typename T > Unconfirmed_Detail(boost::shared_ptr< T> vl, Unconfirmed_Detail_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Unconfirmed_Detail_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(Unconfirmed_Detail_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(otherRequests, null_type, Unconfirmed_Detail_otherRequests);
-        BOOST_ASN_VALUE_CHOICE(eventNotification, CS_EventNotification, Unconfirmed_Detail_eventNotification);
+        ITU_T_CHOICE_DECL(otherRequests, null_type, Unconfirmed_Detail_otherRequests);
+        ITU_T_CHOICE_DECL(eventNotification, CS_EventNotification, Unconfirmed_Detail_eventNotification);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Confirmed-ResponsePDU
@@ -859,17 +847,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ConfirmedServiceResponse> arg__service,
                 boost::shared_ptr< Response_Detail> arg__service_ext = boost::shared_ptr< Response_Detail>());
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(invokeID, Unsigned32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(service, ConfirmedServiceResponse);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(service_ext, Response_Detail);
+        ITU_T_HOLDERH_DECL(invokeID, Unsigned32);
+        ITU_T_HOLDERH_DECL(service, ConfirmedServiceResponse);
+        ITU_T_OPTIONAL_DECL(service_ext, Response_Detail);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Unsigned32> invokeID_;
-        value_holder<ConfirmedServiceResponse> service_;
-        boost::shared_ptr<Response_Detail> service_ext_; // after extention
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice ConfirmedServiceResponse
@@ -964,102 +946,102 @@ namespace ISO_9506_MMS_1 {
         ConfirmedServiceResponse_changeAccessControl,
     };
 
-    struct ConfirmedServiceResponse : public BOOST_ASN_CHOICE_STRUCT(ConfirmedServiceResponse_enum) {
+    struct ConfirmedServiceResponse : public ITU_T_STRUCT(ConfirmedServiceResponse_enum) {
 
-        ConfirmedServiceResponse() : BOOST_ASN_CHOICE_STRUCT(ConfirmedServiceResponse_enum) () {
+        ConfirmedServiceResponse() : ITU_T_STRUCT(ConfirmedServiceResponse_enum) () {
         }
 
         template<typename T > ConfirmedServiceResponse(boost::shared_ptr< T> vl, ConfirmedServiceResponse_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(ConfirmedServiceResponse_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(ConfirmedServiceResponse_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(status, Status_Response, ConfirmedServiceResponse_status);
-        BOOST_ASN_VALUE_CHOICE(getNameList, GetNameList_Response, ConfirmedServiceResponse_getNameList);
-        BOOST_ASN_VALUE_CHOICE(identify, Identify_Response, ConfirmedServiceResponse_identify);
-        BOOST_ASN_VALUE_CHOICE(rename, Rename_Response, ConfirmedServiceResponse_rename);
-        BOOST_ASN_VALUE_CHOICE(read, Read_Response, ConfirmedServiceResponse_read);
-        BOOST_ASN_VALUE_CHOICE(getVariableAccessAttributes, GetVariableAccessAttributes_Response, ConfirmedServiceResponse_getVariableAccessAttributes);
-        BOOST_ASN_VALUE_CHOICE(defineNamedVariable, DefineNamedVariable_Response, ConfirmedServiceResponse_defineNamedVariable);
-        BOOST_ASN_VALUE_CHOICE(defineScatteredAccess, ISO_9506_MMS_1A::DefineScatteredAccess_Response, ConfirmedServiceResponse_defineScatteredAccess);
-        BOOST_ASN_VALUE_CHOICE(getScatteredAccessAttributes, ISO_9506_MMS_1A::GetScatteredAccessAttributes_Response, ConfirmedServiceResponse_getScatteredAccessAttributes);
-        BOOST_ASN_VALUE_CHOICE(deleteVariableAccess, DeleteVariableAccess_Response, ConfirmedServiceResponse_deleteVariableAccess);
-        BOOST_ASN_VALUE_CHOICE(defineNamedVariableList, DefineNamedVariableList_Response, ConfirmedServiceResponse_defineNamedVariableList);
-        BOOST_ASN_VALUE_CHOICE(getNamedVariableListAttributes, GetNamedVariableListAttributes_Response, ConfirmedServiceResponse_getNamedVariableListAttributes);
-        BOOST_ASN_VALUE_CHOICE(deleteNamedVariableList, DeleteNamedVariableList_Response, ConfirmedServiceResponse_deleteNamedVariableList);
-        BOOST_ASN_VALUE_CHOICE(defineNamedType, DefineNamedType_Response, ConfirmedServiceResponse_defineNamedType);
-        BOOST_ASN_VALUE_CHOICE(getNamedTypeAttributes, GetNamedTypeAttributes_Response, ConfirmedServiceResponse_getNamedTypeAttributes);
-        BOOST_ASN_VALUE_CHOICE(deleteNamedType, DeleteNamedType_Response, ConfirmedServiceResponse_deleteNamedType);
-        BOOST_ASN_VALUE_CHOICE(input, Input_Response, ConfirmedServiceResponse_input);
-        BOOST_ASN_VALUE_CHOICE(output, Output_Response, ConfirmedServiceResponse_output);
-        BOOST_ASN_VALUE_CHOICE(takeControl, TakeControl_Response, ConfirmedServiceResponse_takeControl);
-        BOOST_ASN_VALUE_CHOICE(relinquishControl, RelinquishControl_Response, ConfirmedServiceResponse_relinquishControl);
-        BOOST_ASN_VALUE_CHOICE(defineSemaphore, DefineSemaphore_Response, ConfirmedServiceResponse_defineSemaphore);
-        BOOST_ASN_VALUE_CHOICE(deleteSemaphore, DeleteSemaphore_Response, ConfirmedServiceResponse_deleteSemaphore);
-        BOOST_ASN_VALUE_CHOICE(reportSemaphoreStatus, ReportSemaphoreStatus_Response, ConfirmedServiceResponse_reportSemaphoreStatus);
-        BOOST_ASN_VALUE_CHOICE(reportPoolSemaphoreStatus, ReportPoolSemaphoreStatus_Response, ConfirmedServiceResponse_reportPoolSemaphoreStatus);
-        BOOST_ASN_VALUE_CHOICE(reportSemaphoreEntryStatus, ReportSemaphoreEntryStatus_Response, ConfirmedServiceResponse_reportSemaphoreEntryStatus);
-        BOOST_ASN_VALUE_CHOICE(initiateDownloadSequence, InitiateDownloadSequence_Response, ConfirmedServiceResponse_initiateDownloadSequence);
-        BOOST_ASN_VALUE_CHOICE(downloadSegment, DownloadSegment_Response, ConfirmedServiceResponse_downloadSegment);
-        BOOST_ASN_VALUE_CHOICE(terminateDownloadSequence, TerminateDownloadSequence_Response, ConfirmedServiceResponse_terminateDownloadSequence);
-        BOOST_ASN_VALUE_CHOICE(initiateUploadSequence, InitiateUploadSequence_Response, ConfirmedServiceResponse_initiateUploadSequence);
-        BOOST_ASN_VALUE_CHOICE(uploadSegment, UploadSegment_Response, ConfirmedServiceResponse_uploadSegment);
-        BOOST_ASN_VALUE_CHOICE(terminateUploadSequence, TerminateUploadSequence_Response, ConfirmedServiceResponse_terminateUploadSequence);
-        BOOST_ASN_VALUE_CHOICE(requestDomainDownload, RequestDomainDownload_Response, ConfirmedServiceResponse_requestDomainDownload);
-        BOOST_ASN_VALUE_CHOICE(requestDomainUpload, RequestDomainUpload_Response, ConfirmedServiceResponse_requestDomainUpload);
-        BOOST_ASN_VALUE_CHOICE(loadDomainContent, LoadDomainContent_Response, ConfirmedServiceResponse_loadDomainContent);
-        BOOST_ASN_VALUE_CHOICE(storeDomainContent, StoreDomainContent_Response, ConfirmedServiceResponse_storeDomainContent);
-        BOOST_ASN_VALUE_CHOICE(deleteDomain, DeleteDomain_Response, ConfirmedServiceResponse_deleteDomain);
-        BOOST_ASN_VALUE_CHOICE(getDomainAttributes, GetDomainAttributes_Response, ConfirmedServiceResponse_getDomainAttributes);
-        BOOST_ASN_VALUE_CHOICE(createProgramInvocation, CreateProgramInvocation_Response, ConfirmedServiceResponse_createProgramInvocation);
-        BOOST_ASN_VALUE_CHOICE(deleteProgramInvocation, DeleteProgramInvocation_Response, ConfirmedServiceResponse_deleteProgramInvocation);
-        BOOST_ASN_VALUE_CHOICE(start, Start_Response, ConfirmedServiceResponse_start);
-        BOOST_ASN_VALUE_CHOICE(stop, Stop_Response, ConfirmedServiceResponse_stop);
-        BOOST_ASN_VALUE_CHOICE(resume, Resume_Response, ConfirmedServiceResponse_resume);
-        BOOST_ASN_VALUE_CHOICE(reset, Reset_Response, ConfirmedServiceResponse_reset);
-        BOOST_ASN_VALUE_CHOICE(kill, Kill_Response, ConfirmedServiceResponse_kill);
-        BOOST_ASN_VALUE_CHOICE(getProgramInvocationAttributes, GetProgramInvocationAttributes_Response, ConfirmedServiceResponse_getProgramInvocationAttributes);
-        BOOST_ASN_VALUE_CHOICE(obtainFile, ISO_9506_MMS_1A::ObtainFile_Response, ConfirmedServiceResponse_obtainFile);
-        BOOST_ASN_VALUE_CHOICE(defineEventCondition, DefineEventCondition_Response, ConfirmedServiceResponse_defineEventCondition);
-        BOOST_ASN_VALUE_CHOICE(deleteEventCondition, DeleteEventCondition_Response, ConfirmedServiceResponse_deleteEventCondition);
-        BOOST_ASN_VALUE_CHOICE(getEventConditionAttributes, GetEventConditionAttributes_Response, ConfirmedServiceResponse_getEventConditionAttributes);
-        BOOST_ASN_VALUE_CHOICE(reportEventConditionStatus, ReportEventConditionStatus_Response, ConfirmedServiceResponse_reportEventConditionStatus);
-        BOOST_ASN_VALUE_CHOICE(alterEventConditionMonitoring, AlterEventConditionMonitoring_Response, ConfirmedServiceResponse_alterEventConditionMonitoring);
-        BOOST_ASN_VALUE_CHOICE(triggerEvent, TriggerEvent_Response, ConfirmedServiceResponse_triggerEvent);
-        BOOST_ASN_VALUE_CHOICE(defineEventAction, DefineEventAction_Response, ConfirmedServiceResponse_defineEventAction);
-        BOOST_ASN_VALUE_CHOICE(deleteEventAction, DeleteEventAction_Response, ConfirmedServiceResponse_deleteEventAction);
-        BOOST_ASN_VALUE_CHOICE(getEventActionAttributes, GetEventActionAttributes_Response, ConfirmedServiceResponse_getEventActionAttributes);
-        BOOST_ASN_VALUE_CHOICE(reportEventActionStatus, ReportEventActionStatus_Response, ConfirmedServiceResponse_reportEventActionStatus);
-        BOOST_ASN_VALUE_CHOICE(defineEventEnrollment, DefineEventEnrollment_Response, ConfirmedServiceResponse_defineEventEnrollment);
-        BOOST_ASN_VALUE_CHOICE(deleteEventEnrollment, DeleteEventEnrollment_Response, ConfirmedServiceResponse_deleteEventEnrollment);
-        BOOST_ASN_VALUE_CHOICE(alterEventEnrollment, AlterEventEnrollment_Response, ConfirmedServiceResponse_alterEventEnrollment);
-        BOOST_ASN_VALUE_CHOICE(reportEventEnrollmentStatus, ReportEventEnrollmentStatus_Response, ConfirmedServiceResponse_reportEventEnrollmentStatus);
-        BOOST_ASN_VALUE_CHOICE(getEventEnrollmentAttributes, GetEventEnrollmentAttributes_Response, ConfirmedServiceResponse_getEventEnrollmentAttributes);
-        BOOST_ASN_VALUE_CHOICE(acknowledgeEventNotification, AcknowledgeEventNotification_Response, ConfirmedServiceResponse_acknowledgeEventNotification);
-        BOOST_ASN_VALUE_CHOICE(getAlarmSummary, GetAlarmSummary_Response, ConfirmedServiceResponse_getAlarmSummary);
-        BOOST_ASN_VALUE_CHOICE(getAlarmEnrollmentSummary, GetAlarmEnrollmentSummary_Response, ConfirmedServiceResponse_getAlarmEnrollmentSummary);
-        BOOST_ASN_VALUE_CHOICE(readJournal, ReadJournal_Response, ConfirmedServiceResponse_readJournal);
-        BOOST_ASN_VALUE_CHOICE(writeJournal, WriteJournal_Response, ConfirmedServiceResponse_writeJournal);
-        BOOST_ASN_VALUE_CHOICE(initializeJournal, InitializeJournal_Response, ConfirmedServiceResponse_initializeJournal);
-        BOOST_ASN_VALUE_CHOICE(reportJournalStatus, ReportJournalStatus_Response, ConfirmedServiceResponse_reportJournalStatus);
-        BOOST_ASN_VALUE_CHOICE(createJournal, CreateJournal_Response, ConfirmedServiceResponse_createJournal);
-        BOOST_ASN_VALUE_CHOICE(deleteJournal, DeleteJournal_Response, ConfirmedServiceResponse_deleteJournal);
-        BOOST_ASN_VALUE_CHOICE(getCapabilityList, GetCapabilityList_Response, ConfirmedServiceResponse_getCapabilityList);
-        BOOST_ASN_VALUE_CHOICE(fileOpen, ISO_9506_MMS_1A::FileOpen_Response, ConfirmedServiceResponse_fileOpen);
-        BOOST_ASN_VALUE_CHOICE(fileRead, ISO_9506_MMS_1A::FileRead_Response, ConfirmedServiceResponse_fileRead);
-        BOOST_ASN_VALUE_CHOICE(fileClose, ISO_9506_MMS_1A::FileClose_Response, ConfirmedServiceResponse_fileClose);
-        BOOST_ASN_VALUE_CHOICE(fileRename, ISO_9506_MMS_1A::FileRename_Response, ConfirmedServiceResponse_fileRename);
-        BOOST_ASN_VALUE_CHOICE(fileDelete, ISO_9506_MMS_1A::FileDelete_Response, ConfirmedServiceResponse_fileDelete);
-        BOOST_ASN_VALUE_CHOICE(fileDirectory, ISO_9506_MMS_1A::FileDirectory_Response, ConfirmedServiceResponse_fileDirectory);
-        BOOST_ASN_VALUE_CHOICE(additionalService, AdditionalService_Response, ConfirmedServiceResponse_additionalService);
-        BOOST_ASN_VALUE_CHOICE(getDataExchangeAttributes, GetDataExchangeAttributes_Response, ConfirmedServiceResponse_getDataExchangeAttributes);
-        BOOST_ASN_VALUE_CHOICE(exchangeData, ExchangeData_Response, ConfirmedServiceResponse_exchangeData);
-        BOOST_ASN_VALUE_CHOICE(defineAccessControlList, DefineAccessControlList_Response, ConfirmedServiceResponse_defineAccessControlList);
-        BOOST_ASN_VALUE_CHOICE(getAccessControlListAttributes, GetAccessControlListAttributes_Response, ConfirmedServiceResponse_getAccessControlListAttributes);
-        BOOST_ASN_VALUE_CHOICE(reportAccessControlledObjects, ReportAccessControlledObjects_Response, ConfirmedServiceResponse_reportAccessControlledObjects);
-        BOOST_ASN_VALUE_CHOICE(deleteAccessControlList, DeleteAccessControlList_Response, ConfirmedServiceResponse_deleteAccessControlList);
-        BOOST_ASN_VALUE_CHOICE(changeAccessControl, ChangeAccessControl_Response, ConfirmedServiceResponse_changeAccessControl);
+        ITU_T_CHOICE_DECL(status, Status_Response, ConfirmedServiceResponse_status);
+        ITU_T_CHOICE_DECL(getNameList, GetNameList_Response, ConfirmedServiceResponse_getNameList);
+        ITU_T_CHOICE_DECL(identify, Identify_Response, ConfirmedServiceResponse_identify);
+        ITU_T_CHOICE_DECL(rename, Rename_Response, ConfirmedServiceResponse_rename);
+        ITU_T_CHOICE_DECL(read, Read_Response, ConfirmedServiceResponse_read);
+        ITU_T_CHOICE_DECL(getVariableAccessAttributes, GetVariableAccessAttributes_Response, ConfirmedServiceResponse_getVariableAccessAttributes);
+        ITU_T_CHOICE_DECL(defineNamedVariable, DefineNamedVariable_Response, ConfirmedServiceResponse_defineNamedVariable);
+        ITU_T_CHOICE_DECL(defineScatteredAccess, ISO_9506_MMS_1A::DefineScatteredAccess_Response, ConfirmedServiceResponse_defineScatteredAccess);
+        ITU_T_CHOICE_DECL(getScatteredAccessAttributes, ISO_9506_MMS_1A::GetScatteredAccessAttributes_Response, ConfirmedServiceResponse_getScatteredAccessAttributes);
+        ITU_T_CHOICE_DECL(deleteVariableAccess, DeleteVariableAccess_Response, ConfirmedServiceResponse_deleteVariableAccess);
+        ITU_T_CHOICE_DECL(defineNamedVariableList, DefineNamedVariableList_Response, ConfirmedServiceResponse_defineNamedVariableList);
+        ITU_T_CHOICE_DECL(getNamedVariableListAttributes, GetNamedVariableListAttributes_Response, ConfirmedServiceResponse_getNamedVariableListAttributes);
+        ITU_T_CHOICE_DECL(deleteNamedVariableList, DeleteNamedVariableList_Response, ConfirmedServiceResponse_deleteNamedVariableList);
+        ITU_T_CHOICE_DECL(defineNamedType, DefineNamedType_Response, ConfirmedServiceResponse_defineNamedType);
+        ITU_T_CHOICE_DECL(getNamedTypeAttributes, GetNamedTypeAttributes_Response, ConfirmedServiceResponse_getNamedTypeAttributes);
+        ITU_T_CHOICE_DECL(deleteNamedType, DeleteNamedType_Response, ConfirmedServiceResponse_deleteNamedType);
+        ITU_T_CHOICE_DECL(input, Input_Response, ConfirmedServiceResponse_input);
+        ITU_T_CHOICE_DECL(output, Output_Response, ConfirmedServiceResponse_output);
+        ITU_T_CHOICE_DECL(takeControl, TakeControl_Response, ConfirmedServiceResponse_takeControl);
+        ITU_T_CHOICE_DECL(relinquishControl, RelinquishControl_Response, ConfirmedServiceResponse_relinquishControl);
+        ITU_T_CHOICE_DECL(defineSemaphore, DefineSemaphore_Response, ConfirmedServiceResponse_defineSemaphore);
+        ITU_T_CHOICE_DECL(deleteSemaphore, DeleteSemaphore_Response, ConfirmedServiceResponse_deleteSemaphore);
+        ITU_T_CHOICE_DECL(reportSemaphoreStatus, ReportSemaphoreStatus_Response, ConfirmedServiceResponse_reportSemaphoreStatus);
+        ITU_T_CHOICE_DECL(reportPoolSemaphoreStatus, ReportPoolSemaphoreStatus_Response, ConfirmedServiceResponse_reportPoolSemaphoreStatus);
+        ITU_T_CHOICE_DECL(reportSemaphoreEntryStatus, ReportSemaphoreEntryStatus_Response, ConfirmedServiceResponse_reportSemaphoreEntryStatus);
+        ITU_T_CHOICE_DECL(initiateDownloadSequence, InitiateDownloadSequence_Response, ConfirmedServiceResponse_initiateDownloadSequence);
+        ITU_T_CHOICE_DECL(downloadSegment, DownloadSegment_Response, ConfirmedServiceResponse_downloadSegment);
+        ITU_T_CHOICE_DECL(terminateDownloadSequence, TerminateDownloadSequence_Response, ConfirmedServiceResponse_terminateDownloadSequence);
+        ITU_T_CHOICE_DECL(initiateUploadSequence, InitiateUploadSequence_Response, ConfirmedServiceResponse_initiateUploadSequence);
+        ITU_T_CHOICE_DECL(uploadSegment, UploadSegment_Response, ConfirmedServiceResponse_uploadSegment);
+        ITU_T_CHOICE_DECL(terminateUploadSequence, TerminateUploadSequence_Response, ConfirmedServiceResponse_terminateUploadSequence);
+        ITU_T_CHOICE_DECL(requestDomainDownload, RequestDomainDownload_Response, ConfirmedServiceResponse_requestDomainDownload);
+        ITU_T_CHOICE_DECL(requestDomainUpload, RequestDomainUpload_Response, ConfirmedServiceResponse_requestDomainUpload);
+        ITU_T_CHOICE_DECL(loadDomainContent, LoadDomainContent_Response, ConfirmedServiceResponse_loadDomainContent);
+        ITU_T_CHOICE_DECL(storeDomainContent, StoreDomainContent_Response, ConfirmedServiceResponse_storeDomainContent);
+        ITU_T_CHOICE_DECL(deleteDomain, DeleteDomain_Response, ConfirmedServiceResponse_deleteDomain);
+        ITU_T_CHOICE_DECL(getDomainAttributes, GetDomainAttributes_Response, ConfirmedServiceResponse_getDomainAttributes);
+        ITU_T_CHOICE_DECL(createProgramInvocation, CreateProgramInvocation_Response, ConfirmedServiceResponse_createProgramInvocation);
+        ITU_T_CHOICE_DECL(deleteProgramInvocation, DeleteProgramInvocation_Response, ConfirmedServiceResponse_deleteProgramInvocation);
+        ITU_T_CHOICE_DECL(start, Start_Response, ConfirmedServiceResponse_start);
+        ITU_T_CHOICE_DECL(stop, Stop_Response, ConfirmedServiceResponse_stop);
+        ITU_T_CHOICE_DECL(resume, Resume_Response, ConfirmedServiceResponse_resume);
+        ITU_T_CHOICE_DECL(reset, Reset_Response, ConfirmedServiceResponse_reset);
+        ITU_T_CHOICE_DECL(kill, Kill_Response, ConfirmedServiceResponse_kill);
+        ITU_T_CHOICE_DECL(getProgramInvocationAttributes, GetProgramInvocationAttributes_Response, ConfirmedServiceResponse_getProgramInvocationAttributes);
+        ITU_T_CHOICE_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Response, ConfirmedServiceResponse_obtainFile);
+        ITU_T_CHOICE_DECL(defineEventCondition, DefineEventCondition_Response, ConfirmedServiceResponse_defineEventCondition);
+        ITU_T_CHOICE_DECL(deleteEventCondition, DeleteEventCondition_Response, ConfirmedServiceResponse_deleteEventCondition);
+        ITU_T_CHOICE_DECL(getEventConditionAttributes, GetEventConditionAttributes_Response, ConfirmedServiceResponse_getEventConditionAttributes);
+        ITU_T_CHOICE_DECL(reportEventConditionStatus, ReportEventConditionStatus_Response, ConfirmedServiceResponse_reportEventConditionStatus);
+        ITU_T_CHOICE_DECL(alterEventConditionMonitoring, AlterEventConditionMonitoring_Response, ConfirmedServiceResponse_alterEventConditionMonitoring);
+        ITU_T_CHOICE_DECL(triggerEvent, TriggerEvent_Response, ConfirmedServiceResponse_triggerEvent);
+        ITU_T_CHOICE_DECL(defineEventAction, DefineEventAction_Response, ConfirmedServiceResponse_defineEventAction);
+        ITU_T_CHOICE_DECL(deleteEventAction, DeleteEventAction_Response, ConfirmedServiceResponse_deleteEventAction);
+        ITU_T_CHOICE_DECL(getEventActionAttributes, GetEventActionAttributes_Response, ConfirmedServiceResponse_getEventActionAttributes);
+        ITU_T_CHOICE_DECL(reportEventActionStatus, ReportEventActionStatus_Response, ConfirmedServiceResponse_reportEventActionStatus);
+        ITU_T_CHOICE_DECL(defineEventEnrollment, DefineEventEnrollment_Response, ConfirmedServiceResponse_defineEventEnrollment);
+        ITU_T_CHOICE_DECL(deleteEventEnrollment, DeleteEventEnrollment_Response, ConfirmedServiceResponse_deleteEventEnrollment);
+        ITU_T_CHOICE_DECL(alterEventEnrollment, AlterEventEnrollment_Response, ConfirmedServiceResponse_alterEventEnrollment);
+        ITU_T_CHOICE_DECL(reportEventEnrollmentStatus, ReportEventEnrollmentStatus_Response, ConfirmedServiceResponse_reportEventEnrollmentStatus);
+        ITU_T_CHOICE_DECL(getEventEnrollmentAttributes, GetEventEnrollmentAttributes_Response, ConfirmedServiceResponse_getEventEnrollmentAttributes);
+        ITU_T_CHOICE_DECL(acknowledgeEventNotification, AcknowledgeEventNotification_Response, ConfirmedServiceResponse_acknowledgeEventNotification);
+        ITU_T_CHOICE_DECL(getAlarmSummary, GetAlarmSummary_Response, ConfirmedServiceResponse_getAlarmSummary);
+        ITU_T_CHOICE_DECL(getAlarmEnrollmentSummary, GetAlarmEnrollmentSummary_Response, ConfirmedServiceResponse_getAlarmEnrollmentSummary);
+        ITU_T_CHOICE_DECL(readJournal, ReadJournal_Response, ConfirmedServiceResponse_readJournal);
+        ITU_T_CHOICE_DECL(writeJournal, WriteJournal_Response, ConfirmedServiceResponse_writeJournal);
+        ITU_T_CHOICE_DECL(initializeJournal, InitializeJournal_Response, ConfirmedServiceResponse_initializeJournal);
+        ITU_T_CHOICE_DECL(reportJournalStatus, ReportJournalStatus_Response, ConfirmedServiceResponse_reportJournalStatus);
+        ITU_T_CHOICE_DECL(createJournal, CreateJournal_Response, ConfirmedServiceResponse_createJournal);
+        ITU_T_CHOICE_DECL(deleteJournal, DeleteJournal_Response, ConfirmedServiceResponse_deleteJournal);
+        ITU_T_CHOICE_DECL(getCapabilityList, GetCapabilityList_Response, ConfirmedServiceResponse_getCapabilityList);
+        ITU_T_CHOICE_DECL(fileOpen, ISO_9506_MMS_1A::FileOpen_Response, ConfirmedServiceResponse_fileOpen);
+        ITU_T_CHOICE_DECL(fileRead, ISO_9506_MMS_1A::FileRead_Response, ConfirmedServiceResponse_fileRead);
+        ITU_T_CHOICE_DECL(fileClose, ISO_9506_MMS_1A::FileClose_Response, ConfirmedServiceResponse_fileClose);
+        ITU_T_CHOICE_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Response, ConfirmedServiceResponse_fileRename);
+        ITU_T_CHOICE_DECL(fileDelete, ISO_9506_MMS_1A::FileDelete_Response, ConfirmedServiceResponse_fileDelete);
+        ITU_T_CHOICE_DECL(fileDirectory, ISO_9506_MMS_1A::FileDirectory_Response, ConfirmedServiceResponse_fileDirectory);
+        ITU_T_CHOICE_DECL(additionalService, AdditionalService_Response, ConfirmedServiceResponse_additionalService);
+        ITU_T_CHOICE_DECL(getDataExchangeAttributes, GetDataExchangeAttributes_Response, ConfirmedServiceResponse_getDataExchangeAttributes);
+        ITU_T_CHOICE_DECL(exchangeData, ExchangeData_Response, ConfirmedServiceResponse_exchangeData);
+        ITU_T_CHOICE_DECL(defineAccessControlList, DefineAccessControlList_Response, ConfirmedServiceResponse_defineAccessControlList);
+        ITU_T_CHOICE_DECL(getAccessControlListAttributes, GetAccessControlListAttributes_Response, ConfirmedServiceResponse_getAccessControlListAttributes);
+        ITU_T_CHOICE_DECL(reportAccessControlledObjects, ReportAccessControlledObjects_Response, ConfirmedServiceResponse_reportAccessControlledObjects);
+        ITU_T_CHOICE_DECL(deleteAccessControlList, DeleteAccessControlList_Response, ConfirmedServiceResponse_deleteAccessControlList);
+        ITU_T_CHOICE_DECL(changeAccessControl, ChangeAccessControl_Response, ConfirmedServiceResponse_changeAccessControl);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice AdditionalService-Response
@@ -1092,40 +1074,40 @@ namespace ISO_9506_MMS_1 {
         AdditionalService_Response_alterECLMonitoring,
     };
 
-    struct AdditionalService_Response : public BOOST_ASN_CHOICE_STRUCT(AdditionalService_Response_enum) {
+    struct AdditionalService_Response : public ITU_T_STRUCT(AdditionalService_Response_enum) {
 
-        AdditionalService_Response() : BOOST_ASN_CHOICE_STRUCT(AdditionalService_Response_enum) () {
+        AdditionalService_Response() : ITU_T_STRUCT(AdditionalService_Response_enum) () {
         }
 
         template<typename T > AdditionalService_Response(boost::shared_ptr< T> vl, AdditionalService_Response_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(AdditionalService_Response_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(AdditionalService_Response_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(vMDStop, VMDStop_Response, AdditionalService_Response_vMDStop);
-        BOOST_ASN_VALUE_CHOICE(vMDReset, VMDReset_Response, AdditionalService_Response_vMDReset);
-        BOOST_ASN_VALUE_CHOICE(select, Select_Response, AdditionalService_Response_select);
-        BOOST_ASN_VALUE_CHOICE(alterPI, AlterProgramInvocationAttributes_Response, AdditionalService_Response_alterPI);
-        BOOST_ASN_VALUE_CHOICE(initiateUCLoad, InitiateUnitControlLoad_Response, AdditionalService_Response_initiateUCLoad);
-        BOOST_ASN_VALUE_CHOICE(uCLoad, UnitControlLoadSegment_Response, AdditionalService_Response_uCLoad);
-        BOOST_ASN_VALUE_CHOICE(uCUpload, UnitControlUpload_Response, AdditionalService_Response_uCUpload);
-        BOOST_ASN_VALUE_CHOICE(startUC, StartUnitControl_Response, AdditionalService_Response_startUC);
-        BOOST_ASN_VALUE_CHOICE(stopUC, StopUnitControl_Response, AdditionalService_Response_stopUC);
-        BOOST_ASN_VALUE_CHOICE(createUC, CreateUnitControl_Response, AdditionalService_Response_createUC);
-        BOOST_ASN_VALUE_CHOICE(addToUC, AddToUnitControl_Response, AdditionalService_Response_addToUC);
-        BOOST_ASN_VALUE_CHOICE(removeFromUC, RemoveFromUnitControl_Response, AdditionalService_Response_removeFromUC);
-        BOOST_ASN_VALUE_CHOICE(getUCAttributes, GetUnitControlAttributes_Response, AdditionalService_Response_getUCAttributes);
-        BOOST_ASN_VALUE_CHOICE(loadUCFromFile, LoadUnitControlFromFile_Response, AdditionalService_Response_loadUCFromFile);
-        BOOST_ASN_VALUE_CHOICE(storeUCToFile, StoreUnitControlToFile_Response, AdditionalService_Response_storeUCToFile);
-        BOOST_ASN_VALUE_CHOICE(deleteUC, DeleteUnitControl_Response, AdditionalService_Response_deleteUC);
-        BOOST_ASN_VALUE_CHOICE(defineECL, DefineEventConditionList_Response, AdditionalService_Response_defineECL);
-        BOOST_ASN_VALUE_CHOICE(deleteECL, DeleteEventConditionList_Response, AdditionalService_Response_deleteECL);
-        BOOST_ASN_VALUE_CHOICE(addECLReference, AddEventConditionListReference_Response, AdditionalService_Response_addECLReference);
-        BOOST_ASN_VALUE_CHOICE(removeECLReference, RemoveEventConditionListReference_Response, AdditionalService_Response_removeECLReference);
-        BOOST_ASN_VALUE_CHOICE(getECLAttributes, GetEventConditionListAttributes_Response, AdditionalService_Response_getECLAttributes);
-        BOOST_ASN_VALUE_CHOICE(reportECLStatus, ReportEventConditionListStatus_Response, AdditionalService_Response_reportECLStatus);
-        BOOST_ASN_VALUE_CHOICE(alterECLMonitoring, AlterEventConditionListMonitoring_Response, AdditionalService_Response_alterECLMonitoring);
+        ITU_T_CHOICE_DECL(vMDStop, VMDStop_Response, AdditionalService_Response_vMDStop);
+        ITU_T_CHOICE_DECL(vMDReset, VMDReset_Response, AdditionalService_Response_vMDReset);
+        ITU_T_CHOICE_DECL(select, Select_Response, AdditionalService_Response_select);
+        ITU_T_CHOICE_DECL(alterPI, AlterProgramInvocationAttributes_Response, AdditionalService_Response_alterPI);
+        ITU_T_CHOICE_DECL(initiateUCLoad, InitiateUnitControlLoad_Response, AdditionalService_Response_initiateUCLoad);
+        ITU_T_CHOICE_DECL(uCLoad, UnitControlLoadSegment_Response, AdditionalService_Response_uCLoad);
+        ITU_T_CHOICE_DECL(uCUpload, UnitControlUpload_Response, AdditionalService_Response_uCUpload);
+        ITU_T_CHOICE_DECL(startUC, StartUnitControl_Response, AdditionalService_Response_startUC);
+        ITU_T_CHOICE_DECL(stopUC, StopUnitControl_Response, AdditionalService_Response_stopUC);
+        ITU_T_CHOICE_DECL(createUC, CreateUnitControl_Response, AdditionalService_Response_createUC);
+        ITU_T_CHOICE_DECL(addToUC, AddToUnitControl_Response, AdditionalService_Response_addToUC);
+        ITU_T_CHOICE_DECL(removeFromUC, RemoveFromUnitControl_Response, AdditionalService_Response_removeFromUC);
+        ITU_T_CHOICE_DECL(getUCAttributes, GetUnitControlAttributes_Response, AdditionalService_Response_getUCAttributes);
+        ITU_T_CHOICE_DECL(loadUCFromFile, LoadUnitControlFromFile_Response, AdditionalService_Response_loadUCFromFile);
+        ITU_T_CHOICE_DECL(storeUCToFile, StoreUnitControlToFile_Response, AdditionalService_Response_storeUCToFile);
+        ITU_T_CHOICE_DECL(deleteUC, DeleteUnitControl_Response, AdditionalService_Response_deleteUC);
+        ITU_T_CHOICE_DECL(defineECL, DefineEventConditionList_Response, AdditionalService_Response_defineECL);
+        ITU_T_CHOICE_DECL(deleteECL, DeleteEventConditionList_Response, AdditionalService_Response_deleteECL);
+        ITU_T_CHOICE_DECL(addECLReference, AddEventConditionListReference_Response, AdditionalService_Response_addECLReference);
+        ITU_T_CHOICE_DECL(removeECLReference, RemoveEventConditionListReference_Response, AdditionalService_Response_removeECLReference);
+        ITU_T_CHOICE_DECL(getECLAttributes, GetEventConditionListAttributes_Response, AdditionalService_Response_getECLAttributes);
+        ITU_T_CHOICE_DECL(reportECLStatus, ReportEventConditionListStatus_Response, AdditionalService_Response_reportECLStatus);
+        ITU_T_CHOICE_DECL(alterECLMonitoring, AlterEventConditionListMonitoring_Response, AdditionalService_Response_alterECLMonitoring);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice Response-Detail
@@ -1139,21 +1121,21 @@ namespace ISO_9506_MMS_1 {
         Response_Detail_getEventConditionAttributes,
     };
 
-    struct Response_Detail : public BOOST_ASN_CHOICE_STRUCT(Response_Detail_enum) {
+    struct Response_Detail : public ITU_T_STRUCT(Response_Detail_enum) {
 
-        Response_Detail() : BOOST_ASN_CHOICE_STRUCT(Response_Detail_enum) () {
+        Response_Detail() : ITU_T_STRUCT(Response_Detail_enum) () {
         }
 
         template<typename T > Response_Detail(boost::shared_ptr< T> vl, Response_Detail_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Response_Detail_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(Response_Detail_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(otherRequests, null_type, Response_Detail_otherRequests);
-        BOOST_ASN_VALUE_CHOICE(status, CS_Status_Response, Response_Detail_status);
-        BOOST_ASN_VALUE_CHOICE(getProgramInvocationAttributes, CS_GetProgramInvocationAttributes_Response, Response_Detail_getProgramInvocationAttributes);
-        BOOST_ASN_VALUE_CHOICE(getEventConditionAttributes, CS_GetEventConditionAttributes_Response, Response_Detail_getEventConditionAttributes);
+        ITU_T_CHOICE_DECL(otherRequests, null_type, Response_Detail_otherRequests);
+        ITU_T_CHOICE_DECL(status, CS_Status_Response, Response_Detail_status);
+        ITU_T_CHOICE_DECL(getProgramInvocationAttributes, CS_GetProgramInvocationAttributes_Response, Response_Detail_getProgramInvocationAttributes);
+        ITU_T_CHOICE_DECL(getEventConditionAttributes, CS_GetEventConditionAttributes_Response, Response_Detail_getEventConditionAttributes);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Confirmed-ErrorPDU
@@ -1169,17 +1151,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Unsigned32> arg__modifierPosition,
                 boost::shared_ptr< ServiceError> arg__serviceError);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(invokeID, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(modifierPosition, Unsigned32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(serviceError, ServiceError);
+        ITU_T_HOLDERH_DECL(invokeID, Unsigned32);
+        ITU_T_OPTIONAL_DECL(modifierPosition, Unsigned32);
+        ITU_T_HOLDERH_DECL(serviceError, ServiceError);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Unsigned32> invokeID_;
-        boost::shared_ptr<Unsigned32> modifierPosition_;
-        value_holder<ServiceError> serviceError_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ServiceError
@@ -1207,7 +1183,7 @@ namespace ISO_9506_MMS_1 {
             errorClass_type_others,
         };
 
-        struct errorClass_type : public BOOST_ASN_CHOICE_STRUCT(errorClass_type_enum) {
+        struct errorClass_type : public ITU_T_STRUCT(errorClass_type_enum) {
 
             static const int vmd_state_other;
             static const int vmd_state_vmd_state_conflict;
@@ -1281,28 +1257,28 @@ namespace ISO_9506_MMS_1 {
             static const int file_duplicate_filename;
             static const int file_insufficient_space_in_filestore;
 
-            errorClass_type() : BOOST_ASN_CHOICE_STRUCT(errorClass_type_enum) () {
+            errorClass_type() : ITU_T_STRUCT(errorClass_type_enum) () {
             }
 
             template<typename T > errorClass_type(boost::shared_ptr< T> vl, errorClass_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(errorClass_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(errorClass_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(vmd_state, int, errorClass_type_vmd_state);
-            BOOST_ASN_VALUE_CHOICE(application_reference, int, errorClass_type_application_reference);
-            BOOST_ASN_VALUE_CHOICE(definition, int, errorClass_type_definition);
-            BOOST_ASN_VALUE_CHOICE(resource, int, errorClass_type_resource);
-            BOOST_ASN_VALUE_CHOICE(service, int, errorClass_type_service);
-            BOOST_ASN_VALUE_CHOICE(service_preempt, int, errorClass_type_service_preempt);
-            BOOST_ASN_VALUE_CHOICE(time_resolution, int, errorClass_type_time_resolution);
-            BOOST_ASN_VALUE_CHOICE(access, int, errorClass_type_access);
-            BOOST_ASN_VALUE_CHOICE(initiate, int, errorClass_type_initiate);
-            BOOST_ASN_VALUE_CHOICE(conclude, int, errorClass_type_conclude);
-            BOOST_ASN_VALUE_CHOICE(cancel, int, errorClass_type_cancel);
-            BOOST_ASN_VALUE_CHOICE(file, int, errorClass_type_file);
-            BOOST_ASN_VALUE_CHOICE(others, int, errorClass_type_others);
+            ITU_T_CHOICE_DECL(vmd_state, int, errorClass_type_vmd_state);
+            ITU_T_CHOICE_DECL(application_reference, int, errorClass_type_application_reference);
+            ITU_T_CHOICE_DECL(definition, int, errorClass_type_definition);
+            ITU_T_CHOICE_DECL(resource, int, errorClass_type_resource);
+            ITU_T_CHOICE_DECL(service, int, errorClass_type_service);
+            ITU_T_CHOICE_DECL(service_preempt, int, errorClass_type_service_preempt);
+            ITU_T_CHOICE_DECL(time_resolution, int, errorClass_type_time_resolution);
+            ITU_T_CHOICE_DECL(access, int, errorClass_type_access);
+            ITU_T_CHOICE_DECL(initiate, int, errorClass_type_initiate);
+            ITU_T_CHOICE_DECL(conclude, int, errorClass_type_conclude);
+            ITU_T_CHOICE_DECL(cancel, int, errorClass_type_cancel);
+            ITU_T_CHOICE_DECL(file, int, errorClass_type_file);
+            ITU_T_CHOICE_DECL(others, int, errorClass_type_others);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         enum serviceSpecificInfo_type_enum {
@@ -1322,29 +1298,29 @@ namespace ISO_9506_MMS_1 {
             serviceSpecificInfo_type_changeAccessControl,
         };
 
-        struct serviceSpecificInfo_type : public BOOST_ASN_CHOICE_STRUCT(serviceSpecificInfo_type_enum) {
+        struct serviceSpecificInfo_type : public ITU_T_STRUCT(serviceSpecificInfo_type_enum) {
 
-            serviceSpecificInfo_type() : BOOST_ASN_CHOICE_STRUCT(serviceSpecificInfo_type_enum) () {
+            serviceSpecificInfo_type() : ITU_T_STRUCT(serviceSpecificInfo_type_enum) () {
             }
 
             template<typename T > serviceSpecificInfo_type(boost::shared_ptr< T> vl, serviceSpecificInfo_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(serviceSpecificInfo_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(serviceSpecificInfo_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(obtainFile, ISO_9506_MMS_1A::ObtainFile_Error, serviceSpecificInfo_type_obtainFile);
-            BOOST_ASN_VALUE_CHOICE(start, Start_Error, serviceSpecificInfo_type_start);
-            BOOST_ASN_VALUE_CHOICE(stop, Stop_Error, serviceSpecificInfo_type_stop);
-            BOOST_ASN_VALUE_CHOICE(resume, Resume_Error, serviceSpecificInfo_type_resume);
-            BOOST_ASN_VALUE_CHOICE(reset, Reset_Error, serviceSpecificInfo_type_reset);
-            BOOST_ASN_VALUE_CHOICE(deleteVariableAccess, DeleteVariableAccess_Error, serviceSpecificInfo_type_deleteVariableAccess);
-            BOOST_ASN_VALUE_CHOICE(deleteNamedVariableList, DeleteNamedVariableList_Error, serviceSpecificInfo_type_deleteNamedVariableList);
-            BOOST_ASN_VALUE_CHOICE(deleteNamedType, DeleteNamedType_Error, serviceSpecificInfo_type_deleteNamedType);
-            BOOST_ASN_VALUE_CHOICE(defineEventEnrollment_Error, DefineEventEnrollment_Error, serviceSpecificInfo_type_defineEventEnrollment_Error);
-            BOOST_ASN_VALUE_CHOICE(fileRename, ISO_9506_MMS_1A::FileRename_Error, serviceSpecificInfo_type_fileRename);
-            BOOST_ASN_VALUE_CHOICE(additionalService, AdditionalService_Error, serviceSpecificInfo_type_additionalService);
-            BOOST_ASN_VALUE_CHOICE(changeAccessControl, ChangeAccessControl_Error, serviceSpecificInfo_type_changeAccessControl);
+            ITU_T_CHOICE_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Error, serviceSpecificInfo_type_obtainFile);
+            ITU_T_CHOICE_DECL(start, Start_Error, serviceSpecificInfo_type_start);
+            ITU_T_CHOICE_DECL(stop, Stop_Error, serviceSpecificInfo_type_stop);
+            ITU_T_CHOICE_DECL(resume, Resume_Error, serviceSpecificInfo_type_resume);
+            ITU_T_CHOICE_DECL(reset, Reset_Error, serviceSpecificInfo_type_reset);
+            ITU_T_CHOICE_DECL(deleteVariableAccess, DeleteVariableAccess_Error, serviceSpecificInfo_type_deleteVariableAccess);
+            ITU_T_CHOICE_DECL(deleteNamedVariableList, DeleteNamedVariableList_Error, serviceSpecificInfo_type_deleteNamedVariableList);
+            ITU_T_CHOICE_DECL(deleteNamedType, DeleteNamedType_Error, serviceSpecificInfo_type_deleteNamedType);
+            ITU_T_CHOICE_DECL(defineEventEnrollment_Error, DefineEventEnrollment_Error, serviceSpecificInfo_type_defineEventEnrollment_Error);
+            ITU_T_CHOICE_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Error, serviceSpecificInfo_type_fileRename);
+            ITU_T_CHOICE_DECL(additionalService, AdditionalService_Error, serviceSpecificInfo_type_additionalService);
+            ITU_T_CHOICE_DECL(changeAccessControl, ChangeAccessControl_Error, serviceSpecificInfo_type_changeAccessControl);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1357,19 +1333,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< visiblestring_type> arg__additionalDescription,
                 boost::shared_ptr< serviceSpecificInfo_type> arg__serviceSpecificInfo);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(errorClass, errorClass_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(additionalCode, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(additionalDescription, visiblestring_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(serviceSpecificInfo, serviceSpecificInfo_type);
+        ITU_T_HOLDERH_DECL(errorClass, errorClass_type);
+        ITU_T_OPTIONAL_DECL(additionalCode, int);
+        ITU_T_OPTIONAL_DECL(additionalDescription, visiblestring_type);
+        ITU_T_OPTIONAL_DECL(serviceSpecificInfo, serviceSpecificInfo_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<errorClass_type> errorClass_;
-        boost::shared_ptr<int> additionalCode_;
-        boost::shared_ptr<visiblestring_type> additionalDescription_;
-        boost::shared_ptr<serviceSpecificInfo_type> serviceSpecificInfo_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice AdditionalService-Error
@@ -1387,25 +1356,25 @@ namespace ISO_9506_MMS_1 {
         AdditionalService_Error_loadUCFromFile,
     };
 
-    struct AdditionalService_Error : public BOOST_ASN_CHOICE_STRUCT(AdditionalService_Error_enum) {
+    struct AdditionalService_Error : public ITU_T_STRUCT(AdditionalService_Error_enum) {
 
-        AdditionalService_Error() : BOOST_ASN_CHOICE_STRUCT(AdditionalService_Error_enum) () {
+        AdditionalService_Error() : ITU_T_STRUCT(AdditionalService_Error_enum) () {
         }
 
         template<typename T > AdditionalService_Error(boost::shared_ptr< T> vl, AdditionalService_Error_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(AdditionalService_Error_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(AdditionalService_Error_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(defineEcl, DefineEventConditionList_Error, AdditionalService_Error_defineEcl);
-        BOOST_ASN_VALUE_CHOICE(addECLReference, AddEventConditionListReference_Error, AdditionalService_Error_addECLReference);
-        BOOST_ASN_VALUE_CHOICE(removeECLReference, RemoveEventConditionListReference_Error, AdditionalService_Error_removeECLReference);
-        BOOST_ASN_VALUE_CHOICE(initiateUC, InitiateUnitControl_Error, AdditionalService_Error_initiateUC);
-        BOOST_ASN_VALUE_CHOICE(startUC, StartUnitControl_Error, AdditionalService_Error_startUC);
-        BOOST_ASN_VALUE_CHOICE(stopUC, StopUnitControl_Error, AdditionalService_Error_stopUC);
-        BOOST_ASN_VALUE_CHOICE(deleteUC, DeleteUnitControl_Error, AdditionalService_Error_deleteUC);
-        BOOST_ASN_VALUE_CHOICE(loadUCFromFile, LoadUnitControlFromFile_Error, AdditionalService_Error_loadUCFromFile);
+        ITU_T_CHOICE_DECL(defineEcl, DefineEventConditionList_Error, AdditionalService_Error_defineEcl);
+        ITU_T_CHOICE_DECL(addECLReference, AddEventConditionListReference_Error, AdditionalService_Error_addECLReference);
+        ITU_T_CHOICE_DECL(removeECLReference, RemoveEventConditionListReference_Error, AdditionalService_Error_removeECLReference);
+        ITU_T_CHOICE_DECL(initiateUC, InitiateUnitControl_Error, AdditionalService_Error_initiateUC);
+        ITU_T_CHOICE_DECL(startUC, StartUnitControl_Error, AdditionalService_Error_startUC);
+        ITU_T_CHOICE_DECL(stopUC, StopUnitControl_Error, AdditionalService_Error_stopUC);
+        ITU_T_CHOICE_DECL(deleteUC, DeleteUnitControl_Error, AdditionalService_Error_deleteUC);
+        ITU_T_CHOICE_DECL(loadUCFromFile, LoadUnitControlFromFile_Error, AdditionalService_Error_loadUCFromFile);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice ObjectName
@@ -1418,7 +1387,7 @@ namespace ISO_9506_MMS_1 {
         ObjectName_aa_specific,
     };
 
-    struct ObjectName : public BOOST_ASN_CHOICE_STRUCT(ObjectName_enum) {
+    struct ObjectName : public ITU_T_STRUCT(ObjectName_enum) {
 
 
         struct domain_specific_type;
@@ -1430,29 +1399,24 @@ namespace ISO_9506_MMS_1 {
             domain_specific_type(const Identifier& arg__domainID,
                     const Identifier& arg__itemID);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(domainID, Identifier);
-            BOOST_ASN_VALUE_HOLDERH_DECL(itemID, Identifier);
+            ITU_T_HOLDERH_DECL(domainID, Identifier);
+            ITU_T_HOLDERH_DECL(itemID, Identifier);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<Identifier> domainID_;
-            value_holder<Identifier> itemID_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        ObjectName() : BOOST_ASN_CHOICE_STRUCT(ObjectName_enum) () {
+        ObjectName() : ITU_T_STRUCT(ObjectName_enum) () {
         }
 
         template<typename T > ObjectName(boost::shared_ptr< T> vl, ObjectName_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(ObjectName_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(ObjectName_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(vmd_specific, Identifier, ObjectName_vmd_specific);
-        BOOST_ASN_VALUE_CHOICE(domain_specific, domain_specific_type, ObjectName_domain_specific);
-        BOOST_ASN_VALUE_CHOICE(aa_specific, Identifier, ObjectName_aa_specific);
+        ITU_T_CHOICE_DECL(vmd_specific, Identifier, ObjectName_vmd_specific);
+        ITU_T_CHOICE_DECL(domain_specific, domain_specific_type, ObjectName_domain_specific);
+        ITU_T_CHOICE_DECL(aa_specific, Identifier, ObjectName_aa_specific);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice ObjectClass
@@ -1464,7 +1428,7 @@ namespace ISO_9506_MMS_1 {
         ObjectClass_csObjectClass,
     };
 
-    struct ObjectClass : public BOOST_ASN_CHOICE_STRUCT(ObjectClass_enum) {
+    struct ObjectClass : public ITU_T_STRUCT(ObjectClass_enum) {
 
         static const int basicObjectClass_namedVariable;
         static const int basicObjectClass_scatteredAccess;
@@ -1484,17 +1448,17 @@ namespace ISO_9506_MMS_1 {
         static const int csObjectClass_eventConditionList;
         static const int csObjectClass_unitControl;
 
-        ObjectClass() : BOOST_ASN_CHOICE_STRUCT(ObjectClass_enum) () {
+        ObjectClass() : ITU_T_STRUCT(ObjectClass_enum) () {
         }
 
         template<typename T > ObjectClass(boost::shared_ptr< T> vl, ObjectClass_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(ObjectClass_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(ObjectClass_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(basicObjectClass, int, ObjectClass_basicObjectClass);
-        BOOST_ASN_VALUE_CHOICE(csObjectClass, int, ObjectClass_csObjectClass);
+        ITU_T_CHOICE_DECL(basicObjectClass, int, ObjectClass_basicObjectClass);
+        ITU_T_CHOICE_DECL(csObjectClass, int, ObjectClass_csObjectClass);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Initiate-RequestPDU
@@ -1518,23 +1482,14 @@ namespace ISO_9506_MMS_1 {
                     boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalling = boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
                     boost::shared_ptr< visiblestring_type> arg__privilegeClassIdentityCalling = boost::shared_ptr< visiblestring_type>());
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(proposedVersionNumber, Integer16);
-            BOOST_ASN_VALUE_HOLDERH_DECL(proposedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions);
-            BOOST_ASN_VALUE_HOLDERH_DECL(servicesSupportedCalling, MMS_Object_Module_1::ServiceSupportOptions);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(additionalSupportedCalling, MMS_Object_Module_1::AdditionalSupportOptions);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(additionalCbbSupportedCalling, MMS_Object_Module_1::AdditionalCBBOptions);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(privilegeClassIdentityCalling, visiblestring_type);
+            ITU_T_HOLDERH_DECL(proposedVersionNumber, Integer16);
+            ITU_T_HOLDERH_DECL(proposedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions);
+            ITU_T_HOLDERH_DECL(servicesSupportedCalling, MMS_Object_Module_1::ServiceSupportOptions);
+            ITU_T_OPTIONAL_DECL(additionalSupportedCalling, MMS_Object_Module_1::AdditionalSupportOptions);
+            ITU_T_OPTIONAL_DECL(additionalCbbSupportedCalling, MMS_Object_Module_1::AdditionalCBBOptions);
+            ITU_T_OPTIONAL_DECL(privilegeClassIdentityCalling, visiblestring_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<Integer16> proposedVersionNumber_;
-            value_holder<MMS_Object_Module_1::ParameterSupportOptions> proposedParameterCBB_;
-            value_holder<MMS_Object_Module_1::ServiceSupportOptions> servicesSupportedCalling_;
-            boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions> additionalSupportedCalling_; // after extention
-            boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions> additionalCbbSupportedCalling_; // after extention
-            boost::shared_ptr<visiblestring_type> privilegeClassIdentityCalling_; // after extention
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1550,21 +1505,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Integer8> arg__proposedDataStructureNestingLevel,
                 boost::shared_ptr< initRequestDetail_type> arg__initRequestDetail);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(localDetailCalling, Integer32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(proposedMaxServOutstandingCalling, Integer16);
-        BOOST_ASN_VALUE_HOLDERH_DECL(proposedMaxServOutstandingCalled, Integer16);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(proposedDataStructureNestingLevel, Integer8);
-        BOOST_ASN_VALUE_HOLDERH_DECL(initRequestDetail, initRequestDetail_type);
+        ITU_T_OPTIONAL_DECL(localDetailCalling, Integer32);
+        ITU_T_HOLDERH_DECL(proposedMaxServOutstandingCalling, Integer16);
+        ITU_T_HOLDERH_DECL(proposedMaxServOutstandingCalled, Integer16);
+        ITU_T_OPTIONAL_DECL(proposedDataStructureNestingLevel, Integer8);
+        ITU_T_HOLDERH_DECL(initRequestDetail, initRequestDetail_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Integer32> localDetailCalling_;
-        value_holder<Integer16> proposedMaxServOutstandingCalling_;
-        value_holder<Integer16> proposedMaxServOutstandingCalled_;
-        boost::shared_ptr<Integer8> proposedDataStructureNestingLevel_;
-        value_holder<initRequestDetail_type> initRequestDetail_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Initiate-ResponsePDU
@@ -1588,23 +1535,14 @@ namespace ISO_9506_MMS_1 {
                     boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalled = boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
                     boost::shared_ptr< visiblestring_type> arg__privilegeClassIdentityCalled = boost::shared_ptr< visiblestring_type>());
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(negotiatedVersionNumber, Integer16);
-            BOOST_ASN_VALUE_HOLDERH_DECL(negotiatedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions);
-            BOOST_ASN_VALUE_HOLDERH_DECL(servicesSupportedCalled, MMS_Object_Module_1::ServiceSupportOptions);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(additionalSupportedCalled, MMS_Object_Module_1::AdditionalSupportOptions);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(additionalCbbSupportedCalled, MMS_Object_Module_1::AdditionalCBBOptions);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(privilegeClassIdentityCalled, visiblestring_type);
+            ITU_T_HOLDERH_DECL(negotiatedVersionNumber, Integer16);
+            ITU_T_HOLDERH_DECL(negotiatedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions);
+            ITU_T_HOLDERH_DECL(servicesSupportedCalled, MMS_Object_Module_1::ServiceSupportOptions);
+            ITU_T_OPTIONAL_DECL(additionalSupportedCalled, MMS_Object_Module_1::AdditionalSupportOptions);
+            ITU_T_OPTIONAL_DECL(additionalCbbSupportedCalled, MMS_Object_Module_1::AdditionalCBBOptions);
+            ITU_T_OPTIONAL_DECL(privilegeClassIdentityCalled, visiblestring_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<Integer16> negotiatedVersionNumber_;
-            value_holder<MMS_Object_Module_1::ParameterSupportOptions> negotiatedParameterCBB_;
-            value_holder<MMS_Object_Module_1::ServiceSupportOptions> servicesSupportedCalled_;
-            boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions> additionalSupportedCalled_; // after extention
-            boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions> additionalCbbSupportedCalled_; // after extention
-            boost::shared_ptr<visiblestring_type> privilegeClassIdentityCalled_; // after extention
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1620,21 +1558,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Integer8> arg__negotiatedDataStructureNestingLevel,
                 boost::shared_ptr< initResponseDetail_type> arg__initResponseDetail);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(localDetailCalled, Integer32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(negotiatedMaxServOutstandingCalling, Integer16);
-        BOOST_ASN_VALUE_HOLDERH_DECL(negotiatedMaxServOutstandingCalled, Integer16);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(negotiatedDataStructureNestingLevel, Integer8);
-        BOOST_ASN_VALUE_HOLDERH_DECL(initResponseDetail, initResponseDetail_type);
+        ITU_T_OPTIONAL_DECL(localDetailCalled, Integer32);
+        ITU_T_HOLDERH_DECL(negotiatedMaxServOutstandingCalling, Integer16);
+        ITU_T_HOLDERH_DECL(negotiatedMaxServOutstandingCalled, Integer16);
+        ITU_T_OPTIONAL_DECL(negotiatedDataStructureNestingLevel, Integer8);
+        ITU_T_HOLDERH_DECL(initResponseDetail, initResponseDetail_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Integer32> localDetailCalled_;
-        value_holder<Integer16> negotiatedMaxServOutstandingCalling_;
-        value_holder<Integer16> negotiatedMaxServOutstandingCalled_;
-        boost::shared_ptr<Integer8> negotiatedDataStructureNestingLevel_;
-        value_holder<initResponseDetail_type> initResponseDetail_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Cancel-ErrorPDU
@@ -1646,15 +1576,10 @@ namespace ISO_9506_MMS_1 {
         Cancel_ErrorPDU(const Unsigned32& arg__originalInvokeID,
                 const ServiceError& arg__serviceError);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(originalInvokeID, Unsigned32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(serviceError, ServiceError);
+        ITU_T_HOLDERH_DECL(originalInvokeID, Unsigned32);
+        ITU_T_HOLDERH_DECL(serviceError, ServiceError);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Unsigned32> originalInvokeID_;
-        value_holder<ServiceError> serviceError_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence RejectPDU
@@ -1679,7 +1604,7 @@ namespace ISO_9506_MMS_1 {
             rejectReason_type_conclude_errorPDU,
         };
 
-        struct rejectReason_type : public BOOST_ASN_CHOICE_STRUCT(rejectReason_type_enum) {
+        struct rejectReason_type : public ITU_T_STRUCT(rejectReason_type_enum) {
 
             static const int confirmed_requestPDU_other;
             static const int confirmed_requestPDU_unrecognized_service;
@@ -1735,26 +1660,26 @@ namespace ISO_9506_MMS_1 {
             static const int conclude_errorPDU_invalid_serviceError;
             static const int conclude_errorPDU_value_out_of_range;
 
-            rejectReason_type() : BOOST_ASN_CHOICE_STRUCT(rejectReason_type_enum) () {
+            rejectReason_type() : ITU_T_STRUCT(rejectReason_type_enum) () {
             }
 
             template<typename T > rejectReason_type(boost::shared_ptr< T> vl, rejectReason_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(rejectReason_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(rejectReason_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(confirmed_requestPDU, int, rejectReason_type_confirmed_requestPDU);
-            BOOST_ASN_VALUE_CHOICE(confirmed_responsePDU, int, rejectReason_type_confirmed_responsePDU);
-            BOOST_ASN_VALUE_CHOICE(confirmed_errorPDU, int, rejectReason_type_confirmed_errorPDU);
-            BOOST_ASN_VALUE_CHOICE(unconfirmedPDU, int, rejectReason_type_unconfirmedPDU);
-            BOOST_ASN_VALUE_CHOICE(pdu_error, int, rejectReason_type_pdu_error);
-            BOOST_ASN_VALUE_CHOICE(cancel_requestPDU, int, rejectReason_type_cancel_requestPDU);
-            BOOST_ASN_VALUE_CHOICE(cancel_responsePDU, int, rejectReason_type_cancel_responsePDU);
-            BOOST_ASN_VALUE_CHOICE(cancel_errorPDU, int, rejectReason_type_cancel_errorPDU);
-            BOOST_ASN_VALUE_CHOICE(conclude_requestPDU, int, rejectReason_type_conclude_requestPDU);
-            BOOST_ASN_VALUE_CHOICE(conclude_responsePDU, int, rejectReason_type_conclude_responsePDU);
-            BOOST_ASN_VALUE_CHOICE(conclude_errorPDU, int, rejectReason_type_conclude_errorPDU);
+            ITU_T_CHOICE_DECL(confirmed_requestPDU, int, rejectReason_type_confirmed_requestPDU);
+            ITU_T_CHOICE_DECL(confirmed_responsePDU, int, rejectReason_type_confirmed_responsePDU);
+            ITU_T_CHOICE_DECL(confirmed_errorPDU, int, rejectReason_type_confirmed_errorPDU);
+            ITU_T_CHOICE_DECL(unconfirmedPDU, int, rejectReason_type_unconfirmedPDU);
+            ITU_T_CHOICE_DECL(pdu_error, int, rejectReason_type_pdu_error);
+            ITU_T_CHOICE_DECL(cancel_requestPDU, int, rejectReason_type_cancel_requestPDU);
+            ITU_T_CHOICE_DECL(cancel_responsePDU, int, rejectReason_type_cancel_responsePDU);
+            ITU_T_CHOICE_DECL(cancel_errorPDU, int, rejectReason_type_cancel_errorPDU);
+            ITU_T_CHOICE_DECL(conclude_requestPDU, int, rejectReason_type_conclude_requestPDU);
+            ITU_T_CHOICE_DECL(conclude_responsePDU, int, rejectReason_type_conclude_responsePDU);
+            ITU_T_CHOICE_DECL(conclude_errorPDU, int, rejectReason_type_conclude_errorPDU);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1765,15 +1690,10 @@ namespace ISO_9506_MMS_1 {
         RejectPDU(boost::shared_ptr< Unsigned32> arg__originalInvokeID,
                 boost::shared_ptr< rejectReason_type> arg__rejectReason);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(originalInvokeID, Unsigned32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(rejectReason, rejectReason_type);
+        ITU_T_OPTIONAL_DECL(originalInvokeID, Unsigned32);
+        ITU_T_HOLDERH_DECL(rejectReason, rejectReason_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Unsigned32> originalInvokeID_;
-        value_holder<rejectReason_type> rejectReason_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DefineAccessControlList-Request
@@ -1794,25 +1714,15 @@ namespace ISO_9506_MMS_1 {
                     boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__deleteAccessCondition,
                     boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__editAccessCondition);
 
-            BOOST_ASN_VALUE_OPTIONAL_DECL(readAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(storeAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(writeAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(loadAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(executeAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(deleteAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(editAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(readAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(storeAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(writeAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(loadAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(executeAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(deleteAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(editAccessCondition, MMS_Object_Module_1::AccessCondition);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> readAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> storeAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> writeAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> loadAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> executeAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> deleteAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> editAccessCondition_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1821,15 +1731,10 @@ namespace ISO_9506_MMS_1 {
         DefineAccessControlList_Request(const Identifier& arg__accessControlListName,
                 const accessControlListElements_type& arg__accessControlListElements);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(accessControlListName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(accessControlListElements, accessControlListElements_type);
+        ITU_T_HOLDERH_DECL(accessControlListName, Identifier);
+        ITU_T_HOLDERH_DECL(accessControlListElements, accessControlListElements_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> accessControlListName_;
-        value_holder<accessControlListElements_type> accessControlListElements_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice GetAccessControlListAttributes-Request
@@ -1842,7 +1747,7 @@ namespace ISO_9506_MMS_1 {
         GetAccessControlListAttributes_Request_namedObject,
     };
 
-    struct GetAccessControlListAttributes_Request : public BOOST_ASN_CHOICE_STRUCT(GetAccessControlListAttributes_Request_enum) {
+    struct GetAccessControlListAttributes_Request : public ITU_T_STRUCT(GetAccessControlListAttributes_Request_enum) {
 
 
         struct namedObject_type;
@@ -1854,29 +1759,24 @@ namespace ISO_9506_MMS_1 {
             namedObject_type(const ObjectClass& arg__objectClass,
                     const ObjectName& arg__objectName);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
-            BOOST_ASN_VALUE_HOLDERH_DECL(objectName, ObjectName);
+            ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
+            ITU_T_HOLDERH_DECL(objectName, ObjectName);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<ObjectClass> objectClass_;
-            value_holder<ObjectName> objectName_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        GetAccessControlListAttributes_Request() : BOOST_ASN_CHOICE_STRUCT(GetAccessControlListAttributes_Request_enum) () {
+        GetAccessControlListAttributes_Request() : ITU_T_STRUCT(GetAccessControlListAttributes_Request_enum) () {
         }
 
         template<typename T > GetAccessControlListAttributes_Request(boost::shared_ptr< T> vl, GetAccessControlListAttributes_Request_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(GetAccessControlListAttributes_Request_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(GetAccessControlListAttributes_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(accessControlListName, Identifier, GetAccessControlListAttributes_Request_accessControlListName);
-        BOOST_ASN_VALUE_CHOICE(vMD, null_type, GetAccessControlListAttributes_Request_vMD);
-        BOOST_ASN_VALUE_CHOICE(namedObject, namedObject_type, GetAccessControlListAttributes_Request_namedObject);
+        ITU_T_CHOICE_DECL(accessControlListName, Identifier, GetAccessControlListAttributes_Request_accessControlListName);
+        ITU_T_CHOICE_DECL(vMD, null_type, GetAccessControlListAttributes_Request_vMD);
+        ITU_T_CHOICE_DECL(namedObject, namedObject_type, GetAccessControlListAttributes_Request_namedObject);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetAccessControlListAttributes-Response
@@ -1898,25 +1798,15 @@ namespace ISO_9506_MMS_1 {
                     boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__deleteAccessCondition,
                     boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__editAccessCondition);
 
-            BOOST_ASN_VALUE_OPTIONAL_DECL(readAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(storeAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(writeAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(loadAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(executeAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(deleteAccessCondition, MMS_Object_Module_1::AccessCondition);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(editAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(readAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(storeAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(writeAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(loadAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(executeAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(deleteAccessCondition, MMS_Object_Module_1::AccessCondition);
+            ITU_T_OPTIONAL_DECL(editAccessCondition, MMS_Object_Module_1::AccessCondition);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> readAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> storeAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> writeAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> loadAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> executeAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> deleteAccessCondition_;
-            boost::shared_ptr<MMS_Object_Module_1::AccessCondition> editAccessCondition_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct references_type_sequence_of {
@@ -1926,15 +1816,10 @@ namespace ISO_9506_MMS_1 {
             references_type_sequence_of(const ObjectClass& arg__objectClass,
                     const int& arg__objectCount);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
-            BOOST_ASN_VALUE_HOLDERH_DECL(objectCount, int);
+            ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
+            ITU_T_HOLDERH_DECL(objectCount, int);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<ObjectClass> objectClass_;
-            value_holder<int> objectCount_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -1955,21 +1840,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< references_type> arg__references,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(name, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(accessControlListElements, accessControlListElements_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(vMDuse, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(references, references_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_HOLDERH_DECL(name, Identifier);
+        ITU_T_HOLDERH_DECL(accessControlListElements, accessControlListElements_type);
+        ITU_T_HOLDERH_DECL(vMDuse, bool);
+        ITU_T_HOLDERH_DECL(references, references_type);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> name_;
-        value_holder<accessControlListElements_type> accessControlListElements_;
-        value_holder<bool> vMDuse_;
-        value_holder<references_type> references_;
-        boost::shared_ptr<Identifier> accessControlList_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportAccessControlledObjects-Request
@@ -1985,17 +1862,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ObjectClass> arg__objectClass,
                 boost::shared_ptr< ObjectName> arg__continueAfter);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(accessControlList, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, ObjectName);
+        ITU_T_HOLDERH_DECL(accessControlList, Identifier);
+        ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
+        ITU_T_OPTIONAL_DECL(continueAfter, ObjectName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> accessControlList_;
-        value_holder<ObjectClass> objectClass_;
-        boost::shared_ptr<ObjectName> continueAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportAccessControlledObjects-Response
@@ -2013,15 +1884,10 @@ namespace ISO_9506_MMS_1 {
         ReportAccessControlledObjects_Response(boost::shared_ptr< listOfNames_type> arg__listOfNames,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfNames, listOfNames_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfNames, listOfNames_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfNames_type> listOfNames_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ChangeAccessControl-Request
@@ -2037,7 +1903,7 @@ namespace ISO_9506_MMS_1 {
             scopeOfChange_type_listOfObjects,
         };
 
-        struct scopeOfChange_type : public BOOST_ASN_CHOICE_STRUCT(scopeOfChange_type_enum) {
+        struct scopeOfChange_type : public ITU_T_STRUCT(scopeOfChange_type_enum) {
 
 
             struct listOfObjects_type;
@@ -2055,25 +1921,25 @@ namespace ISO_9506_MMS_1 {
                     objectScope_type_vmd,
                 };
 
-                struct objectScope_type : public BOOST_ASN_CHOICE_STRUCT(objectScope_type_enum) {
+                struct objectScope_type : public ITU_T_STRUCT(objectScope_type_enum) {
 
 
 
                     typedef std::vector< ObjectName > specific_type;
 
-                    objectScope_type() : BOOST_ASN_CHOICE_STRUCT(objectScope_type_enum) () {
+                    objectScope_type() : ITU_T_STRUCT(objectScope_type_enum) () {
                     }
 
                     template<typename T > objectScope_type(boost::shared_ptr< T> vl, objectScope_type_enum enm) :
-                            BOOST_ASN_CHOICE_STRUCT(objectScope_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_STRUCT(objectScope_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    BOOST_ASN_VALUE_CHOICE(specific, specific_type, objectScope_type_specific);
-                    BOOST_ASN_VALUE_CHOICE(aa_specific, null_type, objectScope_type_aa_specific);
-                    BOOST_ASN_VALUE_CHOICE(domain, Identifier, objectScope_type_domain);
-                    BOOST_ASN_VALUE_CHOICE(vmd, null_type, objectScope_type_vmd);
+                    ITU_T_CHOICE_DECL(specific, specific_type, objectScope_type_specific);
+                    ITU_T_CHOICE_DECL(aa_specific, null_type, objectScope_type_aa_specific);
+                    ITU_T_CHOICE_DECL(domain, Identifier, objectScope_type_domain);
+                    ITU_T_CHOICE_DECL(vmd, null_type, objectScope_type_vmd);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
 
@@ -2082,28 +1948,23 @@ namespace ISO_9506_MMS_1 {
                 listOfObjects_type(const ObjectClass& arg__objectClass,
                         const objectScope_type& arg__objectScope);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
-                BOOST_ASN_VALUE_HOLDERH_DECL(objectScope, objectScope_type);
+                ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
+                ITU_T_HOLDERH_DECL(objectScope, objectScope_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<ObjectClass> objectClass_;
-                value_holder<objectScope_type> objectScope_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            scopeOfChange_type() : BOOST_ASN_CHOICE_STRUCT(scopeOfChange_type_enum) () {
+            scopeOfChange_type() : ITU_T_STRUCT(scopeOfChange_type_enum) () {
             }
 
             template<typename T > scopeOfChange_type(boost::shared_ptr< T> vl, scopeOfChange_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(scopeOfChange_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(scopeOfChange_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(vMDOnly, null_type, scopeOfChange_type_vMDOnly);
-            BOOST_ASN_VALUE_CHOICE(listOfObjects, listOfObjects_type, scopeOfChange_type_listOfObjects);
+            ITU_T_CHOICE_DECL(vMDOnly, null_type, scopeOfChange_type_vMDOnly);
+            ITU_T_CHOICE_DECL(listOfObjects, listOfObjects_type, scopeOfChange_type_listOfObjects);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -2112,15 +1973,10 @@ namespace ISO_9506_MMS_1 {
         ChangeAccessControl_Request(const scopeOfChange_type& arg__scopeOfChange,
                 const Identifier& arg__accessControlListName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(scopeOfChange, scopeOfChange_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(accessControlListName, Identifier);
+        ITU_T_HOLDERH_DECL(scopeOfChange, scopeOfChange_type);
+        ITU_T_HOLDERH_DECL(accessControlListName, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<scopeOfChange_type> scopeOfChange_;
-        value_holder<Identifier> accessControlListName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ChangeAccessControl-Response
@@ -2132,15 +1988,10 @@ namespace ISO_9506_MMS_1 {
         ChangeAccessControl_Response(const Unsigned32& arg__numberMatched,
                 const Unsigned32& arg__numberChanged);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberMatched, Unsigned32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberChanged, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberChanged, Unsigned32);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Unsigned32> numberMatched_;
-        value_holder<Unsigned32> numberChanged_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence StatusResponse
@@ -2167,17 +2018,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< int> arg__vmdPhysicalStatus,
                 boost::shared_ptr< bitstring_type> arg__localDetail);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(vmdLogicalStatus, int);
-        BOOST_ASN_VALUE_HOLDERH_DECL(vmdPhysicalStatus, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(localDetail, bitstring_type);
+        ITU_T_HOLDERH_DECL(vmdLogicalStatus, int);
+        ITU_T_HOLDERH_DECL(vmdPhysicalStatus, int);
+        ITU_T_OPTIONAL_DECL(localDetail, bitstring_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<int> vmdLogicalStatus_;
-        value_holder<int> vmdPhysicalStatus_;
-        boost::shared_ptr<bitstring_type> localDetail_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice CS-Status-Response
@@ -2189,7 +2034,7 @@ namespace ISO_9506_MMS_1 {
         CS_Status_Response_noExtraResponse,
     };
 
-    struct CS_Status_Response : public BOOST_ASN_CHOICE_STRUCT(CS_Status_Response_enum) {
+    struct CS_Status_Response : public ITU_T_STRUCT(CS_Status_Response_enum) {
 
 
         struct fullResponse_type;
@@ -2205,19 +2050,19 @@ namespace ISO_9506_MMS_1 {
                 selectedProgramInvocation_type_noneSelected,
             };
 
-            struct selectedProgramInvocation_type : public BOOST_ASN_CHOICE_STRUCT(selectedProgramInvocation_type_enum) {
+            struct selectedProgramInvocation_type : public ITU_T_STRUCT(selectedProgramInvocation_type_enum) {
 
-                selectedProgramInvocation_type() : BOOST_ASN_CHOICE_STRUCT(selectedProgramInvocation_type_enum) () {
+                selectedProgramInvocation_type() : ITU_T_STRUCT(selectedProgramInvocation_type_enum) () {
                 }
 
                 template<typename T > selectedProgramInvocation_type(boost::shared_ptr< T> vl, selectedProgramInvocation_type_enum enm) :
-                        BOOST_ASN_CHOICE_STRUCT(selectedProgramInvocation_type_enum) (vl, static_cast<int> (enm)) {
+                        ITU_T_STRUCT(selectedProgramInvocation_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                BOOST_ASN_VALUE_CHOICE(programInvocation, Identifier, selectedProgramInvocation_type_programInvocation);
-                BOOST_ASN_VALUE_CHOICE(noneSelected, null_type, selectedProgramInvocation_type_noneSelected);
+                ITU_T_CHOICE_DECL(programInvocation, Identifier, selectedProgramInvocation_type_programInvocation);
+                ITU_T_CHOICE_DECL(noneSelected, null_type, selectedProgramInvocation_type_noneSelected);
 
-                BOOST_ASN_ARCHIVE_FUNC;
+                ITU_T_ARCHIVE_FUNC;
             };
 
             static const ExtendedStatus extendedStatusMask__default;
@@ -2233,32 +2078,25 @@ namespace ISO_9506_MMS_1 {
                     boost::shared_ptr< ExtendedStatus> arg__extendedStatusMask,
                     boost::shared_ptr< selectedProgramInvocation_type> arg__selectedProgramInvocation);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(operationState, OperationState);
-            BOOST_ASN_VALUE_HOLDERH_DECL(extendedStatus, ExtendedStatus);
-            BOOST_ASN_VALUE_DEFAULT_DECL(extendedStatusMask, ExtendedStatus);
-            BOOST_ASN_VALUE_HOLDERH_DECL(selectedProgramInvocation, selectedProgramInvocation_type);
+            ITU_T_HOLDERH_DECL(operationState, OperationState);
+            ITU_T_HOLDERH_DECL(extendedStatus, ExtendedStatus);
+            ITU_T_DEFAULTH_DECL(extendedStatusMask, ExtendedStatus, extendedStatusMask__default);
+            ITU_T_HOLDERH_DECL(selectedProgramInvocation, selectedProgramInvocation_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<OperationState> operationState_;
-            value_holder<ExtendedStatus> extendedStatus_;
-            default_holder<ExtendedStatus, extendedStatusMask__default> extendedStatusMask_;
-            value_holder<selectedProgramInvocation_type> selectedProgramInvocation_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        CS_Status_Response() : BOOST_ASN_CHOICE_STRUCT(CS_Status_Response_enum) () {
+        CS_Status_Response() : ITU_T_STRUCT(CS_Status_Response_enum) () {
         }
 
         template<typename T > CS_Status_Response(boost::shared_ptr< T> vl, CS_Status_Response_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(CS_Status_Response_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(CS_Status_Response_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(fullResponse, fullResponse_type, CS_Status_Response_fullResponse);
-        BOOST_ASN_VALUE_CHOICE(noExtraResponse, null_type, CS_Status_Response_noExtraResponse);
+        ITU_T_CHOICE_DECL(fullResponse, fullResponse_type, CS_Status_Response_fullResponse);
+        ITU_T_CHOICE_DECL(noExtraResponse, null_type, CS_Status_Response_noExtraResponse);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const OperationState OperationState_idle;
@@ -2287,20 +2125,20 @@ namespace ISO_9506_MMS_1 {
             objectScope_type_aaSpecific,
         };
 
-        struct objectScope_type : public BOOST_ASN_CHOICE_STRUCT(objectScope_type_enum) {
+        struct objectScope_type : public ITU_T_STRUCT(objectScope_type_enum) {
 
-            objectScope_type() : BOOST_ASN_CHOICE_STRUCT(objectScope_type_enum) () {
+            objectScope_type() : ITU_T_STRUCT(objectScope_type_enum) () {
             }
 
             template<typename T > objectScope_type(boost::shared_ptr< T> vl, objectScope_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(objectScope_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(objectScope_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(vmdSpecific, null_type, objectScope_type_vmdSpecific);
-            BOOST_ASN_VALUE_CHOICE(domainSpecific, Identifier, objectScope_type_domainSpecific);
-            BOOST_ASN_VALUE_CHOICE(aaSpecific, null_type, objectScope_type_aaSpecific);
+            ITU_T_CHOICE_DECL(vmdSpecific, null_type, objectScope_type_vmdSpecific);
+            ITU_T_CHOICE_DECL(domainSpecific, Identifier, objectScope_type_domainSpecific);
+            ITU_T_CHOICE_DECL(aaSpecific, null_type, objectScope_type_aaSpecific);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -2313,17 +2151,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< objectScope_type> arg__objectScope,
                 boost::shared_ptr< Identifier> arg__continueAfter);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
-        BOOST_ASN_VALUE_HOLDERH_DECL(objectScope, objectScope_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, Identifier);
+        ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
+        ITU_T_HOLDERH_DECL(objectScope, objectScope_type);
+        ITU_T_OPTIONAL_DECL(continueAfter, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectClass> objectClass_;
-        value_holder<objectScope_type> objectScope_;
-        boost::shared_ptr<Identifier> continueAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetNameList-Response
@@ -2341,15 +2173,10 @@ namespace ISO_9506_MMS_1 {
         GetNameList_Response(boost::shared_ptr< listOfIdentifier_type> arg__listOfIdentifier,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfIdentifier, listOfIdentifier_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfIdentifier, listOfIdentifier_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfIdentifier_type> listOfIdentifier_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Identify-Response
@@ -2370,19 +2197,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMSString> arg__revision,
                 boost::shared_ptr< listOfAbstractSyntaxes_type> arg__listOfAbstractSyntaxes);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(vendorName, MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(modelName, MMSString);
-        BOOST_ASN_VALUE_HOLDERH_DECL(revision, MMSString);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfAbstractSyntaxes, listOfAbstractSyntaxes_type);
+        ITU_T_HOLDERH_DECL(vendorName, MMSString);
+        ITU_T_HOLDERH_DECL(modelName, MMSString);
+        ITU_T_HOLDERH_DECL(revision, MMSString);
+        ITU_T_OPTIONAL_DECL(listOfAbstractSyntaxes, listOfAbstractSyntaxes_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<MMSString> vendorName_;
-        value_holder<MMSString> modelName_;
-        value_holder<MMSString> revision_;
-        boost::shared_ptr<listOfAbstractSyntaxes_type> listOfAbstractSyntaxes_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Rename-Request
@@ -2395,17 +2215,11 @@ namespace ISO_9506_MMS_1 {
                 const ObjectName& arg__currentName,
                 const Identifier& arg__newIdentifier);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(objectClass, ObjectClass);
-        BOOST_ASN_VALUE_HOLDERH_DECL(currentName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(newIdentifier, Identifier);
+        ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
+        ITU_T_HOLDERH_DECL(currentName, ObjectName);
+        ITU_T_HOLDERH_DECL(newIdentifier, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectClass> objectClass_;
-        value_holder<ObjectName> currentName_;
-        value_holder<Identifier> newIdentifier_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetCapabilityList-Request
@@ -2416,13 +2230,9 @@ namespace ISO_9506_MMS_1 {
 
         GetCapabilityList_Request(boost::shared_ptr< MMSString> arg__continueAfter);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, MMSString);
+        ITU_T_OPTIONAL_DECL(continueAfter, MMSString);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<MMSString> continueAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetCapabilityList-Response
@@ -2440,15 +2250,10 @@ namespace ISO_9506_MMS_1 {
         GetCapabilityList_Response(boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfCapabilities_type> listOfCapabilities_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence InitiateDownloadSequence-Request
@@ -2464,17 +2269,11 @@ namespace ISO_9506_MMS_1 {
                 const listOfCapabilities_type& arg__listOfCapabilities,
                 const bool& arg__sharable);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(sharable, bool);
+        ITU_T_HOLDERH_DECL(domainName, Identifier);
+        ITU_T_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_HOLDERH_DECL(sharable, bool);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> domainName_;
-        value_holder<listOfCapabilities_type> listOfCapabilities_;
-        value_holder<bool> sharable_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DownloadSegment-Response
@@ -2490,15 +2289,10 @@ namespace ISO_9506_MMS_1 {
         DownloadSegment_Response(boost::shared_ptr< LoadData> arg__loadData,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(loadData, LoadData);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(loadData, LoadData);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<LoadData> loadData_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice LoadData
@@ -2511,20 +2305,20 @@ namespace ISO_9506_MMS_1 {
         LoadData_embedded,
     };
 
-    struct LoadData : public BOOST_ASN_CHOICE_STRUCT(LoadData_enum) {
+    struct LoadData : public ITU_T_STRUCT(LoadData_enum) {
 
-        LoadData() : BOOST_ASN_CHOICE_STRUCT(LoadData_enum) () {
+        LoadData() : ITU_T_STRUCT(LoadData_enum) () {
         }
 
         template<typename T > LoadData(boost::shared_ptr< T> vl, LoadData_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(LoadData_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(LoadData_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(non_coded, octetstring_type, LoadData_non_coded);
-        BOOST_ASN_VALUE_CHOICE(coded, external_type, LoadData_coded);
-        BOOST_ASN_VALUE_CHOICE(embedded, embeded_type, LoadData_embedded);
+        ITU_T_CHOICE_DECL(non_coded, octetstring_type, LoadData_non_coded);
+        ITU_T_CHOICE_DECL(coded, external_type, LoadData_coded);
+        ITU_T_CHOICE_DECL(embedded, embeded_type, LoadData_embedded);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence TerminateDownloadSequence-Request
@@ -2538,15 +2332,10 @@ namespace ISO_9506_MMS_1 {
         TerminateDownloadSequence_Request(boost::shared_ptr< Identifier> arg__domainName,
                 boost::shared_ptr< ServiceError> arg__discard);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(discard, ServiceError);
+        ITU_T_HOLDERH_DECL(domainName, Identifier);
+        ITU_T_OPTIONAL_DECL(discard, ServiceError);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> domainName_;
-        boost::shared_ptr<ServiceError> discard_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence InitiateUploadSequence-Response
@@ -2561,15 +2350,10 @@ namespace ISO_9506_MMS_1 {
         InitiateUploadSequence_Response(const Integer32& arg__ulsmID,
                 const listOfCapabilities_type& arg__listOfCapabilities);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(ulsmID, Integer32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_HOLDERH_DECL(ulsmID, Integer32);
+        ITU_T_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Integer32> ulsmID_;
-        value_holder<listOfCapabilities_type> listOfCapabilities_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence UploadSegment-Response
@@ -2585,15 +2369,10 @@ namespace ISO_9506_MMS_1 {
         UploadSegment_Response(boost::shared_ptr< LoadData> arg__loadData,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(loadData, LoadData);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(loadData, LoadData);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<LoadData> loadData_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence RequestDomainDownload-Request
@@ -2614,19 +2393,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< bool> arg__sharable,
                 boost::shared_ptr< FileName> arg__fileName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfCapabilities, listOfCapabilities_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(sharable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileName, FileName);
+        ITU_T_HOLDERH_DECL(domainName, Identifier);
+        ITU_T_OPTIONAL_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_HOLDERH_DECL(sharable, bool);
+        ITU_T_HOLDERH_DECL(fileName, FileName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> domainName_;
-        boost::shared_ptr<listOfCapabilities_type> listOfCapabilities_;
-        value_holder<bool> sharable_;
-        value_holder<FileName> fileName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence RequestDomainUpload-Request
@@ -2638,15 +2410,10 @@ namespace ISO_9506_MMS_1 {
         RequestDomainUpload_Request(const Identifier& arg__domainName,
                 const FileName& arg__fileName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileName, FileName);
+        ITU_T_HOLDERH_DECL(domainName, Identifier);
+        ITU_T_HOLDERH_DECL(fileName, FileName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> domainName_;
-        value_holder<FileName> fileName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence LoadDomainContent-Request
@@ -2668,21 +2435,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< FileName> arg__fileName,
                 boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__thirdParty);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfCapabilities, listOfCapabilities_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(sharable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileName, FileName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(thirdParty, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(domainName, Identifier);
+        ITU_T_OPTIONAL_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_HOLDERH_DECL(sharable, bool);
+        ITU_T_HOLDERH_DECL(fileName, FileName);
+        ITU_T_OPTIONAL_DECL(thirdParty, MMS_Environment_1::ApplicationReference);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> domainName_;
-        boost::shared_ptr<listOfCapabilities_type> listOfCapabilities_;
-        value_holder<bool> sharable_;
-        value_holder<FileName> fileName_;
-        boost::shared_ptr<MMS_Environment_1::ApplicationReference> thirdParty_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence StoreDomainContent-Request
@@ -2698,17 +2457,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< FileName> arg__fileName,
                 boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__thirdParty);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileName, FileName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(thirdParty, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(domainName, Identifier);
+        ITU_T_HOLDERH_DECL(fileName, FileName);
+        ITU_T_OPTIONAL_DECL(thirdParty, MMS_Environment_1::ApplicationReference);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> domainName_;
-        value_holder<FileName> fileName_;
-        boost::shared_ptr<MMS_Environment_1::ApplicationReference> thirdParty_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetDomainAttributes-Response
@@ -2736,25 +2489,15 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Integer8> arg__uploadInProgress,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState);
-        BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(sharable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfProgramInvocations, listOfProgramInvocations_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(uploadInProgress, Integer8);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState);
+        ITU_T_HOLDERH_DECL(mmsDeletable, bool);
+        ITU_T_HOLDERH_DECL(sharable, bool);
+        ITU_T_HOLDERH_DECL(listOfProgramInvocations, listOfProgramInvocations_type);
+        ITU_T_HOLDERH_DECL(uploadInProgress, Integer8);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfCapabilities_type> listOfCapabilities_;
-        value_holder<MMS_Object_Module_1::DomainState> state_;
-        value_holder<bool> mmsDeletable_;
-        value_holder<bool> sharable_;
-        value_holder<listOfProgramInvocations_type> listOfProgramInvocations_;
-        value_holder<Integer8> uploadInProgress_;
-        boost::shared_ptr<Identifier> accessControlList_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence CreateProgramInvocation-Request
@@ -2775,19 +2518,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< bool> arg__reusable,
                 boost::shared_ptr< bool> arg__monitorType);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfDomainNames, listOfDomainNames_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(reusable, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(monitorType, bool);
+        ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
+        ITU_T_HOLDERH_DECL(listOfDomainNames, listOfDomainNames_type);
+        ITU_T_DEFAULTH_DECL(reusable, bool, reusable__default);
+        ITU_T_OPTIONAL_DECL(monitorType, bool);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> programInvocationName_;
-        value_holder<listOfDomainNames_type> listOfDomainNames_;
-        default_holder<bool, reusable__default> reusable_;
-        boost::shared_ptr<bool> monitorType_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const CS_CreateProgramInvocation_Request CS_CreateProgramInvocation_Request_normal;
@@ -2808,20 +2544,20 @@ namespace ISO_9506_MMS_1 {
             executionArgument_type_embeddedString,
         };
 
-        struct executionArgument_type : public BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) {
+        struct executionArgument_type : public ITU_T_STRUCT(executionArgument_type_enum) {
 
-            executionArgument_type() : BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) () {
+            executionArgument_type() : ITU_T_STRUCT(executionArgument_type_enum) () {
             }
 
             template<typename T > executionArgument_type(boost::shared_ptr< T> vl, executionArgument_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(simpleString, MMSString, executionArgument_type_simpleString);
-            BOOST_ASN_VALUE_CHOICE(encodedString, external_type, executionArgument_type_encodedString);
-            BOOST_ASN_VALUE_CHOICE(embeddedString, embeded_type, executionArgument_type_embeddedString);
+            ITU_T_CHOICE_DECL(simpleString, MMSString, executionArgument_type_simpleString);
+            ITU_T_CHOICE_DECL(encodedString, external_type, executionArgument_type_encodedString);
+            ITU_T_CHOICE_DECL(embeddedString, embeded_type, executionArgument_type_embeddedString);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -2832,15 +2568,10 @@ namespace ISO_9506_MMS_1 {
         Start_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
                 boost::shared_ptr< executionArgument_type> arg__executionArgument);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(executionArgument, executionArgument_type);
+        ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
+        ITU_T_OPTIONAL_DECL(executionArgument, executionArgument_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> programInvocationName_;
-        boost::shared_ptr<executionArgument_type> executionArgument_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice CS-Start-Request
@@ -2852,7 +2583,7 @@ namespace ISO_9506_MMS_1 {
         CS_Start_Request_impl_controlling,
     };
 
-    struct CS_Start_Request_impl : public BOOST_ASN_CHOICE_STRUCT(CS_Start_Request_impl_enum) {
+    struct CS_Start_Request_impl : public ITU_T_STRUCT(CS_Start_Request_impl_enum) {
 
 
         struct controlling_type;
@@ -2864,28 +2595,23 @@ namespace ISO_9506_MMS_1 {
             controlling_type(boost::shared_ptr< visiblestring_type> arg__startLocation,
                     boost::shared_ptr< StartCount> arg__startCount);
 
-            BOOST_ASN_VALUE_OPTIONAL_DECL(startLocation, visiblestring_type);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(startCount, StartCount);
+            ITU_T_OPTIONAL_DECL(startLocation, visiblestring_type);
+            ITU_T_OPTIONAL_DECL(startCount, StartCount);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            boost::shared_ptr<visiblestring_type> startLocation_;
-            boost::shared_ptr<StartCount> startCount_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        CS_Start_Request_impl() : BOOST_ASN_CHOICE_STRUCT(CS_Start_Request_impl_enum) () {
+        CS_Start_Request_impl() : ITU_T_STRUCT(CS_Start_Request_impl_enum) () {
         }
 
         template<typename T > CS_Start_Request_impl(boost::shared_ptr< T> vl, CS_Start_Request_impl_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(CS_Start_Request_impl_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(CS_Start_Request_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(normal, null_type, CS_Start_Request_impl_normal);
-        BOOST_ASN_VALUE_CHOICE(controlling, controlling_type, CS_Start_Request_impl_controlling);
+        ITU_T_CHOICE_DECL(normal, null_type, CS_Start_Request_impl_normal);
+        ITU_T_CHOICE_DECL(controlling, controlling_type, CS_Start_Request_impl_controlling);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice StartCount
@@ -2898,20 +2624,20 @@ namespace ISO_9506_MMS_1 {
         StartCount_stepCount,
     };
 
-    struct StartCount : public BOOST_ASN_CHOICE_STRUCT(StartCount_enum) {
+    struct StartCount : public ITU_T_STRUCT(StartCount_enum) {
 
-        StartCount() : BOOST_ASN_CHOICE_STRUCT(StartCount_enum) () {
+        StartCount() : ITU_T_STRUCT(StartCount_enum) () {
         }
 
         template<typename T > StartCount(boost::shared_ptr< T> vl, StartCount_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(StartCount_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(StartCount_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(noLimit, null_type, StartCount_noLimit);
-        BOOST_ASN_VALUE_CHOICE(cycleCount, int, StartCount_cycleCount);
-        BOOST_ASN_VALUE_CHOICE(stepCount, int, StartCount_stepCount);
+        ITU_T_CHOICE_DECL(noLimit, null_type, StartCount_noLimit);
+        ITU_T_CHOICE_DECL(cycleCount, int, StartCount_cycleCount);
+        ITU_T_CHOICE_DECL(stepCount, int, StartCount_stepCount);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Stop-Request
@@ -2922,13 +2648,9 @@ namespace ISO_9506_MMS_1 {
 
         Stop_Request(const Identifier& arg__programInvocationName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
+        ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> programInvocationName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Resume-Request
@@ -2945,20 +2667,20 @@ namespace ISO_9506_MMS_1 {
             executionArgument_type_enmbeddedString,
         };
 
-        struct executionArgument_type : public BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) {
+        struct executionArgument_type : public ITU_T_STRUCT(executionArgument_type_enum) {
 
-            executionArgument_type() : BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) () {
+            executionArgument_type() : ITU_T_STRUCT(executionArgument_type_enum) () {
             }
 
             template<typename T > executionArgument_type(boost::shared_ptr< T> vl, executionArgument_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(simpleString, MMSString, executionArgument_type_simpleString);
-            BOOST_ASN_VALUE_CHOICE(encodedString, external_type, executionArgument_type_encodedString);
-            BOOST_ASN_VALUE_CHOICE(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString);
+            ITU_T_CHOICE_DECL(simpleString, MMSString, executionArgument_type_simpleString);
+            ITU_T_CHOICE_DECL(encodedString, external_type, executionArgument_type_encodedString);
+            ITU_T_CHOICE_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -2969,15 +2691,10 @@ namespace ISO_9506_MMS_1 {
         Resume_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
                 boost::shared_ptr< executionArgument_type> arg__executionArgument);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(executionArgument, executionArgument_type);
+        ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
+        ITU_T_OPTIONAL_DECL(executionArgument, executionArgument_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> programInvocationName_;
-        boost::shared_ptr<executionArgument_type> executionArgument_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice CS-Resume-Request
@@ -2989,7 +2706,7 @@ namespace ISO_9506_MMS_1 {
         CS_Resume_Request_impl_controlling,
     };
 
-    struct CS_Resume_Request_impl : public BOOST_ASN_CHOICE_STRUCT(CS_Resume_Request_impl_enum) {
+    struct CS_Resume_Request_impl : public ITU_T_STRUCT(CS_Resume_Request_impl_enum) {
 
 
         struct controlling_type;
@@ -3005,19 +2722,19 @@ namespace ISO_9506_MMS_1 {
                 modeType_type_changeMode,
             };
 
-            struct modeType_type : public BOOST_ASN_CHOICE_STRUCT(modeType_type_enum) {
+            struct modeType_type : public ITU_T_STRUCT(modeType_type_enum) {
 
-                modeType_type() : BOOST_ASN_CHOICE_STRUCT(modeType_type_enum) () {
+                modeType_type() : ITU_T_STRUCT(modeType_type_enum) () {
                 }
 
                 template<typename T > modeType_type(boost::shared_ptr< T> vl, modeType_type_enum enm) :
-                        BOOST_ASN_CHOICE_STRUCT(modeType_type_enum) (vl, static_cast<int> (enm)) {
+                        ITU_T_STRUCT(modeType_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                BOOST_ASN_VALUE_CHOICE(continueMode, null_type, modeType_type_continueMode);
-                BOOST_ASN_VALUE_CHOICE(changeMode, StartCount, modeType_type_changeMode);
+                ITU_T_CHOICE_DECL(continueMode, null_type, modeType_type_continueMode);
+                ITU_T_CHOICE_DECL(changeMode, StartCount, modeType_type_changeMode);
 
-                BOOST_ASN_ARCHIVE_FUNC;
+                ITU_T_ARCHIVE_FUNC;
             };
 
 
@@ -3025,26 +2742,22 @@ namespace ISO_9506_MMS_1 {
 
             controlling_type(const modeType_type& arg__modeType);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(modeType, modeType_type);
+            ITU_T_HOLDERH_DECL(modeType, modeType_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<modeType_type> modeType_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        CS_Resume_Request_impl() : BOOST_ASN_CHOICE_STRUCT(CS_Resume_Request_impl_enum) () {
+        CS_Resume_Request_impl() : ITU_T_STRUCT(CS_Resume_Request_impl_enum) () {
         }
 
         template<typename T > CS_Resume_Request_impl(boost::shared_ptr< T> vl, CS_Resume_Request_impl_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(CS_Resume_Request_impl_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(CS_Resume_Request_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(normal, null_type, CS_Resume_Request_impl_normal);
-        BOOST_ASN_VALUE_CHOICE(controlling, controlling_type, CS_Resume_Request_impl_controlling);
+        ITU_T_CHOICE_DECL(normal, null_type, CS_Resume_Request_impl_normal);
+        ITU_T_CHOICE_DECL(controlling, controlling_type, CS_Resume_Request_impl_controlling);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Reset-Request
@@ -3055,13 +2768,9 @@ namespace ISO_9506_MMS_1 {
 
         Reset_Request(const Identifier& arg__programInvocationName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
+        ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> programInvocationName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Kill-Request
@@ -3072,13 +2781,9 @@ namespace ISO_9506_MMS_1 {
 
         Kill_Request(const Identifier& arg__programInvocationName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
+        ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> programInvocationName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetProgramInvocationAttributes-Response
@@ -3095,20 +2800,20 @@ namespace ISO_9506_MMS_1 {
             executionArgument_type_enmbeddedString,
         };
 
-        struct executionArgument_type : public BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) {
+        struct executionArgument_type : public ITU_T_STRUCT(executionArgument_type_enum) {
 
-            executionArgument_type() : BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) () {
+            executionArgument_type() : ITU_T_STRUCT(executionArgument_type_enum) () {
             }
 
             template<typename T > executionArgument_type(boost::shared_ptr< T> vl, executionArgument_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(simpleString, MMSString, executionArgument_type_simpleString);
-            BOOST_ASN_VALUE_CHOICE(encodedString, external_type, executionArgument_type_encodedString);
-            BOOST_ASN_VALUE_CHOICE(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString);
+            ITU_T_CHOICE_DECL(simpleString, MMSString, executionArgument_type_simpleString);
+            ITU_T_CHOICE_DECL(encodedString, external_type, executionArgument_type_encodedString);
+            ITU_T_CHOICE_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -3133,25 +2838,15 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< executionArgument_type> arg__executionArgument,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(state, MMS_Object_Module_1::ProgramInvocationState);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfDomainNames, listOfDomainNames_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(reusable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(monitor, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(executionArgument, executionArgument_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::ProgramInvocationState);
+        ITU_T_HOLDERH_DECL(listOfDomainNames, listOfDomainNames_type);
+        ITU_T_HOLDERH_DECL(mmsDeletable, bool);
+        ITU_T_HOLDERH_DECL(reusable, bool);
+        ITU_T_HOLDERH_DECL(monitor, bool);
+        ITU_T_HOLDERH_DECL(executionArgument, executionArgument_type);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<MMS_Object_Module_1::ProgramInvocationState> state_;
-        value_holder<listOfDomainNames_type> listOfDomainNames_;
-        value_holder<bool> mmsDeletable_;
-        value_holder<bool> reusable_;
-        value_holder<bool> monitor_;
-        value_holder<executionArgument_type> executionArgument_;
-        boost::shared_ptr<Identifier> accessControlList_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence CS-GetProgramInvocationAttributes-Response
@@ -3168,7 +2863,7 @@ namespace ISO_9506_MMS_1 {
             control_type_normal,
         };
 
-        struct control_type : public BOOST_ASN_CHOICE_STRUCT(control_type_enum) {
+        struct control_type : public ITU_T_STRUCT(control_type_enum) {
 
 
             struct controlling_type;
@@ -3186,20 +2881,20 @@ namespace ISO_9506_MMS_1 {
                     runningMode_type_stepLimited,
                 };
 
-                struct runningMode_type : public BOOST_ASN_CHOICE_STRUCT(runningMode_type_enum) {
+                struct runningMode_type : public ITU_T_STRUCT(runningMode_type_enum) {
 
-                    runningMode_type() : BOOST_ASN_CHOICE_STRUCT(runningMode_type_enum) () {
+                    runningMode_type() : ITU_T_STRUCT(runningMode_type_enum) () {
                     }
 
                     template<typename T > runningMode_type(boost::shared_ptr< T> vl, runningMode_type_enum enm) :
-                            BOOST_ASN_CHOICE_STRUCT(runningMode_type_enum) (vl, static_cast<int> (enm)) {
+                            ITU_T_STRUCT(runningMode_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    BOOST_ASN_VALUE_CHOICE(freeRunning, null_type, runningMode_type_freeRunning);
-                    BOOST_ASN_VALUE_CHOICE(cycleLimited, int, runningMode_type_cycleLimited);
-                    BOOST_ASN_VALUE_CHOICE(stepLimited, int, runningMode_type_stepLimited);
+                    ITU_T_CHOICE_DECL(freeRunning, null_type, runningMode_type_freeRunning);
+                    ITU_T_CHOICE_DECL(cycleLimited, int, runningMode_type_cycleLimited);
+                    ITU_T_CHOICE_DECL(stepLimited, int, runningMode_type_stepLimited);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
 
@@ -3216,17 +2911,11 @@ namespace ISO_9506_MMS_1 {
                         boost::shared_ptr< visiblestring_type> arg__programLocation,
                         boost::shared_ptr< runningMode_type> arg__runningMode);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(controlledPI, controlledPI_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(programLocation, visiblestring_type);
-                BOOST_ASN_VALUE_HOLDERH_DECL(runningMode, runningMode_type);
+                ITU_T_HOLDERH_DECL(controlledPI, controlledPI_type);
+                ITU_T_OPTIONAL_DECL(programLocation, visiblestring_type);
+                ITU_T_HOLDERH_DECL(runningMode, runningMode_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<controlledPI_type> controlledPI_;
-                boost::shared_ptr<visiblestring_type> programLocation_;
-                value_holder<runningMode_type> runningMode_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
             enum controlled_type_enum {
@@ -3236,33 +2925,33 @@ namespace ISO_9506_MMS_1 {
                 controlled_type_none,
             };
 
-            struct controlled_type : public BOOST_ASN_CHOICE_STRUCT(controlled_type_enum) {
+            struct controlled_type : public ITU_T_STRUCT(controlled_type_enum) {
 
-                controlled_type() : BOOST_ASN_CHOICE_STRUCT(controlled_type_enum) () {
+                controlled_type() : ITU_T_STRUCT(controlled_type_enum) () {
                 }
 
                 template<typename T > controlled_type(boost::shared_ptr< T> vl, controlled_type_enum enm) :
-                        BOOST_ASN_CHOICE_STRUCT(controlled_type_enum) (vl, static_cast<int> (enm)) {
+                        ITU_T_STRUCT(controlled_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                BOOST_ASN_VALUE_CHOICE(controllingPI, Identifier, controlled_type_controllingPI);
-                BOOST_ASN_VALUE_CHOICE(none, null_type, controlled_type_none);
+                ITU_T_CHOICE_DECL(controllingPI, Identifier, controlled_type_controllingPI);
+                ITU_T_CHOICE_DECL(none, null_type, controlled_type_none);
 
-                BOOST_ASN_ARCHIVE_FUNC;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            control_type() : BOOST_ASN_CHOICE_STRUCT(control_type_enum) () {
+            control_type() : ITU_T_STRUCT(control_type_enum) () {
             }
 
             template<typename T > control_type(boost::shared_ptr< T> vl, control_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(control_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(control_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(controlling, controlling_type, control_type_controlling);
-            BOOST_ASN_VALUE_CHOICE(controlled, controlled_type, control_type_controlled);
-            BOOST_ASN_VALUE_CHOICE(normal, null_type, control_type_normal);
+            ITU_T_CHOICE_DECL(controlling, controlling_type, control_type_controlling);
+            ITU_T_CHOICE_DECL(controlled, controlled_type, control_type_controlled);
+            ITU_T_CHOICE_DECL(normal, null_type, control_type_normal);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -3271,15 +2960,10 @@ namespace ISO_9506_MMS_1 {
         CS_GetProgramInvocationAttributes_Response(const int& arg__errorCode,
                 const control_type& arg__control);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(errorCode, int);
-        BOOST_ASN_VALUE_HOLDERH_DECL(control, control_type);
+        ITU_T_HOLDERH_DECL(errorCode, int);
+        ITU_T_HOLDERH_DECL(control, control_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<int> errorCode_;
-        value_holder<control_type> control_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Select-Request
@@ -3294,15 +2978,10 @@ namespace ISO_9506_MMS_1 {
         Select_Request(boost::shared_ptr< Identifier> arg__controlling,
                 boost::shared_ptr< controlled_type> arg__controlled);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(controlling, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(controlled, controlled_type);
+        ITU_T_OPTIONAL_DECL(controlling, Identifier);
+        ITU_T_OPTIONAL_DECL(controlled, controlled_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<Identifier> controlling_;
-        boost::shared_ptr<controlled_type> controlled_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AlterProgramInvocationAttributes-Request
@@ -3316,15 +2995,10 @@ namespace ISO_9506_MMS_1 {
         AlterProgramInvocationAttributes_Request(boost::shared_ptr< Identifier> arg__programInvocation,
                 boost::shared_ptr< StartCount> arg__startCount);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocation, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(startCount, StartCount);
+        ITU_T_HOLDERH_DECL(programInvocation, Identifier);
+        ITU_T_OPTIONAL_DECL(startCount, StartCount);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> programInvocation_;
-        boost::shared_ptr<StartCount> startCount_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReconfigureProgramInvocation-Request
@@ -3346,19 +3020,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< domainsToAdd_type> arg__domainsToAdd,
                 boost::shared_ptr< domainsToRemove_type> arg__domainsToRemove);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(oldProgramInvocationName, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(newProgramInvocationName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(domainsToAdd, domainsToAdd_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(domainsToRemove, domainsToRemove_type);
+        ITU_T_HOLDERH_DECL(oldProgramInvocationName, Identifier);
+        ITU_T_OPTIONAL_DECL(newProgramInvocationName, Identifier);
+        ITU_T_HOLDERH_DECL(domainsToAdd, domainsToAdd_type);
+        ITU_T_HOLDERH_DECL(domainsToRemove, domainsToRemove_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> oldProgramInvocationName_;
-        boost::shared_ptr<Identifier> newProgramInvocationName_;
-        value_holder<domainsToAdd_type> domainsToAdd_;
-        value_holder<domainsToRemove_type> domainsToRemove_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice ControlElement
@@ -3372,7 +3039,7 @@ namespace ISO_9506_MMS_1 {
         ControlElement_piDefinition,
     };
 
-    struct ControlElement : public BOOST_ASN_CHOICE_STRUCT(ControlElement_enum) {
+    struct ControlElement : public ITU_T_STRUCT(ControlElement_enum) {
 
 
         struct beginDomainDef_type;
@@ -3395,19 +3062,12 @@ namespace ISO_9506_MMS_1 {
                     boost::shared_ptr< bool> arg__sharable,
                     boost::shared_ptr< LoadData> arg__loadData);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
-            BOOST_ASN_VALUE_HOLDERH_DECL(capabilities, capabilities_type);
-            BOOST_ASN_VALUE_HOLDERH_DECL(sharable, bool);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(loadData, LoadData);
+            ITU_T_HOLDERH_DECL(domainName, Identifier);
+            ITU_T_HOLDERH_DECL(capabilities, capabilities_type);
+            ITU_T_HOLDERH_DECL(sharable, bool);
+            ITU_T_OPTIONAL_DECL(loadData, LoadData);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<Identifier> domainName_;
-            value_holder<capabilities_type> capabilities_;
-            value_holder<bool> sharable_;
-            boost::shared_ptr<LoadData> loadData_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct continueDomainDef_type {
@@ -3417,15 +3077,10 @@ namespace ISO_9506_MMS_1 {
             continueDomainDef_type(const Identifier& arg__domainName,
                     const LoadData& arg__loadData);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(domainName, Identifier);
-            BOOST_ASN_VALUE_HOLDERH_DECL(loadData, LoadData);
+            ITU_T_HOLDERH_DECL(domainName, Identifier);
+            ITU_T_HOLDERH_DECL(loadData, LoadData);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<Identifier> domainName_;
-            value_holder<LoadData> loadData_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct piDefinition_type {
@@ -3445,36 +3100,28 @@ namespace ISO_9506_MMS_1 {
                     boost::shared_ptr< bool> arg__monitorType,
                     boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> arg__pIState);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(piName, Identifier);
-            BOOST_ASN_VALUE_HOLDERH_DECL(listOfDomains, listOfDomains_type);
-            BOOST_ASN_VALUE_DEFAULT_DECL(reusable, bool);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(monitorType, bool);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(pIState, MMS_Object_Module_1::ProgramInvocationState);
+            ITU_T_HOLDERH_DECL(piName, Identifier);
+            ITU_T_HOLDERH_DECL(listOfDomains, listOfDomains_type);
+            ITU_T_DEFAULTH_DECL(reusable, bool, reusable__default);
+            ITU_T_OPTIONAL_DECL(monitorType, bool);
+            ITU_T_OPTIONAL_DECL(pIState, MMS_Object_Module_1::ProgramInvocationState);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<Identifier> piName_;
-            value_holder<listOfDomains_type> listOfDomains_;
-            default_holder<bool, reusable__default> reusable_;
-            boost::shared_ptr<bool> monitorType_;
-            boost::shared_ptr<MMS_Object_Module_1::ProgramInvocationState> pIState_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        ControlElement() : BOOST_ASN_CHOICE_STRUCT(ControlElement_enum) () {
+        ControlElement() : ITU_T_STRUCT(ControlElement_enum) () {
         }
 
         template<typename T > ControlElement(boost::shared_ptr< T> vl, ControlElement_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(ControlElement_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(ControlElement_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(beginDomainDef, beginDomainDef_type, ControlElement_beginDomainDef);
-        BOOST_ASN_VALUE_CHOICE(continueDomainDef, continueDomainDef_type, ControlElement_continueDomainDef);
-        BOOST_ASN_VALUE_CHOICE(endDomainDef, Identifier, ControlElement_endDomainDef);
-        BOOST_ASN_VALUE_CHOICE(piDefinition, piDefinition_type, ControlElement_piDefinition);
+        ITU_T_CHOICE_DECL(beginDomainDef, beginDomainDef_type, ControlElement_beginDomainDef);
+        ITU_T_CHOICE_DECL(continueDomainDef, continueDomainDef_type, ControlElement_continueDomainDef);
+        ITU_T_CHOICE_DECL(endDomainDef, Identifier, ControlElement_endDomainDef);
+        ITU_T_CHOICE_DECL(piDefinition, piDefinition_type, ControlElement_piDefinition);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice InitiateUnitControl-Error
@@ -3486,19 +3133,19 @@ namespace ISO_9506_MMS_1 {
         InitiateUnitControl_Error_programInvocation,
     };
 
-    struct InitiateUnitControl_Error : public BOOST_ASN_CHOICE_STRUCT(InitiateUnitControl_Error_enum) {
+    struct InitiateUnitControl_Error : public ITU_T_STRUCT(InitiateUnitControl_Error_enum) {
 
-        InitiateUnitControl_Error() : BOOST_ASN_CHOICE_STRUCT(InitiateUnitControl_Error_enum) () {
+        InitiateUnitControl_Error() : ITU_T_STRUCT(InitiateUnitControl_Error_enum) () {
         }
 
         template<typename T > InitiateUnitControl_Error(boost::shared_ptr< T> vl, InitiateUnitControl_Error_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(InitiateUnitControl_Error_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(InitiateUnitControl_Error_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(domain, Identifier, InitiateUnitControl_Error_domain);
-        BOOST_ASN_VALUE_CHOICE(programInvocation, Identifier, InitiateUnitControl_Error_programInvocation);
+        ITU_T_CHOICE_DECL(domain, Identifier, InitiateUnitControl_Error_domain);
+        ITU_T_CHOICE_DECL(programInvocation, Identifier, InitiateUnitControl_Error_programInvocation);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence UnitControlLoadSegment-Response
@@ -3516,15 +3163,10 @@ namespace ISO_9506_MMS_1 {
         UnitControlLoadSegment_Response(boost::shared_ptr< controlElements_type> arg__controlElements,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(controlElements, controlElements_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(controlElements, controlElements_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<controlElements_type> controlElements_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence UnitControlUpload-Request
@@ -3541,20 +3183,20 @@ namespace ISO_9506_MMS_1 {
             continueAfter_type_programInvocation,
         };
 
-        struct continueAfter_type : public BOOST_ASN_CHOICE_STRUCT(continueAfter_type_enum) {
+        struct continueAfter_type : public ITU_T_STRUCT(continueAfter_type_enum) {
 
-            continueAfter_type() : BOOST_ASN_CHOICE_STRUCT(continueAfter_type_enum) () {
+            continueAfter_type() : ITU_T_STRUCT(continueAfter_type_enum) () {
             }
 
             template<typename T > continueAfter_type(boost::shared_ptr< T> vl, continueAfter_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(continueAfter_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(continueAfter_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(domain, Identifier, continueAfter_type_domain);
-            BOOST_ASN_VALUE_CHOICE(ulsmID, int, continueAfter_type_ulsmID);
-            BOOST_ASN_VALUE_CHOICE(programInvocation, Identifier, continueAfter_type_programInvocation);
+            ITU_T_CHOICE_DECL(domain, Identifier, continueAfter_type_domain);
+            ITU_T_CHOICE_DECL(ulsmID, int, continueAfter_type_ulsmID);
+            ITU_T_CHOICE_DECL(programInvocation, Identifier, continueAfter_type_programInvocation);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -3565,15 +3207,10 @@ namespace ISO_9506_MMS_1 {
         UnitControlUpload_Request(boost::shared_ptr< Identifier> arg__unitControlName,
                 boost::shared_ptr< continueAfter_type> arg__continueAfter);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(unitControlName, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, continueAfter_type);
+        ITU_T_HOLDERH_DECL(unitControlName, Identifier);
+        ITU_T_OPTIONAL_DECL(continueAfter, continueAfter_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> unitControlName_;
-        boost::shared_ptr<continueAfter_type> continueAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence UnitControlUpload-Response
@@ -3590,20 +3227,20 @@ namespace ISO_9506_MMS_1 {
             nextElement_type_programInvocation,
         };
 
-        struct nextElement_type : public BOOST_ASN_CHOICE_STRUCT(nextElement_type_enum) {
+        struct nextElement_type : public ITU_T_STRUCT(nextElement_type_enum) {
 
-            nextElement_type() : BOOST_ASN_CHOICE_STRUCT(nextElement_type_enum) () {
+            nextElement_type() : ITU_T_STRUCT(nextElement_type_enum) () {
             }
 
             template<typename T > nextElement_type(boost::shared_ptr< T> vl, nextElement_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(nextElement_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(nextElement_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(domain, Identifier, nextElement_type_domain);
-            BOOST_ASN_VALUE_CHOICE(ulsmID, int, nextElement_type_ulsmID);
-            BOOST_ASN_VALUE_CHOICE(programInvocation, Identifier, nextElement_type_programInvocation);
+            ITU_T_CHOICE_DECL(domain, Identifier, nextElement_type_domain);
+            ITU_T_CHOICE_DECL(ulsmID, int, nextElement_type_ulsmID);
+            ITU_T_CHOICE_DECL(programInvocation, Identifier, nextElement_type_programInvocation);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -3618,15 +3255,10 @@ namespace ISO_9506_MMS_1 {
         UnitControlUpload_Response(boost::shared_ptr< controlElements_type> arg__controlElements,
                 boost::shared_ptr< nextElement_type> arg__nextElement);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(controlElements, controlElements_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(nextElement, nextElement_type);
+        ITU_T_HOLDERH_DECL(controlElements, controlElements_type);
+        ITU_T_OPTIONAL_DECL(nextElement, nextElement_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<controlElements_type> controlElements_;
-        boost::shared_ptr<nextElement_type> nextElement_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence StartUnitControl-Request
@@ -3643,20 +3275,20 @@ namespace ISO_9506_MMS_1 {
             executionArgument_type_enmbeddedString,
         };
 
-        struct executionArgument_type : public BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) {
+        struct executionArgument_type : public ITU_T_STRUCT(executionArgument_type_enum) {
 
-            executionArgument_type() : BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) () {
+            executionArgument_type() : ITU_T_STRUCT(executionArgument_type_enum) () {
             }
 
             template<typename T > executionArgument_type(boost::shared_ptr< T> vl, executionArgument_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(simpleString, MMSString, executionArgument_type_simpleString);
-            BOOST_ASN_VALUE_CHOICE(encodedString, external_type, executionArgument_type_encodedString);
-            BOOST_ASN_VALUE_CHOICE(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString);
+            ITU_T_CHOICE_DECL(simpleString, MMSString, executionArgument_type_simpleString);
+            ITU_T_CHOICE_DECL(encodedString, external_type, executionArgument_type_encodedString);
+            ITU_T_CHOICE_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -3667,15 +3299,10 @@ namespace ISO_9506_MMS_1 {
         StartUnitControl_Request(boost::shared_ptr< Identifier> arg__unitControlName,
                 boost::shared_ptr< executionArgument_type> arg__executionArgument);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(unitControlName, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(executionArgument, executionArgument_type);
+        ITU_T_HOLDERH_DECL(unitControlName, Identifier);
+        ITU_T_OPTIONAL_DECL(executionArgument, executionArgument_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> unitControlName_;
-        boost::shared_ptr<executionArgument_type> executionArgument_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence StartUnitControl-Error
@@ -3687,15 +3314,10 @@ namespace ISO_9506_MMS_1 {
         StartUnitControl_Error(const Identifier& arg__programInvocationName,
                 const MMS_Object_Module_1::ProgramInvocationState& arg__programInvocationState);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
+        ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
+        ITU_T_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> programInvocationName_;
-        value_holder<MMS_Object_Module_1::ProgramInvocationState> programInvocationState_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence StopUnitControl-Error
@@ -3707,15 +3329,10 @@ namespace ISO_9506_MMS_1 {
         StopUnitControl_Error(const Identifier& arg__programInvocationName,
                 const MMS_Object_Module_1::ProgramInvocationState& arg__programInvocationState);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
+        ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
+        ITU_T_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> programInvocationName_;
-        value_holder<MMS_Object_Module_1::ProgramInvocationState> programInvocationState_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence CreateUnitControl-Request
@@ -3732,17 +3349,11 @@ namespace ISO_9506_MMS_1 {
                 const domains_type& arg__domains,
                 const programInvocations_type& arg__programInvocations);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(unitControl, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocations, programInvocations_type);
+        ITU_T_HOLDERH_DECL(unitControl, Identifier);
+        ITU_T_HOLDERH_DECL(domains, domains_type);
+        ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> unitControl_;
-        value_holder<domains_type> domains_;
-        value_holder<programInvocations_type> programInvocations_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AddToUnitControl-Request
@@ -3759,17 +3370,11 @@ namespace ISO_9506_MMS_1 {
                 const domains_type& arg__domains,
                 const programInvocations_type& arg__programInvocations);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(unitControl, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocations, programInvocations_type);
+        ITU_T_HOLDERH_DECL(unitControl, Identifier);
+        ITU_T_HOLDERH_DECL(domains, domains_type);
+        ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> unitControl_;
-        value_holder<domains_type> domains_;
-        value_holder<programInvocations_type> programInvocations_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence RemoveFromUnitControl-Request
@@ -3786,17 +3391,11 @@ namespace ISO_9506_MMS_1 {
                 const domains_type& arg__domains,
                 const programInvocations_type& arg__programInvocations);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(unitControl, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocations, programInvocations_type);
+        ITU_T_HOLDERH_DECL(unitControl, Identifier);
+        ITU_T_HOLDERH_DECL(domains, domains_type);
+        ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> unitControl_;
-        value_holder<domains_type> domains_;
-        value_holder<programInvocations_type> programInvocations_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetUnitControlAttributes-Response
@@ -3812,15 +3411,10 @@ namespace ISO_9506_MMS_1 {
         GetUnitControlAttributes_Response(const domains_type& arg__domains,
                 const programInvocations_type& arg__programInvocations);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(domains, domains_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(programInvocations, programInvocations_type);
+        ITU_T_HOLDERH_DECL(domains, domains_type);
+        ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<domains_type> domains_;
-        value_holder<programInvocations_type> programInvocations_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence LoadUnitControlFromFile-Request
@@ -3836,17 +3430,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< FileName> arg__fileName,
                 boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__thirdParty);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(unitControlName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileName, FileName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(thirdParty, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(unitControlName, Identifier);
+        ITU_T_HOLDERH_DECL(fileName, FileName);
+        ITU_T_OPTIONAL_DECL(thirdParty, MMS_Environment_1::ApplicationReference);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> unitControlName_;
-        value_holder<FileName> fileName_;
-        boost::shared_ptr<MMS_Environment_1::ApplicationReference> thirdParty_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice LoadUnitControlFromFile-Error
@@ -3859,20 +3447,20 @@ namespace ISO_9506_MMS_1 {
         LoadUnitControlFromFile_Error_programInvocation,
     };
 
-    struct LoadUnitControlFromFile_Error : public BOOST_ASN_CHOICE_STRUCT(LoadUnitControlFromFile_Error_enum) {
+    struct LoadUnitControlFromFile_Error : public ITU_T_STRUCT(LoadUnitControlFromFile_Error_enum) {
 
-        LoadUnitControlFromFile_Error() : BOOST_ASN_CHOICE_STRUCT(LoadUnitControlFromFile_Error_enum) () {
+        LoadUnitControlFromFile_Error() : ITU_T_STRUCT(LoadUnitControlFromFile_Error_enum) () {
         }
 
         template<typename T > LoadUnitControlFromFile_Error(boost::shared_ptr< T> vl, LoadUnitControlFromFile_Error_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(LoadUnitControlFromFile_Error_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(LoadUnitControlFromFile_Error_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(none, null_type, LoadUnitControlFromFile_Error_none);
-        BOOST_ASN_VALUE_CHOICE(domain, Identifier, LoadUnitControlFromFile_Error_domain);
-        BOOST_ASN_VALUE_CHOICE(programInvocation, Identifier, LoadUnitControlFromFile_Error_programInvocation);
+        ITU_T_CHOICE_DECL(none, null_type, LoadUnitControlFromFile_Error_none);
+        ITU_T_CHOICE_DECL(domain, Identifier, LoadUnitControlFromFile_Error_domain);
+        ITU_T_CHOICE_DECL(programInvocation, Identifier, LoadUnitControlFromFile_Error_programInvocation);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence StoreUnitControlToFile-Request
@@ -3888,17 +3476,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< FileName> arg__fileName,
                 boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__thirdParty);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(unitControlName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(fileName, FileName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(thirdParty, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(unitControlName, Identifier);
+        ITU_T_HOLDERH_DECL(fileName, FileName);
+        ITU_T_OPTIONAL_DECL(thirdParty, MMS_Environment_1::ApplicationReference);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> unitControlName_;
-        value_holder<FileName> fileName_;
-        boost::shared_ptr<MMS_Environment_1::ApplicationReference> thirdParty_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice DeleteUnitControl-Error
@@ -3910,19 +3492,19 @@ namespace ISO_9506_MMS_1 {
         DeleteUnitControl_Error_programInvocation,
     };
 
-    struct DeleteUnitControl_Error : public BOOST_ASN_CHOICE_STRUCT(DeleteUnitControl_Error_enum) {
+    struct DeleteUnitControl_Error : public ITU_T_STRUCT(DeleteUnitControl_Error_enum) {
 
-        DeleteUnitControl_Error() : BOOST_ASN_CHOICE_STRUCT(DeleteUnitControl_Error_enum) () {
+        DeleteUnitControl_Error() : ITU_T_STRUCT(DeleteUnitControl_Error_enum) () {
         }
 
         template<typename T > DeleteUnitControl_Error(boost::shared_ptr< T> vl, DeleteUnitControl_Error_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(DeleteUnitControl_Error_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(DeleteUnitControl_Error_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(domain, Identifier, DeleteUnitControl_Error_domain);
-        BOOST_ASN_VALUE_CHOICE(programInvocation, Identifier, DeleteUnitControl_Error_programInvocation);
+        ITU_T_CHOICE_DECL(domain, Identifier, DeleteUnitControl_Error_domain);
+        ITU_T_CHOICE_DECL(programInvocation, Identifier, DeleteUnitControl_Error_programInvocation);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice TypeSpecification
@@ -3934,19 +3516,19 @@ namespace ISO_9506_MMS_1 {
         TypeSpecification_typeDescription,
     };
 
-    struct TypeSpecification : public BOOST_ASN_CHOICE_STRUCT(TypeSpecification_enum) {
+    struct TypeSpecification : public ITU_T_STRUCT(TypeSpecification_enum) {
 
-        TypeSpecification() : BOOST_ASN_CHOICE_STRUCT(TypeSpecification_enum) () {
+        TypeSpecification() : ITU_T_STRUCT(TypeSpecification_enum) () {
         }
 
         template<typename T > TypeSpecification(boost::shared_ptr< T> vl, TypeSpecification_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(TypeSpecification_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(TypeSpecification_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(typeName, ObjectName, TypeSpecification_typeName);
-        BOOST_ASN_VALUE_CHOICE(typeDescription, MMS_Object_Module_1::TypeDescription, TypeSpecification_typeDescription);
+        ITU_T_CHOICE_DECL(typeName, ObjectName, TypeSpecification_typeName);
+        ITU_T_CHOICE_DECL(typeDescription, MMS_Object_Module_1::TypeDescription, TypeSpecification_typeDescription);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     enum AlternateAccess_sequence_of_enum {
@@ -3956,7 +3538,7 @@ namespace ISO_9506_MMS_1 {
         AlternateAccess_sequence_of_named,
     };
 
-    struct AlternateAccess_sequence_of : public BOOST_ASN_CHOICE_STRUCT(AlternateAccess_sequence_of_enum) {
+    struct AlternateAccess_sequence_of : public ITU_T_STRUCT(AlternateAccess_sequence_of_enum) {
 
 
         struct named_type;
@@ -3968,28 +3550,23 @@ namespace ISO_9506_MMS_1 {
             named_type(const Identifier& arg__componentName,
                     const AlternateAccessSelection& arg__access);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(componentName, Identifier);
-            BOOST_ASN_VALUE_HOLDERH_DECL(access, AlternateAccessSelection);
+            ITU_T_HOLDERH_DECL(componentName, Identifier);
+            ITU_T_HOLDERH_DECL(access, AlternateAccessSelection);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<Identifier> componentName_;
-            value_holder<AlternateAccessSelection> access_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        AlternateAccess_sequence_of() : BOOST_ASN_CHOICE_STRUCT(AlternateAccess_sequence_of_enum) () {
+        AlternateAccess_sequence_of() : ITU_T_STRUCT(AlternateAccess_sequence_of_enum) () {
         }
 
         template<typename T > AlternateAccess_sequence_of(boost::shared_ptr< T> vl, AlternateAccess_sequence_of_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(AlternateAccess_sequence_of_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(AlternateAccess_sequence_of_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(unnamed, AlternateAccessSelection, AlternateAccess_sequence_of_unnamed);
-        BOOST_ASN_VALUE_CHOICE(named, named_type, AlternateAccess_sequence_of_named);
+        ITU_T_CHOICE_DECL(unnamed, AlternateAccessSelection, AlternateAccess_sequence_of_unnamed);
+        ITU_T_CHOICE_DECL(named, named_type, AlternateAccess_sequence_of_named);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice AlternateAccessSelection
@@ -4001,7 +3578,7 @@ namespace ISO_9506_MMS_1 {
         AlternateAccessSelection_selectAccess,
     };
 
-    struct AlternateAccessSelection : public BOOST_ASN_CHOICE_STRUCT(AlternateAccessSelection_enum) {
+    struct AlternateAccessSelection : public ITU_T_STRUCT(AlternateAccessSelection_enum) {
 
 
         struct selectAlternateAccess_type;
@@ -4020,7 +3597,7 @@ namespace ISO_9506_MMS_1 {
                 accessSelection_type_allElements,
             };
 
-            struct accessSelection_type : public BOOST_ASN_CHOICE_STRUCT(accessSelection_type_enum) {
+            struct accessSelection_type : public ITU_T_STRUCT(accessSelection_type_enum) {
 
 
                 struct indexRange_type;
@@ -4032,30 +3609,25 @@ namespace ISO_9506_MMS_1 {
                     indexRange_type(const Unsigned32& arg__lowIndex,
                             const Unsigned32& arg__numberOfElements);
 
-                    BOOST_ASN_VALUE_HOLDERH_DECL(lowIndex, Unsigned32);
-                    BOOST_ASN_VALUE_HOLDERH_DECL(numberOfElements, Unsigned32);
+                    ITU_T_HOLDERH_DECL(lowIndex, Unsigned32);
+                    ITU_T_HOLDERH_DECL(numberOfElements, Unsigned32);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
-
-                private:
-
-                    value_holder<Unsigned32> lowIndex_;
-                    value_holder<Unsigned32> numberOfElements_;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
-                accessSelection_type() : BOOST_ASN_CHOICE_STRUCT(accessSelection_type_enum) () {
+                accessSelection_type() : ITU_T_STRUCT(accessSelection_type_enum) () {
                 }
 
                 template<typename T > accessSelection_type(boost::shared_ptr< T> vl, accessSelection_type_enum enm) :
-                        BOOST_ASN_CHOICE_STRUCT(accessSelection_type_enum) (vl, static_cast<int> (enm)) {
+                        ITU_T_STRUCT(accessSelection_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                BOOST_ASN_VALUE_CHOICE(component, Identifier, accessSelection_type_component);
-                BOOST_ASN_VALUE_CHOICE(index, Unsigned32, accessSelection_type_index);
-                BOOST_ASN_VALUE_CHOICE(indexRange, indexRange_type, accessSelection_type_indexRange);
-                BOOST_ASN_VALUE_CHOICE(allElements, null_type, accessSelection_type_allElements);
+                ITU_T_CHOICE_DECL(component, Identifier, accessSelection_type_component);
+                ITU_T_CHOICE_DECL(index, Unsigned32, accessSelection_type_index);
+                ITU_T_CHOICE_DECL(indexRange, indexRange_type, accessSelection_type_indexRange);
+                ITU_T_CHOICE_DECL(allElements, null_type, accessSelection_type_allElements);
 
-                BOOST_ASN_ARCHIVE_FUNC;
+                ITU_T_ARCHIVE_FUNC;
             };
 
 
@@ -4064,15 +3636,10 @@ namespace ISO_9506_MMS_1 {
             selectAlternateAccess_type(const accessSelection_type& arg__accessSelection,
                     const AlternateAccess& arg__alternateAccess);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(accessSelection, accessSelection_type);
-            BOOST_ASN_VALUE_HOLDERH_DECL(alternateAccess, AlternateAccess);
+            ITU_T_HOLDERH_DECL(accessSelection, accessSelection_type);
+            ITU_T_HOLDERH_DECL(alternateAccess, AlternateAccess);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<accessSelection_type> accessSelection_;
-            value_holder<AlternateAccess> alternateAccess_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         enum selectAccess_type_enum {
@@ -4084,7 +3651,7 @@ namespace ISO_9506_MMS_1 {
             selectAccess_type_allElements,
         };
 
-        struct selectAccess_type : public BOOST_ASN_CHOICE_STRUCT(selectAccess_type_enum) {
+        struct selectAccess_type : public ITU_T_STRUCT(selectAccess_type_enum) {
 
 
             struct indexRange_type;
@@ -4096,43 +3663,38 @@ namespace ISO_9506_MMS_1 {
                 indexRange_type(const Unsigned32& arg__lowIndex,
                         const Unsigned32& arg__numberOfElements);
 
-                BOOST_ASN_VALUE_HOLDERH_DECL(lowIndex, Unsigned32);
-                BOOST_ASN_VALUE_HOLDERH_DECL(numberOfElements, Unsigned32);
+                ITU_T_HOLDERH_DECL(lowIndex, Unsigned32);
+                ITU_T_HOLDERH_DECL(numberOfElements, Unsigned32);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                value_holder<Unsigned32> lowIndex_;
-                value_holder<Unsigned32> numberOfElements_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            selectAccess_type() : BOOST_ASN_CHOICE_STRUCT(selectAccess_type_enum) () {
+            selectAccess_type() : ITU_T_STRUCT(selectAccess_type_enum) () {
             }
 
             template<typename T > selectAccess_type(boost::shared_ptr< T> vl, selectAccess_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(selectAccess_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(selectAccess_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(component, Identifier, selectAccess_type_component);
-            BOOST_ASN_VALUE_CHOICE(index, Unsigned32, selectAccess_type_index);
-            BOOST_ASN_VALUE_CHOICE(indexRange, indexRange_type, selectAccess_type_indexRange);
-            BOOST_ASN_VALUE_CHOICE(allElements, null_type, selectAccess_type_allElements);
+            ITU_T_CHOICE_DECL(component, Identifier, selectAccess_type_component);
+            ITU_T_CHOICE_DECL(index, Unsigned32, selectAccess_type_index);
+            ITU_T_CHOICE_DECL(indexRange, indexRange_type, selectAccess_type_indexRange);
+            ITU_T_CHOICE_DECL(allElements, null_type, selectAccess_type_allElements);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        AlternateAccessSelection() : BOOST_ASN_CHOICE_STRUCT(AlternateAccessSelection_enum) () {
+        AlternateAccessSelection() : ITU_T_STRUCT(AlternateAccessSelection_enum) () {
         }
 
         template<typename T > AlternateAccessSelection(boost::shared_ptr< T> vl, AlternateAccessSelection_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(AlternateAccessSelection_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(AlternateAccessSelection_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(selectAlternateAccess, selectAlternateAccess_type, AlternateAccessSelection_selectAlternateAccess);
-        BOOST_ASN_VALUE_CHOICE(selectAccess, selectAccess_type, AlternateAccessSelection_selectAccess);
+        ITU_T_CHOICE_DECL(selectAlternateAccess, selectAlternateAccess_type, AlternateAccessSelection_selectAlternateAccess);
+        ITU_T_CHOICE_DECL(selectAccess, selectAccess_type, AlternateAccessSelection_selectAccess);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice AccessResult
@@ -4144,19 +3706,19 @@ namespace ISO_9506_MMS_1 {
         AccessResult_success,
     };
 
-    struct AccessResult : public BOOST_ASN_CHOICE_STRUCT(AccessResult_enum) {
+    struct AccessResult : public ITU_T_STRUCT(AccessResult_enum) {
 
-        AccessResult() : BOOST_ASN_CHOICE_STRUCT(AccessResult_enum) () {
+        AccessResult() : ITU_T_STRUCT(AccessResult_enum) () {
         }
 
         template<typename T > AccessResult(boost::shared_ptr< T> vl, AccessResult_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(AccessResult_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(AccessResult_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(failure, DataAccessError, AccessResult_failure);
-        BOOST_ASN_VALUE_CHOICE(success, Data, AccessResult_success);
+        ITU_T_CHOICE_DECL(failure, DataAccessError, AccessResult_failure);
+        ITU_T_CHOICE_DECL(success, Data, AccessResult_success);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice Data
@@ -4181,37 +3743,37 @@ namespace ISO_9506_MMS_1 {
         Data_mMSString,
     };
 
-    struct Data : public BOOST_ASN_CHOICE_STRUCT(Data_enum) {
+    struct Data : public ITU_T_STRUCT(Data_enum) {
 
 
 
         typedef std::vector< Data > array_type;
         typedef std::vector< Data > structure_type;
 
-        Data() : BOOST_ASN_CHOICE_STRUCT(Data_enum) () {
+        Data() : ITU_T_STRUCT(Data_enum) () {
         }
 
         template<typename T > Data(boost::shared_ptr< T> vl, Data_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Data_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(Data_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(array, array_type, Data_array);
-        BOOST_ASN_VALUE_CHOICE(structure, structure_type, Data_structure);
-        BOOST_ASN_VALUE_CHOICE(boolean, bool, Data_boolean);
-        BOOST_ASN_VALUE_CHOICE(bit_string, bitstring_type, Data_bit_string);
-        BOOST_ASN_VALUE_CHOICE(integer, int, Data_integer);
-        BOOST_ASN_VALUE_CHOICE(unsignedV, int, Data_unsignedV);
-        BOOST_ASN_VALUE_CHOICE(floating_point, FloatingPoint, Data_floating_point);
-        BOOST_ASN_VALUE_CHOICE(octet_string, octetstring_type, Data_octet_string);
-        BOOST_ASN_VALUE_CHOICE(visible_string, visiblestring_type, Data_visible_string);
-        BOOST_ASN_VALUE_CHOICE(generalized_time, gentime_type, Data_generalized_time);
-        BOOST_ASN_VALUE_CHOICE(binary_time, TimeOfDay, Data_binary_time);
-        BOOST_ASN_VALUE_CHOICE(bcd, int, Data_bcd);
-        BOOST_ASN_VALUE_CHOICE(booleanArray, bitstring_type, Data_booleanArray);
-        BOOST_ASN_VALUE_CHOICE(objId, oid_type, Data_objId);
-        BOOST_ASN_VALUE_CHOICE(mMSString, MMSString, Data_mMSString);
+        ITU_T_CHOICE_DECL(array, array_type, Data_array);
+        ITU_T_CHOICE_DECL(structure, structure_type, Data_structure);
+        ITU_T_CHOICE_DECL(boolean, bool, Data_boolean);
+        ITU_T_CHOICE_DECL(bit_string, bitstring_type, Data_bit_string);
+        ITU_T_CHOICE_DECL(integer, int, Data_integer);
+        ITU_T_CHOICE_DECL(unsignedV, int, Data_unsignedV);
+        ITU_T_CHOICE_DECL(floating_point, FloatingPoint, Data_floating_point);
+        ITU_T_CHOICE_DECL(octet_string, octetstring_type, Data_octet_string);
+        ITU_T_CHOICE_DECL(visible_string, visiblestring_type, Data_visible_string);
+        ITU_T_CHOICE_DECL(generalized_time, gentime_type, Data_generalized_time);
+        ITU_T_CHOICE_DECL(binary_time, TimeOfDay, Data_binary_time);
+        ITU_T_CHOICE_DECL(bcd, int, Data_bcd);
+        ITU_T_CHOICE_DECL(booleanArray, bitstring_type, Data_booleanArray);
+        ITU_T_CHOICE_DECL(objId, oid_type, Data_objId);
+        ITU_T_CHOICE_DECL(mMSString, MMSString, Data_mMSString);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const DataAccessError DataAccessError_object_invalidated;
@@ -4236,7 +3798,7 @@ namespace ISO_9506_MMS_1 {
         VariableAccessSpecification_variableListName,
     };
 
-    struct VariableAccessSpecification : public BOOST_ASN_CHOICE_STRUCT(VariableAccessSpecification_enum) {
+    struct VariableAccessSpecification : public ITU_T_STRUCT(VariableAccessSpecification_enum) {
 
 
         struct listOfVariable_type_sequence_of;
@@ -4250,32 +3812,27 @@ namespace ISO_9506_MMS_1 {
             listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
                     boost::shared_ptr< AlternateAccess> arg__alternateAccess);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(variableSpecification, VariableSpecification);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(alternateAccess, AlternateAccess);
+            ITU_T_HOLDERH_DECL(variableSpecification, VariableSpecification);
+            ITU_T_OPTIONAL_DECL(alternateAccess, AlternateAccess);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<VariableSpecification> variableSpecification_;
-            boost::shared_ptr<AlternateAccess> alternateAccess_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
 
         typedef std::vector< listOfVariable_type_sequence_of > listOfVariable_type;
 
-        VariableAccessSpecification() : BOOST_ASN_CHOICE_STRUCT(VariableAccessSpecification_enum) () {
+        VariableAccessSpecification() : ITU_T_STRUCT(VariableAccessSpecification_enum) () {
         }
 
         template<typename T > VariableAccessSpecification(boost::shared_ptr< T> vl, VariableAccessSpecification_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(VariableAccessSpecification_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(VariableAccessSpecification_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(listOfVariable, listOfVariable_type, VariableAccessSpecification_listOfVariable);
-        BOOST_ASN_VALUE_CHOICE(variableListName, ObjectName, VariableAccessSpecification_variableListName);
+        ITU_T_CHOICE_DECL(listOfVariable, listOfVariable_type, VariableAccessSpecification_listOfVariable);
+        ITU_T_CHOICE_DECL(variableListName, ObjectName, VariableAccessSpecification_variableListName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice VariableSpecification
@@ -4290,7 +3847,7 @@ namespace ISO_9506_MMS_1 {
         VariableSpecification_invalidated,
     };
 
-    struct VariableSpecification : public BOOST_ASN_CHOICE_STRUCT(VariableSpecification_enum) {
+    struct VariableSpecification : public ITU_T_STRUCT(VariableSpecification_enum) {
 
 
         struct variableDescription_type;
@@ -4302,31 +3859,26 @@ namespace ISO_9506_MMS_1 {
             variableDescription_type(const MMS_Object_Module_1::Address& arg__address,
                     const TypeSpecification& arg__typeSpecification);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(address, MMS_Object_Module_1::Address);
-            BOOST_ASN_VALUE_HOLDERH_DECL(typeSpecification, TypeSpecification);
+            ITU_T_HOLDERH_DECL(address, MMS_Object_Module_1::Address);
+            ITU_T_HOLDERH_DECL(typeSpecification, TypeSpecification);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<MMS_Object_Module_1::Address> address_;
-            value_holder<TypeSpecification> typeSpecification_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
-        VariableSpecification() : BOOST_ASN_CHOICE_STRUCT(VariableSpecification_enum) () {
+        VariableSpecification() : ITU_T_STRUCT(VariableSpecification_enum) () {
         }
 
         template<typename T > VariableSpecification(boost::shared_ptr< T> vl, VariableSpecification_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(VariableSpecification_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(VariableSpecification_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(name, ObjectName, VariableSpecification_name);
-        BOOST_ASN_VALUE_CHOICE(address, MMS_Object_Module_1::Address, VariableSpecification_address);
-        BOOST_ASN_VALUE_CHOICE(variableDescription, variableDescription_type, VariableSpecification_variableDescription);
-        BOOST_ASN_VALUE_CHOICE(scatteredAccessDescription, ISO_9506_MMS_1A::ScatteredAccessDescription, VariableSpecification_scatteredAccessDescription);
-        BOOST_ASN_VALUE_CHOICE(invalidated, null_type, VariableSpecification_invalidated);
+        ITU_T_CHOICE_DECL(name, ObjectName, VariableSpecification_name);
+        ITU_T_CHOICE_DECL(address, MMS_Object_Module_1::Address, VariableSpecification_address);
+        ITU_T_CHOICE_DECL(variableDescription, variableDescription_type, VariableSpecification_variableDescription);
+        ITU_T_CHOICE_DECL(scatteredAccessDescription, ISO_9506_MMS_1A::ScatteredAccessDescription, VariableSpecification_scatteredAccessDescription);
+        ITU_T_CHOICE_DECL(invalidated, null_type, VariableSpecification_invalidated);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Read-Request
@@ -4342,15 +3894,10 @@ namespace ISO_9506_MMS_1 {
         Read_Request(boost::shared_ptr< bool> arg__specificationWithResult,
                 boost::shared_ptr< VariableAccessSpecification> arg__variableAccessSpecification);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(specificationWithResult, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
+        ITU_T_DEFAULTH_DECL(specificationWithResult, bool, specificationWithResult__default);
+        ITU_T_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        default_holder<bool, specificationWithResult__default> specificationWithResult_;
-        value_holder<VariableAccessSpecification> variableAccessSpecification_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Read-Response
@@ -4367,15 +3914,10 @@ namespace ISO_9506_MMS_1 {
         Read_Response(boost::shared_ptr< VariableAccessSpecification> arg__variableAccessSpecification,
                 boost::shared_ptr< listOfAccessResult_type> arg__listOfAccessResult);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(variableAccessSpecification, VariableAccessSpecification);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfAccessResult, listOfAccessResult_type);
+        ITU_T_OPTIONAL_DECL(variableAccessSpecification, VariableAccessSpecification);
+        ITU_T_HOLDERH_DECL(listOfAccessResult, listOfAccessResult_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<VariableAccessSpecification> variableAccessSpecification_;
-        value_holder<listOfAccessResult_type> listOfAccessResult_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Write-Request
@@ -4390,15 +3932,10 @@ namespace ISO_9506_MMS_1 {
         Write_Request(const VariableAccessSpecification& arg__variableAccessSpecification,
                 const listOfData_type& arg__listOfData);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfData, listOfData_type);
+        ITU_T_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
+        ITU_T_HOLDERH_DECL(listOfData, listOfData_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<VariableAccessSpecification> variableAccessSpecification_;
-        value_holder<listOfData_type> listOfData_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     enum Write_Response_sequence_of_enum {
@@ -4408,19 +3945,19 @@ namespace ISO_9506_MMS_1 {
         Write_Response_sequence_of_success,
     };
 
-    struct Write_Response_sequence_of : public BOOST_ASN_CHOICE_STRUCT(Write_Response_sequence_of_enum) {
+    struct Write_Response_sequence_of : public ITU_T_STRUCT(Write_Response_sequence_of_enum) {
 
-        Write_Response_sequence_of() : BOOST_ASN_CHOICE_STRUCT(Write_Response_sequence_of_enum) () {
+        Write_Response_sequence_of() : ITU_T_STRUCT(Write_Response_sequence_of_enum) () {
         }
 
         template<typename T > Write_Response_sequence_of(boost::shared_ptr< T> vl, Write_Response_sequence_of_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(Write_Response_sequence_of_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(Write_Response_sequence_of_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(failure, DataAccessError, Write_Response_sequence_of_failure);
-        BOOST_ASN_VALUE_CHOICE(success, null_type, Write_Response_sequence_of_success);
+        ITU_T_CHOICE_DECL(failure, DataAccessError, Write_Response_sequence_of_failure);
+        ITU_T_CHOICE_DECL(success, null_type, Write_Response_sequence_of_success);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence InformationReport
@@ -4435,15 +3972,10 @@ namespace ISO_9506_MMS_1 {
         InformationReport(const VariableAccessSpecification& arg__variableAccessSpecification,
                 const listOfAccessResult_type& arg__listOfAccessResult);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfAccessResult, listOfAccessResult_type);
+        ITU_T_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
+        ITU_T_HOLDERH_DECL(listOfAccessResult, listOfAccessResult_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<VariableAccessSpecification> variableAccessSpecification_;
-        value_holder<listOfAccessResult_type> listOfAccessResult_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice GetVariableAccessAttributes-Request
@@ -4455,19 +3987,19 @@ namespace ISO_9506_MMS_1 {
         GetVariableAccessAttributes_Request_address,
     };
 
-    struct GetVariableAccessAttributes_Request : public BOOST_ASN_CHOICE_STRUCT(GetVariableAccessAttributes_Request_enum) {
+    struct GetVariableAccessAttributes_Request : public ITU_T_STRUCT(GetVariableAccessAttributes_Request_enum) {
 
-        GetVariableAccessAttributes_Request() : BOOST_ASN_CHOICE_STRUCT(GetVariableAccessAttributes_Request_enum) () {
+        GetVariableAccessAttributes_Request() : ITU_T_STRUCT(GetVariableAccessAttributes_Request_enum) () {
         }
 
         template<typename T > GetVariableAccessAttributes_Request(boost::shared_ptr< T> vl, GetVariableAccessAttributes_Request_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(GetVariableAccessAttributes_Request_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(GetVariableAccessAttributes_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(name, ObjectName, GetVariableAccessAttributes_Request_name);
-        BOOST_ASN_VALUE_CHOICE(address, MMS_Object_Module_1::Address, GetVariableAccessAttributes_Request_address);
+        ITU_T_CHOICE_DECL(name, ObjectName, GetVariableAccessAttributes_Request_name);
+        ITU_T_CHOICE_DECL(address, MMS_Object_Module_1::Address, GetVariableAccessAttributes_Request_address);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetVariableAccessAttributes-Response
@@ -4485,21 +4017,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Identifier> arg__accessControlList,
                 boost::shared_ptr< visiblestring_type> arg__meaning);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(address, MMS_Object_Module_1::Address);
-        BOOST_ASN_VALUE_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(meaning, visiblestring_type);
+        ITU_T_HOLDERH_DECL(mmsDeletable, bool);
+        ITU_T_OPTIONAL_DECL(address, MMS_Object_Module_1::Address);
+        ITU_T_HOLDERH_DECL(typeDescription, MMS_Object_Module_1::TypeDescription);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_OPTIONAL_DECL(meaning, visiblestring_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<bool> mmsDeletable_;
-        boost::shared_ptr<MMS_Object_Module_1::Address> address_;
-        value_holder<MMS_Object_Module_1::TypeDescription> typeDescription_;
-        boost::shared_ptr<Identifier> accessControlList_;
-        boost::shared_ptr<visiblestring_type> meaning_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DefineNamedVariable-Request
@@ -4515,17 +4039,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::Address> arg__address,
                 boost::shared_ptr< TypeSpecification> arg__typeSpecification);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(variableName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(address, MMS_Object_Module_1::Address);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(typeSpecification, TypeSpecification);
+        ITU_T_HOLDERH_DECL(variableName, ObjectName);
+        ITU_T_HOLDERH_DECL(address, MMS_Object_Module_1::Address);
+        ITU_T_OPTIONAL_DECL(typeSpecification, TypeSpecification);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> variableName_;
-        value_holder<MMS_Object_Module_1::Address> address_;
-        boost::shared_ptr<TypeSpecification> typeSpecification_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DeleteVariableAccess-Request
@@ -4547,17 +4065,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< listOfName_type> arg__listOfName,
                 boost::shared_ptr< Identifier> arg__domainName);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(scopeOfDelete, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfName, listOfName_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(domainName, Identifier);
+        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default);
+        ITU_T_OPTIONAL_DECL(listOfName, listOfName_type);
+        ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        default_holder<int, scopeOfDelete__default> scopeOfDelete_;
-        boost::shared_ptr<listOfName_type> listOfName_;
-        boost::shared_ptr<Identifier> domainName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DeleteVariableAccess-Response
@@ -4569,15 +4081,10 @@ namespace ISO_9506_MMS_1 {
         DeleteVariableAccess_Response(const Unsigned32& arg__numberMatched,
                 const Unsigned32& arg__numberDeleted);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberMatched, Unsigned32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberDeleted, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberDeleted, Unsigned32);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Unsigned32> numberMatched_;
-        value_holder<Unsigned32> numberDeleted_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DefineNamedVariableList-Request
@@ -4595,15 +4102,10 @@ namespace ISO_9506_MMS_1 {
             listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
                     boost::shared_ptr< AlternateAccess> arg__alternateAccess);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(variableSpecification, VariableSpecification);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(alternateAccess, AlternateAccess);
+            ITU_T_HOLDERH_DECL(variableSpecification, VariableSpecification);
+            ITU_T_OPTIONAL_DECL(alternateAccess, AlternateAccess);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<VariableSpecification> variableSpecification_;
-            boost::shared_ptr<AlternateAccess> alternateAccess_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -4616,15 +4118,10 @@ namespace ISO_9506_MMS_1 {
         DefineNamedVariableList_Request(const ObjectName& arg__variableListName,
                 const listOfVariable_type& arg__listOfVariable);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(variableListName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfVariable, listOfVariable_type);
+        ITU_T_HOLDERH_DECL(variableListName, ObjectName);
+        ITU_T_HOLDERH_DECL(listOfVariable, listOfVariable_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> variableListName_;
-        value_holder<listOfVariable_type> listOfVariable_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetNamedVariableListAttributes-Response
@@ -4642,15 +4139,10 @@ namespace ISO_9506_MMS_1 {
             listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
                     boost::shared_ptr< AlternateAccess> arg__alternateAccess);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(variableSpecification, VariableSpecification);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(alternateAccess, AlternateAccess);
+            ITU_T_HOLDERH_DECL(variableSpecification, VariableSpecification);
+            ITU_T_OPTIONAL_DECL(alternateAccess, AlternateAccess);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<VariableSpecification> variableSpecification_;
-            boost::shared_ptr<AlternateAccess> alternateAccess_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -4667,17 +4159,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< listOfVariable_type> arg__listOfVariable,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfVariable, listOfVariable_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_HOLDERH_DECL(mmsDeletable, bool);
+        ITU_T_HOLDERH_DECL(listOfVariable, listOfVariable_type);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<bool> mmsDeletable_;
-        value_holder<listOfVariable_type> listOfVariable_;
-        boost::shared_ptr<Identifier> accessControlList_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DeleteNamedVariableList-Request
@@ -4699,17 +4185,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< listOfVariableListName_type> arg__listOfVariableListName,
                 boost::shared_ptr< Identifier> arg__domainName);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(scopeOfDelete, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfVariableListName, listOfVariableListName_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(domainName, Identifier);
+        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default);
+        ITU_T_OPTIONAL_DECL(listOfVariableListName, listOfVariableListName_type);
+        ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        default_holder<int, scopeOfDelete__default> scopeOfDelete_;
-        boost::shared_ptr<listOfVariableListName_type> listOfVariableListName_;
-        boost::shared_ptr<Identifier> domainName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DeleteNamedVariableList-Response
@@ -4721,15 +4201,10 @@ namespace ISO_9506_MMS_1 {
         DeleteNamedVariableList_Response(const Unsigned32& arg__numberMatched,
                 const Unsigned32& arg__numberDeleted);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberMatched, Unsigned32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberDeleted, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberDeleted, Unsigned32);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Unsigned32> numberMatched_;
-        value_holder<Unsigned32> numberDeleted_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DefineNamedType-Request
@@ -4741,15 +4216,10 @@ namespace ISO_9506_MMS_1 {
         DefineNamedType_Request(const ObjectName& arg__typeName,
                 const TypeSpecification& arg__typeSpecification);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(typeName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(typeSpecification, TypeSpecification);
+        ITU_T_HOLDERH_DECL(typeName, ObjectName);
+        ITU_T_HOLDERH_DECL(typeSpecification, TypeSpecification);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> typeName_;
-        value_holder<TypeSpecification> typeSpecification_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetNamedTypeAttributes-Response
@@ -4766,19 +4236,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Identifier> arg__accessControlList,
                 boost::shared_ptr< visiblestring_type> arg__meaning);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(typeSpecification, TypeSpecification);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(meaning, visiblestring_type);
+        ITU_T_HOLDERH_DECL(mmsDeletable, bool);
+        ITU_T_HOLDERH_DECL(typeSpecification, TypeSpecification);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_OPTIONAL_DECL(meaning, visiblestring_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<bool> mmsDeletable_;
-        value_holder<TypeSpecification> typeSpecification_;
-        boost::shared_ptr<Identifier> accessControlList_;
-        boost::shared_ptr<visiblestring_type> meaning_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DeleteNamedType-Request
@@ -4800,17 +4263,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< listOfTypeName_type> arg__listOfTypeName,
                 boost::shared_ptr< Identifier> arg__domainName);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(scopeOfDelete, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfTypeName, listOfTypeName_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(domainName, Identifier);
+        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default);
+        ITU_T_OPTIONAL_DECL(listOfTypeName, listOfTypeName_type);
+        ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        default_holder<int, scopeOfDelete__default> scopeOfDelete_;
-        boost::shared_ptr<listOfTypeName_type> listOfTypeName_;
-        boost::shared_ptr<Identifier> domainName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DeleteNamedType-Response
@@ -4822,15 +4279,10 @@ namespace ISO_9506_MMS_1 {
         DeleteNamedType_Response(const Unsigned32& arg__numberMatched,
                 const Unsigned32& arg__numberDeleted);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberMatched, Unsigned32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberDeleted, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberDeleted, Unsigned32);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Unsigned32> numberMatched_;
-        value_holder<Unsigned32> numberDeleted_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ExchangeData-Request
@@ -4845,15 +4297,10 @@ namespace ISO_9506_MMS_1 {
         ExchangeData_Request(const ObjectName& arg__dataExchangeName,
                 const listOfRequestData_type& arg__listOfRequestData);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(dataExchangeName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfRequestData, listOfRequestData_type);
+        ITU_T_HOLDERH_DECL(dataExchangeName, ObjectName);
+        ITU_T_HOLDERH_DECL(listOfRequestData, listOfRequestData_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> dataExchangeName_;
-        value_holder<listOfRequestData_type> listOfRequestData_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ExchangeData-Response
@@ -4867,13 +4314,9 @@ namespace ISO_9506_MMS_1 {
 
         ExchangeData_Response(const listOfResponseData_type& arg__listOfResponseData);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfResponseData, listOfResponseData_type);
+        ITU_T_HOLDERH_DECL(listOfResponseData, listOfResponseData_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfResponseData_type> listOfResponseData_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetDataExchangeAttributes-Response
@@ -4895,21 +4338,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Identifier> arg__programInvocation,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(inUse, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfRequestTypeDescriptions, listOfRequestTypeDescriptions_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfResponseTypeDescriptions, listOfResponseTypeDescriptions_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(programInvocation, Identifier);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_HOLDERH_DECL(inUse, bool);
+        ITU_T_HOLDERH_DECL(listOfRequestTypeDescriptions, listOfRequestTypeDescriptions_type);
+        ITU_T_HOLDERH_DECL(listOfResponseTypeDescriptions, listOfResponseTypeDescriptions_type);
+        ITU_T_OPTIONAL_DECL(programInvocation, Identifier);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<bool> inUse_;
-        value_holder<listOfRequestTypeDescriptions_type> listOfRequestTypeDescriptions_;
-        value_holder<listOfResponseTypeDescriptions_type> listOfResponseTypeDescriptions_;
-        boost::shared_ptr<Identifier> programInvocation_;
-        boost::shared_ptr<Identifier> accessControlList_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence TakeControl-Request
@@ -4932,27 +4367,16 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< bool> arg__relinquishIfConnectionLost,
                 boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__applicationToPreempt);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(namedToken, Identifier);
-        BOOST_ASN_VALUE_DEFAULT_DECL(priority, MMS_Object_Module_1::Priority);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(acceptableDelay, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(controlTimeOut, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(abortOnTimeOut, bool);
-        BOOST_ASN_VALUE_DEFAULT_DECL(relinquishIfConnectionLost, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(applicationToPreempt, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
+        ITU_T_OPTIONAL_DECL(namedToken, Identifier);
+        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
+        ITU_T_OPTIONAL_DECL(acceptableDelay, Unsigned32);
+        ITU_T_OPTIONAL_DECL(controlTimeOut, Unsigned32);
+        ITU_T_OPTIONAL_DECL(abortOnTimeOut, bool);
+        ITU_T_DEFAULTH_DECL(relinquishIfConnectionLost, bool, relinquishIfConnectionLost__default);
+        ITU_T_OPTIONAL_DECL(applicationToPreempt, MMS_Environment_1::ApplicationReference);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> semaphoreName_;
-        boost::shared_ptr<Identifier> namedToken_;
-        default_holder<MMS_Object_Module_1::Priority, priority__default> priority_;
-        boost::shared_ptr<Unsigned32> acceptableDelay_;
-        boost::shared_ptr<Unsigned32> controlTimeOut_;
-        boost::shared_ptr<bool> abortOnTimeOut_;
-        default_holder<bool, relinquishIfConnectionLost__default> relinquishIfConnectionLost_;
-        boost::shared_ptr<MMS_Environment_1::ApplicationReference> applicationToPreempt_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice TakeControl-Response
@@ -4964,19 +4388,19 @@ namespace ISO_9506_MMS_1 {
         TakeControl_Response_namedToken,
     };
 
-    struct TakeControl_Response : public BOOST_ASN_CHOICE_STRUCT(TakeControl_Response_enum) {
+    struct TakeControl_Response : public ITU_T_STRUCT(TakeControl_Response_enum) {
 
-        TakeControl_Response() : BOOST_ASN_CHOICE_STRUCT(TakeControl_Response_enum) () {
+        TakeControl_Response() : ITU_T_STRUCT(TakeControl_Response_enum) () {
         }
 
         template<typename T > TakeControl_Response(boost::shared_ptr< T> vl, TakeControl_Response_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(TakeControl_Response_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(TakeControl_Response_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(noResult, null_type, TakeControl_Response_noResult);
-        BOOST_ASN_VALUE_CHOICE(namedToken, Identifier, TakeControl_Response_namedToken);
+        ITU_T_CHOICE_DECL(noResult, null_type, TakeControl_Response_noResult);
+        ITU_T_CHOICE_DECL(namedToken, Identifier, TakeControl_Response_namedToken);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence RelinquishControl-Request
@@ -4990,15 +4414,10 @@ namespace ISO_9506_MMS_1 {
         RelinquishControl_Request(boost::shared_ptr< ObjectName> arg__semaphoreName,
                 boost::shared_ptr< Identifier> arg__namedToken);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(namedToken, Identifier);
+        ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
+        ITU_T_OPTIONAL_DECL(namedToken, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> semaphoreName_;
-        boost::shared_ptr<Identifier> namedToken_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DefineSemaphore-Request
@@ -5010,15 +4429,10 @@ namespace ISO_9506_MMS_1 {
         DefineSemaphore_Request(const ObjectName& arg__semaphoreName,
                 const Unsigned16& arg__numberOfTokens);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberOfTokens, Unsigned16);
+        ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
+        ITU_T_HOLDERH_DECL(numberOfTokens, Unsigned16);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> semaphoreName_;
-        value_holder<Unsigned16> numberOfTokens_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportSemaphoreStatus-Response
@@ -5044,23 +4458,14 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Unsigned16> arg__numberOfHungTokens,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(classV, int);
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberOfTokens, Unsigned16);
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberOfOwnedTokens, Unsigned16);
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberOfHungTokens, Unsigned16);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_HOLDERH_DECL(mmsDeletable, bool);
+        ITU_T_HOLDERH_DECL(classV, int);
+        ITU_T_HOLDERH_DECL(numberOfTokens, Unsigned16);
+        ITU_T_HOLDERH_DECL(numberOfOwnedTokens, Unsigned16);
+        ITU_T_HOLDERH_DECL(numberOfHungTokens, Unsigned16);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<bool> mmsDeletable_;
-        value_holder<int> classV_;
-        value_holder<Unsigned16> numberOfTokens_;
-        value_holder<Unsigned16> numberOfOwnedTokens_;
-        value_holder<Unsigned16> numberOfHungTokens_;
-        boost::shared_ptr<Identifier> accessControlList_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportPoolSemaphoreStatus-Request
@@ -5074,15 +4479,10 @@ namespace ISO_9506_MMS_1 {
         ReportPoolSemaphoreStatus_Request(boost::shared_ptr< ObjectName> arg__semaphoreName,
                 boost::shared_ptr< Identifier> arg__nameToStartAfter);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(nameToStartAfter, Identifier);
+        ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
+        ITU_T_OPTIONAL_DECL(nameToStartAfter, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> semaphoreName_;
-        boost::shared_ptr<Identifier> nameToStartAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportPoolSemaphoreStatus-Response
@@ -5099,20 +4499,20 @@ namespace ISO_9506_MMS_1 {
             listOfNamedTokens_type_sequence_of_hungNamedToken,
         };
 
-        struct listOfNamedTokens_type_sequence_of : public BOOST_ASN_CHOICE_STRUCT(listOfNamedTokens_type_sequence_of_enum) {
+        struct listOfNamedTokens_type_sequence_of : public ITU_T_STRUCT(listOfNamedTokens_type_sequence_of_enum) {
 
-            listOfNamedTokens_type_sequence_of() : BOOST_ASN_CHOICE_STRUCT(listOfNamedTokens_type_sequence_of_enum) () {
+            listOfNamedTokens_type_sequence_of() : ITU_T_STRUCT(listOfNamedTokens_type_sequence_of_enum) () {
             }
 
             template<typename T > listOfNamedTokens_type_sequence_of(boost::shared_ptr< T> vl, listOfNamedTokens_type_sequence_of_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(listOfNamedTokens_type_sequence_of_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(listOfNamedTokens_type_sequence_of_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(freeNamedToken, Identifier, listOfNamedTokens_type_sequence_of_freeNamedToken);
-            BOOST_ASN_VALUE_CHOICE(ownedNamedToken, Identifier, listOfNamedTokens_type_sequence_of_ownedNamedToken);
-            BOOST_ASN_VALUE_CHOICE(hungNamedToken, Identifier, listOfNamedTokens_type_sequence_of_hungNamedToken);
+            ITU_T_CHOICE_DECL(freeNamedToken, Identifier, listOfNamedTokens_type_sequence_of_freeNamedToken);
+            ITU_T_CHOICE_DECL(ownedNamedToken, Identifier, listOfNamedTokens_type_sequence_of_ownedNamedToken);
+            ITU_T_CHOICE_DECL(hungNamedToken, Identifier, listOfNamedTokens_type_sequence_of_hungNamedToken);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -5128,15 +4528,10 @@ namespace ISO_9506_MMS_1 {
         ReportPoolSemaphoreStatus_Response(boost::shared_ptr< listOfNamedTokens_type> arg__listOfNamedTokens,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfNamedTokens, listOfNamedTokens_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfNamedTokens, listOfNamedTokens_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfNamedTokens_type> listOfNamedTokens_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportSemaphoreEntryStatus-Request
@@ -5157,17 +4552,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< int> arg__state,
                 boost::shared_ptr< octetstring_type> arg__entryIDToStartAfter);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(state, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(entryIDToStartAfter, octetstring_type);
+        ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
+        ITU_T_HOLDERH_DECL(state, int);
+        ITU_T_OPTIONAL_DECL(entryIDToStartAfter, octetstring_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> semaphoreName_;
-        value_holder<int> state_;
-        boost::shared_ptr<octetstring_type> entryIDToStartAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportSemaphoreEntryStatus-Response
@@ -5185,15 +4574,10 @@ namespace ISO_9506_MMS_1 {
         ReportSemaphoreEntryStatus_Response(boost::shared_ptr< listOfSemaphoreEntry_type> arg__listOfSemaphoreEntry,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfSemaphoreEntry, listOfSemaphoreEntry_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfSemaphoreEntry, listOfSemaphoreEntry_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfSemaphoreEntry_type> listOfSemaphoreEntry_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence SemaphoreEntry
@@ -5221,27 +4605,16 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< bool> arg__abortOnTimeOut,
                 boost::shared_ptr< bool> arg__relinquishIfConnectionLost);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(entryID, octetstring_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(entryClass, int);
-        BOOST_ASN_VALUE_HOLDERH_DECL(applicationReference, MMS_Environment_1::ApplicationReference);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(namedToken, Identifier);
-        BOOST_ASN_VALUE_DEFAULT_DECL(priority, MMS_Object_Module_1::Priority);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(remainingTimeOut, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(abortOnTimeOut, bool);
-        BOOST_ASN_VALUE_DEFAULT_DECL(relinquishIfConnectionLost, bool);
+        ITU_T_HOLDERH_DECL(entryID, octetstring_type);
+        ITU_T_HOLDERH_DECL(entryClass, int);
+        ITU_T_HOLDERH_DECL(applicationReference, MMS_Environment_1::ApplicationReference);
+        ITU_T_OPTIONAL_DECL(namedToken, Identifier);
+        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
+        ITU_T_OPTIONAL_DECL(remainingTimeOut, Unsigned32);
+        ITU_T_OPTIONAL_DECL(abortOnTimeOut, bool);
+        ITU_T_DEFAULTH_DECL(relinquishIfConnectionLost, bool, relinquishIfConnectionLost__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<octetstring_type> entryID_;
-        value_holder<int> entryClass_;
-        value_holder<MMS_Environment_1::ApplicationReference> applicationReference_;
-        boost::shared_ptr<Identifier> namedToken_;
-        default_holder<MMS_Object_Module_1::Priority, priority__default> priority_;
-        boost::shared_ptr<Unsigned32> remainingTimeOut_;
-        boost::shared_ptr<bool> abortOnTimeOut_;
-        default_holder<bool, relinquishIfConnectionLost__default> relinquishIfConnectionLost_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AttachToSemaphore
@@ -5263,25 +4636,15 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< bool> arg__abortOnTimeOut,
                 boost::shared_ptr< bool> arg__relinquishIfConnectionLost);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(semaphoreName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(namedToken, Identifier);
-        BOOST_ASN_VALUE_DEFAULT_DECL(priority, MMS_Object_Module_1::Priority);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(acceptableDelay, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(controlTimeOut, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(abortOnTimeOut, bool);
-        BOOST_ASN_VALUE_DEFAULT_DECL(relinquishIfConnectionLost, bool);
+        ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
+        ITU_T_OPTIONAL_DECL(namedToken, Identifier);
+        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
+        ITU_T_OPTIONAL_DECL(acceptableDelay, Unsigned32);
+        ITU_T_OPTIONAL_DECL(controlTimeOut, Unsigned32);
+        ITU_T_OPTIONAL_DECL(abortOnTimeOut, bool);
+        ITU_T_DEFAULTH_DECL(relinquishIfConnectionLost, bool, relinquishIfConnectionLost__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> semaphoreName_;
-        boost::shared_ptr<Identifier> namedToken_;
-        default_holder<MMS_Object_Module_1::Priority, priority__default> priority_;
-        boost::shared_ptr<Unsigned32> acceptableDelay_;
-        boost::shared_ptr<Unsigned32> controlTimeOut_;
-        boost::shared_ptr<bool> abortOnTimeOut_;
-        default_holder<bool, relinquishIfConnectionLost__default> relinquishIfConnectionLost_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Input-Request
@@ -5301,19 +4664,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< listOfPromptData_type> arg__listOfPromptData,
                 boost::shared_ptr< Unsigned32> arg__inputTimeOut);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(operatorStationName, Identifier);
-        BOOST_ASN_VALUE_DEFAULT_DECL(echo, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfPromptData, listOfPromptData_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(inputTimeOut, Unsigned32);
+        ITU_T_HOLDERH_DECL(operatorStationName, Identifier);
+        ITU_T_DEFAULTH_DECL(echo, bool, echo__default);
+        ITU_T_OPTIONAL_DECL(listOfPromptData, listOfPromptData_type);
+        ITU_T_OPTIONAL_DECL(inputTimeOut, Unsigned32);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> operatorStationName_;
-        default_holder<bool, echo__default> echo_;
-        boost::shared_ptr<listOfPromptData_type> listOfPromptData_;
-        boost::shared_ptr<Unsigned32> inputTimeOut_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence Output-Request
@@ -5328,15 +4684,10 @@ namespace ISO_9506_MMS_1 {
         Output_Request(const Identifier& arg__operatorStationName,
                 const listOfOutputData_type& arg__listOfOutputData);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(operatorStationName, Identifier);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfOutputData, listOfOutputData_type);
+        ITU_T_HOLDERH_DECL(operatorStationName, Identifier);
+        ITU_T_HOLDERH_DECL(listOfOutputData, listOfOutputData_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Identifier> operatorStationName_;
-        value_holder<listOfOutputData_type> listOfOutputData_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence TriggerEvent-Request
@@ -5350,15 +4701,10 @@ namespace ISO_9506_MMS_1 {
         TriggerEvent_Request(boost::shared_ptr< ObjectName> arg__eventConditionName,
                 boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(priority, MMS_Object_Module_1::Priority);
+        ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
+        ITU_T_OPTIONAL_DECL(priority, MMS_Object_Module_1::Priority);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventConditionName_;
-        boost::shared_ptr<MMS_Object_Module_1::Priority> priority_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence EventNotification
@@ -5378,7 +4724,7 @@ namespace ISO_9506_MMS_1 {
                 successOrFailure_type_failure,
             };
 
-            struct successOrFailure_type : public BOOST_ASN_CHOICE_STRUCT(successOrFailure_type_enum) {
+            struct successOrFailure_type : public ITU_T_STRUCT(successOrFailure_type_enum) {
 
 
                 struct success_type;
@@ -5393,15 +4739,10 @@ namespace ISO_9506_MMS_1 {
                     success_type(boost::shared_ptr< ConfirmedServiceResponse> arg__confirmedServiceResponse,
                             boost::shared_ptr< Response_Detail> arg__cs_Response_Detail);
 
-                    BOOST_ASN_VALUE_HOLDERH_DECL(confirmedServiceResponse, ConfirmedServiceResponse);
-                    BOOST_ASN_VALUE_OPTIONAL_DECL(cs_Response_Detail, Response_Detail);
+                    ITU_T_HOLDERH_DECL(confirmedServiceResponse, ConfirmedServiceResponse);
+                    ITU_T_OPTIONAL_DECL(cs_Response_Detail, Response_Detail);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
-
-                private:
-
-                    value_holder<ConfirmedServiceResponse> confirmedServiceResponse_;
-                    boost::shared_ptr<Response_Detail> cs_Response_Detail_;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
                 struct failure_type {
@@ -5413,28 +4754,23 @@ namespace ISO_9506_MMS_1 {
                     failure_type(boost::shared_ptr< Unsigned32> arg__modifierPosition,
                             boost::shared_ptr< ServiceError> arg__serviceError);
 
-                    BOOST_ASN_VALUE_OPTIONAL_DECL(modifierPosition, Unsigned32);
-                    BOOST_ASN_VALUE_HOLDERH_DECL(serviceError, ServiceError);
+                    ITU_T_OPTIONAL_DECL(modifierPosition, Unsigned32);
+                    ITU_T_HOLDERH_DECL(serviceError, ServiceError);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
-
-                private:
-
-                    boost::shared_ptr<Unsigned32> modifierPosition_;
-                    value_holder<ServiceError> serviceError_;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
-                successOrFailure_type() : BOOST_ASN_CHOICE_STRUCT(successOrFailure_type_enum) () {
+                successOrFailure_type() : ITU_T_STRUCT(successOrFailure_type_enum) () {
                 }
 
                 template<typename T > successOrFailure_type(boost::shared_ptr< T> vl, successOrFailure_type_enum enm) :
-                        BOOST_ASN_CHOICE_STRUCT(successOrFailure_type_enum) (vl, static_cast<int> (enm)) {
+                        ITU_T_STRUCT(successOrFailure_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                BOOST_ASN_VALUE_CHOICE(success, success_type, successOrFailure_type_success);
-                BOOST_ASN_VALUE_CHOICE(failure, failure_type, successOrFailure_type_failure);
+                ITU_T_CHOICE_DECL(success, success_type, successOrFailure_type_success);
+                ITU_T_CHOICE_DECL(failure, failure_type, successOrFailure_type_failure);
 
-                BOOST_ASN_ARCHIVE_FUNC;
+                ITU_T_ARCHIVE_FUNC;
             };
 
 
@@ -5443,15 +4779,10 @@ namespace ISO_9506_MMS_1 {
             actionResult_type(const ObjectName& arg__eventActionName,
                     const successOrFailure_type& arg__successOrFailure);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(eventActionName, ObjectName);
-            BOOST_ASN_VALUE_HOLDERH_DECL(successOrFailure, successOrFailure_type);
+            ITU_T_HOLDERH_DECL(eventActionName, ObjectName);
+            ITU_T_HOLDERH_DECL(successOrFailure, successOrFailure_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<ObjectName> eventActionName_;
-            value_holder<successOrFailure_type> successOrFailure_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         static const bool notificationLost__default;
@@ -5472,27 +4803,16 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule,
                 boost::shared_ptr< actionResult_type> arg__actionResult);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(severity, MMS_Object_Module_1::Severity);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(currentState, MMS_Object_Module_1::EC_State);
-        BOOST_ASN_VALUE_HOLDERH_DECL(transitionTime, MMS_Object_Module_1::EventTime);
-        BOOST_ASN_VALUE_DEFAULT_DECL(notificationLost, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(actionResult, actionResult_type);
+        ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
+        ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
+        ITU_T_HOLDERH_DECL(severity, MMS_Object_Module_1::Severity);
+        ITU_T_OPTIONAL_DECL(currentState, MMS_Object_Module_1::EC_State);
+        ITU_T_HOLDERH_DECL(transitionTime, MMS_Object_Module_1::EventTime);
+        ITU_T_DEFAULTH_DECL(notificationLost, bool, notificationLost__default);
+        ITU_T_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
+        ITU_T_OPTIONAL_DECL(actionResult, actionResult_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventEnrollmentName_;
-        value_holder<ObjectName> eventConditionName_;
-        value_holder<MMS_Object_Module_1::Severity> severity_;
-        boost::shared_ptr<MMS_Object_Module_1::EC_State> currentState_;
-        value_holder<MMS_Object_Module_1::EventTime> transitionTime_;
-        default_holder<bool, notificationLost__default> notificationLost_;
-        boost::shared_ptr<MMS_Object_Module_1::AlarmAckRule> alarmAcknowledgmentRule_;
-        boost::shared_ptr<actionResult_type> actionResult_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice CS-EventNotification
@@ -5505,20 +4825,20 @@ namespace ISO_9506_MMS_1 {
         CS_EventNotification_impl_noEnhancement,
     };
 
-    struct CS_EventNotification_impl : public BOOST_ASN_CHOICE_STRUCT(CS_EventNotification_impl_enum) {
+    struct CS_EventNotification_impl : public ITU_T_STRUCT(CS_EventNotification_impl_enum) {
 
-        CS_EventNotification_impl() : BOOST_ASN_CHOICE_STRUCT(CS_EventNotification_impl_enum) () {
+        CS_EventNotification_impl() : ITU_T_STRUCT(CS_EventNotification_impl_enum) () {
         }
 
         template<typename T > CS_EventNotification_impl(boost::shared_ptr< T> vl, CS_EventNotification_impl_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(CS_EventNotification_impl_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(CS_EventNotification_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(string, visiblestring_type, CS_EventNotification_impl_string);
-        BOOST_ASN_VALUE_CHOICE(index, int, CS_EventNotification_impl_index);
-        BOOST_ASN_VALUE_CHOICE(noEnhancement, null_type, CS_EventNotification_impl_noEnhancement);
+        ITU_T_CHOICE_DECL(string, visiblestring_type, CS_EventNotification_impl_string);
+        ITU_T_CHOICE_DECL(index, int, CS_EventNotification_impl_index);
+        ITU_T_CHOICE_DECL(noEnhancement, null_type, CS_EventNotification_impl_noEnhancement);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AcknowledgeEventNotification-Request
@@ -5531,17 +4851,11 @@ namespace ISO_9506_MMS_1 {
                 const MMS_Object_Module_1::EC_State& arg__acknowledgedState,
                 const MMS_Object_Module_1::EventTime& arg__timeOfAcknowledgedTransition);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(acknowledgedState, MMS_Object_Module_1::EC_State);
-        BOOST_ASN_VALUE_HOLDERH_DECL(timeOfAcknowledgedTransition, MMS_Object_Module_1::EventTime);
+        ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
+        ITU_T_HOLDERH_DECL(acknowledgedState, MMS_Object_Module_1::EC_State);
+        ITU_T_HOLDERH_DECL(timeOfAcknowledgedTransition, MMS_Object_Module_1::EventTime);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventEnrollmentName_;
-        value_holder<MMS_Object_Module_1::EC_State> acknowledgedState_;
-        value_holder<MMS_Object_Module_1::EventTime> timeOfAcknowledgedTransition_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetAlarmSummary-Request
@@ -5557,15 +4871,10 @@ namespace ISO_9506_MMS_1 {
             severityFilter_type(const Unsigned8& arg__mostSevere,
                     const Unsigned8& arg__leastSevere);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(mostSevere, Unsigned8);
-            BOOST_ASN_VALUE_HOLDERH_DECL(leastSevere, Unsigned8);
+            ITU_T_HOLDERH_DECL(mostSevere, Unsigned8);
+            ITU_T_HOLDERH_DECL(leastSevere, Unsigned8);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<Unsigned8> mostSevere_;
-            value_holder<Unsigned8> leastSevere_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         static const int acknowledgementFilter_not_acked;
@@ -5584,21 +4893,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< severityFilter_type> arg__severityFilter,
                 boost::shared_ptr< ObjectName> arg__continueAfter);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(enrollmentsOnly, bool);
-        BOOST_ASN_VALUE_DEFAULT_DECL(activeAlarmsOnly, bool);
-        BOOST_ASN_VALUE_DEFAULT_DECL(acknowledgementFilter, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(severityFilter, severityFilter_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, ObjectName);
+        ITU_T_DEFAULTH_DECL(enrollmentsOnly, bool, enrollmentsOnly__default);
+        ITU_T_DEFAULTH_DECL(activeAlarmsOnly, bool, activeAlarmsOnly__default);
+        ITU_T_DEFAULTH_DECL(acknowledgementFilter, int, acknowledgementFilter__default);
+        ITU_T_OPTIONAL_DECL(severityFilter, severityFilter_type);
+        ITU_T_OPTIONAL_DECL(continueAfter, ObjectName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        default_holder<bool, enrollmentsOnly__default> enrollmentsOnly_;
-        default_holder<bool, activeAlarmsOnly__default> activeAlarmsOnly_;
-        default_holder<int, acknowledgementFilter__default> acknowledgementFilter_;
-        boost::shared_ptr<severityFilter_type> severityFilter_;
-        boost::shared_ptr<ObjectName> continueAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetAlarmSummary-Response
@@ -5616,15 +4917,10 @@ namespace ISO_9506_MMS_1 {
         GetAlarmSummary_Response(boost::shared_ptr< listOfAlarmSummary_type> arg__listOfAlarmSummary,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfAlarmSummary, listOfAlarmSummary_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfAlarmSummary, listOfAlarmSummary_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfAlarmSummary_type> listOfAlarmSummary_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AlarmSummary
@@ -5652,25 +4948,15 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToActive,
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(severity, Unsigned8);
-        BOOST_ASN_VALUE_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
-        BOOST_ASN_VALUE_HOLDERH_DECL(unacknowledgedState, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(displayEnhancement, EN_Additional_Detail);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
+        ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
+        ITU_T_HOLDERH_DECL(severity, Unsigned8);
+        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
+        ITU_T_HOLDERH_DECL(unacknowledgedState, int);
+        ITU_T_OPTIONAL_DECL(displayEnhancement, EN_Additional_Detail);
+        ITU_T_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
+        ITU_T_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventConditionName_;
-        value_holder<Unsigned8> severity_;
-        value_holder<MMS_Object_Module_1::EC_State> currentState_;
-        value_holder<int> unacknowledgedState_;
-        boost::shared_ptr<EN_Additional_Detail> displayEnhancement_;
-        boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive_;
-        boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice EN-Additional-Detail
@@ -5683,20 +4969,20 @@ namespace ISO_9506_MMS_1 {
         EN_Additional_Detail_impl_noEnhancement,
     };
 
-    struct EN_Additional_Detail_impl : public BOOST_ASN_CHOICE_STRUCT(EN_Additional_Detail_impl_enum) {
+    struct EN_Additional_Detail_impl : public ITU_T_STRUCT(EN_Additional_Detail_impl_enum) {
 
-        EN_Additional_Detail_impl() : BOOST_ASN_CHOICE_STRUCT(EN_Additional_Detail_impl_enum) () {
+        EN_Additional_Detail_impl() : ITU_T_STRUCT(EN_Additional_Detail_impl_enum) () {
         }
 
         template<typename T > EN_Additional_Detail_impl(boost::shared_ptr< T> vl, EN_Additional_Detail_impl_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(EN_Additional_Detail_impl_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(EN_Additional_Detail_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(string, visiblestring_type, EN_Additional_Detail_impl_string);
-        BOOST_ASN_VALUE_CHOICE(index, int, EN_Additional_Detail_impl_index);
-        BOOST_ASN_VALUE_CHOICE(noEnhancement, null_type, EN_Additional_Detail_impl_noEnhancement);
+        ITU_T_CHOICE_DECL(string, visiblestring_type, EN_Additional_Detail_impl_string);
+        ITU_T_CHOICE_DECL(index, int, EN_Additional_Detail_impl_index);
+        ITU_T_CHOICE_DECL(noEnhancement, null_type, EN_Additional_Detail_impl_noEnhancement);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetAlarmEnrollmentSummary-Request
@@ -5712,15 +4998,10 @@ namespace ISO_9506_MMS_1 {
             severityFilter_type(const Unsigned8& arg__mostSevere,
                     const Unsigned8& arg__leastSevere);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(mostSevere, Unsigned8);
-            BOOST_ASN_VALUE_HOLDERH_DECL(leastSevere, Unsigned8);
+            ITU_T_HOLDERH_DECL(mostSevere, Unsigned8);
+            ITU_T_HOLDERH_DECL(leastSevere, Unsigned8);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<Unsigned8> mostSevere_;
-            value_holder<Unsigned8> leastSevere_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         static const int acknowledgementFilter_not_acked;
@@ -5739,21 +5020,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< severityFilter_type> arg__severityFilter,
                 boost::shared_ptr< ObjectName> arg__continueAfter);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(enrollmentsOnly, bool);
-        BOOST_ASN_VALUE_DEFAULT_DECL(activeAlarmsOnly, bool);
-        BOOST_ASN_VALUE_DEFAULT_DECL(acknowledgementFilter, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(severityFilter, severityFilter_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, ObjectName);
+        ITU_T_DEFAULTH_DECL(enrollmentsOnly, bool, enrollmentsOnly__default);
+        ITU_T_DEFAULTH_DECL(activeAlarmsOnly, bool, activeAlarmsOnly__default);
+        ITU_T_DEFAULTH_DECL(acknowledgementFilter, int, acknowledgementFilter__default);
+        ITU_T_OPTIONAL_DECL(severityFilter, severityFilter_type);
+        ITU_T_OPTIONAL_DECL(continueAfter, ObjectName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        default_holder<bool, enrollmentsOnly__default> enrollmentsOnly_;
-        default_holder<bool, activeAlarmsOnly__default> activeAlarmsOnly_;
-        default_holder<int, acknowledgementFilter__default> acknowledgementFilter_;
-        boost::shared_ptr<severityFilter_type> severityFilter_;
-        boost::shared_ptr<ObjectName> continueAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetAlarmEnrollmentSummary-Response
@@ -5771,15 +5044,10 @@ namespace ISO_9506_MMS_1 {
         GetAlarmEnrollmentSummary_Response(boost::shared_ptr< listOfAlarmEnrollmentSummary_type> arg__listOfAlarmEnrollmentSummary,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfAlarmEnrollmentSummary, listOfAlarmEnrollmentSummary_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfAlarmEnrollmentSummary, listOfAlarmEnrollmentSummary_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfAlarmEnrollmentSummary_type> listOfAlarmEnrollmentSummary_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AlarmEnrollmentSummary
@@ -5808,35 +5076,20 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle,
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeIdleAcknowledged);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
-        BOOST_ASN_VALUE_HOLDERH_DECL(severity, Unsigned8);
-        BOOST_ASN_VALUE_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(displayEnhancement, EN_Additional_Detail);
-        BOOST_ASN_VALUE_DEFAULT_DECL(notificationLost, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(enrollmentState, EE_State);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(timeActiveAcknowledged, MMS_Object_Module_1::EventTime);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(timeIdleAcknowledged, MMS_Object_Module_1::EventTime);
+        ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
+        ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(severity, Unsigned8);
+        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
+        ITU_T_OPTIONAL_DECL(displayEnhancement, EN_Additional_Detail);
+        ITU_T_DEFAULTH_DECL(notificationLost, bool, notificationLost__default);
+        ITU_T_HOLDERH_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
+        ITU_T_OPTIONAL_DECL(enrollmentState, EE_State);
+        ITU_T_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
+        ITU_T_OPTIONAL_DECL(timeActiveAcknowledged, MMS_Object_Module_1::EventTime);
+        ITU_T_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
+        ITU_T_OPTIONAL_DECL(timeIdleAcknowledged, MMS_Object_Module_1::EventTime);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventEnrollmentName_;
-        boost::shared_ptr<MMS_Environment_1::ApplicationReference> clientApplication_;
-        value_holder<Unsigned8> severity_;
-        value_holder<MMS_Object_Module_1::EC_State> currentState_;
-        boost::shared_ptr<EN_Additional_Detail> displayEnhancement_;
-        default_holder<bool, notificationLost__default> notificationLost_;
-        value_holder<MMS_Object_Module_1::AlarmAckRule> alarmAcknowledgmentRule_;
-        boost::shared_ptr<EE_State> enrollmentState_;
-        boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive_;
-        boost::shared_ptr<MMS_Object_Module_1::EventTime> timeActiveAcknowledged_;
-        boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle_;
-        boost::shared_ptr<MMS_Object_Module_1::EventTime> timeIdleAcknowledged_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AttachToEventCondition
@@ -5854,19 +5107,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::Transitions> arg__causingTransitions,
                 boost::shared_ptr< Unsigned32> arg__acceptableDelay);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(causingTransitions, MMS_Object_Module_1::Transitions);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(acceptableDelay, Unsigned32);
+        ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
+        ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
+        ITU_T_HOLDERH_DECL(causingTransitions, MMS_Object_Module_1::Transitions);
+        ITU_T_OPTIONAL_DECL(acceptableDelay, Unsigned32);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventEnrollmentName_;
-        value_holder<ObjectName> eventConditionName_;
-        value_holder<MMS_Object_Module_1::Transitions> causingTransitions_;
-        boost::shared_ptr<Unsigned32> acceptableDelay_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DefineEventCondition-Request
@@ -5889,25 +5135,15 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< VariableSpecification> arg__monitoredVariable,
                 boost::shared_ptr< Unsigned32> arg__evaluationInterval);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(classV, MMS_Object_Module_1::EC_Class);
-        BOOST_ASN_VALUE_DEFAULT_DECL(priority, MMS_Object_Module_1::Priority);
-        BOOST_ASN_VALUE_DEFAULT_DECL(severity, Unsigned8);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(alarmSummaryReports, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(monitoredVariable, VariableSpecification);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(evaluationInterval, Unsigned32);
+        ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
+        ITU_T_HOLDERH_DECL(classV, MMS_Object_Module_1::EC_Class);
+        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
+        ITU_T_DEFAULTH_DECL(severity, Unsigned8, severity__default);
+        ITU_T_OPTIONAL_DECL(alarmSummaryReports, bool);
+        ITU_T_OPTIONAL_DECL(monitoredVariable, VariableSpecification);
+        ITU_T_OPTIONAL_DECL(evaluationInterval, Unsigned32);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventConditionName_;
-        value_holder<MMS_Object_Module_1::EC_Class> classV_;
-        default_holder<MMS_Object_Module_1::Priority, priority__default> priority_;
-        default_holder<Unsigned8, severity__default> severity_;
-        boost::shared_ptr<bool> alarmSummaryReports_;
-        boost::shared_ptr<VariableSpecification> monitoredVariable_;
-        boost::shared_ptr<Unsigned32> evaluationInterval_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice CS-DefineEventCondition-Request
@@ -5920,20 +5156,20 @@ namespace ISO_9506_MMS_1 {
         CS_DefineEventCondition_Request_impl_noEnhancement,
     };
 
-    struct CS_DefineEventCondition_Request_impl : public BOOST_ASN_CHOICE_STRUCT(CS_DefineEventCondition_Request_impl_enum) {
+    struct CS_DefineEventCondition_Request_impl : public ITU_T_STRUCT(CS_DefineEventCondition_Request_impl_enum) {
 
-        CS_DefineEventCondition_Request_impl() : BOOST_ASN_CHOICE_STRUCT(CS_DefineEventCondition_Request_impl_enum) () {
+        CS_DefineEventCondition_Request_impl() : ITU_T_STRUCT(CS_DefineEventCondition_Request_impl_enum) () {
         }
 
         template<typename T > CS_DefineEventCondition_Request_impl(boost::shared_ptr< T> vl, CS_DefineEventCondition_Request_impl_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(CS_DefineEventCondition_Request_impl_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(CS_DefineEventCondition_Request_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(string, visiblestring_type, CS_DefineEventCondition_Request_impl_string);
-        BOOST_ASN_VALUE_CHOICE(index, int, CS_DefineEventCondition_Request_impl_index);
-        BOOST_ASN_VALUE_CHOICE(noEnhancement, null_type, CS_DefineEventCondition_Request_impl_noEnhancement);
+        ITU_T_CHOICE_DECL(string, visiblestring_type, CS_DefineEventCondition_Request_impl_string);
+        ITU_T_CHOICE_DECL(index, int, CS_DefineEventCondition_Request_impl_index);
+        ITU_T_CHOICE_DECL(noEnhancement, null_type, CS_DefineEventCondition_Request_impl_noEnhancement);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice DeleteEventCondition-Request
@@ -5947,25 +5183,25 @@ namespace ISO_9506_MMS_1 {
         DeleteEventCondition_Request_vmd,
     };
 
-    struct DeleteEventCondition_Request : public BOOST_ASN_CHOICE_STRUCT(DeleteEventCondition_Request_enum) {
+    struct DeleteEventCondition_Request : public ITU_T_STRUCT(DeleteEventCondition_Request_enum) {
 
 
 
         typedef std::vector< ObjectName > specific_type;
 
-        DeleteEventCondition_Request() : BOOST_ASN_CHOICE_STRUCT(DeleteEventCondition_Request_enum) () {
+        DeleteEventCondition_Request() : ITU_T_STRUCT(DeleteEventCondition_Request_enum) () {
         }
 
         template<typename T > DeleteEventCondition_Request(boost::shared_ptr< T> vl, DeleteEventCondition_Request_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(DeleteEventCondition_Request_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(DeleteEventCondition_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(specific, specific_type, DeleteEventCondition_Request_specific);
-        BOOST_ASN_VALUE_CHOICE(aa_specific, null_type, DeleteEventCondition_Request_aa_specific);
-        BOOST_ASN_VALUE_CHOICE(domain, Identifier, DeleteEventCondition_Request_domain);
-        BOOST_ASN_VALUE_CHOICE(vmd, null_type, DeleteEventCondition_Request_vmd);
+        ITU_T_CHOICE_DECL(specific, specific_type, DeleteEventCondition_Request_specific);
+        ITU_T_CHOICE_DECL(aa_specific, null_type, DeleteEventCondition_Request_aa_specific);
+        ITU_T_CHOICE_DECL(domain, Identifier, DeleteEventCondition_Request_domain);
+        ITU_T_CHOICE_DECL(vmd, null_type, DeleteEventCondition_Request_vmd);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetEventConditionAttributes-Response
@@ -5981,19 +5217,19 @@ namespace ISO_9506_MMS_1 {
             monitoredVariable_type_undefined,
         };
 
-        struct monitoredVariable_type : public BOOST_ASN_CHOICE_STRUCT(monitoredVariable_type_enum) {
+        struct monitoredVariable_type : public ITU_T_STRUCT(monitoredVariable_type_enum) {
 
-            monitoredVariable_type() : BOOST_ASN_CHOICE_STRUCT(monitoredVariable_type_enum) () {
+            monitoredVariable_type() : ITU_T_STRUCT(monitoredVariable_type_enum) () {
             }
 
             template<typename T > monitoredVariable_type(boost::shared_ptr< T> vl, monitoredVariable_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(monitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(monitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(variableReference, VariableSpecification, monitoredVariable_type_variableReference);
-            BOOST_ASN_VALUE_CHOICE(undefined, null_type, monitoredVariable_type_undefined);
+            ITU_T_CHOICE_DECL(variableReference, VariableSpecification, monitoredVariable_type_variableReference);
+            ITU_T_CHOICE_DECL(undefined, null_type, monitoredVariable_type_undefined);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         static const bool mmsDeletable__default;
@@ -6014,27 +5250,16 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Unsigned32> arg__evaluationInterval,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(classV, MMS_Object_Module_1::EC_Class);
-        BOOST_ASN_VALUE_DEFAULT_DECL(priority, MMS_Object_Module_1::Priority);
-        BOOST_ASN_VALUE_DEFAULT_DECL(severity, Unsigned8);
-        BOOST_ASN_VALUE_DEFAULT_DECL(alarmSummaryReports, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(monitoredVariable, monitoredVariable_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(evaluationInterval, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_DEFAULTH_DECL(mmsDeletable, bool, mmsDeletable__default);
+        ITU_T_HOLDERH_DECL(classV, MMS_Object_Module_1::EC_Class);
+        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
+        ITU_T_DEFAULTH_DECL(severity, Unsigned8, severity__default);
+        ITU_T_DEFAULTH_DECL(alarmSummaryReports, bool, alarmSummaryReports__default);
+        ITU_T_OPTIONAL_DECL(monitoredVariable, monitoredVariable_type);
+        ITU_T_OPTIONAL_DECL(evaluationInterval, Unsigned32);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        default_holder<bool, mmsDeletable__default> mmsDeletable_;
-        value_holder<MMS_Object_Module_1::EC_Class> classV_;
-        default_holder<MMS_Object_Module_1::Priority, priority__default> priority_;
-        default_holder<Unsigned8, severity__default> severity_;
-        default_holder<bool, alarmSummaryReports__default> alarmSummaryReports_;
-        boost::shared_ptr<monitoredVariable_type> monitoredVariable_;
-        boost::shared_ptr<Unsigned32> evaluationInterval_;
-        boost::shared_ptr<Identifier> accessControlList_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence CS-GetEventConditionAttributes-Response
@@ -6051,19 +5276,19 @@ namespace ISO_9506_MMS_1 {
             groupPriorityOverride_type_undefined,
         };
 
-        struct groupPriorityOverride_type : public BOOST_ASN_CHOICE_STRUCT(groupPriorityOverride_type_enum) {
+        struct groupPriorityOverride_type : public ITU_T_STRUCT(groupPriorityOverride_type_enum) {
 
-            groupPriorityOverride_type() : BOOST_ASN_CHOICE_STRUCT(groupPriorityOverride_type_enum) () {
+            groupPriorityOverride_type() : ITU_T_STRUCT(groupPriorityOverride_type_enum) () {
             }
 
             template<typename T > groupPriorityOverride_type(boost::shared_ptr< T> vl, groupPriorityOverride_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(groupPriorityOverride_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(groupPriorityOverride_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(priority, MMS_Object_Module_1::Priority, groupPriorityOverride_type_priority);
-            BOOST_ASN_VALUE_CHOICE(undefined, null_type, groupPriorityOverride_type_undefined);
+            ITU_T_CHOICE_DECL(priority, MMS_Object_Module_1::Priority, groupPriorityOverride_type_priority);
+            ITU_T_CHOICE_DECL(undefined, null_type, groupPriorityOverride_type_undefined);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         enum displayEnhancement_type_enum {
@@ -6074,20 +5299,20 @@ namespace ISO_9506_MMS_1 {
             displayEnhancement_type_noEnhancement,
         };
 
-        struct displayEnhancement_type : public BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) {
+        struct displayEnhancement_type : public ITU_T_STRUCT(displayEnhancement_type_enum) {
 
-            displayEnhancement_type() : BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) () {
+            displayEnhancement_type() : ITU_T_STRUCT(displayEnhancement_type_enum) () {
             }
 
             template<typename T > displayEnhancement_type(boost::shared_ptr< T> vl, displayEnhancement_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(string, visiblestring_type, displayEnhancement_type_string);
-            BOOST_ASN_VALUE_CHOICE(index, int, displayEnhancement_type_index);
-            BOOST_ASN_VALUE_CHOICE(noEnhancement, null_type, displayEnhancement_type_noEnhancement);
+            ITU_T_CHOICE_DECL(string, visiblestring_type, displayEnhancement_type_string);
+            ITU_T_CHOICE_DECL(index, int, displayEnhancement_type_index);
+            ITU_T_CHOICE_DECL(noEnhancement, null_type, displayEnhancement_type_noEnhancement);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -6103,17 +5328,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< listOfReferencingECL_type> arg__listOfReferencingECL,
                 boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(groupPriorityOverride, groupPriorityOverride_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfReferencingECL, listOfReferencingECL_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(displayEnhancement, displayEnhancement_type);
+        ITU_T_OPTIONAL_DECL(groupPriorityOverride, groupPriorityOverride_type);
+        ITU_T_OPTIONAL_DECL(listOfReferencingECL, listOfReferencingECL_type);
+        ITU_T_HOLDERH_DECL(displayEnhancement, displayEnhancement_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<groupPriorityOverride_type> groupPriorityOverride_;
-        boost::shared_ptr<listOfReferencingECL_type> listOfReferencingECL_;
-        value_holder<displayEnhancement_type> displayEnhancement_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportEventConditionStatus-Response
@@ -6131,21 +5350,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToActive,
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberOfEventEnrollments, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(enabled, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
+        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
+        ITU_T_HOLDERH_DECL(numberOfEventEnrollments, Unsigned32);
+        ITU_T_OPTIONAL_DECL(enabled, bool);
+        ITU_T_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
+        ITU_T_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<MMS_Object_Module_1::EC_State> currentState_;
-        value_holder<Unsigned32> numberOfEventEnrollments_;
-        boost::shared_ptr<bool> enabled_;
-        boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive_;
-        boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AlterEventConditionMonitoring-Request
@@ -6162,21 +5373,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< bool> arg__alarmSummaryReports,
                 boost::shared_ptr< Unsigned32> arg__evaluationInterval);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(enabled, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(priority, MMS_Object_Module_1::Priority);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(alarmSummaryReports, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(evaluationInterval, Unsigned32);
+        ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
+        ITU_T_OPTIONAL_DECL(enabled, bool);
+        ITU_T_OPTIONAL_DECL(priority, MMS_Object_Module_1::Priority);
+        ITU_T_OPTIONAL_DECL(alarmSummaryReports, bool);
+        ITU_T_OPTIONAL_DECL(evaluationInterval, Unsigned32);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventConditionName_;
-        boost::shared_ptr<bool> enabled_;
-        boost::shared_ptr<MMS_Object_Module_1::Priority> priority_;
-        boost::shared_ptr<bool> alarmSummaryReports_;
-        boost::shared_ptr<Unsigned32> evaluationInterval_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence CS-AlterEventConditionMonitoring-Request
@@ -6193,20 +5396,20 @@ namespace ISO_9506_MMS_1 {
             changeDisplay_type_noEnhancement,
         };
 
-        struct changeDisplay_type : public BOOST_ASN_CHOICE_STRUCT(changeDisplay_type_enum) {
+        struct changeDisplay_type : public ITU_T_STRUCT(changeDisplay_type_enum) {
 
-            changeDisplay_type() : BOOST_ASN_CHOICE_STRUCT(changeDisplay_type_enum) () {
+            changeDisplay_type() : ITU_T_STRUCT(changeDisplay_type_enum) () {
             }
 
             template<typename T > changeDisplay_type(boost::shared_ptr< T> vl, changeDisplay_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(changeDisplay_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(changeDisplay_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(string, visiblestring_type, changeDisplay_type_string);
-            BOOST_ASN_VALUE_CHOICE(index, int, changeDisplay_type_index);
-            BOOST_ASN_VALUE_CHOICE(noEnhancement, null_type, changeDisplay_type_noEnhancement);
+            ITU_T_CHOICE_DECL(string, visiblestring_type, changeDisplay_type_string);
+            ITU_T_CHOICE_DECL(index, int, changeDisplay_type_index);
+            ITU_T_CHOICE_DECL(noEnhancement, null_type, changeDisplay_type_noEnhancement);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -6214,13 +5417,9 @@ namespace ISO_9506_MMS_1 {
 
         CS_AlterEventConditionMonitoring_Request(boost::shared_ptr< changeDisplay_type> arg__changeDisplay);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(changeDisplay, changeDisplay_type);
+        ITU_T_OPTIONAL_DECL(changeDisplay, changeDisplay_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<changeDisplay_type> changeDisplay_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DefineEventAction-Request
@@ -6239,19 +5438,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ConfirmedServiceRequest> arg__confirmedServiceRequest,
                 boost::shared_ptr< Request_Detail> arg__cs_extension);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventActionName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfModifier, listOfModifier_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(confirmedServiceRequest, ConfirmedServiceRequest);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(cs_extension, Request_Detail);
+        ITU_T_HOLDERH_DECL(eventActionName, ObjectName);
+        ITU_T_OPTIONAL_DECL(listOfModifier, listOfModifier_type);
+        ITU_T_HOLDERH_DECL(confirmedServiceRequest, ConfirmedServiceRequest);
+        ITU_T_OPTIONAL_DECL(cs_extension, Request_Detail);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventActionName_;
-        boost::shared_ptr<listOfModifier_type> listOfModifier_;
-        value_holder<ConfirmedServiceRequest> confirmedServiceRequest_;
-        boost::shared_ptr<Request_Detail> cs_extension_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice DeleteEventAction-Request
@@ -6265,25 +5457,25 @@ namespace ISO_9506_MMS_1 {
         DeleteEventAction_Request_vmd,
     };
 
-    struct DeleteEventAction_Request : public BOOST_ASN_CHOICE_STRUCT(DeleteEventAction_Request_enum) {
+    struct DeleteEventAction_Request : public ITU_T_STRUCT(DeleteEventAction_Request_enum) {
 
 
 
         typedef std::vector< ObjectName > specific_type;
 
-        DeleteEventAction_Request() : BOOST_ASN_CHOICE_STRUCT(DeleteEventAction_Request_enum) () {
+        DeleteEventAction_Request() : ITU_T_STRUCT(DeleteEventAction_Request_enum) () {
         }
 
         template<typename T > DeleteEventAction_Request(boost::shared_ptr< T> vl, DeleteEventAction_Request_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(DeleteEventAction_Request_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(DeleteEventAction_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(specific, specific_type, DeleteEventAction_Request_specific);
-        BOOST_ASN_VALUE_CHOICE(aa_specific, null_type, DeleteEventAction_Request_aa_specific);
-        BOOST_ASN_VALUE_CHOICE(domain, Identifier, DeleteEventAction_Request_domain);
-        BOOST_ASN_VALUE_CHOICE(vmd, null_type, DeleteEventAction_Request_vmd);
+        ITU_T_CHOICE_DECL(specific, specific_type, DeleteEventAction_Request_specific);
+        ITU_T_CHOICE_DECL(aa_specific, null_type, DeleteEventAction_Request_aa_specific);
+        ITU_T_CHOICE_DECL(domain, Identifier, DeleteEventAction_Request_domain);
+        ITU_T_CHOICE_DECL(vmd, null_type, DeleteEventAction_Request_vmd);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetEventActionAttributes-Response
@@ -6304,21 +5496,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Request_Detail> arg__cs_extension,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfModifier, listOfModifier_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(confirmedServiceRequest, ConfirmedServiceRequest);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(cs_extension, Request_Detail);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_DEFAULTH_DECL(mmsDeletable, bool, mmsDeletable__default);
+        ITU_T_HOLDERH_DECL(listOfModifier, listOfModifier_type);
+        ITU_T_HOLDERH_DECL(confirmedServiceRequest, ConfirmedServiceRequest);
+        ITU_T_OPTIONAL_DECL(cs_extension, Request_Detail);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        default_holder<bool, mmsDeletable__default> mmsDeletable_;
-        value_holder<listOfModifier_type> listOfModifier_;
-        value_holder<ConfirmedServiceRequest> confirmedServiceRequest_;
-        boost::shared_ptr<Request_Detail> cs_extension_;
-        boost::shared_ptr<Identifier> accessControlList_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DefineEventEnrollment-Request
@@ -6339,23 +5523,14 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ObjectName> arg__eventActionName,
                 boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
-        BOOST_ASN_VALUE_HOLDERH_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(eventActionName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
+        ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
+        ITU_T_HOLDERH_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
+        ITU_T_HOLDERH_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
+        ITU_T_OPTIONAL_DECL(eventActionName, ObjectName);
+        ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventEnrollmentName_;
-        value_holder<ObjectName> eventConditionName_;
-        value_holder<MMS_Object_Module_1::Transitions> eventConditionTransitions_;
-        value_holder<MMS_Object_Module_1::AlarmAckRule> alarmAcknowledgmentRule_;
-        boost::shared_ptr<ObjectName> eventActionName_;
-        boost::shared_ptr<MMS_Environment_1::ApplicationReference> clientApplication_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice CS-DefineEventEnrollment-Request
@@ -6368,20 +5543,20 @@ namespace ISO_9506_MMS_1 {
         CS_DefineEventEnrollment_Request_impl_noEnhancement,
     };
 
-    struct CS_DefineEventEnrollment_Request_impl : public BOOST_ASN_CHOICE_STRUCT(CS_DefineEventEnrollment_Request_impl_enum) {
+    struct CS_DefineEventEnrollment_Request_impl : public ITU_T_STRUCT(CS_DefineEventEnrollment_Request_impl_enum) {
 
-        CS_DefineEventEnrollment_Request_impl() : BOOST_ASN_CHOICE_STRUCT(CS_DefineEventEnrollment_Request_impl_enum) () {
+        CS_DefineEventEnrollment_Request_impl() : ITU_T_STRUCT(CS_DefineEventEnrollment_Request_impl_enum) () {
         }
 
         template<typename T > CS_DefineEventEnrollment_Request_impl(boost::shared_ptr< T> vl, CS_DefineEventEnrollment_Request_impl_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(CS_DefineEventEnrollment_Request_impl_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(CS_DefineEventEnrollment_Request_impl_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(string, visiblestring_type, CS_DefineEventEnrollment_Request_impl_string);
-        BOOST_ASN_VALUE_CHOICE(index, int, CS_DefineEventEnrollment_Request_impl_index);
-        BOOST_ASN_VALUE_CHOICE(noEnhancement, null_type, CS_DefineEventEnrollment_Request_impl_noEnhancement);
+        ITU_T_CHOICE_DECL(string, visiblestring_type, CS_DefineEventEnrollment_Request_impl_string);
+        ITU_T_CHOICE_DECL(index, int, CS_DefineEventEnrollment_Request_impl_index);
+        ITU_T_CHOICE_DECL(noEnhancement, null_type, CS_DefineEventEnrollment_Request_impl_noEnhancement);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice DeleteEventEnrollment-Request
@@ -6394,24 +5569,24 @@ namespace ISO_9506_MMS_1 {
         DeleteEventEnrollment_Request_ea,
     };
 
-    struct DeleteEventEnrollment_Request : public BOOST_ASN_CHOICE_STRUCT(DeleteEventEnrollment_Request_enum) {
+    struct DeleteEventEnrollment_Request : public ITU_T_STRUCT(DeleteEventEnrollment_Request_enum) {
 
 
 
         typedef std::vector< ObjectName > specific_type;
 
-        DeleteEventEnrollment_Request() : BOOST_ASN_CHOICE_STRUCT(DeleteEventEnrollment_Request_enum) () {
+        DeleteEventEnrollment_Request() : ITU_T_STRUCT(DeleteEventEnrollment_Request_enum) () {
         }
 
         template<typename T > DeleteEventEnrollment_Request(boost::shared_ptr< T> vl, DeleteEventEnrollment_Request_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(DeleteEventEnrollment_Request_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(DeleteEventEnrollment_Request_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(specific, specific_type, DeleteEventEnrollment_Request_specific);
-        BOOST_ASN_VALUE_CHOICE(ec, ObjectName, DeleteEventEnrollment_Request_ec);
-        BOOST_ASN_VALUE_CHOICE(ea, ObjectName, DeleteEventEnrollment_Request_ea);
+        ITU_T_CHOICE_DECL(specific, specific_type, DeleteEventEnrollment_Request_specific);
+        ITU_T_CHOICE_DECL(ec, ObjectName, DeleteEventEnrollment_Request_ec);
+        ITU_T_CHOICE_DECL(ea, ObjectName, DeleteEventEnrollment_Request_ea);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetEventEnrollmentAttributes-Request
@@ -6436,23 +5611,14 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ObjectName> arg__eventActionName,
                 boost::shared_ptr< ObjectName> arg__continueAfter);
 
-        BOOST_ASN_VALUE_DEFAULT_DECL(scopeOfRequest, int);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(eventEnrollmentNames, eventEnrollmentNames_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(eventConditionName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(eventActionName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, ObjectName);
+        ITU_T_DEFAULTH_DECL(scopeOfRequest, int, scopeOfRequest__default);
+        ITU_T_OPTIONAL_DECL(eventEnrollmentNames, eventEnrollmentNames_type);
+        ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
+        ITU_T_OPTIONAL_DECL(eventConditionName, ObjectName);
+        ITU_T_OPTIONAL_DECL(eventActionName, ObjectName);
+        ITU_T_OPTIONAL_DECL(continueAfter, ObjectName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        default_holder<int, scopeOfRequest__default> scopeOfRequest_;
-        boost::shared_ptr<eventEnrollmentNames_type> eventEnrollmentNames_;
-        boost::shared_ptr<MMS_Environment_1::ApplicationReference> clientApplication_;
-        boost::shared_ptr<ObjectName> eventConditionName_;
-        boost::shared_ptr<ObjectName> eventActionName_;
-        boost::shared_ptr<ObjectName> continueAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetEventEnrollmentAttributes-Response
@@ -6470,15 +5636,10 @@ namespace ISO_9506_MMS_1 {
         GetEventEnrollmentAttributes_Response(boost::shared_ptr< listOfEEAttributes_type> arg__listOfEEAttributes,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfEEAttributes, listOfEEAttributes_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfEEAttributes, listOfEEAttributes_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfEEAttributes_type> listOfEEAttributes_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence EEAttributes
@@ -6496,19 +5657,19 @@ namespace ISO_9506_MMS_1 {
             eventConditionName_type_undefined,
         };
 
-        struct eventConditionName_type : public BOOST_ASN_CHOICE_STRUCT(eventConditionName_type_enum) {
+        struct eventConditionName_type : public ITU_T_STRUCT(eventConditionName_type_enum) {
 
-            eventConditionName_type() : BOOST_ASN_CHOICE_STRUCT(eventConditionName_type_enum) () {
+            eventConditionName_type() : ITU_T_STRUCT(eventConditionName_type_enum) () {
             }
 
             template<typename T > eventConditionName_type(boost::shared_ptr< T> vl, eventConditionName_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(eventConditionName_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(eventConditionName_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(eventCondition, ObjectName, eventConditionName_type_eventCondition);
-            BOOST_ASN_VALUE_CHOICE(undefined, null_type, eventConditionName_type_undefined);
+            ITU_T_CHOICE_DECL(eventCondition, ObjectName, eventConditionName_type_eventCondition);
+            ITU_T_CHOICE_DECL(undefined, null_type, eventConditionName_type_undefined);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         enum eventActionName_type_enum {
@@ -6518,19 +5679,19 @@ namespace ISO_9506_MMS_1 {
             eventActionName_type_undefined,
         };
 
-        struct eventActionName_type : public BOOST_ASN_CHOICE_STRUCT(eventActionName_type_enum) {
+        struct eventActionName_type : public ITU_T_STRUCT(eventActionName_type_enum) {
 
-            eventActionName_type() : BOOST_ASN_CHOICE_STRUCT(eventActionName_type_enum) () {
+            eventActionName_type() : ITU_T_STRUCT(eventActionName_type_enum) () {
             }
 
             template<typename T > eventActionName_type(boost::shared_ptr< T> vl, eventActionName_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(eventActionName_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(eventActionName_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(eventAction, ObjectName, eventActionName_type_eventAction);
-            BOOST_ASN_VALUE_CHOICE(undefined, null_type, eventActionName_type_undefined);
+            ITU_T_CHOICE_DECL(eventAction, ObjectName, eventActionName_type_eventAction);
+            ITU_T_CHOICE_DECL(undefined, null_type, eventActionName_type_undefined);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         enum displayEnhancement_type_enum {
@@ -6541,20 +5702,20 @@ namespace ISO_9506_MMS_1 {
             displayEnhancement_type_noEnhancement,
         };
 
-        struct displayEnhancement_type : public BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) {
+        struct displayEnhancement_type : public ITU_T_STRUCT(displayEnhancement_type_enum) {
 
-            displayEnhancement_type() : BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) () {
+            displayEnhancement_type() : ITU_T_STRUCT(displayEnhancement_type_enum) () {
             }
 
             template<typename T > displayEnhancement_type(boost::shared_ptr< T> vl, displayEnhancement_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(string, visiblestring_type, displayEnhancement_type_string);
-            BOOST_ASN_VALUE_CHOICE(index, int, displayEnhancement_type_index);
-            BOOST_ASN_VALUE_CHOICE(noEnhancement, null_type, displayEnhancement_type_noEnhancement);
+            ITU_T_CHOICE_DECL(string, visiblestring_type, displayEnhancement_type_string);
+            ITU_T_CHOICE_DECL(index, int, displayEnhancement_type_index);
+            ITU_T_CHOICE_DECL(noEnhancement, null_type, displayEnhancement_type_noEnhancement);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         static const bool mmsDeletable__default;
@@ -6578,31 +5739,18 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Unsigned32> arg__remainingAcceptableDelay,
                 boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, eventConditionName_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(eventActionName, eventActionName_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
-        BOOST_ASN_VALUE_DEFAULT_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(enrollmentClass, MMS_Object_Module_1::EE_Class);
-        BOOST_ASN_VALUE_DEFAULT_DECL(duration, MMS_Object_Module_1::EE_Duration);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(invokeID, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(remainingAcceptableDelay, Unsigned32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(displayEnhancement, displayEnhancement_type);
+        ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
+        ITU_T_HOLDERH_DECL(eventConditionName, eventConditionName_type);
+        ITU_T_OPTIONAL_DECL(eventActionName, eventActionName_type);
+        ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
+        ITU_T_DEFAULTH_DECL(mmsDeletable, bool, mmsDeletable__default);
+        ITU_T_HOLDERH_DECL(enrollmentClass, MMS_Object_Module_1::EE_Class);
+        ITU_T_DEFAULTH_DECL(duration, MMS_Object_Module_1::EE_Duration, duration__default);
+        ITU_T_OPTIONAL_DECL(invokeID, Unsigned32);
+        ITU_T_OPTIONAL_DECL(remainingAcceptableDelay, Unsigned32);
+        ITU_T_HOLDERH_DECL(displayEnhancement, displayEnhancement_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventEnrollmentName_;
-        value_holder<eventConditionName_type> eventConditionName_;
-        boost::shared_ptr<eventActionName_type> eventActionName_;
-        boost::shared_ptr<MMS_Environment_1::ApplicationReference> clientApplication_;
-        default_holder<bool, mmsDeletable__default> mmsDeletable_;
-        value_holder<MMS_Object_Module_1::EE_Class> enrollmentClass_;
-        default_holder<MMS_Object_Module_1::EE_Duration, duration__default> duration_;
-        boost::shared_ptr<Unsigned32> invokeID_;
-        boost::shared_ptr<Unsigned32> remainingAcceptableDelay_;
-        value_holder<displayEnhancement_type> displayEnhancement_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportEventEnrollmentStatus-Response
@@ -6623,21 +5771,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule,
                 boost::shared_ptr< EE_State> arg__currentState);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
-        BOOST_ASN_VALUE_DEFAULT_DECL(notificationLost, bool);
-        BOOST_ASN_VALUE_HOLDERH_DECL(duration, MMS_Object_Module_1::EE_Duration);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
-        BOOST_ASN_VALUE_HOLDERH_DECL(currentState, EE_State);
+        ITU_T_HOLDERH_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
+        ITU_T_DEFAULTH_DECL(notificationLost, bool, notificationLost__default);
+        ITU_T_HOLDERH_DECL(duration, MMS_Object_Module_1::EE_Duration);
+        ITU_T_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
+        ITU_T_HOLDERH_DECL(currentState, EE_State);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<MMS_Object_Module_1::Transitions> eventConditionTransitions_;
-        default_holder<bool, notificationLost__default> notificationLost_;
-        value_holder<MMS_Object_Module_1::EE_Duration> duration_;
-        boost::shared_ptr<MMS_Object_Module_1::AlarmAckRule> alarmAcknowledgmentRule_;
-        value_holder<EE_State> currentState_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AlterEventEnrollment-Request
@@ -6652,17 +5792,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::Transitions> arg__eventConditionTransitions,
                 boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventEnrollmentName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
+        ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
+        ITU_T_OPTIONAL_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
+        ITU_T_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventEnrollmentName_;
-        boost::shared_ptr<MMS_Object_Module_1::Transitions> eventConditionTransitions_;
-        boost::shared_ptr<MMS_Object_Module_1::AlarmAckRule> alarmAcknowledgmentRule_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AlterEventEnrollment-Response
@@ -6678,19 +5812,19 @@ namespace ISO_9506_MMS_1 {
             currentState_type_undefined,
         };
 
-        struct currentState_type : public BOOST_ASN_CHOICE_STRUCT(currentState_type_enum) {
+        struct currentState_type : public ITU_T_STRUCT(currentState_type_enum) {
 
-            currentState_type() : BOOST_ASN_CHOICE_STRUCT(currentState_type_enum) () {
+            currentState_type() : ITU_T_STRUCT(currentState_type_enum) () {
             }
 
             template<typename T > currentState_type(boost::shared_ptr< T> vl, currentState_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(currentState_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(currentState_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(state, EE_State, currentState_type_state);
-            BOOST_ASN_VALUE_CHOICE(undefined, null_type, currentState_type_undefined);
+            ITU_T_CHOICE_DECL(state, EE_State, currentState_type_state);
+            ITU_T_CHOICE_DECL(undefined, null_type, currentState_type_undefined);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -6699,15 +5833,10 @@ namespace ISO_9506_MMS_1 {
         AlterEventEnrollment_Response(const currentState_type& arg__currentState,
                 const MMS_Object_Module_1::EventTime& arg__transitionTime);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(currentState, currentState_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(transitionTime, MMS_Object_Module_1::EventTime);
+        ITU_T_HOLDERH_DECL(currentState, currentState_type);
+        ITU_T_HOLDERH_DECL(transitionTime, MMS_Object_Module_1::EventTime);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<currentState_type> currentState_;
-        value_holder<MMS_Object_Module_1::EventTime> transitionTime_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence CS-AlterEventEnrollment-Request
@@ -6724,20 +5853,20 @@ namespace ISO_9506_MMS_1 {
             changeDisplay_type_noEnhancement,
         };
 
-        struct changeDisplay_type : public BOOST_ASN_CHOICE_STRUCT(changeDisplay_type_enum) {
+        struct changeDisplay_type : public ITU_T_STRUCT(changeDisplay_type_enum) {
 
-            changeDisplay_type() : BOOST_ASN_CHOICE_STRUCT(changeDisplay_type_enum) () {
+            changeDisplay_type() : ITU_T_STRUCT(changeDisplay_type_enum) () {
             }
 
             template<typename T > changeDisplay_type(boost::shared_ptr< T> vl, changeDisplay_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(changeDisplay_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(changeDisplay_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(string, visiblestring_type, changeDisplay_type_string);
-            BOOST_ASN_VALUE_CHOICE(index, int, changeDisplay_type_index);
-            BOOST_ASN_VALUE_CHOICE(noEnhancement, null_type, changeDisplay_type_noEnhancement);
+            ITU_T_CHOICE_DECL(string, visiblestring_type, changeDisplay_type_string);
+            ITU_T_CHOICE_DECL(index, int, changeDisplay_type_index);
+            ITU_T_CHOICE_DECL(noEnhancement, null_type, changeDisplay_type_noEnhancement);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -6745,13 +5874,9 @@ namespace ISO_9506_MMS_1 {
 
         CS_AlterEventEnrollment_Request(boost::shared_ptr< changeDisplay_type> arg__changeDisplay);
 
-        BOOST_ASN_VALUE_OPTIONAL_DECL(changeDisplay, changeDisplay_type);
+        ITU_T_OPTIONAL_DECL(changeDisplay, changeDisplay_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        boost::shared_ptr<changeDisplay_type> changeDisplay_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     extern const EE_State EE_State_disabled;
@@ -6781,17 +5906,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
                 boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionListName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
+        ITU_T_HOLDERH_DECL(eventConditionListName, ObjectName);
+        ITU_T_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
+        ITU_T_OPTIONAL_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventConditionListName_;
-        value_holder<listOfEventConditionName_type> listOfEventConditionName_;
-        boost::shared_ptr<listOfEventConditionListName_type> listOfEventConditionListName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AddEventConditionListReference-Request
@@ -6811,17 +5930,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
                 boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionListName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
+        ITU_T_HOLDERH_DECL(eventConditionListName, ObjectName);
+        ITU_T_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
+        ITU_T_OPTIONAL_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventConditionListName_;
-        value_holder<listOfEventConditionName_type> listOfEventConditionName_;
-        boost::shared_ptr<listOfEventConditionListName_type> listOfEventConditionListName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence RemoveEventConditionListReference-Request
@@ -6838,17 +5951,11 @@ namespace ISO_9506_MMS_1 {
                 const listOfEventConditionName_type& arg__listOfEventConditionName,
                 const listOfEventConditionListName_type& arg__listOfEventConditionListName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionListName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
+        ITU_T_HOLDERH_DECL(eventConditionListName, ObjectName);
+        ITU_T_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
+        ITU_T_HOLDERH_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventConditionListName_;
-        value_holder<listOfEventConditionName_type> listOfEventConditionName_;
-        value_holder<listOfEventConditionListName_type> listOfEventConditionListName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // choice RemoveEventConditionListReference-Error
@@ -6860,19 +5967,19 @@ namespace ISO_9506_MMS_1 {
         RemoveEventConditionListReference_Error_eventConditionList,
     };
 
-    struct RemoveEventConditionListReference_Error : public BOOST_ASN_CHOICE_STRUCT(RemoveEventConditionListReference_Error_enum) {
+    struct RemoveEventConditionListReference_Error : public ITU_T_STRUCT(RemoveEventConditionListReference_Error_enum) {
 
-        RemoveEventConditionListReference_Error() : BOOST_ASN_CHOICE_STRUCT(RemoveEventConditionListReference_Error_enum) () {
+        RemoveEventConditionListReference_Error() : ITU_T_STRUCT(RemoveEventConditionListReference_Error_enum) () {
         }
 
         template<typename T > RemoveEventConditionListReference_Error(boost::shared_ptr< T> vl, RemoveEventConditionListReference_Error_enum enm) :
-                BOOST_ASN_CHOICE_STRUCT(RemoveEventConditionListReference_Error_enum) (vl, static_cast<int> (enm)) {
+                ITU_T_STRUCT(RemoveEventConditionListReference_Error_enum) (vl, static_cast<int> (enm)) {
         }
 
-        BOOST_ASN_VALUE_CHOICE(eventCondition, ObjectName, RemoveEventConditionListReference_Error_eventCondition);
-        BOOST_ASN_VALUE_CHOICE(eventConditionList, ObjectName, RemoveEventConditionListReference_Error_eventConditionList);
+        ITU_T_CHOICE_DECL(eventCondition, ObjectName, RemoveEventConditionListReference_Error_eventCondition);
+        ITU_T_CHOICE_DECL(eventConditionList, ObjectName, RemoveEventConditionListReference_Error_eventConditionList);
 
-        BOOST_ASN_ARCHIVE_FUNC;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence GetEventConditionListAttributes-Response
@@ -6890,15 +5997,10 @@ namespace ISO_9506_MMS_1 {
         GetEventConditionListAttributes_Response(boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
                 boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
+        ITU_T_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
+        ITU_T_OPTIONAL_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfEventConditionName_type> listOfEventConditionName_;
-        boost::shared_ptr<listOfEventConditionListName_type> listOfEventConditionListName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportEventConditionListStatus-Request
@@ -6912,15 +6014,10 @@ namespace ISO_9506_MMS_1 {
         ReportEventConditionListStatus_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
                 boost::shared_ptr< Identifier> arg__continueAfter);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionListName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(continueAfter, Identifier);
+        ITU_T_HOLDERH_DECL(eventConditionListName, ObjectName);
+        ITU_T_OPTIONAL_DECL(continueAfter, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventConditionListName_;
-        boost::shared_ptr<Identifier> continueAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportEventConditionListStatus-Response
@@ -6938,15 +6035,10 @@ namespace ISO_9506_MMS_1 {
         ReportEventConditionListStatus_Response(boost::shared_ptr< listOfEventConditionStatus_type> arg__listOfEventConditionStatus,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfEventConditionStatus, listOfEventConditionStatus_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfEventConditionStatus, listOfEventConditionStatus_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfEventConditionStatus_type> listOfEventConditionStatus_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence EventConditionStatus
@@ -6966,23 +6058,14 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToActive,
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
-        BOOST_ASN_VALUE_HOLDERH_DECL(numberOfEventEnrollments, Unsigned32);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(enabled, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
+        ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
+        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
+        ITU_T_HOLDERH_DECL(numberOfEventEnrollments, Unsigned32);
+        ITU_T_OPTIONAL_DECL(enabled, bool);
+        ITU_T_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
+        ITU_T_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventConditionName_;
-        value_holder<MMS_Object_Module_1::EC_State> currentState_;
-        value_holder<Unsigned32> numberOfEventEnrollments_;
-        boost::shared_ptr<bool> enabled_;
-        boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToActive_;
-        boost::shared_ptr<MMS_Object_Module_1::EventTime> timeOfLastTransitionToIdle_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence AlterEventConditionListMonitoring-Request
@@ -6998,19 +6081,19 @@ namespace ISO_9506_MMS_1 {
             priorityChange_type_priorityReset,
         };
 
-        struct priorityChange_type : public BOOST_ASN_CHOICE_STRUCT(priorityChange_type_enum) {
+        struct priorityChange_type : public ITU_T_STRUCT(priorityChange_type_enum) {
 
-            priorityChange_type() : BOOST_ASN_CHOICE_STRUCT(priorityChange_type_enum) () {
+            priorityChange_type() : ITU_T_STRUCT(priorityChange_type_enum) () {
             }
 
             template<typename T > priorityChange_type(boost::shared_ptr< T> vl, priorityChange_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(priorityChange_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(priorityChange_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(priorityValue, int, priorityChange_type_priorityValue);
-            BOOST_ASN_VALUE_CHOICE(priorityReset, null_type, priorityChange_type_priorityReset);
+            ITU_T_CHOICE_DECL(priorityValue, int, priorityChange_type_priorityValue);
+            ITU_T_CHOICE_DECL(priorityReset, null_type, priorityChange_type_priorityReset);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -7023,17 +6106,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< bool> arg__enabled,
                 boost::shared_ptr< priorityChange_type> arg__priorityChange);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionListName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(enabled, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(priorityChange, priorityChange_type);
+        ITU_T_HOLDERH_DECL(eventConditionListName, ObjectName);
+        ITU_T_HOLDERH_DECL(enabled, bool);
+        ITU_T_OPTIONAL_DECL(priorityChange, priorityChange_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> eventConditionListName_;
-        value_holder<bool> enabled_;
-        boost::shared_ptr<priorityChange_type> priorityChange_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReadJournal-Request
@@ -7051,19 +6128,19 @@ namespace ISO_9506_MMS_1 {
             rangeStartSpecification_type_startingEntry,
         };
 
-        struct rangeStartSpecification_type : public BOOST_ASN_CHOICE_STRUCT(rangeStartSpecification_type_enum) {
+        struct rangeStartSpecification_type : public ITU_T_STRUCT(rangeStartSpecification_type_enum) {
 
-            rangeStartSpecification_type() : BOOST_ASN_CHOICE_STRUCT(rangeStartSpecification_type_enum) () {
+            rangeStartSpecification_type() : ITU_T_STRUCT(rangeStartSpecification_type_enum) () {
             }
 
             template<typename T > rangeStartSpecification_type(boost::shared_ptr< T> vl, rangeStartSpecification_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(rangeStartSpecification_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(rangeStartSpecification_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(startingTime, TimeOfDay, rangeStartSpecification_type_startingTime);
-            BOOST_ASN_VALUE_CHOICE(startingEntry, octetstring_type, rangeStartSpecification_type_startingEntry);
+            ITU_T_CHOICE_DECL(startingTime, TimeOfDay, rangeStartSpecification_type_startingTime);
+            ITU_T_CHOICE_DECL(startingEntry, octetstring_type, rangeStartSpecification_type_startingEntry);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         enum rangeStopSpecification_type_enum {
@@ -7073,19 +6150,19 @@ namespace ISO_9506_MMS_1 {
             rangeStopSpecification_type_numberOfEntries,
         };
 
-        struct rangeStopSpecification_type : public BOOST_ASN_CHOICE_STRUCT(rangeStopSpecification_type_enum) {
+        struct rangeStopSpecification_type : public ITU_T_STRUCT(rangeStopSpecification_type_enum) {
 
-            rangeStopSpecification_type() : BOOST_ASN_CHOICE_STRUCT(rangeStopSpecification_type_enum) () {
+            rangeStopSpecification_type() : ITU_T_STRUCT(rangeStopSpecification_type_enum) () {
             }
 
             template<typename T > rangeStopSpecification_type(boost::shared_ptr< T> vl, rangeStopSpecification_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(rangeStopSpecification_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(rangeStopSpecification_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(endingTime, TimeOfDay, rangeStopSpecification_type_endingTime);
-            BOOST_ASN_VALUE_CHOICE(numberOfEntries, Integer32, rangeStopSpecification_type_numberOfEntries);
+            ITU_T_CHOICE_DECL(endingTime, TimeOfDay, rangeStopSpecification_type_endingTime);
+            ITU_T_CHOICE_DECL(numberOfEntries, Integer32, rangeStopSpecification_type_numberOfEntries);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
         struct entryToStartAfter_type {
@@ -7095,15 +6172,10 @@ namespace ISO_9506_MMS_1 {
             entryToStartAfter_type(const TimeOfDay& arg__timeSpecification,
                     const octetstring_type& arg__entrySpecification);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(timeSpecification, TimeOfDay);
-            BOOST_ASN_VALUE_HOLDERH_DECL(entrySpecification, octetstring_type);
+            ITU_T_HOLDERH_DECL(timeSpecification, TimeOfDay);
+            ITU_T_HOLDERH_DECL(entrySpecification, octetstring_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<TimeOfDay> timeSpecification_;
-            value_holder<octetstring_type> entrySpecification_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -7121,21 +6193,13 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< listOfVariables_type> arg__listOfVariables,
                 boost::shared_ptr< entryToStartAfter_type> arg__entryToStartAfter);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(journalName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(rangeStartSpecification, rangeStartSpecification_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(rangeStopSpecification, rangeStopSpecification_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(listOfVariables, listOfVariables_type);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(entryToStartAfter, entryToStartAfter_type);
+        ITU_T_HOLDERH_DECL(journalName, ObjectName);
+        ITU_T_OPTIONAL_DECL(rangeStartSpecification, rangeStartSpecification_type);
+        ITU_T_OPTIONAL_DECL(rangeStopSpecification, rangeStopSpecification_type);
+        ITU_T_OPTIONAL_DECL(listOfVariables, listOfVariables_type);
+        ITU_T_OPTIONAL_DECL(entryToStartAfter, entryToStartAfter_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> journalName_;
-        boost::shared_ptr<rangeStartSpecification_type> rangeStartSpecification_;
-        boost::shared_ptr<rangeStopSpecification_type> rangeStopSpecification_;
-        boost::shared_ptr<listOfVariables_type> listOfVariables_;
-        boost::shared_ptr<entryToStartAfter_type> entryToStartAfter_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReadJournal-Response
@@ -7153,15 +6217,10 @@ namespace ISO_9506_MMS_1 {
         ReadJournal_Response(boost::shared_ptr< listOfJournalEntry_type> arg__listOfJournalEntry,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfJournalEntry, listOfJournalEntry_type);
-        BOOST_ASN_VALUE_DEFAULT_DECL(moreFollows, bool);
+        ITU_T_HOLDERH_DECL(listOfJournalEntry, listOfJournalEntry_type);
+        ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<listOfJournalEntry_type> listOfJournalEntry_;
-        default_holder<bool, moreFollows__default> moreFollows_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence JournalEntry
@@ -7174,17 +6233,11 @@ namespace ISO_9506_MMS_1 {
                 const MMS_Environment_1::ApplicationReference& arg__originatingApplication,
                 const EntryContent& arg__entryContent);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(entryIdentifier, octetstring_type);
-        BOOST_ASN_VALUE_HOLDERH_DECL(originatingApplication, MMS_Environment_1::ApplicationReference);
-        BOOST_ASN_VALUE_HOLDERH_DECL(entryContent, EntryContent);
+        ITU_T_HOLDERH_DECL(entryIdentifier, octetstring_type);
+        ITU_T_HOLDERH_DECL(originatingApplication, MMS_Environment_1::ApplicationReference);
+        ITU_T_HOLDERH_DECL(entryContent, EntryContent);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<octetstring_type> entryIdentifier_;
-        value_holder<MMS_Environment_1::ApplicationReference> originatingApplication_;
-        value_holder<EntryContent> entryContent_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence WriteJournal-Request
@@ -7199,15 +6252,10 @@ namespace ISO_9506_MMS_1 {
         WriteJournal_Request(const ObjectName& arg__journalName,
                 const listOfJournalEntry_type& arg__listOfJournalEntry);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(journalName, ObjectName);
-        BOOST_ASN_VALUE_HOLDERH_DECL(listOfJournalEntry, listOfJournalEntry_type);
+        ITU_T_HOLDERH_DECL(journalName, ObjectName);
+        ITU_T_HOLDERH_DECL(listOfJournalEntry, listOfJournalEntry_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> journalName_;
-        value_holder<listOfJournalEntry_type> listOfJournalEntry_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence InitializeJournal-Request
@@ -7225,15 +6273,10 @@ namespace ISO_9506_MMS_1 {
             limitSpecification_type(boost::shared_ptr< TimeOfDay> arg__limitingTime,
                     boost::shared_ptr< octetstring_type> arg__limitingEntry);
 
-            BOOST_ASN_VALUE_HOLDERH_DECL(limitingTime, TimeOfDay);
-            BOOST_ASN_VALUE_OPTIONAL_DECL(limitingEntry, octetstring_type);
+            ITU_T_HOLDERH_DECL(limitingTime, TimeOfDay);
+            ITU_T_OPTIONAL_DECL(limitingEntry, octetstring_type);
 
-            BOOST_ASN_ARCHIVE_FUNC;
-
-        private:
-
-            value_holder<TimeOfDay> limitingTime_;
-            boost::shared_ptr<octetstring_type> limitingEntry_;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -7244,15 +6287,10 @@ namespace ISO_9506_MMS_1 {
         InitializeJournal_Request(boost::shared_ptr< ObjectName> arg__journalName,
                 boost::shared_ptr< limitSpecification_type> arg__limitSpecification);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(journalName, ObjectName);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(limitSpecification, limitSpecification_type);
+        ITU_T_HOLDERH_DECL(journalName, ObjectName);
+        ITU_T_OPTIONAL_DECL(limitSpecification, limitSpecification_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> journalName_;
-        boost::shared_ptr<limitSpecification_type> limitSpecification_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence ReportJournalStatus-Response
@@ -7268,17 +6306,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< bool> arg__mmsDeletable,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(currentEntries, Unsigned32);
-        BOOST_ASN_VALUE_HOLDERH_DECL(mmsDeletable, bool);
-        BOOST_ASN_VALUE_OPTIONAL_DECL(accessControlList, Identifier);
+        ITU_T_HOLDERH_DECL(currentEntries, Unsigned32);
+        ITU_T_HOLDERH_DECL(mmsDeletable, bool);
+        ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<Unsigned32> currentEntries_;
-        value_holder<bool> mmsDeletable_;
-        boost::shared_ptr<Identifier> accessControlList_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence CreateJournal-Request
@@ -7289,13 +6321,9 @@ namespace ISO_9506_MMS_1 {
 
         CreateJournal_Request(const ObjectName& arg__journalName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(journalName, ObjectName);
+        ITU_T_HOLDERH_DECL(journalName, ObjectName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> journalName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence DeleteJournal-Request
@@ -7306,13 +6334,9 @@ namespace ISO_9506_MMS_1 {
 
         DeleteJournal_Request(const ObjectName& arg__journalName);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(journalName, ObjectName);
+        ITU_T_HOLDERH_DECL(journalName, ObjectName);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<ObjectName> journalName_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     // sequence EntryContent
@@ -7328,7 +6352,7 @@ namespace ISO_9506_MMS_1 {
             entryForm_type_annotation,
         };
 
-        struct entryForm_type : public BOOST_ASN_CHOICE_STRUCT(entryForm_type_enum) {
+        struct entryForm_type : public ITU_T_STRUCT(entryForm_type_enum) {
 
 
             struct data_type;
@@ -7344,15 +6368,10 @@ namespace ISO_9506_MMS_1 {
                     event_type(const ObjectName& arg__eventConditionName,
                             const MMS_Object_Module_1::EC_State& arg__currentState);
 
-                    BOOST_ASN_VALUE_HOLDERH_DECL(eventConditionName, ObjectName);
-                    BOOST_ASN_VALUE_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
+                    ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
+                    ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
 
-                    BOOST_ASN_ARCHIVE_FUNC;
-
-                private:
-
-                    value_holder<ObjectName> eventConditionName_;
-                    value_holder<MMS_Object_Module_1::EC_State> currentState_;
+                    ITU_T_ARCHIVE_FUNC;
                 };
 
 
@@ -7365,28 +6384,23 @@ namespace ISO_9506_MMS_1 {
                 data_type(boost::shared_ptr< event_type> arg__event,
                         boost::shared_ptr< listOfVariables_type> arg__listOfVariables);
 
-                BOOST_ASN_VALUE_OPTIONAL_DECL(event, event_type);
-                BOOST_ASN_VALUE_OPTIONAL_DECL(listOfVariables, listOfVariables_type);
+                ITU_T_OPTIONAL_DECL(event, event_type);
+                ITU_T_OPTIONAL_DECL(listOfVariables, listOfVariables_type);
 
-                BOOST_ASN_ARCHIVE_FUNC;
-
-            private:
-
-                boost::shared_ptr<event_type> event_;
-                boost::shared_ptr<listOfVariables_type> listOfVariables_;
+                ITU_T_ARCHIVE_FUNC;
             };
 
-            entryForm_type() : BOOST_ASN_CHOICE_STRUCT(entryForm_type_enum) () {
+            entryForm_type() : ITU_T_STRUCT(entryForm_type_enum) () {
             }
 
             template<typename T > entryForm_type(boost::shared_ptr< T> vl, entryForm_type_enum enm) :
-                    BOOST_ASN_CHOICE_STRUCT(entryForm_type_enum) (vl, static_cast<int> (enm)) {
+                    ITU_T_STRUCT(entryForm_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            BOOST_ASN_VALUE_CHOICE(data, data_type, entryForm_type_data);
-            BOOST_ASN_VALUE_CHOICE(annotation, MMSString, entryForm_type_annotation);
+            ITU_T_CHOICE_DECL(data, data_type, entryForm_type_data);
+            ITU_T_CHOICE_DECL(annotation, MMSString, entryForm_type_annotation);
 
-            BOOST_ASN_ARCHIVE_FUNC;
+            ITU_T_ARCHIVE_FUNC;
         };
 
 
@@ -7395,15 +6409,10 @@ namespace ISO_9506_MMS_1 {
         EntryContent(const TimeOfDay& arg__occurrenceTime,
                 const entryForm_type& arg__entryForm);
 
-        BOOST_ASN_VALUE_HOLDERH_DECL(occurrenceTime, TimeOfDay);
-        BOOST_ASN_VALUE_HOLDERH_DECL(entryForm, entryForm_type);
+        ITU_T_HOLDERH_DECL(occurrenceTime, TimeOfDay);
+        ITU_T_HOLDERH_DECL(entryForm, entryForm_type);
 
-        BOOST_ASN_ARCHIVE_FUNC;
-
-    private:
-
-        value_holder<TimeOfDay> occurrenceTime_;
-        value_holder<entryForm_type> entryForm_;
+        ITU_T_ARCHIVE_FUNC;
     };
 
     template<> void MMSpdu::serialize(boost::asn1::x690::output_coder& arch);
@@ -7878,80 +6887,80 @@ namespace ISO_9506_MMS_1 {
     template<> void EntryContent::entryForm_type::data_type::event_type::serialize(boost::asn1::x690::input_coder& arch);
 }
 
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::MMSpdu)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ConfirmedServiceRequest)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::AdditionalService_Request)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::Request_Detail)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::UnconfirmedService)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::Unconfirmed_Detail)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ConfirmedServiceResponse)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::AdditionalService_Response)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::Response_Detail)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ServiceError::errorClass_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ServiceError::serviceSpecificInfo_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::AdditionalService_Error)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ObjectName)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ObjectClass)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::RejectPDU::rejectReason_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetAccessControlListAttributes_Request)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ChangeAccessControl_Request::scopeOfChange_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Status_Response)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Status_Response::fullResponse_type::selectedProgramInvocation_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetNameList_Request::objectScope_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::LoadData)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::Start_Request::executionArgument_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Start_Request_impl)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::StartCount)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::Resume_Request::executionArgument_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request_impl)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request_impl::controlling_type::modeType_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetProgramInvocationAttributes_Response::executionArgument_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::control_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::control_type::controlled_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ControlElement)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::InitiateUnitControl_Error)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::UnitControlUpload_Request::continueAfter_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::UnitControlUpload_Response::nextElement_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::StartUnitControl_Request::executionArgument_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::LoadUnitControlFromFile_Error)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteUnitControl_Error)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::TypeSpecification)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccess_sequence_of)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection::selectAccess_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::AccessResult)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::Data)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::VariableAccessSpecification)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::VariableSpecification)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::Write_Response_sequence_of)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetVariableAccessAttributes_Request)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::TakeControl_Response)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::EventNotification::actionResult_type::successOrFailure_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_EventNotification_impl)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::EN_Additional_Detail_impl)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_DefineEventCondition_Request_impl)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventCondition_Request)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetEventConditionAttributes_Response::monitoredVariable_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetEventConditionAttributes_Response::groupPriorityOverride_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetEventConditionAttributes_Response::displayEnhancement_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_AlterEventConditionMonitoring_Request::changeDisplay_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventAction_Request)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_DefineEventEnrollment_Request_impl)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventEnrollment_Request)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::eventConditionName_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::eventActionName_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::displayEnhancement_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlterEventEnrollment_Response::currentState_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_AlterEventEnrollment_Request::changeDisplay_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::RemoveEventConditionListReference_Error)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlterEventConditionListMonitoring_Request::priorityChange_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReadJournal_Request::rangeStartSpecification_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReadJournal_Request::rangeStopSpecification_type)
-BOOST_ASN_CHOICE_REGESTRATE(ISO_9506_MMS_1::EntryContent::entryForm_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::MMSpdu)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ConfirmedServiceRequest)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AdditionalService_Request)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Request_Detail)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::UnconfirmedService)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Unconfirmed_Detail)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ConfirmedServiceResponse)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AdditionalService_Response)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Response_Detail)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ServiceError::errorClass_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ServiceError::serviceSpecificInfo_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AdditionalService_Error)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ObjectName)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ObjectClass)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::RejectPDU::rejectReason_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetAccessControlListAttributes_Request)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ChangeAccessControl_Request::scopeOfChange_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Status_Response)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Status_Response::fullResponse_type::selectedProgramInvocation_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetNameList_Request::objectScope_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::LoadData)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Start_Request::executionArgument_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Start_Request_impl)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::StartCount)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Resume_Request::executionArgument_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request_impl)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request_impl::controlling_type::modeType_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetProgramInvocationAttributes_Response::executionArgument_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::control_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::control_type::controlled_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ControlElement)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::InitiateUnitControl_Error)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::UnitControlUpload_Request::continueAfter_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::UnitControlUpload_Response::nextElement_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::StartUnitControl_Request::executionArgument_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::LoadUnitControlFromFile_Error)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteUnitControl_Error)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::TypeSpecification)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccess_sequence_of)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection::selectAccess_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AccessResult)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Data)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::VariableAccessSpecification)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::VariableSpecification)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Write_Response_sequence_of)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetVariableAccessAttributes_Request)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::TakeControl_Response)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EventNotification::actionResult_type::successOrFailure_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_EventNotification_impl)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EN_Additional_Detail_impl)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_DefineEventCondition_Request_impl)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventCondition_Request)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetEventConditionAttributes_Response::monitoredVariable_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetEventConditionAttributes_Response::groupPriorityOverride_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetEventConditionAttributes_Response::displayEnhancement_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_AlterEventConditionMonitoring_Request::changeDisplay_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventAction_Request)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_DefineEventEnrollment_Request_impl)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventEnrollment_Request)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::eventConditionName_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::eventActionName_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::displayEnhancement_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlterEventEnrollment_Response::currentState_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_AlterEventEnrollment_Request::changeDisplay_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::RemoveEventConditionListReference_Error)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlterEventConditionListMonitoring_Request::priorityChange_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReadJournal_Request::rangeStartSpecification_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReadJournal_Request::rangeStopSpecification_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EntryContent::entryForm_type)
 
 #endif  /*___ISO_9506_MMS_1 */
 
