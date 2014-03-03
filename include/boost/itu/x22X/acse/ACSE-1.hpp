@@ -144,14 +144,14 @@ namespace ACSE_1 {
                 ITU_T_STRUCT(ACSE_apdu_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(aarq, AARQ_apdu, ACSE_apdu_aarq);
-        ITU_T_CHOICE_DECL(aare, AARE_apdu, ACSE_apdu_aare);
-        ITU_T_CHOICE_DECL(rlrq, RLRQ_apdu, ACSE_apdu_rlrq);
-        ITU_T_CHOICE_DECL(rlre, RLRE_apdu, ACSE_apdu_rlre);
-        ITU_T_CHOICE_DECL(abrt, ABRT_apdu, ACSE_apdu_abrt);
-        ITU_T_CHOICE_DECL(adt, A_DT_apdu, ACSE_apdu_adt);
-        ITU_T_CHOICE_DECL(acrq, ACRQ_apdu, ACSE_apdu_acrq);
-        ITU_T_CHOICE_DECL(acrp, ACRP_apdu, ACSE_apdu_acrp);
+        ITU_T_CHOICEC_DECL(aarq, AARQ_apdu, ACSE_apdu_aarq);
+        ITU_T_CHOICEC_DECL(aare, AARE_apdu, ACSE_apdu_aare);
+        ITU_T_CHOICEC_DECL(rlrq, RLRQ_apdu, ACSE_apdu_rlrq);
+        ITU_T_CHOICEC_DECL(rlre, RLRE_apdu, ACSE_apdu_rlre);
+        ITU_T_CHOICEC_DECL(abrt, ABRT_apdu, ACSE_apdu_abrt);
+        ITU_T_CHOICEC_DECL(adt, A_DT_apdu, ACSE_apdu_adt);
+        ITU_T_CHOICEC_DECL(acrq, ACRQ_apdu, ACSE_apdu_acrq);
+        ITU_T_CHOICEC_DECL(acrp, ACRP_apdu, ACSE_apdu_acrp);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -422,9 +422,9 @@ namespace ACSE_1 {
                 ITU_T_STRUCT(AP_title_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(ap_title_form1, AP_title_form1, AP_title_ap_title_form1);
-        ITU_T_CHOICE_DECL(ap_title_form2, AP_title_form2, AP_title_ap_title_form2);
-        ITU_T_CHOICE_DECL(ap_title_form3, AP_title_form3, AP_title_ap_title_form3);
+        ITU_T_CHOICES_DECL(ap_title_form1, AP_title_form1, AP_title_ap_title_form1); // primitive
+        ITU_T_CHOICES_DECL(ap_title_form2, AP_title_form2, AP_title_ap_title_form2); // primitive
+        ITU_T_CHOICES_DECL(ap_title_form3, AP_title_form3, AP_title_ap_title_form3); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -448,9 +448,9 @@ namespace ACSE_1 {
                 ITU_T_STRUCT(ASO_qualifier_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(aso_qualifier_form1, ASO_qualifier_form1, ASO_qualifier_aso_qualifier_form1);
-        ITU_T_CHOICE_DECL(aso_qualifier_form2, ASO_qualifier_form2, ASO_qualifier_aso_qualifier_form2);
-        ITU_T_CHOICE_DECL(aso_qualifier_form3, ASO_qualifier_form3, ASO_qualifier_aso_qualifier_form3);
+        ITU_T_CHOICES_DECL(aso_qualifier_form1, ASO_qualifier_form1, ASO_qualifier_aso_qualifier_form1); // primitive
+        ITU_T_CHOICES_DECL(aso_qualifier_form2, ASO_qualifier_form2, ASO_qualifier_aso_qualifier_form2); // primitive
+        ITU_T_CHOICES_DECL(aso_qualifier_form3, ASO_qualifier_form3, ASO_qualifier_aso_qualifier_form3); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -473,8 +473,8 @@ namespace ACSE_1 {
                 ITU_T_STRUCT(AE_title_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(ae_title_form1, AE_title_form1, AE_title_ae_title_form1);
-        ITU_T_CHOICE_DECL(ae_title_form2, AE_title_form2, AE_title_ae_title_form2);
+        ITU_T_CHOICES_DECL(ae_title_form1, AE_title_form1, AE_title_ae_title_form1); // primitive
+        ITU_T_CHOICES_DECL(ae_title_form2, AE_title_form2, AE_title_ae_title_form2); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -510,8 +510,8 @@ namespace ACSE_1 {
                 ITU_T_STRUCT(Syntactic_context_list_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(context_list, Context_list, Syntactic_context_list_context_list);
-        ITU_T_CHOICE_DECL(default_contact_list, Default_Context_List, Syntactic_context_list_default_contact_list);
+        ITU_T_CHOICEC_DECL(context_list, Context_list, Syntactic_context_list_context_list);
+        ITU_T_CHOICEC_DECL(default_contact_list, Default_Context_List, Syntactic_context_list_default_contact_list);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -618,8 +618,8 @@ namespace ACSE_1 {
                 ITU_T_STRUCT(Associate_source_diagnostic_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(acse_service_user, int, Associate_source_diagnostic_acse_service_user);
-        ITU_T_CHOICE_DECL(acse_service_provider, int, Associate_source_diagnostic_acse_service_provider);
+        ITU_T_CHOICES_DECL(acse_service_user, int, Associate_source_diagnostic_acse_service_user); // primitive
+        ITU_T_CHOICES_DECL(acse_service_provider, int, Associate_source_diagnostic_acse_service_provider); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -643,9 +643,9 @@ namespace ACSE_1 {
                 ITU_T_STRUCT(User_Data_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(user_information, User_information, User_Data_user_information);
-        ITU_T_CHOICE_DECL(simply_encoded_data, Simply_encoded_data, User_Data_simply_encoded_data);
-        ITU_T_CHOICE_DECL(fully_encoded_data, PDV_list, User_Data_fully_encoded_data);
+        ITU_T_CHOICEC_DECL(user_information, User_information, User_Data_user_information);
+        ITU_T_CHOICES_DECL(simply_encoded_data, Simply_encoded_data, User_Data_simply_encoded_data); // primitive
+        ITU_T_CHOICEC_DECL(fully_encoded_data, PDV_list, User_Data_fully_encoded_data);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -673,9 +673,9 @@ namespace ACSE_1 {
                     ITU_T_STRUCT(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICE_DECL(simple_ASN1_type, any_type, presentation_data_values_type_simple_ASN1_type);
-            ITU_T_CHOICE_DECL(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned);
-            ITU_T_CHOICE_DECL(arbitrary, bitstring_type, presentation_data_values_type_arbitrary);
+            ITU_T_CHOICES_DECL(simple_ASN1_type, any_type, presentation_data_values_type_simple_ASN1_type); // primitive
+            ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned); // primitive
+            ITU_T_CHOICES_DECL(arbitrary, bitstring_type, presentation_data_values_type_arbitrary); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -733,10 +733,10 @@ namespace ACSE_1 {
                 ITU_T_STRUCT(Authentication_value_enum) (vl, static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICE_DECL(charstring, graphicstring_type, Authentication_value_charstring);
-        ITU_T_CHOICE_DECL(bitstring, bitstring_type, Authentication_value_bitstring);
-        ITU_T_CHOICE_DECL(external, external_type, Authentication_value_external);
-        ITU_T_CHOICE_DECL(other, other_type, Authentication_value_other);
+        ITU_T_CHOICES_DECL(charstring, graphicstring_type, Authentication_value_charstring); // primitive
+        ITU_T_CHOICES_DECL(bitstring, bitstring_type, Authentication_value_bitstring); // primitive
+        ITU_T_CHOICES_DECL(external, external_type, Authentication_value_external); // primitive
+        ITU_T_CHOICEC_DECL(other, other_type, Authentication_value_other);
 
         ITU_T_ARCHIVE_FUNC;
     };

@@ -1083,6 +1083,18 @@ namespace ACSE_1 {
 
     // choice AP-title
 
+    void AP_title::ap_title_form1(const AP_title_form1& vl) {
+        set<AP_title_form1>(new AP_title_form1(vl), AP_title_ap_title_form1);
+    }
+
+    void AP_title::ap_title_form2(const AP_title_form2& vl) {
+        set<AP_title_form2>(new AP_title_form2(vl), AP_title_ap_title_form2);
+    }
+
+    void AP_title::ap_title_form3(const AP_title_form3& vl) {
+        set<AP_title_form3>(new AP_title_form3(vl), AP_title_ap_title_form3);
+    }
+
     template<> void AP_title::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case AP_title_ap_title_form1:
@@ -1156,6 +1168,18 @@ namespace ACSE_1 {
 
     // choice ASO-qualifier
 
+    void ASO_qualifier::aso_qualifier_form1(const ASO_qualifier_form1& vl) {
+        set<ASO_qualifier_form1>(new ASO_qualifier_form1(vl), ASO_qualifier_aso_qualifier_form1);
+    }
+
+    void ASO_qualifier::aso_qualifier_form2(const ASO_qualifier_form2& vl) {
+        set<ASO_qualifier_form2>(new ASO_qualifier_form2(vl), ASO_qualifier_aso_qualifier_form2);
+    }
+
+    void ASO_qualifier::aso_qualifier_form3(const ASO_qualifier_form3& vl) {
+        set<ASO_qualifier_form3>(new ASO_qualifier_form3(vl), ASO_qualifier_aso_qualifier_form3);
+    }
+
     template<> void ASO_qualifier::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case ASO_qualifier_aso_qualifier_form1:
@@ -1228,6 +1252,14 @@ namespace ACSE_1 {
 
 
     // choice AE-title
+
+    void AE_title::ae_title_form1(const AE_title_form1& vl) {
+        set<AE_title_form1>(new AE_title_form1(vl), AE_title_ae_title_form1);
+    }
+
+    void AE_title::ae_title_form2(const AE_title_form2& vl) {
+        set<AE_title_form2>(new AE_title_form2(vl), AE_title_ae_title_form2);
+    }
 
     template<> void AE_title::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1615,6 +1647,14 @@ namespace ACSE_1 {
     const int Associate_source_diagnostic::acse_service_provider_no_reason_given = 1;
     const int Associate_source_diagnostic::acse_service_provider_no_common_acse_version = 2;
 
+    void Associate_source_diagnostic::acse_service_user(const int& vl) {
+        set<int>(new int(vl), Associate_source_diagnostic_acse_service_user);
+    }
+
+    void Associate_source_diagnostic::acse_service_provider(const int& vl) {
+        set<int>(new int(vl), Associate_source_diagnostic_acse_service_provider);
+    }
+
     template<> void Associate_source_diagnostic::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case Associate_source_diagnostic_acse_service_user:
@@ -1688,6 +1728,10 @@ namespace ACSE_1 {
 
 
     // choice User-Data
+
+    void User_Data::simply_encoded_data(const Simply_encoded_data& vl) {
+        set<Simply_encoded_data>(new Simply_encoded_data(vl), User_Data_simply_encoded_data);
+    }
 
     template<> void User_Data::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1782,6 +1826,18 @@ namespace ACSE_1 {
     presentation_context_identifier_(arg__presentation_context_identifier),
     presentation_data_values_(arg__presentation_data_values) {
     };
+
+    void PDV_list::presentation_data_values_type::simple_ASN1_type(const any_type& vl) {
+        set<any_type>(new any_type(vl), presentation_data_values_type_simple_ASN1_type);
+    }
+
+    void PDV_list::presentation_data_values_type::octet_aligned(const octetstring_type& vl) {
+        set<octetstring_type>(new octetstring_type(vl), presentation_data_values_type_octet_aligned);
+    }
+
+    void PDV_list::presentation_data_values_type::arbitrary(const bitstring_type& vl) {
+        set<bitstring_type>(new bitstring_type(vl), presentation_data_values_type_arbitrary);
+    }
 
     template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1969,6 +2025,18 @@ namespace ACSE_1 {
 
     void Authentication_value::other_type::other_mechanism_value(boost::shared_ptr< any_type> vl) {
         other_mechanism_value_ = vl;
+    }
+
+    void Authentication_value::charstring(const graphicstring_type& vl) {
+        set<graphicstring_type>(new graphicstring_type(vl), Authentication_value_charstring);
+    }
+
+    void Authentication_value::bitstring(const bitstring_type& vl) {
+        set<bitstring_type>(new bitstring_type(vl), Authentication_value_bitstring);
+    }
+
+    void Authentication_value::external(const external_type& vl) {
+        set<external_type>(new external_type(vl), Authentication_value_external);
     }
 
     template<> void Authentication_value::serialize(boost::asn1::x690::output_coder& arch) {
