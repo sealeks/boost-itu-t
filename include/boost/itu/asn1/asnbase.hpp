@@ -32,7 +32,7 @@
 
 
 
-#define BOOST_ASN_SET_REGESTRATE(regtype) \
+#define ITU_T_SET_REGESTRATE(regtype) \
 namespace boost {\
         namespace asn1 {\
             template<>\
@@ -47,7 +47,7 @@ namespace boost {\
         }\
 }\
 
-#define BOOST_ASN_TYPE_REGESTRATE(regtype, id, cl) \
+#define ITU_T_TYPE_REGESTRATE(regtype, id, cl) \
 namespace boost {\
         namespace asn1 {\
             template<>\
@@ -62,7 +62,7 @@ namespace boost {\
         }\
 }\
 
-#define BOOST_ASN_UNIVERSALTYPE_REGESTRATE(regtype, id) \
+#define ITU_T_UNIVERSALTYPE_REGESTRATE(regtype, id) \
 namespace boost {\
         namespace asn1 {\
             template<>\
@@ -77,7 +77,7 @@ namespace boost {\
         }\
 }\
 
-#define BOOST_ASN_CHOICE_REGESTRATE(regtype)\
+#define ITU_T_CHOICE_REGESTRATE(regtype)\
 namespace boost {\
         namespace asn1 {\
             template<typename Archive>\
@@ -91,7 +91,7 @@ namespace boost {\
         }\
 }\
 
-#define BOOST_ASN_INTERNAL_REGESTRATE(regtype, id) \
+#define ITU_T_INTERNAL_REGESTRATE(regtype, id) \
             template<>\
             struct tag_traits< regtype > {\
                 static  id_type number() {\
@@ -102,58 +102,58 @@ namespace boost {\
                 }\
             } ;\
 
-#define BOOST_ASN_TYPEDEF(regtype, type , id, cl)  typedef type  regtype;
-#define BOOST_ASN_IMPLICIT_TYPEDEF(regtype, type , id, cl)  typedef boost::asn1::implicit_typedef< type, class _____TAGTYPE___##regtype ,  id , boost::asn1:: cl>  regtype;
-#define BOOST_ASN_EXPLICIT_TYPEDEF(regtype, type , id, cl)  typedef boost::asn1::explicit_typedef< type,  class _____TAGTYPE___##regtype , id , boost::asn1:: cl>   regtype;      
+#define ITU_T_TYPEDEF(regtype, type , id, cl)  typedef type  regtype;
+#define ITU_T_IMPLICIT_TYPEDEF(regtype, type , id, cl)  typedef boost::asn1::implicit_typedef< type, class _____TAGTYPE___##regtype ,  id , boost::asn1:: cl>  regtype;
+#define ITU_T_EXPLICIT_TYPEDEF(regtype, type , id, cl)  typedef boost::asn1::explicit_typedef< type,  class _____TAGTYPE___##regtype , id , boost::asn1:: cl>   regtype;      
 
 
 
 
-#define BOOST_ASN_BIND_TAG(var)    boost::asn1::bind_basic(arch, var)
-#define BOOST_ASN_IMPLICIT_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::CONTEXT_CLASS)
-#define BOOST_ASN_IMPLICIT_APPLICATION_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
-#define BOOST_ASN_IMPLICIT_PRIVATE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
-#define BOOST_ASN_IMPLICIT_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::UNIVERSAL_CLASS) 
-#define BOOST_ASN_EXPLICIT_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::CONTEXT_CLASS)
-#define BOOST_ASN_EXPLICIT_APPLICATION_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)  
-#define BOOST_ASN_EXPLICIT_PRIVATE_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
-#define BOOST_ASN_EXPLICIT_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::UNIVERSAL_CLASS)
-#define BOOST_ASN_CHOICE(var)    boost::asn1::bind_choice(arch, var)
-#define BOOST_ASN_CHOICE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::CONTEXT_CLASS)
-#define BOOST_ASN_CHOICE_APPLICATION_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
-#define BOOST_ASN_CHOICE_PRIVATE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
-#define BOOST_ASN_CHOICE_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
+#define ITU_T_BIND_TAG(var)    boost::asn1::bind_basic(arch, var)
+#define ITU_T_IMPLICIT_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::CONTEXT_CLASS)
+#define ITU_T_IMPLICIT_APPLICATION_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
+#define ITU_T_IMPLICIT_PRIVATE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
+#define ITU_T_IMPLICIT_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::UNIVERSAL_CLASS) 
+#define ITU_T_EXPLICIT_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::CONTEXT_CLASS)
+#define ITU_T_EXPLICIT_APPLICATION_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)  
+#define ITU_T_EXPLICIT_PRIVATE_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
+#define ITU_T_EXPLICIT_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::UNIVERSAL_CLASS)
+#define ITU_T_CHOICE(var)    boost::asn1::bind_choice(arch, var)
+#define ITU_T_CHOICE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::CONTEXT_CLASS)
+#define ITU_T_CHOICE_APPLICATION_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
+#define ITU_T_CHOICE_PRIVATE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
+#define ITU_T_CHOICE_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
 
-#define BOOST_ASN_EXTENTION   arch.resetextention();
+#define ITU_T_EXTENTION   arch.resetextention();
 
-#define BOOST_ASN_CHOICE_STRUCT(enm)  boost::asn1::___asn__choice__base__< enm> 
-#define BOOST_ASN_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
+#define ITU_T_CHOICE_STRUCT(enm)  boost::asn1::___asn__choice__base__< enm> 
+#define ITU_T_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
 
-#define BOOST_ASN_VALUE_CHOICE(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; \
+#define ITU_T_VALUE_CHOICE(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; \
                          boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);}; boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
 
-#define BOOST_ASN_VALUE_OPTIONAL_DECL(nm ,tp )  boost::shared_ptr< tp >& nm () { return nm ## _; };  const boost::shared_ptr< tp >& nm () const { return nm ## _; } \
+#define ITU_T_VALUE_OPTIONAL_DECL(nm ,tp )  boost::shared_ptr< tp >& nm () { return nm ## _; };  const boost::shared_ptr< tp >& nm () const { return nm ## _; } \
                          void nm  (boost::shared_ptr< tp > vl) {nm ## _ = vl;}; void nm  ( tp *  vl) {nm ## _ = boost::shared_ptr< tp >(vl);}; void nm ( const tp & vl); \
                          boost::shared_ptr< tp> nm ## __new  (); void nm ## __free  () {nm ## _ = boost::shared_ptr< tp>();}; \
                          private: boost::shared_ptr< tp > nm ## _ ; public:                         
 
-#define BOOST_ASN_VALUE_HOLDERH_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
+#define ITU_T_VALUE_HOLDERH_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
                          private: boost::asn1::value_holder< tp > nm ## _ ; public: 
 
-#define BOOST_ASN_VALUE_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm  () const; \
+#define ITU_T_VALUE_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm  () const; \
                          private:  tp  nm ## _ ; public: 
 
-#define BOOST_ASN_VALUE_DEFAULT_DECL(nm ,tp, dflt )    void nm ( const tp & vl);  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
+#define ITU_T_VALUE_DEFAULT_DECL(nm ,tp, dflt )    void nm ( const tp & vl);  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
                          private: boost::asn1::default_holder<tp  , dflt> nm ## _ ; public: 
 
-#define BOOST_ASN_VALUE_FUNC_DECLARATE( type, var)    boost::shared_ptr< type > var  ## __new () { return var = boost::asn1::simple_build_type<type>();} \
+#define ITU_T_VALUE_FUNC_DECLARATE( type, var)    boost::shared_ptr< type > var  ## __new () { return var = boost::asn1::simple_build_type<type>();} \
                void  var ##  __free() { var = boost::shared_ptr< type >() ;} \
                 boost::shared_ptr< type > var  ## __get_or_create () { return var  ? var  : (var = boost::asn1::simple_build_type<type>() );} \
                 void var  ## __assign ( boost::shared_ptr< type > vl ) { var  =  vl ;} \
                 void var  ## __assign ( type * vl ) { var  =  boost::shared_ptr< type >(vl)  ;} \
                 /*void var  ## __assign ( const type & vl ) { var  =  boost::shared_ptr< type >( new type (vl)) ;}*/
 
-#define BOOST_ASN_ARCHIVE_FUNC    template<typename Archive> void serialize(Archive& arch){};
+#define ITU_T_ARCHIVE_FUNC    template<typename Archive> void serialize(Archive& arch){};
 
 
 
@@ -829,39 +829,39 @@ namespace boost {
             }
         };
 
-        BOOST_ASN_INTERNAL_REGESTRATE(eoc_type, TYPE_EOC)
-        BOOST_ASN_INTERNAL_REGESTRATE(int8_t, TYPE_INTEGER)
-        BOOST_ASN_INTERNAL_REGESTRATE(uint8_t, TYPE_INTEGER)
-        BOOST_ASN_INTERNAL_REGESTRATE(int16_t, TYPE_INTEGER)
-        BOOST_ASN_INTERNAL_REGESTRATE(uint16_t, TYPE_INTEGER)
-        BOOST_ASN_INTERNAL_REGESTRATE(int32_t, TYPE_INTEGER)
-        BOOST_ASN_INTERNAL_REGESTRATE(uint32_t, TYPE_INTEGER)
-        BOOST_ASN_INTERNAL_REGESTRATE(int64_t, TYPE_INTEGER)
-        BOOST_ASN_INTERNAL_REGESTRATE(uint64_t, TYPE_INTEGER)
-        BOOST_ASN_INTERNAL_REGESTRATE(long double, TYPE_REAL)
-        BOOST_ASN_INTERNAL_REGESTRATE(double, TYPE_REAL)
-        BOOST_ASN_INTERNAL_REGESTRATE(float, TYPE_REAL)
-        BOOST_ASN_INTERNAL_REGESTRATE(bool, TYPE_BOOLEAN)
-        BOOST_ASN_INTERNAL_REGESTRATE(oid_type, TYPE_OBJECT_IDENTIFIER)
-        BOOST_ASN_INTERNAL_REGESTRATE(reloid_type, TYPE_RELATIVE_OID)
-        BOOST_ASN_INTERNAL_REGESTRATE(null_type, TYPE_NULL)
-        BOOST_ASN_INTERNAL_REGESTRATE(bitstring_type, TYPE_BITSTRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(octetstring_type, TYPE_OCTETSTRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(enumerated_type, TYPE_ENUMERATED)
-        BOOST_ASN_INTERNAL_REGESTRATE(utf8string_type, TYPE_UTF8STRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(numericstring_type, TYPE_NUMERICSTRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(printablestring_type, TYPE_PRINTABLESTRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(t61string_type, TYPE_T61STRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(videotexstring_type, TYPE_VIDEOTEXSTRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(ia5string_type, TYPE_IA5STRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(graphicstring_type, TYPE_GRAPHICSTRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(objectdescriptor_type, TYPE_OBJECT_DESCRIPTOR)
-        BOOST_ASN_INTERNAL_REGESTRATE(visiblestring_type, TYPE_VISIBLESTRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(generalstring_type, TYPE_GENERALSTRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(universalstring_type, TYPE_UNIVERSALSTRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(bmpstring_type, TYPE_BMPSTRING)
-        BOOST_ASN_INTERNAL_REGESTRATE(utctime_type, TYPE_UTCTIME)
-        BOOST_ASN_INTERNAL_REGESTRATE(gentime_type, TYPE_GENERALZEDTIME)
+        ITU_T_INTERNAL_REGESTRATE(eoc_type, TYPE_EOC)
+        ITU_T_INTERNAL_REGESTRATE(int8_t, TYPE_INTEGER)
+        ITU_T_INTERNAL_REGESTRATE(uint8_t, TYPE_INTEGER)
+        ITU_T_INTERNAL_REGESTRATE(int16_t, TYPE_INTEGER)
+        ITU_T_INTERNAL_REGESTRATE(uint16_t, TYPE_INTEGER)
+        ITU_T_INTERNAL_REGESTRATE(int32_t, TYPE_INTEGER)
+        ITU_T_INTERNAL_REGESTRATE(uint32_t, TYPE_INTEGER)
+        ITU_T_INTERNAL_REGESTRATE(int64_t, TYPE_INTEGER)
+        ITU_T_INTERNAL_REGESTRATE(uint64_t, TYPE_INTEGER)
+        ITU_T_INTERNAL_REGESTRATE(long double, TYPE_REAL)
+        ITU_T_INTERNAL_REGESTRATE(double, TYPE_REAL)
+        ITU_T_INTERNAL_REGESTRATE(float, TYPE_REAL)
+        ITU_T_INTERNAL_REGESTRATE(bool, TYPE_BOOLEAN)
+        ITU_T_INTERNAL_REGESTRATE(oid_type, TYPE_OBJECT_IDENTIFIER)
+        ITU_T_INTERNAL_REGESTRATE(reloid_type, TYPE_RELATIVE_OID)
+        ITU_T_INTERNAL_REGESTRATE(null_type, TYPE_NULL)
+        ITU_T_INTERNAL_REGESTRATE(bitstring_type, TYPE_BITSTRING)
+        ITU_T_INTERNAL_REGESTRATE(octetstring_type, TYPE_OCTETSTRING)
+        ITU_T_INTERNAL_REGESTRATE(enumerated_type, TYPE_ENUMERATED)
+        ITU_T_INTERNAL_REGESTRATE(utf8string_type, TYPE_UTF8STRING)
+        ITU_T_INTERNAL_REGESTRATE(numericstring_type, TYPE_NUMERICSTRING)
+        ITU_T_INTERNAL_REGESTRATE(printablestring_type, TYPE_PRINTABLESTRING)
+        ITU_T_INTERNAL_REGESTRATE(t61string_type, TYPE_T61STRING)
+        ITU_T_INTERNAL_REGESTRATE(videotexstring_type, TYPE_VIDEOTEXSTRING)
+        ITU_T_INTERNAL_REGESTRATE(ia5string_type, TYPE_IA5STRING)
+        ITU_T_INTERNAL_REGESTRATE(graphicstring_type, TYPE_GRAPHICSTRING)
+        ITU_T_INTERNAL_REGESTRATE(objectdescriptor_type, TYPE_OBJECT_DESCRIPTOR)
+        ITU_T_INTERNAL_REGESTRATE(visiblestring_type, TYPE_VISIBLESTRING)
+        ITU_T_INTERNAL_REGESTRATE(generalstring_type, TYPE_GENERALSTRING)
+        ITU_T_INTERNAL_REGESTRATE(universalstring_type, TYPE_UNIVERSALSTRING)
+        ITU_T_INTERNAL_REGESTRATE(bmpstring_type, TYPE_BMPSTRING)
+        ITU_T_INTERNAL_REGESTRATE(utctime_type, TYPE_UTCTIME)
+        ITU_T_INTERNAL_REGESTRATE(gentime_type, TYPE_GENERALZEDTIME)
 
 
 
@@ -1828,14 +1828,14 @@ namespace boost {
                 encoding_type_arbitrary,
             };
 
-            struct encoding_type : public BOOST_ASN_CHOICE_STRUCT(encoding_type_enum) {
+            struct encoding_type : public ITU_T_CHOICE_STRUCT(encoding_type_enum) {
 
-                encoding_type() : BOOST_ASN_CHOICE_STRUCT(encoding_type_enum) () {
+                encoding_type() : ITU_T_CHOICE_STRUCT(encoding_type_enum) () {
                 }
 
-                BOOST_ASN_VALUE_CHOICE(single_ASN1_type, any_type, encoding_type_single_ASN1_type)
-                BOOST_ASN_VALUE_CHOICE(octet_aligned, octetstring_type, encoding_type_octet_aligned)
-                BOOST_ASN_VALUE_CHOICE(arbitrary, bitstring_type, encoding_type_arbitrary)
+                ITU_T_VALUE_CHOICE(single_ASN1_type, any_type, encoding_type_single_ASN1_type)
+                ITU_T_VALUE_CHOICE(octet_aligned, octetstring_type, encoding_type_octet_aligned)
+                ITU_T_VALUE_CHOICE(arbitrary, bitstring_type, encoding_type_arbitrary)
 
                         template<typename Archive> void serialize(Archive & arch) {
 
@@ -1874,19 +1874,19 @@ namespace boost {
                                 switch (__tag_id__) {
                                     case 0:
                                     {
-                                        if (BOOST_ASN_EXPLICIT_TAG(value<any_type > (true, encoding_type_single_ASN1_type), 0)) return;
+                                        if (ITU_T_EXPLICIT_TAG(value<any_type > (true, encoding_type_single_ASN1_type), 0)) return;
                                         else free();
                                         break;
                                     }
                                     case 1:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (true, encoding_type_octet_aligned), 1)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, encoding_type_octet_aligned), 1)) return;
                                         else free();
                                         break;
                                     }
                                     case 2:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (true, encoding_type_arbitrary), 2)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, encoding_type_arbitrary), 2)) return;
                                         else free();
                                         break;
                                     }
@@ -1905,17 +1905,17 @@ namespace boost {
                         switch (type()) {
                             case encoding_type_single_ASN1_type:
                             {
-                                BOOST_ASN_EXPLICIT_TAG(value<any_type > (false, encoding_type_single_ASN1_type), 0);
+                                ITU_T_EXPLICIT_TAG(value<any_type > (false, encoding_type_single_ASN1_type), 0);
                                 break;
                             }
                             case encoding_type_octet_aligned:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<octetstring_type > (false, encoding_type_octet_aligned), 1);
+                                ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, encoding_type_octet_aligned), 1);
                                 break;
                             }
                             case encoding_type_arbitrary:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<bitstring_type > (false, encoding_type_arbitrary), 2);
+                                ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, encoding_type_arbitrary), 2);
                                 break;
                             }
                             default:
@@ -1928,13 +1928,13 @@ namespace boost {
 
 
             boost::shared_ptr<oid_type > direct_reference; //  OPTIONAL
-            BOOST_ASN_VALUE_FUNC_DECLARATE(oid_type, direct_reference)
+            ITU_T_VALUE_FUNC_DECLARATE(oid_type, direct_reference)
 
             boost::shared_ptr<int > indirect_reference; //  OPTIONAL
-            BOOST_ASN_VALUE_FUNC_DECLARATE(int, indirect_reference)
+            ITU_T_VALUE_FUNC_DECLARATE(int, indirect_reference)
 
             boost::shared_ptr<objectdescriptor_type > data_value_descriptor; //  OPTIONAL
-            BOOST_ASN_VALUE_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
+            ITU_T_VALUE_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
 
             boost::asn1::value_holder<encoding_type > encoding;
 
@@ -1943,14 +1943,14 @@ namespace boost {
 
             template<typename Archive> void serialize(Archive & arch) {
 
-                BOOST_ASN_BIND_TAG(direct_reference);
-                BOOST_ASN_BIND_TAG(indirect_reference);
-                BOOST_ASN_BIND_TAG(data_value_descriptor);
-                BOOST_ASN_CHOICE(encoding);
+                ITU_T_BIND_TAG(direct_reference);
+                ITU_T_BIND_TAG(indirect_reference);
+                ITU_T_BIND_TAG(data_value_descriptor);
+                ITU_T_CHOICE(encoding);
             }
         };
 
-        BOOST_ASN_INTERNAL_REGESTRATE(external_type, TYPE_EXTERNAL)
+        ITU_T_INTERNAL_REGESTRATE(external_type, TYPE_EXTERNAL)
 
         /////////////////////////////////////////////////////////////////////////////////////////////////   
 
@@ -1967,7 +1967,7 @@ namespace boost {
                 identification_type_fixed_type,
             };
 
-            struct identification_type : public BOOST_ASN_CHOICE_STRUCT(identification_type_enum) {
+            struct identification_type : public ITU_T_CHOICE_STRUCT(identification_type_enum) {
 
                 struct syntaxes_type {
 
@@ -1979,8 +1979,8 @@ namespace boost {
 
                     template<typename Archive> void serialize(Archive & arch) {
 
-                        BOOST_ASN_IMPLICIT_TAG(abstract, 0);
-                        BOOST_ASN_IMPLICIT_TAG(transfer, 1);
+                        ITU_T_IMPLICIT_TAG(abstract, 0);
+                        ITU_T_IMPLICIT_TAG(transfer, 1);
                     }
                 };
 
@@ -1994,20 +1994,20 @@ namespace boost {
 
                     template<typename Archive> void serialize(Archive & arch) {
 
-                        BOOST_ASN_IMPLICIT_TAG(presentation_context_id, 0);
-                        BOOST_ASN_IMPLICIT_TAG(transfer_syntax, 1);
+                        ITU_T_IMPLICIT_TAG(presentation_context_id, 0);
+                        ITU_T_IMPLICIT_TAG(transfer_syntax, 1);
                     }
                 };
 
-                identification_type() : BOOST_ASN_CHOICE_STRUCT(identification_type_enum) () {
+                identification_type() : ITU_T_CHOICE_STRUCT(identification_type_enum) () {
                 }
 
-                BOOST_ASN_VALUE_CHOICE(syntaxes, syntaxes_type, identification_type_syntaxes_type)
-                BOOST_ASN_VALUE_CHOICE(syntax, oid_type, identification_type_syntax_type)
-                BOOST_ASN_VALUE_CHOICE(presentation_context_id, int, identification_type_presentation_context_id_type)
-                BOOST_ASN_VALUE_CHOICE(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
-                BOOST_ASN_VALUE_CHOICE(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
-                BOOST_ASN_VALUE_CHOICE(fixed, null_type, identification_type_fixed_type)
+                ITU_T_VALUE_CHOICE(syntaxes, syntaxes_type, identification_type_syntaxes_type)
+                ITU_T_VALUE_CHOICE(syntax, oid_type, identification_type_syntax_type)
+                ITU_T_VALUE_CHOICE(presentation_context_id, int, identification_type_presentation_context_id_type)
+                ITU_T_VALUE_CHOICE(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
+                ITU_T_VALUE_CHOICE(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
+                ITU_T_VALUE_CHOICE(fixed, null_type, identification_type_fixed_type)
 
                         template<typename Archive> void serialize(Archive & arch) {
 
@@ -2046,37 +2046,37 @@ namespace boost {
                                 switch (__tag_id__) {
                                     case 0:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<syntaxes_type > (true, identification_type_syntaxes_type), 0)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<syntaxes_type > (true, identification_type_syntaxes_type), 0)) return;
                                         else free();
                                         break;
                                     }
                                     case 1:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<oid_type > (true, identification_type_syntax_type), 1)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_syntax_type), 1)) return;
                                         else free();
                                         break;
                                     }
                                     case 2:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<int > (true, identification_type_presentation_context_id_type), 2)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<int > (true, identification_type_presentation_context_id_type), 2)) return;
                                         else free();
                                         break;
                                     }
                                     case 3:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<context_negotiation_type > (true, identification_type_context_negotiation_type), 3)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (true, identification_type_context_negotiation_type), 3)) return;
                                         else free();
                                         break;
                                     }
                                     case 4:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<oid_type > (true, identification_type_transfer_syntax_type), 4)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_transfer_syntax_type), 4)) return;
                                         else free();
                                         break;
                                     }
                                     case 5:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<null_type > (true, identification_type_fixed_type), 5)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, identification_type_fixed_type), 5)) return;
                                         else free();
                                         break;
                                     }
@@ -2095,32 +2095,32 @@ namespace boost {
                         switch (type()) {
                             case identification_type_syntaxes_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<syntaxes_type > (false, identification_type_syntaxes_type), 0);
+                                ITU_T_IMPLICIT_TAG(value<syntaxes_type > (false, identification_type_syntaxes_type), 0);
                                 break;
                             }
                             case identification_type_syntax_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<oid_type > (false, identification_type_syntax_type), 1);
+                                ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_syntax_type), 1);
                                 break;
                             }
                             case identification_type_presentation_context_id_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<int > (false, identification_type_presentation_context_id_type), 2);
+                                ITU_T_IMPLICIT_TAG(value<int > (false, identification_type_presentation_context_id_type), 2);
                                 break;
                             }
                             case identification_type_context_negotiation_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<context_negotiation_type > (false, identification_type_context_negotiation_type), 3);
+                                ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (false, identification_type_context_negotiation_type), 3);
                                 break;
                             }
                             case identification_type_transfer_syntax_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<oid_type > (false, identification_type_transfer_syntax_type), 4);
+                                ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_transfer_syntax_type), 4);
                                 break;
                             }
                             case identification_type_fixed_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<null_type > (false, identification_type_fixed_type), 5);
+                                ITU_T_IMPLICIT_TAG(value<null_type > (false, identification_type_fixed_type), 5);
                                 break;
                             }
                             default:
@@ -2136,7 +2136,7 @@ namespace boost {
 
             identification_type identification;
             boost::shared_ptr< objectdescriptor_type> data_value_descriptor; //  OPTIONAL
-            BOOST_ASN_VALUE_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
+            ITU_T_VALUE_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
 
             octetstring_type data_value;
 
@@ -2145,12 +2145,12 @@ namespace boost {
 
             template<typename Archive> void serialize(Archive & arch) {
 
-                BOOST_ASN_CHOICE(identification);
-                BOOST_ASN_IMPLICIT_TAG(data_value, 1); //  ????
+                ITU_T_CHOICE(identification);
+                ITU_T_IMPLICIT_TAG(data_value, 1); //  ????
             }
         };
 
-        BOOST_ASN_INTERNAL_REGESTRATE(embeded_type, TYPE_EMBEDDED_PDV)
+        ITU_T_INTERNAL_REGESTRATE(embeded_type, TYPE_EMBEDDED_PDV)
 
 
 
@@ -2170,7 +2170,7 @@ namespace boost {
                 identification_type_fixed_type,
             };
 
-            struct identification_type : public BOOST_ASN_CHOICE_STRUCT(identification_type_enum) {
+            struct identification_type : public ITU_T_CHOICE_STRUCT(identification_type_enum) {
 
                 struct syntaxes_type {
 
@@ -2182,8 +2182,8 @@ namespace boost {
 
                     template<typename Archive> void serialize(Archive & arch) {
 
-                        BOOST_ASN_IMPLICIT_TAG(abstract, 0);
-                        BOOST_ASN_IMPLICIT_TAG(transfer, 1);
+                        ITU_T_IMPLICIT_TAG(abstract, 0);
+                        ITU_T_IMPLICIT_TAG(transfer, 1);
                     }
                 };
 
@@ -2197,20 +2197,20 @@ namespace boost {
 
                     template<typename Archive> void serialize(Archive & arch) {
 
-                        BOOST_ASN_IMPLICIT_TAG(presentation_context_id, 0);
-                        BOOST_ASN_IMPLICIT_TAG(transfer_syntax, 1);
+                        ITU_T_IMPLICIT_TAG(presentation_context_id, 0);
+                        ITU_T_IMPLICIT_TAG(transfer_syntax, 1);
                     }
                 };
 
-                identification_type() : BOOST_ASN_CHOICE_STRUCT(identification_type_enum) () {
+                identification_type() : ITU_T_CHOICE_STRUCT(identification_type_enum) () {
                 }
 
-                BOOST_ASN_VALUE_CHOICE(syntaxes, syntaxes_type, identification_type_syntaxes_type)
-                BOOST_ASN_VALUE_CHOICE(syntax, oid_type, identification_type_syntax_type)
-                BOOST_ASN_VALUE_CHOICE(presentation_context_id, int, identification_type_presentation_context_id_type)
-                BOOST_ASN_VALUE_CHOICE(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
-                BOOST_ASN_VALUE_CHOICE(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
-                BOOST_ASN_VALUE_CHOICE(fixed, null_type, identification_type_fixed_type)
+                ITU_T_VALUE_CHOICE(syntaxes, syntaxes_type, identification_type_syntaxes_type)
+                ITU_T_VALUE_CHOICE(syntax, oid_type, identification_type_syntax_type)
+                ITU_T_VALUE_CHOICE(presentation_context_id, int, identification_type_presentation_context_id_type)
+                ITU_T_VALUE_CHOICE(context_negotiation, context_negotiation_type, identification_type_context_negotiation_type)
+                ITU_T_VALUE_CHOICE(transfer_syntax, oid_type, identification_type_transfer_syntax_type)
+                ITU_T_VALUE_CHOICE(fixed, null_type, identification_type_fixed_type)
 
                         template<typename Archive> void serialize(Archive & arch) {
 
@@ -2249,37 +2249,37 @@ namespace boost {
                                 switch (__tag_id__) {
                                     case 0:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<syntaxes_type > (true, identification_type_syntaxes_type), 0)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<syntaxes_type > (true, identification_type_syntaxes_type), 0)) return;
                                         else free();
                                         break;
                                     }
                                     case 1:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<oid_type > (true, identification_type_syntax_type), 1)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_syntax_type), 1)) return;
                                         else free();
                                         break;
                                     }
                                     case 2:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<int > (true, identification_type_presentation_context_id_type), 2)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<int > (true, identification_type_presentation_context_id_type), 2)) return;
                                         else free();
                                         break;
                                     }
                                     case 3:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<context_negotiation_type > (true, identification_type_context_negotiation_type), 3)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (true, identification_type_context_negotiation_type), 3)) return;
                                         else free();
                                         break;
                                     }
                                     case 4:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<oid_type > (true, identification_type_transfer_syntax_type), 4)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, identification_type_transfer_syntax_type), 4)) return;
                                         else free();
                                         break;
                                     }
                                     case 5:
                                     {
-                                        if (BOOST_ASN_IMPLICIT_TAG(value<null_type > (true, identification_type_fixed_type), 5)) return;
+                                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, identification_type_fixed_type), 5)) return;
                                         else free();
                                         break;
                                     }
@@ -2298,32 +2298,32 @@ namespace boost {
                         switch (type()) {
                             case identification_type_syntaxes_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<syntaxes_type > (false, identification_type_syntaxes_type), 0);
+                                ITU_T_IMPLICIT_TAG(value<syntaxes_type > (false, identification_type_syntaxes_type), 0);
                                 break;
                             }
                             case identification_type_syntax_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<oid_type > (false, identification_type_syntax_type), 1);
+                                ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_syntax_type), 1);
                                 break;
                             }
                             case identification_type_presentation_context_id_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<int > (false, identification_type_presentation_context_id_type), 2);
+                                ITU_T_IMPLICIT_TAG(value<int > (false, identification_type_presentation_context_id_type), 2);
                                 break;
                             }
                             case identification_type_context_negotiation_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<context_negotiation_type > (false, identification_type_context_negotiation_type), 3);
+                                ITU_T_IMPLICIT_TAG(value<context_negotiation_type > (false, identification_type_context_negotiation_type), 3);
                                 break;
                             }
                             case identification_type_transfer_syntax_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<oid_type > (false, identification_type_transfer_syntax_type), 4);
+                                ITU_T_IMPLICIT_TAG(value<oid_type > (false, identification_type_transfer_syntax_type), 4);
                                 break;
                             }
                             case identification_type_fixed_type:
                             {
-                                BOOST_ASN_IMPLICIT_TAG(value<null_type > (false, identification_type_fixed_type), 5);
+                                ITU_T_IMPLICIT_TAG(value<null_type > (false, identification_type_fixed_type), 5);
                                 break;
                             }
                             default:
@@ -2339,7 +2339,7 @@ namespace boost {
 
             identification_type identification;
             boost::shared_ptr<objectdescriptor_type > data_value_descriptor; //  OPTIONAL
-            BOOST_ASN_VALUE_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
+            ITU_T_VALUE_FUNC_DECLARATE(objectdescriptor_type, data_value_descriptor)
 
             octetstring_type string_value;
 
@@ -2348,13 +2348,13 @@ namespace boost {
 
             template<typename Archive> void serialize(Archive & arch) {
 
-                BOOST_ASN_CHOICE(identification);
-                BOOST_ASN_IMPLICIT_TAG(data_value_descriptor, 1);
-                BOOST_ASN_IMPLICIT_TAG(string_value, 2);
+                ITU_T_CHOICE(identification);
+                ITU_T_IMPLICIT_TAG(data_value_descriptor, 1);
+                ITU_T_IMPLICIT_TAG(string_value, 2);
             }
         };
 
-        BOOST_ASN_INTERNAL_REGESTRATE(characterstring_type, TYPE_CHARACTERSTRING)
+        ITU_T_INTERNAL_REGESTRATE(characterstring_type, TYPE_CHARACTERSTRING)
 
 
     }
