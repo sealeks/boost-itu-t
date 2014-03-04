@@ -1349,6 +1349,13 @@ namespace boost {
 
 
         }
+        
+        
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif       
 
         /////// external_type
 
@@ -1748,7 +1755,10 @@ namespace boost {
             ITU_T_IMPLICIT_TAG(string_value_, 1);
         }
 
-
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+        
     }
 }
 
