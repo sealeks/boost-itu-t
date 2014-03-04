@@ -1197,27 +1197,27 @@ namespace boost {
 
         template<> void external_type::serialize(boost::asn1::x690::output_coder& arch);
         template<> void external_type::serialize(boost::asn1::x690::input_coder& arch);
-        template<> void external_type::encoding_type::serialize(boost::asn1::x690::output_coder& arch);
-        template<> void external_type::encoding_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void external_type::Encoding_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void external_type::Encoding_type::serialize(boost::asn1::x690::input_coder& arch);
 
         template<> void embeded_type::serialize(boost::asn1::x690::output_coder& arch);
         template<> void embeded_type::serialize(boost::asn1::x690::input_coder& arch);
-        template<> void embeded_type::identification_type::serialize(boost::asn1::x690::output_coder& arch);
-        template<> void embeded_type::identification_type::serialize(boost::asn1::x690::input_coder& arch);
-        template<> void embeded_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::output_coder& arch);
-        template<> void embeded_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::input_coder& arch);
-        template<> void embeded_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch);
-        template<> void embeded_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void embeded_type::Identification_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void embeded_type::Identification_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch);
 
 
         template<> void characterstring_type::serialize(boost::asn1::x690::output_coder& arch);
         template<> void characterstring_type::serialize(boost::asn1::x690::input_coder& arch);
-        template<> void characterstring_type::identification_type::serialize(boost::asn1::x690::output_coder& arch);
-        template<> void characterstring_type::identification_type::serialize(boost::asn1::x690::input_coder& arch);
-        template<> void characterstring_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::output_coder& arch);
-        template<> void characterstring_type::identification_type::syntaxes_type::serialize(boost::asn1::x690::input_coder& arch);
-        template<> void characterstring_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch);
-        template<> void characterstring_type::identification_type::context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void characterstring_type::Identification_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void characterstring_type::Identification_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch);
+        template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch);
+        template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch);
 
 
 
