@@ -26,6 +26,8 @@ namespace x680 {
         bool dir_create(const std::string& path, const std::string& outdir);
 
         std::string correct_name(std::string vl);
+        std::string nameupper(std::string name);         
+        std::string namelower(std::string name);        
         std::string type_str(typeassignment_entity_ptr self, bool native = false);
         std::string fulltype_str(basic_entity_ptr self, bool withns = false);
         std::string fullpathtype_str(typeassignment_entity_ptr self, typeassignment_entity_ptr root, std::string tp);
