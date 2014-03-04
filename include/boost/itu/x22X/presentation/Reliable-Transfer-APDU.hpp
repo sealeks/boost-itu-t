@@ -240,10 +240,10 @@ namespace Reliable_Transfer_APDU {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const RefuseReason RefuseReason_rtsBusy;
-    extern const RefuseReason RefuseReason_cannotRecover;
-    extern const RefuseReason RefuseReason_validationFailure;
-    extern const RefuseReason RefuseReason_unacceptableDialogueMode;
+    extern const RefuseReason refuseReason_rtsBusy;
+    extern const RefuseReason refuseReason_cannotRecover;
+    extern const RefuseReason refuseReason_validationFailure;
+    extern const RefuseReason refuseReason_unacceptableDialogueMode;
 
     // choice CallingSSuserReference
 
@@ -273,14 +273,14 @@ namespace Reliable_Transfer_APDU {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const AbortReason AbortReason_localSystemProblem;
-    extern const AbortReason AbortReason_invalidParameter;
-    extern const AbortReason AbortReason_unrecognizedActivity;
-    extern const AbortReason AbortReason_temporaryProblem;
-    extern const AbortReason AbortReason_protocolError;
-    extern const AbortReason AbortReason_permanentProblem;
-    extern const AbortReason AbortReason_userError;
-    extern const AbortReason AbortReason_transferCompleted;
+    extern const AbortReason abortReason_localSystemProblem;
+    extern const AbortReason abortReason_invalidParameter;
+    extern const AbortReason abortReason_unrecognizedActivity;
+    extern const AbortReason abortReason_temporaryProblem;
+    extern const AbortReason abortReason_protocolError;
+    extern const AbortReason abortReason_permanentProblem;
+    extern const AbortReason abortReason_userError;
+    extern const AbortReason abortReason_transferCompleted;
 
     template<> void RTSE_apdus::serialize(boost::asn1::x690::output_coder& arch);
     template<> void RTSE_apdus::serialize(boost::asn1::x690::input_coder& arch);

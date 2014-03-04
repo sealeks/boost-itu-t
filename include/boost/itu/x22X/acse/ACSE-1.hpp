@@ -392,20 +392,20 @@ namespace ACSE_1 {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const ABRT_diagnostic ABRT_diagnostic_no_reason_given;
-    extern const ABRT_diagnostic ABRT_diagnostic_protocol_error;
-    extern const ABRT_diagnostic ABRT_diagnostic_authentication_mechanism_name_not_recognized;
-    extern const ABRT_diagnostic ABRT_diagnostic_authentication_mechanism_name_required;
-    extern const ABRT_diagnostic ABRT_diagnostic_authentication_failure;
-    extern const ABRT_diagnostic ABRT_diagnostic_authentication_required;
+    extern const ABRT_diagnostic aBRT_diagnostic_no_reason_given;
+    extern const ABRT_diagnostic aBRT_diagnostic_protocol_error;
+    extern const ABRT_diagnostic aBRT_diagnostic_authentication_mechanism_name_not_recognized;
+    extern const ABRT_diagnostic aBRT_diagnostic_authentication_mechanism_name_required;
+    extern const ABRT_diagnostic aBRT_diagnostic_authentication_failure;
+    extern const ABRT_diagnostic aBRT_diagnostic_authentication_required;
 
-    extern const ABRT_source ABRT_source_acse_service_user;
-    extern const ABRT_source ABRT_source_acse_service_provider;
+    extern const ABRT_source aBRT_source_acse_service_user;
+    extern const ABRT_source aBRT_source_acse_service_provider;
 
-    extern const ACSE_requirements ACSE_requirements_authentication;
-    extern const ACSE_requirements ACSE_requirements_aSO_context_negotiation;
-    extern const ACSE_requirements ACSE_requirements_higher_level_association;
-    extern const ACSE_requirements ACSE_requirements_nested_association;
+    extern const ACSE_requirements aCSE_requirements_authentication;
+    extern const ACSE_requirements aCSE_requirements_aSO_context_negotiation;
+    extern const ACSE_requirements aCSE_requirements_higher_level_association;
+    extern const ACSE_requirements aCSE_requirements_nested_association;
 
     // choice AP-title
 
@@ -538,18 +538,18 @@ namespace ACSE_1 {
 
     struct Context_list_sequence_of {
 
-        typedef std::vector< Transfer_syntax_name > transfer_syntaxes_type;
+        typedef std::vector< Transfer_syntax_name > Transfer_syntaxes_type;
 
 
         Context_list_sequence_of();
 
         Context_list_sequence_of(const Presentation_context_identifier& arg__pci,
                 const Abstract_syntax_name& arg__abstract_syntax,
-                const transfer_syntaxes_type& arg__transfer_syntaxes);
+                const Transfer_syntaxes_type& arg__transfer_syntaxes);
 
         ITU_T_HOLDERH_DECL(pci, Presentation_context_identifier);
         ITU_T_HOLDERH_DECL(abstract_syntax, Abstract_syntax_name);
-        ITU_T_HOLDERH_DECL(transfer_syntaxes, transfer_syntaxes_type);
+        ITU_T_HOLDERH_DECL(transfer_syntaxes, Transfer_syntaxes_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -592,13 +592,13 @@ namespace ACSE_1 {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const Result Result_acceptance;
-    extern const Result Result_user_rejection;
-    extern const Result Result_provider_rejection;
+    extern const Result result_acceptance;
+    extern const Result result_user_rejection;
+    extern const Result result_provider_rejection;
 
-    extern const Associate_result Associate_result_accepted;
-    extern const Associate_result Associate_result_rejected_permanent;
-    extern const Associate_result Associate_result_rejected_transient;
+    extern const Associate_result associate_result_accepted;
+    extern const Associate_result associate_result_rejected_permanent;
+    extern const Associate_result associate_result_rejected_transient;
 
     // choice Associate-source-diagnostic
 
@@ -682,32 +682,32 @@ namespace ACSE_1 {
 
     struct PDV_list {
 
-        struct presentation_data_values_type;
+        struct Presentation_data_values_type;
 
-        enum presentation_data_values_type_enum {
+        enum Presentation_data_values_type_enum {
 
-            presentation_data_values_type_null = 0,
-            presentation_data_values_type_simple_ASN1_type,
-            presentation_data_values_type_octet_aligned,
-            presentation_data_values_type_arbitrary,
+            Presentation_data_values_type_null = 0,
+            Presentation_data_values_type_simple_ASN1_type,
+            Presentation_data_values_type_octet_aligned,
+            Presentation_data_values_type_arbitrary,
         };
 
-        struct presentation_data_values_type : public ITU_T_CHOICE(presentation_data_values_type_enum) {
+        struct Presentation_data_values_type : public ITU_T_CHOICE(Presentation_data_values_type_enum) {
 
-            presentation_data_values_type() : ITU_T_CHOICE(presentation_data_values_type_enum) () {
+            Presentation_data_values_type() : ITU_T_CHOICE(Presentation_data_values_type_enum) () {
             }
 
-            template<typename T > presentation_data_values_type(boost::shared_ptr< T> vl, presentation_data_values_type_enum enm) :
-                    ITU_T_CHOICE(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > Presentation_data_values_type(boost::shared_ptr< T> vl, Presentation_data_values_type_enum enm) :
+                    ITU_T_CHOICE(Presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > presentation_data_values_type(const T& vl, presentation_data_values_type_enum enm) :
-                    ITU_T_CHOICE(presentation_data_values_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > Presentation_data_values_type(const T& vl, Presentation_data_values_type_enum enm) :
+                    ITU_T_CHOICE(Presentation_data_values_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(simple_ASN1_type, any_type, presentation_data_values_type_simple_ASN1_type); // primitive
-            ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, presentation_data_values_type_octet_aligned); // primitive
-            ITU_T_CHOICES_DECL(arbitrary, bitstring_type, presentation_data_values_type_arbitrary); // primitive
+            ITU_T_CHOICES_DECL(simple_ASN1_type, any_type, Presentation_data_values_type_simple_ASN1_type); // primitive
+            ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, Presentation_data_values_type_octet_aligned); // primitive
+            ITU_T_CHOICES_DECL(arbitrary, bitstring_type, Presentation_data_values_type_arbitrary); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -716,15 +716,15 @@ namespace ACSE_1 {
         PDV_list();
 
         PDV_list(const Presentation_context_identifier& arg__presentation_context_identifier,
-                const presentation_data_values_type& arg__presentation_data_values);
+                const Presentation_data_values_type& arg__presentation_data_values);
 
         PDV_list(boost::shared_ptr< Transfer_syntax_name> arg__transfer_syntax_name,
                 boost::shared_ptr< Presentation_context_identifier> arg__presentation_context_identifier,
-                boost::shared_ptr< presentation_data_values_type> arg__presentation_data_values);
+                boost::shared_ptr< Presentation_data_values_type> arg__presentation_data_values);
 
         ITU_T_OPTIONAL_DECL(transfer_syntax_name, Transfer_syntax_name);
         ITU_T_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
-        ITU_T_HOLDERH_DECL(presentation_data_values, presentation_data_values_type);
+        ITU_T_HOLDERH_DECL(presentation_data_values, Presentation_data_values_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -743,13 +743,13 @@ namespace ACSE_1 {
     struct Authentication_value : public ITU_T_CHOICE(Authentication_value_enum) {
 
 
-        struct other_type;
+        struct Other_type;
 
-        struct other_type {
+        struct Other_type {
 
-            other_type();
+            Other_type();
 
-            other_type(const any_type& arg__other_mechanism_name,
+            Other_type(const any_type& arg__other_mechanism_name,
                     const any_type& arg__other_mechanism_value);
 
             ITU_T_HOLDERH_DECL(other_mechanism_name, any_type);
@@ -772,18 +772,18 @@ namespace ACSE_1 {
         ITU_T_CHOICES_DECL(charstring, graphicstring_type, Authentication_value_charstring); // primitive
         ITU_T_CHOICES_DECL(bitstring, bitstring_type, Authentication_value_bitstring); // primitive
         ITU_T_CHOICES_DECL(external, external_type, Authentication_value_external); // primitive
-        ITU_T_CHOICEC_DECL(other, other_type, Authentication_value_other);
+        ITU_T_CHOICEC_DECL(other, Other_type, Authentication_value_other);
 
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const Release_request_reason Release_request_reason_normal;
-    extern const Release_request_reason Release_request_reason_urgent;
-    extern const Release_request_reason Release_request_reason_user_defined;
+    extern const Release_request_reason release_request_reason_normal;
+    extern const Release_request_reason release_request_reason_urgent;
+    extern const Release_request_reason release_request_reason_user_defined;
 
-    extern const Release_response_reason Release_response_reason_normal;
-    extern const Release_response_reason Release_response_reason_not_finished;
-    extern const Release_response_reason Release_response_reason_user_defined;
+    extern const Release_response_reason release_response_reason_normal;
+    extern const Release_response_reason release_response_reason_not_finished;
+    extern const Release_response_reason release_response_reason_user_defined;
 
     template<> void ACSE_apdu::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ACSE_apdu::serialize(boost::asn1::x690::input_coder& arch);
@@ -825,12 +825,12 @@ namespace ACSE_1 {
     template<> void User_Data::serialize(boost::asn1::x690::input_coder& arch);
     template<> void PDV_list::serialize(boost::asn1::x690::output_coder& arch);
     template<> void PDV_list::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void PDV_list::Presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void PDV_list::Presentation_data_values_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Authentication_value::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Authentication_value::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void Authentication_value::other_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void Authentication_value::other_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Authentication_value::Other_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Authentication_value::Other_type::serialize(boost::asn1::x690::input_coder& arch);
 }
 
 ITU_T_CHOICE_REGESTRATE(ACSE_1::ACSE_apdu)
@@ -840,7 +840,7 @@ ITU_T_CHOICE_REGESTRATE(ACSE_1::AE_title)
 ITU_T_CHOICE_REGESTRATE(ACSE_1::Syntactic_context_list)
 ITU_T_CHOICE_REGESTRATE(ACSE_1::Associate_source_diagnostic)
 ITU_T_CHOICE_REGESTRATE(ACSE_1::User_Data)
-ITU_T_CHOICE_REGESTRATE(ACSE_1::PDV_list::presentation_data_values_type)
+ITU_T_CHOICE_REGESTRATE(ACSE_1::PDV_list::Presentation_data_values_type)
 ITU_T_CHOICE_REGESTRATE(ACSE_1::Authentication_value)
 
 #ifdef _MSC_VER

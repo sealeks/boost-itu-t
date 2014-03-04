@@ -548,10 +548,10 @@ namespace Reliable_Transfer_APDU {
     }
 
 
-    const RefuseReason RefuseReason_rtsBusy = 0;
-    const RefuseReason RefuseReason_cannotRecover = 1;
-    const RefuseReason RefuseReason_validationFailure = 2;
-    const RefuseReason RefuseReason_unacceptableDialogueMode = 3;
+    const RefuseReason refuseReason_rtsBusy = 0;
+    const RefuseReason refuseReason_cannotRecover = 1;
+    const RefuseReason refuseReason_validationFailure = 2;
+    const RefuseReason refuseReason_unacceptableDialogueMode = 3;
 
     // choice CallingSSuserReference
 
@@ -627,14 +627,14 @@ namespace Reliable_Transfer_APDU {
     }
 
 
-    const AbortReason AbortReason_localSystemProblem = 0;
-    const AbortReason AbortReason_invalidParameter = 1;
-    const AbortReason AbortReason_unrecognizedActivity = 2;
-    const AbortReason AbortReason_temporaryProblem = 3;
-    const AbortReason AbortReason_protocolError = 4;
-    const AbortReason AbortReason_permanentProblem = 5;
-    const AbortReason AbortReason_userError = 6;
-    const AbortReason AbortReason_transferCompleted = 7;
+    const AbortReason abortReason_localSystemProblem = 0;
+    const AbortReason abortReason_invalidParameter = 1;
+    const AbortReason abortReason_unrecognizedActivity = 2;
+    const AbortReason abortReason_temporaryProblem = 3;
+    const AbortReason abortReason_protocolError = 4;
+    const AbortReason abortReason_permanentProblem = 5;
+    const AbortReason abortReason_userError = 6;
+    const AbortReason abortReason_transferCompleted = 7;
 
 }
 

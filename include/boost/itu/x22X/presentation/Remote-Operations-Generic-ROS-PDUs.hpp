@@ -68,34 +68,34 @@ namespace Remote_Operations_Generic_ROS_PDUs {
 
     struct Reject {
 
-        struct problem_type;
+        struct Problem_type;
 
-        enum problem_type_enum {
+        enum Problem_type_enum {
 
-            problem_type_null = 0,
-            problem_type_general,
-            problem_type_invoke,
-            problem_type_returnResult,
-            problem_type_returnError,
+            Problem_type_null = 0,
+            Problem_type_general,
+            Problem_type_invoke,
+            Problem_type_returnResult,
+            Problem_type_returnError,
         };
 
-        struct problem_type : public ITU_T_CHOICE(problem_type_enum) {
+        struct Problem_type : public ITU_T_CHOICE(Problem_type_enum) {
 
-            problem_type() : ITU_T_CHOICE(problem_type_enum) () {
+            Problem_type() : ITU_T_CHOICE(Problem_type_enum) () {
             }
 
-            template<typename T > problem_type(boost::shared_ptr< T> vl, problem_type_enum enm) :
-                    ITU_T_CHOICE(problem_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > Problem_type(boost::shared_ptr< T> vl, Problem_type_enum enm) :
+                    ITU_T_CHOICE(Problem_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > problem_type(const T& vl, problem_type_enum enm) :
-                    ITU_T_CHOICE(problem_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > Problem_type(const T& vl, Problem_type_enum enm) :
+                    ITU_T_CHOICE(Problem_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(general, GeneralProblem, problem_type_general); // primitive
-            ITU_T_CHOICES_DECL(invoke, InvokeProblem, problem_type_invoke); // primitive
-            ITU_T_CHOICES_DECL(returnResult, ReturnResultProblem, problem_type_returnResult); // primitive
-            ITU_T_CHOICES_DECL(returnError, ReturnErrorProblem, problem_type_returnError); // primitive
+            ITU_T_CHOICES_DECL(general, GeneralProblem, Problem_type_general); // primitive
+            ITU_T_CHOICES_DECL(invoke, InvokeProblem, Problem_type_invoke); // primitive
+            ITU_T_CHOICES_DECL(returnResult, ReturnResultProblem, Problem_type_returnResult); // primitive
+            ITU_T_CHOICES_DECL(returnError, ReturnErrorProblem, Problem_type_returnError); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -104,56 +104,56 @@ namespace Remote_Operations_Generic_ROS_PDUs {
         Reject();
 
         Reject(const InvokeId& arg__invokeId,
-                const problem_type& arg__problem);
+                const Problem_type& arg__problem);
 
         ITU_T_HOLDERH_DECL(invokeId, InvokeId);
-        ITU_T_HOLDERH_DECL(problem, problem_type);
+        ITU_T_HOLDERH_DECL(problem, Problem_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const GeneralProblem GeneralProblem_unrecognizedPDU;
-    extern const GeneralProblem GeneralProblem_mistypedPDU;
-    extern const GeneralProblem GeneralProblem_badlyStructuredPDU;
+    extern const GeneralProblem generalProblem_unrecognizedPDU;
+    extern const GeneralProblem generalProblem_mistypedPDU;
+    extern const GeneralProblem generalProblem_badlyStructuredPDU;
 
-    extern const InvokeProblem InvokeProblem_duplicateInvocation;
-    extern const InvokeProblem InvokeProblem_unrecognizedOperation;
-    extern const InvokeProblem InvokeProblem_mistypedArgument;
-    extern const InvokeProblem InvokeProblem_resourceLimitation;
-    extern const InvokeProblem InvokeProblem_releaseInProgress;
-    extern const InvokeProblem InvokeProblem_unrecognizedLinkedId;
-    extern const InvokeProblem InvokeProblem_linkedResponseUnexpected;
-    extern const InvokeProblem InvokeProblem_unexpectedLinkedOperation;
+    extern const InvokeProblem invokeProblem_duplicateInvocation;
+    extern const InvokeProblem invokeProblem_unrecognizedOperation;
+    extern const InvokeProblem invokeProblem_mistypedArgument;
+    extern const InvokeProblem invokeProblem_resourceLimitation;
+    extern const InvokeProblem invokeProblem_releaseInProgress;
+    extern const InvokeProblem invokeProblem_unrecognizedLinkedId;
+    extern const InvokeProblem invokeProblem_linkedResponseUnexpected;
+    extern const InvokeProblem invokeProblem_unexpectedLinkedOperation;
 
-    extern const ReturnResultProblem ReturnResultProblem_unrecognizedInvocation;
-    extern const ReturnResultProblem ReturnResultProblem_resultResponseUnexpected;
-    extern const ReturnResultProblem ReturnResultProblem_mistypedResult;
+    extern const ReturnResultProblem returnResultProblem_unrecognizedInvocation;
+    extern const ReturnResultProblem returnResultProblem_resultResponseUnexpected;
+    extern const ReturnResultProblem returnResultProblem_mistypedResult;
 
-    extern const ReturnErrorProblem ReturnErrorProblem_unrecognizedInvocation;
-    extern const ReturnErrorProblem ReturnErrorProblem_errorResponseUnexpected;
-    extern const ReturnErrorProblem ReturnErrorProblem_unrecognizedError;
-    extern const ReturnErrorProblem ReturnErrorProblem_unexpectedError;
-    extern const ReturnErrorProblem ReturnErrorProblem_mistypedParameter;
+    extern const ReturnErrorProblem returnErrorProblem_unrecognizedInvocation;
+    extern const ReturnErrorProblem returnErrorProblem_errorResponseUnexpected;
+    extern const ReturnErrorProblem returnErrorProblem_unrecognizedError;
+    extern const ReturnErrorProblem returnErrorProblem_unexpectedError;
+    extern const ReturnErrorProblem returnErrorProblem_mistypedParameter;
 
-    extern const RejectProblem RejectProblem_general_unrecognizedPDU;
-    extern const RejectProblem RejectProblem_general_mistypedPDU;
-    extern const RejectProblem RejectProblem_general_badlyStructuredPDU;
-    extern const RejectProblem RejectProblem_invoke_duplicateInvocation;
-    extern const RejectProblem RejectProblem_invoke_unrecognizedOperation;
-    extern const RejectProblem RejectProblem_invoke_mistypedArgument;
-    extern const RejectProblem RejectProblem_invoke_resourceLimitation;
-    extern const RejectProblem RejectProblem_invoke_releaseInProgress;
-    extern const RejectProblem RejectProblem_invoke_unrecognizedLinkedId;
-    extern const RejectProblem RejectProblem_invoke_linkedResponseUnexpected;
-    extern const RejectProblem RejectProblem_invoke_unexpectedLinkedOperation;
-    extern const RejectProblem RejectProblem_returnResult_unrecognizedInvocation;
-    extern const RejectProblem RejectProblem_returnResult_resultResponseUnexpected;
-    extern const RejectProblem RejectProblem_returnResult_mistypedResult;
-    extern const RejectProblem RejectProblem_returnError_unrecognizedInvocation;
-    extern const RejectProblem RejectProblem_returnError_errorResponseUnexpected;
-    extern const RejectProblem RejectProblem_returnError_unrecognizedError;
-    extern const RejectProblem RejectProblem_returnError_unexpectedError;
-    extern const RejectProblem RejectProblem_returnError_mistypedParameter;
+    extern const RejectProblem rejectProblem_general_unrecognizedPDU;
+    extern const RejectProblem rejectProblem_general_mistypedPDU;
+    extern const RejectProblem rejectProblem_general_badlyStructuredPDU;
+    extern const RejectProblem rejectProblem_invoke_duplicateInvocation;
+    extern const RejectProblem rejectProblem_invoke_unrecognizedOperation;
+    extern const RejectProblem rejectProblem_invoke_mistypedArgument;
+    extern const RejectProblem rejectProblem_invoke_resourceLimitation;
+    extern const RejectProblem rejectProblem_invoke_releaseInProgress;
+    extern const RejectProblem rejectProblem_invoke_unrecognizedLinkedId;
+    extern const RejectProblem rejectProblem_invoke_linkedResponseUnexpected;
+    extern const RejectProblem rejectProblem_invoke_unexpectedLinkedOperation;
+    extern const RejectProblem rejectProblem_returnResult_unrecognizedInvocation;
+    extern const RejectProblem rejectProblem_returnResult_resultResponseUnexpected;
+    extern const RejectProblem rejectProblem_returnResult_mistypedResult;
+    extern const RejectProblem rejectProblem_returnError_unrecognizedInvocation;
+    extern const RejectProblem rejectProblem_returnError_errorResponseUnexpected;
+    extern const RejectProblem rejectProblem_returnError_unrecognizedError;
+    extern const RejectProblem rejectProblem_returnError_unexpectedError;
+    extern const RejectProblem rejectProblem_returnError_mistypedParameter;
 
     // choice InvokeId
 
@@ -185,13 +185,13 @@ namespace Remote_Operations_Generic_ROS_PDUs {
 
     template<> void Reject::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Reject::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void Reject::problem_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void Reject::problem_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Reject::Problem_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Reject::Problem_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void InvokeId::serialize(boost::asn1::x690::output_coder& arch);
     template<> void InvokeId::serialize(boost::asn1::x690::input_coder& arch);
 }
 
-ITU_T_CHOICE_REGESTRATE(Remote_Operations_Generic_ROS_PDUs::Reject::problem_type)
+ITU_T_CHOICE_REGESTRATE(Remote_Operations_Generic_ROS_PDUs::Reject::Problem_type)
 ITU_T_CHOICE_REGESTRATE(Remote_Operations_Generic_ROS_PDUs::InvokeId)
 
 #ifdef _MSC_VER

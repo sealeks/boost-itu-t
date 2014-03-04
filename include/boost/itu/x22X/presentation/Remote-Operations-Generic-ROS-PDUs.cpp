@@ -15,47 +15,47 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     };
 
     Reject::Reject(const InvokeId& arg__invokeId,
-            const problem_type& arg__problem) :
+            const Problem_type& arg__problem) :
     invokeId_(arg__invokeId),
     problem_(arg__problem) {
     };
 
-    void Reject::problem_type::general(const GeneralProblem& vl) {
-        set<GeneralProblem>(new GeneralProblem(vl), problem_type_general);
+    void Reject::Problem_type::general(const GeneralProblem& vl) {
+        set<GeneralProblem>(new GeneralProblem(vl), Problem_type_general);
     }
 
-    void Reject::problem_type::invoke(const InvokeProblem& vl) {
-        set<InvokeProblem>(new InvokeProblem(vl), problem_type_invoke);
+    void Reject::Problem_type::invoke(const InvokeProblem& vl) {
+        set<InvokeProblem>(new InvokeProblem(vl), Problem_type_invoke);
     }
 
-    void Reject::problem_type::returnResult(const ReturnResultProblem& vl) {
-        set<ReturnResultProblem>(new ReturnResultProblem(vl), problem_type_returnResult);
+    void Reject::Problem_type::returnResult(const ReturnResultProblem& vl) {
+        set<ReturnResultProblem>(new ReturnResultProblem(vl), Problem_type_returnResult);
     }
 
-    void Reject::problem_type::returnError(const ReturnErrorProblem& vl) {
-        set<ReturnErrorProblem>(new ReturnErrorProblem(vl), problem_type_returnError);
+    void Reject::Problem_type::returnError(const ReturnErrorProblem& vl) {
+        set<ReturnErrorProblem>(new ReturnErrorProblem(vl), Problem_type_returnError);
     }
 
-    template<> void Reject::problem_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void Reject::Problem_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case problem_type_general:
+            case Problem_type_general:
             {
-                ITU_T_IMPLICIT_TAG(value<GeneralProblem > (false, problem_type_general), 0);
+                ITU_T_IMPLICIT_TAG(value<GeneralProblem > (false, Problem_type_general), 0);
                 break;
             }
-            case problem_type_invoke:
+            case Problem_type_invoke:
             {
-                ITU_T_IMPLICIT_TAG(value<InvokeProblem > (false, problem_type_invoke), 1);
+                ITU_T_IMPLICIT_TAG(value<InvokeProblem > (false, Problem_type_invoke), 1);
                 break;
             }
-            case problem_type_returnResult:
+            case Problem_type_returnResult:
             {
-                ITU_T_IMPLICIT_TAG(value<ReturnResultProblem > (false, problem_type_returnResult), 2);
+                ITU_T_IMPLICIT_TAG(value<ReturnResultProblem > (false, Problem_type_returnResult), 2);
                 break;
             }
-            case problem_type_returnError:
+            case Problem_type_returnError:
             {
-                ITU_T_IMPLICIT_TAG(value<ReturnErrorProblem > (false, problem_type_returnError), 3);
+                ITU_T_IMPLICIT_TAG(value<ReturnErrorProblem > (false, Problem_type_returnError), 3);
                 break;
             }
             default:
@@ -64,7 +64,7 @@ namespace Remote_Operations_Generic_ROS_PDUs {
         }
     }
 
-    template<> void Reject::problem_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void Reject::Problem_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -88,25 +88,25 @@ namespace Remote_Operations_Generic_ROS_PDUs {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<GeneralProblem > (true, problem_type_general), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<GeneralProblem > (true, Problem_type_general), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<InvokeProblem > (true, problem_type_invoke), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<InvokeProblem > (true, Problem_type_invoke), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<ReturnResultProblem > (true, problem_type_returnResult), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<ReturnResultProblem > (true, Problem_type_returnResult), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<ReturnErrorProblem > (true, problem_type_returnError), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<ReturnErrorProblem > (true, Problem_type_returnError), 3)) return;
                         else free();
                         break;
                     }
@@ -155,65 +155,65 @@ namespace Remote_Operations_Generic_ROS_PDUs {
         invokeId_ = vl;
     }
 
-    Reject::problem_type& Reject::problem() {
+    Reject::Problem_type& Reject::problem() {
         return *problem_;
     }
 
-    const Reject::problem_type& Reject::problem() const {
+    const Reject::Problem_type& Reject::problem() const {
         return *problem_;
     }
 
-    void Reject::problem(const problem_type& vl) {
+    void Reject::problem(const Problem_type& vl) {
         problem_ = vl;
     }
 
-    void Reject::problem(boost::shared_ptr< problem_type> vl) {
+    void Reject::problem(boost::shared_ptr< Problem_type> vl) {
         problem_ = vl;
     }
 
 
-    const GeneralProblem GeneralProblem_unrecognizedPDU = 0;
-    const GeneralProblem GeneralProblem_mistypedPDU = 1;
-    const GeneralProblem GeneralProblem_badlyStructuredPDU = 2;
+    const GeneralProblem generalProblem_unrecognizedPDU = 0;
+    const GeneralProblem generalProblem_mistypedPDU = 1;
+    const GeneralProblem generalProblem_badlyStructuredPDU = 2;
 
-    const InvokeProblem InvokeProblem_duplicateInvocation = 0;
-    const InvokeProblem InvokeProblem_unrecognizedOperation = 1;
-    const InvokeProblem InvokeProblem_mistypedArgument = 2;
-    const InvokeProblem InvokeProblem_resourceLimitation = 3;
-    const InvokeProblem InvokeProblem_releaseInProgress = 4;
-    const InvokeProblem InvokeProblem_unrecognizedLinkedId = 5;
-    const InvokeProblem InvokeProblem_linkedResponseUnexpected = 6;
-    const InvokeProblem InvokeProblem_unexpectedLinkedOperation = 7;
+    const InvokeProblem invokeProblem_duplicateInvocation = 0;
+    const InvokeProblem invokeProblem_unrecognizedOperation = 1;
+    const InvokeProblem invokeProblem_mistypedArgument = 2;
+    const InvokeProblem invokeProblem_resourceLimitation = 3;
+    const InvokeProblem invokeProblem_releaseInProgress = 4;
+    const InvokeProblem invokeProblem_unrecognizedLinkedId = 5;
+    const InvokeProblem invokeProblem_linkedResponseUnexpected = 6;
+    const InvokeProblem invokeProblem_unexpectedLinkedOperation = 7;
 
-    const ReturnResultProblem ReturnResultProblem_unrecognizedInvocation = 0;
-    const ReturnResultProblem ReturnResultProblem_resultResponseUnexpected = 1;
-    const ReturnResultProblem ReturnResultProblem_mistypedResult = 2;
+    const ReturnResultProblem returnResultProblem_unrecognizedInvocation = 0;
+    const ReturnResultProblem returnResultProblem_resultResponseUnexpected = 1;
+    const ReturnResultProblem returnResultProblem_mistypedResult = 2;
 
-    const ReturnErrorProblem ReturnErrorProblem_unrecognizedInvocation = 0;
-    const ReturnErrorProblem ReturnErrorProblem_errorResponseUnexpected = 1;
-    const ReturnErrorProblem ReturnErrorProblem_unrecognizedError = 2;
-    const ReturnErrorProblem ReturnErrorProblem_unexpectedError = 3;
-    const ReturnErrorProblem ReturnErrorProblem_mistypedParameter = 4;
+    const ReturnErrorProblem returnErrorProblem_unrecognizedInvocation = 0;
+    const ReturnErrorProblem returnErrorProblem_errorResponseUnexpected = 1;
+    const ReturnErrorProblem returnErrorProblem_unrecognizedError = 2;
+    const ReturnErrorProblem returnErrorProblem_unexpectedError = 3;
+    const ReturnErrorProblem returnErrorProblem_mistypedParameter = 4;
 
-    const RejectProblem RejectProblem_general_unrecognizedPDU = 0;
-    const RejectProblem RejectProblem_general_mistypedPDU = 1;
-    const RejectProblem RejectProblem_general_badlyStructuredPDU = 2;
-    const RejectProblem RejectProblem_invoke_duplicateInvocation = 10;
-    const RejectProblem RejectProblem_invoke_unrecognizedOperation = 11;
-    const RejectProblem RejectProblem_invoke_mistypedArgument = 12;
-    const RejectProblem RejectProblem_invoke_resourceLimitation = 13;
-    const RejectProblem RejectProblem_invoke_releaseInProgress = 14;
-    const RejectProblem RejectProblem_invoke_unrecognizedLinkedId = 15;
-    const RejectProblem RejectProblem_invoke_linkedResponseUnexpected = 16;
-    const RejectProblem RejectProblem_invoke_unexpectedLinkedOperation = 17;
-    const RejectProblem RejectProblem_returnResult_unrecognizedInvocation = 20;
-    const RejectProblem RejectProblem_returnResult_resultResponseUnexpected = 21;
-    const RejectProblem RejectProblem_returnResult_mistypedResult = 22;
-    const RejectProblem RejectProblem_returnError_unrecognizedInvocation = 30;
-    const RejectProblem RejectProblem_returnError_errorResponseUnexpected = 31;
-    const RejectProblem RejectProblem_returnError_unrecognizedError = 32;
-    const RejectProblem RejectProblem_returnError_unexpectedError = 33;
-    const RejectProblem RejectProblem_returnError_mistypedParameter = 34;
+    const RejectProblem rejectProblem_general_unrecognizedPDU = 0;
+    const RejectProblem rejectProblem_general_mistypedPDU = 1;
+    const RejectProblem rejectProblem_general_badlyStructuredPDU = 2;
+    const RejectProblem rejectProblem_invoke_duplicateInvocation = 10;
+    const RejectProblem rejectProblem_invoke_unrecognizedOperation = 11;
+    const RejectProblem rejectProblem_invoke_mistypedArgument = 12;
+    const RejectProblem rejectProblem_invoke_resourceLimitation = 13;
+    const RejectProblem rejectProblem_invoke_releaseInProgress = 14;
+    const RejectProblem rejectProblem_invoke_unrecognizedLinkedId = 15;
+    const RejectProblem rejectProblem_invoke_linkedResponseUnexpected = 16;
+    const RejectProblem rejectProblem_invoke_unexpectedLinkedOperation = 17;
+    const RejectProblem rejectProblem_returnResult_unrecognizedInvocation = 20;
+    const RejectProblem rejectProblem_returnResult_resultResponseUnexpected = 21;
+    const RejectProblem rejectProblem_returnResult_mistypedResult = 22;
+    const RejectProblem rejectProblem_returnError_unrecognizedInvocation = 30;
+    const RejectProblem rejectProblem_returnError_errorResponseUnexpected = 31;
+    const RejectProblem rejectProblem_returnError_unrecognizedError = 32;
+    const RejectProblem rejectProblem_returnError_unexpectedError = 33;
+    const RejectProblem rejectProblem_returnError_mistypedParameter = 34;
 
     // choice InvokeId
 

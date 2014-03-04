@@ -1073,20 +1073,20 @@ namespace ACSE_1 {
     }
 
 
-    const ABRT_diagnostic ABRT_diagnostic_no_reason_given = 1;
-    const ABRT_diagnostic ABRT_diagnostic_protocol_error = 2;
-    const ABRT_diagnostic ABRT_diagnostic_authentication_mechanism_name_not_recognized = 3;
-    const ABRT_diagnostic ABRT_diagnostic_authentication_mechanism_name_required = 4;
-    const ABRT_diagnostic ABRT_diagnostic_authentication_failure = 5;
-    const ABRT_diagnostic ABRT_diagnostic_authentication_required = 6;
+    const ABRT_diagnostic aBRT_diagnostic_no_reason_given = 1;
+    const ABRT_diagnostic aBRT_diagnostic_protocol_error = 2;
+    const ABRT_diagnostic aBRT_diagnostic_authentication_mechanism_name_not_recognized = 3;
+    const ABRT_diagnostic aBRT_diagnostic_authentication_mechanism_name_required = 4;
+    const ABRT_diagnostic aBRT_diagnostic_authentication_failure = 5;
+    const ABRT_diagnostic aBRT_diagnostic_authentication_required = 6;
 
-    const ABRT_source ABRT_source_acse_service_user = 0;
-    const ABRT_source ABRT_source_acse_service_provider = 1;
+    const ABRT_source aBRT_source_acse_service_user = 0;
+    const ABRT_source aBRT_source_acse_service_provider = 1;
 
-    const ACSE_requirements ACSE_requirements_authentication = bitstring_type(true, 0);
-    const ACSE_requirements ACSE_requirements_aSO_context_negotiation = bitstring_type(true, 1);
-    const ACSE_requirements ACSE_requirements_higher_level_association = bitstring_type(true, 2);
-    const ACSE_requirements ACSE_requirements_nested_association = bitstring_type(true, 3);
+    const ACSE_requirements aCSE_requirements_authentication = bitstring_type(true, 0);
+    const ACSE_requirements aCSE_requirements_aSO_context_negotiation = bitstring_type(true, 1);
+    const ACSE_requirements aCSE_requirements_higher_level_association = bitstring_type(true, 2);
+    const ACSE_requirements aCSE_requirements_nested_association = bitstring_type(true, 3);
 
     // choice AP-title
 
@@ -1445,7 +1445,7 @@ namespace ACSE_1 {
 
     Context_list_sequence_of::Context_list_sequence_of(const Presentation_context_identifier& arg__pci,
             const Abstract_syntax_name& arg__abstract_syntax,
-            const transfer_syntaxes_type& arg__transfer_syntaxes) :
+            const Transfer_syntaxes_type& arg__transfer_syntaxes) :
     pci_(arg__pci),
     abstract_syntax_(arg__abstract_syntax),
     transfer_syntaxes_(arg__transfer_syntaxes) {
@@ -1495,19 +1495,19 @@ namespace ACSE_1 {
         abstract_syntax_ = vl;
     }
 
-    Context_list_sequence_of::transfer_syntaxes_type& Context_list_sequence_of::transfer_syntaxes() {
+    Context_list_sequence_of::Transfer_syntaxes_type& Context_list_sequence_of::transfer_syntaxes() {
         return *transfer_syntaxes_;
     }
 
-    const Context_list_sequence_of::transfer_syntaxes_type& Context_list_sequence_of::transfer_syntaxes() const {
+    const Context_list_sequence_of::Transfer_syntaxes_type& Context_list_sequence_of::transfer_syntaxes() const {
         return *transfer_syntaxes_;
     }
 
-    void Context_list_sequence_of::transfer_syntaxes(const transfer_syntaxes_type& vl) {
+    void Context_list_sequence_of::transfer_syntaxes(const Transfer_syntaxes_type& vl) {
         transfer_syntaxes_ = vl;
     }
 
-    void Context_list_sequence_of::transfer_syntaxes(boost::shared_ptr< transfer_syntaxes_type> vl) {
+    void Context_list_sequence_of::transfer_syntaxes(boost::shared_ptr< Transfer_syntaxes_type> vl) {
         transfer_syntaxes_ = vl;
     }
 
@@ -1625,13 +1625,13 @@ namespace ACSE_1 {
     }
 
 
-    const Result Result_acceptance = 0;
-    const Result Result_user_rejection = 1;
-    const Result Result_provider_rejection = 2;
+    const Result result_acceptance = 0;
+    const Result result_user_rejection = 1;
+    const Result result_provider_rejection = 2;
 
-    const Associate_result Associate_result_accepted = 0;
-    const Associate_result Associate_result_rejected_permanent = 1;
-    const Associate_result Associate_result_rejected_transient = 2;
+    const Associate_result associate_result_accepted = 0;
+    const Associate_result associate_result_rejected_permanent = 1;
+    const Associate_result associate_result_rejected_transient = 2;
 
     // choice Associate-source-diagnostic
     const int Associate_source_diagnostic::acse_service_user_null = 0;
@@ -1821,46 +1821,46 @@ namespace ACSE_1 {
     };
 
     PDV_list::PDV_list(const Presentation_context_identifier& arg__presentation_context_identifier,
-            const presentation_data_values_type& arg__presentation_data_values) :
+            const Presentation_data_values_type& arg__presentation_data_values) :
     presentation_context_identifier_(arg__presentation_context_identifier),
     presentation_data_values_(arg__presentation_data_values) {
     };
 
     PDV_list::PDV_list(boost::shared_ptr< Transfer_syntax_name> arg__transfer_syntax_name,
             boost::shared_ptr< Presentation_context_identifier> arg__presentation_context_identifier,
-            boost::shared_ptr< presentation_data_values_type> arg__presentation_data_values) :
+            boost::shared_ptr< Presentation_data_values_type> arg__presentation_data_values) :
     transfer_syntax_name_(arg__transfer_syntax_name),
     presentation_context_identifier_(arg__presentation_context_identifier),
     presentation_data_values_(arg__presentation_data_values) {
     };
 
-    void PDV_list::presentation_data_values_type::simple_ASN1_type(const any_type& vl) {
-        set<any_type>(new any_type(vl), presentation_data_values_type_simple_ASN1_type);
+    void PDV_list::Presentation_data_values_type::simple_ASN1_type(const any_type& vl) {
+        set<any_type>(new any_type(vl), Presentation_data_values_type_simple_ASN1_type);
     }
 
-    void PDV_list::presentation_data_values_type::octet_aligned(const octetstring_type& vl) {
-        set<octetstring_type>(new octetstring_type(vl), presentation_data_values_type_octet_aligned);
+    void PDV_list::Presentation_data_values_type::octet_aligned(const octetstring_type& vl) {
+        set<octetstring_type>(new octetstring_type(vl), Presentation_data_values_type_octet_aligned);
     }
 
-    void PDV_list::presentation_data_values_type::arbitrary(const bitstring_type& vl) {
-        set<bitstring_type>(new bitstring_type(vl), presentation_data_values_type_arbitrary);
+    void PDV_list::Presentation_data_values_type::arbitrary(const bitstring_type& vl) {
+        set<bitstring_type>(new bitstring_type(vl), Presentation_data_values_type_arbitrary);
     }
 
-    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void PDV_list::Presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case presentation_data_values_type_simple_ASN1_type:
+            case Presentation_data_values_type_simple_ASN1_type:
             {
-                ITU_T_EXPLICIT_TAG(value<any_type > (false, presentation_data_values_type_simple_ASN1_type), 0);
+                ITU_T_EXPLICIT_TAG(value<any_type > (false, Presentation_data_values_type_simple_ASN1_type), 0);
                 break;
             }
-            case presentation_data_values_type_octet_aligned:
+            case Presentation_data_values_type_octet_aligned:
             {
-                ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, presentation_data_values_type_octet_aligned), 1);
+                ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, Presentation_data_values_type_octet_aligned), 1);
                 break;
             }
-            case presentation_data_values_type_arbitrary:
+            case Presentation_data_values_type_arbitrary:
             {
-                ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, presentation_data_values_type_arbitrary), 2);
+                ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, Presentation_data_values_type_arbitrary), 2);
                 break;
             }
             default:
@@ -1869,7 +1869,7 @@ namespace ACSE_1 {
         }
     }
 
-    template<> void PDV_list::presentation_data_values_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void PDV_list::Presentation_data_values_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -1893,19 +1893,19 @@ namespace ACSE_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<any_type > (true, presentation_data_values_type_simple_ASN1_type), 0)) return;
+                        if (ITU_T_EXPLICIT_TAG(value<any_type > (true, Presentation_data_values_type_simple_ASN1_type), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, presentation_data_values_type_octet_aligned), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, Presentation_data_values_type_octet_aligned), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, presentation_data_values_type_arbitrary), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, Presentation_data_values_type_arbitrary), 2)) return;
                         else free();
                         break;
                     }
@@ -1964,73 +1964,73 @@ namespace ACSE_1 {
         presentation_context_identifier_ = vl;
     }
 
-    PDV_list::presentation_data_values_type& PDV_list::presentation_data_values() {
+    PDV_list::Presentation_data_values_type& PDV_list::presentation_data_values() {
         return *presentation_data_values_;
     }
 
-    const PDV_list::presentation_data_values_type& PDV_list::presentation_data_values() const {
+    const PDV_list::Presentation_data_values_type& PDV_list::presentation_data_values() const {
         return *presentation_data_values_;
     }
 
-    void PDV_list::presentation_data_values(const presentation_data_values_type& vl) {
+    void PDV_list::presentation_data_values(const Presentation_data_values_type& vl) {
         presentation_data_values_ = vl;
     }
 
-    void PDV_list::presentation_data_values(boost::shared_ptr< presentation_data_values_type> vl) {
+    void PDV_list::presentation_data_values(boost::shared_ptr< Presentation_data_values_type> vl) {
         presentation_data_values_ = vl;
     }
 
 
     // choice Authentication-value
 
-    Authentication_value::other_type::other_type() : other_mechanism_name_(), other_mechanism_value_() {
+    Authentication_value::Other_type::Other_type() : other_mechanism_name_(), other_mechanism_value_() {
     };
 
-    Authentication_value::other_type::other_type(const any_type& arg__other_mechanism_name,
+    Authentication_value::Other_type::Other_type(const any_type& arg__other_mechanism_name,
             const any_type& arg__other_mechanism_value) :
     other_mechanism_name_(arg__other_mechanism_name),
     other_mechanism_value_(arg__other_mechanism_value) {
     };
 
-    template<> void Authentication_value::other_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void Authentication_value::Other_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(other_mechanism_name_);
         ITU_T_BIND_TAG(other_mechanism_value_);
     }
 
-    template<> void Authentication_value::other_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void Authentication_value::Other_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_TAG(other_mechanism_name_);
         ITU_T_BIND_TAG(other_mechanism_value_);
     }
 
-    any_type& Authentication_value::other_type::other_mechanism_name() {
+    any_type& Authentication_value::Other_type::other_mechanism_name() {
         return *other_mechanism_name_;
     }
 
-    const any_type& Authentication_value::other_type::other_mechanism_name() const {
+    const any_type& Authentication_value::Other_type::other_mechanism_name() const {
         return *other_mechanism_name_;
     }
 
-    void Authentication_value::other_type::other_mechanism_name(const any_type& vl) {
+    void Authentication_value::Other_type::other_mechanism_name(const any_type& vl) {
         other_mechanism_name_ = vl;
     }
 
-    void Authentication_value::other_type::other_mechanism_name(boost::shared_ptr< any_type> vl) {
+    void Authentication_value::Other_type::other_mechanism_name(boost::shared_ptr< any_type> vl) {
         other_mechanism_name_ = vl;
     }
 
-    any_type& Authentication_value::other_type::other_mechanism_value() {
+    any_type& Authentication_value::Other_type::other_mechanism_value() {
         return *other_mechanism_value_;
     }
 
-    const any_type& Authentication_value::other_type::other_mechanism_value() const {
+    const any_type& Authentication_value::Other_type::other_mechanism_value() const {
         return *other_mechanism_value_;
     }
 
-    void Authentication_value::other_type::other_mechanism_value(const any_type& vl) {
+    void Authentication_value::Other_type::other_mechanism_value(const any_type& vl) {
         other_mechanism_value_ = vl;
     }
 
-    void Authentication_value::other_type::other_mechanism_value(boost::shared_ptr< any_type> vl) {
+    void Authentication_value::Other_type::other_mechanism_value(boost::shared_ptr< any_type> vl) {
         other_mechanism_value_ = vl;
     }
 
@@ -2065,7 +2065,7 @@ namespace ACSE_1 {
             }
             case Authentication_value_other:
             {
-                ITU_T_IMPLICIT_TAG(value<other_type > (false, Authentication_value_other), 3);
+                ITU_T_IMPLICIT_TAG(value<Other_type > (false, Authentication_value_other), 3);
                 break;
             }
             default:
@@ -2116,7 +2116,7 @@ namespace ACSE_1 {
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<other_type > (true, Authentication_value_other), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Other_type > (true, Authentication_value_other), 3)) return;
                         else free();
                         break;
                     }
@@ -2140,13 +2140,13 @@ namespace ACSE_1 {
     }
 
 
-    const Release_request_reason Release_request_reason_normal = 0;
-    const Release_request_reason Release_request_reason_urgent = 1;
-    const Release_request_reason Release_request_reason_user_defined = 30;
+    const Release_request_reason release_request_reason_normal = 0;
+    const Release_request_reason release_request_reason_urgent = 1;
+    const Release_request_reason release_request_reason_user_defined = 30;
 
-    const Release_response_reason Release_response_reason_normal = 0;
-    const Release_response_reason Release_response_reason_not_finished = 1;
-    const Release_response_reason Release_response_reason_user_defined = 30;
+    const Release_response_reason release_response_reason_normal = 0;
+    const Release_response_reason release_response_reason_not_finished = 1;
+    const Release_response_reason release_response_reason_user_defined = 30;
 
 }
 
