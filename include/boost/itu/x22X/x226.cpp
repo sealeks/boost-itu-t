@@ -23,10 +23,10 @@ namespace boost {
             typedef ISO8823_PRESENTATION::Simply_encoded_data simpledata_type;
             typedef ISO8823_PRESENTATION::Fully_encoded_data fulldata_type;
             typedef ISO8823_PRESENTATION::Context_list_sequence_of p_context_type;
-            typedef p_context_type::transfer_syntax_name_list_type transfer_syntax_list;
+            typedef p_context_type::Transfer_syntax_name_list_type transfer_syntax_list;
             typedef ISO8823_PRESENTATION::Result_list_sequence_of p_result_type;
             typedef ISO8823_PRESENTATION::PDV_list pdv_list_type;
-            typedef ISO8823_PRESENTATION::PDV_list::presentation_data_values_type data_values_type;
+            typedef ISO8823_PRESENTATION::PDV_list::Presentation_data_values_type data_values_type;
             typedef ISO8823_PRESENTATION::Result_list result_list_type;
             typedef ISO8823_PRESENTATION::Presentation_context_definition_list definition_list_type;
             typedef ISO8823_PRESENTATION::Presentation_context_definition_result_list definitionresult_list_type;
@@ -158,18 +158,18 @@ namespace boost {
                                     }
                                     const data_values_type& values = it->presentation_data_values();
                                     switch (values.type()) {
-                                        case ISO8823_PRESENTATION::PDV_list::presentation_data_values_type_single_ASN1_type:
+                                        case ISO8823_PRESENTATION::PDV_list::Presentation_data_values_type_single_ASN1_type:
                                         {
                                             if (values.single_ASN1_type())
                                                 values.single_ASN1_type()->bind(*(dcs->find(it->presentation_context_identifier())->in()));
                                             break;
                                         }
-                                        case ISO8823_PRESENTATION::PDV_list::presentation_data_values_type_octet_aligned:
+                                        case ISO8823_PRESENTATION::PDV_list::Presentation_data_values_type_octet_aligned:
                                         {
                                             error_code(ER_BEDSEQ);
                                             break;
                                         }
-                                        case ISO8823_PRESENTATION::PDV_list::presentation_data_values_type_arbitrary:
+                                        case ISO8823_PRESENTATION::PDV_list::Presentation_data_values_type_arbitrary:
                                         {
                                             error_code(ER_BEDSEQ);
                                             break;
@@ -251,7 +251,7 @@ namespace boost {
 
                     request_pdu.mode_selector().mode_value(mode_type::mode_value_normal_mode);
 
-                    CP_type::normal_mode_parameters_type& request_parameters = *request_pdu.normal_mode_parameters__new();                   
+                    CP_type::Normal_mode_parameters_type& request_parameters = *request_pdu.normal_mode_parameters__new();                   
                     definition_list_type& request_list = * request_parameters.presentation_context_definition_list__new();
 
                     if (!option().called().empty())
@@ -294,7 +294,7 @@ namespace boost {
                             if (accept_pdu.mode_selector().mode_value() == mode_type::mode_value_normal_mode) {
                                 if (accept_pdu.normal_mode_parameters()) {
 
-                                    CPA_type::normal_mode_parameters_type& accept_parameters = *accept_pdu.normal_mode_parameters();
+                                    CPA_type::Normal_mode_parameters_type& accept_parameters = *accept_pdu.normal_mode_parameters();
 
                                     if (accept_parameters.presentation_context_definition_result_list()) {
 
@@ -304,7 +304,7 @@ namespace boost {
                                         if (!accept_list.empty()) {
                                             defined_context_map::iterator ctxit = dcs()->contexts().begin();
                                             for (result_list_type::const_iterator it = accept_list.begin(); it != accept_list.end(); ++it) {
-                                                if (it->result() != ISO8823_PRESENTATION::Result_acceptance) {
+                                                if (it->result() != ISO8823_PRESENTATION::result_acceptance) {
                                                     if (ctxit != dcs()->contexts().end())
                                                         dcs()->remove_contex(ctxit->first);
                                                 } else {
@@ -351,12 +351,12 @@ namespace boost {
 
                     accept_pdu.mode_selector().mode_value(respond_pdu.mode_selector().mode_value());
 
-                    CPA_type::normal_mode_parameters_type& accept_parameters = *accept_pdu.normal_mode_parameters__new();
-                    CPR_type::normal_mode_parameters_type& reject_parameters = *reject_pdu.normal_mode_parameters__new();
+                    CPA_type::Normal_mode_parameters_type& accept_parameters = *accept_pdu.normal_mode_parameters__new();
+                    CPR_type::Normal_mode_parameters_type& reject_parameters = *reject_pdu.normal_mode_parameters__new();
 
                     if (respond_pdu.mode_selector().mode_value() == mode_type::mode_value_normal_mode && respond_pdu.normal_mode_parameters()) {
 
-                        CP_type::normal_mode_parameters_type& respond_parameters = *respond_pdu.normal_mode_parameters();
+                        CP_type::Normal_mode_parameters_type& respond_parameters = *respond_pdu.normal_mode_parameters();
 
                         option().called(respond_parameters.called_presentation_selector() ?
                                 *(respond_parameters.called_presentation_selector()) : octet_sequnce());
@@ -380,13 +380,13 @@ namespace boost {
                             if (option_.has_context(it->abstract_syntax_name(), to_encodings(it->transfer_syntax_name_list()))) {
                                 context_id_type cid = dcs()->insert_context(it->presentation_context_identifier(), it->abstract_syntax_name());
                                 p_result_type tmp;
-                                tmp.result(ISO8823_PRESENTATION::Result_acceptance);
+                                tmp.result(ISO8823_PRESENTATION::result_acceptance);
                                 tmp.transfer_syntax_name(new oid_type(to_transfer_syntax(dcs()->context(cid)->encoding())));
                                 accept_list.push_back(tmp);
                                 reject_list.push_back(tmp);
                             } else {
                                 p_result_type tmp;
-                                tmp.result(ISO8823_PRESENTATION::Result_user_rejection);
+                                tmp.result(ISO8823_PRESENTATION::result_user_rejection);
                                 tmp.provider_reason(0);
                                 accept_list.push_back(tmp);
                                 reject_list.push_back(tmp);
