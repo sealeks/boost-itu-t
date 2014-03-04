@@ -1,5 +1,12 @@
 #include "ISO-9506-MMS-1A.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif
+
+
+
 namespace ISO_9506_MMS_1A {
 
     // sequence ObtainFile-Request
@@ -682,3 +689,9 @@ namespace ISO_9506_MMS_1A {
 
 
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+

@@ -81,5 +81,8 @@ namespace MMS_Environment_1 {
 }
 
 
-#endif  /*___MMS_ENVIRONMENT_1 */
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
+#endif  /*___MMS_ENVIRONMENT_1 */

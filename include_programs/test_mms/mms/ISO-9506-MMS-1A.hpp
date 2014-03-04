@@ -333,5 +333,8 @@ namespace ISO_9506_MMS_1A {
 }
 
 
-#endif  /*___ISO_9506_MMS_1A */
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
+#endif  /*___ISO_9506_MMS_1A */

@@ -1,5 +1,12 @@
 #include "MMS-SCI-Module-1.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif
+
+
+
 namespace MMS_SCI_Module_1 {
 
     // sequence SCI-Information
@@ -6811,3 +6818,9 @@ namespace MMS_SCI_Module_1 {
 
 
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+

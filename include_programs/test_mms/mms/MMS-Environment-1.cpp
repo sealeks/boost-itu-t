@@ -1,5 +1,12 @@
 #include "MMS-Environment-1.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif
+
+
+
 namespace MMS_Environment_1 {
 
     // sequence ApplicationReference
@@ -65,3 +72,9 @@ namespace MMS_Environment_1 {
 
 
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+

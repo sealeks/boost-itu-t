@@ -1,5 +1,12 @@
 #include "ISO-9506-MMS-1.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif
+
+
+
 namespace ISO_9506_MMS_1 {
 
     // choice MMSpdu
@@ -21398,3 +21405,9 @@ namespace ISO_9506_MMS_1 {
 
 
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+

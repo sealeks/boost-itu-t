@@ -165,6 +165,10 @@ namespace MMS_Object_Module_1 {
                 ITU_T_CHOICE(Modifier_enum) (vl, static_cast<int> (enm)) {
         }
 
+        template<typename T > Modifier(const T& vl, Modifier_enum enm) :
+                ITU_T_CHOICE(Modifier_enum) (new T(vl), static_cast<int> (enm)) {
+        }
+
         ITU_T_CHOICEC_DECL(eventModifier, ISO_9506_MMS_1::AttachToEventCondition, Modifier_eventModifier);
         ITU_T_CHOICEC_DECL(semaphoreModifier, ISO_9506_MMS_1::AttachToSemaphore, Modifier_semaphoreModifier);
 
@@ -344,6 +348,10 @@ namespace MMS_Object_Module_1 {
                     ITU_T_CHOICE(user_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > user_type(const T& vl, user_type_enum enm) :
+                    ITU_T_CHOICE(user_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICEC_DECL(association, MMS_Environment_1::ApplicationReference, user_type_association);
             ITU_T_CHOICES_DECL(none, null_type, user_type_none); // primitive
 
@@ -360,6 +368,10 @@ namespace MMS_Object_Module_1 {
 
         template<typename T > AccessCondition(boost::shared_ptr< T> vl, AccessCondition_enum enm) :
                 ITU_T_CHOICE(AccessCondition_enum) (vl, static_cast<int> (enm)) {
+        }
+
+        template<typename T > AccessCondition(const T& vl, AccessCondition_enum enm) :
+                ITU_T_CHOICE(AccessCondition_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(never, null_type, AccessCondition_never); // primitive
@@ -431,6 +443,10 @@ namespace MMS_Object_Module_1 {
 
         template<typename T > Address(boost::shared_ptr< T> vl, Address_enum enm) :
                 ITU_T_CHOICE(Address_enum) (vl, static_cast<int> (enm)) {
+        }
+
+        template<typename T > Address(const T& vl, Address_enum enm) :
+                ITU_T_CHOICE(Address_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(numericAddress, ISO_9506_MMS_1::Unsigned32, Address_numericAddress); // primitive
@@ -546,6 +562,10 @@ namespace MMS_Object_Module_1 {
                 ITU_T_CHOICE(TypeDescription_enum) (vl, static_cast<int> (enm)) {
         }
 
+        template<typename T > TypeDescription(const T& vl, TypeDescription_enum enm) :
+                ITU_T_CHOICE(TypeDescription_enum) (new T(vl), static_cast<int> (enm)) {
+        }
+
         ITU_T_CHOICEC_DECL(array, array_type, TypeDescription_array);
         ITU_T_CHOICEC_DECL(structure, structure_type, TypeDescription_structure);
         ITU_T_CHOICES_DECL(boolean, null_type, TypeDescription_boolean); // primitive
@@ -588,6 +608,10 @@ namespace MMS_Object_Module_1 {
 
         template<typename T > EventTime(boost::shared_ptr< T> vl, EventTime_enum enm) :
                 ITU_T_CHOICE(EventTime_enum) (vl, static_cast<int> (enm)) {
+        }
+
+        template<typename T > EventTime(const T& vl, EventTime_enum enm) :
+                ITU_T_CHOICE(EventTime_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICES_DECL(timeOfDay, ISO_9506_MMS_1::TimeOfDay, EventTime_timeOfDay); // primitive
@@ -664,5 +688,8 @@ ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::Address)
 ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::TypeDescription)
 ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::EventTime)
 
-#endif  /*___MMS_OBJECT_MODULE_1 */
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
+#endif  /*___MMS_OBJECT_MODULE_1 */

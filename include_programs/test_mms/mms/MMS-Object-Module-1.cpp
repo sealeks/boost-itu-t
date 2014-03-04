@@ -1,5 +1,12 @@
 #include "MMS-Object-Module-1.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif
+
+
+
 namespace MMS_Object_Module_1 {
 
     const LogicalStatus LogicalStatus_state_changes_allowed = 0;
@@ -1286,3 +1293,9 @@ namespace MMS_Object_Module_1 {
     const oid_type mMSEventCondition = boost::asn1::oid_type(mMSEventCondition_OID_ARR);
 
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+

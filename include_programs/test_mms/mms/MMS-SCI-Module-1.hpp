@@ -166,6 +166,10 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_CHOICE(selected_Program_Invocation_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > selected_Program_Invocation_type(const T& vl, selected_Program_Invocation_type_enum enm) :
+                    ITU_T_CHOICE(selected_Program_Invocation_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICEC_DECL(selectedProgram, Program_Invocation_instance, selected_Program_Invocation_type_selectedProgram);
             ITU_T_CHOICES_DECL(noneSelected, null_type, selected_Program_Invocation_type_noneSelected); // primitive
 
@@ -398,6 +402,10 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
             ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
@@ -483,6 +491,10 @@ namespace MMS_SCI_Module_1 {
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
+            }
+
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -576,6 +588,10 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
             ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
@@ -636,6 +652,10 @@ namespace MMS_SCI_Module_1 {
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
+            }
+
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -718,6 +738,10 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
             ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
@@ -775,6 +799,10 @@ namespace MMS_SCI_Module_1 {
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
+            }
+
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -855,6 +883,10 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
             ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
@@ -923,6 +955,10 @@ namespace MMS_SCI_Module_1 {
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
+            }
+
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -997,6 +1033,10 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
             ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
@@ -1058,6 +1098,10 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
             ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
@@ -1117,6 +1161,10 @@ namespace MMS_SCI_Module_1 {
                             ITU_T_CHOICE(monitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
+                    template<typename T > monitoredVariable_type(const T& vl, monitoredVariable_type_enum enm) :
+                            ITU_T_CHOICE(monitoredVariable_type_enum) (new T(vl), static_cast<int> (enm)) {
+                    }
+
                     ITU_T_CHOICEC_DECL(named, Named_Variable_instance, monitoredVariable_type_named);
                     ITU_T_CHOICEC_DECL(unnamed, Unnamed_Variable_instance, monitoredVariable_type_unnamed);
                     ITU_T_CHOICES_DECL(unspecified, null_type, monitoredVariable_type_unspecified); // primitive
@@ -1141,6 +1189,10 @@ namespace MMS_SCI_Module_1 {
                             ITU_T_CHOICE(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
+                    template<typename T > displayEnhancement_type(const T& vl, displayEnhancement_type_enum enm) :
+                            ITU_T_CHOICE(displayEnhancement_type_enum) (new T(vl), static_cast<int> (enm)) {
+                    }
+
                     ITU_T_CHOICES_DECL(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text); // primitive
                     ITU_T_CHOICES_DECL(number, int, displayEnhancement_type_number); // primitive
                     ITU_T_CHOICES_DECL(none, null_type, displayEnhancement_type_none); // primitive
@@ -1162,6 +1214,10 @@ namespace MMS_SCI_Module_1 {
 
                     template<typename T > group_Priority_Override_type(boost::shared_ptr< T> vl, group_Priority_Override_type_enum enm) :
                             ITU_T_CHOICE(group_Priority_Override_type_enum) (vl, static_cast<int> (enm)) {
+                    }
+
+                    template<typename T > group_Priority_Override_type(const T& vl, group_Priority_Override_type_enum enm) :
+                            ITU_T_CHOICE(group_Priority_Override_type_enum) (new T(vl), static_cast<int> (enm)) {
                     }
 
                     ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, group_Priority_Override_type_priority); // primitive
@@ -1221,6 +1277,10 @@ namespace MMS_SCI_Module_1 {
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
+            }
+
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -1287,6 +1347,10 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
             ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
@@ -1344,6 +1408,10 @@ namespace MMS_SCI_Module_1 {
                             ITU_T_CHOICE(remainingDelay_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
+                    template<typename T > remainingDelay_type(const T& vl, remainingDelay_type_enum enm) :
+                            ITU_T_CHOICE(remainingDelay_type_enum) (new T(vl), static_cast<int> (enm)) {
+                    }
+
                     ITU_T_CHOICES_DECL(time, int, remainingDelay_type_time); // primitive
                     ITU_T_CHOICES_DECL(forever, null_type, remainingDelay_type_forever); // primitive
 
@@ -1365,6 +1433,10 @@ namespace MMS_SCI_Module_1 {
 
                     template<typename T > displayEnhancement_type(boost::shared_ptr< T> vl, displayEnhancement_type_enum enm) :
                             ITU_T_CHOICE(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
+                    }
+
+                    template<typename T > displayEnhancement_type(const T& vl, displayEnhancement_type_enum enm) :
+                            ITU_T_CHOICE(displayEnhancement_type_enum) (new T(vl), static_cast<int> (enm)) {
                     }
 
                     ITU_T_CHOICES_DECL(text, ISO_9506_MMS_1::MMSString, displayEnhancement_type_text); // primitive
@@ -1412,6 +1484,10 @@ namespace MMS_SCI_Module_1 {
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
+            }
+
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -1479,6 +1555,10 @@ namespace MMS_SCI_Module_1 {
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
             ITU_T_CHOICEC_DECL(details, details_type, definition_type_details);
 
@@ -1536,6 +1616,10 @@ namespace MMS_SCI_Module_1 {
 
             template<typename T > definition_type(boost::shared_ptr< T> vl, definition_type_enum enm) :
                     ITU_T_CHOICE(definition_type_enum) (vl, static_cast<int> (enm)) {
+            }
+
+            template<typename T > definition_type(const T& vl, definition_type_enum enm) :
+                    ITU_T_CHOICE(definition_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(reference, oid_type, definition_type_reference); // primitive
@@ -2067,5 +2151,8 @@ ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Enrollment_instance::definition_
 ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Event_Condition_List_instance::definition_type)
 ITU_T_CHOICE_REGESTRATE(MMS_SCI_Module_1::Journal_instance::definition_type)
 
-#endif  /*___MMS_SCI_MODULE_1 */
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
+#endif  /*___MMS_SCI_MODULE_1 */
