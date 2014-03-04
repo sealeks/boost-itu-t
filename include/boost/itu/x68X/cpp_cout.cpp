@@ -123,7 +123,9 @@ namespace x680 {
 
 
         const std::string FHHEADER = "#include <boost/itu/asn1/asnbase.hpp>\n#include <boost/itu/x69X/x690.hpp>\n\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
-        const std::string FHBOTTOM = "\n\n#endif";
+        const std::string FHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n\n#endif";
+        const std::string CHHEADER = "\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
+        const std::string CHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n";        
         const std::string MNDCL = "    using  boost::asn1::null_type;\n"
                 "    using  boost::asn1::enumerated_type;\n"
                 "    using  boost::asn1::bitstring_type;\n"
@@ -768,7 +770,8 @@ namespace x680 {
                     boost::system::error_code(boost::system::errc::io_error, boost::system::system_category()));
 
             execute_include(stream_cpp, self->name());
-            stream << "\n";
+
+            stream_cpp << CHHEADER << "\n";
             execute_start_ns(stream_cpp, self);
 
             if (reverse_)
@@ -777,6 +780,7 @@ namespace x680 {
                 execute_assignments_cpp<basic_entity_vector::const_iterator>(stream_cpp, self->childs().begin(), self->childs().end());
 
             execute_stop_ns(stream_cpp, self);
+            stream_cpp  << CHBOTTOM << "\n";
 
         }
 
@@ -1661,9 +1665,14 @@ namespace x680 {
                                 stream << "\n" << tabformat(self, 1) << type_str(self) << "()";
                                 stream << " : " << " ITU_T_CHOICE(" << type_str(self) << "_enum) () {} \n";
 
-                                stream << tabformat(self, 1) << "template<typename T> ";
+                                stream << "\n" << tabformat(self, 1) << "template<typename T> ";
                                 stream << type_str(self) << "(boost::shared_ptr< T> vl, " << type_str(self) << "_enum enm) : \n";
                                 stream << tabformat(self, 2) << " ITU_T_CHOICE(" << type_str(self) << "_enum) (vl, static_cast<int>(enm)) {} \n";
+                                
+                                stream << "\n" << tabformat(self, 1) << "template<typename T> ";
+                                stream << type_str(self) << "(const T& vl, " << type_str(self) << "_enum enm) : \n";
+                                stream << tabformat(self, 2) << " ITU_T_CHOICE(" << type_str(self) << "_enum) ( new T(vl), static_cast<int>(enm)) {} \n";
+                                
                         break;
                     }
                     case t_SET:
