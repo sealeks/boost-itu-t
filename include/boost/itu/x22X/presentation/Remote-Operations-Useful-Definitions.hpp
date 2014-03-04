@@ -46,8 +46,8 @@ namespace Remote_Operations_Useful_Definitions {
 
 }
 
-#include "Remote-Operations-Information-Objects.hpp"
-#include "Remote-Operations-Generic-ROS-PDUs.hpp"
+#include <boost/itu/x22X/presentation/Remote-Operations-Information-Objects.hpp>
+#include <boost/itu/x22X/presentation/Remote-Operations-Generic-ROS-PDUs.hpp>
 
 namespace Remote_Operations_Useful_Definitions {
 
@@ -64,5 +64,8 @@ namespace Remote_Operations_Useful_Definitions {
 }
 
 
-#endif  /*___REMOTE_OPERATIONS_USEFUL_DEFINITIONS */
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
+#endif  /*___REMOTE_OPERATIONS_USEFUL_DEFINITIONS */

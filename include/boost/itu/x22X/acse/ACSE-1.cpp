@@ -1,5 +1,12 @@
 #include "ACSE-1.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif
+
+
+
 namespace ACSE_1 {
 
     const boost::array<boost::asn1::oidindx_type, 5> acse_as_id_OID_ARR = {2, 2, 1, 0, 1};
@@ -2142,3 +2149,9 @@ namespace ACSE_1 {
     const Release_response_reason Release_response_reason_user_defined = 30;
 
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+

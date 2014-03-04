@@ -94,6 +94,10 @@ namespace Reliable_Transfer_APDU {
                 ITU_T_CHOICE(RTSE_apdus_enum) (vl, static_cast<int> (enm)) {
         }
 
+        template<typename T > RTSE_apdus(const T& vl, RTSE_apdus_enum enm) :
+                ITU_T_CHOICE(RTSE_apdus_enum) (new T(vl), static_cast<int> (enm)) {
+        }
+
         ITU_T_CHOICEC_DECL(rtorq_apdu, RTORQapdu, RTSE_apdus_rtorq_apdu);
         ITU_T_CHOICEC_DECL(rtoac_apdu, RTOACapdu, RTSE_apdus_rtoac_apdu);
         ITU_T_CHOICEC_DECL(rtorj_apdu, RTORJapdu, RTSE_apdus_rtorj_apdu);
@@ -206,6 +210,10 @@ namespace Reliable_Transfer_APDU {
                 ITU_T_CHOICE(ConnectionData_enum) (vl, static_cast<int> (enm)) {
         }
 
+        template<typename T > ConnectionData(const T& vl, ConnectionData_enum enm) :
+                ITU_T_CHOICE(ConnectionData_enum) (new T(vl), static_cast<int> (enm)) {
+        }
+
         ITU_T_CHOICES_DECL(open, any_type, ConnectionData_open); // primitive
         ITU_T_CHOICEC_DECL(recover, SessionConnectionIdentifier, ConnectionData_recover);
 
@@ -255,6 +263,10 @@ namespace Reliable_Transfer_APDU {
                 ITU_T_CHOICE(CallingSSuserReference_enum) (vl, static_cast<int> (enm)) {
         }
 
+        template<typename T > CallingSSuserReference(const T& vl, CallingSSuserReference_enum enm) :
+                ITU_T_CHOICE(CallingSSuserReference_enum) (new T(vl), static_cast<int> (enm)) {
+        }
+
         ITU_T_CHOICES_DECL(t61String, t61string_type, CallingSSuserReference_t61String); // primitive
         ITU_T_CHOICES_DECL(octetString, octetstring_type, CallingSSuserReference_octetString); // primitive
 
@@ -297,5 +309,8 @@ ITU_T_CHOICE_REGESTRATE(Reliable_Transfer_APDU::RTSE_apdus)
 ITU_T_CHOICE_REGESTRATE(Reliable_Transfer_APDU::ConnectionData)
 ITU_T_CHOICE_REGESTRATE(Reliable_Transfer_APDU::CallingSSuserReference)
 
-#endif  /*___RELIABLE_TRANSFER_APDU */
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
+#endif  /*___RELIABLE_TRANSFER_APDU */

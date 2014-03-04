@@ -1,5 +1,12 @@
 #include "Remote-Operations-Information-Objects.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif
+
+
+
 namespace Remote_Operations_Information_Objects {
 
     // choice Code
@@ -77,3 +84,9 @@ namespace Remote_Operations_Information_Objects {
 
 
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+

@@ -1,5 +1,12 @@
 #include "ISO8823-PRESENTATION.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif
+
+
+
 namespace ISO8823_PRESENTATION {
 
     // set CP-type
@@ -1893,3 +1900,9 @@ namespace ISO8823_PRESENTATION {
     const User_session_requirements User_session_requirements_data_separation = bitstring_type(true, 12);
 
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+

@@ -88,6 +88,10 @@ namespace Remote_Operations_Generic_ROS_PDUs {
                     ITU_T_CHOICE(problem_type_enum) (vl, static_cast<int> (enm)) {
             }
 
+            template<typename T > problem_type(const T& vl, problem_type_enum enm) :
+                    ITU_T_CHOICE(problem_type_enum) (new T(vl), static_cast<int> (enm)) {
+            }
+
             ITU_T_CHOICES_DECL(general, GeneralProblem, problem_type_general); // primitive
             ITU_T_CHOICES_DECL(invoke, InvokeProblem, problem_type_invoke); // primitive
             ITU_T_CHOICES_DECL(returnResult, ReturnResultProblem, problem_type_returnResult); // primitive
@@ -169,6 +173,10 @@ namespace Remote_Operations_Generic_ROS_PDUs {
                 ITU_T_CHOICE(InvokeId_enum) (vl, static_cast<int> (enm)) {
         }
 
+        template<typename T > InvokeId(const T& vl, InvokeId_enum enm) :
+                ITU_T_CHOICE(InvokeId_enum) (new T(vl), static_cast<int> (enm)) {
+        }
+
         ITU_T_CHOICES_DECL(present, int, InvokeId_present); // primitive
         ITU_T_CHOICES_DECL(absent, null_type, InvokeId_absent); // primitive
 
@@ -186,5 +194,8 @@ namespace Remote_Operations_Generic_ROS_PDUs {
 ITU_T_CHOICE_REGESTRATE(Remote_Operations_Generic_ROS_PDUs::Reject::problem_type)
 ITU_T_CHOICE_REGESTRATE(Remote_Operations_Generic_ROS_PDUs::InvokeId)
 
-#endif  /*___REMOTE_OPERATIONS_GENERIC_ROS_PDUS */
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
+#endif  /*___REMOTE_OPERATIONS_GENERIC_ROS_PDUS */

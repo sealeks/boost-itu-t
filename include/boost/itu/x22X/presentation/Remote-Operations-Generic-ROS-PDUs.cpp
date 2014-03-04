@@ -1,5 +1,12 @@
 #include "Remote-Operations-Generic-ROS-PDUs.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif
+
+
+
 namespace Remote_Operations_Generic_ROS_PDUs {
 
     // sequence Reject
@@ -283,3 +290,9 @@ namespace Remote_Operations_Generic_ROS_PDUs {
 
 
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+

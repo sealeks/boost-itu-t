@@ -77,6 +77,10 @@ namespace Remote_Operations_Information_Objects {
                 ITU_T_CHOICE(Code_enum) (vl, static_cast<int> (enm)) {
         }
 
+        template<typename T > Code(const T& vl, Code_enum enm) :
+                ITU_T_CHOICE(Code_enum) (new T(vl), static_cast<int> (enm)) {
+        }
+
         ITU_T_CHOICES_DECL(local, int, Code_local); // primitive
         ITU_T_CHOICES_DECL(global, oid_type, Code_global); // primitive
 
@@ -89,5 +93,8 @@ namespace Remote_Operations_Information_Objects {
 
 ITU_T_CHOICE_REGESTRATE(Remote_Operations_Information_Objects::Code)
 
-#endif  /*___REMOTE_OPERATIONS_INFORMATION_OBJECTS */
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
+#endif  /*___REMOTE_OPERATIONS_INFORMATION_OBJECTS */

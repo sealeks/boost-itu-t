@@ -333,6 +333,10 @@ namespace ISO8823_PRESENTATION {
                 ITU_T_CHOICE(CPR_PPDU_enum) (vl, static_cast<int> (enm)) {
         }
 
+        template<typename T > CPR_PPDU(const T& vl, CPR_PPDU_enum enm) :
+                ITU_T_CHOICE(CPR_PPDU_enum) (new T(vl), static_cast<int> (enm)) {
+        }
+
         ITU_T_CHOICEC_DECL(x400_mode_parameters, x400_mode_parameters_type, CPR_PPDU_x400_mode_parameters);
         ITU_T_CHOICEC_DECL(normal_mode_parameters, normal_mode_parameters_type, CPR_PPDU_normal_mode_parameters);
 
@@ -355,6 +359,10 @@ namespace ISO8823_PRESENTATION {
 
         template<typename T > Abort_type(boost::shared_ptr< T> vl, Abort_type_enum enm) :
                 ITU_T_CHOICE(Abort_type_enum) (vl, static_cast<int> (enm)) {
+        }
+
+        template<typename T > Abort_type(const T& vl, Abort_type_enum enm) :
+                ITU_T_CHOICE(Abort_type_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICEC_DECL(aru_ppdu, ARU_PPDU, Abort_type_aru_ppdu);
@@ -413,6 +421,10 @@ namespace ISO8823_PRESENTATION {
                 ITU_T_CHOICE(ARU_PPDU_enum) (vl, static_cast<int> (enm)) {
         }
 
+        template<typename T > ARU_PPDU(const T& vl, ARU_PPDU_enum enm) :
+                ITU_T_CHOICE(ARU_PPDU_enum) (new T(vl), static_cast<int> (enm)) {
+        }
+
         ITU_T_CHOICEC_DECL(x400_mode_parameters, x400_mode_parameters_type, ARU_PPDU_x400_mode_parameters);
         ITU_T_CHOICEC_DECL(normal_mode_parameters, normal_mode_parameters_type, ARU_PPDU_normal_mode_parameters);
 
@@ -451,6 +463,10 @@ namespace ISO8823_PRESENTATION {
 
         template<typename T > Typed_data_type(boost::shared_ptr< T> vl, Typed_data_type_enum enm) :
                 ITU_T_CHOICE(Typed_data_type_enum) (vl, static_cast<int> (enm)) {
+        }
+
+        template<typename T > Typed_data_type(const T& vl, Typed_data_type_enum enm) :
+                ITU_T_CHOICE(Typed_data_type_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
         ITU_T_CHOICEC_DECL(acPPDU, AC_PPDU, Typed_data_type_acPPDU);
@@ -692,6 +708,10 @@ namespace ISO8823_PRESENTATION {
                 ITU_T_CHOICE(User_data_enum) (vl, static_cast<int> (enm)) {
         }
 
+        template<typename T > User_data(const T& vl, User_data_enum enm) :
+                ITU_T_CHOICE(User_data_enum) (new T(vl), static_cast<int> (enm)) {
+        }
+
         ITU_T_CHOICES_DECL(simply_encoded_data, Simply_encoded_data, User_data_simply_encoded_data); // primitive
         ITU_T_CHOICEC_DECL(fully_encoded_data, Fully_encoded_data, User_data_fully_encoded_data);
 
@@ -719,6 +739,10 @@ namespace ISO8823_PRESENTATION {
 
             template<typename T > presentation_data_values_type(boost::shared_ptr< T> vl, presentation_data_values_type_enum enm) :
                     ITU_T_CHOICE(presentation_data_values_type_enum) (vl, static_cast<int> (enm)) {
+            }
+
+            template<typename T > presentation_data_values_type(const T& vl, presentation_data_values_type_enum enm) :
+                    ITU_T_CHOICE(presentation_data_values_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
             ITU_T_CHOICES_DECL(single_ASN1_type, any_type, presentation_data_values_type_single_ASN1_type); // primitive
@@ -832,5 +856,8 @@ ITU_T_CHOICE_REGESTRATE(ISO8823_PRESENTATION::Typed_data_type)
 ITU_T_CHOICE_REGESTRATE(ISO8823_PRESENTATION::User_data)
 ITU_T_CHOICE_REGESTRATE(ISO8823_PRESENTATION::PDV_list::presentation_data_values_type)
 
-#endif  /*___ISO8823_PRESENTATION */
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
+#endif  /*___ISO8823_PRESENTATION */

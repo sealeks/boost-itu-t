@@ -1,5 +1,12 @@
 #include "Reliable-Transfer-APDU.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4065)
+#endif
+
+
+
 namespace Reliable_Transfer_APDU {
 
     const boost::array<boost::asn1::oidindx_type, 3> rTSE_abstract_syntax_OID_ARR = {2, 3, 2};
@@ -630,3 +637,9 @@ namespace Reliable_Transfer_APDU {
     const AbortReason AbortReason_transferCompleted = 7;
 
 }
+
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
