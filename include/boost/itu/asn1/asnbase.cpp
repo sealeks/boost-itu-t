@@ -464,30 +464,30 @@ namespace boost {
         external_type::external_type() : encoding_() {
         };
 
-        external_type::external_type(const encoding_type& arg__encoding) :
+        external_type::external_type(const Encoding_type& arg__encoding) :
         encoding_(arg__encoding) {
         };
 
         external_type::external_type(boost::shared_ptr< oid_type> arg__direct_reference,
                 boost::shared_ptr< int> arg__indirect_reference,
                 boost::shared_ptr< objectdescriptor_type> arg__data_value_descriptor,
-                boost::shared_ptr< encoding_type> arg__encoding) :
+                boost::shared_ptr< Encoding_type> arg__encoding) :
         direct_reference_(arg__direct_reference),
         indirect_reference_(arg__indirect_reference),
         data_value_descriptor_(arg__data_value_descriptor),
         encoding_(arg__encoding) {
         };
 
-        void external_type::encoding_type::single_ASN1_type(const any_type& vl) {
-            set<any_type>(new any_type(vl), encoding_type_single_ASN1_type);
+        void external_type::Encoding_type::single_ASN1_type(const any_type& vl) {
+            set<any_type>(new any_type(vl), Encoding_type_single_ASN1_type);
         }
 
-        void external_type::encoding_type::octet_aligned(const octetstring_type& vl) {
-            set<octetstring_type>(new octetstring_type(vl), encoding_type_octet_aligned);
+        void external_type::Encoding_type::octet_aligned(const octetstring_type& vl) {
+            set<octetstring_type>(new octetstring_type(vl), Encoding_type_octet_aligned);
         }
 
-        void external_type::encoding_type::arbitrary(const bitstring_type& vl) {
-            set<bitstring_type>(new bitstring_type(vl), encoding_type_arbitrary);
+        void external_type::Encoding_type::arbitrary(const bitstring_type& vl) {
+            set<bitstring_type>(new bitstring_type(vl), Encoding_type_arbitrary);
         }
 
         boost::shared_ptr<oid_type> external_type::direct_reference__new() {
@@ -514,19 +514,19 @@ namespace boost {
             data_value_descriptor_ = boost::shared_ptr<objectdescriptor_type>(new objectdescriptor_type(vl));
         }
 
-        external_type::encoding_type& external_type::encoding() {
+        external_type::Encoding_type& external_type::encoding() {
             return *encoding_;
         }
 
-        const external_type::encoding_type& external_type::encoding() const {
+        const external_type::Encoding_type& external_type::encoding() const {
             return *encoding_;
         }
 
-        void external_type::encoding(const encoding_type& vl) {
+        void external_type::encoding(const Encoding_type& vl) {
             encoding_ = vl;
         }
 
-        void external_type::encoding(boost::shared_ptr< encoding_type> vl) {
+        void external_type::encoding(boost::shared_ptr< Encoding_type> vl) {
             encoding_ = vl;
         }
 
@@ -538,123 +538,123 @@ namespace boost {
         embeded_type::embeded_type() : identification_(), data_value_() {
         };
 
-        embeded_type::embeded_type(const identification_type& arg__identification,
+        embeded_type::embeded_type(const Identification_type& arg__identification,
                 const octetstring_type& arg__data_value) :
         identification_(arg__identification),
         data_value_(arg__data_value) {
         };
 
-        embeded_type::identification_type::syntaxes_type::syntaxes_type() : abstract_(), transfer_() {
+        embeded_type::Identification_type::Syntaxes_type::Syntaxes_type() : abstract_(), transfer_() {
         };
 
-        embeded_type::identification_type::syntaxes_type::syntaxes_type(const oid_type& arg__abstract,
+        embeded_type::Identification_type::Syntaxes_type::Syntaxes_type(const oid_type& arg__abstract,
                 const oid_type& arg__transfer) :
         abstract_(arg__abstract),
         transfer_(arg__transfer) {
         };
 
-        oid_type& embeded_type::identification_type::syntaxes_type::abstract() {
+        oid_type& embeded_type::Identification_type::Syntaxes_type::abstract() {
             return *abstract_;
         }
 
-        const oid_type& embeded_type::identification_type::syntaxes_type::abstract() const {
+        const oid_type& embeded_type::Identification_type::Syntaxes_type::abstract() const {
             return *abstract_;
         }
 
-        void embeded_type::identification_type::syntaxes_type::abstract(const oid_type& vl) {
+        void embeded_type::Identification_type::Syntaxes_type::abstract(const oid_type& vl) {
             abstract_ = vl;
         }
 
-        void embeded_type::identification_type::syntaxes_type::abstract(boost::shared_ptr< oid_type> vl) {
+        void embeded_type::Identification_type::Syntaxes_type::abstract(boost::shared_ptr< oid_type> vl) {
             abstract_ = vl;
         }
 
-        oid_type& embeded_type::identification_type::syntaxes_type::transfer() {
+        oid_type& embeded_type::Identification_type::Syntaxes_type::transfer() {
             return *transfer_;
         }
 
-        const oid_type& embeded_type::identification_type::syntaxes_type::transfer() const {
+        const oid_type& embeded_type::Identification_type::Syntaxes_type::transfer() const {
             return *transfer_;
         }
 
-        void embeded_type::identification_type::syntaxes_type::transfer(const oid_type& vl) {
+        void embeded_type::Identification_type::Syntaxes_type::transfer(const oid_type& vl) {
             transfer_ = vl;
         }
 
-        void embeded_type::identification_type::syntaxes_type::transfer(boost::shared_ptr< oid_type> vl) {
+        void embeded_type::Identification_type::Syntaxes_type::transfer(boost::shared_ptr< oid_type> vl) {
             transfer_ = vl;
         }
 
-        embeded_type::identification_type::context_negotiation_type::context_negotiation_type() : presentation_context_id_(), transfer_syntax_() {
+        embeded_type::Identification_type::Context_negotiation_type::Context_negotiation_type() : presentation_context_id_(), transfer_syntax_() {
         };
 
-        embeded_type::identification_type::context_negotiation_type::context_negotiation_type(const int& arg__presentation_context_id,
+        embeded_type::Identification_type::Context_negotiation_type::Context_negotiation_type(const int& arg__presentation_context_id,
                 const oid_type& arg__transfer_syntax) :
         presentation_context_id_(arg__presentation_context_id),
         transfer_syntax_(arg__transfer_syntax) {
         };
 
-        int& embeded_type::identification_type::context_negotiation_type::presentation_context_id() {
+        int& embeded_type::Identification_type::Context_negotiation_type::presentation_context_id() {
             return *presentation_context_id_;
         }
 
-        const int& embeded_type::identification_type::context_negotiation_type::presentation_context_id() const {
+        const int& embeded_type::Identification_type::Context_negotiation_type::presentation_context_id() const {
             return *presentation_context_id_;
         }
 
-        void embeded_type::identification_type::context_negotiation_type::presentation_context_id(const int& vl) {
+        void embeded_type::Identification_type::Context_negotiation_type::presentation_context_id(const int& vl) {
             presentation_context_id_ = vl;
         }
 
-        void embeded_type::identification_type::context_negotiation_type::presentation_context_id(boost::shared_ptr< int> vl) {
+        void embeded_type::Identification_type::Context_negotiation_type::presentation_context_id(boost::shared_ptr< int> vl) {
             presentation_context_id_ = vl;
         }
 
-        oid_type& embeded_type::identification_type::context_negotiation_type::transfer_syntax() {
+        oid_type& embeded_type::Identification_type::Context_negotiation_type::transfer_syntax() {
             return *transfer_syntax_;
         }
 
-        const oid_type& embeded_type::identification_type::context_negotiation_type::transfer_syntax() const {
+        const oid_type& embeded_type::Identification_type::Context_negotiation_type::transfer_syntax() const {
             return *transfer_syntax_;
         }
 
-        void embeded_type::identification_type::context_negotiation_type::transfer_syntax(const oid_type& vl) {
+        void embeded_type::Identification_type::Context_negotiation_type::transfer_syntax(const oid_type& vl) {
             transfer_syntax_ = vl;
         }
 
-        void embeded_type::identification_type::context_negotiation_type::transfer_syntax(boost::shared_ptr< oid_type> vl) {
+        void embeded_type::Identification_type::Context_negotiation_type::transfer_syntax(boost::shared_ptr< oid_type> vl) {
             transfer_syntax_ = vl;
         }
 
-        void embeded_type::identification_type::syntax(const oid_type& vl) {
-            set<oid_type>(new oid_type(vl), identification_type_syntax);
+        void embeded_type::Identification_type::syntax(const oid_type& vl) {
+            set<oid_type>(new oid_type(vl), Identification_type_syntax);
         }
 
-        void embeded_type::identification_type::presentation_context_id(const int& vl) {
-            set<int>(new int(vl), identification_type_presentation_context_id);
+        void embeded_type::Identification_type::presentation_context_id(const int& vl) {
+            set<int>(new int(vl), Identification_type_presentation_context_id);
         }
 
-        void embeded_type::identification_type::transfer_syntax(const oid_type& vl) {
-            set<oid_type>(new oid_type(vl), identification_type_transfer_syntax);
+        void embeded_type::Identification_type::transfer_syntax(const oid_type& vl) {
+            set<oid_type>(new oid_type(vl), Identification_type_transfer_syntax);
         }
 
-        void embeded_type::identification_type::fixed(const null_type& vl) {
-            set<null_type>(new null_type(vl), identification_type_fixed);
+        void embeded_type::Identification_type::fixed(const null_type& vl) {
+            set<null_type>(new null_type(vl), Identification_type_fixed);
         }
 
-        embeded_type::identification_type& embeded_type::identification() {
+        embeded_type::Identification_type& embeded_type::identification() {
             return *identification_;
         }
 
-        const embeded_type::identification_type& embeded_type::identification() const {
+        const embeded_type::Identification_type& embeded_type::identification() const {
             return *identification_;
         }
 
-        void embeded_type::identification(const identification_type& vl) {
+        void embeded_type::identification(const Identification_type& vl) {
             identification_ = vl;
         }
 
-        void embeded_type::identification(boost::shared_ptr< identification_type> vl) {
+        void embeded_type::identification(boost::shared_ptr< Identification_type> vl) {
             identification_ = vl;
         }
 
@@ -680,123 +680,123 @@ namespace boost {
         characterstring_type::characterstring_type() : identification_(), string_value_() {
         };
 
-        characterstring_type::characterstring_type(const identification_type& arg__identification,
+        characterstring_type::characterstring_type(const Identification_type& arg__identification,
                 const octetstring_type& arg__string_value) :
         identification_(arg__identification),
         string_value_(arg__string_value) {
         };
 
-        characterstring_type::identification_type::syntaxes_type::syntaxes_type() : abstract_(), transfer_() {
+        characterstring_type::Identification_type::Syntaxes_type::Syntaxes_type() : abstract_(), transfer_() {
         };
 
-        characterstring_type::identification_type::syntaxes_type::syntaxes_type(const oid_type& arg__abstract,
+        characterstring_type::Identification_type::Syntaxes_type::Syntaxes_type(const oid_type& arg__abstract,
                 const oid_type& arg__transfer) :
         abstract_(arg__abstract),
         transfer_(arg__transfer) {
         };
 
-        oid_type& characterstring_type::identification_type::syntaxes_type::abstract() {
+        oid_type& characterstring_type::Identification_type::Syntaxes_type::abstract() {
             return *abstract_;
         }
 
-        const oid_type& characterstring_type::identification_type::syntaxes_type::abstract() const {
+        const oid_type& characterstring_type::Identification_type::Syntaxes_type::abstract() const {
             return *abstract_;
         }
 
-        void characterstring_type::identification_type::syntaxes_type::abstract(const oid_type& vl) {
+        void characterstring_type::Identification_type::Syntaxes_type::abstract(const oid_type& vl) {
             abstract_ = vl;
         }
 
-        void characterstring_type::identification_type::syntaxes_type::abstract(boost::shared_ptr< oid_type> vl) {
+        void characterstring_type::Identification_type::Syntaxes_type::abstract(boost::shared_ptr< oid_type> vl) {
             abstract_ = vl;
         }
 
-        oid_type& characterstring_type::identification_type::syntaxes_type::transfer() {
+        oid_type& characterstring_type::Identification_type::Syntaxes_type::transfer() {
             return *transfer_;
         }
 
-        const oid_type& characterstring_type::identification_type::syntaxes_type::transfer() const {
+        const oid_type& characterstring_type::Identification_type::Syntaxes_type::transfer() const {
             return *transfer_;
         }
 
-        void characterstring_type::identification_type::syntaxes_type::transfer(const oid_type& vl) {
+        void characterstring_type::Identification_type::Syntaxes_type::transfer(const oid_type& vl) {
             transfer_ = vl;
         }
 
-        void characterstring_type::identification_type::syntaxes_type::transfer(boost::shared_ptr< oid_type> vl) {
+        void characterstring_type::Identification_type::Syntaxes_type::transfer(boost::shared_ptr< oid_type> vl) {
             transfer_ = vl;
         }
 
-        characterstring_type::identification_type::context_negotiation_type::context_negotiation_type() : presentation_context_id_(), transfer_syntax_() {
+        characterstring_type::Identification_type::Context_negotiation_type::Context_negotiation_type() : presentation_context_id_(), transfer_syntax_() {
         };
 
-        characterstring_type::identification_type::context_negotiation_type::context_negotiation_type(const int& arg__presentation_context_id,
+        characterstring_type::Identification_type::Context_negotiation_type::Context_negotiation_type(const int& arg__presentation_context_id,
                 const oid_type& arg__transfer_syntax) :
         presentation_context_id_(arg__presentation_context_id),
         transfer_syntax_(arg__transfer_syntax) {
         };
 
-        int& characterstring_type::identification_type::context_negotiation_type::presentation_context_id() {
+        int& characterstring_type::Identification_type::Context_negotiation_type::presentation_context_id() {
             return *presentation_context_id_;
         }
 
-        const int& characterstring_type::identification_type::context_negotiation_type::presentation_context_id() const {
+        const int& characterstring_type::Identification_type::Context_negotiation_type::presentation_context_id() const {
             return *presentation_context_id_;
         }
 
-        void characterstring_type::identification_type::context_negotiation_type::presentation_context_id(const int& vl) {
+        void characterstring_type::Identification_type::Context_negotiation_type::presentation_context_id(const int& vl) {
             presentation_context_id_ = vl;
         }
 
-        void characterstring_type::identification_type::context_negotiation_type::presentation_context_id(boost::shared_ptr< int> vl) {
+        void characterstring_type::Identification_type::Context_negotiation_type::presentation_context_id(boost::shared_ptr< int> vl) {
             presentation_context_id_ = vl;
         }
 
-        oid_type& characterstring_type::identification_type::context_negotiation_type::transfer_syntax() {
+        oid_type& characterstring_type::Identification_type::Context_negotiation_type::transfer_syntax() {
             return *transfer_syntax_;
         }
 
-        const oid_type& characterstring_type::identification_type::context_negotiation_type::transfer_syntax() const {
+        const oid_type& characterstring_type::Identification_type::Context_negotiation_type::transfer_syntax() const {
             return *transfer_syntax_;
         }
 
-        void characterstring_type::identification_type::context_negotiation_type::transfer_syntax(const oid_type& vl) {
+        void characterstring_type::Identification_type::Context_negotiation_type::transfer_syntax(const oid_type& vl) {
             transfer_syntax_ = vl;
         }
 
-        void characterstring_type::identification_type::context_negotiation_type::transfer_syntax(boost::shared_ptr< oid_type> vl) {
+        void characterstring_type::Identification_type::Context_negotiation_type::transfer_syntax(boost::shared_ptr< oid_type> vl) {
             transfer_syntax_ = vl;
         }
 
-        void characterstring_type::identification_type::syntax(const oid_type& vl) {
-            set<oid_type>(new oid_type(vl), identification_type_syntax);
+        void characterstring_type::Identification_type::syntax(const oid_type& vl) {
+            set<oid_type>(new oid_type(vl), Identification_type_syntax);
         }
 
-        void characterstring_type::identification_type::presentation_context_id(const int& vl) {
-            set<int>(new int(vl), identification_type_presentation_context_id);
+        void characterstring_type::Identification_type::presentation_context_id(const int& vl) {
+            set<int>(new int(vl), Identification_type_presentation_context_id);
         }
 
-        void characterstring_type::identification_type::transfer_syntax(const oid_type& vl) {
-            set<oid_type>(new oid_type(vl), identification_type_transfer_syntax);
+        void characterstring_type::Identification_type::transfer_syntax(const oid_type& vl) {
+            set<oid_type>(new oid_type(vl), Identification_type_transfer_syntax);
         }
 
-        void characterstring_type::identification_type::fixed(const null_type& vl) {
-            set<null_type>(new null_type(vl), identification_type_fixed);
+        void characterstring_type::Identification_type::fixed(const null_type& vl) {
+            set<null_type>(new null_type(vl), Identification_type_fixed);
         }
 
-        characterstring_type::identification_type& characterstring_type::identification() {
+        characterstring_type::Identification_type& characterstring_type::identification() {
             return *identification_;
         }
 
-        const characterstring_type::identification_type& characterstring_type::identification() const {
+        const characterstring_type::Identification_type& characterstring_type::identification() const {
             return *identification_;
         }
 
-        void characterstring_type::identification(const identification_type& vl) {
+        void characterstring_type::identification(const Identification_type& vl) {
             identification_ = vl;
         }
 
-        void characterstring_type::identification(boost::shared_ptr< identification_type> vl) {
+        void characterstring_type::identification(boost::shared_ptr< Identification_type> vl) {
             identification_ = vl;
         }
 

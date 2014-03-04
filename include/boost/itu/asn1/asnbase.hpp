@@ -1814,28 +1814,28 @@ namespace boost {
 
         struct external_type {
 
-            struct encoding_type;
+            struct Encoding_type;
 
-            enum encoding_type_enum {
+            enum Encoding_type_enum {
 
-                encoding_type_null = 0,
-                encoding_type_single_ASN1_type,
-                encoding_type_octet_aligned,
-                encoding_type_arbitrary,
+                Encoding_type_null = 0,
+                Encoding_type_single_ASN1_type,
+                Encoding_type_octet_aligned,
+                Encoding_type_arbitrary,
             };
 
-            struct encoding_type : public ITU_T_CHOICE(encoding_type_enum) {
+            struct Encoding_type : public ITU_T_CHOICE(Encoding_type_enum) {
 
-                encoding_type() : ITU_T_CHOICE(encoding_type_enum) () {
+                Encoding_type() : ITU_T_CHOICE(Encoding_type_enum) () {
                 }
 
-                template<typename T > encoding_type(boost::shared_ptr< T> vl, encoding_type_enum enm) :
-                        ITU_T_CHOICE(encoding_type_enum) (vl, static_cast<int> (enm)) {
+                template<typename T > Encoding_type(boost::shared_ptr< T> vl, Encoding_type_enum enm) :
+                        ITU_T_CHOICE(Encoding_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICES_DECL(single_ASN1_type, any_type, encoding_type_single_ASN1_type); // primitive
-                ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, encoding_type_octet_aligned); // primitive
-                ITU_T_CHOICES_DECL(arbitrary, bitstring_type, encoding_type_arbitrary); // primitive
+                ITU_T_CHOICES_DECL(single_ASN1_type, any_type, Encoding_type_single_ASN1_type); // primitive
+                ITU_T_CHOICES_DECL(octet_aligned, octetstring_type, Encoding_type_octet_aligned); // primitive
+                ITU_T_CHOICES_DECL(arbitrary, bitstring_type, Encoding_type_arbitrary); // primitive
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -1843,17 +1843,17 @@ namespace boost {
 
             external_type();
 
-            external_type(const encoding_type& arg__encoding);
+            external_type(const Encoding_type& arg__encoding);
 
             external_type(boost::shared_ptr< oid_type> arg__direct_reference,
                     boost::shared_ptr< int> arg__indirect_reference,
                     boost::shared_ptr< objectdescriptor_type> arg__data_value_descriptor,
-                    boost::shared_ptr< encoding_type> arg__encoding);
+                    boost::shared_ptr< Encoding_type> arg__encoding);
 
             ITU_T_OPTIONAL_DECL(direct_reference, oid_type);
             ITU_T_OPTIONAL_DECL(indirect_reference, int);
             ITU_T_OPTIONAL_DECL(data_value_descriptor, objectdescriptor_type);
-            ITU_T_HOLDERH_DECL(encoding, encoding_type);
+            ITU_T_HOLDERH_DECL(encoding, Encoding_type);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1866,30 +1866,30 @@ namespace boost {
 
         struct embeded_type {
 
-            struct identification_type;
+            struct Identification_type;
 
-            enum identification_type_enum {
+            enum Identification_type_enum {
 
-                identification_type_null = 0,
-                identification_type_syntaxes,
-                identification_type_syntax,
-                identification_type_presentation_context_id,
-                identification_type_context_negotiation,
-                identification_type_transfer_syntax,
-                identification_type_fixed,
+                Identification_type_null = 0,
+                Identification_type_syntaxes,
+                Identification_type_syntax,
+                Identification_type_presentation_context_id,
+                Identification_type_context_negotiation,
+                Identification_type_transfer_syntax,
+                Identification_type_fixed,
             };
 
-            struct identification_type : public ITU_T_CHOICE(identification_type_enum) {
+            struct Identification_type : public ITU_T_CHOICE(Identification_type_enum) {
 
 
-                struct syntaxes_type;
-                struct context_negotiation_type;
+                struct Syntaxes_type;
+                struct Context_negotiation_type;
 
-                struct syntaxes_type {
+                struct Syntaxes_type {
 
-                    syntaxes_type();
+                    Syntaxes_type();
 
-                    syntaxes_type(const oid_type& arg__abstract,
+                    Syntaxes_type(const oid_type& arg__abstract,
                             const oid_type& arg__transfer);
 
                     ITU_T_HOLDERH_DECL(abstract, oid_type);
@@ -1898,11 +1898,11 @@ namespace boost {
                     ITU_T_ARCHIVE_FUNC;
                 };
 
-                struct context_negotiation_type {
+                struct Context_negotiation_type {
 
-                    context_negotiation_type();
+                    Context_negotiation_type();
 
-                    context_negotiation_type(const int& arg__presentation_context_id,
+                    Context_negotiation_type(const int& arg__presentation_context_id,
                             const oid_type& arg__transfer_syntax);
 
                     ITU_T_HOLDERH_DECL(presentation_context_id, int);
@@ -1911,19 +1911,19 @@ namespace boost {
                     ITU_T_ARCHIVE_FUNC;
                 };
 
-                identification_type() : ITU_T_CHOICE(identification_type_enum) () {
+                Identification_type() : ITU_T_CHOICE(Identification_type_enum) () {
                 }
 
-                template<typename T > identification_type(boost::shared_ptr< T> vl, identification_type_enum enm) :
-                        ITU_T_CHOICE(identification_type_enum) (vl, static_cast<int> (enm)) {
+                template<typename T > Identification_type(boost::shared_ptr< T> vl, Identification_type_enum enm) :
+                        ITU_T_CHOICE(Identification_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICEC_DECL(syntaxes, syntaxes_type, identification_type_syntaxes);
-                ITU_T_CHOICES_DECL(syntax, oid_type, identification_type_syntax); // primitive
-                ITU_T_CHOICES_DECL(presentation_context_id, int, identification_type_presentation_context_id); // primitive
-                ITU_T_CHOICEC_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation);
-                ITU_T_CHOICES_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax); // primitive
-                ITU_T_CHOICES_DECL(fixed, null_type, identification_type_fixed); // primitive
+                ITU_T_CHOICEC_DECL(syntaxes, Syntaxes_type, Identification_type_syntaxes);
+                ITU_T_CHOICES_DECL(syntax, oid_type, Identification_type_syntax); // primitive
+                ITU_T_CHOICES_DECL(presentation_context_id, int, Identification_type_presentation_context_id); // primitive
+                ITU_T_CHOICEC_DECL(context_negotiation, Context_negotiation_type, Identification_type_context_negotiation);
+                ITU_T_CHOICES_DECL(transfer_syntax, oid_type, Identification_type_transfer_syntax); // primitive
+                ITU_T_CHOICES_DECL(fixed, null_type, Identification_type_fixed); // primitive
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -1931,10 +1931,10 @@ namespace boost {
 
             embeded_type();
 
-            embeded_type(const identification_type& arg__identification,
+            embeded_type(const Identification_type& arg__identification,
                     const octetstring_type& arg__data_value);
 
-            ITU_T_HOLDERH_DECL(identification, identification_type);
+            ITU_T_HOLDERH_DECL(identification, Identification_type);
             ITU_T_HOLDERH_DECL(data_value, octetstring_type);
 
             ITU_T_ARCHIVE_FUNC;
@@ -1949,30 +1949,30 @@ namespace boost {
 
         struct characterstring_type {
 
-            struct identification_type;
+            struct Identification_type;
 
-            enum identification_type_enum {
+            enum Identification_type_enum {
 
-                identification_type_null = 0,
-                identification_type_syntaxes,
-                identification_type_syntax,
-                identification_type_presentation_context_id,
-                identification_type_context_negotiation,
-                identification_type_transfer_syntax,
-                identification_type_fixed,
+                Identification_type_null = 0,
+                Identification_type_syntaxes,
+                Identification_type_syntax,
+                Identification_type_presentation_context_id,
+                Identification_type_context_negotiation,
+                Identification_type_transfer_syntax,
+                Identification_type_fixed,
             };
 
-            struct identification_type : public ITU_T_CHOICE(identification_type_enum) {
+            struct Identification_type : public ITU_T_CHOICE(Identification_type_enum) {
 
 
-                struct syntaxes_type;
-                struct context_negotiation_type;
+                struct Syntaxes_type;
+                struct Context_negotiation_type;
 
-                struct syntaxes_type {
+                struct Syntaxes_type {
 
-                    syntaxes_type();
+                    Syntaxes_type();
 
-                    syntaxes_type(const oid_type& arg__abstract,
+                    Syntaxes_type(const oid_type& arg__abstract,
                             const oid_type& arg__transfer);
 
                     ITU_T_HOLDERH_DECL(abstract, oid_type);
@@ -1981,11 +1981,11 @@ namespace boost {
                     ITU_T_ARCHIVE_FUNC;
                 };
 
-                struct context_negotiation_type {
+                struct Context_negotiation_type {
 
-                    context_negotiation_type();
+                    Context_negotiation_type();
 
-                    context_negotiation_type(const int& arg__presentation_context_id,
+                    Context_negotiation_type(const int& arg__presentation_context_id,
                             const oid_type& arg__transfer_syntax);
 
                     ITU_T_HOLDERH_DECL(presentation_context_id, int);
@@ -1994,19 +1994,19 @@ namespace boost {
                     ITU_T_ARCHIVE_FUNC;
                 };
 
-                identification_type() : ITU_T_CHOICE(identification_type_enum) () {
+                Identification_type() : ITU_T_CHOICE(Identification_type_enum) () {
                 }
 
-                template<typename T > identification_type(boost::shared_ptr< T> vl, identification_type_enum enm) :
-                        ITU_T_CHOICE(identification_type_enum) (vl, static_cast<int> (enm)) {
+                template<typename T > Identification_type(boost::shared_ptr< T> vl, Identification_type_enum enm) :
+                        ITU_T_CHOICE(Identification_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICEC_DECL(syntaxes, syntaxes_type, identification_type_syntaxes);
-                ITU_T_CHOICES_DECL(syntax, oid_type, identification_type_syntax); // primitive
-                ITU_T_CHOICES_DECL(presentation_context_id, int, identification_type_presentation_context_id); // primitive
-                ITU_T_CHOICEC_DECL(context_negotiation, context_negotiation_type, identification_type_context_negotiation);
-                ITU_T_CHOICES_DECL(transfer_syntax, oid_type, identification_type_transfer_syntax); // primitive
-                ITU_T_CHOICES_DECL(fixed, null_type, identification_type_fixed); // primitive
+                ITU_T_CHOICEC_DECL(syntaxes, Syntaxes_type, Identification_type_syntaxes);
+                ITU_T_CHOICES_DECL(syntax, oid_type, Identification_type_syntax); // primitive
+                ITU_T_CHOICES_DECL(presentation_context_id, int, Identification_type_presentation_context_id); // primitive
+                ITU_T_CHOICEC_DECL(context_negotiation, Context_negotiation_type, Identification_type_context_negotiation);
+                ITU_T_CHOICES_DECL(transfer_syntax, oid_type, Identification_type_transfer_syntax); // primitive
+                ITU_T_CHOICES_DECL(fixed, null_type, Identification_type_fixed); // primitive
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -2014,10 +2014,10 @@ namespace boost {
 
             characterstring_type();
 
-            characterstring_type(const identification_type& arg__identification,
+            characterstring_type(const Identification_type& arg__identification,
                     const octetstring_type& arg__string_value);
 
-            ITU_T_HOLDERH_DECL(identification, identification_type);
+            ITU_T_HOLDERH_DECL(identification, Identification_type);
             ITU_T_HOLDERH_DECL(string_value, octetstring_type);
 
             ITU_T_ARCHIVE_FUNC;
@@ -2028,9 +2028,9 @@ namespace boost {
     }
 }
 
-ITU_T_CHOICE_REGESTRATE(boost::asn1::external_type::encoding_type)
-ITU_T_CHOICE_REGESTRATE(boost::asn1::embeded_type::identification_type);
-ITU_T_CHOICE_REGESTRATE(boost::asn1::characterstring_type::identification_type);
+ITU_T_CHOICE_REGESTRATE(boost::asn1::external_type::Encoding_type)
+ITU_T_CHOICE_REGESTRATE(boost::asn1::embeded_type::Identification_type);
+ITU_T_CHOICE_REGESTRATE(boost::asn1::characterstring_type::Identification_type);
 
 #ifdef _MSC_VER
 #pragma warning(pop)
