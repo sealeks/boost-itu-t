@@ -116,8 +116,8 @@ namespace ISO_9506_MMS_1A {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const ObtainFile_Error ObtainFile_Error_source_file;
-    extern const ObtainFile_Error ObtainFile_Error_destination_file;
+    extern const ObtainFile_Error obtainFile_Error_source_file;
+    extern const ObtainFile_Error obtainFile_Error_destination_file;
 
     // sequence FileOpen-Request
 
@@ -183,8 +183,8 @@ namespace ISO_9506_MMS_1A {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const FileRename_Error FileRename_Error_source_file;
-    extern const FileRename_Error FileRename_Error_destination_file;
+    extern const FileRename_Error fileRename_Error_source_file;
+    extern const FileRename_Error fileRename_Error_destination_file;
 
     // sequence FileDirectory-Request
 
@@ -205,18 +205,18 @@ namespace ISO_9506_MMS_1A {
 
     struct FileDirectory_Response {
 
-        typedef std::vector< DirectoryEntry > listOfDirectoryEntry_type;
+        typedef std::vector< DirectoryEntry > ListOfDirectoryEntry_type;
 
         static const bool moreFollows__default;
 
         FileDirectory_Response();
 
-        FileDirectory_Response(const listOfDirectoryEntry_type& arg__listOfDirectoryEntry);
+        FileDirectory_Response(const ListOfDirectoryEntry_type& arg__listOfDirectoryEntry);
 
-        FileDirectory_Response(boost::shared_ptr< listOfDirectoryEntry_type> arg__listOfDirectoryEntry,
+        FileDirectory_Response(boost::shared_ptr< ListOfDirectoryEntry_type> arg__listOfDirectoryEntry,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfDirectoryEntry, listOfDirectoryEntry_type);
+        ITU_T_HOLDERH_DECL(listOfDirectoryEntry, ListOfDirectoryEntry_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;

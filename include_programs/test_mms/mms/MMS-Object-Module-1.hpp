@@ -115,22 +115,22 @@ namespace MMS_Object_Module_1 {
     using ISO_9506_MMS_1::Unsigned8;
 
 
-    extern const LogicalStatus LogicalStatus_state_changes_allowed;
-    extern const LogicalStatus LogicalStatus_no_state_changes_allowed;
-    extern const LogicalStatus LogicalStatus_limited_services_permitted;
-    extern const LogicalStatus LogicalStatus_support_services_allowed;
+    extern const LogicalStatus logicalStatus_state_changes_allowed;
+    extern const LogicalStatus logicalStatus_no_state_changes_allowed;
+    extern const LogicalStatus logicalStatus_limited_services_permitted;
+    extern const LogicalStatus logicalStatus_support_services_allowed;
 
-    extern const PhysicalStatus PhysicalStatus_operational;
-    extern const PhysicalStatus PhysicalStatus_partially_operational;
-    extern const PhysicalStatus PhysicalStatus_inoperable;
-    extern const PhysicalStatus PhysicalStatus_needs_commissioning;
+    extern const PhysicalStatus physicalStatus_operational;
+    extern const PhysicalStatus physicalStatus_partially_operational;
+    extern const PhysicalStatus physicalStatus_inoperable;
+    extern const PhysicalStatus physicalStatus_needs_commissioning;
 
-    extern const VMDState VMDState_idle;
-    extern const VMDState VMDState_loaded;
-    extern const VMDState VMDState_ready;
-    extern const VMDState VMDState_executing;
-    extern const VMDState VMDState_motion_paused;
-    extern const VMDState VMDState_manualInterventionRequired;
+    extern const VMDState vMDState_idle;
+    extern const VMDState vMDState_loaded;
+    extern const VMDState vMDState_ready;
+    extern const VMDState vMDState_executing;
+    extern const VMDState vMDState_motion_paused;
+    extern const VMDState vMDState_manualInterventionRequired;
 
     // sequence ModifierStep
 
@@ -175,144 +175,144 @@ namespace MMS_Object_Module_1 {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const ServiceSupportOptions ServiceSupportOptions_status;
-    extern const ServiceSupportOptions ServiceSupportOptions_getNameList;
-    extern const ServiceSupportOptions ServiceSupportOptions_identify;
-    extern const ServiceSupportOptions ServiceSupportOptions_rename;
-    extern const ServiceSupportOptions ServiceSupportOptions_read;
-    extern const ServiceSupportOptions ServiceSupportOptions_write;
-    extern const ServiceSupportOptions ServiceSupportOptions_getVariableAccessAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_defineNamedVariable;
-    extern const ServiceSupportOptions ServiceSupportOptions_defineScatteredAccess;
-    extern const ServiceSupportOptions ServiceSupportOptions_getScatteredAccessAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteVariableAccess;
-    extern const ServiceSupportOptions ServiceSupportOptions_defineNamedVariableList;
-    extern const ServiceSupportOptions ServiceSupportOptions_getNamedVariableListAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteNamedVariableList;
-    extern const ServiceSupportOptions ServiceSupportOptions_defineNamedType;
-    extern const ServiceSupportOptions ServiceSupportOptions_getNamedTypeAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteNamedType;
-    extern const ServiceSupportOptions ServiceSupportOptions_input;
-    extern const ServiceSupportOptions ServiceSupportOptions_output;
-    extern const ServiceSupportOptions ServiceSupportOptions_takeControl;
-    extern const ServiceSupportOptions ServiceSupportOptions_relinquishControl;
-    extern const ServiceSupportOptions ServiceSupportOptions_defineSemaphore;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteSemaphore;
-    extern const ServiceSupportOptions ServiceSupportOptions_reportSemaphoreStatus;
-    extern const ServiceSupportOptions ServiceSupportOptions_reportPoolSemaphoreStatus;
-    extern const ServiceSupportOptions ServiceSupportOptions_reportSemaphoreEntryStatus;
-    extern const ServiceSupportOptions ServiceSupportOptions_initiateDownloadSequence;
-    extern const ServiceSupportOptions ServiceSupportOptions_downloadSegment;
-    extern const ServiceSupportOptions ServiceSupportOptions_terminateDownloadSequence;
-    extern const ServiceSupportOptions ServiceSupportOptions_initiateUploadSequence;
-    extern const ServiceSupportOptions ServiceSupportOptions_uploadSegment;
-    extern const ServiceSupportOptions ServiceSupportOptions_terminateUploadSequence;
-    extern const ServiceSupportOptions ServiceSupportOptions_requestDomainDownload;
-    extern const ServiceSupportOptions ServiceSupportOptions_requestDomainUpload;
-    extern const ServiceSupportOptions ServiceSupportOptions_loadDomainContent;
-    extern const ServiceSupportOptions ServiceSupportOptions_storeDomainContent;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteDomain;
-    extern const ServiceSupportOptions ServiceSupportOptions_getDomainAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_createProgramInvocation;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteProgramInvocation;
-    extern const ServiceSupportOptions ServiceSupportOptions_start;
-    extern const ServiceSupportOptions ServiceSupportOptions_stop;
-    extern const ServiceSupportOptions ServiceSupportOptions_resume;
-    extern const ServiceSupportOptions ServiceSupportOptions_reset;
-    extern const ServiceSupportOptions ServiceSupportOptions_kill;
-    extern const ServiceSupportOptions ServiceSupportOptions_getProgramInvocationAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_obtainFile;
-    extern const ServiceSupportOptions ServiceSupportOptions_defineEventCondition;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteEventCondition;
-    extern const ServiceSupportOptions ServiceSupportOptions_getEventConditionAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_reportEventConditionStatus;
-    extern const ServiceSupportOptions ServiceSupportOptions_alterEventConditionMonitoring;
-    extern const ServiceSupportOptions ServiceSupportOptions_triggerEvent;
-    extern const ServiceSupportOptions ServiceSupportOptions_defineEventAction;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteEventAction;
-    extern const ServiceSupportOptions ServiceSupportOptions_getEventActionAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_reportEventActionStatus;
-    extern const ServiceSupportOptions ServiceSupportOptions_defineEventEnrollment;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteEventEnrollment;
-    extern const ServiceSupportOptions ServiceSupportOptions_alterEventEnrollment;
-    extern const ServiceSupportOptions ServiceSupportOptions_reportEventEnrollmentStatus;
-    extern const ServiceSupportOptions ServiceSupportOptions_getEventEnrollmentAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_acknowledgeEventNotification;
-    extern const ServiceSupportOptions ServiceSupportOptions_getAlarmSummary;
-    extern const ServiceSupportOptions ServiceSupportOptions_getAlarmEnrollmentSummary;
-    extern const ServiceSupportOptions ServiceSupportOptions_readJournal;
-    extern const ServiceSupportOptions ServiceSupportOptions_writeJournal;
-    extern const ServiceSupportOptions ServiceSupportOptions_initializeJournal;
-    extern const ServiceSupportOptions ServiceSupportOptions_reportJournalStatus;
-    extern const ServiceSupportOptions ServiceSupportOptions_createJournal;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteJournal;
-    extern const ServiceSupportOptions ServiceSupportOptions_getCapabilityList;
-    extern const ServiceSupportOptions ServiceSupportOptions_fileOpen;
-    extern const ServiceSupportOptions ServiceSupportOptions_fileRead;
-    extern const ServiceSupportOptions ServiceSupportOptions_fileClose;
-    extern const ServiceSupportOptions ServiceSupportOptions_fileRename;
-    extern const ServiceSupportOptions ServiceSupportOptions_fileDelete;
-    extern const ServiceSupportOptions ServiceSupportOptions_fileDirectory;
-    extern const ServiceSupportOptions ServiceSupportOptions_unsolicitedStatus;
-    extern const ServiceSupportOptions ServiceSupportOptions_informationReport;
-    extern const ServiceSupportOptions ServiceSupportOptions_eventNotification;
-    extern const ServiceSupportOptions ServiceSupportOptions_attachToEventCondition;
-    extern const ServiceSupportOptions ServiceSupportOptions_attachToSemaphore;
-    extern const ServiceSupportOptions ServiceSupportOptions_conclude;
-    extern const ServiceSupportOptions ServiceSupportOptions_cancel;
-    extern const ServiceSupportOptions ServiceSupportOptions_getDataExchangeAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_exchangeData;
-    extern const ServiceSupportOptions ServiceSupportOptions_defineAccessControlList;
-    extern const ServiceSupportOptions ServiceSupportOptions_getAccessControlListAttributes;
-    extern const ServiceSupportOptions ServiceSupportOptions_reportAccessControlledObjects;
-    extern const ServiceSupportOptions ServiceSupportOptions_deleteAccessControlList;
-    extern const ServiceSupportOptions ServiceSupportOptions_alterAccessControl;
-    extern const ServiceSupportOptions ServiceSupportOptions_reconfigureProgramInvocation;
+    extern const ServiceSupportOptions serviceSupportOptions_status;
+    extern const ServiceSupportOptions serviceSupportOptions_getNameList;
+    extern const ServiceSupportOptions serviceSupportOptions_identify;
+    extern const ServiceSupportOptions serviceSupportOptions_rename;
+    extern const ServiceSupportOptions serviceSupportOptions_read;
+    extern const ServiceSupportOptions serviceSupportOptions_write;
+    extern const ServiceSupportOptions serviceSupportOptions_getVariableAccessAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_defineNamedVariable;
+    extern const ServiceSupportOptions serviceSupportOptions_defineScatteredAccess;
+    extern const ServiceSupportOptions serviceSupportOptions_getScatteredAccessAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteVariableAccess;
+    extern const ServiceSupportOptions serviceSupportOptions_defineNamedVariableList;
+    extern const ServiceSupportOptions serviceSupportOptions_getNamedVariableListAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteNamedVariableList;
+    extern const ServiceSupportOptions serviceSupportOptions_defineNamedType;
+    extern const ServiceSupportOptions serviceSupportOptions_getNamedTypeAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteNamedType;
+    extern const ServiceSupportOptions serviceSupportOptions_input;
+    extern const ServiceSupportOptions serviceSupportOptions_output;
+    extern const ServiceSupportOptions serviceSupportOptions_takeControl;
+    extern const ServiceSupportOptions serviceSupportOptions_relinquishControl;
+    extern const ServiceSupportOptions serviceSupportOptions_defineSemaphore;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteSemaphore;
+    extern const ServiceSupportOptions serviceSupportOptions_reportSemaphoreStatus;
+    extern const ServiceSupportOptions serviceSupportOptions_reportPoolSemaphoreStatus;
+    extern const ServiceSupportOptions serviceSupportOptions_reportSemaphoreEntryStatus;
+    extern const ServiceSupportOptions serviceSupportOptions_initiateDownloadSequence;
+    extern const ServiceSupportOptions serviceSupportOptions_downloadSegment;
+    extern const ServiceSupportOptions serviceSupportOptions_terminateDownloadSequence;
+    extern const ServiceSupportOptions serviceSupportOptions_initiateUploadSequence;
+    extern const ServiceSupportOptions serviceSupportOptions_uploadSegment;
+    extern const ServiceSupportOptions serviceSupportOptions_terminateUploadSequence;
+    extern const ServiceSupportOptions serviceSupportOptions_requestDomainDownload;
+    extern const ServiceSupportOptions serviceSupportOptions_requestDomainUpload;
+    extern const ServiceSupportOptions serviceSupportOptions_loadDomainContent;
+    extern const ServiceSupportOptions serviceSupportOptions_storeDomainContent;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteDomain;
+    extern const ServiceSupportOptions serviceSupportOptions_getDomainAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_createProgramInvocation;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteProgramInvocation;
+    extern const ServiceSupportOptions serviceSupportOptions_start;
+    extern const ServiceSupportOptions serviceSupportOptions_stop;
+    extern const ServiceSupportOptions serviceSupportOptions_resume;
+    extern const ServiceSupportOptions serviceSupportOptions_reset;
+    extern const ServiceSupportOptions serviceSupportOptions_kill;
+    extern const ServiceSupportOptions serviceSupportOptions_getProgramInvocationAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_obtainFile;
+    extern const ServiceSupportOptions serviceSupportOptions_defineEventCondition;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteEventCondition;
+    extern const ServiceSupportOptions serviceSupportOptions_getEventConditionAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_reportEventConditionStatus;
+    extern const ServiceSupportOptions serviceSupportOptions_alterEventConditionMonitoring;
+    extern const ServiceSupportOptions serviceSupportOptions_triggerEvent;
+    extern const ServiceSupportOptions serviceSupportOptions_defineEventAction;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteEventAction;
+    extern const ServiceSupportOptions serviceSupportOptions_getEventActionAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_reportEventActionStatus;
+    extern const ServiceSupportOptions serviceSupportOptions_defineEventEnrollment;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteEventEnrollment;
+    extern const ServiceSupportOptions serviceSupportOptions_alterEventEnrollment;
+    extern const ServiceSupportOptions serviceSupportOptions_reportEventEnrollmentStatus;
+    extern const ServiceSupportOptions serviceSupportOptions_getEventEnrollmentAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_acknowledgeEventNotification;
+    extern const ServiceSupportOptions serviceSupportOptions_getAlarmSummary;
+    extern const ServiceSupportOptions serviceSupportOptions_getAlarmEnrollmentSummary;
+    extern const ServiceSupportOptions serviceSupportOptions_readJournal;
+    extern const ServiceSupportOptions serviceSupportOptions_writeJournal;
+    extern const ServiceSupportOptions serviceSupportOptions_initializeJournal;
+    extern const ServiceSupportOptions serviceSupportOptions_reportJournalStatus;
+    extern const ServiceSupportOptions serviceSupportOptions_createJournal;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteJournal;
+    extern const ServiceSupportOptions serviceSupportOptions_getCapabilityList;
+    extern const ServiceSupportOptions serviceSupportOptions_fileOpen;
+    extern const ServiceSupportOptions serviceSupportOptions_fileRead;
+    extern const ServiceSupportOptions serviceSupportOptions_fileClose;
+    extern const ServiceSupportOptions serviceSupportOptions_fileRename;
+    extern const ServiceSupportOptions serviceSupportOptions_fileDelete;
+    extern const ServiceSupportOptions serviceSupportOptions_fileDirectory;
+    extern const ServiceSupportOptions serviceSupportOptions_unsolicitedStatus;
+    extern const ServiceSupportOptions serviceSupportOptions_informationReport;
+    extern const ServiceSupportOptions serviceSupportOptions_eventNotification;
+    extern const ServiceSupportOptions serviceSupportOptions_attachToEventCondition;
+    extern const ServiceSupportOptions serviceSupportOptions_attachToSemaphore;
+    extern const ServiceSupportOptions serviceSupportOptions_conclude;
+    extern const ServiceSupportOptions serviceSupportOptions_cancel;
+    extern const ServiceSupportOptions serviceSupportOptions_getDataExchangeAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_exchangeData;
+    extern const ServiceSupportOptions serviceSupportOptions_defineAccessControlList;
+    extern const ServiceSupportOptions serviceSupportOptions_getAccessControlListAttributes;
+    extern const ServiceSupportOptions serviceSupportOptions_reportAccessControlledObjects;
+    extern const ServiceSupportOptions serviceSupportOptions_deleteAccessControlList;
+    extern const ServiceSupportOptions serviceSupportOptions_alterAccessControl;
+    extern const ServiceSupportOptions serviceSupportOptions_reconfigureProgramInvocation;
 
-    extern const ParameterSupportOptions ParameterSupportOptions_str1;
-    extern const ParameterSupportOptions ParameterSupportOptions_str2;
-    extern const ParameterSupportOptions ParameterSupportOptions_vnam;
-    extern const ParameterSupportOptions ParameterSupportOptions_valt;
-    extern const ParameterSupportOptions ParameterSupportOptions_vadr;
-    extern const ParameterSupportOptions ParameterSupportOptions_vsca;
-    extern const ParameterSupportOptions ParameterSupportOptions_tpy;
-    extern const ParameterSupportOptions ParameterSupportOptions_vlis;
-    extern const ParameterSupportOptions ParameterSupportOptions_cei;
-    extern const ParameterSupportOptions ParameterSupportOptions_aco;
-    extern const ParameterSupportOptions ParameterSupportOptions_sem;
-    extern const ParameterSupportOptions ParameterSupportOptions_csr;
-    extern const ParameterSupportOptions ParameterSupportOptions_csnc;
-    extern const ParameterSupportOptions ParameterSupportOptions_csplc;
-    extern const ParameterSupportOptions ParameterSupportOptions_cspi;
-    extern const ParameterSupportOptions ParameterSupportOptions_char;
+    extern const ParameterSupportOptions parameterSupportOptions_str1;
+    extern const ParameterSupportOptions parameterSupportOptions_str2;
+    extern const ParameterSupportOptions parameterSupportOptions_vnam;
+    extern const ParameterSupportOptions parameterSupportOptions_valt;
+    extern const ParameterSupportOptions parameterSupportOptions_vadr;
+    extern const ParameterSupportOptions parameterSupportOptions_vsca;
+    extern const ParameterSupportOptions parameterSupportOptions_tpy;
+    extern const ParameterSupportOptions parameterSupportOptions_vlis;
+    extern const ParameterSupportOptions parameterSupportOptions_cei;
+    extern const ParameterSupportOptions parameterSupportOptions_aco;
+    extern const ParameterSupportOptions parameterSupportOptions_sem;
+    extern const ParameterSupportOptions parameterSupportOptions_csr;
+    extern const ParameterSupportOptions parameterSupportOptions_csnc;
+    extern const ParameterSupportOptions parameterSupportOptions_csplc;
+    extern const ParameterSupportOptions parameterSupportOptions_cspi;
+    extern const ParameterSupportOptions parameterSupportOptions_char;
 
-    extern const AdditionalSupportOptions AdditionalSupportOptions_vMDStop;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_vMDReset;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_select;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_alterProgramInvocationAttributes;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_initiateUnitControlLoad;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_unitControlLoadSegment;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_unitControlUpload;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_startUnitControl;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_stopUnitControl;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_createUnitControl;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_addToUnitControl;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_removeFromUnitControl;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_getUnitControlAttributes;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_loadUnitControlFromFile;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_storeUnitControlToFile;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_deleteUnitControl;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_defineEventConditionList;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_deleteEventConditionList;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_addEventConditionListReference;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_removeEventConditionListReference;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_getEventConditionListAttributes;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_reportEventConditionListStatus;
-    extern const AdditionalSupportOptions AdditionalSupportOptions_alterEventConditionListMonitoring;
+    extern const AdditionalSupportOptions additionalSupportOptions_vMDStop;
+    extern const AdditionalSupportOptions additionalSupportOptions_vMDReset;
+    extern const AdditionalSupportOptions additionalSupportOptions_select;
+    extern const AdditionalSupportOptions additionalSupportOptions_alterProgramInvocationAttributes;
+    extern const AdditionalSupportOptions additionalSupportOptions_initiateUnitControlLoad;
+    extern const AdditionalSupportOptions additionalSupportOptions_unitControlLoadSegment;
+    extern const AdditionalSupportOptions additionalSupportOptions_unitControlUpload;
+    extern const AdditionalSupportOptions additionalSupportOptions_startUnitControl;
+    extern const AdditionalSupportOptions additionalSupportOptions_stopUnitControl;
+    extern const AdditionalSupportOptions additionalSupportOptions_createUnitControl;
+    extern const AdditionalSupportOptions additionalSupportOptions_addToUnitControl;
+    extern const AdditionalSupportOptions additionalSupportOptions_removeFromUnitControl;
+    extern const AdditionalSupportOptions additionalSupportOptions_getUnitControlAttributes;
+    extern const AdditionalSupportOptions additionalSupportOptions_loadUnitControlFromFile;
+    extern const AdditionalSupportOptions additionalSupportOptions_storeUnitControlToFile;
+    extern const AdditionalSupportOptions additionalSupportOptions_deleteUnitControl;
+    extern const AdditionalSupportOptions additionalSupportOptions_defineEventConditionList;
+    extern const AdditionalSupportOptions additionalSupportOptions_deleteEventConditionList;
+    extern const AdditionalSupportOptions additionalSupportOptions_addEventConditionListReference;
+    extern const AdditionalSupportOptions additionalSupportOptions_removeEventConditionListReference;
+    extern const AdditionalSupportOptions additionalSupportOptions_getEventConditionListAttributes;
+    extern const AdditionalSupportOptions additionalSupportOptions_reportEventConditionListStatus;
+    extern const AdditionalSupportOptions additionalSupportOptions_alterEventConditionListMonitoring;
 
-    extern const AdditionalCBBOptions AdditionalCBBOptions_des;
-    extern const AdditionalCBBOptions AdditionalCBBOptions_dei;
-    extern const AdditionalCBBOptions AdditionalCBBOptions_recl;
+    extern const AdditionalCBBOptions additionalCBBOptions_des;
+    extern const AdditionalCBBOptions additionalCBBOptions_dei;
+    extern const AdditionalCBBOptions additionalCBBOptions_recl;
 
     // choice AccessCondition
 
@@ -330,38 +330,38 @@ namespace MMS_Object_Module_1 {
     struct AccessCondition : public ITU_T_CHOICE(AccessCondition_enum) {
 
 
-        struct user_type;
+        struct User_type;
 
-        enum user_type_enum {
+        enum User_type_enum {
 
-            user_type_null = 0,
-            user_type_association,
-            user_type_none,
+            User_type_null = 0,
+            User_type_association,
+            User_type_none,
         };
 
-        struct user_type : public ITU_T_CHOICE(user_type_enum) {
+        struct User_type : public ITU_T_CHOICE(User_type_enum) {
 
-            user_type() : ITU_T_CHOICE(user_type_enum) () {
+            User_type() : ITU_T_CHOICE(User_type_enum) () {
             }
 
-            template<typename T > user_type(boost::shared_ptr< T> vl, user_type_enum enm) :
-                    ITU_T_CHOICE(user_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > User_type(boost::shared_ptr< T> vl, User_type_enum enm) :
+                    ITU_T_CHOICE(User_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > user_type(const T& vl, user_type_enum enm) :
-                    ITU_T_CHOICE(user_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > User_type(const T& vl, User_type_enum enm) :
+                    ITU_T_CHOICE(User_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICEC_DECL(association, MMS_Environment_1::ApplicationReference, user_type_association);
-            ITU_T_CHOICES_DECL(none, null_type, user_type_none); // primitive
+            ITU_T_CHOICEC_DECL(association, MMS_Environment_1::ApplicationReference, User_type_association);
+            ITU_T_CHOICES_DECL(none, null_type, User_type_none); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
 
 
-        typedef std::vector< AccessCondition > joint_type;
-        typedef std::vector< AccessCondition > alternate_type;
+        typedef std::vector< AccessCondition > Joint_type;
+        typedef std::vector< AccessCondition > Alternate_type;
 
         AccessCondition() : ITU_T_CHOICE(AccessCondition_enum) () {
         }
@@ -376,55 +376,55 @@ namespace MMS_Object_Module_1 {
 
         ITU_T_CHOICES_DECL(never, null_type, AccessCondition_never); // primitive
         ITU_T_CHOICES_DECL(semaphore, ISO_9506_MMS_1::Identifier, AccessCondition_semaphore); // primitive
-        ITU_T_CHOICEC_DECL(user, user_type, AccessCondition_user);
+        ITU_T_CHOICEC_DECL(user, User_type, AccessCondition_user);
         ITU_T_CHOICEC_DECL(password, ACSE_1::Authentication_value, AccessCondition_password);
-        ITU_T_CHOICEC_DECL(joint, joint_type, AccessCondition_joint);
-        ITU_T_CHOICEC_DECL(alternate, alternate_type, AccessCondition_alternate);
+        ITU_T_CHOICEC_DECL(joint, Joint_type, AccessCondition_joint);
+        ITU_T_CHOICEC_DECL(alternate, Alternate_type, AccessCondition_alternate);
 
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const DomainState DomainState_non_existent;
-    extern const DomainState DomainState_loading;
-    extern const DomainState DomainState_ready;
-    extern const DomainState DomainState_in_use;
-    extern const DomainState DomainState_complete;
-    extern const DomainState DomainState_incomplete;
-    extern const DomainState DomainState_d1;
-    extern const DomainState DomainState_d2;
-    extern const DomainState DomainState_d3;
-    extern const DomainState DomainState_d4;
-    extern const DomainState DomainState_d5;
-    extern const DomainState DomainState_d6;
-    extern const DomainState DomainState_d7;
-    extern const DomainState DomainState_d8;
-    extern const DomainState DomainState_d9;
+    extern const DomainState domainState_non_existent;
+    extern const DomainState domainState_loading;
+    extern const DomainState domainState_ready;
+    extern const DomainState domainState_in_use;
+    extern const DomainState domainState_complete;
+    extern const DomainState domainState_incomplete;
+    extern const DomainState domainState_d1;
+    extern const DomainState domainState_d2;
+    extern const DomainState domainState_d3;
+    extern const DomainState domainState_d4;
+    extern const DomainState domainState_d5;
+    extern const DomainState domainState_d6;
+    extern const DomainState domainState_d7;
+    extern const DomainState domainState_d8;
+    extern const DomainState domainState_d9;
 
-    extern const ULState ULState_non_existent;
-    extern const ULState ULState_uploading;
-    extern const ULState ULState_uploaded;
-    extern const ULState ULState_u1;
-    extern const ULState ULState_u2;
-    extern const ULState ULState_u3;
-    extern const ULState ULState_u4;
+    extern const ULState uLState_non_existent;
+    extern const ULState uLState_uploading;
+    extern const ULState uLState_uploaded;
+    extern const ULState uLState_u1;
+    extern const ULState uLState_u2;
+    extern const ULState uLState_u3;
+    extern const ULState uLState_u4;
 
-    extern const ProgramInvocationState ProgramInvocationState_non_existent;
-    extern const ProgramInvocationState ProgramInvocationState_unrunnable;
-    extern const ProgramInvocationState ProgramInvocationState_idle;
-    extern const ProgramInvocationState ProgramInvocationState_running;
-    extern const ProgramInvocationState ProgramInvocationState_stopped;
-    extern const ProgramInvocationState ProgramInvocationState_starting;
-    extern const ProgramInvocationState ProgramInvocationState_stopping;
-    extern const ProgramInvocationState ProgramInvocationState_resuming;
-    extern const ProgramInvocationState ProgramInvocationState_resetting;
+    extern const ProgramInvocationState programInvocationState_non_existent;
+    extern const ProgramInvocationState programInvocationState_unrunnable;
+    extern const ProgramInvocationState programInvocationState_idle;
+    extern const ProgramInvocationState programInvocationState_running;
+    extern const ProgramInvocationState programInvocationState_stopped;
+    extern const ProgramInvocationState programInvocationState_starting;
+    extern const ProgramInvocationState programInvocationState_stopping;
+    extern const ProgramInvocationState programInvocationState_resuming;
+    extern const ProgramInvocationState programInvocationState_resetting;
 
-    extern const Control_State Control_State_normal;
-    extern const Control_State Control_State_controlling;
-    extern const Control_State Control_State_controlled;
+    extern const Control_State control_State_normal;
+    extern const Control_State control_State_controlling;
+    extern const Control_State control_State_controlled;
 
-    extern const Running_Mode Running_Mode_free_run;
-    extern const Running_Mode Running_Mode_cycle_limited;
-    extern const Running_Mode Running_Mode_step_limited;
+    extern const Running_Mode running_Mode_free_run;
+    extern const Running_Mode running_Mode_cycle_limited;
+    extern const Running_Mode running_Mode_step_limited;
 
     // choice Address
 
@@ -480,20 +480,20 @@ namespace MMS_Object_Module_1 {
     struct TypeDescription : public ITU_T_CHOICE(TypeDescription_enum) {
 
 
-        struct array_type;
-        struct structure_type;
-        struct floating_point_type;
+        struct Array_type;
+        struct Structure_type;
+        struct Floating_point_type;
 
-        struct array_type {
+        struct Array_type {
 
             static const bool packed__default;
 
-            array_type();
+            Array_type();
 
-            array_type(const ISO_9506_MMS_1::Unsigned32& arg__numberOfElements,
+            Array_type(const ISO_9506_MMS_1::Unsigned32& arg__numberOfElements,
                     const ISO_9506_MMS_1::TypeSpecification& arg__elementType);
 
-            array_type(boost::shared_ptr< bool> arg__packed,
+            Array_type(boost::shared_ptr< bool> arg__packed,
                     boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__numberOfElements,
                     boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__elementType);
 
@@ -504,17 +504,17 @@ namespace MMS_Object_Module_1 {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        struct structure_type {
+        struct Structure_type {
 
-            struct components_type_sequence_of;
+            struct Components_type_sequence_of;
 
-            struct components_type_sequence_of {
+            struct Components_type_sequence_of {
 
-                components_type_sequence_of();
+                Components_type_sequence_of();
 
-                components_type_sequence_of(const ISO_9506_MMS_1::TypeSpecification& arg__componentType);
+                Components_type_sequence_of(const ISO_9506_MMS_1::TypeSpecification& arg__componentType);
 
-                components_type_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
+                Components_type_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
                         boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__componentType);
 
                 ITU_T_OPTIONAL_DECL(componentName, ISO_9506_MMS_1::Identifier);
@@ -525,28 +525,28 @@ namespace MMS_Object_Module_1 {
 
 
 
-            typedef std::vector< components_type_sequence_of > components_type;
+            typedef std::vector< Components_type_sequence_of > Components_type;
 
             static const bool packed__default;
 
-            structure_type();
+            Structure_type();
 
-            structure_type(const components_type& arg__components);
+            Structure_type(const Components_type& arg__components);
 
-            structure_type(boost::shared_ptr< bool> arg__packed,
-                    boost::shared_ptr< components_type> arg__components);
+            Structure_type(boost::shared_ptr< bool> arg__packed,
+                    boost::shared_ptr< Components_type> arg__components);
 
             ITU_T_DEFAULTH_DECL(packed, bool, packed__default);
-            ITU_T_HOLDERH_DECL(components, components_type);
+            ITU_T_HOLDERH_DECL(components, Components_type);
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        struct floating_point_type {
+        struct Floating_point_type {
 
-            floating_point_type();
+            Floating_point_type();
 
-            floating_point_type(const ISO_9506_MMS_1::Unsigned8& arg__format_width,
+            Floating_point_type(const ISO_9506_MMS_1::Unsigned8& arg__format_width,
                     const ISO_9506_MMS_1::Unsigned8& arg__exponent_width);
 
             ITU_T_HOLDERH_DECL(format_width, ISO_9506_MMS_1::Unsigned8);
@@ -566,13 +566,13 @@ namespace MMS_Object_Module_1 {
                 ITU_T_CHOICE(TypeDescription_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICEC_DECL(array, array_type, TypeDescription_array);
-        ITU_T_CHOICEC_DECL(structure, structure_type, TypeDescription_structure);
+        ITU_T_CHOICEC_DECL(array, Array_type, TypeDescription_array);
+        ITU_T_CHOICEC_DECL(structure, Structure_type, TypeDescription_structure);
         ITU_T_CHOICES_DECL(boolean, null_type, TypeDescription_boolean); // primitive
         ITU_T_CHOICES_DECL(bit_string, ISO_9506_MMS_1::Integer32, TypeDescription_bit_string); // primitive
         ITU_T_CHOICES_DECL(integer, ISO_9506_MMS_1::Unsigned8, TypeDescription_integer); // primitive
         ITU_T_CHOICES_DECL(unsignedV, ISO_9506_MMS_1::Unsigned8, TypeDescription_unsignedV); // primitive
-        ITU_T_CHOICEC_DECL(floating_point, floating_point_type, TypeDescription_floating_point);
+        ITU_T_CHOICEC_DECL(floating_point, Floating_point_type, TypeDescription_floating_point);
         ITU_T_CHOICES_DECL(octet_string, ISO_9506_MMS_1::Integer32, TypeDescription_octet_string); // primitive
         ITU_T_CHOICES_DECL(visible_string, ISO_9506_MMS_1::Integer32, TypeDescription_visible_string); // primitive
         ITU_T_CHOICES_DECL(generalized_time, null_type, TypeDescription_generalized_time); // primitive
@@ -584,12 +584,12 @@ namespace MMS_Object_Module_1 {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const EC_Class EC_Class_network_triggered;
-    extern const EC_Class EC_Class_monitored;
+    extern const EC_Class eC_Class_network_triggered;
+    extern const EC_Class eC_Class_monitored;
 
-    extern const EC_State EC_State_disabled;
-    extern const EC_State EC_State_idle;
-    extern const EC_State EC_State_active;
+    extern const EC_State eC_State_disabled;
+    extern const EC_State eC_State_idle;
+    extern const EC_State eC_State_active;
 
     // choice EventTime
 
@@ -621,24 +621,24 @@ namespace MMS_Object_Module_1 {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const EE_Class EE_Class_modifier;
-    extern const EE_Class EE_Class_notification;
+    extern const EE_Class eE_Class_modifier;
+    extern const EE_Class eE_Class_notification;
 
-    extern const Transitions Transitions_idle_to_disabled;
-    extern const Transitions Transitions_active_to_disabled;
-    extern const Transitions Transitions_disabled_to_idle;
-    extern const Transitions Transitions_active_to_idle;
-    extern const Transitions Transitions_disabled_to_active;
-    extern const Transitions Transitions_idle_to_active;
-    extern const Transitions Transitions_any_to_deleted;
+    extern const Transitions transitions_idle_to_disabled;
+    extern const Transitions transitions_active_to_disabled;
+    extern const Transitions transitions_disabled_to_idle;
+    extern const Transitions transitions_active_to_idle;
+    extern const Transitions transitions_disabled_to_active;
+    extern const Transitions transitions_idle_to_active;
+    extern const Transitions transitions_any_to_deleted;
 
-    extern const EE_Duration EE_Duration_current;
-    extern const EE_Duration EE_Duration_permanent;
+    extern const EE_Duration eE_Duration_current;
+    extern const EE_Duration eE_Duration_permanent;
 
-    extern const AlarmAckRule AlarmAckRule_none;
-    extern const AlarmAckRule AlarmAckRule_simple;
-    extern const AlarmAckRule AlarmAckRule_ack_active;
-    extern const AlarmAckRule AlarmAckRule_ack_all;
+    extern const AlarmAckRule alarmAckRule_none;
+    extern const AlarmAckRule alarmAckRule_simple;
+    extern const AlarmAckRule alarmAckRule_ack_active;
+    extern const AlarmAckRule alarmAckRule_ack_all;
 
     // sequence Journal-Variable
 
@@ -661,20 +661,20 @@ namespace MMS_Object_Module_1 {
     template<> void Modifier::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AccessCondition::serialize(boost::asn1::x690::output_coder& arch);
     template<> void AccessCondition::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void AccessCondition::user_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void AccessCondition::user_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AccessCondition::User_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AccessCondition::User_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Address::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Address::serialize(boost::asn1::x690::input_coder& arch);
     template<> void TypeDescription::serialize(boost::asn1::x690::output_coder& arch);
     template<> void TypeDescription::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void TypeDescription::array_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void TypeDescription::array_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void TypeDescription::structure_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void TypeDescription::structure_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void TypeDescription::structure_type::components_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void TypeDescription::structure_type::components_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void TypeDescription::floating_point_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void TypeDescription::floating_point_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void TypeDescription::Array_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void TypeDescription::Array_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void TypeDescription::Structure_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void TypeDescription::Structure_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void TypeDescription::Structure_type::Components_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void TypeDescription::Structure_type::Components_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void TypeDescription::Floating_point_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void TypeDescription::Floating_point_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void EventTime::serialize(boost::asn1::x690::output_coder& arch);
     template<> void EventTime::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Journal_Variable::serialize(boost::asn1::x690::output_coder& arch);
@@ -683,7 +683,7 @@ namespace MMS_Object_Module_1 {
 
 ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::Modifier)
 ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::AccessCondition)
-ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::AccessCondition::user_type)
+ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::AccessCondition::User_type)
 ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::Address)
 ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::TypeDescription)
 ITU_T_CHOICE_REGESTRATE(MMS_Object_Module_1::EventTime)

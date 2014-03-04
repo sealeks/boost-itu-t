@@ -12,10 +12,10 @@ namespace prot9506 {
 
 
 
-    const MMS::ServiceSupportOptions MMS_SERVICE_OPTOION_SUPPORT = MMSO::ServiceSupportOptions_status | MMSO::ServiceSupportOptions_getNameList | MMSO::ServiceSupportOptions_identify | MMSO::ServiceSupportOptions_read | MMSO::ServiceSupportOptions_write |
-            MMSO::ServiceSupportOptions_rename | MMSO::ServiceSupportOptions_deleteNamedVariableList | MMSO::ServiceSupportOptions_getVariableAccessAttributes | MMSO::ServiceSupportOptions_informationReport;
-    const MMS::ParameterSupportOptions MMS_CBB_OPTION_SUPPORT = MMSO::ParameterSupportOptions_str1 | MMSO::ParameterSupportOptions_str2 | MMSO::ParameterSupportOptions_valt | MMSO::ParameterSupportOptions_valt |
-            MMSO::ParameterSupportOptions_vnam | MMSO::ParameterSupportOptions_vadr | MMSO::ParameterSupportOptions_tpy | MMSO::ParameterSupportOptions_vlis;
+    const MMS::ServiceSupportOptions MMS_SERVICE_OPTOION_SUPPORT = MMSO::serviceSupportOptions_status | MMSO::serviceSupportOptions_getNameList | MMSO::serviceSupportOptions_identify | MMSO::serviceSupportOptions_read | MMSO::serviceSupportOptions_write |
+            MMSO::serviceSupportOptions_rename | MMSO::serviceSupportOptions_deleteNamedVariableList | MMSO::serviceSupportOptions_getVariableAccessAttributes | MMSO::serviceSupportOptions_informationReport;
+    const MMS::ParameterSupportOptions MMS_CBB_OPTION_SUPPORT = MMSO::parameterSupportOptions_str1 | MMSO::parameterSupportOptions_str2 | MMSO::parameterSupportOptions_valt | MMSO::parameterSupportOptions_valt |
+            MMSO::parameterSupportOptions_vnam | MMSO::parameterSupportOptions_vadr | MMSO::parameterSupportOptions_tpy | MMSO::parameterSupportOptions_vlis;
 
     //presentation_option init_synaxes() {
     //   return presentation_option( ACSE_1_OID, MMS_OID);
@@ -33,10 +33,10 @@ namespace prot9506 {
         mms.initiate_RequestPDU__new();
         MMS::Initiate_RequestPDU& initpdu = *mms.initiate_RequestPDU();
 
-        initpdu.localDetailCalling(MMS::Integer32(30000));
-        initpdu.proposedMaxServOutstandingCalling(MMS::Integer16(1));
-        initpdu.proposedMaxServOutstandingCalled(MMS::Integer16(5));
-        initpdu.proposedDataStructureNestingLevel(new MMS::Integer8(5));
+        initpdu.localDetailCalling(30000);
+        initpdu.proposedMaxServOutstandingCalling(1);
+        initpdu.proposedMaxServOutstandingCalled(5);
+        initpdu.proposedDataStructureNestingLevel(5);
         initpdu.initRequestDetail().proposedVersionNumber (1);
         initpdu.initRequestDetail().servicesSupportedCalling(MMS_SERVICE_OPTOION_SUPPORT);
         initpdu.initRequestDetail().proposedParameterCBB(MMS_CBB_OPTION_SUPPORT);

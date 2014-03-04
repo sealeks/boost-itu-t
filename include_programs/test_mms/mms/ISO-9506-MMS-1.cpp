@@ -243,7 +243,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     Confirmed_RequestPDU::Confirmed_RequestPDU(boost::shared_ptr< Unsigned32> arg__invokeID,
-            boost::shared_ptr< listOfModifiers_type> arg__listOfModifiers,
+            boost::shared_ptr< ListOfModifiers_type> arg__listOfModifiers,
             boost::shared_ptr< ConfirmedServiceRequest> arg__service,
             boost::shared_ptr< Request_Detail> arg__service_ext) :
     invokeID_(arg__invokeID),
@@ -284,12 +284,12 @@ namespace ISO_9506_MMS_1 {
         invokeID_ = vl;
     }
 
-    boost::shared_ptr<Confirmed_RequestPDU::listOfModifiers_type> Confirmed_RequestPDU::listOfModifiers__new() {
-        return listOfModifiers_ = boost::shared_ptr<listOfModifiers_type>(new listOfModifiers_type());
+    boost::shared_ptr<Confirmed_RequestPDU::ListOfModifiers_type> Confirmed_RequestPDU::listOfModifiers__new() {
+        return listOfModifiers_ = boost::shared_ptr<ListOfModifiers_type>(new ListOfModifiers_type());
     }
 
-    void Confirmed_RequestPDU::listOfModifiers(const listOfModifiers_type& vl) {
-        listOfModifiers_ = boost::shared_ptr<listOfModifiers_type>(new listOfModifiers_type(vl));
+    void Confirmed_RequestPDU::listOfModifiers(const ListOfModifiers_type& vl) {
+        listOfModifiers_ = boost::shared_ptr<ListOfModifiers_type>(new ListOfModifiers_type(vl));
     }
 
     ConfirmedServiceRequest& Confirmed_RequestPDU::service() {
@@ -3842,14 +3842,14 @@ namespace ISO_9506_MMS_1 {
     ServiceError::ServiceError() : errorClass_() {
     };
 
-    ServiceError::ServiceError(const errorClass_type& arg__errorClass) :
+    ServiceError::ServiceError(const ErrorClass_type& arg__errorClass) :
     errorClass_(arg__errorClass) {
     };
 
-    ServiceError::ServiceError(boost::shared_ptr< errorClass_type> arg__errorClass,
+    ServiceError::ServiceError(boost::shared_ptr< ErrorClass_type> arg__errorClass,
             boost::shared_ptr< int> arg__additionalCode,
             boost::shared_ptr< visiblestring_type> arg__additionalDescription,
-            boost::shared_ptr< serviceSpecificInfo_type> arg__serviceSpecificInfo) :
+            boost::shared_ptr< ServiceSpecificInfo_type> arg__serviceSpecificInfo) :
     errorClass_(arg__errorClass),
     additionalCode_(arg__additionalCode),
     additionalDescription_(arg__additionalDescription),
@@ -3857,195 +3857,195 @@ namespace ISO_9506_MMS_1 {
     };
 
 
-    const int ServiceError::errorClass_type::vmd_state_other = 0;
-    const int ServiceError::errorClass_type::vmd_state_vmd_state_conflict = 1;
-    const int ServiceError::errorClass_type::vmd_state_vmd_operational_problem = 2;
-    const int ServiceError::errorClass_type::vmd_state_domain_transfer_problem = 3;
-    const int ServiceError::errorClass_type::vmd_state_state_machine_id_invalid = 4;
+    const int ServiceError::ErrorClass_type::vmd_state_other = 0;
+    const int ServiceError::ErrorClass_type::vmd_state_vmd_state_conflict = 1;
+    const int ServiceError::ErrorClass_type::vmd_state_vmd_operational_problem = 2;
+    const int ServiceError::ErrorClass_type::vmd_state_domain_transfer_problem = 3;
+    const int ServiceError::ErrorClass_type::vmd_state_state_machine_id_invalid = 4;
 
-    const int ServiceError::errorClass_type::application_reference_other = 0;
-    const int ServiceError::errorClass_type::application_reference_application_unreachable = 1;
-    const int ServiceError::errorClass_type::application_reference_connection_lost = 2;
-    const int ServiceError::errorClass_type::application_reference_application_reference_invalid = 3;
-    const int ServiceError::errorClass_type::application_reference_context_unsupported = 4;
+    const int ServiceError::ErrorClass_type::application_reference_other = 0;
+    const int ServiceError::ErrorClass_type::application_reference_application_unreachable = 1;
+    const int ServiceError::ErrorClass_type::application_reference_connection_lost = 2;
+    const int ServiceError::ErrorClass_type::application_reference_application_reference_invalid = 3;
+    const int ServiceError::ErrorClass_type::application_reference_context_unsupported = 4;
 
-    const int ServiceError::errorClass_type::definition_other = 0;
-    const int ServiceError::errorClass_type::definition_object_undefined = 1;
-    const int ServiceError::errorClass_type::definition_invalid_address = 2;
-    const int ServiceError::errorClass_type::definition_type_unsupported = 3;
-    const int ServiceError::errorClass_type::definition_type_inconsistent = 4;
-    const int ServiceError::errorClass_type::definition_object_exists = 5;
-    const int ServiceError::errorClass_type::definition_object_attribute_inconsistent = 6;
+    const int ServiceError::ErrorClass_type::definition_other = 0;
+    const int ServiceError::ErrorClass_type::definition_object_undefined = 1;
+    const int ServiceError::ErrorClass_type::definition_invalid_address = 2;
+    const int ServiceError::ErrorClass_type::definition_type_unsupported = 3;
+    const int ServiceError::ErrorClass_type::definition_type_inconsistent = 4;
+    const int ServiceError::ErrorClass_type::definition_object_exists = 5;
+    const int ServiceError::ErrorClass_type::definition_object_attribute_inconsistent = 6;
 
-    const int ServiceError::errorClass_type::resource_other = 0;
-    const int ServiceError::errorClass_type::resource_memory_unavailable = 1;
-    const int ServiceError::errorClass_type::resource_processor_resource_unavailable = 2;
-    const int ServiceError::errorClass_type::resource_mass_storage_unavailable = 3;
-    const int ServiceError::errorClass_type::resource_capability_unavailable = 4;
-    const int ServiceError::errorClass_type::resource_capability_unknown = 5;
+    const int ServiceError::ErrorClass_type::resource_other = 0;
+    const int ServiceError::ErrorClass_type::resource_memory_unavailable = 1;
+    const int ServiceError::ErrorClass_type::resource_processor_resource_unavailable = 2;
+    const int ServiceError::ErrorClass_type::resource_mass_storage_unavailable = 3;
+    const int ServiceError::ErrorClass_type::resource_capability_unavailable = 4;
+    const int ServiceError::ErrorClass_type::resource_capability_unknown = 5;
 
-    const int ServiceError::errorClass_type::service_other = 0;
-    const int ServiceError::errorClass_type::service_primitives_out_of_sequence = 1;
-    const int ServiceError::errorClass_type::service_object_state_conflict = 2;
-    const int ServiceError::errorClass_type::service_continuation_invalid = 4;
-    const int ServiceError::errorClass_type::service_object_constraint_conflict = 5;
+    const int ServiceError::ErrorClass_type::service_other = 0;
+    const int ServiceError::ErrorClass_type::service_primitives_out_of_sequence = 1;
+    const int ServiceError::ErrorClass_type::service_object_state_conflict = 2;
+    const int ServiceError::ErrorClass_type::service_continuation_invalid = 4;
+    const int ServiceError::ErrorClass_type::service_object_constraint_conflict = 5;
 
-    const int ServiceError::errorClass_type::service_preempt_other = 0;
-    const int ServiceError::errorClass_type::service_preempt_timeout = 1;
-    const int ServiceError::errorClass_type::service_preempt_deadlock = 2;
-    const int ServiceError::errorClass_type::service_preempt_cancel = 3;
+    const int ServiceError::ErrorClass_type::service_preempt_other = 0;
+    const int ServiceError::ErrorClass_type::service_preempt_timeout = 1;
+    const int ServiceError::ErrorClass_type::service_preempt_deadlock = 2;
+    const int ServiceError::ErrorClass_type::service_preempt_cancel = 3;
 
-    const int ServiceError::errorClass_type::time_resolution_other = 0;
-    const int ServiceError::errorClass_type::time_resolution_unsupportable_time_resolution = 1;
+    const int ServiceError::ErrorClass_type::time_resolution_other = 0;
+    const int ServiceError::ErrorClass_type::time_resolution_unsupportable_time_resolution = 1;
 
-    const int ServiceError::errorClass_type::access_other = 0;
-    const int ServiceError::errorClass_type::access_object_access_unsupported = 1;
-    const int ServiceError::errorClass_type::access_object_non_existent = 2;
-    const int ServiceError::errorClass_type::access_object_access_denied = 3;
-    const int ServiceError::errorClass_type::access_object_invalidated = 4;
+    const int ServiceError::ErrorClass_type::access_other = 0;
+    const int ServiceError::ErrorClass_type::access_object_access_unsupported = 1;
+    const int ServiceError::ErrorClass_type::access_object_non_existent = 2;
+    const int ServiceError::ErrorClass_type::access_object_access_denied = 3;
+    const int ServiceError::ErrorClass_type::access_object_invalidated = 4;
 
-    const int ServiceError::errorClass_type::initiate_other = 0;
-    const int ServiceError::errorClass_type::initiate_max_services_outstanding_calling_insufficient = 3;
-    const int ServiceError::errorClass_type::initiate_max_services_outstanding_called_insufficient = 4;
-    const int ServiceError::errorClass_type::initiate_service_CBB_insufficient = 5;
-    const int ServiceError::errorClass_type::initiate_parameter_CBB_insufficient = 6;
-    const int ServiceError::errorClass_type::initiate_nesting_level_insufficient = 7;
+    const int ServiceError::ErrorClass_type::initiate_other = 0;
+    const int ServiceError::ErrorClass_type::initiate_max_services_outstanding_calling_insufficient = 3;
+    const int ServiceError::ErrorClass_type::initiate_max_services_outstanding_called_insufficient = 4;
+    const int ServiceError::ErrorClass_type::initiate_service_CBB_insufficient = 5;
+    const int ServiceError::ErrorClass_type::initiate_parameter_CBB_insufficient = 6;
+    const int ServiceError::ErrorClass_type::initiate_nesting_level_insufficient = 7;
 
-    const int ServiceError::errorClass_type::conclude_other = 0;
-    const int ServiceError::errorClass_type::conclude_further_communication_required = 1;
+    const int ServiceError::ErrorClass_type::conclude_other = 0;
+    const int ServiceError::ErrorClass_type::conclude_further_communication_required = 1;
 
-    const int ServiceError::errorClass_type::cancel_other = 0;
-    const int ServiceError::errorClass_type::cancel_invoke_id_unknown = 1;
-    const int ServiceError::errorClass_type::cancel_cancel_not_possible = 2;
+    const int ServiceError::ErrorClass_type::cancel_other = 0;
+    const int ServiceError::ErrorClass_type::cancel_invoke_id_unknown = 1;
+    const int ServiceError::ErrorClass_type::cancel_cancel_not_possible = 2;
 
-    const int ServiceError::errorClass_type::file_other = 0;
-    const int ServiceError::errorClass_type::file_filename_ambiguous = 1;
-    const int ServiceError::errorClass_type::file_file_busy = 2;
-    const int ServiceError::errorClass_type::file_filename_syntax_error = 3;
-    const int ServiceError::errorClass_type::file_content_type_invalid = 4;
-    const int ServiceError::errorClass_type::file_position_invalid = 5;
-    const int ServiceError::errorClass_type::file_file_access_denied = 6;
-    const int ServiceError::errorClass_type::file_file_non_existent = 7;
-    const int ServiceError::errorClass_type::file_duplicate_filename = 8;
-    const int ServiceError::errorClass_type::file_insufficient_space_in_filestore = 9;
+    const int ServiceError::ErrorClass_type::file_other = 0;
+    const int ServiceError::ErrorClass_type::file_filename_ambiguous = 1;
+    const int ServiceError::ErrorClass_type::file_file_busy = 2;
+    const int ServiceError::ErrorClass_type::file_filename_syntax_error = 3;
+    const int ServiceError::ErrorClass_type::file_content_type_invalid = 4;
+    const int ServiceError::ErrorClass_type::file_position_invalid = 5;
+    const int ServiceError::ErrorClass_type::file_file_access_denied = 6;
+    const int ServiceError::ErrorClass_type::file_file_non_existent = 7;
+    const int ServiceError::ErrorClass_type::file_duplicate_filename = 8;
+    const int ServiceError::ErrorClass_type::file_insufficient_space_in_filestore = 9;
 
-    void ServiceError::errorClass_type::vmd_state(const int& vl) {
-        set<int>(new int(vl), errorClass_type_vmd_state);
+    void ServiceError::ErrorClass_type::vmd_state(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_vmd_state);
     }
 
-    void ServiceError::errorClass_type::application_reference(const int& vl) {
-        set<int>(new int(vl), errorClass_type_application_reference);
+    void ServiceError::ErrorClass_type::application_reference(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_application_reference);
     }
 
-    void ServiceError::errorClass_type::definition(const int& vl) {
-        set<int>(new int(vl), errorClass_type_definition);
+    void ServiceError::ErrorClass_type::definition(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_definition);
     }
 
-    void ServiceError::errorClass_type::resource(const int& vl) {
-        set<int>(new int(vl), errorClass_type_resource);
+    void ServiceError::ErrorClass_type::resource(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_resource);
     }
 
-    void ServiceError::errorClass_type::service(const int& vl) {
-        set<int>(new int(vl), errorClass_type_service);
+    void ServiceError::ErrorClass_type::service(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_service);
     }
 
-    void ServiceError::errorClass_type::service_preempt(const int& vl) {
-        set<int>(new int(vl), errorClass_type_service_preempt);
+    void ServiceError::ErrorClass_type::service_preempt(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_service_preempt);
     }
 
-    void ServiceError::errorClass_type::time_resolution(const int& vl) {
-        set<int>(new int(vl), errorClass_type_time_resolution);
+    void ServiceError::ErrorClass_type::time_resolution(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_time_resolution);
     }
 
-    void ServiceError::errorClass_type::access(const int& vl) {
-        set<int>(new int(vl), errorClass_type_access);
+    void ServiceError::ErrorClass_type::access(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_access);
     }
 
-    void ServiceError::errorClass_type::initiate(const int& vl) {
-        set<int>(new int(vl), errorClass_type_initiate);
+    void ServiceError::ErrorClass_type::initiate(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_initiate);
     }
 
-    void ServiceError::errorClass_type::conclude(const int& vl) {
-        set<int>(new int(vl), errorClass_type_conclude);
+    void ServiceError::ErrorClass_type::conclude(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_conclude);
     }
 
-    void ServiceError::errorClass_type::cancel(const int& vl) {
-        set<int>(new int(vl), errorClass_type_cancel);
+    void ServiceError::ErrorClass_type::cancel(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_cancel);
     }
 
-    void ServiceError::errorClass_type::file(const int& vl) {
-        set<int>(new int(vl), errorClass_type_file);
+    void ServiceError::ErrorClass_type::file(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_file);
     }
 
-    void ServiceError::errorClass_type::others(const int& vl) {
-        set<int>(new int(vl), errorClass_type_others);
+    void ServiceError::ErrorClass_type::others(const int& vl) {
+        set<int>(new int(vl), ErrorClass_type_others);
     }
 
-    template<> void ServiceError::errorClass_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ServiceError::ErrorClass_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case errorClass_type_vmd_state:
+            case ErrorClass_type_vmd_state:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_vmd_state), 0);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_vmd_state), 0);
                 break;
             }
-            case errorClass_type_application_reference:
+            case ErrorClass_type_application_reference:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_application_reference), 1);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_application_reference), 1);
                 break;
             }
-            case errorClass_type_definition:
+            case ErrorClass_type_definition:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_definition), 2);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_definition), 2);
                 break;
             }
-            case errorClass_type_resource:
+            case ErrorClass_type_resource:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_resource), 3);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_resource), 3);
                 break;
             }
-            case errorClass_type_service:
+            case ErrorClass_type_service:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_service), 4);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_service), 4);
                 break;
             }
-            case errorClass_type_service_preempt:
+            case ErrorClass_type_service_preempt:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_service_preempt), 5);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_service_preempt), 5);
                 break;
             }
-            case errorClass_type_time_resolution:
+            case ErrorClass_type_time_resolution:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_time_resolution), 6);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_time_resolution), 6);
                 break;
             }
-            case errorClass_type_access:
+            case ErrorClass_type_access:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_access), 7);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_access), 7);
                 break;
             }
-            case errorClass_type_initiate:
+            case ErrorClass_type_initiate:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_initiate), 8);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_initiate), 8);
                 break;
             }
-            case errorClass_type_conclude:
+            case ErrorClass_type_conclude:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_conclude), 9);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_conclude), 9);
                 break;
             }
-            case errorClass_type_cancel:
+            case ErrorClass_type_cancel:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_cancel), 10);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_cancel), 10);
                 break;
             }
-            case errorClass_type_file:
+            case ErrorClass_type_file:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_file), 11);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_file), 11);
                 break;
             }
-            case errorClass_type_others:
+            case ErrorClass_type_others:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, errorClass_type_others), 12);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ErrorClass_type_others), 12);
                 break;
             }
             default:
@@ -4054,7 +4054,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void ServiceError::errorClass_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ServiceError::ErrorClass_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -4078,79 +4078,79 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_vmd_state), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_vmd_state), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_application_reference), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_application_reference), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_definition), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_definition), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_resource), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_resource), 3)) return;
                         else free();
                         break;
                     }
                     case 4:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_service), 4)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_service), 4)) return;
                         else free();
                         break;
                     }
                     case 5:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_service_preempt), 5)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_service_preempt), 5)) return;
                         else free();
                         break;
                     }
                     case 6:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_time_resolution), 6)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_time_resolution), 6)) return;
                         else free();
                         break;
                     }
                     case 7:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_access), 7)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_access), 7)) return;
                         else free();
                         break;
                     }
                     case 8:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_initiate), 8)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_initiate), 8)) return;
                         else free();
                         break;
                     }
                     case 9:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_conclude), 9)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_conclude), 9)) return;
                         else free();
                         break;
                     }
                     case 10:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_cancel), 10)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_cancel), 10)) return;
                         else free();
                         break;
                     }
                     case 11:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_file), 11)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_file), 11)) return;
                         else free();
                         break;
                     }
                     case 12:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, errorClass_type_others), 12)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ErrorClass_type_others), 12)) return;
                         else free();
                         break;
                     }
@@ -4173,106 +4173,106 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    void ServiceError::serviceSpecificInfo_type::obtainFile(const ISO_9506_MMS_1A::ObtainFile_Error& vl) {
-        set<ISO_9506_MMS_1A::ObtainFile_Error>(new ISO_9506_MMS_1A::ObtainFile_Error(vl), serviceSpecificInfo_type_obtainFile);
+    void ServiceError::ServiceSpecificInfo_type::obtainFile(const ISO_9506_MMS_1A::ObtainFile_Error& vl) {
+        set<ISO_9506_MMS_1A::ObtainFile_Error>(new ISO_9506_MMS_1A::ObtainFile_Error(vl), ServiceSpecificInfo_type_obtainFile);
     }
 
-    void ServiceError::serviceSpecificInfo_type::start(const Start_Error& vl) {
-        set<Start_Error>(new Start_Error(vl), serviceSpecificInfo_type_start);
+    void ServiceError::ServiceSpecificInfo_type::start(const Start_Error& vl) {
+        set<Start_Error>(new Start_Error(vl), ServiceSpecificInfo_type_start);
     }
 
-    void ServiceError::serviceSpecificInfo_type::stop(const Stop_Error& vl) {
-        set<Stop_Error>(new Stop_Error(vl), serviceSpecificInfo_type_stop);
+    void ServiceError::ServiceSpecificInfo_type::stop(const Stop_Error& vl) {
+        set<Stop_Error>(new Stop_Error(vl), ServiceSpecificInfo_type_stop);
     }
 
-    void ServiceError::serviceSpecificInfo_type::resume(const Resume_Error& vl) {
-        set<Resume_Error>(new Resume_Error(vl), serviceSpecificInfo_type_resume);
+    void ServiceError::ServiceSpecificInfo_type::resume(const Resume_Error& vl) {
+        set<Resume_Error>(new Resume_Error(vl), ServiceSpecificInfo_type_resume);
     }
 
-    void ServiceError::serviceSpecificInfo_type::reset(const Reset_Error& vl) {
-        set<Reset_Error>(new Reset_Error(vl), serviceSpecificInfo_type_reset);
+    void ServiceError::ServiceSpecificInfo_type::reset(const Reset_Error& vl) {
+        set<Reset_Error>(new Reset_Error(vl), ServiceSpecificInfo_type_reset);
     }
 
-    void ServiceError::serviceSpecificInfo_type::deleteVariableAccess(const DeleteVariableAccess_Error& vl) {
-        set<DeleteVariableAccess_Error>(new DeleteVariableAccess_Error(vl), serviceSpecificInfo_type_deleteVariableAccess);
+    void ServiceError::ServiceSpecificInfo_type::deleteVariableAccess(const DeleteVariableAccess_Error& vl) {
+        set<DeleteVariableAccess_Error>(new DeleteVariableAccess_Error(vl), ServiceSpecificInfo_type_deleteVariableAccess);
     }
 
-    void ServiceError::serviceSpecificInfo_type::deleteNamedVariableList(const DeleteNamedVariableList_Error& vl) {
-        set<DeleteNamedVariableList_Error>(new DeleteNamedVariableList_Error(vl), serviceSpecificInfo_type_deleteNamedVariableList);
+    void ServiceError::ServiceSpecificInfo_type::deleteNamedVariableList(const DeleteNamedVariableList_Error& vl) {
+        set<DeleteNamedVariableList_Error>(new DeleteNamedVariableList_Error(vl), ServiceSpecificInfo_type_deleteNamedVariableList);
     }
 
-    void ServiceError::serviceSpecificInfo_type::deleteNamedType(const DeleteNamedType_Error& vl) {
-        set<DeleteNamedType_Error>(new DeleteNamedType_Error(vl), serviceSpecificInfo_type_deleteNamedType);
+    void ServiceError::ServiceSpecificInfo_type::deleteNamedType(const DeleteNamedType_Error& vl) {
+        set<DeleteNamedType_Error>(new DeleteNamedType_Error(vl), ServiceSpecificInfo_type_deleteNamedType);
     }
 
-    void ServiceError::serviceSpecificInfo_type::fileRename(const ISO_9506_MMS_1A::FileRename_Error& vl) {
-        set<ISO_9506_MMS_1A::FileRename_Error>(new ISO_9506_MMS_1A::FileRename_Error(vl), serviceSpecificInfo_type_fileRename);
+    void ServiceError::ServiceSpecificInfo_type::fileRename(const ISO_9506_MMS_1A::FileRename_Error& vl) {
+        set<ISO_9506_MMS_1A::FileRename_Error>(new ISO_9506_MMS_1A::FileRename_Error(vl), ServiceSpecificInfo_type_fileRename);
     }
 
-    void ServiceError::serviceSpecificInfo_type::changeAccessControl(const ChangeAccessControl_Error& vl) {
-        set<ChangeAccessControl_Error>(new ChangeAccessControl_Error(vl), serviceSpecificInfo_type_changeAccessControl);
+    void ServiceError::ServiceSpecificInfo_type::changeAccessControl(const ChangeAccessControl_Error& vl) {
+        set<ChangeAccessControl_Error>(new ChangeAccessControl_Error(vl), ServiceSpecificInfo_type_changeAccessControl);
     }
 
-    template<> void ServiceError::serviceSpecificInfo_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ServiceError::ServiceSpecificInfo_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case serviceSpecificInfo_type_obtainFile:
+            case ServiceSpecificInfo_type_obtainFile:
             {
-                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1A::ObtainFile_Error > (false, serviceSpecificInfo_type_obtainFile), 0);
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1A::ObtainFile_Error > (false, ServiceSpecificInfo_type_obtainFile), 0);
                 break;
             }
-            case serviceSpecificInfo_type_start:
+            case ServiceSpecificInfo_type_start:
             {
-                ITU_T_IMPLICIT_TAG(value<Start_Error > (false, serviceSpecificInfo_type_start), 1);
+                ITU_T_IMPLICIT_TAG(value<Start_Error > (false, ServiceSpecificInfo_type_start), 1);
                 break;
             }
-            case serviceSpecificInfo_type_stop:
+            case ServiceSpecificInfo_type_stop:
             {
-                ITU_T_IMPLICIT_TAG(value<Stop_Error > (false, serviceSpecificInfo_type_stop), 2);
+                ITU_T_IMPLICIT_TAG(value<Stop_Error > (false, ServiceSpecificInfo_type_stop), 2);
                 break;
             }
-            case serviceSpecificInfo_type_resume:
+            case ServiceSpecificInfo_type_resume:
             {
-                ITU_T_IMPLICIT_TAG(value<Resume_Error > (false, serviceSpecificInfo_type_resume), 3);
+                ITU_T_IMPLICIT_TAG(value<Resume_Error > (false, ServiceSpecificInfo_type_resume), 3);
                 break;
             }
-            case serviceSpecificInfo_type_reset:
+            case ServiceSpecificInfo_type_reset:
             {
-                ITU_T_IMPLICIT_TAG(value<Reset_Error > (false, serviceSpecificInfo_type_reset), 4);
+                ITU_T_IMPLICIT_TAG(value<Reset_Error > (false, ServiceSpecificInfo_type_reset), 4);
                 break;
             }
-            case serviceSpecificInfo_type_deleteVariableAccess:
+            case ServiceSpecificInfo_type_deleteVariableAccess:
             {
-                ITU_T_IMPLICIT_TAG(value<DeleteVariableAccess_Error > (false, serviceSpecificInfo_type_deleteVariableAccess), 5);
+                ITU_T_IMPLICIT_TAG(value<DeleteVariableAccess_Error > (false, ServiceSpecificInfo_type_deleteVariableAccess), 5);
                 break;
             }
-            case serviceSpecificInfo_type_deleteNamedVariableList:
+            case ServiceSpecificInfo_type_deleteNamedVariableList:
             {
-                ITU_T_IMPLICIT_TAG(value<DeleteNamedVariableList_Error > (false, serviceSpecificInfo_type_deleteNamedVariableList), 6);
+                ITU_T_IMPLICIT_TAG(value<DeleteNamedVariableList_Error > (false, ServiceSpecificInfo_type_deleteNamedVariableList), 6);
                 break;
             }
-            case serviceSpecificInfo_type_deleteNamedType:
+            case ServiceSpecificInfo_type_deleteNamedType:
             {
-                ITU_T_IMPLICIT_TAG(value<DeleteNamedType_Error > (false, serviceSpecificInfo_type_deleteNamedType), 7);
+                ITU_T_IMPLICIT_TAG(value<DeleteNamedType_Error > (false, ServiceSpecificInfo_type_deleteNamedType), 7);
                 break;
             }
-            case serviceSpecificInfo_type_defineEventEnrollment_Error:
+            case ServiceSpecificInfo_type_defineEventEnrollment_Error:
             {
-                ITU_T_CHOICE_TAG(value<DefineEventEnrollment_Error > (false, serviceSpecificInfo_type_defineEventEnrollment_Error), 8);
+                ITU_T_CHOICE_TAG(value<DefineEventEnrollment_Error > (false, ServiceSpecificInfo_type_defineEventEnrollment_Error), 8);
                 break;
             }
-            case serviceSpecificInfo_type_fileRename:
+            case ServiceSpecificInfo_type_fileRename:
             {
-                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1A::FileRename_Error > (false, serviceSpecificInfo_type_fileRename), 9);
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1A::FileRename_Error > (false, ServiceSpecificInfo_type_fileRename), 9);
                 break;
             }
-            case serviceSpecificInfo_type_additionalService:
+            case ServiceSpecificInfo_type_additionalService:
             {
-                ITU_T_CHOICE_TAG(value<AdditionalService_Error > (false, serviceSpecificInfo_type_additionalService), 10);
+                ITU_T_CHOICE_TAG(value<AdditionalService_Error > (false, ServiceSpecificInfo_type_additionalService), 10);
                 break;
             }
-            case serviceSpecificInfo_type_changeAccessControl:
+            case ServiceSpecificInfo_type_changeAccessControl:
             {
-                ITU_T_IMPLICIT_TAG(value<ChangeAccessControl_Error > (false, serviceSpecificInfo_type_changeAccessControl), 11);
+                ITU_T_IMPLICIT_TAG(value<ChangeAccessControl_Error > (false, ServiceSpecificInfo_type_changeAccessControl), 11);
                 break;
             }
             default:
@@ -4281,7 +4281,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void ServiceError::serviceSpecificInfo_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ServiceError::ServiceSpecificInfo_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -4305,73 +4305,73 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1A::ObtainFile_Error > (true, serviceSpecificInfo_type_obtainFile), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1A::ObtainFile_Error > (true, ServiceSpecificInfo_type_obtainFile), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Start_Error > (true, serviceSpecificInfo_type_start), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Start_Error > (true, ServiceSpecificInfo_type_start), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Stop_Error > (true, serviceSpecificInfo_type_stop), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Stop_Error > (true, ServiceSpecificInfo_type_stop), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Resume_Error > (true, serviceSpecificInfo_type_resume), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Resume_Error > (true, ServiceSpecificInfo_type_resume), 3)) return;
                         else free();
                         break;
                     }
                     case 4:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Reset_Error > (true, serviceSpecificInfo_type_reset), 4)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Reset_Error > (true, ServiceSpecificInfo_type_reset), 4)) return;
                         else free();
                         break;
                     }
                     case 5:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<DeleteVariableAccess_Error > (true, serviceSpecificInfo_type_deleteVariableAccess), 5)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<DeleteVariableAccess_Error > (true, ServiceSpecificInfo_type_deleteVariableAccess), 5)) return;
                         else free();
                         break;
                     }
                     case 6:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<DeleteNamedVariableList_Error > (true, serviceSpecificInfo_type_deleteNamedVariableList), 6)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<DeleteNamedVariableList_Error > (true, ServiceSpecificInfo_type_deleteNamedVariableList), 6)) return;
                         else free();
                         break;
                     }
                     case 7:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<DeleteNamedType_Error > (true, serviceSpecificInfo_type_deleteNamedType), 7)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<DeleteNamedType_Error > (true, ServiceSpecificInfo_type_deleteNamedType), 7)) return;
                         else free();
                         break;
                     }
                     case 8:
                     {
-                        if (ITU_T_CHOICE_TAG(value<DefineEventEnrollment_Error > (true, serviceSpecificInfo_type_defineEventEnrollment_Error), 8)) return;
+                        if (ITU_T_CHOICE_TAG(value<DefineEventEnrollment_Error > (true, ServiceSpecificInfo_type_defineEventEnrollment_Error), 8)) return;
                         else free();
                         break;
                     }
                     case 9:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1A::FileRename_Error > (true, serviceSpecificInfo_type_fileRename), 9)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1A::FileRename_Error > (true, ServiceSpecificInfo_type_fileRename), 9)) return;
                         else free();
                         break;
                     }
                     case 10:
                     {
-                        if (ITU_T_CHOICE_TAG(value<AdditionalService_Error > (true, serviceSpecificInfo_type_additionalService), 10)) return;
+                        if (ITU_T_CHOICE_TAG(value<AdditionalService_Error > (true, ServiceSpecificInfo_type_additionalService), 10)) return;
                         else free();
                         break;
                     }
                     case 11:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<ChangeAccessControl_Error > (true, serviceSpecificInfo_type_changeAccessControl), 11)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<ChangeAccessControl_Error > (true, ServiceSpecificInfo_type_changeAccessControl), 11)) return;
                         else free();
                         break;
                     }
@@ -4408,19 +4408,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(serviceSpecificInfo_, 3);
     }
 
-    ServiceError::errorClass_type& ServiceError::errorClass() {
+    ServiceError::ErrorClass_type& ServiceError::errorClass() {
         return *errorClass_;
     }
 
-    const ServiceError::errorClass_type& ServiceError::errorClass() const {
+    const ServiceError::ErrorClass_type& ServiceError::errorClass() const {
         return *errorClass_;
     }
 
-    void ServiceError::errorClass(const errorClass_type& vl) {
+    void ServiceError::errorClass(const ErrorClass_type& vl) {
         errorClass_ = vl;
     }
 
-    void ServiceError::errorClass(boost::shared_ptr< errorClass_type> vl) {
+    void ServiceError::errorClass(boost::shared_ptr< ErrorClass_type> vl) {
         errorClass_ = vl;
     }
 
@@ -4440,12 +4440,12 @@ namespace ISO_9506_MMS_1 {
         additionalDescription_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type(vl));
     }
 
-    boost::shared_ptr<ServiceError::serviceSpecificInfo_type> ServiceError::serviceSpecificInfo__new() {
-        return serviceSpecificInfo_ = boost::shared_ptr<serviceSpecificInfo_type>(new serviceSpecificInfo_type());
+    boost::shared_ptr<ServiceError::ServiceSpecificInfo_type> ServiceError::serviceSpecificInfo__new() {
+        return serviceSpecificInfo_ = boost::shared_ptr<ServiceSpecificInfo_type>(new ServiceSpecificInfo_type());
     }
 
-    void ServiceError::serviceSpecificInfo(const serviceSpecificInfo_type& vl) {
-        serviceSpecificInfo_ = boost::shared_ptr<serviceSpecificInfo_type>(new serviceSpecificInfo_type(vl));
+    void ServiceError::serviceSpecificInfo(const ServiceSpecificInfo_type& vl) {
+        serviceSpecificInfo_ = boost::shared_ptr<ServiceSpecificInfo_type>(new ServiceSpecificInfo_type(vl));
     }
 
 
@@ -4593,54 +4593,54 @@ namespace ISO_9506_MMS_1 {
 
     // choice ObjectName
 
-    ObjectName::domain_specific_type::domain_specific_type() : domainID_(), itemID_() {
+    ObjectName::Domain_specific_type::Domain_specific_type() : domainID_(), itemID_() {
     };
 
-    ObjectName::domain_specific_type::domain_specific_type(const Identifier& arg__domainID,
+    ObjectName::Domain_specific_type::Domain_specific_type(const Identifier& arg__domainID,
             const Identifier& arg__itemID) :
     domainID_(arg__domainID),
     itemID_(arg__itemID) {
     };
 
-    template<> void ObjectName::domain_specific_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ObjectName::Domain_specific_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(domainID_);
         ITU_T_BIND_TAG(itemID_);
     }
 
-    template<> void ObjectName::domain_specific_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ObjectName::Domain_specific_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_TAG(domainID_);
         ITU_T_BIND_TAG(itemID_);
     }
 
-    Identifier& ObjectName::domain_specific_type::domainID() {
+    Identifier& ObjectName::Domain_specific_type::domainID() {
         return *domainID_;
     }
 
-    const Identifier& ObjectName::domain_specific_type::domainID() const {
+    const Identifier& ObjectName::Domain_specific_type::domainID() const {
         return *domainID_;
     }
 
-    void ObjectName::domain_specific_type::domainID(const Identifier& vl) {
+    void ObjectName::Domain_specific_type::domainID(const Identifier& vl) {
         domainID_ = vl;
     }
 
-    void ObjectName::domain_specific_type::domainID(boost::shared_ptr< Identifier> vl) {
+    void ObjectName::Domain_specific_type::domainID(boost::shared_ptr< Identifier> vl) {
         domainID_ = vl;
     }
 
-    Identifier& ObjectName::domain_specific_type::itemID() {
+    Identifier& ObjectName::Domain_specific_type::itemID() {
         return *itemID_;
     }
 
-    const Identifier& ObjectName::domain_specific_type::itemID() const {
+    const Identifier& ObjectName::Domain_specific_type::itemID() const {
         return *itemID_;
     }
 
-    void ObjectName::domain_specific_type::itemID(const Identifier& vl) {
+    void ObjectName::Domain_specific_type::itemID(const Identifier& vl) {
         itemID_ = vl;
     }
 
-    void ObjectName::domain_specific_type::itemID(boost::shared_ptr< Identifier> vl) {
+    void ObjectName::Domain_specific_type::itemID(boost::shared_ptr< Identifier> vl) {
         itemID_ = vl;
     }
 
@@ -4661,7 +4661,7 @@ namespace ISO_9506_MMS_1 {
             }
             case ObjectName_domain_specific:
             {
-                ITU_T_IMPLICIT_TAG(value<domain_specific_type > (false, ObjectName_domain_specific), 1);
+                ITU_T_IMPLICIT_TAG(value<Domain_specific_type > (false, ObjectName_domain_specific), 1);
                 break;
             }
             case ObjectName_aa_specific:
@@ -4705,7 +4705,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<domain_specific_type > (true, ObjectName_domain_specific), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Domain_specific_type > (true, ObjectName_domain_specific), 1)) return;
                         else free();
                         break;
                     }
@@ -4841,7 +4841,7 @@ namespace ISO_9506_MMS_1 {
 
     Initiate_RequestPDU::Initiate_RequestPDU(const Integer16& arg__proposedMaxServOutstandingCalling,
             const Integer16& arg__proposedMaxServOutstandingCalled,
-            const initRequestDetail_type& arg__initRequestDetail) :
+            const InitRequestDetail_type& arg__initRequestDetail) :
     proposedMaxServOutstandingCalling_(arg__proposedMaxServOutstandingCalling),
     proposedMaxServOutstandingCalled_(arg__proposedMaxServOutstandingCalled),
     initRequestDetail_(arg__initRequestDetail) {
@@ -4851,7 +4851,7 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr< Integer16> arg__proposedMaxServOutstandingCalling,
             boost::shared_ptr< Integer16> arg__proposedMaxServOutstandingCalled,
             boost::shared_ptr< Integer8> arg__proposedDataStructureNestingLevel,
-            boost::shared_ptr< initRequestDetail_type> arg__initRequestDetail) :
+            boost::shared_ptr< InitRequestDetail_type> arg__initRequestDetail) :
     localDetailCalling_(arg__localDetailCalling),
     proposedMaxServOutstandingCalling_(arg__proposedMaxServOutstandingCalling),
     proposedMaxServOutstandingCalled_(arg__proposedMaxServOutstandingCalled),
@@ -4859,10 +4859,10 @@ namespace ISO_9506_MMS_1 {
     initRequestDetail_(arg__initRequestDetail) {
     };
 
-    Initiate_RequestPDU::initRequestDetail_type::initRequestDetail_type() : proposedVersionNumber_(), proposedParameterCBB_(), servicesSupportedCalling_() {
+    Initiate_RequestPDU::InitRequestDetail_type::InitRequestDetail_type() : proposedVersionNumber_(), proposedParameterCBB_(), servicesSupportedCalling_() {
     };
 
-    Initiate_RequestPDU::initRequestDetail_type::initRequestDetail_type(const Integer16& arg__proposedVersionNumber,
+    Initiate_RequestPDU::InitRequestDetail_type::InitRequestDetail_type(const Integer16& arg__proposedVersionNumber,
             const MMS_Object_Module_1::ParameterSupportOptions& arg__proposedParameterCBB,
             const MMS_Object_Module_1::ServiceSupportOptions& arg__servicesSupportedCalling) :
     proposedVersionNumber_(arg__proposedVersionNumber),
@@ -4870,7 +4870,7 @@ namespace ISO_9506_MMS_1 {
     servicesSupportedCalling_(arg__servicesSupportedCalling) {
     };
 
-    Initiate_RequestPDU::initRequestDetail_type::initRequestDetail_type(boost::shared_ptr< Integer16> arg__proposedVersionNumber,
+    Initiate_RequestPDU::InitRequestDetail_type::InitRequestDetail_type(boost::shared_ptr< Integer16> arg__proposedVersionNumber,
             boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> arg__proposedParameterCBB,
             boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> arg__servicesSupportedCalling,
             boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalling,
@@ -4884,7 +4884,7 @@ namespace ISO_9506_MMS_1 {
     privilegeClassIdentityCalling_(arg__privilegeClassIdentityCalling) {
     };
 
-    template<> void Initiate_RequestPDU::initRequestDetail_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(proposedVersionNumber_, 0);
         ITU_T_IMPLICIT_TAG(proposedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(servicesSupportedCalling_, 2);
@@ -4894,7 +4894,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalling_, 5);
     }
 
-    template<> void Initiate_RequestPDU::initRequestDetail_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(proposedVersionNumber_, 0);
         ITU_T_IMPLICIT_TAG(proposedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(servicesSupportedCalling_, 2);
@@ -4904,75 +4904,75 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalling_, 5);
     }
 
-    Integer16& Initiate_RequestPDU::initRequestDetail_type::proposedVersionNumber() {
+    Integer16& Initiate_RequestPDU::InitRequestDetail_type::proposedVersionNumber() {
         return *proposedVersionNumber_;
     }
 
-    const Integer16& Initiate_RequestPDU::initRequestDetail_type::proposedVersionNumber() const {
+    const Integer16& Initiate_RequestPDU::InitRequestDetail_type::proposedVersionNumber() const {
         return *proposedVersionNumber_;
     }
 
-    void Initiate_RequestPDU::initRequestDetail_type::proposedVersionNumber(const Integer16& vl) {
+    void Initiate_RequestPDU::InitRequestDetail_type::proposedVersionNumber(const Integer16& vl) {
         proposedVersionNumber_ = vl;
     }
 
-    void Initiate_RequestPDU::initRequestDetail_type::proposedVersionNumber(boost::shared_ptr< Integer16> vl) {
+    void Initiate_RequestPDU::InitRequestDetail_type::proposedVersionNumber(boost::shared_ptr< Integer16> vl) {
         proposedVersionNumber_ = vl;
     }
 
-    MMS_Object_Module_1::ParameterSupportOptions& Initiate_RequestPDU::initRequestDetail_type::proposedParameterCBB() {
+    MMS_Object_Module_1::ParameterSupportOptions& Initiate_RequestPDU::InitRequestDetail_type::proposedParameterCBB() {
         return *proposedParameterCBB_;
     }
 
-    const MMS_Object_Module_1::ParameterSupportOptions& Initiate_RequestPDU::initRequestDetail_type::proposedParameterCBB() const {
+    const MMS_Object_Module_1::ParameterSupportOptions& Initiate_RequestPDU::InitRequestDetail_type::proposedParameterCBB() const {
         return *proposedParameterCBB_;
     }
 
-    void Initiate_RequestPDU::initRequestDetail_type::proposedParameterCBB(const MMS_Object_Module_1::ParameterSupportOptions& vl) {
+    void Initiate_RequestPDU::InitRequestDetail_type::proposedParameterCBB(const MMS_Object_Module_1::ParameterSupportOptions& vl) {
         proposedParameterCBB_ = vl;
     }
 
-    void Initiate_RequestPDU::initRequestDetail_type::proposedParameterCBB(boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> vl) {
+    void Initiate_RequestPDU::InitRequestDetail_type::proposedParameterCBB(boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> vl) {
         proposedParameterCBB_ = vl;
     }
 
-    MMS_Object_Module_1::ServiceSupportOptions& Initiate_RequestPDU::initRequestDetail_type::servicesSupportedCalling() {
+    MMS_Object_Module_1::ServiceSupportOptions& Initiate_RequestPDU::InitRequestDetail_type::servicesSupportedCalling() {
         return *servicesSupportedCalling_;
     }
 
-    const MMS_Object_Module_1::ServiceSupportOptions& Initiate_RequestPDU::initRequestDetail_type::servicesSupportedCalling() const {
+    const MMS_Object_Module_1::ServiceSupportOptions& Initiate_RequestPDU::InitRequestDetail_type::servicesSupportedCalling() const {
         return *servicesSupportedCalling_;
     }
 
-    void Initiate_RequestPDU::initRequestDetail_type::servicesSupportedCalling(const MMS_Object_Module_1::ServiceSupportOptions& vl) {
+    void Initiate_RequestPDU::InitRequestDetail_type::servicesSupportedCalling(const MMS_Object_Module_1::ServiceSupportOptions& vl) {
         servicesSupportedCalling_ = vl;
     }
 
-    void Initiate_RequestPDU::initRequestDetail_type::servicesSupportedCalling(boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> vl) {
+    void Initiate_RequestPDU::InitRequestDetail_type::servicesSupportedCalling(boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> vl) {
         servicesSupportedCalling_ = vl;
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions> Initiate_RequestPDU::initRequestDetail_type::additionalSupportedCalling__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions> Initiate_RequestPDU::InitRequestDetail_type::additionalSupportedCalling__new() {
         return additionalSupportedCalling_ = boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions>(new MMS_Object_Module_1::AdditionalSupportOptions());
     }
 
-    void Initiate_RequestPDU::initRequestDetail_type::additionalSupportedCalling(const MMS_Object_Module_1::AdditionalSupportOptions& vl) {
+    void Initiate_RequestPDU::InitRequestDetail_type::additionalSupportedCalling(const MMS_Object_Module_1::AdditionalSupportOptions& vl) {
         additionalSupportedCalling_ = boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions>(new MMS_Object_Module_1::AdditionalSupportOptions(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions> Initiate_RequestPDU::initRequestDetail_type::additionalCbbSupportedCalling__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions> Initiate_RequestPDU::InitRequestDetail_type::additionalCbbSupportedCalling__new() {
         return additionalCbbSupportedCalling_ = boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions>(new MMS_Object_Module_1::AdditionalCBBOptions());
     }
 
-    void Initiate_RequestPDU::initRequestDetail_type::additionalCbbSupportedCalling(const MMS_Object_Module_1::AdditionalCBBOptions& vl) {
+    void Initiate_RequestPDU::InitRequestDetail_type::additionalCbbSupportedCalling(const MMS_Object_Module_1::AdditionalCBBOptions& vl) {
         additionalCbbSupportedCalling_ = boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions>(new MMS_Object_Module_1::AdditionalCBBOptions(vl));
     }
 
-    boost::shared_ptr<visiblestring_type> Initiate_RequestPDU::initRequestDetail_type::privilegeClassIdentityCalling__new() {
+    boost::shared_ptr<visiblestring_type> Initiate_RequestPDU::InitRequestDetail_type::privilegeClassIdentityCalling__new() {
         return privilegeClassIdentityCalling_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type());
     }
 
-    void Initiate_RequestPDU::initRequestDetail_type::privilegeClassIdentityCalling(const visiblestring_type& vl) {
+    void Initiate_RequestPDU::InitRequestDetail_type::privilegeClassIdentityCalling(const visiblestring_type& vl) {
         privilegeClassIdentityCalling_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type(vl));
     }
 
@@ -5040,19 +5040,19 @@ namespace ISO_9506_MMS_1 {
         proposedDataStructureNestingLevel_ = boost::shared_ptr<Integer8>(new Integer8(vl));
     }
 
-    Initiate_RequestPDU::initRequestDetail_type& Initiate_RequestPDU::initRequestDetail() {
+    Initiate_RequestPDU::InitRequestDetail_type& Initiate_RequestPDU::initRequestDetail() {
         return *initRequestDetail_;
     }
 
-    const Initiate_RequestPDU::initRequestDetail_type& Initiate_RequestPDU::initRequestDetail() const {
+    const Initiate_RequestPDU::InitRequestDetail_type& Initiate_RequestPDU::initRequestDetail() const {
         return *initRequestDetail_;
     }
 
-    void Initiate_RequestPDU::initRequestDetail(const initRequestDetail_type& vl) {
+    void Initiate_RequestPDU::initRequestDetail(const InitRequestDetail_type& vl) {
         initRequestDetail_ = vl;
     }
 
-    void Initiate_RequestPDU::initRequestDetail(boost::shared_ptr< initRequestDetail_type> vl) {
+    void Initiate_RequestPDU::initRequestDetail(boost::shared_ptr< InitRequestDetail_type> vl) {
         initRequestDetail_ = vl;
     }
 
@@ -5064,7 +5064,7 @@ namespace ISO_9506_MMS_1 {
 
     Initiate_ResponsePDU::Initiate_ResponsePDU(const Integer16& arg__negotiatedMaxServOutstandingCalling,
             const Integer16& arg__negotiatedMaxServOutstandingCalled,
-            const initResponseDetail_type& arg__initResponseDetail) :
+            const InitResponseDetail_type& arg__initResponseDetail) :
     negotiatedMaxServOutstandingCalling_(arg__negotiatedMaxServOutstandingCalling),
     negotiatedMaxServOutstandingCalled_(arg__negotiatedMaxServOutstandingCalled),
     initResponseDetail_(arg__initResponseDetail) {
@@ -5074,7 +5074,7 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr< Integer16> arg__negotiatedMaxServOutstandingCalling,
             boost::shared_ptr< Integer16> arg__negotiatedMaxServOutstandingCalled,
             boost::shared_ptr< Integer8> arg__negotiatedDataStructureNestingLevel,
-            boost::shared_ptr< initResponseDetail_type> arg__initResponseDetail) :
+            boost::shared_ptr< InitResponseDetail_type> arg__initResponseDetail) :
     localDetailCalled_(arg__localDetailCalled),
     negotiatedMaxServOutstandingCalling_(arg__negotiatedMaxServOutstandingCalling),
     negotiatedMaxServOutstandingCalled_(arg__negotiatedMaxServOutstandingCalled),
@@ -5082,10 +5082,10 @@ namespace ISO_9506_MMS_1 {
     initResponseDetail_(arg__initResponseDetail) {
     };
 
-    Initiate_ResponsePDU::initResponseDetail_type::initResponseDetail_type() : negotiatedVersionNumber_(), negotiatedParameterCBB_(), servicesSupportedCalled_() {
+    Initiate_ResponsePDU::InitResponseDetail_type::InitResponseDetail_type() : negotiatedVersionNumber_(), negotiatedParameterCBB_(), servicesSupportedCalled_() {
     };
 
-    Initiate_ResponsePDU::initResponseDetail_type::initResponseDetail_type(const Integer16& arg__negotiatedVersionNumber,
+    Initiate_ResponsePDU::InitResponseDetail_type::InitResponseDetail_type(const Integer16& arg__negotiatedVersionNumber,
             const MMS_Object_Module_1::ParameterSupportOptions& arg__negotiatedParameterCBB,
             const MMS_Object_Module_1::ServiceSupportOptions& arg__servicesSupportedCalled) :
     negotiatedVersionNumber_(arg__negotiatedVersionNumber),
@@ -5093,7 +5093,7 @@ namespace ISO_9506_MMS_1 {
     servicesSupportedCalled_(arg__servicesSupportedCalled) {
     };
 
-    Initiate_ResponsePDU::initResponseDetail_type::initResponseDetail_type(boost::shared_ptr< Integer16> arg__negotiatedVersionNumber,
+    Initiate_ResponsePDU::InitResponseDetail_type::InitResponseDetail_type(boost::shared_ptr< Integer16> arg__negotiatedVersionNumber,
             boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> arg__negotiatedParameterCBB,
             boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> arg__servicesSupportedCalled,
             boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalled,
@@ -5107,7 +5107,7 @@ namespace ISO_9506_MMS_1 {
     privilegeClassIdentityCalled_(arg__privilegeClassIdentityCalled) {
     };
 
-    template<> void Initiate_ResponsePDU::initResponseDetail_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(negotiatedVersionNumber_, 0);
         ITU_T_IMPLICIT_TAG(negotiatedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(servicesSupportedCalled_, 2);
@@ -5117,7 +5117,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalled_, 5);
     }
 
-    template<> void Initiate_ResponsePDU::initResponseDetail_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(negotiatedVersionNumber_, 0);
         ITU_T_IMPLICIT_TAG(negotiatedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(servicesSupportedCalled_, 2);
@@ -5127,75 +5127,75 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalled_, 5);
     }
 
-    Integer16& Initiate_ResponsePDU::initResponseDetail_type::negotiatedVersionNumber() {
+    Integer16& Initiate_ResponsePDU::InitResponseDetail_type::negotiatedVersionNumber() {
         return *negotiatedVersionNumber_;
     }
 
-    const Integer16& Initiate_ResponsePDU::initResponseDetail_type::negotiatedVersionNumber() const {
+    const Integer16& Initiate_ResponsePDU::InitResponseDetail_type::negotiatedVersionNumber() const {
         return *negotiatedVersionNumber_;
     }
 
-    void Initiate_ResponsePDU::initResponseDetail_type::negotiatedVersionNumber(const Integer16& vl) {
+    void Initiate_ResponsePDU::InitResponseDetail_type::negotiatedVersionNumber(const Integer16& vl) {
         negotiatedVersionNumber_ = vl;
     }
 
-    void Initiate_ResponsePDU::initResponseDetail_type::negotiatedVersionNumber(boost::shared_ptr< Integer16> vl) {
+    void Initiate_ResponsePDU::InitResponseDetail_type::negotiatedVersionNumber(boost::shared_ptr< Integer16> vl) {
         negotiatedVersionNumber_ = vl;
     }
 
-    MMS_Object_Module_1::ParameterSupportOptions& Initiate_ResponsePDU::initResponseDetail_type::negotiatedParameterCBB() {
+    MMS_Object_Module_1::ParameterSupportOptions& Initiate_ResponsePDU::InitResponseDetail_type::negotiatedParameterCBB() {
         return *negotiatedParameterCBB_;
     }
 
-    const MMS_Object_Module_1::ParameterSupportOptions& Initiate_ResponsePDU::initResponseDetail_type::negotiatedParameterCBB() const {
+    const MMS_Object_Module_1::ParameterSupportOptions& Initiate_ResponsePDU::InitResponseDetail_type::negotiatedParameterCBB() const {
         return *negotiatedParameterCBB_;
     }
 
-    void Initiate_ResponsePDU::initResponseDetail_type::negotiatedParameterCBB(const MMS_Object_Module_1::ParameterSupportOptions& vl) {
+    void Initiate_ResponsePDU::InitResponseDetail_type::negotiatedParameterCBB(const MMS_Object_Module_1::ParameterSupportOptions& vl) {
         negotiatedParameterCBB_ = vl;
     }
 
-    void Initiate_ResponsePDU::initResponseDetail_type::negotiatedParameterCBB(boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> vl) {
+    void Initiate_ResponsePDU::InitResponseDetail_type::negotiatedParameterCBB(boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> vl) {
         negotiatedParameterCBB_ = vl;
     }
 
-    MMS_Object_Module_1::ServiceSupportOptions& Initiate_ResponsePDU::initResponseDetail_type::servicesSupportedCalled() {
+    MMS_Object_Module_1::ServiceSupportOptions& Initiate_ResponsePDU::InitResponseDetail_type::servicesSupportedCalled() {
         return *servicesSupportedCalled_;
     }
 
-    const MMS_Object_Module_1::ServiceSupportOptions& Initiate_ResponsePDU::initResponseDetail_type::servicesSupportedCalled() const {
+    const MMS_Object_Module_1::ServiceSupportOptions& Initiate_ResponsePDU::InitResponseDetail_type::servicesSupportedCalled() const {
         return *servicesSupportedCalled_;
     }
 
-    void Initiate_ResponsePDU::initResponseDetail_type::servicesSupportedCalled(const MMS_Object_Module_1::ServiceSupportOptions& vl) {
+    void Initiate_ResponsePDU::InitResponseDetail_type::servicesSupportedCalled(const MMS_Object_Module_1::ServiceSupportOptions& vl) {
         servicesSupportedCalled_ = vl;
     }
 
-    void Initiate_ResponsePDU::initResponseDetail_type::servicesSupportedCalled(boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> vl) {
+    void Initiate_ResponsePDU::InitResponseDetail_type::servicesSupportedCalled(boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> vl) {
         servicesSupportedCalled_ = vl;
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions> Initiate_ResponsePDU::initResponseDetail_type::additionalSupportedCalled__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions> Initiate_ResponsePDU::InitResponseDetail_type::additionalSupportedCalled__new() {
         return additionalSupportedCalled_ = boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions>(new MMS_Object_Module_1::AdditionalSupportOptions());
     }
 
-    void Initiate_ResponsePDU::initResponseDetail_type::additionalSupportedCalled(const MMS_Object_Module_1::AdditionalSupportOptions& vl) {
+    void Initiate_ResponsePDU::InitResponseDetail_type::additionalSupportedCalled(const MMS_Object_Module_1::AdditionalSupportOptions& vl) {
         additionalSupportedCalled_ = boost::shared_ptr<MMS_Object_Module_1::AdditionalSupportOptions>(new MMS_Object_Module_1::AdditionalSupportOptions(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions> Initiate_ResponsePDU::initResponseDetail_type::additionalCbbSupportedCalled__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions> Initiate_ResponsePDU::InitResponseDetail_type::additionalCbbSupportedCalled__new() {
         return additionalCbbSupportedCalled_ = boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions>(new MMS_Object_Module_1::AdditionalCBBOptions());
     }
 
-    void Initiate_ResponsePDU::initResponseDetail_type::additionalCbbSupportedCalled(const MMS_Object_Module_1::AdditionalCBBOptions& vl) {
+    void Initiate_ResponsePDU::InitResponseDetail_type::additionalCbbSupportedCalled(const MMS_Object_Module_1::AdditionalCBBOptions& vl) {
         additionalCbbSupportedCalled_ = boost::shared_ptr<MMS_Object_Module_1::AdditionalCBBOptions>(new MMS_Object_Module_1::AdditionalCBBOptions(vl));
     }
 
-    boost::shared_ptr<visiblestring_type> Initiate_ResponsePDU::initResponseDetail_type::privilegeClassIdentityCalled__new() {
+    boost::shared_ptr<visiblestring_type> Initiate_ResponsePDU::InitResponseDetail_type::privilegeClassIdentityCalled__new() {
         return privilegeClassIdentityCalled_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type());
     }
 
-    void Initiate_ResponsePDU::initResponseDetail_type::privilegeClassIdentityCalled(const visiblestring_type& vl) {
+    void Initiate_ResponsePDU::InitResponseDetail_type::privilegeClassIdentityCalled(const visiblestring_type& vl) {
         privilegeClassIdentityCalled_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type(vl));
     }
 
@@ -5263,19 +5263,19 @@ namespace ISO_9506_MMS_1 {
         negotiatedDataStructureNestingLevel_ = boost::shared_ptr<Integer8>(new Integer8(vl));
     }
 
-    Initiate_ResponsePDU::initResponseDetail_type& Initiate_ResponsePDU::initResponseDetail() {
+    Initiate_ResponsePDU::InitResponseDetail_type& Initiate_ResponsePDU::initResponseDetail() {
         return *initResponseDetail_;
     }
 
-    const Initiate_ResponsePDU::initResponseDetail_type& Initiate_ResponsePDU::initResponseDetail() const {
+    const Initiate_ResponsePDU::InitResponseDetail_type& Initiate_ResponsePDU::initResponseDetail() const {
         return *initResponseDetail_;
     }
 
-    void Initiate_ResponsePDU::initResponseDetail(const initResponseDetail_type& vl) {
+    void Initiate_ResponsePDU::initResponseDetail(const InitResponseDetail_type& vl) {
         initResponseDetail_ = vl;
     }
 
-    void Initiate_ResponsePDU::initResponseDetail(boost::shared_ptr< initResponseDetail_type> vl) {
+    void Initiate_ResponsePDU::initResponseDetail(boost::shared_ptr< InitResponseDetail_type> vl) {
         initResponseDetail_ = vl;
     }
 
@@ -5339,170 +5339,170 @@ namespace ISO_9506_MMS_1 {
     RejectPDU::RejectPDU() : rejectReason_() {
     };
 
-    RejectPDU::RejectPDU(const rejectReason_type& arg__rejectReason) :
+    RejectPDU::RejectPDU(const RejectReason_type& arg__rejectReason) :
     rejectReason_(arg__rejectReason) {
     };
 
     RejectPDU::RejectPDU(boost::shared_ptr< Unsigned32> arg__originalInvokeID,
-            boost::shared_ptr< rejectReason_type> arg__rejectReason) :
+            boost::shared_ptr< RejectReason_type> arg__rejectReason) :
     originalInvokeID_(arg__originalInvokeID),
     rejectReason_(arg__rejectReason) {
     };
 
 
-    const int RejectPDU::rejectReason_type::confirmed_requestPDU_other = 0;
-    const int RejectPDU::rejectReason_type::confirmed_requestPDU_unrecognized_service = 1;
-    const int RejectPDU::rejectReason_type::confirmed_requestPDU_unrecognized_modifier = 2;
-    const int RejectPDU::rejectReason_type::confirmed_requestPDU_invalid_invokeID = 3;
-    const int RejectPDU::rejectReason_type::confirmed_requestPDU_invalid_argument = 4;
-    const int RejectPDU::rejectReason_type::confirmed_requestPDU_invalid_modifier = 5;
-    const int RejectPDU::rejectReason_type::confirmed_requestPDU_max_serv_outstanding_exceeded = 6;
-    const int RejectPDU::rejectReason_type::confirmed_requestPDU_max_recursion_exceeded = 8;
-    const int RejectPDU::rejectReason_type::confirmed_requestPDU_value_out_of_range = 9;
+    const int RejectPDU::RejectReason_type::confirmed_requestPDU_other = 0;
+    const int RejectPDU::RejectReason_type::confirmed_requestPDU_unrecognized_service = 1;
+    const int RejectPDU::RejectReason_type::confirmed_requestPDU_unrecognized_modifier = 2;
+    const int RejectPDU::RejectReason_type::confirmed_requestPDU_invalid_invokeID = 3;
+    const int RejectPDU::RejectReason_type::confirmed_requestPDU_invalid_argument = 4;
+    const int RejectPDU::RejectReason_type::confirmed_requestPDU_invalid_modifier = 5;
+    const int RejectPDU::RejectReason_type::confirmed_requestPDU_max_serv_outstanding_exceeded = 6;
+    const int RejectPDU::RejectReason_type::confirmed_requestPDU_max_recursion_exceeded = 8;
+    const int RejectPDU::RejectReason_type::confirmed_requestPDU_value_out_of_range = 9;
 
-    const int RejectPDU::rejectReason_type::confirmed_responsePDU_other = 0;
-    const int RejectPDU::rejectReason_type::confirmed_responsePDU_unrecognized_service = 1;
-    const int RejectPDU::rejectReason_type::confirmed_responsePDU_invalid_invokeID = 2;
-    const int RejectPDU::rejectReason_type::confirmed_responsePDU_invalid_result = 3;
-    const int RejectPDU::rejectReason_type::confirmed_responsePDU_max_recursion_exceeded = 5;
-    const int RejectPDU::rejectReason_type::confirmed_responsePDU_value_out_of_range = 6;
+    const int RejectPDU::RejectReason_type::confirmed_responsePDU_other = 0;
+    const int RejectPDU::RejectReason_type::confirmed_responsePDU_unrecognized_service = 1;
+    const int RejectPDU::RejectReason_type::confirmed_responsePDU_invalid_invokeID = 2;
+    const int RejectPDU::RejectReason_type::confirmed_responsePDU_invalid_result = 3;
+    const int RejectPDU::RejectReason_type::confirmed_responsePDU_max_recursion_exceeded = 5;
+    const int RejectPDU::RejectReason_type::confirmed_responsePDU_value_out_of_range = 6;
 
-    const int RejectPDU::rejectReason_type::confirmed_errorPDU_other = 0;
-    const int RejectPDU::rejectReason_type::confirmed_errorPDU_unrecognized_service = 1;
-    const int RejectPDU::rejectReason_type::confirmed_errorPDU_invalid_invokeID = 2;
-    const int RejectPDU::rejectReason_type::confirmed_errorPDU_invalid_serviceError = 3;
-    const int RejectPDU::rejectReason_type::confirmed_errorPDU_value_out_of_range = 4;
+    const int RejectPDU::RejectReason_type::confirmed_errorPDU_other = 0;
+    const int RejectPDU::RejectReason_type::confirmed_errorPDU_unrecognized_service = 1;
+    const int RejectPDU::RejectReason_type::confirmed_errorPDU_invalid_invokeID = 2;
+    const int RejectPDU::RejectReason_type::confirmed_errorPDU_invalid_serviceError = 3;
+    const int RejectPDU::RejectReason_type::confirmed_errorPDU_value_out_of_range = 4;
 
-    const int RejectPDU::rejectReason_type::unconfirmedPDU_other = 0;
-    const int RejectPDU::rejectReason_type::unconfirmedPDU_unrecognized_service = 1;
-    const int RejectPDU::rejectReason_type::unconfirmedPDU_invalid_argument = 2;
-    const int RejectPDU::rejectReason_type::unconfirmedPDU_max_recursion_exceeded = 3;
-    const int RejectPDU::rejectReason_type::unconfirmedPDU_value_out_of_range = 4;
+    const int RejectPDU::RejectReason_type::unconfirmedPDU_other = 0;
+    const int RejectPDU::RejectReason_type::unconfirmedPDU_unrecognized_service = 1;
+    const int RejectPDU::RejectReason_type::unconfirmedPDU_invalid_argument = 2;
+    const int RejectPDU::RejectReason_type::unconfirmedPDU_max_recursion_exceeded = 3;
+    const int RejectPDU::RejectReason_type::unconfirmedPDU_value_out_of_range = 4;
 
-    const int RejectPDU::rejectReason_type::pdu_error_unknown_pdu_type = 0;
-    const int RejectPDU::rejectReason_type::pdu_error_invalid_pdu = 1;
-    const int RejectPDU::rejectReason_type::pdu_error_illegal_acse_mapping = 2;
+    const int RejectPDU::RejectReason_type::pdu_error_unknown_pdu_type = 0;
+    const int RejectPDU::RejectReason_type::pdu_error_invalid_pdu = 1;
+    const int RejectPDU::RejectReason_type::pdu_error_illegal_acse_mapping = 2;
 
-    const int RejectPDU::rejectReason_type::cancel_requestPDU_other = 0;
-    const int RejectPDU::rejectReason_type::cancel_requestPDU_invalid_invokeID = 1;
+    const int RejectPDU::RejectReason_type::cancel_requestPDU_other = 0;
+    const int RejectPDU::RejectReason_type::cancel_requestPDU_invalid_invokeID = 1;
 
-    const int RejectPDU::rejectReason_type::cancel_responsePDU_other = 0;
-    const int RejectPDU::rejectReason_type::cancel_responsePDU_invalid_invokeID = 1;
+    const int RejectPDU::RejectReason_type::cancel_responsePDU_other = 0;
+    const int RejectPDU::RejectReason_type::cancel_responsePDU_invalid_invokeID = 1;
 
-    const int RejectPDU::rejectReason_type::cancel_errorPDU_other = 0;
-    const int RejectPDU::rejectReason_type::cancel_errorPDU_invalid_invokeID = 1;
-    const int RejectPDU::rejectReason_type::cancel_errorPDU_invalid_serviceError = 2;
-    const int RejectPDU::rejectReason_type::cancel_errorPDU_value_out_of_range = 3;
+    const int RejectPDU::RejectReason_type::cancel_errorPDU_other = 0;
+    const int RejectPDU::RejectReason_type::cancel_errorPDU_invalid_invokeID = 1;
+    const int RejectPDU::RejectReason_type::cancel_errorPDU_invalid_serviceError = 2;
+    const int RejectPDU::RejectReason_type::cancel_errorPDU_value_out_of_range = 3;
 
-    const int RejectPDU::rejectReason_type::conclude_requestPDU_other = 0;
-    const int RejectPDU::rejectReason_type::conclude_requestPDU_invalid_argument = 1;
+    const int RejectPDU::RejectReason_type::conclude_requestPDU_other = 0;
+    const int RejectPDU::RejectReason_type::conclude_requestPDU_invalid_argument = 1;
 
-    const int RejectPDU::rejectReason_type::conclude_responsePDU_other = 0;
-    const int RejectPDU::rejectReason_type::conclude_responsePDU_invalid_result = 1;
+    const int RejectPDU::RejectReason_type::conclude_responsePDU_other = 0;
+    const int RejectPDU::RejectReason_type::conclude_responsePDU_invalid_result = 1;
 
-    const int RejectPDU::rejectReason_type::conclude_errorPDU_other = 0;
-    const int RejectPDU::rejectReason_type::conclude_errorPDU_invalid_serviceError = 1;
-    const int RejectPDU::rejectReason_type::conclude_errorPDU_value_out_of_range = 2;
+    const int RejectPDU::RejectReason_type::conclude_errorPDU_other = 0;
+    const int RejectPDU::RejectReason_type::conclude_errorPDU_invalid_serviceError = 1;
+    const int RejectPDU::RejectReason_type::conclude_errorPDU_value_out_of_range = 2;
 
-    void RejectPDU::rejectReason_type::confirmed_requestPDU(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_confirmed_requestPDU);
+    void RejectPDU::RejectReason_type::confirmed_requestPDU(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_confirmed_requestPDU);
     }
 
-    void RejectPDU::rejectReason_type::confirmed_responsePDU(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_confirmed_responsePDU);
+    void RejectPDU::RejectReason_type::confirmed_responsePDU(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_confirmed_responsePDU);
     }
 
-    void RejectPDU::rejectReason_type::confirmed_errorPDU(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_confirmed_errorPDU);
+    void RejectPDU::RejectReason_type::confirmed_errorPDU(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_confirmed_errorPDU);
     }
 
-    void RejectPDU::rejectReason_type::unconfirmedPDU(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_unconfirmedPDU);
+    void RejectPDU::RejectReason_type::unconfirmedPDU(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_unconfirmedPDU);
     }
 
-    void RejectPDU::rejectReason_type::pdu_error(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_pdu_error);
+    void RejectPDU::RejectReason_type::pdu_error(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_pdu_error);
     }
 
-    void RejectPDU::rejectReason_type::cancel_requestPDU(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_cancel_requestPDU);
+    void RejectPDU::RejectReason_type::cancel_requestPDU(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_cancel_requestPDU);
     }
 
-    void RejectPDU::rejectReason_type::cancel_responsePDU(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_cancel_responsePDU);
+    void RejectPDU::RejectReason_type::cancel_responsePDU(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_cancel_responsePDU);
     }
 
-    void RejectPDU::rejectReason_type::cancel_errorPDU(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_cancel_errorPDU);
+    void RejectPDU::RejectReason_type::cancel_errorPDU(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_cancel_errorPDU);
     }
 
-    void RejectPDU::rejectReason_type::conclude_requestPDU(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_conclude_requestPDU);
+    void RejectPDU::RejectReason_type::conclude_requestPDU(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_conclude_requestPDU);
     }
 
-    void RejectPDU::rejectReason_type::conclude_responsePDU(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_conclude_responsePDU);
+    void RejectPDU::RejectReason_type::conclude_responsePDU(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_conclude_responsePDU);
     }
 
-    void RejectPDU::rejectReason_type::conclude_errorPDU(const int& vl) {
-        set<int>(new int(vl), rejectReason_type_conclude_errorPDU);
+    void RejectPDU::RejectReason_type::conclude_errorPDU(const int& vl) {
+        set<int>(new int(vl), RejectReason_type_conclude_errorPDU);
     }
 
-    template<> void RejectPDU::rejectReason_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void RejectPDU::RejectReason_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case rejectReason_type_confirmed_requestPDU:
+            case RejectReason_type_confirmed_requestPDU:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_confirmed_requestPDU), 1);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_confirmed_requestPDU), 1);
                 break;
             }
-            case rejectReason_type_confirmed_responsePDU:
+            case RejectReason_type_confirmed_responsePDU:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_confirmed_responsePDU), 2);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_confirmed_responsePDU), 2);
                 break;
             }
-            case rejectReason_type_confirmed_errorPDU:
+            case RejectReason_type_confirmed_errorPDU:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_confirmed_errorPDU), 3);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_confirmed_errorPDU), 3);
                 break;
             }
-            case rejectReason_type_unconfirmedPDU:
+            case RejectReason_type_unconfirmedPDU:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_unconfirmedPDU), 4);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_unconfirmedPDU), 4);
                 break;
             }
-            case rejectReason_type_pdu_error:
+            case RejectReason_type_pdu_error:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_pdu_error), 5);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_pdu_error), 5);
                 break;
             }
-            case rejectReason_type_cancel_requestPDU:
+            case RejectReason_type_cancel_requestPDU:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_cancel_requestPDU), 6);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_cancel_requestPDU), 6);
                 break;
             }
-            case rejectReason_type_cancel_responsePDU:
+            case RejectReason_type_cancel_responsePDU:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_cancel_responsePDU), 7);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_cancel_responsePDU), 7);
                 break;
             }
-            case rejectReason_type_cancel_errorPDU:
+            case RejectReason_type_cancel_errorPDU:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_cancel_errorPDU), 8);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_cancel_errorPDU), 8);
                 break;
             }
-            case rejectReason_type_conclude_requestPDU:
+            case RejectReason_type_conclude_requestPDU:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_conclude_requestPDU), 9);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_conclude_requestPDU), 9);
                 break;
             }
-            case rejectReason_type_conclude_responsePDU:
+            case RejectReason_type_conclude_responsePDU:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_conclude_responsePDU), 10);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_conclude_responsePDU), 10);
                 break;
             }
-            case rejectReason_type_conclude_errorPDU:
+            case RejectReason_type_conclude_errorPDU:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, rejectReason_type_conclude_errorPDU), 11);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RejectReason_type_conclude_errorPDU), 11);
                 break;
             }
             default:
@@ -5511,7 +5511,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void RejectPDU::rejectReason_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void RejectPDU::RejectReason_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -5535,67 +5535,67 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_confirmed_requestPDU), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_confirmed_requestPDU), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_confirmed_responsePDU), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_confirmed_responsePDU), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_confirmed_errorPDU), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_confirmed_errorPDU), 3)) return;
                         else free();
                         break;
                     }
                     case 4:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_unconfirmedPDU), 4)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_unconfirmedPDU), 4)) return;
                         else free();
                         break;
                     }
                     case 5:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_pdu_error), 5)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_pdu_error), 5)) return;
                         else free();
                         break;
                     }
                     case 6:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_cancel_requestPDU), 6)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_cancel_requestPDU), 6)) return;
                         else free();
                         break;
                     }
                     case 7:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_cancel_responsePDU), 7)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_cancel_responsePDU), 7)) return;
                         else free();
                         break;
                     }
                     case 8:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_cancel_errorPDU), 8)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_cancel_errorPDU), 8)) return;
                         else free();
                         break;
                     }
                     case 9:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_conclude_requestPDU), 9)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_conclude_requestPDU), 9)) return;
                         else free();
                         break;
                     }
                     case 10:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_conclude_responsePDU), 10)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_conclude_responsePDU), 10)) return;
                         else free();
                         break;
                     }
                     case 11:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, rejectReason_type_conclude_errorPDU), 11)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RejectReason_type_conclude_errorPDU), 11)) return;
                         else free();
                         break;
                     }
@@ -5636,19 +5636,19 @@ namespace ISO_9506_MMS_1 {
         originalInvokeID_ = boost::shared_ptr<Unsigned32>(new Unsigned32(vl));
     }
 
-    RejectPDU::rejectReason_type& RejectPDU::rejectReason() {
+    RejectPDU::RejectReason_type& RejectPDU::rejectReason() {
         return *rejectReason_;
     }
 
-    const RejectPDU::rejectReason_type& RejectPDU::rejectReason() const {
+    const RejectPDU::RejectReason_type& RejectPDU::rejectReason() const {
         return *rejectReason_;
     }
 
-    void RejectPDU::rejectReason(const rejectReason_type& vl) {
+    void RejectPDU::rejectReason(const RejectReason_type& vl) {
         rejectReason_ = vl;
     }
 
-    void RejectPDU::rejectReason(boost::shared_ptr< rejectReason_type> vl) {
+    void RejectPDU::rejectReason(boost::shared_ptr< RejectReason_type> vl) {
         rejectReason_ = vl;
     }
 
@@ -5659,15 +5659,15 @@ namespace ISO_9506_MMS_1 {
     };
 
     DefineAccessControlList_Request::DefineAccessControlList_Request(const Identifier& arg__accessControlListName,
-            const accessControlListElements_type& arg__accessControlListElements) :
+            const AccessControlListElements_type& arg__accessControlListElements) :
     accessControlListName_(arg__accessControlListName),
     accessControlListElements_(arg__accessControlListElements) {
     };
 
-    DefineAccessControlList_Request::accessControlListElements_type::accessControlListElements_type() {
+    DefineAccessControlList_Request::AccessControlListElements_type::AccessControlListElements_type() {
     };
 
-    DefineAccessControlList_Request::accessControlListElements_type::accessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
+    DefineAccessControlList_Request::AccessControlListElements_type::AccessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
             boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__storeAccessCondition,
             boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__writeAccessCondition,
             boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__loadAccessCondition,
@@ -5683,7 +5683,7 @@ namespace ISO_9506_MMS_1 {
     editAccessCondition_(arg__editAccessCondition) {
     };
 
-    template<> void DefineAccessControlList_Request::accessControlListElements_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void DefineAccessControlList_Request::AccessControlListElements_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(readAccessCondition_, 0);
         ITU_T_CHOICE_TAG(storeAccessCondition_, 1);
         ITU_T_CHOICE_TAG(writeAccessCondition_, 2);
@@ -5693,7 +5693,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(editAccessCondition_, 6);
     }
 
-    template<> void DefineAccessControlList_Request::accessControlListElements_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void DefineAccessControlList_Request::AccessControlListElements_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_CHOICE_TAG(readAccessCondition_, 0);
         ITU_T_CHOICE_TAG(storeAccessCondition_, 1);
         ITU_T_CHOICE_TAG(writeAccessCondition_, 2);
@@ -5703,59 +5703,59 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(editAccessCondition_, 6);
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::accessControlListElements_type::readAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::AccessControlListElements_type::readAccessCondition__new() {
         return readAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void DefineAccessControlList_Request::accessControlListElements_type::readAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void DefineAccessControlList_Request::AccessControlListElements_type::readAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         readAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::accessControlListElements_type::storeAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::AccessControlListElements_type::storeAccessCondition__new() {
         return storeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void DefineAccessControlList_Request::accessControlListElements_type::storeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void DefineAccessControlList_Request::AccessControlListElements_type::storeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         storeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::accessControlListElements_type::writeAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::AccessControlListElements_type::writeAccessCondition__new() {
         return writeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void DefineAccessControlList_Request::accessControlListElements_type::writeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void DefineAccessControlList_Request::AccessControlListElements_type::writeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         writeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::accessControlListElements_type::loadAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::AccessControlListElements_type::loadAccessCondition__new() {
         return loadAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void DefineAccessControlList_Request::accessControlListElements_type::loadAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void DefineAccessControlList_Request::AccessControlListElements_type::loadAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         loadAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::accessControlListElements_type::executeAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::AccessControlListElements_type::executeAccessCondition__new() {
         return executeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void DefineAccessControlList_Request::accessControlListElements_type::executeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void DefineAccessControlList_Request::AccessControlListElements_type::executeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         executeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::accessControlListElements_type::deleteAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::AccessControlListElements_type::deleteAccessCondition__new() {
         return deleteAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void DefineAccessControlList_Request::accessControlListElements_type::deleteAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void DefineAccessControlList_Request::AccessControlListElements_type::deleteAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         deleteAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::accessControlListElements_type::editAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> DefineAccessControlList_Request::AccessControlListElements_type::editAccessCondition__new() {
         return editAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void DefineAccessControlList_Request::accessControlListElements_type::editAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void DefineAccessControlList_Request::AccessControlListElements_type::editAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         editAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
@@ -5785,73 +5785,73 @@ namespace ISO_9506_MMS_1 {
         accessControlListName_ = vl;
     }
 
-    DefineAccessControlList_Request::accessControlListElements_type& DefineAccessControlList_Request::accessControlListElements() {
+    DefineAccessControlList_Request::AccessControlListElements_type& DefineAccessControlList_Request::accessControlListElements() {
         return *accessControlListElements_;
     }
 
-    const DefineAccessControlList_Request::accessControlListElements_type& DefineAccessControlList_Request::accessControlListElements() const {
+    const DefineAccessControlList_Request::AccessControlListElements_type& DefineAccessControlList_Request::accessControlListElements() const {
         return *accessControlListElements_;
     }
 
-    void DefineAccessControlList_Request::accessControlListElements(const accessControlListElements_type& vl) {
+    void DefineAccessControlList_Request::accessControlListElements(const AccessControlListElements_type& vl) {
         accessControlListElements_ = vl;
     }
 
-    void DefineAccessControlList_Request::accessControlListElements(boost::shared_ptr< accessControlListElements_type> vl) {
+    void DefineAccessControlList_Request::accessControlListElements(boost::shared_ptr< AccessControlListElements_type> vl) {
         accessControlListElements_ = vl;
     }
 
 
     // choice GetAccessControlListAttributes-Request
 
-    GetAccessControlListAttributes_Request::namedObject_type::namedObject_type() : objectClass_(), objectName_() {
+    GetAccessControlListAttributes_Request::NamedObject_type::NamedObject_type() : objectClass_(), objectName_() {
     };
 
-    GetAccessControlListAttributes_Request::namedObject_type::namedObject_type(const ObjectClass& arg__objectClass,
+    GetAccessControlListAttributes_Request::NamedObject_type::NamedObject_type(const ObjectClass& arg__objectClass,
             const ObjectName& arg__objectName) :
     objectClass_(arg__objectClass),
     objectName_(arg__objectName) {
     };
 
-    template<> void GetAccessControlListAttributes_Request::namedObject_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void GetAccessControlListAttributes_Request::NamedObject_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(objectClass_, 0);
         ITU_T_CHOICE_TAG(objectName_, 1);
     }
 
-    template<> void GetAccessControlListAttributes_Request::namedObject_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void GetAccessControlListAttributes_Request::NamedObject_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_CHOICE_TAG(objectClass_, 0);
         ITU_T_CHOICE_TAG(objectName_, 1);
     }
 
-    ObjectClass& GetAccessControlListAttributes_Request::namedObject_type::objectClass() {
+    ObjectClass& GetAccessControlListAttributes_Request::NamedObject_type::objectClass() {
         return *objectClass_;
     }
 
-    const ObjectClass& GetAccessControlListAttributes_Request::namedObject_type::objectClass() const {
+    const ObjectClass& GetAccessControlListAttributes_Request::NamedObject_type::objectClass() const {
         return *objectClass_;
     }
 
-    void GetAccessControlListAttributes_Request::namedObject_type::objectClass(const ObjectClass& vl) {
+    void GetAccessControlListAttributes_Request::NamedObject_type::objectClass(const ObjectClass& vl) {
         objectClass_ = vl;
     }
 
-    void GetAccessControlListAttributes_Request::namedObject_type::objectClass(boost::shared_ptr< ObjectClass> vl) {
+    void GetAccessControlListAttributes_Request::NamedObject_type::objectClass(boost::shared_ptr< ObjectClass> vl) {
         objectClass_ = vl;
     }
 
-    ObjectName& GetAccessControlListAttributes_Request::namedObject_type::objectName() {
+    ObjectName& GetAccessControlListAttributes_Request::NamedObject_type::objectName() {
         return *objectName_;
     }
 
-    const ObjectName& GetAccessControlListAttributes_Request::namedObject_type::objectName() const {
+    const ObjectName& GetAccessControlListAttributes_Request::NamedObject_type::objectName() const {
         return *objectName_;
     }
 
-    void GetAccessControlListAttributes_Request::namedObject_type::objectName(const ObjectName& vl) {
+    void GetAccessControlListAttributes_Request::NamedObject_type::objectName(const ObjectName& vl) {
         objectName_ = vl;
     }
 
-    void GetAccessControlListAttributes_Request::namedObject_type::objectName(boost::shared_ptr< ObjectName> vl) {
+    void GetAccessControlListAttributes_Request::NamedObject_type::objectName(boost::shared_ptr< ObjectName> vl) {
         objectName_ = vl;
     }
 
@@ -5877,7 +5877,7 @@ namespace ISO_9506_MMS_1 {
             }
             case GetAccessControlListAttributes_Request_namedObject:
             {
-                ITU_T_IMPLICIT_TAG(value<namedObject_type > (false, GetAccessControlListAttributes_Request_namedObject), 2);
+                ITU_T_IMPLICIT_TAG(value<NamedObject_type > (false, GetAccessControlListAttributes_Request_namedObject), 2);
                 break;
             }
             default:
@@ -5922,7 +5922,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<namedObject_type > (true, GetAccessControlListAttributes_Request_namedObject), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<NamedObject_type > (true, GetAccessControlListAttributes_Request_namedObject), 2)) return;
                         else free();
                         break;
                     }
@@ -5952,9 +5952,9 @@ namespace ISO_9506_MMS_1 {
     };
 
     GetAccessControlListAttributes_Response::GetAccessControlListAttributes_Response(const Identifier& arg__name,
-            const accessControlListElements_type& arg__accessControlListElements,
+            const AccessControlListElements_type& arg__accessControlListElements,
             const bool& arg__vMDuse,
-            const references_type& arg__references) :
+            const References_type& arg__references) :
     name_(arg__name),
     accessControlListElements_(arg__accessControlListElements),
     vMDuse_(arg__vMDuse),
@@ -5962,9 +5962,9 @@ namespace ISO_9506_MMS_1 {
     };
 
     GetAccessControlListAttributes_Response::GetAccessControlListAttributes_Response(boost::shared_ptr< Identifier> arg__name,
-            boost::shared_ptr< accessControlListElements_type> arg__accessControlListElements,
+            boost::shared_ptr< AccessControlListElements_type> arg__accessControlListElements,
             boost::shared_ptr< bool> arg__vMDuse,
-            boost::shared_ptr< references_type> arg__references,
+            boost::shared_ptr< References_type> arg__references,
             boost::shared_ptr< Identifier> arg__accessControlList) :
     name_(arg__name),
     accessControlListElements_(arg__accessControlListElements),
@@ -5973,10 +5973,10 @@ namespace ISO_9506_MMS_1 {
     accessControlList_(arg__accessControlList) {
     };
 
-    GetAccessControlListAttributes_Response::accessControlListElements_type::accessControlListElements_type() {
+    GetAccessControlListAttributes_Response::AccessControlListElements_type::AccessControlListElements_type() {
     };
 
-    GetAccessControlListAttributes_Response::accessControlListElements_type::accessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
+    GetAccessControlListAttributes_Response::AccessControlListElements_type::AccessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
             boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__storeAccessCondition,
             boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__writeAccessCondition,
             boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__loadAccessCondition,
@@ -5992,7 +5992,7 @@ namespace ISO_9506_MMS_1 {
     editAccessCondition_(arg__editAccessCondition) {
     };
 
-    template<> void GetAccessControlListAttributes_Response::accessControlListElements_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void GetAccessControlListAttributes_Response::AccessControlListElements_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(readAccessCondition_, 0);
         ITU_T_CHOICE_TAG(storeAccessCondition_, 1);
         ITU_T_CHOICE_TAG(writeAccessCondition_, 2);
@@ -6002,7 +6002,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(editAccessCondition_, 6);
     }
 
-    template<> void GetAccessControlListAttributes_Response::accessControlListElements_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void GetAccessControlListAttributes_Response::AccessControlListElements_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_CHOICE_TAG(readAccessCondition_, 0);
         ITU_T_CHOICE_TAG(storeAccessCondition_, 1);
         ITU_T_CHOICE_TAG(writeAccessCondition_, 2);
@@ -6012,110 +6012,110 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(editAccessCondition_, 6);
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::accessControlListElements_type::readAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::AccessControlListElements_type::readAccessCondition__new() {
         return readAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void GetAccessControlListAttributes_Response::accessControlListElements_type::readAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void GetAccessControlListAttributes_Response::AccessControlListElements_type::readAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         readAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::accessControlListElements_type::storeAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::AccessControlListElements_type::storeAccessCondition__new() {
         return storeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void GetAccessControlListAttributes_Response::accessControlListElements_type::storeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void GetAccessControlListAttributes_Response::AccessControlListElements_type::storeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         storeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::accessControlListElements_type::writeAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::AccessControlListElements_type::writeAccessCondition__new() {
         return writeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void GetAccessControlListAttributes_Response::accessControlListElements_type::writeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void GetAccessControlListAttributes_Response::AccessControlListElements_type::writeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         writeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::accessControlListElements_type::loadAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::AccessControlListElements_type::loadAccessCondition__new() {
         return loadAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void GetAccessControlListAttributes_Response::accessControlListElements_type::loadAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void GetAccessControlListAttributes_Response::AccessControlListElements_type::loadAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         loadAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::accessControlListElements_type::executeAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::AccessControlListElements_type::executeAccessCondition__new() {
         return executeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void GetAccessControlListAttributes_Response::accessControlListElements_type::executeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void GetAccessControlListAttributes_Response::AccessControlListElements_type::executeAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         executeAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::accessControlListElements_type::deleteAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::AccessControlListElements_type::deleteAccessCondition__new() {
         return deleteAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void GetAccessControlListAttributes_Response::accessControlListElements_type::deleteAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void GetAccessControlListAttributes_Response::AccessControlListElements_type::deleteAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         deleteAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::accessControlListElements_type::editAccessCondition__new() {
+    boost::shared_ptr<MMS_Object_Module_1::AccessCondition> GetAccessControlListAttributes_Response::AccessControlListElements_type::editAccessCondition__new() {
         return editAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition());
     }
 
-    void GetAccessControlListAttributes_Response::accessControlListElements_type::editAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
+    void GetAccessControlListAttributes_Response::AccessControlListElements_type::editAccessCondition(const MMS_Object_Module_1::AccessCondition& vl) {
         editAccessCondition_ = boost::shared_ptr<MMS_Object_Module_1::AccessCondition>(new MMS_Object_Module_1::AccessCondition(vl));
     }
 
-    GetAccessControlListAttributes_Response::references_type_sequence_of::references_type_sequence_of() : objectClass_(), objectCount_() {
+    GetAccessControlListAttributes_Response::References_type_sequence_of::References_type_sequence_of() : objectClass_(), objectCount_() {
     };
 
-    GetAccessControlListAttributes_Response::references_type_sequence_of::references_type_sequence_of(const ObjectClass& arg__objectClass,
+    GetAccessControlListAttributes_Response::References_type_sequence_of::References_type_sequence_of(const ObjectClass& arg__objectClass,
             const int& arg__objectCount) :
     objectClass_(arg__objectClass),
     objectCount_(arg__objectCount) {
     };
 
-    template<> void GetAccessControlListAttributes_Response::references_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void GetAccessControlListAttributes_Response::References_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(objectClass_, 0);
         ITU_T_IMPLICIT_TAG(objectCount_, 1);
     }
 
-    template<> void GetAccessControlListAttributes_Response::references_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void GetAccessControlListAttributes_Response::References_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_CHOICE_TAG(objectClass_, 0);
         ITU_T_IMPLICIT_TAG(objectCount_, 1);
     }
 
-    ObjectClass& GetAccessControlListAttributes_Response::references_type_sequence_of::objectClass() {
+    ObjectClass& GetAccessControlListAttributes_Response::References_type_sequence_of::objectClass() {
         return *objectClass_;
     }
 
-    const ObjectClass& GetAccessControlListAttributes_Response::references_type_sequence_of::objectClass() const {
+    const ObjectClass& GetAccessControlListAttributes_Response::References_type_sequence_of::objectClass() const {
         return *objectClass_;
     }
 
-    void GetAccessControlListAttributes_Response::references_type_sequence_of::objectClass(const ObjectClass& vl) {
+    void GetAccessControlListAttributes_Response::References_type_sequence_of::objectClass(const ObjectClass& vl) {
         objectClass_ = vl;
     }
 
-    void GetAccessControlListAttributes_Response::references_type_sequence_of::objectClass(boost::shared_ptr< ObjectClass> vl) {
+    void GetAccessControlListAttributes_Response::References_type_sequence_of::objectClass(boost::shared_ptr< ObjectClass> vl) {
         objectClass_ = vl;
     }
 
-    int& GetAccessControlListAttributes_Response::references_type_sequence_of::objectCount() {
+    int& GetAccessControlListAttributes_Response::References_type_sequence_of::objectCount() {
         return *objectCount_;
     }
 
-    const int& GetAccessControlListAttributes_Response::references_type_sequence_of::objectCount() const {
+    const int& GetAccessControlListAttributes_Response::References_type_sequence_of::objectCount() const {
         return *objectCount_;
     }
 
-    void GetAccessControlListAttributes_Response::references_type_sequence_of::objectCount(const int& vl) {
+    void GetAccessControlListAttributes_Response::References_type_sequence_of::objectCount(const int& vl) {
         objectCount_ = vl;
     }
 
-    void GetAccessControlListAttributes_Response::references_type_sequence_of::objectCount(boost::shared_ptr< int> vl) {
+    void GetAccessControlListAttributes_Response::References_type_sequence_of::objectCount(boost::shared_ptr< int> vl) {
         objectCount_ = vl;
     }
 
@@ -6151,19 +6151,19 @@ namespace ISO_9506_MMS_1 {
         name_ = vl;
     }
 
-    GetAccessControlListAttributes_Response::accessControlListElements_type& GetAccessControlListAttributes_Response::accessControlListElements() {
+    GetAccessControlListAttributes_Response::AccessControlListElements_type& GetAccessControlListAttributes_Response::accessControlListElements() {
         return *accessControlListElements_;
     }
 
-    const GetAccessControlListAttributes_Response::accessControlListElements_type& GetAccessControlListAttributes_Response::accessControlListElements() const {
+    const GetAccessControlListAttributes_Response::AccessControlListElements_type& GetAccessControlListAttributes_Response::accessControlListElements() const {
         return *accessControlListElements_;
     }
 
-    void GetAccessControlListAttributes_Response::accessControlListElements(const accessControlListElements_type& vl) {
+    void GetAccessControlListAttributes_Response::accessControlListElements(const AccessControlListElements_type& vl) {
         accessControlListElements_ = vl;
     }
 
-    void GetAccessControlListAttributes_Response::accessControlListElements(boost::shared_ptr< accessControlListElements_type> vl) {
+    void GetAccessControlListAttributes_Response::accessControlListElements(boost::shared_ptr< AccessControlListElements_type> vl) {
         accessControlListElements_ = vl;
     }
 
@@ -6183,19 +6183,19 @@ namespace ISO_9506_MMS_1 {
         vMDuse_ = vl;
     }
 
-    GetAccessControlListAttributes_Response::references_type& GetAccessControlListAttributes_Response::references() {
+    GetAccessControlListAttributes_Response::References_type& GetAccessControlListAttributes_Response::references() {
         return *references_;
     }
 
-    const GetAccessControlListAttributes_Response::references_type& GetAccessControlListAttributes_Response::references() const {
+    const GetAccessControlListAttributes_Response::References_type& GetAccessControlListAttributes_Response::references() const {
         return *references_;
     }
 
-    void GetAccessControlListAttributes_Response::references(const references_type& vl) {
+    void GetAccessControlListAttributes_Response::references(const References_type& vl) {
         references_ = vl;
     }
 
-    void GetAccessControlListAttributes_Response::references(boost::shared_ptr< references_type> vl) {
+    void GetAccessControlListAttributes_Response::references(boost::shared_ptr< References_type> vl) {
         references_ = vl;
     }
 
@@ -6285,11 +6285,11 @@ namespace ISO_9506_MMS_1 {
     ReportAccessControlledObjects_Response::ReportAccessControlledObjects_Response() : listOfNames_() {
     };
 
-    ReportAccessControlledObjects_Response::ReportAccessControlledObjects_Response(const listOfNames_type& arg__listOfNames) :
+    ReportAccessControlledObjects_Response::ReportAccessControlledObjects_Response(const ListOfNames_type& arg__listOfNames) :
     listOfNames_(arg__listOfNames) {
     };
 
-    ReportAccessControlledObjects_Response::ReportAccessControlledObjects_Response(boost::shared_ptr< listOfNames_type> arg__listOfNames,
+    ReportAccessControlledObjects_Response::ReportAccessControlledObjects_Response(boost::shared_ptr< ListOfNames_type> arg__listOfNames,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfNames_(arg__listOfNames),
     moreFollows_(arg__moreFollows) {
@@ -6307,19 +6307,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    ReportAccessControlledObjects_Response::listOfNames_type& ReportAccessControlledObjects_Response::listOfNames() {
+    ReportAccessControlledObjects_Response::ListOfNames_type& ReportAccessControlledObjects_Response::listOfNames() {
         return *listOfNames_;
     }
 
-    const ReportAccessControlledObjects_Response::listOfNames_type& ReportAccessControlledObjects_Response::listOfNames() const {
+    const ReportAccessControlledObjects_Response::ListOfNames_type& ReportAccessControlledObjects_Response::listOfNames() const {
         return *listOfNames_;
     }
 
-    void ReportAccessControlledObjects_Response::listOfNames(const listOfNames_type& vl) {
+    void ReportAccessControlledObjects_Response::listOfNames(const ListOfNames_type& vl) {
         listOfNames_ = vl;
     }
 
-    void ReportAccessControlledObjects_Response::listOfNames(boost::shared_ptr< listOfNames_type> vl) {
+    void ReportAccessControlledObjects_Response::listOfNames(boost::shared_ptr< ListOfNames_type> vl) {
         listOfNames_ = vl;
     }
 
@@ -6341,53 +6341,53 @@ namespace ISO_9506_MMS_1 {
     ChangeAccessControl_Request::ChangeAccessControl_Request() : scopeOfChange_(), accessControlListName_() {
     };
 
-    ChangeAccessControl_Request::ChangeAccessControl_Request(const scopeOfChange_type& arg__scopeOfChange,
+    ChangeAccessControl_Request::ChangeAccessControl_Request(const ScopeOfChange_type& arg__scopeOfChange,
             const Identifier& arg__accessControlListName) :
     scopeOfChange_(arg__scopeOfChange),
     accessControlListName_(arg__accessControlListName) {
     };
 
-    ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::listOfObjects_type() : objectClass_(), objectScope_() {
+    ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ListOfObjects_type() : objectClass_(), objectScope_() {
     };
 
-    ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::listOfObjects_type(const ObjectClass& arg__objectClass,
-            const objectScope_type& arg__objectScope) :
+    ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ListOfObjects_type(const ObjectClass& arg__objectClass,
+            const ObjectScope_type& arg__objectScope) :
     objectClass_(arg__objectClass),
     objectScope_(arg__objectScope) {
     };
 
-    void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::aa_specific(const null_type& vl) {
-        set<null_type>(new null_type(vl), objectScope_type_aa_specific);
+    void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type::aa_specific(const null_type& vl) {
+        set<null_type>(new null_type(vl), ObjectScope_type_aa_specific);
     }
 
-    void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::domain(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), objectScope_type_domain);
+    void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), ObjectScope_type_domain);
     }
 
-    void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::vmd(const null_type& vl) {
-        set<null_type>(new null_type(vl), objectScope_type_vmd);
+    void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type::vmd(const null_type& vl) {
+        set<null_type>(new null_type(vl), ObjectScope_type_vmd);
     }
 
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case objectScope_type_specific:
+            case ObjectScope_type_specific:
             {
-                ITU_T_IMPLICIT_TAG(value<specific_type > (false, objectScope_type_specific), 0);
+                ITU_T_IMPLICIT_TAG(value<Specific_type > (false, ObjectScope_type_specific), 0);
                 break;
             }
-            case objectScope_type_aa_specific:
+            case ObjectScope_type_aa_specific:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, objectScope_type_aa_specific), 1);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, ObjectScope_type_aa_specific), 1);
                 break;
             }
-            case objectScope_type_domain:
+            case ObjectScope_type_domain:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, objectScope_type_domain), 2);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, ObjectScope_type_domain), 2);
                 break;
             }
-            case objectScope_type_vmd:
+            case ObjectScope_type_vmd:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, objectScope_type_vmd), 3);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, ObjectScope_type_vmd), 3);
                 break;
             }
             default:
@@ -6396,7 +6396,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -6420,25 +6420,25 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<specific_type > (true, objectScope_type_specific), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Specific_type > (true, ObjectScope_type_specific), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, objectScope_type_aa_specific), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, ObjectScope_type_aa_specific), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, objectScope_type_domain), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, ObjectScope_type_domain), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, objectScope_type_vmd), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, ObjectScope_type_vmd), 3)) return;
                         else free();
                         break;
                     }
@@ -6461,62 +6461,62 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(objectClass_, 0);
         ITU_T_CHOICE_TAG(objectScope_, 1);
     }
 
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_CHOICE_TAG(objectClass_, 0);
         ITU_T_CHOICE_TAG(objectScope_, 1);
     }
 
-    ObjectClass& ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectClass() {
+    ObjectClass& ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::objectClass() {
         return *objectClass_;
     }
 
-    const ObjectClass& ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectClass() const {
+    const ObjectClass& ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::objectClass() const {
         return *objectClass_;
     }
 
-    void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectClass(const ObjectClass& vl) {
+    void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::objectClass(const ObjectClass& vl) {
         objectClass_ = vl;
     }
 
-    void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectClass(boost::shared_ptr< ObjectClass> vl) {
+    void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::objectClass(boost::shared_ptr< ObjectClass> vl) {
         objectClass_ = vl;
     }
 
-    ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type& ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope() {
+    ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type& ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::objectScope() {
         return *objectScope_;
     }
 
-    const ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type& ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope() const {
+    const ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type& ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::objectScope() const {
         return *objectScope_;
     }
 
-    void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope(const objectScope_type& vl) {
+    void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::objectScope(const ObjectScope_type& vl) {
         objectScope_ = vl;
     }
 
-    void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope(boost::shared_ptr< objectScope_type> vl) {
+    void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::objectScope(boost::shared_ptr< ObjectScope_type> vl) {
         objectScope_ = vl;
     }
 
-    void ChangeAccessControl_Request::scopeOfChange_type::vMDOnly(const null_type& vl) {
-        set<null_type>(new null_type(vl), scopeOfChange_type_vMDOnly);
+    void ChangeAccessControl_Request::ScopeOfChange_type::vMDOnly(const null_type& vl) {
+        set<null_type>(new null_type(vl), ScopeOfChange_type_vMDOnly);
     }
 
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case scopeOfChange_type_vMDOnly:
+            case ScopeOfChange_type_vMDOnly:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, scopeOfChange_type_vMDOnly), 0);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, ScopeOfChange_type_vMDOnly), 0);
                 break;
             }
-            case scopeOfChange_type_listOfObjects:
+            case ScopeOfChange_type_listOfObjects:
             {
-                ITU_T_IMPLICIT_TAG(value<listOfObjects_type > (false, scopeOfChange_type_listOfObjects), 1);
+                ITU_T_IMPLICIT_TAG(value<ListOfObjects_type > (false, ScopeOfChange_type_listOfObjects), 1);
                 break;
             }
             default:
@@ -6525,7 +6525,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -6549,13 +6549,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, scopeOfChange_type_vMDOnly), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, ScopeOfChange_type_vMDOnly), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<listOfObjects_type > (true, scopeOfChange_type_listOfObjects), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<ListOfObjects_type > (true, ScopeOfChange_type_listOfObjects), 1)) return;
                         else free();
                         break;
                     }
@@ -6588,19 +6588,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(accessControlListName_, 2);
     }
 
-    ChangeAccessControl_Request::scopeOfChange_type& ChangeAccessControl_Request::scopeOfChange() {
+    ChangeAccessControl_Request::ScopeOfChange_type& ChangeAccessControl_Request::scopeOfChange() {
         return *scopeOfChange_;
     }
 
-    const ChangeAccessControl_Request::scopeOfChange_type& ChangeAccessControl_Request::scopeOfChange() const {
+    const ChangeAccessControl_Request::ScopeOfChange_type& ChangeAccessControl_Request::scopeOfChange() const {
         return *scopeOfChange_;
     }
 
-    void ChangeAccessControl_Request::scopeOfChange(const scopeOfChange_type& vl) {
+    void ChangeAccessControl_Request::scopeOfChange(const ScopeOfChange_type& vl) {
         scopeOfChange_ = vl;
     }
 
-    void ChangeAccessControl_Request::scopeOfChange(boost::shared_ptr< scopeOfChange_type> vl) {
+    void ChangeAccessControl_Request::scopeOfChange(boost::shared_ptr< ScopeOfChange_type> vl) {
         scopeOfChange_ = vl;
     }
 
@@ -6758,45 +6758,45 @@ namespace ISO_9506_MMS_1 {
 
     // choice CS-Status-Response
 
-    CS_Status_Response::fullResponse_type::fullResponse_type() : operationState_(), extendedStatus_(), selectedProgramInvocation_() {
+    CS_Status_Response::FullResponse_type::FullResponse_type() : operationState_(), extendedStatus_(), selectedProgramInvocation_() {
     };
 
-    CS_Status_Response::fullResponse_type::fullResponse_type(const OperationState& arg__operationState,
+    CS_Status_Response::FullResponse_type::FullResponse_type(const OperationState& arg__operationState,
             const ExtendedStatus& arg__extendedStatus,
-            const selectedProgramInvocation_type& arg__selectedProgramInvocation) :
+            const SelectedProgramInvocation_type& arg__selectedProgramInvocation) :
     operationState_(arg__operationState),
     extendedStatus_(arg__extendedStatus),
     selectedProgramInvocation_(arg__selectedProgramInvocation) {
     };
 
-    CS_Status_Response::fullResponse_type::fullResponse_type(boost::shared_ptr< OperationState> arg__operationState,
+    CS_Status_Response::FullResponse_type::FullResponse_type(boost::shared_ptr< OperationState> arg__operationState,
             boost::shared_ptr< ExtendedStatus> arg__extendedStatus,
             boost::shared_ptr< ExtendedStatus> arg__extendedStatusMask,
-            boost::shared_ptr< selectedProgramInvocation_type> arg__selectedProgramInvocation) :
+            boost::shared_ptr< SelectedProgramInvocation_type> arg__selectedProgramInvocation) :
     operationState_(arg__operationState),
     extendedStatus_(arg__extendedStatus),
     extendedStatusMask_(arg__extendedStatusMask),
     selectedProgramInvocation_(arg__selectedProgramInvocation) {
     };
 
-    void CS_Status_Response::fullResponse_type::selectedProgramInvocation_type::programInvocation(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), selectedProgramInvocation_type_programInvocation);
+    void CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type::programInvocation(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), SelectedProgramInvocation_type_programInvocation);
     }
 
-    void CS_Status_Response::fullResponse_type::selectedProgramInvocation_type::noneSelected(const null_type& vl) {
-        set<null_type>(new null_type(vl), selectedProgramInvocation_type_noneSelected);
+    void CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type::noneSelected(const null_type& vl) {
+        set<null_type>(new null_type(vl), SelectedProgramInvocation_type_noneSelected);
     }
 
-    template<> void CS_Status_Response::fullResponse_type::selectedProgramInvocation_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case selectedProgramInvocation_type_programInvocation:
+            case SelectedProgramInvocation_type_programInvocation:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, selectedProgramInvocation_type_programInvocation), 3);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, SelectedProgramInvocation_type_programInvocation), 3);
                 break;
             }
-            case selectedProgramInvocation_type_noneSelected:
+            case SelectedProgramInvocation_type_noneSelected:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, selectedProgramInvocation_type_noneSelected), 4);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, SelectedProgramInvocation_type_noneSelected), 4);
                 break;
             }
             default:
@@ -6805,7 +6805,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_Status_Response::fullResponse_type::selectedProgramInvocation_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -6829,13 +6829,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, selectedProgramInvocation_type_programInvocation), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, SelectedProgramInvocation_type_programInvocation), 3)) return;
                         else free();
                         break;
                     }
                     case 4:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, selectedProgramInvocation_type_noneSelected), 4)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, SelectedProgramInvocation_type_noneSelected), 4)) return;
                         else free();
                         break;
                     }
@@ -6859,79 +6859,79 @@ namespace ISO_9506_MMS_1 {
     }
 
 
-    const ExtendedStatus CS_Status_Response::fullResponse_type::extendedStatusMask__default = ExtendedStatus(boost::asn1::bitstring_type(static_cast<uint8_t> (15), 4));
+    const ExtendedStatus CS_Status_Response::FullResponse_type::extendedStatusMask__default = ExtendedStatus(boost::asn1::bitstring_type(static_cast<uint8_t> (15), 4));
 
-    template<> void CS_Status_Response::fullResponse_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_Status_Response::FullResponse_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(operationState_, 0);
         ITU_T_IMPLICIT_TAG(extendedStatus_, 1);
         ITU_T_IMPLICIT_TAG(extendedStatusMask_, 2);
         ITU_T_BIND_CHOICE(selectedProgramInvocation_);
     }
 
-    template<> void CS_Status_Response::fullResponse_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_Status_Response::FullResponse_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(operationState_, 0);
         ITU_T_IMPLICIT_TAG(extendedStatus_, 1);
         ITU_T_IMPLICIT_TAG(extendedStatusMask_, 2);
         ITU_T_BIND_CHOICE(selectedProgramInvocation_);
     }
 
-    OperationState& CS_Status_Response::fullResponse_type::operationState() {
+    OperationState& CS_Status_Response::FullResponse_type::operationState() {
         return *operationState_;
     }
 
-    const OperationState& CS_Status_Response::fullResponse_type::operationState() const {
+    const OperationState& CS_Status_Response::FullResponse_type::operationState() const {
         return *operationState_;
     }
 
-    void CS_Status_Response::fullResponse_type::operationState(const OperationState& vl) {
+    void CS_Status_Response::FullResponse_type::operationState(const OperationState& vl) {
         operationState_ = vl;
     }
 
-    void CS_Status_Response::fullResponse_type::operationState(boost::shared_ptr< OperationState> vl) {
+    void CS_Status_Response::FullResponse_type::operationState(boost::shared_ptr< OperationState> vl) {
         operationState_ = vl;
     }
 
-    ExtendedStatus& CS_Status_Response::fullResponse_type::extendedStatus() {
+    ExtendedStatus& CS_Status_Response::FullResponse_type::extendedStatus() {
         return *extendedStatus_;
     }
 
-    const ExtendedStatus& CS_Status_Response::fullResponse_type::extendedStatus() const {
+    const ExtendedStatus& CS_Status_Response::FullResponse_type::extendedStatus() const {
         return *extendedStatus_;
     }
 
-    void CS_Status_Response::fullResponse_type::extendedStatus(const ExtendedStatus& vl) {
+    void CS_Status_Response::FullResponse_type::extendedStatus(const ExtendedStatus& vl) {
         extendedStatus_ = vl;
     }
 
-    void CS_Status_Response::fullResponse_type::extendedStatus(boost::shared_ptr< ExtendedStatus> vl) {
+    void CS_Status_Response::FullResponse_type::extendedStatus(boost::shared_ptr< ExtendedStatus> vl) {
         extendedStatus_ = vl;
     }
 
-    const ExtendedStatus& CS_Status_Response::fullResponse_type::extendedStatusMask() const {
+    const ExtendedStatus& CS_Status_Response::FullResponse_type::extendedStatusMask() const {
         return *extendedStatusMask_;
     }
 
-    void CS_Status_Response::fullResponse_type::extendedStatusMask(const ExtendedStatus& vl) {
+    void CS_Status_Response::FullResponse_type::extendedStatusMask(const ExtendedStatus& vl) {
         extendedStatusMask_ = vl;
     }
 
-    void CS_Status_Response::fullResponse_type::extendedStatusMask(boost::shared_ptr< ExtendedStatus> vl) {
+    void CS_Status_Response::FullResponse_type::extendedStatusMask(boost::shared_ptr< ExtendedStatus> vl) {
         extendedStatusMask_ = vl;
     }
 
-    CS_Status_Response::fullResponse_type::selectedProgramInvocation_type& CS_Status_Response::fullResponse_type::selectedProgramInvocation() {
+    CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type& CS_Status_Response::FullResponse_type::selectedProgramInvocation() {
         return *selectedProgramInvocation_;
     }
 
-    const CS_Status_Response::fullResponse_type::selectedProgramInvocation_type& CS_Status_Response::fullResponse_type::selectedProgramInvocation() const {
+    const CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type& CS_Status_Response::FullResponse_type::selectedProgramInvocation() const {
         return *selectedProgramInvocation_;
     }
 
-    void CS_Status_Response::fullResponse_type::selectedProgramInvocation(const selectedProgramInvocation_type& vl) {
+    void CS_Status_Response::FullResponse_type::selectedProgramInvocation(const SelectedProgramInvocation_type& vl) {
         selectedProgramInvocation_ = vl;
     }
 
-    void CS_Status_Response::fullResponse_type::selectedProgramInvocation(boost::shared_ptr< selectedProgramInvocation_type> vl) {
+    void CS_Status_Response::FullResponse_type::selectedProgramInvocation(boost::shared_ptr< SelectedProgramInvocation_type> vl) {
         selectedProgramInvocation_ = vl;
     }
 
@@ -6943,7 +6943,7 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case CS_Status_Response_fullResponse:
             {
-                ITU_T_BIND_TAG(value<fullResponse_type > (false, CS_Status_Response_fullResponse));
+                ITU_T_BIND_TAG(value<FullResponse_type > (false, CS_Status_Response_fullResponse));
                 break;
             }
             case CS_Status_Response_noExtraResponse:
@@ -6994,7 +6994,7 @@ namespace ISO_9506_MMS_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<fullResponse_type > (true, CS_Status_Response_fullResponse))) return;
+                if (ITU_T_BIND_TAG(value<FullResponse_type > (true, CS_Status_Response_fullResponse))) return;
                 else free();
                 if (ITU_T_BIND_TAG(value<null_type > (true, CS_Status_Response_noExtraResponse))) return;
                 else free();
@@ -7003,17 +7003,17 @@ namespace ISO_9506_MMS_1 {
     }
 
 
-    const OperationState OperationState_idle = 0;
-    const OperationState OperationState_loaded = 1;
-    const OperationState OperationState_ready = 2;
-    const OperationState OperationState_executing = 3;
-    const OperationState OperationState_motion_paused = 4;
-    const OperationState OperationState_manualInterventionRequired = 5;
+    const OperationState operationState_idle = 0;
+    const OperationState operationState_loaded = 1;
+    const OperationState operationState_ready = 2;
+    const OperationState operationState_executing = 3;
+    const OperationState operationState_motion_paused = 4;
+    const OperationState operationState_manualInterventionRequired = 5;
 
-    const ExtendedStatus ExtendedStatus_safetyInterlocksViolated = bitstring_type(true, 0);
-    const ExtendedStatus ExtendedStatus_anyPhysicalResourcePowerOn = bitstring_type(true, 1);
-    const ExtendedStatus ExtendedStatus_allPhysicalResourcesCalibrated = bitstring_type(true, 2);
-    const ExtendedStatus ExtendedStatus_localControl = bitstring_type(true, 3);
+    const ExtendedStatus extendedStatus_safetyInterlocksViolated = bitstring_type(true, 0);
+    const ExtendedStatus extendedStatus_anyPhysicalResourcePowerOn = bitstring_type(true, 1);
+    const ExtendedStatus extendedStatus_allPhysicalResourcesCalibrated = bitstring_type(true, 2);
+    const ExtendedStatus extendedStatus_localControl = bitstring_type(true, 3);
 
     // sequence GetNameList-Request
 
@@ -7021,46 +7021,46 @@ namespace ISO_9506_MMS_1 {
     };
 
     GetNameList_Request::GetNameList_Request(const ObjectClass& arg__objectClass,
-            const objectScope_type& arg__objectScope) :
+            const ObjectScope_type& arg__objectScope) :
     objectClass_(arg__objectClass),
     objectScope_(arg__objectScope) {
     };
 
     GetNameList_Request::GetNameList_Request(boost::shared_ptr< ObjectClass> arg__objectClass,
-            boost::shared_ptr< objectScope_type> arg__objectScope,
+            boost::shared_ptr< ObjectScope_type> arg__objectScope,
             boost::shared_ptr< Identifier> arg__continueAfter) :
     objectClass_(arg__objectClass),
     objectScope_(arg__objectScope),
     continueAfter_(arg__continueAfter) {
     };
 
-    void GetNameList_Request::objectScope_type::vmdSpecific(const null_type& vl) {
-        set<null_type>(new null_type(vl), objectScope_type_vmdSpecific);
+    void GetNameList_Request::ObjectScope_type::vmdSpecific(const null_type& vl) {
+        set<null_type>(new null_type(vl), ObjectScope_type_vmdSpecific);
     }
 
-    void GetNameList_Request::objectScope_type::domainSpecific(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), objectScope_type_domainSpecific);
+    void GetNameList_Request::ObjectScope_type::domainSpecific(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), ObjectScope_type_domainSpecific);
     }
 
-    void GetNameList_Request::objectScope_type::aaSpecific(const null_type& vl) {
-        set<null_type>(new null_type(vl), objectScope_type_aaSpecific);
+    void GetNameList_Request::ObjectScope_type::aaSpecific(const null_type& vl) {
+        set<null_type>(new null_type(vl), ObjectScope_type_aaSpecific);
     }
 
-    template<> void GetNameList_Request::objectScope_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void GetNameList_Request::ObjectScope_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case objectScope_type_vmdSpecific:
+            case ObjectScope_type_vmdSpecific:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, objectScope_type_vmdSpecific), 0);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, ObjectScope_type_vmdSpecific), 0);
                 break;
             }
-            case objectScope_type_domainSpecific:
+            case ObjectScope_type_domainSpecific:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, objectScope_type_domainSpecific), 1);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, ObjectScope_type_domainSpecific), 1);
                 break;
             }
-            case objectScope_type_aaSpecific:
+            case ObjectScope_type_aaSpecific:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, objectScope_type_aaSpecific), 2);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, ObjectScope_type_aaSpecific), 2);
                 break;
             }
             default:
@@ -7069,7 +7069,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void GetNameList_Request::objectScope_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void GetNameList_Request::ObjectScope_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -7093,19 +7093,19 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, objectScope_type_vmdSpecific), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, ObjectScope_type_vmdSpecific), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, objectScope_type_domainSpecific), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, ObjectScope_type_domainSpecific), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, objectScope_type_aaSpecific), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, ObjectScope_type_aaSpecific), 2)) return;
                         else free();
                         break;
                     }
@@ -7156,19 +7156,19 @@ namespace ISO_9506_MMS_1 {
         objectClass_ = vl;
     }
 
-    GetNameList_Request::objectScope_type& GetNameList_Request::objectScope() {
+    GetNameList_Request::ObjectScope_type& GetNameList_Request::objectScope() {
         return *objectScope_;
     }
 
-    const GetNameList_Request::objectScope_type& GetNameList_Request::objectScope() const {
+    const GetNameList_Request::ObjectScope_type& GetNameList_Request::objectScope() const {
         return *objectScope_;
     }
 
-    void GetNameList_Request::objectScope(const objectScope_type& vl) {
+    void GetNameList_Request::objectScope(const ObjectScope_type& vl) {
         objectScope_ = vl;
     }
 
-    void GetNameList_Request::objectScope(boost::shared_ptr< objectScope_type> vl) {
+    void GetNameList_Request::objectScope(boost::shared_ptr< ObjectScope_type> vl) {
         objectScope_ = vl;
     }
 
@@ -7186,11 +7186,11 @@ namespace ISO_9506_MMS_1 {
     GetNameList_Response::GetNameList_Response() : listOfIdentifier_() {
     };
 
-    GetNameList_Response::GetNameList_Response(const listOfIdentifier_type& arg__listOfIdentifier) :
+    GetNameList_Response::GetNameList_Response(const ListOfIdentifier_type& arg__listOfIdentifier) :
     listOfIdentifier_(arg__listOfIdentifier) {
     };
 
-    GetNameList_Response::GetNameList_Response(boost::shared_ptr< listOfIdentifier_type> arg__listOfIdentifier,
+    GetNameList_Response::GetNameList_Response(boost::shared_ptr< ListOfIdentifier_type> arg__listOfIdentifier,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfIdentifier_(arg__listOfIdentifier),
     moreFollows_(arg__moreFollows) {
@@ -7208,19 +7208,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    GetNameList_Response::listOfIdentifier_type& GetNameList_Response::listOfIdentifier() {
+    GetNameList_Response::ListOfIdentifier_type& GetNameList_Response::listOfIdentifier() {
         return *listOfIdentifier_;
     }
 
-    const GetNameList_Response::listOfIdentifier_type& GetNameList_Response::listOfIdentifier() const {
+    const GetNameList_Response::ListOfIdentifier_type& GetNameList_Response::listOfIdentifier() const {
         return *listOfIdentifier_;
     }
 
-    void GetNameList_Response::listOfIdentifier(const listOfIdentifier_type& vl) {
+    void GetNameList_Response::listOfIdentifier(const ListOfIdentifier_type& vl) {
         listOfIdentifier_ = vl;
     }
 
-    void GetNameList_Response::listOfIdentifier(boost::shared_ptr< listOfIdentifier_type> vl) {
+    void GetNameList_Response::listOfIdentifier(boost::shared_ptr< ListOfIdentifier_type> vl) {
         listOfIdentifier_ = vl;
     }
 
@@ -7253,7 +7253,7 @@ namespace ISO_9506_MMS_1 {
     Identify_Response::Identify_Response(boost::shared_ptr< MMSString> arg__vendorName,
             boost::shared_ptr< MMSString> arg__modelName,
             boost::shared_ptr< MMSString> arg__revision,
-            boost::shared_ptr< listOfAbstractSyntaxes_type> arg__listOfAbstractSyntaxes) :
+            boost::shared_ptr< ListOfAbstractSyntaxes_type> arg__listOfAbstractSyntaxes) :
     vendorName_(arg__vendorName),
     modelName_(arg__modelName),
     revision_(arg__revision),
@@ -7322,12 +7322,12 @@ namespace ISO_9506_MMS_1 {
         revision_ = vl;
     }
 
-    boost::shared_ptr<Identify_Response::listOfAbstractSyntaxes_type> Identify_Response::listOfAbstractSyntaxes__new() {
-        return listOfAbstractSyntaxes_ = boost::shared_ptr<listOfAbstractSyntaxes_type>(new listOfAbstractSyntaxes_type());
+    boost::shared_ptr<Identify_Response::ListOfAbstractSyntaxes_type> Identify_Response::listOfAbstractSyntaxes__new() {
+        return listOfAbstractSyntaxes_ = boost::shared_ptr<ListOfAbstractSyntaxes_type>(new ListOfAbstractSyntaxes_type());
     }
 
-    void Identify_Response::listOfAbstractSyntaxes(const listOfAbstractSyntaxes_type& vl) {
-        listOfAbstractSyntaxes_ = boost::shared_ptr<listOfAbstractSyntaxes_type>(new listOfAbstractSyntaxes_type(vl));
+    void Identify_Response::listOfAbstractSyntaxes(const ListOfAbstractSyntaxes_type& vl) {
+        listOfAbstractSyntaxes_ = boost::shared_ptr<ListOfAbstractSyntaxes_type>(new ListOfAbstractSyntaxes_type(vl));
     }
 
 
@@ -7436,11 +7436,11 @@ namespace ISO_9506_MMS_1 {
     GetCapabilityList_Response::GetCapabilityList_Response() : listOfCapabilities_() {
     };
 
-    GetCapabilityList_Response::GetCapabilityList_Response(const listOfCapabilities_type& arg__listOfCapabilities) :
+    GetCapabilityList_Response::GetCapabilityList_Response(const ListOfCapabilities_type& arg__listOfCapabilities) :
     listOfCapabilities_(arg__listOfCapabilities) {
     };
 
-    GetCapabilityList_Response::GetCapabilityList_Response(boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+    GetCapabilityList_Response::GetCapabilityList_Response(boost::shared_ptr< ListOfCapabilities_type> arg__listOfCapabilities,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfCapabilities_(arg__listOfCapabilities),
     moreFollows_(arg__moreFollows) {
@@ -7458,19 +7458,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    GetCapabilityList_Response::listOfCapabilities_type& GetCapabilityList_Response::listOfCapabilities() {
+    GetCapabilityList_Response::ListOfCapabilities_type& GetCapabilityList_Response::listOfCapabilities() {
         return *listOfCapabilities_;
     }
 
-    const GetCapabilityList_Response::listOfCapabilities_type& GetCapabilityList_Response::listOfCapabilities() const {
+    const GetCapabilityList_Response::ListOfCapabilities_type& GetCapabilityList_Response::listOfCapabilities() const {
         return *listOfCapabilities_;
     }
 
-    void GetCapabilityList_Response::listOfCapabilities(const listOfCapabilities_type& vl) {
+    void GetCapabilityList_Response::listOfCapabilities(const ListOfCapabilities_type& vl) {
         listOfCapabilities_ = vl;
     }
 
-    void GetCapabilityList_Response::listOfCapabilities(boost::shared_ptr< listOfCapabilities_type> vl) {
+    void GetCapabilityList_Response::listOfCapabilities(boost::shared_ptr< ListOfCapabilities_type> vl) {
         listOfCapabilities_ = vl;
     }
 
@@ -7493,7 +7493,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     InitiateDownloadSequence_Request::InitiateDownloadSequence_Request(const Identifier& arg__domainName,
-            const listOfCapabilities_type& arg__listOfCapabilities,
+            const ListOfCapabilities_type& arg__listOfCapabilities,
             const bool& arg__sharable) :
     domainName_(arg__domainName),
     listOfCapabilities_(arg__listOfCapabilities),
@@ -7528,19 +7528,19 @@ namespace ISO_9506_MMS_1 {
         domainName_ = vl;
     }
 
-    InitiateDownloadSequence_Request::listOfCapabilities_type& InitiateDownloadSequence_Request::listOfCapabilities() {
+    InitiateDownloadSequence_Request::ListOfCapabilities_type& InitiateDownloadSequence_Request::listOfCapabilities() {
         return *listOfCapabilities_;
     }
 
-    const InitiateDownloadSequence_Request::listOfCapabilities_type& InitiateDownloadSequence_Request::listOfCapabilities() const {
+    const InitiateDownloadSequence_Request::ListOfCapabilities_type& InitiateDownloadSequence_Request::listOfCapabilities() const {
         return *listOfCapabilities_;
     }
 
-    void InitiateDownloadSequence_Request::listOfCapabilities(const listOfCapabilities_type& vl) {
+    void InitiateDownloadSequence_Request::listOfCapabilities(const ListOfCapabilities_type& vl) {
         listOfCapabilities_ = vl;
     }
 
-    void InitiateDownloadSequence_Request::listOfCapabilities(boost::shared_ptr< listOfCapabilities_type> vl) {
+    void InitiateDownloadSequence_Request::listOfCapabilities(boost::shared_ptr< ListOfCapabilities_type> vl) {
         listOfCapabilities_ = vl;
     }
 
@@ -7762,7 +7762,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     InitiateUploadSequence_Response::InitiateUploadSequence_Response(const Integer32& arg__ulsmID,
-            const listOfCapabilities_type& arg__listOfCapabilities) :
+            const ListOfCapabilities_type& arg__listOfCapabilities) :
     ulsmID_(arg__ulsmID),
     listOfCapabilities_(arg__listOfCapabilities) {
     };
@@ -7793,19 +7793,19 @@ namespace ISO_9506_MMS_1 {
         ulsmID_ = vl;
     }
 
-    InitiateUploadSequence_Response::listOfCapabilities_type& InitiateUploadSequence_Response::listOfCapabilities() {
+    InitiateUploadSequence_Response::ListOfCapabilities_type& InitiateUploadSequence_Response::listOfCapabilities() {
         return *listOfCapabilities_;
     }
 
-    const InitiateUploadSequence_Response::listOfCapabilities_type& InitiateUploadSequence_Response::listOfCapabilities() const {
+    const InitiateUploadSequence_Response::ListOfCapabilities_type& InitiateUploadSequence_Response::listOfCapabilities() const {
         return *listOfCapabilities_;
     }
 
-    void InitiateUploadSequence_Response::listOfCapabilities(const listOfCapabilities_type& vl) {
+    void InitiateUploadSequence_Response::listOfCapabilities(const ListOfCapabilities_type& vl) {
         listOfCapabilities_ = vl;
     }
 
-    void InitiateUploadSequence_Response::listOfCapabilities(boost::shared_ptr< listOfCapabilities_type> vl) {
+    void InitiateUploadSequence_Response::listOfCapabilities(boost::shared_ptr< ListOfCapabilities_type> vl) {
         listOfCapabilities_ = vl;
     }
 
@@ -7880,7 +7880,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     RequestDomainDownload_Request::RequestDomainDownload_Request(boost::shared_ptr< Identifier> arg__domainName,
-            boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+            boost::shared_ptr< ListOfCapabilities_type> arg__listOfCapabilities,
             boost::shared_ptr< bool> arg__sharable,
             boost::shared_ptr< FileName> arg__fileName) :
     domainName_(arg__domainName),
@@ -7919,12 +7919,12 @@ namespace ISO_9506_MMS_1 {
         domainName_ = vl;
     }
 
-    boost::shared_ptr<RequestDomainDownload_Request::listOfCapabilities_type> RequestDomainDownload_Request::listOfCapabilities__new() {
-        return listOfCapabilities_ = boost::shared_ptr<listOfCapabilities_type>(new listOfCapabilities_type());
+    boost::shared_ptr<RequestDomainDownload_Request::ListOfCapabilities_type> RequestDomainDownload_Request::listOfCapabilities__new() {
+        return listOfCapabilities_ = boost::shared_ptr<ListOfCapabilities_type>(new ListOfCapabilities_type());
     }
 
-    void RequestDomainDownload_Request::listOfCapabilities(const listOfCapabilities_type& vl) {
-        listOfCapabilities_ = boost::shared_ptr<listOfCapabilities_type>(new listOfCapabilities_type(vl));
+    void RequestDomainDownload_Request::listOfCapabilities(const ListOfCapabilities_type& vl) {
+        listOfCapabilities_ = boost::shared_ptr<ListOfCapabilities_type>(new ListOfCapabilities_type(vl));
     }
 
     bool& RequestDomainDownload_Request::sharable() {
@@ -8028,7 +8028,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     LoadDomainContent_Request::LoadDomainContent_Request(boost::shared_ptr< Identifier> arg__domainName,
-            boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+            boost::shared_ptr< ListOfCapabilities_type> arg__listOfCapabilities,
             boost::shared_ptr< bool> arg__sharable,
             boost::shared_ptr< FileName> arg__fileName,
             boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__thirdParty) :
@@ -8071,12 +8071,12 @@ namespace ISO_9506_MMS_1 {
         domainName_ = vl;
     }
 
-    boost::shared_ptr<LoadDomainContent_Request::listOfCapabilities_type> LoadDomainContent_Request::listOfCapabilities__new() {
-        return listOfCapabilities_ = boost::shared_ptr<listOfCapabilities_type>(new listOfCapabilities_type());
+    boost::shared_ptr<LoadDomainContent_Request::ListOfCapabilities_type> LoadDomainContent_Request::listOfCapabilities__new() {
+        return listOfCapabilities_ = boost::shared_ptr<ListOfCapabilities_type>(new ListOfCapabilities_type());
     }
 
-    void LoadDomainContent_Request::listOfCapabilities(const listOfCapabilities_type& vl) {
-        listOfCapabilities_ = boost::shared_ptr<listOfCapabilities_type>(new listOfCapabilities_type(vl));
+    void LoadDomainContent_Request::listOfCapabilities(const ListOfCapabilities_type& vl) {
+        listOfCapabilities_ = boost::shared_ptr<ListOfCapabilities_type>(new ListOfCapabilities_type(vl));
     }
 
     bool& LoadDomainContent_Request::sharable() {
@@ -8197,11 +8197,11 @@ namespace ISO_9506_MMS_1 {
     GetDomainAttributes_Response::GetDomainAttributes_Response() : listOfCapabilities_(), state_(), mmsDeletable_(), sharable_(), listOfProgramInvocations_(), uploadInProgress_() {
     };
 
-    GetDomainAttributes_Response::GetDomainAttributes_Response(const listOfCapabilities_type& arg__listOfCapabilities,
+    GetDomainAttributes_Response::GetDomainAttributes_Response(const ListOfCapabilities_type& arg__listOfCapabilities,
             const MMS_Object_Module_1::DomainState& arg__state,
             const bool& arg__mmsDeletable,
             const bool& arg__sharable,
-            const listOfProgramInvocations_type& arg__listOfProgramInvocations,
+            const ListOfProgramInvocations_type& arg__listOfProgramInvocations,
             const Integer8& arg__uploadInProgress) :
     listOfCapabilities_(arg__listOfCapabilities),
     state_(arg__state),
@@ -8211,11 +8211,11 @@ namespace ISO_9506_MMS_1 {
     uploadInProgress_(arg__uploadInProgress) {
     };
 
-    GetDomainAttributes_Response::GetDomainAttributes_Response(boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+    GetDomainAttributes_Response::GetDomainAttributes_Response(boost::shared_ptr< ListOfCapabilities_type> arg__listOfCapabilities,
             boost::shared_ptr< MMS_Object_Module_1::DomainState> arg__state,
             boost::shared_ptr< bool> arg__mmsDeletable,
             boost::shared_ptr< bool> arg__sharable,
-            boost::shared_ptr< listOfProgramInvocations_type> arg__listOfProgramInvocations,
+            boost::shared_ptr< ListOfProgramInvocations_type> arg__listOfProgramInvocations,
             boost::shared_ptr< Integer8> arg__uploadInProgress,
             boost::shared_ptr< Identifier> arg__accessControlList) :
     listOfCapabilities_(arg__listOfCapabilities),
@@ -8247,19 +8247,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(accessControlList_, 6);
     }
 
-    GetDomainAttributes_Response::listOfCapabilities_type& GetDomainAttributes_Response::listOfCapabilities() {
+    GetDomainAttributes_Response::ListOfCapabilities_type& GetDomainAttributes_Response::listOfCapabilities() {
         return *listOfCapabilities_;
     }
 
-    const GetDomainAttributes_Response::listOfCapabilities_type& GetDomainAttributes_Response::listOfCapabilities() const {
+    const GetDomainAttributes_Response::ListOfCapabilities_type& GetDomainAttributes_Response::listOfCapabilities() const {
         return *listOfCapabilities_;
     }
 
-    void GetDomainAttributes_Response::listOfCapabilities(const listOfCapabilities_type& vl) {
+    void GetDomainAttributes_Response::listOfCapabilities(const ListOfCapabilities_type& vl) {
         listOfCapabilities_ = vl;
     }
 
-    void GetDomainAttributes_Response::listOfCapabilities(boost::shared_ptr< listOfCapabilities_type> vl) {
+    void GetDomainAttributes_Response::listOfCapabilities(boost::shared_ptr< ListOfCapabilities_type> vl) {
         listOfCapabilities_ = vl;
     }
 
@@ -8311,19 +8311,19 @@ namespace ISO_9506_MMS_1 {
         sharable_ = vl;
     }
 
-    GetDomainAttributes_Response::listOfProgramInvocations_type& GetDomainAttributes_Response::listOfProgramInvocations() {
+    GetDomainAttributes_Response::ListOfProgramInvocations_type& GetDomainAttributes_Response::listOfProgramInvocations() {
         return *listOfProgramInvocations_;
     }
 
-    const GetDomainAttributes_Response::listOfProgramInvocations_type& GetDomainAttributes_Response::listOfProgramInvocations() const {
+    const GetDomainAttributes_Response::ListOfProgramInvocations_type& GetDomainAttributes_Response::listOfProgramInvocations() const {
         return *listOfProgramInvocations_;
     }
 
-    void GetDomainAttributes_Response::listOfProgramInvocations(const listOfProgramInvocations_type& vl) {
+    void GetDomainAttributes_Response::listOfProgramInvocations(const ListOfProgramInvocations_type& vl) {
         listOfProgramInvocations_ = vl;
     }
 
-    void GetDomainAttributes_Response::listOfProgramInvocations(boost::shared_ptr< listOfProgramInvocations_type> vl) {
+    void GetDomainAttributes_Response::listOfProgramInvocations(boost::shared_ptr< ListOfProgramInvocations_type> vl) {
         listOfProgramInvocations_ = vl;
     }
 
@@ -8358,13 +8358,13 @@ namespace ISO_9506_MMS_1 {
     };
 
     CreateProgramInvocation_Request::CreateProgramInvocation_Request(const Identifier& arg__programInvocationName,
-            const listOfDomainNames_type& arg__listOfDomainNames) :
+            const ListOfDomainNames_type& arg__listOfDomainNames) :
     programInvocationName_(arg__programInvocationName),
     listOfDomainNames_(arg__listOfDomainNames) {
     };
 
     CreateProgramInvocation_Request::CreateProgramInvocation_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
-            boost::shared_ptr< listOfDomainNames_type> arg__listOfDomainNames,
+            boost::shared_ptr< ListOfDomainNames_type> arg__listOfDomainNames,
             boost::shared_ptr< bool> arg__reusable,
             boost::shared_ptr< bool> arg__monitorType) :
     programInvocationName_(arg__programInvocationName),
@@ -8405,19 +8405,19 @@ namespace ISO_9506_MMS_1 {
         programInvocationName_ = vl;
     }
 
-    CreateProgramInvocation_Request::listOfDomainNames_type& CreateProgramInvocation_Request::listOfDomainNames() {
+    CreateProgramInvocation_Request::ListOfDomainNames_type& CreateProgramInvocation_Request::listOfDomainNames() {
         return *listOfDomainNames_;
     }
 
-    const CreateProgramInvocation_Request::listOfDomainNames_type& CreateProgramInvocation_Request::listOfDomainNames() const {
+    const CreateProgramInvocation_Request::ListOfDomainNames_type& CreateProgramInvocation_Request::listOfDomainNames() const {
         return *listOfDomainNames_;
     }
 
-    void CreateProgramInvocation_Request::listOfDomainNames(const listOfDomainNames_type& vl) {
+    void CreateProgramInvocation_Request::listOfDomainNames(const ListOfDomainNames_type& vl) {
         listOfDomainNames_ = vl;
     }
 
-    void CreateProgramInvocation_Request::listOfDomainNames(boost::shared_ptr< listOfDomainNames_type> vl) {
+    void CreateProgramInvocation_Request::listOfDomainNames(boost::shared_ptr< ListOfDomainNames_type> vl) {
         listOfDomainNames_ = vl;
     }
 
@@ -8442,9 +8442,9 @@ namespace ISO_9506_MMS_1 {
     }
 
 
-    const CS_CreateProgramInvocation_Request CS_CreateProgramInvocation_Request_normal = 0;
-    const CS_CreateProgramInvocation_Request CS_CreateProgramInvocation_Request_controlling = 1;
-    const CS_CreateProgramInvocation_Request CS_CreateProgramInvocation_Request_controlled = 2;
+    const CS_CreateProgramInvocation_Request cS_CreateProgramInvocation_Request_normal = 0;
+    const CS_CreateProgramInvocation_Request cS_CreateProgramInvocation_Request_controlling = 1;
+    const CS_CreateProgramInvocation_Request cS_CreateProgramInvocation_Request_controlled = 2;
 
     // sequence Start-Request
 
@@ -8456,38 +8456,38 @@ namespace ISO_9506_MMS_1 {
     };
 
     Start_Request::Start_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
-            boost::shared_ptr< executionArgument_type> arg__executionArgument) :
+            boost::shared_ptr< ExecutionArgument_type> arg__executionArgument) :
     programInvocationName_(arg__programInvocationName),
     executionArgument_(arg__executionArgument) {
     };
 
-    void Start_Request::executionArgument_type::simpleString(const MMSString& vl) {
-        set<MMSString>(new MMSString(vl), executionArgument_type_simpleString);
+    void Start_Request::ExecutionArgument_type::simpleString(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), ExecutionArgument_type_simpleString);
     }
 
-    void Start_Request::executionArgument_type::encodedString(const external_type& vl) {
-        set<external_type>(new external_type(vl), executionArgument_type_encodedString);
+    void Start_Request::ExecutionArgument_type::encodedString(const external_type& vl) {
+        set<external_type>(new external_type(vl), ExecutionArgument_type_encodedString);
     }
 
-    void Start_Request::executionArgument_type::embeddedString(const embeded_type& vl) {
-        set<embeded_type>(new embeded_type(vl), executionArgument_type_embeddedString);
+    void Start_Request::ExecutionArgument_type::embeddedString(const embeded_type& vl) {
+        set<embeded_type>(new embeded_type(vl), ExecutionArgument_type_embeddedString);
     }
 
-    template<> void Start_Request::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void Start_Request::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case executionArgument_type_simpleString:
+            case ExecutionArgument_type_simpleString:
             {
-                ITU_T_IMPLICIT_TAG(value<MMSString > (false, executionArgument_type_simpleString), 1);
+                ITU_T_IMPLICIT_TAG(value<MMSString > (false, ExecutionArgument_type_simpleString), 1);
                 break;
             }
-            case executionArgument_type_encodedString:
+            case ExecutionArgument_type_encodedString:
             {
-                ITU_T_BIND_TAG(value<external_type > (false, executionArgument_type_encodedString));
+                ITU_T_BIND_TAG(value<external_type > (false, ExecutionArgument_type_encodedString));
                 break;
             }
-            case executionArgument_type_embeddedString:
+            case ExecutionArgument_type_embeddedString:
             {
-                ITU_T_BIND_TAG(value<embeded_type > (false, executionArgument_type_embeddedString));
+                ITU_T_BIND_TAG(value<embeded_type > (false, ExecutionArgument_type_embeddedString));
                 break;
             }
             default:
@@ -8496,7 +8496,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void Start_Request::executionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void Start_Request::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -8520,7 +8520,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<MMSString > (true, executionArgument_type_simpleString), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<MMSString > (true, ExecutionArgument_type_simpleString), 1)) return;
                         else free();
                         break;
                     }
@@ -8539,9 +8539,9 @@ namespace ISO_9506_MMS_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<external_type > (true, executionArgument_type_encodedString))) return;
+                if (ITU_T_BIND_TAG(value<external_type > (true, ExecutionArgument_type_encodedString))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<embeded_type > (true, executionArgument_type_embeddedString))) return;
+                if (ITU_T_BIND_TAG(value<embeded_type > (true, ExecutionArgument_type_embeddedString))) return;
                 else free();
             }
         }
@@ -8573,49 +8573,49 @@ namespace ISO_9506_MMS_1 {
         programInvocationName_ = vl;
     }
 
-    boost::shared_ptr<Start_Request::executionArgument_type> Start_Request::executionArgument__new() {
-        return executionArgument_ = boost::shared_ptr<executionArgument_type>(new executionArgument_type());
+    boost::shared_ptr<Start_Request::ExecutionArgument_type> Start_Request::executionArgument__new() {
+        return executionArgument_ = boost::shared_ptr<ExecutionArgument_type>(new ExecutionArgument_type());
     }
 
-    void Start_Request::executionArgument(const executionArgument_type& vl) {
-        executionArgument_ = boost::shared_ptr<executionArgument_type>(new executionArgument_type(vl));
+    void Start_Request::executionArgument(const ExecutionArgument_type& vl) {
+        executionArgument_ = boost::shared_ptr<ExecutionArgument_type>(new ExecutionArgument_type(vl));
     }
 
 
     // choice CS-Start-Request
 
-    CS_Start_Request_impl::controlling_type::controlling_type() {
+    CS_Start_Request_impl::Controlling_type::Controlling_type() {
     };
 
-    CS_Start_Request_impl::controlling_type::controlling_type(boost::shared_ptr< visiblestring_type> arg__startLocation,
+    CS_Start_Request_impl::Controlling_type::Controlling_type(boost::shared_ptr< visiblestring_type> arg__startLocation,
             boost::shared_ptr< StartCount> arg__startCount) :
     startLocation_(arg__startLocation),
     startCount_(arg__startCount) {
     };
 
-    template<> void CS_Start_Request_impl::controlling_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(startLocation_, 0);
         ITU_T_CHOICE_TAG(startCount_, 1);
     }
 
-    template<> void CS_Start_Request_impl::controlling_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(startLocation_, 0);
         ITU_T_CHOICE_TAG(startCount_, 1);
     }
 
-    boost::shared_ptr<visiblestring_type> CS_Start_Request_impl::controlling_type::startLocation__new() {
+    boost::shared_ptr<visiblestring_type> CS_Start_Request_impl::Controlling_type::startLocation__new() {
         return startLocation_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type());
     }
 
-    void CS_Start_Request_impl::controlling_type::startLocation(const visiblestring_type& vl) {
+    void CS_Start_Request_impl::Controlling_type::startLocation(const visiblestring_type& vl) {
         startLocation_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type(vl));
     }
 
-    boost::shared_ptr<StartCount> CS_Start_Request_impl::controlling_type::startCount__new() {
+    boost::shared_ptr<StartCount> CS_Start_Request_impl::Controlling_type::startCount__new() {
         return startCount_ = boost::shared_ptr<StartCount>(new StartCount());
     }
 
-    void CS_Start_Request_impl::controlling_type::startCount(const StartCount& vl) {
+    void CS_Start_Request_impl::Controlling_type::startCount(const StartCount& vl) {
         startCount_ = boost::shared_ptr<StartCount>(new StartCount(vl));
     }
 
@@ -8632,7 +8632,7 @@ namespace ISO_9506_MMS_1 {
             }
             case CS_Start_Request_impl_controlling:
             {
-                ITU_T_BIND_TAG(value<controlling_type > (false, CS_Start_Request_impl_controlling));
+                ITU_T_BIND_TAG(value<Controlling_type > (false, CS_Start_Request_impl_controlling));
                 break;
             }
             default:
@@ -8680,7 +8680,7 @@ namespace ISO_9506_MMS_1 {
             {
                 if (ITU_T_BIND_TAG(value<null_type > (true, CS_Start_Request_impl_normal))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<controlling_type > (true, CS_Start_Request_impl_controlling))) return;
+                if (ITU_T_BIND_TAG(value<Controlling_type > (true, CS_Start_Request_impl_controlling))) return;
                 else free();
             }
         }
@@ -8828,38 +8828,38 @@ namespace ISO_9506_MMS_1 {
     };
 
     Resume_Request::Resume_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
-            boost::shared_ptr< executionArgument_type> arg__executionArgument) :
+            boost::shared_ptr< ExecutionArgument_type> arg__executionArgument) :
     programInvocationName_(arg__programInvocationName),
     executionArgument_(arg__executionArgument) {
     };
 
-    void Resume_Request::executionArgument_type::simpleString(const MMSString& vl) {
-        set<MMSString>(new MMSString(vl), executionArgument_type_simpleString);
+    void Resume_Request::ExecutionArgument_type::simpleString(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), ExecutionArgument_type_simpleString);
     }
 
-    void Resume_Request::executionArgument_type::encodedString(const external_type& vl) {
-        set<external_type>(new external_type(vl), executionArgument_type_encodedString);
+    void Resume_Request::ExecutionArgument_type::encodedString(const external_type& vl) {
+        set<external_type>(new external_type(vl), ExecutionArgument_type_encodedString);
     }
 
-    void Resume_Request::executionArgument_type::enmbeddedString(const embeded_type& vl) {
-        set<embeded_type>(new embeded_type(vl), executionArgument_type_enmbeddedString);
+    void Resume_Request::ExecutionArgument_type::enmbeddedString(const embeded_type& vl) {
+        set<embeded_type>(new embeded_type(vl), ExecutionArgument_type_enmbeddedString);
     }
 
-    template<> void Resume_Request::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void Resume_Request::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case executionArgument_type_simpleString:
+            case ExecutionArgument_type_simpleString:
             {
-                ITU_T_IMPLICIT_TAG(value<MMSString > (false, executionArgument_type_simpleString), 1);
+                ITU_T_IMPLICIT_TAG(value<MMSString > (false, ExecutionArgument_type_simpleString), 1);
                 break;
             }
-            case executionArgument_type_encodedString:
+            case ExecutionArgument_type_encodedString:
             {
-                ITU_T_BIND_TAG(value<external_type > (false, executionArgument_type_encodedString));
+                ITU_T_BIND_TAG(value<external_type > (false, ExecutionArgument_type_encodedString));
                 break;
             }
-            case executionArgument_type_enmbeddedString:
+            case ExecutionArgument_type_enmbeddedString:
             {
-                ITU_T_BIND_TAG(value<embeded_type > (false, executionArgument_type_enmbeddedString));
+                ITU_T_BIND_TAG(value<embeded_type > (false, ExecutionArgument_type_enmbeddedString));
                 break;
             }
             default:
@@ -8868,7 +8868,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void Resume_Request::executionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void Resume_Request::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -8892,7 +8892,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<MMSString > (true, executionArgument_type_simpleString), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<MMSString > (true, ExecutionArgument_type_simpleString), 1)) return;
                         else free();
                         break;
                     }
@@ -8911,9 +8911,9 @@ namespace ISO_9506_MMS_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<external_type > (true, executionArgument_type_encodedString))) return;
+                if (ITU_T_BIND_TAG(value<external_type > (true, ExecutionArgument_type_encodedString))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<embeded_type > (true, executionArgument_type_enmbeddedString))) return;
+                if (ITU_T_BIND_TAG(value<embeded_type > (true, ExecutionArgument_type_enmbeddedString))) return;
                 else free();
             }
         }
@@ -8945,38 +8945,38 @@ namespace ISO_9506_MMS_1 {
         programInvocationName_ = vl;
     }
 
-    boost::shared_ptr<Resume_Request::executionArgument_type> Resume_Request::executionArgument__new() {
-        return executionArgument_ = boost::shared_ptr<executionArgument_type>(new executionArgument_type());
+    boost::shared_ptr<Resume_Request::ExecutionArgument_type> Resume_Request::executionArgument__new() {
+        return executionArgument_ = boost::shared_ptr<ExecutionArgument_type>(new ExecutionArgument_type());
     }
 
-    void Resume_Request::executionArgument(const executionArgument_type& vl) {
-        executionArgument_ = boost::shared_ptr<executionArgument_type>(new executionArgument_type(vl));
+    void Resume_Request::executionArgument(const ExecutionArgument_type& vl) {
+        executionArgument_ = boost::shared_ptr<ExecutionArgument_type>(new ExecutionArgument_type(vl));
     }
 
 
     // choice CS-Resume-Request
 
-    CS_Resume_Request_impl::controlling_type::controlling_type() : modeType_() {
+    CS_Resume_Request_impl::Controlling_type::Controlling_type() : modeType_() {
     };
 
-    CS_Resume_Request_impl::controlling_type::controlling_type(const modeType_type& arg__modeType) :
+    CS_Resume_Request_impl::Controlling_type::Controlling_type(const ModeType_type& arg__modeType) :
     modeType_(arg__modeType) {
     };
 
-    void CS_Resume_Request_impl::controlling_type::modeType_type::continueMode(const null_type& vl) {
-        set<null_type>(new null_type(vl), modeType_type_continueMode);
+    void CS_Resume_Request_impl::Controlling_type::ModeType_type::continueMode(const null_type& vl) {
+        set<null_type>(new null_type(vl), ModeType_type_continueMode);
     }
 
-    template<> void CS_Resume_Request_impl::controlling_type::modeType_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_Resume_Request_impl::Controlling_type::ModeType_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case modeType_type_continueMode:
+            case ModeType_type_continueMode:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, modeType_type_continueMode), 0);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, ModeType_type_continueMode), 0);
                 break;
             }
-            case modeType_type_changeMode:
+            case ModeType_type_changeMode:
             {
-                ITU_T_CHOICE_TAG(value<StartCount > (false, modeType_type_changeMode), 1);
+                ITU_T_CHOICE_TAG(value<StartCount > (false, ModeType_type_changeMode), 1);
                 break;
             }
             default:
@@ -8985,7 +8985,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_Resume_Request_impl::controlling_type::modeType_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_Resume_Request_impl::Controlling_type::ModeType_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -9009,13 +9009,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, modeType_type_continueMode), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, ModeType_type_continueMode), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_CHOICE_TAG(value<StartCount > (true, modeType_type_changeMode), 1)) return;
+                        if (ITU_T_CHOICE_TAG(value<StartCount > (true, ModeType_type_changeMode), 1)) return;
                         else free();
                         break;
                     }
@@ -9038,27 +9038,27 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_Resume_Request_impl::controlling_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_Resume_Request_impl::Controlling_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(modeType_);
     }
 
-    template<> void CS_Resume_Request_impl::controlling_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_Resume_Request_impl::Controlling_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(modeType_);
     }
 
-    CS_Resume_Request_impl::controlling_type::modeType_type& CS_Resume_Request_impl::controlling_type::modeType() {
+    CS_Resume_Request_impl::Controlling_type::ModeType_type& CS_Resume_Request_impl::Controlling_type::modeType() {
         return *modeType_;
     }
 
-    const CS_Resume_Request_impl::controlling_type::modeType_type& CS_Resume_Request_impl::controlling_type::modeType() const {
+    const CS_Resume_Request_impl::Controlling_type::ModeType_type& CS_Resume_Request_impl::Controlling_type::modeType() const {
         return *modeType_;
     }
 
-    void CS_Resume_Request_impl::controlling_type::modeType(const modeType_type& vl) {
+    void CS_Resume_Request_impl::Controlling_type::modeType(const ModeType_type& vl) {
         modeType_ = vl;
     }
 
-    void CS_Resume_Request_impl::controlling_type::modeType(boost::shared_ptr< modeType_type> vl) {
+    void CS_Resume_Request_impl::Controlling_type::modeType(boost::shared_ptr< ModeType_type> vl) {
         modeType_ = vl;
     }
 
@@ -9075,7 +9075,7 @@ namespace ISO_9506_MMS_1 {
             }
             case CS_Resume_Request_impl_controlling:
             {
-                ITU_T_BIND_TAG(value<controlling_type > (false, CS_Resume_Request_impl_controlling));
+                ITU_T_BIND_TAG(value<Controlling_type > (false, CS_Resume_Request_impl_controlling));
                 break;
             }
             default:
@@ -9123,7 +9123,7 @@ namespace ISO_9506_MMS_1 {
             {
                 if (ITU_T_BIND_TAG(value<null_type > (true, CS_Resume_Request_impl_normal))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<controlling_type > (true, CS_Resume_Request_impl_controlling))) return;
+                if (ITU_T_BIND_TAG(value<Controlling_type > (true, CS_Resume_Request_impl_controlling))) return;
                 else free();
             }
         }
@@ -9204,11 +9204,11 @@ namespace ISO_9506_MMS_1 {
     };
 
     GetProgramInvocationAttributes_Response::GetProgramInvocationAttributes_Response(const MMS_Object_Module_1::ProgramInvocationState& arg__state,
-            const listOfDomainNames_type& arg__listOfDomainNames,
+            const ListOfDomainNames_type& arg__listOfDomainNames,
             const bool& arg__mmsDeletable,
             const bool& arg__reusable,
             const bool& arg__monitor,
-            const executionArgument_type& arg__executionArgument) :
+            const ExecutionArgument_type& arg__executionArgument) :
     state_(arg__state),
     listOfDomainNames_(arg__listOfDomainNames),
     mmsDeletable_(arg__mmsDeletable),
@@ -9218,11 +9218,11 @@ namespace ISO_9506_MMS_1 {
     };
 
     GetProgramInvocationAttributes_Response::GetProgramInvocationAttributes_Response(boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> arg__state,
-            boost::shared_ptr< listOfDomainNames_type> arg__listOfDomainNames,
+            boost::shared_ptr< ListOfDomainNames_type> arg__listOfDomainNames,
             boost::shared_ptr< bool> arg__mmsDeletable,
             boost::shared_ptr< bool> arg__reusable,
             boost::shared_ptr< bool> arg__monitor,
-            boost::shared_ptr< executionArgument_type> arg__executionArgument,
+            boost::shared_ptr< ExecutionArgument_type> arg__executionArgument,
             boost::shared_ptr< Identifier> arg__accessControlList) :
     state_(arg__state),
     listOfDomainNames_(arg__listOfDomainNames),
@@ -9233,33 +9233,33 @@ namespace ISO_9506_MMS_1 {
     accessControlList_(arg__accessControlList) {
     };
 
-    void GetProgramInvocationAttributes_Response::executionArgument_type::simpleString(const MMSString& vl) {
-        set<MMSString>(new MMSString(vl), executionArgument_type_simpleString);
+    void GetProgramInvocationAttributes_Response::ExecutionArgument_type::simpleString(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), ExecutionArgument_type_simpleString);
     }
 
-    void GetProgramInvocationAttributes_Response::executionArgument_type::encodedString(const external_type& vl) {
-        set<external_type>(new external_type(vl), executionArgument_type_encodedString);
+    void GetProgramInvocationAttributes_Response::ExecutionArgument_type::encodedString(const external_type& vl) {
+        set<external_type>(new external_type(vl), ExecutionArgument_type_encodedString);
     }
 
-    void GetProgramInvocationAttributes_Response::executionArgument_type::enmbeddedString(const embeded_type& vl) {
-        set<embeded_type>(new embeded_type(vl), executionArgument_type_enmbeddedString);
+    void GetProgramInvocationAttributes_Response::ExecutionArgument_type::enmbeddedString(const embeded_type& vl) {
+        set<embeded_type>(new embeded_type(vl), ExecutionArgument_type_enmbeddedString);
     }
 
-    template<> void GetProgramInvocationAttributes_Response::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void GetProgramInvocationAttributes_Response::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case executionArgument_type_simpleString:
+            case ExecutionArgument_type_simpleString:
             {
-                ITU_T_IMPLICIT_TAG(value<MMSString > (false, executionArgument_type_simpleString), 5);
+                ITU_T_IMPLICIT_TAG(value<MMSString > (false, ExecutionArgument_type_simpleString), 5);
                 break;
             }
-            case executionArgument_type_encodedString:
+            case ExecutionArgument_type_encodedString:
             {
-                ITU_T_BIND_TAG(value<external_type > (false, executionArgument_type_encodedString));
+                ITU_T_BIND_TAG(value<external_type > (false, ExecutionArgument_type_encodedString));
                 break;
             }
-            case executionArgument_type_enmbeddedString:
+            case ExecutionArgument_type_enmbeddedString:
             {
-                ITU_T_BIND_TAG(value<embeded_type > (false, executionArgument_type_enmbeddedString));
+                ITU_T_BIND_TAG(value<embeded_type > (false, ExecutionArgument_type_enmbeddedString));
                 break;
             }
             default:
@@ -9268,7 +9268,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void GetProgramInvocationAttributes_Response::executionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void GetProgramInvocationAttributes_Response::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -9292,7 +9292,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 5:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<MMSString > (true, executionArgument_type_simpleString), 5)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<MMSString > (true, ExecutionArgument_type_simpleString), 5)) return;
                         else free();
                         break;
                     }
@@ -9311,9 +9311,9 @@ namespace ISO_9506_MMS_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<external_type > (true, executionArgument_type_encodedString))) return;
+                if (ITU_T_BIND_TAG(value<external_type > (true, ExecutionArgument_type_encodedString))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<embeded_type > (true, executionArgument_type_enmbeddedString))) return;
+                if (ITU_T_BIND_TAG(value<embeded_type > (true, ExecutionArgument_type_enmbeddedString))) return;
                 else free();
             }
         }
@@ -9355,19 +9355,19 @@ namespace ISO_9506_MMS_1 {
         state_ = vl;
     }
 
-    GetProgramInvocationAttributes_Response::listOfDomainNames_type& GetProgramInvocationAttributes_Response::listOfDomainNames() {
+    GetProgramInvocationAttributes_Response::ListOfDomainNames_type& GetProgramInvocationAttributes_Response::listOfDomainNames() {
         return *listOfDomainNames_;
     }
 
-    const GetProgramInvocationAttributes_Response::listOfDomainNames_type& GetProgramInvocationAttributes_Response::listOfDomainNames() const {
+    const GetProgramInvocationAttributes_Response::ListOfDomainNames_type& GetProgramInvocationAttributes_Response::listOfDomainNames() const {
         return *listOfDomainNames_;
     }
 
-    void GetProgramInvocationAttributes_Response::listOfDomainNames(const listOfDomainNames_type& vl) {
+    void GetProgramInvocationAttributes_Response::listOfDomainNames(const ListOfDomainNames_type& vl) {
         listOfDomainNames_ = vl;
     }
 
-    void GetProgramInvocationAttributes_Response::listOfDomainNames(boost::shared_ptr< listOfDomainNames_type> vl) {
+    void GetProgramInvocationAttributes_Response::listOfDomainNames(boost::shared_ptr< ListOfDomainNames_type> vl) {
         listOfDomainNames_ = vl;
     }
 
@@ -9419,19 +9419,19 @@ namespace ISO_9506_MMS_1 {
         monitor_ = vl;
     }
 
-    GetProgramInvocationAttributes_Response::executionArgument_type& GetProgramInvocationAttributes_Response::executionArgument() {
+    GetProgramInvocationAttributes_Response::ExecutionArgument_type& GetProgramInvocationAttributes_Response::executionArgument() {
         return *executionArgument_;
     }
 
-    const GetProgramInvocationAttributes_Response::executionArgument_type& GetProgramInvocationAttributes_Response::executionArgument() const {
+    const GetProgramInvocationAttributes_Response::ExecutionArgument_type& GetProgramInvocationAttributes_Response::executionArgument() const {
         return *executionArgument_;
     }
 
-    void GetProgramInvocationAttributes_Response::executionArgument(const executionArgument_type& vl) {
+    void GetProgramInvocationAttributes_Response::executionArgument(const ExecutionArgument_type& vl) {
         executionArgument_ = vl;
     }
 
-    void GetProgramInvocationAttributes_Response::executionArgument(boost::shared_ptr< executionArgument_type> vl) {
+    void GetProgramInvocationAttributes_Response::executionArgument(boost::shared_ptr< ExecutionArgument_type> vl) {
         executionArgument_ = vl;
     }
 
@@ -9450,55 +9450,55 @@ namespace ISO_9506_MMS_1 {
     };
 
     CS_GetProgramInvocationAttributes_Response::CS_GetProgramInvocationAttributes_Response(const int& arg__errorCode,
-            const control_type& arg__control) :
+            const Control_type& arg__control) :
     errorCode_(arg__errorCode),
     control_(arg__control) {
     };
 
-    CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::controlling_type() : controlledPI_(), runningMode_() {
+    CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::Controlling_type() : controlledPI_(), runningMode_() {
     };
 
-    CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::controlling_type(const controlledPI_type& arg__controlledPI,
-            const runningMode_type& arg__runningMode) :
+    CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::Controlling_type(const ControlledPI_type& arg__controlledPI,
+            const RunningMode_type& arg__runningMode) :
     controlledPI_(arg__controlledPI),
     runningMode_(arg__runningMode) {
     };
 
-    CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::controlling_type(boost::shared_ptr< controlledPI_type> arg__controlledPI,
+    CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::Controlling_type(boost::shared_ptr< ControlledPI_type> arg__controlledPI,
             boost::shared_ptr< visiblestring_type> arg__programLocation,
-            boost::shared_ptr< runningMode_type> arg__runningMode) :
+            boost::shared_ptr< RunningMode_type> arg__runningMode) :
     controlledPI_(arg__controlledPI),
     programLocation_(arg__programLocation),
     runningMode_(arg__runningMode) {
     };
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::freeRunning(const null_type& vl) {
-        set<null_type>(new null_type(vl), runningMode_type_freeRunning);
+    void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::freeRunning(const null_type& vl) {
+        set<null_type>(new null_type(vl), RunningMode_type_freeRunning);
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::cycleLimited(const int& vl) {
-        set<int>(new int(vl), runningMode_type_cycleLimited);
+    void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::cycleLimited(const int& vl) {
+        set<int>(new int(vl), RunningMode_type_cycleLimited);
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::stepLimited(const int& vl) {
-        set<int>(new int(vl), runningMode_type_stepLimited);
+    void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::stepLimited(const int& vl) {
+        set<int>(new int(vl), RunningMode_type_stepLimited);
     }
 
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case runningMode_type_freeRunning:
+            case RunningMode_type_freeRunning:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, runningMode_type_freeRunning), 0);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, RunningMode_type_freeRunning), 0);
                 break;
             }
-            case runningMode_type_cycleLimited:
+            case RunningMode_type_cycleLimited:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, runningMode_type_cycleLimited), 1);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RunningMode_type_cycleLimited), 1);
                 break;
             }
-            case runningMode_type_stepLimited:
+            case RunningMode_type_stepLimited:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, runningMode_type_stepLimited), 2);
+                ITU_T_IMPLICIT_TAG(value<int > (false, RunningMode_type_stepLimited), 2);
                 break;
             }
             default:
@@ -9507,7 +9507,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -9531,19 +9531,19 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, runningMode_type_freeRunning), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, RunningMode_type_freeRunning), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, runningMode_type_cycleLimited), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RunningMode_type_cycleLimited), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, runningMode_type_stepLimited), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, RunningMode_type_stepLimited), 2)) return;
                         else free();
                         break;
                     }
@@ -9566,76 +9566,76 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(controlledPI_, 0);
         ITU_T_IMPLICIT_TAG(programLocation_, 1);
         ITU_T_CHOICE_TAG(runningMode_, 2);
     }
 
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(controlledPI_, 0);
         ITU_T_IMPLICIT_TAG(programLocation_, 1);
         ITU_T_CHOICE_TAG(runningMode_, 2);
     }
 
-    CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::controlledPI_type& CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::controlledPI() {
+    CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::ControlledPI_type& CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::controlledPI() {
         return *controlledPI_;
     }
 
-    const CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::controlledPI_type& CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::controlledPI() const {
+    const CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::ControlledPI_type& CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::controlledPI() const {
         return *controlledPI_;
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::controlledPI(const controlledPI_type& vl) {
+    void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::controlledPI(const ControlledPI_type& vl) {
         controlledPI_ = vl;
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::controlledPI(boost::shared_ptr< controlledPI_type> vl) {
+    void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::controlledPI(boost::shared_ptr< ControlledPI_type> vl) {
         controlledPI_ = vl;
     }
 
-    boost::shared_ptr<visiblestring_type> CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::programLocation__new() {
+    boost::shared_ptr<visiblestring_type> CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::programLocation__new() {
         return programLocation_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type());
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::programLocation(const visiblestring_type& vl) {
+    void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::programLocation(const visiblestring_type& vl) {
         programLocation_ = boost::shared_ptr<visiblestring_type>(new visiblestring_type(vl));
     }
 
-    CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type& CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode() {
+    CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type& CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::runningMode() {
         return *runningMode_;
     }
 
-    const CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type& CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode() const {
+    const CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type& CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::runningMode() const {
         return *runningMode_;
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode(const runningMode_type& vl) {
+    void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::runningMode(const RunningMode_type& vl) {
         runningMode_ = vl;
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode(boost::shared_ptr< runningMode_type> vl) {
+    void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::runningMode(boost::shared_ptr< RunningMode_type> vl) {
         runningMode_ = vl;
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::controlled_type::controllingPI(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), controlled_type_controllingPI);
+    void CS_GetProgramInvocationAttributes_Response::Control_type::Controlled_type::controllingPI(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), Controlled_type_controllingPI);
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::controlled_type::none(const null_type& vl) {
-        set<null_type>(new null_type(vl), controlled_type_none);
+    void CS_GetProgramInvocationAttributes_Response::Control_type::Controlled_type::none(const null_type& vl) {
+        set<null_type>(new null_type(vl), Controlled_type_none);
     }
 
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlled_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlled_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case controlled_type_controllingPI:
+            case Controlled_type_controllingPI:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, controlled_type_controllingPI), 0);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, Controlled_type_controllingPI), 0);
                 break;
             }
-            case controlled_type_none:
+            case Controlled_type_none:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, controlled_type_none), 1);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, Controlled_type_none), 1);
                 break;
             }
             default:
@@ -9644,7 +9644,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlled_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlled_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -9668,13 +9668,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, controlled_type_controllingPI), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, Controlled_type_controllingPI), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, controlled_type_none), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, Controlled_type_none), 1)) return;
                         else free();
                         break;
                     }
@@ -9697,25 +9697,25 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control_type::normal(const null_type& vl) {
-        set<null_type>(new null_type(vl), control_type_normal);
+    void CS_GetProgramInvocationAttributes_Response::Control_type::normal(const null_type& vl) {
+        set<null_type>(new null_type(vl), Control_type_normal);
     }
 
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case control_type_controlling:
+            case Control_type_controlling:
             {
-                ITU_T_IMPLICIT_TAG(value<controlling_type > (false, control_type_controlling), 0);
+                ITU_T_IMPLICIT_TAG(value<Controlling_type > (false, Control_type_controlling), 0);
                 break;
             }
-            case control_type_controlled:
+            case Control_type_controlled:
             {
-                ITU_T_CHOICE_TAG(value<controlled_type > (false, control_type_controlled), 1);
+                ITU_T_CHOICE_TAG(value<Controlled_type > (false, Control_type_controlled), 1);
                 break;
             }
-            case control_type_normal:
+            case Control_type_normal:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, control_type_normal), 2);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, Control_type_normal), 2);
                 break;
             }
             default:
@@ -9724,7 +9724,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -9748,19 +9748,19 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<controlling_type > (true, control_type_controlling), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Controlling_type > (true, Control_type_controlling), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_CHOICE_TAG(value<controlled_type > (true, control_type_controlled), 1)) return;
+                        if (ITU_T_CHOICE_TAG(value<Controlled_type > (true, Control_type_controlled), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, control_type_normal), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, Control_type_normal), 2)) return;
                         else free();
                         break;
                     }
@@ -9809,19 +9809,19 @@ namespace ISO_9506_MMS_1 {
         errorCode_ = vl;
     }
 
-    CS_GetProgramInvocationAttributes_Response::control_type& CS_GetProgramInvocationAttributes_Response::control() {
+    CS_GetProgramInvocationAttributes_Response::Control_type& CS_GetProgramInvocationAttributes_Response::control() {
         return *control_;
     }
 
-    const CS_GetProgramInvocationAttributes_Response::control_type& CS_GetProgramInvocationAttributes_Response::control() const {
+    const CS_GetProgramInvocationAttributes_Response::Control_type& CS_GetProgramInvocationAttributes_Response::control() const {
         return *control_;
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control(const control_type& vl) {
+    void CS_GetProgramInvocationAttributes_Response::control(const Control_type& vl) {
         control_ = vl;
     }
 
-    void CS_GetProgramInvocationAttributes_Response::control(boost::shared_ptr< control_type> vl) {
+    void CS_GetProgramInvocationAttributes_Response::control(boost::shared_ptr< Control_type> vl) {
         control_ = vl;
     }
 
@@ -9832,7 +9832,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     Select_Request::Select_Request(boost::shared_ptr< Identifier> arg__controlling,
-            boost::shared_ptr< controlled_type> arg__controlled) :
+            boost::shared_ptr< Controlled_type> arg__controlled) :
     controlling_(arg__controlling),
     controlled_(arg__controlled) {
     };
@@ -9855,12 +9855,12 @@ namespace ISO_9506_MMS_1 {
         controlling_ = boost::shared_ptr<Identifier>(new Identifier(vl));
     }
 
-    boost::shared_ptr<Select_Request::controlled_type> Select_Request::controlled__new() {
-        return controlled_ = boost::shared_ptr<controlled_type>(new controlled_type());
+    boost::shared_ptr<Select_Request::Controlled_type> Select_Request::controlled__new() {
+        return controlled_ = boost::shared_ptr<Controlled_type>(new Controlled_type());
     }
 
-    void Select_Request::controlled(const controlled_type& vl) {
-        controlled_ = boost::shared_ptr<controlled_type>(new controlled_type(vl));
+    void Select_Request::controlled(const Controlled_type& vl) {
+        controlled_ = boost::shared_ptr<Controlled_type>(new Controlled_type(vl));
     }
 
 
@@ -9920,8 +9920,8 @@ namespace ISO_9506_MMS_1 {
     };
 
     ReconfigureProgramInvocation_Request::ReconfigureProgramInvocation_Request(const Identifier& arg__oldProgramInvocationName,
-            const domainsToAdd_type& arg__domainsToAdd,
-            const domainsToRemove_type& arg__domainsToRemove) :
+            const DomainsToAdd_type& arg__domainsToAdd,
+            const DomainsToRemove_type& arg__domainsToRemove) :
     oldProgramInvocationName_(arg__oldProgramInvocationName),
     domainsToAdd_(arg__domainsToAdd),
     domainsToRemove_(arg__domainsToRemove) {
@@ -9929,8 +9929,8 @@ namespace ISO_9506_MMS_1 {
 
     ReconfigureProgramInvocation_Request::ReconfigureProgramInvocation_Request(boost::shared_ptr< Identifier> arg__oldProgramInvocationName,
             boost::shared_ptr< Identifier> arg__newProgramInvocationName,
-            boost::shared_ptr< domainsToAdd_type> arg__domainsToAdd,
-            boost::shared_ptr< domainsToRemove_type> arg__domainsToRemove) :
+            boost::shared_ptr< DomainsToAdd_type> arg__domainsToAdd,
+            boost::shared_ptr< DomainsToRemove_type> arg__domainsToRemove) :
     oldProgramInvocationName_(arg__oldProgramInvocationName),
     newProgramInvocationName_(arg__newProgramInvocationName),
     domainsToAdd_(arg__domainsToAdd),
@@ -9975,54 +9975,54 @@ namespace ISO_9506_MMS_1 {
         newProgramInvocationName_ = boost::shared_ptr<Identifier>(new Identifier(vl));
     }
 
-    ReconfigureProgramInvocation_Request::domainsToAdd_type& ReconfigureProgramInvocation_Request::domainsToAdd() {
+    ReconfigureProgramInvocation_Request::DomainsToAdd_type& ReconfigureProgramInvocation_Request::domainsToAdd() {
         return *domainsToAdd_;
     }
 
-    const ReconfigureProgramInvocation_Request::domainsToAdd_type& ReconfigureProgramInvocation_Request::domainsToAdd() const {
+    const ReconfigureProgramInvocation_Request::DomainsToAdd_type& ReconfigureProgramInvocation_Request::domainsToAdd() const {
         return *domainsToAdd_;
     }
 
-    void ReconfigureProgramInvocation_Request::domainsToAdd(const domainsToAdd_type& vl) {
+    void ReconfigureProgramInvocation_Request::domainsToAdd(const DomainsToAdd_type& vl) {
         domainsToAdd_ = vl;
     }
 
-    void ReconfigureProgramInvocation_Request::domainsToAdd(boost::shared_ptr< domainsToAdd_type> vl) {
+    void ReconfigureProgramInvocation_Request::domainsToAdd(boost::shared_ptr< DomainsToAdd_type> vl) {
         domainsToAdd_ = vl;
     }
 
-    ReconfigureProgramInvocation_Request::domainsToRemove_type& ReconfigureProgramInvocation_Request::domainsToRemove() {
+    ReconfigureProgramInvocation_Request::DomainsToRemove_type& ReconfigureProgramInvocation_Request::domainsToRemove() {
         return *domainsToRemove_;
     }
 
-    const ReconfigureProgramInvocation_Request::domainsToRemove_type& ReconfigureProgramInvocation_Request::domainsToRemove() const {
+    const ReconfigureProgramInvocation_Request::DomainsToRemove_type& ReconfigureProgramInvocation_Request::domainsToRemove() const {
         return *domainsToRemove_;
     }
 
-    void ReconfigureProgramInvocation_Request::domainsToRemove(const domainsToRemove_type& vl) {
+    void ReconfigureProgramInvocation_Request::domainsToRemove(const DomainsToRemove_type& vl) {
         domainsToRemove_ = vl;
     }
 
-    void ReconfigureProgramInvocation_Request::domainsToRemove(boost::shared_ptr< domainsToRemove_type> vl) {
+    void ReconfigureProgramInvocation_Request::domainsToRemove(boost::shared_ptr< DomainsToRemove_type> vl) {
         domainsToRemove_ = vl;
     }
 
 
     // choice ControlElement
 
-    ControlElement::beginDomainDef_type::beginDomainDef_type() : domainName_(), capabilities_(), sharable_() {
+    ControlElement::BeginDomainDef_type::BeginDomainDef_type() : domainName_(), capabilities_(), sharable_() {
     };
 
-    ControlElement::beginDomainDef_type::beginDomainDef_type(const Identifier& arg__domainName,
-            const capabilities_type& arg__capabilities,
+    ControlElement::BeginDomainDef_type::BeginDomainDef_type(const Identifier& arg__domainName,
+            const Capabilities_type& arg__capabilities,
             const bool& arg__sharable) :
     domainName_(arg__domainName),
     capabilities_(arg__capabilities),
     sharable_(arg__sharable) {
     };
 
-    ControlElement::beginDomainDef_type::beginDomainDef_type(boost::shared_ptr< Identifier> arg__domainName,
-            boost::shared_ptr< capabilities_type> arg__capabilities,
+    ControlElement::BeginDomainDef_type::BeginDomainDef_type(boost::shared_ptr< Identifier> arg__domainName,
+            boost::shared_ptr< Capabilities_type> arg__capabilities,
             boost::shared_ptr< bool> arg__sharable,
             boost::shared_ptr< LoadData> arg__loadData) :
     domainName_(arg__domainName),
@@ -10031,138 +10031,138 @@ namespace ISO_9506_MMS_1 {
     loadData_(arg__loadData) {
     };
 
-    template<> void ControlElement::beginDomainDef_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ControlElement::BeginDomainDef_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(domainName_, 1);
         ITU_T_IMPLICIT_TAG(capabilities_, 2);
         ITU_T_IMPLICIT_TAG(sharable_, 3);
         ITU_T_CHOICE_TAG(loadData_, 4);
     }
 
-    template<> void ControlElement::beginDomainDef_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ControlElement::BeginDomainDef_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(domainName_, 1);
         ITU_T_IMPLICIT_TAG(capabilities_, 2);
         ITU_T_IMPLICIT_TAG(sharable_, 3);
         ITU_T_CHOICE_TAG(loadData_, 4);
     }
 
-    Identifier& ControlElement::beginDomainDef_type::domainName() {
+    Identifier& ControlElement::BeginDomainDef_type::domainName() {
         return *domainName_;
     }
 
-    const Identifier& ControlElement::beginDomainDef_type::domainName() const {
+    const Identifier& ControlElement::BeginDomainDef_type::domainName() const {
         return *domainName_;
     }
 
-    void ControlElement::beginDomainDef_type::domainName(const Identifier& vl) {
+    void ControlElement::BeginDomainDef_type::domainName(const Identifier& vl) {
         domainName_ = vl;
     }
 
-    void ControlElement::beginDomainDef_type::domainName(boost::shared_ptr< Identifier> vl) {
+    void ControlElement::BeginDomainDef_type::domainName(boost::shared_ptr< Identifier> vl) {
         domainName_ = vl;
     }
 
-    ControlElement::beginDomainDef_type::capabilities_type& ControlElement::beginDomainDef_type::capabilities() {
+    ControlElement::BeginDomainDef_type::Capabilities_type& ControlElement::BeginDomainDef_type::capabilities() {
         return *capabilities_;
     }
 
-    const ControlElement::beginDomainDef_type::capabilities_type& ControlElement::beginDomainDef_type::capabilities() const {
+    const ControlElement::BeginDomainDef_type::Capabilities_type& ControlElement::BeginDomainDef_type::capabilities() const {
         return *capabilities_;
     }
 
-    void ControlElement::beginDomainDef_type::capabilities(const capabilities_type& vl) {
+    void ControlElement::BeginDomainDef_type::capabilities(const Capabilities_type& vl) {
         capabilities_ = vl;
     }
 
-    void ControlElement::beginDomainDef_type::capabilities(boost::shared_ptr< capabilities_type> vl) {
+    void ControlElement::BeginDomainDef_type::capabilities(boost::shared_ptr< Capabilities_type> vl) {
         capabilities_ = vl;
     }
 
-    bool& ControlElement::beginDomainDef_type::sharable() {
+    bool& ControlElement::BeginDomainDef_type::sharable() {
         return *sharable_;
     }
 
-    const bool& ControlElement::beginDomainDef_type::sharable() const {
+    const bool& ControlElement::BeginDomainDef_type::sharable() const {
         return *sharable_;
     }
 
-    void ControlElement::beginDomainDef_type::sharable(const bool& vl) {
+    void ControlElement::BeginDomainDef_type::sharable(const bool& vl) {
         sharable_ = vl;
     }
 
-    void ControlElement::beginDomainDef_type::sharable(boost::shared_ptr< bool> vl) {
+    void ControlElement::BeginDomainDef_type::sharable(boost::shared_ptr< bool> vl) {
         sharable_ = vl;
     }
 
-    boost::shared_ptr<LoadData> ControlElement::beginDomainDef_type::loadData__new() {
+    boost::shared_ptr<LoadData> ControlElement::BeginDomainDef_type::loadData__new() {
         return loadData_ = boost::shared_ptr<LoadData>(new LoadData());
     }
 
-    void ControlElement::beginDomainDef_type::loadData(const LoadData& vl) {
+    void ControlElement::BeginDomainDef_type::loadData(const LoadData& vl) {
         loadData_ = boost::shared_ptr<LoadData>(new LoadData(vl));
     }
 
-    ControlElement::continueDomainDef_type::continueDomainDef_type() : domainName_(), loadData_() {
+    ControlElement::ContinueDomainDef_type::ContinueDomainDef_type() : domainName_(), loadData_() {
     };
 
-    ControlElement::continueDomainDef_type::continueDomainDef_type(const Identifier& arg__domainName,
+    ControlElement::ContinueDomainDef_type::ContinueDomainDef_type(const Identifier& arg__domainName,
             const LoadData& arg__loadData) :
     domainName_(arg__domainName),
     loadData_(arg__loadData) {
     };
 
-    template<> void ControlElement::continueDomainDef_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ControlElement::ContinueDomainDef_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(domainName_, 1);
         ITU_T_CHOICE_TAG(loadData_, 3);
     }
 
-    template<> void ControlElement::continueDomainDef_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ControlElement::ContinueDomainDef_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(domainName_, 1);
         ITU_T_CHOICE_TAG(loadData_, 3);
     }
 
-    Identifier& ControlElement::continueDomainDef_type::domainName() {
+    Identifier& ControlElement::ContinueDomainDef_type::domainName() {
         return *domainName_;
     }
 
-    const Identifier& ControlElement::continueDomainDef_type::domainName() const {
+    const Identifier& ControlElement::ContinueDomainDef_type::domainName() const {
         return *domainName_;
     }
 
-    void ControlElement::continueDomainDef_type::domainName(const Identifier& vl) {
+    void ControlElement::ContinueDomainDef_type::domainName(const Identifier& vl) {
         domainName_ = vl;
     }
 
-    void ControlElement::continueDomainDef_type::domainName(boost::shared_ptr< Identifier> vl) {
+    void ControlElement::ContinueDomainDef_type::domainName(boost::shared_ptr< Identifier> vl) {
         domainName_ = vl;
     }
 
-    LoadData& ControlElement::continueDomainDef_type::loadData() {
+    LoadData& ControlElement::ContinueDomainDef_type::loadData() {
         return *loadData_;
     }
 
-    const LoadData& ControlElement::continueDomainDef_type::loadData() const {
+    const LoadData& ControlElement::ContinueDomainDef_type::loadData() const {
         return *loadData_;
     }
 
-    void ControlElement::continueDomainDef_type::loadData(const LoadData& vl) {
+    void ControlElement::ContinueDomainDef_type::loadData(const LoadData& vl) {
         loadData_ = vl;
     }
 
-    void ControlElement::continueDomainDef_type::loadData(boost::shared_ptr< LoadData> vl) {
+    void ControlElement::ContinueDomainDef_type::loadData(boost::shared_ptr< LoadData> vl) {
         loadData_ = vl;
     }
 
-    ControlElement::piDefinition_type::piDefinition_type() : piName_(), listOfDomains_() {
+    ControlElement::PiDefinition_type::PiDefinition_type() : piName_(), listOfDomains_() {
     };
 
-    ControlElement::piDefinition_type::piDefinition_type(const Identifier& arg__piName,
-            const listOfDomains_type& arg__listOfDomains) :
+    ControlElement::PiDefinition_type::PiDefinition_type(const Identifier& arg__piName,
+            const ListOfDomains_type& arg__listOfDomains) :
     piName_(arg__piName),
     listOfDomains_(arg__listOfDomains) {
     };
 
-    ControlElement::piDefinition_type::piDefinition_type(boost::shared_ptr< Identifier> arg__piName,
-            boost::shared_ptr< listOfDomains_type> arg__listOfDomains,
+    ControlElement::PiDefinition_type::PiDefinition_type(boost::shared_ptr< Identifier> arg__piName,
+            boost::shared_ptr< ListOfDomains_type> arg__listOfDomains,
             boost::shared_ptr< bool> arg__reusable,
             boost::shared_ptr< bool> arg__monitorType,
             boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> arg__pIState) :
@@ -10173,9 +10173,9 @@ namespace ISO_9506_MMS_1 {
     pIState_(arg__pIState) {
     };
 
-    const bool ControlElement::piDefinition_type::reusable__default = true;
+    const bool ControlElement::PiDefinition_type::reusable__default = true;
 
-    template<> void ControlElement::piDefinition_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ControlElement::PiDefinition_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(piName_, 0);
         ITU_T_IMPLICIT_TAG(listOfDomains_, 1);
         ITU_T_IMPLICIT_TAG(reusable_, 2);
@@ -10183,7 +10183,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(pIState_, 4);
     }
 
-    template<> void ControlElement::piDefinition_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ControlElement::PiDefinition_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(piName_, 0);
         ITU_T_IMPLICIT_TAG(listOfDomains_, 1);
         ITU_T_IMPLICIT_TAG(reusable_, 2);
@@ -10191,63 +10191,63 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(pIState_, 4);
     }
 
-    Identifier& ControlElement::piDefinition_type::piName() {
+    Identifier& ControlElement::PiDefinition_type::piName() {
         return *piName_;
     }
 
-    const Identifier& ControlElement::piDefinition_type::piName() const {
+    const Identifier& ControlElement::PiDefinition_type::piName() const {
         return *piName_;
     }
 
-    void ControlElement::piDefinition_type::piName(const Identifier& vl) {
+    void ControlElement::PiDefinition_type::piName(const Identifier& vl) {
         piName_ = vl;
     }
 
-    void ControlElement::piDefinition_type::piName(boost::shared_ptr< Identifier> vl) {
+    void ControlElement::PiDefinition_type::piName(boost::shared_ptr< Identifier> vl) {
         piName_ = vl;
     }
 
-    ControlElement::piDefinition_type::listOfDomains_type& ControlElement::piDefinition_type::listOfDomains() {
+    ControlElement::PiDefinition_type::ListOfDomains_type& ControlElement::PiDefinition_type::listOfDomains() {
         return *listOfDomains_;
     }
 
-    const ControlElement::piDefinition_type::listOfDomains_type& ControlElement::piDefinition_type::listOfDomains() const {
+    const ControlElement::PiDefinition_type::ListOfDomains_type& ControlElement::PiDefinition_type::listOfDomains() const {
         return *listOfDomains_;
     }
 
-    void ControlElement::piDefinition_type::listOfDomains(const listOfDomains_type& vl) {
+    void ControlElement::PiDefinition_type::listOfDomains(const ListOfDomains_type& vl) {
         listOfDomains_ = vl;
     }
 
-    void ControlElement::piDefinition_type::listOfDomains(boost::shared_ptr< listOfDomains_type> vl) {
+    void ControlElement::PiDefinition_type::listOfDomains(boost::shared_ptr< ListOfDomains_type> vl) {
         listOfDomains_ = vl;
     }
 
-    const bool& ControlElement::piDefinition_type::reusable() const {
+    const bool& ControlElement::PiDefinition_type::reusable() const {
         return *reusable_;
     }
 
-    void ControlElement::piDefinition_type::reusable(const bool& vl) {
+    void ControlElement::PiDefinition_type::reusable(const bool& vl) {
         reusable_ = vl;
     }
 
-    void ControlElement::piDefinition_type::reusable(boost::shared_ptr< bool> vl) {
+    void ControlElement::PiDefinition_type::reusable(boost::shared_ptr< bool> vl) {
         reusable_ = vl;
     }
 
-    boost::shared_ptr<bool> ControlElement::piDefinition_type::monitorType__new() {
+    boost::shared_ptr<bool> ControlElement::PiDefinition_type::monitorType__new() {
         return monitorType_ = boost::shared_ptr<bool>(new bool());
     }
 
-    void ControlElement::piDefinition_type::monitorType(const bool& vl) {
+    void ControlElement::PiDefinition_type::monitorType(const bool& vl) {
         monitorType_ = boost::shared_ptr<bool>(new bool(vl));
     }
 
-    boost::shared_ptr<MMS_Object_Module_1::ProgramInvocationState> ControlElement::piDefinition_type::pIState__new() {
+    boost::shared_ptr<MMS_Object_Module_1::ProgramInvocationState> ControlElement::PiDefinition_type::pIState__new() {
         return pIState_ = boost::shared_ptr<MMS_Object_Module_1::ProgramInvocationState>(new MMS_Object_Module_1::ProgramInvocationState());
     }
 
-    void ControlElement::piDefinition_type::pIState(const MMS_Object_Module_1::ProgramInvocationState& vl) {
+    void ControlElement::PiDefinition_type::pIState(const MMS_Object_Module_1::ProgramInvocationState& vl) {
         pIState_ = boost::shared_ptr<MMS_Object_Module_1::ProgramInvocationState>(new MMS_Object_Module_1::ProgramInvocationState(vl));
     }
 
@@ -10259,12 +10259,12 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case ControlElement_beginDomainDef:
             {
-                ITU_T_EXPLICIT_TAG(value<beginDomainDef_type > (false, ControlElement_beginDomainDef), 0);
+                ITU_T_EXPLICIT_TAG(value<BeginDomainDef_type > (false, ControlElement_beginDomainDef), 0);
                 break;
             }
             case ControlElement_continueDomainDef:
             {
-                ITU_T_EXPLICIT_TAG(value<continueDomainDef_type > (false, ControlElement_continueDomainDef), 1);
+                ITU_T_EXPLICIT_TAG(value<ContinueDomainDef_type > (false, ControlElement_continueDomainDef), 1);
                 break;
             }
             case ControlElement_endDomainDef:
@@ -10274,7 +10274,7 @@ namespace ISO_9506_MMS_1 {
             }
             case ControlElement_piDefinition:
             {
-                ITU_T_IMPLICIT_TAG(value<piDefinition_type > (false, ControlElement_piDefinition), 3);
+                ITU_T_IMPLICIT_TAG(value<PiDefinition_type > (false, ControlElement_piDefinition), 3);
                 break;
             }
             default:
@@ -10307,13 +10307,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<beginDomainDef_type > (true, ControlElement_beginDomainDef), 0)) return;
+                        if (ITU_T_EXPLICIT_TAG(value<BeginDomainDef_type > (true, ControlElement_beginDomainDef), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<continueDomainDef_type > (true, ControlElement_continueDomainDef), 1)) return;
+                        if (ITU_T_EXPLICIT_TAG(value<ContinueDomainDef_type > (true, ControlElement_continueDomainDef), 1)) return;
                         else free();
                         break;
                     }
@@ -10325,7 +10325,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<piDefinition_type > (true, ControlElement_piDefinition), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<PiDefinition_type > (true, ControlElement_piDefinition), 3)) return;
                         else free();
                         break;
                     }
@@ -10436,11 +10436,11 @@ namespace ISO_9506_MMS_1 {
     UnitControlLoadSegment_Response::UnitControlLoadSegment_Response() : controlElements_() {
     };
 
-    UnitControlLoadSegment_Response::UnitControlLoadSegment_Response(const controlElements_type& arg__controlElements) :
+    UnitControlLoadSegment_Response::UnitControlLoadSegment_Response(const ControlElements_type& arg__controlElements) :
     controlElements_(arg__controlElements) {
     };
 
-    UnitControlLoadSegment_Response::UnitControlLoadSegment_Response(boost::shared_ptr< controlElements_type> arg__controlElements,
+    UnitControlLoadSegment_Response::UnitControlLoadSegment_Response(boost::shared_ptr< ControlElements_type> arg__controlElements,
             boost::shared_ptr< bool> arg__moreFollows) :
     controlElements_(arg__controlElements),
     moreFollows_(arg__moreFollows) {
@@ -10458,19 +10458,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    UnitControlLoadSegment_Response::controlElements_type& UnitControlLoadSegment_Response::controlElements() {
+    UnitControlLoadSegment_Response::ControlElements_type& UnitControlLoadSegment_Response::controlElements() {
         return *controlElements_;
     }
 
-    const UnitControlLoadSegment_Response::controlElements_type& UnitControlLoadSegment_Response::controlElements() const {
+    const UnitControlLoadSegment_Response::ControlElements_type& UnitControlLoadSegment_Response::controlElements() const {
         return *controlElements_;
     }
 
-    void UnitControlLoadSegment_Response::controlElements(const controlElements_type& vl) {
+    void UnitControlLoadSegment_Response::controlElements(const ControlElements_type& vl) {
         controlElements_ = vl;
     }
 
-    void UnitControlLoadSegment_Response::controlElements(boost::shared_ptr< controlElements_type> vl) {
+    void UnitControlLoadSegment_Response::controlElements(boost::shared_ptr< ControlElements_type> vl) {
         controlElements_ = vl;
     }
 
@@ -10497,38 +10497,38 @@ namespace ISO_9506_MMS_1 {
     };
 
     UnitControlUpload_Request::UnitControlUpload_Request(boost::shared_ptr< Identifier> arg__unitControlName,
-            boost::shared_ptr< continueAfter_type> arg__continueAfter) :
+            boost::shared_ptr< ContinueAfter_type> arg__continueAfter) :
     unitControlName_(arg__unitControlName),
     continueAfter_(arg__continueAfter) {
     };
 
-    void UnitControlUpload_Request::continueAfter_type::domain(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), continueAfter_type_domain);
+    void UnitControlUpload_Request::ContinueAfter_type::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), ContinueAfter_type_domain);
     }
 
-    void UnitControlUpload_Request::continueAfter_type::ulsmID(const int& vl) {
-        set<int>(new int(vl), continueAfter_type_ulsmID);
+    void UnitControlUpload_Request::ContinueAfter_type::ulsmID(const int& vl) {
+        set<int>(new int(vl), ContinueAfter_type_ulsmID);
     }
 
-    void UnitControlUpload_Request::continueAfter_type::programInvocation(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), continueAfter_type_programInvocation);
+    void UnitControlUpload_Request::ContinueAfter_type::programInvocation(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), ContinueAfter_type_programInvocation);
     }
 
-    template<> void UnitControlUpload_Request::continueAfter_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void UnitControlUpload_Request::ContinueAfter_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case continueAfter_type_domain:
+            case ContinueAfter_type_domain:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, continueAfter_type_domain), 1);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, ContinueAfter_type_domain), 1);
                 break;
             }
-            case continueAfter_type_ulsmID:
+            case ContinueAfter_type_ulsmID:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, continueAfter_type_ulsmID), 2);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ContinueAfter_type_ulsmID), 2);
                 break;
             }
-            case continueAfter_type_programInvocation:
+            case ContinueAfter_type_programInvocation:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, continueAfter_type_programInvocation), 3);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, ContinueAfter_type_programInvocation), 3);
                 break;
             }
             default:
@@ -10537,7 +10537,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void UnitControlUpload_Request::continueAfter_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void UnitControlUpload_Request::ContinueAfter_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -10561,19 +10561,19 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, continueAfter_type_domain), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, ContinueAfter_type_domain), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, continueAfter_type_ulsmID), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ContinueAfter_type_ulsmID), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, continueAfter_type_programInvocation), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, ContinueAfter_type_programInvocation), 3)) return;
                         else free();
                         break;
                     }
@@ -10622,12 +10622,12 @@ namespace ISO_9506_MMS_1 {
         unitControlName_ = vl;
     }
 
-    boost::shared_ptr<UnitControlUpload_Request::continueAfter_type> UnitControlUpload_Request::continueAfter__new() {
-        return continueAfter_ = boost::shared_ptr<continueAfter_type>(new continueAfter_type());
+    boost::shared_ptr<UnitControlUpload_Request::ContinueAfter_type> UnitControlUpload_Request::continueAfter__new() {
+        return continueAfter_ = boost::shared_ptr<ContinueAfter_type>(new ContinueAfter_type());
     }
 
-    void UnitControlUpload_Request::continueAfter(const continueAfter_type& vl) {
-        continueAfter_ = boost::shared_ptr<continueAfter_type>(new continueAfter_type(vl));
+    void UnitControlUpload_Request::continueAfter(const ContinueAfter_type& vl) {
+        continueAfter_ = boost::shared_ptr<ContinueAfter_type>(new ContinueAfter_type(vl));
     }
 
 
@@ -10636,43 +10636,43 @@ namespace ISO_9506_MMS_1 {
     UnitControlUpload_Response::UnitControlUpload_Response() : controlElements_() {
     };
 
-    UnitControlUpload_Response::UnitControlUpload_Response(const controlElements_type& arg__controlElements) :
+    UnitControlUpload_Response::UnitControlUpload_Response(const ControlElements_type& arg__controlElements) :
     controlElements_(arg__controlElements) {
     };
 
-    UnitControlUpload_Response::UnitControlUpload_Response(boost::shared_ptr< controlElements_type> arg__controlElements,
-            boost::shared_ptr< nextElement_type> arg__nextElement) :
+    UnitControlUpload_Response::UnitControlUpload_Response(boost::shared_ptr< ControlElements_type> arg__controlElements,
+            boost::shared_ptr< NextElement_type> arg__nextElement) :
     controlElements_(arg__controlElements),
     nextElement_(arg__nextElement) {
     };
 
-    void UnitControlUpload_Response::nextElement_type::domain(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), nextElement_type_domain);
+    void UnitControlUpload_Response::NextElement_type::domain(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), NextElement_type_domain);
     }
 
-    void UnitControlUpload_Response::nextElement_type::ulsmID(const int& vl) {
-        set<int>(new int(vl), nextElement_type_ulsmID);
+    void UnitControlUpload_Response::NextElement_type::ulsmID(const int& vl) {
+        set<int>(new int(vl), NextElement_type_ulsmID);
     }
 
-    void UnitControlUpload_Response::nextElement_type::programInvocation(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), nextElement_type_programInvocation);
+    void UnitControlUpload_Response::NextElement_type::programInvocation(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), NextElement_type_programInvocation);
     }
 
-    template<> void UnitControlUpload_Response::nextElement_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void UnitControlUpload_Response::NextElement_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case nextElement_type_domain:
+            case NextElement_type_domain:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, nextElement_type_domain), 1);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, NextElement_type_domain), 1);
                 break;
             }
-            case nextElement_type_ulsmID:
+            case NextElement_type_ulsmID:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, nextElement_type_ulsmID), 2);
+                ITU_T_IMPLICIT_TAG(value<int > (false, NextElement_type_ulsmID), 2);
                 break;
             }
-            case nextElement_type_programInvocation:
+            case NextElement_type_programInvocation:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, nextElement_type_programInvocation), 3);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, NextElement_type_programInvocation), 3);
                 break;
             }
             default:
@@ -10681,7 +10681,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void UnitControlUpload_Response::nextElement_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void UnitControlUpload_Response::NextElement_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -10705,19 +10705,19 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, nextElement_type_domain), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, NextElement_type_domain), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, nextElement_type_ulsmID), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, NextElement_type_ulsmID), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, nextElement_type_programInvocation), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, NextElement_type_programInvocation), 3)) return;
                         else free();
                         break;
                     }
@@ -10750,28 +10750,28 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(nextElement_);
     }
 
-    UnitControlUpload_Response::controlElements_type& UnitControlUpload_Response::controlElements() {
+    UnitControlUpload_Response::ControlElements_type& UnitControlUpload_Response::controlElements() {
         return *controlElements_;
     }
 
-    const UnitControlUpload_Response::controlElements_type& UnitControlUpload_Response::controlElements() const {
+    const UnitControlUpload_Response::ControlElements_type& UnitControlUpload_Response::controlElements() const {
         return *controlElements_;
     }
 
-    void UnitControlUpload_Response::controlElements(const controlElements_type& vl) {
+    void UnitControlUpload_Response::controlElements(const ControlElements_type& vl) {
         controlElements_ = vl;
     }
 
-    void UnitControlUpload_Response::controlElements(boost::shared_ptr< controlElements_type> vl) {
+    void UnitControlUpload_Response::controlElements(boost::shared_ptr< ControlElements_type> vl) {
         controlElements_ = vl;
     }
 
-    boost::shared_ptr<UnitControlUpload_Response::nextElement_type> UnitControlUpload_Response::nextElement__new() {
-        return nextElement_ = boost::shared_ptr<nextElement_type>(new nextElement_type());
+    boost::shared_ptr<UnitControlUpload_Response::NextElement_type> UnitControlUpload_Response::nextElement__new() {
+        return nextElement_ = boost::shared_ptr<NextElement_type>(new NextElement_type());
     }
 
-    void UnitControlUpload_Response::nextElement(const nextElement_type& vl) {
-        nextElement_ = boost::shared_ptr<nextElement_type>(new nextElement_type(vl));
+    void UnitControlUpload_Response::nextElement(const NextElement_type& vl) {
+        nextElement_ = boost::shared_ptr<NextElement_type>(new NextElement_type(vl));
     }
 
 
@@ -10785,38 +10785,38 @@ namespace ISO_9506_MMS_1 {
     };
 
     StartUnitControl_Request::StartUnitControl_Request(boost::shared_ptr< Identifier> arg__unitControlName,
-            boost::shared_ptr< executionArgument_type> arg__executionArgument) :
+            boost::shared_ptr< ExecutionArgument_type> arg__executionArgument) :
     unitControlName_(arg__unitControlName),
     executionArgument_(arg__executionArgument) {
     };
 
-    void StartUnitControl_Request::executionArgument_type::simpleString(const MMSString& vl) {
-        set<MMSString>(new MMSString(vl), executionArgument_type_simpleString);
+    void StartUnitControl_Request::ExecutionArgument_type::simpleString(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), ExecutionArgument_type_simpleString);
     }
 
-    void StartUnitControl_Request::executionArgument_type::encodedString(const external_type& vl) {
-        set<external_type>(new external_type(vl), executionArgument_type_encodedString);
+    void StartUnitControl_Request::ExecutionArgument_type::encodedString(const external_type& vl) {
+        set<external_type>(new external_type(vl), ExecutionArgument_type_encodedString);
     }
 
-    void StartUnitControl_Request::executionArgument_type::enmbeddedString(const embeded_type& vl) {
-        set<embeded_type>(new embeded_type(vl), executionArgument_type_enmbeddedString);
+    void StartUnitControl_Request::ExecutionArgument_type::enmbeddedString(const embeded_type& vl) {
+        set<embeded_type>(new embeded_type(vl), ExecutionArgument_type_enmbeddedString);
     }
 
-    template<> void StartUnitControl_Request::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void StartUnitControl_Request::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case executionArgument_type_simpleString:
+            case ExecutionArgument_type_simpleString:
             {
-                ITU_T_IMPLICIT_TAG(value<MMSString > (false, executionArgument_type_simpleString), 1);
+                ITU_T_IMPLICIT_TAG(value<MMSString > (false, ExecutionArgument_type_simpleString), 1);
                 break;
             }
-            case executionArgument_type_encodedString:
+            case ExecutionArgument_type_encodedString:
             {
-                ITU_T_BIND_TAG(value<external_type > (false, executionArgument_type_encodedString));
+                ITU_T_BIND_TAG(value<external_type > (false, ExecutionArgument_type_encodedString));
                 break;
             }
-            case executionArgument_type_enmbeddedString:
+            case ExecutionArgument_type_enmbeddedString:
             {
-                ITU_T_BIND_TAG(value<embeded_type > (false, executionArgument_type_enmbeddedString));
+                ITU_T_BIND_TAG(value<embeded_type > (false, ExecutionArgument_type_enmbeddedString));
                 break;
             }
             default:
@@ -10825,7 +10825,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void StartUnitControl_Request::executionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void StartUnitControl_Request::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -10849,7 +10849,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<MMSString > (true, executionArgument_type_simpleString), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<MMSString > (true, ExecutionArgument_type_simpleString), 1)) return;
                         else free();
                         break;
                     }
@@ -10868,9 +10868,9 @@ namespace ISO_9506_MMS_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<external_type > (true, executionArgument_type_encodedString))) return;
+                if (ITU_T_BIND_TAG(value<external_type > (true, ExecutionArgument_type_encodedString))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<embeded_type > (true, executionArgument_type_enmbeddedString))) return;
+                if (ITU_T_BIND_TAG(value<embeded_type > (true, ExecutionArgument_type_enmbeddedString))) return;
                 else free();
             }
         }
@@ -10902,12 +10902,12 @@ namespace ISO_9506_MMS_1 {
         unitControlName_ = vl;
     }
 
-    boost::shared_ptr<StartUnitControl_Request::executionArgument_type> StartUnitControl_Request::executionArgument__new() {
-        return executionArgument_ = boost::shared_ptr<executionArgument_type>(new executionArgument_type());
+    boost::shared_ptr<StartUnitControl_Request::ExecutionArgument_type> StartUnitControl_Request::executionArgument__new() {
+        return executionArgument_ = boost::shared_ptr<ExecutionArgument_type>(new ExecutionArgument_type());
     }
 
-    void StartUnitControl_Request::executionArgument(const executionArgument_type& vl) {
-        executionArgument_ = boost::shared_ptr<executionArgument_type>(new executionArgument_type(vl));
+    void StartUnitControl_Request::executionArgument(const ExecutionArgument_type& vl) {
+        executionArgument_ = boost::shared_ptr<ExecutionArgument_type>(new ExecutionArgument_type(vl));
     }
 
 
@@ -11025,8 +11025,8 @@ namespace ISO_9506_MMS_1 {
     };
 
     CreateUnitControl_Request::CreateUnitControl_Request(const Identifier& arg__unitControl,
-            const domains_type& arg__domains,
-            const programInvocations_type& arg__programInvocations) :
+            const Domains_type& arg__domains,
+            const ProgramInvocations_type& arg__programInvocations) :
     unitControl_(arg__unitControl),
     domains_(arg__domains),
     programInvocations_(arg__programInvocations) {
@@ -11060,35 +11060,35 @@ namespace ISO_9506_MMS_1 {
         unitControl_ = vl;
     }
 
-    CreateUnitControl_Request::domains_type& CreateUnitControl_Request::domains() {
+    CreateUnitControl_Request::Domains_type& CreateUnitControl_Request::domains() {
         return *domains_;
     }
 
-    const CreateUnitControl_Request::domains_type& CreateUnitControl_Request::domains() const {
+    const CreateUnitControl_Request::Domains_type& CreateUnitControl_Request::domains() const {
         return *domains_;
     }
 
-    void CreateUnitControl_Request::domains(const domains_type& vl) {
+    void CreateUnitControl_Request::domains(const Domains_type& vl) {
         domains_ = vl;
     }
 
-    void CreateUnitControl_Request::domains(boost::shared_ptr< domains_type> vl) {
+    void CreateUnitControl_Request::domains(boost::shared_ptr< Domains_type> vl) {
         domains_ = vl;
     }
 
-    CreateUnitControl_Request::programInvocations_type& CreateUnitControl_Request::programInvocations() {
+    CreateUnitControl_Request::ProgramInvocations_type& CreateUnitControl_Request::programInvocations() {
         return *programInvocations_;
     }
 
-    const CreateUnitControl_Request::programInvocations_type& CreateUnitControl_Request::programInvocations() const {
+    const CreateUnitControl_Request::ProgramInvocations_type& CreateUnitControl_Request::programInvocations() const {
         return *programInvocations_;
     }
 
-    void CreateUnitControl_Request::programInvocations(const programInvocations_type& vl) {
+    void CreateUnitControl_Request::programInvocations(const ProgramInvocations_type& vl) {
         programInvocations_ = vl;
     }
 
-    void CreateUnitControl_Request::programInvocations(boost::shared_ptr< programInvocations_type> vl) {
+    void CreateUnitControl_Request::programInvocations(boost::shared_ptr< ProgramInvocations_type> vl) {
         programInvocations_ = vl;
     }
 
@@ -11099,8 +11099,8 @@ namespace ISO_9506_MMS_1 {
     };
 
     AddToUnitControl_Request::AddToUnitControl_Request(const Identifier& arg__unitControl,
-            const domains_type& arg__domains,
-            const programInvocations_type& arg__programInvocations) :
+            const Domains_type& arg__domains,
+            const ProgramInvocations_type& arg__programInvocations) :
     unitControl_(arg__unitControl),
     domains_(arg__domains),
     programInvocations_(arg__programInvocations) {
@@ -11134,35 +11134,35 @@ namespace ISO_9506_MMS_1 {
         unitControl_ = vl;
     }
 
-    AddToUnitControl_Request::domains_type& AddToUnitControl_Request::domains() {
+    AddToUnitControl_Request::Domains_type& AddToUnitControl_Request::domains() {
         return *domains_;
     }
 
-    const AddToUnitControl_Request::domains_type& AddToUnitControl_Request::domains() const {
+    const AddToUnitControl_Request::Domains_type& AddToUnitControl_Request::domains() const {
         return *domains_;
     }
 
-    void AddToUnitControl_Request::domains(const domains_type& vl) {
+    void AddToUnitControl_Request::domains(const Domains_type& vl) {
         domains_ = vl;
     }
 
-    void AddToUnitControl_Request::domains(boost::shared_ptr< domains_type> vl) {
+    void AddToUnitControl_Request::domains(boost::shared_ptr< Domains_type> vl) {
         domains_ = vl;
     }
 
-    AddToUnitControl_Request::programInvocations_type& AddToUnitControl_Request::programInvocations() {
+    AddToUnitControl_Request::ProgramInvocations_type& AddToUnitControl_Request::programInvocations() {
         return *programInvocations_;
     }
 
-    const AddToUnitControl_Request::programInvocations_type& AddToUnitControl_Request::programInvocations() const {
+    const AddToUnitControl_Request::ProgramInvocations_type& AddToUnitControl_Request::programInvocations() const {
         return *programInvocations_;
     }
 
-    void AddToUnitControl_Request::programInvocations(const programInvocations_type& vl) {
+    void AddToUnitControl_Request::programInvocations(const ProgramInvocations_type& vl) {
         programInvocations_ = vl;
     }
 
-    void AddToUnitControl_Request::programInvocations(boost::shared_ptr< programInvocations_type> vl) {
+    void AddToUnitControl_Request::programInvocations(boost::shared_ptr< ProgramInvocations_type> vl) {
         programInvocations_ = vl;
     }
 
@@ -11173,8 +11173,8 @@ namespace ISO_9506_MMS_1 {
     };
 
     RemoveFromUnitControl_Request::RemoveFromUnitControl_Request(const Identifier& arg__unitControl,
-            const domains_type& arg__domains,
-            const programInvocations_type& arg__programInvocations) :
+            const Domains_type& arg__domains,
+            const ProgramInvocations_type& arg__programInvocations) :
     unitControl_(arg__unitControl),
     domains_(arg__domains),
     programInvocations_(arg__programInvocations) {
@@ -11208,35 +11208,35 @@ namespace ISO_9506_MMS_1 {
         unitControl_ = vl;
     }
 
-    RemoveFromUnitControl_Request::domains_type& RemoveFromUnitControl_Request::domains() {
+    RemoveFromUnitControl_Request::Domains_type& RemoveFromUnitControl_Request::domains() {
         return *domains_;
     }
 
-    const RemoveFromUnitControl_Request::domains_type& RemoveFromUnitControl_Request::domains() const {
+    const RemoveFromUnitControl_Request::Domains_type& RemoveFromUnitControl_Request::domains() const {
         return *domains_;
     }
 
-    void RemoveFromUnitControl_Request::domains(const domains_type& vl) {
+    void RemoveFromUnitControl_Request::domains(const Domains_type& vl) {
         domains_ = vl;
     }
 
-    void RemoveFromUnitControl_Request::domains(boost::shared_ptr< domains_type> vl) {
+    void RemoveFromUnitControl_Request::domains(boost::shared_ptr< Domains_type> vl) {
         domains_ = vl;
     }
 
-    RemoveFromUnitControl_Request::programInvocations_type& RemoveFromUnitControl_Request::programInvocations() {
+    RemoveFromUnitControl_Request::ProgramInvocations_type& RemoveFromUnitControl_Request::programInvocations() {
         return *programInvocations_;
     }
 
-    const RemoveFromUnitControl_Request::programInvocations_type& RemoveFromUnitControl_Request::programInvocations() const {
+    const RemoveFromUnitControl_Request::ProgramInvocations_type& RemoveFromUnitControl_Request::programInvocations() const {
         return *programInvocations_;
     }
 
-    void RemoveFromUnitControl_Request::programInvocations(const programInvocations_type& vl) {
+    void RemoveFromUnitControl_Request::programInvocations(const ProgramInvocations_type& vl) {
         programInvocations_ = vl;
     }
 
-    void RemoveFromUnitControl_Request::programInvocations(boost::shared_ptr< programInvocations_type> vl) {
+    void RemoveFromUnitControl_Request::programInvocations(boost::shared_ptr< ProgramInvocations_type> vl) {
         programInvocations_ = vl;
     }
 
@@ -11246,8 +11246,8 @@ namespace ISO_9506_MMS_1 {
     GetUnitControlAttributes_Response::GetUnitControlAttributes_Response() : domains_(), programInvocations_() {
     };
 
-    GetUnitControlAttributes_Response::GetUnitControlAttributes_Response(const domains_type& arg__domains,
-            const programInvocations_type& arg__programInvocations) :
+    GetUnitControlAttributes_Response::GetUnitControlAttributes_Response(const Domains_type& arg__domains,
+            const ProgramInvocations_type& arg__programInvocations) :
     domains_(arg__domains),
     programInvocations_(arg__programInvocations) {
     };
@@ -11262,35 +11262,35 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(programInvocations_, 1);
     }
 
-    GetUnitControlAttributes_Response::domains_type& GetUnitControlAttributes_Response::domains() {
+    GetUnitControlAttributes_Response::Domains_type& GetUnitControlAttributes_Response::domains() {
         return *domains_;
     }
 
-    const GetUnitControlAttributes_Response::domains_type& GetUnitControlAttributes_Response::domains() const {
+    const GetUnitControlAttributes_Response::Domains_type& GetUnitControlAttributes_Response::domains() const {
         return *domains_;
     }
 
-    void GetUnitControlAttributes_Response::domains(const domains_type& vl) {
+    void GetUnitControlAttributes_Response::domains(const Domains_type& vl) {
         domains_ = vl;
     }
 
-    void GetUnitControlAttributes_Response::domains(boost::shared_ptr< domains_type> vl) {
+    void GetUnitControlAttributes_Response::domains(boost::shared_ptr< Domains_type> vl) {
         domains_ = vl;
     }
 
-    GetUnitControlAttributes_Response::programInvocations_type& GetUnitControlAttributes_Response::programInvocations() {
+    GetUnitControlAttributes_Response::ProgramInvocations_type& GetUnitControlAttributes_Response::programInvocations() {
         return *programInvocations_;
     }
 
-    const GetUnitControlAttributes_Response::programInvocations_type& GetUnitControlAttributes_Response::programInvocations() const {
+    const GetUnitControlAttributes_Response::ProgramInvocations_type& GetUnitControlAttributes_Response::programInvocations() const {
         return *programInvocations_;
     }
 
-    void GetUnitControlAttributes_Response::programInvocations(const programInvocations_type& vl) {
+    void GetUnitControlAttributes_Response::programInvocations(const ProgramInvocations_type& vl) {
         programInvocations_ = vl;
     }
 
-    void GetUnitControlAttributes_Response::programInvocations(boost::shared_ptr< programInvocations_type> vl) {
+    void GetUnitControlAttributes_Response::programInvocations(boost::shared_ptr< ProgramInvocations_type> vl) {
         programInvocations_ = vl;
     }
 
@@ -11687,54 +11687,54 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    AlternateAccess_sequence_of::named_type::named_type() : componentName_(), access_() {
+    AlternateAccess_sequence_of::Named_type::Named_type() : componentName_(), access_() {
     };
 
-    AlternateAccess_sequence_of::named_type::named_type(const Identifier& arg__componentName,
+    AlternateAccess_sequence_of::Named_type::Named_type(const Identifier& arg__componentName,
             const AlternateAccessSelection& arg__access) :
     componentName_(arg__componentName),
     access_(arg__access) {
     };
 
-    template<> void AlternateAccess_sequence_of::named_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void AlternateAccess_sequence_of::Named_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(componentName_, 0);
         ITU_T_BIND_CHOICE(access_);
     }
 
-    template<> void AlternateAccess_sequence_of::named_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void AlternateAccess_sequence_of::Named_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(componentName_, 0);
         ITU_T_BIND_CHOICE(access_);
     }
 
-    Identifier& AlternateAccess_sequence_of::named_type::componentName() {
+    Identifier& AlternateAccess_sequence_of::Named_type::componentName() {
         return *componentName_;
     }
 
-    const Identifier& AlternateAccess_sequence_of::named_type::componentName() const {
+    const Identifier& AlternateAccess_sequence_of::Named_type::componentName() const {
         return *componentName_;
     }
 
-    void AlternateAccess_sequence_of::named_type::componentName(const Identifier& vl) {
+    void AlternateAccess_sequence_of::Named_type::componentName(const Identifier& vl) {
         componentName_ = vl;
     }
 
-    void AlternateAccess_sequence_of::named_type::componentName(boost::shared_ptr< Identifier> vl) {
+    void AlternateAccess_sequence_of::Named_type::componentName(boost::shared_ptr< Identifier> vl) {
         componentName_ = vl;
     }
 
-    AlternateAccessSelection& AlternateAccess_sequence_of::named_type::access() {
+    AlternateAccessSelection& AlternateAccess_sequence_of::Named_type::access() {
         return *access_;
     }
 
-    const AlternateAccessSelection& AlternateAccess_sequence_of::named_type::access() const {
+    const AlternateAccessSelection& AlternateAccess_sequence_of::Named_type::access() const {
         return *access_;
     }
 
-    void AlternateAccess_sequence_of::named_type::access(const AlternateAccessSelection& vl) {
+    void AlternateAccess_sequence_of::Named_type::access(const AlternateAccessSelection& vl) {
         access_ = vl;
     }
 
-    void AlternateAccess_sequence_of::named_type::access(boost::shared_ptr< AlternateAccessSelection> vl) {
+    void AlternateAccess_sequence_of::Named_type::access(boost::shared_ptr< AlternateAccessSelection> vl) {
         access_ = vl;
     }
 
@@ -11747,7 +11747,7 @@ namespace ISO_9506_MMS_1 {
             }
             case AlternateAccess_sequence_of_named:
             {
-                ITU_T_IMPLICIT_TAG(value<named_type > (false, AlternateAccess_sequence_of_named), 5);
+                ITU_T_IMPLICIT_TAG(value<Named_type > (false, AlternateAccess_sequence_of_named), 5);
                 break;
             }
             default:
@@ -11780,7 +11780,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 5:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<named_type > (true, AlternateAccess_sequence_of_named), 5)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Named_type > (true, AlternateAccess_sequence_of_named), 5)) return;
                         else free();
                         break;
                     }
@@ -11808,98 +11808,98 @@ namespace ISO_9506_MMS_1 {
 
     // choice AlternateAccessSelection
 
-    AlternateAccessSelection::selectAlternateAccess_type::selectAlternateAccess_type() : accessSelection_(), alternateAccess_() {
+    AlternateAccessSelection::SelectAlternateAccess_type::SelectAlternateAccess_type() : accessSelection_(), alternateAccess_() {
     };
 
-    AlternateAccessSelection::selectAlternateAccess_type::selectAlternateAccess_type(const accessSelection_type& arg__accessSelection,
+    AlternateAccessSelection::SelectAlternateAccess_type::SelectAlternateAccess_type(const AccessSelection_type& arg__accessSelection,
             const AlternateAccess& arg__alternateAccess) :
     accessSelection_(arg__accessSelection),
     alternateAccess_(arg__alternateAccess) {
     };
 
-    AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::indexRange_type() : lowIndex_(), numberOfElements_() {
+    AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::IndexRange_type() : lowIndex_(), numberOfElements_() {
     };
 
-    AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::indexRange_type(const Unsigned32& arg__lowIndex,
+    AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::IndexRange_type(const Unsigned32& arg__lowIndex,
             const Unsigned32& arg__numberOfElements) :
     lowIndex_(arg__lowIndex),
     numberOfElements_(arg__numberOfElements) {
     };
 
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(lowIndex_, 0);
         ITU_T_IMPLICIT_TAG(numberOfElements_, 1);
     }
 
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(lowIndex_, 0);
         ITU_T_IMPLICIT_TAG(numberOfElements_, 1);
     }
 
-    Unsigned32& AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::lowIndex() {
+    Unsigned32& AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::lowIndex() {
         return *lowIndex_;
     }
 
-    const Unsigned32& AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::lowIndex() const {
+    const Unsigned32& AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::lowIndex() const {
         return *lowIndex_;
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::lowIndex(const Unsigned32& vl) {
+    void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::lowIndex(const Unsigned32& vl) {
         lowIndex_ = vl;
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::lowIndex(boost::shared_ptr< Unsigned32> vl) {
+    void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::lowIndex(boost::shared_ptr< Unsigned32> vl) {
         lowIndex_ = vl;
     }
 
-    Unsigned32& AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::numberOfElements() {
+    Unsigned32& AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::numberOfElements() {
         return *numberOfElements_;
     }
 
-    const Unsigned32& AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::numberOfElements() const {
+    const Unsigned32& AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::numberOfElements() const {
         return *numberOfElements_;
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::numberOfElements(const Unsigned32& vl) {
+    void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::numberOfElements(const Unsigned32& vl) {
         numberOfElements_ = vl;
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::numberOfElements(boost::shared_ptr< Unsigned32> vl) {
+    void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::numberOfElements(boost::shared_ptr< Unsigned32> vl) {
         numberOfElements_ = vl;
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::component(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), accessSelection_type_component);
+    void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::component(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), AccessSelection_type_component);
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::index(const Unsigned32& vl) {
-        set<Unsigned32>(new Unsigned32(vl), accessSelection_type_index);
+    void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::index(const Unsigned32& vl) {
+        set<Unsigned32>(new Unsigned32(vl), AccessSelection_type_index);
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::allElements(const null_type& vl) {
-        set<null_type>(new null_type(vl), accessSelection_type_allElements);
+    void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::allElements(const null_type& vl) {
+        set<null_type>(new null_type(vl), AccessSelection_type_allElements);
     }
 
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case accessSelection_type_component:
+            case AccessSelection_type_component:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, accessSelection_type_component), 0);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, AccessSelection_type_component), 0);
                 break;
             }
-            case accessSelection_type_index:
+            case AccessSelection_type_index:
             {
-                ITU_T_IMPLICIT_TAG(value<Unsigned32 > (false, accessSelection_type_index), 1);
+                ITU_T_IMPLICIT_TAG(value<Unsigned32 > (false, AccessSelection_type_index), 1);
                 break;
             }
-            case accessSelection_type_indexRange:
+            case AccessSelection_type_indexRange:
             {
-                ITU_T_IMPLICIT_TAG(value<indexRange_type > (false, accessSelection_type_indexRange), 2);
+                ITU_T_IMPLICIT_TAG(value<IndexRange_type > (false, AccessSelection_type_indexRange), 2);
                 break;
             }
-            case accessSelection_type_allElements:
+            case AccessSelection_type_allElements:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, accessSelection_type_allElements), 3);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, AccessSelection_type_allElements), 3);
                 break;
             }
             default:
@@ -11908,7 +11908,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -11932,25 +11932,25 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, accessSelection_type_component), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, AccessSelection_type_component), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Unsigned32 > (true, accessSelection_type_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Unsigned32 > (true, AccessSelection_type_index), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<indexRange_type > (true, accessSelection_type_indexRange), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<IndexRange_type > (true, AccessSelection_type_indexRange), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, accessSelection_type_allElements), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, AccessSelection_type_allElements), 3)) return;
                         else free();
                         break;
                     }
@@ -11973,131 +11973,131 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(accessSelection_);
         ITU_T_BIND_TAG(alternateAccess_);
     }
 
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(accessSelection_);
         ITU_T_BIND_TAG(alternateAccess_);
     }
 
-    AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type& AlternateAccessSelection::selectAlternateAccess_type::accessSelection() {
+    AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type& AlternateAccessSelection::SelectAlternateAccess_type::accessSelection() {
         return *accessSelection_;
     }
 
-    const AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type& AlternateAccessSelection::selectAlternateAccess_type::accessSelection() const {
+    const AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type& AlternateAccessSelection::SelectAlternateAccess_type::accessSelection() const {
         return *accessSelection_;
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection(const accessSelection_type& vl) {
+    void AlternateAccessSelection::SelectAlternateAccess_type::accessSelection(const AccessSelection_type& vl) {
         accessSelection_ = vl;
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::accessSelection(boost::shared_ptr< accessSelection_type> vl) {
+    void AlternateAccessSelection::SelectAlternateAccess_type::accessSelection(boost::shared_ptr< AccessSelection_type> vl) {
         accessSelection_ = vl;
     }
 
-    AlternateAccess& AlternateAccessSelection::selectAlternateAccess_type::alternateAccess() {
+    AlternateAccess& AlternateAccessSelection::SelectAlternateAccess_type::alternateAccess() {
         return *alternateAccess_;
     }
 
-    const AlternateAccess& AlternateAccessSelection::selectAlternateAccess_type::alternateAccess() const {
+    const AlternateAccess& AlternateAccessSelection::SelectAlternateAccess_type::alternateAccess() const {
         return *alternateAccess_;
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::alternateAccess(const AlternateAccess& vl) {
+    void AlternateAccessSelection::SelectAlternateAccess_type::alternateAccess(const AlternateAccess& vl) {
         alternateAccess_ = vl;
     }
 
-    void AlternateAccessSelection::selectAlternateAccess_type::alternateAccess(boost::shared_ptr< AlternateAccess> vl) {
+    void AlternateAccessSelection::SelectAlternateAccess_type::alternateAccess(boost::shared_ptr< AlternateAccess> vl) {
         alternateAccess_ = vl;
     }
 
-    AlternateAccessSelection::selectAccess_type::indexRange_type::indexRange_type() : lowIndex_(), numberOfElements_() {
+    AlternateAccessSelection::SelectAccess_type::IndexRange_type::IndexRange_type() : lowIndex_(), numberOfElements_() {
     };
 
-    AlternateAccessSelection::selectAccess_type::indexRange_type::indexRange_type(const Unsigned32& arg__lowIndex,
+    AlternateAccessSelection::SelectAccess_type::IndexRange_type::IndexRange_type(const Unsigned32& arg__lowIndex,
             const Unsigned32& arg__numberOfElements) :
     lowIndex_(arg__lowIndex),
     numberOfElements_(arg__numberOfElements) {
     };
 
-    template<> void AlternateAccessSelection::selectAccess_type::indexRange_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void AlternateAccessSelection::SelectAccess_type::IndexRange_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(lowIndex_, 0);
         ITU_T_IMPLICIT_TAG(numberOfElements_, 1);
     }
 
-    template<> void AlternateAccessSelection::selectAccess_type::indexRange_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void AlternateAccessSelection::SelectAccess_type::IndexRange_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(lowIndex_, 0);
         ITU_T_IMPLICIT_TAG(numberOfElements_, 1);
     }
 
-    Unsigned32& AlternateAccessSelection::selectAccess_type::indexRange_type::lowIndex() {
+    Unsigned32& AlternateAccessSelection::SelectAccess_type::IndexRange_type::lowIndex() {
         return *lowIndex_;
     }
 
-    const Unsigned32& AlternateAccessSelection::selectAccess_type::indexRange_type::lowIndex() const {
+    const Unsigned32& AlternateAccessSelection::SelectAccess_type::IndexRange_type::lowIndex() const {
         return *lowIndex_;
     }
 
-    void AlternateAccessSelection::selectAccess_type::indexRange_type::lowIndex(const Unsigned32& vl) {
+    void AlternateAccessSelection::SelectAccess_type::IndexRange_type::lowIndex(const Unsigned32& vl) {
         lowIndex_ = vl;
     }
 
-    void AlternateAccessSelection::selectAccess_type::indexRange_type::lowIndex(boost::shared_ptr< Unsigned32> vl) {
+    void AlternateAccessSelection::SelectAccess_type::IndexRange_type::lowIndex(boost::shared_ptr< Unsigned32> vl) {
         lowIndex_ = vl;
     }
 
-    Unsigned32& AlternateAccessSelection::selectAccess_type::indexRange_type::numberOfElements() {
+    Unsigned32& AlternateAccessSelection::SelectAccess_type::IndexRange_type::numberOfElements() {
         return *numberOfElements_;
     }
 
-    const Unsigned32& AlternateAccessSelection::selectAccess_type::indexRange_type::numberOfElements() const {
+    const Unsigned32& AlternateAccessSelection::SelectAccess_type::IndexRange_type::numberOfElements() const {
         return *numberOfElements_;
     }
 
-    void AlternateAccessSelection::selectAccess_type::indexRange_type::numberOfElements(const Unsigned32& vl) {
+    void AlternateAccessSelection::SelectAccess_type::IndexRange_type::numberOfElements(const Unsigned32& vl) {
         numberOfElements_ = vl;
     }
 
-    void AlternateAccessSelection::selectAccess_type::indexRange_type::numberOfElements(boost::shared_ptr< Unsigned32> vl) {
+    void AlternateAccessSelection::SelectAccess_type::IndexRange_type::numberOfElements(boost::shared_ptr< Unsigned32> vl) {
         numberOfElements_ = vl;
     }
 
-    void AlternateAccessSelection::selectAccess_type::component(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), selectAccess_type_component);
+    void AlternateAccessSelection::SelectAccess_type::component(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), SelectAccess_type_component);
     }
 
-    void AlternateAccessSelection::selectAccess_type::index(const Unsigned32& vl) {
-        set<Unsigned32>(new Unsigned32(vl), selectAccess_type_index);
+    void AlternateAccessSelection::SelectAccess_type::index(const Unsigned32& vl) {
+        set<Unsigned32>(new Unsigned32(vl), SelectAccess_type_index);
     }
 
-    void AlternateAccessSelection::selectAccess_type::allElements(const null_type& vl) {
-        set<null_type>(new null_type(vl), selectAccess_type_allElements);
+    void AlternateAccessSelection::SelectAccess_type::allElements(const null_type& vl) {
+        set<null_type>(new null_type(vl), SelectAccess_type_allElements);
     }
 
-    template<> void AlternateAccessSelection::selectAccess_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void AlternateAccessSelection::SelectAccess_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case selectAccess_type_component:
+            case SelectAccess_type_component:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, selectAccess_type_component), 1);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, SelectAccess_type_component), 1);
                 break;
             }
-            case selectAccess_type_index:
+            case SelectAccess_type_index:
             {
-                ITU_T_IMPLICIT_TAG(value<Unsigned32 > (false, selectAccess_type_index), 2);
+                ITU_T_IMPLICIT_TAG(value<Unsigned32 > (false, SelectAccess_type_index), 2);
                 break;
             }
-            case selectAccess_type_indexRange:
+            case SelectAccess_type_indexRange:
             {
-                ITU_T_IMPLICIT_TAG(value<indexRange_type > (false, selectAccess_type_indexRange), 3);
+                ITU_T_IMPLICIT_TAG(value<IndexRange_type > (false, SelectAccess_type_indexRange), 3);
                 break;
             }
-            case selectAccess_type_allElements:
+            case SelectAccess_type_allElements:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, selectAccess_type_allElements), 4);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, SelectAccess_type_allElements), 4);
                 break;
             }
             default:
@@ -12106,7 +12106,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void AlternateAccessSelection::selectAccess_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void AlternateAccessSelection::SelectAccess_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -12130,25 +12130,25 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, selectAccess_type_component), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, SelectAccess_type_component), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Unsigned32 > (true, selectAccess_type_index), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Unsigned32 > (true, SelectAccess_type_index), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<indexRange_type > (true, selectAccess_type_indexRange), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<IndexRange_type > (true, SelectAccess_type_indexRange), 3)) return;
                         else free();
                         break;
                     }
                     case 4:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, selectAccess_type_allElements), 4)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, SelectAccess_type_allElements), 4)) return;
                         else free();
                         break;
                     }
@@ -12175,12 +12175,12 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case AlternateAccessSelection_selectAlternateAccess:
             {
-                ITU_T_IMPLICIT_TAG(value<selectAlternateAccess_type > (false, AlternateAccessSelection_selectAlternateAccess), 0);
+                ITU_T_IMPLICIT_TAG(value<SelectAlternateAccess_type > (false, AlternateAccessSelection_selectAlternateAccess), 0);
                 break;
             }
             case AlternateAccessSelection_selectAccess:
             {
-                ITU_T_BIND_CHOICE(value<selectAccess_type > (false, AlternateAccessSelection_selectAccess));
+                ITU_T_BIND_CHOICE(value<SelectAccess_type > (false, AlternateAccessSelection_selectAccess));
                 break;
             }
             default:
@@ -12213,7 +12213,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<selectAlternateAccess_type > (true, AlternateAccessSelection_selectAlternateAccess), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<SelectAlternateAccess_type > (true, AlternateAccessSelection_selectAlternateAccess), 0)) return;
                         else free();
                         break;
                     }
@@ -12232,7 +12232,7 @@ namespace ISO_9506_MMS_1 {
             }
             default:
             {
-                if (ITU_T_BIND_CHOICE(value<selectAccess_type > (true, AlternateAccessSelection_selectAccess))) return;
+                if (ITU_T_BIND_CHOICE(value<SelectAccess_type > (true, AlternateAccessSelection_selectAccess))) return;
                 else free();
             }
         }
@@ -12371,12 +12371,12 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case Data_array:
             {
-                ITU_T_IMPLICIT_TAG(value<array_type > (false, Data_array), 1);
+                ITU_T_IMPLICIT_TAG(value<Array_type > (false, Data_array), 1);
                 break;
             }
             case Data_structure:
             {
-                ITU_T_IMPLICIT_TAG(value<structure_type > (false, Data_structure), 2);
+                ITU_T_IMPLICIT_TAG(value<Structure_type > (false, Data_structure), 2);
                 break;
             }
             case Data_boolean:
@@ -12474,13 +12474,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<array_type > (true, Data_array), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Array_type > (true, Data_array), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<structure_type > (true, Data_structure), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Structure_type > (true, Data_structure), 2)) return;
                         else free();
                         break;
                     }
@@ -12582,65 +12582,65 @@ namespace ISO_9506_MMS_1 {
     }
 
 
-    const DataAccessError DataAccessError_object_invalidated = 0;
-    const DataAccessError DataAccessError_hardware_fault = 1;
-    const DataAccessError DataAccessError_temporarily_unavailable = 2;
-    const DataAccessError DataAccessError_object_access_denied = 3;
-    const DataAccessError DataAccessError_object_undefined = 4;
-    const DataAccessError DataAccessError_invalid_address = 5;
-    const DataAccessError DataAccessError_type_unsupported = 6;
-    const DataAccessError DataAccessError_type_inconsistent = 7;
-    const DataAccessError DataAccessError_object_attribute_inconsistent = 8;
-    const DataAccessError DataAccessError_object_access_unsupported = 9;
-    const DataAccessError DataAccessError_object_non_existent = 10;
-    const DataAccessError DataAccessError_object_value_invalid = 11;
+    const DataAccessError dataAccessError_object_invalidated = 0;
+    const DataAccessError dataAccessError_hardware_fault = 1;
+    const DataAccessError dataAccessError_temporarily_unavailable = 2;
+    const DataAccessError dataAccessError_object_access_denied = 3;
+    const DataAccessError dataAccessError_object_undefined = 4;
+    const DataAccessError dataAccessError_invalid_address = 5;
+    const DataAccessError dataAccessError_type_unsupported = 6;
+    const DataAccessError dataAccessError_type_inconsistent = 7;
+    const DataAccessError dataAccessError_object_attribute_inconsistent = 8;
+    const DataAccessError dataAccessError_object_access_unsupported = 9;
+    const DataAccessError dataAccessError_object_non_existent = 10;
+    const DataAccessError dataAccessError_object_value_invalid = 11;
 
     // choice VariableAccessSpecification
 
-    VariableAccessSpecification::listOfVariable_type_sequence_of::listOfVariable_type_sequence_of() : variableSpecification_() {
+    VariableAccessSpecification::ListOfVariable_type_sequence_of::ListOfVariable_type_sequence_of() : variableSpecification_() {
     };
 
-    VariableAccessSpecification::listOfVariable_type_sequence_of::listOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification) :
+    VariableAccessSpecification::ListOfVariable_type_sequence_of::ListOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification) :
     variableSpecification_(arg__variableSpecification) {
     };
 
-    VariableAccessSpecification::listOfVariable_type_sequence_of::listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
+    VariableAccessSpecification::ListOfVariable_type_sequence_of::ListOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
             boost::shared_ptr< AlternateAccess> arg__alternateAccess) :
     variableSpecification_(arg__variableSpecification),
     alternateAccess_(arg__alternateAccess) {
     };
 
-    template<> void VariableAccessSpecification::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void VariableAccessSpecification::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
     }
 
-    template<> void VariableAccessSpecification::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void VariableAccessSpecification::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
     }
 
-    VariableSpecification& VariableAccessSpecification::listOfVariable_type_sequence_of::variableSpecification() {
+    VariableSpecification& VariableAccessSpecification::ListOfVariable_type_sequence_of::variableSpecification() {
         return *variableSpecification_;
     }
 
-    const VariableSpecification& VariableAccessSpecification::listOfVariable_type_sequence_of::variableSpecification() const {
+    const VariableSpecification& VariableAccessSpecification::ListOfVariable_type_sequence_of::variableSpecification() const {
         return *variableSpecification_;
     }
 
-    void VariableAccessSpecification::listOfVariable_type_sequence_of::variableSpecification(const VariableSpecification& vl) {
+    void VariableAccessSpecification::ListOfVariable_type_sequence_of::variableSpecification(const VariableSpecification& vl) {
         variableSpecification_ = vl;
     }
 
-    void VariableAccessSpecification::listOfVariable_type_sequence_of::variableSpecification(boost::shared_ptr< VariableSpecification> vl) {
+    void VariableAccessSpecification::ListOfVariable_type_sequence_of::variableSpecification(boost::shared_ptr< VariableSpecification> vl) {
         variableSpecification_ = vl;
     }
 
-    boost::shared_ptr<AlternateAccess> VariableAccessSpecification::listOfVariable_type_sequence_of::alternateAccess__new() {
+    boost::shared_ptr<AlternateAccess> VariableAccessSpecification::ListOfVariable_type_sequence_of::alternateAccess__new() {
         return alternateAccess_ = boost::shared_ptr<AlternateAccess>(new AlternateAccess());
     }
 
-    void VariableAccessSpecification::listOfVariable_type_sequence_of::alternateAccess(const AlternateAccess& vl) {
+    void VariableAccessSpecification::ListOfVariable_type_sequence_of::alternateAccess(const AlternateAccess& vl) {
         alternateAccess_ = boost::shared_ptr<AlternateAccess>(new AlternateAccess(vl));
     }
 
@@ -12648,7 +12648,7 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case VariableAccessSpecification_listOfVariable:
             {
-                ITU_T_IMPLICIT_TAG(value<listOfVariable_type > (false, VariableAccessSpecification_listOfVariable), 0);
+                ITU_T_IMPLICIT_TAG(value<ListOfVariable_type > (false, VariableAccessSpecification_listOfVariable), 0);
                 break;
             }
             case VariableAccessSpecification_variableListName:
@@ -12686,7 +12686,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<listOfVariable_type > (true, VariableAccessSpecification_listOfVariable), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<ListOfVariable_type > (true, VariableAccessSpecification_listOfVariable), 0)) return;
                         else free();
                         break;
                     }
@@ -12718,54 +12718,54 @@ namespace ISO_9506_MMS_1 {
 
     // choice VariableSpecification
 
-    VariableSpecification::variableDescription_type::variableDescription_type() : address_(), typeSpecification_() {
+    VariableSpecification::VariableDescription_type::VariableDescription_type() : address_(), typeSpecification_() {
     };
 
-    VariableSpecification::variableDescription_type::variableDescription_type(const MMS_Object_Module_1::Address& arg__address,
+    VariableSpecification::VariableDescription_type::VariableDescription_type(const MMS_Object_Module_1::Address& arg__address,
             const TypeSpecification& arg__typeSpecification) :
     address_(arg__address),
     typeSpecification_(arg__typeSpecification) {
     };
 
-    template<> void VariableSpecification::variableDescription_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void VariableSpecification::VariableDescription_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(address_);
         ITU_T_BIND_CHOICE(typeSpecification_);
     }
 
-    template<> void VariableSpecification::variableDescription_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void VariableSpecification::VariableDescription_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(address_);
         ITU_T_BIND_CHOICE(typeSpecification_);
     }
 
-    MMS_Object_Module_1::Address& VariableSpecification::variableDescription_type::address() {
+    MMS_Object_Module_1::Address& VariableSpecification::VariableDescription_type::address() {
         return *address_;
     }
 
-    const MMS_Object_Module_1::Address& VariableSpecification::variableDescription_type::address() const {
+    const MMS_Object_Module_1::Address& VariableSpecification::VariableDescription_type::address() const {
         return *address_;
     }
 
-    void VariableSpecification::variableDescription_type::address(const MMS_Object_Module_1::Address& vl) {
+    void VariableSpecification::VariableDescription_type::address(const MMS_Object_Module_1::Address& vl) {
         address_ = vl;
     }
 
-    void VariableSpecification::variableDescription_type::address(boost::shared_ptr< MMS_Object_Module_1::Address> vl) {
+    void VariableSpecification::VariableDescription_type::address(boost::shared_ptr< MMS_Object_Module_1::Address> vl) {
         address_ = vl;
     }
 
-    TypeSpecification& VariableSpecification::variableDescription_type::typeSpecification() {
+    TypeSpecification& VariableSpecification::VariableDescription_type::typeSpecification() {
         return *typeSpecification_;
     }
 
-    const TypeSpecification& VariableSpecification::variableDescription_type::typeSpecification() const {
+    const TypeSpecification& VariableSpecification::VariableDescription_type::typeSpecification() const {
         return *typeSpecification_;
     }
 
-    void VariableSpecification::variableDescription_type::typeSpecification(const TypeSpecification& vl) {
+    void VariableSpecification::VariableDescription_type::typeSpecification(const TypeSpecification& vl) {
         typeSpecification_ = vl;
     }
 
-    void VariableSpecification::variableDescription_type::typeSpecification(boost::shared_ptr< TypeSpecification> vl) {
+    void VariableSpecification::VariableDescription_type::typeSpecification(boost::shared_ptr< TypeSpecification> vl) {
         typeSpecification_ = vl;
     }
 
@@ -12787,7 +12787,7 @@ namespace ISO_9506_MMS_1 {
             }
             case VariableSpecification_variableDescription:
             {
-                ITU_T_IMPLICIT_TAG(value<variableDescription_type > (false, VariableSpecification_variableDescription), 2);
+                ITU_T_IMPLICIT_TAG(value<VariableDescription_type > (false, VariableSpecification_variableDescription), 2);
                 break;
             }
             case VariableSpecification_scatteredAccessDescription:
@@ -12842,7 +12842,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<variableDescription_type > (true, VariableSpecification_variableDescription), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<VariableDescription_type > (true, VariableSpecification_variableDescription), 2)) return;
                         else free();
                         break;
                     }
@@ -12939,12 +12939,12 @@ namespace ISO_9506_MMS_1 {
     Read_Response::Read_Response() : listOfAccessResult_() {
     };
 
-    Read_Response::Read_Response(const listOfAccessResult_type& arg__listOfAccessResult) :
+    Read_Response::Read_Response(const ListOfAccessResult_type& arg__listOfAccessResult) :
     listOfAccessResult_(arg__listOfAccessResult) {
     };
 
     Read_Response::Read_Response(boost::shared_ptr< VariableAccessSpecification> arg__variableAccessSpecification,
-            boost::shared_ptr< listOfAccessResult_type> arg__listOfAccessResult) :
+            boost::shared_ptr< ListOfAccessResult_type> arg__listOfAccessResult) :
     variableAccessSpecification_(arg__variableAccessSpecification),
     listOfAccessResult_(arg__listOfAccessResult) {
     };
@@ -12967,19 +12967,19 @@ namespace ISO_9506_MMS_1 {
         variableAccessSpecification_ = boost::shared_ptr<VariableAccessSpecification>(new VariableAccessSpecification(vl));
     }
 
-    Read_Response::listOfAccessResult_type& Read_Response::listOfAccessResult() {
+    Read_Response::ListOfAccessResult_type& Read_Response::listOfAccessResult() {
         return *listOfAccessResult_;
     }
 
-    const Read_Response::listOfAccessResult_type& Read_Response::listOfAccessResult() const {
+    const Read_Response::ListOfAccessResult_type& Read_Response::listOfAccessResult() const {
         return *listOfAccessResult_;
     }
 
-    void Read_Response::listOfAccessResult(const listOfAccessResult_type& vl) {
+    void Read_Response::listOfAccessResult(const ListOfAccessResult_type& vl) {
         listOfAccessResult_ = vl;
     }
 
-    void Read_Response::listOfAccessResult(boost::shared_ptr< listOfAccessResult_type> vl) {
+    void Read_Response::listOfAccessResult(boost::shared_ptr< ListOfAccessResult_type> vl) {
         listOfAccessResult_ = vl;
     }
 
@@ -12990,7 +12990,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     Write_Request::Write_Request(const VariableAccessSpecification& arg__variableAccessSpecification,
-            const listOfData_type& arg__listOfData) :
+            const ListOfData_type& arg__listOfData) :
     variableAccessSpecification_(arg__variableAccessSpecification),
     listOfData_(arg__listOfData) {
     };
@@ -13021,19 +13021,19 @@ namespace ISO_9506_MMS_1 {
         variableAccessSpecification_ = vl;
     }
 
-    Write_Request::listOfData_type& Write_Request::listOfData() {
+    Write_Request::ListOfData_type& Write_Request::listOfData() {
         return *listOfData_;
     }
 
-    const Write_Request::listOfData_type& Write_Request::listOfData() const {
+    const Write_Request::ListOfData_type& Write_Request::listOfData() const {
         return *listOfData_;
     }
 
-    void Write_Request::listOfData(const listOfData_type& vl) {
+    void Write_Request::listOfData(const ListOfData_type& vl) {
         listOfData_ = vl;
     }
 
-    void Write_Request::listOfData(boost::shared_ptr< listOfData_type> vl) {
+    void Write_Request::listOfData(boost::shared_ptr< ListOfData_type> vl) {
         listOfData_ = vl;
     }
 
@@ -13123,7 +13123,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     InformationReport::InformationReport(const VariableAccessSpecification& arg__variableAccessSpecification,
-            const listOfAccessResult_type& arg__listOfAccessResult) :
+            const ListOfAccessResult_type& arg__listOfAccessResult) :
     variableAccessSpecification_(arg__variableAccessSpecification),
     listOfAccessResult_(arg__listOfAccessResult) {
     };
@@ -13154,19 +13154,19 @@ namespace ISO_9506_MMS_1 {
         variableAccessSpecification_ = vl;
     }
 
-    InformationReport::listOfAccessResult_type& InformationReport::listOfAccessResult() {
+    InformationReport::ListOfAccessResult_type& InformationReport::listOfAccessResult() {
         return *listOfAccessResult_;
     }
 
-    const InformationReport::listOfAccessResult_type& InformationReport::listOfAccessResult() const {
+    const InformationReport::ListOfAccessResult_type& InformationReport::listOfAccessResult() const {
         return *listOfAccessResult_;
     }
 
-    void InformationReport::listOfAccessResult(const listOfAccessResult_type& vl) {
+    void InformationReport::listOfAccessResult(const ListOfAccessResult_type& vl) {
         listOfAccessResult_ = vl;
     }
 
-    void InformationReport::listOfAccessResult(boost::shared_ptr< listOfAccessResult_type> vl) {
+    void InformationReport::listOfAccessResult(boost::shared_ptr< ListOfAccessResult_type> vl) {
         listOfAccessResult_ = vl;
     }
 
@@ -13423,7 +13423,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     DeleteVariableAccess_Request::DeleteVariableAccess_Request(boost::shared_ptr< int> arg__scopeOfDelete,
-            boost::shared_ptr< listOfName_type> arg__listOfName,
+            boost::shared_ptr< ListOfName_type> arg__listOfName,
             boost::shared_ptr< Identifier> arg__domainName) :
     scopeOfDelete_(arg__scopeOfDelete),
     listOfName_(arg__listOfName),
@@ -13456,12 +13456,12 @@ namespace ISO_9506_MMS_1 {
         scopeOfDelete_ = vl;
     }
 
-    boost::shared_ptr<DeleteVariableAccess_Request::listOfName_type> DeleteVariableAccess_Request::listOfName__new() {
-        return listOfName_ = boost::shared_ptr<listOfName_type>(new listOfName_type());
+    boost::shared_ptr<DeleteVariableAccess_Request::ListOfName_type> DeleteVariableAccess_Request::listOfName__new() {
+        return listOfName_ = boost::shared_ptr<ListOfName_type>(new ListOfName_type());
     }
 
-    void DeleteVariableAccess_Request::listOfName(const listOfName_type& vl) {
-        listOfName_ = boost::shared_ptr<listOfName_type>(new listOfName_type(vl));
+    void DeleteVariableAccess_Request::listOfName(const ListOfName_type& vl) {
+        listOfName_ = boost::shared_ptr<ListOfName_type>(new ListOfName_type(vl));
     }
 
     boost::shared_ptr<Identifier> DeleteVariableAccess_Request::domainName__new() {
@@ -13533,55 +13533,55 @@ namespace ISO_9506_MMS_1 {
     };
 
     DefineNamedVariableList_Request::DefineNamedVariableList_Request(const ObjectName& arg__variableListName,
-            const listOfVariable_type& arg__listOfVariable) :
+            const ListOfVariable_type& arg__listOfVariable) :
     variableListName_(arg__variableListName),
     listOfVariable_(arg__listOfVariable) {
     };
 
-    DefineNamedVariableList_Request::listOfVariable_type_sequence_of::listOfVariable_type_sequence_of() : variableSpecification_() {
+    DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::ListOfVariable_type_sequence_of() : variableSpecification_() {
     };
 
-    DefineNamedVariableList_Request::listOfVariable_type_sequence_of::listOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification) :
+    DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::ListOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification) :
     variableSpecification_(arg__variableSpecification) {
     };
 
-    DefineNamedVariableList_Request::listOfVariable_type_sequence_of::listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
+    DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::ListOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
             boost::shared_ptr< AlternateAccess> arg__alternateAccess) :
     variableSpecification_(arg__variableSpecification),
     alternateAccess_(arg__alternateAccess) {
     };
 
-    template<> void DefineNamedVariableList_Request::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
     }
 
-    template<> void DefineNamedVariableList_Request::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
     }
 
-    VariableSpecification& DefineNamedVariableList_Request::listOfVariable_type_sequence_of::variableSpecification() {
+    VariableSpecification& DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::variableSpecification() {
         return *variableSpecification_;
     }
 
-    const VariableSpecification& DefineNamedVariableList_Request::listOfVariable_type_sequence_of::variableSpecification() const {
+    const VariableSpecification& DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::variableSpecification() const {
         return *variableSpecification_;
     }
 
-    void DefineNamedVariableList_Request::listOfVariable_type_sequence_of::variableSpecification(const VariableSpecification& vl) {
+    void DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::variableSpecification(const VariableSpecification& vl) {
         variableSpecification_ = vl;
     }
 
-    void DefineNamedVariableList_Request::listOfVariable_type_sequence_of::variableSpecification(boost::shared_ptr< VariableSpecification> vl) {
+    void DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::variableSpecification(boost::shared_ptr< VariableSpecification> vl) {
         variableSpecification_ = vl;
     }
 
-    boost::shared_ptr<AlternateAccess> DefineNamedVariableList_Request::listOfVariable_type_sequence_of::alternateAccess__new() {
+    boost::shared_ptr<AlternateAccess> DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::alternateAccess__new() {
         return alternateAccess_ = boost::shared_ptr<AlternateAccess>(new AlternateAccess());
     }
 
-    void DefineNamedVariableList_Request::listOfVariable_type_sequence_of::alternateAccess(const AlternateAccess& vl) {
+    void DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::alternateAccess(const AlternateAccess& vl) {
         alternateAccess_ = boost::shared_ptr<AlternateAccess>(new AlternateAccess(vl));
     }
 
@@ -13611,19 +13611,19 @@ namespace ISO_9506_MMS_1 {
         variableListName_ = vl;
     }
 
-    DefineNamedVariableList_Request::listOfVariable_type& DefineNamedVariableList_Request::listOfVariable() {
+    DefineNamedVariableList_Request::ListOfVariable_type& DefineNamedVariableList_Request::listOfVariable() {
         return *listOfVariable_;
     }
 
-    const DefineNamedVariableList_Request::listOfVariable_type& DefineNamedVariableList_Request::listOfVariable() const {
+    const DefineNamedVariableList_Request::ListOfVariable_type& DefineNamedVariableList_Request::listOfVariable() const {
         return *listOfVariable_;
     }
 
-    void DefineNamedVariableList_Request::listOfVariable(const listOfVariable_type& vl) {
+    void DefineNamedVariableList_Request::listOfVariable(const ListOfVariable_type& vl) {
         listOfVariable_ = vl;
     }
 
-    void DefineNamedVariableList_Request::listOfVariable(boost::shared_ptr< listOfVariable_type> vl) {
+    void DefineNamedVariableList_Request::listOfVariable(boost::shared_ptr< ListOfVariable_type> vl) {
         listOfVariable_ = vl;
     }
 
@@ -13634,63 +13634,63 @@ namespace ISO_9506_MMS_1 {
     };
 
     GetNamedVariableListAttributes_Response::GetNamedVariableListAttributes_Response(const bool& arg__mmsDeletable,
-            const listOfVariable_type& arg__listOfVariable) :
+            const ListOfVariable_type& arg__listOfVariable) :
     mmsDeletable_(arg__mmsDeletable),
     listOfVariable_(arg__listOfVariable) {
     };
 
     GetNamedVariableListAttributes_Response::GetNamedVariableListAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
-            boost::shared_ptr< listOfVariable_type> arg__listOfVariable,
+            boost::shared_ptr< ListOfVariable_type> arg__listOfVariable,
             boost::shared_ptr< Identifier> arg__accessControlList) :
     mmsDeletable_(arg__mmsDeletable),
     listOfVariable_(arg__listOfVariable),
     accessControlList_(arg__accessControlList) {
     };
 
-    GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::listOfVariable_type_sequence_of() : variableSpecification_() {
+    GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::ListOfVariable_type_sequence_of() : variableSpecification_() {
     };
 
-    GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::listOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification) :
+    GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::ListOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification) :
     variableSpecification_(arg__variableSpecification) {
     };
 
-    GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
+    GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::ListOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
             boost::shared_ptr< AlternateAccess> arg__alternateAccess) :
     variableSpecification_(arg__variableSpecification),
     alternateAccess_(arg__alternateAccess) {
     };
 
-    template<> void GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
     }
 
-    template<> void GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
     }
 
-    VariableSpecification& GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::variableSpecification() {
+    VariableSpecification& GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::variableSpecification() {
         return *variableSpecification_;
     }
 
-    const VariableSpecification& GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::variableSpecification() const {
+    const VariableSpecification& GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::variableSpecification() const {
         return *variableSpecification_;
     }
 
-    void GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::variableSpecification(const VariableSpecification& vl) {
+    void GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::variableSpecification(const VariableSpecification& vl) {
         variableSpecification_ = vl;
     }
 
-    void GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::variableSpecification(boost::shared_ptr< VariableSpecification> vl) {
+    void GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::variableSpecification(boost::shared_ptr< VariableSpecification> vl) {
         variableSpecification_ = vl;
     }
 
-    boost::shared_ptr<AlternateAccess> GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::alternateAccess__new() {
+    boost::shared_ptr<AlternateAccess> GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::alternateAccess__new() {
         return alternateAccess_ = boost::shared_ptr<AlternateAccess>(new AlternateAccess());
     }
 
-    void GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::alternateAccess(const AlternateAccess& vl) {
+    void GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::alternateAccess(const AlternateAccess& vl) {
         alternateAccess_ = boost::shared_ptr<AlternateAccess>(new AlternateAccess(vl));
     }
 
@@ -13722,19 +13722,19 @@ namespace ISO_9506_MMS_1 {
         mmsDeletable_ = vl;
     }
 
-    GetNamedVariableListAttributes_Response::listOfVariable_type& GetNamedVariableListAttributes_Response::listOfVariable() {
+    GetNamedVariableListAttributes_Response::ListOfVariable_type& GetNamedVariableListAttributes_Response::listOfVariable() {
         return *listOfVariable_;
     }
 
-    const GetNamedVariableListAttributes_Response::listOfVariable_type& GetNamedVariableListAttributes_Response::listOfVariable() const {
+    const GetNamedVariableListAttributes_Response::ListOfVariable_type& GetNamedVariableListAttributes_Response::listOfVariable() const {
         return *listOfVariable_;
     }
 
-    void GetNamedVariableListAttributes_Response::listOfVariable(const listOfVariable_type& vl) {
+    void GetNamedVariableListAttributes_Response::listOfVariable(const ListOfVariable_type& vl) {
         listOfVariable_ = vl;
     }
 
-    void GetNamedVariableListAttributes_Response::listOfVariable(boost::shared_ptr< listOfVariable_type> vl) {
+    void GetNamedVariableListAttributes_Response::listOfVariable(boost::shared_ptr< ListOfVariable_type> vl) {
         listOfVariable_ = vl;
     }
 
@@ -13757,7 +13757,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     DeleteNamedVariableList_Request::DeleteNamedVariableList_Request(boost::shared_ptr< int> arg__scopeOfDelete,
-            boost::shared_ptr< listOfVariableListName_type> arg__listOfVariableListName,
+            boost::shared_ptr< ListOfVariableListName_type> arg__listOfVariableListName,
             boost::shared_ptr< Identifier> arg__domainName) :
     scopeOfDelete_(arg__scopeOfDelete),
     listOfVariableListName_(arg__listOfVariableListName),
@@ -13790,12 +13790,12 @@ namespace ISO_9506_MMS_1 {
         scopeOfDelete_ = vl;
     }
 
-    boost::shared_ptr<DeleteNamedVariableList_Request::listOfVariableListName_type> DeleteNamedVariableList_Request::listOfVariableListName__new() {
-        return listOfVariableListName_ = boost::shared_ptr<listOfVariableListName_type>(new listOfVariableListName_type());
+    boost::shared_ptr<DeleteNamedVariableList_Request::ListOfVariableListName_type> DeleteNamedVariableList_Request::listOfVariableListName__new() {
+        return listOfVariableListName_ = boost::shared_ptr<ListOfVariableListName_type>(new ListOfVariableListName_type());
     }
 
-    void DeleteNamedVariableList_Request::listOfVariableListName(const listOfVariableListName_type& vl) {
-        listOfVariableListName_ = boost::shared_ptr<listOfVariableListName_type>(new listOfVariableListName_type(vl));
+    void DeleteNamedVariableList_Request::listOfVariableListName(const ListOfVariableListName_type& vl) {
+        listOfVariableListName_ = boost::shared_ptr<ListOfVariableListName_type>(new ListOfVariableListName_type(vl));
     }
 
     boost::shared_ptr<Identifier> DeleteNamedVariableList_Request::domainName__new() {
@@ -14009,7 +14009,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     DeleteNamedType_Request::DeleteNamedType_Request(boost::shared_ptr< int> arg__scopeOfDelete,
-            boost::shared_ptr< listOfTypeName_type> arg__listOfTypeName,
+            boost::shared_ptr< ListOfTypeName_type> arg__listOfTypeName,
             boost::shared_ptr< Identifier> arg__domainName) :
     scopeOfDelete_(arg__scopeOfDelete),
     listOfTypeName_(arg__listOfTypeName),
@@ -14042,12 +14042,12 @@ namespace ISO_9506_MMS_1 {
         scopeOfDelete_ = vl;
     }
 
-    boost::shared_ptr<DeleteNamedType_Request::listOfTypeName_type> DeleteNamedType_Request::listOfTypeName__new() {
-        return listOfTypeName_ = boost::shared_ptr<listOfTypeName_type>(new listOfTypeName_type());
+    boost::shared_ptr<DeleteNamedType_Request::ListOfTypeName_type> DeleteNamedType_Request::listOfTypeName__new() {
+        return listOfTypeName_ = boost::shared_ptr<ListOfTypeName_type>(new ListOfTypeName_type());
     }
 
-    void DeleteNamedType_Request::listOfTypeName(const listOfTypeName_type& vl) {
-        listOfTypeName_ = boost::shared_ptr<listOfTypeName_type>(new listOfTypeName_type(vl));
+    void DeleteNamedType_Request::listOfTypeName(const ListOfTypeName_type& vl) {
+        listOfTypeName_ = boost::shared_ptr<ListOfTypeName_type>(new ListOfTypeName_type(vl));
     }
 
     boost::shared_ptr<Identifier> DeleteNamedType_Request::domainName__new() {
@@ -14119,7 +14119,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     ExchangeData_Request::ExchangeData_Request(const ObjectName& arg__dataExchangeName,
-            const listOfRequestData_type& arg__listOfRequestData) :
+            const ListOfRequestData_type& arg__listOfRequestData) :
     dataExchangeName_(arg__dataExchangeName),
     listOfRequestData_(arg__listOfRequestData) {
     };
@@ -14150,19 +14150,19 @@ namespace ISO_9506_MMS_1 {
         dataExchangeName_ = vl;
     }
 
-    ExchangeData_Request::listOfRequestData_type& ExchangeData_Request::listOfRequestData() {
+    ExchangeData_Request::ListOfRequestData_type& ExchangeData_Request::listOfRequestData() {
         return *listOfRequestData_;
     }
 
-    const ExchangeData_Request::listOfRequestData_type& ExchangeData_Request::listOfRequestData() const {
+    const ExchangeData_Request::ListOfRequestData_type& ExchangeData_Request::listOfRequestData() const {
         return *listOfRequestData_;
     }
 
-    void ExchangeData_Request::listOfRequestData(const listOfRequestData_type& vl) {
+    void ExchangeData_Request::listOfRequestData(const ListOfRequestData_type& vl) {
         listOfRequestData_ = vl;
     }
 
-    void ExchangeData_Request::listOfRequestData(boost::shared_ptr< listOfRequestData_type> vl) {
+    void ExchangeData_Request::listOfRequestData(boost::shared_ptr< ListOfRequestData_type> vl) {
         listOfRequestData_ = vl;
     }
 
@@ -14172,7 +14172,7 @@ namespace ISO_9506_MMS_1 {
     ExchangeData_Response::ExchangeData_Response() : listOfResponseData_() {
     };
 
-    ExchangeData_Response::ExchangeData_Response(const listOfResponseData_type& arg__listOfResponseData) :
+    ExchangeData_Response::ExchangeData_Response(const ListOfResponseData_type& arg__listOfResponseData) :
     listOfResponseData_(arg__listOfResponseData) {
     };
 
@@ -14184,19 +14184,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(listOfResponseData_, 0);
     }
 
-    ExchangeData_Response::listOfResponseData_type& ExchangeData_Response::listOfResponseData() {
+    ExchangeData_Response::ListOfResponseData_type& ExchangeData_Response::listOfResponseData() {
         return *listOfResponseData_;
     }
 
-    const ExchangeData_Response::listOfResponseData_type& ExchangeData_Response::listOfResponseData() const {
+    const ExchangeData_Response::ListOfResponseData_type& ExchangeData_Response::listOfResponseData() const {
         return *listOfResponseData_;
     }
 
-    void ExchangeData_Response::listOfResponseData(const listOfResponseData_type& vl) {
+    void ExchangeData_Response::listOfResponseData(const ListOfResponseData_type& vl) {
         listOfResponseData_ = vl;
     }
 
-    void ExchangeData_Response::listOfResponseData(boost::shared_ptr< listOfResponseData_type> vl) {
+    void ExchangeData_Response::listOfResponseData(boost::shared_ptr< ListOfResponseData_type> vl) {
         listOfResponseData_ = vl;
     }
 
@@ -14207,16 +14207,16 @@ namespace ISO_9506_MMS_1 {
     };
 
     GetDataExchangeAttributes_Response::GetDataExchangeAttributes_Response(const bool& arg__inUse,
-            const listOfRequestTypeDescriptions_type& arg__listOfRequestTypeDescriptions,
-            const listOfResponseTypeDescriptions_type& arg__listOfResponseTypeDescriptions) :
+            const ListOfRequestTypeDescriptions_type& arg__listOfRequestTypeDescriptions,
+            const ListOfResponseTypeDescriptions_type& arg__listOfResponseTypeDescriptions) :
     inUse_(arg__inUse),
     listOfRequestTypeDescriptions_(arg__listOfRequestTypeDescriptions),
     listOfResponseTypeDescriptions_(arg__listOfResponseTypeDescriptions) {
     };
 
     GetDataExchangeAttributes_Response::GetDataExchangeAttributes_Response(boost::shared_ptr< bool> arg__inUse,
-            boost::shared_ptr< listOfRequestTypeDescriptions_type> arg__listOfRequestTypeDescriptions,
-            boost::shared_ptr< listOfResponseTypeDescriptions_type> arg__listOfResponseTypeDescriptions,
+            boost::shared_ptr< ListOfRequestTypeDescriptions_type> arg__listOfRequestTypeDescriptions,
+            boost::shared_ptr< ListOfResponseTypeDescriptions_type> arg__listOfResponseTypeDescriptions,
             boost::shared_ptr< Identifier> arg__programInvocation,
             boost::shared_ptr< Identifier> arg__accessControlList) :
     inUse_(arg__inUse),
@@ -14258,35 +14258,35 @@ namespace ISO_9506_MMS_1 {
         inUse_ = vl;
     }
 
-    GetDataExchangeAttributes_Response::listOfRequestTypeDescriptions_type& GetDataExchangeAttributes_Response::listOfRequestTypeDescriptions() {
+    GetDataExchangeAttributes_Response::ListOfRequestTypeDescriptions_type& GetDataExchangeAttributes_Response::listOfRequestTypeDescriptions() {
         return *listOfRequestTypeDescriptions_;
     }
 
-    const GetDataExchangeAttributes_Response::listOfRequestTypeDescriptions_type& GetDataExchangeAttributes_Response::listOfRequestTypeDescriptions() const {
+    const GetDataExchangeAttributes_Response::ListOfRequestTypeDescriptions_type& GetDataExchangeAttributes_Response::listOfRequestTypeDescriptions() const {
         return *listOfRequestTypeDescriptions_;
     }
 
-    void GetDataExchangeAttributes_Response::listOfRequestTypeDescriptions(const listOfRequestTypeDescriptions_type& vl) {
+    void GetDataExchangeAttributes_Response::listOfRequestTypeDescriptions(const ListOfRequestTypeDescriptions_type& vl) {
         listOfRequestTypeDescriptions_ = vl;
     }
 
-    void GetDataExchangeAttributes_Response::listOfRequestTypeDescriptions(boost::shared_ptr< listOfRequestTypeDescriptions_type> vl) {
+    void GetDataExchangeAttributes_Response::listOfRequestTypeDescriptions(boost::shared_ptr< ListOfRequestTypeDescriptions_type> vl) {
         listOfRequestTypeDescriptions_ = vl;
     }
 
-    GetDataExchangeAttributes_Response::listOfResponseTypeDescriptions_type& GetDataExchangeAttributes_Response::listOfResponseTypeDescriptions() {
+    GetDataExchangeAttributes_Response::ListOfResponseTypeDescriptions_type& GetDataExchangeAttributes_Response::listOfResponseTypeDescriptions() {
         return *listOfResponseTypeDescriptions_;
     }
 
-    const GetDataExchangeAttributes_Response::listOfResponseTypeDescriptions_type& GetDataExchangeAttributes_Response::listOfResponseTypeDescriptions() const {
+    const GetDataExchangeAttributes_Response::ListOfResponseTypeDescriptions_type& GetDataExchangeAttributes_Response::listOfResponseTypeDescriptions() const {
         return *listOfResponseTypeDescriptions_;
     }
 
-    void GetDataExchangeAttributes_Response::listOfResponseTypeDescriptions(const listOfResponseTypeDescriptions_type& vl) {
+    void GetDataExchangeAttributes_Response::listOfResponseTypeDescriptions(const ListOfResponseTypeDescriptions_type& vl) {
         listOfResponseTypeDescriptions_ = vl;
     }
 
-    void GetDataExchangeAttributes_Response::listOfResponseTypeDescriptions(boost::shared_ptr< listOfResponseTypeDescriptions_type> vl) {
+    void GetDataExchangeAttributes_Response::listOfResponseTypeDescriptions(boost::shared_ptr< ListOfResponseTypeDescriptions_type> vl) {
         listOfResponseTypeDescriptions_ = vl;
     }
 
@@ -14822,43 +14822,43 @@ namespace ISO_9506_MMS_1 {
     ReportPoolSemaphoreStatus_Response::ReportPoolSemaphoreStatus_Response() : listOfNamedTokens_() {
     };
 
-    ReportPoolSemaphoreStatus_Response::ReportPoolSemaphoreStatus_Response(const listOfNamedTokens_type& arg__listOfNamedTokens) :
+    ReportPoolSemaphoreStatus_Response::ReportPoolSemaphoreStatus_Response(const ListOfNamedTokens_type& arg__listOfNamedTokens) :
     listOfNamedTokens_(arg__listOfNamedTokens) {
     };
 
-    ReportPoolSemaphoreStatus_Response::ReportPoolSemaphoreStatus_Response(boost::shared_ptr< listOfNamedTokens_type> arg__listOfNamedTokens,
+    ReportPoolSemaphoreStatus_Response::ReportPoolSemaphoreStatus_Response(boost::shared_ptr< ListOfNamedTokens_type> arg__listOfNamedTokens,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfNamedTokens_(arg__listOfNamedTokens),
     moreFollows_(arg__moreFollows) {
     };
 
-    void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::freeNamedToken(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), listOfNamedTokens_type_sequence_of_freeNamedToken);
+    void ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of::freeNamedToken(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), ListOfNamedTokens_type_sequence_of_freeNamedToken);
     }
 
-    void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::ownedNamedToken(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), listOfNamedTokens_type_sequence_of_ownedNamedToken);
+    void ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of::ownedNamedToken(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), ListOfNamedTokens_type_sequence_of_ownedNamedToken);
     }
 
-    void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::hungNamedToken(const Identifier& vl) {
-        set<Identifier>(new Identifier(vl), listOfNamedTokens_type_sequence_of_hungNamedToken);
+    void ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of::hungNamedToken(const Identifier& vl) {
+        set<Identifier>(new Identifier(vl), ListOfNamedTokens_type_sequence_of_hungNamedToken);
     }
 
-    template<> void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case listOfNamedTokens_type_sequence_of_freeNamedToken:
+            case ListOfNamedTokens_type_sequence_of_freeNamedToken:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, listOfNamedTokens_type_sequence_of_freeNamedToken), 0);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, ListOfNamedTokens_type_sequence_of_freeNamedToken), 0);
                 break;
             }
-            case listOfNamedTokens_type_sequence_of_ownedNamedToken:
+            case ListOfNamedTokens_type_sequence_of_ownedNamedToken:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, listOfNamedTokens_type_sequence_of_ownedNamedToken), 1);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, ListOfNamedTokens_type_sequence_of_ownedNamedToken), 1);
                 break;
             }
-            case listOfNamedTokens_type_sequence_of_hungNamedToken:
+            case ListOfNamedTokens_type_sequence_of_hungNamedToken:
             {
-                ITU_T_IMPLICIT_TAG(value<Identifier > (false, listOfNamedTokens_type_sequence_of_hungNamedToken), 2);
+                ITU_T_IMPLICIT_TAG(value<Identifier > (false, ListOfNamedTokens_type_sequence_of_hungNamedToken), 2);
                 break;
             }
             default:
@@ -14867,7 +14867,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -14891,19 +14891,19 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, listOfNamedTokens_type_sequence_of_freeNamedToken), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, ListOfNamedTokens_type_sequence_of_freeNamedToken), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, listOfNamedTokens_type_sequence_of_ownedNamedToken), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, ListOfNamedTokens_type_sequence_of_ownedNamedToken), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, listOfNamedTokens_type_sequence_of_hungNamedToken), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Identifier > (true, ListOfNamedTokens_type_sequence_of_hungNamedToken), 2)) return;
                         else free();
                         break;
                     }
@@ -14939,19 +14939,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type& ReportPoolSemaphoreStatus_Response::listOfNamedTokens() {
+    ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type& ReportPoolSemaphoreStatus_Response::listOfNamedTokens() {
         return *listOfNamedTokens_;
     }
 
-    const ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type& ReportPoolSemaphoreStatus_Response::listOfNamedTokens() const {
+    const ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type& ReportPoolSemaphoreStatus_Response::listOfNamedTokens() const {
         return *listOfNamedTokens_;
     }
 
-    void ReportPoolSemaphoreStatus_Response::listOfNamedTokens(const listOfNamedTokens_type& vl) {
+    void ReportPoolSemaphoreStatus_Response::listOfNamedTokens(const ListOfNamedTokens_type& vl) {
         listOfNamedTokens_ = vl;
     }
 
-    void ReportPoolSemaphoreStatus_Response::listOfNamedTokens(boost::shared_ptr< listOfNamedTokens_type> vl) {
+    void ReportPoolSemaphoreStatus_Response::listOfNamedTokens(boost::shared_ptr< ListOfNamedTokens_type> vl) {
         listOfNamedTokens_ = vl;
     }
 
@@ -15048,11 +15048,11 @@ namespace ISO_9506_MMS_1 {
     ReportSemaphoreEntryStatus_Response::ReportSemaphoreEntryStatus_Response() : listOfSemaphoreEntry_() {
     };
 
-    ReportSemaphoreEntryStatus_Response::ReportSemaphoreEntryStatus_Response(const listOfSemaphoreEntry_type& arg__listOfSemaphoreEntry) :
+    ReportSemaphoreEntryStatus_Response::ReportSemaphoreEntryStatus_Response(const ListOfSemaphoreEntry_type& arg__listOfSemaphoreEntry) :
     listOfSemaphoreEntry_(arg__listOfSemaphoreEntry) {
     };
 
-    ReportSemaphoreEntryStatus_Response::ReportSemaphoreEntryStatus_Response(boost::shared_ptr< listOfSemaphoreEntry_type> arg__listOfSemaphoreEntry,
+    ReportSemaphoreEntryStatus_Response::ReportSemaphoreEntryStatus_Response(boost::shared_ptr< ListOfSemaphoreEntry_type> arg__listOfSemaphoreEntry,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfSemaphoreEntry_(arg__listOfSemaphoreEntry),
     moreFollows_(arg__moreFollows) {
@@ -15070,19 +15070,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    ReportSemaphoreEntryStatus_Response::listOfSemaphoreEntry_type& ReportSemaphoreEntryStatus_Response::listOfSemaphoreEntry() {
+    ReportSemaphoreEntryStatus_Response::ListOfSemaphoreEntry_type& ReportSemaphoreEntryStatus_Response::listOfSemaphoreEntry() {
         return *listOfSemaphoreEntry_;
     }
 
-    const ReportSemaphoreEntryStatus_Response::listOfSemaphoreEntry_type& ReportSemaphoreEntryStatus_Response::listOfSemaphoreEntry() const {
+    const ReportSemaphoreEntryStatus_Response::ListOfSemaphoreEntry_type& ReportSemaphoreEntryStatus_Response::listOfSemaphoreEntry() const {
         return *listOfSemaphoreEntry_;
     }
 
-    void ReportSemaphoreEntryStatus_Response::listOfSemaphoreEntry(const listOfSemaphoreEntry_type& vl) {
+    void ReportSemaphoreEntryStatus_Response::listOfSemaphoreEntry(const ListOfSemaphoreEntry_type& vl) {
         listOfSemaphoreEntry_ = vl;
     }
 
-    void ReportSemaphoreEntryStatus_Response::listOfSemaphoreEntry(boost::shared_ptr< listOfSemaphoreEntry_type> vl) {
+    void ReportSemaphoreEntryStatus_Response::listOfSemaphoreEntry(boost::shared_ptr< ListOfSemaphoreEntry_type> vl) {
         listOfSemaphoreEntry_ = vl;
     }
 
@@ -15388,7 +15388,7 @@ namespace ISO_9506_MMS_1 {
 
     Input_Request::Input_Request(boost::shared_ptr< Identifier> arg__operatorStationName,
             boost::shared_ptr< bool> arg__echo,
-            boost::shared_ptr< listOfPromptData_type> arg__listOfPromptData,
+            boost::shared_ptr< ListOfPromptData_type> arg__listOfPromptData,
             boost::shared_ptr< Unsigned32> arg__inputTimeOut) :
     operatorStationName_(arg__operatorStationName),
     echo_(arg__echo),
@@ -15440,12 +15440,12 @@ namespace ISO_9506_MMS_1 {
         echo_ = vl;
     }
 
-    boost::shared_ptr<Input_Request::listOfPromptData_type> Input_Request::listOfPromptData__new() {
-        return listOfPromptData_ = boost::shared_ptr<listOfPromptData_type>(new listOfPromptData_type());
+    boost::shared_ptr<Input_Request::ListOfPromptData_type> Input_Request::listOfPromptData__new() {
+        return listOfPromptData_ = boost::shared_ptr<ListOfPromptData_type>(new ListOfPromptData_type());
     }
 
-    void Input_Request::listOfPromptData(const listOfPromptData_type& vl) {
-        listOfPromptData_ = boost::shared_ptr<listOfPromptData_type>(new listOfPromptData_type(vl));
+    void Input_Request::listOfPromptData(const ListOfPromptData_type& vl) {
+        listOfPromptData_ = boost::shared_ptr<ListOfPromptData_type>(new ListOfPromptData_type(vl));
     }
 
     boost::shared_ptr<Unsigned32> Input_Request::inputTimeOut__new() {
@@ -15463,7 +15463,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     Output_Request::Output_Request(const Identifier& arg__operatorStationName,
-            const listOfOutputData_type& arg__listOfOutputData) :
+            const ListOfOutputData_type& arg__listOfOutputData) :
     operatorStationName_(arg__operatorStationName),
     listOfOutputData_(arg__listOfOutputData) {
     };
@@ -15494,19 +15494,19 @@ namespace ISO_9506_MMS_1 {
         operatorStationName_ = vl;
     }
 
-    Output_Request::listOfOutputData_type& Output_Request::listOfOutputData() {
+    Output_Request::ListOfOutputData_type& Output_Request::listOfOutputData() {
         return *listOfOutputData_;
     }
 
-    const Output_Request::listOfOutputData_type& Output_Request::listOfOutputData() const {
+    const Output_Request::ListOfOutputData_type& Output_Request::listOfOutputData() const {
         return *listOfOutputData_;
     }
 
-    void Output_Request::listOfOutputData(const listOfOutputData_type& vl) {
+    void Output_Request::listOfOutputData(const ListOfOutputData_type& vl) {
         listOfOutputData_ = vl;
     }
 
-    void Output_Request::listOfOutputData(boost::shared_ptr< listOfOutputData_type> vl) {
+    void Output_Request::listOfOutputData(boost::shared_ptr< ListOfOutputData_type> vl) {
         listOfOutputData_ = vl;
     }
 
@@ -15583,7 +15583,7 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__transitionTime,
             boost::shared_ptr< bool> arg__notificationLost,
             boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule,
-            boost::shared_ptr< actionResult_type> arg__actionResult) :
+            boost::shared_ptr< ActionResult_type> arg__actionResult) :
     eventEnrollmentName_(arg__eventEnrollmentName),
     eventConditionName_(arg__eventConditionName),
     severity_(arg__severity),
@@ -15594,119 +15594,119 @@ namespace ISO_9506_MMS_1 {
     actionResult_(arg__actionResult) {
     };
 
-    EventNotification::actionResult_type::actionResult_type() : eventActionName_(), successOrFailure_() {
+    EventNotification::ActionResult_type::ActionResult_type() : eventActionName_(), successOrFailure_() {
     };
 
-    EventNotification::actionResult_type::actionResult_type(const ObjectName& arg__eventActionName,
-            const successOrFailure_type& arg__successOrFailure) :
+    EventNotification::ActionResult_type::ActionResult_type(const ObjectName& arg__eventActionName,
+            const SuccessOrFailure_type& arg__successOrFailure) :
     eventActionName_(arg__eventActionName),
     successOrFailure_(arg__successOrFailure) {
     };
 
-    EventNotification::actionResult_type::successOrFailure_type::success_type::success_type() : confirmedServiceResponse_() {
+    EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::Success_type() : confirmedServiceResponse_() {
     };
 
-    EventNotification::actionResult_type::successOrFailure_type::success_type::success_type(const ConfirmedServiceResponse& arg__confirmedServiceResponse) :
+    EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::Success_type(const ConfirmedServiceResponse& arg__confirmedServiceResponse) :
     confirmedServiceResponse_(arg__confirmedServiceResponse) {
     };
 
-    EventNotification::actionResult_type::successOrFailure_type::success_type::success_type(boost::shared_ptr< ConfirmedServiceResponse> arg__confirmedServiceResponse,
+    EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::Success_type(boost::shared_ptr< ConfirmedServiceResponse> arg__confirmedServiceResponse,
             boost::shared_ptr< Response_Detail> arg__cs_Response_Detail) :
     confirmedServiceResponse_(arg__confirmedServiceResponse),
     cs_Response_Detail_(arg__cs_Response_Detail) {
     };
 
-    template<> void EventNotification::actionResult_type::successOrFailure_type::success_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(confirmedServiceResponse_);
         ITU_T_CHOICE_TAG(cs_Response_Detail_, 79);
     }
 
-    template<> void EventNotification::actionResult_type::successOrFailure_type::success_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(confirmedServiceResponse_);
         ITU_T_CHOICE_TAG(cs_Response_Detail_, 79);
     }
 
-    ConfirmedServiceResponse& EventNotification::actionResult_type::successOrFailure_type::success_type::confirmedServiceResponse() {
+    ConfirmedServiceResponse& EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::confirmedServiceResponse() {
         return *confirmedServiceResponse_;
     }
 
-    const ConfirmedServiceResponse& EventNotification::actionResult_type::successOrFailure_type::success_type::confirmedServiceResponse() const {
+    const ConfirmedServiceResponse& EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::confirmedServiceResponse() const {
         return *confirmedServiceResponse_;
     }
 
-    void EventNotification::actionResult_type::successOrFailure_type::success_type::confirmedServiceResponse(const ConfirmedServiceResponse& vl) {
+    void EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::confirmedServiceResponse(const ConfirmedServiceResponse& vl) {
         confirmedServiceResponse_ = vl;
     }
 
-    void EventNotification::actionResult_type::successOrFailure_type::success_type::confirmedServiceResponse(boost::shared_ptr< ConfirmedServiceResponse> vl) {
+    void EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::confirmedServiceResponse(boost::shared_ptr< ConfirmedServiceResponse> vl) {
         confirmedServiceResponse_ = vl;
     }
 
-    boost::shared_ptr<Response_Detail> EventNotification::actionResult_type::successOrFailure_type::success_type::cs_Response_Detail__new() {
+    boost::shared_ptr<Response_Detail> EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::cs_Response_Detail__new() {
         return cs_Response_Detail_ = boost::shared_ptr<Response_Detail>(new Response_Detail());
     }
 
-    void EventNotification::actionResult_type::successOrFailure_type::success_type::cs_Response_Detail(const Response_Detail& vl) {
+    void EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::cs_Response_Detail(const Response_Detail& vl) {
         cs_Response_Detail_ = boost::shared_ptr<Response_Detail>(new Response_Detail(vl));
     }
 
-    EventNotification::actionResult_type::successOrFailure_type::failure_type::failure_type() : serviceError_() {
+    EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::Failure_type() : serviceError_() {
     };
 
-    EventNotification::actionResult_type::successOrFailure_type::failure_type::failure_type(const ServiceError& arg__serviceError) :
+    EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::Failure_type(const ServiceError& arg__serviceError) :
     serviceError_(arg__serviceError) {
     };
 
-    EventNotification::actionResult_type::successOrFailure_type::failure_type::failure_type(boost::shared_ptr< Unsigned32> arg__modifierPosition,
+    EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::Failure_type(boost::shared_ptr< Unsigned32> arg__modifierPosition,
             boost::shared_ptr< ServiceError> arg__serviceError) :
     modifierPosition_(arg__modifierPosition),
     serviceError_(arg__serviceError) {
     };
 
-    template<> void EventNotification::actionResult_type::successOrFailure_type::failure_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(modifierPosition_, 0);
         ITU_T_IMPLICIT_TAG(serviceError_, 1);
     }
 
-    template<> void EventNotification::actionResult_type::successOrFailure_type::failure_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(modifierPosition_, 0);
         ITU_T_IMPLICIT_TAG(serviceError_, 1);
     }
 
-    boost::shared_ptr<Unsigned32> EventNotification::actionResult_type::successOrFailure_type::failure_type::modifierPosition__new() {
+    boost::shared_ptr<Unsigned32> EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::modifierPosition__new() {
         return modifierPosition_ = boost::shared_ptr<Unsigned32>(new Unsigned32());
     }
 
-    void EventNotification::actionResult_type::successOrFailure_type::failure_type::modifierPosition(const Unsigned32& vl) {
+    void EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::modifierPosition(const Unsigned32& vl) {
         modifierPosition_ = boost::shared_ptr<Unsigned32>(new Unsigned32(vl));
     }
 
-    ServiceError& EventNotification::actionResult_type::successOrFailure_type::failure_type::serviceError() {
+    ServiceError& EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serviceError() {
         return *serviceError_;
     }
 
-    const ServiceError& EventNotification::actionResult_type::successOrFailure_type::failure_type::serviceError() const {
+    const ServiceError& EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serviceError() const {
         return *serviceError_;
     }
 
-    void EventNotification::actionResult_type::successOrFailure_type::failure_type::serviceError(const ServiceError& vl) {
+    void EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serviceError(const ServiceError& vl) {
         serviceError_ = vl;
     }
 
-    void EventNotification::actionResult_type::successOrFailure_type::failure_type::serviceError(boost::shared_ptr< ServiceError> vl) {
+    void EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serviceError(boost::shared_ptr< ServiceError> vl) {
         serviceError_ = vl;
     }
 
-    template<> void EventNotification::actionResult_type::successOrFailure_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case successOrFailure_type_success:
+            case SuccessOrFailure_type_success:
             {
-                ITU_T_IMPLICIT_TAG(value<success_type > (false, successOrFailure_type_success), 0);
+                ITU_T_IMPLICIT_TAG(value<Success_type > (false, SuccessOrFailure_type_success), 0);
                 break;
             }
-            case successOrFailure_type_failure:
+            case SuccessOrFailure_type_failure:
             {
-                ITU_T_IMPLICIT_TAG(value<failure_type > (false, successOrFailure_type_failure), 1);
+                ITU_T_IMPLICIT_TAG(value<Failure_type > (false, SuccessOrFailure_type_failure), 1);
                 break;
             }
             default:
@@ -15715,7 +15715,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void EventNotification::actionResult_type::successOrFailure_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -15739,13 +15739,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<success_type > (true, successOrFailure_type_success), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Success_type > (true, SuccessOrFailure_type_success), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<failure_type > (true, successOrFailure_type_failure), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Failure_type > (true, SuccessOrFailure_type_failure), 1)) return;
                         else free();
                         break;
                     }
@@ -15768,45 +15768,45 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void EventNotification::actionResult_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void EventNotification::ActionResult_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(eventActionName_);
         ITU_T_BIND_CHOICE(successOrFailure_);
     }
 
-    template<> void EventNotification::actionResult_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void EventNotification::ActionResult_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(eventActionName_);
         ITU_T_BIND_CHOICE(successOrFailure_);
     }
 
-    ObjectName& EventNotification::actionResult_type::eventActionName() {
+    ObjectName& EventNotification::ActionResult_type::eventActionName() {
         return *eventActionName_;
     }
 
-    const ObjectName& EventNotification::actionResult_type::eventActionName() const {
+    const ObjectName& EventNotification::ActionResult_type::eventActionName() const {
         return *eventActionName_;
     }
 
-    void EventNotification::actionResult_type::eventActionName(const ObjectName& vl) {
+    void EventNotification::ActionResult_type::eventActionName(const ObjectName& vl) {
         eventActionName_ = vl;
     }
 
-    void EventNotification::actionResult_type::eventActionName(boost::shared_ptr< ObjectName> vl) {
+    void EventNotification::ActionResult_type::eventActionName(boost::shared_ptr< ObjectName> vl) {
         eventActionName_ = vl;
     }
 
-    EventNotification::actionResult_type::successOrFailure_type& EventNotification::actionResult_type::successOrFailure() {
+    EventNotification::ActionResult_type::SuccessOrFailure_type& EventNotification::ActionResult_type::successOrFailure() {
         return *successOrFailure_;
     }
 
-    const EventNotification::actionResult_type::successOrFailure_type& EventNotification::actionResult_type::successOrFailure() const {
+    const EventNotification::ActionResult_type::SuccessOrFailure_type& EventNotification::ActionResult_type::successOrFailure() const {
         return *successOrFailure_;
     }
 
-    void EventNotification::actionResult_type::successOrFailure(const successOrFailure_type& vl) {
+    void EventNotification::ActionResult_type::successOrFailure(const SuccessOrFailure_type& vl) {
         successOrFailure_ = vl;
     }
 
-    void EventNotification::actionResult_type::successOrFailure(boost::shared_ptr< successOrFailure_type> vl) {
+    void EventNotification::ActionResult_type::successOrFailure(boost::shared_ptr< SuccessOrFailure_type> vl) {
         successOrFailure_ = vl;
     }
 
@@ -15927,12 +15927,12 @@ namespace ISO_9506_MMS_1 {
         alarmAcknowledgmentRule_ = boost::shared_ptr<MMS_Object_Module_1::AlarmAckRule>(new MMS_Object_Module_1::AlarmAckRule(vl));
     }
 
-    boost::shared_ptr<EventNotification::actionResult_type> EventNotification::actionResult__new() {
-        return actionResult_ = boost::shared_ptr<actionResult_type>(new actionResult_type());
+    boost::shared_ptr<EventNotification::ActionResult_type> EventNotification::actionResult__new() {
+        return actionResult_ = boost::shared_ptr<ActionResult_type>(new ActionResult_type());
     }
 
-    void EventNotification::actionResult(const actionResult_type& vl) {
-        actionResult_ = boost::shared_ptr<actionResult_type>(new actionResult_type(vl));
+    void EventNotification::actionResult(const ActionResult_type& vl) {
+        actionResult_ = boost::shared_ptr<ActionResult_type>(new ActionResult_type(vl));
     }
 
 
@@ -16114,7 +16114,7 @@ namespace ISO_9506_MMS_1 {
     GetAlarmSummary_Request::GetAlarmSummary_Request(boost::shared_ptr< bool> arg__enrollmentsOnly,
             boost::shared_ptr< bool> arg__activeAlarmsOnly,
             boost::shared_ptr< int> arg__acknowledgementFilter,
-            boost::shared_ptr< severityFilter_type> arg__severityFilter,
+            boost::shared_ptr< SeverityFilter_type> arg__severityFilter,
             boost::shared_ptr< ObjectName> arg__continueAfter) :
     enrollmentsOnly_(arg__enrollmentsOnly),
     activeAlarmsOnly_(arg__activeAlarmsOnly),
@@ -16123,54 +16123,54 @@ namespace ISO_9506_MMS_1 {
     continueAfter_(arg__continueAfter) {
     };
 
-    GetAlarmSummary_Request::severityFilter_type::severityFilter_type() : mostSevere_(), leastSevere_() {
+    GetAlarmSummary_Request::SeverityFilter_type::SeverityFilter_type() : mostSevere_(), leastSevere_() {
     };
 
-    GetAlarmSummary_Request::severityFilter_type::severityFilter_type(const Unsigned8& arg__mostSevere,
+    GetAlarmSummary_Request::SeverityFilter_type::SeverityFilter_type(const Unsigned8& arg__mostSevere,
             const Unsigned8& arg__leastSevere) :
     mostSevere_(arg__mostSevere),
     leastSevere_(arg__leastSevere) {
     };
 
-    template<> void GetAlarmSummary_Request::severityFilter_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void GetAlarmSummary_Request::SeverityFilter_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(mostSevere_, 0);
         ITU_T_IMPLICIT_TAG(leastSevere_, 1);
     }
 
-    template<> void GetAlarmSummary_Request::severityFilter_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void GetAlarmSummary_Request::SeverityFilter_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(mostSevere_, 0);
         ITU_T_IMPLICIT_TAG(leastSevere_, 1);
     }
 
-    Unsigned8& GetAlarmSummary_Request::severityFilter_type::mostSevere() {
+    Unsigned8& GetAlarmSummary_Request::SeverityFilter_type::mostSevere() {
         return *mostSevere_;
     }
 
-    const Unsigned8& GetAlarmSummary_Request::severityFilter_type::mostSevere() const {
+    const Unsigned8& GetAlarmSummary_Request::SeverityFilter_type::mostSevere() const {
         return *mostSevere_;
     }
 
-    void GetAlarmSummary_Request::severityFilter_type::mostSevere(const Unsigned8& vl) {
+    void GetAlarmSummary_Request::SeverityFilter_type::mostSevere(const Unsigned8& vl) {
         mostSevere_ = vl;
     }
 
-    void GetAlarmSummary_Request::severityFilter_type::mostSevere(boost::shared_ptr< Unsigned8> vl) {
+    void GetAlarmSummary_Request::SeverityFilter_type::mostSevere(boost::shared_ptr< Unsigned8> vl) {
         mostSevere_ = vl;
     }
 
-    Unsigned8& GetAlarmSummary_Request::severityFilter_type::leastSevere() {
+    Unsigned8& GetAlarmSummary_Request::SeverityFilter_type::leastSevere() {
         return *leastSevere_;
     }
 
-    const Unsigned8& GetAlarmSummary_Request::severityFilter_type::leastSevere() const {
+    const Unsigned8& GetAlarmSummary_Request::SeverityFilter_type::leastSevere() const {
         return *leastSevere_;
     }
 
-    void GetAlarmSummary_Request::severityFilter_type::leastSevere(const Unsigned8& vl) {
+    void GetAlarmSummary_Request::SeverityFilter_type::leastSevere(const Unsigned8& vl) {
         leastSevere_ = vl;
     }
 
-    void GetAlarmSummary_Request::severityFilter_type::leastSevere(boost::shared_ptr< Unsigned8> vl) {
+    void GetAlarmSummary_Request::SeverityFilter_type::leastSevere(boost::shared_ptr< Unsigned8> vl) {
         leastSevere_ = vl;
     }
 
@@ -16233,12 +16233,12 @@ namespace ISO_9506_MMS_1 {
         acknowledgementFilter_ = vl;
     }
 
-    boost::shared_ptr<GetAlarmSummary_Request::severityFilter_type> GetAlarmSummary_Request::severityFilter__new() {
-        return severityFilter_ = boost::shared_ptr<severityFilter_type>(new severityFilter_type());
+    boost::shared_ptr<GetAlarmSummary_Request::SeverityFilter_type> GetAlarmSummary_Request::severityFilter__new() {
+        return severityFilter_ = boost::shared_ptr<SeverityFilter_type>(new SeverityFilter_type());
     }
 
-    void GetAlarmSummary_Request::severityFilter(const severityFilter_type& vl) {
-        severityFilter_ = boost::shared_ptr<severityFilter_type>(new severityFilter_type(vl));
+    void GetAlarmSummary_Request::severityFilter(const SeverityFilter_type& vl) {
+        severityFilter_ = boost::shared_ptr<SeverityFilter_type>(new SeverityFilter_type(vl));
     }
 
     boost::shared_ptr<ObjectName> GetAlarmSummary_Request::continueAfter__new() {
@@ -16255,11 +16255,11 @@ namespace ISO_9506_MMS_1 {
     GetAlarmSummary_Response::GetAlarmSummary_Response() : listOfAlarmSummary_() {
     };
 
-    GetAlarmSummary_Response::GetAlarmSummary_Response(const listOfAlarmSummary_type& arg__listOfAlarmSummary) :
+    GetAlarmSummary_Response::GetAlarmSummary_Response(const ListOfAlarmSummary_type& arg__listOfAlarmSummary) :
     listOfAlarmSummary_(arg__listOfAlarmSummary) {
     };
 
-    GetAlarmSummary_Response::GetAlarmSummary_Response(boost::shared_ptr< listOfAlarmSummary_type> arg__listOfAlarmSummary,
+    GetAlarmSummary_Response::GetAlarmSummary_Response(boost::shared_ptr< ListOfAlarmSummary_type> arg__listOfAlarmSummary,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfAlarmSummary_(arg__listOfAlarmSummary),
     moreFollows_(arg__moreFollows) {
@@ -16277,19 +16277,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    GetAlarmSummary_Response::listOfAlarmSummary_type& GetAlarmSummary_Response::listOfAlarmSummary() {
+    GetAlarmSummary_Response::ListOfAlarmSummary_type& GetAlarmSummary_Response::listOfAlarmSummary() {
         return *listOfAlarmSummary_;
     }
 
-    const GetAlarmSummary_Response::listOfAlarmSummary_type& GetAlarmSummary_Response::listOfAlarmSummary() const {
+    const GetAlarmSummary_Response::ListOfAlarmSummary_type& GetAlarmSummary_Response::listOfAlarmSummary() const {
         return *listOfAlarmSummary_;
     }
 
-    void GetAlarmSummary_Response::listOfAlarmSummary(const listOfAlarmSummary_type& vl) {
+    void GetAlarmSummary_Response::listOfAlarmSummary(const ListOfAlarmSummary_type& vl) {
         listOfAlarmSummary_ = vl;
     }
 
-    void GetAlarmSummary_Response::listOfAlarmSummary(boost::shared_ptr< listOfAlarmSummary_type> vl) {
+    void GetAlarmSummary_Response::listOfAlarmSummary(boost::shared_ptr< ListOfAlarmSummary_type> vl) {
         listOfAlarmSummary_ = vl;
     }
 
@@ -16554,7 +16554,7 @@ namespace ISO_9506_MMS_1 {
     GetAlarmEnrollmentSummary_Request::GetAlarmEnrollmentSummary_Request(boost::shared_ptr< bool> arg__enrollmentsOnly,
             boost::shared_ptr< bool> arg__activeAlarmsOnly,
             boost::shared_ptr< int> arg__acknowledgementFilter,
-            boost::shared_ptr< severityFilter_type> arg__severityFilter,
+            boost::shared_ptr< SeverityFilter_type> arg__severityFilter,
             boost::shared_ptr< ObjectName> arg__continueAfter) :
     enrollmentsOnly_(arg__enrollmentsOnly),
     activeAlarmsOnly_(arg__activeAlarmsOnly),
@@ -16563,54 +16563,54 @@ namespace ISO_9506_MMS_1 {
     continueAfter_(arg__continueAfter) {
     };
 
-    GetAlarmEnrollmentSummary_Request::severityFilter_type::severityFilter_type() : mostSevere_(), leastSevere_() {
+    GetAlarmEnrollmentSummary_Request::SeverityFilter_type::SeverityFilter_type() : mostSevere_(), leastSevere_() {
     };
 
-    GetAlarmEnrollmentSummary_Request::severityFilter_type::severityFilter_type(const Unsigned8& arg__mostSevere,
+    GetAlarmEnrollmentSummary_Request::SeverityFilter_type::SeverityFilter_type(const Unsigned8& arg__mostSevere,
             const Unsigned8& arg__leastSevere) :
     mostSevere_(arg__mostSevere),
     leastSevere_(arg__leastSevere) {
     };
 
-    template<> void GetAlarmEnrollmentSummary_Request::severityFilter_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(mostSevere_, 0);
         ITU_T_IMPLICIT_TAG(leastSevere_, 1);
     }
 
-    template<> void GetAlarmEnrollmentSummary_Request::severityFilter_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(mostSevere_, 0);
         ITU_T_IMPLICIT_TAG(leastSevere_, 1);
     }
 
-    Unsigned8& GetAlarmEnrollmentSummary_Request::severityFilter_type::mostSevere() {
+    Unsigned8& GetAlarmEnrollmentSummary_Request::SeverityFilter_type::mostSevere() {
         return *mostSevere_;
     }
 
-    const Unsigned8& GetAlarmEnrollmentSummary_Request::severityFilter_type::mostSevere() const {
+    const Unsigned8& GetAlarmEnrollmentSummary_Request::SeverityFilter_type::mostSevere() const {
         return *mostSevere_;
     }
 
-    void GetAlarmEnrollmentSummary_Request::severityFilter_type::mostSevere(const Unsigned8& vl) {
+    void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::mostSevere(const Unsigned8& vl) {
         mostSevere_ = vl;
     }
 
-    void GetAlarmEnrollmentSummary_Request::severityFilter_type::mostSevere(boost::shared_ptr< Unsigned8> vl) {
+    void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::mostSevere(boost::shared_ptr< Unsigned8> vl) {
         mostSevere_ = vl;
     }
 
-    Unsigned8& GetAlarmEnrollmentSummary_Request::severityFilter_type::leastSevere() {
+    Unsigned8& GetAlarmEnrollmentSummary_Request::SeverityFilter_type::leastSevere() {
         return *leastSevere_;
     }
 
-    const Unsigned8& GetAlarmEnrollmentSummary_Request::severityFilter_type::leastSevere() const {
+    const Unsigned8& GetAlarmEnrollmentSummary_Request::SeverityFilter_type::leastSevere() const {
         return *leastSevere_;
     }
 
-    void GetAlarmEnrollmentSummary_Request::severityFilter_type::leastSevere(const Unsigned8& vl) {
+    void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::leastSevere(const Unsigned8& vl) {
         leastSevere_ = vl;
     }
 
-    void GetAlarmEnrollmentSummary_Request::severityFilter_type::leastSevere(boost::shared_ptr< Unsigned8> vl) {
+    void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::leastSevere(boost::shared_ptr< Unsigned8> vl) {
         leastSevere_ = vl;
     }
 
@@ -16673,12 +16673,12 @@ namespace ISO_9506_MMS_1 {
         acknowledgementFilter_ = vl;
     }
 
-    boost::shared_ptr<GetAlarmEnrollmentSummary_Request::severityFilter_type> GetAlarmEnrollmentSummary_Request::severityFilter__new() {
-        return severityFilter_ = boost::shared_ptr<severityFilter_type>(new severityFilter_type());
+    boost::shared_ptr<GetAlarmEnrollmentSummary_Request::SeverityFilter_type> GetAlarmEnrollmentSummary_Request::severityFilter__new() {
+        return severityFilter_ = boost::shared_ptr<SeverityFilter_type>(new SeverityFilter_type());
     }
 
-    void GetAlarmEnrollmentSummary_Request::severityFilter(const severityFilter_type& vl) {
-        severityFilter_ = boost::shared_ptr<severityFilter_type>(new severityFilter_type(vl));
+    void GetAlarmEnrollmentSummary_Request::severityFilter(const SeverityFilter_type& vl) {
+        severityFilter_ = boost::shared_ptr<SeverityFilter_type>(new SeverityFilter_type(vl));
     }
 
     boost::shared_ptr<ObjectName> GetAlarmEnrollmentSummary_Request::continueAfter__new() {
@@ -16695,11 +16695,11 @@ namespace ISO_9506_MMS_1 {
     GetAlarmEnrollmentSummary_Response::GetAlarmEnrollmentSummary_Response() : listOfAlarmEnrollmentSummary_() {
     };
 
-    GetAlarmEnrollmentSummary_Response::GetAlarmEnrollmentSummary_Response(const listOfAlarmEnrollmentSummary_type& arg__listOfAlarmEnrollmentSummary) :
+    GetAlarmEnrollmentSummary_Response::GetAlarmEnrollmentSummary_Response(const ListOfAlarmEnrollmentSummary_type& arg__listOfAlarmEnrollmentSummary) :
     listOfAlarmEnrollmentSummary_(arg__listOfAlarmEnrollmentSummary) {
     };
 
-    GetAlarmEnrollmentSummary_Response::GetAlarmEnrollmentSummary_Response(boost::shared_ptr< listOfAlarmEnrollmentSummary_type> arg__listOfAlarmEnrollmentSummary,
+    GetAlarmEnrollmentSummary_Response::GetAlarmEnrollmentSummary_Response(boost::shared_ptr< ListOfAlarmEnrollmentSummary_type> arg__listOfAlarmEnrollmentSummary,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfAlarmEnrollmentSummary_(arg__listOfAlarmEnrollmentSummary),
     moreFollows_(arg__moreFollows) {
@@ -16717,19 +16717,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    GetAlarmEnrollmentSummary_Response::listOfAlarmEnrollmentSummary_type& GetAlarmEnrollmentSummary_Response::listOfAlarmEnrollmentSummary() {
+    GetAlarmEnrollmentSummary_Response::ListOfAlarmEnrollmentSummary_type& GetAlarmEnrollmentSummary_Response::listOfAlarmEnrollmentSummary() {
         return *listOfAlarmEnrollmentSummary_;
     }
 
-    const GetAlarmEnrollmentSummary_Response::listOfAlarmEnrollmentSummary_type& GetAlarmEnrollmentSummary_Response::listOfAlarmEnrollmentSummary() const {
+    const GetAlarmEnrollmentSummary_Response::ListOfAlarmEnrollmentSummary_type& GetAlarmEnrollmentSummary_Response::listOfAlarmEnrollmentSummary() const {
         return *listOfAlarmEnrollmentSummary_;
     }
 
-    void GetAlarmEnrollmentSummary_Response::listOfAlarmEnrollmentSummary(const listOfAlarmEnrollmentSummary_type& vl) {
+    void GetAlarmEnrollmentSummary_Response::listOfAlarmEnrollmentSummary(const ListOfAlarmEnrollmentSummary_type& vl) {
         listOfAlarmEnrollmentSummary_ = vl;
     }
 
-    void GetAlarmEnrollmentSummary_Response::listOfAlarmEnrollmentSummary(boost::shared_ptr< listOfAlarmEnrollmentSummary_type> vl) {
+    void GetAlarmEnrollmentSummary_Response::listOfAlarmEnrollmentSummary(boost::shared_ptr< ListOfAlarmEnrollmentSummary_type> vl) {
         listOfAlarmEnrollmentSummary_ = vl;
     }
 
@@ -17289,7 +17289,7 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case DeleteEventCondition_Request_specific:
             {
-                ITU_T_IMPLICIT_TAG(value<specific_type > (false, DeleteEventCondition_Request_specific), 0);
+                ITU_T_IMPLICIT_TAG(value<Specific_type > (false, DeleteEventCondition_Request_specific), 0);
                 break;
             }
             case DeleteEventCondition_Request_aa_specific:
@@ -17337,7 +17337,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<specific_type > (true, DeleteEventCondition_Request_specific), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Specific_type > (true, DeleteEventCondition_Request_specific), 0)) return;
                         else free();
                         break;
                     }
@@ -17393,7 +17393,7 @@ namespace ISO_9506_MMS_1 {
             boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
             boost::shared_ptr< Unsigned8> arg__severity,
             boost::shared_ptr< bool> arg__alarmSummaryReports,
-            boost::shared_ptr< monitoredVariable_type> arg__monitoredVariable,
+            boost::shared_ptr< MonitoredVariable_type> arg__monitoredVariable,
             boost::shared_ptr< Unsigned32> arg__evaluationInterval,
             boost::shared_ptr< Identifier> arg__accessControlList) :
     mmsDeletable_(arg__mmsDeletable),
@@ -17406,20 +17406,20 @@ namespace ISO_9506_MMS_1 {
     accessControlList_(arg__accessControlList) {
     };
 
-    void GetEventConditionAttributes_Response::monitoredVariable_type::undefined(const null_type& vl) {
-        set<null_type>(new null_type(vl), monitoredVariable_type_undefined);
+    void GetEventConditionAttributes_Response::MonitoredVariable_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), MonitoredVariable_type_undefined);
     }
 
-    template<> void GetEventConditionAttributes_Response::monitoredVariable_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void GetEventConditionAttributes_Response::MonitoredVariable_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case monitoredVariable_type_variableReference:
+            case MonitoredVariable_type_variableReference:
             {
-                ITU_T_CHOICE_TAG(value<VariableSpecification > (false, monitoredVariable_type_variableReference), 0);
+                ITU_T_CHOICE_TAG(value<VariableSpecification > (false, MonitoredVariable_type_variableReference), 0);
                 break;
             }
-            case monitoredVariable_type_undefined:
+            case MonitoredVariable_type_undefined:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, monitoredVariable_type_undefined), 1);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, MonitoredVariable_type_undefined), 1);
                 break;
             }
             default:
@@ -17428,7 +17428,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void GetEventConditionAttributes_Response::monitoredVariable_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void GetEventConditionAttributes_Response::MonitoredVariable_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -17452,13 +17452,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_CHOICE_TAG(value<VariableSpecification > (true, monitoredVariable_type_variableReference), 0)) return;
+                        if (ITU_T_CHOICE_TAG(value<VariableSpecification > (true, MonitoredVariable_type_variableReference), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, monitoredVariable_type_undefined), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, MonitoredVariable_type_undefined), 1)) return;
                         else free();
                         break;
                     }
@@ -17576,12 +17576,12 @@ namespace ISO_9506_MMS_1 {
         alarmSummaryReports_ = vl;
     }
 
-    boost::shared_ptr<GetEventConditionAttributes_Response::monitoredVariable_type> GetEventConditionAttributes_Response::monitoredVariable__new() {
-        return monitoredVariable_ = boost::shared_ptr<monitoredVariable_type>(new monitoredVariable_type());
+    boost::shared_ptr<GetEventConditionAttributes_Response::MonitoredVariable_type> GetEventConditionAttributes_Response::monitoredVariable__new() {
+        return monitoredVariable_ = boost::shared_ptr<MonitoredVariable_type>(new MonitoredVariable_type());
     }
 
-    void GetEventConditionAttributes_Response::monitoredVariable(const monitoredVariable_type& vl) {
-        monitoredVariable_ = boost::shared_ptr<monitoredVariable_type>(new monitoredVariable_type(vl));
+    void GetEventConditionAttributes_Response::monitoredVariable(const MonitoredVariable_type& vl) {
+        monitoredVariable_ = boost::shared_ptr<MonitoredVariable_type>(new MonitoredVariable_type(vl));
     }
 
     boost::shared_ptr<Unsigned32> GetEventConditionAttributes_Response::evaluationInterval__new() {
@@ -17606,36 +17606,36 @@ namespace ISO_9506_MMS_1 {
     CS_GetEventConditionAttributes_Response::CS_GetEventConditionAttributes_Response() : displayEnhancement_() {
     };
 
-    CS_GetEventConditionAttributes_Response::CS_GetEventConditionAttributes_Response(const displayEnhancement_type& arg__displayEnhancement) :
+    CS_GetEventConditionAttributes_Response::CS_GetEventConditionAttributes_Response(const DisplayEnhancement_type& arg__displayEnhancement) :
     displayEnhancement_(arg__displayEnhancement) {
     };
 
-    CS_GetEventConditionAttributes_Response::CS_GetEventConditionAttributes_Response(boost::shared_ptr< groupPriorityOverride_type> arg__groupPriorityOverride,
-            boost::shared_ptr< listOfReferencingECL_type> arg__listOfReferencingECL,
-            boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement) :
+    CS_GetEventConditionAttributes_Response::CS_GetEventConditionAttributes_Response(boost::shared_ptr< GroupPriorityOverride_type> arg__groupPriorityOverride,
+            boost::shared_ptr< ListOfReferencingECL_type> arg__listOfReferencingECL,
+            boost::shared_ptr< DisplayEnhancement_type> arg__displayEnhancement) :
     groupPriorityOverride_(arg__groupPriorityOverride),
     listOfReferencingECL_(arg__listOfReferencingECL),
     displayEnhancement_(arg__displayEnhancement) {
     };
 
-    void CS_GetEventConditionAttributes_Response::groupPriorityOverride_type::priority(const MMS_Object_Module_1::Priority& vl) {
-        set<MMS_Object_Module_1::Priority>(new MMS_Object_Module_1::Priority(vl), groupPriorityOverride_type_priority);
+    void CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type::priority(const MMS_Object_Module_1::Priority& vl) {
+        set<MMS_Object_Module_1::Priority>(new MMS_Object_Module_1::Priority(vl), GroupPriorityOverride_type_priority);
     }
 
-    void CS_GetEventConditionAttributes_Response::groupPriorityOverride_type::undefined(const null_type& vl) {
-        set<null_type>(new null_type(vl), groupPriorityOverride_type_undefined);
+    void CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), GroupPriorityOverride_type_undefined);
     }
 
-    template<> void CS_GetEventConditionAttributes_Response::groupPriorityOverride_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case groupPriorityOverride_type_priority:
+            case GroupPriorityOverride_type_priority:
             {
-                ITU_T_IMPLICIT_TAG(value<MMS_Object_Module_1::Priority > (false, groupPriorityOverride_type_priority), 0);
+                ITU_T_IMPLICIT_TAG(value<MMS_Object_Module_1::Priority > (false, GroupPriorityOverride_type_priority), 0);
                 break;
             }
-            case groupPriorityOverride_type_undefined:
+            case GroupPriorityOverride_type_undefined:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, groupPriorityOverride_type_undefined), 1);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, GroupPriorityOverride_type_undefined), 1);
                 break;
             }
             default:
@@ -17644,7 +17644,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_GetEventConditionAttributes_Response::groupPriorityOverride_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -17668,13 +17668,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<MMS_Object_Module_1::Priority > (true, groupPriorityOverride_type_priority), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<MMS_Object_Module_1::Priority > (true, GroupPriorityOverride_type_priority), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, groupPriorityOverride_type_undefined), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, GroupPriorityOverride_type_undefined), 1)) return;
                         else free();
                         break;
                     }
@@ -17697,33 +17697,33 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    void CS_GetEventConditionAttributes_Response::displayEnhancement_type::string(const visiblestring_type& vl) {
-        set<visiblestring_type>(new visiblestring_type(vl), displayEnhancement_type_string);
+    void CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), DisplayEnhancement_type_string);
     }
 
-    void CS_GetEventConditionAttributes_Response::displayEnhancement_type::index(const int& vl) {
-        set<int>(new int(vl), displayEnhancement_type_index);
+    void CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::index(const int& vl) {
+        set<int>(new int(vl), DisplayEnhancement_type_index);
     }
 
-    void CS_GetEventConditionAttributes_Response::displayEnhancement_type::noEnhancement(const null_type& vl) {
-        set<null_type>(new null_type(vl), displayEnhancement_type_noEnhancement);
+    void CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), DisplayEnhancement_type_noEnhancement);
     }
 
-    template<> void CS_GetEventConditionAttributes_Response::displayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case displayEnhancement_type_string:
+            case DisplayEnhancement_type_string:
             {
-                ITU_T_IMPLICIT_TAG(value<visiblestring_type > (false, displayEnhancement_type_string), 0);
+                ITU_T_IMPLICIT_TAG(value<visiblestring_type > (false, DisplayEnhancement_type_string), 0);
                 break;
             }
-            case displayEnhancement_type_index:
+            case DisplayEnhancement_type_index:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, displayEnhancement_type_index), 1);
+                ITU_T_IMPLICIT_TAG(value<int > (false, DisplayEnhancement_type_index), 1);
                 break;
             }
-            case displayEnhancement_type_noEnhancement:
+            case DisplayEnhancement_type_noEnhancement:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, displayEnhancement_type_noEnhancement), 2);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, DisplayEnhancement_type_noEnhancement), 2);
                 break;
             }
             default:
@@ -17732,7 +17732,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_GetEventConditionAttributes_Response::displayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -17756,19 +17756,19 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<visiblestring_type > (true, displayEnhancement_type_string), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<visiblestring_type > (true, DisplayEnhancement_type_string), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, displayEnhancement_type_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, DisplayEnhancement_type_index), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, displayEnhancement_type_noEnhancement), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, DisplayEnhancement_type_noEnhancement), 2)) return;
                         else free();
                         break;
                     }
@@ -17803,35 +17803,35 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(displayEnhancement_, 2);
     }
 
-    boost::shared_ptr<CS_GetEventConditionAttributes_Response::groupPriorityOverride_type> CS_GetEventConditionAttributes_Response::groupPriorityOverride__new() {
-        return groupPriorityOverride_ = boost::shared_ptr<groupPriorityOverride_type>(new groupPriorityOverride_type());
+    boost::shared_ptr<CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type> CS_GetEventConditionAttributes_Response::groupPriorityOverride__new() {
+        return groupPriorityOverride_ = boost::shared_ptr<GroupPriorityOverride_type>(new GroupPriorityOverride_type());
     }
 
-    void CS_GetEventConditionAttributes_Response::groupPriorityOverride(const groupPriorityOverride_type& vl) {
-        groupPriorityOverride_ = boost::shared_ptr<groupPriorityOverride_type>(new groupPriorityOverride_type(vl));
+    void CS_GetEventConditionAttributes_Response::groupPriorityOverride(const GroupPriorityOverride_type& vl) {
+        groupPriorityOverride_ = boost::shared_ptr<GroupPriorityOverride_type>(new GroupPriorityOverride_type(vl));
     }
 
-    boost::shared_ptr<CS_GetEventConditionAttributes_Response::listOfReferencingECL_type> CS_GetEventConditionAttributes_Response::listOfReferencingECL__new() {
-        return listOfReferencingECL_ = boost::shared_ptr<listOfReferencingECL_type>(new listOfReferencingECL_type());
+    boost::shared_ptr<CS_GetEventConditionAttributes_Response::ListOfReferencingECL_type> CS_GetEventConditionAttributes_Response::listOfReferencingECL__new() {
+        return listOfReferencingECL_ = boost::shared_ptr<ListOfReferencingECL_type>(new ListOfReferencingECL_type());
     }
 
-    void CS_GetEventConditionAttributes_Response::listOfReferencingECL(const listOfReferencingECL_type& vl) {
-        listOfReferencingECL_ = boost::shared_ptr<listOfReferencingECL_type>(new listOfReferencingECL_type(vl));
+    void CS_GetEventConditionAttributes_Response::listOfReferencingECL(const ListOfReferencingECL_type& vl) {
+        listOfReferencingECL_ = boost::shared_ptr<ListOfReferencingECL_type>(new ListOfReferencingECL_type(vl));
     }
 
-    CS_GetEventConditionAttributes_Response::displayEnhancement_type& CS_GetEventConditionAttributes_Response::displayEnhancement() {
+    CS_GetEventConditionAttributes_Response::DisplayEnhancement_type& CS_GetEventConditionAttributes_Response::displayEnhancement() {
         return *displayEnhancement_;
     }
 
-    const CS_GetEventConditionAttributes_Response::displayEnhancement_type& CS_GetEventConditionAttributes_Response::displayEnhancement() const {
+    const CS_GetEventConditionAttributes_Response::DisplayEnhancement_type& CS_GetEventConditionAttributes_Response::displayEnhancement() const {
         return *displayEnhancement_;
     }
 
-    void CS_GetEventConditionAttributes_Response::displayEnhancement(const displayEnhancement_type& vl) {
+    void CS_GetEventConditionAttributes_Response::displayEnhancement(const DisplayEnhancement_type& vl) {
         displayEnhancement_ = vl;
     }
 
-    void CS_GetEventConditionAttributes_Response::displayEnhancement(boost::shared_ptr< displayEnhancement_type> vl) {
+    void CS_GetEventConditionAttributes_Response::displayEnhancement(boost::shared_ptr< DisplayEnhancement_type> vl) {
         displayEnhancement_ = vl;
     }
 
@@ -18023,37 +18023,37 @@ namespace ISO_9506_MMS_1 {
     CS_AlterEventConditionMonitoring_Request::CS_AlterEventConditionMonitoring_Request() {
     };
 
-    CS_AlterEventConditionMonitoring_Request::CS_AlterEventConditionMonitoring_Request(boost::shared_ptr< changeDisplay_type> arg__changeDisplay) :
+    CS_AlterEventConditionMonitoring_Request::CS_AlterEventConditionMonitoring_Request(boost::shared_ptr< ChangeDisplay_type> arg__changeDisplay) :
     changeDisplay_(arg__changeDisplay) {
     };
 
-    void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::string(const visiblestring_type& vl) {
-        set<visiblestring_type>(new visiblestring_type(vl), changeDisplay_type_string);
+    void CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), ChangeDisplay_type_string);
     }
 
-    void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::index(const int& vl) {
-        set<int>(new int(vl), changeDisplay_type_index);
+    void CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::index(const int& vl) {
+        set<int>(new int(vl), ChangeDisplay_type_index);
     }
 
-    void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::noEnhancement(const null_type& vl) {
-        set<null_type>(new null_type(vl), changeDisplay_type_noEnhancement);
+    void CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), ChangeDisplay_type_noEnhancement);
     }
 
-    template<> void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case changeDisplay_type_string:
+            case ChangeDisplay_type_string:
             {
-                ITU_T_IMPLICIT_TAG(value<visiblestring_type > (false, changeDisplay_type_string), 0);
+                ITU_T_IMPLICIT_TAG(value<visiblestring_type > (false, ChangeDisplay_type_string), 0);
                 break;
             }
-            case changeDisplay_type_index:
+            case ChangeDisplay_type_index:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, changeDisplay_type_index), 1);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ChangeDisplay_type_index), 1);
                 break;
             }
-            case changeDisplay_type_noEnhancement:
+            case ChangeDisplay_type_noEnhancement:
             {
-                ITU_T_EXPLICIT_TAG(value<null_type > (false, changeDisplay_type_noEnhancement), 2);
+                ITU_T_EXPLICIT_TAG(value<null_type > (false, ChangeDisplay_type_noEnhancement), 2);
                 break;
             }
             default:
@@ -18062,7 +18062,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -18086,19 +18086,19 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<visiblestring_type > (true, changeDisplay_type_string), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<visiblestring_type > (true, ChangeDisplay_type_string), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, changeDisplay_type_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ChangeDisplay_type_index), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<null_type > (true, changeDisplay_type_noEnhancement), 2)) return;
+                        if (ITU_T_EXPLICIT_TAG(value<null_type > (true, ChangeDisplay_type_noEnhancement), 2)) return;
                         else free();
                         break;
                     }
@@ -18129,12 +18129,12 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(changeDisplay_);
     }
 
-    boost::shared_ptr<CS_AlterEventConditionMonitoring_Request::changeDisplay_type> CS_AlterEventConditionMonitoring_Request::changeDisplay__new() {
-        return changeDisplay_ = boost::shared_ptr<changeDisplay_type>(new changeDisplay_type());
+    boost::shared_ptr<CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type> CS_AlterEventConditionMonitoring_Request::changeDisplay__new() {
+        return changeDisplay_ = boost::shared_ptr<ChangeDisplay_type>(new ChangeDisplay_type());
     }
 
-    void CS_AlterEventConditionMonitoring_Request::changeDisplay(const changeDisplay_type& vl) {
-        changeDisplay_ = boost::shared_ptr<changeDisplay_type>(new changeDisplay_type(vl));
+    void CS_AlterEventConditionMonitoring_Request::changeDisplay(const ChangeDisplay_type& vl) {
+        changeDisplay_ = boost::shared_ptr<ChangeDisplay_type>(new ChangeDisplay_type(vl));
     }
 
 
@@ -18150,7 +18150,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     DefineEventAction_Request::DefineEventAction_Request(boost::shared_ptr< ObjectName> arg__eventActionName,
-            boost::shared_ptr< listOfModifier_type> arg__listOfModifier,
+            boost::shared_ptr< ListOfModifier_type> arg__listOfModifier,
             boost::shared_ptr< ConfirmedServiceRequest> arg__confirmedServiceRequest,
             boost::shared_ptr< Request_Detail> arg__cs_extension) :
     eventActionName_(arg__eventActionName),
@@ -18189,12 +18189,12 @@ namespace ISO_9506_MMS_1 {
         eventActionName_ = vl;
     }
 
-    boost::shared_ptr<DefineEventAction_Request::listOfModifier_type> DefineEventAction_Request::listOfModifier__new() {
-        return listOfModifier_ = boost::shared_ptr<listOfModifier_type>(new listOfModifier_type());
+    boost::shared_ptr<DefineEventAction_Request::ListOfModifier_type> DefineEventAction_Request::listOfModifier__new() {
+        return listOfModifier_ = boost::shared_ptr<ListOfModifier_type>(new ListOfModifier_type());
     }
 
-    void DefineEventAction_Request::listOfModifier(const listOfModifier_type& vl) {
-        listOfModifier_ = boost::shared_ptr<listOfModifier_type>(new listOfModifier_type(vl));
+    void DefineEventAction_Request::listOfModifier(const ListOfModifier_type& vl) {
+        listOfModifier_ = boost::shared_ptr<ListOfModifier_type>(new ListOfModifier_type(vl));
     }
 
     ConfirmedServiceRequest& DefineEventAction_Request::confirmedServiceRequest() {
@@ -18240,7 +18240,7 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case DeleteEventAction_Request_specific:
             {
-                ITU_T_IMPLICIT_TAG(value<specific_type > (false, DeleteEventAction_Request_specific), 0);
+                ITU_T_IMPLICIT_TAG(value<Specific_type > (false, DeleteEventAction_Request_specific), 0);
                 break;
             }
             case DeleteEventAction_Request_aa_specific:
@@ -18288,7 +18288,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<specific_type > (true, DeleteEventAction_Request_specific), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Specific_type > (true, DeleteEventAction_Request_specific), 0)) return;
                         else free();
                         break;
                     }
@@ -18335,14 +18335,14 @@ namespace ISO_9506_MMS_1 {
     GetEventActionAttributes_Response::GetEventActionAttributes_Response() : listOfModifier_(), confirmedServiceRequest_() {
     };
 
-    GetEventActionAttributes_Response::GetEventActionAttributes_Response(const listOfModifier_type& arg__listOfModifier,
+    GetEventActionAttributes_Response::GetEventActionAttributes_Response(const ListOfModifier_type& arg__listOfModifier,
             const ConfirmedServiceRequest& arg__confirmedServiceRequest) :
     listOfModifier_(arg__listOfModifier),
     confirmedServiceRequest_(arg__confirmedServiceRequest) {
     };
 
     GetEventActionAttributes_Response::GetEventActionAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
-            boost::shared_ptr< listOfModifier_type> arg__listOfModifier,
+            boost::shared_ptr< ListOfModifier_type> arg__listOfModifier,
             boost::shared_ptr< ConfirmedServiceRequest> arg__confirmedServiceRequest,
             boost::shared_ptr< Request_Detail> arg__cs_extension,
             boost::shared_ptr< Identifier> arg__accessControlList) :
@@ -18383,19 +18383,19 @@ namespace ISO_9506_MMS_1 {
         mmsDeletable_ = vl;
     }
 
-    GetEventActionAttributes_Response::listOfModifier_type& GetEventActionAttributes_Response::listOfModifier() {
+    GetEventActionAttributes_Response::ListOfModifier_type& GetEventActionAttributes_Response::listOfModifier() {
         return *listOfModifier_;
     }
 
-    const GetEventActionAttributes_Response::listOfModifier_type& GetEventActionAttributes_Response::listOfModifier() const {
+    const GetEventActionAttributes_Response::ListOfModifier_type& GetEventActionAttributes_Response::listOfModifier() const {
         return *listOfModifier_;
     }
 
-    void GetEventActionAttributes_Response::listOfModifier(const listOfModifier_type& vl) {
+    void GetEventActionAttributes_Response::listOfModifier(const ListOfModifier_type& vl) {
         listOfModifier_ = vl;
     }
 
-    void GetEventActionAttributes_Response::listOfModifier(boost::shared_ptr< listOfModifier_type> vl) {
+    void GetEventActionAttributes_Response::listOfModifier(boost::shared_ptr< ListOfModifier_type> vl) {
         listOfModifier_ = vl;
     }
 
@@ -18659,7 +18659,7 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case DeleteEventEnrollment_Request_specific:
             {
-                ITU_T_IMPLICIT_TAG(value<specific_type > (false, DeleteEventEnrollment_Request_specific), 0);
+                ITU_T_IMPLICIT_TAG(value<Specific_type > (false, DeleteEventEnrollment_Request_specific), 0);
                 break;
             }
             case DeleteEventEnrollment_Request_ec:
@@ -18702,7 +18702,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<specific_type > (true, DeleteEventEnrollment_Request_specific), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Specific_type > (true, DeleteEventEnrollment_Request_specific), 0)) return;
                         else free();
                         break;
                     }
@@ -18748,7 +18748,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     GetEventEnrollmentAttributes_Request::GetEventEnrollmentAttributes_Request(boost::shared_ptr< int> arg__scopeOfRequest,
-            boost::shared_ptr< eventEnrollmentNames_type> arg__eventEnrollmentNames,
+            boost::shared_ptr< EventEnrollmentNames_type> arg__eventEnrollmentNames,
             boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
             boost::shared_ptr< ObjectName> arg__eventConditionName,
             boost::shared_ptr< ObjectName> arg__eventActionName,
@@ -18793,12 +18793,12 @@ namespace ISO_9506_MMS_1 {
         scopeOfRequest_ = vl;
     }
 
-    boost::shared_ptr<GetEventEnrollmentAttributes_Request::eventEnrollmentNames_type> GetEventEnrollmentAttributes_Request::eventEnrollmentNames__new() {
-        return eventEnrollmentNames_ = boost::shared_ptr<eventEnrollmentNames_type>(new eventEnrollmentNames_type());
+    boost::shared_ptr<GetEventEnrollmentAttributes_Request::EventEnrollmentNames_type> GetEventEnrollmentAttributes_Request::eventEnrollmentNames__new() {
+        return eventEnrollmentNames_ = boost::shared_ptr<EventEnrollmentNames_type>(new EventEnrollmentNames_type());
     }
 
-    void GetEventEnrollmentAttributes_Request::eventEnrollmentNames(const eventEnrollmentNames_type& vl) {
-        eventEnrollmentNames_ = boost::shared_ptr<eventEnrollmentNames_type>(new eventEnrollmentNames_type(vl));
+    void GetEventEnrollmentAttributes_Request::eventEnrollmentNames(const EventEnrollmentNames_type& vl) {
+        eventEnrollmentNames_ = boost::shared_ptr<EventEnrollmentNames_type>(new EventEnrollmentNames_type(vl));
     }
 
     boost::shared_ptr<MMS_Environment_1::ApplicationReference> GetEventEnrollmentAttributes_Request::clientApplication__new() {
@@ -18839,11 +18839,11 @@ namespace ISO_9506_MMS_1 {
     GetEventEnrollmentAttributes_Response::GetEventEnrollmentAttributes_Response() : listOfEEAttributes_() {
     };
 
-    GetEventEnrollmentAttributes_Response::GetEventEnrollmentAttributes_Response(const listOfEEAttributes_type& arg__listOfEEAttributes) :
+    GetEventEnrollmentAttributes_Response::GetEventEnrollmentAttributes_Response(const ListOfEEAttributes_type& arg__listOfEEAttributes) :
     listOfEEAttributes_(arg__listOfEEAttributes) {
     };
 
-    GetEventEnrollmentAttributes_Response::GetEventEnrollmentAttributes_Response(boost::shared_ptr< listOfEEAttributes_type> arg__listOfEEAttributes,
+    GetEventEnrollmentAttributes_Response::GetEventEnrollmentAttributes_Response(boost::shared_ptr< ListOfEEAttributes_type> arg__listOfEEAttributes,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfEEAttributes_(arg__listOfEEAttributes),
     moreFollows_(arg__moreFollows) {
@@ -18861,19 +18861,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    GetEventEnrollmentAttributes_Response::listOfEEAttributes_type& GetEventEnrollmentAttributes_Response::listOfEEAttributes() {
+    GetEventEnrollmentAttributes_Response::ListOfEEAttributes_type& GetEventEnrollmentAttributes_Response::listOfEEAttributes() {
         return *listOfEEAttributes_;
     }
 
-    const GetEventEnrollmentAttributes_Response::listOfEEAttributes_type& GetEventEnrollmentAttributes_Response::listOfEEAttributes() const {
+    const GetEventEnrollmentAttributes_Response::ListOfEEAttributes_type& GetEventEnrollmentAttributes_Response::listOfEEAttributes() const {
         return *listOfEEAttributes_;
     }
 
-    void GetEventEnrollmentAttributes_Response::listOfEEAttributes(const listOfEEAttributes_type& vl) {
+    void GetEventEnrollmentAttributes_Response::listOfEEAttributes(const ListOfEEAttributes_type& vl) {
         listOfEEAttributes_ = vl;
     }
 
-    void GetEventEnrollmentAttributes_Response::listOfEEAttributes(boost::shared_ptr< listOfEEAttributes_type> vl) {
+    void GetEventEnrollmentAttributes_Response::listOfEEAttributes(boost::shared_ptr< ListOfEEAttributes_type> vl) {
         listOfEEAttributes_ = vl;
     }
 
@@ -18896,9 +18896,9 @@ namespace ISO_9506_MMS_1 {
     };
 
     EEAttributes::EEAttributes(const ObjectName& arg__eventEnrollmentName,
-            const eventConditionName_type& arg__eventConditionName,
+            const EventConditionName_type& arg__eventConditionName,
             const MMS_Object_Module_1::EE_Class& arg__enrollmentClass,
-            const displayEnhancement_type& arg__displayEnhancement) :
+            const DisplayEnhancement_type& arg__displayEnhancement) :
     eventEnrollmentName_(arg__eventEnrollmentName),
     eventConditionName_(arg__eventConditionName),
     enrollmentClass_(arg__enrollmentClass),
@@ -18906,15 +18906,15 @@ namespace ISO_9506_MMS_1 {
     };
 
     EEAttributes::EEAttributes(boost::shared_ptr< ObjectName> arg__eventEnrollmentName,
-            boost::shared_ptr< eventConditionName_type> arg__eventConditionName,
-            boost::shared_ptr< eventActionName_type> arg__eventActionName,
+            boost::shared_ptr< EventConditionName_type> arg__eventConditionName,
+            boost::shared_ptr< EventActionName_type> arg__eventActionName,
             boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
             boost::shared_ptr< bool> arg__mmsDeletable,
             boost::shared_ptr< MMS_Object_Module_1::EE_Class> arg__enrollmentClass,
             boost::shared_ptr< MMS_Object_Module_1::EE_Duration> arg__duration,
             boost::shared_ptr< Unsigned32> arg__invokeID,
             boost::shared_ptr< Unsigned32> arg__remainingAcceptableDelay,
-            boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement) :
+            boost::shared_ptr< DisplayEnhancement_type> arg__displayEnhancement) :
     eventEnrollmentName_(arg__eventEnrollmentName),
     eventConditionName_(arg__eventConditionName),
     eventActionName_(arg__eventActionName),
@@ -18927,20 +18927,20 @@ namespace ISO_9506_MMS_1 {
     displayEnhancement_(arg__displayEnhancement) {
     };
 
-    void EEAttributes::eventConditionName_type::undefined(const null_type& vl) {
-        set<null_type>(new null_type(vl), eventConditionName_type_undefined);
+    void EEAttributes::EventConditionName_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), EventConditionName_type_undefined);
     }
 
-    template<> void EEAttributes::eventConditionName_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void EEAttributes::EventConditionName_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case eventConditionName_type_eventCondition:
+            case EventConditionName_type_eventCondition:
             {
-                ITU_T_CHOICE_TAG(value<ObjectName > (false, eventConditionName_type_eventCondition), 0);
+                ITU_T_CHOICE_TAG(value<ObjectName > (false, EventConditionName_type_eventCondition), 0);
                 break;
             }
-            case eventConditionName_type_undefined:
+            case EventConditionName_type_undefined:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, eventConditionName_type_undefined), 1);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, EventConditionName_type_undefined), 1);
                 break;
             }
             default:
@@ -18949,7 +18949,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void EEAttributes::eventConditionName_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void EEAttributes::EventConditionName_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -18973,13 +18973,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_CHOICE_TAG(value<ObjectName > (true, eventConditionName_type_eventCondition), 0)) return;
+                        if (ITU_T_CHOICE_TAG(value<ObjectName > (true, EventConditionName_type_eventCondition), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, eventConditionName_type_undefined), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, EventConditionName_type_undefined), 1)) return;
                         else free();
                         break;
                     }
@@ -19002,20 +19002,20 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    void EEAttributes::eventActionName_type::undefined(const null_type& vl) {
-        set<null_type>(new null_type(vl), eventActionName_type_undefined);
+    void EEAttributes::EventActionName_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), EventActionName_type_undefined);
     }
 
-    template<> void EEAttributes::eventActionName_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void EEAttributes::EventActionName_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case eventActionName_type_eventAction:
+            case EventActionName_type_eventAction:
             {
-                ITU_T_CHOICE_TAG(value<ObjectName > (false, eventActionName_type_eventAction), 0);
+                ITU_T_CHOICE_TAG(value<ObjectName > (false, EventActionName_type_eventAction), 0);
                 break;
             }
-            case eventActionName_type_undefined:
+            case EventActionName_type_undefined:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, eventActionName_type_undefined), 1);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, EventActionName_type_undefined), 1);
                 break;
             }
             default:
@@ -19024,7 +19024,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void EEAttributes::eventActionName_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void EEAttributes::EventActionName_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -19048,13 +19048,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_CHOICE_TAG(value<ObjectName > (true, eventActionName_type_eventAction), 0)) return;
+                        if (ITU_T_CHOICE_TAG(value<ObjectName > (true, EventActionName_type_eventAction), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, eventActionName_type_undefined), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, EventActionName_type_undefined), 1)) return;
                         else free();
                         break;
                     }
@@ -19077,33 +19077,33 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    void EEAttributes::displayEnhancement_type::string(const visiblestring_type& vl) {
-        set<visiblestring_type>(new visiblestring_type(vl), displayEnhancement_type_string);
+    void EEAttributes::DisplayEnhancement_type::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), DisplayEnhancement_type_string);
     }
 
-    void EEAttributes::displayEnhancement_type::index(const int& vl) {
-        set<int>(new int(vl), displayEnhancement_type_index);
+    void EEAttributes::DisplayEnhancement_type::index(const int& vl) {
+        set<int>(new int(vl), DisplayEnhancement_type_index);
     }
 
-    void EEAttributes::displayEnhancement_type::noEnhancement(const null_type& vl) {
-        set<null_type>(new null_type(vl), displayEnhancement_type_noEnhancement);
+    void EEAttributes::DisplayEnhancement_type::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), DisplayEnhancement_type_noEnhancement);
     }
 
-    template<> void EEAttributes::displayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void EEAttributes::DisplayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case displayEnhancement_type_string:
+            case DisplayEnhancement_type_string:
             {
-                ITU_T_IMPLICIT_TAG(value<visiblestring_type > (false, displayEnhancement_type_string), 0);
+                ITU_T_IMPLICIT_TAG(value<visiblestring_type > (false, DisplayEnhancement_type_string), 0);
                 break;
             }
-            case displayEnhancement_type_index:
+            case DisplayEnhancement_type_index:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, displayEnhancement_type_index), 1);
+                ITU_T_IMPLICIT_TAG(value<int > (false, DisplayEnhancement_type_index), 1);
                 break;
             }
-            case displayEnhancement_type_noEnhancement:
+            case DisplayEnhancement_type_noEnhancement:
             {
-                ITU_T_BIND_TAG(value<null_type > (false, displayEnhancement_type_noEnhancement));
+                ITU_T_BIND_TAG(value<null_type > (false, DisplayEnhancement_type_noEnhancement));
                 break;
             }
             default:
@@ -19112,7 +19112,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void EEAttributes::displayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void EEAttributes::DisplayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -19136,13 +19136,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<visiblestring_type > (true, displayEnhancement_type_string), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<visiblestring_type > (true, DisplayEnhancement_type_string), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, displayEnhancement_type_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, DisplayEnhancement_type_index), 1)) return;
                         else free();
                         break;
                     }
@@ -19161,7 +19161,7 @@ namespace ISO_9506_MMS_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<null_type > (true, displayEnhancement_type_noEnhancement))) return;
+                if (ITU_T_BIND_TAG(value<null_type > (true, DisplayEnhancement_type_noEnhancement))) return;
                 else free();
             }
         }
@@ -19214,28 +19214,28 @@ namespace ISO_9506_MMS_1 {
         eventEnrollmentName_ = vl;
     }
 
-    EEAttributes::eventConditionName_type& EEAttributes::eventConditionName() {
+    EEAttributes::EventConditionName_type& EEAttributes::eventConditionName() {
         return *eventConditionName_;
     }
 
-    const EEAttributes::eventConditionName_type& EEAttributes::eventConditionName() const {
+    const EEAttributes::EventConditionName_type& EEAttributes::eventConditionName() const {
         return *eventConditionName_;
     }
 
-    void EEAttributes::eventConditionName(const eventConditionName_type& vl) {
+    void EEAttributes::eventConditionName(const EventConditionName_type& vl) {
         eventConditionName_ = vl;
     }
 
-    void EEAttributes::eventConditionName(boost::shared_ptr< eventConditionName_type> vl) {
+    void EEAttributes::eventConditionName(boost::shared_ptr< EventConditionName_type> vl) {
         eventConditionName_ = vl;
     }
 
-    boost::shared_ptr<EEAttributes::eventActionName_type> EEAttributes::eventActionName__new() {
-        return eventActionName_ = boost::shared_ptr<eventActionName_type>(new eventActionName_type());
+    boost::shared_ptr<EEAttributes::EventActionName_type> EEAttributes::eventActionName__new() {
+        return eventActionName_ = boost::shared_ptr<EventActionName_type>(new EventActionName_type());
     }
 
-    void EEAttributes::eventActionName(const eventActionName_type& vl) {
-        eventActionName_ = boost::shared_ptr<eventActionName_type>(new eventActionName_type(vl));
+    void EEAttributes::eventActionName(const EventActionName_type& vl) {
+        eventActionName_ = boost::shared_ptr<EventActionName_type>(new EventActionName_type(vl));
     }
 
     boost::shared_ptr<MMS_Environment_1::ApplicationReference> EEAttributes::clientApplication__new() {
@@ -19302,19 +19302,19 @@ namespace ISO_9506_MMS_1 {
         remainingAcceptableDelay_ = boost::shared_ptr<Unsigned32>(new Unsigned32(vl));
     }
 
-    EEAttributes::displayEnhancement_type& EEAttributes::displayEnhancement() {
+    EEAttributes::DisplayEnhancement_type& EEAttributes::displayEnhancement() {
         return *displayEnhancement_;
     }
 
-    const EEAttributes::displayEnhancement_type& EEAttributes::displayEnhancement() const {
+    const EEAttributes::DisplayEnhancement_type& EEAttributes::displayEnhancement() const {
         return *displayEnhancement_;
     }
 
-    void EEAttributes::displayEnhancement(const displayEnhancement_type& vl) {
+    void EEAttributes::displayEnhancement(const DisplayEnhancement_type& vl) {
         displayEnhancement_ = vl;
     }
 
-    void EEAttributes::displayEnhancement(boost::shared_ptr< displayEnhancement_type> vl) {
+    void EEAttributes::displayEnhancement(boost::shared_ptr< DisplayEnhancement_type> vl) {
         displayEnhancement_ = vl;
     }
 
@@ -19498,30 +19498,30 @@ namespace ISO_9506_MMS_1 {
     AlterEventEnrollment_Response::AlterEventEnrollment_Response() : currentState_(), transitionTime_() {
     };
 
-    AlterEventEnrollment_Response::AlterEventEnrollment_Response(const currentState_type& arg__currentState,
+    AlterEventEnrollment_Response::AlterEventEnrollment_Response(const CurrentState_type& arg__currentState,
             const MMS_Object_Module_1::EventTime& arg__transitionTime) :
     currentState_(arg__currentState),
     transitionTime_(arg__transitionTime) {
     };
 
-    void AlterEventEnrollment_Response::currentState_type::state(const EE_State& vl) {
-        set<EE_State>(new EE_State(vl), currentState_type_state);
+    void AlterEventEnrollment_Response::CurrentState_type::state(const EE_State& vl) {
+        set<EE_State>(new EE_State(vl), CurrentState_type_state);
     }
 
-    void AlterEventEnrollment_Response::currentState_type::undefined(const null_type& vl) {
-        set<null_type>(new null_type(vl), currentState_type_undefined);
+    void AlterEventEnrollment_Response::CurrentState_type::undefined(const null_type& vl) {
+        set<null_type>(new null_type(vl), CurrentState_type_undefined);
     }
 
-    template<> void AlterEventEnrollment_Response::currentState_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void AlterEventEnrollment_Response::CurrentState_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case currentState_type_state:
+            case CurrentState_type_state:
             {
-                ITU_T_IMPLICIT_TAG(value<EE_State > (false, currentState_type_state), 0);
+                ITU_T_IMPLICIT_TAG(value<EE_State > (false, CurrentState_type_state), 0);
                 break;
             }
-            case currentState_type_undefined:
+            case CurrentState_type_undefined:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, currentState_type_undefined), 1);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, CurrentState_type_undefined), 1);
                 break;
             }
             default:
@@ -19530,7 +19530,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void AlterEventEnrollment_Response::currentState_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void AlterEventEnrollment_Response::CurrentState_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -19554,13 +19554,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<EE_State > (true, currentState_type_state), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<EE_State > (true, CurrentState_type_state), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, currentState_type_undefined), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, CurrentState_type_undefined), 1)) return;
                         else free();
                         break;
                     }
@@ -19593,19 +19593,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(transitionTime_, 1);
     }
 
-    AlterEventEnrollment_Response::currentState_type& AlterEventEnrollment_Response::currentState() {
+    AlterEventEnrollment_Response::CurrentState_type& AlterEventEnrollment_Response::currentState() {
         return *currentState_;
     }
 
-    const AlterEventEnrollment_Response::currentState_type& AlterEventEnrollment_Response::currentState() const {
+    const AlterEventEnrollment_Response::CurrentState_type& AlterEventEnrollment_Response::currentState() const {
         return *currentState_;
     }
 
-    void AlterEventEnrollment_Response::currentState(const currentState_type& vl) {
+    void AlterEventEnrollment_Response::currentState(const CurrentState_type& vl) {
         currentState_ = vl;
     }
 
-    void AlterEventEnrollment_Response::currentState(boost::shared_ptr< currentState_type> vl) {
+    void AlterEventEnrollment_Response::currentState(boost::shared_ptr< CurrentState_type> vl) {
         currentState_ = vl;
     }
 
@@ -19631,37 +19631,37 @@ namespace ISO_9506_MMS_1 {
     CS_AlterEventEnrollment_Request::CS_AlterEventEnrollment_Request() {
     };
 
-    CS_AlterEventEnrollment_Request::CS_AlterEventEnrollment_Request(boost::shared_ptr< changeDisplay_type> arg__changeDisplay) :
+    CS_AlterEventEnrollment_Request::CS_AlterEventEnrollment_Request(boost::shared_ptr< ChangeDisplay_type> arg__changeDisplay) :
     changeDisplay_(arg__changeDisplay) {
     };
 
-    void CS_AlterEventEnrollment_Request::changeDisplay_type::string(const visiblestring_type& vl) {
-        set<visiblestring_type>(new visiblestring_type(vl), changeDisplay_type_string);
+    void CS_AlterEventEnrollment_Request::ChangeDisplay_type::string(const visiblestring_type& vl) {
+        set<visiblestring_type>(new visiblestring_type(vl), ChangeDisplay_type_string);
     }
 
-    void CS_AlterEventEnrollment_Request::changeDisplay_type::index(const int& vl) {
-        set<int>(new int(vl), changeDisplay_type_index);
+    void CS_AlterEventEnrollment_Request::ChangeDisplay_type::index(const int& vl) {
+        set<int>(new int(vl), ChangeDisplay_type_index);
     }
 
-    void CS_AlterEventEnrollment_Request::changeDisplay_type::noEnhancement(const null_type& vl) {
-        set<null_type>(new null_type(vl), changeDisplay_type_noEnhancement);
+    void CS_AlterEventEnrollment_Request::ChangeDisplay_type::noEnhancement(const null_type& vl) {
+        set<null_type>(new null_type(vl), ChangeDisplay_type_noEnhancement);
     }
 
-    template<> void CS_AlterEventEnrollment_Request::changeDisplay_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void CS_AlterEventEnrollment_Request::ChangeDisplay_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case changeDisplay_type_string:
+            case ChangeDisplay_type_string:
             {
-                ITU_T_IMPLICIT_TAG(value<visiblestring_type > (false, changeDisplay_type_string), 0);
+                ITU_T_IMPLICIT_TAG(value<visiblestring_type > (false, ChangeDisplay_type_string), 0);
                 break;
             }
-            case changeDisplay_type_index:
+            case ChangeDisplay_type_index:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, changeDisplay_type_index), 1);
+                ITU_T_IMPLICIT_TAG(value<int > (false, ChangeDisplay_type_index), 1);
                 break;
             }
-            case changeDisplay_type_noEnhancement:
+            case ChangeDisplay_type_noEnhancement:
             {
-                ITU_T_EXPLICIT_TAG(value<null_type > (false, changeDisplay_type_noEnhancement), 2);
+                ITU_T_EXPLICIT_TAG(value<null_type > (false, ChangeDisplay_type_noEnhancement), 2);
                 break;
             }
             default:
@@ -19670,7 +19670,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void CS_AlterEventEnrollment_Request::changeDisplay_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void CS_AlterEventEnrollment_Request::ChangeDisplay_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -19694,19 +19694,19 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<visiblestring_type > (true, changeDisplay_type_string), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<visiblestring_type > (true, ChangeDisplay_type_string), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, changeDisplay_type_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, ChangeDisplay_type_index), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<null_type > (true, changeDisplay_type_noEnhancement), 2)) return;
+                        if (ITU_T_EXPLICIT_TAG(value<null_type > (true, ChangeDisplay_type_noEnhancement), 2)) return;
                         else free();
                         break;
                     }
@@ -19737,24 +19737,24 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(changeDisplay_);
     }
 
-    boost::shared_ptr<CS_AlterEventEnrollment_Request::changeDisplay_type> CS_AlterEventEnrollment_Request::changeDisplay__new() {
-        return changeDisplay_ = boost::shared_ptr<changeDisplay_type>(new changeDisplay_type());
+    boost::shared_ptr<CS_AlterEventEnrollment_Request::ChangeDisplay_type> CS_AlterEventEnrollment_Request::changeDisplay__new() {
+        return changeDisplay_ = boost::shared_ptr<ChangeDisplay_type>(new ChangeDisplay_type());
     }
 
-    void CS_AlterEventEnrollment_Request::changeDisplay(const changeDisplay_type& vl) {
-        changeDisplay_ = boost::shared_ptr<changeDisplay_type>(new changeDisplay_type(vl));
+    void CS_AlterEventEnrollment_Request::changeDisplay(const ChangeDisplay_type& vl) {
+        changeDisplay_ = boost::shared_ptr<ChangeDisplay_type>(new ChangeDisplay_type(vl));
     }
 
 
-    const EE_State EE_State_disabled = 0;
-    const EE_State EE_State_idle = 1;
-    const EE_State EE_State_active = 2;
-    const EE_State EE_State_activeNoAckA = 3;
-    const EE_State EE_State_idleNoAckI = 4;
-    const EE_State EE_State_idleNoAckA = 5;
-    const EE_State EE_State_idleAcked = 6;
-    const EE_State EE_State_activeAcked = 7;
-    const EE_State EE_State_undefined = 8;
+    const EE_State eE_State_disabled = 0;
+    const EE_State eE_State_idle = 1;
+    const EE_State eE_State_active = 2;
+    const EE_State eE_State_activeNoAckA = 3;
+    const EE_State eE_State_idleNoAckI = 4;
+    const EE_State eE_State_idleNoAckA = 5;
+    const EE_State eE_State_idleAcked = 6;
+    const EE_State eE_State_activeAcked = 7;
+    const EE_State eE_State_undefined = 8;
 
     // sequence DefineEventConditionList-Request
 
@@ -19762,14 +19762,14 @@ namespace ISO_9506_MMS_1 {
     };
 
     DefineEventConditionList_Request::DefineEventConditionList_Request(const ObjectName& arg__eventConditionListName,
-            const listOfEventConditionName_type& arg__listOfEventConditionName) :
+            const ListOfEventConditionName_type& arg__listOfEventConditionName) :
     eventConditionListName_(arg__eventConditionListName),
     listOfEventConditionName_(arg__listOfEventConditionName) {
     };
 
     DefineEventConditionList_Request::DefineEventConditionList_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
-            boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
-            boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName) :
+            boost::shared_ptr< ListOfEventConditionName_type> arg__listOfEventConditionName,
+            boost::shared_ptr< ListOfEventConditionListName_type> arg__listOfEventConditionListName) :
     eventConditionListName_(arg__eventConditionListName),
     listOfEventConditionName_(arg__listOfEventConditionName),
     listOfEventConditionListName_(arg__listOfEventConditionListName) {
@@ -19803,28 +19803,28 @@ namespace ISO_9506_MMS_1 {
         eventConditionListName_ = vl;
     }
 
-    DefineEventConditionList_Request::listOfEventConditionName_type& DefineEventConditionList_Request::listOfEventConditionName() {
+    DefineEventConditionList_Request::ListOfEventConditionName_type& DefineEventConditionList_Request::listOfEventConditionName() {
         return *listOfEventConditionName_;
     }
 
-    const DefineEventConditionList_Request::listOfEventConditionName_type& DefineEventConditionList_Request::listOfEventConditionName() const {
+    const DefineEventConditionList_Request::ListOfEventConditionName_type& DefineEventConditionList_Request::listOfEventConditionName() const {
         return *listOfEventConditionName_;
     }
 
-    void DefineEventConditionList_Request::listOfEventConditionName(const listOfEventConditionName_type& vl) {
+    void DefineEventConditionList_Request::listOfEventConditionName(const ListOfEventConditionName_type& vl) {
         listOfEventConditionName_ = vl;
     }
 
-    void DefineEventConditionList_Request::listOfEventConditionName(boost::shared_ptr< listOfEventConditionName_type> vl) {
+    void DefineEventConditionList_Request::listOfEventConditionName(boost::shared_ptr< ListOfEventConditionName_type> vl) {
         listOfEventConditionName_ = vl;
     }
 
-    boost::shared_ptr<DefineEventConditionList_Request::listOfEventConditionListName_type> DefineEventConditionList_Request::listOfEventConditionListName__new() {
-        return listOfEventConditionListName_ = boost::shared_ptr<listOfEventConditionListName_type>(new listOfEventConditionListName_type());
+    boost::shared_ptr<DefineEventConditionList_Request::ListOfEventConditionListName_type> DefineEventConditionList_Request::listOfEventConditionListName__new() {
+        return listOfEventConditionListName_ = boost::shared_ptr<ListOfEventConditionListName_type>(new ListOfEventConditionListName_type());
     }
 
-    void DefineEventConditionList_Request::listOfEventConditionListName(const listOfEventConditionListName_type& vl) {
-        listOfEventConditionListName_ = boost::shared_ptr<listOfEventConditionListName_type>(new listOfEventConditionListName_type(vl));
+    void DefineEventConditionList_Request::listOfEventConditionListName(const ListOfEventConditionListName_type& vl) {
+        listOfEventConditionListName_ = boost::shared_ptr<ListOfEventConditionListName_type>(new ListOfEventConditionListName_type(vl));
     }
 
 
@@ -19834,14 +19834,14 @@ namespace ISO_9506_MMS_1 {
     };
 
     AddEventConditionListReference_Request::AddEventConditionListReference_Request(const ObjectName& arg__eventConditionListName,
-            const listOfEventConditionName_type& arg__listOfEventConditionName) :
+            const ListOfEventConditionName_type& arg__listOfEventConditionName) :
     eventConditionListName_(arg__eventConditionListName),
     listOfEventConditionName_(arg__listOfEventConditionName) {
     };
 
     AddEventConditionListReference_Request::AddEventConditionListReference_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
-            boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
-            boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName) :
+            boost::shared_ptr< ListOfEventConditionName_type> arg__listOfEventConditionName,
+            boost::shared_ptr< ListOfEventConditionListName_type> arg__listOfEventConditionListName) :
     eventConditionListName_(arg__eventConditionListName),
     listOfEventConditionName_(arg__listOfEventConditionName),
     listOfEventConditionListName_(arg__listOfEventConditionListName) {
@@ -19875,28 +19875,28 @@ namespace ISO_9506_MMS_1 {
         eventConditionListName_ = vl;
     }
 
-    AddEventConditionListReference_Request::listOfEventConditionName_type& AddEventConditionListReference_Request::listOfEventConditionName() {
+    AddEventConditionListReference_Request::ListOfEventConditionName_type& AddEventConditionListReference_Request::listOfEventConditionName() {
         return *listOfEventConditionName_;
     }
 
-    const AddEventConditionListReference_Request::listOfEventConditionName_type& AddEventConditionListReference_Request::listOfEventConditionName() const {
+    const AddEventConditionListReference_Request::ListOfEventConditionName_type& AddEventConditionListReference_Request::listOfEventConditionName() const {
         return *listOfEventConditionName_;
     }
 
-    void AddEventConditionListReference_Request::listOfEventConditionName(const listOfEventConditionName_type& vl) {
+    void AddEventConditionListReference_Request::listOfEventConditionName(const ListOfEventConditionName_type& vl) {
         listOfEventConditionName_ = vl;
     }
 
-    void AddEventConditionListReference_Request::listOfEventConditionName(boost::shared_ptr< listOfEventConditionName_type> vl) {
+    void AddEventConditionListReference_Request::listOfEventConditionName(boost::shared_ptr< ListOfEventConditionName_type> vl) {
         listOfEventConditionName_ = vl;
     }
 
-    boost::shared_ptr<AddEventConditionListReference_Request::listOfEventConditionListName_type> AddEventConditionListReference_Request::listOfEventConditionListName__new() {
-        return listOfEventConditionListName_ = boost::shared_ptr<listOfEventConditionListName_type>(new listOfEventConditionListName_type());
+    boost::shared_ptr<AddEventConditionListReference_Request::ListOfEventConditionListName_type> AddEventConditionListReference_Request::listOfEventConditionListName__new() {
+        return listOfEventConditionListName_ = boost::shared_ptr<ListOfEventConditionListName_type>(new ListOfEventConditionListName_type());
     }
 
-    void AddEventConditionListReference_Request::listOfEventConditionListName(const listOfEventConditionListName_type& vl) {
-        listOfEventConditionListName_ = boost::shared_ptr<listOfEventConditionListName_type>(new listOfEventConditionListName_type(vl));
+    void AddEventConditionListReference_Request::listOfEventConditionListName(const ListOfEventConditionListName_type& vl) {
+        listOfEventConditionListName_ = boost::shared_ptr<ListOfEventConditionListName_type>(new ListOfEventConditionListName_type(vl));
     }
 
 
@@ -19906,8 +19906,8 @@ namespace ISO_9506_MMS_1 {
     };
 
     RemoveEventConditionListReference_Request::RemoveEventConditionListReference_Request(const ObjectName& arg__eventConditionListName,
-            const listOfEventConditionName_type& arg__listOfEventConditionName,
-            const listOfEventConditionListName_type& arg__listOfEventConditionListName) :
+            const ListOfEventConditionName_type& arg__listOfEventConditionName,
+            const ListOfEventConditionListName_type& arg__listOfEventConditionListName) :
     eventConditionListName_(arg__eventConditionListName),
     listOfEventConditionName_(arg__listOfEventConditionName),
     listOfEventConditionListName_(arg__listOfEventConditionListName) {
@@ -19941,35 +19941,35 @@ namespace ISO_9506_MMS_1 {
         eventConditionListName_ = vl;
     }
 
-    RemoveEventConditionListReference_Request::listOfEventConditionName_type& RemoveEventConditionListReference_Request::listOfEventConditionName() {
+    RemoveEventConditionListReference_Request::ListOfEventConditionName_type& RemoveEventConditionListReference_Request::listOfEventConditionName() {
         return *listOfEventConditionName_;
     }
 
-    const RemoveEventConditionListReference_Request::listOfEventConditionName_type& RemoveEventConditionListReference_Request::listOfEventConditionName() const {
+    const RemoveEventConditionListReference_Request::ListOfEventConditionName_type& RemoveEventConditionListReference_Request::listOfEventConditionName() const {
         return *listOfEventConditionName_;
     }
 
-    void RemoveEventConditionListReference_Request::listOfEventConditionName(const listOfEventConditionName_type& vl) {
+    void RemoveEventConditionListReference_Request::listOfEventConditionName(const ListOfEventConditionName_type& vl) {
         listOfEventConditionName_ = vl;
     }
 
-    void RemoveEventConditionListReference_Request::listOfEventConditionName(boost::shared_ptr< listOfEventConditionName_type> vl) {
+    void RemoveEventConditionListReference_Request::listOfEventConditionName(boost::shared_ptr< ListOfEventConditionName_type> vl) {
         listOfEventConditionName_ = vl;
     }
 
-    RemoveEventConditionListReference_Request::listOfEventConditionListName_type& RemoveEventConditionListReference_Request::listOfEventConditionListName() {
+    RemoveEventConditionListReference_Request::ListOfEventConditionListName_type& RemoveEventConditionListReference_Request::listOfEventConditionListName() {
         return *listOfEventConditionListName_;
     }
 
-    const RemoveEventConditionListReference_Request::listOfEventConditionListName_type& RemoveEventConditionListReference_Request::listOfEventConditionListName() const {
+    const RemoveEventConditionListReference_Request::ListOfEventConditionListName_type& RemoveEventConditionListReference_Request::listOfEventConditionListName() const {
         return *listOfEventConditionListName_;
     }
 
-    void RemoveEventConditionListReference_Request::listOfEventConditionListName(const listOfEventConditionListName_type& vl) {
+    void RemoveEventConditionListReference_Request::listOfEventConditionListName(const ListOfEventConditionListName_type& vl) {
         listOfEventConditionListName_ = vl;
     }
 
-    void RemoveEventConditionListReference_Request::listOfEventConditionListName(boost::shared_ptr< listOfEventConditionListName_type> vl) {
+    void RemoveEventConditionListReference_Request::listOfEventConditionListName(boost::shared_ptr< ListOfEventConditionListName_type> vl) {
         listOfEventConditionListName_ = vl;
     }
 
@@ -20053,12 +20053,12 @@ namespace ISO_9506_MMS_1 {
     GetEventConditionListAttributes_Response::GetEventConditionListAttributes_Response() : listOfEventConditionName_() {
     };
 
-    GetEventConditionListAttributes_Response::GetEventConditionListAttributes_Response(const listOfEventConditionName_type& arg__listOfEventConditionName) :
+    GetEventConditionListAttributes_Response::GetEventConditionListAttributes_Response(const ListOfEventConditionName_type& arg__listOfEventConditionName) :
     listOfEventConditionName_(arg__listOfEventConditionName) {
     };
 
-    GetEventConditionListAttributes_Response::GetEventConditionListAttributes_Response(boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
-            boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName) :
+    GetEventConditionListAttributes_Response::GetEventConditionListAttributes_Response(boost::shared_ptr< ListOfEventConditionName_type> arg__listOfEventConditionName,
+            boost::shared_ptr< ListOfEventConditionListName_type> arg__listOfEventConditionListName) :
     listOfEventConditionName_(arg__listOfEventConditionName),
     listOfEventConditionListName_(arg__listOfEventConditionListName) {
     };
@@ -20073,28 +20073,28 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(listOfEventConditionListName_, 2);
     }
 
-    GetEventConditionListAttributes_Response::listOfEventConditionName_type& GetEventConditionListAttributes_Response::listOfEventConditionName() {
+    GetEventConditionListAttributes_Response::ListOfEventConditionName_type& GetEventConditionListAttributes_Response::listOfEventConditionName() {
         return *listOfEventConditionName_;
     }
 
-    const GetEventConditionListAttributes_Response::listOfEventConditionName_type& GetEventConditionListAttributes_Response::listOfEventConditionName() const {
+    const GetEventConditionListAttributes_Response::ListOfEventConditionName_type& GetEventConditionListAttributes_Response::listOfEventConditionName() const {
         return *listOfEventConditionName_;
     }
 
-    void GetEventConditionListAttributes_Response::listOfEventConditionName(const listOfEventConditionName_type& vl) {
+    void GetEventConditionListAttributes_Response::listOfEventConditionName(const ListOfEventConditionName_type& vl) {
         listOfEventConditionName_ = vl;
     }
 
-    void GetEventConditionListAttributes_Response::listOfEventConditionName(boost::shared_ptr< listOfEventConditionName_type> vl) {
+    void GetEventConditionListAttributes_Response::listOfEventConditionName(boost::shared_ptr< ListOfEventConditionName_type> vl) {
         listOfEventConditionName_ = vl;
     }
 
-    boost::shared_ptr<GetEventConditionListAttributes_Response::listOfEventConditionListName_type> GetEventConditionListAttributes_Response::listOfEventConditionListName__new() {
-        return listOfEventConditionListName_ = boost::shared_ptr<listOfEventConditionListName_type>(new listOfEventConditionListName_type());
+    boost::shared_ptr<GetEventConditionListAttributes_Response::ListOfEventConditionListName_type> GetEventConditionListAttributes_Response::listOfEventConditionListName__new() {
+        return listOfEventConditionListName_ = boost::shared_ptr<ListOfEventConditionListName_type>(new ListOfEventConditionListName_type());
     }
 
-    void GetEventConditionListAttributes_Response::listOfEventConditionListName(const listOfEventConditionListName_type& vl) {
-        listOfEventConditionListName_ = boost::shared_ptr<listOfEventConditionListName_type>(new listOfEventConditionListName_type(vl));
+    void GetEventConditionListAttributes_Response::listOfEventConditionListName(const ListOfEventConditionListName_type& vl) {
+        listOfEventConditionListName_ = boost::shared_ptr<ListOfEventConditionListName_type>(new ListOfEventConditionListName_type(vl));
     }
 
 
@@ -20153,11 +20153,11 @@ namespace ISO_9506_MMS_1 {
     ReportEventConditionListStatus_Response::ReportEventConditionListStatus_Response() : listOfEventConditionStatus_() {
     };
 
-    ReportEventConditionListStatus_Response::ReportEventConditionListStatus_Response(const listOfEventConditionStatus_type& arg__listOfEventConditionStatus) :
+    ReportEventConditionListStatus_Response::ReportEventConditionListStatus_Response(const ListOfEventConditionStatus_type& arg__listOfEventConditionStatus) :
     listOfEventConditionStatus_(arg__listOfEventConditionStatus) {
     };
 
-    ReportEventConditionListStatus_Response::ReportEventConditionListStatus_Response(boost::shared_ptr< listOfEventConditionStatus_type> arg__listOfEventConditionStatus,
+    ReportEventConditionListStatus_Response::ReportEventConditionListStatus_Response(boost::shared_ptr< ListOfEventConditionStatus_type> arg__listOfEventConditionStatus,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfEventConditionStatus_(arg__listOfEventConditionStatus),
     moreFollows_(arg__moreFollows) {
@@ -20175,19 +20175,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 2);
     }
 
-    ReportEventConditionListStatus_Response::listOfEventConditionStatus_type& ReportEventConditionListStatus_Response::listOfEventConditionStatus() {
+    ReportEventConditionListStatus_Response::ListOfEventConditionStatus_type& ReportEventConditionListStatus_Response::listOfEventConditionStatus() {
         return *listOfEventConditionStatus_;
     }
 
-    const ReportEventConditionListStatus_Response::listOfEventConditionStatus_type& ReportEventConditionListStatus_Response::listOfEventConditionStatus() const {
+    const ReportEventConditionListStatus_Response::ListOfEventConditionStatus_type& ReportEventConditionListStatus_Response::listOfEventConditionStatus() const {
         return *listOfEventConditionStatus_;
     }
 
-    void ReportEventConditionListStatus_Response::listOfEventConditionStatus(const listOfEventConditionStatus_type& vl) {
+    void ReportEventConditionListStatus_Response::listOfEventConditionStatus(const ListOfEventConditionStatus_type& vl) {
         listOfEventConditionStatus_ = vl;
     }
 
-    void ReportEventConditionListStatus_Response::listOfEventConditionStatus(boost::shared_ptr< listOfEventConditionStatus_type> vl) {
+    void ReportEventConditionListStatus_Response::listOfEventConditionStatus(boost::shared_ptr< ListOfEventConditionStatus_type> vl) {
         listOfEventConditionStatus_ = vl;
     }
 
@@ -20335,30 +20335,30 @@ namespace ISO_9506_MMS_1 {
 
     AlterEventConditionListMonitoring_Request::AlterEventConditionListMonitoring_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
             boost::shared_ptr< bool> arg__enabled,
-            boost::shared_ptr< priorityChange_type> arg__priorityChange) :
+            boost::shared_ptr< PriorityChange_type> arg__priorityChange) :
     eventConditionListName_(arg__eventConditionListName),
     enabled_(arg__enabled),
     priorityChange_(arg__priorityChange) {
     };
 
-    void AlterEventConditionListMonitoring_Request::priorityChange_type::priorityValue(const int& vl) {
-        set<int>(new int(vl), priorityChange_type_priorityValue);
+    void AlterEventConditionListMonitoring_Request::PriorityChange_type::priorityValue(const int& vl) {
+        set<int>(new int(vl), PriorityChange_type_priorityValue);
     }
 
-    void AlterEventConditionListMonitoring_Request::priorityChange_type::priorityReset(const null_type& vl) {
-        set<null_type>(new null_type(vl), priorityChange_type_priorityReset);
+    void AlterEventConditionListMonitoring_Request::PriorityChange_type::priorityReset(const null_type& vl) {
+        set<null_type>(new null_type(vl), PriorityChange_type_priorityReset);
     }
 
-    template<> void AlterEventConditionListMonitoring_Request::priorityChange_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void AlterEventConditionListMonitoring_Request::PriorityChange_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case priorityChange_type_priorityValue:
+            case PriorityChange_type_priorityValue:
             {
-                ITU_T_IMPLICIT_TAG(value<int > (false, priorityChange_type_priorityValue), 0);
+                ITU_T_IMPLICIT_TAG(value<int > (false, PriorityChange_type_priorityValue), 0);
                 break;
             }
-            case priorityChange_type_priorityReset:
+            case PriorityChange_type_priorityReset:
             {
-                ITU_T_IMPLICIT_TAG(value<null_type > (false, priorityChange_type_priorityReset), 1);
+                ITU_T_IMPLICIT_TAG(value<null_type > (false, PriorityChange_type_priorityReset), 1);
                 break;
             }
             default:
@@ -20367,7 +20367,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void AlterEventConditionListMonitoring_Request::priorityChange_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void AlterEventConditionListMonitoring_Request::PriorityChange_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -20391,13 +20391,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<int > (true, priorityChange_type_priorityValue), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<int > (true, PriorityChange_type_priorityValue), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, priorityChange_type_priorityReset), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<null_type > (true, PriorityChange_type_priorityReset), 1)) return;
                         else free();
                         break;
                     }
@@ -20464,12 +20464,12 @@ namespace ISO_9506_MMS_1 {
         enabled_ = vl;
     }
 
-    boost::shared_ptr<AlterEventConditionListMonitoring_Request::priorityChange_type> AlterEventConditionListMonitoring_Request::priorityChange__new() {
-        return priorityChange_ = boost::shared_ptr<priorityChange_type>(new priorityChange_type());
+    boost::shared_ptr<AlterEventConditionListMonitoring_Request::PriorityChange_type> AlterEventConditionListMonitoring_Request::priorityChange__new() {
+        return priorityChange_ = boost::shared_ptr<PriorityChange_type>(new PriorityChange_type());
     }
 
-    void AlterEventConditionListMonitoring_Request::priorityChange(const priorityChange_type& vl) {
-        priorityChange_ = boost::shared_ptr<priorityChange_type>(new priorityChange_type(vl));
+    void AlterEventConditionListMonitoring_Request::priorityChange(const PriorityChange_type& vl) {
+        priorityChange_ = boost::shared_ptr<PriorityChange_type>(new PriorityChange_type(vl));
     }
 
 
@@ -20483,10 +20483,10 @@ namespace ISO_9506_MMS_1 {
     };
 
     ReadJournal_Request::ReadJournal_Request(boost::shared_ptr< ObjectName> arg__journalName,
-            boost::shared_ptr< rangeStartSpecification_type> arg__rangeStartSpecification,
-            boost::shared_ptr< rangeStopSpecification_type> arg__rangeStopSpecification,
-            boost::shared_ptr< listOfVariables_type> arg__listOfVariables,
-            boost::shared_ptr< entryToStartAfter_type> arg__entryToStartAfter) :
+            boost::shared_ptr< RangeStartSpecification_type> arg__rangeStartSpecification,
+            boost::shared_ptr< RangeStopSpecification_type> arg__rangeStopSpecification,
+            boost::shared_ptr< ListOfVariables_type> arg__listOfVariables,
+            boost::shared_ptr< EntryToStartAfter_type> arg__entryToStartAfter) :
     journalName_(arg__journalName),
     rangeStartSpecification_(arg__rangeStartSpecification),
     rangeStopSpecification_(arg__rangeStopSpecification),
@@ -20494,24 +20494,24 @@ namespace ISO_9506_MMS_1 {
     entryToStartAfter_(arg__entryToStartAfter) {
     };
 
-    void ReadJournal_Request::rangeStartSpecification_type::startingTime(const TimeOfDay& vl) {
-        set<TimeOfDay>(new TimeOfDay(vl), rangeStartSpecification_type_startingTime);
+    void ReadJournal_Request::RangeStartSpecification_type::startingTime(const TimeOfDay& vl) {
+        set<TimeOfDay>(new TimeOfDay(vl), RangeStartSpecification_type_startingTime);
     }
 
-    void ReadJournal_Request::rangeStartSpecification_type::startingEntry(const octetstring_type& vl) {
-        set<octetstring_type>(new octetstring_type(vl), rangeStartSpecification_type_startingEntry);
+    void ReadJournal_Request::RangeStartSpecification_type::startingEntry(const octetstring_type& vl) {
+        set<octetstring_type>(new octetstring_type(vl), RangeStartSpecification_type_startingEntry);
     }
 
-    template<> void ReadJournal_Request::rangeStartSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ReadJournal_Request::RangeStartSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case rangeStartSpecification_type_startingTime:
+            case RangeStartSpecification_type_startingTime:
             {
-                ITU_T_IMPLICIT_TAG(value<TimeOfDay > (false, rangeStartSpecification_type_startingTime), 0);
+                ITU_T_IMPLICIT_TAG(value<TimeOfDay > (false, RangeStartSpecification_type_startingTime), 0);
                 break;
             }
-            case rangeStartSpecification_type_startingEntry:
+            case RangeStartSpecification_type_startingEntry:
             {
-                ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, rangeStartSpecification_type_startingEntry), 1);
+                ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, RangeStartSpecification_type_startingEntry), 1);
                 break;
             }
             default:
@@ -20520,7 +20520,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void ReadJournal_Request::rangeStartSpecification_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ReadJournal_Request::RangeStartSpecification_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -20544,13 +20544,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<TimeOfDay > (true, rangeStartSpecification_type_startingTime), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<TimeOfDay > (true, RangeStartSpecification_type_startingTime), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, rangeStartSpecification_type_startingEntry), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, RangeStartSpecification_type_startingEntry), 1)) return;
                         else free();
                         break;
                     }
@@ -20573,24 +20573,24 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    void ReadJournal_Request::rangeStopSpecification_type::endingTime(const TimeOfDay& vl) {
-        set<TimeOfDay>(new TimeOfDay(vl), rangeStopSpecification_type_endingTime);
+    void ReadJournal_Request::RangeStopSpecification_type::endingTime(const TimeOfDay& vl) {
+        set<TimeOfDay>(new TimeOfDay(vl), RangeStopSpecification_type_endingTime);
     }
 
-    void ReadJournal_Request::rangeStopSpecification_type::numberOfEntries(const Integer32& vl) {
-        set<Integer32>(new Integer32(vl), rangeStopSpecification_type_numberOfEntries);
+    void ReadJournal_Request::RangeStopSpecification_type::numberOfEntries(const Integer32& vl) {
+        set<Integer32>(new Integer32(vl), RangeStopSpecification_type_numberOfEntries);
     }
 
-    template<> void ReadJournal_Request::rangeStopSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ReadJournal_Request::RangeStopSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case rangeStopSpecification_type_endingTime:
+            case RangeStopSpecification_type_endingTime:
             {
-                ITU_T_IMPLICIT_TAG(value<TimeOfDay > (false, rangeStopSpecification_type_endingTime), 0);
+                ITU_T_IMPLICIT_TAG(value<TimeOfDay > (false, RangeStopSpecification_type_endingTime), 0);
                 break;
             }
-            case rangeStopSpecification_type_numberOfEntries:
+            case RangeStopSpecification_type_numberOfEntries:
             {
-                ITU_T_IMPLICIT_TAG(value<Integer32 > (false, rangeStopSpecification_type_numberOfEntries), 1);
+                ITU_T_IMPLICIT_TAG(value<Integer32 > (false, RangeStopSpecification_type_numberOfEntries), 1);
                 break;
             }
             default:
@@ -20599,7 +20599,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void ReadJournal_Request::rangeStopSpecification_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ReadJournal_Request::RangeStopSpecification_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -20623,13 +20623,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<TimeOfDay > (true, rangeStopSpecification_type_endingTime), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<TimeOfDay > (true, RangeStopSpecification_type_endingTime), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Integer32 > (true, rangeStopSpecification_type_numberOfEntries), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Integer32 > (true, RangeStopSpecification_type_numberOfEntries), 1)) return;
                         else free();
                         break;
                     }
@@ -20652,54 +20652,54 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    ReadJournal_Request::entryToStartAfter_type::entryToStartAfter_type() : timeSpecification_(), entrySpecification_() {
+    ReadJournal_Request::EntryToStartAfter_type::EntryToStartAfter_type() : timeSpecification_(), entrySpecification_() {
     };
 
-    ReadJournal_Request::entryToStartAfter_type::entryToStartAfter_type(const TimeOfDay& arg__timeSpecification,
+    ReadJournal_Request::EntryToStartAfter_type::EntryToStartAfter_type(const TimeOfDay& arg__timeSpecification,
             const octetstring_type& arg__entrySpecification) :
     timeSpecification_(arg__timeSpecification),
     entrySpecification_(arg__entrySpecification) {
     };
 
-    template<> void ReadJournal_Request::entryToStartAfter_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void ReadJournal_Request::EntryToStartAfter_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(timeSpecification_, 0);
         ITU_T_IMPLICIT_TAG(entrySpecification_, 1);
     }
 
-    template<> void ReadJournal_Request::entryToStartAfter_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void ReadJournal_Request::EntryToStartAfter_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(timeSpecification_, 0);
         ITU_T_IMPLICIT_TAG(entrySpecification_, 1);
     }
 
-    TimeOfDay& ReadJournal_Request::entryToStartAfter_type::timeSpecification() {
+    TimeOfDay& ReadJournal_Request::EntryToStartAfter_type::timeSpecification() {
         return *timeSpecification_;
     }
 
-    const TimeOfDay& ReadJournal_Request::entryToStartAfter_type::timeSpecification() const {
+    const TimeOfDay& ReadJournal_Request::EntryToStartAfter_type::timeSpecification() const {
         return *timeSpecification_;
     }
 
-    void ReadJournal_Request::entryToStartAfter_type::timeSpecification(const TimeOfDay& vl) {
+    void ReadJournal_Request::EntryToStartAfter_type::timeSpecification(const TimeOfDay& vl) {
         timeSpecification_ = vl;
     }
 
-    void ReadJournal_Request::entryToStartAfter_type::timeSpecification(boost::shared_ptr< TimeOfDay> vl) {
+    void ReadJournal_Request::EntryToStartAfter_type::timeSpecification(boost::shared_ptr< TimeOfDay> vl) {
         timeSpecification_ = vl;
     }
 
-    octetstring_type& ReadJournal_Request::entryToStartAfter_type::entrySpecification() {
+    octetstring_type& ReadJournal_Request::EntryToStartAfter_type::entrySpecification() {
         return *entrySpecification_;
     }
 
-    const octetstring_type& ReadJournal_Request::entryToStartAfter_type::entrySpecification() const {
+    const octetstring_type& ReadJournal_Request::EntryToStartAfter_type::entrySpecification() const {
         return *entrySpecification_;
     }
 
-    void ReadJournal_Request::entryToStartAfter_type::entrySpecification(const octetstring_type& vl) {
+    void ReadJournal_Request::EntryToStartAfter_type::entrySpecification(const octetstring_type& vl) {
         entrySpecification_ = vl;
     }
 
-    void ReadJournal_Request::entryToStartAfter_type::entrySpecification(boost::shared_ptr< octetstring_type> vl) {
+    void ReadJournal_Request::EntryToStartAfter_type::entrySpecification(boost::shared_ptr< octetstring_type> vl) {
         entrySpecification_ = vl;
     }
 
@@ -20735,36 +20735,36 @@ namespace ISO_9506_MMS_1 {
         journalName_ = vl;
     }
 
-    boost::shared_ptr<ReadJournal_Request::rangeStartSpecification_type> ReadJournal_Request::rangeStartSpecification__new() {
-        return rangeStartSpecification_ = boost::shared_ptr<rangeStartSpecification_type>(new rangeStartSpecification_type());
+    boost::shared_ptr<ReadJournal_Request::RangeStartSpecification_type> ReadJournal_Request::rangeStartSpecification__new() {
+        return rangeStartSpecification_ = boost::shared_ptr<RangeStartSpecification_type>(new RangeStartSpecification_type());
     }
 
-    void ReadJournal_Request::rangeStartSpecification(const rangeStartSpecification_type& vl) {
-        rangeStartSpecification_ = boost::shared_ptr<rangeStartSpecification_type>(new rangeStartSpecification_type(vl));
+    void ReadJournal_Request::rangeStartSpecification(const RangeStartSpecification_type& vl) {
+        rangeStartSpecification_ = boost::shared_ptr<RangeStartSpecification_type>(new RangeStartSpecification_type(vl));
     }
 
-    boost::shared_ptr<ReadJournal_Request::rangeStopSpecification_type> ReadJournal_Request::rangeStopSpecification__new() {
-        return rangeStopSpecification_ = boost::shared_ptr<rangeStopSpecification_type>(new rangeStopSpecification_type());
+    boost::shared_ptr<ReadJournal_Request::RangeStopSpecification_type> ReadJournal_Request::rangeStopSpecification__new() {
+        return rangeStopSpecification_ = boost::shared_ptr<RangeStopSpecification_type>(new RangeStopSpecification_type());
     }
 
-    void ReadJournal_Request::rangeStopSpecification(const rangeStopSpecification_type& vl) {
-        rangeStopSpecification_ = boost::shared_ptr<rangeStopSpecification_type>(new rangeStopSpecification_type(vl));
+    void ReadJournal_Request::rangeStopSpecification(const RangeStopSpecification_type& vl) {
+        rangeStopSpecification_ = boost::shared_ptr<RangeStopSpecification_type>(new RangeStopSpecification_type(vl));
     }
 
-    boost::shared_ptr<ReadJournal_Request::listOfVariables_type> ReadJournal_Request::listOfVariables__new() {
-        return listOfVariables_ = boost::shared_ptr<listOfVariables_type>(new listOfVariables_type());
+    boost::shared_ptr<ReadJournal_Request::ListOfVariables_type> ReadJournal_Request::listOfVariables__new() {
+        return listOfVariables_ = boost::shared_ptr<ListOfVariables_type>(new ListOfVariables_type());
     }
 
-    void ReadJournal_Request::listOfVariables(const listOfVariables_type& vl) {
-        listOfVariables_ = boost::shared_ptr<listOfVariables_type>(new listOfVariables_type(vl));
+    void ReadJournal_Request::listOfVariables(const ListOfVariables_type& vl) {
+        listOfVariables_ = boost::shared_ptr<ListOfVariables_type>(new ListOfVariables_type(vl));
     }
 
-    boost::shared_ptr<ReadJournal_Request::entryToStartAfter_type> ReadJournal_Request::entryToStartAfter__new() {
-        return entryToStartAfter_ = boost::shared_ptr<entryToStartAfter_type>(new entryToStartAfter_type());
+    boost::shared_ptr<ReadJournal_Request::EntryToStartAfter_type> ReadJournal_Request::entryToStartAfter__new() {
+        return entryToStartAfter_ = boost::shared_ptr<EntryToStartAfter_type>(new EntryToStartAfter_type());
     }
 
-    void ReadJournal_Request::entryToStartAfter(const entryToStartAfter_type& vl) {
-        entryToStartAfter_ = boost::shared_ptr<entryToStartAfter_type>(new entryToStartAfter_type(vl));
+    void ReadJournal_Request::entryToStartAfter(const EntryToStartAfter_type& vl) {
+        entryToStartAfter_ = boost::shared_ptr<EntryToStartAfter_type>(new EntryToStartAfter_type(vl));
     }
 
 
@@ -20773,11 +20773,11 @@ namespace ISO_9506_MMS_1 {
     ReadJournal_Response::ReadJournal_Response() : listOfJournalEntry_() {
     };
 
-    ReadJournal_Response::ReadJournal_Response(const listOfJournalEntry_type& arg__listOfJournalEntry) :
+    ReadJournal_Response::ReadJournal_Response(const ListOfJournalEntry_type& arg__listOfJournalEntry) :
     listOfJournalEntry_(arg__listOfJournalEntry) {
     };
 
-    ReadJournal_Response::ReadJournal_Response(boost::shared_ptr< listOfJournalEntry_type> arg__listOfJournalEntry,
+    ReadJournal_Response::ReadJournal_Response(boost::shared_ptr< ListOfJournalEntry_type> arg__listOfJournalEntry,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfJournalEntry_(arg__listOfJournalEntry),
     moreFollows_(arg__moreFollows) {
@@ -20795,19 +20795,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    ReadJournal_Response::listOfJournalEntry_type& ReadJournal_Response::listOfJournalEntry() {
+    ReadJournal_Response::ListOfJournalEntry_type& ReadJournal_Response::listOfJournalEntry() {
         return *listOfJournalEntry_;
     }
 
-    const ReadJournal_Response::listOfJournalEntry_type& ReadJournal_Response::listOfJournalEntry() const {
+    const ReadJournal_Response::ListOfJournalEntry_type& ReadJournal_Response::listOfJournalEntry() const {
         return *listOfJournalEntry_;
     }
 
-    void ReadJournal_Response::listOfJournalEntry(const listOfJournalEntry_type& vl) {
+    void ReadJournal_Response::listOfJournalEntry(const ListOfJournalEntry_type& vl) {
         listOfJournalEntry_ = vl;
     }
 
-    void ReadJournal_Response::listOfJournalEntry(boost::shared_ptr< listOfJournalEntry_type> vl) {
+    void ReadJournal_Response::listOfJournalEntry(boost::shared_ptr< ListOfJournalEntry_type> vl) {
         listOfJournalEntry_ = vl;
     }
 
@@ -20904,7 +20904,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     WriteJournal_Request::WriteJournal_Request(const ObjectName& arg__journalName,
-            const listOfJournalEntry_type& arg__listOfJournalEntry) :
+            const ListOfJournalEntry_type& arg__listOfJournalEntry) :
     journalName_(arg__journalName),
     listOfJournalEntry_(arg__listOfJournalEntry) {
     };
@@ -20935,19 +20935,19 @@ namespace ISO_9506_MMS_1 {
         journalName_ = vl;
     }
 
-    WriteJournal_Request::listOfJournalEntry_type& WriteJournal_Request::listOfJournalEntry() {
+    WriteJournal_Request::ListOfJournalEntry_type& WriteJournal_Request::listOfJournalEntry() {
         return *listOfJournalEntry_;
     }
 
-    const WriteJournal_Request::listOfJournalEntry_type& WriteJournal_Request::listOfJournalEntry() const {
+    const WriteJournal_Request::ListOfJournalEntry_type& WriteJournal_Request::listOfJournalEntry() const {
         return *listOfJournalEntry_;
     }
 
-    void WriteJournal_Request::listOfJournalEntry(const listOfJournalEntry_type& vl) {
+    void WriteJournal_Request::listOfJournalEntry(const ListOfJournalEntry_type& vl) {
         listOfJournalEntry_ = vl;
     }
 
-    void WriteJournal_Request::listOfJournalEntry(boost::shared_ptr< listOfJournalEntry_type> vl) {
+    void WriteJournal_Request::listOfJournalEntry(boost::shared_ptr< ListOfJournalEntry_type> vl) {
         listOfJournalEntry_ = vl;
     }
 
@@ -20962,55 +20962,55 @@ namespace ISO_9506_MMS_1 {
     };
 
     InitializeJournal_Request::InitializeJournal_Request(boost::shared_ptr< ObjectName> arg__journalName,
-            boost::shared_ptr< limitSpecification_type> arg__limitSpecification) :
+            boost::shared_ptr< LimitSpecification_type> arg__limitSpecification) :
     journalName_(arg__journalName),
     limitSpecification_(arg__limitSpecification) {
     };
 
-    InitializeJournal_Request::limitSpecification_type::limitSpecification_type() : limitingTime_() {
+    InitializeJournal_Request::LimitSpecification_type::LimitSpecification_type() : limitingTime_() {
     };
 
-    InitializeJournal_Request::limitSpecification_type::limitSpecification_type(const TimeOfDay& arg__limitingTime) :
+    InitializeJournal_Request::LimitSpecification_type::LimitSpecification_type(const TimeOfDay& arg__limitingTime) :
     limitingTime_(arg__limitingTime) {
     };
 
-    InitializeJournal_Request::limitSpecification_type::limitSpecification_type(boost::shared_ptr< TimeOfDay> arg__limitingTime,
+    InitializeJournal_Request::LimitSpecification_type::LimitSpecification_type(boost::shared_ptr< TimeOfDay> arg__limitingTime,
             boost::shared_ptr< octetstring_type> arg__limitingEntry) :
     limitingTime_(arg__limitingTime),
     limitingEntry_(arg__limitingEntry) {
     };
 
-    template<> void InitializeJournal_Request::limitSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void InitializeJournal_Request::LimitSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(limitingTime_, 0);
         ITU_T_IMPLICIT_TAG(limitingEntry_, 1);
     }
 
-    template<> void InitializeJournal_Request::limitSpecification_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void InitializeJournal_Request::LimitSpecification_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(limitingTime_, 0);
         ITU_T_IMPLICIT_TAG(limitingEntry_, 1);
     }
 
-    TimeOfDay& InitializeJournal_Request::limitSpecification_type::limitingTime() {
+    TimeOfDay& InitializeJournal_Request::LimitSpecification_type::limitingTime() {
         return *limitingTime_;
     }
 
-    const TimeOfDay& InitializeJournal_Request::limitSpecification_type::limitingTime() const {
+    const TimeOfDay& InitializeJournal_Request::LimitSpecification_type::limitingTime() const {
         return *limitingTime_;
     }
 
-    void InitializeJournal_Request::limitSpecification_type::limitingTime(const TimeOfDay& vl) {
+    void InitializeJournal_Request::LimitSpecification_type::limitingTime(const TimeOfDay& vl) {
         limitingTime_ = vl;
     }
 
-    void InitializeJournal_Request::limitSpecification_type::limitingTime(boost::shared_ptr< TimeOfDay> vl) {
+    void InitializeJournal_Request::LimitSpecification_type::limitingTime(boost::shared_ptr< TimeOfDay> vl) {
         limitingTime_ = vl;
     }
 
-    boost::shared_ptr<octetstring_type> InitializeJournal_Request::limitSpecification_type::limitingEntry__new() {
+    boost::shared_ptr<octetstring_type> InitializeJournal_Request::LimitSpecification_type::limitingEntry__new() {
         return limitingEntry_ = boost::shared_ptr<octetstring_type>(new octetstring_type());
     }
 
-    void InitializeJournal_Request::limitSpecification_type::limitingEntry(const octetstring_type& vl) {
+    void InitializeJournal_Request::LimitSpecification_type::limitingEntry(const octetstring_type& vl) {
         limitingEntry_ = boost::shared_ptr<octetstring_type>(new octetstring_type(vl));
     }
 
@@ -21040,12 +21040,12 @@ namespace ISO_9506_MMS_1 {
         journalName_ = vl;
     }
 
-    boost::shared_ptr<InitializeJournal_Request::limitSpecification_type> InitializeJournal_Request::limitSpecification__new() {
-        return limitSpecification_ = boost::shared_ptr<limitSpecification_type>(new limitSpecification_type());
+    boost::shared_ptr<InitializeJournal_Request::LimitSpecification_type> InitializeJournal_Request::limitSpecification__new() {
+        return limitSpecification_ = boost::shared_ptr<LimitSpecification_type>(new LimitSpecification_type());
     }
 
-    void InitializeJournal_Request::limitSpecification(const limitSpecification_type& vl) {
-        limitSpecification_ = boost::shared_ptr<limitSpecification_type>(new limitSpecification_type(vl));
+    void InitializeJournal_Request::limitSpecification(const LimitSpecification_type& vl) {
+        limitSpecification_ = boost::shared_ptr<LimitSpecification_type>(new LimitSpecification_type(vl));
     }
 
 
@@ -21195,111 +21195,111 @@ namespace ISO_9506_MMS_1 {
     };
 
     EntryContent::EntryContent(const TimeOfDay& arg__occurrenceTime,
-            const entryForm_type& arg__entryForm) :
+            const EntryForm_type& arg__entryForm) :
     occurrenceTime_(arg__occurrenceTime),
     entryForm_(arg__entryForm) {
     };
 
-    EntryContent::entryForm_type::data_type::data_type() {
+    EntryContent::EntryForm_type::Data_type::Data_type() {
     };
 
-    EntryContent::entryForm_type::data_type::data_type(boost::shared_ptr< event_type> arg__event,
-            boost::shared_ptr< listOfVariables_type> arg__listOfVariables) :
+    EntryContent::EntryForm_type::Data_type::Data_type(boost::shared_ptr< Event_type> arg__event,
+            boost::shared_ptr< ListOfVariables_type> arg__listOfVariables) :
     event_(arg__event),
     listOfVariables_(arg__listOfVariables) {
     };
 
-    EntryContent::entryForm_type::data_type::event_type::event_type() : eventConditionName_(), currentState_() {
+    EntryContent::EntryForm_type::Data_type::Event_type::Event_type() : eventConditionName_(), currentState_() {
     };
 
-    EntryContent::entryForm_type::data_type::event_type::event_type(const ObjectName& arg__eventConditionName,
+    EntryContent::EntryForm_type::Data_type::Event_type::Event_type(const ObjectName& arg__eventConditionName,
             const MMS_Object_Module_1::EC_State& arg__currentState) :
     eventConditionName_(arg__eventConditionName),
     currentState_(arg__currentState) {
     };
 
-    template<> void EntryContent::entryForm_type::data_type::event_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void EntryContent::EntryForm_type::Data_type::Event_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(eventConditionName_, 0);
         ITU_T_IMPLICIT_TAG(currentState_, 1);
     }
 
-    template<> void EntryContent::entryForm_type::data_type::event_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void EntryContent::EntryForm_type::Data_type::Event_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_CHOICE_TAG(eventConditionName_, 0);
         ITU_T_IMPLICIT_TAG(currentState_, 1);
     }
 
-    ObjectName& EntryContent::entryForm_type::data_type::event_type::eventConditionName() {
+    ObjectName& EntryContent::EntryForm_type::Data_type::Event_type::eventConditionName() {
         return *eventConditionName_;
     }
 
-    const ObjectName& EntryContent::entryForm_type::data_type::event_type::eventConditionName() const {
+    const ObjectName& EntryContent::EntryForm_type::Data_type::Event_type::eventConditionName() const {
         return *eventConditionName_;
     }
 
-    void EntryContent::entryForm_type::data_type::event_type::eventConditionName(const ObjectName& vl) {
+    void EntryContent::EntryForm_type::Data_type::Event_type::eventConditionName(const ObjectName& vl) {
         eventConditionName_ = vl;
     }
 
-    void EntryContent::entryForm_type::data_type::event_type::eventConditionName(boost::shared_ptr< ObjectName> vl) {
+    void EntryContent::EntryForm_type::Data_type::Event_type::eventConditionName(boost::shared_ptr< ObjectName> vl) {
         eventConditionName_ = vl;
     }
 
-    MMS_Object_Module_1::EC_State& EntryContent::entryForm_type::data_type::event_type::currentState() {
+    MMS_Object_Module_1::EC_State& EntryContent::EntryForm_type::Data_type::Event_type::currentState() {
         return *currentState_;
     }
 
-    const MMS_Object_Module_1::EC_State& EntryContent::entryForm_type::data_type::event_type::currentState() const {
+    const MMS_Object_Module_1::EC_State& EntryContent::EntryForm_type::Data_type::Event_type::currentState() const {
         return *currentState_;
     }
 
-    void EntryContent::entryForm_type::data_type::event_type::currentState(const MMS_Object_Module_1::EC_State& vl) {
+    void EntryContent::EntryForm_type::Data_type::Event_type::currentState(const MMS_Object_Module_1::EC_State& vl) {
         currentState_ = vl;
     }
 
-    void EntryContent::entryForm_type::data_type::event_type::currentState(boost::shared_ptr< MMS_Object_Module_1::EC_State> vl) {
+    void EntryContent::EntryForm_type::Data_type::Event_type::currentState(boost::shared_ptr< MMS_Object_Module_1::EC_State> vl) {
         currentState_ = vl;
     }
 
-    template<> void EntryContent::entryForm_type::data_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void EntryContent::EntryForm_type::Data_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(event_, 0);
         ITU_T_IMPLICIT_TAG(listOfVariables_, 1);
     }
 
-    template<> void EntryContent::entryForm_type::data_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void EntryContent::EntryForm_type::Data_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(event_, 0);
         ITU_T_IMPLICIT_TAG(listOfVariables_, 1);
     }
 
-    boost::shared_ptr<EntryContent::entryForm_type::data_type::event_type> EntryContent::entryForm_type::data_type::event__new() {
-        return event_ = boost::shared_ptr<event_type>(new event_type());
+    boost::shared_ptr<EntryContent::EntryForm_type::Data_type::Event_type> EntryContent::EntryForm_type::Data_type::event__new() {
+        return event_ = boost::shared_ptr<Event_type>(new Event_type());
     }
 
-    void EntryContent::entryForm_type::data_type::event(const event_type& vl) {
-        event_ = boost::shared_ptr<event_type>(new event_type(vl));
+    void EntryContent::EntryForm_type::Data_type::event(const Event_type& vl) {
+        event_ = boost::shared_ptr<Event_type>(new Event_type(vl));
     }
 
-    boost::shared_ptr<EntryContent::entryForm_type::data_type::listOfVariables_type> EntryContent::entryForm_type::data_type::listOfVariables__new() {
-        return listOfVariables_ = boost::shared_ptr<listOfVariables_type>(new listOfVariables_type());
+    boost::shared_ptr<EntryContent::EntryForm_type::Data_type::ListOfVariables_type> EntryContent::EntryForm_type::Data_type::listOfVariables__new() {
+        return listOfVariables_ = boost::shared_ptr<ListOfVariables_type>(new ListOfVariables_type());
     }
 
-    void EntryContent::entryForm_type::data_type::listOfVariables(const listOfVariables_type& vl) {
-        listOfVariables_ = boost::shared_ptr<listOfVariables_type>(new listOfVariables_type(vl));
+    void EntryContent::EntryForm_type::Data_type::listOfVariables(const ListOfVariables_type& vl) {
+        listOfVariables_ = boost::shared_ptr<ListOfVariables_type>(new ListOfVariables_type(vl));
     }
 
-    void EntryContent::entryForm_type::annotation(const MMSString& vl) {
-        set<MMSString>(new MMSString(vl), entryForm_type_annotation);
+    void EntryContent::EntryForm_type::annotation(const MMSString& vl) {
+        set<MMSString>(new MMSString(vl), EntryForm_type_annotation);
     }
 
-    template<> void EntryContent::entryForm_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void EntryContent::EntryForm_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case entryForm_type_data:
+            case EntryForm_type_data:
             {
-                ITU_T_IMPLICIT_TAG(value<data_type > (false, entryForm_type_data), 2);
+                ITU_T_IMPLICIT_TAG(value<Data_type > (false, EntryForm_type_data), 2);
                 break;
             }
-            case entryForm_type_annotation:
+            case EntryForm_type_annotation:
             {
-                ITU_T_EXPLICIT_TAG(value<MMSString > (false, entryForm_type_annotation), 3);
+                ITU_T_EXPLICIT_TAG(value<MMSString > (false, EntryForm_type_annotation), 3);
                 break;
             }
             default:
@@ -21308,7 +21308,7 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
-    template<> void EntryContent::entryForm_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void EntryContent::EntryForm_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -21332,13 +21332,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<data_type > (true, entryForm_type_data), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Data_type > (true, EntryForm_type_data), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<MMSString > (true, entryForm_type_annotation), 3)) return;
+                        if (ITU_T_EXPLICIT_TAG(value<MMSString > (true, EntryForm_type_annotation), 3)) return;
                         else free();
                         break;
                     }
@@ -21387,19 +21387,19 @@ namespace ISO_9506_MMS_1 {
         occurrenceTime_ = vl;
     }
 
-    EntryContent::entryForm_type& EntryContent::entryForm() {
+    EntryContent::EntryForm_type& EntryContent::entryForm() {
         return *entryForm_;
     }
 
-    const EntryContent::entryForm_type& EntryContent::entryForm() const {
+    const EntryContent::EntryForm_type& EntryContent::entryForm() const {
         return *entryForm_;
     }
 
-    void EntryContent::entryForm(const entryForm_type& vl) {
+    void EntryContent::entryForm(const EntryForm_type& vl) {
         entryForm_ = vl;
     }
 
-    void EntryContent::entryForm(boost::shared_ptr< entryForm_type> vl) {
+    void EntryContent::entryForm(boost::shared_ptr< EntryForm_type> vl) {
         entryForm_ = vl;
     }
 

@@ -238,7 +238,7 @@ private:
 
             std::string last;
 
-            typedef MMS::GetNameList_Response::listOfIdentifier_type namedlist_type;
+            typedef MMS::GetNameList_Response::ListOfIdentifier_type namedlist_type;
             for (namedlist_type::iterator it = rslt->response()->listOfIdentifier().begin(); it != rslt->response()->listOfIdentifier().end(); ++it) {
                 fulllist.push_back((*it));
                 last = (*it);
@@ -337,7 +337,7 @@ private:
                 operationl->request()->variableAccessSpecification().listOfVariable__new();
 
 
-                MMS::VariableAccessSpecification::listOfVariable_type_sequence_of vacs;
+                MMS::VariableAccessSpecification::ListOfVariable_type_sequence_of vacs;
 
                 vacs.variableSpecification().name__new();
                 vacs.variableSpecification().name()->domain_specific__new();

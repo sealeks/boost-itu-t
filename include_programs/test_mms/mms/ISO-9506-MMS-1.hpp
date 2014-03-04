@@ -457,7 +457,7 @@ namespace ISO_9506_MMS_1 {
 
     struct Confirmed_RequestPDU {
 
-        typedef std::vector< MMS_Object_Module_1::Modifier > listOfModifiers_type;
+        typedef std::vector< MMS_Object_Module_1::Modifier > ListOfModifiers_type;
 
         Confirmed_RequestPDU();
 
@@ -465,12 +465,12 @@ namespace ISO_9506_MMS_1 {
                 const ConfirmedServiceRequest& arg__service);
 
         Confirmed_RequestPDU(boost::shared_ptr< Unsigned32> arg__invokeID,
-                boost::shared_ptr< listOfModifiers_type> arg__listOfModifiers,
+                boost::shared_ptr< ListOfModifiers_type> arg__listOfModifiers,
                 boost::shared_ptr< ConfirmedServiceRequest> arg__service,
                 boost::shared_ptr< Request_Detail> arg__service_ext = boost::shared_ptr< Request_Detail>());
 
         ITU_T_HOLDERH_DECL(invokeID, Unsigned32);
-        ITU_T_OPTIONAL_DECL(listOfModifiers, listOfModifiers_type);
+        ITU_T_OPTIONAL_DECL(listOfModifiers, ListOfModifiers_type);
         ITU_T_HOLDERH_DECL(service, ConfirmedServiceRequest);
         ITU_T_OPTIONAL_DECL(service_ext, Request_Detail);
 
@@ -1198,28 +1198,28 @@ namespace ISO_9506_MMS_1 {
 
     struct ServiceError {
 
-        struct errorClass_type;
-        struct serviceSpecificInfo_type;
+        struct ErrorClass_type;
+        struct ServiceSpecificInfo_type;
 
-        enum errorClass_type_enum {
+        enum ErrorClass_type_enum {
 
-            errorClass_type_null = 0,
-            errorClass_type_vmd_state,
-            errorClass_type_application_reference,
-            errorClass_type_definition,
-            errorClass_type_resource,
-            errorClass_type_service,
-            errorClass_type_service_preempt,
-            errorClass_type_time_resolution,
-            errorClass_type_access,
-            errorClass_type_initiate,
-            errorClass_type_conclude,
-            errorClass_type_cancel,
-            errorClass_type_file,
-            errorClass_type_others,
+            ErrorClass_type_null = 0,
+            ErrorClass_type_vmd_state,
+            ErrorClass_type_application_reference,
+            ErrorClass_type_definition,
+            ErrorClass_type_resource,
+            ErrorClass_type_service,
+            ErrorClass_type_service_preempt,
+            ErrorClass_type_time_resolution,
+            ErrorClass_type_access,
+            ErrorClass_type_initiate,
+            ErrorClass_type_conclude,
+            ErrorClass_type_cancel,
+            ErrorClass_type_file,
+            ErrorClass_type_others,
         };
 
-        struct errorClass_type : public ITU_T_CHOICE(errorClass_type_enum) {
+        struct ErrorClass_type : public ITU_T_CHOICE(ErrorClass_type_enum) {
 
             static const int vmd_state_other;
             static const int vmd_state_vmd_state_conflict;
@@ -1293,76 +1293,76 @@ namespace ISO_9506_MMS_1 {
             static const int file_duplicate_filename;
             static const int file_insufficient_space_in_filestore;
 
-            errorClass_type() : ITU_T_CHOICE(errorClass_type_enum) () {
+            ErrorClass_type() : ITU_T_CHOICE(ErrorClass_type_enum) () {
             }
 
-            template<typename T > errorClass_type(boost::shared_ptr< T> vl, errorClass_type_enum enm) :
-                    ITU_T_CHOICE(errorClass_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ErrorClass_type(boost::shared_ptr< T> vl, ErrorClass_type_enum enm) :
+                    ITU_T_CHOICE(ErrorClass_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > errorClass_type(const T& vl, errorClass_type_enum enm) :
-                    ITU_T_CHOICE(errorClass_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ErrorClass_type(const T& vl, ErrorClass_type_enum enm) :
+                    ITU_T_CHOICE(ErrorClass_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(vmd_state, int, errorClass_type_vmd_state); // primitive
-            ITU_T_CHOICES_DECL(application_reference, int, errorClass_type_application_reference); // primitive
-            ITU_T_CHOICES_DECL(definition, int, errorClass_type_definition); // primitive
-            ITU_T_CHOICES_DECL(resource, int, errorClass_type_resource); // primitive
-            ITU_T_CHOICES_DECL(service, int, errorClass_type_service); // primitive
-            ITU_T_CHOICES_DECL(service_preempt, int, errorClass_type_service_preempt); // primitive
-            ITU_T_CHOICES_DECL(time_resolution, int, errorClass_type_time_resolution); // primitive
-            ITU_T_CHOICES_DECL(access, int, errorClass_type_access); // primitive
-            ITU_T_CHOICES_DECL(initiate, int, errorClass_type_initiate); // primitive
-            ITU_T_CHOICES_DECL(conclude, int, errorClass_type_conclude); // primitive
-            ITU_T_CHOICES_DECL(cancel, int, errorClass_type_cancel); // primitive
-            ITU_T_CHOICES_DECL(file, int, errorClass_type_file); // primitive
-            ITU_T_CHOICES_DECL(others, int, errorClass_type_others); // primitive
+            ITU_T_CHOICES_DECL(vmd_state, int, ErrorClass_type_vmd_state); // primitive
+            ITU_T_CHOICES_DECL(application_reference, int, ErrorClass_type_application_reference); // primitive
+            ITU_T_CHOICES_DECL(definition, int, ErrorClass_type_definition); // primitive
+            ITU_T_CHOICES_DECL(resource, int, ErrorClass_type_resource); // primitive
+            ITU_T_CHOICES_DECL(service, int, ErrorClass_type_service); // primitive
+            ITU_T_CHOICES_DECL(service_preempt, int, ErrorClass_type_service_preempt); // primitive
+            ITU_T_CHOICES_DECL(time_resolution, int, ErrorClass_type_time_resolution); // primitive
+            ITU_T_CHOICES_DECL(access, int, ErrorClass_type_access); // primitive
+            ITU_T_CHOICES_DECL(initiate, int, ErrorClass_type_initiate); // primitive
+            ITU_T_CHOICES_DECL(conclude, int, ErrorClass_type_conclude); // primitive
+            ITU_T_CHOICES_DECL(cancel, int, ErrorClass_type_cancel); // primitive
+            ITU_T_CHOICES_DECL(file, int, ErrorClass_type_file); // primitive
+            ITU_T_CHOICES_DECL(others, int, ErrorClass_type_others); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        enum serviceSpecificInfo_type_enum {
+        enum ServiceSpecificInfo_type_enum {
 
-            serviceSpecificInfo_type_null = 0,
-            serviceSpecificInfo_type_obtainFile,
-            serviceSpecificInfo_type_start,
-            serviceSpecificInfo_type_stop,
-            serviceSpecificInfo_type_resume,
-            serviceSpecificInfo_type_reset,
-            serviceSpecificInfo_type_deleteVariableAccess,
-            serviceSpecificInfo_type_deleteNamedVariableList,
-            serviceSpecificInfo_type_deleteNamedType,
-            serviceSpecificInfo_type_defineEventEnrollment_Error,
-            serviceSpecificInfo_type_fileRename,
-            serviceSpecificInfo_type_additionalService,
-            serviceSpecificInfo_type_changeAccessControl,
+            ServiceSpecificInfo_type_null = 0,
+            ServiceSpecificInfo_type_obtainFile,
+            ServiceSpecificInfo_type_start,
+            ServiceSpecificInfo_type_stop,
+            ServiceSpecificInfo_type_resume,
+            ServiceSpecificInfo_type_reset,
+            ServiceSpecificInfo_type_deleteVariableAccess,
+            ServiceSpecificInfo_type_deleteNamedVariableList,
+            ServiceSpecificInfo_type_deleteNamedType,
+            ServiceSpecificInfo_type_defineEventEnrollment_Error,
+            ServiceSpecificInfo_type_fileRename,
+            ServiceSpecificInfo_type_additionalService,
+            ServiceSpecificInfo_type_changeAccessControl,
         };
 
-        struct serviceSpecificInfo_type : public ITU_T_CHOICE(serviceSpecificInfo_type_enum) {
+        struct ServiceSpecificInfo_type : public ITU_T_CHOICE(ServiceSpecificInfo_type_enum) {
 
-            serviceSpecificInfo_type() : ITU_T_CHOICE(serviceSpecificInfo_type_enum) () {
+            ServiceSpecificInfo_type() : ITU_T_CHOICE(ServiceSpecificInfo_type_enum) () {
             }
 
-            template<typename T > serviceSpecificInfo_type(boost::shared_ptr< T> vl, serviceSpecificInfo_type_enum enm) :
-                    ITU_T_CHOICE(serviceSpecificInfo_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ServiceSpecificInfo_type(boost::shared_ptr< T> vl, ServiceSpecificInfo_type_enum enm) :
+                    ITU_T_CHOICE(ServiceSpecificInfo_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > serviceSpecificInfo_type(const T& vl, serviceSpecificInfo_type_enum enm) :
-                    ITU_T_CHOICE(serviceSpecificInfo_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ServiceSpecificInfo_type(const T& vl, ServiceSpecificInfo_type_enum enm) :
+                    ITU_T_CHOICE(ServiceSpecificInfo_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Error, serviceSpecificInfo_type_obtainFile); // primitive
-            ITU_T_CHOICES_DECL(start, Start_Error, serviceSpecificInfo_type_start); // primitive
-            ITU_T_CHOICES_DECL(stop, Stop_Error, serviceSpecificInfo_type_stop); // primitive
-            ITU_T_CHOICES_DECL(resume, Resume_Error, serviceSpecificInfo_type_resume); // primitive
-            ITU_T_CHOICES_DECL(reset, Reset_Error, serviceSpecificInfo_type_reset); // primitive
-            ITU_T_CHOICES_DECL(deleteVariableAccess, DeleteVariableAccess_Error, serviceSpecificInfo_type_deleteVariableAccess); // primitive
-            ITU_T_CHOICES_DECL(deleteNamedVariableList, DeleteNamedVariableList_Error, serviceSpecificInfo_type_deleteNamedVariableList); // primitive
-            ITU_T_CHOICES_DECL(deleteNamedType, DeleteNamedType_Error, serviceSpecificInfo_type_deleteNamedType); // primitive
-            ITU_T_CHOICEC_DECL(defineEventEnrollment_Error, DefineEventEnrollment_Error, serviceSpecificInfo_type_defineEventEnrollment_Error);
-            ITU_T_CHOICES_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Error, serviceSpecificInfo_type_fileRename); // primitive
-            ITU_T_CHOICEC_DECL(additionalService, AdditionalService_Error, serviceSpecificInfo_type_additionalService);
-            ITU_T_CHOICES_DECL(changeAccessControl, ChangeAccessControl_Error, serviceSpecificInfo_type_changeAccessControl); // primitive
+            ITU_T_CHOICES_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Error, ServiceSpecificInfo_type_obtainFile); // primitive
+            ITU_T_CHOICES_DECL(start, Start_Error, ServiceSpecificInfo_type_start); // primitive
+            ITU_T_CHOICES_DECL(stop, Stop_Error, ServiceSpecificInfo_type_stop); // primitive
+            ITU_T_CHOICES_DECL(resume, Resume_Error, ServiceSpecificInfo_type_resume); // primitive
+            ITU_T_CHOICES_DECL(reset, Reset_Error, ServiceSpecificInfo_type_reset); // primitive
+            ITU_T_CHOICES_DECL(deleteVariableAccess, DeleteVariableAccess_Error, ServiceSpecificInfo_type_deleteVariableAccess); // primitive
+            ITU_T_CHOICES_DECL(deleteNamedVariableList, DeleteNamedVariableList_Error, ServiceSpecificInfo_type_deleteNamedVariableList); // primitive
+            ITU_T_CHOICES_DECL(deleteNamedType, DeleteNamedType_Error, ServiceSpecificInfo_type_deleteNamedType); // primitive
+            ITU_T_CHOICEC_DECL(defineEventEnrollment_Error, DefineEventEnrollment_Error, ServiceSpecificInfo_type_defineEventEnrollment_Error);
+            ITU_T_CHOICES_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Error, ServiceSpecificInfo_type_fileRename); // primitive
+            ITU_T_CHOICEC_DECL(additionalService, AdditionalService_Error, ServiceSpecificInfo_type_additionalService);
+            ITU_T_CHOICES_DECL(changeAccessControl, ChangeAccessControl_Error, ServiceSpecificInfo_type_changeAccessControl); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1370,17 +1370,17 @@ namespace ISO_9506_MMS_1 {
 
         ServiceError();
 
-        ServiceError(const errorClass_type& arg__errorClass);
+        ServiceError(const ErrorClass_type& arg__errorClass);
 
-        ServiceError(boost::shared_ptr< errorClass_type> arg__errorClass,
+        ServiceError(boost::shared_ptr< ErrorClass_type> arg__errorClass,
                 boost::shared_ptr< int> arg__additionalCode,
                 boost::shared_ptr< visiblestring_type> arg__additionalDescription,
-                boost::shared_ptr< serviceSpecificInfo_type> arg__serviceSpecificInfo);
+                boost::shared_ptr< ServiceSpecificInfo_type> arg__serviceSpecificInfo);
 
-        ITU_T_HOLDERH_DECL(errorClass, errorClass_type);
+        ITU_T_HOLDERH_DECL(errorClass, ErrorClass_type);
         ITU_T_OPTIONAL_DECL(additionalCode, int);
         ITU_T_OPTIONAL_DECL(additionalDescription, visiblestring_type);
-        ITU_T_OPTIONAL_DECL(serviceSpecificInfo, serviceSpecificInfo_type);
+        ITU_T_OPTIONAL_DECL(serviceSpecificInfo, ServiceSpecificInfo_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1438,13 +1438,13 @@ namespace ISO_9506_MMS_1 {
     struct ObjectName : public ITU_T_CHOICE(ObjectName_enum) {
 
 
-        struct domain_specific_type;
+        struct Domain_specific_type;
 
-        struct domain_specific_type {
+        struct Domain_specific_type {
 
-            domain_specific_type();
+            Domain_specific_type();
 
-            domain_specific_type(const Identifier& arg__domainID,
+            Domain_specific_type(const Identifier& arg__domainID,
                     const Identifier& arg__itemID);
 
             ITU_T_HOLDERH_DECL(domainID, Identifier);
@@ -1465,7 +1465,7 @@ namespace ISO_9506_MMS_1 {
         }
 
         ITU_T_CHOICES_DECL(vmd_specific, Identifier, ObjectName_vmd_specific); // primitive
-        ITU_T_CHOICEC_DECL(domain_specific, domain_specific_type, ObjectName_domain_specific);
+        ITU_T_CHOICEC_DECL(domain_specific, Domain_specific_type, ObjectName_domain_specific);
         ITU_T_CHOICES_DECL(aa_specific, Identifier, ObjectName_aa_specific); // primitive
 
         ITU_T_ARCHIVE_FUNC;
@@ -1521,17 +1521,17 @@ namespace ISO_9506_MMS_1 {
 
     struct Initiate_RequestPDU {
 
-        struct initRequestDetail_type;
+        struct InitRequestDetail_type;
 
-        struct initRequestDetail_type {
+        struct InitRequestDetail_type {
 
-            initRequestDetail_type();
+            InitRequestDetail_type();
 
-            initRequestDetail_type(const Integer16& arg__proposedVersionNumber,
+            InitRequestDetail_type(const Integer16& arg__proposedVersionNumber,
                     const MMS_Object_Module_1::ParameterSupportOptions& arg__proposedParameterCBB,
                     const MMS_Object_Module_1::ServiceSupportOptions& arg__servicesSupportedCalling);
 
-            initRequestDetail_type(boost::shared_ptr< Integer16> arg__proposedVersionNumber,
+            InitRequestDetail_type(boost::shared_ptr< Integer16> arg__proposedVersionNumber,
                     boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> arg__proposedParameterCBB,
                     boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> arg__servicesSupportedCalling,
                     boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalling = boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions>(),
@@ -1553,19 +1553,19 @@ namespace ISO_9506_MMS_1 {
 
         Initiate_RequestPDU(const Integer16& arg__proposedMaxServOutstandingCalling,
                 const Integer16& arg__proposedMaxServOutstandingCalled,
-                const initRequestDetail_type& arg__initRequestDetail);
+                const InitRequestDetail_type& arg__initRequestDetail);
 
         Initiate_RequestPDU(boost::shared_ptr< Integer32> arg__localDetailCalling,
                 boost::shared_ptr< Integer16> arg__proposedMaxServOutstandingCalling,
                 boost::shared_ptr< Integer16> arg__proposedMaxServOutstandingCalled,
                 boost::shared_ptr< Integer8> arg__proposedDataStructureNestingLevel,
-                boost::shared_ptr< initRequestDetail_type> arg__initRequestDetail);
+                boost::shared_ptr< InitRequestDetail_type> arg__initRequestDetail);
 
         ITU_T_OPTIONAL_DECL(localDetailCalling, Integer32);
         ITU_T_HOLDERH_DECL(proposedMaxServOutstandingCalling, Integer16);
         ITU_T_HOLDERH_DECL(proposedMaxServOutstandingCalled, Integer16);
         ITU_T_OPTIONAL_DECL(proposedDataStructureNestingLevel, Integer8);
-        ITU_T_HOLDERH_DECL(initRequestDetail, initRequestDetail_type);
+        ITU_T_HOLDERH_DECL(initRequestDetail, InitRequestDetail_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1574,17 +1574,17 @@ namespace ISO_9506_MMS_1 {
 
     struct Initiate_ResponsePDU {
 
-        struct initResponseDetail_type;
+        struct InitResponseDetail_type;
 
-        struct initResponseDetail_type {
+        struct InitResponseDetail_type {
 
-            initResponseDetail_type();
+            InitResponseDetail_type();
 
-            initResponseDetail_type(const Integer16& arg__negotiatedVersionNumber,
+            InitResponseDetail_type(const Integer16& arg__negotiatedVersionNumber,
                     const MMS_Object_Module_1::ParameterSupportOptions& arg__negotiatedParameterCBB,
                     const MMS_Object_Module_1::ServiceSupportOptions& arg__servicesSupportedCalled);
 
-            initResponseDetail_type(boost::shared_ptr< Integer16> arg__negotiatedVersionNumber,
+            InitResponseDetail_type(boost::shared_ptr< Integer16> arg__negotiatedVersionNumber,
                     boost::shared_ptr< MMS_Object_Module_1::ParameterSupportOptions> arg__negotiatedParameterCBB,
                     boost::shared_ptr< MMS_Object_Module_1::ServiceSupportOptions> arg__servicesSupportedCalled,
                     boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions> arg__additionalSupportedCalled = boost::shared_ptr< MMS_Object_Module_1::AdditionalSupportOptions>(),
@@ -1606,19 +1606,19 @@ namespace ISO_9506_MMS_1 {
 
         Initiate_ResponsePDU(const Integer16& arg__negotiatedMaxServOutstandingCalling,
                 const Integer16& arg__negotiatedMaxServOutstandingCalled,
-                const initResponseDetail_type& arg__initResponseDetail);
+                const InitResponseDetail_type& arg__initResponseDetail);
 
         Initiate_ResponsePDU(boost::shared_ptr< Integer32> arg__localDetailCalled,
                 boost::shared_ptr< Integer16> arg__negotiatedMaxServOutstandingCalling,
                 boost::shared_ptr< Integer16> arg__negotiatedMaxServOutstandingCalled,
                 boost::shared_ptr< Integer8> arg__negotiatedDataStructureNestingLevel,
-                boost::shared_ptr< initResponseDetail_type> arg__initResponseDetail);
+                boost::shared_ptr< InitResponseDetail_type> arg__initResponseDetail);
 
         ITU_T_OPTIONAL_DECL(localDetailCalled, Integer32);
         ITU_T_HOLDERH_DECL(negotiatedMaxServOutstandingCalling, Integer16);
         ITU_T_HOLDERH_DECL(negotiatedMaxServOutstandingCalled, Integer16);
         ITU_T_OPTIONAL_DECL(negotiatedDataStructureNestingLevel, Integer8);
-        ITU_T_HOLDERH_DECL(initResponseDetail, initResponseDetail_type);
+        ITU_T_HOLDERH_DECL(initResponseDetail, InitResponseDetail_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1642,25 +1642,25 @@ namespace ISO_9506_MMS_1 {
 
     struct RejectPDU {
 
-        struct rejectReason_type;
+        struct RejectReason_type;
 
-        enum rejectReason_type_enum {
+        enum RejectReason_type_enum {
 
-            rejectReason_type_null = 0,
-            rejectReason_type_confirmed_requestPDU,
-            rejectReason_type_confirmed_responsePDU,
-            rejectReason_type_confirmed_errorPDU,
-            rejectReason_type_unconfirmedPDU,
-            rejectReason_type_pdu_error,
-            rejectReason_type_cancel_requestPDU,
-            rejectReason_type_cancel_responsePDU,
-            rejectReason_type_cancel_errorPDU,
-            rejectReason_type_conclude_requestPDU,
-            rejectReason_type_conclude_responsePDU,
-            rejectReason_type_conclude_errorPDU,
+            RejectReason_type_null = 0,
+            RejectReason_type_confirmed_requestPDU,
+            RejectReason_type_confirmed_responsePDU,
+            RejectReason_type_confirmed_errorPDU,
+            RejectReason_type_unconfirmedPDU,
+            RejectReason_type_pdu_error,
+            RejectReason_type_cancel_requestPDU,
+            RejectReason_type_cancel_responsePDU,
+            RejectReason_type_cancel_errorPDU,
+            RejectReason_type_conclude_requestPDU,
+            RejectReason_type_conclude_responsePDU,
+            RejectReason_type_conclude_errorPDU,
         };
 
-        struct rejectReason_type : public ITU_T_CHOICE(rejectReason_type_enum) {
+        struct RejectReason_type : public ITU_T_CHOICE(RejectReason_type_enum) {
 
             static const int confirmed_requestPDU_other;
             static const int confirmed_requestPDU_unrecognized_service;
@@ -1716,28 +1716,28 @@ namespace ISO_9506_MMS_1 {
             static const int conclude_errorPDU_invalid_serviceError;
             static const int conclude_errorPDU_value_out_of_range;
 
-            rejectReason_type() : ITU_T_CHOICE(rejectReason_type_enum) () {
+            RejectReason_type() : ITU_T_CHOICE(RejectReason_type_enum) () {
             }
 
-            template<typename T > rejectReason_type(boost::shared_ptr< T> vl, rejectReason_type_enum enm) :
-                    ITU_T_CHOICE(rejectReason_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > RejectReason_type(boost::shared_ptr< T> vl, RejectReason_type_enum enm) :
+                    ITU_T_CHOICE(RejectReason_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > rejectReason_type(const T& vl, rejectReason_type_enum enm) :
-                    ITU_T_CHOICE(rejectReason_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > RejectReason_type(const T& vl, RejectReason_type_enum enm) :
+                    ITU_T_CHOICE(RejectReason_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(confirmed_requestPDU, int, rejectReason_type_confirmed_requestPDU); // primitive
-            ITU_T_CHOICES_DECL(confirmed_responsePDU, int, rejectReason_type_confirmed_responsePDU); // primitive
-            ITU_T_CHOICES_DECL(confirmed_errorPDU, int, rejectReason_type_confirmed_errorPDU); // primitive
-            ITU_T_CHOICES_DECL(unconfirmedPDU, int, rejectReason_type_unconfirmedPDU); // primitive
-            ITU_T_CHOICES_DECL(pdu_error, int, rejectReason_type_pdu_error); // primitive
-            ITU_T_CHOICES_DECL(cancel_requestPDU, int, rejectReason_type_cancel_requestPDU); // primitive
-            ITU_T_CHOICES_DECL(cancel_responsePDU, int, rejectReason_type_cancel_responsePDU); // primitive
-            ITU_T_CHOICES_DECL(cancel_errorPDU, int, rejectReason_type_cancel_errorPDU); // primitive
-            ITU_T_CHOICES_DECL(conclude_requestPDU, int, rejectReason_type_conclude_requestPDU); // primitive
-            ITU_T_CHOICES_DECL(conclude_responsePDU, int, rejectReason_type_conclude_responsePDU); // primitive
-            ITU_T_CHOICES_DECL(conclude_errorPDU, int, rejectReason_type_conclude_errorPDU); // primitive
+            ITU_T_CHOICES_DECL(confirmed_requestPDU, int, RejectReason_type_confirmed_requestPDU); // primitive
+            ITU_T_CHOICES_DECL(confirmed_responsePDU, int, RejectReason_type_confirmed_responsePDU); // primitive
+            ITU_T_CHOICES_DECL(confirmed_errorPDU, int, RejectReason_type_confirmed_errorPDU); // primitive
+            ITU_T_CHOICES_DECL(unconfirmedPDU, int, RejectReason_type_unconfirmedPDU); // primitive
+            ITU_T_CHOICES_DECL(pdu_error, int, RejectReason_type_pdu_error); // primitive
+            ITU_T_CHOICES_DECL(cancel_requestPDU, int, RejectReason_type_cancel_requestPDU); // primitive
+            ITU_T_CHOICES_DECL(cancel_responsePDU, int, RejectReason_type_cancel_responsePDU); // primitive
+            ITU_T_CHOICES_DECL(cancel_errorPDU, int, RejectReason_type_cancel_errorPDU); // primitive
+            ITU_T_CHOICES_DECL(conclude_requestPDU, int, RejectReason_type_conclude_requestPDU); // primitive
+            ITU_T_CHOICES_DECL(conclude_responsePDU, int, RejectReason_type_conclude_responsePDU); // primitive
+            ITU_T_CHOICES_DECL(conclude_errorPDU, int, RejectReason_type_conclude_errorPDU); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1745,13 +1745,13 @@ namespace ISO_9506_MMS_1 {
 
         RejectPDU();
 
-        RejectPDU(const rejectReason_type& arg__rejectReason);
+        RejectPDU(const RejectReason_type& arg__rejectReason);
 
         RejectPDU(boost::shared_ptr< Unsigned32> arg__originalInvokeID,
-                boost::shared_ptr< rejectReason_type> arg__rejectReason);
+                boost::shared_ptr< RejectReason_type> arg__rejectReason);
 
         ITU_T_OPTIONAL_DECL(originalInvokeID, Unsigned32);
-        ITU_T_HOLDERH_DECL(rejectReason, rejectReason_type);
+        ITU_T_HOLDERH_DECL(rejectReason, RejectReason_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1760,13 +1760,13 @@ namespace ISO_9506_MMS_1 {
 
     struct DefineAccessControlList_Request {
 
-        struct accessControlListElements_type;
+        struct AccessControlListElements_type;
 
-        struct accessControlListElements_type {
+        struct AccessControlListElements_type {
 
-            accessControlListElements_type();
+            AccessControlListElements_type();
 
-            accessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
+            AccessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
                     boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__storeAccessCondition,
                     boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__writeAccessCondition,
                     boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__loadAccessCondition,
@@ -1789,10 +1789,10 @@ namespace ISO_9506_MMS_1 {
         DefineAccessControlList_Request();
 
         DefineAccessControlList_Request(const Identifier& arg__accessControlListName,
-                const accessControlListElements_type& arg__accessControlListElements);
+                const AccessControlListElements_type& arg__accessControlListElements);
 
         ITU_T_HOLDERH_DECL(accessControlListName, Identifier);
-        ITU_T_HOLDERH_DECL(accessControlListElements, accessControlListElements_type);
+        ITU_T_HOLDERH_DECL(accessControlListElements, AccessControlListElements_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1810,13 +1810,13 @@ namespace ISO_9506_MMS_1 {
     struct GetAccessControlListAttributes_Request : public ITU_T_CHOICE(GetAccessControlListAttributes_Request_enum) {
 
 
-        struct namedObject_type;
+        struct NamedObject_type;
 
-        struct namedObject_type {
+        struct NamedObject_type {
 
-            namedObject_type();
+            NamedObject_type();
 
-            namedObject_type(const ObjectClass& arg__objectClass,
+            NamedObject_type(const ObjectClass& arg__objectClass,
                     const ObjectName& arg__objectName);
 
             ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
@@ -1838,7 +1838,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_CHOICES_DECL(accessControlListName, Identifier, GetAccessControlListAttributes_Request_accessControlListName); // primitive
         ITU_T_CHOICES_DECL(vMD, null_type, GetAccessControlListAttributes_Request_vMD); // primitive
-        ITU_T_CHOICEC_DECL(namedObject, namedObject_type, GetAccessControlListAttributes_Request_namedObject);
+        ITU_T_CHOICEC_DECL(namedObject, NamedObject_type, GetAccessControlListAttributes_Request_namedObject);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1847,14 +1847,14 @@ namespace ISO_9506_MMS_1 {
 
     struct GetAccessControlListAttributes_Response {
 
-        struct accessControlListElements_type;
-        struct references_type_sequence_of;
+        struct AccessControlListElements_type;
+        struct References_type_sequence_of;
 
-        struct accessControlListElements_type {
+        struct AccessControlListElements_type {
 
-            accessControlListElements_type();
+            AccessControlListElements_type();
 
-            accessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
+            AccessControlListElements_type(boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__readAccessCondition,
                     boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__storeAccessCondition,
                     boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__writeAccessCondition,
                     boost::shared_ptr< MMS_Object_Module_1::AccessCondition> arg__loadAccessCondition,
@@ -1873,11 +1873,11 @@ namespace ISO_9506_MMS_1 {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        struct references_type_sequence_of {
+        struct References_type_sequence_of {
 
-            references_type_sequence_of();
+            References_type_sequence_of();
 
-            references_type_sequence_of(const ObjectClass& arg__objectClass,
+            References_type_sequence_of(const ObjectClass& arg__objectClass,
                     const int& arg__objectCount);
 
             ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
@@ -1888,26 +1888,26 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< references_type_sequence_of > references_type;
+        typedef std::vector< References_type_sequence_of > References_type;
 
 
         GetAccessControlListAttributes_Response();
 
         GetAccessControlListAttributes_Response(const Identifier& arg__name,
-                const accessControlListElements_type& arg__accessControlListElements,
+                const AccessControlListElements_type& arg__accessControlListElements,
                 const bool& arg__vMDuse,
-                const references_type& arg__references);
+                const References_type& arg__references);
 
         GetAccessControlListAttributes_Response(boost::shared_ptr< Identifier> arg__name,
-                boost::shared_ptr< accessControlListElements_type> arg__accessControlListElements,
+                boost::shared_ptr< AccessControlListElements_type> arg__accessControlListElements,
                 boost::shared_ptr< bool> arg__vMDuse,
-                boost::shared_ptr< references_type> arg__references,
+                boost::shared_ptr< References_type> arg__references,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
         ITU_T_HOLDERH_DECL(name, Identifier);
-        ITU_T_HOLDERH_DECL(accessControlListElements, accessControlListElements_type);
+        ITU_T_HOLDERH_DECL(accessControlListElements, AccessControlListElements_type);
         ITU_T_HOLDERH_DECL(vMDuse, bool);
-        ITU_T_HOLDERH_DECL(references, references_type);
+        ITU_T_HOLDERH_DECL(references, References_type);
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -1937,18 +1937,18 @@ namespace ISO_9506_MMS_1 {
 
     struct ReportAccessControlledObjects_Response {
 
-        typedef std::vector< ObjectName > listOfNames_type;
+        typedef std::vector< ObjectName > ListOfNames_type;
 
         static const bool moreFollows__default;
 
         ReportAccessControlledObjects_Response();
 
-        ReportAccessControlledObjects_Response(const listOfNames_type& arg__listOfNames);
+        ReportAccessControlledObjects_Response(const ListOfNames_type& arg__listOfNames);
 
-        ReportAccessControlledObjects_Response(boost::shared_ptr< listOfNames_type> arg__listOfNames,
+        ReportAccessControlledObjects_Response(boost::shared_ptr< ListOfNames_type> arg__listOfNames,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfNames, listOfNames_type);
+        ITU_T_HOLDERH_DECL(listOfNames, ListOfNames_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -1958,83 +1958,83 @@ namespace ISO_9506_MMS_1 {
 
     struct ChangeAccessControl_Request {
 
-        struct scopeOfChange_type;
+        struct ScopeOfChange_type;
 
-        enum scopeOfChange_type_enum {
+        enum ScopeOfChange_type_enum {
 
-            scopeOfChange_type_null = 0,
-            scopeOfChange_type_vMDOnly,
-            scopeOfChange_type_listOfObjects,
+            ScopeOfChange_type_null = 0,
+            ScopeOfChange_type_vMDOnly,
+            ScopeOfChange_type_listOfObjects,
         };
 
-        struct scopeOfChange_type : public ITU_T_CHOICE(scopeOfChange_type_enum) {
+        struct ScopeOfChange_type : public ITU_T_CHOICE(ScopeOfChange_type_enum) {
 
 
-            struct listOfObjects_type;
+            struct ListOfObjects_type;
 
-            struct listOfObjects_type {
+            struct ListOfObjects_type {
 
-                struct objectScope_type;
+                struct ObjectScope_type;
 
-                enum objectScope_type_enum {
+                enum ObjectScope_type_enum {
 
-                    objectScope_type_null = 0,
-                    objectScope_type_specific,
-                    objectScope_type_aa_specific,
-                    objectScope_type_domain,
-                    objectScope_type_vmd,
+                    ObjectScope_type_null = 0,
+                    ObjectScope_type_specific,
+                    ObjectScope_type_aa_specific,
+                    ObjectScope_type_domain,
+                    ObjectScope_type_vmd,
                 };
 
-                struct objectScope_type : public ITU_T_CHOICE(objectScope_type_enum) {
+                struct ObjectScope_type : public ITU_T_CHOICE(ObjectScope_type_enum) {
 
 
 
-                    typedef std::vector< ObjectName > specific_type;
+                    typedef std::vector< ObjectName > Specific_type;
 
-                    objectScope_type() : ITU_T_CHOICE(objectScope_type_enum) () {
+                    ObjectScope_type() : ITU_T_CHOICE(ObjectScope_type_enum) () {
                     }
 
-                    template<typename T > objectScope_type(boost::shared_ptr< T> vl, objectScope_type_enum enm) :
-                            ITU_T_CHOICE(objectScope_type_enum) (vl, static_cast<int> (enm)) {
+                    template<typename T > ObjectScope_type(boost::shared_ptr< T> vl, ObjectScope_type_enum enm) :
+                            ITU_T_CHOICE(ObjectScope_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    template<typename T > objectScope_type(const T& vl, objectScope_type_enum enm) :
-                            ITU_T_CHOICE(objectScope_type_enum) (new T(vl), static_cast<int> (enm)) {
+                    template<typename T > ObjectScope_type(const T& vl, ObjectScope_type_enum enm) :
+                            ITU_T_CHOICE(ObjectScope_type_enum) (new T(vl), static_cast<int> (enm)) {
                     }
 
-                    ITU_T_CHOICEC_DECL(specific, specific_type, objectScope_type_specific);
-                    ITU_T_CHOICES_DECL(aa_specific, null_type, objectScope_type_aa_specific); // primitive
-                    ITU_T_CHOICES_DECL(domain, Identifier, objectScope_type_domain); // primitive
-                    ITU_T_CHOICES_DECL(vmd, null_type, objectScope_type_vmd); // primitive
+                    ITU_T_CHOICEC_DECL(specific, Specific_type, ObjectScope_type_specific);
+                    ITU_T_CHOICES_DECL(aa_specific, null_type, ObjectScope_type_aa_specific); // primitive
+                    ITU_T_CHOICES_DECL(domain, Identifier, ObjectScope_type_domain); // primitive
+                    ITU_T_CHOICES_DECL(vmd, null_type, ObjectScope_type_vmd); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
                 };
 
 
-                listOfObjects_type();
+                ListOfObjects_type();
 
-                listOfObjects_type(const ObjectClass& arg__objectClass,
-                        const objectScope_type& arg__objectScope);
+                ListOfObjects_type(const ObjectClass& arg__objectClass,
+                        const ObjectScope_type& arg__objectScope);
 
                 ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
-                ITU_T_HOLDERH_DECL(objectScope, objectScope_type);
+                ITU_T_HOLDERH_DECL(objectScope, ObjectScope_type);
 
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            scopeOfChange_type() : ITU_T_CHOICE(scopeOfChange_type_enum) () {
+            ScopeOfChange_type() : ITU_T_CHOICE(ScopeOfChange_type_enum) () {
             }
 
-            template<typename T > scopeOfChange_type(boost::shared_ptr< T> vl, scopeOfChange_type_enum enm) :
-                    ITU_T_CHOICE(scopeOfChange_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ScopeOfChange_type(boost::shared_ptr< T> vl, ScopeOfChange_type_enum enm) :
+                    ITU_T_CHOICE(ScopeOfChange_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > scopeOfChange_type(const T& vl, scopeOfChange_type_enum enm) :
-                    ITU_T_CHOICE(scopeOfChange_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ScopeOfChange_type(const T& vl, ScopeOfChange_type_enum enm) :
+                    ITU_T_CHOICE(ScopeOfChange_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(vMDOnly, null_type, scopeOfChange_type_vMDOnly); // primitive
-            ITU_T_CHOICEC_DECL(listOfObjects, listOfObjects_type, scopeOfChange_type_listOfObjects);
+            ITU_T_CHOICES_DECL(vMDOnly, null_type, ScopeOfChange_type_vMDOnly); // primitive
+            ITU_T_CHOICEC_DECL(listOfObjects, ListOfObjects_type, ScopeOfChange_type_listOfObjects);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2042,10 +2042,10 @@ namespace ISO_9506_MMS_1 {
 
         ChangeAccessControl_Request();
 
-        ChangeAccessControl_Request(const scopeOfChange_type& arg__scopeOfChange,
+        ChangeAccessControl_Request(const ScopeOfChange_type& arg__scopeOfChange,
                 const Identifier& arg__accessControlListName);
 
-        ITU_T_HOLDERH_DECL(scopeOfChange, scopeOfChange_type);
+        ITU_T_HOLDERH_DECL(scopeOfChange, ScopeOfChange_type);
         ITU_T_HOLDERH_DECL(accessControlListName, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -2109,55 +2109,55 @@ namespace ISO_9506_MMS_1 {
     struct CS_Status_Response : public ITU_T_CHOICE(CS_Status_Response_enum) {
 
 
-        struct fullResponse_type;
+        struct FullResponse_type;
 
-        struct fullResponse_type {
+        struct FullResponse_type {
 
-            struct selectedProgramInvocation_type;
+            struct SelectedProgramInvocation_type;
 
-            enum selectedProgramInvocation_type_enum {
+            enum SelectedProgramInvocation_type_enum {
 
-                selectedProgramInvocation_type_null = 0,
-                selectedProgramInvocation_type_programInvocation,
-                selectedProgramInvocation_type_noneSelected,
+                SelectedProgramInvocation_type_null = 0,
+                SelectedProgramInvocation_type_programInvocation,
+                SelectedProgramInvocation_type_noneSelected,
             };
 
-            struct selectedProgramInvocation_type : public ITU_T_CHOICE(selectedProgramInvocation_type_enum) {
+            struct SelectedProgramInvocation_type : public ITU_T_CHOICE(SelectedProgramInvocation_type_enum) {
 
-                selectedProgramInvocation_type() : ITU_T_CHOICE(selectedProgramInvocation_type_enum) () {
+                SelectedProgramInvocation_type() : ITU_T_CHOICE(SelectedProgramInvocation_type_enum) () {
                 }
 
-                template<typename T > selectedProgramInvocation_type(boost::shared_ptr< T> vl, selectedProgramInvocation_type_enum enm) :
-                        ITU_T_CHOICE(selectedProgramInvocation_type_enum) (vl, static_cast<int> (enm)) {
+                template<typename T > SelectedProgramInvocation_type(boost::shared_ptr< T> vl, SelectedProgramInvocation_type_enum enm) :
+                        ITU_T_CHOICE(SelectedProgramInvocation_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                template<typename T > selectedProgramInvocation_type(const T& vl, selectedProgramInvocation_type_enum enm) :
-                        ITU_T_CHOICE(selectedProgramInvocation_type_enum) (new T(vl), static_cast<int> (enm)) {
+                template<typename T > SelectedProgramInvocation_type(const T& vl, SelectedProgramInvocation_type_enum enm) :
+                        ITU_T_CHOICE(SelectedProgramInvocation_type_enum) (new T(vl), static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICES_DECL(programInvocation, Identifier, selectedProgramInvocation_type_programInvocation); // primitive
-                ITU_T_CHOICES_DECL(noneSelected, null_type, selectedProgramInvocation_type_noneSelected); // primitive
+                ITU_T_CHOICES_DECL(programInvocation, Identifier, SelectedProgramInvocation_type_programInvocation); // primitive
+                ITU_T_CHOICES_DECL(noneSelected, null_type, SelectedProgramInvocation_type_noneSelected); // primitive
 
                 ITU_T_ARCHIVE_FUNC;
             };
 
             static const ExtendedStatus extendedStatusMask__default;
 
-            fullResponse_type();
+            FullResponse_type();
 
-            fullResponse_type(const OperationState& arg__operationState,
+            FullResponse_type(const OperationState& arg__operationState,
                     const ExtendedStatus& arg__extendedStatus,
-                    const selectedProgramInvocation_type& arg__selectedProgramInvocation);
+                    const SelectedProgramInvocation_type& arg__selectedProgramInvocation);
 
-            fullResponse_type(boost::shared_ptr< OperationState> arg__operationState,
+            FullResponse_type(boost::shared_ptr< OperationState> arg__operationState,
                     boost::shared_ptr< ExtendedStatus> arg__extendedStatus,
                     boost::shared_ptr< ExtendedStatus> arg__extendedStatusMask,
-                    boost::shared_ptr< selectedProgramInvocation_type> arg__selectedProgramInvocation);
+                    boost::shared_ptr< SelectedProgramInvocation_type> arg__selectedProgramInvocation);
 
             ITU_T_HOLDERH_DECL(operationState, OperationState);
             ITU_T_HOLDERH_DECL(extendedStatus, ExtendedStatus);
             ITU_T_DEFAULTH_DECL(extendedStatusMask, ExtendedStatus, extendedStatusMask__default);
-            ITU_T_HOLDERH_DECL(selectedProgramInvocation, selectedProgramInvocation_type);
+            ITU_T_HOLDERH_DECL(selectedProgramInvocation, SelectedProgramInvocation_type);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2173,54 +2173,54 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(CS_Status_Response_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICEC_DECL(fullResponse, fullResponse_type, CS_Status_Response_fullResponse);
+        ITU_T_CHOICEC_DECL(fullResponse, FullResponse_type, CS_Status_Response_fullResponse);
         ITU_T_CHOICES_DECL(noExtraResponse, null_type, CS_Status_Response_noExtraResponse); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const OperationState OperationState_idle;
-    extern const OperationState OperationState_loaded;
-    extern const OperationState OperationState_ready;
-    extern const OperationState OperationState_executing;
-    extern const OperationState OperationState_motion_paused;
-    extern const OperationState OperationState_manualInterventionRequired;
+    extern const OperationState operationState_idle;
+    extern const OperationState operationState_loaded;
+    extern const OperationState operationState_ready;
+    extern const OperationState operationState_executing;
+    extern const OperationState operationState_motion_paused;
+    extern const OperationState operationState_manualInterventionRequired;
 
-    extern const ExtendedStatus ExtendedStatus_safetyInterlocksViolated;
-    extern const ExtendedStatus ExtendedStatus_anyPhysicalResourcePowerOn;
-    extern const ExtendedStatus ExtendedStatus_allPhysicalResourcesCalibrated;
-    extern const ExtendedStatus ExtendedStatus_localControl;
+    extern const ExtendedStatus extendedStatus_safetyInterlocksViolated;
+    extern const ExtendedStatus extendedStatus_anyPhysicalResourcePowerOn;
+    extern const ExtendedStatus extendedStatus_allPhysicalResourcesCalibrated;
+    extern const ExtendedStatus extendedStatus_localControl;
 
     // sequence GetNameList-Request
 
     struct GetNameList_Request {
 
-        struct objectScope_type;
+        struct ObjectScope_type;
 
-        enum objectScope_type_enum {
+        enum ObjectScope_type_enum {
 
-            objectScope_type_null = 0,
-            objectScope_type_vmdSpecific,
-            objectScope_type_domainSpecific,
-            objectScope_type_aaSpecific,
+            ObjectScope_type_null = 0,
+            ObjectScope_type_vmdSpecific,
+            ObjectScope_type_domainSpecific,
+            ObjectScope_type_aaSpecific,
         };
 
-        struct objectScope_type : public ITU_T_CHOICE(objectScope_type_enum) {
+        struct ObjectScope_type : public ITU_T_CHOICE(ObjectScope_type_enum) {
 
-            objectScope_type() : ITU_T_CHOICE(objectScope_type_enum) () {
+            ObjectScope_type() : ITU_T_CHOICE(ObjectScope_type_enum) () {
             }
 
-            template<typename T > objectScope_type(boost::shared_ptr< T> vl, objectScope_type_enum enm) :
-                    ITU_T_CHOICE(objectScope_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ObjectScope_type(boost::shared_ptr< T> vl, ObjectScope_type_enum enm) :
+                    ITU_T_CHOICE(ObjectScope_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > objectScope_type(const T& vl, objectScope_type_enum enm) :
-                    ITU_T_CHOICE(objectScope_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ObjectScope_type(const T& vl, ObjectScope_type_enum enm) :
+                    ITU_T_CHOICE(ObjectScope_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(vmdSpecific, null_type, objectScope_type_vmdSpecific); // primitive
-            ITU_T_CHOICES_DECL(domainSpecific, Identifier, objectScope_type_domainSpecific); // primitive
-            ITU_T_CHOICES_DECL(aaSpecific, null_type, objectScope_type_aaSpecific); // primitive
+            ITU_T_CHOICES_DECL(vmdSpecific, null_type, ObjectScope_type_vmdSpecific); // primitive
+            ITU_T_CHOICES_DECL(domainSpecific, Identifier, ObjectScope_type_domainSpecific); // primitive
+            ITU_T_CHOICES_DECL(aaSpecific, null_type, ObjectScope_type_aaSpecific); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2229,14 +2229,14 @@ namespace ISO_9506_MMS_1 {
         GetNameList_Request();
 
         GetNameList_Request(const ObjectClass& arg__objectClass,
-                const objectScope_type& arg__objectScope);
+                const ObjectScope_type& arg__objectScope);
 
         GetNameList_Request(boost::shared_ptr< ObjectClass> arg__objectClass,
-                boost::shared_ptr< objectScope_type> arg__objectScope,
+                boost::shared_ptr< ObjectScope_type> arg__objectScope,
                 boost::shared_ptr< Identifier> arg__continueAfter);
 
         ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
-        ITU_T_HOLDERH_DECL(objectScope, objectScope_type);
+        ITU_T_HOLDERH_DECL(objectScope, ObjectScope_type);
         ITU_T_OPTIONAL_DECL(continueAfter, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -2246,18 +2246,18 @@ namespace ISO_9506_MMS_1 {
 
     struct GetNameList_Response {
 
-        typedef std::vector< Identifier > listOfIdentifier_type;
+        typedef std::vector< Identifier > ListOfIdentifier_type;
 
         static const bool moreFollows__default;
 
         GetNameList_Response();
 
-        GetNameList_Response(const listOfIdentifier_type& arg__listOfIdentifier);
+        GetNameList_Response(const ListOfIdentifier_type& arg__listOfIdentifier);
 
-        GetNameList_Response(boost::shared_ptr< listOfIdentifier_type> arg__listOfIdentifier,
+        GetNameList_Response(boost::shared_ptr< ListOfIdentifier_type> arg__listOfIdentifier,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfIdentifier, listOfIdentifier_type);
+        ITU_T_HOLDERH_DECL(listOfIdentifier, ListOfIdentifier_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -2267,7 +2267,7 @@ namespace ISO_9506_MMS_1 {
 
     struct Identify_Response {
 
-        typedef std::vector< oid_type > listOfAbstractSyntaxes_type;
+        typedef std::vector< oid_type > ListOfAbstractSyntaxes_type;
 
 
         Identify_Response();
@@ -2279,12 +2279,12 @@ namespace ISO_9506_MMS_1 {
         Identify_Response(boost::shared_ptr< MMSString> arg__vendorName,
                 boost::shared_ptr< MMSString> arg__modelName,
                 boost::shared_ptr< MMSString> arg__revision,
-                boost::shared_ptr< listOfAbstractSyntaxes_type> arg__listOfAbstractSyntaxes);
+                boost::shared_ptr< ListOfAbstractSyntaxes_type> arg__listOfAbstractSyntaxes);
 
         ITU_T_HOLDERH_DECL(vendorName, MMSString);
         ITU_T_HOLDERH_DECL(modelName, MMSString);
         ITU_T_HOLDERH_DECL(revision, MMSString);
-        ITU_T_OPTIONAL_DECL(listOfAbstractSyntaxes, listOfAbstractSyntaxes_type);
+        ITU_T_OPTIONAL_DECL(listOfAbstractSyntaxes, ListOfAbstractSyntaxes_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2323,18 +2323,18 @@ namespace ISO_9506_MMS_1 {
 
     struct GetCapabilityList_Response {
 
-        typedef std::vector< MMSString > listOfCapabilities_type;
+        typedef std::vector< MMSString > ListOfCapabilities_type;
 
         static const bool moreFollows__default;
 
         GetCapabilityList_Response();
 
-        GetCapabilityList_Response(const listOfCapabilities_type& arg__listOfCapabilities);
+        GetCapabilityList_Response(const ListOfCapabilities_type& arg__listOfCapabilities);
 
-        GetCapabilityList_Response(boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+        GetCapabilityList_Response(boost::shared_ptr< ListOfCapabilities_type> arg__listOfCapabilities,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_HOLDERH_DECL(listOfCapabilities, ListOfCapabilities_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -2344,17 +2344,17 @@ namespace ISO_9506_MMS_1 {
 
     struct InitiateDownloadSequence_Request {
 
-        typedef std::vector< MMSString > listOfCapabilities_type;
+        typedef std::vector< MMSString > ListOfCapabilities_type;
 
 
         InitiateDownloadSequence_Request();
 
         InitiateDownloadSequence_Request(const Identifier& arg__domainName,
-                const listOfCapabilities_type& arg__listOfCapabilities,
+                const ListOfCapabilities_type& arg__listOfCapabilities,
                 const bool& arg__sharable);
 
         ITU_T_HOLDERH_DECL(domainName, Identifier);
-        ITU_T_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_HOLDERH_DECL(listOfCapabilities, ListOfCapabilities_type);
         ITU_T_HOLDERH_DECL(sharable, bool);
 
         ITU_T_ARCHIVE_FUNC;
@@ -2430,16 +2430,16 @@ namespace ISO_9506_MMS_1 {
 
     struct InitiateUploadSequence_Response {
 
-        typedef std::vector< MMSString > listOfCapabilities_type;
+        typedef std::vector< MMSString > ListOfCapabilities_type;
 
 
         InitiateUploadSequence_Response();
 
         InitiateUploadSequence_Response(const Integer32& arg__ulsmID,
-                const listOfCapabilities_type& arg__listOfCapabilities);
+                const ListOfCapabilities_type& arg__listOfCapabilities);
 
         ITU_T_HOLDERH_DECL(ulsmID, Integer32);
-        ITU_T_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_HOLDERH_DECL(listOfCapabilities, ListOfCapabilities_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2467,7 +2467,7 @@ namespace ISO_9506_MMS_1 {
 
     struct RequestDomainDownload_Request {
 
-        typedef std::vector< MMSString > listOfCapabilities_type;
+        typedef std::vector< MMSString > ListOfCapabilities_type;
 
 
         RequestDomainDownload_Request();
@@ -2477,12 +2477,12 @@ namespace ISO_9506_MMS_1 {
                 const FileName& arg__fileName);
 
         RequestDomainDownload_Request(boost::shared_ptr< Identifier> arg__domainName,
-                boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+                boost::shared_ptr< ListOfCapabilities_type> arg__listOfCapabilities,
                 boost::shared_ptr< bool> arg__sharable,
                 boost::shared_ptr< FileName> arg__fileName);
 
         ITU_T_HOLDERH_DECL(domainName, Identifier);
-        ITU_T_OPTIONAL_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_OPTIONAL_DECL(listOfCapabilities, ListOfCapabilities_type);
         ITU_T_HOLDERH_DECL(sharable, bool);
         ITU_T_HOLDERH_DECL(fileName, FileName);
 
@@ -2508,7 +2508,7 @@ namespace ISO_9506_MMS_1 {
 
     struct LoadDomainContent_Request {
 
-        typedef std::vector< MMSString > listOfCapabilities_type;
+        typedef std::vector< MMSString > ListOfCapabilities_type;
 
 
         LoadDomainContent_Request();
@@ -2518,13 +2518,13 @@ namespace ISO_9506_MMS_1 {
                 const FileName& arg__fileName);
 
         LoadDomainContent_Request(boost::shared_ptr< Identifier> arg__domainName,
-                boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+                boost::shared_ptr< ListOfCapabilities_type> arg__listOfCapabilities,
                 boost::shared_ptr< bool> arg__sharable,
                 boost::shared_ptr< FileName> arg__fileName,
                 boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__thirdParty);
 
         ITU_T_HOLDERH_DECL(domainName, Identifier);
-        ITU_T_OPTIONAL_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_OPTIONAL_DECL(listOfCapabilities, ListOfCapabilities_type);
         ITU_T_HOLDERH_DECL(sharable, bool);
         ITU_T_HOLDERH_DECL(fileName, FileName);
         ITU_T_OPTIONAL_DECL(thirdParty, MMS_Environment_1::ApplicationReference);
@@ -2556,32 +2556,32 @@ namespace ISO_9506_MMS_1 {
 
     struct GetDomainAttributes_Response {
 
-        typedef std::vector< MMSString > listOfCapabilities_type;
-        typedef std::vector< Identifier > listOfProgramInvocations_type;
+        typedef std::vector< MMSString > ListOfCapabilities_type;
+        typedef std::vector< Identifier > ListOfProgramInvocations_type;
 
 
         GetDomainAttributes_Response();
 
-        GetDomainAttributes_Response(const listOfCapabilities_type& arg__listOfCapabilities,
+        GetDomainAttributes_Response(const ListOfCapabilities_type& arg__listOfCapabilities,
                 const MMS_Object_Module_1::DomainState& arg__state,
                 const bool& arg__mmsDeletable,
                 const bool& arg__sharable,
-                const listOfProgramInvocations_type& arg__listOfProgramInvocations,
+                const ListOfProgramInvocations_type& arg__listOfProgramInvocations,
                 const Integer8& arg__uploadInProgress);
 
-        GetDomainAttributes_Response(boost::shared_ptr< listOfCapabilities_type> arg__listOfCapabilities,
+        GetDomainAttributes_Response(boost::shared_ptr< ListOfCapabilities_type> arg__listOfCapabilities,
                 boost::shared_ptr< MMS_Object_Module_1::DomainState> arg__state,
                 boost::shared_ptr< bool> arg__mmsDeletable,
                 boost::shared_ptr< bool> arg__sharable,
-                boost::shared_ptr< listOfProgramInvocations_type> arg__listOfProgramInvocations,
+                boost::shared_ptr< ListOfProgramInvocations_type> arg__listOfProgramInvocations,
                 boost::shared_ptr< Integer8> arg__uploadInProgress,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        ITU_T_HOLDERH_DECL(listOfCapabilities, listOfCapabilities_type);
+        ITU_T_HOLDERH_DECL(listOfCapabilities, ListOfCapabilities_type);
         ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState);
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
         ITU_T_HOLDERH_DECL(sharable, bool);
-        ITU_T_HOLDERH_DECL(listOfProgramInvocations, listOfProgramInvocations_type);
+        ITU_T_HOLDERH_DECL(listOfProgramInvocations, ListOfProgramInvocations_type);
         ITU_T_HOLDERH_DECL(uploadInProgress, Integer8);
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
@@ -2592,62 +2592,62 @@ namespace ISO_9506_MMS_1 {
 
     struct CreateProgramInvocation_Request {
 
-        typedef std::vector< Identifier > listOfDomainNames_type;
+        typedef std::vector< Identifier > ListOfDomainNames_type;
 
         static const bool reusable__default;
 
         CreateProgramInvocation_Request();
 
         CreateProgramInvocation_Request(const Identifier& arg__programInvocationName,
-                const listOfDomainNames_type& arg__listOfDomainNames);
+                const ListOfDomainNames_type& arg__listOfDomainNames);
 
         CreateProgramInvocation_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
-                boost::shared_ptr< listOfDomainNames_type> arg__listOfDomainNames,
+                boost::shared_ptr< ListOfDomainNames_type> arg__listOfDomainNames,
                 boost::shared_ptr< bool> arg__reusable,
                 boost::shared_ptr< bool> arg__monitorType);
 
         ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
-        ITU_T_HOLDERH_DECL(listOfDomainNames, listOfDomainNames_type);
+        ITU_T_HOLDERH_DECL(listOfDomainNames, ListOfDomainNames_type);
         ITU_T_DEFAULTH_DECL(reusable, bool, reusable__default);
         ITU_T_OPTIONAL_DECL(monitorType, bool);
 
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const CS_CreateProgramInvocation_Request CS_CreateProgramInvocation_Request_normal;
-    extern const CS_CreateProgramInvocation_Request CS_CreateProgramInvocation_Request_controlling;
-    extern const CS_CreateProgramInvocation_Request CS_CreateProgramInvocation_Request_controlled;
+    extern const CS_CreateProgramInvocation_Request cS_CreateProgramInvocation_Request_normal;
+    extern const CS_CreateProgramInvocation_Request cS_CreateProgramInvocation_Request_controlling;
+    extern const CS_CreateProgramInvocation_Request cS_CreateProgramInvocation_Request_controlled;
 
     // sequence Start-Request
 
     struct Start_Request {
 
-        struct executionArgument_type;
+        struct ExecutionArgument_type;
 
-        enum executionArgument_type_enum {
+        enum ExecutionArgument_type_enum {
 
-            executionArgument_type_null = 0,
-            executionArgument_type_simpleString,
-            executionArgument_type_encodedString,
-            executionArgument_type_embeddedString,
+            ExecutionArgument_type_null = 0,
+            ExecutionArgument_type_simpleString,
+            ExecutionArgument_type_encodedString,
+            ExecutionArgument_type_embeddedString,
         };
 
-        struct executionArgument_type : public ITU_T_CHOICE(executionArgument_type_enum) {
+        struct ExecutionArgument_type : public ITU_T_CHOICE(ExecutionArgument_type_enum) {
 
-            executionArgument_type() : ITU_T_CHOICE(executionArgument_type_enum) () {
+            ExecutionArgument_type() : ITU_T_CHOICE(ExecutionArgument_type_enum) () {
             }
 
-            template<typename T > executionArgument_type(boost::shared_ptr< T> vl, executionArgument_type_enum enm) :
-                    ITU_T_CHOICE(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ExecutionArgument_type(boost::shared_ptr< T> vl, ExecutionArgument_type_enum enm) :
+                    ITU_T_CHOICE(ExecutionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > executionArgument_type(const T& vl, executionArgument_type_enum enm) :
-                    ITU_T_CHOICE(executionArgument_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ExecutionArgument_type(const T& vl, ExecutionArgument_type_enum enm) :
+                    ITU_T_CHOICE(ExecutionArgument_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString); // primitive
-            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString); // primitive
-            ITU_T_CHOICES_DECL(embeddedString, embeded_type, executionArgument_type_embeddedString); // primitive
+            ITU_T_CHOICES_DECL(simpleString, MMSString, ExecutionArgument_type_simpleString); // primitive
+            ITU_T_CHOICES_DECL(encodedString, external_type, ExecutionArgument_type_encodedString); // primitive
+            ITU_T_CHOICES_DECL(embeddedString, embeded_type, ExecutionArgument_type_embeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2658,10 +2658,10 @@ namespace ISO_9506_MMS_1 {
         Start_Request(const Identifier& arg__programInvocationName);
 
         Start_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
-                boost::shared_ptr< executionArgument_type> arg__executionArgument);
+                boost::shared_ptr< ExecutionArgument_type> arg__executionArgument);
 
         ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
-        ITU_T_OPTIONAL_DECL(executionArgument, executionArgument_type);
+        ITU_T_OPTIONAL_DECL(executionArgument, ExecutionArgument_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2678,13 +2678,13 @@ namespace ISO_9506_MMS_1 {
     struct CS_Start_Request_impl : public ITU_T_CHOICE(CS_Start_Request_impl_enum) {
 
 
-        struct controlling_type;
+        struct Controlling_type;
 
-        struct controlling_type {
+        struct Controlling_type {
 
-            controlling_type();
+            Controlling_type();
 
-            controlling_type(boost::shared_ptr< visiblestring_type> arg__startLocation,
+            Controlling_type(boost::shared_ptr< visiblestring_type> arg__startLocation,
                     boost::shared_ptr< StartCount> arg__startCount);
 
             ITU_T_OPTIONAL_DECL(startLocation, visiblestring_type);
@@ -2705,7 +2705,7 @@ namespace ISO_9506_MMS_1 {
         }
 
         ITU_T_CHOICES_DECL(normal, null_type, CS_Start_Request_impl_normal); // primitive
-        ITU_T_CHOICEC_DECL(controlling, controlling_type, CS_Start_Request_impl_controlling);
+        ITU_T_CHOICEC_DECL(controlling, Controlling_type, CS_Start_Request_impl_controlling);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2757,32 +2757,32 @@ namespace ISO_9506_MMS_1 {
 
     struct Resume_Request {
 
-        struct executionArgument_type;
+        struct ExecutionArgument_type;
 
-        enum executionArgument_type_enum {
+        enum ExecutionArgument_type_enum {
 
-            executionArgument_type_null = 0,
-            executionArgument_type_simpleString,
-            executionArgument_type_encodedString,
-            executionArgument_type_enmbeddedString,
+            ExecutionArgument_type_null = 0,
+            ExecutionArgument_type_simpleString,
+            ExecutionArgument_type_encodedString,
+            ExecutionArgument_type_enmbeddedString,
         };
 
-        struct executionArgument_type : public ITU_T_CHOICE(executionArgument_type_enum) {
+        struct ExecutionArgument_type : public ITU_T_CHOICE(ExecutionArgument_type_enum) {
 
-            executionArgument_type() : ITU_T_CHOICE(executionArgument_type_enum) () {
+            ExecutionArgument_type() : ITU_T_CHOICE(ExecutionArgument_type_enum) () {
             }
 
-            template<typename T > executionArgument_type(boost::shared_ptr< T> vl, executionArgument_type_enum enm) :
-                    ITU_T_CHOICE(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ExecutionArgument_type(boost::shared_ptr< T> vl, ExecutionArgument_type_enum enm) :
+                    ITU_T_CHOICE(ExecutionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > executionArgument_type(const T& vl, executionArgument_type_enum enm) :
-                    ITU_T_CHOICE(executionArgument_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ExecutionArgument_type(const T& vl, ExecutionArgument_type_enum enm) :
+                    ITU_T_CHOICE(ExecutionArgument_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString); // primitive
-            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString); // primitive
-            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString); // primitive
+            ITU_T_CHOICES_DECL(simpleString, MMSString, ExecutionArgument_type_simpleString); // primitive
+            ITU_T_CHOICES_DECL(encodedString, external_type, ExecutionArgument_type_encodedString); // primitive
+            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, ExecutionArgument_type_enmbeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2793,10 +2793,10 @@ namespace ISO_9506_MMS_1 {
         Resume_Request(const Identifier& arg__programInvocationName);
 
         Resume_Request(boost::shared_ptr< Identifier> arg__programInvocationName,
-                boost::shared_ptr< executionArgument_type> arg__executionArgument);
+                boost::shared_ptr< ExecutionArgument_type> arg__executionArgument);
 
         ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
-        ITU_T_OPTIONAL_DECL(executionArgument, executionArgument_type);
+        ITU_T_OPTIONAL_DECL(executionArgument, ExecutionArgument_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2813,44 +2813,44 @@ namespace ISO_9506_MMS_1 {
     struct CS_Resume_Request_impl : public ITU_T_CHOICE(CS_Resume_Request_impl_enum) {
 
 
-        struct controlling_type;
+        struct Controlling_type;
 
-        struct controlling_type {
+        struct Controlling_type {
 
-            struct modeType_type;
+            struct ModeType_type;
 
-            enum modeType_type_enum {
+            enum ModeType_type_enum {
 
-                modeType_type_null = 0,
-                modeType_type_continueMode,
-                modeType_type_changeMode,
+                ModeType_type_null = 0,
+                ModeType_type_continueMode,
+                ModeType_type_changeMode,
             };
 
-            struct modeType_type : public ITU_T_CHOICE(modeType_type_enum) {
+            struct ModeType_type : public ITU_T_CHOICE(ModeType_type_enum) {
 
-                modeType_type() : ITU_T_CHOICE(modeType_type_enum) () {
+                ModeType_type() : ITU_T_CHOICE(ModeType_type_enum) () {
                 }
 
-                template<typename T > modeType_type(boost::shared_ptr< T> vl, modeType_type_enum enm) :
-                        ITU_T_CHOICE(modeType_type_enum) (vl, static_cast<int> (enm)) {
+                template<typename T > ModeType_type(boost::shared_ptr< T> vl, ModeType_type_enum enm) :
+                        ITU_T_CHOICE(ModeType_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                template<typename T > modeType_type(const T& vl, modeType_type_enum enm) :
-                        ITU_T_CHOICE(modeType_type_enum) (new T(vl), static_cast<int> (enm)) {
+                template<typename T > ModeType_type(const T& vl, ModeType_type_enum enm) :
+                        ITU_T_CHOICE(ModeType_type_enum) (new T(vl), static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICES_DECL(continueMode, null_type, modeType_type_continueMode); // primitive
-                ITU_T_CHOICEC_DECL(changeMode, StartCount, modeType_type_changeMode);
+                ITU_T_CHOICES_DECL(continueMode, null_type, ModeType_type_continueMode); // primitive
+                ITU_T_CHOICEC_DECL(changeMode, StartCount, ModeType_type_changeMode);
 
                 ITU_T_ARCHIVE_FUNC;
             };
 
 
-            controlling_type();
+            Controlling_type();
 
-            controlling_type(const modeType_type& arg__modeType);
+            Controlling_type(const ModeType_type& arg__modeType);
 
-            ITU_T_HOLDERH_DECL(modeType, modeType_type);
+            ITU_T_HOLDERH_DECL(modeType, ModeType_type);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2867,7 +2867,7 @@ namespace ISO_9506_MMS_1 {
         }
 
         ITU_T_CHOICES_DECL(normal, null_type, CS_Resume_Request_impl_normal); // primitive
-        ITU_T_CHOICEC_DECL(controlling, controlling_type, CS_Resume_Request_impl_controlling);
+        ITU_T_CHOICEC_DECL(controlling, Controlling_type, CS_Resume_Request_impl_controlling);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2902,64 +2902,64 @@ namespace ISO_9506_MMS_1 {
 
     struct GetProgramInvocationAttributes_Response {
 
-        struct executionArgument_type;
+        struct ExecutionArgument_type;
 
-        enum executionArgument_type_enum {
+        enum ExecutionArgument_type_enum {
 
-            executionArgument_type_null = 0,
-            executionArgument_type_simpleString,
-            executionArgument_type_encodedString,
-            executionArgument_type_enmbeddedString,
+            ExecutionArgument_type_null = 0,
+            ExecutionArgument_type_simpleString,
+            ExecutionArgument_type_encodedString,
+            ExecutionArgument_type_enmbeddedString,
         };
 
-        struct executionArgument_type : public ITU_T_CHOICE(executionArgument_type_enum) {
+        struct ExecutionArgument_type : public ITU_T_CHOICE(ExecutionArgument_type_enum) {
 
-            executionArgument_type() : ITU_T_CHOICE(executionArgument_type_enum) () {
+            ExecutionArgument_type() : ITU_T_CHOICE(ExecutionArgument_type_enum) () {
             }
 
-            template<typename T > executionArgument_type(boost::shared_ptr< T> vl, executionArgument_type_enum enm) :
-                    ITU_T_CHOICE(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ExecutionArgument_type(boost::shared_ptr< T> vl, ExecutionArgument_type_enum enm) :
+                    ITU_T_CHOICE(ExecutionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > executionArgument_type(const T& vl, executionArgument_type_enum enm) :
-                    ITU_T_CHOICE(executionArgument_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ExecutionArgument_type(const T& vl, ExecutionArgument_type_enum enm) :
+                    ITU_T_CHOICE(ExecutionArgument_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString); // primitive
-            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString); // primitive
-            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString); // primitive
+            ITU_T_CHOICES_DECL(simpleString, MMSString, ExecutionArgument_type_simpleString); // primitive
+            ITU_T_CHOICES_DECL(encodedString, external_type, ExecutionArgument_type_encodedString); // primitive
+            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, ExecutionArgument_type_enmbeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
 
 
-        typedef std::vector< Identifier > listOfDomainNames_type;
+        typedef std::vector< Identifier > ListOfDomainNames_type;
 
 
         GetProgramInvocationAttributes_Response();
 
         GetProgramInvocationAttributes_Response(const MMS_Object_Module_1::ProgramInvocationState& arg__state,
-                const listOfDomainNames_type& arg__listOfDomainNames,
+                const ListOfDomainNames_type& arg__listOfDomainNames,
                 const bool& arg__mmsDeletable,
                 const bool& arg__reusable,
                 const bool& arg__monitor,
-                const executionArgument_type& arg__executionArgument);
+                const ExecutionArgument_type& arg__executionArgument);
 
         GetProgramInvocationAttributes_Response(boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> arg__state,
-                boost::shared_ptr< listOfDomainNames_type> arg__listOfDomainNames,
+                boost::shared_ptr< ListOfDomainNames_type> arg__listOfDomainNames,
                 boost::shared_ptr< bool> arg__mmsDeletable,
                 boost::shared_ptr< bool> arg__reusable,
                 boost::shared_ptr< bool> arg__monitor,
-                boost::shared_ptr< executionArgument_type> arg__executionArgument,
+                boost::shared_ptr< ExecutionArgument_type> arg__executionArgument,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
         ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::ProgramInvocationState);
-        ITU_T_HOLDERH_DECL(listOfDomainNames, listOfDomainNames_type);
+        ITU_T_HOLDERH_DECL(listOfDomainNames, ListOfDomainNames_type);
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
         ITU_T_HOLDERH_DECL(reusable, bool);
         ITU_T_HOLDERH_DECL(monitor, bool);
-        ITU_T_HOLDERH_DECL(executionArgument, executionArgument_type);
+        ITU_T_HOLDERH_DECL(executionArgument, ExecutionArgument_type);
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -2969,115 +2969,115 @@ namespace ISO_9506_MMS_1 {
 
     struct CS_GetProgramInvocationAttributes_Response {
 
-        struct control_type;
+        struct Control_type;
 
-        enum control_type_enum {
+        enum Control_type_enum {
 
-            control_type_null = 0,
-            control_type_controlling,
-            control_type_controlled,
-            control_type_normal,
+            Control_type_null = 0,
+            Control_type_controlling,
+            Control_type_controlled,
+            Control_type_normal,
         };
 
-        struct control_type : public ITU_T_CHOICE(control_type_enum) {
+        struct Control_type : public ITU_T_CHOICE(Control_type_enum) {
 
 
-            struct controlling_type;
-            struct controlled_type;
+            struct Controlling_type;
+            struct Controlled_type;
 
-            struct controlling_type {
+            struct Controlling_type {
 
-                struct runningMode_type;
+                struct RunningMode_type;
 
-                enum runningMode_type_enum {
+                enum RunningMode_type_enum {
 
-                    runningMode_type_null = 0,
-                    runningMode_type_freeRunning,
-                    runningMode_type_cycleLimited,
-                    runningMode_type_stepLimited,
+                    RunningMode_type_null = 0,
+                    RunningMode_type_freeRunning,
+                    RunningMode_type_cycleLimited,
+                    RunningMode_type_stepLimited,
                 };
 
-                struct runningMode_type : public ITU_T_CHOICE(runningMode_type_enum) {
+                struct RunningMode_type : public ITU_T_CHOICE(RunningMode_type_enum) {
 
-                    runningMode_type() : ITU_T_CHOICE(runningMode_type_enum) () {
+                    RunningMode_type() : ITU_T_CHOICE(RunningMode_type_enum) () {
                     }
 
-                    template<typename T > runningMode_type(boost::shared_ptr< T> vl, runningMode_type_enum enm) :
-                            ITU_T_CHOICE(runningMode_type_enum) (vl, static_cast<int> (enm)) {
+                    template<typename T > RunningMode_type(boost::shared_ptr< T> vl, RunningMode_type_enum enm) :
+                            ITU_T_CHOICE(RunningMode_type_enum) (vl, static_cast<int> (enm)) {
                     }
 
-                    template<typename T > runningMode_type(const T& vl, runningMode_type_enum enm) :
-                            ITU_T_CHOICE(runningMode_type_enum) (new T(vl), static_cast<int> (enm)) {
+                    template<typename T > RunningMode_type(const T& vl, RunningMode_type_enum enm) :
+                            ITU_T_CHOICE(RunningMode_type_enum) (new T(vl), static_cast<int> (enm)) {
                     }
 
-                    ITU_T_CHOICES_DECL(freeRunning, null_type, runningMode_type_freeRunning); // primitive
-                    ITU_T_CHOICES_DECL(cycleLimited, int, runningMode_type_cycleLimited); // primitive
-                    ITU_T_CHOICES_DECL(stepLimited, int, runningMode_type_stepLimited); // primitive
+                    ITU_T_CHOICES_DECL(freeRunning, null_type, RunningMode_type_freeRunning); // primitive
+                    ITU_T_CHOICES_DECL(cycleLimited, int, RunningMode_type_cycleLimited); // primitive
+                    ITU_T_CHOICES_DECL(stepLimited, int, RunningMode_type_stepLimited); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
                 };
 
 
 
-                typedef std::vector< Identifier > controlledPI_type;
+                typedef std::vector< Identifier > ControlledPI_type;
 
 
-                controlling_type();
+                Controlling_type();
 
-                controlling_type(const controlledPI_type& arg__controlledPI,
-                        const runningMode_type& arg__runningMode);
+                Controlling_type(const ControlledPI_type& arg__controlledPI,
+                        const RunningMode_type& arg__runningMode);
 
-                controlling_type(boost::shared_ptr< controlledPI_type> arg__controlledPI,
+                Controlling_type(boost::shared_ptr< ControlledPI_type> arg__controlledPI,
                         boost::shared_ptr< visiblestring_type> arg__programLocation,
-                        boost::shared_ptr< runningMode_type> arg__runningMode);
+                        boost::shared_ptr< RunningMode_type> arg__runningMode);
 
-                ITU_T_HOLDERH_DECL(controlledPI, controlledPI_type);
+                ITU_T_HOLDERH_DECL(controlledPI, ControlledPI_type);
                 ITU_T_OPTIONAL_DECL(programLocation, visiblestring_type);
-                ITU_T_HOLDERH_DECL(runningMode, runningMode_type);
+                ITU_T_HOLDERH_DECL(runningMode, RunningMode_type);
 
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            enum controlled_type_enum {
+            enum Controlled_type_enum {
 
-                controlled_type_null = 0,
-                controlled_type_controllingPI,
-                controlled_type_none,
+                Controlled_type_null = 0,
+                Controlled_type_controllingPI,
+                Controlled_type_none,
             };
 
-            struct controlled_type : public ITU_T_CHOICE(controlled_type_enum) {
+            struct Controlled_type : public ITU_T_CHOICE(Controlled_type_enum) {
 
-                controlled_type() : ITU_T_CHOICE(controlled_type_enum) () {
+                Controlled_type() : ITU_T_CHOICE(Controlled_type_enum) () {
                 }
 
-                template<typename T > controlled_type(boost::shared_ptr< T> vl, controlled_type_enum enm) :
-                        ITU_T_CHOICE(controlled_type_enum) (vl, static_cast<int> (enm)) {
+                template<typename T > Controlled_type(boost::shared_ptr< T> vl, Controlled_type_enum enm) :
+                        ITU_T_CHOICE(Controlled_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                template<typename T > controlled_type(const T& vl, controlled_type_enum enm) :
-                        ITU_T_CHOICE(controlled_type_enum) (new T(vl), static_cast<int> (enm)) {
+                template<typename T > Controlled_type(const T& vl, Controlled_type_enum enm) :
+                        ITU_T_CHOICE(Controlled_type_enum) (new T(vl), static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICES_DECL(controllingPI, Identifier, controlled_type_controllingPI); // primitive
-                ITU_T_CHOICES_DECL(none, null_type, controlled_type_none); // primitive
+                ITU_T_CHOICES_DECL(controllingPI, Identifier, Controlled_type_controllingPI); // primitive
+                ITU_T_CHOICES_DECL(none, null_type, Controlled_type_none); // primitive
 
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            control_type() : ITU_T_CHOICE(control_type_enum) () {
+            Control_type() : ITU_T_CHOICE(Control_type_enum) () {
             }
 
-            template<typename T > control_type(boost::shared_ptr< T> vl, control_type_enum enm) :
-                    ITU_T_CHOICE(control_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > Control_type(boost::shared_ptr< T> vl, Control_type_enum enm) :
+                    ITU_T_CHOICE(Control_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > control_type(const T& vl, control_type_enum enm) :
-                    ITU_T_CHOICE(control_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > Control_type(const T& vl, Control_type_enum enm) :
+                    ITU_T_CHOICE(Control_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICEC_DECL(controlling, controlling_type, control_type_controlling);
-            ITU_T_CHOICEC_DECL(controlled, controlled_type, control_type_controlled);
-            ITU_T_CHOICES_DECL(normal, null_type, control_type_normal); // primitive
+            ITU_T_CHOICEC_DECL(controlling, Controlling_type, Control_type_controlling);
+            ITU_T_CHOICEC_DECL(controlled, Controlled_type, Control_type_controlled);
+            ITU_T_CHOICES_DECL(normal, null_type, Control_type_normal); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3086,10 +3086,10 @@ namespace ISO_9506_MMS_1 {
         CS_GetProgramInvocationAttributes_Response();
 
         CS_GetProgramInvocationAttributes_Response(const int& arg__errorCode,
-                const control_type& arg__control);
+                const Control_type& arg__control);
 
         ITU_T_HOLDERH_DECL(errorCode, int);
-        ITU_T_HOLDERH_DECL(control, control_type);
+        ITU_T_HOLDERH_DECL(control, Control_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3098,16 +3098,16 @@ namespace ISO_9506_MMS_1 {
 
     struct Select_Request {
 
-        typedef std::vector< Identifier > controlled_type;
+        typedef std::vector< Identifier > Controlled_type;
 
 
         Select_Request();
 
         Select_Request(boost::shared_ptr< Identifier> arg__controlling,
-                boost::shared_ptr< controlled_type> arg__controlled);
+                boost::shared_ptr< Controlled_type> arg__controlled);
 
         ITU_T_OPTIONAL_DECL(controlling, Identifier);
-        ITU_T_OPTIONAL_DECL(controlled, controlled_type);
+        ITU_T_OPTIONAL_DECL(controlled, Controlled_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3133,25 +3133,25 @@ namespace ISO_9506_MMS_1 {
 
     struct ReconfigureProgramInvocation_Request {
 
-        typedef std::vector< Identifier > domainsToAdd_type;
-        typedef std::vector< Identifier > domainsToRemove_type;
+        typedef std::vector< Identifier > DomainsToAdd_type;
+        typedef std::vector< Identifier > DomainsToRemove_type;
 
 
         ReconfigureProgramInvocation_Request();
 
         ReconfigureProgramInvocation_Request(const Identifier& arg__oldProgramInvocationName,
-                const domainsToAdd_type& arg__domainsToAdd,
-                const domainsToRemove_type& arg__domainsToRemove);
+                const DomainsToAdd_type& arg__domainsToAdd,
+                const DomainsToRemove_type& arg__domainsToRemove);
 
         ReconfigureProgramInvocation_Request(boost::shared_ptr< Identifier> arg__oldProgramInvocationName,
                 boost::shared_ptr< Identifier> arg__newProgramInvocationName,
-                boost::shared_ptr< domainsToAdd_type> arg__domainsToAdd,
-                boost::shared_ptr< domainsToRemove_type> arg__domainsToRemove);
+                boost::shared_ptr< DomainsToAdd_type> arg__domainsToAdd,
+                boost::shared_ptr< DomainsToRemove_type> arg__domainsToRemove);
 
         ITU_T_HOLDERH_DECL(oldProgramInvocationName, Identifier);
         ITU_T_OPTIONAL_DECL(newProgramInvocationName, Identifier);
-        ITU_T_HOLDERH_DECL(domainsToAdd, domainsToAdd_type);
-        ITU_T_HOLDERH_DECL(domainsToRemove, domainsToRemove_type);
+        ITU_T_HOLDERH_DECL(domainsToAdd, DomainsToAdd_type);
+        ITU_T_HOLDERH_DECL(domainsToRemove, DomainsToRemove_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3170,39 +3170,39 @@ namespace ISO_9506_MMS_1 {
     struct ControlElement : public ITU_T_CHOICE(ControlElement_enum) {
 
 
-        struct beginDomainDef_type;
-        struct continueDomainDef_type;
-        struct piDefinition_type;
+        struct BeginDomainDef_type;
+        struct ContinueDomainDef_type;
+        struct PiDefinition_type;
 
-        struct beginDomainDef_type {
+        struct BeginDomainDef_type {
 
-            typedef std::vector< MMSString > capabilities_type;
+            typedef std::vector< MMSString > Capabilities_type;
 
 
-            beginDomainDef_type();
+            BeginDomainDef_type();
 
-            beginDomainDef_type(const Identifier& arg__domainName,
-                    const capabilities_type& arg__capabilities,
+            BeginDomainDef_type(const Identifier& arg__domainName,
+                    const Capabilities_type& arg__capabilities,
                     const bool& arg__sharable);
 
-            beginDomainDef_type(boost::shared_ptr< Identifier> arg__domainName,
-                    boost::shared_ptr< capabilities_type> arg__capabilities,
+            BeginDomainDef_type(boost::shared_ptr< Identifier> arg__domainName,
+                    boost::shared_ptr< Capabilities_type> arg__capabilities,
                     boost::shared_ptr< bool> arg__sharable,
                     boost::shared_ptr< LoadData> arg__loadData);
 
             ITU_T_HOLDERH_DECL(domainName, Identifier);
-            ITU_T_HOLDERH_DECL(capabilities, capabilities_type);
+            ITU_T_HOLDERH_DECL(capabilities, Capabilities_type);
             ITU_T_HOLDERH_DECL(sharable, bool);
             ITU_T_OPTIONAL_DECL(loadData, LoadData);
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        struct continueDomainDef_type {
+        struct ContinueDomainDef_type {
 
-            continueDomainDef_type();
+            ContinueDomainDef_type();
 
-            continueDomainDef_type(const Identifier& arg__domainName,
+            ContinueDomainDef_type(const Identifier& arg__domainName,
                     const LoadData& arg__loadData);
 
             ITU_T_HOLDERH_DECL(domainName, Identifier);
@@ -3211,25 +3211,25 @@ namespace ISO_9506_MMS_1 {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        struct piDefinition_type {
+        struct PiDefinition_type {
 
-            typedef std::vector< Identifier > listOfDomains_type;
+            typedef std::vector< Identifier > ListOfDomains_type;
 
             static const bool reusable__default;
 
-            piDefinition_type();
+            PiDefinition_type();
 
-            piDefinition_type(const Identifier& arg__piName,
-                    const listOfDomains_type& arg__listOfDomains);
+            PiDefinition_type(const Identifier& arg__piName,
+                    const ListOfDomains_type& arg__listOfDomains);
 
-            piDefinition_type(boost::shared_ptr< Identifier> arg__piName,
-                    boost::shared_ptr< listOfDomains_type> arg__listOfDomains,
+            PiDefinition_type(boost::shared_ptr< Identifier> arg__piName,
+                    boost::shared_ptr< ListOfDomains_type> arg__listOfDomains,
                     boost::shared_ptr< bool> arg__reusable,
                     boost::shared_ptr< bool> arg__monitorType,
                     boost::shared_ptr< MMS_Object_Module_1::ProgramInvocationState> arg__pIState);
 
             ITU_T_HOLDERH_DECL(piName, Identifier);
-            ITU_T_HOLDERH_DECL(listOfDomains, listOfDomains_type);
+            ITU_T_HOLDERH_DECL(listOfDomains, ListOfDomains_type);
             ITU_T_DEFAULTH_DECL(reusable, bool, reusable__default);
             ITU_T_OPTIONAL_DECL(monitorType, bool);
             ITU_T_OPTIONAL_DECL(pIState, MMS_Object_Module_1::ProgramInvocationState);
@@ -3248,10 +3248,10 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(ControlElement_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICEC_DECL(beginDomainDef, beginDomainDef_type, ControlElement_beginDomainDef);
-        ITU_T_CHOICEC_DECL(continueDomainDef, continueDomainDef_type, ControlElement_continueDomainDef);
+        ITU_T_CHOICEC_DECL(beginDomainDef, BeginDomainDef_type, ControlElement_beginDomainDef);
+        ITU_T_CHOICEC_DECL(continueDomainDef, ContinueDomainDef_type, ControlElement_continueDomainDef);
         ITU_T_CHOICES_DECL(endDomainDef, Identifier, ControlElement_endDomainDef); // primitive
-        ITU_T_CHOICEC_DECL(piDefinition, piDefinition_type, ControlElement_piDefinition);
+        ITU_T_CHOICEC_DECL(piDefinition, PiDefinition_type, ControlElement_piDefinition);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3288,18 +3288,18 @@ namespace ISO_9506_MMS_1 {
 
     struct UnitControlLoadSegment_Response {
 
-        typedef std::vector< ControlElement > controlElements_type;
+        typedef std::vector< ControlElement > ControlElements_type;
 
         static const bool moreFollows__default;
 
         UnitControlLoadSegment_Response();
 
-        UnitControlLoadSegment_Response(const controlElements_type& arg__controlElements);
+        UnitControlLoadSegment_Response(const ControlElements_type& arg__controlElements);
 
-        UnitControlLoadSegment_Response(boost::shared_ptr< controlElements_type> arg__controlElements,
+        UnitControlLoadSegment_Response(boost::shared_ptr< ControlElements_type> arg__controlElements,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(controlElements, controlElements_type);
+        ITU_T_HOLDERH_DECL(controlElements, ControlElements_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -3309,32 +3309,32 @@ namespace ISO_9506_MMS_1 {
 
     struct UnitControlUpload_Request {
 
-        struct continueAfter_type;
+        struct ContinueAfter_type;
 
-        enum continueAfter_type_enum {
+        enum ContinueAfter_type_enum {
 
-            continueAfter_type_null = 0,
-            continueAfter_type_domain,
-            continueAfter_type_ulsmID,
-            continueAfter_type_programInvocation,
+            ContinueAfter_type_null = 0,
+            ContinueAfter_type_domain,
+            ContinueAfter_type_ulsmID,
+            ContinueAfter_type_programInvocation,
         };
 
-        struct continueAfter_type : public ITU_T_CHOICE(continueAfter_type_enum) {
+        struct ContinueAfter_type : public ITU_T_CHOICE(ContinueAfter_type_enum) {
 
-            continueAfter_type() : ITU_T_CHOICE(continueAfter_type_enum) () {
+            ContinueAfter_type() : ITU_T_CHOICE(ContinueAfter_type_enum) () {
             }
 
-            template<typename T > continueAfter_type(boost::shared_ptr< T> vl, continueAfter_type_enum enm) :
-                    ITU_T_CHOICE(continueAfter_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ContinueAfter_type(boost::shared_ptr< T> vl, ContinueAfter_type_enum enm) :
+                    ITU_T_CHOICE(ContinueAfter_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > continueAfter_type(const T& vl, continueAfter_type_enum enm) :
-                    ITU_T_CHOICE(continueAfter_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ContinueAfter_type(const T& vl, ContinueAfter_type_enum enm) :
+                    ITU_T_CHOICE(ContinueAfter_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(domain, Identifier, continueAfter_type_domain); // primitive
-            ITU_T_CHOICES_DECL(ulsmID, int, continueAfter_type_ulsmID); // primitive
-            ITU_T_CHOICES_DECL(programInvocation, Identifier, continueAfter_type_programInvocation); // primitive
+            ITU_T_CHOICES_DECL(domain, Identifier, ContinueAfter_type_domain); // primitive
+            ITU_T_CHOICES_DECL(ulsmID, int, ContinueAfter_type_ulsmID); // primitive
+            ITU_T_CHOICES_DECL(programInvocation, Identifier, ContinueAfter_type_programInvocation); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3345,10 +3345,10 @@ namespace ISO_9506_MMS_1 {
         UnitControlUpload_Request(const Identifier& arg__unitControlName);
 
         UnitControlUpload_Request(boost::shared_ptr< Identifier> arg__unitControlName,
-                boost::shared_ptr< continueAfter_type> arg__continueAfter);
+                boost::shared_ptr< ContinueAfter_type> arg__continueAfter);
 
         ITU_T_HOLDERH_DECL(unitControlName, Identifier);
-        ITU_T_OPTIONAL_DECL(continueAfter, continueAfter_type);
+        ITU_T_OPTIONAL_DECL(continueAfter, ContinueAfter_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3357,50 +3357,50 @@ namespace ISO_9506_MMS_1 {
 
     struct UnitControlUpload_Response {
 
-        struct nextElement_type;
+        struct NextElement_type;
 
-        enum nextElement_type_enum {
+        enum NextElement_type_enum {
 
-            nextElement_type_null = 0,
-            nextElement_type_domain,
-            nextElement_type_ulsmID,
-            nextElement_type_programInvocation,
+            NextElement_type_null = 0,
+            NextElement_type_domain,
+            NextElement_type_ulsmID,
+            NextElement_type_programInvocation,
         };
 
-        struct nextElement_type : public ITU_T_CHOICE(nextElement_type_enum) {
+        struct NextElement_type : public ITU_T_CHOICE(NextElement_type_enum) {
 
-            nextElement_type() : ITU_T_CHOICE(nextElement_type_enum) () {
+            NextElement_type() : ITU_T_CHOICE(NextElement_type_enum) () {
             }
 
-            template<typename T > nextElement_type(boost::shared_ptr< T> vl, nextElement_type_enum enm) :
-                    ITU_T_CHOICE(nextElement_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > NextElement_type(boost::shared_ptr< T> vl, NextElement_type_enum enm) :
+                    ITU_T_CHOICE(NextElement_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > nextElement_type(const T& vl, nextElement_type_enum enm) :
-                    ITU_T_CHOICE(nextElement_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > NextElement_type(const T& vl, NextElement_type_enum enm) :
+                    ITU_T_CHOICE(NextElement_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(domain, Identifier, nextElement_type_domain); // primitive
-            ITU_T_CHOICES_DECL(ulsmID, int, nextElement_type_ulsmID); // primitive
-            ITU_T_CHOICES_DECL(programInvocation, Identifier, nextElement_type_programInvocation); // primitive
+            ITU_T_CHOICES_DECL(domain, Identifier, NextElement_type_domain); // primitive
+            ITU_T_CHOICES_DECL(ulsmID, int, NextElement_type_ulsmID); // primitive
+            ITU_T_CHOICES_DECL(programInvocation, Identifier, NextElement_type_programInvocation); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
 
 
-        typedef std::vector< ControlElement > controlElements_type;
+        typedef std::vector< ControlElement > ControlElements_type;
 
 
         UnitControlUpload_Response();
 
-        UnitControlUpload_Response(const controlElements_type& arg__controlElements);
+        UnitControlUpload_Response(const ControlElements_type& arg__controlElements);
 
-        UnitControlUpload_Response(boost::shared_ptr< controlElements_type> arg__controlElements,
-                boost::shared_ptr< nextElement_type> arg__nextElement);
+        UnitControlUpload_Response(boost::shared_ptr< ControlElements_type> arg__controlElements,
+                boost::shared_ptr< NextElement_type> arg__nextElement);
 
-        ITU_T_HOLDERH_DECL(controlElements, controlElements_type);
-        ITU_T_OPTIONAL_DECL(nextElement, nextElement_type);
+        ITU_T_HOLDERH_DECL(controlElements, ControlElements_type);
+        ITU_T_OPTIONAL_DECL(nextElement, NextElement_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3409,32 +3409,32 @@ namespace ISO_9506_MMS_1 {
 
     struct StartUnitControl_Request {
 
-        struct executionArgument_type;
+        struct ExecutionArgument_type;
 
-        enum executionArgument_type_enum {
+        enum ExecutionArgument_type_enum {
 
-            executionArgument_type_null = 0,
-            executionArgument_type_simpleString,
-            executionArgument_type_encodedString,
-            executionArgument_type_enmbeddedString,
+            ExecutionArgument_type_null = 0,
+            ExecutionArgument_type_simpleString,
+            ExecutionArgument_type_encodedString,
+            ExecutionArgument_type_enmbeddedString,
         };
 
-        struct executionArgument_type : public ITU_T_CHOICE(executionArgument_type_enum) {
+        struct ExecutionArgument_type : public ITU_T_CHOICE(ExecutionArgument_type_enum) {
 
-            executionArgument_type() : ITU_T_CHOICE(executionArgument_type_enum) () {
+            ExecutionArgument_type() : ITU_T_CHOICE(ExecutionArgument_type_enum) () {
             }
 
-            template<typename T > executionArgument_type(boost::shared_ptr< T> vl, executionArgument_type_enum enm) :
-                    ITU_T_CHOICE(executionArgument_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ExecutionArgument_type(boost::shared_ptr< T> vl, ExecutionArgument_type_enum enm) :
+                    ITU_T_CHOICE(ExecutionArgument_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > executionArgument_type(const T& vl, executionArgument_type_enum enm) :
-                    ITU_T_CHOICE(executionArgument_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ExecutionArgument_type(const T& vl, ExecutionArgument_type_enum enm) :
+                    ITU_T_CHOICE(ExecutionArgument_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(simpleString, MMSString, executionArgument_type_simpleString); // primitive
-            ITU_T_CHOICES_DECL(encodedString, external_type, executionArgument_type_encodedString); // primitive
-            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, executionArgument_type_enmbeddedString); // primitive
+            ITU_T_CHOICES_DECL(simpleString, MMSString, ExecutionArgument_type_simpleString); // primitive
+            ITU_T_CHOICES_DECL(encodedString, external_type, ExecutionArgument_type_encodedString); // primitive
+            ITU_T_CHOICES_DECL(enmbeddedString, embeded_type, ExecutionArgument_type_enmbeddedString); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3445,10 +3445,10 @@ namespace ISO_9506_MMS_1 {
         StartUnitControl_Request(const Identifier& arg__unitControlName);
 
         StartUnitControl_Request(boost::shared_ptr< Identifier> arg__unitControlName,
-                boost::shared_ptr< executionArgument_type> arg__executionArgument);
+                boost::shared_ptr< ExecutionArgument_type> arg__executionArgument);
 
         ITU_T_HOLDERH_DECL(unitControlName, Identifier);
-        ITU_T_OPTIONAL_DECL(executionArgument, executionArgument_type);
+        ITU_T_OPTIONAL_DECL(executionArgument, ExecutionArgument_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3487,19 +3487,19 @@ namespace ISO_9506_MMS_1 {
 
     struct CreateUnitControl_Request {
 
-        typedef std::vector< Identifier > domains_type;
-        typedef std::vector< Identifier > programInvocations_type;
+        typedef std::vector< Identifier > Domains_type;
+        typedef std::vector< Identifier > ProgramInvocations_type;
 
 
         CreateUnitControl_Request();
 
         CreateUnitControl_Request(const Identifier& arg__unitControl,
-                const domains_type& arg__domains,
-                const programInvocations_type& arg__programInvocations);
+                const Domains_type& arg__domains,
+                const ProgramInvocations_type& arg__programInvocations);
 
         ITU_T_HOLDERH_DECL(unitControl, Identifier);
-        ITU_T_HOLDERH_DECL(domains, domains_type);
-        ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
+        ITU_T_HOLDERH_DECL(domains, Domains_type);
+        ITU_T_HOLDERH_DECL(programInvocations, ProgramInvocations_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3508,19 +3508,19 @@ namespace ISO_9506_MMS_1 {
 
     struct AddToUnitControl_Request {
 
-        typedef std::vector< Identifier > domains_type;
-        typedef std::vector< Identifier > programInvocations_type;
+        typedef std::vector< Identifier > Domains_type;
+        typedef std::vector< Identifier > ProgramInvocations_type;
 
 
         AddToUnitControl_Request();
 
         AddToUnitControl_Request(const Identifier& arg__unitControl,
-                const domains_type& arg__domains,
-                const programInvocations_type& arg__programInvocations);
+                const Domains_type& arg__domains,
+                const ProgramInvocations_type& arg__programInvocations);
 
         ITU_T_HOLDERH_DECL(unitControl, Identifier);
-        ITU_T_HOLDERH_DECL(domains, domains_type);
-        ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
+        ITU_T_HOLDERH_DECL(domains, Domains_type);
+        ITU_T_HOLDERH_DECL(programInvocations, ProgramInvocations_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3529,19 +3529,19 @@ namespace ISO_9506_MMS_1 {
 
     struct RemoveFromUnitControl_Request {
 
-        typedef std::vector< Identifier > domains_type;
-        typedef std::vector< Identifier > programInvocations_type;
+        typedef std::vector< Identifier > Domains_type;
+        typedef std::vector< Identifier > ProgramInvocations_type;
 
 
         RemoveFromUnitControl_Request();
 
         RemoveFromUnitControl_Request(const Identifier& arg__unitControl,
-                const domains_type& arg__domains,
-                const programInvocations_type& arg__programInvocations);
+                const Domains_type& arg__domains,
+                const ProgramInvocations_type& arg__programInvocations);
 
         ITU_T_HOLDERH_DECL(unitControl, Identifier);
-        ITU_T_HOLDERH_DECL(domains, domains_type);
-        ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
+        ITU_T_HOLDERH_DECL(domains, Domains_type);
+        ITU_T_HOLDERH_DECL(programInvocations, ProgramInvocations_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3550,17 +3550,17 @@ namespace ISO_9506_MMS_1 {
 
     struct GetUnitControlAttributes_Response {
 
-        typedef std::vector< Identifier > domains_type;
-        typedef std::vector< Identifier > programInvocations_type;
+        typedef std::vector< Identifier > Domains_type;
+        typedef std::vector< Identifier > ProgramInvocations_type;
 
 
         GetUnitControlAttributes_Response();
 
-        GetUnitControlAttributes_Response(const domains_type& arg__domains,
-                const programInvocations_type& arg__programInvocations);
+        GetUnitControlAttributes_Response(const Domains_type& arg__domains,
+                const ProgramInvocations_type& arg__programInvocations);
 
-        ITU_T_HOLDERH_DECL(domains, domains_type);
-        ITU_T_HOLDERH_DECL(programInvocations, programInvocations_type);
+        ITU_T_HOLDERH_DECL(domains, Domains_type);
+        ITU_T_HOLDERH_DECL(programInvocations, ProgramInvocations_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3701,13 +3701,13 @@ namespace ISO_9506_MMS_1 {
     struct AlternateAccess_sequence_of : public ITU_T_CHOICE(AlternateAccess_sequence_of_enum) {
 
 
-        struct named_type;
+        struct Named_type;
 
-        struct named_type {
+        struct Named_type {
 
-            named_type();
+            Named_type();
 
-            named_type(const Identifier& arg__componentName,
+            Named_type(const Identifier& arg__componentName,
                     const AlternateAccessSelection& arg__access);
 
             ITU_T_HOLDERH_DECL(componentName, Identifier);
@@ -3728,7 +3728,7 @@ namespace ISO_9506_MMS_1 {
         }
 
         ITU_T_CHOICEC_DECL(unnamed, AlternateAccessSelection, AlternateAccess_sequence_of_unnamed);
-        ITU_T_CHOICEC_DECL(named, named_type, AlternateAccess_sequence_of_named);
+        ITU_T_CHOICEC_DECL(named, Named_type, AlternateAccess_sequence_of_named);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3745,32 +3745,32 @@ namespace ISO_9506_MMS_1 {
     struct AlternateAccessSelection : public ITU_T_CHOICE(AlternateAccessSelection_enum) {
 
 
-        struct selectAlternateAccess_type;
-        struct selectAccess_type;
+        struct SelectAlternateAccess_type;
+        struct SelectAccess_type;
 
-        struct selectAlternateAccess_type {
+        struct SelectAlternateAccess_type {
 
-            struct accessSelection_type;
+            struct AccessSelection_type;
 
-            enum accessSelection_type_enum {
+            enum AccessSelection_type_enum {
 
-                accessSelection_type_null = 0,
-                accessSelection_type_component,
-                accessSelection_type_index,
-                accessSelection_type_indexRange,
-                accessSelection_type_allElements,
+                AccessSelection_type_null = 0,
+                AccessSelection_type_component,
+                AccessSelection_type_index,
+                AccessSelection_type_indexRange,
+                AccessSelection_type_allElements,
             };
 
-            struct accessSelection_type : public ITU_T_CHOICE(accessSelection_type_enum) {
+            struct AccessSelection_type : public ITU_T_CHOICE(AccessSelection_type_enum) {
 
 
-                struct indexRange_type;
+                struct IndexRange_type;
 
-                struct indexRange_type {
+                struct IndexRange_type {
 
-                    indexRange_type();
+                    IndexRange_type();
 
-                    indexRange_type(const Unsigned32& arg__lowIndex,
+                    IndexRange_type(const Unsigned32& arg__lowIndex,
                             const Unsigned32& arg__numberOfElements);
 
                     ITU_T_HOLDERH_DECL(lowIndex, Unsigned32);
@@ -3779,56 +3779,56 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_ARCHIVE_FUNC;
                 };
 
-                accessSelection_type() : ITU_T_CHOICE(accessSelection_type_enum) () {
+                AccessSelection_type() : ITU_T_CHOICE(AccessSelection_type_enum) () {
                 }
 
-                template<typename T > accessSelection_type(boost::shared_ptr< T> vl, accessSelection_type_enum enm) :
-                        ITU_T_CHOICE(accessSelection_type_enum) (vl, static_cast<int> (enm)) {
+                template<typename T > AccessSelection_type(boost::shared_ptr< T> vl, AccessSelection_type_enum enm) :
+                        ITU_T_CHOICE(AccessSelection_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                template<typename T > accessSelection_type(const T& vl, accessSelection_type_enum enm) :
-                        ITU_T_CHOICE(accessSelection_type_enum) (new T(vl), static_cast<int> (enm)) {
+                template<typename T > AccessSelection_type(const T& vl, AccessSelection_type_enum enm) :
+                        ITU_T_CHOICE(AccessSelection_type_enum) (new T(vl), static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICES_DECL(component, Identifier, accessSelection_type_component); // primitive
-                ITU_T_CHOICES_DECL(index, Unsigned32, accessSelection_type_index); // primitive
-                ITU_T_CHOICEC_DECL(indexRange, indexRange_type, accessSelection_type_indexRange);
-                ITU_T_CHOICES_DECL(allElements, null_type, accessSelection_type_allElements); // primitive
+                ITU_T_CHOICES_DECL(component, Identifier, AccessSelection_type_component); // primitive
+                ITU_T_CHOICES_DECL(index, Unsigned32, AccessSelection_type_index); // primitive
+                ITU_T_CHOICEC_DECL(indexRange, IndexRange_type, AccessSelection_type_indexRange);
+                ITU_T_CHOICES_DECL(allElements, null_type, AccessSelection_type_allElements); // primitive
 
                 ITU_T_ARCHIVE_FUNC;
             };
 
 
-            selectAlternateAccess_type();
+            SelectAlternateAccess_type();
 
-            selectAlternateAccess_type(const accessSelection_type& arg__accessSelection,
+            SelectAlternateAccess_type(const AccessSelection_type& arg__accessSelection,
                     const AlternateAccess& arg__alternateAccess);
 
-            ITU_T_HOLDERH_DECL(accessSelection, accessSelection_type);
+            ITU_T_HOLDERH_DECL(accessSelection, AccessSelection_type);
             ITU_T_HOLDERH_DECL(alternateAccess, AlternateAccess);
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        enum selectAccess_type_enum {
+        enum SelectAccess_type_enum {
 
-            selectAccess_type_null = 0,
-            selectAccess_type_component,
-            selectAccess_type_index,
-            selectAccess_type_indexRange,
-            selectAccess_type_allElements,
+            SelectAccess_type_null = 0,
+            SelectAccess_type_component,
+            SelectAccess_type_index,
+            SelectAccess_type_indexRange,
+            SelectAccess_type_allElements,
         };
 
-        struct selectAccess_type : public ITU_T_CHOICE(selectAccess_type_enum) {
+        struct SelectAccess_type : public ITU_T_CHOICE(SelectAccess_type_enum) {
 
 
-            struct indexRange_type;
+            struct IndexRange_type;
 
-            struct indexRange_type {
+            struct IndexRange_type {
 
-                indexRange_type();
+                IndexRange_type();
 
-                indexRange_type(const Unsigned32& arg__lowIndex,
+                IndexRange_type(const Unsigned32& arg__lowIndex,
                         const Unsigned32& arg__numberOfElements);
 
                 ITU_T_HOLDERH_DECL(lowIndex, Unsigned32);
@@ -3837,21 +3837,21 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            selectAccess_type() : ITU_T_CHOICE(selectAccess_type_enum) () {
+            SelectAccess_type() : ITU_T_CHOICE(SelectAccess_type_enum) () {
             }
 
-            template<typename T > selectAccess_type(boost::shared_ptr< T> vl, selectAccess_type_enum enm) :
-                    ITU_T_CHOICE(selectAccess_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > SelectAccess_type(boost::shared_ptr< T> vl, SelectAccess_type_enum enm) :
+                    ITU_T_CHOICE(SelectAccess_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > selectAccess_type(const T& vl, selectAccess_type_enum enm) :
-                    ITU_T_CHOICE(selectAccess_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > SelectAccess_type(const T& vl, SelectAccess_type_enum enm) :
+                    ITU_T_CHOICE(SelectAccess_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(component, Identifier, selectAccess_type_component); // primitive
-            ITU_T_CHOICES_DECL(index, Unsigned32, selectAccess_type_index); // primitive
-            ITU_T_CHOICEC_DECL(indexRange, indexRange_type, selectAccess_type_indexRange);
-            ITU_T_CHOICES_DECL(allElements, null_type, selectAccess_type_allElements); // primitive
+            ITU_T_CHOICES_DECL(component, Identifier, SelectAccess_type_component); // primitive
+            ITU_T_CHOICES_DECL(index, Unsigned32, SelectAccess_type_index); // primitive
+            ITU_T_CHOICEC_DECL(indexRange, IndexRange_type, SelectAccess_type_indexRange);
+            ITU_T_CHOICES_DECL(allElements, null_type, SelectAccess_type_allElements); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3867,8 +3867,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(AlternateAccessSelection_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICEC_DECL(selectAlternateAccess, selectAlternateAccess_type, AlternateAccessSelection_selectAlternateAccess);
-        ITU_T_CHOICEC_DECL(selectAccess, selectAccess_type, AlternateAccessSelection_selectAccess);
+        ITU_T_CHOICEC_DECL(selectAlternateAccess, SelectAlternateAccess_type, AlternateAccessSelection_selectAlternateAccess);
+        ITU_T_CHOICEC_DECL(selectAccess, SelectAccess_type, AlternateAccessSelection_selectAccess);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3927,8 +3927,8 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< Data > array_type;
-        typedef std::vector< Data > structure_type;
+        typedef std::vector< Data > Array_type;
+        typedef std::vector< Data > Structure_type;
 
         Data() : ITU_T_CHOICE(Data_enum) () {
         }
@@ -3941,8 +3941,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(Data_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICEC_DECL(array, array_type, Data_array);
-        ITU_T_CHOICEC_DECL(structure, structure_type, Data_structure);
+        ITU_T_CHOICEC_DECL(array, Array_type, Data_array);
+        ITU_T_CHOICEC_DECL(structure, Structure_type, Data_structure);
         ITU_T_CHOICES_DECL(boolean, bool, Data_boolean); // primitive
         ITU_T_CHOICES_DECL(bit_string, bitstring_type, Data_bit_string); // primitive
         ITU_T_CHOICES_DECL(integer, int, Data_integer); // primitive
@@ -3960,18 +3960,18 @@ namespace ISO_9506_MMS_1 {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const DataAccessError DataAccessError_object_invalidated;
-    extern const DataAccessError DataAccessError_hardware_fault;
-    extern const DataAccessError DataAccessError_temporarily_unavailable;
-    extern const DataAccessError DataAccessError_object_access_denied;
-    extern const DataAccessError DataAccessError_object_undefined;
-    extern const DataAccessError DataAccessError_invalid_address;
-    extern const DataAccessError DataAccessError_type_unsupported;
-    extern const DataAccessError DataAccessError_type_inconsistent;
-    extern const DataAccessError DataAccessError_object_attribute_inconsistent;
-    extern const DataAccessError DataAccessError_object_access_unsupported;
-    extern const DataAccessError DataAccessError_object_non_existent;
-    extern const DataAccessError DataAccessError_object_value_invalid;
+    extern const DataAccessError dataAccessError_object_invalidated;
+    extern const DataAccessError dataAccessError_hardware_fault;
+    extern const DataAccessError dataAccessError_temporarily_unavailable;
+    extern const DataAccessError dataAccessError_object_access_denied;
+    extern const DataAccessError dataAccessError_object_undefined;
+    extern const DataAccessError dataAccessError_invalid_address;
+    extern const DataAccessError dataAccessError_type_unsupported;
+    extern const DataAccessError dataAccessError_type_inconsistent;
+    extern const DataAccessError dataAccessError_object_attribute_inconsistent;
+    extern const DataAccessError dataAccessError_object_access_unsupported;
+    extern const DataAccessError dataAccessError_object_non_existent;
+    extern const DataAccessError dataAccessError_object_value_invalid;
 
     // choice VariableAccessSpecification
 
@@ -3985,15 +3985,15 @@ namespace ISO_9506_MMS_1 {
     struct VariableAccessSpecification : public ITU_T_CHOICE(VariableAccessSpecification_enum) {
 
 
-        struct listOfVariable_type_sequence_of;
+        struct ListOfVariable_type_sequence_of;
 
-        struct listOfVariable_type_sequence_of {
+        struct ListOfVariable_type_sequence_of {
 
-            listOfVariable_type_sequence_of();
+            ListOfVariable_type_sequence_of();
 
-            listOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification);
+            ListOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification);
 
-            listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
+            ListOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
                     boost::shared_ptr< AlternateAccess> arg__alternateAccess);
 
             ITU_T_HOLDERH_DECL(variableSpecification, VariableSpecification);
@@ -4004,7 +4004,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< listOfVariable_type_sequence_of > listOfVariable_type;
+        typedef std::vector< ListOfVariable_type_sequence_of > ListOfVariable_type;
 
         VariableAccessSpecification() : ITU_T_CHOICE(VariableAccessSpecification_enum) () {
         }
@@ -4017,7 +4017,7 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(VariableAccessSpecification_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICEC_DECL(listOfVariable, listOfVariable_type, VariableAccessSpecification_listOfVariable);
+        ITU_T_CHOICEC_DECL(listOfVariable, ListOfVariable_type, VariableAccessSpecification_listOfVariable);
         ITU_T_CHOICEC_DECL(variableListName, ObjectName, VariableAccessSpecification_variableListName);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4038,13 +4038,13 @@ namespace ISO_9506_MMS_1 {
     struct VariableSpecification : public ITU_T_CHOICE(VariableSpecification_enum) {
 
 
-        struct variableDescription_type;
+        struct VariableDescription_type;
 
-        struct variableDescription_type {
+        struct VariableDescription_type {
 
-            variableDescription_type();
+            VariableDescription_type();
 
-            variableDescription_type(const MMS_Object_Module_1::Address& arg__address,
+            VariableDescription_type(const MMS_Object_Module_1::Address& arg__address,
                     const TypeSpecification& arg__typeSpecification);
 
             ITU_T_HOLDERH_DECL(address, MMS_Object_Module_1::Address);
@@ -4066,7 +4066,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_CHOICEC_DECL(name, ObjectName, VariableSpecification_name);
         ITU_T_CHOICEC_DECL(address, MMS_Object_Module_1::Address, VariableSpecification_address);
-        ITU_T_CHOICEC_DECL(variableDescription, variableDescription_type, VariableSpecification_variableDescription);
+        ITU_T_CHOICEC_DECL(variableDescription, VariableDescription_type, VariableSpecification_variableDescription);
         ITU_T_CHOICEC_DECL(scatteredAccessDescription, ISO_9506_MMS_1A::ScatteredAccessDescription, VariableSpecification_scatteredAccessDescription);
         ITU_T_CHOICES_DECL(invalidated, null_type, VariableSpecification_invalidated); // primitive
 
@@ -4096,18 +4096,18 @@ namespace ISO_9506_MMS_1 {
 
     struct Read_Response {
 
-        typedef std::vector< AccessResult > listOfAccessResult_type;
+        typedef std::vector< AccessResult > ListOfAccessResult_type;
 
 
         Read_Response();
 
-        Read_Response(const listOfAccessResult_type& arg__listOfAccessResult);
+        Read_Response(const ListOfAccessResult_type& arg__listOfAccessResult);
 
         Read_Response(boost::shared_ptr< VariableAccessSpecification> arg__variableAccessSpecification,
-                boost::shared_ptr< listOfAccessResult_type> arg__listOfAccessResult);
+                boost::shared_ptr< ListOfAccessResult_type> arg__listOfAccessResult);
 
         ITU_T_OPTIONAL_DECL(variableAccessSpecification, VariableAccessSpecification);
-        ITU_T_HOLDERH_DECL(listOfAccessResult, listOfAccessResult_type);
+        ITU_T_HOLDERH_DECL(listOfAccessResult, ListOfAccessResult_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4116,16 +4116,16 @@ namespace ISO_9506_MMS_1 {
 
     struct Write_Request {
 
-        typedef std::vector< Data > listOfData_type;
+        typedef std::vector< Data > ListOfData_type;
 
 
         Write_Request();
 
         Write_Request(const VariableAccessSpecification& arg__variableAccessSpecification,
-                const listOfData_type& arg__listOfData);
+                const ListOfData_type& arg__listOfData);
 
         ITU_T_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
-        ITU_T_HOLDERH_DECL(listOfData, listOfData_type);
+        ITU_T_HOLDERH_DECL(listOfData, ListOfData_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4160,16 +4160,16 @@ namespace ISO_9506_MMS_1 {
 
     struct InformationReport {
 
-        typedef std::vector< AccessResult > listOfAccessResult_type;
+        typedef std::vector< AccessResult > ListOfAccessResult_type;
 
 
         InformationReport();
 
         InformationReport(const VariableAccessSpecification& arg__variableAccessSpecification,
-                const listOfAccessResult_type& arg__listOfAccessResult);
+                const ListOfAccessResult_type& arg__listOfAccessResult);
 
         ITU_T_HOLDERH_DECL(variableAccessSpecification, VariableAccessSpecification);
-        ITU_T_HOLDERH_DECL(listOfAccessResult, listOfAccessResult_type);
+        ITU_T_HOLDERH_DECL(listOfAccessResult, ListOfAccessResult_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4250,7 +4250,7 @@ namespace ISO_9506_MMS_1 {
 
     struct DeleteVariableAccess_Request {
 
-        typedef std::vector< ObjectName > listOfName_type;
+        typedef std::vector< ObjectName > ListOfName_type;
 
         static const int scopeOfDelete_specific;
         static const int scopeOfDelete_aa_specific;
@@ -4262,11 +4262,11 @@ namespace ISO_9506_MMS_1 {
         DeleteVariableAccess_Request();
 
         DeleteVariableAccess_Request(boost::shared_ptr< int> arg__scopeOfDelete,
-                boost::shared_ptr< listOfName_type> arg__listOfName,
+                boost::shared_ptr< ListOfName_type> arg__listOfName,
                 boost::shared_ptr< Identifier> arg__domainName);
 
         ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default);
-        ITU_T_OPTIONAL_DECL(listOfName, listOfName_type);
+        ITU_T_OPTIONAL_DECL(listOfName, ListOfName_type);
         ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4291,15 +4291,15 @@ namespace ISO_9506_MMS_1 {
 
     struct DefineNamedVariableList_Request {
 
-        struct listOfVariable_type_sequence_of;
+        struct ListOfVariable_type_sequence_of;
 
-        struct listOfVariable_type_sequence_of {
+        struct ListOfVariable_type_sequence_of {
 
-            listOfVariable_type_sequence_of();
+            ListOfVariable_type_sequence_of();
 
-            listOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification);
+            ListOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification);
 
-            listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
+            ListOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
                     boost::shared_ptr< AlternateAccess> arg__alternateAccess);
 
             ITU_T_HOLDERH_DECL(variableSpecification, VariableSpecification);
@@ -4310,16 +4310,16 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< listOfVariable_type_sequence_of > listOfVariable_type;
+        typedef std::vector< ListOfVariable_type_sequence_of > ListOfVariable_type;
 
 
         DefineNamedVariableList_Request();
 
         DefineNamedVariableList_Request(const ObjectName& arg__variableListName,
-                const listOfVariable_type& arg__listOfVariable);
+                const ListOfVariable_type& arg__listOfVariable);
 
         ITU_T_HOLDERH_DECL(variableListName, ObjectName);
-        ITU_T_HOLDERH_DECL(listOfVariable, listOfVariable_type);
+        ITU_T_HOLDERH_DECL(listOfVariable, ListOfVariable_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4328,15 +4328,15 @@ namespace ISO_9506_MMS_1 {
 
     struct GetNamedVariableListAttributes_Response {
 
-        struct listOfVariable_type_sequence_of;
+        struct ListOfVariable_type_sequence_of;
 
-        struct listOfVariable_type_sequence_of {
+        struct ListOfVariable_type_sequence_of {
 
-            listOfVariable_type_sequence_of();
+            ListOfVariable_type_sequence_of();
 
-            listOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification);
+            ListOfVariable_type_sequence_of(const VariableSpecification& arg__variableSpecification);
 
-            listOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
+            ListOfVariable_type_sequence_of(boost::shared_ptr< VariableSpecification> arg__variableSpecification,
                     boost::shared_ptr< AlternateAccess> arg__alternateAccess);
 
             ITU_T_HOLDERH_DECL(variableSpecification, VariableSpecification);
@@ -4347,20 +4347,20 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< listOfVariable_type_sequence_of > listOfVariable_type;
+        typedef std::vector< ListOfVariable_type_sequence_of > ListOfVariable_type;
 
 
         GetNamedVariableListAttributes_Response();
 
         GetNamedVariableListAttributes_Response(const bool& arg__mmsDeletable,
-                const listOfVariable_type& arg__listOfVariable);
+                const ListOfVariable_type& arg__listOfVariable);
 
         GetNamedVariableListAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
-                boost::shared_ptr< listOfVariable_type> arg__listOfVariable,
+                boost::shared_ptr< ListOfVariable_type> arg__listOfVariable,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
-        ITU_T_HOLDERH_DECL(listOfVariable, listOfVariable_type);
+        ITU_T_HOLDERH_DECL(listOfVariable, ListOfVariable_type);
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4370,7 +4370,7 @@ namespace ISO_9506_MMS_1 {
 
     struct DeleteNamedVariableList_Request {
 
-        typedef std::vector< ObjectName > listOfVariableListName_type;
+        typedef std::vector< ObjectName > ListOfVariableListName_type;
 
         static const int scopeOfDelete_specific;
         static const int scopeOfDelete_aa_specific;
@@ -4382,11 +4382,11 @@ namespace ISO_9506_MMS_1 {
         DeleteNamedVariableList_Request();
 
         DeleteNamedVariableList_Request(boost::shared_ptr< int> arg__scopeOfDelete,
-                boost::shared_ptr< listOfVariableListName_type> arg__listOfVariableListName,
+                boost::shared_ptr< ListOfVariableListName_type> arg__listOfVariableListName,
                 boost::shared_ptr< Identifier> arg__domainName);
 
         ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default);
-        ITU_T_OPTIONAL_DECL(listOfVariableListName, listOfVariableListName_type);
+        ITU_T_OPTIONAL_DECL(listOfVariableListName, ListOfVariableListName_type);
         ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4448,7 +4448,7 @@ namespace ISO_9506_MMS_1 {
 
     struct DeleteNamedType_Request {
 
-        typedef std::vector< ObjectName > listOfTypeName_type;
+        typedef std::vector< ObjectName > ListOfTypeName_type;
 
         static const int scopeOfDelete_specific;
         static const int scopeOfDelete_aa_specific;
@@ -4460,11 +4460,11 @@ namespace ISO_9506_MMS_1 {
         DeleteNamedType_Request();
 
         DeleteNamedType_Request(boost::shared_ptr< int> arg__scopeOfDelete,
-                boost::shared_ptr< listOfTypeName_type> arg__listOfTypeName,
+                boost::shared_ptr< ListOfTypeName_type> arg__listOfTypeName,
                 boost::shared_ptr< Identifier> arg__domainName);
 
         ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default);
-        ITU_T_OPTIONAL_DECL(listOfTypeName, listOfTypeName_type);
+        ITU_T_OPTIONAL_DECL(listOfTypeName, ListOfTypeName_type);
         ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4489,16 +4489,16 @@ namespace ISO_9506_MMS_1 {
 
     struct ExchangeData_Request {
 
-        typedef std::vector< Data > listOfRequestData_type;
+        typedef std::vector< Data > ListOfRequestData_type;
 
 
         ExchangeData_Request();
 
         ExchangeData_Request(const ObjectName& arg__dataExchangeName,
-                const listOfRequestData_type& arg__listOfRequestData);
+                const ListOfRequestData_type& arg__listOfRequestData);
 
         ITU_T_HOLDERH_DECL(dataExchangeName, ObjectName);
-        ITU_T_HOLDERH_DECL(listOfRequestData, listOfRequestData_type);
+        ITU_T_HOLDERH_DECL(listOfRequestData, ListOfRequestData_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4507,14 +4507,14 @@ namespace ISO_9506_MMS_1 {
 
     struct ExchangeData_Response {
 
-        typedef std::vector< Data > listOfResponseData_type;
+        typedef std::vector< Data > ListOfResponseData_type;
 
 
         ExchangeData_Response();
 
-        ExchangeData_Response(const listOfResponseData_type& arg__listOfResponseData);
+        ExchangeData_Response(const ListOfResponseData_type& arg__listOfResponseData);
 
-        ITU_T_HOLDERH_DECL(listOfResponseData, listOfResponseData_type);
+        ITU_T_HOLDERH_DECL(listOfResponseData, ListOfResponseData_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4523,24 +4523,24 @@ namespace ISO_9506_MMS_1 {
 
     struct GetDataExchangeAttributes_Response {
 
-        typedef std::vector< MMS_Object_Module_1::TypeDescription > listOfRequestTypeDescriptions_type;
-        typedef std::vector< MMS_Object_Module_1::TypeDescription > listOfResponseTypeDescriptions_type;
+        typedef std::vector< MMS_Object_Module_1::TypeDescription > ListOfRequestTypeDescriptions_type;
+        typedef std::vector< MMS_Object_Module_1::TypeDescription > ListOfResponseTypeDescriptions_type;
 
         GetDataExchangeAttributes_Response();
 
         GetDataExchangeAttributes_Response(const bool& arg__inUse,
-                const listOfRequestTypeDescriptions_type& arg__listOfRequestTypeDescriptions,
-                const listOfResponseTypeDescriptions_type& arg__listOfResponseTypeDescriptions);
+                const ListOfRequestTypeDescriptions_type& arg__listOfRequestTypeDescriptions,
+                const ListOfResponseTypeDescriptions_type& arg__listOfResponseTypeDescriptions);
 
         GetDataExchangeAttributes_Response(boost::shared_ptr< bool> arg__inUse,
-                boost::shared_ptr< listOfRequestTypeDescriptions_type> arg__listOfRequestTypeDescriptions,
-                boost::shared_ptr< listOfResponseTypeDescriptions_type> arg__listOfResponseTypeDescriptions,
+                boost::shared_ptr< ListOfRequestTypeDescriptions_type> arg__listOfRequestTypeDescriptions,
+                boost::shared_ptr< ListOfResponseTypeDescriptions_type> arg__listOfResponseTypeDescriptions,
                 boost::shared_ptr< Identifier> arg__programInvocation,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
         ITU_T_HOLDERH_DECL(inUse, bool);
-        ITU_T_HOLDERH_DECL(listOfRequestTypeDescriptions, listOfRequestTypeDescriptions_type);
-        ITU_T_HOLDERH_DECL(listOfResponseTypeDescriptions, listOfResponseTypeDescriptions_type);
+        ITU_T_HOLDERH_DECL(listOfRequestTypeDescriptions, ListOfRequestTypeDescriptions_type);
+        ITU_T_HOLDERH_DECL(listOfResponseTypeDescriptions, ListOfResponseTypeDescriptions_type);
         ITU_T_OPTIONAL_DECL(programInvocation, Identifier);
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
@@ -4693,50 +4693,50 @@ namespace ISO_9506_MMS_1 {
 
     struct ReportPoolSemaphoreStatus_Response {
 
-        struct listOfNamedTokens_type_sequence_of;
+        struct ListOfNamedTokens_type_sequence_of;
 
-        enum listOfNamedTokens_type_sequence_of_enum {
+        enum ListOfNamedTokens_type_sequence_of_enum {
 
-            listOfNamedTokens_type_sequence_of_null = 0,
-            listOfNamedTokens_type_sequence_of_freeNamedToken,
-            listOfNamedTokens_type_sequence_of_ownedNamedToken,
-            listOfNamedTokens_type_sequence_of_hungNamedToken,
+            ListOfNamedTokens_type_sequence_of_null = 0,
+            ListOfNamedTokens_type_sequence_of_freeNamedToken,
+            ListOfNamedTokens_type_sequence_of_ownedNamedToken,
+            ListOfNamedTokens_type_sequence_of_hungNamedToken,
         };
 
-        struct listOfNamedTokens_type_sequence_of : public ITU_T_CHOICE(listOfNamedTokens_type_sequence_of_enum) {
+        struct ListOfNamedTokens_type_sequence_of : public ITU_T_CHOICE(ListOfNamedTokens_type_sequence_of_enum) {
 
-            listOfNamedTokens_type_sequence_of() : ITU_T_CHOICE(listOfNamedTokens_type_sequence_of_enum) () {
+            ListOfNamedTokens_type_sequence_of() : ITU_T_CHOICE(ListOfNamedTokens_type_sequence_of_enum) () {
             }
 
-            template<typename T > listOfNamedTokens_type_sequence_of(boost::shared_ptr< T> vl, listOfNamedTokens_type_sequence_of_enum enm) :
-                    ITU_T_CHOICE(listOfNamedTokens_type_sequence_of_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ListOfNamedTokens_type_sequence_of(boost::shared_ptr< T> vl, ListOfNamedTokens_type_sequence_of_enum enm) :
+                    ITU_T_CHOICE(ListOfNamedTokens_type_sequence_of_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > listOfNamedTokens_type_sequence_of(const T& vl, listOfNamedTokens_type_sequence_of_enum enm) :
-                    ITU_T_CHOICE(listOfNamedTokens_type_sequence_of_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ListOfNamedTokens_type_sequence_of(const T& vl, ListOfNamedTokens_type_sequence_of_enum enm) :
+                    ITU_T_CHOICE(ListOfNamedTokens_type_sequence_of_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(freeNamedToken, Identifier, listOfNamedTokens_type_sequence_of_freeNamedToken); // primitive
-            ITU_T_CHOICES_DECL(ownedNamedToken, Identifier, listOfNamedTokens_type_sequence_of_ownedNamedToken); // primitive
-            ITU_T_CHOICES_DECL(hungNamedToken, Identifier, listOfNamedTokens_type_sequence_of_hungNamedToken); // primitive
+            ITU_T_CHOICES_DECL(freeNamedToken, Identifier, ListOfNamedTokens_type_sequence_of_freeNamedToken); // primitive
+            ITU_T_CHOICES_DECL(ownedNamedToken, Identifier, ListOfNamedTokens_type_sequence_of_ownedNamedToken); // primitive
+            ITU_T_CHOICES_DECL(hungNamedToken, Identifier, ListOfNamedTokens_type_sequence_of_hungNamedToken); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
 
 
-        typedef std::vector< listOfNamedTokens_type_sequence_of > listOfNamedTokens_type;
+        typedef std::vector< ListOfNamedTokens_type_sequence_of > ListOfNamedTokens_type;
 
         static const bool moreFollows__default;
 
         ReportPoolSemaphoreStatus_Response();
 
-        ReportPoolSemaphoreStatus_Response(const listOfNamedTokens_type& arg__listOfNamedTokens);
+        ReportPoolSemaphoreStatus_Response(const ListOfNamedTokens_type& arg__listOfNamedTokens);
 
-        ReportPoolSemaphoreStatus_Response(boost::shared_ptr< listOfNamedTokens_type> arg__listOfNamedTokens,
+        ReportPoolSemaphoreStatus_Response(boost::shared_ptr< ListOfNamedTokens_type> arg__listOfNamedTokens,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfNamedTokens, listOfNamedTokens_type);
+        ITU_T_HOLDERH_DECL(listOfNamedTokens, ListOfNamedTokens_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4771,18 +4771,18 @@ namespace ISO_9506_MMS_1 {
 
     struct ReportSemaphoreEntryStatus_Response {
 
-        typedef std::vector< SemaphoreEntry > listOfSemaphoreEntry_type;
+        typedef std::vector< SemaphoreEntry > ListOfSemaphoreEntry_type;
 
         static const bool moreFollows__default;
 
         ReportSemaphoreEntryStatus_Response();
 
-        ReportSemaphoreEntryStatus_Response(const listOfSemaphoreEntry_type& arg__listOfSemaphoreEntry);
+        ReportSemaphoreEntryStatus_Response(const ListOfSemaphoreEntry_type& arg__listOfSemaphoreEntry);
 
-        ReportSemaphoreEntryStatus_Response(boost::shared_ptr< listOfSemaphoreEntry_type> arg__listOfSemaphoreEntry,
+        ReportSemaphoreEntryStatus_Response(boost::shared_ptr< ListOfSemaphoreEntry_type> arg__listOfSemaphoreEntry,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfSemaphoreEntry, listOfSemaphoreEntry_type);
+        ITU_T_HOLDERH_DECL(listOfSemaphoreEntry, ListOfSemaphoreEntry_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4859,7 +4859,7 @@ namespace ISO_9506_MMS_1 {
 
     struct Input_Request {
 
-        typedef std::vector< MMSString > listOfPromptData_type;
+        typedef std::vector< MMSString > ListOfPromptData_type;
 
         static const bool echo__default;
 
@@ -4869,12 +4869,12 @@ namespace ISO_9506_MMS_1 {
 
         Input_Request(boost::shared_ptr< Identifier> arg__operatorStationName,
                 boost::shared_ptr< bool> arg__echo,
-                boost::shared_ptr< listOfPromptData_type> arg__listOfPromptData,
+                boost::shared_ptr< ListOfPromptData_type> arg__listOfPromptData,
                 boost::shared_ptr< Unsigned32> arg__inputTimeOut);
 
         ITU_T_HOLDERH_DECL(operatorStationName, Identifier);
         ITU_T_DEFAULTH_DECL(echo, bool, echo__default);
-        ITU_T_OPTIONAL_DECL(listOfPromptData, listOfPromptData_type);
+        ITU_T_OPTIONAL_DECL(listOfPromptData, ListOfPromptData_type);
         ITU_T_OPTIONAL_DECL(inputTimeOut, Unsigned32);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4884,16 +4884,16 @@ namespace ISO_9506_MMS_1 {
 
     struct Output_Request {
 
-        typedef std::vector< MMSString > listOfOutputData_type;
+        typedef std::vector< MMSString > ListOfOutputData_type;
 
 
         Output_Request();
 
         Output_Request(const Identifier& arg__operatorStationName,
-                const listOfOutputData_type& arg__listOfOutputData);
+                const ListOfOutputData_type& arg__listOfOutputData);
 
         ITU_T_HOLDERH_DECL(operatorStationName, Identifier);
-        ITU_T_HOLDERH_DECL(listOfOutputData, listOfOutputData_type);
+        ITU_T_HOLDERH_DECL(listOfOutputData, ListOfOutputData_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4919,32 +4919,32 @@ namespace ISO_9506_MMS_1 {
 
     struct EventNotification {
 
-        struct actionResult_type;
+        struct ActionResult_type;
 
-        struct actionResult_type {
+        struct ActionResult_type {
 
-            struct successOrFailure_type;
+            struct SuccessOrFailure_type;
 
-            enum successOrFailure_type_enum {
+            enum SuccessOrFailure_type_enum {
 
-                successOrFailure_type_null = 0,
-                successOrFailure_type_success,
-                successOrFailure_type_failure,
+                SuccessOrFailure_type_null = 0,
+                SuccessOrFailure_type_success,
+                SuccessOrFailure_type_failure,
             };
 
-            struct successOrFailure_type : public ITU_T_CHOICE(successOrFailure_type_enum) {
+            struct SuccessOrFailure_type : public ITU_T_CHOICE(SuccessOrFailure_type_enum) {
 
 
-                struct success_type;
-                struct failure_type;
+                struct Success_type;
+                struct Failure_type;
 
-                struct success_type {
+                struct Success_type {
 
-                    success_type();
+                    Success_type();
 
-                    success_type(const ConfirmedServiceResponse& arg__confirmedServiceResponse);
+                    Success_type(const ConfirmedServiceResponse& arg__confirmedServiceResponse);
 
-                    success_type(boost::shared_ptr< ConfirmedServiceResponse> arg__confirmedServiceResponse,
+                    Success_type(boost::shared_ptr< ConfirmedServiceResponse> arg__confirmedServiceResponse,
                             boost::shared_ptr< Response_Detail> arg__cs_Response_Detail);
 
                     ITU_T_HOLDERH_DECL(confirmedServiceResponse, ConfirmedServiceResponse);
@@ -4953,13 +4953,13 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_ARCHIVE_FUNC;
                 };
 
-                struct failure_type {
+                struct Failure_type {
 
-                    failure_type();
+                    Failure_type();
 
-                    failure_type(const ServiceError& arg__serviceError);
+                    Failure_type(const ServiceError& arg__serviceError);
 
-                    failure_type(boost::shared_ptr< Unsigned32> arg__modifierPosition,
+                    Failure_type(boost::shared_ptr< Unsigned32> arg__modifierPosition,
                             boost::shared_ptr< ServiceError> arg__serviceError);
 
                     ITU_T_OPTIONAL_DECL(modifierPosition, Unsigned32);
@@ -4968,31 +4968,31 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_ARCHIVE_FUNC;
                 };
 
-                successOrFailure_type() : ITU_T_CHOICE(successOrFailure_type_enum) () {
+                SuccessOrFailure_type() : ITU_T_CHOICE(SuccessOrFailure_type_enum) () {
                 }
 
-                template<typename T > successOrFailure_type(boost::shared_ptr< T> vl, successOrFailure_type_enum enm) :
-                        ITU_T_CHOICE(successOrFailure_type_enum) (vl, static_cast<int> (enm)) {
+                template<typename T > SuccessOrFailure_type(boost::shared_ptr< T> vl, SuccessOrFailure_type_enum enm) :
+                        ITU_T_CHOICE(SuccessOrFailure_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
-                template<typename T > successOrFailure_type(const T& vl, successOrFailure_type_enum enm) :
-                        ITU_T_CHOICE(successOrFailure_type_enum) (new T(vl), static_cast<int> (enm)) {
+                template<typename T > SuccessOrFailure_type(const T& vl, SuccessOrFailure_type_enum enm) :
+                        ITU_T_CHOICE(SuccessOrFailure_type_enum) (new T(vl), static_cast<int> (enm)) {
                 }
 
-                ITU_T_CHOICEC_DECL(success, success_type, successOrFailure_type_success);
-                ITU_T_CHOICEC_DECL(failure, failure_type, successOrFailure_type_failure);
+                ITU_T_CHOICEC_DECL(success, Success_type, SuccessOrFailure_type_success);
+                ITU_T_CHOICEC_DECL(failure, Failure_type, SuccessOrFailure_type_failure);
 
                 ITU_T_ARCHIVE_FUNC;
             };
 
 
-            actionResult_type();
+            ActionResult_type();
 
-            actionResult_type(const ObjectName& arg__eventActionName,
-                    const successOrFailure_type& arg__successOrFailure);
+            ActionResult_type(const ObjectName& arg__eventActionName,
+                    const SuccessOrFailure_type& arg__successOrFailure);
 
             ITU_T_HOLDERH_DECL(eventActionName, ObjectName);
-            ITU_T_HOLDERH_DECL(successOrFailure, successOrFailure_type);
+            ITU_T_HOLDERH_DECL(successOrFailure, SuccessOrFailure_type);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5013,7 +5013,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__transitionTime,
                 boost::shared_ptr< bool> arg__notificationLost,
                 boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule,
-                boost::shared_ptr< actionResult_type> arg__actionResult);
+                boost::shared_ptr< ActionResult_type> arg__actionResult);
 
         ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
@@ -5022,7 +5022,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_HOLDERH_DECL(transitionTime, MMS_Object_Module_1::EventTime);
         ITU_T_DEFAULTH_DECL(notificationLost, bool, notificationLost__default);
         ITU_T_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
-        ITU_T_OPTIONAL_DECL(actionResult, actionResult_type);
+        ITU_T_OPTIONAL_DECL(actionResult, ActionResult_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5078,13 +5078,13 @@ namespace ISO_9506_MMS_1 {
 
     struct GetAlarmSummary_Request {
 
-        struct severityFilter_type;
+        struct SeverityFilter_type;
 
-        struct severityFilter_type {
+        struct SeverityFilter_type {
 
-            severityFilter_type();
+            SeverityFilter_type();
 
-            severityFilter_type(const Unsigned8& arg__mostSevere,
+            SeverityFilter_type(const Unsigned8& arg__mostSevere,
                     const Unsigned8& arg__leastSevere);
 
             ITU_T_HOLDERH_DECL(mostSevere, Unsigned8);
@@ -5106,13 +5106,13 @@ namespace ISO_9506_MMS_1 {
         GetAlarmSummary_Request(boost::shared_ptr< bool> arg__enrollmentsOnly,
                 boost::shared_ptr< bool> arg__activeAlarmsOnly,
                 boost::shared_ptr< int> arg__acknowledgementFilter,
-                boost::shared_ptr< severityFilter_type> arg__severityFilter,
+                boost::shared_ptr< SeverityFilter_type> arg__severityFilter,
                 boost::shared_ptr< ObjectName> arg__continueAfter);
 
         ITU_T_DEFAULTH_DECL(enrollmentsOnly, bool, enrollmentsOnly__default);
         ITU_T_DEFAULTH_DECL(activeAlarmsOnly, bool, activeAlarmsOnly__default);
         ITU_T_DEFAULTH_DECL(acknowledgementFilter, int, acknowledgementFilter__default);
-        ITU_T_OPTIONAL_DECL(severityFilter, severityFilter_type);
+        ITU_T_OPTIONAL_DECL(severityFilter, SeverityFilter_type);
         ITU_T_OPTIONAL_DECL(continueAfter, ObjectName);
 
         ITU_T_ARCHIVE_FUNC;
@@ -5122,18 +5122,18 @@ namespace ISO_9506_MMS_1 {
 
     struct GetAlarmSummary_Response {
 
-        typedef std::vector< AlarmSummary > listOfAlarmSummary_type;
+        typedef std::vector< AlarmSummary > ListOfAlarmSummary_type;
 
         static const bool moreFollows__default;
 
         GetAlarmSummary_Response();
 
-        GetAlarmSummary_Response(const listOfAlarmSummary_type& arg__listOfAlarmSummary);
+        GetAlarmSummary_Response(const ListOfAlarmSummary_type& arg__listOfAlarmSummary);
 
-        GetAlarmSummary_Response(boost::shared_ptr< listOfAlarmSummary_type> arg__listOfAlarmSummary,
+        GetAlarmSummary_Response(boost::shared_ptr< ListOfAlarmSummary_type> arg__listOfAlarmSummary,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfAlarmSummary, listOfAlarmSummary_type);
+        ITU_T_HOLDERH_DECL(listOfAlarmSummary, ListOfAlarmSummary_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -5209,13 +5209,13 @@ namespace ISO_9506_MMS_1 {
 
     struct GetAlarmEnrollmentSummary_Request {
 
-        struct severityFilter_type;
+        struct SeverityFilter_type;
 
-        struct severityFilter_type {
+        struct SeverityFilter_type {
 
-            severityFilter_type();
+            SeverityFilter_type();
 
-            severityFilter_type(const Unsigned8& arg__mostSevere,
+            SeverityFilter_type(const Unsigned8& arg__mostSevere,
                     const Unsigned8& arg__leastSevere);
 
             ITU_T_HOLDERH_DECL(mostSevere, Unsigned8);
@@ -5237,13 +5237,13 @@ namespace ISO_9506_MMS_1 {
         GetAlarmEnrollmentSummary_Request(boost::shared_ptr< bool> arg__enrollmentsOnly,
                 boost::shared_ptr< bool> arg__activeAlarmsOnly,
                 boost::shared_ptr< int> arg__acknowledgementFilter,
-                boost::shared_ptr< severityFilter_type> arg__severityFilter,
+                boost::shared_ptr< SeverityFilter_type> arg__severityFilter,
                 boost::shared_ptr< ObjectName> arg__continueAfter);
 
         ITU_T_DEFAULTH_DECL(enrollmentsOnly, bool, enrollmentsOnly__default);
         ITU_T_DEFAULTH_DECL(activeAlarmsOnly, bool, activeAlarmsOnly__default);
         ITU_T_DEFAULTH_DECL(acknowledgementFilter, int, acknowledgementFilter__default);
-        ITU_T_OPTIONAL_DECL(severityFilter, severityFilter_type);
+        ITU_T_OPTIONAL_DECL(severityFilter, SeverityFilter_type);
         ITU_T_OPTIONAL_DECL(continueAfter, ObjectName);
 
         ITU_T_ARCHIVE_FUNC;
@@ -5253,18 +5253,18 @@ namespace ISO_9506_MMS_1 {
 
     struct GetAlarmEnrollmentSummary_Response {
 
-        typedef std::vector< AlarmEnrollmentSummary > listOfAlarmEnrollmentSummary_type;
+        typedef std::vector< AlarmEnrollmentSummary > ListOfAlarmEnrollmentSummary_type;
 
         static const bool moreFollows__default;
 
         GetAlarmEnrollmentSummary_Response();
 
-        GetAlarmEnrollmentSummary_Response(const listOfAlarmEnrollmentSummary_type& arg__listOfAlarmEnrollmentSummary);
+        GetAlarmEnrollmentSummary_Response(const ListOfAlarmEnrollmentSummary_type& arg__listOfAlarmEnrollmentSummary);
 
-        GetAlarmEnrollmentSummary_Response(boost::shared_ptr< listOfAlarmEnrollmentSummary_type> arg__listOfAlarmEnrollmentSummary,
+        GetAlarmEnrollmentSummary_Response(boost::shared_ptr< ListOfAlarmEnrollmentSummary_type> arg__listOfAlarmEnrollmentSummary,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfAlarmEnrollmentSummary, listOfAlarmEnrollmentSummary_type);
+        ITU_T_HOLDERH_DECL(listOfAlarmEnrollmentSummary, ListOfAlarmEnrollmentSummary_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -5411,7 +5411,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ObjectName > specific_type;
+        typedef std::vector< ObjectName > Specific_type;
 
         DeleteEventCondition_Request() : ITU_T_CHOICE(DeleteEventCondition_Request_enum) () {
         }
@@ -5424,7 +5424,7 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(DeleteEventCondition_Request_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICEC_DECL(specific, specific_type, DeleteEventCondition_Request_specific);
+        ITU_T_CHOICEC_DECL(specific, Specific_type, DeleteEventCondition_Request_specific);
         ITU_T_CHOICES_DECL(aa_specific, null_type, DeleteEventCondition_Request_aa_specific); // primitive
         ITU_T_CHOICES_DECL(domain, Identifier, DeleteEventCondition_Request_domain); // primitive
         ITU_T_CHOICES_DECL(vmd, null_type, DeleteEventCondition_Request_vmd); // primitive
@@ -5436,30 +5436,30 @@ namespace ISO_9506_MMS_1 {
 
     struct GetEventConditionAttributes_Response {
 
-        struct monitoredVariable_type;
+        struct MonitoredVariable_type;
 
-        enum monitoredVariable_type_enum {
+        enum MonitoredVariable_type_enum {
 
-            monitoredVariable_type_null = 0,
-            monitoredVariable_type_variableReference,
-            monitoredVariable_type_undefined,
+            MonitoredVariable_type_null = 0,
+            MonitoredVariable_type_variableReference,
+            MonitoredVariable_type_undefined,
         };
 
-        struct monitoredVariable_type : public ITU_T_CHOICE(monitoredVariable_type_enum) {
+        struct MonitoredVariable_type : public ITU_T_CHOICE(MonitoredVariable_type_enum) {
 
-            monitoredVariable_type() : ITU_T_CHOICE(monitoredVariable_type_enum) () {
+            MonitoredVariable_type() : ITU_T_CHOICE(MonitoredVariable_type_enum) () {
             }
 
-            template<typename T > monitoredVariable_type(boost::shared_ptr< T> vl, monitoredVariable_type_enum enm) :
-                    ITU_T_CHOICE(monitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > MonitoredVariable_type(boost::shared_ptr< T> vl, MonitoredVariable_type_enum enm) :
+                    ITU_T_CHOICE(MonitoredVariable_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > monitoredVariable_type(const T& vl, monitoredVariable_type_enum enm) :
-                    ITU_T_CHOICE(monitoredVariable_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > MonitoredVariable_type(const T& vl, MonitoredVariable_type_enum enm) :
+                    ITU_T_CHOICE(MonitoredVariable_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICEC_DECL(variableReference, VariableSpecification, monitoredVariable_type_variableReference);
-            ITU_T_CHOICES_DECL(undefined, null_type, monitoredVariable_type_undefined); // primitive
+            ITU_T_CHOICEC_DECL(variableReference, VariableSpecification, MonitoredVariable_type_variableReference);
+            ITU_T_CHOICES_DECL(undefined, null_type, MonitoredVariable_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5478,7 +5478,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
                 boost::shared_ptr< Unsigned8> arg__severity,
                 boost::shared_ptr< bool> arg__alarmSummaryReports,
-                boost::shared_ptr< monitoredVariable_type> arg__monitoredVariable,
+                boost::shared_ptr< MonitoredVariable_type> arg__monitoredVariable,
                 boost::shared_ptr< Unsigned32> arg__evaluationInterval,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
@@ -5487,7 +5487,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
         ITU_T_DEFAULTH_DECL(severity, Unsigned8, severity__default);
         ITU_T_DEFAULTH_DECL(alarmSummaryReports, bool, alarmSummaryReports__default);
-        ITU_T_OPTIONAL_DECL(monitoredVariable, monitoredVariable_type);
+        ITU_T_OPTIONAL_DECL(monitoredVariable, MonitoredVariable_type);
         ITU_T_OPTIONAL_DECL(evaluationInterval, Unsigned32);
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
@@ -5498,79 +5498,79 @@ namespace ISO_9506_MMS_1 {
 
     struct CS_GetEventConditionAttributes_Response {
 
-        struct groupPriorityOverride_type;
-        struct displayEnhancement_type;
+        struct GroupPriorityOverride_type;
+        struct DisplayEnhancement_type;
 
-        enum groupPriorityOverride_type_enum {
+        enum GroupPriorityOverride_type_enum {
 
-            groupPriorityOverride_type_null = 0,
-            groupPriorityOverride_type_priority,
-            groupPriorityOverride_type_undefined,
+            GroupPriorityOverride_type_null = 0,
+            GroupPriorityOverride_type_priority,
+            GroupPriorityOverride_type_undefined,
         };
 
-        struct groupPriorityOverride_type : public ITU_T_CHOICE(groupPriorityOverride_type_enum) {
+        struct GroupPriorityOverride_type : public ITU_T_CHOICE(GroupPriorityOverride_type_enum) {
 
-            groupPriorityOverride_type() : ITU_T_CHOICE(groupPriorityOverride_type_enum) () {
+            GroupPriorityOverride_type() : ITU_T_CHOICE(GroupPriorityOverride_type_enum) () {
             }
 
-            template<typename T > groupPriorityOverride_type(boost::shared_ptr< T> vl, groupPriorityOverride_type_enum enm) :
-                    ITU_T_CHOICE(groupPriorityOverride_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > GroupPriorityOverride_type(boost::shared_ptr< T> vl, GroupPriorityOverride_type_enum enm) :
+                    ITU_T_CHOICE(GroupPriorityOverride_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > groupPriorityOverride_type(const T& vl, groupPriorityOverride_type_enum enm) :
-                    ITU_T_CHOICE(groupPriorityOverride_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > GroupPriorityOverride_type(const T& vl, GroupPriorityOverride_type_enum enm) :
+                    ITU_T_CHOICE(GroupPriorityOverride_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, groupPriorityOverride_type_priority); // primitive
-            ITU_T_CHOICES_DECL(undefined, null_type, groupPriorityOverride_type_undefined); // primitive
+            ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, GroupPriorityOverride_type_priority); // primitive
+            ITU_T_CHOICES_DECL(undefined, null_type, GroupPriorityOverride_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        enum displayEnhancement_type_enum {
+        enum DisplayEnhancement_type_enum {
 
-            displayEnhancement_type_null = 0,
-            displayEnhancement_type_string,
-            displayEnhancement_type_index,
-            displayEnhancement_type_noEnhancement,
+            DisplayEnhancement_type_null = 0,
+            DisplayEnhancement_type_string,
+            DisplayEnhancement_type_index,
+            DisplayEnhancement_type_noEnhancement,
         };
 
-        struct displayEnhancement_type : public ITU_T_CHOICE(displayEnhancement_type_enum) {
+        struct DisplayEnhancement_type : public ITU_T_CHOICE(DisplayEnhancement_type_enum) {
 
-            displayEnhancement_type() : ITU_T_CHOICE(displayEnhancement_type_enum) () {
+            DisplayEnhancement_type() : ITU_T_CHOICE(DisplayEnhancement_type_enum) () {
             }
 
-            template<typename T > displayEnhancement_type(boost::shared_ptr< T> vl, displayEnhancement_type_enum enm) :
-                    ITU_T_CHOICE(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > DisplayEnhancement_type(boost::shared_ptr< T> vl, DisplayEnhancement_type_enum enm) :
+                    ITU_T_CHOICE(DisplayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > displayEnhancement_type(const T& vl, displayEnhancement_type_enum enm) :
-                    ITU_T_CHOICE(displayEnhancement_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > DisplayEnhancement_type(const T& vl, DisplayEnhancement_type_enum enm) :
+                    ITU_T_CHOICE(DisplayEnhancement_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, displayEnhancement_type_string); // primitive
-            ITU_T_CHOICES_DECL(index, int, displayEnhancement_type_index); // primitive
-            ITU_T_CHOICES_DECL(noEnhancement, null_type, displayEnhancement_type_noEnhancement); // primitive
+            ITU_T_CHOICES_DECL(string, visiblestring_type, DisplayEnhancement_type_string); // primitive
+            ITU_T_CHOICES_DECL(index, int, DisplayEnhancement_type_index); // primitive
+            ITU_T_CHOICES_DECL(noEnhancement, null_type, DisplayEnhancement_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
 
 
-        typedef std::vector< ObjectName > listOfReferencingECL_type;
+        typedef std::vector< ObjectName > ListOfReferencingECL_type;
 
 
         CS_GetEventConditionAttributes_Response();
 
-        CS_GetEventConditionAttributes_Response(const displayEnhancement_type& arg__displayEnhancement);
+        CS_GetEventConditionAttributes_Response(const DisplayEnhancement_type& arg__displayEnhancement);
 
-        CS_GetEventConditionAttributes_Response(boost::shared_ptr< groupPriorityOverride_type> arg__groupPriorityOverride,
-                boost::shared_ptr< listOfReferencingECL_type> arg__listOfReferencingECL,
-                boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement);
+        CS_GetEventConditionAttributes_Response(boost::shared_ptr< GroupPriorityOverride_type> arg__groupPriorityOverride,
+                boost::shared_ptr< ListOfReferencingECL_type> arg__listOfReferencingECL,
+                boost::shared_ptr< DisplayEnhancement_type> arg__displayEnhancement);
 
-        ITU_T_OPTIONAL_DECL(groupPriorityOverride, groupPriorityOverride_type);
-        ITU_T_OPTIONAL_DECL(listOfReferencingECL, listOfReferencingECL_type);
-        ITU_T_HOLDERH_DECL(displayEnhancement, displayEnhancement_type);
+        ITU_T_OPTIONAL_DECL(groupPriorityOverride, GroupPriorityOverride_type);
+        ITU_T_OPTIONAL_DECL(listOfReferencingECL, ListOfReferencingECL_type);
+        ITU_T_HOLDERH_DECL(displayEnhancement, DisplayEnhancement_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5626,32 +5626,32 @@ namespace ISO_9506_MMS_1 {
 
     struct CS_AlterEventConditionMonitoring_Request {
 
-        struct changeDisplay_type;
+        struct ChangeDisplay_type;
 
-        enum changeDisplay_type_enum {
+        enum ChangeDisplay_type_enum {
 
-            changeDisplay_type_null = 0,
-            changeDisplay_type_string,
-            changeDisplay_type_index,
-            changeDisplay_type_noEnhancement,
+            ChangeDisplay_type_null = 0,
+            ChangeDisplay_type_string,
+            ChangeDisplay_type_index,
+            ChangeDisplay_type_noEnhancement,
         };
 
-        struct changeDisplay_type : public ITU_T_CHOICE(changeDisplay_type_enum) {
+        struct ChangeDisplay_type : public ITU_T_CHOICE(ChangeDisplay_type_enum) {
 
-            changeDisplay_type() : ITU_T_CHOICE(changeDisplay_type_enum) () {
+            ChangeDisplay_type() : ITU_T_CHOICE(ChangeDisplay_type_enum) () {
             }
 
-            template<typename T > changeDisplay_type(boost::shared_ptr< T> vl, changeDisplay_type_enum enm) :
-                    ITU_T_CHOICE(changeDisplay_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ChangeDisplay_type(boost::shared_ptr< T> vl, ChangeDisplay_type_enum enm) :
+                    ITU_T_CHOICE(ChangeDisplay_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > changeDisplay_type(const T& vl, changeDisplay_type_enum enm) :
-                    ITU_T_CHOICE(changeDisplay_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ChangeDisplay_type(const T& vl, ChangeDisplay_type_enum enm) :
+                    ITU_T_CHOICE(ChangeDisplay_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, changeDisplay_type_string); // primitive
-            ITU_T_CHOICES_DECL(index, int, changeDisplay_type_index); // primitive
-            ITU_T_CHOICES_DECL(noEnhancement, null_type, changeDisplay_type_noEnhancement); // primitive
+            ITU_T_CHOICES_DECL(string, visiblestring_type, ChangeDisplay_type_string); // primitive
+            ITU_T_CHOICES_DECL(index, int, ChangeDisplay_type_index); // primitive
+            ITU_T_CHOICES_DECL(noEnhancement, null_type, ChangeDisplay_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5659,9 +5659,9 @@ namespace ISO_9506_MMS_1 {
 
         CS_AlterEventConditionMonitoring_Request();
 
-        CS_AlterEventConditionMonitoring_Request(boost::shared_ptr< changeDisplay_type> arg__changeDisplay);
+        CS_AlterEventConditionMonitoring_Request(boost::shared_ptr< ChangeDisplay_type> arg__changeDisplay);
 
-        ITU_T_OPTIONAL_DECL(changeDisplay, changeDisplay_type);
+        ITU_T_OPTIONAL_DECL(changeDisplay, ChangeDisplay_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5670,7 +5670,7 @@ namespace ISO_9506_MMS_1 {
 
     struct DefineEventAction_Request {
 
-        typedef std::vector< MMS_Object_Module_1::Modifier > listOfModifier_type;
+        typedef std::vector< MMS_Object_Module_1::Modifier > ListOfModifier_type;
 
         DefineEventAction_Request();
 
@@ -5678,12 +5678,12 @@ namespace ISO_9506_MMS_1 {
                 const ConfirmedServiceRequest& arg__confirmedServiceRequest);
 
         DefineEventAction_Request(boost::shared_ptr< ObjectName> arg__eventActionName,
-                boost::shared_ptr< listOfModifier_type> arg__listOfModifier,
+                boost::shared_ptr< ListOfModifier_type> arg__listOfModifier,
                 boost::shared_ptr< ConfirmedServiceRequest> arg__confirmedServiceRequest,
                 boost::shared_ptr< Request_Detail> arg__cs_extension);
 
         ITU_T_HOLDERH_DECL(eventActionName, ObjectName);
-        ITU_T_OPTIONAL_DECL(listOfModifier, listOfModifier_type);
+        ITU_T_OPTIONAL_DECL(listOfModifier, ListOfModifier_type);
         ITU_T_HOLDERH_DECL(confirmedServiceRequest, ConfirmedServiceRequest);
         ITU_T_OPTIONAL_DECL(cs_extension, Request_Detail);
 
@@ -5705,7 +5705,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ObjectName > specific_type;
+        typedef std::vector< ObjectName > Specific_type;
 
         DeleteEventAction_Request() : ITU_T_CHOICE(DeleteEventAction_Request_enum) () {
         }
@@ -5718,7 +5718,7 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(DeleteEventAction_Request_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICEC_DECL(specific, specific_type, DeleteEventAction_Request_specific);
+        ITU_T_CHOICEC_DECL(specific, Specific_type, DeleteEventAction_Request_specific);
         ITU_T_CHOICES_DECL(aa_specific, null_type, DeleteEventAction_Request_aa_specific); // primitive
         ITU_T_CHOICES_DECL(domain, Identifier, DeleteEventAction_Request_domain); // primitive
         ITU_T_CHOICES_DECL(vmd, null_type, DeleteEventAction_Request_vmd); // primitive
@@ -5730,22 +5730,22 @@ namespace ISO_9506_MMS_1 {
 
     struct GetEventActionAttributes_Response {
 
-        typedef std::vector< MMS_Object_Module_1::Modifier > listOfModifier_type;
+        typedef std::vector< MMS_Object_Module_1::Modifier > ListOfModifier_type;
         static const bool mmsDeletable__default;
 
         GetEventActionAttributes_Response();
 
-        GetEventActionAttributes_Response(const listOfModifier_type& arg__listOfModifier,
+        GetEventActionAttributes_Response(const ListOfModifier_type& arg__listOfModifier,
                 const ConfirmedServiceRequest& arg__confirmedServiceRequest);
 
         GetEventActionAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
-                boost::shared_ptr< listOfModifier_type> arg__listOfModifier,
+                boost::shared_ptr< ListOfModifier_type> arg__listOfModifier,
                 boost::shared_ptr< ConfirmedServiceRequest> arg__confirmedServiceRequest,
                 boost::shared_ptr< Request_Detail> arg__cs_extension,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
         ITU_T_DEFAULTH_DECL(mmsDeletable, bool, mmsDeletable__default);
-        ITU_T_HOLDERH_DECL(listOfModifier, listOfModifier_type);
+        ITU_T_HOLDERH_DECL(listOfModifier, ListOfModifier_type);
         ITU_T_HOLDERH_DECL(confirmedServiceRequest, ConfirmedServiceRequest);
         ITU_T_OPTIONAL_DECL(cs_extension, Request_Detail);
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
@@ -5825,7 +5825,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< ObjectName > specific_type;
+        typedef std::vector< ObjectName > Specific_type;
 
         DeleteEventEnrollment_Request() : ITU_T_CHOICE(DeleteEventEnrollment_Request_enum) () {
         }
@@ -5838,7 +5838,7 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(DeleteEventEnrollment_Request_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICEC_DECL(specific, specific_type, DeleteEventEnrollment_Request_specific);
+        ITU_T_CHOICEC_DECL(specific, Specific_type, DeleteEventEnrollment_Request_specific);
         ITU_T_CHOICEC_DECL(ec, ObjectName, DeleteEventEnrollment_Request_ec);
         ITU_T_CHOICEC_DECL(ea, ObjectName, DeleteEventEnrollment_Request_ea);
 
@@ -5849,7 +5849,7 @@ namespace ISO_9506_MMS_1 {
 
     struct GetEventEnrollmentAttributes_Request {
 
-        typedef std::vector< ObjectName > eventEnrollmentNames_type;
+        typedef std::vector< ObjectName > EventEnrollmentNames_type;
 
         static const int scopeOfRequest_specific;
         static const int scopeOfRequest_client;
@@ -5861,14 +5861,14 @@ namespace ISO_9506_MMS_1 {
         GetEventEnrollmentAttributes_Request();
 
         GetEventEnrollmentAttributes_Request(boost::shared_ptr< int> arg__scopeOfRequest,
-                boost::shared_ptr< eventEnrollmentNames_type> arg__eventEnrollmentNames,
+                boost::shared_ptr< EventEnrollmentNames_type> arg__eventEnrollmentNames,
                 boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
                 boost::shared_ptr< ObjectName> arg__eventConditionName,
                 boost::shared_ptr< ObjectName> arg__eventActionName,
                 boost::shared_ptr< ObjectName> arg__continueAfter);
 
         ITU_T_DEFAULTH_DECL(scopeOfRequest, int, scopeOfRequest__default);
-        ITU_T_OPTIONAL_DECL(eventEnrollmentNames, eventEnrollmentNames_type);
+        ITU_T_OPTIONAL_DECL(eventEnrollmentNames, EventEnrollmentNames_type);
         ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
         ITU_T_OPTIONAL_DECL(eventConditionName, ObjectName);
         ITU_T_OPTIONAL_DECL(eventActionName, ObjectName);
@@ -5881,18 +5881,18 @@ namespace ISO_9506_MMS_1 {
 
     struct GetEventEnrollmentAttributes_Response {
 
-        typedef std::vector< EEAttributes > listOfEEAttributes_type;
+        typedef std::vector< EEAttributes > ListOfEEAttributes_type;
 
         static const bool moreFollows__default;
 
         GetEventEnrollmentAttributes_Response();
 
-        GetEventEnrollmentAttributes_Response(const listOfEEAttributes_type& arg__listOfEEAttributes);
+        GetEventEnrollmentAttributes_Response(const ListOfEEAttributes_type& arg__listOfEEAttributes);
 
-        GetEventEnrollmentAttributes_Response(boost::shared_ptr< listOfEEAttributes_type> arg__listOfEEAttributes,
+        GetEventEnrollmentAttributes_Response(boost::shared_ptr< ListOfEEAttributes_type> arg__listOfEEAttributes,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfEEAttributes, listOfEEAttributes_type);
+        ITU_T_HOLDERH_DECL(listOfEEAttributes, ListOfEEAttributes_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -5902,86 +5902,86 @@ namespace ISO_9506_MMS_1 {
 
     struct EEAttributes {
 
-        struct eventConditionName_type;
-        struct eventActionName_type;
-        struct displayEnhancement_type;
+        struct EventConditionName_type;
+        struct EventActionName_type;
+        struct DisplayEnhancement_type;
 
-        enum eventConditionName_type_enum {
+        enum EventConditionName_type_enum {
 
-            eventConditionName_type_null = 0,
-            eventConditionName_type_eventCondition,
-            eventConditionName_type_undefined,
+            EventConditionName_type_null = 0,
+            EventConditionName_type_eventCondition,
+            EventConditionName_type_undefined,
         };
 
-        struct eventConditionName_type : public ITU_T_CHOICE(eventConditionName_type_enum) {
+        struct EventConditionName_type : public ITU_T_CHOICE(EventConditionName_type_enum) {
 
-            eventConditionName_type() : ITU_T_CHOICE(eventConditionName_type_enum) () {
+            EventConditionName_type() : ITU_T_CHOICE(EventConditionName_type_enum) () {
             }
 
-            template<typename T > eventConditionName_type(boost::shared_ptr< T> vl, eventConditionName_type_enum enm) :
-                    ITU_T_CHOICE(eventConditionName_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > EventConditionName_type(boost::shared_ptr< T> vl, EventConditionName_type_enum enm) :
+                    ITU_T_CHOICE(EventConditionName_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > eventConditionName_type(const T& vl, eventConditionName_type_enum enm) :
-                    ITU_T_CHOICE(eventConditionName_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > EventConditionName_type(const T& vl, EventConditionName_type_enum enm) :
+                    ITU_T_CHOICE(EventConditionName_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICEC_DECL(eventCondition, ObjectName, eventConditionName_type_eventCondition);
-            ITU_T_CHOICES_DECL(undefined, null_type, eventConditionName_type_undefined); // primitive
+            ITU_T_CHOICEC_DECL(eventCondition, ObjectName, EventConditionName_type_eventCondition);
+            ITU_T_CHOICES_DECL(undefined, null_type, EventConditionName_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        enum eventActionName_type_enum {
+        enum EventActionName_type_enum {
 
-            eventActionName_type_null = 0,
-            eventActionName_type_eventAction,
-            eventActionName_type_undefined,
+            EventActionName_type_null = 0,
+            EventActionName_type_eventAction,
+            EventActionName_type_undefined,
         };
 
-        struct eventActionName_type : public ITU_T_CHOICE(eventActionName_type_enum) {
+        struct EventActionName_type : public ITU_T_CHOICE(EventActionName_type_enum) {
 
-            eventActionName_type() : ITU_T_CHOICE(eventActionName_type_enum) () {
+            EventActionName_type() : ITU_T_CHOICE(EventActionName_type_enum) () {
             }
 
-            template<typename T > eventActionName_type(boost::shared_ptr< T> vl, eventActionName_type_enum enm) :
-                    ITU_T_CHOICE(eventActionName_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > EventActionName_type(boost::shared_ptr< T> vl, EventActionName_type_enum enm) :
+                    ITU_T_CHOICE(EventActionName_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > eventActionName_type(const T& vl, eventActionName_type_enum enm) :
-                    ITU_T_CHOICE(eventActionName_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > EventActionName_type(const T& vl, EventActionName_type_enum enm) :
+                    ITU_T_CHOICE(EventActionName_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICEC_DECL(eventAction, ObjectName, eventActionName_type_eventAction);
-            ITU_T_CHOICES_DECL(undefined, null_type, eventActionName_type_undefined); // primitive
+            ITU_T_CHOICEC_DECL(eventAction, ObjectName, EventActionName_type_eventAction);
+            ITU_T_CHOICES_DECL(undefined, null_type, EventActionName_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        enum displayEnhancement_type_enum {
+        enum DisplayEnhancement_type_enum {
 
-            displayEnhancement_type_null = 0,
-            displayEnhancement_type_string,
-            displayEnhancement_type_index,
-            displayEnhancement_type_noEnhancement,
+            DisplayEnhancement_type_null = 0,
+            DisplayEnhancement_type_string,
+            DisplayEnhancement_type_index,
+            DisplayEnhancement_type_noEnhancement,
         };
 
-        struct displayEnhancement_type : public ITU_T_CHOICE(displayEnhancement_type_enum) {
+        struct DisplayEnhancement_type : public ITU_T_CHOICE(DisplayEnhancement_type_enum) {
 
-            displayEnhancement_type() : ITU_T_CHOICE(displayEnhancement_type_enum) () {
+            DisplayEnhancement_type() : ITU_T_CHOICE(DisplayEnhancement_type_enum) () {
             }
 
-            template<typename T > displayEnhancement_type(boost::shared_ptr< T> vl, displayEnhancement_type_enum enm) :
-                    ITU_T_CHOICE(displayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > DisplayEnhancement_type(boost::shared_ptr< T> vl, DisplayEnhancement_type_enum enm) :
+                    ITU_T_CHOICE(DisplayEnhancement_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > displayEnhancement_type(const T& vl, displayEnhancement_type_enum enm) :
-                    ITU_T_CHOICE(displayEnhancement_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > DisplayEnhancement_type(const T& vl, DisplayEnhancement_type_enum enm) :
+                    ITU_T_CHOICE(DisplayEnhancement_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, displayEnhancement_type_string); // primitive
-            ITU_T_CHOICES_DECL(index, int, displayEnhancement_type_index); // primitive
-            ITU_T_CHOICES_DECL(noEnhancement, null_type, displayEnhancement_type_noEnhancement); // primitive
+            ITU_T_CHOICES_DECL(string, visiblestring_type, DisplayEnhancement_type_string); // primitive
+            ITU_T_CHOICES_DECL(index, int, DisplayEnhancement_type_index); // primitive
+            ITU_T_CHOICES_DECL(noEnhancement, null_type, DisplayEnhancement_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5992,31 +5992,31 @@ namespace ISO_9506_MMS_1 {
         EEAttributes();
 
         EEAttributes(const ObjectName& arg__eventEnrollmentName,
-                const eventConditionName_type& arg__eventConditionName,
+                const EventConditionName_type& arg__eventConditionName,
                 const MMS_Object_Module_1::EE_Class& arg__enrollmentClass,
-                const displayEnhancement_type& arg__displayEnhancement);
+                const DisplayEnhancement_type& arg__displayEnhancement);
 
         EEAttributes(boost::shared_ptr< ObjectName> arg__eventEnrollmentName,
-                boost::shared_ptr< eventConditionName_type> arg__eventConditionName,
-                boost::shared_ptr< eventActionName_type> arg__eventActionName,
+                boost::shared_ptr< EventConditionName_type> arg__eventConditionName,
+                boost::shared_ptr< EventActionName_type> arg__eventActionName,
                 boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
                 boost::shared_ptr< bool> arg__mmsDeletable,
                 boost::shared_ptr< MMS_Object_Module_1::EE_Class> arg__enrollmentClass,
                 boost::shared_ptr< MMS_Object_Module_1::EE_Duration> arg__duration,
                 boost::shared_ptr< Unsigned32> arg__invokeID,
                 boost::shared_ptr< Unsigned32> arg__remainingAcceptableDelay,
-                boost::shared_ptr< displayEnhancement_type> arg__displayEnhancement);
+                boost::shared_ptr< DisplayEnhancement_type> arg__displayEnhancement);
 
         ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
-        ITU_T_HOLDERH_DECL(eventConditionName, eventConditionName_type);
-        ITU_T_OPTIONAL_DECL(eventActionName, eventActionName_type);
+        ITU_T_HOLDERH_DECL(eventConditionName, EventConditionName_type);
+        ITU_T_OPTIONAL_DECL(eventActionName, EventActionName_type);
         ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
         ITU_T_DEFAULTH_DECL(mmsDeletable, bool, mmsDeletable__default);
         ITU_T_HOLDERH_DECL(enrollmentClass, MMS_Object_Module_1::EE_Class);
         ITU_T_DEFAULTH_DECL(duration, MMS_Object_Module_1::EE_Duration, duration__default);
         ITU_T_OPTIONAL_DECL(invokeID, Unsigned32);
         ITU_T_OPTIONAL_DECL(remainingAcceptableDelay, Unsigned32);
-        ITU_T_HOLDERH_DECL(displayEnhancement, displayEnhancement_type);
+        ITU_T_HOLDERH_DECL(displayEnhancement, DisplayEnhancement_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6071,30 +6071,30 @@ namespace ISO_9506_MMS_1 {
 
     struct AlterEventEnrollment_Response {
 
-        struct currentState_type;
+        struct CurrentState_type;
 
-        enum currentState_type_enum {
+        enum CurrentState_type_enum {
 
-            currentState_type_null = 0,
-            currentState_type_state,
-            currentState_type_undefined,
+            CurrentState_type_null = 0,
+            CurrentState_type_state,
+            CurrentState_type_undefined,
         };
 
-        struct currentState_type : public ITU_T_CHOICE(currentState_type_enum) {
+        struct CurrentState_type : public ITU_T_CHOICE(CurrentState_type_enum) {
 
-            currentState_type() : ITU_T_CHOICE(currentState_type_enum) () {
+            CurrentState_type() : ITU_T_CHOICE(CurrentState_type_enum) () {
             }
 
-            template<typename T > currentState_type(boost::shared_ptr< T> vl, currentState_type_enum enm) :
-                    ITU_T_CHOICE(currentState_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > CurrentState_type(boost::shared_ptr< T> vl, CurrentState_type_enum enm) :
+                    ITU_T_CHOICE(CurrentState_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > currentState_type(const T& vl, currentState_type_enum enm) :
-                    ITU_T_CHOICE(currentState_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > CurrentState_type(const T& vl, CurrentState_type_enum enm) :
+                    ITU_T_CHOICE(CurrentState_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(state, EE_State, currentState_type_state); // primitive
-            ITU_T_CHOICES_DECL(undefined, null_type, currentState_type_undefined); // primitive
+            ITU_T_CHOICES_DECL(state, EE_State, CurrentState_type_state); // primitive
+            ITU_T_CHOICES_DECL(undefined, null_type, CurrentState_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -6102,10 +6102,10 @@ namespace ISO_9506_MMS_1 {
 
         AlterEventEnrollment_Response();
 
-        AlterEventEnrollment_Response(const currentState_type& arg__currentState,
+        AlterEventEnrollment_Response(const CurrentState_type& arg__currentState,
                 const MMS_Object_Module_1::EventTime& arg__transitionTime);
 
-        ITU_T_HOLDERH_DECL(currentState, currentState_type);
+        ITU_T_HOLDERH_DECL(currentState, CurrentState_type);
         ITU_T_HOLDERH_DECL(transitionTime, MMS_Object_Module_1::EventTime);
 
         ITU_T_ARCHIVE_FUNC;
@@ -6115,32 +6115,32 @@ namespace ISO_9506_MMS_1 {
 
     struct CS_AlterEventEnrollment_Request {
 
-        struct changeDisplay_type;
+        struct ChangeDisplay_type;
 
-        enum changeDisplay_type_enum {
+        enum ChangeDisplay_type_enum {
 
-            changeDisplay_type_null = 0,
-            changeDisplay_type_string,
-            changeDisplay_type_index,
-            changeDisplay_type_noEnhancement,
+            ChangeDisplay_type_null = 0,
+            ChangeDisplay_type_string,
+            ChangeDisplay_type_index,
+            ChangeDisplay_type_noEnhancement,
         };
 
-        struct changeDisplay_type : public ITU_T_CHOICE(changeDisplay_type_enum) {
+        struct ChangeDisplay_type : public ITU_T_CHOICE(ChangeDisplay_type_enum) {
 
-            changeDisplay_type() : ITU_T_CHOICE(changeDisplay_type_enum) () {
+            ChangeDisplay_type() : ITU_T_CHOICE(ChangeDisplay_type_enum) () {
             }
 
-            template<typename T > changeDisplay_type(boost::shared_ptr< T> vl, changeDisplay_type_enum enm) :
-                    ITU_T_CHOICE(changeDisplay_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > ChangeDisplay_type(boost::shared_ptr< T> vl, ChangeDisplay_type_enum enm) :
+                    ITU_T_CHOICE(ChangeDisplay_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > changeDisplay_type(const T& vl, changeDisplay_type_enum enm) :
-                    ITU_T_CHOICE(changeDisplay_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > ChangeDisplay_type(const T& vl, ChangeDisplay_type_enum enm) :
+                    ITU_T_CHOICE(ChangeDisplay_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(string, visiblestring_type, changeDisplay_type_string); // primitive
-            ITU_T_CHOICES_DECL(index, int, changeDisplay_type_index); // primitive
-            ITU_T_CHOICES_DECL(noEnhancement, null_type, changeDisplay_type_noEnhancement); // primitive
+            ITU_T_CHOICES_DECL(string, visiblestring_type, ChangeDisplay_type_string); // primitive
+            ITU_T_CHOICES_DECL(index, int, ChangeDisplay_type_index); // primitive
+            ITU_T_CHOICES_DECL(noEnhancement, null_type, ChangeDisplay_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -6148,43 +6148,43 @@ namespace ISO_9506_MMS_1 {
 
         CS_AlterEventEnrollment_Request();
 
-        CS_AlterEventEnrollment_Request(boost::shared_ptr< changeDisplay_type> arg__changeDisplay);
+        CS_AlterEventEnrollment_Request(boost::shared_ptr< ChangeDisplay_type> arg__changeDisplay);
 
-        ITU_T_OPTIONAL_DECL(changeDisplay, changeDisplay_type);
+        ITU_T_OPTIONAL_DECL(changeDisplay, ChangeDisplay_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const EE_State EE_State_disabled;
-    extern const EE_State EE_State_idle;
-    extern const EE_State EE_State_active;
-    extern const EE_State EE_State_activeNoAckA;
-    extern const EE_State EE_State_idleNoAckI;
-    extern const EE_State EE_State_idleNoAckA;
-    extern const EE_State EE_State_idleAcked;
-    extern const EE_State EE_State_activeAcked;
-    extern const EE_State EE_State_undefined;
+    extern const EE_State eE_State_disabled;
+    extern const EE_State eE_State_idle;
+    extern const EE_State eE_State_active;
+    extern const EE_State eE_State_activeNoAckA;
+    extern const EE_State eE_State_idleNoAckI;
+    extern const EE_State eE_State_idleNoAckA;
+    extern const EE_State eE_State_idleAcked;
+    extern const EE_State eE_State_activeAcked;
+    extern const EE_State eE_State_undefined;
 
     // sequence DefineEventConditionList-Request
 
     struct DefineEventConditionList_Request {
 
-        typedef std::vector< ObjectName > listOfEventConditionName_type;
-        typedef std::vector< ObjectName > listOfEventConditionListName_type;
+        typedef std::vector< ObjectName > ListOfEventConditionName_type;
+        typedef std::vector< ObjectName > ListOfEventConditionListName_type;
 
 
         DefineEventConditionList_Request();
 
         DefineEventConditionList_Request(const ObjectName& arg__eventConditionListName,
-                const listOfEventConditionName_type& arg__listOfEventConditionName);
+                const ListOfEventConditionName_type& arg__listOfEventConditionName);
 
         DefineEventConditionList_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
-                boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
-                boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName);
+                boost::shared_ptr< ListOfEventConditionName_type> arg__listOfEventConditionName,
+                boost::shared_ptr< ListOfEventConditionListName_type> arg__listOfEventConditionListName);
 
         ITU_T_HOLDERH_DECL(eventConditionListName, ObjectName);
-        ITU_T_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
-        ITU_T_OPTIONAL_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
+        ITU_T_HOLDERH_DECL(listOfEventConditionName, ListOfEventConditionName_type);
+        ITU_T_OPTIONAL_DECL(listOfEventConditionListName, ListOfEventConditionListName_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6193,22 +6193,22 @@ namespace ISO_9506_MMS_1 {
 
     struct AddEventConditionListReference_Request {
 
-        typedef std::vector< ObjectName > listOfEventConditionName_type;
-        typedef std::vector< ObjectName > listOfEventConditionListName_type;
+        typedef std::vector< ObjectName > ListOfEventConditionName_type;
+        typedef std::vector< ObjectName > ListOfEventConditionListName_type;
 
 
         AddEventConditionListReference_Request();
 
         AddEventConditionListReference_Request(const ObjectName& arg__eventConditionListName,
-                const listOfEventConditionName_type& arg__listOfEventConditionName);
+                const ListOfEventConditionName_type& arg__listOfEventConditionName);
 
         AddEventConditionListReference_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
-                boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
-                boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName);
+                boost::shared_ptr< ListOfEventConditionName_type> arg__listOfEventConditionName,
+                boost::shared_ptr< ListOfEventConditionListName_type> arg__listOfEventConditionListName);
 
         ITU_T_HOLDERH_DECL(eventConditionListName, ObjectName);
-        ITU_T_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
-        ITU_T_OPTIONAL_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
+        ITU_T_HOLDERH_DECL(listOfEventConditionName, ListOfEventConditionName_type);
+        ITU_T_OPTIONAL_DECL(listOfEventConditionListName, ListOfEventConditionListName_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6217,19 +6217,19 @@ namespace ISO_9506_MMS_1 {
 
     struct RemoveEventConditionListReference_Request {
 
-        typedef std::vector< ObjectName > listOfEventConditionName_type;
-        typedef std::vector< ObjectName > listOfEventConditionListName_type;
+        typedef std::vector< ObjectName > ListOfEventConditionName_type;
+        typedef std::vector< ObjectName > ListOfEventConditionListName_type;
 
 
         RemoveEventConditionListReference_Request();
 
         RemoveEventConditionListReference_Request(const ObjectName& arg__eventConditionListName,
-                const listOfEventConditionName_type& arg__listOfEventConditionName,
-                const listOfEventConditionListName_type& arg__listOfEventConditionListName);
+                const ListOfEventConditionName_type& arg__listOfEventConditionName,
+                const ListOfEventConditionListName_type& arg__listOfEventConditionListName);
 
         ITU_T_HOLDERH_DECL(eventConditionListName, ObjectName);
-        ITU_T_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
-        ITU_T_HOLDERH_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
+        ITU_T_HOLDERH_DECL(listOfEventConditionName, ListOfEventConditionName_type);
+        ITU_T_HOLDERH_DECL(listOfEventConditionListName, ListOfEventConditionListName_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6266,19 +6266,19 @@ namespace ISO_9506_MMS_1 {
 
     struct GetEventConditionListAttributes_Response {
 
-        typedef std::vector< ObjectName > listOfEventConditionName_type;
-        typedef std::vector< ObjectName > listOfEventConditionListName_type;
+        typedef std::vector< ObjectName > ListOfEventConditionName_type;
+        typedef std::vector< ObjectName > ListOfEventConditionListName_type;
 
 
         GetEventConditionListAttributes_Response();
 
-        GetEventConditionListAttributes_Response(const listOfEventConditionName_type& arg__listOfEventConditionName);
+        GetEventConditionListAttributes_Response(const ListOfEventConditionName_type& arg__listOfEventConditionName);
 
-        GetEventConditionListAttributes_Response(boost::shared_ptr< listOfEventConditionName_type> arg__listOfEventConditionName,
-                boost::shared_ptr< listOfEventConditionListName_type> arg__listOfEventConditionListName);
+        GetEventConditionListAttributes_Response(boost::shared_ptr< ListOfEventConditionName_type> arg__listOfEventConditionName,
+                boost::shared_ptr< ListOfEventConditionListName_type> arg__listOfEventConditionListName);
 
-        ITU_T_HOLDERH_DECL(listOfEventConditionName, listOfEventConditionName_type);
-        ITU_T_OPTIONAL_DECL(listOfEventConditionListName, listOfEventConditionListName_type);
+        ITU_T_HOLDERH_DECL(listOfEventConditionName, ListOfEventConditionName_type);
+        ITU_T_OPTIONAL_DECL(listOfEventConditionListName, ListOfEventConditionListName_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6304,18 +6304,18 @@ namespace ISO_9506_MMS_1 {
 
     struct ReportEventConditionListStatus_Response {
 
-        typedef std::vector< EventConditionStatus > listOfEventConditionStatus_type;
+        typedef std::vector< EventConditionStatus > ListOfEventConditionStatus_type;
 
         static const bool moreFollows__default;
 
         ReportEventConditionListStatus_Response();
 
-        ReportEventConditionListStatus_Response(const listOfEventConditionStatus_type& arg__listOfEventConditionStatus);
+        ReportEventConditionListStatus_Response(const ListOfEventConditionStatus_type& arg__listOfEventConditionStatus);
 
-        ReportEventConditionListStatus_Response(boost::shared_ptr< listOfEventConditionStatus_type> arg__listOfEventConditionStatus,
+        ReportEventConditionListStatus_Response(boost::shared_ptr< ListOfEventConditionStatus_type> arg__listOfEventConditionStatus,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfEventConditionStatus, listOfEventConditionStatus_type);
+        ITU_T_HOLDERH_DECL(listOfEventConditionStatus, ListOfEventConditionStatus_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -6352,30 +6352,30 @@ namespace ISO_9506_MMS_1 {
 
     struct AlterEventConditionListMonitoring_Request {
 
-        struct priorityChange_type;
+        struct PriorityChange_type;
 
-        enum priorityChange_type_enum {
+        enum PriorityChange_type_enum {
 
-            priorityChange_type_null = 0,
-            priorityChange_type_priorityValue,
-            priorityChange_type_priorityReset,
+            PriorityChange_type_null = 0,
+            PriorityChange_type_priorityValue,
+            PriorityChange_type_priorityReset,
         };
 
-        struct priorityChange_type : public ITU_T_CHOICE(priorityChange_type_enum) {
+        struct PriorityChange_type : public ITU_T_CHOICE(PriorityChange_type_enum) {
 
-            priorityChange_type() : ITU_T_CHOICE(priorityChange_type_enum) () {
+            PriorityChange_type() : ITU_T_CHOICE(PriorityChange_type_enum) () {
             }
 
-            template<typename T > priorityChange_type(boost::shared_ptr< T> vl, priorityChange_type_enum enm) :
-                    ITU_T_CHOICE(priorityChange_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > PriorityChange_type(boost::shared_ptr< T> vl, PriorityChange_type_enum enm) :
+                    ITU_T_CHOICE(PriorityChange_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > priorityChange_type(const T& vl, priorityChange_type_enum enm) :
-                    ITU_T_CHOICE(priorityChange_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > PriorityChange_type(const T& vl, PriorityChange_type_enum enm) :
+                    ITU_T_CHOICE(PriorityChange_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(priorityValue, int, priorityChange_type_priorityValue); // primitive
-            ITU_T_CHOICES_DECL(priorityReset, null_type, priorityChange_type_priorityReset); // primitive
+            ITU_T_CHOICES_DECL(priorityValue, int, PriorityChange_type_priorityValue); // primitive
+            ITU_T_CHOICES_DECL(priorityReset, null_type, PriorityChange_type_priorityReset); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -6388,11 +6388,11 @@ namespace ISO_9506_MMS_1 {
 
         AlterEventConditionListMonitoring_Request(boost::shared_ptr< ObjectName> arg__eventConditionListName,
                 boost::shared_ptr< bool> arg__enabled,
-                boost::shared_ptr< priorityChange_type> arg__priorityChange);
+                boost::shared_ptr< PriorityChange_type> arg__priorityChange);
 
         ITU_T_HOLDERH_DECL(eventConditionListName, ObjectName);
         ITU_T_HOLDERH_DECL(enabled, bool);
-        ITU_T_OPTIONAL_DECL(priorityChange, priorityChange_type);
+        ITU_T_OPTIONAL_DECL(priorityChange, PriorityChange_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6401,67 +6401,67 @@ namespace ISO_9506_MMS_1 {
 
     struct ReadJournal_Request {
 
-        struct rangeStartSpecification_type;
-        struct rangeStopSpecification_type;
-        struct entryToStartAfter_type;
+        struct RangeStartSpecification_type;
+        struct RangeStopSpecification_type;
+        struct EntryToStartAfter_type;
 
-        enum rangeStartSpecification_type_enum {
+        enum RangeStartSpecification_type_enum {
 
-            rangeStartSpecification_type_null = 0,
-            rangeStartSpecification_type_startingTime,
-            rangeStartSpecification_type_startingEntry,
+            RangeStartSpecification_type_null = 0,
+            RangeStartSpecification_type_startingTime,
+            RangeStartSpecification_type_startingEntry,
         };
 
-        struct rangeStartSpecification_type : public ITU_T_CHOICE(rangeStartSpecification_type_enum) {
+        struct RangeStartSpecification_type : public ITU_T_CHOICE(RangeStartSpecification_type_enum) {
 
-            rangeStartSpecification_type() : ITU_T_CHOICE(rangeStartSpecification_type_enum) () {
+            RangeStartSpecification_type() : ITU_T_CHOICE(RangeStartSpecification_type_enum) () {
             }
 
-            template<typename T > rangeStartSpecification_type(boost::shared_ptr< T> vl, rangeStartSpecification_type_enum enm) :
-                    ITU_T_CHOICE(rangeStartSpecification_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > RangeStartSpecification_type(boost::shared_ptr< T> vl, RangeStartSpecification_type_enum enm) :
+                    ITU_T_CHOICE(RangeStartSpecification_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > rangeStartSpecification_type(const T& vl, rangeStartSpecification_type_enum enm) :
-                    ITU_T_CHOICE(rangeStartSpecification_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > RangeStartSpecification_type(const T& vl, RangeStartSpecification_type_enum enm) :
+                    ITU_T_CHOICE(RangeStartSpecification_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(startingTime, TimeOfDay, rangeStartSpecification_type_startingTime); // primitive
-            ITU_T_CHOICES_DECL(startingEntry, octetstring_type, rangeStartSpecification_type_startingEntry); // primitive
+            ITU_T_CHOICES_DECL(startingTime, TimeOfDay, RangeStartSpecification_type_startingTime); // primitive
+            ITU_T_CHOICES_DECL(startingEntry, octetstring_type, RangeStartSpecification_type_startingEntry); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        enum rangeStopSpecification_type_enum {
+        enum RangeStopSpecification_type_enum {
 
-            rangeStopSpecification_type_null = 0,
-            rangeStopSpecification_type_endingTime,
-            rangeStopSpecification_type_numberOfEntries,
+            RangeStopSpecification_type_null = 0,
+            RangeStopSpecification_type_endingTime,
+            RangeStopSpecification_type_numberOfEntries,
         };
 
-        struct rangeStopSpecification_type : public ITU_T_CHOICE(rangeStopSpecification_type_enum) {
+        struct RangeStopSpecification_type : public ITU_T_CHOICE(RangeStopSpecification_type_enum) {
 
-            rangeStopSpecification_type() : ITU_T_CHOICE(rangeStopSpecification_type_enum) () {
+            RangeStopSpecification_type() : ITU_T_CHOICE(RangeStopSpecification_type_enum) () {
             }
 
-            template<typename T > rangeStopSpecification_type(boost::shared_ptr< T> vl, rangeStopSpecification_type_enum enm) :
-                    ITU_T_CHOICE(rangeStopSpecification_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > RangeStopSpecification_type(boost::shared_ptr< T> vl, RangeStopSpecification_type_enum enm) :
+                    ITU_T_CHOICE(RangeStopSpecification_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > rangeStopSpecification_type(const T& vl, rangeStopSpecification_type_enum enm) :
-                    ITU_T_CHOICE(rangeStopSpecification_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > RangeStopSpecification_type(const T& vl, RangeStopSpecification_type_enum enm) :
+                    ITU_T_CHOICE(RangeStopSpecification_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(endingTime, TimeOfDay, rangeStopSpecification_type_endingTime); // primitive
-            ITU_T_CHOICES_DECL(numberOfEntries, Integer32, rangeStopSpecification_type_numberOfEntries); // primitive
+            ITU_T_CHOICES_DECL(endingTime, TimeOfDay, RangeStopSpecification_type_endingTime); // primitive
+            ITU_T_CHOICES_DECL(numberOfEntries, Integer32, RangeStopSpecification_type_numberOfEntries); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
 
-        struct entryToStartAfter_type {
+        struct EntryToStartAfter_type {
 
-            entryToStartAfter_type();
+            EntryToStartAfter_type();
 
-            entryToStartAfter_type(const TimeOfDay& arg__timeSpecification,
+            EntryToStartAfter_type(const TimeOfDay& arg__timeSpecification,
                     const octetstring_type& arg__entrySpecification);
 
             ITU_T_HOLDERH_DECL(timeSpecification, TimeOfDay);
@@ -6472,7 +6472,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-        typedef std::vector< visiblestring_type > listOfVariables_type;
+        typedef std::vector< visiblestring_type > ListOfVariables_type;
 
 
         ReadJournal_Request();
@@ -6480,16 +6480,16 @@ namespace ISO_9506_MMS_1 {
         ReadJournal_Request(const ObjectName& arg__journalName);
 
         ReadJournal_Request(boost::shared_ptr< ObjectName> arg__journalName,
-                boost::shared_ptr< rangeStartSpecification_type> arg__rangeStartSpecification,
-                boost::shared_ptr< rangeStopSpecification_type> arg__rangeStopSpecification,
-                boost::shared_ptr< listOfVariables_type> arg__listOfVariables,
-                boost::shared_ptr< entryToStartAfter_type> arg__entryToStartAfter);
+                boost::shared_ptr< RangeStartSpecification_type> arg__rangeStartSpecification,
+                boost::shared_ptr< RangeStopSpecification_type> arg__rangeStopSpecification,
+                boost::shared_ptr< ListOfVariables_type> arg__listOfVariables,
+                boost::shared_ptr< EntryToStartAfter_type> arg__entryToStartAfter);
 
         ITU_T_HOLDERH_DECL(journalName, ObjectName);
-        ITU_T_OPTIONAL_DECL(rangeStartSpecification, rangeStartSpecification_type);
-        ITU_T_OPTIONAL_DECL(rangeStopSpecification, rangeStopSpecification_type);
-        ITU_T_OPTIONAL_DECL(listOfVariables, listOfVariables_type);
-        ITU_T_OPTIONAL_DECL(entryToStartAfter, entryToStartAfter_type);
+        ITU_T_OPTIONAL_DECL(rangeStartSpecification, RangeStartSpecification_type);
+        ITU_T_OPTIONAL_DECL(rangeStopSpecification, RangeStopSpecification_type);
+        ITU_T_OPTIONAL_DECL(listOfVariables, ListOfVariables_type);
+        ITU_T_OPTIONAL_DECL(entryToStartAfter, EntryToStartAfter_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6498,18 +6498,18 @@ namespace ISO_9506_MMS_1 {
 
     struct ReadJournal_Response {
 
-        typedef std::vector< JournalEntry > listOfJournalEntry_type;
+        typedef std::vector< JournalEntry > ListOfJournalEntry_type;
 
         static const bool moreFollows__default;
 
         ReadJournal_Response();
 
-        ReadJournal_Response(const listOfJournalEntry_type& arg__listOfJournalEntry);
+        ReadJournal_Response(const ListOfJournalEntry_type& arg__listOfJournalEntry);
 
-        ReadJournal_Response(boost::shared_ptr< listOfJournalEntry_type> arg__listOfJournalEntry,
+        ReadJournal_Response(boost::shared_ptr< ListOfJournalEntry_type> arg__listOfJournalEntry,
                 boost::shared_ptr< bool> arg__moreFollows);
 
-        ITU_T_HOLDERH_DECL(listOfJournalEntry, listOfJournalEntry_type);
+        ITU_T_HOLDERH_DECL(listOfJournalEntry, ListOfJournalEntry_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
 
         ITU_T_ARCHIVE_FUNC;
@@ -6536,16 +6536,16 @@ namespace ISO_9506_MMS_1 {
 
     struct WriteJournal_Request {
 
-        typedef std::vector< EntryContent > listOfJournalEntry_type;
+        typedef std::vector< EntryContent > ListOfJournalEntry_type;
 
 
         WriteJournal_Request();
 
         WriteJournal_Request(const ObjectName& arg__journalName,
-                const listOfJournalEntry_type& arg__listOfJournalEntry);
+                const ListOfJournalEntry_type& arg__listOfJournalEntry);
 
         ITU_T_HOLDERH_DECL(journalName, ObjectName);
-        ITU_T_HOLDERH_DECL(listOfJournalEntry, listOfJournalEntry_type);
+        ITU_T_HOLDERH_DECL(listOfJournalEntry, ListOfJournalEntry_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6554,15 +6554,15 @@ namespace ISO_9506_MMS_1 {
 
     struct InitializeJournal_Request {
 
-        struct limitSpecification_type;
+        struct LimitSpecification_type;
 
-        struct limitSpecification_type {
+        struct LimitSpecification_type {
 
-            limitSpecification_type();
+            LimitSpecification_type();
 
-            limitSpecification_type(const TimeOfDay& arg__limitingTime);
+            LimitSpecification_type(const TimeOfDay& arg__limitingTime);
 
-            limitSpecification_type(boost::shared_ptr< TimeOfDay> arg__limitingTime,
+            LimitSpecification_type(boost::shared_ptr< TimeOfDay> arg__limitingTime,
                     boost::shared_ptr< octetstring_type> arg__limitingEntry);
 
             ITU_T_HOLDERH_DECL(limitingTime, TimeOfDay);
@@ -6577,10 +6577,10 @@ namespace ISO_9506_MMS_1 {
         InitializeJournal_Request(const ObjectName& arg__journalName);
 
         InitializeJournal_Request(boost::shared_ptr< ObjectName> arg__journalName,
-                boost::shared_ptr< limitSpecification_type> arg__limitSpecification);
+                boost::shared_ptr< LimitSpecification_type> arg__limitSpecification);
 
         ITU_T_HOLDERH_DECL(journalName, ObjectName);
-        ITU_T_OPTIONAL_DECL(limitSpecification, limitSpecification_type);
+        ITU_T_OPTIONAL_DECL(limitSpecification, LimitSpecification_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6635,29 +6635,29 @@ namespace ISO_9506_MMS_1 {
 
     struct EntryContent {
 
-        struct entryForm_type;
+        struct EntryForm_type;
 
-        enum entryForm_type_enum {
+        enum EntryForm_type_enum {
 
-            entryForm_type_null = 0,
-            entryForm_type_data,
-            entryForm_type_annotation,
+            EntryForm_type_null = 0,
+            EntryForm_type_data,
+            EntryForm_type_annotation,
         };
 
-        struct entryForm_type : public ITU_T_CHOICE(entryForm_type_enum) {
+        struct EntryForm_type : public ITU_T_CHOICE(EntryForm_type_enum) {
 
 
-            struct data_type;
+            struct Data_type;
 
-            struct data_type {
+            struct Data_type {
 
-                struct event_type;
+                struct Event_type;
 
-                struct event_type {
+                struct Event_type {
 
-                    event_type();
+                    Event_type();
 
-                    event_type(const ObjectName& arg__eventConditionName,
+                    Event_type(const ObjectName& arg__eventConditionName,
                             const MMS_Object_Module_1::EC_State& arg__currentState);
 
                     ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
@@ -6669,32 +6669,32 @@ namespace ISO_9506_MMS_1 {
 
 
 
-                typedef std::vector< MMS_Object_Module_1::Journal_Variable > listOfVariables_type;
+                typedef std::vector< MMS_Object_Module_1::Journal_Variable > ListOfVariables_type;
 
-                data_type();
+                Data_type();
 
-                data_type(boost::shared_ptr< event_type> arg__event,
-                        boost::shared_ptr< listOfVariables_type> arg__listOfVariables);
+                Data_type(boost::shared_ptr< Event_type> arg__event,
+                        boost::shared_ptr< ListOfVariables_type> arg__listOfVariables);
 
-                ITU_T_OPTIONAL_DECL(event, event_type);
-                ITU_T_OPTIONAL_DECL(listOfVariables, listOfVariables_type);
+                ITU_T_OPTIONAL_DECL(event, Event_type);
+                ITU_T_OPTIONAL_DECL(listOfVariables, ListOfVariables_type);
 
                 ITU_T_ARCHIVE_FUNC;
             };
 
-            entryForm_type() : ITU_T_CHOICE(entryForm_type_enum) () {
+            EntryForm_type() : ITU_T_CHOICE(EntryForm_type_enum) () {
             }
 
-            template<typename T > entryForm_type(boost::shared_ptr< T> vl, entryForm_type_enum enm) :
-                    ITU_T_CHOICE(entryForm_type_enum) (vl, static_cast<int> (enm)) {
+            template<typename T > EntryForm_type(boost::shared_ptr< T> vl, EntryForm_type_enum enm) :
+                    ITU_T_CHOICE(EntryForm_type_enum) (vl, static_cast<int> (enm)) {
             }
 
-            template<typename T > entryForm_type(const T& vl, entryForm_type_enum enm) :
-                    ITU_T_CHOICE(entryForm_type_enum) (new T(vl), static_cast<int> (enm)) {
+            template<typename T > EntryForm_type(const T& vl, EntryForm_type_enum enm) :
+                    ITU_T_CHOICE(EntryForm_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICEC_DECL(data, data_type, entryForm_type_data);
-            ITU_T_CHOICES_DECL(annotation, MMSString, entryForm_type_annotation); // primitive
+            ITU_T_CHOICEC_DECL(data, Data_type, EntryForm_type_data);
+            ITU_T_CHOICES_DECL(annotation, MMSString, EntryForm_type_annotation); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -6703,10 +6703,10 @@ namespace ISO_9506_MMS_1 {
         EntryContent();
 
         EntryContent(const TimeOfDay& arg__occurrenceTime,
-                const entryForm_type& arg__entryForm);
+                const EntryForm_type& arg__entryForm);
 
         ITU_T_HOLDERH_DECL(occurrenceTime, TimeOfDay);
-        ITU_T_HOLDERH_DECL(entryForm, entryForm_type);
+        ITU_T_HOLDERH_DECL(entryForm, EntryForm_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6739,72 +6739,72 @@ namespace ISO_9506_MMS_1 {
     template<> void Confirmed_ErrorPDU::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ServiceError::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ServiceError::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ServiceError::errorClass_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ServiceError::errorClass_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ServiceError::serviceSpecificInfo_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ServiceError::serviceSpecificInfo_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ServiceError::ErrorClass_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ServiceError::ErrorClass_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ServiceError::ServiceSpecificInfo_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ServiceError::ServiceSpecificInfo_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AdditionalService_Error::serialize(boost::asn1::x690::output_coder& arch);
     template<> void AdditionalService_Error::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ObjectName::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ObjectName::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ObjectName::domain_specific_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ObjectName::domain_specific_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ObjectName::Domain_specific_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ObjectName::Domain_specific_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ObjectClass::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ObjectClass::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Initiate_RequestPDU::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Initiate_RequestPDU::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void Initiate_RequestPDU::initRequestDetail_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void Initiate_RequestPDU::initRequestDetail_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Initiate_ResponsePDU::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Initiate_ResponsePDU::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void Initiate_ResponsePDU::initResponseDetail_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void Initiate_ResponsePDU::initResponseDetail_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Cancel_ErrorPDU::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Cancel_ErrorPDU::serialize(boost::asn1::x690::input_coder& arch);
     template<> void RejectPDU::serialize(boost::asn1::x690::output_coder& arch);
     template<> void RejectPDU::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void RejectPDU::rejectReason_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void RejectPDU::rejectReason_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void RejectPDU::RejectReason_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void RejectPDU::RejectReason_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void DefineAccessControlList_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void DefineAccessControlList_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void DefineAccessControlList_Request::accessControlListElements_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void DefineAccessControlList_Request::accessControlListElements_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void DefineAccessControlList_Request::AccessControlListElements_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void DefineAccessControlList_Request::AccessControlListElements_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetAccessControlListAttributes_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetAccessControlListAttributes_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void GetAccessControlListAttributes_Request::namedObject_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void GetAccessControlListAttributes_Request::namedObject_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void GetAccessControlListAttributes_Request::NamedObject_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void GetAccessControlListAttributes_Request::NamedObject_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetAccessControlListAttributes_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetAccessControlListAttributes_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void GetAccessControlListAttributes_Response::accessControlListElements_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void GetAccessControlListAttributes_Response::accessControlListElements_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void GetAccessControlListAttributes_Response::references_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void GetAccessControlListAttributes_Response::references_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void GetAccessControlListAttributes_Response::AccessControlListElements_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void GetAccessControlListAttributes_Response::AccessControlListElements_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void GetAccessControlListAttributes_Response::References_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void GetAccessControlListAttributes_Response::References_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ReportAccessControlledObjects_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ReportAccessControlledObjects_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ReportAccessControlledObjects_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ReportAccessControlledObjects_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ChangeAccessControl_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ChangeAccessControl_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ChangeAccessControl_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ChangeAccessControl_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void StatusResponse::serialize(boost::asn1::x690::output_coder& arch);
     template<> void StatusResponse::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CS_Status_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CS_Status_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_Status_Response::fullResponse_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_Status_Response::fullResponse_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_Status_Response::fullResponse_type::selectedProgramInvocation_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_Status_Response::fullResponse_type::selectedProgramInvocation_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_Status_Response::FullResponse_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_Status_Response::FullResponse_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetNameList_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetNameList_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void GetNameList_Request::objectScope_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void GetNameList_Request::objectScope_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void GetNameList_Request::ObjectScope_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void GetNameList_Request::ObjectScope_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetNameList_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetNameList_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Identify_Response::serialize(boost::asn1::x690::output_coder& arch);
@@ -6841,44 +6841,44 @@ namespace ISO_9506_MMS_1 {
     template<> void CreateProgramInvocation_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Start_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Start_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void Start_Request::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void Start_Request::executionArgument_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Start_Request::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Start_Request::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CS_Start_Request_impl::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CS_Start_Request_impl::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_Start_Request_impl::controlling_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_Start_Request_impl::controlling_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void StartCount::serialize(boost::asn1::x690::output_coder& arch);
     template<> void StartCount::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Stop_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Stop_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Resume_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Resume_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void Resume_Request::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void Resume_Request::executionArgument_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Resume_Request::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Resume_Request::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CS_Resume_Request_impl::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CS_Resume_Request_impl::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_Resume_Request_impl::controlling_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_Resume_Request_impl::controlling_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_Resume_Request_impl::controlling_type::modeType_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_Resume_Request_impl::controlling_type::modeType_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_Resume_Request_impl::Controlling_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_Resume_Request_impl::Controlling_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_Resume_Request_impl::Controlling_type::ModeType_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_Resume_Request_impl::Controlling_type::ModeType_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Reset_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Reset_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Kill_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Kill_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetProgramInvocationAttributes_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetProgramInvocationAttributes_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void GetProgramInvocationAttributes_Response::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void GetProgramInvocationAttributes_Response::executionArgument_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void GetProgramInvocationAttributes_Response::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void GetProgramInvocationAttributes_Response::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CS_GetProgramInvocationAttributes_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CS_GetProgramInvocationAttributes_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlled_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_GetProgramInvocationAttributes_Response::control_type::controlled_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlled_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlled_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Select_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Select_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AlterProgramInvocationAttributes_Request::serialize(boost::asn1::x690::output_coder& arch);
@@ -6887,28 +6887,28 @@ namespace ISO_9506_MMS_1 {
     template<> void ReconfigureProgramInvocation_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ControlElement::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ControlElement::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ControlElement::beginDomainDef_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ControlElement::beginDomainDef_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ControlElement::continueDomainDef_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ControlElement::continueDomainDef_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ControlElement::piDefinition_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ControlElement::piDefinition_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ControlElement::BeginDomainDef_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ControlElement::BeginDomainDef_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ControlElement::ContinueDomainDef_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ControlElement::ContinueDomainDef_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ControlElement::PiDefinition_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ControlElement::PiDefinition_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void InitiateUnitControl_Error::serialize(boost::asn1::x690::output_coder& arch);
     template<> void InitiateUnitControl_Error::serialize(boost::asn1::x690::input_coder& arch);
     template<> void UnitControlLoadSegment_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void UnitControlLoadSegment_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void UnitControlUpload_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void UnitControlUpload_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void UnitControlUpload_Request::continueAfter_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void UnitControlUpload_Request::continueAfter_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void UnitControlUpload_Request::ContinueAfter_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void UnitControlUpload_Request::ContinueAfter_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void UnitControlUpload_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void UnitControlUpload_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void UnitControlUpload_Response::nextElement_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void UnitControlUpload_Response::nextElement_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void UnitControlUpload_Response::NextElement_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void UnitControlUpload_Response::NextElement_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void StartUnitControl_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void StartUnitControl_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void StartUnitControl_Request::executionArgument_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void StartUnitControl_Request::executionArgument_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void StartUnitControl_Request::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void StartUnitControl_Request::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void StartUnitControl_Error::serialize(boost::asn1::x690::output_coder& arch);
     template<> void StartUnitControl_Error::serialize(boost::asn1::x690::input_coder& arch);
     template<> void StopUnitControl_Error::serialize(boost::asn1::x690::output_coder& arch);
@@ -6933,32 +6933,32 @@ namespace ISO_9506_MMS_1 {
     template<> void TypeSpecification::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AlternateAccess_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
     template<> void AlternateAccess_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void AlternateAccess_sequence_of::named_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void AlternateAccess_sequence_of::named_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AlternateAccess_sequence_of::Named_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AlternateAccess_sequence_of::Named_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AlternateAccessSelection::serialize(boost::asn1::x690::output_coder& arch);
     template<> void AlternateAccessSelection::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type::indexRange_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void AlternateAccessSelection::selectAccess_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void AlternateAccessSelection::selectAccess_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void AlternateAccessSelection::selectAccess_type::indexRange_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void AlternateAccessSelection::selectAccess_type::indexRange_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AlternateAccessSelection::SelectAccess_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AlternateAccessSelection::SelectAccess_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AlternateAccessSelection::SelectAccess_type::IndexRange_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AlternateAccessSelection::SelectAccess_type::IndexRange_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AccessResult::serialize(boost::asn1::x690::output_coder& arch);
     template<> void AccessResult::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Data::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Data::serialize(boost::asn1::x690::input_coder& arch);
     template<> void VariableAccessSpecification::serialize(boost::asn1::x690::output_coder& arch);
     template<> void VariableAccessSpecification::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void VariableAccessSpecification::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void VariableAccessSpecification::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void VariableAccessSpecification::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void VariableAccessSpecification::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
     template<> void VariableSpecification::serialize(boost::asn1::x690::output_coder& arch);
     template<> void VariableSpecification::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void VariableSpecification::variableDescription_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void VariableSpecification::variableDescription_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void VariableSpecification::VariableDescription_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void VariableSpecification::VariableDescription_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Read_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void Read_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void Read_Response::serialize(boost::asn1::x690::output_coder& arch);
@@ -6981,12 +6981,12 @@ namespace ISO_9506_MMS_1 {
     template<> void DeleteVariableAccess_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void DefineNamedVariableList_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void DefineNamedVariableList_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void DefineNamedVariableList_Request::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void DefineNamedVariableList_Request::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetNamedVariableListAttributes_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetNamedVariableListAttributes_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void GetNamedVariableListAttributes_Response::listOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
     template<> void DeleteNamedVariableList_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void DeleteNamedVariableList_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void DeleteNamedVariableList_Response::serialize(boost::asn1::x690::output_coder& arch);
@@ -7019,8 +7019,8 @@ namespace ISO_9506_MMS_1 {
     template<> void ReportPoolSemaphoreStatus_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ReportPoolSemaphoreStatus_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ReportPoolSemaphoreStatus_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ReportSemaphoreEntryStatus_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ReportSemaphoreEntryStatus_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ReportSemaphoreEntryStatus_Response::serialize(boost::asn1::x690::output_coder& arch);
@@ -7037,22 +7037,22 @@ namespace ISO_9506_MMS_1 {
     template<> void TriggerEvent_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void EventNotification::serialize(boost::asn1::x690::output_coder& arch);
     template<> void EventNotification::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void EventNotification::actionResult_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void EventNotification::actionResult_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void EventNotification::actionResult_type::successOrFailure_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void EventNotification::actionResult_type::successOrFailure_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void EventNotification::actionResult_type::successOrFailure_type::success_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void EventNotification::actionResult_type::successOrFailure_type::success_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void EventNotification::actionResult_type::successOrFailure_type::failure_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void EventNotification::actionResult_type::successOrFailure_type::failure_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void EventNotification::ActionResult_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void EventNotification::ActionResult_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CS_EventNotification_impl::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CS_EventNotification_impl::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AcknowledgeEventNotification_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void AcknowledgeEventNotification_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetAlarmSummary_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetAlarmSummary_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void GetAlarmSummary_Request::severityFilter_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void GetAlarmSummary_Request::severityFilter_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void GetAlarmSummary_Request::SeverityFilter_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void GetAlarmSummary_Request::SeverityFilter_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetAlarmSummary_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetAlarmSummary_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AlarmSummary::serialize(boost::asn1::x690::output_coder& arch);
@@ -7061,8 +7061,8 @@ namespace ISO_9506_MMS_1 {
     template<> void EN_Additional_Detail_impl::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetAlarmEnrollmentSummary_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetAlarmEnrollmentSummary_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void GetAlarmEnrollmentSummary_Request::severityFilter_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void GetAlarmEnrollmentSummary_Request::severityFilter_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetAlarmEnrollmentSummary_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetAlarmEnrollmentSummary_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AlarmEnrollmentSummary::serialize(boost::asn1::x690::output_coder& arch);
@@ -7077,22 +7077,22 @@ namespace ISO_9506_MMS_1 {
     template<> void DeleteEventCondition_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void GetEventConditionAttributes_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void GetEventConditionAttributes_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void GetEventConditionAttributes_Response::monitoredVariable_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void GetEventConditionAttributes_Response::monitoredVariable_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void GetEventConditionAttributes_Response::MonitoredVariable_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void GetEventConditionAttributes_Response::MonitoredVariable_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CS_GetEventConditionAttributes_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CS_GetEventConditionAttributes_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_GetEventConditionAttributes_Response::groupPriorityOverride_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_GetEventConditionAttributes_Response::groupPriorityOverride_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_GetEventConditionAttributes_Response::displayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_GetEventConditionAttributes_Response::displayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ReportEventConditionStatus_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ReportEventConditionStatus_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AlterEventConditionMonitoring_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void AlterEventConditionMonitoring_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CS_AlterEventConditionMonitoring_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CS_AlterEventConditionMonitoring_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_AlterEventConditionMonitoring_Request::changeDisplay_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void DefineEventAction_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void DefineEventAction_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void DeleteEventAction_Request::serialize(boost::asn1::x690::output_coder& arch);
@@ -7111,24 +7111,24 @@ namespace ISO_9506_MMS_1 {
     template<> void GetEventEnrollmentAttributes_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void EEAttributes::serialize(boost::asn1::x690::output_coder& arch);
     template<> void EEAttributes::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void EEAttributes::eventConditionName_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void EEAttributes::eventConditionName_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void EEAttributes::eventActionName_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void EEAttributes::eventActionName_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void EEAttributes::displayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void EEAttributes::displayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void EEAttributes::EventConditionName_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void EEAttributes::EventConditionName_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void EEAttributes::EventActionName_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void EEAttributes::EventActionName_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void EEAttributes::DisplayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void EEAttributes::DisplayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ReportEventEnrollmentStatus_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ReportEventEnrollmentStatus_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AlterEventEnrollment_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void AlterEventEnrollment_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AlterEventEnrollment_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void AlterEventEnrollment_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void AlterEventEnrollment_Response::currentState_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void AlterEventEnrollment_Response::currentState_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AlterEventEnrollment_Response::CurrentState_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AlterEventEnrollment_Response::CurrentState_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CS_AlterEventEnrollment_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CS_AlterEventEnrollment_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CS_AlterEventEnrollment_Request::changeDisplay_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CS_AlterEventEnrollment_Request::changeDisplay_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void CS_AlterEventEnrollment_Request::ChangeDisplay_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void CS_AlterEventEnrollment_Request::ChangeDisplay_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void DefineEventConditionList_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void DefineEventConditionList_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AddEventConditionListReference_Request::serialize(boost::asn1::x690::output_coder& arch);
@@ -7147,16 +7147,16 @@ namespace ISO_9506_MMS_1 {
     template<> void EventConditionStatus::serialize(boost::asn1::x690::input_coder& arch);
     template<> void AlterEventConditionListMonitoring_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void AlterEventConditionListMonitoring_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void AlterEventConditionListMonitoring_Request::priorityChange_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void AlterEventConditionListMonitoring_Request::priorityChange_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void AlterEventConditionListMonitoring_Request::PriorityChange_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void AlterEventConditionListMonitoring_Request::PriorityChange_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ReadJournal_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ReadJournal_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ReadJournal_Request::rangeStartSpecification_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ReadJournal_Request::rangeStartSpecification_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ReadJournal_Request::rangeStopSpecification_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ReadJournal_Request::rangeStopSpecification_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ReadJournal_Request::entryToStartAfter_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ReadJournal_Request::entryToStartAfter_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ReadJournal_Request::RangeStartSpecification_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ReadJournal_Request::RangeStartSpecification_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ReadJournal_Request::RangeStopSpecification_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ReadJournal_Request::RangeStopSpecification_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ReadJournal_Request::EntryToStartAfter_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ReadJournal_Request::EntryToStartAfter_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ReadJournal_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ReadJournal_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void JournalEntry::serialize(boost::asn1::x690::output_coder& arch);
@@ -7165,8 +7165,8 @@ namespace ISO_9506_MMS_1 {
     template<> void WriteJournal_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void InitializeJournal_Request::serialize(boost::asn1::x690::output_coder& arch);
     template<> void InitializeJournal_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void InitializeJournal_Request::limitSpecification_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void InitializeJournal_Request::limitSpecification_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void InitializeJournal_Request::LimitSpecification_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void InitializeJournal_Request::LimitSpecification_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void ReportJournalStatus_Response::serialize(boost::asn1::x690::output_coder& arch);
     template<> void ReportJournalStatus_Response::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CreateJournal_Request::serialize(boost::asn1::x690::output_coder& arch);
@@ -7175,12 +7175,12 @@ namespace ISO_9506_MMS_1 {
     template<> void DeleteJournal_Request::serialize(boost::asn1::x690::input_coder& arch);
     template<> void EntryContent::serialize(boost::asn1::x690::output_coder& arch);
     template<> void EntryContent::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void EntryContent::entryForm_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void EntryContent::entryForm_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void EntryContent::entryForm_type::data_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void EntryContent::entryForm_type::data_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void EntryContent::entryForm_type::data_type::event_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void EntryContent::entryForm_type::data_type::event_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void EntryContent::EntryForm_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void EntryContent::EntryForm_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void EntryContent::EntryForm_type::Data_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void EntryContent::EntryForm_type::Data_type::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void EntryContent::EntryForm_type::Data_type::Event_type::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void EntryContent::EntryForm_type::Data_type::Event_type::serialize(boost::asn1::x690::input_coder& arch);
 }
 
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::MMSpdu)
@@ -7192,41 +7192,41 @@ ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Unconfirmed_Detail)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ConfirmedServiceResponse)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AdditionalService_Response)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Response_Detail)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ServiceError::errorClass_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ServiceError::serviceSpecificInfo_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ServiceError::ErrorClass_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ServiceError::ServiceSpecificInfo_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AdditionalService_Error)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ObjectName)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ObjectClass)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::RejectPDU::rejectReason_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::RejectPDU::RejectReason_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetAccessControlListAttributes_Request)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ChangeAccessControl_Request::scopeOfChange_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ChangeAccessControl_Request::scopeOfChange_type::listOfObjects_type::objectScope_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ChangeAccessControl_Request::ScopeOfChange_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Status_Response)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Status_Response::fullResponse_type::selectedProgramInvocation_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetNameList_Request::objectScope_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetNameList_Request::ObjectScope_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::LoadData)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Start_Request::executionArgument_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Start_Request::ExecutionArgument_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Start_Request_impl)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::StartCount)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Resume_Request::executionArgument_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Resume_Request::ExecutionArgument_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request_impl)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request_impl::controlling_type::modeType_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetProgramInvocationAttributes_Response::executionArgument_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::control_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::control_type::controlling_type::runningMode_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::control_type::controlled_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_Resume_Request_impl::Controlling_type::ModeType_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetProgramInvocationAttributes_Response::ExecutionArgument_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::Control_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetProgramInvocationAttributes_Response::Control_type::Controlled_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ControlElement)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::InitiateUnitControl_Error)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::UnitControlUpload_Request::continueAfter_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::UnitControlUpload_Response::nextElement_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::StartUnitControl_Request::executionArgument_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::UnitControlUpload_Request::ContinueAfter_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::UnitControlUpload_Response::NextElement_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::StartUnitControl_Request::ExecutionArgument_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::LoadUnitControlFromFile_Error)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteUnitControl_Error)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::TypeSpecification)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccess_sequence_of)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection::selectAlternateAccess_type::accessSelection_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection::selectAccess_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlternateAccessSelection::SelectAccess_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AccessResult)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Data)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::VariableAccessSpecification)
@@ -7234,29 +7234,29 @@ ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::VariableSpecification)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::Write_Response_sequence_of)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetVariableAccessAttributes_Request)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::TakeControl_Response)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReportPoolSemaphoreStatus_Response::listOfNamedTokens_type_sequence_of)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EventNotification::actionResult_type::successOrFailure_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EventNotification::ActionResult_type::SuccessOrFailure_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_EventNotification_impl)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EN_Additional_Detail_impl)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_DefineEventCondition_Request_impl)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventCondition_Request)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetEventConditionAttributes_Response::monitoredVariable_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetEventConditionAttributes_Response::groupPriorityOverride_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetEventConditionAttributes_Response::displayEnhancement_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_AlterEventConditionMonitoring_Request::changeDisplay_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::GetEventConditionAttributes_Response::MonitoredVariable_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_GetEventConditionAttributes_Response::DisplayEnhancement_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventAction_Request)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_DefineEventEnrollment_Request_impl)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::DeleteEventEnrollment_Request)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::eventConditionName_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::eventActionName_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::displayEnhancement_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlterEventEnrollment_Response::currentState_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_AlterEventEnrollment_Request::changeDisplay_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::EventConditionName_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::EventActionName_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EEAttributes::DisplayEnhancement_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlterEventEnrollment_Response::CurrentState_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::CS_AlterEventEnrollment_Request::ChangeDisplay_type)
 ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::RemoveEventConditionListReference_Error)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlterEventConditionListMonitoring_Request::priorityChange_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReadJournal_Request::rangeStartSpecification_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReadJournal_Request::rangeStopSpecification_type)
-ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EntryContent::entryForm_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::AlterEventConditionListMonitoring_Request::PriorityChange_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReadJournal_Request::RangeStartSpecification_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::ReadJournal_Request::RangeStopSpecification_type)
+ITU_T_CHOICE_REGESTRATE(ISO_9506_MMS_1::EntryContent::EntryForm_type)
 
 #ifdef _MSC_VER
 #pragma warning(pop)

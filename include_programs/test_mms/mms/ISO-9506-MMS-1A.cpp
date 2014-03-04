@@ -81,8 +81,8 @@ namespace ISO_9506_MMS_1A {
     }
 
 
-    const ObtainFile_Error ObtainFile_Error_source_file = 0;
-    const ObtainFile_Error ObtainFile_Error_destination_file = 1;
+    const ObtainFile_Error obtainFile_Error_source_file = 0;
+    const ObtainFile_Error obtainFile_Error_destination_file = 1;
 
     // sequence FileOpen-Request
 
@@ -302,8 +302,8 @@ namespace ISO_9506_MMS_1A {
     }
 
 
-    const FileRename_Error FileRename_Error_source_file = 0;
-    const FileRename_Error FileRename_Error_destination_file = 1;
+    const FileRename_Error fileRename_Error_source_file = 0;
+    const FileRename_Error fileRename_Error_destination_file = 1;
 
     // sequence FileDirectory-Request
 
@@ -348,11 +348,11 @@ namespace ISO_9506_MMS_1A {
     FileDirectory_Response::FileDirectory_Response() : listOfDirectoryEntry_() {
     };
 
-    FileDirectory_Response::FileDirectory_Response(const listOfDirectoryEntry_type& arg__listOfDirectoryEntry) :
+    FileDirectory_Response::FileDirectory_Response(const ListOfDirectoryEntry_type& arg__listOfDirectoryEntry) :
     listOfDirectoryEntry_(arg__listOfDirectoryEntry) {
     };
 
-    FileDirectory_Response::FileDirectory_Response(boost::shared_ptr< listOfDirectoryEntry_type> arg__listOfDirectoryEntry,
+    FileDirectory_Response::FileDirectory_Response(boost::shared_ptr< ListOfDirectoryEntry_type> arg__listOfDirectoryEntry,
             boost::shared_ptr< bool> arg__moreFollows) :
     listOfDirectoryEntry_(arg__listOfDirectoryEntry),
     moreFollows_(arg__moreFollows) {
@@ -370,19 +370,19 @@ namespace ISO_9506_MMS_1A {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
-    FileDirectory_Response::listOfDirectoryEntry_type& FileDirectory_Response::listOfDirectoryEntry() {
+    FileDirectory_Response::ListOfDirectoryEntry_type& FileDirectory_Response::listOfDirectoryEntry() {
         return *listOfDirectoryEntry_;
     }
 
-    const FileDirectory_Response::listOfDirectoryEntry_type& FileDirectory_Response::listOfDirectoryEntry() const {
+    const FileDirectory_Response::ListOfDirectoryEntry_type& FileDirectory_Response::listOfDirectoryEntry() const {
         return *listOfDirectoryEntry_;
     }
 
-    void FileDirectory_Response::listOfDirectoryEntry(const listOfDirectoryEntry_type& vl) {
+    void FileDirectory_Response::listOfDirectoryEntry(const ListOfDirectoryEntry_type& vl) {
         listOfDirectoryEntry_ = vl;
     }
 
-    void FileDirectory_Response::listOfDirectoryEntry(boost::shared_ptr< listOfDirectoryEntry_type> vl) {
+    void FileDirectory_Response::listOfDirectoryEntry(boost::shared_ptr< ListOfDirectoryEntry_type> vl) {
         listOfDirectoryEntry_ = vl;
     }
 

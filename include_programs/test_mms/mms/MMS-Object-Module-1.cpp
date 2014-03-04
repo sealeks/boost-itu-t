@@ -9,22 +9,22 @@
 
 namespace MMS_Object_Module_1 {
 
-    const LogicalStatus LogicalStatus_state_changes_allowed = 0;
-    const LogicalStatus LogicalStatus_no_state_changes_allowed = 1;
-    const LogicalStatus LogicalStatus_limited_services_permitted = 2;
-    const LogicalStatus LogicalStatus_support_services_allowed = 3;
+    const LogicalStatus logicalStatus_state_changes_allowed = 0;
+    const LogicalStatus logicalStatus_no_state_changes_allowed = 1;
+    const LogicalStatus logicalStatus_limited_services_permitted = 2;
+    const LogicalStatus logicalStatus_support_services_allowed = 3;
 
-    const PhysicalStatus PhysicalStatus_operational = 0;
-    const PhysicalStatus PhysicalStatus_partially_operational = 1;
-    const PhysicalStatus PhysicalStatus_inoperable = 2;
-    const PhysicalStatus PhysicalStatus_needs_commissioning = 3;
+    const PhysicalStatus physicalStatus_operational = 0;
+    const PhysicalStatus physicalStatus_partially_operational = 1;
+    const PhysicalStatus physicalStatus_inoperable = 2;
+    const PhysicalStatus physicalStatus_needs_commissioning = 3;
 
-    const VMDState VMDState_idle = 0;
-    const VMDState VMDState_loaded = 1;
-    const VMDState VMDState_ready = 2;
-    const VMDState VMDState_executing = 3;
-    const VMDState VMDState_motion_paused = 4;
-    const VMDState VMDState_manualInterventionRequired = 5;
+    const VMDState vMDState_idle = 0;
+    const VMDState vMDState_loaded = 1;
+    const VMDState vMDState_ready = 2;
+    const VMDState vMDState_executing = 3;
+    const VMDState vMDState_motion_paused = 4;
+    const VMDState vMDState_manualInterventionRequired = 5;
 
     // sequence ModifierStep
 
@@ -154,161 +154,161 @@ namespace MMS_Object_Module_1 {
     }
 
 
-    const ServiceSupportOptions ServiceSupportOptions_status = bitstring_type(true, 0);
-    const ServiceSupportOptions ServiceSupportOptions_getNameList = bitstring_type(true, 1);
-    const ServiceSupportOptions ServiceSupportOptions_identify = bitstring_type(true, 2);
-    const ServiceSupportOptions ServiceSupportOptions_rename = bitstring_type(true, 3);
-    const ServiceSupportOptions ServiceSupportOptions_read = bitstring_type(true, 4);
-    const ServiceSupportOptions ServiceSupportOptions_write = bitstring_type(true, 5);
-    const ServiceSupportOptions ServiceSupportOptions_getVariableAccessAttributes = bitstring_type(true, 6);
-    const ServiceSupportOptions ServiceSupportOptions_defineNamedVariable = bitstring_type(true, 7);
-    const ServiceSupportOptions ServiceSupportOptions_defineScatteredAccess = bitstring_type(true, 8);
-    const ServiceSupportOptions ServiceSupportOptions_getScatteredAccessAttributes = bitstring_type(true, 9);
-    const ServiceSupportOptions ServiceSupportOptions_deleteVariableAccess = bitstring_type(true, 10);
-    const ServiceSupportOptions ServiceSupportOptions_defineNamedVariableList = bitstring_type(true, 11);
-    const ServiceSupportOptions ServiceSupportOptions_getNamedVariableListAttributes = bitstring_type(true, 12);
-    const ServiceSupportOptions ServiceSupportOptions_deleteNamedVariableList = bitstring_type(true, 13);
-    const ServiceSupportOptions ServiceSupportOptions_defineNamedType = bitstring_type(true, 14);
-    const ServiceSupportOptions ServiceSupportOptions_getNamedTypeAttributes = bitstring_type(true, 15);
-    const ServiceSupportOptions ServiceSupportOptions_deleteNamedType = bitstring_type(true, 16);
-    const ServiceSupportOptions ServiceSupportOptions_input = bitstring_type(true, 17);
-    const ServiceSupportOptions ServiceSupportOptions_output = bitstring_type(true, 18);
-    const ServiceSupportOptions ServiceSupportOptions_takeControl = bitstring_type(true, 19);
-    const ServiceSupportOptions ServiceSupportOptions_relinquishControl = bitstring_type(true, 20);
-    const ServiceSupportOptions ServiceSupportOptions_defineSemaphore = bitstring_type(true, 21);
-    const ServiceSupportOptions ServiceSupportOptions_deleteSemaphore = bitstring_type(true, 22);
-    const ServiceSupportOptions ServiceSupportOptions_reportSemaphoreStatus = bitstring_type(true, 23);
-    const ServiceSupportOptions ServiceSupportOptions_reportPoolSemaphoreStatus = bitstring_type(true, 24);
-    const ServiceSupportOptions ServiceSupportOptions_reportSemaphoreEntryStatus = bitstring_type(true, 25);
-    const ServiceSupportOptions ServiceSupportOptions_initiateDownloadSequence = bitstring_type(true, 26);
-    const ServiceSupportOptions ServiceSupportOptions_downloadSegment = bitstring_type(true, 27);
-    const ServiceSupportOptions ServiceSupportOptions_terminateDownloadSequence = bitstring_type(true, 28);
-    const ServiceSupportOptions ServiceSupportOptions_initiateUploadSequence = bitstring_type(true, 29);
-    const ServiceSupportOptions ServiceSupportOptions_uploadSegment = bitstring_type(true, 30);
-    const ServiceSupportOptions ServiceSupportOptions_terminateUploadSequence = bitstring_type(true, 31);
-    const ServiceSupportOptions ServiceSupportOptions_requestDomainDownload = bitstring_type(true, 32);
-    const ServiceSupportOptions ServiceSupportOptions_requestDomainUpload = bitstring_type(true, 33);
-    const ServiceSupportOptions ServiceSupportOptions_loadDomainContent = bitstring_type(true, 34);
-    const ServiceSupportOptions ServiceSupportOptions_storeDomainContent = bitstring_type(true, 35);
-    const ServiceSupportOptions ServiceSupportOptions_deleteDomain = bitstring_type(true, 36);
-    const ServiceSupportOptions ServiceSupportOptions_getDomainAttributes = bitstring_type(true, 37);
-    const ServiceSupportOptions ServiceSupportOptions_createProgramInvocation = bitstring_type(true, 38);
-    const ServiceSupportOptions ServiceSupportOptions_deleteProgramInvocation = bitstring_type(true, 39);
-    const ServiceSupportOptions ServiceSupportOptions_start = bitstring_type(true, 40);
-    const ServiceSupportOptions ServiceSupportOptions_stop = bitstring_type(true, 41);
-    const ServiceSupportOptions ServiceSupportOptions_resume = bitstring_type(true, 42);
-    const ServiceSupportOptions ServiceSupportOptions_reset = bitstring_type(true, 43);
-    const ServiceSupportOptions ServiceSupportOptions_kill = bitstring_type(true, 44);
-    const ServiceSupportOptions ServiceSupportOptions_getProgramInvocationAttributes = bitstring_type(true, 45);
-    const ServiceSupportOptions ServiceSupportOptions_obtainFile = bitstring_type(true, 46);
-    const ServiceSupportOptions ServiceSupportOptions_defineEventCondition = bitstring_type(true, 47);
-    const ServiceSupportOptions ServiceSupportOptions_deleteEventCondition = bitstring_type(true, 48);
-    const ServiceSupportOptions ServiceSupportOptions_getEventConditionAttributes = bitstring_type(true, 49);
-    const ServiceSupportOptions ServiceSupportOptions_reportEventConditionStatus = bitstring_type(true, 50);
-    const ServiceSupportOptions ServiceSupportOptions_alterEventConditionMonitoring = bitstring_type(true, 51);
-    const ServiceSupportOptions ServiceSupportOptions_triggerEvent = bitstring_type(true, 52);
-    const ServiceSupportOptions ServiceSupportOptions_defineEventAction = bitstring_type(true, 53);
-    const ServiceSupportOptions ServiceSupportOptions_deleteEventAction = bitstring_type(true, 54);
-    const ServiceSupportOptions ServiceSupportOptions_getEventActionAttributes = bitstring_type(true, 55);
-    const ServiceSupportOptions ServiceSupportOptions_reportEventActionStatus = bitstring_type(true, 56);
-    const ServiceSupportOptions ServiceSupportOptions_defineEventEnrollment = bitstring_type(true, 57);
-    const ServiceSupportOptions ServiceSupportOptions_deleteEventEnrollment = bitstring_type(true, 58);
-    const ServiceSupportOptions ServiceSupportOptions_alterEventEnrollment = bitstring_type(true, 59);
-    const ServiceSupportOptions ServiceSupportOptions_reportEventEnrollmentStatus = bitstring_type(true, 60);
-    const ServiceSupportOptions ServiceSupportOptions_getEventEnrollmentAttributes = bitstring_type(true, 61);
-    const ServiceSupportOptions ServiceSupportOptions_acknowledgeEventNotification = bitstring_type(true, 62);
-    const ServiceSupportOptions ServiceSupportOptions_getAlarmSummary = bitstring_type(true, 63);
-    const ServiceSupportOptions ServiceSupportOptions_getAlarmEnrollmentSummary = bitstring_type(true, 64);
-    const ServiceSupportOptions ServiceSupportOptions_readJournal = bitstring_type(true, 65);
-    const ServiceSupportOptions ServiceSupportOptions_writeJournal = bitstring_type(true, 66);
-    const ServiceSupportOptions ServiceSupportOptions_initializeJournal = bitstring_type(true, 67);
-    const ServiceSupportOptions ServiceSupportOptions_reportJournalStatus = bitstring_type(true, 68);
-    const ServiceSupportOptions ServiceSupportOptions_createJournal = bitstring_type(true, 69);
-    const ServiceSupportOptions ServiceSupportOptions_deleteJournal = bitstring_type(true, 70);
-    const ServiceSupportOptions ServiceSupportOptions_getCapabilityList = bitstring_type(true, 71);
-    const ServiceSupportOptions ServiceSupportOptions_fileOpen = bitstring_type(true, 72);
-    const ServiceSupportOptions ServiceSupportOptions_fileRead = bitstring_type(true, 73);
-    const ServiceSupportOptions ServiceSupportOptions_fileClose = bitstring_type(true, 74);
-    const ServiceSupportOptions ServiceSupportOptions_fileRename = bitstring_type(true, 75);
-    const ServiceSupportOptions ServiceSupportOptions_fileDelete = bitstring_type(true, 76);
-    const ServiceSupportOptions ServiceSupportOptions_fileDirectory = bitstring_type(true, 77);
-    const ServiceSupportOptions ServiceSupportOptions_unsolicitedStatus = bitstring_type(true, 78);
-    const ServiceSupportOptions ServiceSupportOptions_informationReport = bitstring_type(true, 79);
-    const ServiceSupportOptions ServiceSupportOptions_eventNotification = bitstring_type(true, 80);
-    const ServiceSupportOptions ServiceSupportOptions_attachToEventCondition = bitstring_type(true, 81);
-    const ServiceSupportOptions ServiceSupportOptions_attachToSemaphore = bitstring_type(true, 82);
-    const ServiceSupportOptions ServiceSupportOptions_conclude = bitstring_type(true, 83);
-    const ServiceSupportOptions ServiceSupportOptions_cancel = bitstring_type(true, 84);
-    const ServiceSupportOptions ServiceSupportOptions_getDataExchangeAttributes = bitstring_type(true, 85);
-    const ServiceSupportOptions ServiceSupportOptions_exchangeData = bitstring_type(true, 86);
-    const ServiceSupportOptions ServiceSupportOptions_defineAccessControlList = bitstring_type(true, 87);
-    const ServiceSupportOptions ServiceSupportOptions_getAccessControlListAttributes = bitstring_type(true, 88);
-    const ServiceSupportOptions ServiceSupportOptions_reportAccessControlledObjects = bitstring_type(true, 89);
-    const ServiceSupportOptions ServiceSupportOptions_deleteAccessControlList = bitstring_type(true, 90);
-    const ServiceSupportOptions ServiceSupportOptions_alterAccessControl = bitstring_type(true, 91);
-    const ServiceSupportOptions ServiceSupportOptions_reconfigureProgramInvocation = bitstring_type(true, 92);
+    const ServiceSupportOptions serviceSupportOptions_status = bitstring_type(true, 0);
+    const ServiceSupportOptions serviceSupportOptions_getNameList = bitstring_type(true, 1);
+    const ServiceSupportOptions serviceSupportOptions_identify = bitstring_type(true, 2);
+    const ServiceSupportOptions serviceSupportOptions_rename = bitstring_type(true, 3);
+    const ServiceSupportOptions serviceSupportOptions_read = bitstring_type(true, 4);
+    const ServiceSupportOptions serviceSupportOptions_write = bitstring_type(true, 5);
+    const ServiceSupportOptions serviceSupportOptions_getVariableAccessAttributes = bitstring_type(true, 6);
+    const ServiceSupportOptions serviceSupportOptions_defineNamedVariable = bitstring_type(true, 7);
+    const ServiceSupportOptions serviceSupportOptions_defineScatteredAccess = bitstring_type(true, 8);
+    const ServiceSupportOptions serviceSupportOptions_getScatteredAccessAttributes = bitstring_type(true, 9);
+    const ServiceSupportOptions serviceSupportOptions_deleteVariableAccess = bitstring_type(true, 10);
+    const ServiceSupportOptions serviceSupportOptions_defineNamedVariableList = bitstring_type(true, 11);
+    const ServiceSupportOptions serviceSupportOptions_getNamedVariableListAttributes = bitstring_type(true, 12);
+    const ServiceSupportOptions serviceSupportOptions_deleteNamedVariableList = bitstring_type(true, 13);
+    const ServiceSupportOptions serviceSupportOptions_defineNamedType = bitstring_type(true, 14);
+    const ServiceSupportOptions serviceSupportOptions_getNamedTypeAttributes = bitstring_type(true, 15);
+    const ServiceSupportOptions serviceSupportOptions_deleteNamedType = bitstring_type(true, 16);
+    const ServiceSupportOptions serviceSupportOptions_input = bitstring_type(true, 17);
+    const ServiceSupportOptions serviceSupportOptions_output = bitstring_type(true, 18);
+    const ServiceSupportOptions serviceSupportOptions_takeControl = bitstring_type(true, 19);
+    const ServiceSupportOptions serviceSupportOptions_relinquishControl = bitstring_type(true, 20);
+    const ServiceSupportOptions serviceSupportOptions_defineSemaphore = bitstring_type(true, 21);
+    const ServiceSupportOptions serviceSupportOptions_deleteSemaphore = bitstring_type(true, 22);
+    const ServiceSupportOptions serviceSupportOptions_reportSemaphoreStatus = bitstring_type(true, 23);
+    const ServiceSupportOptions serviceSupportOptions_reportPoolSemaphoreStatus = bitstring_type(true, 24);
+    const ServiceSupportOptions serviceSupportOptions_reportSemaphoreEntryStatus = bitstring_type(true, 25);
+    const ServiceSupportOptions serviceSupportOptions_initiateDownloadSequence = bitstring_type(true, 26);
+    const ServiceSupportOptions serviceSupportOptions_downloadSegment = bitstring_type(true, 27);
+    const ServiceSupportOptions serviceSupportOptions_terminateDownloadSequence = bitstring_type(true, 28);
+    const ServiceSupportOptions serviceSupportOptions_initiateUploadSequence = bitstring_type(true, 29);
+    const ServiceSupportOptions serviceSupportOptions_uploadSegment = bitstring_type(true, 30);
+    const ServiceSupportOptions serviceSupportOptions_terminateUploadSequence = bitstring_type(true, 31);
+    const ServiceSupportOptions serviceSupportOptions_requestDomainDownload = bitstring_type(true, 32);
+    const ServiceSupportOptions serviceSupportOptions_requestDomainUpload = bitstring_type(true, 33);
+    const ServiceSupportOptions serviceSupportOptions_loadDomainContent = bitstring_type(true, 34);
+    const ServiceSupportOptions serviceSupportOptions_storeDomainContent = bitstring_type(true, 35);
+    const ServiceSupportOptions serviceSupportOptions_deleteDomain = bitstring_type(true, 36);
+    const ServiceSupportOptions serviceSupportOptions_getDomainAttributes = bitstring_type(true, 37);
+    const ServiceSupportOptions serviceSupportOptions_createProgramInvocation = bitstring_type(true, 38);
+    const ServiceSupportOptions serviceSupportOptions_deleteProgramInvocation = bitstring_type(true, 39);
+    const ServiceSupportOptions serviceSupportOptions_start = bitstring_type(true, 40);
+    const ServiceSupportOptions serviceSupportOptions_stop = bitstring_type(true, 41);
+    const ServiceSupportOptions serviceSupportOptions_resume = bitstring_type(true, 42);
+    const ServiceSupportOptions serviceSupportOptions_reset = bitstring_type(true, 43);
+    const ServiceSupportOptions serviceSupportOptions_kill = bitstring_type(true, 44);
+    const ServiceSupportOptions serviceSupportOptions_getProgramInvocationAttributes = bitstring_type(true, 45);
+    const ServiceSupportOptions serviceSupportOptions_obtainFile = bitstring_type(true, 46);
+    const ServiceSupportOptions serviceSupportOptions_defineEventCondition = bitstring_type(true, 47);
+    const ServiceSupportOptions serviceSupportOptions_deleteEventCondition = bitstring_type(true, 48);
+    const ServiceSupportOptions serviceSupportOptions_getEventConditionAttributes = bitstring_type(true, 49);
+    const ServiceSupportOptions serviceSupportOptions_reportEventConditionStatus = bitstring_type(true, 50);
+    const ServiceSupportOptions serviceSupportOptions_alterEventConditionMonitoring = bitstring_type(true, 51);
+    const ServiceSupportOptions serviceSupportOptions_triggerEvent = bitstring_type(true, 52);
+    const ServiceSupportOptions serviceSupportOptions_defineEventAction = bitstring_type(true, 53);
+    const ServiceSupportOptions serviceSupportOptions_deleteEventAction = bitstring_type(true, 54);
+    const ServiceSupportOptions serviceSupportOptions_getEventActionAttributes = bitstring_type(true, 55);
+    const ServiceSupportOptions serviceSupportOptions_reportEventActionStatus = bitstring_type(true, 56);
+    const ServiceSupportOptions serviceSupportOptions_defineEventEnrollment = bitstring_type(true, 57);
+    const ServiceSupportOptions serviceSupportOptions_deleteEventEnrollment = bitstring_type(true, 58);
+    const ServiceSupportOptions serviceSupportOptions_alterEventEnrollment = bitstring_type(true, 59);
+    const ServiceSupportOptions serviceSupportOptions_reportEventEnrollmentStatus = bitstring_type(true, 60);
+    const ServiceSupportOptions serviceSupportOptions_getEventEnrollmentAttributes = bitstring_type(true, 61);
+    const ServiceSupportOptions serviceSupportOptions_acknowledgeEventNotification = bitstring_type(true, 62);
+    const ServiceSupportOptions serviceSupportOptions_getAlarmSummary = bitstring_type(true, 63);
+    const ServiceSupportOptions serviceSupportOptions_getAlarmEnrollmentSummary = bitstring_type(true, 64);
+    const ServiceSupportOptions serviceSupportOptions_readJournal = bitstring_type(true, 65);
+    const ServiceSupportOptions serviceSupportOptions_writeJournal = bitstring_type(true, 66);
+    const ServiceSupportOptions serviceSupportOptions_initializeJournal = bitstring_type(true, 67);
+    const ServiceSupportOptions serviceSupportOptions_reportJournalStatus = bitstring_type(true, 68);
+    const ServiceSupportOptions serviceSupportOptions_createJournal = bitstring_type(true, 69);
+    const ServiceSupportOptions serviceSupportOptions_deleteJournal = bitstring_type(true, 70);
+    const ServiceSupportOptions serviceSupportOptions_getCapabilityList = bitstring_type(true, 71);
+    const ServiceSupportOptions serviceSupportOptions_fileOpen = bitstring_type(true, 72);
+    const ServiceSupportOptions serviceSupportOptions_fileRead = bitstring_type(true, 73);
+    const ServiceSupportOptions serviceSupportOptions_fileClose = bitstring_type(true, 74);
+    const ServiceSupportOptions serviceSupportOptions_fileRename = bitstring_type(true, 75);
+    const ServiceSupportOptions serviceSupportOptions_fileDelete = bitstring_type(true, 76);
+    const ServiceSupportOptions serviceSupportOptions_fileDirectory = bitstring_type(true, 77);
+    const ServiceSupportOptions serviceSupportOptions_unsolicitedStatus = bitstring_type(true, 78);
+    const ServiceSupportOptions serviceSupportOptions_informationReport = bitstring_type(true, 79);
+    const ServiceSupportOptions serviceSupportOptions_eventNotification = bitstring_type(true, 80);
+    const ServiceSupportOptions serviceSupportOptions_attachToEventCondition = bitstring_type(true, 81);
+    const ServiceSupportOptions serviceSupportOptions_attachToSemaphore = bitstring_type(true, 82);
+    const ServiceSupportOptions serviceSupportOptions_conclude = bitstring_type(true, 83);
+    const ServiceSupportOptions serviceSupportOptions_cancel = bitstring_type(true, 84);
+    const ServiceSupportOptions serviceSupportOptions_getDataExchangeAttributes = bitstring_type(true, 85);
+    const ServiceSupportOptions serviceSupportOptions_exchangeData = bitstring_type(true, 86);
+    const ServiceSupportOptions serviceSupportOptions_defineAccessControlList = bitstring_type(true, 87);
+    const ServiceSupportOptions serviceSupportOptions_getAccessControlListAttributes = bitstring_type(true, 88);
+    const ServiceSupportOptions serviceSupportOptions_reportAccessControlledObjects = bitstring_type(true, 89);
+    const ServiceSupportOptions serviceSupportOptions_deleteAccessControlList = bitstring_type(true, 90);
+    const ServiceSupportOptions serviceSupportOptions_alterAccessControl = bitstring_type(true, 91);
+    const ServiceSupportOptions serviceSupportOptions_reconfigureProgramInvocation = bitstring_type(true, 92);
 
-    const ParameterSupportOptions ParameterSupportOptions_str1 = bitstring_type(true, 0);
-    const ParameterSupportOptions ParameterSupportOptions_str2 = bitstring_type(true, 1);
-    const ParameterSupportOptions ParameterSupportOptions_vnam = bitstring_type(true, 2);
-    const ParameterSupportOptions ParameterSupportOptions_valt = bitstring_type(true, 3);
-    const ParameterSupportOptions ParameterSupportOptions_vadr = bitstring_type(true, 4);
-    const ParameterSupportOptions ParameterSupportOptions_vsca = bitstring_type(true, 5);
-    const ParameterSupportOptions ParameterSupportOptions_tpy = bitstring_type(true, 6);
-    const ParameterSupportOptions ParameterSupportOptions_vlis = bitstring_type(true, 7);
-    const ParameterSupportOptions ParameterSupportOptions_cei = bitstring_type(true, 10);
-    const ParameterSupportOptions ParameterSupportOptions_aco = bitstring_type(true, 11);
-    const ParameterSupportOptions ParameterSupportOptions_sem = bitstring_type(true, 12);
-    const ParameterSupportOptions ParameterSupportOptions_csr = bitstring_type(true, 13);
-    const ParameterSupportOptions ParameterSupportOptions_csnc = bitstring_type(true, 14);
-    const ParameterSupportOptions ParameterSupportOptions_csplc = bitstring_type(true, 15);
-    const ParameterSupportOptions ParameterSupportOptions_cspi = bitstring_type(true, 16);
-    const ParameterSupportOptions ParameterSupportOptions_char = bitstring_type(true, 17);
+    const ParameterSupportOptions parameterSupportOptions_str1 = bitstring_type(true, 0);
+    const ParameterSupportOptions parameterSupportOptions_str2 = bitstring_type(true, 1);
+    const ParameterSupportOptions parameterSupportOptions_vnam = bitstring_type(true, 2);
+    const ParameterSupportOptions parameterSupportOptions_valt = bitstring_type(true, 3);
+    const ParameterSupportOptions parameterSupportOptions_vadr = bitstring_type(true, 4);
+    const ParameterSupportOptions parameterSupportOptions_vsca = bitstring_type(true, 5);
+    const ParameterSupportOptions parameterSupportOptions_tpy = bitstring_type(true, 6);
+    const ParameterSupportOptions parameterSupportOptions_vlis = bitstring_type(true, 7);
+    const ParameterSupportOptions parameterSupportOptions_cei = bitstring_type(true, 10);
+    const ParameterSupportOptions parameterSupportOptions_aco = bitstring_type(true, 11);
+    const ParameterSupportOptions parameterSupportOptions_sem = bitstring_type(true, 12);
+    const ParameterSupportOptions parameterSupportOptions_csr = bitstring_type(true, 13);
+    const ParameterSupportOptions parameterSupportOptions_csnc = bitstring_type(true, 14);
+    const ParameterSupportOptions parameterSupportOptions_csplc = bitstring_type(true, 15);
+    const ParameterSupportOptions parameterSupportOptions_cspi = bitstring_type(true, 16);
+    const ParameterSupportOptions parameterSupportOptions_char = bitstring_type(true, 17);
 
-    const AdditionalSupportOptions AdditionalSupportOptions_vMDStop = bitstring_type(true, 0);
-    const AdditionalSupportOptions AdditionalSupportOptions_vMDReset = bitstring_type(true, 1);
-    const AdditionalSupportOptions AdditionalSupportOptions_select = bitstring_type(true, 2);
-    const AdditionalSupportOptions AdditionalSupportOptions_alterProgramInvocationAttributes = bitstring_type(true, 3);
-    const AdditionalSupportOptions AdditionalSupportOptions_initiateUnitControlLoad = bitstring_type(true, 4);
-    const AdditionalSupportOptions AdditionalSupportOptions_unitControlLoadSegment = bitstring_type(true, 5);
-    const AdditionalSupportOptions AdditionalSupportOptions_unitControlUpload = bitstring_type(true, 6);
-    const AdditionalSupportOptions AdditionalSupportOptions_startUnitControl = bitstring_type(true, 7);
-    const AdditionalSupportOptions AdditionalSupportOptions_stopUnitControl = bitstring_type(true, 8);
-    const AdditionalSupportOptions AdditionalSupportOptions_createUnitControl = bitstring_type(true, 9);
-    const AdditionalSupportOptions AdditionalSupportOptions_addToUnitControl = bitstring_type(true, 10);
-    const AdditionalSupportOptions AdditionalSupportOptions_removeFromUnitControl = bitstring_type(true, 11);
-    const AdditionalSupportOptions AdditionalSupportOptions_getUnitControlAttributes = bitstring_type(true, 12);
-    const AdditionalSupportOptions AdditionalSupportOptions_loadUnitControlFromFile = bitstring_type(true, 13);
-    const AdditionalSupportOptions AdditionalSupportOptions_storeUnitControlToFile = bitstring_type(true, 14);
-    const AdditionalSupportOptions AdditionalSupportOptions_deleteUnitControl = bitstring_type(true, 15);
-    const AdditionalSupportOptions AdditionalSupportOptions_defineEventConditionList = bitstring_type(true, 16);
-    const AdditionalSupportOptions AdditionalSupportOptions_deleteEventConditionList = bitstring_type(true, 17);
-    const AdditionalSupportOptions AdditionalSupportOptions_addEventConditionListReference = bitstring_type(true, 18);
-    const AdditionalSupportOptions AdditionalSupportOptions_removeEventConditionListReference = bitstring_type(true, 19);
-    const AdditionalSupportOptions AdditionalSupportOptions_getEventConditionListAttributes = bitstring_type(true, 20);
-    const AdditionalSupportOptions AdditionalSupportOptions_reportEventConditionListStatus = bitstring_type(true, 21);
-    const AdditionalSupportOptions AdditionalSupportOptions_alterEventConditionListMonitoring = bitstring_type(true, 22);
+    const AdditionalSupportOptions additionalSupportOptions_vMDStop = bitstring_type(true, 0);
+    const AdditionalSupportOptions additionalSupportOptions_vMDReset = bitstring_type(true, 1);
+    const AdditionalSupportOptions additionalSupportOptions_select = bitstring_type(true, 2);
+    const AdditionalSupportOptions additionalSupportOptions_alterProgramInvocationAttributes = bitstring_type(true, 3);
+    const AdditionalSupportOptions additionalSupportOptions_initiateUnitControlLoad = bitstring_type(true, 4);
+    const AdditionalSupportOptions additionalSupportOptions_unitControlLoadSegment = bitstring_type(true, 5);
+    const AdditionalSupportOptions additionalSupportOptions_unitControlUpload = bitstring_type(true, 6);
+    const AdditionalSupportOptions additionalSupportOptions_startUnitControl = bitstring_type(true, 7);
+    const AdditionalSupportOptions additionalSupportOptions_stopUnitControl = bitstring_type(true, 8);
+    const AdditionalSupportOptions additionalSupportOptions_createUnitControl = bitstring_type(true, 9);
+    const AdditionalSupportOptions additionalSupportOptions_addToUnitControl = bitstring_type(true, 10);
+    const AdditionalSupportOptions additionalSupportOptions_removeFromUnitControl = bitstring_type(true, 11);
+    const AdditionalSupportOptions additionalSupportOptions_getUnitControlAttributes = bitstring_type(true, 12);
+    const AdditionalSupportOptions additionalSupportOptions_loadUnitControlFromFile = bitstring_type(true, 13);
+    const AdditionalSupportOptions additionalSupportOptions_storeUnitControlToFile = bitstring_type(true, 14);
+    const AdditionalSupportOptions additionalSupportOptions_deleteUnitControl = bitstring_type(true, 15);
+    const AdditionalSupportOptions additionalSupportOptions_defineEventConditionList = bitstring_type(true, 16);
+    const AdditionalSupportOptions additionalSupportOptions_deleteEventConditionList = bitstring_type(true, 17);
+    const AdditionalSupportOptions additionalSupportOptions_addEventConditionListReference = bitstring_type(true, 18);
+    const AdditionalSupportOptions additionalSupportOptions_removeEventConditionListReference = bitstring_type(true, 19);
+    const AdditionalSupportOptions additionalSupportOptions_getEventConditionListAttributes = bitstring_type(true, 20);
+    const AdditionalSupportOptions additionalSupportOptions_reportEventConditionListStatus = bitstring_type(true, 21);
+    const AdditionalSupportOptions additionalSupportOptions_alterEventConditionListMonitoring = bitstring_type(true, 22);
 
-    const AdditionalCBBOptions AdditionalCBBOptions_des = bitstring_type(true, 0);
-    const AdditionalCBBOptions AdditionalCBBOptions_dei = bitstring_type(true, 1);
-    const AdditionalCBBOptions AdditionalCBBOptions_recl = bitstring_type(true, 2);
+    const AdditionalCBBOptions additionalCBBOptions_des = bitstring_type(true, 0);
+    const AdditionalCBBOptions additionalCBBOptions_dei = bitstring_type(true, 1);
+    const AdditionalCBBOptions additionalCBBOptions_recl = bitstring_type(true, 2);
 
     // choice AccessCondition
 
-    void AccessCondition::user_type::none(const null_type& vl) {
-        set<null_type>(new null_type(vl), user_type_none);
+    void AccessCondition::User_type::none(const null_type& vl) {
+        set<null_type>(new null_type(vl), User_type_none);
     }
 
-    template<> void AccessCondition::user_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void AccessCondition::User_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
-            case user_type_association:
+            case User_type_association:
             {
-                ITU_T_BIND_TAG(value<MMS_Environment_1::ApplicationReference > (false, user_type_association));
+                ITU_T_BIND_TAG(value<MMS_Environment_1::ApplicationReference > (false, User_type_association));
                 break;
             }
-            case user_type_none:
+            case User_type_none:
             {
-                ITU_T_BIND_TAG(value<null_type > (false, user_type_none));
+                ITU_T_BIND_TAG(value<null_type > (false, User_type_none));
                 break;
             }
             default:
@@ -317,7 +317,7 @@ namespace MMS_Object_Module_1 {
         }
     }
 
-    template<> void AccessCondition::user_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void AccessCondition::User_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
             case 0x0:
@@ -354,9 +354,9 @@ namespace MMS_Object_Module_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<MMS_Environment_1::ApplicationReference > (true, user_type_association))) return;
+                if (ITU_T_BIND_TAG(value<MMS_Environment_1::ApplicationReference > (true, User_type_association))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<null_type > (true, user_type_none))) return;
+                if (ITU_T_BIND_TAG(value<null_type > (true, User_type_none))) return;
                 else free();
             }
         }
@@ -384,7 +384,7 @@ namespace MMS_Object_Module_1 {
             }
             case AccessCondition_user:
             {
-                ITU_T_CHOICE_TAG(value<user_type > (false, AccessCondition_user), 2);
+                ITU_T_CHOICE_TAG(value<User_type > (false, AccessCondition_user), 2);
                 break;
             }
             case AccessCondition_password:
@@ -394,12 +394,12 @@ namespace MMS_Object_Module_1 {
             }
             case AccessCondition_joint:
             {
-                ITU_T_IMPLICIT_TAG(value<joint_type > (false, AccessCondition_joint), 4);
+                ITU_T_IMPLICIT_TAG(value<Joint_type > (false, AccessCondition_joint), 4);
                 break;
             }
             case AccessCondition_alternate:
             {
-                ITU_T_IMPLICIT_TAG(value<alternate_type > (false, AccessCondition_alternate), 5);
+                ITU_T_IMPLICIT_TAG(value<Alternate_type > (false, AccessCondition_alternate), 5);
                 break;
             }
             default:
@@ -444,7 +444,7 @@ namespace MMS_Object_Module_1 {
                     }
                     case 2:
                     {
-                        if (ITU_T_CHOICE_TAG(value<user_type > (true, AccessCondition_user), 2)) return;
+                        if (ITU_T_CHOICE_TAG(value<User_type > (true, AccessCondition_user), 2)) return;
                         else free();
                         break;
                     }
@@ -456,13 +456,13 @@ namespace MMS_Object_Module_1 {
                     }
                     case 4:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<joint_type > (true, AccessCondition_joint), 4)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Joint_type > (true, AccessCondition_joint), 4)) return;
                         else free();
                         break;
                     }
                     case 5:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<alternate_type > (true, AccessCondition_alternate), 5)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Alternate_type > (true, AccessCondition_alternate), 5)) return;
                         else free();
                         break;
                     }
@@ -486,47 +486,47 @@ namespace MMS_Object_Module_1 {
     }
 
 
-    const DomainState DomainState_non_existent = 0;
-    const DomainState DomainState_loading = 1;
-    const DomainState DomainState_ready = 2;
-    const DomainState DomainState_in_use = 3;
-    const DomainState DomainState_complete = 4;
-    const DomainState DomainState_incomplete = 5;
-    const DomainState DomainState_d1 = 7;
-    const DomainState DomainState_d2 = 8;
-    const DomainState DomainState_d3 = 9;
-    const DomainState DomainState_d4 = 10;
-    const DomainState DomainState_d5 = 11;
-    const DomainState DomainState_d6 = 12;
-    const DomainState DomainState_d7 = 13;
-    const DomainState DomainState_d8 = 14;
-    const DomainState DomainState_d9 = 15;
+    const DomainState domainState_non_existent = 0;
+    const DomainState domainState_loading = 1;
+    const DomainState domainState_ready = 2;
+    const DomainState domainState_in_use = 3;
+    const DomainState domainState_complete = 4;
+    const DomainState domainState_incomplete = 5;
+    const DomainState domainState_d1 = 7;
+    const DomainState domainState_d2 = 8;
+    const DomainState domainState_d3 = 9;
+    const DomainState domainState_d4 = 10;
+    const DomainState domainState_d5 = 11;
+    const DomainState domainState_d6 = 12;
+    const DomainState domainState_d7 = 13;
+    const DomainState domainState_d8 = 14;
+    const DomainState domainState_d9 = 15;
 
-    const ULState ULState_non_existent = 0;
-    const ULState ULState_uploading = 1;
-    const ULState ULState_uploaded = 2;
-    const ULState ULState_u1 = 3;
-    const ULState ULState_u2 = 4;
-    const ULState ULState_u3 = 5;
-    const ULState ULState_u4 = 6;
+    const ULState uLState_non_existent = 0;
+    const ULState uLState_uploading = 1;
+    const ULState uLState_uploaded = 2;
+    const ULState uLState_u1 = 3;
+    const ULState uLState_u2 = 4;
+    const ULState uLState_u3 = 5;
+    const ULState uLState_u4 = 6;
 
-    const ProgramInvocationState ProgramInvocationState_non_existent = 0;
-    const ProgramInvocationState ProgramInvocationState_unrunnable = 1;
-    const ProgramInvocationState ProgramInvocationState_idle = 2;
-    const ProgramInvocationState ProgramInvocationState_running = 3;
-    const ProgramInvocationState ProgramInvocationState_stopped = 4;
-    const ProgramInvocationState ProgramInvocationState_starting = 5;
-    const ProgramInvocationState ProgramInvocationState_stopping = 6;
-    const ProgramInvocationState ProgramInvocationState_resuming = 7;
-    const ProgramInvocationState ProgramInvocationState_resetting = 8;
+    const ProgramInvocationState programInvocationState_non_existent = 0;
+    const ProgramInvocationState programInvocationState_unrunnable = 1;
+    const ProgramInvocationState programInvocationState_idle = 2;
+    const ProgramInvocationState programInvocationState_running = 3;
+    const ProgramInvocationState programInvocationState_stopped = 4;
+    const ProgramInvocationState programInvocationState_starting = 5;
+    const ProgramInvocationState programInvocationState_stopping = 6;
+    const ProgramInvocationState programInvocationState_resuming = 7;
+    const ProgramInvocationState programInvocationState_resetting = 8;
 
-    const Control_State Control_State_normal = 0;
-    const Control_State Control_State_controlling = 1;
-    const Control_State Control_State_controlled = 2;
+    const Control_State control_State_normal = 0;
+    const Control_State control_State_controlling = 1;
+    const Control_State control_State_controlled = 2;
 
-    const Running_Mode Running_Mode_free_run = 0;
-    const Running_Mode Running_Mode_cycle_limited = 1;
-    const Running_Mode Running_Mode_step_limited = 2;
+    const Running_Mode running_Mode_free_run = 0;
+    const Running_Mode running_Mode_cycle_limited = 1;
+    const Running_Mode running_Mode_step_limited = 2;
 
     // choice Address
 
@@ -627,16 +627,16 @@ namespace MMS_Object_Module_1 {
 
     // choice TypeDescription
 
-    TypeDescription::array_type::array_type() : numberOfElements_(), elementType_() {
+    TypeDescription::Array_type::Array_type() : numberOfElements_(), elementType_() {
     };
 
-    TypeDescription::array_type::array_type(const ISO_9506_MMS_1::Unsigned32& arg__numberOfElements,
+    TypeDescription::Array_type::Array_type(const ISO_9506_MMS_1::Unsigned32& arg__numberOfElements,
             const ISO_9506_MMS_1::TypeSpecification& arg__elementType) :
     numberOfElements_(arg__numberOfElements),
     elementType_(arg__elementType) {
     };
 
-    TypeDescription::array_type::array_type(boost::shared_ptr< bool> arg__packed,
+    TypeDescription::Array_type::Array_type(boost::shared_ptr< bool> arg__packed,
             boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__numberOfElements,
             boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__elementType) :
     packed_(arg__packed),
@@ -644,213 +644,213 @@ namespace MMS_Object_Module_1 {
     elementType_(arg__elementType) {
     };
 
-    const bool TypeDescription::array_type::packed__default = false;
+    const bool TypeDescription::Array_type::packed__default = false;
 
-    template<> void TypeDescription::array_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void TypeDescription::Array_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(packed_, 0);
         ITU_T_IMPLICIT_TAG(numberOfElements_, 1);
         ITU_T_CHOICE_TAG(elementType_, 2);
     }
 
-    template<> void TypeDescription::array_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void TypeDescription::Array_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(packed_, 0);
         ITU_T_IMPLICIT_TAG(numberOfElements_, 1);
         ITU_T_CHOICE_TAG(elementType_, 2);
     }
 
-    const bool& TypeDescription::array_type::packed() const {
+    const bool& TypeDescription::Array_type::packed() const {
         return *packed_;
     }
 
-    void TypeDescription::array_type::packed(const bool& vl) {
+    void TypeDescription::Array_type::packed(const bool& vl) {
         packed_ = vl;
     }
 
-    void TypeDescription::array_type::packed(boost::shared_ptr< bool> vl) {
+    void TypeDescription::Array_type::packed(boost::shared_ptr< bool> vl) {
         packed_ = vl;
     }
 
-    ISO_9506_MMS_1::Unsigned32& TypeDescription::array_type::numberOfElements() {
+    ISO_9506_MMS_1::Unsigned32& TypeDescription::Array_type::numberOfElements() {
         return *numberOfElements_;
     }
 
-    const ISO_9506_MMS_1::Unsigned32& TypeDescription::array_type::numberOfElements() const {
+    const ISO_9506_MMS_1::Unsigned32& TypeDescription::Array_type::numberOfElements() const {
         return *numberOfElements_;
     }
 
-    void TypeDescription::array_type::numberOfElements(const ISO_9506_MMS_1::Unsigned32& vl) {
+    void TypeDescription::Array_type::numberOfElements(const ISO_9506_MMS_1::Unsigned32& vl) {
         numberOfElements_ = vl;
     }
 
-    void TypeDescription::array_type::numberOfElements(boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> vl) {
+    void TypeDescription::Array_type::numberOfElements(boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> vl) {
         numberOfElements_ = vl;
     }
 
-    ISO_9506_MMS_1::TypeSpecification& TypeDescription::array_type::elementType() {
+    ISO_9506_MMS_1::TypeSpecification& TypeDescription::Array_type::elementType() {
         return *elementType_;
     }
 
-    const ISO_9506_MMS_1::TypeSpecification& TypeDescription::array_type::elementType() const {
+    const ISO_9506_MMS_1::TypeSpecification& TypeDescription::Array_type::elementType() const {
         return *elementType_;
     }
 
-    void TypeDescription::array_type::elementType(const ISO_9506_MMS_1::TypeSpecification& vl) {
+    void TypeDescription::Array_type::elementType(const ISO_9506_MMS_1::TypeSpecification& vl) {
         elementType_ = vl;
     }
 
-    void TypeDescription::array_type::elementType(boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> vl) {
+    void TypeDescription::Array_type::elementType(boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> vl) {
         elementType_ = vl;
     }
 
-    TypeDescription::structure_type::structure_type() : components_() {
+    TypeDescription::Structure_type::Structure_type() : components_() {
     };
 
-    TypeDescription::structure_type::structure_type(const components_type& arg__components) :
+    TypeDescription::Structure_type::Structure_type(const Components_type& arg__components) :
     components_(arg__components) {
     };
 
-    TypeDescription::structure_type::structure_type(boost::shared_ptr< bool> arg__packed,
-            boost::shared_ptr< components_type> arg__components) :
+    TypeDescription::Structure_type::Structure_type(boost::shared_ptr< bool> arg__packed,
+            boost::shared_ptr< Components_type> arg__components) :
     packed_(arg__packed),
     components_(arg__components) {
     };
 
-    TypeDescription::structure_type::components_type_sequence_of::components_type_sequence_of() : componentType_() {
+    TypeDescription::Structure_type::Components_type_sequence_of::Components_type_sequence_of() : componentType_() {
     };
 
-    TypeDescription::structure_type::components_type_sequence_of::components_type_sequence_of(const ISO_9506_MMS_1::TypeSpecification& arg__componentType) :
+    TypeDescription::Structure_type::Components_type_sequence_of::Components_type_sequence_of(const ISO_9506_MMS_1::TypeSpecification& arg__componentType) :
     componentType_(arg__componentType) {
     };
 
-    TypeDescription::structure_type::components_type_sequence_of::components_type_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
+    TypeDescription::Structure_type::Components_type_sequence_of::Components_type_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
             boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__componentType) :
     componentName_(arg__componentName),
     componentType_(arg__componentType) {
     };
 
-    template<> void TypeDescription::structure_type::components_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void TypeDescription::Structure_type::Components_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(componentName_, 0);
         ITU_T_CHOICE_TAG(componentType_, 1);
     }
 
-    template<> void TypeDescription::structure_type::components_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void TypeDescription::Structure_type::Components_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(componentName_, 0);
         ITU_T_CHOICE_TAG(componentType_, 1);
     }
 
-    boost::shared_ptr<ISO_9506_MMS_1::Identifier> TypeDescription::structure_type::components_type_sequence_of::componentName__new() {
+    boost::shared_ptr<ISO_9506_MMS_1::Identifier> TypeDescription::Structure_type::Components_type_sequence_of::componentName__new() {
         return componentName_ = boost::shared_ptr<ISO_9506_MMS_1::Identifier>(new ISO_9506_MMS_1::Identifier());
     }
 
-    void TypeDescription::structure_type::components_type_sequence_of::componentName(const ISO_9506_MMS_1::Identifier& vl) {
+    void TypeDescription::Structure_type::Components_type_sequence_of::componentName(const ISO_9506_MMS_1::Identifier& vl) {
         componentName_ = boost::shared_ptr<ISO_9506_MMS_1::Identifier>(new ISO_9506_MMS_1::Identifier(vl));
     }
 
-    ISO_9506_MMS_1::TypeSpecification& TypeDescription::structure_type::components_type_sequence_of::componentType() {
+    ISO_9506_MMS_1::TypeSpecification& TypeDescription::Structure_type::Components_type_sequence_of::componentType() {
         return *componentType_;
     }
 
-    const ISO_9506_MMS_1::TypeSpecification& TypeDescription::structure_type::components_type_sequence_of::componentType() const {
+    const ISO_9506_MMS_1::TypeSpecification& TypeDescription::Structure_type::Components_type_sequence_of::componentType() const {
         return *componentType_;
     }
 
-    void TypeDescription::structure_type::components_type_sequence_of::componentType(const ISO_9506_MMS_1::TypeSpecification& vl) {
+    void TypeDescription::Structure_type::Components_type_sequence_of::componentType(const ISO_9506_MMS_1::TypeSpecification& vl) {
         componentType_ = vl;
     }
 
-    void TypeDescription::structure_type::components_type_sequence_of::componentType(boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> vl) {
+    void TypeDescription::Structure_type::Components_type_sequence_of::componentType(boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> vl) {
         componentType_ = vl;
     }
 
 
-    const bool TypeDescription::structure_type::packed__default = false;
+    const bool TypeDescription::Structure_type::packed__default = false;
 
-    template<> void TypeDescription::structure_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void TypeDescription::Structure_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(packed_, 0);
         ITU_T_IMPLICIT_TAG(components_, 1);
     }
 
-    template<> void TypeDescription::structure_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void TypeDescription::Structure_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(packed_, 0);
         ITU_T_IMPLICIT_TAG(components_, 1);
     }
 
-    const bool& TypeDescription::structure_type::packed() const {
+    const bool& TypeDescription::Structure_type::packed() const {
         return *packed_;
     }
 
-    void TypeDescription::structure_type::packed(const bool& vl) {
+    void TypeDescription::Structure_type::packed(const bool& vl) {
         packed_ = vl;
     }
 
-    void TypeDescription::structure_type::packed(boost::shared_ptr< bool> vl) {
+    void TypeDescription::Structure_type::packed(boost::shared_ptr< bool> vl) {
         packed_ = vl;
     }
 
-    TypeDescription::structure_type::components_type& TypeDescription::structure_type::components() {
+    TypeDescription::Structure_type::Components_type& TypeDescription::Structure_type::components() {
         return *components_;
     }
 
-    const TypeDescription::structure_type::components_type& TypeDescription::structure_type::components() const {
+    const TypeDescription::Structure_type::Components_type& TypeDescription::Structure_type::components() const {
         return *components_;
     }
 
-    void TypeDescription::structure_type::components(const components_type& vl) {
+    void TypeDescription::Structure_type::components(const Components_type& vl) {
         components_ = vl;
     }
 
-    void TypeDescription::structure_type::components(boost::shared_ptr< components_type> vl) {
+    void TypeDescription::Structure_type::components(boost::shared_ptr< Components_type> vl) {
         components_ = vl;
     }
 
-    TypeDescription::floating_point_type::floating_point_type() : format_width_(), exponent_width_() {
+    TypeDescription::Floating_point_type::Floating_point_type() : format_width_(), exponent_width_() {
     };
 
-    TypeDescription::floating_point_type::floating_point_type(const ISO_9506_MMS_1::Unsigned8& arg__format_width,
+    TypeDescription::Floating_point_type::Floating_point_type(const ISO_9506_MMS_1::Unsigned8& arg__format_width,
             const ISO_9506_MMS_1::Unsigned8& arg__exponent_width) :
     format_width_(arg__format_width),
     exponent_width_(arg__exponent_width) {
     };
 
-    template<> void TypeDescription::floating_point_type::serialize(boost::asn1::x690::output_coder& arch) {
+    template<> void TypeDescription::Floating_point_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(format_width_);
         ITU_T_BIND_TAG(exponent_width_);
     }
 
-    template<> void TypeDescription::floating_point_type::serialize(boost::asn1::x690::input_coder& arch) {
+    template<> void TypeDescription::Floating_point_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_TAG(format_width_);
         ITU_T_BIND_TAG(exponent_width_);
     }
 
-    ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::format_width() {
+    ISO_9506_MMS_1::Unsigned8& TypeDescription::Floating_point_type::format_width() {
         return *format_width_;
     }
 
-    const ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::format_width() const {
+    const ISO_9506_MMS_1::Unsigned8& TypeDescription::Floating_point_type::format_width() const {
         return *format_width_;
     }
 
-    void TypeDescription::floating_point_type::format_width(const ISO_9506_MMS_1::Unsigned8& vl) {
+    void TypeDescription::Floating_point_type::format_width(const ISO_9506_MMS_1::Unsigned8& vl) {
         format_width_ = vl;
     }
 
-    void TypeDescription::floating_point_type::format_width(boost::shared_ptr< ISO_9506_MMS_1::Unsigned8> vl) {
+    void TypeDescription::Floating_point_type::format_width(boost::shared_ptr< ISO_9506_MMS_1::Unsigned8> vl) {
         format_width_ = vl;
     }
 
-    ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::exponent_width() {
+    ISO_9506_MMS_1::Unsigned8& TypeDescription::Floating_point_type::exponent_width() {
         return *exponent_width_;
     }
 
-    const ISO_9506_MMS_1::Unsigned8& TypeDescription::floating_point_type::exponent_width() const {
+    const ISO_9506_MMS_1::Unsigned8& TypeDescription::Floating_point_type::exponent_width() const {
         return *exponent_width_;
     }
 
-    void TypeDescription::floating_point_type::exponent_width(const ISO_9506_MMS_1::Unsigned8& vl) {
+    void TypeDescription::Floating_point_type::exponent_width(const ISO_9506_MMS_1::Unsigned8& vl) {
         exponent_width_ = vl;
     }
 
-    void TypeDescription::floating_point_type::exponent_width(boost::shared_ptr< ISO_9506_MMS_1::Unsigned8> vl) {
+    void TypeDescription::Floating_point_type::exponent_width(boost::shared_ptr< ISO_9506_MMS_1::Unsigned8> vl) {
         exponent_width_ = vl;
     }
 
@@ -902,12 +902,12 @@ namespace MMS_Object_Module_1 {
         switch (type()) {
             case TypeDescription_array:
             {
-                ITU_T_IMPLICIT_TAG(value<array_type > (false, TypeDescription_array), 1);
+                ITU_T_IMPLICIT_TAG(value<Array_type > (false, TypeDescription_array), 1);
                 break;
             }
             case TypeDescription_structure:
             {
-                ITU_T_IMPLICIT_TAG(value<structure_type > (false, TypeDescription_structure), 2);
+                ITU_T_IMPLICIT_TAG(value<Structure_type > (false, TypeDescription_structure), 2);
                 break;
             }
             case TypeDescription_boolean:
@@ -932,7 +932,7 @@ namespace MMS_Object_Module_1 {
             }
             case TypeDescription_floating_point:
             {
-                ITU_T_IMPLICIT_TAG(value<floating_point_type > (false, TypeDescription_floating_point), 7);
+                ITU_T_IMPLICIT_TAG(value<Floating_point_type > (false, TypeDescription_floating_point), 7);
                 break;
             }
             case TypeDescription_octet_string:
@@ -1000,13 +1000,13 @@ namespace MMS_Object_Module_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<array_type > (true, TypeDescription_array), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Array_type > (true, TypeDescription_array), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<structure_type > (true, TypeDescription_structure), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Structure_type > (true, TypeDescription_structure), 2)) return;
                         else free();
                         break;
                     }
@@ -1036,7 +1036,7 @@ namespace MMS_Object_Module_1 {
                     }
                     case 7:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<floating_point_type > (true, TypeDescription_floating_point), 7)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<Floating_point_type > (true, TypeDescription_floating_point), 7)) return;
                         else free();
                         break;
                     }
@@ -1104,12 +1104,12 @@ namespace MMS_Object_Module_1 {
 
     const Priority normalPriority = 64;
 
-    const EC_Class EC_Class_network_triggered = 0;
-    const EC_Class EC_Class_monitored = 1;
+    const EC_Class eC_Class_network_triggered = 0;
+    const EC_Class eC_Class_monitored = 1;
 
-    const EC_State EC_State_disabled = 0;
-    const EC_State EC_State_idle = 1;
-    const EC_State EC_State_active = 2;
+    const EC_State eC_State_disabled = 0;
+    const EC_State eC_State_idle = 1;
+    const EC_State eC_State_active = 2;
 
     const Severity normalSeverity = 64;
 
@@ -1210,24 +1210,24 @@ namespace MMS_Object_Module_1 {
     }
 
 
-    const EE_Class EE_Class_modifier = 0;
-    const EE_Class EE_Class_notification = 1;
+    const EE_Class eE_Class_modifier = 0;
+    const EE_Class eE_Class_notification = 1;
 
-    const Transitions Transitions_idle_to_disabled = bitstring_type(true, 0);
-    const Transitions Transitions_active_to_disabled = bitstring_type(true, 1);
-    const Transitions Transitions_disabled_to_idle = bitstring_type(true, 2);
-    const Transitions Transitions_active_to_idle = bitstring_type(true, 3);
-    const Transitions Transitions_disabled_to_active = bitstring_type(true, 4);
-    const Transitions Transitions_idle_to_active = bitstring_type(true, 5);
-    const Transitions Transitions_any_to_deleted = bitstring_type(true, 6);
+    const Transitions transitions_idle_to_disabled = bitstring_type(true, 0);
+    const Transitions transitions_active_to_disabled = bitstring_type(true, 1);
+    const Transitions transitions_disabled_to_idle = bitstring_type(true, 2);
+    const Transitions transitions_active_to_idle = bitstring_type(true, 3);
+    const Transitions transitions_disabled_to_active = bitstring_type(true, 4);
+    const Transitions transitions_idle_to_active = bitstring_type(true, 5);
+    const Transitions transitions_any_to_deleted = bitstring_type(true, 6);
 
-    const EE_Duration EE_Duration_current = 0;
-    const EE_Duration EE_Duration_permanent = 1;
+    const EE_Duration eE_Duration_current = 0;
+    const EE_Duration eE_Duration_permanent = 1;
 
-    const AlarmAckRule AlarmAckRule_none = 0;
-    const AlarmAckRule AlarmAckRule_simple = 1;
-    const AlarmAckRule AlarmAckRule_ack_active = 2;
-    const AlarmAckRule AlarmAckRule_ack_all = 3;
+    const AlarmAckRule alarmAckRule_none = 0;
+    const AlarmAckRule alarmAckRule_simple = 1;
+    const AlarmAckRule alarmAckRule_ack_active = 2;
+    const AlarmAckRule alarmAckRule_ack_all = 3;
 
     // sequence Journal-Variable
 
