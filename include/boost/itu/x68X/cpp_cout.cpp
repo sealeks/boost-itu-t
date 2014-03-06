@@ -573,7 +573,7 @@ namespace x680 {
         }
 
         std::string choice_enum_str(typeassignment_entity_ptr self, basic_entity_ptr sub) {
-            return type_str(self) + "_" + nameconvert(sub->name());
+            return type_str(self) + "_" + nameconvert(sub ? sub->name() : "");
         }
 
         std::string tagged_str(tagged_ptr self) {
@@ -1379,11 +1379,14 @@ namespace x680 {
                     stream << "\n";
                     if (!ischoice) {
                         switch (mkr) {
-                            case mk_none: stream << tabformat(self, 1) << "ITU_T_HOLDER" << (noholder_ ? "N": "H") << "_DECL(" << it->name << ", " << it->typenam << ");";
+                            case mk_none: stream << tabformat(self, 1) << "ITU_T_HOLDER" << (noholder_ ? "N": "H") <<
+                                    "_DECL(" << it->name << ", " << it->typenam << ");";
                                 break;
-                            case mk_optional: stream << tabformat(self, 1) << "ITU_T_OPTIONAL_DECL(" << it->name << ", " << it->typenam << ");";
+                            case mk_optional: stream << tabformat(self, 1) << "ITU_T_OPTIONAL_DECL(" << it->name << 
+                                    ", " << it->typenam << ");";
                                 break;
-                            case mk_default: stream << tabformat(self, 1) << "ITU_T_DEFAULTH_DECL(" << it->name << ", " << it->typenam << ", " << (it->name + "__default") << ");";
+                            case mk_default: stream << tabformat(self, 1) << "ITU_T_DEFAULTH_DECL(" << it->name <<
+                                    ", " << it->typenam << ", " << (it->name + "__default") << ");";
                                 break;
                             default:
                             {
@@ -1392,7 +1395,7 @@ namespace x680 {
                     } else {
                         bool primitive = ((it->typ) && (it->typ->isprimitive()));
                         stream << tabformat(self, 1) << "ITU_T_CHOICE" << (primitive ? "S" : "C") << "_DECL(" << it->name << ", " <<
-                                it->typenam << ", " << type_str(self) << "_" << it->name << ");     " << (primitive ? "// primitive" : "");
+                                it->typenam << ", " << choice_enum_str(self, it->typ) << ");     " << (primitive ? "// primitive" : "");
                     }
                 }
             }
