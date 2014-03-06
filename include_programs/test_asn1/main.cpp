@@ -62,6 +62,7 @@ public:
     typedef boost::shared_ptr<TYPE> root_type_ptr;
     typedef range<TYPE> self_type;
     typedef std::vector<self_type> range_container_type;
+    typedef std::set<self_type> range_set_type;
 
     static const root_type min;
     static const root_type max;
@@ -114,6 +115,10 @@ public:
         return (right_ && left_ && (*right_<*left_));
     }
 
+    bool all() const {
+        return ((!right_ && !left_) || (((left_) && (*left_ == min)) && ((right_) &&(*right_ == max))));
+    }
+
     //   l <  x  < r
 
     range<TYPE> create_unstrict_range(root_type l, root_type r) {
@@ -157,14 +162,100 @@ public:
     }
 
     operator range_container_type() const {
-        if (empty())
-            return range_container_type();
         range_container_type rslt;
-        rslt.push_back(new range<TYPE>(*this));
+        if (empty())
+            return rslt;    
+        rslt.push_back(range<TYPE>(*this));
         return rslt;
     }
 
-    friend range<TYPE> operator&(const range<TYPE>& l, const range<TYPE>& r) {
+    friend bool operator ==(const range<TYPE>& l, const range<TYPE>& r) {
+        if (l.empty() && r.empty())
+            return true;
+        if (l.all() && r.all())
+            return true;
+        return ((l.left_ == r.left_) && (l.right_ == r.right_));
+    }
+
+    friend bool operator<(const range<TYPE>& l, const range<TYPE>& r) {
+        if (l.empty() && r.empty())
+            return false;
+        if (l.all() && r.all())
+            return false;
+        if (l.left_ && r.left_)
+            return *l.left_ < *r.left_;
+        if (l.left_ && !r.left_)
+            return false;
+        if (!l.left_ && r.left_)
+            return true;
+        if (l.right_ && r.right_)
+            return *l.right_ < *r.right_;
+        if (l.right_ && !r.right_)
+            return false;
+        if (!l.right_ && r.right_)
+            return true;
+        return false;
+    }
+
+    static bool has_intercection(const range<TYPE>& l, const range<TYPE>& r) {
+        range<TYPE> tmp = l & r;
+        return !tmp.empty();
+    }
+
+    static range_container_type normalize(const range_container_type & vl) {
+        if (vl.empty())
+            return vl;
+        if (vl.size()==1){
+            if (vl.begin()->empty())
+                return range_container_type();
+            else
+                return vl;
+        }
+        range_set_type tmpset(vl.begin(), vl.end());
+        bool fnd = true;
+        while (fnd) {
+            fnd = false;
+            for (typename range_set_type::iterator it = tmpset.begin(); it != tmpset.end(); ++it) {
+                typename range_set_type::iterator next = it;
+                ++next;
+                if (next == tmpset.end()) break;
+                if (has_intercection(*it, *next)) {
+                    range_container_type nval = (*it) | (*next);
+                    if (nval.size() == 1) {
+                        tmpset.erase(next);
+                        tmpset.erase(it);
+                        tmpset.insert(*(nval.begin()));
+                        fnd = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (!tmpset.empty() || (tmpset.size() != 1)) {
+            fnd = true;
+            while (fnd) {
+                fnd = false;
+                for (typename range_set_type::iterator it = tmpset.begin(); it != tmpset.end(); ++it) {
+                    typename range_set_type::iterator next = it;
+                    ++next;
+                    if (next == tmpset.end()) break;
+                    if (it->right_ptr() && next->left_ptr()) {
+                        if ((it->right() + 1) == next->left()) {
+                            range<TYPE> nval(it->left_ptr(), next->right_ptr());
+                            tmpset.erase(next);
+                            tmpset.erase(it);
+                            tmpset.insert(nval);
+                            fnd = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return range_container_type(tmpset.begin(), tmpset.end());
+    }
+
+    friend range<TYPE> operator &(const range<TYPE>& l, const range<TYPE>& r) {
         root_type_ptr nl;
         root_type_ptr nr;
         if (l.empty() || r.empty())
@@ -189,11 +280,46 @@ public:
         return rslt.empty() ? range<TYPE>() : rslt;
     }
 
+    friend range_container_type operator |(const range<TYPE>& l, const range<TYPE>& r) {
+        root_type_ptr nl;
+        root_type_ptr nr;
+        range_container_type rslt;
+        if (l.empty() || r.empty())
+            return rslt;
+        if (l.empty()) {
+            rslt.push_back(r);
+            return rslt;
+        }
+        if (r.empty()) {           
+            rslt.push_back(l);
+            return rslt;
+        }
+        if (l.has_intercection(l, r)) {
+            if (r.left_ && l.left_)
+                nl = (*(l.left_)<*(r.left_)) ? l.left_ : r.left_;
+            if (r.right_ && l.right_)
+                nr = (*(l.right_)>*(r.right_)) ? l.right_ : r.right_;
+            rslt.push_back(range<TYPE>(nl, nr));
+            return rslt;
+        }
+        rslt.push_back(r);
+        rslt.push_back(l);
+        return rslt;
+    }
+
     friend range_container_type operator&(const range_container_type& l, const range<TYPE>& r) {
-        return range_container_type();
+        return l & (r.operator range_container_type());
+    }
+
+    friend range_container_type operator |(const range_container_type& l, const range<TYPE>& r) {
+        return l | (r.operator range_container_type());
     }
 
     friend range_container_type operator&(const range<TYPE>& l, const range_container_type& r) {
+        return r & l;
+    }
+
+    friend range_container_type operator |(const range<TYPE>& l, const range_container_type& r) {
         return r & l;
     }
 
@@ -201,38 +327,48 @@ public:
         return range_container_type();
     }
 
-    bool has_intercection(const range<TYPE>& l, const range<TYPE>& r) const {
-        range<TYPE> tmp = l & r;
-        return !tmp.empty();
+    friend range_container_type operator |(const range_container_type& l, const range_container_type& r) {
+        range_container_type tmp = l;
+        tmp.insert(tmp.end(), r.begin(), r.end());
+        //return range_container_type();
+        return range<TYPE>::normalize(tmp);
     }
+    
 
     range_container_type operator!() {
-        if (empty()) {
-            range_container_type rslt;
+        range_container_type rslt;
+        if (empty()) {         
             rslt.push_back(range<TYPE>(root_type_ptr(), root_type_ptr()));
             return rslt;
         }
         if (left_ && right_) {
-            range_container_type rslt;
             if (!is_min())
                 rslt.push_back(range<TYPE>(root_type_ptr(), root_type_ptr(new TYPE(*left_ - 1))));
             if (!is_max())
                 rslt.push_back(range<TYPE>(root_type_ptr(new TYPE(*right_ + 1)), root_type_ptr()));
             return rslt;
         } else if (left_) {
-            range_container_type rslt;
             if (!is_min())
                 rslt.push_back(range<TYPE>(root_type_ptr(), root_type_ptr(new TYPE(*left_ - 1))));
             return rslt;
         } else if (right_) {
-            range_container_type rslt;
             if (!is_max())
                 rslt.push_back(range<TYPE>(root_type_ptr(new TYPE(*right_ + 1)), root_type_ptr()));
             return rslt;
         }
-        return range_container_type();
+        return rslt;
     }
-
+    friend range_container_type notop(const range_container_type& vl) {
+        range_container_type rslt;
+        rslt = range<TYPE>::normalize(vl);
+        if (rslt.empty()) {
+            rslt.push_back(range<TYPE>(root_type_ptr(), root_type_ptr()));
+            return rslt;
+        }
+        if ((rslt.size() == 1) && (rslt.begin()->all()))
+            return range_container_type();
+        return rslt;
+    } 
 
 
 private:
@@ -307,8 +443,14 @@ int main(int argc, char* argv[]) {
     rangeint_type A(0, 100);
     rangeint_type B(15, 150);
     rangeint_type C(5, 80);
-    std::cout << (A & B & C);
-    std::cout << !(A & B & C);
+
+    rangeint_type A1(1);
+    rangeint_type B1(2);
+    rangeint_type C1(3);
+
+    std::cout << (A & B & C) << "\n";
+    std::cout << !(A & B & C) << "\n";
+    std::cout << (A1 | B1 | C1 | C) << "\n";
 
 }
 
