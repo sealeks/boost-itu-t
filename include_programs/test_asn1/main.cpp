@@ -78,6 +78,10 @@ public:
 
     range(T l, T r) :
     left_(root_type_ptr(new T(l))), right_(root_type_ptr(new T(r))) {
+        if (l>r){
+            left_=root_type_ptr(new T(T() + 1));
+            right_=root_type_ptr(new T());
+        }          
     };
 
     range(T v) :
@@ -222,7 +226,7 @@ public:
         if (vl.empty())
             return vl;
         if (vl.size() == 1) {
-            if (vl.begin()->empty())
+            if (vl.front().empty())
                 return range_container_type();
             else
                 return vl;
@@ -240,7 +244,7 @@ public:
                     if (nval.size() == 1) {
                         tmpset.erase(next);
                         tmpset.erase(it);
-                        tmpset.insert(*(nval.begin()));
+                        tmpset.insert(nval.front());
                         fnd = true;
                         break;
                     }
@@ -275,7 +279,9 @@ public:
         root_type_ptr nl;
         root_type_ptr nr;
         if (l.empty() || r.empty())
-            return self_type();
+            return create_empty();
+        if (l.all() && r.all())
+            return create_all();        
         if (r.left_ || l.left_) {
             if (!r.left_)
                 nl = l.left_;
@@ -293,7 +299,7 @@ public:
                 nr = (*(l.right_)>*(r.right_)) ? r.right_ : l.right_;
         }
         self_type rslt(nl, nr);
-        return rslt.empty() ? self_type() : rslt;
+        return rslt.empty() ? create_empty() : rslt;
     }
 
     friend range_container_type operator |(const self_type& l, const self_type& r) {
@@ -310,7 +316,7 @@ public:
             rslt.push_back(l);
             return rslt;
         }
-        if (l.has_intercection(l, r)) {
+        if (has_intercection(l, r)) {
             if (r.left_ && l.left_)
                 nl = (*(l.left_)<*(r.left_)) ? l.left_ : r.left_;
             if (r.right_ && l.right_)
@@ -324,14 +330,16 @@ public:
     }
 
     friend range_container_type operator-(const self_type& l, const self_type& r) {
+        range_container_type rslt;
         if (l.empty() && r.empty())
-            return l;
+            return rslt;
         if (l.empty())
-            return l;
+            return rslt;
         if (r.all())
-            return self_type();
-        if (r.empty())
-            return l;
+            return rslt;
+        if (r.empty()){
+            rslt.push_back(l);
+            return rslt;}
         return !r & l;
     }
 
@@ -442,6 +450,11 @@ const T range<T>::min = std::numeric_limits<T>::min();
 
 template<typename T>
 const T range<T>::max = std::numeric_limits<T>::max();
+
+
+
+
+
 
 template<typename T>
 std::ostream& operator<<(std::ostream& stream, const range<T>& vl) {
