@@ -68,23 +68,20 @@ public:
     static const T min;
     static const T max;
 
-    
+
     // empty()
+
     range() : left_(root_type_ptr(new T(T() + 1))), right_(root_type_ptr(new T())) {
     };
 
     //   l <=  x  <= r    
+
     range(T l, T r) :
     left_(root_type_ptr(new T(l))), right_(root_type_ptr(new T(r))) {
     };
 
-    // x  == v   
     range(T v) :
     left_(root_type_ptr(new T(v))), right_(root_type_ptr(new T(v))) {
-    };
-
-    range(root_type_ptr l, root_type_ptr r) :
-    left_(l), right_(r) {
     };
 
     virtual ~range() {
@@ -122,49 +119,61 @@ public:
         return ((!right_ && !left_) || (((left_) && (*left_ == min)) && ((right_) &&(*right_ == max))));
     }
 
-    static self_type create_all_range() {
+    static self_type create_empty() {
+        return self_type();
+    }
+
+    static self_type create_all() {
         return self_type(root_type_ptr(), root_type_ptr());
+    }
+
+    static self_type create_range(T l, T r) {
+        return self_type(l, r);
+    }
+
+    static self_type create_single(T v) {
+        return self_type(v);
     }
 
     //   l <  x  < r
 
-    static self_type create_unstrict_range(T l, T r) {
+    static self_type create_more_and_less(T l, T r) {
         return self_type(l + 1, r - 1);
     }
 
     //   l <  x  <= r        
 
-    static self_type create_ul_rr_range(T l, T r) {
+    static self_type create_more_and_less_or_eq(T l, T r) {
         return self_type(l + 1, r);
     }
 
     //   l <=  x  < r         
 
-    static self_type create_rl_uu_range(T l, T r) {
+    static self_type create_more_or_eq_and_less(T l, T r) {
         return self_type(l, r - 1);
     }
 
     //   x  <= r        
 
-    static self_type create_rr_range(T r) {
+    static self_type create_less_or_eq(T r) {
         return self_type(root_type_ptr(), root_type_ptr(new T(r)));
     }
 
     //   l <=  x          
 
-    static self_type create_rl_range(T l) {
+    static self_type create_more_or_eq(T l) {
         return self_type(root_type_ptr(new T(l)), root_type_ptr());
     }
 
     //   x  < r        
 
-    static self_type create_ur_range(T r) {
+    static self_type create_less(T r) {
         return self_type(root_type_ptr(), root_type_ptr(new T(r - 1)));
     }
 
     //   l <  x          
 
-    static self_type create_ul_range(T l) {
+    static self_type create_more(T l) {
         return self_type(root_type_ptr(new T(l + 1)), root_type_ptr());
     }
 
@@ -381,7 +390,7 @@ public:
     range_container_type operator!() const {
         range_container_type rslt;
         if (empty()) {
-            rslt.push_back(create_all_range());
+            rslt.push_back(create_all());
             return rslt;
         }
         if (left_ && right_) {
@@ -406,12 +415,12 @@ public:
         range_container_type rslt;
         range_container_type tmp = self_type::normalize(vl);
         if (tmp.empty()) {
-            rslt.push_back(create_all_range());
+            rslt.push_back(create_all());
             return rslt;
         }
         if ((tmp.size() == 1) && (tmp.front().all()))
             return range_container_type();
-        rslt.push_back(create_all_range());
+        rslt.push_back(create_all());
         for (typename range_container_type::iterator it = tmp.begin(); it != tmp.end(); ++it)
             rslt = rslt & !(*it);
         return rslt;
@@ -419,6 +428,10 @@ public:
 
 
 private:
+
+    range(root_type_ptr l, root_type_ptr r) :
+    left_(l), right_(r) {
+    };
 
     root_type_ptr left_;
     root_type_ptr right_;
@@ -505,6 +518,7 @@ int main(int argc, char* argv[]) {
     std::cout << notop(!(A & B & C) & (A1 | B1 | C1 | C)) << "\n";
     std::cout << (notop(D | E)) << "\n";
     std::cout << ((A & B & C) - (D | E)) << "\n";
+    std::cout << ((rangeint_type::create_more(3) & rangeint_type::create_less(45)) - !rangeint_type(20)) << "\n";
 
 }
 
