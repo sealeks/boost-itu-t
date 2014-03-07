@@ -453,37 +453,243 @@ const T range<T>::max = std::numeric_limits<T>::max();
 
 
 
+template<typename T>
+class range_constraints {
+public:
+    
+    typedef range_constraints<T> self_type;
+    typedef  range<T> range_type;
+    typedef typename range_type::range_container_type container_type;
+
+    range_constraints() {
+        expention_=range_type::create_empty();
+    }
+
+    explicit range_constraints(const T& vl) {
+        range_.push_back(range_type(vl));
+        expention_=range_type::create_empty();
+    }
+    
+    explicit range_constraints(const T& l, const T& r) {
+        range_.push_back(range_type(l,r));
+        expention_=range_type::create_empty();
+    }
+    
+    explicit range_constraints(const T& l, const T& r, const T& e) {
+        range_.push_back(range_type(l, r));
+        if (e > r)
+            expention_ = range_type::create_more_or_eq(e);
+        else
+            expention_ = range_type::create_empty();
+    }
+
+    explicit range_constraints(const T& l, const T& r, bool e) {
+        range_.push_back(range_type(l, r));
+        if (r != range_type::max) {
+            expention_ = range_type::create_more_or_eq(r + 1);
+        } else
+            expention_ = range_type::create_empty();
+    }
+    
+
+    explicit range_constraints(const range_type& vl, const T& e) {
+        if (!vl.empty())
+            range_.push_back(vl);
+       range_type tmp = range_type::create_more_or_eq(e);
+        container_type test=range_type::normalize(tmp - range_);
+        if (test.empty()){
+            expention_=tmp;  
+            return;
+        }
+        expention_=range_type::create_empty();
+    }
+    
+
+    explicit range_constraints(const range_type& vl, bool e) {
+        if (!vl.empty())
+            range_.push_back(vl);
+        if (vl.right_ptr()) {
+            range_type tmp = range_type::create_more_or_eq(vl.right() + 1);
+            container_type test = range_type::normalize(tmp - range_);
+            if (test.empty())
+                expention_ = tmp;
+            return;
+        }
+        expention_=range_type::create_empty();
+    }      
+    
+    range_constraints(const container_type& vl) : range_(vl) {
+    }        
+
+    container_type& set() {
+        return range_;
+    }
+    
+    const container_type& set() const {
+        return range_;
+    }
+    
+    bool has_extention() const {
+        return !expention_.empty();
+    }    
+
+     range_type extention() const {
+        return expention_;
+    }  
+     
+     void extention(range_type e)  {
+        expention_=e;
+    }      
+     
+     void add_extention(const T& e) {
+        if (e < range_type::max)
+            expention_ = range_type::create_more_or_eq(e + 1);
+    }   
+
+     void add_extention()  {
+         if (!all() && !empty()){
+             container_type tmp = range_type::normalize(range_);
+             if (!tmp.empty()){
+                 if (tmp.back().right_ptr()){
+                     if (tmp.back().right()!=range_type::max){
+                         expention_ = range_type::create_more_or_eq(tmp.back().right()+ 1);
+                     }
+                 }
+             }
+         }      
+    }  
+     
+     void clear_extention()  {
+        expention_=range_type::create_empty();
+    }      
+    
+    
+    bool all(){
+        if (!range_.empty()){
+            container_type tmp = range_type::normalize(range_);
+            return ((tmp.size()==1) && (tmp.front().all()));
+        }
+        return false;
+    }
+    
+    bool empty(){
+        if (range_.empty())
+            return true;
+        container_type tmp = range_type::normalize(range_);
+        return ((tmp.size()==1) && (tmp.front().empty()));
+    }    
+    
+    self_type& operator&=(const self_type& vl) {
+        range_ = range_ & vl.range_;
+        return *this;
+    }        
+    
+    self_type& operator&=(const container_type& vl) {
+        range_ = range_ & vl;
+        return *this;
+    }    
+    
+    self_type& operator&=(const range_type& vl) {
+        range_ = range_ & vl;
+        return *this;
+    }
+    
+    self_type& operator&=(const T& vl) {
+        range_ = range_ & range_type(vl);
+        return *this;
+    } 
+    
+    self_type& operator|=(const self_type& vl) {
+        range_ = range_ | vl.range_;
+        return *this;
+    }       
+    
+    self_type& operator|=(const container_type& vl) {
+        range_ = range_ | vl;
+        return *this;
+    }        
+    
+    self_type& operator|=(const range_type& vl) {
+        range_ = range_ | vl;
+        return *this;
+    } 
+    
+    self_type& operator|=(const T& vl) {
+        range_ = range_ | range_type(vl);
+        return *this;
+    }      
+    
+    self_type& operator-=(const self_type& vl) {
+        range_ = range_ - vl.range_;
+        return *this;
+    }       
+    
+    self_type& operator-=(const container_type& vl) {
+        range_ = range_ - vl;
+        return *this;
+    }    
+    
+    self_type& operator-=(const range_type& vl) {
+        range_ = range_ - vl;
+        return *this;
+    }
+
+    self_type& operator-=(const T& vl) {
+        range_ = range_ - vl;
+        return *this;
+    }
+
+    self_type&  operator!() {
+        range_=notop(range_);
+        return *this;
+    }   
+
+private:
+    
+    container_type range_;
+    range_type expention_;
+};
+
 
 
 
 template<typename T>
 std::ostream& operator<<(std::ostream& stream, const range<T>& vl) {
     if (vl.empty())
-        return stream << " range [ null ] ";
+        return stream << "  [ null ] ";
     if ((vl.left_ptr()) && (vl.right_ptr())) {
         if (vl.left() != vl.right())
-            stream << " range [ " << vl.left() << "  ...   " << vl.right() << " ] ";
+            stream << "  [ " << vl.left() << "  ...   " << vl.right() << " ] ";
         else
-            stream << " range [ " << vl.left() << " ] ";
+            stream << "  [ " << vl.left() << " ] ";
         return stream;
     }
     if (vl.left_ptr()) {
-        stream << " range [ " << vl.left() << "  ...   " << " ] ";
+        stream << "  [ " << vl.left() << "  ...   " << " ] ";
         return stream;
     }
     if (vl.right_ptr()) {
-        stream << " range [ " << "  ...   " << vl.right() << " ] ";
+        stream << "  [ " << "  ...   " << vl.right() << " ] ";
         return stream;
     }
-    return stream << " range [ ... ] ";
+    return stream << "  [ ... ] ";
 }
 
 template<typename T>
 std::ostream& operator<<(std::ostream& stream, const std::vector<range<T> >& vl) {
     if (vl.empty())
-        return stream << " range [ null ] ";
+        return stream << "  [ null ] ";
     for (typename std::vector<range<T> >::const_iterator it = vl.begin(); it != vl.end(); ++it) {
         stream << *it;
+    }
+    return stream;
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& stream, const range_constraints<T>& vl) {
+    stream << "{"  << vl.set()  << "}"  ;
+    if (vl.has_extention()) {
+        stream << "( ext "  << vl.extention()  << ")"  ;
     }
     return stream;
 }
@@ -495,7 +701,9 @@ std::ostream& operator<<(std::ostream& stream, const std::vector<range<T> >& vl)
 using namespace Test1;
 
 typedef asn1_stream_adaptor<std::istream, std::ostream> asn1_adaptor;
-typedef range<int> rangeint_type;
+
+typedef range_constraints<int> constraintsint_type;
+typedef constraintsint_type::range_type rangeint_type;
 
 int main(int argc, char* argv[]) {
 
@@ -513,24 +721,28 @@ int main(int argc, char* argv[]) {
     
        adaptor << PR;*/
 
-    rangeint_type A(0, 100);
-    rangeint_type B(15, 150);
-    rangeint_type C(5, 80);
-    rangeint_type D(1, 3);
-    rangeint_type E(5, 15);
+    constraintsint_type A(0, 100, 130);
+    constraintsint_type B(15, 99);
+    constraintsint_type C(5,30);
+    constraintsint_type D(1, 3);
+    constraintsint_type E(5, 15);
 
-    rangeint_type A1(1);
-    rangeint_type B1(2);
-    rangeint_type C1(3);
+    constraintsint_type A1(1);
+    constraintsint_type B1(2);
+    constraintsint_type C1(3);
+    
+    A&=B;
+    A-=C;
 
-    std::cout << (A & B & C) << "\n";
-    std::cout << !(A & B & C) << "\n";
-    std::cout << (A1 | B1 | C1 | C) << "\n";
-    std::cout << (!(A & B & C) & (A1 | B1 | C1 | C)) << "\n";
-    std::cout << (A - B) << "\n";
-    std::cout << notop(!(A & B & C) & (A1 | B1 | C1 | C)) << "\n";
-    std::cout << (notop(D | E)) << "\n";
-    std::cout << ((A & B & C) - (D | E)) << "\n";
+    //std::cout << (A & B & C) << "\n";
+    //std::cout << !(A & B & C) << "\n";
+    //std::cout << (A1 | B1 | C1 | C) << "\n";
+    //std::cout << (!(A & B & C) & (A1 | B1 | C1 | C)) << "\n";
+    //std::cout << (A - B) << "\n";
+    //std::cout << notop(!(A & B & C) & (A1 | B1 | C1 | C)) << "\n";
+    //std::cout << (notop(D | E)) << "\n";
+    //std::cout << ((A & B & C) - (D | E)) << "\n";
+    std::cout << A << "\n";
     std::cout << ((rangeint_type::create_more(3) & rangeint_type::create_less(45)) - !rangeint_type(20)) << "\n";
 
 }
