@@ -485,10 +485,7 @@ public:
 
     explicit range_constraints(const T& l, const T& r, bool e) {
         range_.push_back(range_type(l, r));
-        if (r != range_type::max) {
-            expention_ = range_type::create_more_or_eq(r + 1);
-        } else
-            expention_ = range_type::create_empty();
+        expention_ = range_type::create_all();
     }
     
 
@@ -503,23 +500,19 @@ public:
         }
         expention_=range_type::create_empty();
     }
-    
 
     explicit range_constraints(const range_type& vl, bool e) {
-        if (!vl.empty())
+        if (!vl.empty()) {
             range_.push_back(vl);
-        if (vl.right_ptr()) {
-            range_type tmp = range_type::create_more_or_eq(vl.right() + 1);
-            container_type test = range_type::normalize(tmp - range_);
-            if (test.empty())
-                expention_ = tmp;
-            return;
+            expention_ = range_type::create_all();
         }
-        expention_=range_type::create_empty();
     }      
     
-    range_constraints(const container_type& vl) : range_(vl) {
+    range_constraints(const container_type& vl, bool e = false) : range_(vl) {
+        if (e)
+            expention_ = range_type::create_all();
     }        
+    
 
     container_type& set() {
         return range_;
@@ -652,6 +645,57 @@ private:
 
 
 
+template<typename T, typename U>
+class dual_constraints {
+    
+    public:
+        
+    typedef  range<T> first_range;
+    typedef typename first_range::range_container_type first_container;
+    typedef  range_constraints<T>  first_constraints;
+    
+    typedef  range<U> second_range;
+    typedef typename second_range::range_container_type second_container; 
+    typedef  range_constraints<U>  second_constraints; 
+    
+    typedef dual_constraints<T,U> self_type;
+    
+    dual_constraints(){}
+    
+    dual_constraints(first_range f, second_range s) : 
+    first_(f), second_(s) {}    
+    
+    virtual ~dual_constraints(){}
+        
+    
+    first_constraints& first(){
+        return first_;
+    }
+    
+    second_constraints& second(){
+        return second_;
+    }    
+    
+    friend self_type operator&(const self_type& l, const self_type& r) {
+        return self_type();
+    }
+    
+    friend self_type operator|(const self_type& l, const self_type& r) {
+        return self_type();
+    }    
+    
+    friend self_type operator-(const self_type& l, const self_type& r) {
+        return self_type();
+    }        
+    
+    private:
+    
+        first_constraints first_;
+        second_constraints second_;
+};
+
+
+
 
 template<typename T>
 std::ostream& operator<<(std::ostream& stream, const range<T>& vl) {
@@ -743,7 +787,7 @@ int main(int argc, char* argv[]) {
     //std::cout << (notop(D | E)) << "\n";
     //std::cout << ((A & B & C) - (D | E)) << "\n";
     std::cout << A << "\n";
-    std::cout << ((rangeint_type::create_more(3) & rangeint_type::create_less(45)) - !rangeint_type(20)) << "\n";
+    //std::cout << ((rangeint_type::create_more(3) & rangeint_type::create_less(45)) - !rangeint_type(20)) << "\n";
 
 }
 
