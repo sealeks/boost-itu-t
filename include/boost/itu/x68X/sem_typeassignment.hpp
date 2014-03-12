@@ -234,6 +234,12 @@ namespace x680 {
         bool isopen() const;
 
         bool isenum() const;
+        
+        bool can_per_visible_constraints();
+    
+        bool can_per_visible_type_constraints();
+       
+        bool can_per_visible_size_constraints();    
 
         bool istextualy_choice();
 
@@ -498,6 +504,18 @@ namespace x680 {
             return (type() && (type()->isenum()));
         }
 
+        bool can_per_visible_constraints(){
+            return (type() && (type()->can_per_visible_constraints()));
+        }
+    
+        bool can_per_visible_type_constraints(){
+            return (type() && (type()->can_per_visible_type_constraints())); 
+        }
+       
+        bool can_per_visible_size_constraints(){
+           return (type() && (type()->can_per_visible_size_constraints())); 
+        }         
+        
         bool istextualy_choice() {
             return (type() && (type()->istextualy_choice()));
         }
