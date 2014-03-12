@@ -87,6 +87,10 @@ public:
     range(T v) :
     left_(root_type_ptr(new T(v))), right_(root_type_ptr(new T(v))) {
     };
+    
+    range(root_type_ptr l, root_type_ptr r) :
+    left_(l), right_(r) {
+    };    
 
     virtual ~range() {
     };
@@ -437,9 +441,6 @@ public:
 
 private:
 
-    range(root_type_ptr l, root_type_ptr r) :
-    left_(l), right_(r) {
-    };
 
     root_type_ptr left_;
     root_type_ptr right_;
@@ -462,6 +463,7 @@ public:
     typedef typename range_type::range_container_type container_type;
 
     range_constraints() {
+        range_.push_back(range_type::create_all());
         expention_=range_type::create_empty();
     }
 
@@ -570,7 +572,26 @@ public:
             return true;
         container_type tmp = range_type::normalize(range_);
         return ((tmp.size()==1) && (tmp.front().empty()));
-    }    
+    } 
+    
+   range_type to_per(){
+       range_ = range_type::normalize(range_);
+       if ((range_.empty()) || (empty()))
+           return range_type::create_empty();
+       if (all())
+           return range_type::create_all();  
+       container_type tmp = range_type::normalize(range_);
+       typename range_type::root_type_ptr lptr;
+       typename range_type::root_type_ptr rptr;
+       for(typename container_type::const_iterator it=range_.begin();it!=range_.end();++it){
+           typename container_type::const_iterator nxt = it +1;
+           if (it==range_.begin())
+               lptr=it->left_ptr();
+           if (nxt==range_.end())
+               rptr=it->right_ptr();
+       }
+       return range_type(lptr, rptr);
+   } 
     
     self_type& operator&=(const self_type& vl) {
         range_ = range_ & vl.range_;
@@ -660,7 +681,8 @@ class dual_constraints {
     
     typedef dual_constraints<T,U> self_type;
     
-    dual_constraints(){}
+    dual_constraints() :
+    first_(first_range::create_all()), second_(second_range::create_all()){}
     
     dual_constraints(first_range f, second_range s) : 
     first_(f), second_(s) {}    
@@ -676,17 +698,56 @@ class dual_constraints {
         return second_;
     }    
     
-    friend self_type operator&(const self_type& l, const self_type& r) {
-        return self_type();
+   const first_constraints& first() const {
+        return first_;
     }
     
-    friend self_type operator|(const self_type& l, const self_type& r) {
-        return self_type();
+    const second_constraints& second() const{
+        return second_;
     }    
     
-    friend self_type operator-(const self_type& l, const self_type& r) {
-        return self_type();
+    self_type& operator&=(const self_type& v) {
+        first_&=v.first();
+        second_&=v.second();
+        return *this;
+    }
+    
+   self_type& operator|=(const self_type& v) {
+        first_|=v.first();
+        second_|=v.second();
+        return *this;
+    }    
+    
+    self_type& operator-=(const self_type& v) {
+        first_-=v.first();
+        second_-=v.second();
+        return *this;
+    }       
+    
+    static self_type create_and(const first_range& f, const second_range& s) {
+        return create_first(f)&=create_second(s);
+    }   
+    
+    static self_type create_or(const first_range& f, const second_range& s) {
+        return create_first(f)|=create_second(s);
     }        
+    
+    static self_type create_except(const first_range& f, const second_range& s) {
+        return create_first(f)-=create_second(s);
+    }            
+    
+    static self_type create_first(const first_range& v) {
+        self_type tmp;
+        tmp.first_&=v;
+        return tmp;
+    }
+    
+    static self_type create_second(const second_range& v) {
+        self_type tmp;
+        tmp.second_&=v;
+         return tmp;       
+    }    
+    
     
     private:
     
@@ -738,6 +799,15 @@ std::ostream& operator<<(std::ostream& stream, const range_constraints<T>& vl) {
     return stream;
 }
 
+template<typename T,typename U>
+std::ostream& operator<<(std::ostream& stream, dual_constraints<T,U>& vl) {
+    stream << "("  << vl.first() << ")" << "("  << vl.second()  << ")"  ;
+   /* if (vl.has_extention()) {
+        stream << "( ext "  << vl.extention()  << ")"  ;
+    }*/
+    return stream;
+}
+
 
 
 
@@ -748,6 +818,8 @@ typedef asn1_stream_adaptor<std::istream, std::ostream> asn1_adaptor;
 
 typedef range_constraints<int> constraintsint_type;
 typedef constraintsint_type::range_type rangeint_type;
+
+typedef dual_constraints<std::size_t, std::string::value_type>  dconstraintsint_type;
 
 int main(int argc, char* argv[]) {
 
@@ -765,7 +837,7 @@ int main(int argc, char* argv[]) {
     
        adaptor << PR;*/
 
-    constraintsint_type A(0, 100, 130);
+ /*   constraintsint_type A(0, 100, 130);
     constraintsint_type B(15, 99);
     constraintsint_type C(5,30);
     constraintsint_type D(1, 3);
@@ -776,7 +848,11 @@ int main(int argc, char* argv[]) {
     constraintsint_type C1(3);
     
     A&=B;
-    A-=C;
+    A-=C;*/
+   
+    dconstraintsint_type D;
+    dconstraintsint_type A(dconstraintsint_type::first_range(2,20), dconstraintsint_type::second_range('a','z'));
+    dconstraintsint_type B(dconstraintsint_type::first_range(18,30), dconstraintsint_type::second_range('y','z'));
 
     //std::cout << (A & B & C) << "\n";
     //std::cout << !(A & B & C) << "\n";
@@ -786,7 +862,12 @@ int main(int argc, char* argv[]) {
     //std::cout << notop(!(A & B & C) & (A1 | B1 | C1 | C)) << "\n";
     //std::cout << (notop(D | E)) << "\n";
     //std::cout << ((A & B & C) - (D | E)) << "\n";
+    std::cout << D << "\n";
     std::cout << A << "\n";
+    std::cout << B << "\n";
+    A|=B;
+    std::cout << A << "\n";
+    std::cout << A.first().to_per()<< A.second().to_per()  << "\n";
     //std::cout << ((rangeint_type::create_more(3) & rangeint_type::create_less(45)) - !rangeint_type(20)) << "\n";
 
 }
