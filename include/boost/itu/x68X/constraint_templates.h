@@ -13,6 +13,11 @@
 
 
 namespace x680 {
+    
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  range
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     template<typename T>
     class range {
@@ -47,6 +52,10 @@ namespace x680 {
 
         range(T v) :
         left_(root_type_ptr(new T(v))), right_(root_type_ptr(new T(v))) {
+        };
+
+        range(root_type_ptr l, root_type_ptr r) :
+        left_(l), right_(r) {
         };
 
         virtual ~range() {
@@ -399,9 +408,6 @@ namespace x680 {
 
     private:
 
-        range(root_type_ptr l, root_type_ptr r) :
-        left_(l), right_(r) {
-        };
 
         root_type_ptr left_;
         root_type_ptr right_;
@@ -412,7 +418,16 @@ namespace x680 {
 
     template<typename T>
     const T range<T>::max = std::numeric_limits<T>::max();
-
+    
+    
+    
+    
+    
+    
+     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  range_constraints
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+    
     template<typename T>
     class range_constraints {
 
@@ -423,6 +438,7 @@ namespace x680 {
         typedef typename range_type::range_container_type container_type;
 
         range_constraints() {
+            range_.push_back(range_type::create_all());
             expention_ = range_type::create_empty();
         }
 
@@ -530,6 +546,25 @@ namespace x680 {
             return ((tmp.size() == 1) && (tmp.front().empty()));
         }
 
+        range_type to_per() {
+            range_ = range_type::normalize(range_);
+            if ((range_.empty()) || (empty()))
+                return range_type::create_empty();
+            if (all())
+                return range_type::create_all();
+            container_type tmp = range_type::normalize(range_);
+            typename range_type::root_type_ptr lptr;
+            typename range_type::root_type_ptr rptr;
+            for (typename container_type::const_iterator it = range_.begin(); it != range_.end(); ++it) {
+                typename container_type::const_iterator nxt = it + 1;
+                if (it == range_.begin())
+                    lptr = it->left_ptr();
+                if (nxt == range_.end())
+                    rptr = it->right_ptr();
+            }
+            return range_type(lptr, rptr);
+        }
+
         self_type& operator&=(const self_type& vl) {
             range_ = range_ & vl.range_;
             return *this;
@@ -600,6 +635,15 @@ namespace x680 {
         container_type range_;
         range_type expention_;
     };
+    
+    
+    
+    
+    
+     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  dual_constraints
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
+    
 
     template<typename T, typename U>
     class dual_constraints {
@@ -734,13 +778,42 @@ namespace x680 {
     }
 
     template<typename T, typename U>
-    std::ostream& operator<<(std::ostream& stream, const dual_constraints<T, U>& vl) {
+    std::ostream& operator<<(std::ostream& stream, dual_constraints<T, U>& vl) {
         stream << "(" << vl.first() << ")" << "(" << vl.second() << ")";
         /* if (vl.has_extention()) {
              stream << "( ext "  << vl.extention()  << ")"  ;
          }*/
         return stream;
     }
+    
+    
+    
+    
+    
+    typedef range_constraints<int64_t> integer_constraints;
+    typedef integer_constraints::range_type integer_range;
+    typedef integer_constraints::container_type integer_container;
+    typedef boost::shared_ptr<integer_constraints> integer_constraints_ptr;
+    
+    typedef range_constraints<std::size_t> size_constraints;
+    typedef size_constraints::range_type size_range;    
+    typedef boost::shared_ptr<size_constraints> size_constraints_ptr;
+    
+    typedef dual_constraints<std::size_t, std::string::value_type> char8_constraints;
+    typedef char8_constraints::first_range char8size_range;    
+    typedef char8_constraints::second_range char8_range;     
+    typedef boost::shared_ptr<char8_constraints> char8_constraints_ptr;    
+    
+    typedef dual_constraints<std::size_t, uint16_t> char16_constraints;
+    typedef char16_constraints::first_range char16size_range;    
+    typedef char16_constraints::second_range char16_range;     
+    typedef boost::shared_ptr<char16_constraints> char16_constraints_ptr;       
+    
+    typedef dual_constraints<std::size_t, uint32_t> char32_constraints;
+    typedef char16_constraints::first_range char32size_range;    
+    typedef char16_constraints::second_range char32_range;     
+    typedef boost::shared_ptr<char32_constraints> char32_constraints_ptr;          
+    
 
 }
 

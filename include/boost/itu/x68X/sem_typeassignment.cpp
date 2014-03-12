@@ -197,6 +197,35 @@ namespace x680 {
         return rslt;
     }
 
+    integer_constraints_ptr type_atom::integer_constraint() {
+        integer_constraints_ptr rslt;
+        if ((root_builtin() == t_INTEGER)) {
+            if ((isrefferrence()) && (reff())) {
+                if (!(reff()->as_typeassigment()) || !(reff()->as_typeassigment()->type()))
+                    return rslt;
+                rslt = reff()->as_typeassigment()->type()->integer_constraint();
+            }
+            if (has_constraint()) {
+                integer_constraints terslt;
+                constraint_atom_stack stk;
+                for (constraints_atom_vct::const_iterator ite = constraints().begin(); ite != constraints().end(); ++ite) {
+                    if ((*ite)) {
+                        integer_constraints tirslt;
+                        for (constraint_atom_vct::const_iterator iti =(*ite)->constraintline().begin(); iti != (*ite)->constraintline().end(); ++iti) {
+                            if ((*iti)->as_range()){
+                                stk.push(*iti);
+                            }
+                            else if ((*iti)->as_value()){
+                                stk.push(*iti);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return rslt;
+    }
+
     bool type_atom::isrefferrence() const {
         return (((builtin_ == t_Reference)
                 || (builtin_ == t_TypeFromObject)
@@ -246,18 +275,18 @@ namespace x680 {
     bool type_atom::can_per_visible_constraints() {
         return (can_per_visible_type_constraints()) || (can_per_visible_size_constraints());
     }
+    
+    bool type_atom::can_per_visible_dual_constraints() {
+        return (can_per_visible_type_constraints()) && (can_per_visible_size_constraints());
+    }    
 
     bool type_atom::can_per_visible_type_constraints() {
         switch (root_builtin()) {
             case t_INTEGER:
             case t_NumericString:
             case t_PrintableString:
-            case t_T61String:
-            case t_VideotexString:
             case t_IA5String:
-            case t_GraphicString:
             case t_VisibleString:
-            case t_GeneralString:
             case t_UniversalString:
             case t_BMPString: return true;                
             default:
@@ -273,14 +302,10 @@ namespace x680 {
             case t_OCTET_STRING:
             case t_NumericString:
             case t_PrintableString:
-            case t_T61String:
-            case t_VideotexString:
             case t_IA5String:
-            case t_GraphicString:
             case t_VisibleString:
-            case t_GeneralString:
             case t_UniversalString:
-            case t_BMPString:
+            case t_BMPString: 
             case t_SEQUENCE_OF:
             case t_SET_OF: return true;
             default:

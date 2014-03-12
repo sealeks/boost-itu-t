@@ -10,6 +10,7 @@
 #include <boost/itu/x68X/x680.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/make_shared.hpp>
+#include <stack>
 
 #define  DEBUG_SEMANTIC
 
@@ -240,6 +241,7 @@ namespace x680 {
     class constraint_atom;
     typedef boost::shared_ptr<constraint_atom> constraint_atom_ptr;
     typedef std::vector<constraint_atom_ptr> constraint_atom_vct;
+    typedef std::stack<constraint_atom_ptr> constraint_atom_stack;
 
     class typeconstraint_atom;
     typedef boost::shared_ptr<typeconstraint_atom> typeconstraint_atom_ptr;

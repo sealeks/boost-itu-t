@@ -4,7 +4,6 @@
 //  See http://www.boost.org/LICENSE_1_0.txt
 
 #include <boost/itu/x68X/semantics.hpp>
-#include <boost/itu/x68X/constraint_templates.h>
 
 namespace x680 {
 

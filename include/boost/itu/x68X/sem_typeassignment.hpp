@@ -7,6 +7,7 @@
 #define	_ITU_T_SEM_TYPEASSIGNMENT_IMPLEMENTATIUON_H_
 
 #include <boost/itu/x68X/sem_assignment.hpp>
+#include <boost/itu/x68X/constraint_templates.h>
 
 namespace x680 {
 
@@ -216,6 +217,8 @@ namespace x680 {
         bool has_constraint() const {
             return !constraints_.empty();
         }
+        
+        integer_constraints_ptr integer_constraint();
 
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
@@ -234,18 +237,20 @@ namespace x680 {
         bool isopen() const;
 
         bool isenum() const;
-        
+
         bool can_per_visible_constraints();
-    
+
+        bool can_per_visible_dual_constraints();
+
         bool can_per_visible_type_constraints();
-       
-        bool can_per_visible_size_constraints();    
+
+        bool can_per_visible_size_constraints();
 
         bool istextualy_choice();
 
         bool isallways_explicit();
-        
-        bool isprimitive();        
+
+        bool isprimitive();
 
 
         tagrule_type tagrule() const;
@@ -504,25 +509,29 @@ namespace x680 {
             return (type() && (type()->isenum()));
         }
 
-        bool can_per_visible_constraints(){
+        bool can_per_visible_constraints() {
             return (type() && (type()->can_per_visible_constraints()));
         }
-    
-        bool can_per_visible_type_constraints(){
-            return (type() && (type()->can_per_visible_type_constraints())); 
+
+        bool can_per_visible_dual_constraints() {
+            return (type() && (type()->can_per_visible_dual_constraints()));
         }
-       
-        bool can_per_visible_size_constraints(){
-           return (type() && (type()->can_per_visible_size_constraints())); 
-        }         
-        
+
+        bool can_per_visible_type_constraints() {
+            return (type() && (type()->can_per_visible_type_constraints()));
+        }
+
+        bool can_per_visible_size_constraints() {
+            return (type() && (type()->can_per_visible_size_constraints()));
+        }
+
         bool istextualy_choice() {
             return (type() && (type()->istextualy_choice()));
         }
-        
+
         bool isprimitive() {
             return (type() && (type()->isprimitive()));
-        }        
+        }
 
         bool isdefined_choice();
 
@@ -531,11 +540,11 @@ namespace x680 {
         bool islocaldefined() const;
 
         canonical_tag_vct cncl_tags();
-            
+
         typeassignment_entity_ptr superfluous_assignment(module_entity_ptr mod);
 
         namedtypeassignment_entity_ptr as_named();
-        
+
 
 
         /////        
