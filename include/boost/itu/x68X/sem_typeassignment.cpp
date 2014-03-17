@@ -7,7 +7,426 @@
 
 namespace x680 {
 
+    /////////////////////////////////////////////////////////////////////////   
+    // Effective constraint logic
+    /////////////////////////////////////////////////////////////////////////  
 
+    template<typename T>
+    static bool build_range(valueconstraint_atom_ptr vl, range_constraints<T>& rslt) {
+        if (vl && (vl->value()) && (vl->value()->as_number())) {
+            rslt = range_constraints<T>(range_constraints<T>::range_type::create_single(vl->value()->as_number()->value()));
+            return true;
+        }
+        return false;
+    }
+
+    template<typename T>
+    static bool build_range(rangeconstraint_atom_ptr vl, range_constraints<T>& rslt) {
+        if (vl) {
+            value_atom_ptr f = vl->from();
+            value_atom_ptr t = vl->to();
+            switch (vl->fromtype()) {
+                case close_range: break;
+                case open_range:
+                {
+                    if (f && f->as_number()) {
+                        f = value_atom_ptr(new numvalue_atom(f->as_number()->value() + 1));
+                        break;
+                    }
+                    return false;
+                }
+                case min_range: f = value_atom_ptr();
+                    break;
+                default:
+                {
+                    return false;
+                }
+            }
+
+            switch (vl->totype()) {
+                case close_range: break;
+                case open_range:
+                {
+                    if (t && t->as_number()) {
+                        t = value_atom_ptr(new numvalue_atom(t->as_number()->value() - 1));
+                        break;
+                    }
+                    return false;
+                }
+                case max_range: t = value_atom_ptr();
+                    break;
+                default:
+                {
+                    return false;
+                }
+            }
+            if (f || t) {
+                if (f && t) {
+                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_range(f->as_number()->value(), t->as_number()->value()));
+                    return true;
+                } else if (f) {
+                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_more_or_eq(f->as_number()->value()));
+                    return true;
+                } else if (t) {
+                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_less_or_eq(t->as_number()->value()));
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+    /////////////////////////////////////////////////
+    // Effective  integer constraint logik
+    /////////////////////////////////////////////////
+
+    static bool build_range_integer(tvosoconstraint_atom_ptr vl, integer_constraints& rslt) {
+        if (vl && (vl->as_tvoso())) {
+            vl->resolve();
+            if (vl->type()) {
+                integer_constraints_ptr rslt_ptr = vl->type()->integer_constraint();
+                if (rslt_ptr) {
+                    rslt = *rslt_ptr;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    static bool build_range_integer(typeconstraint_atom_ptr vl, integer_constraints& rslt) {
+        if (vl && (vl->as_typeconstraint())) {
+            if (vl->type()) {
+                integer_constraints_ptr rslt_ptr = vl->type()->integer_constraint();
+                if (rslt_ptr) {
+                    rslt = *rslt_ptr;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    static integer_constraints_ptr build_integer_constraints(const constraints_atom_vct& vl) {
+        typedef std::stack<integer_constraints> integer_constraints_stack;
+
+        integer_constraints_stack stke;
+        for (constraints_atom_vct::const_iterator ite = vl.begin(); ite != vl.end(); ++ite) {
+            if ((*ite)) {
+                integer_constraints_stack stki;
+                integer_constraints rng;
+                for (constraint_atom_vct::const_iterator iti = (*ite)->constraintline().begin(); iti != (*ite)->constraintline().end(); ++iti) {
+                    if ((*iti)->as_range()) {
+                        if (!build_range<int64_t>((*iti)->as_range(), rng)) {
+                            stki = integer_constraints_stack();
+                            break;
+                        }
+                        stki.push(rng);
+                    } else if ((*iti)->as_valueconstraint()) {
+                        if (!build_range<int64_t>((*iti)->as_valueconstraint(), rng)) {
+                            stki = integer_constraints_stack();
+                            break;
+                        }
+                        stki.push(rng);
+                    } else if ((*iti)->as_typeconstraint()) {
+                        if (!build_range_integer((*iti)->as_typeconstraint(), rng)) {
+                            stki = integer_constraints_stack();
+                            break;
+                        }
+                        stki.push(rng);
+                    } else if ((*iti)->as_tvoso()) {
+                        if (!build_range_integer((*iti)->as_tvoso(), rng)) {
+                            stki = integer_constraints_stack();
+                            break;
+                        }
+                        stki.push(rng);
+                    } else if ((*iti)->as_union()) {
+                        if (stki.size() < 2) {
+                            stki = integer_constraints_stack();
+                            break;
+                        }
+                        rng = stki.top();
+                        stki.pop();
+                        stki.top() |= rng;
+                    } else if ((*iti)->as_intersection()) {
+                        if (stki.size() < 2) {
+                            stki = integer_constraints_stack();
+                            break;
+                        }
+                        rng = stki.top();
+                        stki.pop();
+                        stki.top() &= rng;
+                    } else if ((*iti)->as_except()) {
+                        if (stki.size() < 2) {
+                            stki = integer_constraints_stack();
+                            break;
+                        }
+                        rng = stki.top();
+                        stki.pop();
+                        stki.top() -= rng;
+                    } else if ((*iti)->as_allexcept()) {
+                        if (stki.size() < 1) {
+                            stki = integer_constraints_stack();
+                            break;
+                        }
+                        rng = integer_constraints();
+                        rng -= stki.top();
+                        stki.top() = rng;
+                    } else {
+                        stki = integer_constraints_stack();
+                        break;
+                    }
+                }
+                if ((stki.size() == 1) && (!stki.top().all())) {
+                    if ((*ite)->extend())
+                        stki.top().add_extention();
+                    stke.push(stki.top());
+                }
+            }
+        }
+        if (!stke.empty()) {
+            while (stke.size() != 1) {
+                integer_constraints rng = stke.top();
+                stke.pop();
+                if (stke.size() != 1)
+                    rng.clear_extention();
+
+                if (!stke.top().include(rng))
+                    throw x680::semantics::error("");
+
+                if ((stke.size() == 1) && (stke.top().has_extention())) {
+                    stke.top() &= rng;
+                    stke.top().add_extention();
+                } else
+                    stke.top() &= rng;
+            }
+        }
+        if (stke.size() != 1)
+            return integer_constraints_ptr();
+        if (stke.top().all())
+            return integer_constraints_ptr();
+        return integer_constraints_ptr(new integer_constraints(stke.top()));
+    }
+
+
+
+
+
+
+    /////////////////////////////////////////////////
+    //  Effective  size constraint logik
+    /////////////////////////////////////////////////   
+
+    static bool build_range_size(tvosoconstraint_atom_ptr vl, size_constraints& rslt) {
+        if (vl && (vl->as_tvoso())) {
+            vl->resolve();
+            if (vl->type()) {
+                size_constraints_ptr rslt_ptr = vl->type()->size_constraint();
+                if (rslt_ptr) {
+                    rslt = *rslt_ptr;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    static bool build_range_size(typeconstraint_atom_ptr vl, size_constraints& rslt) {
+        if (vl && (vl->as_typeconstraint())) {
+            if (vl->type()) {
+                size_constraints_ptr rslt_ptr = vl->type()->size_constraint();
+                if (rslt_ptr) {
+                    rslt = *rslt_ptr;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    static size_constraints_ptr build_size_constraints(constraints_atom_ptr vl) {
+
+        size_constraints_ptr rslt;
+        typedef std::stack<size_constraints> size_constraints_stack;
+        size_constraints_stack stki;
+        size_constraints rng;
+        for (constraint_atom_vct::const_iterator iti = vl->constraintline().begin(); iti != vl->constraintline().end(); ++iti) {
+            if ((*iti)->as_range()) {
+                if (!build_range<std::size_t>((*iti)->as_range(), rng)) {
+                    stki = size_constraints_stack();
+                    break;
+                }
+                stki.push(rng);
+            } else if ((*iti)->as_valueconstraint()) {
+                if (!build_range<std::size_t>((*iti)->as_valueconstraint(), rng)) {
+                    stki = size_constraints_stack();
+                    break;
+                }
+                stki.push(rng);
+            } else if ((*iti)->as_typeconstraint()) {
+                if (!build_range_size((*iti)->as_typeconstraint(), rng)) {
+                    stki = size_constraints_stack();
+                    break;
+                }
+                stki.push(rng);
+            } else if ((*iti)->as_tvoso()) {
+                if (!build_range_size((*iti)->as_tvoso(), rng)) {
+                    stki = size_constraints_stack();
+                    break;
+                }
+                stki.push(rng);
+            } else if ((*iti)->as_union()) {
+                if (stki.size() < 2) {
+                    stki = size_constraints_stack();
+                    break;
+                }
+                rng = stki.top();
+                stki.pop();
+                stki.top() |= rng;
+            } else if ((*iti)->as_intersection()) {
+                if (stki.size() < 2) {
+                    stki = size_constraints_stack();
+                    break;
+                }
+                rng = stki.top();
+                stki.pop();
+                stki.top() &= rng;
+            } else if ((*iti)->as_except()) {
+                if (stki.size() < 2) {
+                    stki = size_constraints_stack();
+                    break;
+                }
+                rng = stki.top();
+                stki.pop();
+                stki.top() -= rng;
+            } else if ((*iti)->as_allexcept()) {
+                if (stki.size() < 1) {
+                    stki = size_constraints_stack();
+                    break;
+                }
+                rng = size_constraints();
+                rng -= stki.top();
+                stki.top() = rng;
+            } else {
+                stki = size_constraints_stack();
+                break;
+            }
+        }
+        if ((stki.size() == 1) && (!stki.top().all())) {
+            if (vl->extend())
+                stki.top().add_extention();
+            return size_constraints_ptr(new size_constraints(stki.top()));
+        }
+        return rslt;
+    }
+
+    static size_constraints_ptr build_size_constraints(const constraints_atom_vct& vl, bool alpha = false) {
+        typedef std::stack<size_constraints> size_constraints_stack;
+
+        size_constraints_stack stke;
+        for (constraints_atom_vct::const_iterator ite = vl.begin(); ite != vl.end(); ++ite) {
+            if ((*ite)) {
+                size_constraints_stack stki;
+                size_constraints rng;
+                for (constraint_atom_vct::const_iterator iti = (*ite)->constraintline().begin(); iti != (*ite)->constraintline().end(); ++iti) {
+                    if ((*iti)->as_size()) {
+                        size_constraints_ptr tmp = build_size_constraints((*iti)->as_size()->constraints());
+                        if (!tmp) {
+                            stki = size_constraints_stack();
+                            break;
+                        }
+                        rng = *tmp;
+                        stki.push(rng);
+                    } else if ((*iti)->as_permitted()) {
+                        if (!alpha) {
+                            stki = size_constraints_stack();
+                            break;
+                        }
+                        rng = size_constraints();
+                        stki.push(rng);
+                    } else if ((*iti)->as_typeconstraint()) {
+                        if (!build_range_size((*iti)->as_typeconstraint(), rng)) {
+                            stki = size_constraints_stack();
+                            break;
+                        }
+                        stki.push(rng);
+                    } else if ((*iti)->as_tvoso()) {
+                        if (!build_range_size((*iti)->as_tvoso(), rng)) {
+                            stki = size_constraints_stack();
+                            break;
+                        }
+                        stki.push(rng);
+                    } else if ((*iti)->as_union()) {
+                        if (stki.size() < 2) {
+                            stki = size_constraints_stack();
+                            break;
+                        }
+                        rng = stki.top();
+                        stki.pop();
+                        stki.top() |= rng;
+                    } else if ((*iti)->as_intersection()) {
+                        if (stki.size() < 2) {
+                            stki = size_constraints_stack();
+                            break;
+                        }
+                        rng = stki.top();
+                        stki.pop();
+                        stki.top() &= rng;
+                    } else if ((*iti)->as_except()) {
+                        if (stki.size() < 2) {
+                            stki = size_constraints_stack();
+                            break;
+                        }
+                        rng = stki.top();
+                        stki.pop();
+                        stki.top() -= rng;
+                    } else if ((*iti)->as_allexcept()) {
+                        if (stki.size() < 1) {
+                            stki = size_constraints_stack();
+                            break;
+                        }
+                        rng = size_constraints();
+                        rng -= stki.top();
+                        stki.top() = rng;
+                    } else {
+                        stki = size_constraints_stack();
+                        break;
+                    }
+                }
+                if ((!stki.empty()) && (!stki.top().all())) {
+                    if ((*ite)->extend())
+                        stki.top().add_extention();
+                    stke.push(stki.top());
+                }
+            }
+        }
+        if (!stke.empty()) {
+            while (stke.size() != 1) {
+                size_constraints rng = stke.top();
+                stke.pop();
+                if (stke.size() != 1)
+                    rng.clear_extention();
+
+                if (!stke.top().include(rng))
+                    throw x680::semantics::error("");
+
+                if ((stke.size() == 1) && (stke.top().has_extention())) {
+                    stke.top() &= rng;
+                    stke.top().add_extention();
+                } else
+                    stke.top() &= rng;
+            }
+        }
+        if (stke.size() != 1)
+            return size_constraints_ptr();
+        if (stke.top().all())
+            return size_constraints_ptr();
+        return size_constraints_ptr(new size_constraints(stke.top()));
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // TYPE
@@ -199,28 +618,63 @@ namespace x680 {
 
     integer_constraints_ptr type_atom::integer_constraint() {
         integer_constraints_ptr rslt;
-        if ((root_builtin() == t_INTEGER)) {
+        integer_constraints_ptr rsltc;
+        if (can_integer_constraints()) {
             if ((isrefferrence()) && (reff())) {
                 if (!(reff()->as_typeassigment()) || !(reff()->as_typeassigment()->type()))
                     return rslt;
                 rslt = reff()->as_typeassigment()->type()->integer_constraint();
             }
-            if (has_constraint()) {
-                integer_constraints terslt;
-                constraint_atom_stack stk;
-                for (constraints_atom_vct::const_iterator ite = constraints().begin(); ite != constraints().end(); ++ite) {
-                    if ((*ite)) {
-                        integer_constraints tirslt;
-                        for (constraint_atom_vct::const_iterator iti =(*ite)->constraintline().begin(); iti != (*ite)->constraintline().end(); ++iti) {
-                            if ((*iti)->as_range()){
-                                stk.push(*iti);
-                            }
-                            else if ((*iti)->as_value()){
-                                stk.push(*iti);
-                            }
-                        }
+            if (has_constraint())
+                rsltc = build_integer_constraints(constraints());
+
+            if (rsltc) {
+                if (rslt) {
+                    rslt->clear_extention();
+                    if (!(*rslt).include(*rsltc)) {
+                        if (scope())
+                            scope()->referenceerror_throw("Constraint error:");
+                        else
+                            throw semantics::error("Constraint error:" + (moduleref() ? (" in module " + moduleref()->name()) : ""));
                     }
-                }
+
+                    (*rslt) &= *rsltc;
+                    if (rsltc->has_extention())
+                        rslt->add_extention();
+                } else
+                    rslt = integer_constraints_ptr(new integer_constraints(*rsltc));
+            }
+        }
+        return rslt;
+    }
+
+    size_constraints_ptr type_atom::size_constraint() {
+        size_constraints_ptr rslt;
+        size_constraints_ptr rsltc;
+        if (can_size_constraints()) {
+            if ((isrefferrence()) && (reff())) {
+                if (!(reff()->as_typeassigment()) || !(reff()->as_typeassigment()->type()))
+                    return rslt;
+                rslt = reff()->as_typeassigment()->type()->size_constraint();
+            }
+            if (has_constraint())
+                rsltc = build_size_constraints(constraints(), can_alphabet_constraints());
+
+            if (rsltc) {
+                if (rslt) {
+                    rslt->clear_extention();
+                    if (!(*rslt).include(*rsltc)) {
+                        if (scope())
+                            scope()->referenceerror_throw("Constraint error:");
+                        else
+                            throw semantics::error("Constraint error:" + (moduleref() ? (" in module " + moduleref()->name()) : ""));
+                    }
+
+                    (*rslt) &= *rsltc;
+                    if (rsltc->has_extention())
+                        rslt->add_extention();
+                } else
+                    rslt = size_constraints_ptr(new size_constraints(*rsltc));
             }
         }
         return rslt;
@@ -272,23 +726,22 @@ namespace x680 {
         return ((isrefferrence()) && (!tag_) && (constraints_.empty()));
     }
 
-    bool type_atom::can_per_visible_constraints() {
-        return (can_per_visible_type_constraints()) || (can_per_visible_size_constraints());
+    bool type_atom::can_per_constraints() {
+        return (can_char_constraints()) || (can_size_constraints() || (can_integer_constraints()));
     }
-    
-    bool type_atom::can_per_visible_dual_constraints() {
-        return (can_per_visible_type_constraints()) && (can_per_visible_size_constraints());
-    }    
 
-    bool type_atom::can_per_visible_type_constraints() {
+    bool type_atom::can_alphabet_constraints() {
+        return (can_char_constraints()) && (can_size_constraints());
+    }
+
+    bool type_atom::can_char_constraints() {
         switch (root_builtin()) {
-            case t_INTEGER:
             case t_NumericString:
             case t_PrintableString:
             case t_IA5String:
             case t_VisibleString:
             case t_UniversalString:
-            case t_BMPString: return true;                
+            case t_BMPString: return true;
             default:
             {
             }
@@ -296,7 +749,7 @@ namespace x680 {
         return false;
     }
 
-    bool type_atom::can_per_visible_size_constraints() {
+    bool type_atom::can_size_constraints() {
         switch (root_builtin()) {
             case t_BIT_STRING:
             case t_OCTET_STRING:
@@ -305,7 +758,7 @@ namespace x680 {
             case t_IA5String:
             case t_VisibleString:
             case t_UniversalString:
-            case t_BMPString: 
+            case t_BMPString:
             case t_SEQUENCE_OF:
             case t_SET_OF: return true;
             default:
@@ -313,6 +766,10 @@ namespace x680 {
             }
         }
         return false;
+    }
+
+    bool type_atom::can_integer_constraints() {
+        return (root_builtin() == t_INTEGER);
     }
 
     bool type_atom::istextualy_choice() {

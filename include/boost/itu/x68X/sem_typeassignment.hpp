@@ -219,6 +219,8 @@ namespace x680 {
         }
         
         integer_constraints_ptr integer_constraint();
+        
+        size_constraints_ptr size_constraint();
 
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
@@ -238,13 +240,15 @@ namespace x680 {
 
         bool isenum() const;
 
-        bool can_per_visible_constraints();
+        bool can_per_constraints();
 
-        bool can_per_visible_dual_constraints();
+        bool can_alphabet_constraints();
 
-        bool can_per_visible_type_constraints();
+        bool can_char_constraints();
 
-        bool can_per_visible_size_constraints();
+        bool can_size_constraints();
+        
+        bool can_integer_constraints();
 
         bool istextualy_choice();
 
@@ -509,20 +513,24 @@ namespace x680 {
             return (type() && (type()->isenum()));
         }
 
-        bool can_per_visible_constraints() {
-            return (type() && (type()->can_per_visible_constraints()));
+        bool can_per_constraints() {
+            return (type() && (type()->can_per_constraints()));
         }
 
-        bool can_per_visible_dual_constraints() {
-            return (type() && (type()->can_per_visible_dual_constraints()));
+        bool can_alphabet_constraints() {
+            return (type() && (type()->can_alphabet_constraints()));
         }
 
-        bool can_per_visible_type_constraints() {
-            return (type() && (type()->can_per_visible_type_constraints()));
+        bool can_char_constraints() {
+            return (type() && (type()->can_char_constraints()));
         }
 
-        bool can_per_visible_size_constraints() {
-            return (type() && (type()->can_per_visible_size_constraints()));
+        bool can_size_constraints() {
+            return (type() && (type()->can_size_constraints()));
+        }
+        
+        bool can_integer_constraints(){
+            return (type() && (type()->can_integer_constraints()));            
         }
 
         bool istextualy_choice() {

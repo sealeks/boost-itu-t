@@ -370,6 +370,14 @@ namespace x680 {
                 stream << self->builtin();
             }
         }
+        if (self->integer_constraint()){
+            stream << "[ has effective integer constrant " << (*(self->integer_constraint())).to_per() <<
+                    /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
+        }
+        if (self->size_constraint()){
+            stream << "[ has effective size constrant " << (*(self->size_constraint())).to_per() <<
+                    /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
+        }        
         if (self->parameterized())
             stream << self->parameters();
         if (self->predefined())
