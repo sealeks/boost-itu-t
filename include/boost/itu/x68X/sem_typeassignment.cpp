@@ -680,6 +680,16 @@ namespace x680 {
         return rslt;
     }
 
+    char8_constraints_ptr type_atom::char8_constraint() {
+        return char8_constraints_ptr();
+    }
+
+    wchar_constraints_ptr type_atom::wchar_constraint() {
+        return wchar_constraints_ptr();
+    }
+
+
+
     bool type_atom::isrefferrence() const {
         return (((builtin_ == t_Reference)
                 || (builtin_ == t_TypeFromObject)
@@ -748,6 +758,30 @@ namespace x680 {
         }
         return false;
     }
+    
+    bool type_atom::can_char8_constraints() {
+        switch (root_builtin()) {
+            case t_NumericString:
+            case t_PrintableString:
+            case t_IA5String:
+            case t_VisibleString: return true;
+            default:
+            {
+            }
+        }
+        return false;
+    }  
+    
+    bool type_atom::can_wchar_constraints() {
+        switch (root_builtin()) {
+            case t_UniversalString:
+            case t_BMPString: return true;
+            default:
+            {
+            }
+        }
+        return false;
+    }     
 
     bool type_atom::can_size_constraints() {
         switch (root_builtin()) {

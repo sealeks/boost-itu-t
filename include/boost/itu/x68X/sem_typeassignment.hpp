@@ -217,10 +217,14 @@ namespace x680 {
         bool has_constraint() const {
             return !constraints_.empty();
         }
-        
+
         integer_constraints_ptr integer_constraint();
-        
+
         size_constraints_ptr size_constraint();
+
+        char8_constraints_ptr char8_constraint();
+
+        wchar_constraints_ptr wchar_constraint();
 
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
@@ -245,9 +249,13 @@ namespace x680 {
         bool can_alphabet_constraints();
 
         bool can_char_constraints();
+        
+        bool can_char8_constraints();  
+        
+        bool can_wchar_constraints();        
 
         bool can_size_constraints();
-        
+
         bool can_integer_constraints();
 
         bool istextualy_choice();
@@ -524,13 +532,21 @@ namespace x680 {
         bool can_char_constraints() {
             return (type() && (type()->can_char_constraints()));
         }
+        
+        bool can_char8_constraints() {
+            return (type() && (type()->can_char8_constraints()));
+        }
+
+        bool can_wchar_constraints() {
+            return (type() && (type()->can_wchar_constraints()));
+        }        
 
         bool can_size_constraints() {
             return (type() && (type()->can_size_constraints()));
         }
-        
-        bool can_integer_constraints(){
-            return (type() && (type()->can_integer_constraints()));            
+
+        bool can_integer_constraints() {
+            return (type() && (type()->can_integer_constraints()));
         }
 
         bool istextualy_choice() {

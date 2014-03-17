@@ -648,103 +648,8 @@ namespace x680 {
 
 
 
-
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  dual_constraints
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
-
-    template<typename T, typename U>
-    class dual_constraints {
-
-    public:
-
-        typedef range<T> first_range;
-        typedef typename first_range::range_container_type first_container;
-        typedef range_constraints<T> first_constraints;
-
-        typedef range<U> second_range;
-        typedef typename second_range::range_container_type second_container;
-        typedef range_constraints<U> second_constraints;
-
-        typedef dual_constraints<T, U> self_type;
-
-        dual_constraints() :
-        first_(first_range::create_all()), second_(second_range::create_all()) {
-        }
-
-        dual_constraints(first_range f, second_range s) :
-        first_(f), second_(s) {
-        }
-
-        virtual ~dual_constraints() {
-        }
-
-        first_constraints& first() {
-            return first_;
-        }
-
-        second_constraints& second() {
-            return second_;
-        }
-
-        const first_constraints& first() const {
-            return first_;
-        }
-
-        const second_constraints& second() const {
-            return second_;
-        }
-
-        self_type& operator&=(const self_type& v) {
-            first_ &= v.first();
-            second_ &= v.second();
-            return *this;
-        }
-
-        self_type& operator|=(const self_type& v) {
-            first_ |= v.first();
-            second_ |= v.second();
-            return *this;
-        }
-
-        self_type& operator-=(const self_type& v) {
-            first_ -= v.first();
-            second_ -= v.second();
-            return *this;
-        }
-
-        static self_type create_and(const first_range& f, const second_range& s) {
-            return create_first(f) &= create_second(s);
-        }
-
-        static self_type create_or(const first_range& f, const second_range& s) {
-            return create_first(f) |= create_second(s);
-        }
-
-        static self_type create_except(const first_range& f, const second_range& s) {
-            return create_first(f) -= create_second(s);
-        }
-
-        static self_type create_first(const first_range& v) {
-            self_type tmp;
-            tmp.first_ &= v;
-            return tmp;
-        }
-
-        static self_type create_second(const second_range& v) {
-            self_type tmp;
-            tmp.second_ &= v;
-            return tmp;
-        }
-
-
-    private:
-
-        first_constraints first_;
-        second_constraints second_;
-    };
+    
+    
 
     template<typename T>
     std::ostream& operator<<(std::ostream& stream, const range<T>& vl) {
@@ -787,16 +692,6 @@ namespace x680 {
         return stream;
     }
 
-    template<typename T, typename U>
-    std::ostream& operator<<(std::ostream& stream, dual_constraints<T, U>& vl) {
-        stream << "(" << vl.first() << ")" << "(" << vl.second() << ")";
-        /* if (vl.has_extention()) {
-             stream << "( ext "  << vl.extention()  << ")"  ;
-         }*/
-        return stream;
-    }
-
-
 
 
     typedef range_constraints<int64_t> integer_constraints;
@@ -807,19 +702,20 @@ namespace x680 {
     typedef size_constraints::range_type size_range;
     typedef boost::shared_ptr<size_constraints> size_constraints_ptr;
 
-    typedef dual_constraints<std::size_t, std::string::value_type> char8_constraints;
-    typedef char8_constraints::first_range char8size_range;
-    typedef char8_constraints::second_range char8_range;
+    typedef range_constraints<std::string::value_type> char8_constraints;
+    typedef char8_constraints::range_type char8_range;
     typedef boost::shared_ptr<char8_constraints> char8_constraints_ptr;
+    
+    typedef range_constraints<std::wstring::value_type> wchar_constraints;
+    typedef wchar_constraints::range_type wchar_range;
+    typedef boost::shared_ptr<wchar_constraints> wchar_constraints_ptr;    
 
-    typedef dual_constraints<std::size_t, uint16_t> char16_constraints;
-    typedef char16_constraints::first_range char16size_range;
-    typedef char16_constraints::second_range char16_range;
+    typedef range_constraints<uint16_t> char16_constraints;
+    typedef char16_constraints::range_type char16_range;
     typedef boost::shared_ptr<char16_constraints> char16_constraints_ptr;
 
-    typedef dual_constraints<std::size_t, uint32_t> char32_constraints;
-    typedef char16_constraints::first_range char32size_range;
-    typedef char16_constraints::second_range char32_range;
+    typedef range_constraints<uint32_t> char32_constraints;
+    typedef char32_constraints::range_type char32_range;
     typedef boost::shared_ptr<char32_constraints> char32_constraints_ptr;
 
 
