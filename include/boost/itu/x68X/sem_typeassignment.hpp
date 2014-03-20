@@ -218,6 +218,11 @@ namespace x680 {
             return !constraints_.empty();
         }
 
+        template<typename T>
+        boost::shared_ptr<range_constraints<T> > effective_constraint() {
+            return boost::shared_ptr<range_constraints<T> >();
+        }
+
         integer_constraints_ptr integer_constraint();
 
         size_constraints_ptr size_constraint();
@@ -249,10 +254,10 @@ namespace x680 {
         bool can_alphabet_constraints();
 
         bool can_char_constraints();
-        
-        bool can_char8_constraints();  
-        
-        bool can_wchar_constraints();        
+
+        bool can_char8_constraints();
+
+        bool can_wchar_constraints();
 
         bool can_size_constraints();
 
@@ -294,6 +299,20 @@ namespace x680 {
         constraints_atom_vct constraints_;
 
     };
+
+
+    template<>
+    integer_constraints_ptr type_atom::effective_constraint();
+
+    template<>
+    size_constraints_ptr type_atom::effective_constraint();
+
+    template<>
+    char8_constraints_ptr type_atom::effective_constraint();
+
+    template<>
+    wchar_constraints_ptr type_atom::effective_constraint();
+
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -532,14 +551,14 @@ namespace x680 {
         bool can_char_constraints() {
             return (type() && (type()->can_char_constraints()));
         }
-        
+
         bool can_char8_constraints() {
             return (type() && (type()->can_char8_constraints()));
         }
 
         bool can_wchar_constraints() {
             return (type() && (type()->can_wchar_constraints()));
-        }        
+        }
 
         bool can_size_constraints() {
             return (type() && (type()->can_size_constraints()));

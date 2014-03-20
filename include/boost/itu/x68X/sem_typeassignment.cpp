@@ -12,6 +12,36 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     template<typename T>
+    T can_effective_constraint(type_atom* vl) {
+        return T();
+    }
+
+    template<>
+    int64_t can_effective_constraint(type_atom* vl) {
+        return vl->can_integer_constraints() ? 1 : 0;
+    }
+
+    template<>
+    std::size_t can_effective_constraint(type_atom* vl) {
+        return vl->can_size_constraints() ? 1 : 0;
+    }
+
+    template<>
+    std::string::value_type can_effective_constraint(type_atom* vl) {
+        return vl->can_char8_constraints() ? 1 : 0;
+    }
+
+    template<>
+    std::wstring::value_type can_effective_constraint(type_atom* vl) {
+        return vl->can_wchar_constraints() ? 1 : 0;
+    }
+
+    template<typename T>
+    static boost::shared_ptr<range_constraints<T> > build_constraints(const constraints_atom_vct& vl, bool alpha) {
+        return boost::shared_ptr<range_constraints<T> >();
+    }
+
+    template<typename T>
     static bool build_range(valueconstraint_atom_ptr vl, range_constraints<T>& rslt) {
         if (vl && (vl->value()) && (vl->value()->as_number())) {
             rslt = range_constraints<T>(range_constraints<T>::range_type::create_single(vl->value()->as_number()->value()));
@@ -76,19 +106,12 @@ namespace x680 {
         return false;
     }
 
-
-
-
-
-    /////////////////////////////////////////////////
-    // Effective  integer constraint logik
-    /////////////////////////////////////////////////
-
-    static bool build_range_integer(tvosoconstraint_atom_ptr vl, integer_constraints& rslt) {
+    template<typename T>
+    static bool build_range(tvosoconstraint_atom_ptr vl, range_constraints<T>& rslt) {
         if (vl && (vl->as_tvoso())) {
             vl->resolve();
             if (vl->type()) {
-                integer_constraints_ptr rslt_ptr = vl->type()->integer_constraint();
+                boost::shared_ptr<range_constraints<T> > rslt_ptr = vl->type()->effective_constraint<T>();
                 if (rslt_ptr) {
                     rslt = *rslt_ptr;
                     return true;
@@ -98,10 +121,11 @@ namespace x680 {
         return false;
     }
 
-    static bool build_range_integer(typeconstraint_atom_ptr vl, integer_constraints& rslt) {
+    template<typename T>
+    static bool build_range(typeconstraint_atom_ptr vl, range_constraints<T>& rslt) {
         if (vl && (vl->as_typeconstraint())) {
             if (vl->type()) {
-                integer_constraints_ptr rslt_ptr = vl->type()->integer_constraint();
+                boost::shared_ptr<range_constraints<T> > rslt_ptr = vl->type()->effective_constraint<T>();
                 if (rslt_ptr) {
                     rslt = *rslt_ptr;
                     return true;
@@ -111,7 +135,13 @@ namespace x680 {
         return false;
     }
 
-    static integer_constraints_ptr build_integer_constraints(const constraints_atom_vct& vl) {
+    /////////////////////////////////////////////////
+    // Effective  integer constraint logic
+    /////////////////////////////////////////////////
+
+    template<>
+    integer_constraints_ptr build_constraints(const constraints_atom_vct& vl, bool alpha) {
+
         typedef std::stack<integer_constraints> integer_constraints_stack;
 
         integer_constraints_stack stke;
@@ -133,13 +163,13 @@ namespace x680 {
                         }
                         stki.push(rng);
                     } else if ((*iti)->as_typeconstraint()) {
-                        if (!build_range_integer((*iti)->as_typeconstraint(), rng)) {
+                        if (!build_range((*iti)->as_typeconstraint(), rng)) {
                             stki = integer_constraints_stack();
                             break;
                         }
                         stki.push(rng);
                     } else if ((*iti)->as_tvoso()) {
-                        if (!build_range_integer((*iti)->as_tvoso(), rng)) {
+                        if (!build_range((*iti)->as_tvoso(), rng)) {
                             stki = integer_constraints_stack();
                             break;
                         }
@@ -218,35 +248,8 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////
-    //  Effective  size constraint logik
+    //  Effective  size constraint logic
     /////////////////////////////////////////////////   
-
-    static bool build_range_size(tvosoconstraint_atom_ptr vl, size_constraints& rslt) {
-        if (vl && (vl->as_tvoso())) {
-            vl->resolve();
-            if (vl->type()) {
-                size_constraints_ptr rslt_ptr = vl->type()->size_constraint();
-                if (rslt_ptr) {
-                    rslt = *rslt_ptr;
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    static bool build_range_size(typeconstraint_atom_ptr vl, size_constraints& rslt) {
-        if (vl && (vl->as_typeconstraint())) {
-            if (vl->type()) {
-                size_constraints_ptr rslt_ptr = vl->type()->size_constraint();
-                if (rslt_ptr) {
-                    rslt = *rslt_ptr;
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     static size_constraints_ptr build_size_constraints(constraints_atom_ptr vl) {
 
@@ -268,13 +271,13 @@ namespace x680 {
                 }
                 stki.push(rng);
             } else if ((*iti)->as_typeconstraint()) {
-                if (!build_range_size((*iti)->as_typeconstraint(), rng)) {
+                if (!build_range((*iti)->as_typeconstraint(), rng)) {
                     stki = size_constraints_stack();
                     break;
                 }
                 stki.push(rng);
             } else if ((*iti)->as_tvoso()) {
-                if (!build_range_size((*iti)->as_tvoso(), rng)) {
+                if (!build_range((*iti)->as_tvoso(), rng)) {
                     stki = size_constraints_stack();
                     break;
                 }
@@ -324,9 +327,10 @@ namespace x680 {
         return rslt;
     }
 
-    static size_constraints_ptr build_size_constraints(const constraints_atom_vct& vl, bool alpha = false) {
-        typedef std::stack<size_constraints> size_constraints_stack;
+    template<>
+    size_constraints_ptr build_constraints(const constraints_atom_vct& vl, bool alpha) {
 
+        typedef std::stack<size_constraints> size_constraints_stack;
         size_constraints_stack stke;
         for (constraints_atom_vct::const_iterator ite = vl.begin(); ite != vl.end(); ++ite) {
             if ((*ite)) {
@@ -349,13 +353,13 @@ namespace x680 {
                         rng = size_constraints();
                         stki.push(rng);
                     } else if ((*iti)->as_typeconstraint()) {
-                        if (!build_range_size((*iti)->as_typeconstraint(), rng)) {
+                        if (!build_range((*iti)->as_typeconstraint(), rng)) {
                             stki = size_constraints_stack();
                             break;
                         }
                         stki.push(rng);
                     } else if ((*iti)->as_tvoso()) {
-                        if (!build_range_size((*iti)->as_tvoso(), rng)) {
+                        if (!build_range((*iti)->as_tvoso(), rng)) {
                             stki = size_constraints_stack();
                             break;
                         }
@@ -426,6 +430,222 @@ namespace x680 {
         if (stke.top().all())
             return size_constraints_ptr();
         return size_constraints_ptr(new size_constraints(stke.top()));
+    }
+
+
+    /////////////////////////////////////////////////
+    //  Effective  char8 constraint logik
+    /////////////////////////////////////////////////   
+
+    static char8_constraints_ptr build_char8_constraints(constraints_atom_ptr vl) {
+
+        char8_constraints_ptr rslt;
+        typedef std::stack<char8_constraints> char8_constraints_stack;
+        char8_constraints_stack stki;
+        char8_constraints rng;
+        for (constraint_atom_vct::const_iterator iti = vl->constraintline().begin(); iti != vl->constraintline().end(); ++iti) {
+            if ((*iti)->as_range()) {
+                if (!build_range<std::string::value_type>((*iti)->as_range(), rng)) {
+                    stki = char8_constraints_stack();
+                    break;
+                }
+                stki.push(rng);
+            } else if ((*iti)->as_valueconstraint()) {
+                if (!build_range<std::string::value_type>((*iti)->as_valueconstraint(), rng)) {
+                    stki = char8_constraints_stack();
+                    break;
+                }
+                stki.push(rng);
+            } else if ((*iti)->as_typeconstraint()) {
+                if (!build_range((*iti)->as_typeconstraint(), rng)) {
+                    stki = char8_constraints_stack();
+                    break;
+                }
+                stki.push(rng);
+            } else if ((*iti)->as_tvoso()) {
+                if (!build_range((*iti)->as_tvoso(), rng)) {
+                    stki = char8_constraints_stack();
+                    break;
+                }
+                stki.push(rng);
+            } else if ((*iti)->as_union()) {
+                if (stki.size() < 2) {
+                    stki = char8_constraints_stack();
+                    break;
+                }
+                rng = stki.top();
+                stki.pop();
+                stki.top() |= rng;
+            } else if ((*iti)->as_intersection()) {
+                if (stki.size() < 2) {
+                    stki = char8_constraints_stack();
+                    break;
+                }
+                rng = stki.top();
+                stki.pop();
+                stki.top() &= rng;
+            } else if ((*iti)->as_except()) {
+                if (stki.size() < 2) {
+                    stki = char8_constraints_stack();
+                    break;
+                }
+                rng = stki.top();
+                stki.pop();
+                stki.top() -= rng;
+            } else if ((*iti)->as_allexcept()) {
+                if (stki.size() < 1) {
+                    stki = char8_constraints_stack();
+                    break;
+                }
+                rng = char8_constraints();
+                rng -= stki.top();
+                stki.top() = rng;
+            } else {
+                stki = char8_constraints_stack();
+                break;
+            }
+        }
+        if ((stki.size() == 1) && (!stki.top().all())) {
+            if (vl->extend())
+                stki.top().add_extention();
+            return char8_constraints_ptr(new char8_constraints(stki.top()));
+        }
+        return rslt;
+    }
+
+    template<>
+    char8_constraints_ptr build_constraints(const constraints_atom_vct& vl, bool alpha) {
+        typedef std::stack<char8_constraints> char8_constraints_stack;
+
+        char8_constraints_stack stke;
+        for (constraints_atom_vct::const_iterator ite = vl.begin(); ite != vl.end(); ++ite) {
+            if ((*ite)) {
+                char8_constraints_stack stki;
+                char8_constraints rng;
+                for (constraint_atom_vct::const_iterator iti = (*ite)->constraintline().begin(); iti != (*ite)->constraintline().end(); ++iti) {
+                    if ((*iti)->as_permitted()) {
+                        char8_constraints_ptr tmp = build_char8_constraints((*iti)->as_permitted()->constraints());
+                        if (!tmp) {
+                            stki = char8_constraints_stack();
+                            break;
+                        }
+                        rng = *tmp;
+                        stki.push(rng);
+                    } else if ((*iti)->as_size()) {
+                        rng = char8_constraints();
+                        stki.push(rng);
+                    } else if ((*iti)->as_typeconstraint()) {
+                        if (!build_range((*iti)->as_typeconstraint(), rng)) {
+                            stki = char8_constraints_stack();
+                            break;
+                        }
+                        stki.push(rng);
+                    } else if ((*iti)->as_tvoso()) {
+                        if (!build_range((*iti)->as_tvoso(), rng)) {
+                            stki = char8_constraints_stack();
+                            break;
+                        }
+                        stki.push(rng);
+                    } else if ((*iti)->as_union()) {
+                        if (stki.size() < 2) {
+                            stki = char8_constraints_stack();
+                            break;
+                        }
+                        rng = stki.top();
+                        stki.pop();
+                        stki.top() |= rng;
+                    } else if ((*iti)->as_intersection()) {
+                        if (stki.size() < 2) {
+                            stki = char8_constraints_stack();
+                            break;
+                        }
+                        rng = stki.top();
+                        stki.pop();
+                        stki.top() &= rng;
+                    } else if ((*iti)->as_except()) {
+                        if (stki.size() < 2) {
+                            stki = char8_constraints_stack();
+                            break;
+                        }
+                        rng = stki.top();
+                        stki.pop();
+                        stki.top() -= rng;
+                    } else if ((*iti)->as_allexcept()) {
+                        if (stki.size() < 1) {
+                            stki = char8_constraints_stack();
+                            break;
+                        }
+                        rng = char8_constraints();
+                        rng -= stki.top();
+                        stki.top() = rng;
+                    } else {
+                        stki = char8_constraints_stack();
+                        break;
+                    }
+                }
+                if ((!stki.empty()) && (!stki.top().all())) {
+                    if ((*ite)->extend())
+                        stki.top().add_extention();
+                    stke.push(stki.top());
+                }
+            }
+        }
+        if (!stke.empty()) {
+            while (stke.size() != 1) {
+                char8_constraints rng = stke.top();
+                stke.pop();
+                if (stke.size() != 1)
+                    rng.clear_extention();
+
+                if (!stke.top().include(rng))
+                    throw x680::semantics::error("");
+
+                if ((stke.size() == 1) && (stke.top().has_extention())) {
+                    stke.top() &= rng;
+                    stke.top().add_extention();
+                } else
+                    stke.top() &= rng;
+            }
+        }
+        if (stke.size() != 1)
+            return char8_constraints_ptr();
+        if (stke.top().all())
+            return char8_constraints_ptr();
+        return char8_constraints_ptr(new char8_constraints(stke.top()));
+    }
+
+
+
+    /////////////////////////////////////////////////
+    //  Calculate effective constraint 
+    /////////////////////////////////////////////////     
+
+    template<typename T>
+    static boost::shared_ptr<range_constraints<T> > calculate_effective_constraint(type_atom* vl) {
+        boost::shared_ptr<range_constraints<T> > rslt;
+        boost::shared_ptr<range_constraints<T> > rsltc;
+        if (can_effective_constraint<T>(vl)) {
+            if ((vl->isrefferrence()) && (vl->reff())) {
+                if (!(vl->reff()->as_typeassigment()) || !(vl->reff()->as_typeassigment()->type()))
+                    rslt = vl->reff()->as_typeassigment()->type()->effective_constraint<T>();
+            }
+            if (vl->has_constraint())
+                rsltc = build_constraints<T>(vl->constraints(), vl->can_alphabet_constraints());
+
+            if (rsltc) {
+                if (rslt) {
+                    rslt->clear_extention();
+                    if (!(*rslt).include(*rsltc)) {
+                        throw semantics::error("");
+                    }
+                    (*rslt) &= *rsltc;
+                    if (rsltc->has_extention())
+                        rslt->add_extention();
+                } else
+                    rslt = boost::shared_ptr<range_constraints<T> >(new range_constraints<T>(*rsltc));
+            }
+        }
+        return rslt;
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -616,79 +836,41 @@ namespace x680 {
         return rslt;
     }
 
+    template<>
+    integer_constraints_ptr type_atom::effective_constraint() {
+        return calculate_effective_constraint<int64_t>(this);
+    }
+
     integer_constraints_ptr type_atom::integer_constraint() {
-        integer_constraints_ptr rslt;
-        integer_constraints_ptr rsltc;
-        if (can_integer_constraints()) {
-            if ((isrefferrence()) && (reff())) {
-                if (!(reff()->as_typeassigment()) || !(reff()->as_typeassigment()->type()))
-                    return rslt;
-                rslt = reff()->as_typeassigment()->type()->integer_constraint();
-            }
-            if (has_constraint())
-                rsltc = build_integer_constraints(constraints());
+        return effective_constraint<int64_t>();
+    }
 
-            if (rsltc) {
-                if (rslt) {
-                    rslt->clear_extention();
-                    if (!(*rslt).include(*rsltc)) {
-                        if (scope())
-                            scope()->referenceerror_throw("Constraint error:");
-                        else
-                            throw semantics::error("Constraint error:" + (moduleref() ? (" in module " + moduleref()->name()) : ""));
-                    }
-
-                    (*rslt) &= *rsltc;
-                    if (rsltc->has_extention())
-                        rslt->add_extention();
-                } else
-                    rslt = integer_constraints_ptr(new integer_constraints(*rsltc));
-            }
-        }
-        return rslt;
+    template<>
+    size_constraints_ptr type_atom::effective_constraint() {
+        return calculate_effective_constraint<std::size_t>(this);
     }
 
     size_constraints_ptr type_atom::size_constraint() {
-        size_constraints_ptr rslt;
-        size_constraints_ptr rsltc;
-        if (can_size_constraints()) {
-            if ((isrefferrence()) && (reff())) {
-                if (!(reff()->as_typeassigment()) || !(reff()->as_typeassigment()->type()))
-                    return rslt;
-                rslt = reff()->as_typeassigment()->type()->size_constraint();
-            }
-            if (has_constraint())
-                rsltc = build_size_constraints(constraints(), can_alphabet_constraints());
+        return effective_constraint<std::size_t>();
+    }
 
-            if (rsltc) {
-                if (rslt) {
-                    rslt->clear_extention();
-                    if (!(*rslt).include(*rsltc)) {
-                        if (scope())
-                            scope()->referenceerror_throw("Constraint error:");
-                        else
-                            throw semantics::error("Constraint error:" + (moduleref() ? (" in module " + moduleref()->name()) : ""));
-                    }
-
-                    (*rslt) &= *rsltc;
-                    if (rsltc->has_extention())
-                        rslt->add_extention();
-                } else
-                    rslt = size_constraints_ptr(new size_constraints(*rsltc));
-            }
-        }
-        return rslt;
+    template<>
+    char8_constraints_ptr type_atom::effective_constraint() {
+        return calculate_effective_constraint<std::string::value_type>(this);
     }
 
     char8_constraints_ptr type_atom::char8_constraint() {
-        return char8_constraints_ptr();
+        return effective_constraint<std::string::value_type>();
+    }
+
+    template<>
+    wchar_constraints_ptr type_atom::effective_constraint() {
+        return calculate_effective_constraint<std::wstring::value_type>(this);
     }
 
     wchar_constraints_ptr type_atom::wchar_constraint() {
-        return wchar_constraints_ptr();
+        return effective_constraint<std::wstring::value_type>();
     }
-
-
 
     bool type_atom::isrefferrence() const {
         return (((builtin_ == t_Reference)
@@ -758,7 +940,7 @@ namespace x680 {
         }
         return false;
     }
-    
+
     bool type_atom::can_char8_constraints() {
         switch (root_builtin()) {
             case t_NumericString:
@@ -770,8 +952,8 @@ namespace x680 {
             }
         }
         return false;
-    }  
-    
+    }
+
     bool type_atom::can_wchar_constraints() {
         switch (root_builtin()) {
             case t_UniversalString:
@@ -781,7 +963,7 @@ namespace x680 {
             }
         }
         return false;
-    }     
+    }
 
     bool type_atom::can_size_constraints() {
         switch (root_builtin()) {
