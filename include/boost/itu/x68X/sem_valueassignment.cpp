@@ -215,17 +215,52 @@ namespace x680 {
     boost::shared_ptr<num_vector> value_atom::get_value(bool except_abstract) {
         if (as_defined()) {
             return get_value_parent<num_vector>(except_abstract);
+        } else if (as_list()) {
+            structvalue_atom_ptr lst = as_list();
+            boost::shared_ptr<num_vector> rslt = boost::shared_ptr<num_vector>(new num_vector());
+            for (value_vct::const_iterator it = lst->values().begin(); it != lst->values().end(); ++it) {
+                if (*it) {
+                    if ((*it)->get_value<int64_t>(except_abstract)) {
+                        rslt->push_back(*((*it)->get_value<int64_t>(except_abstract)));
+                    } else
+                        return boost::shared_ptr<num_vector>();
+                } else return boost::shared_ptr<num_vector>();
+            }
+            return rslt;
+        } else if (as_empty()) {
+            return boost::shared_ptr<num_vector>(new num_vector());
         }
         return boost::shared_ptr<num_vector>();
     }
-    
+
     template<>
     boost::shared_ptr<unum_vector> value_atom::get_value(bool except_abstract) {
         if (as_defined()) {
             return get_value_parent<unum_vector>(except_abstract);
+        } else if (as_list()) {
+            boost::shared_ptr<unum_vector> rslt = boost::shared_ptr<unum_vector>(new unum_vector());
+            for (value_vct::const_iterator it = as_list()->values().begin(); it != as_list()->values().end(); ++it) {
+                value_atom_ptr el = *it;
+                if (el && (el->as_assign()))
+                    el = el->as_assign()->value();
+
+                if (el) {
+                    if (el->get_value<std::size_t>(except_abstract)) {
+                        rslt->push_back(*(el->get_value<int64_t>(except_abstract)));
+                    }
+                    if (el->get_value<unum_vector>(except_abstract)) {
+                        boost::shared_ptr<unum_vector> sub = el->get_value<unum_vector>(except_abstract);
+                        rslt->insert(rslt->end(), sub->begin(), sub->end());
+                    } else
+                        return boost::shared_ptr<unum_vector>();
+                } else return boost::shared_ptr<unum_vector>();
+            }
+            return rslt;
+        } else if (as_empty()) {
+            return boost::shared_ptr<unum_vector>(new unum_vector());
         }
         return boost::shared_ptr<unum_vector>();
-    }    
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
