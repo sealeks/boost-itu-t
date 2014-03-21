@@ -785,6 +785,11 @@ namespace x680 {
         container_type range_;
         range_type expention_;
     };
+    
+    
+    std::ostream& operator<<(std::ostream& stream, const quadruple& vl);
+    
+    std::ostream& operator<<(std::ostream& stream, const tuple& vl);    
 
     template<typename T>
     std::ostream& operator<<(std::ostream& stream, const range<T>& vl) {
