@@ -377,7 +377,12 @@ namespace x680 {
         if (self->size_constraint()){
             stream << "[ has effective size constrant " << (*(self->size_constraint())).to_per() <<
                     /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
-        }        
+        }       
+        if (self->char8_constraint()){
+            stream << "[ has effective char8 constrant " << (*(self->char8_constraint())).to_per() <<
+                    /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
+        }          
+        
         if (self->parameterized())
             stream << self->parameters();
         if (self->predefined())

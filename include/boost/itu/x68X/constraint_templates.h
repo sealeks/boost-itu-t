@@ -2,7 +2,7 @@
  * File:   constraint_templates.h
  * Author: sealeks@mail.ru
  *
- * Created on 12 Март 2014 г., 15:01
+ * Created on 12 РњР°СЂС‚ 2014 Рі., 15:01
  */
 
 #ifndef ___CONSTRAINT_TEMPLATES_H
@@ -176,13 +176,13 @@ namespace x680 {
                 return false;
             if (l.all() && r.all())
                 return false;
-            if (l.left_ && r.left_)
+            if (l.left_ && r.left_ && (*l.left_ != *r.left_))
                 return *l.left_ < *r.left_;
             if (l.left_ && !r.left_)
                 return false;
             if (!l.left_ && r.left_)
                 return true;
-            if (l.right_ && r.right_)
+            if (l.right_ && r.right_ && (*l.right_ != *r.right_))
                 return *l.right_ < *r.right_;
             if (l.right_ && !r.right_)
                 return false;
@@ -467,7 +467,7 @@ namespace x680 {
         }
 
         explicit range_constraints(const T& l, const T& r, bool e) {
-            range_.push_back(range_type(l, r));         
+            range_.push_back(range_type(l, r));
             expention_ = e ? range_type::create_all() : range_type::create_empty();
         }
 
@@ -520,16 +520,7 @@ namespace x680 {
         }
 
         void add_extention() {
-            if (!all() && !empty()) {
-                container_type tmp = range_type::normalize(range_);
-                if (!tmp.empty()) {
-                    if (tmp.back().right_ptr()) {
-                        if (tmp.back().right() != range_type::max) {
-                            expention_ = range_type::create_more_or_eq(tmp.back().right() + 1);
-                        }
-                    }
-                }
-            }
+            expention_ = range_type::create_all();
         }
 
         void clear_extention() {
@@ -542,6 +533,10 @@ namespace x680 {
                 return ((tmp.size() == 1) && (tmp.front().all()));
             }
             return false;
+        }
+
+        bool effective() {
+            return ((!all()) || (has_extention()));
         }
 
         bool empty() {
@@ -645,12 +640,6 @@ namespace x680 {
         range_type expention_;
     };
 
-
-
-
-    
-    
-
     template<typename T>
     std::ostream& operator<<(std::ostream& stream, const range<T>& vl) {
         if (vl.empty())
@@ -705,10 +694,10 @@ namespace x680 {
     typedef range_constraints<std::string::value_type> char8_constraints;
     typedef char8_constraints::range_type char8_range;
     typedef boost::shared_ptr<char8_constraints> char8_constraints_ptr;
-    
+
     typedef range_constraints<std::wstring::value_type> wchar_constraints;
     typedef wchar_constraints::range_type wchar_range;
-    typedef boost::shared_ptr<wchar_constraints> wchar_constraints_ptr;    
+    typedef boost::shared_ptr<wchar_constraints> wchar_constraints_ptr;
 
     typedef range_constraints<uint16_t> char16_constraints;
     typedef char16_constraints::range_type char16_range;
