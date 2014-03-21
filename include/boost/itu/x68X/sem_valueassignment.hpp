@@ -10,6 +10,8 @@
 
 namespace x680 {
 
+    
+
 
     /////////////////////////////////////////////////////////////////////////   
     // VALUE
@@ -26,7 +28,7 @@ namespace x680 {
         value_type valtype() const {
             return valtype_;
         }
-        
+
         virtual bool isrefferrence() const;
 
         numvalue_atom_ptr as_number();
@@ -65,6 +67,14 @@ namespace x680 {
 
         emptyvalue_atom_ptr as_empty();
 
+        template< typename T>
+        boost::shared_ptr<T> get_value(bool except_abstract = false) {
+            return boost::shared_ptr<T>();
+        }
+
+        template< typename T>
+        boost::shared_ptr<T> get_value_parent(bool except_abstract = false);
+
 
     protected:
 
@@ -77,6 +87,42 @@ namespace x680 {
     };
 
 
+    template<>
+    boost::shared_ptr<int64_t> value_atom::get_value(bool except_abstract);
+
+    template<>
+    boost::shared_ptr<std::string::value_type> value_atom::get_value(bool except_abstract);
+
+    template<>
+    boost::shared_ptr<std::size_t> value_atom::get_value(bool except_abstract);
+
+    template<>
+    boost::shared_ptr<bool> value_atom::get_value(bool except_abstract);
+    
+    template<>
+    boost::shared_ptr<double> value_atom::get_value(bool except_abstract);   
+    
+    template<>
+    boost::shared_ptr<std::string> value_atom::get_value(bool except_abstract);       
+
+    template<>
+    boost::shared_ptr<quadruple> value_atom::get_value(bool except_abstract);
+
+    template<>
+    boost::shared_ptr<tuple> value_atom::get_value(bool except_abstract);     
+    
+    template<>
+    boost::shared_ptr<string_vector> value_atom::get_value(bool except_abstract);  
+    
+    template<>
+    boost::shared_ptr<num_vector> value_atom::get_value(bool except_abstract);
+
+    template<>
+    boost::shared_ptr<unum_vector> value_atom::get_value(bool except_abstract);       
+
+
+    
+    
     /////////////////////////////////////////////////////////////////////////   
     // numvalue_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -458,7 +504,19 @@ namespace x680 {
         value_atom_ptr value_;
     };
 
-
+    template< typename T>
+    boost::shared_ptr<T> value_atom::get_value_parent(bool except_abstract) {
+        if (as_defined()) {
+            if ((as_defined()->reff()) && (as_defined()->reff()->as_valueassigment())) {
+                if (as_defined()->reff()->as_valueassigment()->value()) {
+                    if ((except_abstract) && (as_defined()->reff()->as_valueassigment()->value()->isdummy()))
+                        return boost::shared_ptr<T>();
+                    return as_defined()->reff()->as_valueassigment()->value()->get_value<T>(except_abstract);
+                }
+            }
+        }
+        return boost::shared_ptr<T>();
+    }
 
 }
 

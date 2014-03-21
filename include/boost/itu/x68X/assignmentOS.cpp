@@ -94,7 +94,7 @@ namespace x680 {
                     >> *(oEElems[phx::bind(&push_objects, sprt::_val, sprt::_1)]);
 
 
-            oAElems %= (qi::omit[qi::lit("ALL EXCEPT")]
+            oAElems %= (qi::omit[ALL_ >> (+qi::space) >> EXCEPT_]
                     >> oExclusions)[phx::bind(&objectsetpush_object, sprt::_val, OBJECT_ALLEXCEPT)];
 
             oExclusions

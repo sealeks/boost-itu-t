@@ -229,7 +229,7 @@ namespace x680 {
 
         char8_constraints_ptr char8_constraint();
 
-        wchar_constraints_ptr wchar_constraint();
+        quadruple_constraints_ptr quadruple_constraint();
 
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
@@ -257,7 +257,7 @@ namespace x680 {
 
         bool can_char8_constraints();
 
-        bool can_wchar_constraints();
+        bool can_quadruple_constraints();
 
         bool can_size_constraints();
 
@@ -311,7 +311,7 @@ namespace x680 {
     char8_constraints_ptr type_atom::effective_constraint();
 
     template<>
-    wchar_constraints_ptr type_atom::effective_constraint();
+    quadruple_constraints_ptr type_atom::effective_constraint();
 
 
 
@@ -556,8 +556,8 @@ namespace x680 {
             return (type() && (type()->can_char8_constraints()));
         }
 
-        bool can_wchar_constraints() {
-            return (type() && (type()->can_wchar_constraints()));
+        bool can_quadruple_constraints() {
+            return (type() && (type()->can_quadruple_constraints()));
         }
 
         bool can_size_constraints() {

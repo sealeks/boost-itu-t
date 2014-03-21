@@ -99,7 +99,7 @@ namespace x680 {
 
 
             AElems %=
-                    (qi::omit[qi::lit("ALL EXCEPT")]
+                    (qi::omit[ALL_ >> (+qi::space) >> EXCEPT_]
                     >> Exclusions)[phx::bind(&push_constraint, sprt::_val, CONSTRAINT_ALLEXCEPT)];
 
             Exclusions

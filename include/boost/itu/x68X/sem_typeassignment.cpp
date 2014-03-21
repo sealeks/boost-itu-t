@@ -29,11 +29,11 @@ namespace x680 {
     template<>
     std::string::value_type can_effective_constraint(type_atom* vl) {
         return vl->can_char8_constraints() ? 1 : 0;
-    }
-
+    }    
+    
     template<>
-    std::wstring::value_type can_effective_constraint(type_atom* vl) {
-        return vl->can_wchar_constraints() ? 1 : 0;
+    quadruple can_effective_constraint(type_atom* vl) {   
+        return vl->can_quadruple_constraints() ? MAX_QUADRUPLE : NULL_QUADRUPLE;
     }
 
     template<typename T>
@@ -43,43 +43,40 @@ namespace x680 {
 
     template<typename T>
     static bool build_range(valueconstraint_atom_ptr vl, range_constraints<T>& rslt) {
-        if (vl && (vl->value()) && (vl->value()->as_number())) {
-            rslt = range_constraints<T>(range_constraints<T>::range_type::create_single(vl->value()->as_number()->value()));
+        if (vl && (vl->value()) && (vl->value()->get_value<T>())) {
+            rslt = range_constraints<T>(range_constraints<T>::range_type::create_single(*(vl->value()->get_value<T>())));
             return true;
         }
         return false;
     }
 
 
-    static bool build_range_str8(valueconstraint_atom_ptr vl, char8_constraints& rslt) {
-        if (vl && (vl->value()) && (vl->value()->as_cstr())) {
-            std::string tmp = vl->value()->as_cstr()->value();
-            if (!tmp.empty()) {
-                rslt = char8_constraints(char8_constraints::range_type::create_empty());
-                for (std::string::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
-                    rslt |= char8_constraints::range_type::create_single(*it);
-                return true;
-            }
-        }
-        return false;
-    }    
-
     template<typename T>
     static bool build_range(rangeconstraint_atom_ptr vl, range_constraints<T>& rslt) {
-        if (vl) {
-            value_atom_ptr f = vl->from();
-            value_atom_ptr t = vl->to();
+        if (vl) {         
+            value_atom_ptr fv = vl->from();
+            value_atom_ptr tv = vl->to();            
+            boost::shared_ptr<T> f;
+            boost::shared_ptr<T> t;
+            if (fv && (fv->get_value<T>()) && (!fv->get_value<T>(true)))
+                return false;
+            if (tv && (tv->get_value<T>()) && (!tv->get_value<T>(true)))
+                return false;
+            if (fv )
+                f=fv->get_value<T>(true);
+            if (tv )
+                t=tv->get_value<T>(true);            
             switch (vl->fromtype()) {
                 case close_range: break;
                 case open_range:
                 {
-                    if (f && f->as_number()) {
-                        f = value_atom_ptr(new numvalue_atom(f->as_number()->value() + 1));
+                    if (f) {
+                        f = boost::shared_ptr<T>(new T(*f + 1));
                         break;
                     }
                     return false;
                 }
-                case min_range: f = value_atom_ptr();
+                case min_range: f = boost::shared_ptr<T>();
                     break;
                 default:
                 {
@@ -91,13 +88,13 @@ namespace x680 {
                 case close_range: break;
                 case open_range:
                 {
-                    if (t && t->as_number()) {
-                        t = value_atom_ptr(new numvalue_atom(t->as_number()->value() - 1));
+                    if (t) {
+                        t = boost::shared_ptr<T>(new T(*t - 1));
                         break;
                     }
                     return false;
                 }
-                case max_range: t = value_atom_ptr();
+                case max_range: t = boost::shared_ptr<T>();
                     break;
                 default:
                 {
@@ -106,13 +103,13 @@ namespace x680 {
             }
             if (f || t) {
                 if (f && t) {
-                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_range(f->as_number()->value(), t->as_number()->value()));
+                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_range(*f, *t));
                     return true;
                 } else if (f) {
-                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_more_or_eq(f->as_number()->value()));
+                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_more_or_eq(*f));
                     return true;
                 } else if (t) {
-                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_less_or_eq(t->as_number()->value()));
+                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_less_or_eq(*t));
                     return true;
                 }
             }
@@ -126,11 +123,21 @@ namespace x680 {
     
     static bool build_range_str8(rangeconstraint_atom_ptr vl, char8_constraints& rslt) {
         if (vl) {
-            value_atom_ptr f = vl->from();
-            value_atom_ptr t = vl->to();
+            value_atom_ptr fv = vl->from();
+            value_atom_ptr tv = vl->to();
+            boost::shared_ptr<std::string::value_type> f;
+            boost::shared_ptr<std::string::value_type> t;
+            if (fv && (fv->get_value<std::string::value_type>()) && (!fv->get_value<std::string::value_type>(true)))
+                return false;
+            if (tv && (tv->get_value<std::string::value_type>()) && (!tv->get_value<std::string::value_type>(true)))
+                return false;
+            if (fv )
+                f=fv->get_value<std::string::value_type>(true);
+            if (tv )
+                t=tv->get_value<std::string::value_type>(true);            
             switch (vl->fromtype()) {
                 case close_range: break;
-                case min_range: f = value_atom_ptr();
+                case min_range: f = boost::shared_ptr<std::string::value_type>();
                     break;
                 default:
                 {
@@ -140,7 +147,7 @@ namespace x680 {
 
             switch (vl->totype()) {
                 case close_range: break;
-                case max_range: t = value_atom_ptr();
+                case max_range: t = boost::shared_ptr<std::string::value_type>();
                     break;
                 default:
                 {
@@ -149,25 +156,13 @@ namespace x680 {
             }
             if (f || t) {
                 if (f && t) {
-                    if (!f->as_cstr() || !t->as_cstr())
-                        return false;
-                    if (!((f->as_cstr()->value().size()==1) && (t->as_cstr()->value().size()==1)))
-                        return false;
-                    rslt = char8_constraints(char8_constraints::range_type::create_range(*(f->as_cstr()->value().begin()), *(t->as_cstr()->value().begin())));
+                    rslt = range_constraints<std::string::value_type>(range_constraints<std::string::value_type>::range_type::create_range(*f, *t));
                     return true;
                 } else if (f) {
-                    if (!f->as_cstr())
-                        return false;
-                    if (!(f->as_cstr()->value().size()==1))
-                        return false;                    
-                    rslt = char8_constraints(char8_constraints::range_type::create_more_or_eq(*(f->as_cstr()->value().begin())));
+                    rslt = range_constraints<std::string::value_type>(range_constraints<std::string::value_type>::range_type::create_more_or_eq(*f));
                     return true;
                 } else if (t) {
-                    if (!t->as_cstr())
-                        return false;
-                    if (!(t->as_cstr()->value().size()==1))
-                        return false;                        
-                    rslt = char8_constraints(char8_constraints::range_type::create_less_or_eq(*(t->as_cstr()->value().begin())));
+                    rslt = range_constraints<std::string::value_type>(range_constraints<std::string::value_type>::range_type::create_less_or_eq(*t));
                     return true;
                 }
             }
@@ -508,7 +503,7 @@ namespace x680 {
                 }
                 stki.push(rng);
             } else if ((*iti)->as_valueconstraint()) {
-                if (!build_range_str8((*iti)->as_valueconstraint(), rng)) {
+                if (!build_range((*iti)->as_valueconstraint(), rng)) {
                     stki = char8_constraints_stack();
                     break;
                 }
@@ -909,12 +904,12 @@ namespace x680 {
     }
 
     template<>
-    wchar_constraints_ptr type_atom::effective_constraint() {
-        return calculate_effective_constraint<std::wstring::value_type>(this);
+    quadruple_constraints_ptr type_atom::effective_constraint() {
+        return calculate_effective_constraint<quadruple>(this);
     }
 
-    wchar_constraints_ptr type_atom::wchar_constraint() {
-        return effective_constraint<std::wstring::value_type>();
+    quadruple_constraints_ptr type_atom::quadruple_constraint() {
+        return effective_constraint<quadruple>();
     }
 
     bool type_atom::isrefferrence() const {
@@ -999,7 +994,7 @@ namespace x680 {
         return false;
     }
 
-    bool type_atom::can_wchar_constraints() {
+    bool type_atom::can_quadruple_constraints() {
         switch (root_builtin()) {
             case t_UniversalString:
             case t_BMPString: return true;

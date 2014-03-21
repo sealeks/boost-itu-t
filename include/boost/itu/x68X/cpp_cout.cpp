@@ -286,10 +286,9 @@ namespace x680 {
         }
 
         std::string value_int_str(value_atom_ptr self) {
-            self = value_skip_defined(self);
-            if (self && (self->as_number())) {
+            if (self && (self->get_value<int64_t>())) {
                 try {
-                    return boost::lexical_cast<std::string > (self->as_number()->value());
+                    return boost::lexical_cast<std::string > (self->get_value<int64_t>());
                 } catch (boost::bad_lexical_cast) {
                     return "???num???";
                 }
@@ -298,17 +297,15 @@ namespace x680 {
         }
 
         std::string value_bool_str(value_atom_ptr self) {
-            self = value_skip_defined(self);
-            if (self && (self->as_bool()))
-                return self->as_bool()->value() ? "true" : "false";
+            if (self && (self->get_value<bool>()))
+                return self->get_value<bool>() ? "true" : "false";
             return "???bool???";
         }
 
         std::string value_real_str(value_atom_ptr self) {
-            self = value_skip_defined(self);
-            if (self && (self->as_real())) {
+            if (self && (self->get_value<double>())){
                 try {
-                    return boost::lexical_cast<std::string > (self->as_real()->value());
+                    return boost::lexical_cast<std::string > (self->get_value<double>());
                 } catch (boost::bad_lexical_cast) {
                     return "???real???";
                 }

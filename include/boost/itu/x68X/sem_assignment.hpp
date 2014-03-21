@@ -429,9 +429,9 @@ namespace x680 {
 
     typedef std::vector<std::string> export_vector;
     typedef std::vector<std::string> import_vector;
-
-
-
+    
+    
+ 
     void debug_warning(const std::string& msg);
 
     void insert_assigment(basic_entity_ptr scope, basic_entity_ptr val);

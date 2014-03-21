@@ -14,7 +14,153 @@
 
 namespace x680 {
 
+    /////////////////////////////////////////////////////////////////////////      
+    // quadruple
+    /////////////////////////////////////////////////////////////////////////     
 
+    struct quadruple {
+
+        quadruple() : group(0), plane(0), row(0), cell(0) {
+        };
+
+        quadruple(uint8_t r, uint8_t c) :
+        group(0), plane(0), row(r), cell(c) {
+        };
+
+        quadruple(uint8_t g, uint8_t p, uint8_t r, uint8_t c) :
+        group(g), plane(p), row(r), cell(c) {
+        };
+
+        uint8_t group;
+        uint8_t plane;
+        uint8_t row;
+        uint8_t cell;
+
+        friend bool operator==(const quadruple& ls, const quadruple& rs) {
+            return ((ls.group == rs.group) && (ls.plane == rs.plane) && (ls.row == rs.row) && (ls.cell == rs.cell));
+        }
+
+        friend quadruple operator+(const quadruple& ls, int rs) {
+            if (ls.cell < 255)
+                return quadruple(ls.group, ls.plane, ls.row, ls.cell + 1);
+            if (ls.row < 255)
+                return quadruple(ls.group, ls.plane, ls.row + 1, 0);
+            if (ls.plane < 255)
+                return quadruple(ls.group, ls.plane + 1, 0, 0);
+            if (ls.group < 127)
+                return quadruple(ls.group + 1, 0, 0, 0);
+            return ls;
+        }
+
+        friend quadruple operator-(const quadruple& ls, int rs) {
+            if (ls.cell > 0)
+                return quadruple(ls.group, ls.plane, ls.row, ls.cell - 1);
+            if (ls.row > 0)
+                return quadruple(ls.group, ls.plane, ls.row - 1, 0);
+            if (ls.plane > 0)
+                return quadruple(ls.group, ls.plane - 1, 0, 0);
+            if (ls.group > 0)
+                return quadruple(ls.group - 1, 0, 0, 0);
+            return ls;
+        }
+
+        friend bool operator!=(const quadruple& ls, const quadruple& rs) {
+            return !(ls == rs);
+        }
+
+        friend bool operator<(const quadruple& ls, const quadruple& rs) {
+            if (ls.group < rs.group)
+                return true;
+            if (ls.group > rs.group)
+                return false;
+            if (ls.plane < rs.plane)
+                return true;
+            if (ls.plane > rs.plane)
+                return false;
+            if (ls.row < rs.row)
+                return true;
+            if (ls.row > rs.row)
+                return false;
+            if (ls.cell < rs.cell)
+                return true;
+            return false;
+        }
+
+        operator bool() const {
+            return (group || plane || row || cell);
+        }
+
+    };
+
+
+
+    const quadruple NULL_QUADRUPLE = quadruple();
+    const quadruple MAX_QUADRUPLE = quadruple(127, 255, 255, 255);
+
+
+
+    /////////////////////////////////////////////////////////////////////////      
+    // tuple
+    /////////////////////////////////////////////////////////////////////////    
+
+    struct tuple {
+
+        tuple() : tablecolumn(0), tablerow(0) {
+        };
+
+        tuple(uint8_t c, uint8_t r) : tablecolumn(c), tablerow(r) {
+        };
+
+
+        uint8_t tablecolumn;
+        uint8_t tablerow;
+
+        friend bool operator==(const tuple& ls, const tuple& rs) {
+            return ((ls.tablecolumn == rs.tablecolumn) && (ls.tablerow == rs.tablerow));
+        }
+
+        friend tuple operator+(const tuple& ls, int rs) {
+            if (ls.tablerow < 15)
+                return tuple(ls.tablecolumn, ls.tablerow + 1);
+            if (ls.tablecolumn < 7)
+                return tuple(ls.tablecolumn + 1, 0);
+            return ls;
+        }
+
+        friend tuple operator-(const tuple& ls, int rs) {
+            if (ls.tablerow > 0)
+                return tuple(ls.tablecolumn, ls.tablerow - 1);
+            if (ls.tablecolumn > 0)
+                return tuple(ls.tablecolumn - 1, 0);
+            return ls;
+        }
+
+        friend bool operator!=(const tuple& ls, const tuple& rs) {
+            return !(ls == rs);
+        }
+
+        friend bool operator<(const tuple& ls, const tuple& rs) {
+            if (ls.tablecolumn < rs.tablecolumn)
+                return true;
+            if (ls.tablecolumn > rs.tablecolumn)
+                return false;
+            if (ls.tablerow < rs.tablerow)
+                return true;
+        }
+
+        operator bool() const {
+            return (tablerow || tablerow);
+        }
+
+    };
+
+    const tuple NULL_TUPLE = tuple();
+    const tuple MAX_TUPLE = tuple(7, 15);
+
+
+    typedef std::vector<std::string> string_vector;
+    typedef std::vector<std::size_t> unum_vector;
+    typedef std::vector<int64_t> num_vector;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  range
@@ -695,18 +841,41 @@ namespace x680 {
     typedef char8_constraints::range_type char8_range;
     typedef boost::shared_ptr<char8_constraints> char8_constraints_ptr;
 
-    typedef range_constraints<std::wstring::value_type> wchar_constraints;
-    typedef wchar_constraints::range_type wchar_range;
-    typedef boost::shared_ptr<wchar_constraints> wchar_constraints_ptr;
+    typedef range_constraints<quadruple> quadruple_constraints;
+    typedef quadruple_constraints::range_type quadruple_range;
+    typedef boost::shared_ptr<quadruple_constraints> quadruple_constraints_ptr;
 
-    typedef range_constraints<uint16_t> char16_constraints;
-    typedef char16_constraints::range_type char16_range;
-    typedef boost::shared_ptr<char16_constraints> char16_constraints_ptr;
 
-    typedef range_constraints<uint32_t> char32_constraints;
-    typedef char32_constraints::range_type char32_range;
-    typedef boost::shared_ptr<char32_constraints> char32_constraints_ptr;
 
+}
+
+namespace std {
+
+    template<>
+    struct numeric_limits<x680::quadruple> {
+
+        static x680::quadruple min() {
+            return x680::NULL_QUADRUPLE;
+        }
+
+        static x680::quadruple max() {
+            return x680::MAX_QUADRUPLE;
+        }
+
+    };
+
+    template<>
+    struct numeric_limits<x680::tuple> {
+
+        static x680::tuple min() {
+            return x680::NULL_TUPLE;
+        }
+
+        static x680::tuple max() {
+            return x680::MAX_TUPLE;
+        }
+
+    };
 
 }
 
