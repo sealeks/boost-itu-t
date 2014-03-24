@@ -16,18 +16,30 @@ namespace x680 {
     
     
     /////////////////////////////////////////////////////////////////////////      
-    // string_initer
+    // bstring_initer
     /////////////////////////////////////////////////////////////////////////     
 
-    struct string_initer {
+    struct bstring_initer {
            
-        string_initer() : str(), unused(0) {}
-        string_initer(const std::string vl) : str(vl), unused(0) {}
-        string_initer(const std::string vl, std::size_t un) : str(vl), unused(un) {}
+        bstring_initer() : str(), unused(0) {}
+        bstring_initer(const std::string vl) : str(vl), unused(0) {}
+        bstring_initer(const std::string vl, std::size_t un) : str(vl), unused(un) {}
                 
         std::string str;
         std::size_t unused;
     };
+    
+    /////////////////////////////////////////////////////////////////////////      
+    // hstring_initer
+    /////////////////////////////////////////////////////////////////////////     
+
+    struct hstring_initer {
+           
+        hstring_initer() : str() {}
+        hstring_initer(const std::string vl) : str(vl) {}
+                
+        std::string str;
+    };    
 
     /////////////////////////////////////////////////////////////////////////      
     // quadruple
@@ -844,9 +856,9 @@ namespace x680 {
 
     template<typename T>
     std::ostream& operator<<(std::ostream& stream, const range_constraints<T>& vl) {
-        stream << "{" << vl.set() << "}";
+        stream << "(" << vl.set() << " ";
         if (vl.has_extention()) {
-            stream << "( ext " << vl.extention() << ")";
+            stream << " ...ext...)";
         }
         return stream;
     }

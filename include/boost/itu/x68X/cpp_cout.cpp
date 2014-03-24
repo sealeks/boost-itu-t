@@ -9,6 +9,47 @@
 namespace x680 {
     namespace cpp {
 
+        /*static std::ofstream& operator<<(std::ofstream& stream, const quadruple& vl) {
+            stream << "{" << static_cast<int> (vl.group) << " , " << static_cast<int> (vl.plane) << " , " << static_cast<int> (vl.row) << " , " << static_cast<int> (vl.cell) << "}";
+            return stream;
+        }
+
+        static std::ofstream& operator<<(std::ofstream& stream, const tuple & vl) {
+            stream << "{" << static_cast<int> (vl.tablecolumn) << " , " << static_cast<int> (vl.tablerow) << "}";
+            return stream;
+        }
+
+        template<typename T>
+        std::ofstream& operator<<(std::ofstream& stream, const range<T>& vl) {
+            if (vl.empty())
+                return stream << "  [ null ] ";
+            if ((vl.left_ptr()) && (vl.right_ptr())) {
+                if (vl.left() != vl.right())
+                    stream << "  [ " << vl.left() << "  ...   " << vl.right() << " ] ";
+                else
+                    stream << "  [ " << vl.left() << " ] ";
+                return stream;
+            }
+            if (vl.left_ptr()) {
+                stream << "  [ " << vl.left() << "  ...   " << " ] ";
+                return stream;
+            }
+            if (vl.right_ptr()) {
+                stream << "  [ " << "  ...   " << vl.right() << " ] ";
+                return stream;
+            }
+            return stream << "  [ ... ] ";
+        }
+
+        template<typename T>
+        std::ofstream& operator<<(std::ofstream& stream, const range_constraints<T>& vl) {
+            stream << "(" << vl.set() << "";
+            if (vl.has_extention()) {
+                stream << "..... " << ")";
+            }
+            return stream;
+        }*/
+
         enum declare_type {
             declare_typedef,
             declare_seq,
@@ -1377,6 +1418,24 @@ namespace x680 {
                         bool primitive = ((it->typ) && (it->typ->isprimitive()));
                         stream << tabformat(self, 1) << "ITU_T_CHOICE" << (primitive ? "S" : "C") << "_DECL(" << it->name << ", " <<
                                 it->typenam << ", " << choice_enum_str(self, it->typ) << ");     " << (primitive ? "// primitive" : "");
+                    }
+                    if ((it->typ) && (it->typ->type()) && (it->typ->type()->can_per_constraints())) {
+                        type_atom_ptr tmp = it->typ->type();
+                        if (tmp->integer_constraint()) {
+                            stream << "  //   Ic" << (*(tmp->integer_constraint())).to_per() << " ";
+                        }
+                        if (tmp->size_constraint()) {
+                            stream << "  //    Sc " << (*(tmp->size_constraint())).to_per() << " ";
+                        }
+                        if (tmp->char8_constraint()) {
+                            stream << "  //    c8C " << (*(tmp->char8_constraint())).to_per() << " ";
+                        }
+                        if (tmp->quadruple_constraint()) {
+                            stream << "  //   qC " << (*(tmp->quadruple_constraint())).to_per() << " ";
+                        }
+                        if (tmp->tuple_constraint()) {
+                            stream << "  //   Tc " << (*(tmp->tuple_constraint())).to_per() << " ";
+                        }
                     }
                 }
             }
