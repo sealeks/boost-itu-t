@@ -277,9 +277,8 @@ namespace x680 {
 
                 if (el) {
                     if (el->get_value<std::size_t>(except_abstract)) {
-                        rslt->push_back(*(el->get_value<int64_t>(except_abstract)));
-                    }
-                    if (el->get_value<unum_vector>(except_abstract)) {
+                        rslt->push_back(*(el->get_value<std::size_t>(except_abstract)));
+                    } else if (el->get_value<unum_vector>(except_abstract)) {
                         boost::shared_ptr<unum_vector> sub = el->get_value<unum_vector>(except_abstract);
                         rslt->insert(rslt->end(), sub->begin(), sub->end());
                     } else
@@ -292,6 +291,107 @@ namespace x680 {
         }
         return boost::shared_ptr<unum_vector>();
     }
+
+    template<>
+    boost::shared_ptr<bstring_initer> value_atom::get_value(bool except_abstract) {
+        if (as_defined()) {
+            get_value_parent<bstring_initer>(except_abstract);
+        } else if (as_cstr()) {
+            std::string tmp = boost::algorithm::to_upper_copy(as_cstr()->value());
+            std::string rslt;
+            std::size_t cnt = 0;
+            int sub = 0;
+            if (valtype() == v_bstring) {
+                for (std::string::const_iterator it = tmp.begin(); it != tmp.end(); ++it) {
+                    sub <<= 1;
+                    sub |= (((*it) == '1') ? 0x1 : 0x0);
+                    cnt++;
+                    if ((++cnt) == 8) {
+                        rslt.insert(rslt.end(), static_cast<std::string::value_type> (sub));
+                        cnt = 0;
+                        sub = 0;
+                    }
+                }
+                if (cnt < 8) {
+                    rslt.insert(rslt.end(), static_cast<std::string::value_type> (sub));
+                }
+                return boost::shared_ptr<bstring_initer>(new bstring_initer(rslt, 8 - cnt));
+            } else if (valtype() == v_hstring) {
+                for (std::string::const_iterator it = tmp.begin(); it != tmp.end(); ++it) {
+                    sub <<= 4;
+                    switch (*it) {
+                        case '1': sub |= static_cast<int> ('\x1');
+                            break;
+                        case '2': sub |= static_cast<int> ('\x2');
+                            break;
+                        case '3': sub |= static_cast<int> ('\x3');
+                            break;
+                        case '4': sub |= static_cast<int> ('\x4');
+                            break;
+                        case '5': sub |= static_cast<int> ('\x5');
+                            break;
+                        case '6': sub |= static_cast<int> ('\x6');
+                            break;
+                        case '7': sub |= static_cast<int> ('\x7');
+                            break;
+                        case '8': sub |= static_cast<int> ('\x8');
+                            break;
+                        case '9': sub |= static_cast<int> ('\x9');
+                            break;
+                        case 'A': sub |= static_cast<int> ('\xA');
+                            break;
+                        case 'B': sub |= static_cast<int> ('\xB');
+                            break;
+                        case 'C': sub |= static_cast<int> ('\xC');
+                            break;
+                        case 'D': sub |= static_cast<int> ('\xD');
+                            break;
+                        case 'E': sub |= static_cast<int> ('\xE');
+                            break;
+                        case 'F': sub |= static_cast<int> ('\xF');
+                            break;
+                        default:
+                        {
+                        }
+                    }
+                    cnt += 4;
+                    if (cnt == 8) {
+                        rslt.insert(rslt.end(), static_cast<std::string::value_type> (sub));
+                        cnt = 0;
+                        sub = 0;
+                    }
+                }
+                if (cnt) {
+                    rslt.insert(rslt.end(), static_cast<std::string::value_type> (sub));
+                    return boost::shared_ptr<bstring_initer>(new bstring_initer(rslt, cnt ? 4 : 0));
+                }
+            }
+        } else if (as_empty()) {
+            return boost::shared_ptr<bstring_initer>(new bstring_initer());
+        }
+        return boost::shared_ptr<bstring_initer>();
+    }
+
+    template<>
+    boost::shared_ptr<hstring_initer> value_atom::get_value(bool except_abstract) {
+        boost::shared_ptr<bstring_initer> tmp = get_value<bstring_initer>();
+        if (tmp && !(tmp->unused % 8)) {
+            return boost::shared_ptr<hstring_initer>(new hstring_initer(tmp->str));
+        }
+        return boost::shared_ptr<hstring_initer>();
+    }
+
+    template<>
+    boost::shared_ptr<tuple_vector> value_atom::get_value(bool except_abstract) {
+        return boost::shared_ptr<tuple_vector>();
+    }
+
+    template<>
+    boost::shared_ptr<quadruple_vector> value_atom::get_value(bool except_abstract) {
+        return boost::shared_ptr<quadruple_vector>();
+    }
+
+
 
 
     /////////////////////////////////////////////////////////////////////////   
