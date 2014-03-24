@@ -29,11 +29,16 @@ namespace x680 {
     template<>
     std::string::value_type can_effective_constraint(type_atom* vl) {
         return vl->can_char8_constraints() ? 1 : 0;
-    }    
-    
+    }
+
     template<>
-    quadruple can_effective_constraint(type_atom* vl) {   
+    quadruple can_effective_constraint(type_atom* vl) {
         return vl->can_quadruple_constraints() ? MAX_QUADRUPLE : NULL_QUADRUPLE;
+    }
+
+    template<>
+    tuple can_effective_constraint(type_atom* vl) {
+        return vl->can_tuple_constraints() ? MAX_TUPLE : NULL_TUPLE;
     }
 
     template<typename T>
@@ -50,22 +55,21 @@ namespace x680 {
         return false;
     }
 
-
     template<typename T>
-    static bool build_range(rangeconstraint_atom_ptr vl, range_constraints<T>& rslt) {
-        if (vl) {         
+    bool build_range(rangeconstraint_atom_ptr vl, range_constraints<T>& rslt) {
+        if (vl) {
             value_atom_ptr fv = vl->from();
-            value_atom_ptr tv = vl->to();            
+            value_atom_ptr tv = vl->to();
             boost::shared_ptr<T> f;
             boost::shared_ptr<T> t;
             if (fv && (fv->get_value<T>()) && (!fv->get_value<T>(true)))
                 return false;
             if (tv && (tv->get_value<T>()) && (!tv->get_value<T>(true)))
                 return false;
-            if (fv )
-                f=fv->get_value<T>(true);
-            if (tv )
-                t=tv->get_value<T>(true);            
+            if (fv)
+                f = fv->get_value<T>(true);
+            if (tv)
+                t = tv->get_value<T>(true);
             switch (vl->fromtype()) {
                 case close_range: break;
                 case open_range:
@@ -112,32 +116,32 @@ namespace x680 {
                     rslt = range_constraints<T>(range_constraints<T>::range_type::create_less_or_eq(*t));
                     return true;
                 }
-            }
-            else {
+            } else {
                 rslt = range_constraints<T>(range_constraints<T>::range_type::create_all());
-                return true;                
-            }        
+                return true;
+            }
         }
         return false;
     }
-    
-    static bool build_range_str8(rangeconstraint_atom_ptr vl, char8_constraints& rslt) {
+
+    template<typename T>
+    static bool build_range_str(rangeconstraint_atom_ptr vl, range_constraints<T>& rslt) {
         if (vl) {
             value_atom_ptr fv = vl->from();
             value_atom_ptr tv = vl->to();
-            boost::shared_ptr<std::string::value_type> f;
-            boost::shared_ptr<std::string::value_type> t;
-            if (fv && (fv->get_value<std::string::value_type>()) && (!fv->get_value<std::string::value_type>(true)))
+            boost::shared_ptr<T> f;
+            boost::shared_ptr<T> t;
+            if (fv && (fv->get_value<T>()) && (!fv->get_value<T>(true)))
                 return false;
-            if (tv && (tv->get_value<std::string::value_type>()) && (!tv->get_value<std::string::value_type>(true)))
+            if (tv && (tv->get_value<T>()) && (!tv->get_value<T>(true)))
                 return false;
-            if (fv )
-                f=fv->get_value<std::string::value_type>(true);
-            if (tv )
-                t=tv->get_value<std::string::value_type>(true);            
+            if (fv)
+                f = fv->get_value<T>(true);
+            if (tv)
+                t = tv->get_value<T>(true);
             switch (vl->fromtype()) {
                 case close_range: break;
-                case min_range: f = boost::shared_ptr<std::string::value_type>();
+                case min_range: f = boost::shared_ptr<T>();
                     break;
                 default:
                 {
@@ -147,7 +151,7 @@ namespace x680 {
 
             switch (vl->totype()) {
                 case close_range: break;
-                case max_range: t = boost::shared_ptr<std::string::value_type>();
+                case max_range: t = boost::shared_ptr<T>();
                     break;
                 default:
                 {
@@ -156,20 +160,34 @@ namespace x680 {
             }
             if (f || t) {
                 if (f && t) {
-                    rslt = range_constraints<std::string::value_type>(range_constraints<std::string::value_type>::range_type::create_range(*f, *t));
+                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_range(*f, *t));
                     return true;
                 } else if (f) {
-                    rslt = range_constraints<std::string::value_type>(range_constraints<std::string::value_type>::range_type::create_more_or_eq(*f));
+                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_more_or_eq(*f));
                     return true;
                 } else if (t) {
-                    rslt = range_constraints<std::string::value_type>(range_constraints<std::string::value_type>::range_type::create_less_or_eq(*t));
+                    rslt = range_constraints<T>(range_constraints<T>::range_type::create_less_or_eq(*t));
                     return true;
                 }
             }
         }
         return false;
-    }    
-    
+    }
+
+    template<>
+    bool build_range(rangeconstraint_atom_ptr vl, range_constraints<std::string::value_type>& rslt) {
+        return build_range_str<std::string::value_type>(vl, rslt);
+    }
+
+    template<>
+    bool build_range(rangeconstraint_atom_ptr vl, range_constraints<quadruple>& rslt) {
+        return build_range_str<quadruple>(vl, rslt);
+    }
+
+    template<>
+    bool build_range(rangeconstraint_atom_ptr vl, range_constraints<tuple>& rslt) {
+        return build_range_str<tuple>(vl, rslt);
+    }
 
     template<typename T>
     static bool build_range(tvosoconstraint_atom_ptr vl, range_constraints<T>& rslt) {
@@ -194,7 +212,7 @@ namespace x680 {
                 boost::shared_ptr<range_constraints<T> > rslt_ptr = vl->type()->effective_constraint<T>();
                 if (rslt_ptr) {
                     rslt = *rslt_ptr;
-                    rslt.clear_extention();                    
+                    rslt.clear_extention();
                     return true;
                 }
             }
@@ -205,21 +223,23 @@ namespace x680 {
     template<typename T>
     static boost::shared_ptr< range_constraints<T> > build_serial_constrains(std::stack<range_constraints<T> > vl) {
         if (!vl.empty()) {
-            bool has_ext=vl.top().has_extention();
+            bool has_ext = vl.top().has_extention();
             while (vl.size() != 1) {
                 range_constraints<T> rng = vl.top();
-                vl.pop();                    
+                vl.pop();
+                if ((!rng.all()) && (!vl.top().include(rng)))
+                        throw semantics::error("");
                 vl.top() &= rng;
             }
             if (has_ext)
                 vl.top().add_extention();
             else
-                vl.top().clear_extention(); 
+                vl.top().clear_extention();
             if (vl.top().effective())
                 return boost::shared_ptr< range_constraints<T> >(new range_constraints<T>(vl.top()));
         }
         return boost::shared_ptr< range_constraints<T> >();
-    }    
+    }
 
     /////////////////////////////////////////////////
     // Effective  integer constraint logic
@@ -231,12 +251,12 @@ namespace x680 {
         typedef std::stack<integer_constraints> integer_constraints_stack;
 
         integer_constraints_stack stke;
-        bool has_ext=false;
+        bool has_ext = false;
         for (constraints_atom_vct::const_iterator ite = vl.begin(); ite != vl.end(); ++ite) {
             if ((*ite)) {
                 integer_constraints_stack stki;
                 integer_constraints rng;
-                has_ext=false;
+                has_ext = false;
                 for (constraint_atom_vct::const_iterator iti = (*ite)->constraintline().begin(); iti != (*ite)->constraintline().end(); ++iti) {
                     if ((*iti)->as_range()) {
                         if (!build_range<int64_t>((*iti)->as_range(), rng)) {
@@ -244,7 +264,7 @@ namespace x680 {
                             break;
                         }
                         if (rng.has_extention())
-                            has_ext=true;
+                            has_ext = true;
                         stki.push(rng);
                     } else if ((*iti)->as_valueconstraint()) {
                         if (!build_range<int64_t>((*iti)->as_valueconstraint(), rng)) {
@@ -401,12 +421,12 @@ namespace x680 {
 
         typedef std::stack<size_constraints> size_constraints_stack;
         size_constraints_stack stke;
-        bool has_ext=false;
+        bool has_ext = false;
         for (constraints_atom_vct::const_iterator ite = vl.begin(); ite != vl.end(); ++ite) {
             if ((*ite)) {
                 size_constraints_stack stki;
                 size_constraints rng;
-                has_ext=false;
+                has_ext = false;
                 for (constraint_atom_vct::const_iterator iti = (*ite)->constraintline().begin(); iti != (*ite)->constraintline().end(); ++iti) {
                     if ((*iti)->as_size()) {
                         size_constraints_ptr tmp = build_size_constraints((*iti)->as_size()->constraints());
@@ -416,7 +436,7 @@ namespace x680 {
                         }
                         rng = *tmp;
                         if (rng.has_extention())
-                            has_ext=true;
+                            has_ext = true;
                         stki.push(rng);
                     } else if ((*iti)->as_permitted()) {
                         if (!alpha) {
@@ -475,8 +495,9 @@ namespace x680 {
                     }
                 }
                 if ((!stki.empty())) {
-                    if (((*ite)->extend()) || (has_ext)){
-                        stki.top().add_extention();}
+                    if (((*ite)->extend()) || (has_ext)) {
+                        stki.top().add_extention();
+                    }
                     stke.push(stki.top());
                 }
             }
@@ -489,40 +510,43 @@ namespace x680 {
     //  Effective  char8 constraint logik
     /////////////////////////////////////////////////   
 
-    static char8_constraints_ptr build_char8_constraints(constraints_atom_ptr vl) {
+    template<typename T>
+    boost::shared_ptr<range_constraints<T> > build_alphabet_constraints(constraints_atom_ptr vl) {
 
-        char8_constraints_ptr rslt;
-        typedef std::stack<char8_constraints> char8_constraints_stack;
-        char8_constraints_stack stki;
-        char8_constraints rng;
+        typedef range_constraints<T> constraints_type;
+        typedef std::stack<constraints_type> constraints_stack;
+
+        boost::shared_ptr<constraints_type > rslt;
+        constraints_stack stki;
+        constraints_type rng;
         for (constraint_atom_vct::const_iterator iti = vl->constraintline().begin(); iti != vl->constraintline().end(); ++iti) {
             if ((*iti)->as_range()) {
-                if (!build_range_str8((*iti)->as_range(), rng)) {
-                    stki = char8_constraints_stack();
+                if (!build_range((*iti)->as_range(), rng)) {
+                    stki = constraints_stack();
                     break;
                 }
                 stki.push(rng);
             } else if ((*iti)->as_valueconstraint()) {
                 if (!build_range((*iti)->as_valueconstraint(), rng)) {
-                    stki = char8_constraints_stack();
+                    stki = constraints_stack();
                     break;
                 }
                 stki.push(rng);
             } else if ((*iti)->as_typeconstraint()) {
                 if (!build_range((*iti)->as_typeconstraint(), rng)) {
-                    stki = char8_constraints_stack();
+                    stki = constraints_stack();
                     break;
                 }
                 stki.push(rng);
             } else if ((*iti)->as_tvoso()) {
                 if (!build_range((*iti)->as_tvoso(), rng)) {
-                    stki = char8_constraints_stack();
+                    stki = constraints_stack();
                     break;
                 }
                 stki.push(rng);
             } else if ((*iti)->as_union()) {
                 if (stki.size() < 2) {
-                    stki = char8_constraints_stack();
+                    stki = constraints_stack();
                     break;
                 }
                 rng = stki.top();
@@ -530,7 +554,7 @@ namespace x680 {
                 stki.top() |= rng;
             } else if ((*iti)->as_intersection()) {
                 if (stki.size() < 2) {
-                    stki = char8_constraints_stack();
+                    stki = constraints_stack();
                     break;
                 }
                 rng = stki.top();
@@ -538,7 +562,7 @@ namespace x680 {
                 stki.top() &= rng;
             } else if ((*iti)->as_except()) {
                 if (stki.size() < 2) {
-                    stki = char8_constraints_stack();
+                    stki = constraints_stack();
                     break;
                 }
                 rng = stki.top();
@@ -546,66 +570,67 @@ namespace x680 {
                 stki.top() -= rng;
             } else if ((*iti)->as_allexcept()) {
                 if (stki.size() < 1) {
-                    stki = char8_constraints_stack();
+                    stki = constraints_stack();
                     break;
                 }
-                rng = char8_constraints();
+                rng = constraints_type();
                 rng -= stki.top();
                 stki.top() = rng;
             } else {
-                stki = char8_constraints_stack();
+                stki = constraints_stack();
                 break;
             }
         }
         if ((stki.size() == 1)) {
             if (vl->extend())
                 stki.top().add_extention();
-            return char8_constraints_ptr(new char8_constraints(stki.top()));
+            return boost::shared_ptr<constraints_type >(new constraints_type(stki.top()));
         }
         return rslt;
     }
 
-    template<>
-    char8_constraints_ptr build_constraints(const constraints_atom_vct& vl, bool alpha) {
-        
-        typedef std::stack<char8_constraints> char8_constraints_stack;
-        
-        char8_constraints_stack stke;
-        bool has_ext=false;
+    template<typename T>
+    boost::shared_ptr<range_constraints<T> > build_alphabet_constraints(const constraints_atom_vct& vl, bool alpha) {
+
+        typedef range_constraints<T> constraints_type;
+        typedef std::stack<constraints_type> constraints_stack;
+
+        constraints_stack stke;
+        bool has_ext = false;
         for (constraints_atom_vct::const_iterator ite = vl.begin(); ite != vl.end(); ++ite) {
             if ((*ite)) {
-                char8_constraints_stack stki;
-                char8_constraints rng;
-                has_ext=false;
+                constraints_stack stki;
+                constraints_type rng;
+                has_ext = false;
                 for (constraint_atom_vct::const_iterator iti = (*ite)->constraintline().begin(); iti != (*ite)->constraintline().end(); ++iti) {
                     if ((*iti)->as_permitted()) {
-                        char8_constraints_ptr tmp = build_char8_constraints((*iti)->as_permitted()->constraints());
+                        boost::shared_ptr<constraints_type> tmp = build_alphabet_constraints<T>((*iti)->as_permitted()->constraints());
                         if (!tmp) {
-                            stki = char8_constraints_stack();
+                            stki = constraints_stack();
                             break;
                         }
                         rng = *tmp;
                         if (rng.has_extention())
-                            has_ext=true;
+                            has_ext = true;
                         stki.push(rng);
                     } else if ((*iti)->as_size()) {
-                        rng = char8_constraints();
+                        rng = constraints_type();
                         stki.push(rng);
                     } else if ((*iti)->as_typeconstraint()) {
                         if (!build_range((*iti)->as_typeconstraint(), rng)) {
-                            stki = char8_constraints_stack();
+                            stki = constraints_stack();
                             break;
                         }
                         stki.push(rng);
                     } else if ((*iti)->as_tvoso()) {
                         if (!build_range((*iti)->as_tvoso(), rng)) {
-                            stki = char8_constraints_stack();
+                            stki = constraints_stack();
                             break;
                         }
                         stki.push(rng);
                     } else if ((*iti)->as_union()) {
                         if (stki.size() < 2) {
-                            stki = char8_constraints_stack();
+                            stki = constraints_stack();
                             break;
                         }
                         rng = stki.top();
@@ -613,7 +638,7 @@ namespace x680 {
                         stki.top() |= rng;
                     } else if ((*iti)->as_intersection()) {
                         if (stki.size() < 2) {
-                            stki = char8_constraints_stack();
+                            stki = constraints_stack();
                             break;
                         }
                         rng = stki.top();
@@ -621,7 +646,7 @@ namespace x680 {
                         stki.top() &= rng;
                     } else if ((*iti)->as_except()) {
                         if (stki.size() < 2) {
-                            stki = char8_constraints_stack();
+                            stki = constraints_stack();
                             break;
                         }
                         rng = stki.top();
@@ -629,14 +654,14 @@ namespace x680 {
                         stki.top() -= rng;
                     } else if ((*iti)->as_allexcept()) {
                         if (stki.size() < 1) {
-                            stki = char8_constraints_stack();
+                            stki = constraints_stack();
                             break;
                         }
-                        rng = char8_constraints();
+                        rng = constraints_type();
                         rng -= stki.top();
                         stki.top() = rng;
                     } else {
-                        stki = char8_constraints_stack();
+                        stki = constraints_stack();
                         break;
                     }
                 }
@@ -647,10 +672,23 @@ namespace x680 {
                 }
             }
         }
-        return build_serial_constrains<std::string::value_type>(stke);
+        return build_serial_constrains<T>(stke);
     }
 
+    template<>
+    char8_constraints_ptr build_constraints(const constraints_atom_vct& vl, bool alpha) {
+        return build_alphabet_constraints<std::string::value_type>(vl, alpha);
+    }
 
+    template<>
+    quadruple_constraints_ptr build_constraints(const constraints_atom_vct& vl, bool alpha) {
+        return build_alphabet_constraints<quadruple>(vl, alpha);
+    }
+
+    template<>
+    tuple_constraints_ptr build_constraints(const constraints_atom_vct& vl, bool alpha) {
+        return build_alphabet_constraints<tuple>(vl, alpha);
+    }
 
     /////////////////////////////////////////////////
     //  Calculate effective constraint 
@@ -895,8 +933,8 @@ namespace x680 {
     }
 
     char8_constraints_ptr type_atom::char8_constraint() {
-        char8_constraints_ptr rslt= effective_constraint<std::string::value_type>();
-        if (rslt ) {
+        char8_constraints_ptr rslt = effective_constraint<std::string::value_type>();
+        if (rslt) {
             if (rslt->has_extention())
                 return char8_constraints_ptr();
         }
@@ -910,6 +948,15 @@ namespace x680 {
 
     quadruple_constraints_ptr type_atom::quadruple_constraint() {
         return effective_constraint<quadruple>();
+    }
+
+    template<>
+    tuple_constraints_ptr type_atom::effective_constraint() {
+        return calculate_effective_constraint<tuple>(this);
+    }
+
+    tuple_constraints_ptr type_atom::tuple_constraint() {
+        return effective_constraint<tuple>();
     }
 
     bool type_atom::isrefferrence() const {
@@ -985,8 +1032,17 @@ namespace x680 {
         switch (root_builtin()) {
             case t_NumericString:
             case t_PrintableString:
-            case t_IA5String:
             case t_VisibleString: return true;
+            default:
+            {
+            }
+        }
+        return false;
+    }
+
+    bool type_atom::can_tuple_constraints() {
+        switch (root_builtin()) {
+            case t_IA5String: return true;
             default:
             {
             }
@@ -1439,6 +1495,22 @@ namespace x680 {
             type()->resolve();
         post_resolve_child();
 
+    }
+
+    void typeassignment_entity::after_resolve() {
+        if (type() && (type()->can_per_constraints())) {
+            try {
+                type()->integer_constraint();
+                type()->size_constraint();
+                type()->char8_constraint();
+                type()->quadruple_constraint();
+                type()->tuple_constraint();
+            }            
+            catch (...) {
+                this->referenceerror_throw("Constraint error");
+            }
+        }
+        after_resolve_child();
     }
 
     basic_entity_vector::iterator typeassignment_entity::first_extention() {

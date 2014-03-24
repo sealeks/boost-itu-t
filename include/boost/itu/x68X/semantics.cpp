@@ -33,6 +33,7 @@ namespace x680 {
                 compile_module(*it, global);
             }
             global->resolve();
+            global->after_resolve();
             return global;
         }
 

@@ -550,10 +550,14 @@ namespace x680 {
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual void preresolve();
+        
+        virtual void after_resolve();        
 
     protected:
 
         void resolve_child();
+        
+        void after_resolve_child();        
 
         void prefind(const std::string& nm, basic_entity_vector& elm);
 

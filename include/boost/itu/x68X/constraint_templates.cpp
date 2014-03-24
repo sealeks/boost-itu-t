@@ -10,10 +10,10 @@
 namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, const quadruple & vl) {
-        return stream << "{" << vl.group << " , " << vl.plane << " , " << vl.row << " , " << vl.cell << "}";
+        return stream << "{" << static_cast<int>(vl.group) << " , " << static_cast<int>(vl.plane) << " , " << static_cast<int>(vl.row) << " , " << static_cast<int>(vl.cell) << "}";
     }
 
     std::ostream& operator<<(std::ostream& stream, const tuple & vl) {
-        return stream << "{" << vl.tablecolumn << " , " << vl.tablerow << "}";
+        return stream << "{" << static_cast<int>(vl.tablecolumn) << " , " << static_cast<int>(vl.tablerow) << "}";
     }
 }

@@ -8,7 +8,6 @@
 namespace x680 {
 
 
-
     /////////////////////////////////////////////////////////////////////////   
     // VALUE
     ///////////////////////////////////////////////////////////////////////// 
@@ -191,6 +190,20 @@ namespace x680 {
     boost::shared_ptr<quadruple> value_atom::get_value(bool except_abstract) {
         if (as_defined()) {
             return get_value_parent<quadruple>(except_abstract);
+        } else if (as_list()) {
+            boost::shared_ptr<num_vector> fnd = get_value<num_vector>();
+            if (fnd) {
+                if (fnd->size() == 4) {
+                    if (((fnd->operator [](0) >= 0) && (fnd->operator [](0) <= 127)) &&
+                            ((fnd->operator [](1) >= 0) && (fnd->operator [](1) <= 255)) &&
+                            ((fnd->operator [](2) >= 0) && (fnd->operator [](2) <= 255)) &&
+                            ((fnd->operator [](3) >= 0) && (fnd->operator [](3) <= 255)))
+                        return boost::shared_ptr<quadruple>(new quadruple(static_cast<uint8_t> (fnd->operator [](0)),
+                            static_cast<uint8_t> (fnd->operator [](1)),
+                            static_cast<uint8_t> (fnd->operator [](2)),
+                            static_cast<uint8_t> (fnd->operator [](3))));
+                }
+            }
         }
         return boost::shared_ptr<quadruple>();
     }
@@ -198,7 +211,25 @@ namespace x680 {
     template<>
     boost::shared_ptr<tuple> value_atom::get_value(bool except_abstract) {
         if (as_defined()) {
-            return get_value_parent<tuple>(except_abstract);
+            if (get_value_parent<tuple>(except_abstract))
+                return get_value_parent<tuple>(except_abstract);
+            else if (get_value_parent<std::string::value_type>(except_abstract)) {
+                boost::shared_ptr<std::string::value_type> tmp = get_value_parent<std::string::value_type>(except_abstract);
+                return boost::shared_ptr<tuple>(new tuple(static_cast<uint8_t> (*tmp / 16), static_cast<uint8_t> (*tmp % 16)));
+            }
+        } else if (as_list()) {
+            boost::shared_ptr<num_vector> fnd = get_value<num_vector>();
+            if (fnd) {
+                if (fnd->size() == 2) {
+                    if (((fnd->operator [](0) >= 0) && (fnd->operator [](0) <= 7)) &&
+                            ((fnd->operator [](1) >= 0) && (fnd->operator [](1) <= 15)))
+                        return boost::shared_ptr<tuple>(new tuple(static_cast<uint8_t> (fnd->operator [](0)),
+                            static_cast<uint8_t> (fnd->operator [](1))));
+                }
+            }
+        } else if (get_value<std::string::value_type>(except_abstract)) {
+            boost::shared_ptr<std::string::value_type> tmp = get_value<std::string::value_type>(except_abstract);
+            return boost::shared_ptr<tuple>(new tuple(static_cast<uint8_t> (*tmp / 16), static_cast<uint8_t> (*tmp % 16)));
         }
         return boost::shared_ptr<tuple>();
     }

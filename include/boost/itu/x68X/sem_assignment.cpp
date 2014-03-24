@@ -327,11 +327,22 @@ namespace x680 {
     void basic_entity::preresolve() {
     };
 
+    void basic_entity::after_resolve() {
+        after_resolve_child();
+    }     
+
     void basic_entity::resolve_child() {
         for (basic_entity_vector::const_iterator it = childs().begin(); it != childs().end(); ++it) {
             (*it)->resolve();
         }
     }
+
+    void basic_entity::after_resolve_child() {
+        for (basic_entity_vector::const_iterator it = childs().begin(); it != childs().end(); ++it) {
+            if (*it)
+                (*it)->after_resolve();
+        }
+    }   
 
     void basic_entity::prefind(const std::string& nm, basic_entity_vector& elm) {
         for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {

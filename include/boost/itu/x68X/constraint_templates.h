@@ -146,6 +146,7 @@ namespace x680 {
                 return false;
             if (ls.tablerow < rs.tablerow)
                 return true;
+            return false;
         }
 
         operator bool() const {
@@ -217,7 +218,7 @@ namespace x680 {
             return *left_;
         }
 
-        T is_min() const {
+        bool is_min() const {
             return left_ && (*left_ == min);
         }
 
@@ -229,7 +230,7 @@ namespace x680 {
             return *right_;
         }
 
-        T is_max() const {
+        bool is_max() const {
             return right_ && (*right_ == max);
         }
 
@@ -785,11 +786,11 @@ namespace x680 {
         container_type range_;
         range_type expention_;
     };
-    
-    
+
+
     std::ostream& operator<<(std::ostream& stream, const quadruple& vl);
-    
-    std::ostream& operator<<(std::ostream& stream, const tuple& vl);    
+
+    std::ostream& operator<<(std::ostream& stream, const tuple& vl);
 
     template<typename T>
     std::ostream& operator<<(std::ostream& stream, const range<T>& vl) {
@@ -849,6 +850,10 @@ namespace x680 {
     typedef range_constraints<quadruple> quadruple_constraints;
     typedef quadruple_constraints::range_type quadruple_range;
     typedef boost::shared_ptr<quadruple_constraints> quadruple_constraints_ptr;
+
+    typedef range_constraints<tuple> tuple_constraints;
+    typedef tuple_constraints::range_type tuple_range;
+    typedef boost::shared_ptr<tuple_constraints> tuple_constraints_ptr;
 
 
 

@@ -382,6 +382,14 @@ namespace x680 {
             stream << "[ has effective char8 constrant " << (*(self->char8_constraint())).to_per() <<
                     /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
         }          
+        if (self->quadruple_constraint()){
+            stream << "[ has effective quadruple constrant " << (*(self->quadruple_constraint())).to_per() <<
+                    /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
+        }  
+        if (self->tuple_constraint()){
+            stream << "[ has effective tuple constrant " << (*(self->tuple_constraint())).to_per() <<
+                    /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
+        }          
         
         if (self->parameterized())
             stream << self->parameters();

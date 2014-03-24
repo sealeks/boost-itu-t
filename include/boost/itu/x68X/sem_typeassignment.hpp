@@ -231,6 +231,8 @@ namespace x680 {
 
         quadruple_constraints_ptr quadruple_constraint();
 
+        tuple_constraints_ptr tuple_constraint();
+
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
         }
@@ -256,6 +258,8 @@ namespace x680 {
         bool can_char_constraints();
 
         bool can_char8_constraints();
+
+        bool can_tuple_constraints();
 
         bool can_quadruple_constraints();
 
@@ -312,6 +316,9 @@ namespace x680 {
 
     template<>
     quadruple_constraints_ptr type_atom::effective_constraint();
+
+    template<>
+    tuple_constraints_ptr type_atom::effective_constraint();
 
 
 
@@ -598,7 +605,7 @@ namespace x680 {
 
         // protected:
 
-        //   void resolve_predef();    
+         virtual void after_resolve(); 
 
         basic_entity_vector::iterator first_extention();
 

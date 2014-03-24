@@ -10,7 +10,7 @@
 
 namespace x680 {
 
-    
+
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -98,31 +98,31 @@ namespace x680 {
 
     template<>
     boost::shared_ptr<bool> value_atom::get_value(bool except_abstract);
-    
+
     template<>
-    boost::shared_ptr<double> value_atom::get_value(bool except_abstract);   
-    
+    boost::shared_ptr<double> value_atom::get_value(bool except_abstract);
+
     template<>
-    boost::shared_ptr<std::string> value_atom::get_value(bool except_abstract);       
+    boost::shared_ptr<std::string> value_atom::get_value(bool except_abstract);
 
     template<>
     boost::shared_ptr<quadruple> value_atom::get_value(bool except_abstract);
 
     template<>
-    boost::shared_ptr<tuple> value_atom::get_value(bool except_abstract);     
-    
+    boost::shared_ptr<tuple> value_atom::get_value(bool except_abstract);
+
     template<>
-    boost::shared_ptr<string_vector> value_atom::get_value(bool except_abstract);  
-    
+    boost::shared_ptr<string_vector> value_atom::get_value(bool except_abstract);
+
     template<>
     boost::shared_ptr<num_vector> value_atom::get_value(bool except_abstract);
 
     template<>
-    boost::shared_ptr<unum_vector> value_atom::get_value(bool except_abstract);       
+    boost::shared_ptr<unum_vector> value_atom::get_value(bool except_abstract);
 
 
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////   
     // numvalue_atom
     /////////////////////////////////////////////////////////////////////////  
