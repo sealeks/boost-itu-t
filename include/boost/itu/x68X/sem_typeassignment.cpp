@@ -700,7 +700,7 @@ namespace x680 {
         boost::shared_ptr<range_constraints<T> > rsltc;
         if (can_effective_constraint<T>(vl)) {
             if ((vl->isrefferrence()) && (vl->reff())) {
-                if (!(vl->reff()->as_typeassigment()) || !(vl->reff()->as_typeassigment()->type()))
+                if ((vl->reff()->as_typeassigment()) && (vl->reff()->as_typeassigment()->type()))
                     rslt = vl->reff()->as_typeassigment()->type()->effective_constraint<T>();
             }
             if (vl->has_constraint())

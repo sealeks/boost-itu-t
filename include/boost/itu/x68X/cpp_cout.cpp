@@ -303,7 +303,7 @@ namespace x680 {
         }
 
         std::string value_real_str(value_atom_ptr self) {
-            if (self && (self->get_value<double>())){
+            if (self && (self->get_value<double>())) {
                 try {
                     return boost::lexical_cast<std::string > (self->get_value<double>());
                 } catch (boost::bad_lexical_cast) {
@@ -403,29 +403,13 @@ namespace x680 {
         }
 
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt) {
-            if (self && (self->as_list())) {
-                structvalue_atom_ptr lst = self->as_list();
-                for (value_vct::const_iterator it = lst->values().begin(); it != lst->values().end(); ++it) {
-                    value_atom_ptr subval = (*it);
-                    if (subval->as_number())
-                        rslt.push_back(value_int_str(subval));
-                    else if (subval->as_assign())
-                        rslt.push_back(value_int_str(subval->as_assign()->value()));
-                    else if (subval->as_defined()) {
-                        if (subval->as_defined()->reff()) {
-                            if (subval->as_defined()->reff()->as_valueassigment()) {
-                                value_atom_ptr tmpval = value_skip_defined(subval->as_defined()->reff()->as_valueassigment()->value());
-                                if (tmpval) {
-                                    if (tmpval->as_list())
-                                        value_oid_str(tmpval, rslt);
-                                    else
-                                        rslt.push_back(value_int_str(tmpval));
-                                }
-                            } else rslt.push_back("???");
-                        } else rslt.push_back("???");
-                    } else rslt.push_back("???");
-                }
-            }
+            if (self && (self->get_value<unum_vector>())) {
+                boost::shared_ptr<unum_vector> lst = self->get_value<unum_vector>();
+                if (!lst->empty()) {
+                    for (unum_vector::const_iterator it = lst->begin(); it != lst->end(); ++it)
+                        rslt.push_back(boost::lexical_cast<std::string >(*it));
+                } else rslt.push_back("???");
+            } else rslt.push_back("???");
             return !rslt.empty();
         }
 
@@ -1377,13 +1361,13 @@ namespace x680 {
                     if (!ischoice) {
                         switch (mkr) {
                             case mk_none: stream << tabformat(self, 1) << "ITU_T_HOLDER" << (noholder_ ? "N": "H") <<
-                                    "_DECL(" << it->name << ", " << it->typenam << ");";
+                                "_DECL(" << it->name << ", " << it->typenam << ");";
                                 break;
-                            case mk_optional: stream << tabformat(self, 1) << "ITU_T_OPTIONAL_DECL(" << it->name << 
-                                    ", " << it->typenam << ");";
+                            case mk_optional: stream << tabformat(self, 1) << "ITU_T_OPTIONAL_DECL(" << it->name <<
+                                        ", " << it->typenam << ");";
                                 break;
                             case mk_default: stream << tabformat(self, 1) << "ITU_T_DEFAULTH_DECL(" << it->name <<
-                                    ", " << it->typenam << ", " << (it->name + "__default") << ");";
+                                        ", " << it->typenam << ", " << (it->name + "__default") << ");";
                                 break;
                             default:
                             {

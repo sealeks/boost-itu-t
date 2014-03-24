@@ -13,6 +13,21 @@
 
 
 namespace x680 {
+    
+    
+    /////////////////////////////////////////////////////////////////////////      
+    // string_initer
+    /////////////////////////////////////////////////////////////////////////     
+
+    struct string_initer {
+           
+        string_initer() : str(), unused(0) {}
+        string_initer(const std::string vl) : str(vl), unused(0) {}
+        string_initer(const std::string vl, std::size_t un) : str(vl), unused(un) {}
+                
+        std::string str;
+        std::size_t unused;
+    };
 
     /////////////////////////////////////////////////////////////////////////      
     // quadruple
@@ -162,6 +177,9 @@ namespace x680 {
     typedef std::vector<std::string> string_vector;
     typedef std::vector<std::size_t> unum_vector;
     typedef std::vector<int64_t> num_vector;
+    typedef std::vector<tuple> tuple_vector;    
+    typedef std::vector<quadruple> quadruple_vector;     
+    
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  range

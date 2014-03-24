@@ -370,27 +370,22 @@ namespace x680 {
                 stream << self->builtin();
             }
         }
-        if (self->integer_constraint()){
-            stream << "[ has effective integer constrant " << (*(self->integer_constraint())).to_per() <<
-                    /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
+        if (self->integer_constraint()) {
+            stream << "[ EIC" << (*(self->integer_constraint())).to_per() << "]";
         }
-        if (self->size_constraint()){
-            stream << "[ has effective size constrant " << (*(self->size_constraint())).to_per() <<
-                    /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
-        }       
-        if (self->char8_constraint()){
-            stream << "[ has effective char8 constrant " << (*(self->char8_constraint())).to_per() <<
-                    /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
-        }          
-        if (self->quadruple_constraint()){
-            stream << "[ has effective quadruple constrant " << (*(self->quadruple_constraint())).to_per() <<
-                    /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
-        }  
-        if (self->tuple_constraint()){
-            stream << "[ has effective tuple constrant " << (*(self->tuple_constraint())).to_per() <<
-                    /*(self->integer_constraint()->has_extention() ? " with extention ..." : "") <<*/ "]";
-        }          
-        
+        if (self->size_constraint()) {
+            stream << "[ ESC " << (*(self->size_constraint())).to_per() << "]";
+        }
+        if (self->char8_constraint()) {
+            stream << "[ EC8C " << (*(self->char8_constraint())).to_per() << "]";
+        }
+        if (self->quadruple_constraint()) {
+            stream << "[ EQC " << (*(self->quadruple_constraint())).to_per() << "]";
+        }
+        if (self->tuple_constraint()) {
+            stream << "[ ETC " << (*(self->tuple_constraint())).to_per() << "]";
+        }
+
         if (self->parameterized())
             stream << self->parameters();
         if (self->predefined())
