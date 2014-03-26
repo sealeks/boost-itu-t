@@ -305,66 +305,34 @@ namespace x680 {
                 for (std::string::const_iterator it = tmp.begin(); it != tmp.end(); ++it) {
                     sub <<= 1;
                     sub |= (((*it) == '1') ? 0x1 : 0x0);
-                    cnt++;
                     if ((++cnt) == 8) {
                         rslt.insert(rslt.end(), static_cast<std::string::value_type> (sub));
                         cnt = 0;
                         sub = 0;
                     }
                 }
-                if (cnt < 8) {
+                if (cnt > 0) {
                     rslt.insert(rslt.end(), static_cast<std::string::value_type> (sub));
                 }
-                return boost::shared_ptr<bstring_initer>(new bstring_initer(rslt, 8 - cnt));
+                return boost::shared_ptr<bstring_initer>(new bstring_initer(rslt, cnt ? (8 - cnt) : 0));
             } else if (valtype() == v_hstring) {
                 for (std::string::const_iterator it = tmp.begin(); it != tmp.end(); ++it) {
                     sub <<= 4;
-                    switch (*it) {
-                        case '1': sub |= static_cast<int> ('\x1');
-                            break;
-                        case '2': sub |= static_cast<int> ('\x2');
-                            break;
-                        case '3': sub |= static_cast<int> ('\x3');
-                            break;
-                        case '4': sub |= static_cast<int> ('\x4');
-                            break;
-                        case '5': sub |= static_cast<int> ('\x5');
-                            break;
-                        case '6': sub |= static_cast<int> ('\x6');
-                            break;
-                        case '7': sub |= static_cast<int> ('\x7');
-                            break;
-                        case '8': sub |= static_cast<int> ('\x8');
-                            break;
-                        case '9': sub |= static_cast<int> ('\x9');
-                            break;
-                        case 'A': sub |= static_cast<int> ('\xA');
-                            break;
-                        case 'B': sub |= static_cast<int> ('\xB');
-                            break;
-                        case 'C': sub |= static_cast<int> ('\xC');
-                            break;
-                        case 'D': sub |= static_cast<int> ('\xD');
-                            break;
-                        case 'E': sub |= static_cast<int> ('\xE');
-                            break;
-                        case 'F': sub |= static_cast<int> ('\xF');
-                            break;
-                        default:
-                        {
-                        }
-                    }
-                    cnt += 4;
-                    if (cnt == 8) {
-                        rslt.insert(rslt.end(), static_cast<std::string::value_type> (sub));
+                    if ((*it>='\x30') && (*it<='\x39')) 
+                        sub |= static_cast<int> (*it - '\x30');
+                    else if (((*it>='\x41') && (*it<='\x46')) )
+                        sub |= static_cast<int> (*it - '\x41'+'\xA');
+                    cnt+=4;
+                    if ((cnt) == 8) {
+                        rslt.insert(rslt.end(), static_cast<std::string::value_type> ('\xFF' & sub));
                         cnt = 0;
                         sub = 0;
                     }
                 }
                 if (cnt) {
-                    rslt.insert(rslt.end(), static_cast<std::string::value_type> (sub));
-                    return boost::shared_ptr<bstring_initer>(new bstring_initer(rslt, cnt ? 4 : 0));
+                    rslt.insert(rslt.end(), static_cast<std::string::value_type> (sub));                    
                 }
+                return boost::shared_ptr<bstring_initer>(new bstring_initer(rslt, cnt ? 4 : 0));
             }
         } else if (as_empty()) {
             return boost::shared_ptr<bstring_initer>(new bstring_initer());

@@ -329,7 +329,7 @@ namespace x680 {
         std::string value_int_str(value_atom_ptr self) {
             if (self && (self->get_value<int64_t>())) {
                 try {
-                    return boost::lexical_cast<std::string > (self->get_value<int64_t>());
+                    return boost::lexical_cast<std::string > (*(self->get_value<int64_t>()));
                 } catch (boost::bad_lexical_cast) {
                     return "???num???";
                 }
@@ -339,14 +339,14 @@ namespace x680 {
 
         std::string value_bool_str(value_atom_ptr self) {
             if (self && (self->get_value<bool>()))
-                return self->get_value<bool>() ? "true" : "false";
+                return *(self->get_value<bool>()) ? "true" : "false";
             return "???bool???";
         }
 
         std::string value_real_str(value_atom_ptr self) {
             if (self && (self->get_value<double>())) {
                 try {
-                    return boost::lexical_cast<std::string > (self->get_value<double>());
+                    return boost::lexical_cast<std::string > (*(self->get_value<double>()));
                 } catch (boost::bad_lexical_cast) {
                     return "???real???";
                 }
@@ -366,42 +366,32 @@ namespace x680 {
             return "???reff???";
         }
 
-        std::string value_bs_bstr_str(strvalue_atom_ptr self) {
-            std::size_t cnt = 0;
-            std::string src = self->value();
-            uint64_t numrsl = 0;
-            for (std::string::const_iterator it = src.begin(); it != src.end(); ++it) {
-                numrsl <<= 1;
-                numrsl |= (((*it) == '1') ? 0x1 : 0x0);
-                cnt++;
+        template <typename T>
+        static std::string num_to_hex(T vl) {
+            std::string rslt;
+            while (vl) {
+                T tmp = vl & static_cast<T> ('\xF');
+                if (tmp <= 9)
+                    rslt = std::string::value_type('\x30' + static_cast<std::string::value_type> (tmp)) + rslt;
+                else
+                    rslt = std::string::value_type('\x41' + static_cast<std::string::value_type> (tmp - 10)) + rslt;
+                if (vl < 0) {
+                    vl >>= 1;
+                    vl &= (~std::numeric_limits<T>::min());
+                    vl >>= 3;
+                } else
+                    vl >>= 4;
             }
-            if (!cnt)
-                return "";
-            if (cnt <= 8)
-                return "static_cast<uint8_t>(" + boost::lexical_cast<std::string > (numrsl) + "), " + boost::lexical_cast<std::string >(8 - cnt);
-            if (cnt <= 16)
-                return "static_cast<uint16_t>(" + boost::lexical_cast<std::string > (numrsl) + "), " + boost::lexical_cast<std::string >(16 - cnt);
-            if (cnt <= 32)
-                return "static_cast<uint32_t>(" + boost::lexical_cast<std::string > (numrsl) + "), " + boost::lexical_cast<std::string >(32 - cnt);
-            if (cnt <= 64)
-                return "static_cast<uint64_t>(" + boost::lexical_cast<std::string > (numrsl) + "), " + boost::lexical_cast<std::string >(64 - cnt);
-            return "???bstr???";
+            return rslt.empty() ? "0" : rslt;
         }
 
-        std::string value_bs_hstr_str(strvalue_atom_ptr self) {
-            std::string src = self->value();
-            std::size_t cnt = src.size()*8;
-            if (cnt <= 32)
-                return "0x" + src + ", " + boost::lexical_cast<std::string >(32 - cnt);
-            return "???bstr???";
-        }
-
-        std::string value_bs_str_str(strvalue_atom_ptr self) {
-            if (self->valtype() == v_bstring)
-                return "boost::asn1::bitstring_type(" + value_bs_bstr_str(self) + ")";
-            else if (self->valtype() == v_hstring)
-                return "boost::asn1::bitstring_type(" + value_bs_hstr_str(self) + ")";
-            return "???bstr???";
+        static std::string string_to_literal(const std::string& vl) {
+            std::string rslt;
+            if (!vl.empty()) {
+                for (std::string::const_iterator it = vl.begin(); it != vl.end(); ++it)
+                    rslt += ("\\x" + (num_to_hex<std::string::value_type>(*it)));
+            }
+            return rslt;
         }
 
         std::string value_bs_str(value_atom_ptr self) {
@@ -420,10 +410,30 @@ namespace x680 {
                 }
                 return rslt;
             } else if (self->as_cstr()) {
-                return value_bs_str_str(self->as_cstr());
+                if (self->get_value<bstring_initer>()) {
+                    boost::shared_ptr<bstring_initer> tmp = self->get_value<bstring_initer>();
+                    if (!tmp->str.empty())
+                        return "boost::asn1::bitstring_type(std::string(\"" + string_to_literal(tmp->str) + "\", "
+                        + boost::lexical_cast<std::string >(tmp->str.size()) + "), "
+                        + boost::lexical_cast<std::string >(tmp->unused) + ")";
+                    else
+                        return "boost::asn1::bitstring_type()";
+                }
             } else if (self->as_assign())
                 return nameconvert(self->as_assign()->name());
             return "???bitnum???";
+        }
+
+        std::string value_os_str(value_atom_ptr self) {
+            if (self->get_value<hstring_initer>()) {
+                boost::shared_ptr<hstring_initer> tmp = self->get_value<hstring_initer>();
+                if (!tmp->str.empty())
+                    return "boost::asn1::octetstring_type(std::string(\"" + string_to_literal(tmp->str) + "\", "
+                    + boost::lexical_cast<std::string >(tmp->str.size()) + "))";
+                else
+                    return "boost::asn1::octetstring_type()";
+            };
+            return "???0str???";
         }
 
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self) {
@@ -464,6 +474,7 @@ namespace x680 {
                 case t_BOOLEAN: return nested_init_str(tp, value_bool_str(vl));
                 case t_REAL: return nested_init_str(tp, value_real_str(vl));
                 case t_BIT_STRING: return nested_init_str(tp, value_bs_str(vl));
+                case t_OCTET_STRING: return nested_init_str(tp, value_os_str(vl));
                 case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl));
                 case t_OBJECT_IDENTIFIER: return nested_init_str(tp, "boost::asn1::oid_type(" + nm + "_OID_ARR )");
                 case t_RELATIVE_OID: return nested_init_str(tp, "boost::asn1::reloid_type(" + nm + "_OID_ARR )");
@@ -1311,10 +1322,11 @@ namespace x680 {
                 case t_INTEGER:
                 case t_BOOLEAN:
                 case t_REAL:
+                case t_BIT_STRING:
+                case t_OCTET_STRING:
                 case t_ENUMERATED:
                 {
                     stream << "\n" << tabformat(scp, 2) << "extern const " << fromtype_str(self->type()) << " " << nameconvert(self->name()) << ";";
-
                     break;
                 }
                 case t_OBJECT_IDENTIFIER:
@@ -1356,6 +1368,8 @@ namespace x680 {
                     case t_REAL:
                     case t_ENUMERATED:
                     case t_OBJECT_IDENTIFIER:
+                    case t_BIT_STRING:
+                    case t_OCTET_STRING:
                     case t_RELATIVE_OID:
                     {
                         stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
