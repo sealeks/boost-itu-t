@@ -345,6 +345,8 @@ namespace boost {
             explicit bitstring_type(const std::vector<bool>& vl);
 
             explicit bitstring_type(bool vl, std::size_t n);
+            
+            explicit bitstring_type(const std::string& vl, std::size_t unuse = 0);
 
             bitstring_type(const dynamic_bitset_type& vl) : std::vector<octet_type>() {
                 construct(vl);

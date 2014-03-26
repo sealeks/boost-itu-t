@@ -62,8 +62,7 @@ namespace boost {
         bool check_utf8(const std::string& val) {
             try {
                 return boost::asn1::utf8::is_valid(val.begin(), val.end());
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return false;
         }
@@ -88,8 +87,7 @@ namespace boost {
                 return L"?";
 #endif        
                 return std::wstring(unicodeline.begin(), unicodeline.end());
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return L"";
         }
@@ -115,8 +113,7 @@ namespace boost {
 #endif        
                 rslt = std::wstring(unicodeline.begin(), unicodeline.end());
                 return true;
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return false;
         }
@@ -132,8 +129,7 @@ namespace boost {
                 return L"?";
 #endif        
                 return utf8line;
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return "";
         }
@@ -150,8 +146,7 @@ namespace boost {
 #endif        
                 rslt = utf8line;
                 return true;
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return false;
         }
@@ -181,8 +176,7 @@ namespace boost {
                 return L"?";
 #endif        
                 return true;
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return false;
         }
@@ -213,8 +207,7 @@ namespace boost {
                 return L"?";
 #endif        
                 return true;
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return false;
         }
@@ -259,8 +252,7 @@ namespace boost {
                 return L"?";
 #endif        
                 return true;
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return false;
         }
@@ -307,10 +299,19 @@ namespace boost {
                 return L"?";
 #endif        
                 return true;
-            }
-            catch (...) {
+            }            catch (...) {
             }
             return false;
+        }
+
+        bool quadrople_to_str(const boost::asn1::utf8::uint32_t& val, std::string& rslt) {
+            try {
+                std::vector<boost::asn1::utf8::uint32_t> utf32line(1, val);
+                boost::asn1::utf8::utf32to8(utf32line.begin(), utf32line.end(), std::back_inserter(rslt));
+            } catch (...) {
+                return false;
+            }
+            return true;
         }
 
     }

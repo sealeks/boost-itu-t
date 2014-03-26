@@ -87,39 +87,39 @@ namespace boost {
 
         /// bitstring type
 
-        bitstring_type::bitstring_type(uint8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
+        bitstring_type::bitstring_type(uint8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
             construct(vl, unuse);
         };
 
-        bitstring_type::bitstring_type(uint16_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
+        bitstring_type::bitstring_type(uint16_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
             construct(vl, unuse);
         };
 
-        bitstring_type::bitstring_type(uint32_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
+        bitstring_type::bitstring_type(uint32_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
             construct(vl, unuse);
         };
 
-        bitstring_type::bitstring_type(uint64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
+        bitstring_type::bitstring_type(uint64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
             construct(vl, unuse);
         };
 
-        bitstring_type::bitstring_type(int8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
+        bitstring_type::bitstring_type(int8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
             construct(*reinterpret_cast<uint8_t*> (&vl), unuse);
         };
 
-        bitstring_type::bitstring_type(int16_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
+        bitstring_type::bitstring_type(int16_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
             construct(*reinterpret_cast<uint16_t*> (&vl), unuse);
         };
 
-        bitstring_type::bitstring_type(int32_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
+        bitstring_type::bitstring_type(int32_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
             construct(*reinterpret_cast<uint32_t*> (&vl), unuse);
         };
 
-        bitstring_type::bitstring_type(int64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
+        bitstring_type::bitstring_type(int64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
             construct(*reinterpret_cast<uint64_t*> (&vl), unuse);
         };
 
-        bitstring_type::bitstring_type(const octet_sequnce& vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
+        bitstring_type::bitstring_type(const octet_sequnce& vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
             insert_bitstring(vl, unuse);
         };
 
@@ -132,6 +132,10 @@ namespace boost {
                 insert(begin(), (n / 8 + 1), 0);
                 back() = (0x1 << (7 - (n % 8)));
             }
+        }
+        
+        bitstring_type::bitstring_type(const std::string& vl, std::size_t unuse) : unuse_(unuse % 8){
+            std::copy(vl.begin(), vl.end(), std::back_inserter(*this));
         }
 
         void bitstring_type::insert_bitstring(const octet_sequnce& val, std::size_t unuse) {

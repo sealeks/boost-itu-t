@@ -115,12 +115,10 @@ namespace boost {
                     if (cp < 0x80) {
                         if (length != 1)
                             return true;
-                    }
-                    else if (cp < 0x800) {
+                    } else if (cp < 0x800) {
                         if (length != 2)
                             return true;
-                    }
-                    else if (cp < 0x10000) {
+                    } else if (cp < 0x10000) {
                         if (length != 3)
                             return true;
                     }
@@ -129,6 +127,7 @@ namespace boost {
                 }
 
                 enum utf_error {
+
                     UTF8_OK, NOT_ENOUGH_ROOM, INVALID_LEAD, INCOMPLETE_SEQUENCE, OVERLONG_SEQUENCE, INVALID_CODE_POINT
                 };
 
@@ -157,11 +156,9 @@ namespace boost {
                                 if (code_point)
                                     *code_point = cp;
                                 ret_code = UTF8_OK;
-                            }
-                            else
+                            } else
                                 ret_code = INCOMPLETE_SEQUENCE;
-                        }
-                        else
+                        } else
                             ret_code = NOT_ENOUGH_ROOM;
                     }
 
@@ -184,17 +181,13 @@ namespace boost {
                                         if (code_point)
                                             *code_point = cp;
                                         ret_code = UTF8_OK;
-                                    }
-                                    else
+                                    } else
                                         ret_code = INCOMPLETE_SEQUENCE;
-                                }
-                                else
+                                } else
                                     ret_code = NOT_ENOUGH_ROOM;
-                            }
-                            else
+                            } else
                                 ret_code = INCOMPLETE_SEQUENCE;
-                        }
-                        else
+                        } else
                             ret_code = NOT_ENOUGH_ROOM;
                     }
 
@@ -220,23 +213,17 @@ namespace boost {
                                                 if (code_point)
                                                     *code_point = cp;
                                                 ret_code = UTF8_OK;
-                                            }
-                                            else
+                                            } else
                                                 ret_code = INCOMPLETE_SEQUENCE;
-                                        }
-                                        else
+                                        } else
                                             ret_code = NOT_ENOUGH_ROOM;
-                                    }
-                                    else
+                                    } else
                                         ret_code = INCOMPLETE_SEQUENCE;
-                                }
-                                else
+                                } else
                                     ret_code = NOT_ENOUGH_ROOM;
-                            }
-                            else
+                            } else
                                 ret_code = INCOMPLETE_SEQUENCE;
-                        }
-                        else
+                        } else
                             ret_code = NOT_ENOUGH_ROOM;
                     }
 
@@ -282,11 +269,9 @@ namespace boost {
                                     *code_point = cp;
                                 ++it;
                                 return UTF8_OK;
-                            }
-                            else
+                            } else
                                 err = OVERLONG_SEQUENCE;
-                        }
-                        else
+                        } else
                             err = INVALID_CODE_POINT;
                     }
 
@@ -347,11 +332,13 @@ namespace boost {
             // Base for the exceptions that may be thrown from the library
 
             class exception : public std::exception {
+
             };
 
             // Exceptions that may be thrown from the library functions.
 
             class invalid_code_point : public exception {
+
                 uint32_t cp;
             public:
 
@@ -368,6 +355,7 @@ namespace boost {
             };
 
             class invalid_utf8 : public exception {
+
                 uint8_t u8;
             public:
 
@@ -384,6 +372,7 @@ namespace boost {
             };
 
             class invalid_utf16 : public exception {
+
                 uint16_t u16;
             public:
 
@@ -400,6 +389,7 @@ namespace boost {
             };
 
             class not_enough_room : public exception {
+
             public:
 
                 virtual const char* what() const throw () {
@@ -455,13 +445,11 @@ namespace boost {
                 else if (cp < 0x800) { // two octets
                     *(result++) = static_cast<uint8_t> ((cp >> 6) | 0xc0);
                     *(result++) = static_cast<uint8_t> ((cp & 0x3f) | 0x80);
-                }
-                else if (cp < 0x10000) { // three octets
+                } else if (cp < 0x10000) { // three octets
                     *(result++) = static_cast<uint8_t> ((cp >> 12) | 0xe0);
                     *(result++) = static_cast<uint8_t> (((cp >> 6) & 0x3f) | 0x80);
                     *(result++) = static_cast<uint8_t> ((cp & 0x3f) | 0x80);
-                }
-                else { // four octets
+                } else { // four octets
                     *(result++) = static_cast<uint8_t> ((cp >> 18) | 0xf0);
                     *(result++) = static_cast<uint8_t> (((cp >> 12) & 0x3f) | 0x80);
                     *(result++) = static_cast<uint8_t> (((cp >> 6) & 0x3f) | 0x80);
@@ -547,11 +535,9 @@ namespace boost {
                                 cp = (cp << 10) + trail_surrogate + internal::SURROGATE_OFFSET;
                             else
                                 throw invalid_utf16(static_cast<uint16_t> (trail_surrogate));
-                        }
-                        else
+                        } else
                             throw invalid_utf16(static_cast<uint16_t> (cp));
-                    }
-                        // Lone trail surrogate
+                    }                        // Lone trail surrogate
                     else if (internal::is_trail_surrogate(cp))
                         throw invalid_utf16(static_cast<uint16_t> (cp));
 
@@ -567,8 +553,7 @@ namespace boost {
                     if (cp > 0xffff) { //make a surrogate pair
                         *result++ = static_cast<uint16_t> ((cp >> 10) + internal::LEAD_OFFSET);
                         *result++ = static_cast<uint16_t> ((cp & 0x3ff) + internal::TRAIL_SURROGATE_MIN);
-                    }
-                    else
+                    } else
                         *result++ = static_cast<uint16_t> (cp);
                 }
                 return result;
@@ -594,6 +579,7 @@ namespace boost {
 
             template <typename octet_iterator>
             class iterator : public std::iterator <std::bidirectional_iterator_tag, uint32_t> {
+
                 octet_iterator it;
                 octet_iterator range_start;
                 octet_iterator range_end;
@@ -664,13 +650,11 @@ namespace boost {
                     else if (cp < 0x800) { // two octets
                         *(result++) = static_cast<uint8_t> ((cp >> 6) | 0xc0);
                         *(result++) = static_cast<uint8_t> ((cp & 0x3f) | 0x80);
-                    }
-                    else if (cp < 0x10000) { // three octets
+                    } else if (cp < 0x10000) { // three octets
                         *(result++) = static_cast<uint8_t> ((cp >> 12) | 0xe0);
                         *(result++) = static_cast<uint8_t> (((cp >> 6) & 0x3f) | 0x80);
                         *(result++) = static_cast<uint8_t> ((cp & 0x3f) | 0x80);
-                    }
-                    else { // four octets
+                    } else { // four octets
                         *(result++) = static_cast<uint8_t> ((cp >> 18) | 0xf0);
                         *(result++) = static_cast<uint8_t> (((cp >> 12) & 0x3f) | 0x80);
                         *(result++) = static_cast<uint8_t> (((cp >> 6) & 0x3f) | 0x80);
@@ -764,8 +748,7 @@ namespace boost {
                         if (cp > 0xffff) { //make a surrogate pair
                             *result++ = static_cast<uint16_t> ((cp >> 10) + internal::LEAD_OFFSET);
                             *result++ = static_cast<uint16_t> ((cp & 0x3ff) + internal::TRAIL_SURROGATE_MIN);
-                        }
-                        else
+                        } else
                             *result++ = static_cast<uint16_t> (cp);
                     }
                     return result;
@@ -791,6 +774,7 @@ namespace boost {
 
                 template <typename octet_iterator>
                 class iterator : public std::iterator <std::bidirectional_iterator_tag, uint32_t> {
+
                     octet_iterator it;
                 public:
 
@@ -853,6 +837,7 @@ namespace boost {
         bool wstr_to_bmpstr(const std::wstring& val, std::string& rslt);
         bool universalstr_to_wstr(const std::string& val, std::wstring& rslt);
         bool bmpstr_to_wstr(const std::string& val, std::wstring& rslt);
+        bool quadrople_to_str(const boost::asn1::utf8::uint32_t& val, std::string& rslt);
 
         inline std::string wstr_to_universalstr(const std::wstring& val) {
             std::string tmp;
