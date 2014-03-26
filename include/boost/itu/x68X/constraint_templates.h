@@ -13,33 +13,41 @@
 
 
 namespace x680 {
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////      
     // bstring_initer
     /////////////////////////////////////////////////////////////////////////     
 
     struct bstring_initer {
-           
-        bstring_initer() : str(), unused(0) {}
-        bstring_initer(const std::string vl) : str(vl), unused(0) {}
-        bstring_initer(const std::string vl, std::size_t un) : str(vl), unused(un) {}
-                
+
+        bstring_initer() : str(), unused(0) {
+        }
+
+        bstring_initer(const std::string vl) : str(vl), unused(0) {
+        }
+
+        bstring_initer(const std::string vl, std::size_t un) : str(vl), unused(un) {
+        }
+
         std::string str;
         std::size_t unused;
     };
-    
+
     /////////////////////////////////////////////////////////////////////////      
     // hstring_initer
     /////////////////////////////////////////////////////////////////////////     
 
     struct hstring_initer {
-           
-        hstring_initer() : str() {}
-        hstring_initer(const std::string vl) : str(vl) {}
-                
+
+        hstring_initer() : str() {
+        }
+
+        hstring_initer(const std::string vl) : str(vl) {
+        }
+
         std::string str;
-    };    
+    };
 
     /////////////////////////////////////////////////////////////////////////      
     // quadruple
@@ -189,9 +197,9 @@ namespace x680 {
     typedef std::vector<std::string> string_vector;
     typedef std::vector<std::size_t> unum_vector;
     typedef std::vector<int64_t> num_vector;
-    typedef std::vector<tuple> tuple_vector;    
-    typedef std::vector<quadruple> quadruple_vector;     
-    
+    typedef std::vector<tuple> tuple_vector;
+    typedef std::vector<quadruple> quadruple_vector;
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  range
@@ -742,6 +750,16 @@ namespace x680 {
             return self_type(range_type(lptr, rptr), has_extention());
         }
 
+        self_type to_alphabet_per() {
+            range_ = range_type::normalize(range_);
+            if ((range_.empty()) || (empty()))
+                return self_type(range_type::create_empty());
+            if (all())
+                return self_type();
+            clear_extention();
+            return *this;
+        }
+
         bool include(const self_type& vl) const {
             return (container_type(range_) & container_type(vl.range_)) == container_type(vl.range_);
         }
@@ -848,8 +866,11 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, const std::vector<range<T> >& vl) {
         if (vl.empty())
             return stream << "  [ null ] ";
+        std::size_t cnt = 1;
         for (typename std::vector<range<T> >::const_iterator it = vl.begin(); it != vl.end(); ++it) {
             stream << *it;
+            if (cnt++ > 10)
+                return stream << " ... more folllow element full size =" << vl.size();
         }
         return stream;
     }

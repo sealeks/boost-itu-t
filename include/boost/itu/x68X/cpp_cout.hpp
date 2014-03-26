@@ -45,6 +45,8 @@ namespace x680 {
         std::string value_reff_str(defined_value_atom_ptr self);
         std::string value_bs_str(value_atom_ptr self);
         std::string value_os_str(value_atom_ptr self);
+        std::string value_chars8_str(value_atom_ptr self, bool cantuple);
+        std::string value_chars16_str(value_atom_ptr self);
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self);
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
         std::string valueassmnt_str(valueassignment_entity_ptr self);
@@ -133,6 +135,7 @@ namespace x680 {
 
 
             void execute_access_member_hpp(std::ofstream& stream, typeassignment_entity_ptr self);
+            void mark_constraints(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_access_member_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_member(std::ofstream& stream, typeassignment_entity_ptr self);
 

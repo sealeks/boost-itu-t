@@ -64,15 +64,16 @@ namespace x680 {
             decl(declare_typedef), remote_(false) {
             };
 
-            declare_atom(declare_type decl_, const std::string& typenam_, const std::string& from_type_, bool rem = false) :
-            decl(decl_), typenam(typenam_), from_type(from_type_), remote_(rem) {
+            declare_atom(declare_type decl_, typeassignment_entity_ptr tp, const std::string& typenam_, const std::string& from_type_, bool rem = false) :
+            decl(decl_), typ(tp), typenam(typenam_), from_type(from_type_), remote_(rem) {
             };
 
-            declare_atom(declare_type decl_, const std::string& typenam_, const std::string& from_type_, const std::string& tag_, const std::string& _class_, bool rem = false) :
-            decl(decl_), typenam(typenam_), from_type(from_type_), tag(tag_), class_(_class_), remote_(rem) {
+            declare_atom(declare_type decl_, typeassignment_entity_ptr tp, const std::string& typenam_, const std::string& from_type_, const std::string& tag_, const std::string& _class_, bool rem = false) :
+            decl(decl_), typ(tp), typenam(typenam_), from_type(from_type_), tag(tag_), class_(_class_), remote_(rem) {
             };
 
             declare_type decl;
+            typeassignment_entity_ptr typ;
             std::string typenam;
             std::string from_type;
             std::string tag;
@@ -345,11 +346,14 @@ namespace x680 {
 
         std::string value_real_str(value_atom_ptr self) {
             if (self && (self->get_value<double>())) {
-                try {
-                    return boost::lexical_cast<std::string > (*(self->get_value<double>()));
-                } catch (boost::bad_lexical_cast) {
-                    return "???real???";
-                }
+                double tmp = *(self->get_value<double>());
+                if (tmp != tmp)
+                    return "std::numeric_limits<double>::quiet_NaN()";
+                if (tmp == std::numeric_limits<double>::infinity())
+                    return "std::numeric_limits<double>::infinity()";
+                if (tmp == -std::numeric_limits<double>::infinity())
+                    return " - std::numeric_limits<double>::infinity()";
+                return boost::lexical_cast<std::string > (*(self->get_value<double>()));
             }
             return "???real???";
         }
@@ -390,6 +394,15 @@ namespace x680 {
             if (!vl.empty()) {
                 for (std::string::const_iterator it = vl.begin(); it != vl.end(); ++it)
                     rslt += ("\\x" + (num_to_hex<std::string::value_type>(*it)));
+            }
+            return rslt;
+        }
+
+        static std::string string_to_literal(const std::wstring& vl) {
+            std::string rslt;
+            if (!vl.empty()) {
+                for (std::wstring::const_iterator it = vl.begin(); it != vl.end(); ++it)
+                    rslt += ("\\x" + (num_to_hex<std::wstring::value_type>(*it)));
             }
             return rslt;
         }
@@ -436,6 +449,30 @@ namespace x680 {
             return "???0str???";
         }
 
+        std::string value_chars8_str(value_atom_ptr self, bool cantuple) {
+            if (cantuple && self->get_value<tuple>()) {
+                boost::shared_ptr<tuple> tmp = self->get_value<tuple>();
+                return "std::string(1, \'" +
+                string_to_literal(std::string(1, std::string::value_type(static_cast<std::string::value_type> (tmp->tablecolumn * 8 + tmp->tablerow)))) +
+                        "\')";
+            } else if (self->get_value<std::string>()) {
+                return "std::string(\"" +
+                *(self->get_value<std::string>()) +
+                        "\")";
+            }
+            return "???str???";
+        }
+
+        std::string value_chars16_str(value_atom_ptr self) {
+            if (self->get_value<quadruple>()) {
+                boost::shared_ptr<quadruple> tmp = self->get_value<quadruple>();
+                return "std::wstring(1, L\'" +
+                string_to_literal(std::wstring(1, std::wstring::value_type(static_cast<std::wstring::value_type> (tmp->row * 256 + tmp->cell)))) +
+                        "\')";
+            }
+            return "???wstr???";
+        }
+
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self) {
             if (tp && self && (self->as_defined()) && (self->as_defined()->reff()))
                 return namelower(fromtype_str(tp)) + "_" + nameconvert(self->as_defined()->reff()->name());
@@ -478,6 +515,8 @@ namespace x680 {
                 case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl));
                 case t_OBJECT_IDENTIFIER: return nested_init_str(tp, "boost::asn1::oid_type(" + nm + "_OID_ARR )");
                 case t_RELATIVE_OID: return nested_init_str(tp, "boost::asn1::reloid_type(" + nm + "_OID_ARR )");
+                case t_IA5String: return nested_init_str(tp, value_chars8_str(vl, tp->root_builtin() == t_IA5String));
+                case t_BMPString: return nested_init_str(tp, value_chars16_str(vl));
                 default:
                 {
                 }
@@ -905,10 +944,10 @@ namespace x680 {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if (tpas && (tpas->type()) && (tpas->issimplerefferrence()) && (tpas->is_cpp_expressed())) {
                     if (!tagged && (!tpas->tag())) {
-                        vct.push_back(declare_atom(declare_typedef, type_str(tpas), fromtype_str(tpas), false));
+                        vct.push_back(declare_atom(declare_typedef, tpas, type_str(tpas), fromtype_str(tpas), false));
                     } else if (tagged && (tpas->tag())) {
                         vct.push_back(declare_atom(((tpas->tag()->rule() == explicit_tags) ? declare_explicit : declare_implicit),
-                                type_str(tpas), fromtype_str(tpas), tagged_str(tpas->tag()), tagged_class_str(tpas->tag()), false));
+                                tpas, type_str(tpas), fromtype_str(tpas), tagged_str(tpas->tag()), tagged_class_str(tpas->tag()), false));
                     }
                 }
             }
@@ -928,12 +967,12 @@ namespace x680 {
                 if (cpas && (cpas->type())) {
                     if (cpas->issimplerefferrence()) {
                         vct.push_back(declare_atom(((self->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
-                                type_str(self), fromtype_str(cpas), false));
+                                self, type_str(self), fromtype_str(cpas), false));
                         return true;
                     } else if ((cpas->isstruct_of())) {
                         if (load_typedef_structof_native_impl(vct, cpas)) {
                             vct.push_back(declare_atom(((self->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
-                                    type_str(self), fromtype_str(cpas), false));
+                                    self, type_str(self), fromtype_str(cpas), false));
                             return true;
                         }
                     }
@@ -964,6 +1003,7 @@ namespace x680 {
                         {
                         }
                     }
+                    mark_constraints(stream, it->typ);
                 }
             }
         }
@@ -981,14 +1021,14 @@ namespace x680 {
                 if (tpas && (tpas->is_cpp_expressed())) {
                     if (tpas->isrefferrence()) {
                         if (!tpas->tag()) {
-                            vct.push_back(declare_atom(declare_typedef, type_str(tpas), fromtype_str(tpas), fromtype_remote(tpas)));
+                            vct.push_back(declare_atom(declare_typedef, tpas, type_str(tpas), fromtype_str(tpas), fromtype_remote(tpas)));
                         } else {
                             vct.push_back(declare_atom(((tpas->tag()->rule() == explicit_tags) ? declare_explicit : declare_implicit),
-                                    type_str(tpas), fromtype_str(tpas), tagged_str(tpas->tag()), tagged_class_str(tpas->tag()), fromtype_remote(tpas)));
+                                    tpas, type_str(tpas), fromtype_str(tpas), tagged_str(tpas->tag()), tagged_class_str(tpas->tag()), fromtype_remote(tpas)));
                         }
                     } else if ((tpas->isstructure())&& (tpas->tag())) {
                         vct.push_back(declare_atom(((tpas->tag()->rule() == explicit_tags) ? declare_explicit : declare_implicit),
-                                type_str(tpas, true), type_str(tpas), tagged_str(tpas->tag()), tagged_class_str(tpas->tag()), false));
+                                tpas, type_str(tpas, true), type_str(tpas), tagged_str(tpas->tag()), tagged_class_str(tpas->tag()), false));
                     }
                 }
             }
@@ -1010,12 +1050,12 @@ namespace x680 {
                 if (cpas && (cpas->type())) {
                     if ((!cpas->issimplerefferrence()) && (!cpas->isstruct_of())) {
                         vct.push_back(declare_atom(((self->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
-                                type_str(self), fromtype_str(cpas), fromtype_remote(cpas)));
+                                self, type_str(self), fromtype_str(cpas), fromtype_remote(cpas)));
                         return true;
                     } else if ((cpas->isstruct_of())) {
                         if (load_typedef_structof_impl(vct, cpas)) {
                             vct.push_back(declare_atom(((self->builtin() == t_SEQUENCE_OF) ? declare_seq : declare_set),
-                                    type_str(self), fromtype_str(cpas), fromtype_remote(cpas)));
+                                    self, type_str(self), fromtype_str(cpas), fromtype_remote(cpas)));
                             return true;
                         }
                     }
@@ -1325,6 +1365,8 @@ namespace x680 {
                 case t_BIT_STRING:
                 case t_OCTET_STRING:
                 case t_ENUMERATED:
+                case t_IA5String:
+                case t_BMPString:
                 {
                     stream << "\n" << tabformat(scp, 2) << "extern const " << fromtype_str(self->type()) << " " << nameconvert(self->name()) << ";";
                     break;
@@ -1371,6 +1413,8 @@ namespace x680 {
                     case t_BIT_STRING:
                     case t_OCTET_STRING:
                     case t_RELATIVE_OID:
+                    case t_IA5String:
+                    case t_BMPString:
                     {
                         stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
                                 << nameconvert(self->name()) << " = " << valueassmnt_str(self) << ";\n";
@@ -1433,25 +1477,24 @@ namespace x680 {
                         stream << tabformat(self, 1) << "ITU_T_CHOICE" << (primitive ? "S" : "C") << "_DECL(" << it->name << ", " <<
                                 it->typenam << ", " << choice_enum_str(self, it->typ) << ");     " << (primitive ? "// primitive" : "");
                     }
-                    if ((it->typ) && (it->typ->type()) && (it->typ->type()->can_per_constraints())) {
-                        type_atom_ptr tmp = it->typ->type();
-                        if (tmp->integer_constraint()) {
-                            stream << "  //   Ic" << (*(tmp->integer_constraint())).to_per() << " ";
-                        }
-                        if (tmp->size_constraint()) {
-                            stream << "  //    Sc " << (*(tmp->size_constraint())).to_per() << " ";
-                        }
-                        if (tmp->char8_constraint()) {
-                            stream << "  //    c8C " << (*(tmp->char8_constraint())).to_per() << " ";
-                        }
-                        if (tmp->quadruple_constraint()) {
-                            stream << "  //   qC " << (*(tmp->quadruple_constraint())).to_per() << " ";
-                        }
-                        if (tmp->tuple_constraint()) {
-                            stream << "  //   Tc " << (*(tmp->tuple_constraint())).to_per() << " ";
-                        }
-                    }
+                    mark_constraints(stream, it->typ);
                 }
+            }
+        }
+
+        void fileout::mark_constraints(std::ofstream& stream, typeassignment_entity_ptr self) {
+            if ((self) && (self->type()) && (self->type()->can_per_constraints())) {
+                type_atom_ptr tmp = self->type();
+                if (tmp->integer_constraint())
+                    stream << "  //   Ic" << (*(tmp->integer_constraint())).to_per() << " ";
+                if (tmp->size_constraint())
+                    stream << "  //    Sc " << (*(tmp->size_constraint())).to_per() << " ";
+                if (tmp->char8_constraint())
+                    stream << "  //    c8C " << (*(tmp->char8_constraint())).to_alphabet_per() << " ";
+                if (tmp->quadruple_constraint())
+                    stream << "  //   qC " << (*(tmp->quadruple_constraint())).to_alphabet_per() << " ";
+                if (tmp->tuple_constraint())
+                    stream << "  //   Tc " << (*(tmp->tuple_constraint())).to_alphabet_per() << " ";
             }
         }
 
