@@ -356,6 +356,26 @@ namespace x680 {
 
     template<>
     boost::shared_ptr<quadruple_vector> value_atom::get_value(bool except_abstract) {
+        if (as_defined()) {
+            get_value_parent<bstring_initer>(except_abstract);
+        } else if (get_value<quadruple>(except_abstract)) {
+            boost::shared_ptr<quadruple_vector> rslt(new quadruple_vector());
+            rslt->push_back(*(get_value<quadruple>(except_abstract)));
+            return rslt;
+        } else if (as_list()) {
+            boost::shared_ptr<quadruple_vector> rslt(new quadruple_vector());
+            structvalue_atom_ptr lst = as_list();
+            for (value_vct::const_iterator it = lst->values().begin(); it != lst->values().end(); ++it) {
+                if (*it) {
+                    if ((*it)->get_value<quadruple_vector>(except_abstract)){
+                        boost::shared_ptr<quadruple_vector> sub=(*it)->get_value<quadruple_vector>(except_abstract);
+                        rslt->insert(rslt->end(),sub->begin(), sub->end());
+                    } 
+                    else break;
+                }
+            }
+            return rslt;
+        }
         return boost::shared_ptr<quadruple_vector>();
     }
 
