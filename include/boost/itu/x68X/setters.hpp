@@ -250,7 +250,7 @@ namespace x680 {
         const constraint_element CONSTRAINT_UNION = constraint_element(cns_UNION);
         const constraint_element CONSTRAINT_INTERSECTION = constraint_element(cns_INTERSECTION);
         const constraint_element CONSTRAINT_EXCEPT = constraint_element(cns_EXCEPT);
-        const constraint_element CONSTRAINT_ALLEXCEPT = constraint_element(cns_ALLEXCEPT);
+        const constraint_element CONSTRAINT_ALL = constraint_element(cns_ALLEXCEPT);
         const constraint_element CONSTRAINT_EXTENTION = constraint_element(cns_EXTENTION, cmk_extention);
 
 
@@ -457,7 +457,7 @@ namespace x680 {
         const object_element OBJECT_UNION = object_element(ot_UNION);
         const object_element OBJECT_INTERSECTION = object_element(ot_INTERSECTION);
         const object_element OBJECT_EXCEPT = object_element(ot_EXCEPT);
-        const object_element OBJECT_ALLEXCEPT = object_element(ot_ALLEXCEPT);
+        const object_element OBJECT_ALL = object_element(ot_ALLEXCEPT);
         const object_element OBJECT_EXTENTION = object_element(ot_EXTENTION);
 
         void object_parameters(object_element& holder, const parameter_vector& val);

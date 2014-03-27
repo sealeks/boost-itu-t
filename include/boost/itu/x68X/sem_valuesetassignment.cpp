@@ -252,9 +252,9 @@ namespace x680 {
                 boost::static_pointer_cast<exceptconstraint_atom> (self()) : exceptconstraint_atom_ptr();
     }
 
-    allexceptconstraint_atom_ptr constraint_atom::as_allexcept() {
+    allconstraint_atom_ptr constraint_atom::as_all() {
         return cotstrtype_ == cns_ALLEXCEPT ?
-                boost::static_pointer_cast<allexceptconstraint_atom> (self()) : allexceptconstraint_atom_ptr();
+                boost::static_pointer_cast<allconstraint_atom> (self()) : allconstraint_atom_ptr();
     }
 
     extentionconstraint_atom_ptr constraint_atom::as_extention() {

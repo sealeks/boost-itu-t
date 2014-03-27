@@ -177,7 +177,7 @@ namespace x680 {
         skip_comment_grammar comment_skip;
 
         term_rule ECODED_ = distinct(qi::alnum | ('-' >> qi::alnum))["ECODED"];
-        term_rule INTERSECTION_ = distinct(qi::alnum | ('-' >> qi::alnum))["ECODED"];
+        term_rule INTERSECTION_ = distinct(qi::alnum | ('-' >> qi::alnum))["INTERSECTION"];
         term_rule SEQUENCE_ = distinct(qi::alnum | ('-' >> qi::alnum))["SEQUENCE"];
         term_rule ABSTRACT_SYNTAX_ = distinct(qi::alnum | ('-' >> qi::alnum))["ABSTRACT-SYNTAX"];
         term_rule ABSENT_ = distinct(qi::alnum | ('-' >> qi::alnum))["ABSENT"];

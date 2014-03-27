@@ -518,7 +518,7 @@ namespace x680 {
                 case cns_UNION: return boost::make_shared< unionconstraint_atom>();
                 case cns_INTERSECTION: return boost::make_shared< intersectionconstraint_atom>();
                 case cns_EXCEPT: return boost::make_shared< exceptconstraint_atom>();
-                case cns_ALLEXCEPT: return boost::make_shared< allexceptconstraint_atom>();
+                case cns_ALLEXCEPT: return boost::make_shared< allconstraint_atom>();
                 case cns_EXTENTION: return boost::make_shared< extentionconstraint_atom>();
                 case cns_EXCEPTION: return compile_exceptionconstraint(scope, ent);
                 case cns_UserDefinedConstraint: return boost::make_shared< userconstraint_atom>(scope, compile_uarguments(scope, ent.uparameters));
@@ -902,7 +902,7 @@ namespace x680 {
                 case ot_UNION: return boost::make_shared< unionobject_atom>();
                 case ot_INTERSECTION: return boost::make_shared< intersectionobject_atom>();
                 case ot_EXCEPT: return boost::make_shared< exceptobject_atom>();
-                case ot_ALLEXCEPT: return boost::make_shared< allexceptobject_atom>();
+                case ot_ALLEXCEPT: return boost::make_shared<  allobject_atom>();
                 case ot_EXTENTION: return boost::make_shared< extentionobject_atom>();
                 default:
                 {

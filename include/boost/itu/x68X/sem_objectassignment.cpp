@@ -87,9 +87,9 @@ namespace x680 {
                 boost::static_pointer_cast<exceptobject_atom> (self()) : exceptobject_atom_ptr();
     }
 
-    allexceptobject_atom_ptr object_atom::as_allexcept() {
+     allobject_atom_ptr object_atom::as_all() {
         return builtin_ == ot_ALLEXCEPT ?
-                boost::static_pointer_cast<allexceptobject_atom> (self()) : allexceptobject_atom_ptr();
+                boost::static_pointer_cast< allobject_atom> (self()) :  allobject_atom_ptr();
     }
 
     extentionobject_atom_ptr object_atom::as_extention() {

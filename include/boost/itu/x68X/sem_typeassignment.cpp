@@ -308,14 +308,8 @@ namespace x680 {
                         rng = stki.top();
                         stki.pop();
                         stki.top() -= rng;
-                    } else if ((*iti)->as_allexcept()) {
-                        if (stki.size() < 1) {
-                            stki = integer_constraints_stack();
-                            break;
-                        }
-                        rng = integer_constraints();
-                        rng -= stki.top();
-                        stki.top() = rng;
+                    } else if ((*iti)->as_all()) {
+                        stki.push(integer_constraints());
                     } else {
                         stki = integer_constraints_stack();
                         break;
@@ -395,14 +389,8 @@ namespace x680 {
                 rng = stki.top();
                 stki.pop();
                 stki.top() -= rng;
-            } else if ((*iti)->as_allexcept()) {
-                if (stki.size() < 1) {
-                    stki = size_constraints_stack();
-                    break;
-                }
-                rng = size_constraints();
-                rng -= stki.top();
-                stki.top() = rng;
+            } else if ((*iti)->as_all()) {
+                stki.push(size_constraints());
             } else {
                 stki = size_constraints_stack();
                 break;
@@ -481,14 +469,8 @@ namespace x680 {
                         rng = stki.top();
                         stki.pop();
                         stki.top() -= rng;
-                    } else if ((*iti)->as_allexcept()) {
-                        if (stki.size() < 1) {
-                            stki = size_constraints_stack();
-                            break;
-                        }
-                        rng = size_constraints();
-                        rng -= stki.top();
-                        stki.top() = rng;
+                    } else if ((*iti)->as_all()) {
+                        stki.push(size_constraints());
                     } else {
                         stki = size_constraints_stack();
                         break;
@@ -568,14 +550,8 @@ namespace x680 {
                 rng = stki.top();
                 stki.pop();
                 stki.top() -= rng;
-            } else if ((*iti)->as_allexcept()) {
-                if (stki.size() < 1) {
-                    stki = constraints_stack();
-                    break;
-                }
-                rng = constraints_type();
-                rng -= stki.top();
-                stki.top() = rng;
+            } else if ((*iti)->as_all()) {
+                stki.push(constraints_type());                
             } else {
                 stki = constraints_stack();
                 break;
@@ -652,14 +628,8 @@ namespace x680 {
                         rng = stki.top();
                         stki.pop();
                         stki.top() -= rng;
-                    } else if ((*iti)->as_allexcept()) {
-                        if (stki.size() < 1) {
-                            stki = constraints_stack();
-                            break;
-                        }
-                        rng = constraints_type();
-                        rng -= stki.top();
-                        stki.top() = rng;
+                    } else if ((*iti)->as_all()) {
+                        stki.push(constraints_type());
                     } else {
                         stki = constraints_stack();
                         break;

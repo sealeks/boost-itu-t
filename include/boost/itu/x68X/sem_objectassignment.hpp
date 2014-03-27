@@ -92,7 +92,7 @@ namespace x680 {
 
         exceptobject_atom_ptr as_except();
 
-        allexceptobject_atom_ptr as_allexcept();
+         allobject_atom_ptr as_all();
 
         extentionobject_atom_ptr as_extention();
 
@@ -375,14 +375,14 @@ namespace x680 {
     };
 
     /////////////////////////////////////////////////////////////////////////        
-    // allexceptobject_atom
+    //  allobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class allexceptobject_atom : public object_atom {
+    class  allobject_atom : public object_atom {
 
     public:
 
-        allexceptobject_atom() : object_atom(ot_ALLEXCEPT) {
+         allobject_atom() : object_atom(ot_ALLEXCEPT) {
         };
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {

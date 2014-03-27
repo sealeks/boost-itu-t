@@ -245,7 +245,7 @@ namespace x680 {
 
         exceptconstraint_atom_ptr as_except();
 
-        allexceptconstraint_atom_ptr as_allexcept();
+        allconstraint_atom_ptr as_all();
 
         extentionconstraint_atom_ptr as_extention();
 
@@ -583,14 +583,14 @@ namespace x680 {
 
 
     /////////////////////////////////////////////////////////////////////////   
-    // allexceptconstraint_atom
+    // allconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class allexceptconstraint_atom : public constraint_atom {
+    class allconstraint_atom : public constraint_atom {
 
     public:
 
-        allexceptconstraint_atom() : constraint_atom(cns_ALLEXCEPT) {
+        allconstraint_atom() : constraint_atom(cns_ALLEXCEPT) {
         }
     };
 

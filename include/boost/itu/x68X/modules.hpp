@@ -415,7 +415,7 @@ namespace x680 {
             qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> UElems;
             qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> IElems;
             qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> EElems;
-            qi::rule<str_iterator, constraint_element_vector(), skip_cmt_type> AElems;
+            qi::rule<str_iterator, constraint_element(), skip_cmt_type> ALLElems;
 
             qi::rule<str_iterator, constraint_element(), skip_cmt_type> Element;
 
@@ -546,6 +546,7 @@ namespace x680 {
             qi::rule<str_iterator, object_element(), skip_cmt_type> oDefinedObjectSet;
             qi::rule<str_iterator, object_element(), skip_cmt_type> oObjectSetFromObjects;
             qi::rule<str_iterator, object_element(), skip_cmt_type> oObjectSetFromObject;
+            qi::rule<str_iterator, object_element(), skip_cmt_type> oALLElems;           
 
 
             qi::rule < str_iterator, object_element_vector(), skip_cmt_type> oElementSetSpecs1;
@@ -559,7 +560,6 @@ namespace x680 {
             qi::rule<str_iterator, object_element_vector(), skip_cmt_type> oUElems;
             qi::rule<str_iterator, object_element_vector(), skip_cmt_type> oIElems;
             qi::rule<str_iterator, object_element_vector(), skip_cmt_type> oEElems;
-            qi::rule<str_iterator, object_element_vector(), skip_cmt_type> oAElems;
 
             qi::rule<str_iterator, object_element(), skip_cmt_type> oExtention;
 

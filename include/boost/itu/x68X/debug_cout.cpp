@@ -723,7 +723,7 @@ namespace x680 {
             case cns_UNION: return stream << " | ";
             case cns_INTERSECTION: return stream << " & ";
             case cns_EXCEPT: return stream << " ^ ";
-            case cns_ALLEXCEPT: return stream << " ~ ";
+            case cns_ALLEXCEPT: return stream << " ALL ";
             case cns_EXTENTION: return stream << " ... ";
             case cns_EXCEPTION: return stream << self->as_exception();
             default:
@@ -1162,7 +1162,7 @@ namespace x680 {
             case ot_UNION: return stream << " | ";
             case ot_INTERSECTION: return stream << " & ";
             case ot_EXCEPT: return stream << " ^ ";
-            case ot_ALLEXCEPT: return stream << " ~ ";
+            case ot_ALLEXCEPT: return stream << " ALL ";
             case ot_EXTENTION: return stream << " ... ";
             default:
             {

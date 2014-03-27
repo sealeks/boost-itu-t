@@ -294,14 +294,14 @@ namespace x680 {
     class exceptconstraint_atom;
     typedef boost::shared_ptr<exceptconstraint_atom> exceptconstraint_atom_ptr;
 
-    class allexceptconstraint_atom;
-    typedef boost::shared_ptr<allexceptconstraint_atom> allexceptconstraint_atom_ptr;
+    class allconstraint_atom;
+    typedef boost::shared_ptr<allconstraint_atom> allconstraint_atom_ptr;
 
     class exceptconstraint_atom;
     typedef boost::shared_ptr<exceptconstraint_atom> exceptconstraint_atom_ptr;
 
-    class allexceptconstraint_atom;
-    typedef boost::shared_ptr<allexceptconstraint_atom> allexceptconstraint_atom_ptr;
+    class allconstraint_atom;
+    typedef boost::shared_ptr<allconstraint_atom> allconstraint_atom_ptr;
 
     class extentionconstraint_atom;
     typedef boost::shared_ptr<extentionconstraint_atom> extentionconstraint_atom_ptr;
@@ -396,14 +396,14 @@ namespace x680 {
     class exceptobject_atom;
     typedef boost::shared_ptr<exceptobject_atom> exceptobject_atom_ptr;
 
-    class allexceptobject_atom;
-    typedef boost::shared_ptr<allexceptobject_atom> allexceptobject_atom_ptr;
+    class  allobject_atom;
+    typedef boost::shared_ptr< allobject_atom>  allobject_atom_ptr;
 
     class exceptobject_atom;
     typedef boost::shared_ptr<exceptobject_atom> exceptobject_atom_ptr;
 
-    class allexceptobject_atom;
-    typedef boost::shared_ptr<allexceptobject_atom> allexceptobject_atom_ptr;
+    class  allobject_atom;
+    typedef boost::shared_ptr< allobject_atom>  allobject_atom_ptr;
 
     class extentionobject_atom;
     typedef boost::shared_ptr<extentionobject_atom> extentionobject_atom_ptr;

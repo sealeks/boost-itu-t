@@ -98,16 +98,14 @@ namespace x680 {
                     >> *(EElems[phx::bind(&push_constraints, sprt::_val, sprt::_1)]);
 
 
-            AElems %=
-                    (qi::omit[ALL_ >> (+qi::space) >> EXCEPT_]
-                    >> Exclusions)[phx::bind(&push_constraint, sprt::_val, CONSTRAINT_ALLEXCEPT)];
+            ALLElems =
+                    ALL_ [sprt::_val =CONSTRAINT_ALL];
 
             Exclusions
                     = Element
                     | qi::omit[qi::lit("(")]
                     >> ElementSetSpec
                     >> qi::omit[ qi::lit(")")]
-                    | AElems
                     ;
 
             Extention = qi::lit("...")[sprt::_val = CONSTRAINT_EXTENTION];
@@ -171,7 +169,7 @@ namespace x680 {
 
             Element = SizeConstraint | PermittedAlphabet
                     | MultipleTypeConstraints | SingleTypeConstraint | SimpleElement
-                    | ConstraintTVSOS;
+                    | ALLElems | ConstraintTVSOS;
 
 
 

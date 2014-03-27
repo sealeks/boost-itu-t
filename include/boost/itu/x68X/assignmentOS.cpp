@@ -94,20 +94,18 @@ namespace x680 {
                     >> *(oEElems[phx::bind(&push_objects, sprt::_val, sprt::_1)]);
 
 
-            oAElems %= (qi::omit[ALL_ >> (+qi::space) >> EXCEPT_]
-                    >> oExclusions)[phx::bind(&objectsetpush_object, sprt::_val, OBJECT_ALLEXCEPT)];
+            oALLElems = ALL_[sprt::_val = OBJECT_ALL];
 
             oExclusions
                     = oElement
                     | qi::omit[qi::lit("(")]
                     >> oElementSetSpec
                     >> qi::omit[ qi::lit(")")]
-                    | oAElems
                     ;
 
             oExtention = qi::lit("...")[sprt::_val = OBJECT_EXTENTION];
 
-            oElement = oObjectSetFromObject | oObjectSetFromObjects | oDefinedObjectSet | Object;
+            oElement = oObjectSetFromObject | oObjectSetFromObjects | oDefinedObjectSet | oALLElems | Object;
 
 
 
