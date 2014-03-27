@@ -110,7 +110,7 @@ namespace x680 {
 
         tcl_universal = 0,
         tcl_application = 1,
-        tcl_context = 2,        
+        tcl_context = 2,
         tcl_private = 3
 
     };
@@ -1091,7 +1091,7 @@ namespace x680 {
 
 
             synxtas_error(const std::string& file, const std::string& src, std::size_t pos);
-            
+
             std::size_t filepos() const {
                 return filepos_;
             };
@@ -1167,6 +1167,7 @@ namespace x680 {
 
 
         extern str_rule pos_number_str;
+        extern str_rule pos_onumber_str;
         extern str_rule number_str;
         extern str_rule realnumber_str;
         extern str_rule bstring_str;

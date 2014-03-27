@@ -141,6 +141,8 @@ namespace x680 {
                 | (qi::char_("1-9")[ sprt::_val = sprt::_1]
                 >> *(qi::char_("0-9")[ sprt::_val += sprt::_1]))];
 
+        str_rule pos_onumber_str = distinct(qi::alnum | ('-' >> qi::alnum))[ (qi::char_("0-9")[ sprt::_val = sprt::_1]
+                >> *(qi::char_("0-9")[ sprt::_val += sprt::_1]))];
 
         str_rule number_str = distinct(qi::alnum | ('-' >> qi::alnum))[(qi::string("-")[ sprt::_val = sprt::_1 ]
                 >> qi::omit[*qi::blank]
@@ -148,7 +150,7 @@ namespace x680 {
         | pos_number_str[ sprt::_val = sprt::_1 ]];
 
         str_rule realnumber_str = distinct(qi::alnum | ('-' >> qi::alnum))[number_str[ sprt::_val = sprt::_1 ]
-                >> (qi::string(".")[ sprt::_val += sprt::_1 ] >> number_str[ sprt::_val += sprt::_1 ])];
+                >> (qi::string(".")[ sprt::_val += sprt::_1 ] >> pos_onumber_str[ sprt::_val += sprt::_1 ])];
 
         str_rule bstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::omit[qi::char_("'")]
         >> *(qi::char_("0-1")[ sprt::_val += sprt::_1] | qi::omit[qi::space])
