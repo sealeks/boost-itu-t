@@ -30,6 +30,8 @@ namespace x680 {
         }
 
         virtual bool isrefferrence() const;
+        
+        value_atom_ptr skip_defined(bool except_abstract = false);
 
         numvalue_atom_ptr as_number();
 
@@ -86,7 +88,9 @@ namespace x680 {
 
     };
 
-
+    template<>
+    boost::shared_ptr<null_initer> value_atom::get_value(bool except_abstract);
+    
     template<>
     boost::shared_ptr<int64_t> value_atom::get_value(bool except_abstract);
 
