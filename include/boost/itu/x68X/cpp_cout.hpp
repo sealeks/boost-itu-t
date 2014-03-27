@@ -40,6 +40,7 @@ namespace x680 {
         bool default_supported(typeassignment_entity_ptr self);
         value_atom_ptr value_skip_defined(value_atom_ptr self);
         std::string value_int_str(value_atom_ptr self);
+        std::string value_null_str(value_atom_ptr self);        
         std::string value_bool_str(value_atom_ptr self);
         std::string value_real_str(value_atom_ptr self);
         std::string value_reff_str(defined_value_atom_ptr self);

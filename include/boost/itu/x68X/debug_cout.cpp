@@ -549,8 +549,8 @@ namespace x680 {
                     stream << "  ";
                 else
                     stream << ",  ";
-                stream << (*it);
             }
+            stream << (*it);
         }
         return stream << "}";
     }
