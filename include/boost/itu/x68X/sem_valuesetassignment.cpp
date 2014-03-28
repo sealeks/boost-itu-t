@@ -33,7 +33,7 @@ namespace x680 {
         return (((builtin_ == vs_defined)
                 || (builtin_ == vs_ValueSetFromObjects)
                 || (builtin_ == vs_ValueSetFromObject)) && (reff()));
-    }    
+    }
 
     fromobjects_valueset_atom_ptr valueset_atom::as_fromobjectset() {
         return builtin_ == vs_ValueSetFromObjects ?
@@ -67,7 +67,7 @@ namespace x680 {
                     reff(tmpasmt->find_component(field_->expectedname()));
                 }
             }
-        }              
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -88,7 +88,7 @@ namespace x680 {
                     reff(tmpasmt->find_component(field_->expectedname()));
                 }
             }
-        }               
+        }
     }
 
 
@@ -96,13 +96,34 @@ namespace x680 {
     // constraints_atom
     /////////////////////////////////////////////////////////////////////////
 
+    static void resolve_tsvo(constraint_atom_vct& vl) {
+        for (constraint_atom_vct::iterator it = vl.begin(); it != vl.end(); ++it) {
+            if ((*it)->as_tvoso()) {
+                if ((*it)->as_tvoso()->type())
+                    (*it) = typeconstraint_atom_ptr(new typeconstraint_atom((*it)->as_tvoso()->scope(), cns_ContainedSubtype, (*it)->as_tvoso()->type(), false));
+                else if ((*it)->as_tvoso()->objectset())
+                    (*it) = tableconstraint_atom_ptr(new tableconstraint_atom((*it)->as_tvoso()->scope(), (*it)->as_tvoso()->objectset()));
+                //else if ((*it)->as_tvoso()->valueset()))
+                //(*it) =tableconstraint_atom_ptr( new tableconstraint_atom((*it)->as_tvoso()->scope()(*it)->as_tvoso()->objectset()));                
+            } /*else if (((*it)->as_complex()) && ((*it)->as_complex()->constraints()))
+                resolve_tsvo(*((*it)->as_complex()->constraints()));*/
+        }
+    }
+
+    static void resolve_tsvo(constraints_atom& vl) {
+        resolve_tsvo(vl.constraintline());
+        resolve_tsvo(vl.extendline());
+    }
+
     void constraints_atom::resolve(basic_atom_ptr holder) {
-        for (constraint_atom_vct::iterator it = constraintline_.begin(); it != constraintline_.end(); ++it)
+        for (constraint_atom_vct::iterator it = constraintline_.begin(); it != constraintline_.end(); ++it) {
             if (*it)
                 (*it)->resolve();
+        }
         for (constraint_atom_vct::iterator it = extendline_.begin(); it != extendline_.end(); ++it)
             if (*it)
                 (*it)->resolve();
+        resolve_tsvo(*this);
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -142,12 +163,12 @@ namespace x680 {
     }
 
     typeconstraint_atom_ptr constraint_atom::as_subtypeconstraint() {
-        return cotstrtype_ == cns_ContainedSubtype ?
+        return ((cotstrtype_ == cns_ContainedSubtype) || (cotstrtype_ == cns_TypeConstraint )) ?
                 boost::static_pointer_cast<typeconstraint_atom> (self()) : typeconstraint_atom_ptr();
     };
 
     typeconstraint_atom_ptr constraint_atom::as_typeconstraint() {
-        return cotstrtype_ == cns_TypeConstraint ?
+        return ((cotstrtype_ == cns_ContainedSubtype) || (cotstrtype_ == cns_TypeConstraint )) ?
                 boost::static_pointer_cast<typeconstraint_atom> (self()) : typeconstraint_atom_ptr();
     };
 
@@ -489,7 +510,7 @@ namespace x680 {
                 }
             }
         }
-        debug_warning("Should be error :  tvosoconstraint resolve");
+        scope()->referenceerror_throw("Unresoved constraint : ", scope()->name());
     }
 
     /////////////////////////////////////////////////////////////////////////   

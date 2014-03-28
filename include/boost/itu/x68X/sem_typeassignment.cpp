@@ -207,7 +207,7 @@ namespace x680 {
 
     template<typename T>
     static bool build_range(typeconstraint_atom_ptr vl, range_constraints<T>& rslt) {
-        if (vl && (vl->as_typeconstraint())) {
+        if (vl && (vl->as_subtypeconstraint())) {
             if (vl->type()) {
                 boost::shared_ptr<range_constraints<T> > rslt_ptr = vl->type()->effective_constraint<T>();
                 if (rslt_ptr) {
@@ -272,8 +272,8 @@ namespace x680 {
                             break;
                         }
                         stki.push(rng);
-                    } else if ((*iti)->as_typeconstraint()) {
-                        if (!build_range((*iti)->as_typeconstraint(), rng)) {
+                    } else if ((*iti)->as_subtypeconstraint()) {
+                        if (!build_range((*iti)->as_subtypeconstraint(), rng)) {
                             stki = integer_constraints_stack();
                             break;
                         }
@@ -353,8 +353,8 @@ namespace x680 {
                     break;
                 }
                 stki.push(rng);
-            } else if ((*iti)->as_typeconstraint()) {
-                if (!build_range((*iti)->as_typeconstraint(), rng)) {
+            } else if ((*iti)->as_subtypeconstraint()) {
+                if (!build_range((*iti)->as_subtypeconstraint(), rng)) {
                     stki = size_constraints_stack();
                     break;
                 }
@@ -433,8 +433,8 @@ namespace x680 {
                         }
                         rng = size_constraints();
                         stki.push(rng);
-                    } else if ((*iti)->as_typeconstraint()) {
-                        if (!build_range((*iti)->as_typeconstraint(), rng)) {
+                    } else if ((*iti)->as_subtypeconstraint()) {
+                        if (!build_range((*iti)->as_subtypeconstraint(), rng)) {
                             stki = size_constraints_stack();
                             break;
                         }
@@ -514,8 +514,8 @@ namespace x680 {
                     break;
                 }
                 stki.push(rng);
-            } else if ((*iti)->as_typeconstraint()) {
-                if (!build_range((*iti)->as_typeconstraint(), rng)) {
+            } else if ((*iti)->as_subtypeconstraint()) {
+                if (!build_range((*iti)->as_subtypeconstraint(), rng)) {
                     stki = constraints_stack();
                     break;
                 }
@@ -592,8 +592,8 @@ namespace x680 {
                     } else if ((*iti)->as_size()) {
                         rng = constraints_type();
                         stki.push(rng);
-                    } else if ((*iti)->as_typeconstraint()) {
-                        if (!build_range((*iti)->as_typeconstraint(), rng)) {
+                    } else if ((*iti)->as_subtypeconstraint()) {
+                        if (!build_range((*iti)->as_subtypeconstraint(), rng)) {
                             stki = constraints_stack();
                             break;
                         }
@@ -1466,7 +1466,7 @@ namespace x680 {
         post_resolve_child();
 
     }
-
+    
     void typeassignment_entity::after_resolve() {
         if (type() && (type()->can_per_constraints())) {
             try {
