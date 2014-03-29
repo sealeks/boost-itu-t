@@ -473,11 +473,9 @@ namespace x680 {
         typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp = type_atom_ptr(), bool nmd = false);
         typeassignment_entity(basic_entity_ptr scope, bool nmd = false);
 
-        type_atom_ptr type() const {
-            return type_;
-        }
+        type_atom_ptr type() const;
 
-        void type(type_atom_ptr vl) {
+        void type(type_atom_ptr vl)  {
             type_ = vl;
         }
 

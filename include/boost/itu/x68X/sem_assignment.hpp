@@ -26,10 +26,10 @@ namespace x680 {
     enum entity_enum {
 
         et_Nodef,
-        et_NodefT,        
+        et_NodefT,
         et_NodefV,
         et_NodefS,
-        et_NodefE,               
+        et_NodefE,
         et_Global,
         et_Module,
         et_Import,
@@ -44,21 +44,21 @@ namespace x680 {
         et_UArgument,
         et_Extention
     };
-    
-        enum assignment_enum {
+
+    enum assignment_enum {
 
         at_Nodef,
-        at_Type,        
+        at_Type,
         at_Value,
         at_ValueSet,
-        at_Class,               
+        at_Class,
         at_Object,
         at_ObjectSet,
         at_Setting,
         at_Syntax,
-        at_FieldSetting,   
+        at_FieldSetting,
         at_Constraint,
-        at_Constraints        
+        at_Constraints
     };
 
     enum argument_enum {
@@ -156,11 +156,11 @@ namespace x680 {
 
     class tagged;
     typedef boost::shared_ptr<tagged> tagged_ptr;
-    
+
     class canonical_tag;
-    typedef boost::shared_ptr<canonical_tag> canonical_tag_ptr;   
+    typedef boost::shared_ptr<canonical_tag> canonical_tag_ptr;
     typedef std::vector<canonical_tag_ptr> canonical_tag_vct;
-    typedef std::set<canonical_tag_ptr> canonical_tag_set;    
+    typedef std::set<canonical_tag_ptr> canonical_tag_set;
 
     class type_atom;
     typedef boost::shared_ptr<type_atom> type_atom_ptr;
@@ -396,14 +396,14 @@ namespace x680 {
     class exceptobject_atom;
     typedef boost::shared_ptr<exceptobject_atom> exceptobject_atom_ptr;
 
-    class  allobject_atom;
-    typedef boost::shared_ptr< allobject_atom>  allobject_atom_ptr;
+    class allobject_atom;
+    typedef boost::shared_ptr< allobject_atom> allobject_atom_ptr;
 
     class exceptobject_atom;
     typedef boost::shared_ptr<exceptobject_atom> exceptobject_atom_ptr;
 
-    class  allobject_atom;
-    typedef boost::shared_ptr< allobject_atom>  allobject_atom_ptr;
+    class allobject_atom;
+    typedef boost::shared_ptr< allobject_atom> allobject_atom_ptr;
 
     class extentionobject_atom;
     typedef boost::shared_ptr<extentionobject_atom> extentionobject_atom_ptr;
@@ -429,9 +429,9 @@ namespace x680 {
 
     typedef std::vector<std::string> export_vector;
     typedef std::vector<std::string> import_vector;
-    
-    
- 
+
+
+
     void debug_warning(const std::string& msg);
 
     void insert_assigment(basic_entity_ptr scope, basic_entity_ptr val);
@@ -485,13 +485,17 @@ namespace x680 {
 
         void scope(basic_entity_ptr vl);
 
-        basic_entity_vector& childs() {
-            return childs_;
+        basic_entity_ptr reffholder() const {
+            return !reffholder_._empty() ? reffholder_.lock() : basic_entity_ptr();
         }
+
+        void reffholder(basic_entity_ptr vl) const;
+
+        basic_entity_vector& childs();
 
         self_shared_type self() {
             return shared_from_this();
-        }        
+        }
 
         int level() const;
 
@@ -537,7 +541,7 @@ namespace x680 {
 
         std::string source_throw();
 
-        void referenceerror_throw(const std::string& msg = "Unknown reference :", const std::string& nm ="");
+        void referenceerror_throw(const std::string& msg = "Unknown reference :", const std::string& nm = "");
 
         void unicalelerror_throw(const basic_entity_vector& elms);
 
@@ -550,18 +554,19 @@ namespace x680 {
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual void preresolve();
-        
-        virtual void after_resolve();        
+
+        virtual void after_resolve();
 
     protected:
 
         void resolve_child();
-        
-        void after_resolve_child();        
+
+        void after_resolve_child();
 
         void prefind(const std::string& nm, basic_entity_vector& elm);
 
         basic_entity_wptr scope_;
+        mutable basic_entity_wptr reffholder_;
         basic_entity_vector childs_;
         std::string name_;
         entity_enum kind_;
@@ -775,6 +780,8 @@ namespace x680 {
             return governor_;
         }
 
+        basic_atom_ptr reff();
+
         bool has_governor() const {
             return governor_;
         }
@@ -799,6 +806,8 @@ namespace x680 {
             return dummyrefferences_.size();
         }
 
+        void apply_argument(setting_atom_ptr vl);
+
         void insert_dummyrefference(basic_atom_ptr val);
 
         ///
@@ -812,6 +821,7 @@ namespace x680 {
         assignment_entity_ptr unspecified_;
         basic_atom_vct dummyrefferences_;
         argument_enum argumenttype_;
+        basic_atom_ptr reff_;
 
     };
 
@@ -900,10 +910,10 @@ namespace x680 {
 
         typedef boost::shared_ptr<basic_atom> self_shared_type;
 
-        
-        basic_atom(assignment_enum tp = at_Nodef , basic_entity_ptr scp = basic_entity_ptr());
-        basic_atom(assignment_enum tp,  basic_entity_ptr scp , const std::string& reff);
-        basic_atom(basic_entity_ptr scp, const std::string& reff);        
+
+        basic_atom(assignment_enum tp = at_Nodef, basic_entity_ptr scp = basic_entity_ptr());
+        basic_atom(assignment_enum tp, basic_entity_ptr scp, const std::string& reff);
+        basic_atom(basic_entity_ptr scp, const std::string& reff);
 
         virtual ~basic_atom() {
         }
@@ -915,10 +925,10 @@ namespace x680 {
         void scope(basic_entity_ptr vl) {
             scope_ = vl;
         }
-        
+
         assignment_enum kind() const {
             return kind_;
-        }        
+        }
 
         self_shared_type self() {
             return shared_from_this();
@@ -949,8 +959,8 @@ namespace x680 {
         void parameters(setting_atom_vct vl) {
             parameters_ = vl;
         }
-        
-         virtual bool isrefferrence() const;
+
+        virtual bool isrefferrence() const;
 
         bool parameterized() const {
             return !parameters_.empty();
@@ -1004,7 +1014,7 @@ namespace x680 {
 
         constraint_atom_ptr as_constraint();
 
-        constraints_atom_ptr as_constraints();        
+        constraints_atom_ptr as_constraints();
 
         ////////
 
@@ -1014,7 +1024,7 @@ namespace x680 {
 
 
     protected:
-        assignment_enum kind_;        
+        assignment_enum kind_;
         basic_entity_ptr reff_;
         basic_entity_ptr scope_;
         setting_atom_vct parameters_;
@@ -1163,9 +1173,13 @@ namespace x680 {
 
 
         /////        
-        
+
+        void apply_arguments(const setting_atom_vct& vl);
+
         assignment_entity_ptr refference_to();
         
+        basic_atom_ptr dummy_reff();
+
         assignment_entity_ptr find_component(const std::string& nm);
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
@@ -1175,9 +1189,9 @@ namespace x680 {
         virtual void preresolve();
 
     protected:
-        
+
         std::string subidentifier(std::string& nm);
-        
+
     private:
 
         argument_entity_vct arguments_;

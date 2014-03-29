@@ -126,93 +126,104 @@ namespace x680 {
         scope_ = basic_entity_wptr(vl);
     }
 
+    void basic_entity::reffholder(basic_entity_ptr vl) const {
+        if (vl && (vl.get() == this))
+            throw semantics::error("Internal error selfscoping :" + name());
+        reffholder_ = basic_entity_wptr(vl);
+    }
+
+    basic_entity_vector& basic_entity::childs() {
+        if (reffholder())
+            return reffholder()->childs();
+        return childs_;
+    }
+
     int basic_entity::level() const {
         int rslt = 0;
         basic_entity_ptr scp = scope();
         while (scp) {
-            if(!((scp->as_typeassigment()) && (scp->as_typeassigment()->isstruct_of())))
-            rslt++;
+            if (!((scp->as_typeassigment()) && (scp->as_typeassigment()->isstruct_of())))
+                rslt++;
             scp = scp->scope();
         }
         return rslt;
     }
 
-    
     global_entity_ptr basic_entity::as_global() {
-        return kind_==et_Global ? boost::static_pointer_cast<global_entity> (self()) : global_entity_ptr ();
+        return kind_ == et_Global ? boost::static_pointer_cast<global_entity> (self()) : global_entity_ptr();
     }
 
     module_entity_ptr basic_entity::as_module() {
-        return kind_==et_Module ? boost::static_pointer_cast<module_entity> (self()) : module_entity_ptr();
+        return kind_ == et_Module ? boost::static_pointer_cast<module_entity> (self()) : module_entity_ptr();
     }
 
     expectdef_entity_ptr basic_entity::as_expectdef() {
-        return  kind_==et_NodefE ? boost::static_pointer_cast<expectdef_entity> (self()) : expectdef_entity_ptr() ;
+        return kind_ == et_NodefE ? boost::static_pointer_cast<expectdef_entity> (self()) : expectdef_entity_ptr();
     }
 
     import_entity_ptr basic_entity::as_import() {
-        return kind_==et_Import ? boost::static_pointer_cast<import_entity> (self()) : import_entity_ptr();
+        return kind_ == et_Import ? boost::static_pointer_cast<import_entity> (self()) : import_entity_ptr();
     }
 
     assignment_entity_ptr basic_entity::as_assigment() {
-        return ((kind_==et_Type)
-                || (kind_==et_Value)
-                || (kind_==et_ValueSet)
-                || (kind_==et_Class)
-                || (kind_==et_Object)
-                || (kind_==et_ObjectSet)) ? boost::static_pointer_cast<assignment_entity> (self()) : assignment_entity_ptr();
+        return ((kind_ == et_Type)
+                || (kind_ == et_Value)
+                || (kind_ == et_ValueSet)
+                || (kind_ == et_Class)
+                || (kind_ == et_Object)
+                || (kind_ == et_ObjectSet)) ? boost::static_pointer_cast<assignment_entity> (self()) : assignment_entity_ptr();
     }
 
     argument_entity_ptr basic_entity::as_argument() {
-        return kind_==et_Argument ? boost::static_pointer_cast<argument_entity> (self()) : argument_entity_ptr();
+        return kind_ == et_Argument ? boost::static_pointer_cast<argument_entity> (self()) : argument_entity_ptr();
     }
 
     uargument_entity_ptr basic_entity::as_uargument() {
-        return kind_==et_UArgument ? boost::static_pointer_cast<uargument_entity> (self()) : uargument_entity_ptr();
+        return kind_ == et_UArgument ? boost::static_pointer_cast<uargument_entity> (self()) : uargument_entity_ptr();
     }
 
     bigassignment_entity_ptr basic_entity::as_bigassigment() {
-        return kind_==et_NodefT ? boost::static_pointer_cast<bigassignment_entity> (self()) : bigassignment_entity_ptr();
+        return kind_ == et_NodefT ? boost::static_pointer_cast<bigassignment_entity> (self()) : bigassignment_entity_ptr();
     }
 
     voassignment_entity_ptr basic_entity::as_voassigment() {
-        return kind_==et_NodefV ? boost::static_pointer_cast<voassignment_entity > (self()) : voassignment_entity_ptr();
+        return kind_ == et_NodefV ? boost::static_pointer_cast<voassignment_entity > (self()) : voassignment_entity_ptr();
     }
 
     soassignment_entity_ptr basic_entity::as_soassigment() {
-        return kind_==et_NodefS ? boost::static_pointer_cast<soassignment_entity > (self()) : soassignment_entity_ptr();
+        return kind_ == et_NodefS ? boost::static_pointer_cast<soassignment_entity > (self()) : soassignment_entity_ptr();
     }
 
     typeassignment_entity_ptr basic_entity::as_typeassigment() {
-        return kind_==et_Type ? boost::static_pointer_cast<typeassignment_entity> (self()) : typeassignment_entity_ptr();
+        return kind_ == et_Type ? boost::static_pointer_cast<typeassignment_entity> (self()) : typeassignment_entity_ptr();
     }
 
     valueassignment_entity_ptr basic_entity::as_valueassigment() {
-        return kind_==et_Value ? boost::static_pointer_cast<valueassignment_entity> (self()) : valueassignment_entity_ptr();
+        return kind_ == et_Value ? boost::static_pointer_cast<valueassignment_entity> (self()) : valueassignment_entity_ptr();
     }
 
     valuesetassignment_entity_ptr basic_entity::as_valuesetassigment() {
-        return kind_==et_ValueSet ? boost::static_pointer_cast<valuesetassignment_entity> (self()) : valuesetassignment_entity_ptr();
+        return kind_ == et_ValueSet ? boost::static_pointer_cast<valuesetassignment_entity> (self()) : valuesetassignment_entity_ptr();
     }
 
     classassignment_entity_ptr basic_entity::as_classassigment() {
-        return kind_==et_Class ? boost::static_pointer_cast<classassignment_entity> (self()) : classassignment_entity_ptr();
+        return kind_ == et_Class ? boost::static_pointer_cast<classassignment_entity> (self()) : classassignment_entity_ptr();
     }
 
     objectassignment_entity_ptr basic_entity::as_objectassigment() {
-        return kind_==et_Object ? boost::static_pointer_cast<objectassignment_entity> (self()) : objectassignment_entity_ptr();
+        return kind_ == et_Object ? boost::static_pointer_cast<objectassignment_entity> (self()) : objectassignment_entity_ptr();
     }
 
     objectsetassignment_entity_ptr basic_entity::as_objectsetassigment() {
-        return kind_==et_ObjectSet ? boost::static_pointer_cast<objectsetassignment_entity> (self()) : objectsetassignment_entity_ptr();
+        return kind_ == et_ObjectSet ? boost::static_pointer_cast<objectsetassignment_entity> (self()) : objectsetassignment_entity_ptr();
     }
 
     field_entity_ptr basic_entity::as_classfield() {
-        return kind_==et_ClassField ? boost::static_pointer_cast<field_entity> (self()) : field_entity_ptr();
+        return kind_ == et_ClassField ? boost::static_pointer_cast<field_entity> (self()) : field_entity_ptr();
     }
 
     extention_entity_ptr basic_entity::as_extention() {
-        return kind_==et_Extention ? boost::static_pointer_cast<extention_entity> (self()) : extention_entity_ptr();
+        return kind_ == et_Extention ? boost::static_pointer_cast<extention_entity> (self()) : extention_entity_ptr();
     }
 
     module_entity_ptr basic_entity::moduleref() {
@@ -239,8 +250,7 @@ namespace x680 {
                 rslt = rslt + " in named type";
             else
                 rslt = rslt + " in typeassignment";
-        }
-        else if (as_valueassigment())
+        } else if (as_valueassigment())
             rslt = rslt + " in valueassignment";
         else if (as_valuesetassigment())
             rslt = rslt + " in valuesetassignment";
@@ -255,8 +265,8 @@ namespace x680 {
         else
             rslt = rslt + " in assignment";
         basic_entity_ptr sc = self();
-        std::string stack = "";          
-        if ((scope()) && (moduleref()) && (moduleref() != self())) {        
+        std::string stack = "";
+        if ((scope()) && (moduleref()) && (moduleref() != self())) {
             while ((sc) && (moduleref() != sc)) {
                 stack = stack.empty() ? sc->name() : (sc->name() + "." + stack);
                 sc = sc->scope();
@@ -275,7 +285,7 @@ namespace x680 {
         if (!nm.empty())
             rslt += " '" + nm + "' ";
         rslt += source_throw();
-        rslt = rslt +  " " + modulerefname();
+        rslt = rslt + " " + modulerefname();
         throw semantics::error(rslt);
     }
 
@@ -287,7 +297,7 @@ namespace x680 {
                 if (!(*it)->name().empty()) {
                     if (set.find((*it)->name()) != set.end())
                         throw semantics::error("Identifier '" + (*it)->name() + "' duplicates "
-                                + (*it)->source_throw() + " " +modulerefname());
+                            + (*it)->source_throw() + " " + modulerefname());
                     else
                         set.insert((*it)->name());
                 }
@@ -304,7 +314,7 @@ namespace x680 {
             if (reff->as_expectdef()->ismodule()) {
                 if (reff->moduleref())
                     return reff->moduleref()->find_in_importmodule(
-                            reff->as_expectdef()->module(), reff->as_expectdef()->name());
+                        reff->as_expectdef()->module(), reff->as_expectdef()->name());
                 else
                     basic_entity_ptr();
             } else {
@@ -329,10 +339,10 @@ namespace x680 {
 
     void basic_entity::after_resolve() {
         after_resolve_child();
-    }     
+    }
 
     void basic_entity::resolve_child() {
-        for (basic_entity_vector::const_iterator it = childs().begin(); it != childs().end(); ++it) {
+        for (basic_entity_vector::const_iterator it = childs_.begin(); it != childs_.end(); ++it) {
             (*it)->resolve();
         }
     }
@@ -342,7 +352,7 @@ namespace x680 {
             if (*it)
                 (*it)->after_resolve();
         }
-    }   
+    }
 
     void basic_entity::prefind(const std::string& nm, basic_entity_vector& elm) {
         for (basic_entity_vector::iterator it = elm.begin(); it != elm.end(); ++it) {
@@ -732,6 +742,10 @@ namespace x680 {
         return ( governor_ && !((governor_->as_type()) || (governor_->as_class())));
     }
 
+    basic_atom_ptr argument_entity::reff() {
+        return reff_;
+    }
+
     void argument_entity::governor(type_atom_ptr vl) {
         if (argumenttype_ != argm_Nodef)
             scope()->referenceerror_throw("Internal error: duplicate argument governer set ; ", name());
@@ -762,6 +776,66 @@ namespace x680 {
         governor_ = vl;
     }
 
+    void argument_entity::apply_argument(setting_atom_ptr val) {
+        if (!val->as_setting())
+            throw semantics::error("");
+        setting_atom_ptr vl = val->as_setting();
+        switch (argumenttype_) {
+            case argm_Type:
+            {
+                if (vl->type())
+                    reff_ = vl->type();
+                else
+                    throw semantics::error("");
+                break;
+            }
+            case argm_Value:
+            {
+                if (vl->value())
+                    reff_ = vl->value();
+                else
+                    throw semantics::error("");
+                break;
+            }
+            case argm_ValueSet:
+            {
+                if (vl->valueset())
+                    reff_ = vl->valueset();
+                else
+                    throw semantics::error("");
+                break;
+            }
+            case argm_Class:
+            {
+                if (vl->_class())
+                    reff_ = vl->_class();
+                else
+                    throw semantics::error("");
+                break;
+            }
+            case argm_Object:
+            {
+                if (vl->object())
+                    reff_ = vl->object();
+                else
+                    throw semantics::error("");
+                break;
+            }
+            case argm_ObjectSet:
+            {
+                if (vl->objectset())
+                    reff_ = vl->objectset();
+                else
+                    throw semantics::error("");
+                break;
+            }
+            default:
+            {
+                throw semantics::error("");
+            }
+        }
+    }
+
     void argument_entity::insert_dummyrefference(basic_atom_ptr val) {
         if (argumenttype_ == argm_Nodef) {
             if (val->as_type()) {
@@ -774,7 +848,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                 debug_warning("Should be error argument type set");
 #else
-                val->scope()->referenceerror_throw( "Should be error argument type set ; ", name());
+                val->scope()->referenceerror_throw("Should be error argument type set ; ", name());
 #endif                
                 return;
             }
@@ -786,7 +860,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: Type ");
 #else
-                    val->scope()->referenceerror_throw( "Argument type ambiguous: Type expected : ", name());
+                    val->scope()->referenceerror_throw("Argument type ambiguous: Type expected : ", name());
 #endif                         
                     return;
                 }
@@ -798,7 +872,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: Value ");
 #else
-                    val->scope()->referenceerror_throw( "Argument type ambiguous. Value expected : ", name());
+                    val->scope()->referenceerror_throw("Argument type ambiguous. Value expected : ", name());
 #endif    
                     return;
                 }
@@ -810,7 +884,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                     debug_warning("Should be error argument type ambiguous: ValueSet ");
 #else
-                    val->scope()->referenceerror_throw( "Argument type ambiguous. ValueSet expected : ", name());
+                    val->scope()->referenceerror_throw("Argument type ambiguous. ValueSet expected : ", name());
 #endif   
                     return;
                 }
@@ -918,23 +992,23 @@ namespace x680 {
     // basic_atom
     /////////////////////////////////////////////////////////////////////////   
 
-    basic_atom::basic_atom(assignment_enum tp , basic_entity_ptr scp) : 
-                kind_(tp), scope_(scp), extention_(false), isdummy_(false) {
+    basic_atom::basic_atom(assignment_enum tp, basic_entity_ptr scp) :
+    kind_(tp), scope_(scp), extention_(false), isdummy_(false) {
     };
 
-    basic_atom::basic_atom(assignment_enum tp, basic_entity_ptr scp , const std::string& reff ) : 
-                kind_(tp), scope_(scp), extention_(false), isdummy_(false) {
+    basic_atom::basic_atom(assignment_enum tp, basic_entity_ptr scp, const std::string& reff) :
+    kind_(tp), scope_(scp), extention_(false), isdummy_(false) {
         reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
     }
-    
-    basic_atom::basic_atom(basic_entity_ptr scp , const std::string& reff ) : 
-                kind_(at_Nodef), scope_(scp), extention_(false), isdummy_(false) {
+
+    basic_atom::basic_atom(basic_entity_ptr scp, const std::string& reff) :
+    kind_(at_Nodef), scope_(scp), extention_(false), isdummy_(false) {
         reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
     }
 
     bool basic_atom::isrefferrence() const {
         return false;
-    }    
+    }
 
     module_entity_ptr basic_atom::external() const {
         if ((scope()) && (reff()) /*&& (!reff()->as_expectdef()) */ && (scope()->moduleref()) && (reff()->moduleref()))
@@ -974,50 +1048,50 @@ namespace x680 {
     bool basic_atom::rooted() {
         return ((root()) && (root() != self()));
     }
-    
+
     type_atom_ptr basic_atom::as_type() {
-        return kind_==at_Type ? boost::static_pointer_cast<type_atom> (self()) : type_atom_ptr();
+        return kind_ == at_Type ? boost::static_pointer_cast<type_atom> (self()) : type_atom_ptr();
     }
 
     value_atom_ptr basic_atom::as_value() {
-        return kind_==at_Value ? boost::static_pointer_cast<value_atom> (self()) : value_atom_ptr();
+        return kind_ == at_Value ? boost::static_pointer_cast<value_atom> (self()) : value_atom_ptr();
     }
 
     valueset_atom_ptr basic_atom::as_valueset() {
-        return kind_==at_ValueSet ? boost::static_pointer_cast<valueset_atom> (self()) : valueset_atom_ptr();
+        return kind_ == at_ValueSet ? boost::static_pointer_cast<valueset_atom> (self()) : valueset_atom_ptr();
     }
 
     class_atom_ptr basic_atom::as_class() {
-        return kind_==at_Class ? boost::static_pointer_cast<class_atom> (self()) : class_atom_ptr();
+        return kind_ == at_Class ? boost::static_pointer_cast<class_atom> (self()) : class_atom_ptr();
     }
 
     object_atom_ptr basic_atom::as_object() {
-        return kind_==at_Object ? boost::static_pointer_cast<object_atom> (self()) : object_atom_ptr();
+        return kind_ == at_Object ? boost::static_pointer_cast<object_atom> (self()) : object_atom_ptr();
     }
 
     objectset_atom_ptr basic_atom::as_objectset() {
-        return kind_==at_ObjectSet ? boost::static_pointer_cast<objectset_atom> (self()) : objectset_atom_ptr();
+        return kind_ == at_ObjectSet ? boost::static_pointer_cast<objectset_atom> (self()) : objectset_atom_ptr();
     }
-    
+
     setting_atom_ptr basic_atom::as_setting() {
-        return kind_==at_Setting ? boost::static_pointer_cast<setting_atom> (self()) : setting_atom_ptr();
-    }    
-    
+        return kind_ == at_Setting ? boost::static_pointer_cast<setting_atom> (self()) : setting_atom_ptr();
+    }
+
     syntax_atom_ptr basic_atom::as_syntax() {
-        return kind_==at_Syntax ? boost::static_pointer_cast<syntax_atom> (self()) : syntax_atom_ptr();
-    }        
-    
+        return kind_ == at_Syntax ? boost::static_pointer_cast<syntax_atom> (self()) : syntax_atom_ptr();
+    }
+
     fieldsetting_atom_ptr basic_atom::as_fieldsetting() {
-        return kind_==at_FieldSetting ? boost::static_pointer_cast<fieldsetting_atom> (self()) : fieldsetting_atom_ptr();
-    }      
-    
+        return kind_ == at_FieldSetting ? boost::static_pointer_cast<fieldsetting_atom> (self()) : fieldsetting_atom_ptr();
+    }
+
     constraint_atom_ptr basic_atom::as_constraint() {
-        return kind_==at_Constraint ? boost::static_pointer_cast<constraint_atom> (self()) : constraint_atom_ptr();
-    }        
-    
+        return kind_ == at_Constraint ? boost::static_pointer_cast<constraint_atom> (self()) : constraint_atom_ptr();
+    }
+
     constraints_atom_ptr basic_atom::as_constraints() {
-        return kind_==at_Constraints ? boost::static_pointer_cast<constraints_atom> (self()) : constraints_atom_ptr();
-    }           
+        return kind_ == at_Constraints ? boost::static_pointer_cast<constraints_atom> (self()) : constraints_atom_ptr();
+    }
 
     void basic_atom::resolve(basic_atom_ptr holder) {
     }
@@ -1048,7 +1122,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to valuesetassigment");
 #else
-                            scope()->referenceerror_throw( "Refference to ValueSet : ", expectedname());
+                            scope()->referenceerror_throw("Refference to ValueSet : ", expectedname());
 #endif                                                         
                     } else if (fnd->as_classassigment()) {
                         if (!as_class())
@@ -1062,7 +1136,7 @@ namespace x680 {
 #ifdef  DEBUG_SEMANTIC                
                             debug_warning("Should be error : " + expectedname() + " ref to objectassigment");
 #else
-                            scope()->referenceerror_throw( "Refference to Object: ", expectedname());
+                            scope()->referenceerror_throw("Refference to Object: ", expectedname());
 #endif                                                           
                     } else if (fnd->as_objectsetassigment()) {
                         if (!as_objectset())
@@ -1096,7 +1170,7 @@ namespace x680 {
                         debug_warning("Should be error : refference : " + expectedname() + "  source : " +
                                 source->name() + "  scope : " + scope()->name());
 #else
-                        scope()->referenceerror_throw( "Refference don't find", expectedname());
+                        scope()->referenceerror_throw("Refference don't find", expectedname());
 #endif                         
                     }
                 }
@@ -1134,6 +1208,18 @@ namespace x680 {
                     return reff()->as_objectsetassigment()->objectset()->root_assignment();          
                 return 0;
             }*/
+
+    void assignment_entity::apply_arguments(const setting_atom_vct& vl) {
+        if ((vl.empty()) || (vl.size() != arguments_.size()))
+            throw semantics::error("");
+        argument_entity_vct::const_iterator it2 = arguments_.begin();
+        for (setting_atom_vct::const_iterator it1 = vl.begin(); it1 != vl.end(); ++it1) {
+            if (!(*it1) || !(*it2))
+                throw semantics::error("");
+            (*it2)->apply_argument(*it1);
+            ++it2;
+        }
+    }
 
     assignment_entity_ptr assignment_entity::refference_to() {
         resolve();
@@ -1175,7 +1261,11 @@ namespace x680 {
             }
         }
         return as_assigment();
-    }    
+    }
+    
+    basic_atom_ptr assignment_entity::dummy_reff(){
+        return basic_atom_ptr();
+    }
 
     assignment_entity_ptr assignment_entity::find_component(const std::string& nmf) {
         std::string nm = nmf;
@@ -1186,9 +1276,9 @@ namespace x680 {
                     if (nm.empty()) {
                         return (*it)->as_assigment();
                     } else {
-                        assignment_entity_ptr ref =(*it)->as_assigment()->refference_to();
-                        if (ref && (ref->as_assigment()))                      
-                           return ref->as_assigment()->find_component(nm);
+                        assignment_entity_ptr ref = (*it)->as_assigment()->refference_to();
+                        if (ref && (ref->as_assigment()))
+                            return ref->as_assigment()->find_component(nm);
                     }
                 } else
                     return assignment_entity_ptr();
@@ -1233,7 +1323,7 @@ namespace x680 {
         std::string rslt = nm;
         std::string::size_type it = nm.find_first_of('.');
         if ((it != std::string::npos) && ((it) && (it < (nm.size() - 1)))) {
-            rslt = nm.substr(0, it );
+            rslt = nm.substr(0, it);
             nm = nm.substr(it + 1);
         } else
             nm = "";

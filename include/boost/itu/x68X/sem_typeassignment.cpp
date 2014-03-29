@@ -228,7 +228,7 @@ namespace x680 {
                 range_constraints<T> rng = vl.top();
                 vl.pop();
                 if ((!rng.all()) && (!vl.top().include(rng)))
-                        throw semantics::error("");
+                    throw semantics::error("");
                 vl.top() &= rng;
             }
             if (has_ext)
@@ -551,7 +551,7 @@ namespace x680 {
                 stki.pop();
                 stki.top() -= rng;
             } else if ((*iti)->as_all()) {
-                stki.push(constraints_type());                
+                stki.push(constraints_type());
             } else {
                 stki = constraints_stack();
                 break;
@@ -1368,6 +1368,28 @@ namespace x680 {
     assignment_entity(scope, et_Type), named_(nmd) {
     };
 
+    type_atom_ptr typeassignment_entity::type() const {
+        return type_;
+        type_atom_ptr rslt = type_;
+        if (rslt) {
+            if (rslt->parameterized()) {
+                try {
+                    if ((rslt->reff()) && (rslt->reff()->as_typeassigment())) {
+                        typeassignment_entity_ptr tas = rslt->reff()->as_typeassigment();
+                        tas->apply_arguments(rslt->parameters());
+                        reffholder(tas);
+                        rslt = tas->type();
+                    }
+                } catch (const semantics::error&) {
+                    debug_warning(std::string("Should be error argument type ambiguous:   Arguments apply error ") + name());
+                    return rslt;
+                    //const_cast<typeassignment_entity*> (this)->referenceerror_throw("Arguments apply error ", name());
+                }
+            }
+        }
+        return rslt;
+    }
+
     ////////
 
     basic_entity_ptr typeassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
@@ -1461,12 +1483,12 @@ namespace x680 {
         unicalelerror_throw(childs());
         assignment_entity::resolve(holder);
         resolve_child();
-        if (type())
-            type()->resolve();
+        if (type_)
+            type_->resolve();
         post_resolve_child();
 
     }
-    
+
     void typeassignment_entity::after_resolve() {
         if (type() && (type()->can_per_constraints())) {
             try {
@@ -1475,9 +1497,8 @@ namespace x680 {
                 type()->char8_constraint();
                 type()->quadruple_constraint();
                 type()->tuple_constraint();
-            }            
-            catch (...) {
-                this->referenceerror_throw("Constraint error");
+            } catch (...) {
+                referenceerror_throw("Constraint error");
             }
         }
         after_resolve_child();
