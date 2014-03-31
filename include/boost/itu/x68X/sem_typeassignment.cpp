@@ -805,9 +805,13 @@ namespace x680 {
     : basic_atom(at_Type, scp, reff), builtin_(tp), tag_(tg) {
     }
 
+    defined_type type_atom::builtin() const {
+        return subatom_ && subatom_->as_type() ? subatom_->as_type()->builtin() : builtin_;
+    }
+
     defined_type type_atom::root_builtin() {
-        if (builtin_ != t_Reference)
-            return builtin_;
+        if (builtin() != t_Reference)
+            return builtin();
         if (reff() && (reff()->as_typeassigment())) {
             if (reff()->as_typeassigment()->type())
                 return reff()->as_typeassigment()->type()->root_builtin();
@@ -820,7 +824,7 @@ namespace x680 {
             if ((istextualy_choice()) || (isopen()) ||
                     (isdummy()))
                 return canonical_tag_ptr();
-            switch (builtin_) {
+            switch (builtin()) {
                 case t_Reference:
                 {
                     if (reff() && (reff()->as_typeassigment())) {
@@ -831,7 +835,7 @@ namespace x680 {
                 }
                 default:
                 {
-                    return canonical_tag_ptr(new canonical_tag(builtin_));
+                    return canonical_tag_ptr(new canonical_tag(builtin()));
                 }
             }
         } else {
@@ -930,13 +934,13 @@ namespace x680 {
     }
 
     bool type_atom::isrefferrence() const {
-        return (((builtin_ == t_Reference)
-                || (builtin_ == t_TypeFromObject)
-                || (builtin_ == t_ValueSetFromObjects)) && (reff()));
+        return (((builtin() == t_Reference)
+                || (builtin() == t_TypeFromObject)
+                || (builtin() == t_ValueSetFromObjects)) && (reff()));
     }
 
     bool type_atom::issimplerefferrence() {
-        switch (builtin_) {
+        switch (builtin()) {
             case t_SEQUENCE:
             case t_SEQUENCE_OF:
             case t_SET:
@@ -956,11 +960,11 @@ namespace x680 {
     }
 
     bool type_atom::isstruct() const {
-        return (((builtin_ == t_CHOICE) || (builtin_ == t_SET) || (builtin_ == t_SEQUENCE)));
+        return (((builtin() == t_CHOICE) || (builtin() == t_SET) || (builtin() == t_SEQUENCE)));
     }
 
     bool type_atom::isstruct_of() const {
-        return ( (builtin_ == t_SET_OF) || (builtin_ == t_SEQUENCE_OF));
+        return ( (builtin() == t_SET_OF) || (builtin() == t_SEQUENCE_OF));
     }
 
     bool type_atom::isstructure() const {
@@ -968,7 +972,7 @@ namespace x680 {
     }
 
     bool type_atom::isopen() const {
-        return ((builtin_ == t_ClassField) || (builtin_ == t_ANY));
+        return ((builtin() == t_ClassField) || (builtin() == t_ANY));
     }
 
     bool type_atom::isenum() const {
@@ -1055,7 +1059,7 @@ namespace x680 {
     }
 
     bool type_atom::istextualy_choice() {
-        if (builtin_ == t_CHOICE)
+        if (builtin() == t_CHOICE)
             return !tag();
         if (!isrefferrence() || tag())
             return false;
@@ -1369,26 +1373,10 @@ namespace x680 {
     };
 
     type_atom_ptr typeassignment_entity::type() const {
-        return type_;
-        type_atom_ptr rslt = type_;
-        if (rslt) {
-            if (rslt->parameterized()) {
-                try {
-                    if ((rslt->reff()) && (rslt->reff()->as_typeassigment())) {
-                        typeassignment_entity_ptr tas = rslt->reff()->as_typeassigment();
-                        tas->apply_arguments(rslt->parameters());
-                        reffholder(tas);
-                        rslt = tas->type();
-                    }
-                } catch (const semantics::error&) {
-                    debug_warning(std::string("Should be error argument type ambiguous:   Arguments apply error ") + name());
-                    return rslt;
-                    //const_cast<typeassignment_entity*> (this)->referenceerror_throw("Arguments apply error ", name());
-                }
-            }
-        }
-        return rslt;
+        basic_atom_ptr rslt = calculate_atom<typeassignment_entity>();
+        return (rslt && (rslt->as_type())) ? rslt->as_type() : type_;
     }
+
 
     ////////
 

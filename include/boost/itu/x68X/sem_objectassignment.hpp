@@ -69,8 +69,8 @@ namespace x680 {
         object_type builtin() const {
             return builtin_;
         }
-        
-        virtual bool isrefferrence() const;        
+
+        virtual bool isrefferrence() const;
 
         defined_object_atom_ptr as_defined();
 
@@ -92,7 +92,7 @@ namespace x680 {
 
         exceptobject_atom_ptr as_except();
 
-         allobject_atom_ptr as_all();
+        allobject_atom_ptr as_all();
 
         extentionobject_atom_ptr as_extention();
 
@@ -378,11 +378,11 @@ namespace x680 {
     //  allobject_atom
     /////////////////////////////////////////////////////////////////////////  
 
-    class  allobject_atom : public object_atom {
+    class allobject_atom : public object_atom {
 
     public:
 
-         allobject_atom() : object_atom(ot_ALLEXCEPT) {
+        allobject_atom() : object_atom(ot_ALLEXCEPT) {
         };
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()) {
@@ -446,6 +446,10 @@ namespace x680 {
 
         void apply_fields();
 
+        virtual basic_atom_ptr atom() const {
+            return object_;
+        }
+
     private:
 
         void calculate_fields(classassignment_entity_ptr cls, defsyntax_object_atom_ptr obj);
@@ -457,8 +461,8 @@ namespace x680 {
         basic_entity_ptr find_typefields(reffvaluefield_entity_ptr fld);
 
         basic_entity_ptr find_typefields(reffvaluesetfield_entity_ptr fld);
-        
-        basic_entity_ptr find_typefields(const std::string& nm);       
+
+        basic_entity_ptr find_typefields(const std::string& nm);
 
         bool calculate_fields(syntax_atom_ptr syn, defsyntax_object_atom_ptr obj, fieldsetting_atom_vct& newvct, bool optional = false);
 

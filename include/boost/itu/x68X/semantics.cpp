@@ -8,12 +8,6 @@
 namespace x680 {
     namespace semantics {
 
-        std::ostream& operator<<(std::ostream& stream, const error& self) {
-            stream << "Semantic error: " << self.message() << "\n";
-            return stream;
-        }
-
-
 
         /////////////////////////////////////////////////////////////////////////   
         // precomile modules
@@ -487,7 +481,7 @@ namespace x680 {
                 }
             }
             return first ? boost::make_shared<constraints_atom>(scope, tmp1) :
-                boost::make_shared<constraints_atom>(scope, tmp1, tmp2);
+                    boost::make_shared<constraints_atom>(scope, tmp1, tmp2);
         }
 
         constraint_atom_ptr compile_constraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
@@ -564,7 +558,7 @@ namespace x680 {
             } else if (ent.value.type != v_nodef) {
                 return boost::make_shared< contentconstraint_atom>(scope, compile_value(scope, ent.value));
             }
-            scope->referenceerror_throw( "Content constraint dos'nt set : ", scope->name());
+            scope->referenceerror_throw("Content constraint dos'nt set : ", scope->name());
             return constraint_atom_ptr();
         }
 
@@ -862,7 +856,7 @@ namespace x680 {
                 if (it->group.empty()) {
                     tmp.push_back(boost::make_shared< syntax_atom>(scope, it->alias, it->field, it->optional));
                 } else {
-                    tmp.push_back(boost::make_shared< groupsyntax_atom>(scope, it->alias, 
+                    tmp.push_back(boost::make_shared< groupsyntax_atom>(scope, it->alias,
                             compile_groupwithsyntax(scope, it->group), it->optional));
                 }
             }
@@ -902,7 +896,7 @@ namespace x680 {
                 case ot_UNION: return boost::make_shared< unionobject_atom>();
                 case ot_INTERSECTION: return boost::make_shared< intersectionobject_atom>();
                 case ot_EXCEPT: return boost::make_shared< exceptobject_atom>();
-                case ot_ALLEXCEPT: return boost::make_shared<  allobject_atom>();
+                case ot_ALLEXCEPT: return boost::make_shared< allobject_atom>();
                 case ot_EXTENTION: return boost::make_shared< extentionobject_atom>();
                 default:
                 {
@@ -980,7 +974,7 @@ namespace x680 {
         }
 
         bigassignment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::unknown_tc_assignment& tmp) {
-            bigassignment_entity_ptr tmpv =boost::make_shared< bigassignment_entity>(scope, tmp.identifier);
+            bigassignment_entity_ptr tmpv = boost::make_shared< bigassignment_entity>(scope, tmp.identifier);
             tmpv->big(compile_reff(scope, tmp.unknown_tc.reff));
             tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
             tmpv->big()->parameters(compile_parameters(scope, tmp.unknown_tc.parameters));

@@ -10,8 +10,8 @@
 
 namespace x680 {
 
-    
-     typedef std::vector<std::string> snotation_vector;    
+
+    typedef std::vector<std::string> snotation_vector;
 
     /////////////////////////////////////////////////////////////////////////   
     // VALUESET
@@ -136,7 +136,7 @@ namespace x680 {
     public:
 
         constraints_atom(basic_entity_ptr scp, const std::string& reff) :
-        basic_atom(at_Constraints, scp , reff) {
+        basic_atom(at_Constraints, scp, reff) {
         };
 
         constraints_atom(basic_entity_ptr scp, const constraint_atom_vct& fst, bool ext = false) :
@@ -228,16 +228,16 @@ namespace x680 {
         multipletypeconstraint_atom_ptr as_multipletypeconstraint();
 
         stringconstraint_atom_ptr as_property();
-        
+
         userconstraint_atom_ptr as_user();
-        
-        contentconstraint_atom_ptr as_content();      
-        
-       relationconstraint_atom_ptr as_relation();     
-       
-       tableconstraint_atom_ptr as_table();        
-       
-       tvosoconstraint_atom_ptr as_tvoso();
+
+        contentconstraint_atom_ptr as_content();
+
+        relationconstraint_atom_ptr as_relation();
+
+        tableconstraint_atom_ptr as_table();
+
+        tvosoconstraint_atom_ptr as_tvoso();
 
         unionconstraint_atom_ptr as_union();
 
@@ -616,10 +616,9 @@ namespace x680 {
 
     public:
 
-
         exceptionconstraint_atom(basic_entity_ptr scp, int vl)
-        : constraint_atom(scp, cns_EXCEPTION), value_(value_atom_ptr(new numvalue_atom(vl))), 
-                type_(type_atom_ptr(new type_atom(scp, t_INTEGER))) {
+        : constraint_atom(scp, cns_EXCEPTION), value_(value_atom_ptr(new numvalue_atom(vl))),
+        type_(type_atom_ptr(new type_atom(scp, t_INTEGER))) {
         }
 
         exceptionconstraint_atom(basic_entity_ptr scp, std::string vl)
@@ -628,7 +627,7 @@ namespace x680 {
         }
 
         exceptionconstraint_atom(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl)
-        : constraint_atom(scp, cns_EXCEPTION),  value_(vl), type_(tp) {
+        : constraint_atom(scp, cns_EXCEPTION), value_(vl), type_(tp) {
         }
 
         value_atom_ptr value() const {
@@ -646,8 +645,8 @@ namespace x680 {
         void type(type_atom_ptr val) {
             type_ = val;
         }
-        
-         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
@@ -655,9 +654,9 @@ namespace x680 {
         type_atom_ptr type_;
 
     };
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // userconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -665,8 +664,7 @@ namespace x680 {
 
     public:
 
-
-        userconstraint_atom(basic_entity_ptr scp, uargument_entity_vct vct) 
+        userconstraint_atom(basic_entity_ptr scp, uargument_entity_vct vct)
         : constraint_atom(scp, cns_UserDefinedConstraint), arguments_(vct) {
         }
 
@@ -681,17 +679,17 @@ namespace x680 {
         bool has_arguments() const {
             return !arguments_.empty();
         }
-        
-         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
         uargument_entity_vct arguments_;
 
-    };   
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // contentconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -700,17 +698,17 @@ namespace x680 {
     public:
 
         contentconstraint_atom(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl)
-        : constraint_atom(scp, cns_Contents),  value_(vl), type_(tp)  {
+        : constraint_atom(scp, cns_Contents), value_(vl), type_(tp) {
         }
 
         contentconstraint_atom(basic_entity_ptr scp, type_atom_ptr tp)
-        : constraint_atom(scp, cns_Contents),  type_(tp)  {
+        : constraint_atom(scp, cns_Contents), type_(tp) {
         }
-        
+
         contentconstraint_atom(basic_entity_ptr scp, value_atom_ptr vl)
-        : constraint_atom(scp, cns_Contents),  value_(vl)  {
-        }        
-        
+        : constraint_atom(scp, cns_Contents), value_(vl) {
+        }
+
         value_atom_ptr value() const {
             return value_;
         }
@@ -735,11 +733,11 @@ namespace x680 {
         value_atom_ptr value_;
         type_atom_ptr type_;
 
-    };       
-    
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+    };
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // relationconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -748,9 +746,9 @@ namespace x680 {
     public:
 
         relationconstraint_atom(basic_entity_ptr scp, objectset_atom_ptr objs, snotation_vector nots)
-        : constraint_atom(scp, cns_ComponentRelation),  objectset_(objs),  snotation_(nots)  {
+        : constraint_atom(scp, cns_ComponentRelation), objectset_(objs), snotation_(nots) {
         }
-        
+
         objectset_atom_ptr objectset() const {
             return objectset_;
         }
@@ -764,7 +762,7 @@ namespace x680 {
         }
 
         void snotation(snotation_vector val) {
-           snotation_ = val;
+            snotation_ = val;
         }
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
@@ -775,10 +773,10 @@ namespace x680 {
         objectset_atom_ptr objectset_;
         snotation_vector snotation_;
 
-    };       
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // tableconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -787,9 +785,9 @@ namespace x680 {
     public:
 
         tableconstraint_atom(basic_entity_ptr scp, objectset_atom_ptr objs)
-        : constraint_atom(scp, cns_SimpleTableConstraint),  objectset_(objs)  {
+        : constraint_atom(scp, cns_SimpleTableConstraint), objectset_(objs) {
         }
-        
+
         objectset_atom_ptr objectset() const {
             return objectset_;
         }
@@ -805,10 +803,10 @@ namespace x680 {
 
         objectset_atom_ptr objectset_;
 
-    };           
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+    };
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // tvosoconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -841,14 +839,14 @@ namespace x680 {
         void objectset(objectset_atom_ptr val) {
             objectset_ = val;
         }
-        
+
         argument_enum tp() const {
             return tp_;
         }
 
         void tp(argument_enum val) {
             tp_ = val;
-        }        
+        }
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -860,8 +858,8 @@ namespace x680 {
         type_atom_ptr type_;
         argument_enum tp_;
 
-    };      
-    
+    };
+
 
 
 
@@ -897,6 +895,9 @@ namespace x680 {
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
+        virtual basic_atom_ptr atom() const {
+            return valueset_;
+        }
 
     private:
 

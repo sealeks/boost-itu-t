@@ -439,6 +439,28 @@ namespace x680 {
     void insert_global(basic_entity_ptr global);
 
 
+    namespace semantics {
+
+        class error {
+
+        public:
+
+            error(const std::string& ms) : msg_(ms) {
+            }
+
+            std::string message() const {
+                return msg_;
+            }
+
+        private:
+            std::string msg_;
+        };
+
+        std::ostream& operator<<(std::ostream& stream, const error& self);
+
+    }
+
+
 
 
 
@@ -808,6 +830,8 @@ namespace x680 {
 
         void apply_argument(setting_atom_ptr vl);
 
+        void clear_argument();
+
         void insert_dummyrefference(basic_atom_ptr val);
 
         ///
@@ -934,8 +958,14 @@ namespace x680 {
             return shared_from_this();
         }
 
-        basic_entity_ptr reff() const {
-            return reff_;
+        basic_entity_ptr reff() const;
+
+        basic_atom_ptr subatom() const {
+            return subatom_;
+        }
+
+        void subatom(basic_atom_ptr vl) const {
+            subatom_ = vl;
         }
 
         module_entity_ptr moduleref() {
@@ -1028,6 +1058,7 @@ namespace x680 {
         basic_entity_ptr reff_;
         basic_entity_ptr scope_;
         setting_atom_vct parameters_;
+        mutable basic_atom_ptr subatom_;
         bool extention_;
         bool isdummy_;
     };
@@ -1176,8 +1207,10 @@ namespace x680 {
 
         void apply_arguments(const setting_atom_vct& vl);
 
+        void clear_argument();
+
         assignment_entity_ptr refference_to();
-        
+
         basic_atom_ptr dummy_reff();
 
         assignment_entity_ptr find_component(const std::string& nm);
@@ -1188,7 +1221,17 @@ namespace x680 {
 
         virtual void preresolve();
 
-    protected:
+        virtual basic_atom_ptr atom() const {
+            return basic_atom_ptr();
+        }
+
+        template<typename T>
+        boost::shared_ptr<T> as_baseassignment() {
+            return boost::shared_ptr<T>();
+        }
+
+        template<typename T>
+        basic_atom_ptr calculate_atom() const;
 
         std::string subidentifier(std::string& nm);
 
@@ -1199,6 +1242,57 @@ namespace x680 {
     };
 
 
+    template<>
+    typeassignment_entity_ptr assignment_entity::as_baseassignment();
+
+    template<>
+    valueassignment_entity_ptr assignment_entity::as_baseassignment();
+
+    template<>
+    valuesetassignment_entity_ptr assignment_entity::as_baseassignment();
+
+    template<>
+    classassignment_entity_ptr assignment_entity::as_baseassignment();
+
+    template<>
+    objectassignment_entity_ptr assignment_entity::as_baseassignment();
+
+    template<>
+    objectsetassignment_entity_ptr assignment_entity::as_baseassignment();
+
+    template<typename T>
+    basic_atom_ptr assignment_entity::calculate_atom() const {
+        //return type_;
+        basic_atom_ptr rslt = atom();
+        if (rslt) {
+            if (!has_arguments()) {
+                if (rslt->parameterized()) {
+                    try {
+                        if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
+                            boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
+                            tas->apply_arguments(rslt->parameters());
+                            reffholder(tas);
+                            rslt = tas->atom();
+                        }
+                    } catch (const semantics::error&) {
+                        debug_warning(std::string("Should be error argument type ambiguous:   Arguments apply error ") + name());
+                        return rslt;
+                        //const_cast<typeassignment_entity*> (this)->referenceerror_throw("Arguments apply error ", name());
+                    }
+                } else
+                    if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
+                        && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
+                    if (rslt->reff()->as_assigment()->as_baseassignment<T>()->atom()) {
+                        //rslt->reff()->as_typeassigment()->type()->subatom(rslt);
+                        rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->atom();
+                        if (rslt)
+                            rslt->resolve();
+                    }
+                }
+            }
+        }
+        return rslt;
+    }
 
 
 

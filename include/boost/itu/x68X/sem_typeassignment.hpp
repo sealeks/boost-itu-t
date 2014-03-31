@@ -178,9 +178,7 @@ namespace x680 {
         type_atom(basic_entity_ptr scp, defined_type tp, tagged_ptr tg = tagged_ptr());
         type_atom(basic_entity_ptr scp, const std::string& reff, defined_type tp, tagged_ptr tg = tagged_ptr());
 
-        defined_type builtin() const {
-            return builtin_;
-        }
+        defined_type builtin() const;
 
         defined_type root_builtin();
 
@@ -475,7 +473,7 @@ namespace x680 {
 
         type_atom_ptr type() const;
 
-        void type(type_atom_ptr vl)  {
+        void type(type_atom_ptr vl) {
             type_ = vl;
         }
 
@@ -603,11 +601,15 @@ namespace x680 {
 
         // protected:
 
-         virtual void after_resolve(); 
+        virtual void after_resolve();
 
         basic_entity_vector::iterator first_extention();
 
         basic_entity_vector::iterator second_extention();
+
+        virtual basic_atom_ptr atom() const {
+            return type_;
+        }
 
     private:
 

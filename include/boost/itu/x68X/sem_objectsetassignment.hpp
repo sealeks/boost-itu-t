@@ -27,8 +27,8 @@ namespace x680 {
         objectset_type builtin() const {
             return builtin_;
         }
-        
-       virtual bool isrefferrence() const;   
+
+        virtual bool isrefferrence() const;
 
         defined_objectset_atom_ptr as_defined();
 
@@ -90,9 +90,9 @@ namespace x680 {
         object_atom_vct objects_;
 
     };
-    
-    
-        /////////////////////////////////////////////////////////////////////////   
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // fromobject_objectset_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -194,6 +194,10 @@ namespace x680 {
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+        virtual basic_atom_ptr atom() const {
+            return objectset_;
+        }
 
     private:
 

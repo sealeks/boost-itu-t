@@ -246,7 +246,7 @@ namespace x680 {
         };
 
         reffvaluesetfield_entity(basic_entity_ptr scope, const std::string& nm, const std::string& reff, tagmarker_type mkr = mk_none) :
-        field_entity(scope, nm, fkind_VariableTypeValueSetFieldSpec, mkr), field_(new basic_atom(at_Nodef,  scope, reff)) {
+        field_entity(scope, nm, fkind_VariableTypeValueSetFieldSpec, mkr), field_(new basic_atom(at_Nodef, scope, reff)) {
         };
 
         basic_atom_ptr field() const {
@@ -491,15 +491,15 @@ namespace x680 {
         std::string alias() const {
             return alias_;
         }
-        
+
         bool isalias() const {
             return !alias_.empty();
-        }   
-        
+        }
+
         bool isgroup() const {
             return isgroup_;
-        }           
-        
+        }
+
         groupsyntax_atom_ptr as_group();
 
 
@@ -605,6 +605,10 @@ namespace x680 {
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual void preresolve();
+
+        virtual basic_atom_ptr atom() const {
+            return class_;
+        }
 
     private:
 

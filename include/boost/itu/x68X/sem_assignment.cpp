@@ -7,6 +7,15 @@
 
 namespace x680 {
 
+    namespace semantics {
+
+        std::ostream& operator<<(std::ostream& stream, const error& self) {
+            stream << "Semantic error: " << self.message() << "\n";
+            return stream;
+        }
+
+    }
+
     void debug_warning(const std::string& msg) {
         std::cout << msg << std::endl;
         std::cout.flush();
@@ -783,9 +792,11 @@ namespace x680 {
         switch (argumenttype_) {
             case argm_Type:
             {
-                if (vl->type())
+                if (vl->type()) {
+                    if ((unspecified_) && (unspecified_->as_typeassigment()))
+                        unspecified_->as_typeassigment()->type(vl->type());
                     reff_ = vl->type();
-                else
+                } else
                     throw semantics::error("");
                 break;
             }
@@ -832,6 +843,24 @@ namespace x680 {
             default:
             {
                 throw semantics::error("");
+            }
+        }
+    }
+
+    void argument_entity::clear_argument() {
+        if (unspecified_) {
+            if (unspecified_->as_typeassigment()) {
+                unspecified_->as_typeassigment()->type(type_atom_ptr());
+            } else if (unspecified_->as_valueassigment()) {
+                unspecified_->as_valueassigment()->value(value_atom_ptr());
+            } else if (unspecified_->as_valuesetassigment()) {
+                unspecified_->as_valuesetassigment()->valueset(valueset_atom_ptr());
+            } else if (unspecified_->as_classassigment()) {
+                unspecified_->as_classassigment()->_class(class_atom_ptr());
+            } else if (unspecified_->as_objectassigment()) {
+                unspecified_->as_objectassigment()->object(object_atom_ptr());
+            } else if (unspecified_->as_objectsetassigment()) {
+                unspecified_->as_objectsetassigment()->objectset(objectset_atom_ptr());
             }
         }
     }
@@ -1020,6 +1049,10 @@ namespace x680 {
         if (external())
             return external()->name() + "::";
         return "";
+    }
+
+    basic_entity_ptr basic_atom::reff() const {
+        return subatom_ ? subatom_->reff() : reff_;
     }
 
     bool basic_atom::extesibility_implied() const {
@@ -1221,6 +1254,13 @@ namespace x680 {
         }
     }
 
+    void assignment_entity::clear_argument() {
+        for (argument_entity_vct::iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
+            if (*it)
+                (*it)->clear_argument();
+        }
+    }
+
     assignment_entity_ptr assignment_entity::refference_to() {
         resolve();
         if (as_typeassigment()) {
@@ -1262,8 +1302,8 @@ namespace x680 {
         }
         return as_assigment();
     }
-    
-    basic_atom_ptr assignment_entity::dummy_reff(){
+
+    basic_atom_ptr assignment_entity::dummy_reff() {
         return basic_atom_ptr();
     }
 
@@ -1328,6 +1368,36 @@ namespace x680 {
         } else
             nm = "";
         return rslt;
+    }
+
+    template<>
+    typeassignment_entity_ptr assignment_entity::as_baseassignment() {
+        return as_typeassigment();
+    }
+
+    template<>
+    valueassignment_entity_ptr assignment_entity::as_baseassignment() {
+        return as_valueassigment();
+    }
+
+    template<>
+    valuesetassignment_entity_ptr assignment_entity::as_baseassignment() {
+        return as_valuesetassigment();
+    }
+
+    template<>
+    classassignment_entity_ptr assignment_entity::as_baseassignment() {
+        return as_classassigment();
+    }
+
+    template<>
+    objectassignment_entity_ptr assignment_entity::as_baseassignment() {
+        return as_objectassigment();
+    }
+
+    template<>
+    objectsetassignment_entity_ptr assignment_entity::as_baseassignment() {
+        return as_objectsetassigment();
     }
 
 

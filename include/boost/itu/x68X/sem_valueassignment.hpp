@@ -30,7 +30,7 @@ namespace x680 {
         }
 
         virtual bool isrefferrence() const;
-        
+
         value_atom_ptr skip_defined(bool except_abstract = false);
 
         numvalue_atom_ptr as_number();
@@ -90,7 +90,7 @@ namespace x680 {
 
     template<>
     boost::shared_ptr<null_initer> value_atom::get_value(bool except_abstract);
-    
+
     template<>
     boost::shared_ptr<int64_t> value_atom::get_value(bool except_abstract);
 
@@ -123,18 +123,18 @@ namespace x680 {
 
     template<>
     boost::shared_ptr<unum_vector> value_atom::get_value(bool except_abstract);
-      
-    template<>
-    boost::shared_ptr<bstring_initer> value_atom::get_value(bool except_abstract);  
-    
-    template<>
-    boost::shared_ptr<hstring_initer> value_atom::get_value(bool except_abstract);    
-    
-    template<>
-    boost::shared_ptr<tuple_vector> value_atom::get_value(bool except_abstract);   
 
     template<>
-    boost::shared_ptr<quadruple_vector> value_atom::get_value(bool except_abstract); 
+    boost::shared_ptr<bstring_initer> value_atom::get_value(bool except_abstract);
+
+    template<>
+    boost::shared_ptr<hstring_initer> value_atom::get_value(bool except_abstract);
+
+    template<>
+    boost::shared_ptr<tuple_vector> value_atom::get_value(bool except_abstract);
+
+    template<>
+    boost::shared_ptr<quadruple_vector> value_atom::get_value(bool except_abstract);
 
 
 
@@ -511,6 +511,10 @@ namespace x680 {
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+        virtual basic_atom_ptr atom() const {
+            return value_;
+        }
 
 
     private:

@@ -17,27 +17,6 @@
 namespace x680 {
     namespace semantics {
 
-        class error {
-
-        public:
-
-            error(const std::string& ms) : msg_(ms) {
-            }
-
-            std::string message() const {
-                return msg_;
-            }
-
-        private:
-            std::string msg_;
-        };
-
-        std::ostream& operator<<(std::ostream& stream, const error& self);
-
-
-
-
-
         /////////////////////////////////////////////////////////////////////////   
         // COMPILE
         /////////////////////////////////////////////////////////////////////////   
