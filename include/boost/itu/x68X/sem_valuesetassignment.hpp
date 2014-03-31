@@ -880,9 +880,7 @@ namespace x680 {
             type_ = vl;
         }
 
-        valueset_atom_ptr valueset() const {
-            return valueset_;
-        }
+        valueset_atom_ptr valueset() const;
 
         void valueset(valueset_atom_ptr vl) {
             valueset_ = vl;

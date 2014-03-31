@@ -243,6 +243,10 @@ namespace x680 {
     assignment_entity(scope, nm, et_Class), class_(tp) {
     };
 
+    class_atom_ptr classassignment_entity::_class() const {
+        return class_;
+    }
+
     basic_entity_ptr classassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
             return argfnd;          

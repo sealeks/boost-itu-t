@@ -124,6 +124,10 @@ namespace x680 {
     assignment_entity(scope, nm, et_ObjectSet), objectset_(objs), class_(cls) {
     };
 
+    objectset_atom_ptr objectsetassignment_entity::objectset() const {
+        return objectset_;
+    }
+
     basic_entity_ptr objectsetassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (basic_entity_ptr argfnd = assignment_entity::find_by_name(nm))
             return argfnd;

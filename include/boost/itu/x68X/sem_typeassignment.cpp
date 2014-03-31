@@ -1373,6 +1373,7 @@ namespace x680 {
     };
 
     type_atom_ptr typeassignment_entity::type() const {
+        //return type_;
         basic_atom_ptr rslt = calculate_atom<typeassignment_entity>();
         return (rslt && (rslt->as_type())) ? rslt->as_type() : type_;
     }

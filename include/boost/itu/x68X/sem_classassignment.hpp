@@ -582,9 +582,7 @@ namespace x680 {
     public:
         classassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp = class_atom_ptr());
 
-        class_atom_ptr _class() const {
-            return class_;
-        }
+        class_atom_ptr _class() const;
 
         void _class(class_atom_ptr vl) {
             class_ = vl;

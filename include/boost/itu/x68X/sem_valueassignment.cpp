@@ -208,9 +208,9 @@ namespace x680 {
             return get_value_parent<std::string>(except_abstract);
         } else if (as_cstr()) {
             return boost::shared_ptr<std::string>(new std::string(as_cstr()->value()));
-        }  else if (as_list() && (get_value<tuple>(except_abstract))) {
-            tuple tmp=*get_value<tuple>(except_abstract);
-            return boost::shared_ptr<std::string>(new std::string(1, std::string::value_type(tmp.tablecolumn*16 + tmp.tablerow)));
+        } else if (as_list() && (get_value<tuple>(except_abstract))) {
+            tuple tmp = *get_value<tuple>(except_abstract);
+            return boost::shared_ptr<std::string>(new std::string(1, std::string::value_type(tmp.tablecolumn * 16 + tmp.tablerow)));
         } else if (as_list()) {
             boost::shared_ptr<std::string> rslt(new std::string());
             structvalue_atom_ptr lst = as_list();
@@ -422,163 +422,168 @@ namespace x680 {
             for (std::string::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
                 rslt->push_back(quadruple(0, *it));
             return rslt;
-    } else if (as_list()) {
-        boost::shared_ptr<quadruple_vector> rslt(new quadruple_vector());
-        structvalue_atom_ptr lst = as_list();
-        for (value_vct::const_iterator it = lst->values().begin(); it != lst->values().end(); ++it) {
-            if (*it) {
-                if ((*it)->get_value<quadruple_vector>(except_abstract)) {
-                    boost::shared_ptr<quadruple_vector> sub = (*it)->get_value<quadruple_vector>(except_abstract);
-                    rslt->insert(rslt->end(), sub->begin(), sub->end());
+        } else if (as_list()) {
+            boost::shared_ptr<quadruple_vector> rslt(new quadruple_vector());
+            structvalue_atom_ptr lst = as_list();
+            for (value_vct::const_iterator it = lst->values().begin(); it != lst->values().end(); ++it) {
+                if (*it) {
+                    if ((*it)->get_value<quadruple_vector>(except_abstract)) {
+                        boost::shared_ptr<quadruple_vector> sub = (*it)->get_value<quadruple_vector>(except_abstract);
+                        rslt->insert(rslt->end(), sub->begin(), sub->end());
+                    } else
+                        return boost::shared_ptr<quadruple_vector>();
                 }
-                else 
-                    return boost::shared_ptr<quadruple_vector>();
+            }
+            return rslt;
+        }
+        return boost::shared_ptr<quadruple_vector>();
+    }
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // namedvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void namedvalue_atom::resolve(basic_atom_ptr holder) {
+        if (value_)
+            value_->resolve_reff(holder);
+    }
+
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // structvalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void structvalue_atom::resolve(basic_atom_ptr holder) {
+        resolve_vect(values_, holder);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // defined_value_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void defined_value_atom::resolve(basic_atom_ptr holder) {
+        resolve_reff(holder);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////     
+    // fromobject_value_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    fromobject_value_atom::fromobject_value_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj)
+    : value_atom(scp, v_ValueFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
+    };
+
+    void fromobject_value_atom::resolve(basic_atom_ptr holder) {
+        if (object())
+            object()->resolve(holder);
+        if (object()->reff()) {
+            assignment_entity_ptr tmpasmt = object()->reff()->as_assigment();
+            if (tmpasmt) {
+                if (tmpasmt->find_component(field_->expectedname())) {
+                    reff(tmpasmt->find_component(field_->expectedname()));
+                }
             }
         }
-        return rslt;
     }
-    return boost::shared_ptr<quadruple_vector>();
-}
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // assignvalue_atom
+    ///////////////////////////////////////////////////////////////////////// 
+
+    void assignvalue_atom::resolve(basic_atom_ptr holder) {
+        if (value_)
+            value_->resolve_reff(holder);
+        if (value_->reff())
+            reff(value_->reff());
+    }
+
+    /////////////////////////////////////////////////////////////////////////   
+    // choicevalue_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void choicevalue_atom::resolve(basic_atom_ptr holder) {
+        if (value_)
+            value_->resolve_reff(holder);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
+    // openvalue_atom_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    void openvalue_atom::resolve(basic_atom_ptr holder) {
+        if (type_)
+            type_->resolve();
+        if (value_)
+            value_->resolve_reff(type_);
+    }
 
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // valueassignment_entity
+    /////////////////////////////////////////////////////////////////////////  
 
-/////////////////////////////////////////////////////////////////////////   
-// namedvalue_atom
-/////////////////////////////////////////////////////////////////////////      
+    valueassignment_entity::valueassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl) :
+    assignment_entity(scope, nm, et_Value), type_(tp), value_(vl) {
+    };
 
-void namedvalue_atom::resolve(basic_atom_ptr holder) {
-    if (value_)
-        value_->resolve_reff(holder);
-}
+    value_atom_ptr valueassignment_entity::value() const {
+        //return value_;
+        basic_atom_ptr rslt = calculate_atom< valueassignment_entity>();
+        return (rslt && (rslt->as_value())) ? rslt->as_value() : value_;
+    }
 
-
-
-/////////////////////////////////////////////////////////////////////////   
-// structvalue_atom
-/////////////////////////////////////////////////////////////////////////      
-
-void structvalue_atom::resolve(basic_atom_ptr holder) {
-    resolve_vect(values_, holder);
-}
-
-
-/////////////////////////////////////////////////////////////////////////   
-// defined_value_atom
-/////////////////////////////////////////////////////////////////////////      
-
-void defined_value_atom::resolve(basic_atom_ptr holder) {
-    resolve_reff(holder);
-}
-
-
-/////////////////////////////////////////////////////////////////////////     
-// fromobject_value_atom
-/////////////////////////////////////////////////////////////////////////      
-
-fromobject_value_atom::fromobject_value_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj)
-: value_atom(scp, v_ValueFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
-};
-
-void fromobject_value_atom::resolve(basic_atom_ptr holder) {
-    if (object())
-        object()->resolve(holder);
-    if (object()->reff()) {
-        assignment_entity_ptr tmpasmt = object()->reff()->as_assigment();
-        if (tmpasmt) {
-            if (tmpasmt->find_component(field_->expectedname())) {
-                reff(tmpasmt->find_component(field_->expectedname()));
-            }
+    void valueassignment_entity::check_value_with_exception(value_type tp) {
+        if ((value()) && (value()->root()) && (value()->root()->as_value())) {
+            if (value()->root()->as_value()->valtype() != tp)
+                throw semantics::error("value '" + name() + "' has invalid type " +
+                    modulerefname());
         }
     }
-}
 
-
-/////////////////////////////////////////////////////////////////////////   
-// assignvalue_atom
-///////////////////////////////////////////////////////////////////////// 
-
-void assignvalue_atom::resolve(basic_atom_ptr holder) {
-    if (value_)
-        value_->resolve_reff(holder);
-    if (value_->reff())
-        reff(value_->reff());
-}
-
-/////////////////////////////////////////////////////////////////////////   
-// choicevalue_atom
-/////////////////////////////////////////////////////////////////////////      
-
-void choicevalue_atom::resolve(basic_atom_ptr holder) {
-    if (value_)
-        value_->resolve_reff(holder);
-}
-
-
-/////////////////////////////////////////////////////////////////////////   
-// openvalue_atom_atom
-/////////////////////////////////////////////////////////////////////////      
-
-void openvalue_atom::resolve(basic_atom_ptr holder) {
-    if (type_)
-        type_->resolve();
-    if (value_)
-        value_->resolve_reff(type_);
-}
-
-
-
-/////////////////////////////////////////////////////////////////////////   
-// valueassignment_entity
-/////////////////////////////////////////////////////////////////////////  
-
-valueassignment_entity::valueassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl) :
-assignment_entity(scope, nm, et_Value), type_(tp), value_(vl) {
-};
-
-void valueassignment_entity::check_value_with_exception(value_type tp) {
-    if ((value()) && (value()->root()) && (value()->root()->as_value())) {
-        if (value()->root()->as_value()->valtype() != tp)
-            throw semantics::error("value '" + name() + "' has invalid type " +
-                modulerefname());
-    }
-}
-
-basic_entity_ptr valueassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
-    if (sch & local_search) {
-        if (((type()->predefined()))) {
-            for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it)
-                if ((*it)->name() == nm)
+    basic_entity_ptr valueassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
+        if (sch & local_search) {
+            if (((type()->predefined()))) {
+                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it)
+                    if ((*it)->name() == nm)
+                        return *it;
+            }
+            if ((type()->reff() && (type()->reff()->name() != nm))) {
+                type()->resolve_reff(basic_atom_ptr(), sch);
+                if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, sch))
+                    return fnd;
+            }
+        }
+        if (!(sch & extend_search))
+            return basic_entity_ptr();
+        if (basic_entity_ptr fnd = assignment_entity::find_by_name(nm))
+            return fnd;
+        if (scope()) {
+            prefind(nm, scope()->childs());
+            for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
+                if (nm == (*it)->name())
                     return *it;
         }
-        if ((type()->reff() && (type()->reff()->name() != nm))) {
-            type()->resolve_reff(basic_atom_ptr(), sch);
-            if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, sch))
-                return fnd;
-        }
-    }
-    if (!(sch & extend_search))
+        if (scope())
+            return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
-    if (basic_entity_ptr fnd = assignment_entity::find_by_name(nm))
-        return fnd;
-    if (scope()) {
-        prefind(nm, scope()->childs());
-        for (basic_entity_vector::iterator it = scope()->childs().begin(); it != scope()->childs().end(); ++it)
-            if (nm == (*it)->name())
-                return *it;
     }
-    if (scope())
-        return scope()->find_by_name(nm, sch);
-    return basic_entity_ptr();
-}
 
-void valueassignment_entity::resolve(basic_atom_ptr holder) {
-    assignment_entity::resolve(holder);
-    resolve_child();
-    type()->resolve();
-    if (value())
-        value()->resolve(type());
-}
+    void valueassignment_entity::resolve(basic_atom_ptr holder) {
+        assignment_entity::resolve(holder);
+        resolve_child();
+        type()->resolve();
+        if (value())
+            value()->resolve(type());
+    }
 
 
 

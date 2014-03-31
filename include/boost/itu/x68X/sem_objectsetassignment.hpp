@@ -181,10 +181,8 @@ namespace x680 {
             class_ = vl;
         }
 
-        objectset_atom_ptr objectset() const {
-            return objectset_;
-        }
-
+        objectset_atom_ptr objectset() const;
+        
         void objectset(objectset_atom_ptr vl) {
             objectset_ = vl;
         }

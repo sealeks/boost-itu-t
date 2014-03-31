@@ -521,6 +521,10 @@ namespace x680 {
     assignment_entity(scope, nm, et_ValueSet), type_(tp), valueset_(vl) {
     };
 
+    valueset_atom_ptr valuesetassignment_entity::valueset() const {
+        return valueset_;
+    }
+
     basic_entity_ptr valuesetassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (sch & local_search) {
             if (((type()->predefined()))) {

@@ -495,9 +495,7 @@ namespace x680 {
             type_ = vl;
         }
 
-        value_atom_ptr value() const {
-            return value_;
-        }
+        value_atom_ptr value() const;
 
         void value(value_atom_ptr vl) {
             value_ = vl;
