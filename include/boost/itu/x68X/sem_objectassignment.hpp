@@ -447,6 +447,8 @@ namespace x680 {
         virtual basic_atom_ptr atom() const {
             return object_;
         }
+        
+        virtual basic_atom_ptr typed_atom() const;        
 
     private:
 

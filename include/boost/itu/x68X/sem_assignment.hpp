@@ -1224,6 +1224,10 @@ namespace x680 {
         virtual basic_atom_ptr atom() const {
             return basic_atom_ptr();
         }
+        
+        virtual basic_atom_ptr typed_atom() const {
+            return basic_atom_ptr();
+        }
 
         template<typename T>
         boost::shared_ptr<T> as_baseassignment() {
@@ -1272,19 +1276,20 @@ namespace x680 {
                             boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
                             tas->apply_arguments(rslt->parameters());
                             reffholder(tas);
-                            rslt = tas->atom();
+                            rslt = tas->typed_atom();
                         }
                     } catch (const semantics::error&) {
                         debug_warning(std::string("Should be error argument type ambiguous:   Arguments apply error ") + name());
                         return rslt;
                         //const_cast<typeassignment_entity*> (this)->referenceerror_throw("Arguments apply error ", name());
                     }
-                } else
+                } 
                     if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
                         && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
-                    if (rslt->reff()->as_assigment()->as_baseassignment<T>()->atom()) {
+                    basic_atom_ptr tmp=rslt->reff()->as_assigment()->as_baseassignment<T>()->typed_atom();   
+                    if (tmp) {
                         //rslt->reff()->as_typeassigment()->type()->subatom(rslt);
-                        rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->atom();
+                        rslt = tmp;
                         if (rslt)
                             rslt->resolve();
                     }

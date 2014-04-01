@@ -486,97 +486,120 @@ namespace x680 {
         }
 
         defined_type builtin() const {
-            return type() ? type()->builtin() : t_NODEF;
+            type_atom_ptr tmptype = type();
+            return tmptype ? tmptype->builtin() : t_NODEF;
         }
 
         defined_type root_builtin() {
-            return type() ? type()->root_builtin() : t_NODEF;
+            type_atom_ptr tmptype = type();
+            return tmptype ? tmptype->root_builtin() : t_NODEF;
         }
 
         tagged_ptr tag() const {
-            return type() ? type()->tag() : tagged_ptr();
+            type_atom_ptr tmptype = type();
+            return tmptype ? tmptype->tag() : tagged_ptr();
         }
 
         canonical_tag_ptr cncl_tag() {
-            return type() ? type()->cncl_tag() : canonical_tag_ptr();
+            type_atom_ptr tmptype = type();
+            return tmptype ? tmptype->cncl_tag() : canonical_tag_ptr();
         }
 
         // preffix = textualy tagging
 
         canonical_tag_ptr textualy_tag() {
-            return type() ? type()->textualy_tag() : canonical_tag_ptr();
+            type_atom_ptr tmptype = type();
+            return tmptype ? tmptype->textualy_tag() : canonical_tag_ptr();
         }
 
         type_atom_ptr textualy_type() {
-            return type() ? type()->textualy_type() : type_atom_ptr();
+            type_atom_ptr tmptype = type();
+            return tmptype ? tmptype->textualy_type() : type_atom_ptr();
         }
 
         predefined_ptr predefined() {
-            return type() ? type()->predefined() : predefined_ptr();
+            type_atom_ptr tmptype = type();
+            return tmptype ? tmptype->predefined() : predefined_ptr();
         }
 
         bool isrefferrence() const {
-            return (type() && (type()->isrefferrence()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->isrefferrence()));
         }
 
         bool issimplerefferrence() {
-            return (type() && (type()->issimplerefferrence()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->issimplerefferrence()));
         }
 
         bool isstruct() const {
-            return (type() && (type()->isstruct()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->isstruct()));
         }
 
         bool isstruct_of() const {
-            return (type() && (type()->isstruct_of()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->isstruct_of()));
         }
 
         bool isstructure() const {
-            return (type() && (type()->isstructure()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->isstructure()));
         }
 
         bool isopen() const {
-            return (type() && (type()->isopen()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->isopen()));
         }
 
         bool isenum() const {
-            return (type() && (type()->isenum()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->isenum()));
         }
 
         bool can_per_constraints() {
-            return (type() && (type()->can_per_constraints()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->can_per_constraints()));
         }
 
         bool can_alphabet_constraints() {
-            return (type() && (type()->can_alphabet_constraints()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->can_alphabet_constraints()));
         }
 
         bool can_char_constraints() {
-            return (type() && (type()->can_char_constraints()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->can_char_constraints()));
         }
 
         bool can_char8_constraints() {
-            return (type() && (type()->can_char8_constraints()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->can_char8_constraints()));
         }
 
         bool can_quadruple_constraints() {
-            return (type() && (type()->can_quadruple_constraints()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->can_quadruple_constraints()));
         }
 
         bool can_size_constraints() {
-            return (type() && (type()->can_size_constraints()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->can_size_constraints()));
         }
 
         bool can_integer_constraints() {
-            return (type() && (type()->can_integer_constraints()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->can_integer_constraints()));
         }
 
         bool istextualy_choice() {
-            return (type() && (type()->istextualy_choice()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->istextualy_choice()));
         }
 
         bool isprimitive() {
-            return (type() && (type()->isprimitive()));
+            type_atom_ptr tmptype = type();
+            return (tmptype && (tmptype->isprimitive()));
         }
 
         bool isdefined_choice();
@@ -610,6 +633,8 @@ namespace x680 {
         virtual basic_atom_ptr atom() const {
             return type_;
         }
+        
+        virtual basic_atom_ptr typed_atom() const;        
 
     private:
 

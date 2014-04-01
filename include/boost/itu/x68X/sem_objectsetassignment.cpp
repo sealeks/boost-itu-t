@@ -123,9 +123,18 @@ namespace x680 {
     objectsetassignment_entity::objectsetassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr cls, objectset_atom_ptr objs) :
     assignment_entity(scope, nm, et_ObjectSet), objectset_(objs), class_(cls) {
     };
+    
+    
+    basic_atom_ptr objectsetassignment_entity::typed_atom() const{
+        return objectset();
+    }        
 
     objectset_atom_ptr objectsetassignment_entity::objectset() const {
-        return objectset_;
+        //return objectset_;
+        basic_atom_ptr rslt = calculate_atom< objectsetassignment_entity>();
+        //if (!rslt || !(rslt->as_objectset()))
+           // referenceerror_throw("Not resolved  ")
+        return (rslt && (rslt->as_objectset())) ? rslt->as_objectset() : objectset_;
     }
 
     basic_entity_ptr objectsetassignment_entity::find_by_name(const std::string& nm, search_marker sch) {

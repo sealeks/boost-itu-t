@@ -1371,10 +1371,17 @@ namespace x680 {
     typeassignment_entity::typeassignment_entity(basic_entity_ptr scope, bool nmd) :
     assignment_entity(scope, et_Type), named_(nmd) {
     };
+    
+    
+    basic_atom_ptr typeassignment_entity::typed_atom() const{
+        return type();
+    }        
 
     type_atom_ptr typeassignment_entity::type() const {
         //return type_;
         basic_atom_ptr rslt = calculate_atom<typeassignment_entity>();
+        //if (!rslt || !(rslt->as_type()))
+        //    referenceerror_throw("Not resolved  ")  
         return (rslt && (rslt->as_type())) ? rslt->as_type() : type_;
     }
 
@@ -1382,15 +1389,16 @@ namespace x680 {
     ////////
 
     basic_entity_ptr typeassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
+        type_atom_ptr tmptype = type();
         if (sch & local_search) {
-            if (((type()->predefined()))) {
-                for (basic_entity_vector::iterator it = type()->predefined()->values().begin(); it != type()->predefined()->values().end(); ++it)
+            if (((tmptype->predefined()))) {
+                for (basic_entity_vector::iterator it = tmptype->predefined()->values().begin(); it != tmptype->predefined()->values().end(); ++it)
                     if ((*it)->name() == nm)
                         return *it;
             }
-            if (type()->reff() && (type()->reff()->name() != nm)) {
-                type()->resolve_reff();
-                if (basic_entity_ptr fnd = type()->reff()->find_by_name(nm, sch))
+            if (tmptype->reff() && (tmptype->reff()->name() != nm)) {
+                tmptype->resolve_reff();
+                if (basic_entity_ptr fnd = tmptype->reff()->find_by_name(nm, sch))
                     return fnd;
             }
         }
@@ -1404,17 +1412,19 @@ namespace x680 {
     }
 
     bool typeassignment_entity::isdefined_choice() {
+        type_atom_ptr tmptype = type();
         if (islocaldefined()) {
             if (tag()) {
-                return (type() && type()->untagged_type() && (type()->untagged_type() ->istextualy_choice()));
+                return (tmptype && tmptype->untagged_type() && (tmptype->untagged_type() ->istextualy_choice()));
             }
         }
-        return (type() && ((istextualy_choice()) || (type()->builtin() == t_CHOICE)));
+        return (tmptype && ((istextualy_choice()) || (type()->builtin() == t_CHOICE)));
     }
 
     bool typeassignment_entity::islocaldeclare() const {
-        if (scope() && (scope()->as_typeassigment()) && (type()))
-            return (type()->isstructure());
+        type_atom_ptr tmptype = type();
+        if (scope() && (scope()->as_typeassigment()) && (tmptype))
+            return (tmptype->isstructure());
         return false;
     }
 
@@ -1425,12 +1435,13 @@ namespace x680 {
     }
 
     canonical_tag_vct typeassignment_entity::cncl_tags() {
+        type_atom_ptr tmptype = type();
         canonical_tag_vct tmp;
-        if (type()) {
-            if (type()->istextualy_choice()) {
-                if (type()->builtin() == t_CHOICE) {
-                    if ((type()->tag()) && (type()->cncl_tag())) {
-                        tmp.push_back(type()->cncl_tag());
+        if (tmptype) {
+            if (tmptype->istextualy_choice()) {
+                if (tmptype->builtin() == t_CHOICE) {
+                    if ((tmptype->tag()) && (tmptype->cncl_tag())) {
+                        tmp.push_back(tmptype->cncl_tag());
                     } else {
                         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                             if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
@@ -1441,21 +1452,22 @@ namespace x680 {
                         }
                     }
                 } else {
-                    if ((type()->reff()) && (type()->reff()->as_typeassigment()))
-                        tmp = type()->reff()->as_typeassigment()->cncl_tags();
+                    if ((tmptype->reff()) && (tmptype->reff()->as_typeassigment()))
+                        tmp = tmptype->reff()->as_typeassigment()->cncl_tags();
                 }
             } else {
-                if (type()->cncl_tag())
-                    tmp.push_back(type()->cncl_tag());
+                if (tmptype->cncl_tag())
+                    tmp.push_back(tmptype->cncl_tag());
             }
         }
         return tmp;
     }
 
     typeassignment_entity_ptr typeassignment_entity::superfluous_assignment(module_entity_ptr mod) {
-        if (type() && (!tag()) && (type()->reff()) && mod) {
-            typeassignment_entity_ptr rf = ((type()->reff()) && (type()->reff()->as_typeassigment())) ?
-                    type()->reff()->as_typeassigment() : typeassignment_entity_ptr();
+        type_atom_ptr tmptype = type();
+        if (tmptype && (!tag()) && (tmptype->reff()) && mod) {
+            typeassignment_entity_ptr rf = ((tmptype->reff()) && (tmptype->reff()->as_typeassigment())) ?
+                    tmptype->reff()->as_typeassigment() : typeassignment_entity_ptr();
             if (rf && (rf->moduleref() == mod)) {
                 return rf;
             }
@@ -1479,13 +1491,14 @@ namespace x680 {
     }
 
     void typeassignment_entity::after_resolve() {
-        if (type() && (type()->can_per_constraints())) {
+        type_atom_ptr tmptype = type();
+        if (tmptype && (tmptype->can_per_constraints())) {
             try {
-                type()->integer_constraint();
-                type()->size_constraint();
-                type()->char8_constraint();
-                type()->quadruple_constraint();
-                type()->tuple_constraint();
+                tmptype->integer_constraint();
+                tmptype->size_constraint();
+                tmptype->char8_constraint();
+                tmptype->quadruple_constraint();
+                tmptype->tuple_constraint();
             } catch (...) {
                 referenceerror_throw("Constraint error");
             }
@@ -1523,8 +1536,9 @@ namespace x680 {
     }
 
     void typeassignment_entity::post_resolve_apply_componentsof() {
-        if ((type()) && (!childs().empty())) {
-            if ((type()->builtin() == t_SEQUENCE) || ((type()->builtin() == t_SET))) {
+        type_atom_ptr tmptype = type();
+        if ((tmptype) && (!childs().empty())) {
+            if ((tmptype->builtin() == t_SEQUENCE) || ((tmptype->builtin() == t_SET))) {
                 bool find_compomensof = true;
                 while (find_compomensof) {
                     find_compomensof = false;
@@ -1579,16 +1593,18 @@ namespace x680 {
     }
 
     bool typeassignment_entity::is_resolve_autotag() {
-        if ((type()) && (!childs().empty())) {
+        type_atom_ptr tmptype = type();
+        if ((tmptype) && (!childs().empty())) {
             bool automatic = true;
             std::size_t num = 0;
-            if (type()->tagrule() == automatic_tags) {
+            if (tmptype->tagrule() == automatic_tags) {
                 for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                     namedtypeassignment_entity_ptr tmpel = ((*it)->as_typeassigment() && (*it)->as_typeassigment()->as_named()) ?
                             (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr();
-                    if ((tmpel) && (tmpel->type()) && (tmpel->type()->tag()) &&
+                    type_atom_ptr tmptype1 = tmpel ? (tmpel->type()) : type_atom_ptr();
+                    if ((tmptype1) && (tmptype1->tag()) &&
                             (tmpel->marker() != mk_components_of)) {
-                        if ((tmpel->type()->textualy_tag()) /*|| (num++ > 3)*/) {
+                        if ((tmptype1->textualy_tag()) /*|| (num++ > 3)*/) {
                             //debug_warning("warning:  : " + source_throw() + " automatic tagging skiped.");
                             automatic = false;
                             break;

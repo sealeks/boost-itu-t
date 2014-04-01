@@ -1452,73 +1452,77 @@ namespace x680 {
 
         void fileout::execute_valueassignment_cpp(std::ofstream& stream, valueassignment_entity_ptr self) {
             bool decl = true;
-            if ((self->type()->root_builtin() == t_OBJECT_IDENTIFIER) || (self->type()->root_builtin() == t_RELATIVE_OID)) {
-                decl = false;
-                std::vector<std::string> rslt;
-                if (value_oid_str(self->value(), rslt)) {
-                    decl = true;
-                    stream << "\n" << tabformat() << "const boost::array<boost::asn1::oidindx_type, ";
-                    stream << rslt.size() << "> " << nameconvert(self->name()) << "_OID_ARR = { ";
-                    for (std::vector<std::string>::const_iterator it = rslt.begin(); it != rslt.end(); ++it) {
-                        if (it != rslt.begin())
-                            stream << ", ";
-                        stream << (*it);
+            if (!self->has_arguments()) {
+                if ((self->type()->root_builtin() == t_OBJECT_IDENTIFIER) || (self->type()->root_builtin() == t_RELATIVE_OID)) {
+                    decl = false;
+                    std::vector<std::string> rslt;
+                    if (value_oid_str(self->value(), rslt)) {
+                        decl = true;
+                        stream << "\n" << tabformat() << "const boost::array<boost::asn1::oidindx_type, ";
+                        stream << rslt.size() << "> " << nameconvert(self->name()) << "_OID_ARR = { ";
+                        for (std::vector<std::string>::const_iterator it = rslt.begin(); it != rslt.end(); ++it) {
+                            if (it != rslt.begin())
+                                stream << ", ";
+                            stream << (*it);
+                        }
+                        stream << "};";
                     }
-                    stream << "};";
                 }
-            }
-            if (decl) {
-                switch (self->type()->root_builtin()) {
-                    case t_NULL:
-                    case t_INTEGER:
-                    case t_BOOLEAN:
-                    case t_REAL:
-                    case t_ENUMERATED:
-                    case t_OBJECT_IDENTIFIER:
-                    case t_BIT_STRING:
-                    case t_OCTET_STRING:
-                    case t_RELATIVE_OID:
-                    case t_IA5String:
-                    case t_BMPString:
-                    case t_UniversalString:
-                    case t_UTF8String:
-                    case t_NumericString:
-                    case t_PrintableString:
-                    case t_T61String:
-                    case t_VideotexString:
-                    case t_GraphicString:
-                    case t_VisibleString:
-                    case t_GeneralString:
-                    case t_ObjectDescriptor:
-                    {
-                        stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
-                                << nameconvert(self->name()) << " = " << valueassmnt_str(self) << ";\n";
-                        break;
-                    }
-                    default:
-                    {
+                if (decl) {
+                    switch (self->type()->root_builtin()) {
+                        case t_NULL:
+                        case t_INTEGER:
+                        case t_BOOLEAN:
+                        case t_REAL:
+                        case t_ENUMERATED:
+                        case t_OBJECT_IDENTIFIER:
+                        case t_BIT_STRING:
+                        case t_OCTET_STRING:
+                        case t_RELATIVE_OID:
+                        case t_IA5String:
+                        case t_BMPString:
+                        case t_UniversalString:
+                        case t_UTF8String:
+                        case t_NumericString:
+                        case t_PrintableString:
+                        case t_T61String:
+                        case t_VideotexString:
+                        case t_GraphicString:
+                        case t_VisibleString:
+                        case t_GeneralString:
+                        case t_ObjectDescriptor:
+                        {
+                            stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
+                                    << nameconvert(self->name()) << " = " << valueassmnt_str(self) << ";\n";
+                            break;
+                        }
+                        default:
+                        {
+                        }
                     }
                 }
             }
         }
 
         void fileout::execute_defaultassignment_cpp(std::ofstream& stream, namedtypeassignment_entity_ptr self, typeassignment_entity_ptr ansec) {
-            if ((self->type()) && (self->_default()) && ansec) {
-                switch (self->type()->root_builtin()) {
-                    case t_INTEGER:
-                    case t_BOOLEAN:
-                    case t_REAL:
-                    case t_ENUMERATED:
-                    case t_BIT_STRING:
-                    case t_OBJECT_IDENTIFIER:
-                    case t_RELATIVE_OID:
-                    {
-                        stream << "\n" << tabformat() << "const " << fromtype_str(self) << " " << fulltype_str(ansec, false) << "::"
-                                << nameconvert(self->name()) << "__default = " << valueassmnt_str(self->type(), self->_default()) << ";\n";
-                        break;
-                    }
-                    default:
-                    {
+            if (!self->has_arguments()) {
+                if ((self->type()) && (self->_default()) && ansec) {
+                    switch (self->type()->root_builtin()) {
+                        case t_INTEGER:
+                        case t_BOOLEAN:
+                        case t_REAL:
+                        case t_ENUMERATED:
+                        case t_BIT_STRING:
+                        case t_OBJECT_IDENTIFIER:
+                        case t_RELATIVE_OID:
+                        {
+                            stream << "\n" << tabformat() << "const " << fromtype_str(self) << " " << fulltype_str(ansec, false) << "::"
+                                    << nameconvert(self->name()) << "__default = " << valueassmnt_str(self->type(), self->_default()) << ";\n";
+                            break;
+                        }
+                        default:
+                        {
+                        }
                     }
                 }
             }

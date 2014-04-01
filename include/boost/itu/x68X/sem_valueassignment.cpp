@@ -534,16 +534,24 @@ namespace x680 {
     valueassignment_entity::valueassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl) :
     assignment_entity(scope, nm, et_Value), type_(tp), value_(vl) {
     };
+    
+    
+    basic_atom_ptr valueassignment_entity::typed_atom() const{
+        return value();
+    }        
 
     value_atom_ptr valueassignment_entity::value() const {
         //return value_;
         basic_atom_ptr rslt = calculate_atom< valueassignment_entity>();
+        //if (!rslt || !(rslt->as_value()))
+        //    referenceerror_throw("Not resolved  ")        
         return (rslt && (rslt->as_value())) ? rslt->as_value() : value_;
     }
 
     void valueassignment_entity::check_value_with_exception(value_type tp) {
-        if ((value()) && (value()->root()) && (value()->root()->as_value())) {
-            if (value()->root()->as_value()->valtype() != tp)
+        value_atom_ptr tmpvalue = value();
+        if ((tmpvalue) && (tmpvalue->root()) && (tmpvalue->root()->as_value())) {
+            if (tmpvalue->root()->as_value()->valtype() != tp)
                 throw semantics::error("value '" + name() + "' has invalid type " +
                     modulerefname());
         }
@@ -581,8 +589,9 @@ namespace x680 {
         assignment_entity::resolve(holder);
         resolve_child();
         type()->resolve();
-        if (value())
-            value()->resolve(type());
+        value_atom_ptr tmpvalue = value();
+        if (tmpvalue)
+            tmpvalue->resolve(type());
     }
 
 

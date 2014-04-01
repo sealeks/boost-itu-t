@@ -514,6 +514,7 @@ namespace x680 {
             return value_;
         }
 
+         virtual basic_atom_ptr typed_atom() const;       
 
     private:
 

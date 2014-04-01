@@ -240,9 +240,17 @@ namespace x680 {
     objectassignment_entity::objectassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr cls, object_atom_ptr obj) :
     assignment_entity(scope, nm, et_Object), class_(cls), object_(obj) {
     };
+    
+    basic_atom_ptr objectassignment_entity::typed_atom() const{
+        return object();
+    }    
 
     object_atom_ptr objectassignment_entity::object() const {
-        return object_;
+        //return object_;
+        basic_atom_ptr rslt = calculate_atom< objectassignment_entity>();
+        //if (!rslt || !(rslt->as_object()))
+        //    referenceerror_throw("Not resolved  ")        
+        return (rslt && (rslt->as_object())) ? rslt->as_object() : object_;  
     }
 
     basic_entity_ptr objectassignment_entity::find_by_name(const std::string& nm, search_marker sch) {

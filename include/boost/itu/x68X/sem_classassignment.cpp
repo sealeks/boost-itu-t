@@ -242,9 +242,17 @@ namespace x680 {
     classassignment_entity::classassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr tp) :
     assignment_entity(scope, nm, et_Class), class_(tp) {
     };
+    
+    basic_atom_ptr classassignment_entity::typed_atom() const{
+        return _class();
+    }
 
     class_atom_ptr classassignment_entity::_class() const {
-        return class_;
+        //return class_;
+        basic_atom_ptr rslt = calculate_atom< classassignment_entity>();
+        //if (!rslt || !(rslt->as_class()))
+       //     referenceerror_throw("Not resolved  ")        
+        return (rslt && (rslt->as_class())) ? rslt->as_class() : class_;  
     }
 
     basic_entity_ptr classassignment_entity::find_by_name(const std::string& nm, search_marker sch) {

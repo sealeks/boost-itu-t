@@ -802,41 +802,51 @@ namespace x680 {
             }
             case argm_Value:
             {
-                if (vl->value())
+                if (vl->value()) {
+                    if ((unspecified_) && (unspecified_->as_valueassigment()))
+                        unspecified_->as_valueassigment()->value(vl->value());
                     reff_ = vl->value();
-                else
+                } else
                     throw semantics::error("");
                 break;
             }
             case argm_ValueSet:
             {
-                if (vl->valueset())
+                if (vl->valueset()) {
+                    if ((unspecified_) && (unspecified_->as_valuesetassigment()))
+                        unspecified_->as_valuesetassigment()->valueset(vl->valueset());
                     reff_ = vl->valueset();
-                else
+                } else
                     throw semantics::error("");
                 break;
             }
             case argm_Class:
             {
-                if (vl->_class())
+                if (vl->_class()) {
+                    if ((unspecified_) && (unspecified_->as_classassigment()))
+                        unspecified_->as_classassigment()->_class(vl->_class());
                     reff_ = vl->_class();
-                else
+                } else
                     throw semantics::error("");
                 break;
             }
             case argm_Object:
             {
-                if (vl->object())
+                if (vl->object()) {
+                    if ((unspecified_) && (unspecified_->as_objectassigment()))
+                        unspecified_->as_objectassigment()->object(vl->object());
                     reff_ = vl->object();
-                else
+                } else
                     throw semantics::error("");
                 break;
             }
             case argm_ObjectSet:
             {
-                if (vl->objectset())
+                if (vl->objectset()) {
+                    if ((unspecified_) && (unspecified_->as_objectsetassigment()))
+                        unspecified_->as_objectsetassigment()->objectset(vl->objectset());
                     reff_ = vl->objectset();
-                else
+                } else
                     throw semantics::error("");
                 break;
             }

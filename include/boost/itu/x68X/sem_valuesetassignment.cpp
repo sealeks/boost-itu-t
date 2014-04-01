@@ -520,9 +520,18 @@ namespace x680 {
     valuesetassignment_entity::valuesetassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, valueset_atom_ptr vl) :
     assignment_entity(scope, nm, et_ValueSet), type_(tp), valueset_(vl) {
     };
+    
+        
+    basic_atom_ptr valuesetassignment_entity::typed_atom() const {
+        return valueset();
+    }    
 
     valueset_atom_ptr valuesetassignment_entity::valueset() const {
-        return valueset_;
+        //return valueset_;
+        basic_atom_ptr rslt = calculate_atom< valuesetassignment_entity>();
+        //if (!rslt || !(rslt->as_value()))
+        //    referenceerror_throw("Not resolved  ")          
+        return (rslt && (rslt->as_valueset())) ? rslt->as_valueset() : valueset_;        
     }
 
     basic_entity_ptr valuesetassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
