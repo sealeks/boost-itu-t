@@ -182,9 +182,7 @@ namespace x680 {
 
         defined_type root_builtin();
 
-        tagged_ptr tag() const {
-            return tag_;
-        }
+        tagged_ptr tag() const;
 
         void tag(tagged_ptr vl) {
             tag_ = vl;

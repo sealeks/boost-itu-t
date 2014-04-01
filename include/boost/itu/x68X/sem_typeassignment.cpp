@@ -806,7 +806,12 @@ namespace x680 {
     }
 
     defined_type type_atom::builtin() const {
-        return subatom_ && subatom_->as_type() ? subatom_->as_type()->builtin() : builtin_;
+        return builtin_;
+    }
+
+    tagged_ptr type_atom::tag() const {
+        return ((subatom()) && (subatom()->as_type()) && (subatom()->as_type()->tag()))
+                ? subatom()->as_type()->tag() : tag_;
     }
 
     defined_type type_atom::root_builtin() {
@@ -1371,11 +1376,10 @@ namespace x680 {
     typeassignment_entity::typeassignment_entity(basic_entity_ptr scope, bool nmd) :
     assignment_entity(scope, et_Type), named_(nmd) {
     };
-    
-    
-    basic_atom_ptr typeassignment_entity::typed_atom() const{
+
+    basic_atom_ptr typeassignment_entity::typed_atom() const {
         return type();
-    }        
+    }
 
     type_atom_ptr typeassignment_entity::type() const {
         //return type_;
@@ -1668,17 +1672,21 @@ namespace x680 {
     }
 
     void typeassignment_entity::post_resolve_check() {
-        if ((type()) && (!childs().empty())) {
-            if ((type()->builtin() == t_SEQUENCE) || ((type()->builtin() == t_SET))) {
+        if (has_arguments())
+            return;
+        type_atom_ptr tmptype = type();
+        if ((tmptype) && (!childs().empty())) {
+            if ((tmptype->builtin() == t_SEQUENCE) || ((tmptype->builtin() == t_SET))) {
                 canonical_tag_set tmpset;
                 for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                     namedtypeassignment_entity_ptr tmpel = ((*it)->as_typeassigment() && (*it)->as_typeassigment()->as_named()) ?
                             (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr();
-                    if ((tmpel) && (tmpel->type())) {
-                        if (tmpel->type()->cncl_tag()) {
-                            if (tmpset.find(tmpel->type()->cncl_tag()) != tmpset.end())
+                    type_atom_ptr tmptype1 = tmpel ? (tmpel->type()) : type_atom_ptr();
+                    if ((tmpel) && (tmptype1)) {
+                        if (tmptype1->cncl_tag()) {
+                            if (tmpset.find(tmptype1->cncl_tag()) != tmpset.end())
                                 referenceerror_throw("Tagging of structured type is ambiguous :", tmpel->name());
-                            tmpset.insert(tmpel->type()->cncl_tag());
+                            tmpset.insert(tmptype1->cncl_tag());
                         } else {
                             canonical_tag_vct tmpelmts = tmpel->cncl_tags();
                             if (!tmpelmts.empty()) {
@@ -1690,11 +1698,11 @@ namespace x680 {
                                 }
                             }
                         }
-                        if ((type()->builtin() == t_SEQUENCE) && (tmpel->marker() == mk_none))
+                        if ((tmptype->builtin() == t_SEQUENCE) && (tmpel->marker() == mk_none))
                             tmpset.clear();
                     }
                 }
-            } else if (type()->builtin() == t_CHOICE) {
+            } else if (tmptype->builtin() == t_CHOICE) {
                 canonical_tag_set tmpset;
                 for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                     namedtypeassignment_entity_ptr tmpel = ((*it)->as_typeassigment() && (*it)->as_typeassigment()->as_named()) ?

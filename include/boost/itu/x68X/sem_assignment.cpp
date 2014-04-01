@@ -1062,7 +1062,7 @@ namespace x680 {
     }
 
     basic_entity_ptr basic_atom::reff() const {
-        return subatom_ ? subatom_->reff() : reff_;
+        return reff_;
     }
 
     bool basic_atom::extesibility_implied() const {

@@ -1286,12 +1286,14 @@ namespace x680 {
                 } 
                     if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
                         && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
+                    basic_atom_ptr fromtmp=rslt;
                     basic_atom_ptr tmp=rslt->reff()->as_assigment()->as_baseassignment<T>()->typed_atom();   
                     if (tmp) {
                         //rslt->reff()->as_typeassigment()->type()->subatom(rslt);
                         rslt = tmp;
+                        rslt->subatom(fromtmp);
                         if (rslt)
-                            rslt->resolve();
+                        rslt->resolve();
                     }
                 }
             }
