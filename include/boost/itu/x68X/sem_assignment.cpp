@@ -1265,6 +1265,10 @@ namespace x680 {
     }
 
     void assignment_entity::clear_argument() {
+        if (atom())
+            atom()->subatom(basic_atom_ptr());
+        if (typed_atom())
+            typed_atom()->subatom(basic_atom_ptr());
         for (argument_entity_vct::iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
             if (*it)
                 (*it)->clear_argument();

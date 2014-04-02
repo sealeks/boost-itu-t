@@ -1268,34 +1268,42 @@ namespace x680 {
     basic_atom_ptr assignment_entity::calculate_atom() const {
         //return type_;
         basic_atom_ptr rslt = atom();
+        basic_atom_ptr fromtmp;
         if (rslt) {
             if (!has_arguments()) {
                 if (rslt->parameterized()) {
                     try {
                         if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
+                            fromtmp = rslt;
                             boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
                             tas->apply_arguments(rslt->parameters());
                             reffholder(tas);
                             rslt = tas->typed_atom();
+                            if (rslt)
+                                rslt->subatom(fromtmp);
                         }
                     } catch (const semantics::error&) {
                         debug_warning(std::string("Should be error argument type ambiguous:   Arguments apply error ") + name());
                         return rslt;
                         //const_cast<typeassignment_entity*> (this)->referenceerror_throw("Arguments apply error ", name());
                     }
-                } 
-                    if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
+                }
+            } else {
+                reffholder(boost::shared_ptr<T>());
+                rslt->subatom(basic_atom_ptr());
+            }
+
+            if (rslt) {
+                if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
                         && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
-                    basic_atom_ptr fromtmp=rslt;
-                    basic_atom_ptr tmp=rslt->reff()->as_assigment()->as_baseassignment<T>()->typed_atom();   
-                    if (tmp) {
-                        //rslt->reff()->as_typeassigment()->type()->subatom(rslt);
-                        rslt = tmp;
+                    fromtmp = rslt;
+                    rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->typed_atom();
+                    if (rslt) {
                         rslt->subatom(fromtmp);
-                        if (rslt)
                         rslt->resolve();
                     }
-                }
+                } else
+                        rslt->subatom(basic_atom_ptr());
             }
         }
         return rslt;
