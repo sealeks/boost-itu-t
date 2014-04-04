@@ -39,6 +39,7 @@ namespace x680 {
         basic_entity_vector compile_structtype(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         typeassignment_entity_ptr compile_namedtype(basic_entity_ptr scope, const x680::syntactic::type_assignment& ent);
         type_atom_ptr compile_type(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
+        typeassignment_entity_ptr compile_typea(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         predefined_ptr compile_typepredef(basic_entity_ptr scope, const x680::syntactic::type_element& ent);
         tagged_ptr compile_tag(basic_entity_ptr scope, const x680::syntactic::tag_type& ent);
         // value

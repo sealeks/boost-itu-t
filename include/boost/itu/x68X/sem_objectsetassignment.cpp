@@ -130,11 +130,7 @@ namespace x680 {
     }        
 
     objectset_atom_ptr objectsetassignment_entity::objectset() const {
-        //return objectset_;
-        basic_atom_ptr rslt = calculate_atom< objectsetassignment_entity>();
-        //if (!rslt || !(rslt->as_objectset()))
-           // referenceerror_throw("Not resolved  ")
-        return (rslt && (rslt->as_objectset())) ? rslt->as_objectset() : objectset_;
+        return objectset_;
     }
 
     basic_entity_ptr objectsetassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
@@ -159,6 +155,10 @@ namespace x680 {
         if (objectset())
             objectset()->resolve();
     }
+    
+    void objectsetassignment_entity::assign_from(assignment_entity_ptr from) {
+
+    }     
 
 
 }

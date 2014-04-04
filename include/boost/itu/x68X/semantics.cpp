@@ -143,6 +143,7 @@ namespace x680 {
 
         typeassignment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::type_assignment& tmp) {
             typeassignment_entity_ptr tmpt(new typeassignment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
+            tmpt->synctas(tmp);
             switch (tmp.type.builtin_t) {
                 case t_SEQUENCE:
                 case t_SEQUENCE_OF:
@@ -235,6 +236,21 @@ namespace x680 {
             return tmp;
         }
 
+        typeassignment_entity_ptr compile_typea(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
+            typeassignment_entity_ptr tmpt(new typeassignment_entity(scope, "", compile_type(scope, ent)));
+            switch (ent.builtin_t) {
+                case t_SEQUENCE:
+                case t_SEQUENCE_OF:
+                case t_SET:
+                case t_SET_OF:
+                case t_CHOICE: tmpt->childs() = compile_structtype(tmpt, ent);
+                default:
+                {
+                };
+            }
+            return tmpt;
+        }
+
         predefined_ptr compile_typepredef(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
             if (ent.predefined.empty())
                 return predefined_ptr();
@@ -296,6 +312,7 @@ namespace x680 {
 
         valueassignment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::value_assignment& tmp) {
             valueassignment_entity_ptr tmpt(new valueassignment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
+            tmpt->synctas(tmp);
             value_atom_ptr tmpv = compile_value(tmpt, tmp.value);
             tmpt->value(tmpv);
             tmpt->type()->predefined(compile_typepredef(tmpt, tmp.type));
@@ -430,6 +447,7 @@ namespace x680 {
 
         valuesetassignment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::valueset_assignment& tmp) {
             valuesetassignment_entity_ptr tmpv(new valuesetassignment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
+            tmpv->synctas(tmp);
             tmpv->valueset(compile_valueset(tmpv, tmp.set));
             tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
             return tmpv;
@@ -615,6 +633,7 @@ namespace x680 {
 
         classassignment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::class_assignment& tmp) {
             classassignment_entity_ptr tmpc(new classassignment_entity(scope, tmp.identifier));
+            tmpc->synctas(tmp);
             switch (tmp.class_.tp) {
                 case cl_Reference:
                 {
@@ -868,6 +887,7 @@ namespace x680 {
 
         objectassignment_entity_ptr compile_objectassignment(basic_entity_ptr scope, const x680::syntactic::object_assignment& tmp) {
             objectassignment_entity_ptr tmpc(new objectassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_)));
+            tmpc->synctas(tmp);
             object_atom_ptr obj = compile_object(tmpc, tmp.object);
             tmpc->object(obj);
             tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
@@ -920,7 +940,7 @@ namespace x680 {
         setting_atom_ptr compile_setting(basic_entity_ptr scope, const x680::syntactic::setting_element& ent) {
             setting_atom_ptr tmp(new setting_atom(ent.alternative, scope));
             if ((ent.alternative & AS_TYPE) && (ent.type))
-                tmp->type(compile_type(scope, *ent.type));
+                tmp->typeassignment(compile_typea(scope, *ent.type));
             if ((ent.alternative & AS_VALUE) && (ent.value))
                 tmp->value(compile_value(scope, *ent.value));
             if ((ent.alternative & AS_VALUESET) && (ent.valueset))
@@ -941,6 +961,7 @@ namespace x680 {
 
         objectsetassignment_entity_ptr compile_objectsetassignment(basic_entity_ptr scope, const x680::syntactic::objectset_assignment& tmp) {
             objectsetassignment_entity_ptr tmpc(new objectsetassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_)));
+            tmpc->synctas(tmp);
             objectset_atom_ptr objs = compile_objectset(tmpc, tmp.set);
             tmpc->objectset(objs);
             tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
@@ -975,6 +996,7 @@ namespace x680 {
 
         bigassignment_entity_ptr compile_bigassignment(basic_entity_ptr scope, const x680::syntactic::unknown_tc_assignment& tmp) {
             bigassignment_entity_ptr tmpv = boost::make_shared< bigassignment_entity>(scope, tmp.identifier);
+            tmpv->synctas(tmp);
             tmpv->big(compile_reff(scope, tmp.unknown_tc.reff));
             tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
             tmpv->big()->parameters(compile_parameters(scope, tmp.unknown_tc.parameters));
@@ -989,6 +1011,7 @@ namespace x680 {
 
         voassignment_entity_ptr compile_voassignment(basic_entity_ptr scope, const x680::syntactic::unknown_vo_assignment& tmp) {
             voassignment_entity_ptr tmpv = boost::make_shared< voassignment_entity>(scope, tmp.identifier);
+            tmpv->synctas(tmp);
             tmpv->big(compile_reff(tmpv, tmp.reff));
             if ((tmp.alternative_ & AS_VALUE) && (tmp.valuea))
                 tmpv->bigT(compile_valueassignment(scope, *tmp.valuea));
@@ -1002,6 +1025,7 @@ namespace x680 {
 
         soassignment_entity_ptr compile_soassignment(basic_entity_ptr scope, const x680::syntactic::unknown_so_assignment& tmp) {
             soassignment_entity_ptr tmpv = soassignment_entity_ptr(new soassignment_entity(scope, tmp.identifier));
+            tmpv->synctas(tmp);
             tmpv->big(compile_reff(tmpv, tmp.reff));
             if ((tmp.alternative_ & AS_VALUESET) && (tmp.valueseta))
                 tmpv->bigT(compile_valuesetassignment(scope, *tmp.valueseta));

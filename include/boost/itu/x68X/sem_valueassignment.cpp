@@ -541,11 +541,7 @@ namespace x680 {
     }        
 
     value_atom_ptr valueassignment_entity::value() const {
-        //return value_;
-        basic_atom_ptr rslt = calculate_atom< valueassignment_entity>();
-        //if (!rslt || !(rslt->as_value()))
-        //    referenceerror_throw("Not resolved  ")        
-        return (rslt && (rslt->as_value())) ? rslt->as_value() : value_;
+        return value_;
     }
 
     void valueassignment_entity::check_value_with_exception(value_type tp) {
@@ -594,6 +590,8 @@ namespace x680 {
             tmpvalue->resolve(type());
     }
 
+    virtual void valueassignment_entity::assign_from(assignment_entity_ptr from) {
 
+    }  
 
 }

@@ -878,13 +878,21 @@ namespace x680 {
 
         void type(type_atom_ptr vl) {
             type_ = vl;
-        }
+        }         
 
         valueset_atom_ptr valueset() const;
 
         void valueset(valueset_atom_ptr vl) {
             valueset_ = vl;
         }
+        
+       const  x680::syntactic::valueset_assignment& synctas() const{
+            return synctas_;
+        }
+
+        void synctas(const x680::syntactic::valueset_assignment& vl) {
+            synctas_ = vl;
+        }           
 
 
         /////        
@@ -898,11 +906,14 @@ namespace x680 {
         }
         
         virtual basic_atom_ptr typed_atom() const;        
+        
+        virtual void assign_from(assignment_entity_ptr from);        
 
     private:
 
         type_atom_ptr type_;
         valueset_atom_ptr valueset_;
+        x680::syntactic::valueset_assignment synctas_;
     };
 
 

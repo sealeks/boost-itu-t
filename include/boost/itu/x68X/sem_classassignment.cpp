@@ -248,11 +248,7 @@ namespace x680 {
     }
 
     class_atom_ptr classassignment_entity::_class() const {
-        //return class_;
-        basic_atom_ptr rslt = calculate_atom< classassignment_entity>();
-        //if (!rslt || !(rslt->as_class()))
-       //     referenceerror_throw("Not resolved  ")        
-        return (rslt && (rslt->as_class())) ? rslt->as_class() : class_;  
+        return class_;
     }
 
     basic_entity_ptr classassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
@@ -335,6 +331,8 @@ namespace x680 {
         }
     }
 
+    void classassignment_entity::assign_from(assignment_entity_ptr from) {
 
+    }  
 
 }

@@ -474,11 +474,19 @@ namespace x680 {
         void type(type_atom_ptr vl) {
             type_ = vl;
         }
+        
+       const  x680::syntactic::type_assignment& synctas() const{
+            return synctas_;
+        }
+
+        void synctas(const x680::syntactic::type_assignment& vl) {
+            synctas_ = vl;
+        }        
 
         bool named() const {
             return named_;
         }
-
+        
         bool is_cpp_expressed() const {
             return ((type()) && (!has_arguments()));
         }
@@ -632,7 +640,9 @@ namespace x680 {
             return type_;
         }
         
-        virtual basic_atom_ptr typed_atom() const;        
+        virtual basic_atom_ptr typed_atom() const;   
+        
+        virtual void assign_from(assignment_entity_ptr from);  
 
     private:
 
@@ -647,7 +657,8 @@ namespace x680 {
         void post_resolve_check();
 
         type_atom_ptr type_;
-        bool named_;
+        bool named_; 
+        x680::syntactic::type_assignment synctas_;
     };
 
 

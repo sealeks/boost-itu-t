@@ -435,6 +435,14 @@ namespace x680 {
         void _class(class_atom_ptr vl) {
             class_ = vl;
         }
+        
+        const  x680::syntactic::object_assignment& synctas() const{
+            return synctas_;
+        }
+
+        void synctas(const x680::syntactic::object_assignment& vl) {
+            synctas_ = vl;
+        }         
 
         /////        
 
@@ -448,7 +456,9 @@ namespace x680 {
             return object_;
         }
         
-        virtual basic_atom_ptr typed_atom() const;        
+        virtual basic_atom_ptr typed_atom() const;   
+        
+        virtual void assign_from(assignment_entity_ptr from);        
 
     private:
 
@@ -468,6 +478,7 @@ namespace x680 {
 
         class_atom_ptr class_;
         object_atom_ptr object_;
+        x680::syntactic::object_assignment synctas_;         
     };
 
 

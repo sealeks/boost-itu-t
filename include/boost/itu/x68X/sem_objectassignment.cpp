@@ -246,11 +246,7 @@ namespace x680 {
     }    
 
     object_atom_ptr objectassignment_entity::object() const {
-        //return object_;
-        basic_atom_ptr rslt = calculate_atom< objectassignment_entity>();
-        //if (!rslt || !(rslt->as_object()))
-        //    referenceerror_throw("Not resolved  ")        
-        return (rslt && (rslt->as_object())) ? rslt->as_object() : object_;  
+        return object_;  
     }
 
     basic_entity_ptr objectassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
@@ -494,7 +490,9 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
+    void objectassignment_entity::assign_from(assignment_entity_ptr from) {
 
+    }  
 
 
 }

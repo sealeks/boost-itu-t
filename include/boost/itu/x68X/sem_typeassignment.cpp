@@ -1382,11 +1382,7 @@ namespace x680 {
     }
 
     type_atom_ptr typeassignment_entity::type() const {
-        //return type_;
-        basic_atom_ptr rslt = calculate_atom<typeassignment_entity>();
-        //if (!rslt || !(rslt->as_type()))
-        //    referenceerror_throw("Not resolved  ")  
-        return (rslt && (rslt->as_type())) ? rslt->as_type() : type_;
+        return type_;
     }
 
 
@@ -1487,9 +1483,10 @@ namespace x680 {
     void typeassignment_entity::resolve(basic_atom_ptr holder) {
         unicalelerror_throw(childs());
         assignment_entity::resolve(holder);
-        resolve_child();
         if (type_)
             type_->resolve();
+        assignment_entity::resolve_parametrezed<typeassignment_entity>();
+        resolve_child();
         post_resolve_child();
 
     }
@@ -1672,6 +1669,7 @@ namespace x680 {
     }
 
     void typeassignment_entity::post_resolve_check() {
+        return;
         if (has_arguments())
             return;
         type_atom_ptr tmptype = type();
@@ -1722,6 +1720,10 @@ namespace x680 {
             }
         }
     }
+
+    virtual void typeassignment_entity::assign_from(assignment_entity_ptr from) {
+
+    }       
 
 
 

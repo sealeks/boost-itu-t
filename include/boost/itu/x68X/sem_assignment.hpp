@@ -508,12 +508,14 @@ namespace x680 {
         void scope(basic_entity_ptr vl);
 
         basic_entity_ptr reffholder() const {
-            return !reffholder_._empty() ? reffholder_.lock() : basic_entity_ptr();
+            return reffholder_;
         }
 
         void reffholder(basic_entity_ptr vl) const;
 
         basic_entity_vector& childs();
+
+        void childs(basic_entity_vector& vl);
 
         self_shared_type self() {
             return shared_from_this();
@@ -588,7 +590,7 @@ namespace x680 {
         void prefind(const std::string& nm, basic_entity_vector& elm);
 
         basic_entity_wptr scope_;
-        mutable basic_entity_wptr reffholder_;
+        mutable basic_entity_ptr reffholder_;
         basic_entity_vector childs_;
         std::string name_;
         entity_enum kind_;
@@ -1087,12 +1089,14 @@ namespace x680 {
             mask_ = vl;
         }
 
-        type_atom_ptr type() {
-            return type_;
+        type_atom_ptr type();
+
+        typeassignment_entity_ptr typeassignment() {
+            return typeassignment_;
         }
 
-        void type(type_atom_ptr vl) {
-            type_ = vl;
+        void typeassignment(typeassignment_entity_ptr vl) {
+            typeassignment_ = vl;
         }
 
         value_atom_ptr value() {
@@ -1147,7 +1151,7 @@ namespace x680 {
     private:
 
         alternmask mask_;
-        type_atom_ptr type_;
+        typeassignment_entity_ptr typeassignment_;
         value_atom_ptr value_;
         valueset_atom_ptr valueset_;
         class_atom_ptr class_;
@@ -1224,7 +1228,7 @@ namespace x680 {
         virtual basic_atom_ptr atom() const {
             return basic_atom_ptr();
         }
-        
+
         virtual basic_atom_ptr typed_atom() const {
             return basic_atom_ptr();
         }
@@ -1232,12 +1236,21 @@ namespace x680 {
         template<typename T>
         boost::shared_ptr<T> as_baseassignment() {
             return boost::shared_ptr<T>();
-        }
+        }    
 
         template<typename T>
-        basic_atom_ptr calculate_atom() const;
-
+        basic_atom_ptr resolve_parametrezed();
+        
+        template<typename T>
+        boost::shared_ptr<T> clone(basic_entity_ptr scope = basic_entity_ptr()) {
+            return boost::shared_ptr<T>();
+        }   
+        
         std::string subidentifier(std::string& nm);
+        
+        virtual void assign_from(assignment_entity_ptr from){
+            
+        }
 
     private:
 
@@ -1263,53 +1276,80 @@ namespace x680 {
 
     template<>
     objectsetassignment_entity_ptr assignment_entity::as_baseassignment();
+    
+
+    
+    
+    template<>
+    typeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);    
+    
+    template<>
+    valueassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);    
+
+    template<>
+    valuesetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);      
+    
+    template<>
+    classassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);    
+    
+    template<>
+    objectassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);    
+
+    template<>
+    objectsetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope); 
+    
+    
 
     template<typename T>
-    basic_atom_ptr assignment_entity::calculate_atom() const {
+    basic_atom_ptr assignment_entity::resolve_parametrezed()  {
         //return type_;
         basic_atom_ptr rslt = atom();
         basic_atom_ptr fromtmp;
         if (rslt) {
-            if (!has_arguments()) {
-                if (rslt->parameterized()) {
-                    try {
-                        if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
-                            fromtmp = rslt;
-                            boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
-                            tas->apply_arguments(rslt->parameters());
-                            reffholder(tas);
-                            rslt = tas->typed_atom();
-                            if (rslt)
-                                rslt->subatom(fromtmp);
-                        }
-                    } catch (const semantics::error&) {
-                        debug_warning(std::string("Should be error argument type ambiguous:   Arguments apply error ") + name());
-                        return rslt;
-                        //const_cast<typeassignment_entity*> (this)->referenceerror_throw("Arguments apply error ", name());
+            //if (!has_arguments()) {
+            if (rslt->parameterized()) {
+                try {
+                    if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
+                        fromtmp = rslt;
+                        boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
+                        tas->apply_arguments(rslt->parameters());
+                        reffholder(tas);
+                        rslt = tas->typed_atom();
+                        if (rslt)
+                            rslt->subatom(fromtmp);
                     }
+                } catch (const semantics::error&) {
+                    debug_warning(std::string("Should be error argument type ambiguous:   Arguments apply error ") + name());
+                    return rslt;
+                    //const_cast<typeassignment_entity*> (this)->referenceerror_throw("Arguments apply error ", name());
                 }
+                //}
             } else {
-                reffholder(boost::shared_ptr<T>());
+                //     reffholder(boost::shared_ptr<T>());
                 rslt->subatom(basic_atom_ptr());
             }
 
             if (rslt) {
                 if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
                         && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
+                    boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
+                    reffholder(tas);
                     fromtmp = rslt;
                     rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->typed_atom();
                     if (rslt) {
                         rslt->subatom(fromtmp);
                         rslt->resolve();
                     }
+                    const_cast<assignment_entity*> (this)->resolve_child();
                 } else
-                        rslt->subatom(basic_atom_ptr());
+                    rslt->subatom(basic_atom_ptr());
             }
         }
         return rslt;
     }
 
-
+    template<>
+    basic_atom_ptr assignment_entity::resolve_parametrezed<typeassignment_entity>();
 
 
 
@@ -1348,6 +1388,21 @@ namespace x680 {
             bigC_ = vl;
         }
 
+        const x680::syntactic::unknown_tc_assignment& synctas() const {
+            return synctas_;
+        }
+
+        void synctas(const x680::syntactic::unknown_tc_assignment& vl) {
+            synctas_ = vl;
+        }
+
+        x680::syntactic::type_assignment synctasT() const;
+
+        x680::syntactic::class_assignment synctasC() const;
+
+
+
+
         /////        
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
@@ -1361,6 +1416,7 @@ namespace x680 {
         basic_atom_ptr big_;
         typeassignment_entity_ptr bigT_;
         classassignment_entity_ptr bigC_;
+        x680::syntactic::unknown_tc_assignment synctas_;
     };
 
 
@@ -1403,7 +1459,17 @@ namespace x680 {
             bigC_ = vl;
         }
 
+        const x680::syntactic::unknown_vo_assignment& synctas() const {
+            return synctas_;
+        }
 
+        void synctas(const x680::syntactic::unknown_vo_assignment& vl) {
+            synctas_ = vl;
+        }
+
+        x680::syntactic::value_assignment synctasT() const;
+
+        x680::syntactic::object_assignment synctasC() const;
 
         /////        
 
@@ -1418,6 +1484,7 @@ namespace x680 {
         basic_atom_ptr big_;
         valueassignment_entity_ptr bigT_;
         objectassignment_entity_ptr bigC_;
+        x680::syntactic::unknown_vo_assignment synctas_;
     };
 
 
@@ -1457,6 +1524,18 @@ namespace x680 {
             bigC_ = vl;
         }
 
+        const x680::syntactic::unknown_so_assignment& synctas() const {
+            return synctas_;
+        }
+
+        void synctas(const x680::syntactic::unknown_so_assignment& vl) {
+            synctas_ = vl;
+        }
+
+        x680::syntactic::valueset_assignment synctasT() const;
+
+        x680::syntactic::objectset_assignment synctasC() const;
+
 
         /////        
 
@@ -1471,6 +1550,7 @@ namespace x680 {
         basic_atom_ptr big_;
         valuesetassignment_entity_ptr bigT_;
         objectsetassignment_entity_ptr bigC_;
+        x680::syntactic::unknown_so_assignment synctas_;
     };
 
 
