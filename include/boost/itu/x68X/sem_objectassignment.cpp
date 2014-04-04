@@ -27,15 +27,14 @@ namespace x680 {
     object_atom::object_atom(basic_entity_ptr scope, const std::string& reff, object_type tp)
     : basic_atom(at_Object, scope, reff), builtin_(tp) {
     }
-    
+
     bool object_atom::isrefferrence() const {
         return (((builtin_ == ot_Refference)
                 || (builtin_ == ot_FromObject)
                 || (builtin_ == ot_DefinedObjectSet)
-                ||  (builtin_ == ot_DefinedObjectSet)
+                || (builtin_ == ot_DefinedObjectSet)
                 || (builtin_ == ot_ObjectSetFromObject)) && (reff()));
-    }            
-    
+    }
 
     defined_object_atom_ptr object_atom::as_defined() {
         return builtin_ == ot_Refference ?
@@ -87,9 +86,9 @@ namespace x680 {
                 boost::static_pointer_cast<exceptobject_atom> (self()) : exceptobject_atom_ptr();
     }
 
-     allobject_atom_ptr object_atom::as_all() {
+    allobject_atom_ptr object_atom::as_all() {
         return builtin_ == ot_ALLEXCEPT ?
-                boost::static_pointer_cast< allobject_atom> (self()) :  allobject_atom_ptr();
+                boost::static_pointer_cast< allobject_atom> (self()) : allobject_atom_ptr();
     }
 
     extentionobject_atom_ptr object_atom::as_extention() {
@@ -229,7 +228,7 @@ namespace x680 {
                     reff(tmpasmt->find_component(field_->expectedname()));
                 }
             }
-        }           
+        }
     }
 
 
@@ -240,13 +239,13 @@ namespace x680 {
     objectassignment_entity::objectassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr cls, object_atom_ptr obj) :
     assignment_entity(scope, nm, et_Object), class_(cls), object_(obj) {
     };
-    
-    basic_atom_ptr objectassignment_entity::typed_atom() const{
+
+    basic_atom_ptr objectassignment_entity::typed_atom() const {
         return object();
-    }    
+    }
 
     object_atom_ptr objectassignment_entity::object() const {
-        return object_;  
+        return object_;
     }
 
     basic_entity_ptr objectassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
@@ -295,7 +294,7 @@ namespace x680 {
                                 case mk_default:create_fields((*it)->as_classfield());
                                     break;
                                 case mk_optional: break;
-                                default: referenceerror_throw( "Field sould be set : ", (*it)->as_classfield()->name());
+                                default: referenceerror_throw("Field sould be set : ", (*it)->as_classfield()->name());
                             }
                         }
                     }
@@ -309,7 +308,7 @@ namespace x680 {
                                 case mk_default:create_fields_var((*it)->as_classfield());
                                     break;
                                 case mk_optional: break;
-                                default: referenceerror_throw( "Field sould be set : " , (*it)->as_classfield()->name());
+                                default: referenceerror_throw("Field sould be set : ", (*it)->as_classfield()->name());
                             }
                         }
                     }
@@ -341,7 +340,7 @@ namespace x680 {
                 if (obj->find_literal(syn->alias())) {
                 } else {
                     if ((!syn->optional()) && !optional)
-                        referenceerror_throw( "Field object parsing error :", syn->alias());
+                        referenceerror_throw("Field object parsing error :", syn->alias());
                     else
                         return false;
                 }
@@ -367,13 +366,13 @@ namespace x680 {
                     return true;
                 } else {
                     if ((!syn->optional()) && !optional)
-                        referenceerror_throw("Field object parsing error : " , syn->alias());
+                        referenceerror_throw("Field object parsing error : ", syn->alias());
                     else
                         return false;
                 }
             } else {
                 if (obj->fieldsetting().empty())
-                    referenceerror_throw("Field object parsing error : " , syn->alias());
+                    referenceerror_throw("Field object parsing error : ", syn->alias());
                 newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
                 obj->fieldsetting().erase(obj->fieldsetting().begin());
                 return true;
@@ -393,7 +392,7 @@ namespace x680 {
                 if (st->value())
                     childs_.push_back(basic_entity_ptr(new valueassignment_entity(fld->scope(), fld->name(), fld->as_valuefield()->type(), st->value())));
                 else
-                    referenceerror_throw( "Field is not value : ", fld->name());
+                    referenceerror_throw("Field is not value : ", fld->name());
             } else if (fld->as_valuesetfield()) {
                 if (st->valueset())
                     childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(fld->scope(), fld->name(), fld->as_valuesetfield()->type(), st->valueset())));
@@ -403,7 +402,7 @@ namespace x680 {
                 if (st->object())
                     childs_.push_back(basic_entity_ptr(new objectassignment_entity(fld->scope(), fld->name(), fld->as_objectfield()->_class(), st->object())));
                 else
-                    referenceerror_throw("Field is not object : " , fld->name());
+                    referenceerror_throw("Field is not object : ", fld->name());
             } else if (fld->as_objectsetfield()) {
                 if (st->objectset())
                     childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(fld->scope(), fld->name(), fld->as_objectsetfield()->_class(), st->objectset())));
@@ -479,8 +478,9 @@ namespace x680 {
 
     basic_entity_ptr objectassignment_entity::find_typefields(const std::string& nm) {
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-            if (((*it)->name() == nm) && ((*it)->as_typeassigment())){
-                return (*it);}
+            if (((*it)->name() == nm) && ((*it)->as_typeassigment())) {
+                return (*it);
+            }
             if (((*it)->name() == nm) && ((*it)->as_valueassigment()))
                 return find_typefields((*it)->as_valueassigment()->type()->reff()->name());
             if (((*it)->name() == nm) && ((*it)->as_valuesetassigment()))
@@ -492,7 +492,7 @@ namespace x680 {
 
     void objectassignment_entity::assign_from(assignment_entity_ptr from) {
 
-    }  
+    }
 
 
 }

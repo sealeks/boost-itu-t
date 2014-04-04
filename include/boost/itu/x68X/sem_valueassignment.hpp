@@ -493,21 +493,21 @@ namespace x680 {
 
         void type(type_atom_ptr vl) {
             type_ = vl;
-        }           
+        }
 
         value_atom_ptr value() const;
 
         void value(value_atom_ptr vl) {
             value_ = vl;
         }
-        
-       const  x680::syntactic::value_assignment& synctas() const{
+
+        const x680::syntactic::value_assignment& synctas() const {
             return synctas_;
         }
 
         void synctas(const x680::syntactic::value_assignment& vl) {
             synctas_ = vl;
-        }         
+        }
 
         void check_value_with_exception(value_type tp);
 
@@ -522,9 +522,9 @@ namespace x680 {
             return value_;
         }
 
-        virtual basic_atom_ptr typed_atom() const;   
-         
-        virtual void assign_from(assignment_entity_ptr from);         
+        virtual basic_atom_ptr typed_atom() const;
+
+        virtual void assign_from(assignment_entity_ptr from);
 
     private:
 

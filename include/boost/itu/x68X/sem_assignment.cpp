@@ -141,7 +141,7 @@ namespace x680 {
 
     basic_entity_vector& basic_entity::childs() {
         //if (reffholder())
-            //return reffholder()->childs();
+        //return reffholder()->childs();
         return childs_;
     }
 
@@ -1448,46 +1448,45 @@ namespace x680 {
     }
 
     template<>
-    typeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp)  {
-        return  (as_typeassigment()) ? 
-            x680::semantics::compile_typeassignment( scp ? scp : scope() , as_typeassigment()->synctas()) : typeassignment_entity_ptr();
+    typeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
+        return (as_typeassigment()) ?
+                x680::semantics::compile_typeassignment(scp ? scp : scope(), as_typeassigment()->synctas()) : typeassignment_entity_ptr();
     }
 
     template<>
-    valueassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp)  {
-        return  (as_valueassigment()) ? 
-            x680::semantics::compile_valueassignment( scp ? scp : scope() , as_valueassigment()->synctas()) : valueassignment_entity_ptr();
+    valueassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
+        return (as_valueassigment()) ?
+                x680::semantics::compile_valueassignment(scp ? scp : scope(), as_valueassigment()->synctas()) : valueassignment_entity_ptr();
     }
 
     template<>
-    valuesetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp)  {
-        return  (as_valuesetassigment()) ? 
-            x680::semantics::compile_valuesetassignment( scp ? scp : scope() , as_valuesetassigment()->synctas()) : valuesetassignment_entity_ptr();
+    valuesetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
+        return (as_valuesetassigment()) ?
+                x680::semantics::compile_valuesetassignment(scp ? scp : scope(), as_valuesetassigment()->synctas()) : valuesetassignment_entity_ptr();
     }
 
     template<>
-    classassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp)  {
-        return  (as_classassigment()) ? 
-            x680::semantics::compile_classassignment( scp ? scp : scope() , as_classassigment()->synctas()) : classassignment_entity_ptr();
+    classassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
+        return (as_classassigment()) ?
+                x680::semantics::compile_classassignment(scp ? scp : scope(), as_classassigment()->synctas()) : classassignment_entity_ptr();
     }
 
     template<>
-    objectassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp)  {
-        return  (as_objectassigment()) ? 
-            x680::semantics::compile_objectassignment( scp ? scp : scope() , as_objectassigment()->synctas()) : objectassignment_entity_ptr();
+    objectassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
+        return (as_objectassigment()) ?
+                x680::semantics::compile_objectassignment(scp ? scp : scope(), as_objectassigment()->synctas()) : objectassignment_entity_ptr();
     }
 
     template<>
-    objectsetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp)  {
-        return  (as_objectsetassigment()) ? 
-            x680::semantics::compile_objectsetassignment( scp ? scp : scope() , as_objectsetassigment()->synctas()) : objectsetassignment_entity_ptr();
+    objectsetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
+        return (as_objectsetassigment()) ?
+                x680::semantics::compile_objectsetassignment(scp ? scp : scope(), as_objectsetassigment()->synctas()) : objectsetassignment_entity_ptr();
     }
-    
 
     template<>
-    basic_atom_ptr assignment_entity::resolve_parametrezed<typeassignment_entity>()  {
+    basic_atom_ptr assignment_entity::resolve_parametrezed<typeassignment_entity>() {
         basic_atom_ptr rslt = atom();
-        basic_atom_ptr fromtmp;       
+        basic_atom_ptr fromtmp;
         if (rslt) {
             if (rslt->parameterized()) {
                 try {
@@ -1496,11 +1495,11 @@ namespace x680 {
                         boost::shared_ptr<typeassignment_entity> tascopy = tas->clone<typeassignment_entity>();
                         if (!tascopy)
                             throw semantics::error("");
-                        tascopy->resolve();                      
+                        tascopy->resolve();
                         tascopy->apply_arguments(rslt->parameters());
-                        
+
                         assign_from(tascopy);
-                        childs()=tascopy->childs();
+                        childs() = tascopy->childs();
                         rslt->parameters().clear();
                         reffholder(tascopy);
                         /*rslt = tas->typed_atom();

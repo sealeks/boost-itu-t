@@ -1236,20 +1236,20 @@ namespace x680 {
         template<typename T>
         boost::shared_ptr<T> as_baseassignment() {
             return boost::shared_ptr<T>();
-        }    
+        }
 
         template<typename T>
         basic_atom_ptr resolve_parametrezed();
-        
+
         template<typename T>
         boost::shared_ptr<T> clone(basic_entity_ptr scope = basic_entity_ptr()) {
             return boost::shared_ptr<T>();
-        }   
-        
+        }
+
         std::string subidentifier(std::string& nm);
-        
-        virtual void assign_from(assignment_entity_ptr from){
-            
+
+        virtual void assign_from(assignment_entity_ptr from) {
+
         }
 
     private:
@@ -1276,32 +1276,30 @@ namespace x680 {
 
     template<>
     objectsetassignment_entity_ptr assignment_entity::as_baseassignment();
-    
 
-    
-    
-    template<>
-    typeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);    
-    
-    template<>
-    valueassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);    
+
+
 
     template<>
-    valuesetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);      
-    
-    template<>
-    classassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);    
-    
-    template<>
-    objectassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);    
+    typeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
 
     template<>
-    objectsetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope); 
-    
-    
+    valueassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
+
+    template<>
+    valuesetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
+
+    template<>
+    classassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
+
+    template<>
+    objectassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
+
+    template<>
+    objectsetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
 
     template<typename T>
-    basic_atom_ptr assignment_entity::resolve_parametrezed()  {
+    basic_atom_ptr assignment_entity::resolve_parametrezed() {
         //return type_;
         basic_atom_ptr rslt = atom();
         basic_atom_ptr fromtmp;

@@ -182,18 +182,18 @@ namespace x680 {
         }
 
         objectset_atom_ptr objectset() const;
-        
+
         void objectset(objectset_atom_ptr vl) {
             objectset_ = vl;
         }
-        
-        const  x680::syntactic::objectset_assignment& synctas() const{
+
+        const x680::syntactic::objectset_assignment& synctas() const {
             return synctas_;
         }
 
         void synctas(const x680::syntactic::objectset_assignment& vl) {
             synctas_ = vl;
-        }           
+        }
 
         /////        
 
@@ -204,16 +204,16 @@ namespace x680 {
         virtual basic_atom_ptr atom() const {
             return objectset_;
         }
-        
-        virtual basic_atom_ptr typed_atom() const;        
-        
-        virtual void assign_from(assignment_entity_ptr from);        
+
+        virtual basic_atom_ptr typed_atom() const;
+
+        virtual void assign_from(assignment_entity_ptr from);
 
     private:
 
         objectset_atom_ptr objectset_;
         class_atom_ptr class_;
-        x680::syntactic::objectset_assignment synctas_;                
+        x680::syntactic::objectset_assignment synctas_;
     };
 
 

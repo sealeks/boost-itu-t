@@ -534,11 +534,10 @@ namespace x680 {
     valueassignment_entity::valueassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl) :
     assignment_entity(scope, nm, et_Value), type_(tp), value_(vl) {
     };
-    
-    
-    basic_atom_ptr valueassignment_entity::typed_atom() const{
+
+    basic_atom_ptr valueassignment_entity::typed_atom() const {
         return value();
-    }        
+    }
 
     value_atom_ptr valueassignment_entity::value() const {
         return value_;
@@ -590,8 +589,8 @@ namespace x680 {
             tmpvalue->resolve(type());
     }
 
-    virtual void valueassignment_entity::assign_from(assignment_entity_ptr from) {
+    void valueassignment_entity::assign_from(assignment_entity_ptr from) {
 
-    }  
+    }
 
 }

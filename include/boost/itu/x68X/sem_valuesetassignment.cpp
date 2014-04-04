@@ -163,12 +163,12 @@ namespace x680 {
     }
 
     typeconstraint_atom_ptr constraint_atom::as_subtypeconstraint() {
-        return ((cotstrtype_ == cns_ContainedSubtype) || (cotstrtype_ == cns_TypeConstraint )) ?
+        return ((cotstrtype_ == cns_ContainedSubtype) || (cotstrtype_ == cns_TypeConstraint)) ?
                 boost::static_pointer_cast<typeconstraint_atom> (self()) : typeconstraint_atom_ptr();
     };
 
     typeconstraint_atom_ptr constraint_atom::as_typeconstraint() {
-        return ((cotstrtype_ == cns_ContainedSubtype) || (cotstrtype_ == cns_TypeConstraint )) ?
+        return ((cotstrtype_ == cns_ContainedSubtype) || (cotstrtype_ == cns_TypeConstraint)) ?
                 boost::static_pointer_cast<typeconstraint_atom> (self()) : typeconstraint_atom_ptr();
     };
 
@@ -520,14 +520,13 @@ namespace x680 {
     valuesetassignment_entity::valuesetassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, valueset_atom_ptr vl) :
     assignment_entity(scope, nm, et_ValueSet), type_(tp), valueset_(vl) {
     };
-    
-        
+
     basic_atom_ptr valuesetassignment_entity::typed_atom() const {
         return valueset();
-    }    
+    }
 
     valueset_atom_ptr valuesetassignment_entity::valueset() const {
-        return valueset_;     
+        return valueset_;
     }
 
     basic_entity_ptr valuesetassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
@@ -565,10 +564,10 @@ namespace x680 {
         if (valueset())
             valueset()->resolve(type());
     }
-    
+
     void valuesetassignment_entity::assign_from(assignment_entity_ptr from) {
 
-    }      
+    }
 
 
 }

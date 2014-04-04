@@ -1721,9 +1721,9 @@ namespace x680 {
         }
     }
 
-    virtual void typeassignment_entity::assign_from(assignment_entity_ptr from) {
+    void typeassignment_entity::assign_from(assignment_entity_ptr from) {
 
-    }       
+    }
 
 
 

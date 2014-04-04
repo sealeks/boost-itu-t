@@ -28,8 +28,8 @@ namespace x680 {
         return (((builtin_ == os_defined)
                 || (builtin_ == os_ObjectSetFromObject)
                 || (builtin_ == os_ObjectSetFromObjects)) && (reff()));
-    }            
-    
+    }
+
     defined_objectset_atom_ptr objectset_atom::as_defined() {
         return builtin_ == os_defined ?
                 boost::static_pointer_cast<defined_objectset_atom> (self()) : defined_objectset_atom_ptr();
@@ -103,7 +103,7 @@ namespace x680 {
                     reff(tmpasmt->find_component(field_->expectedname()));
                 }
             }
-        }        
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////        
@@ -123,11 +123,10 @@ namespace x680 {
     objectsetassignment_entity::objectsetassignment_entity(basic_entity_ptr scope, const std::string& nm, class_atom_ptr cls, objectset_atom_ptr objs) :
     assignment_entity(scope, nm, et_ObjectSet), objectset_(objs), class_(cls) {
     };
-    
-    
-    basic_atom_ptr objectsetassignment_entity::typed_atom() const{
+
+    basic_atom_ptr objectsetassignment_entity::typed_atom() const {
         return objectset();
-    }        
+    }
 
     objectset_atom_ptr objectsetassignment_entity::objectset() const {
         return objectset_;
@@ -155,10 +154,10 @@ namespace x680 {
         if (objectset())
             objectset()->resolve();
     }
-    
+
     void objectsetassignment_entity::assign_from(assignment_entity_ptr from) {
 
-    }     
+    }
 
 
 }
