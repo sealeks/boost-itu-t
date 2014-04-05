@@ -810,8 +810,7 @@ namespace x680 {
     }
 
     tagged_ptr type_atom::tag() const {
-        return ((subatom()) && (subatom()->as_type()) && (subatom()->as_type()->tag()))
-                ? subatom()->as_type()->tag() : tag_;
+        return  tag_;
     }
 
     defined_type type_atom::root_builtin() {
@@ -1079,7 +1078,7 @@ namespace x680 {
 
     bool type_atom::isallways_explicit() {
         return (((istextualy_choice()) || (isopen()) ||
-                (isdummy())) && (tag()));
+                (isdummy())/* || (isdummysource())*/) && (tag()));
     }
 
     bool type_atom::isprimitive() {
