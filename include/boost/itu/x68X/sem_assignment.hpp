@@ -521,7 +521,7 @@ namespace x680 {
             return shared_from_this();
         }
 
-        int level() const;
+        std::size_t level() const;
 
         module_entity_ptr moduleref();
 
@@ -962,13 +962,6 @@ namespace x680 {
 
         basic_entity_ptr reff() const;
 
-        basic_atom_ptr subatom() const {
-            return subatom_;
-        }
-
-        void subatom(basic_atom_ptr vl) const {
-            subatom_ = vl;
-        }
 
         module_entity_ptr moduleref() {
             return scope() ? scope()->moduleref() : module_entity_ptr();
@@ -1023,16 +1016,16 @@ namespace x680 {
         void isdummy(bool vl) {
             isdummy_ = vl;
         }
-        
-        bool isdummyAS() const;       
-        
+
+        bool isdummyAS() const;
+
         bool isdummysource() const {
             return isdummysource_;
         }
 
-        void dummysource(bool vl) {
+        void isdummysource(bool vl) {
             isdummysource_ = vl;
-        }        
+        }
 
         bool rooted();
 
@@ -1061,6 +1054,8 @@ namespace x680 {
         ////////
 
         void resolve_reff(basic_atom_ptr holder = basic_atom_ptr(), search_marker sch = full_search);
+
+        entity_enum check_reff(basic_atom_ptr holder, search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -1126,12 +1121,14 @@ namespace x680 {
             valueset_ = vl;
         }
 
-        class_atom_ptr _class() {
-            return class_;
+        class_atom_ptr _class();
+
+        classassignment_entity_ptr classassignment() {
+            return classassignment_;
         }
 
-        void _class(class_atom_ptr vl) {
-            class_ = vl;
+        void classassignment(classassignment_entity_ptr vl) {
+            classassignment_ = vl;
         }
 
         object_atom_ptr object() {
@@ -1165,7 +1162,8 @@ namespace x680 {
         typeassignment_entity_ptr typeassignment_;
         value_atom_ptr value_;
         valueset_atom_ptr valueset_;
-        class_atom_ptr class_;
+        classassignment_entity_ptr classassignment_;
+        ;
         object_atom_ptr object_;
         objectset_atom_ptr objectset_;
         std::string literal_;
@@ -1323,6 +1321,7 @@ namespace x680 {
                     boost::shared_ptr<T> tascopy = tas->clone<T>(self());
                     if (!tascopy)
                         throw semantics::error("");
+                    tascopy->preresolve();
                     tascopy->resolve();
                     tascopy->apply_arguments(rslt->parameters());
                     assign_from(tascopy);
@@ -1345,8 +1344,12 @@ namespace x680 {
             boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
             rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->typed_atom();
             if (rslt) {
+                tas->preresolve();
                 tas->resolve();
                 assign_from(tas);
+                rslt = atom();
+                if (rslt)
+                    rslt->isdummysource(true);
             }
         }
     }

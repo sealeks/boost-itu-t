@@ -153,12 +153,14 @@ namespace x680 {
         }
     }
 
-    int basic_entity::level() const {
-        int rslt = 0;
+    std::size_t basic_entity::level() const {
+        std::size_t rslt = 0;
         basic_entity_ptr scp = scope();
         while (scp) {
             if (!((scp->as_typeassigment()) && (scp->as_typeassigment()->isstruct_of())))
                 rslt++;
+            /*if ((reffholder()) && (reffholder().get()!=this))
+                rslt+=reffholder()->level();*/
             scp = scp->scope();
         }
         return rslt;
@@ -844,8 +846,10 @@ namespace x680 {
             case argm_Class:
             {
                 if (vl->_class()) {
-                    if ((unspecified_) && (unspecified_->as_classassigment()))
+                    if ((unspecified_) && (unspecified_->as_classassigment())) {
                         unspecified_->as_classassigment()->_class(vl->_class());
+                        unspecified_->as_classassigment()->childs(vl->classassignment()->childs());
+                    }
                     reff_ = vl->_class();
                 } else
                     throw semantics::error("");
@@ -1112,8 +1116,8 @@ namespace x680 {
 
     bool basic_atom::isdummyAS() const {
         return ((isdummysource_ || isdummy_) && (scope()) && (scope()->as_classassigment()) &&
-                (scope()->as_classassigment()->_class()) && (scope()->as_classassigment()->_class()->builtin()==cl_ABSTRACT_SYNTAX));
-    }       
+                (scope()->as_classassigment()->_class()) && (scope()->as_classassigment()->_class()->builtin() == cl_ABSTRACT_SYNTAX));
+    }
 
     bool basic_atom::rooted() {
         return ((root()) && (root() != self()));
@@ -1164,6 +1168,23 @@ namespace x680 {
     }
 
     void basic_atom::resolve(basic_atom_ptr holder) {
+    }
+
+    entity_enum basic_atom::check_reff(basic_atom_ptr holder, search_marker sch) {
+        if ((scope()) && (reff()) && (reff()->as_expectdef())) {
+            basic_entity_ptr source = holder ?
+                    (holder->reff() ? holder->reff() : holder->scope()) : scope();
+            if (source) {
+                basic_entity_ptr fnd = source->find(reff(), holder ? local_search : sch);
+                if (fnd) {
+                    if ((fnd->kind() != et_Nodef) && (fnd->kind() != et_NodefT) && (fnd->kind() != et_NodefV) &&
+                            (fnd->kind() != et_NodefS) && (fnd->kind() != et_NodefE)) {
+                        return fnd->kind();
+                    }
+                }
+            }
+        }
+        return et_Nodef;
     }
 
     void basic_atom::resolve_reff(basic_atom_ptr holder, search_marker sch) {
@@ -1265,6 +1286,10 @@ namespace x680 {
         return typeassignment_ ? typeassignment_->type() : type_atom_ptr();
     }
 
+    class_atom_ptr setting_atom::_class() {
+        return classassignment_ ? classassignment_->_class() : class_atom_ptr();
+    }
+
 
     /////////////////////////////////////////////////////////////////////////   
     // ASSIGNMENT
@@ -1303,10 +1328,6 @@ namespace x680 {
     }
 
     void assignment_entity::clear_argument() {
-        if (atom())
-            atom()->subatom(basic_atom_ptr());
-        if (typed_atom())
-            typed_atom()->subatom(basic_atom_ptr());
         for (argument_entity_vct::iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
             if (*it)
                 (*it)->clear_argument();
