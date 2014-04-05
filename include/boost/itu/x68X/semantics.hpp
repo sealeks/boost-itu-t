@@ -72,6 +72,7 @@ namespace x680 {
         classassignment_entity_ptr compile_classassignment(basic_entity_ptr scope, const x680::syntactic::class_assignment& ent);
         basic_entity_vector compile_classfields(basic_entity_ptr scope, const x680::syntactic::class_element& ent);
         class_atom_ptr compile_classdefined(basic_entity_ptr scope, const x680::syntactic::class_element& ent);
+        classassignment_entity_ptr compile_classa(basic_entity_ptr scope, const x680::syntactic::class_element& ent);
         basic_entity_ptr compile_typeclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
         basic_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent);
