@@ -670,6 +670,13 @@ namespace x680 {
             tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
             return tmpc;
         }
+        
+        classassignment_entity_ptr compile_classa(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
+            x680::syntactic::class_assignment tmp;
+            tmp.class_=ent;
+            tmp.identifier="";
+            return compile_classassignment(scope,tmp);
+        }
 
         class_atom_ptr compile_classdefined(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
             class_atom_ptr tmp;
@@ -946,7 +953,7 @@ namespace x680 {
             if ((ent.alternative & AS_VALUESET) && (ent.valueset))
                 tmp->valueset(compile_valueset(scope, * ent.valueset));
             if ((ent.alternative & AS_CLASS) && (ent.class_))
-                tmp->_class(compile_classdefined(scope, *ent.class_));
+                tmp->classassignment(compile_classa(scope, *ent.class_));
             if ((ent.alternative & AS_OBJECT) && (ent.object))
                 tmp->object(compile_object(scope, *ent.object));
             if ((ent.alternative & AS_OBJECTSET) && (ent.objectset))
