@@ -12,6 +12,22 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
     // std::cout  tree
     /////////////////////////////////////////////////////////////////////////       
+    
+    
+    std::ostream& dummymarker(std::ostream& stream, basic_atom_ptr self) {
+        if (self) {
+            if (self->isdummy()){
+                 stream << "(%d)";
+            }
+            if (self->isdummysource()){
+                 stream << "(%ds)";
+            }           
+            if (self->isdummyAS()){
+                 stream << "(%dsA)";
+            }                       
+        }
+        return stream;
+    }    
 
     std::ostream& indent(std::ostream& stream, typeassignment_entity_ptr self) {
         if (self) {
@@ -199,6 +215,7 @@ namespace x680 {
                 return stream << "(...) " << "\n";
             else
                 stream << self->name() << "  ";
+            dummymarker(stream, self->type());
             stream << self->type() << " ";
             if (self->has_arguments())
                 self->clear_argument();
