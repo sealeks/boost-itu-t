@@ -563,10 +563,15 @@ namespace x680 {
         type()->resolve();
         if (valueset())
             valueset()->resolve(type());
+        assignment_entity::resolve_complex<valuesetassignment_entity>();
     }
 
     void valuesetassignment_entity::assign_from(assignment_entity_ptr from) {
-
+        if (from->as_valuesetassigment()) {
+            assignment_entity::assign_from(from);
+            valueset_atom_ptr selftype = valueset_;
+            valueset_ = from->as_valuesetassigment()->valueset_;
+        }
     }
 
 

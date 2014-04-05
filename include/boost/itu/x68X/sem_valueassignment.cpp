@@ -587,10 +587,15 @@ namespace x680 {
         value_atom_ptr tmpvalue = value();
         if (tmpvalue)
             tmpvalue->resolve(type());
+        assignment_entity::resolve_complex<valueassignment_entity>();
     }
 
     void valueassignment_entity::assign_from(assignment_entity_ptr from) {
-
+        if (from->as_valueassigment()) {
+            assignment_entity::assign_from(from);
+            value_atom_ptr selftype = value_;
+            value_ = from->as_valueassigment()->value_;
+        }
     }
 
 }

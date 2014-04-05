@@ -268,6 +268,7 @@ namespace x680 {
             _class()->resolve();
         if (object())
             object()->resolve();
+        assignment_entity::resolve_complex<objectassignment_entity>();
         resolve_child();
     }
 
@@ -491,7 +492,11 @@ namespace x680 {
     }
 
     void objectassignment_entity::assign_from(assignment_entity_ptr from) {
-
+        if (from->as_objectassigment()) {
+            assignment_entity::assign_from(from);
+            object_atom_ptr selftype = object_;
+            object_ = from->as_objectassigment()->object_;
+        }
     }
 
 

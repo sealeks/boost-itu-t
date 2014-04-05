@@ -62,6 +62,7 @@ namespace x680 {
                             ("NumericString", t_NumericString)
                             ("PrintableString", t_PrintableString)
                             ("T61String", t_T61String)
+                            ("TeletexString", t_T61String)
                             ("VideotexString", t_VideotexString)
                             ("IA5String", t_IA5String)
                             ("GraphicString", t_GraphicString)

@@ -270,6 +270,7 @@ namespace x680 {
         assignment_entity::resolve(holder);
         if (_class())
             _class()->resolve();
+        assignment_entity::resolve_complex<classassignment_entity>();
         if (withsyntax())
             withsyntax()->resolve();
         resolve_child();
@@ -333,7 +334,11 @@ namespace x680 {
     }
 
     void classassignment_entity::assign_from(assignment_entity_ptr from) {
-
+        if (from->as_classassigment()) {
+            assignment_entity::assign_from(from);
+            class_atom_ptr selftype = class_;
+            class_ = from->as_classassigment()->class_;
+        }
     }
 
 }

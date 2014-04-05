@@ -1054,16 +1054,16 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
 
     basic_atom::basic_atom(assignment_enum tp, basic_entity_ptr scp) :
-    kind_(tp), scope_(scp), extention_(false), isdummy_(false) {
+    kind_(tp), scope_(scp), extention_(false), isdummy_(false), isdummysource_(false) {
     };
 
     basic_atom::basic_atom(assignment_enum tp, basic_entity_ptr scp, const std::string& reff) :
-    kind_(tp), scope_(scp), extention_(false), isdummy_(false) {
+    kind_(tp), scope_(scp), extention_(false), isdummy_(false), isdummysource_(false) {
         reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
     }
 
     basic_atom::basic_atom(basic_entity_ptr scp, const std::string& reff) :
-    kind_(at_Nodef), scope_(scp), extention_(false), isdummy_(false) {
+    kind_(at_Nodef), scope_(scp), extention_(false), isdummy_(false), isdummysource_(false) {
         reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
     }
 
@@ -1109,6 +1109,11 @@ namespace x680 {
             return reff()->as_objectsetassigment()->objectset()->root();
         return basic_atom_ptr();
     }
+
+    bool basic_atom::isdummyAS() const {
+        return ((isdummysource_ || isdummy_) && (scope()) && (scope()->as_classassigment()) &&
+                (scope()->as_classassigment()->_class()) && (scope()->as_classassigment()->_class()->builtin()==cl_ABSTRACT_SYNTAX));
+    }       
 
     bool basic_atom::rooted() {
         return ((root()) && (root() != self()));
@@ -1212,7 +1217,7 @@ namespace x680 {
 #endif                                                                     
                     } else if (fnd->as_argument()) {
 #ifdef  DEBUG_SEMANTIC                        
-                        debug_warning("Here is argument parser: '" + expectedname() + "'");
+                        //debug_warning("Here is argument parser: '" + expectedname() + "'");
 #endif                          
                         fnd->as_argument()->insert_dummyrefference(self());
                         return;
@@ -1417,6 +1422,13 @@ namespace x680 {
         return rslt;
     }
 
+    void assignment_entity::assign_from(assignment_entity_ptr from) {
+        if (from) {
+            childs() = from->childs();
+            reffholder(from);
+        }
+    }
+
     template<>
     typeassignment_entity_ptr assignment_entity::as_baseassignment() {
         return as_typeassigment();
@@ -1483,61 +1495,40 @@ namespace x680 {
                 x680::semantics::compile_objectsetassignment(scp ? scp : scope(), as_objectsetassigment()->synctas()) : objectsetassignment_entity_ptr();
     }
 
-    template<>
-    basic_atom_ptr assignment_entity::resolve_parametrezed<typeassignment_entity>() {
+    /*template<>
+    void assignment_entity::resolve_parametrezed<typeassignment_entity>() {
         basic_atom_ptr rslt = atom();
-        basic_atom_ptr fromtmp;
-        if (rslt) {
-            if (rslt->parameterized()) {
+        if ((rslt) &&  (rslt->parameterized())) {
                 try {
                     if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>())) {
                         boost::shared_ptr<typeassignment_entity> tas = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>();
-                        boost::shared_ptr<typeassignment_entity> tascopy = tas->clone<typeassignment_entity>();
+                        boost::shared_ptr<typeassignment_entity> tascopy = tas->clone<typeassignment_entity>(self());
                         if (!tascopy)
                             throw semantics::error("");
                         tascopy->resolve();
                         tascopy->apply_arguments(rslt->parameters());
-
                         assign_from(tascopy);
-                        childs() = tascopy->childs();
-                        rslt->parameters().clear();
-                        reffholder(tascopy);
-                        /*rslt = tas->typed_atom();
-                        if (rslt)
-                            rslt->subatom(fromtmp);*/
-                        as_typeassigment()->type(tas->typed_atom()->as_type());
                     }
                 } catch (const semantics::error&) {
-                    debug_warning(std::string("Should be error argument type ambiguous:   Arguments apply error ") + name());
-                    return rslt;
+                    debug_warning(std::string(" Arguments apply error ") + name());
                     //const_cast<typeassignment_entity*> (this)->referenceerror_throw("Arguments apply error ", name());
                 }
-                //}
-            } else {
-                //reffholder(boost::shared_ptr<typeassignment_entity>());
-                // rslt->subatom(basic_atom_ptr());
             }
-
-            /*if (rslt) {
-                if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
-                        && (rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>())) {
-                    boost::shared_ptr<typeassignment_entity> tas = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>();
-                    reffholder(tas);
-                    fromtmp = rslt;
-                    rslt = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>()->typed_atom();
-                    if (rslt) {
-                        rslt->subatom(fromtmp);
-                        rslt->resolve();
-                    }
-                    tas->resolve();
-                } else {
-                    //reffholder(boost::shared_ptr<typeassignment_entity>());
-                    //rslt->subatom(basic_atom_ptr());
-                }
-            }*/
-        }
-        return rslt;
     }
+
+    template<>
+    void assignment_entity::resolve_argumented<typeassignment_entity>() {
+        basic_atom_ptr rslt = atom();
+        if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
+                && (rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>())) {
+            boost::shared_ptr<typeassignment_entity> tas = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>();
+            rslt = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>()->typed_atom();
+            if (rslt) {
+                 tas->resolve();
+                 assign_from(tas);
+            }     
+        }
+    } */
 
     /////////////////////////////////////////////////////////////////////////   
     // BIG

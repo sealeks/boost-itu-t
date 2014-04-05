@@ -1023,6 +1023,16 @@ namespace x680 {
         void isdummy(bool vl) {
             isdummy_ = vl;
         }
+        
+        bool isdummyAS() const;       
+        
+        bool isdummysource() const {
+            return isdummysource_;
+        }
+
+        void dummysource(bool vl) {
+            isdummysource_ = vl;
+        }        
 
         bool rooted();
 
@@ -1063,6 +1073,7 @@ namespace x680 {
         mutable basic_atom_ptr subatom_;
         bool extention_;
         bool isdummy_;
+        bool isdummysource_;
     };
 
 
@@ -1239,18 +1250,22 @@ namespace x680 {
         }
 
         template<typename T>
-        basic_atom_ptr resolve_parametrezed();
+        void resolve_parametrezed();
+
+        template<typename T>
+        void resolve_argumented();
 
         template<typename T>
         boost::shared_ptr<T> clone(basic_entity_ptr scope = basic_entity_ptr()) {
             return boost::shared_ptr<T>();
         }
 
+        template<typename T>
+        void resolve_complex();
+
         std::string subidentifier(std::string& nm);
 
-        virtual void assign_from(assignment_entity_ptr from) {
-
-        }
+        virtual void assign_from(assignment_entity_ptr from);
 
     private:
 
@@ -1299,55 +1314,51 @@ namespace x680 {
     objectsetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
 
     template<typename T>
-    basic_atom_ptr assignment_entity::resolve_parametrezed() {
-        //return type_;
+    void assignment_entity::resolve_parametrezed() {
         basic_atom_ptr rslt = atom();
-        basic_atom_ptr fromtmp;
-        if (rslt) {
-            //if (!has_arguments()) {
-            if (rslt->parameterized()) {
-                try {
-                    if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
-                        fromtmp = rslt;
-                        boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
-                        tas->apply_arguments(rslt->parameters());
-                        reffholder(tas);
-                        rslt = tas->typed_atom();
-                        if (rslt)
-                            rslt->subatom(fromtmp);
-                    }
-                } catch (const semantics::error&) {
-                    debug_warning(std::string("Should be error argument type ambiguous:   Arguments apply error ") + name());
-                    return rslt;
-                    //const_cast<typeassignment_entity*> (this)->referenceerror_throw("Arguments apply error ", name());
-                }
-                //}
-            } else {
-                //     reffholder(boost::shared_ptr<T>());
-                rslt->subatom(basic_atom_ptr());
-            }
-
-            if (rslt) {
-                if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
-                        && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
+        if ((rslt) && (rslt->parameterized())) {
+            try {
+                if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
                     boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
-                    reffholder(tas);
-                    fromtmp = rslt;
-                    rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->typed_atom();
-                    if (rslt) {
-                        rslt->subatom(fromtmp);
-                        rslt->resolve();
-                    }
-                    const_cast<assignment_entity*> (this)->resolve_child();
-                } else
-                    rslt->subatom(basic_atom_ptr());
+                    boost::shared_ptr<T> tascopy = tas->clone<T>(self());
+                    if (!tascopy)
+                        throw semantics::error("");
+                    tascopy->resolve();
+                    tascopy->apply_arguments(rslt->parameters());
+                    assign_from(tascopy);
+                }
+            } catch (const semantics::error&) {
+                debug_warning(std::string(" Arguments apply error ") + name());
+                //const_cast<T*> (this)->referenceerror_throw("Arguments apply error ", name());
             }
         }
-        return rslt;
     }
 
-    template<>
-    basic_atom_ptr assignment_entity::resolve_parametrezed<typeassignment_entity>();
+    //template<>
+    //void assignment_entity::resolve_parametrezed<typeassignment_entity>();
+
+    template<typename T>
+    void assignment_entity::resolve_argumented() {
+        basic_atom_ptr rslt = atom();
+        if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
+                && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
+            boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
+            rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->typed_atom();
+            if (rslt) {
+                tas->resolve();
+                assign_from(tas);
+            }
+        }
+    }
+
+    //template<>
+    //void assignment_entity::resolve_argumented<typeassignment_entity>(); 
+
+    template<typename T>
+    void assignment_entity::resolve_complex() {
+        resolve_parametrezed<T>();
+        resolve_argumented<T>();
+    }
 
 
 

@@ -538,7 +538,7 @@ namespace x680 {
         if (as_defined()) {
             if ((as_defined()->reff()) && (as_defined()->reff()->as_valueassigment())) {
                 if (as_defined()->reff()->as_valueassigment()->value()) {
-                    if ((except_abstract) && (as_defined()->reff()->as_valueassigment()->value()->isdummy()))
+                    if ((except_abstract) && (as_defined()->reff()->as_valueassigment()->value()->isdummyAS()))
                         return boost::shared_ptr<T>();
                     return as_defined()->reff()->as_valueassigment()->value()->get_value<T>(except_abstract);
                 }

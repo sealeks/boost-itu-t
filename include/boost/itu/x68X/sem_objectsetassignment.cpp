@@ -153,10 +153,15 @@ namespace x680 {
             _class()->resolve();
         if (objectset())
             objectset()->resolve();
+        assignment_entity::resolve_complex<objectsetassignment_entity>();
     }
 
     void objectsetassignment_entity::assign_from(assignment_entity_ptr from) {
-
+        if (from->as_objectsetassigment()) {
+            assignment_entity::assign_from(from);
+            objectset_atom_ptr selftype = objectset_;
+            objectset_ = from->as_objectsetassigment()->objectset_;
+        }
     }
 
 
