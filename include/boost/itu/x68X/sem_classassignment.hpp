@@ -612,11 +612,7 @@ namespace x680 {
 
         virtual void preresolve();
 
-        virtual basic_atom_ptr atom() const {
-            return class_;
-        }
-
-        virtual basic_atom_ptr typed_atom() const;
+        virtual basic_atom_ptr atom() const;
 
         virtual void assign_from(assignment_entity_ptr from);
 

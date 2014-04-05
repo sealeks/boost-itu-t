@@ -244,8 +244,8 @@ namespace x680 {
     assignment_entity(scope, nm, et_Class), class_(tp) {
     };
 
-    basic_atom_ptr classassignment_entity::typed_atom() const {
-        return _class();
+    basic_atom_ptr classassignment_entity::atom() const {
+        return class_;
     }
 
     class_atom_ptr classassignment_entity::_class() const {

@@ -521,9 +521,9 @@ namespace x680 {
     assignment_entity(scope, nm, et_ValueSet), type_(tp), valueset_(vl) {
     };
 
-    basic_atom_ptr valuesetassignment_entity::typed_atom() const {
-        return valueset();
-    }
+    basic_atom_ptr valuesetassignment_entity::atom() const {
+        return valueset_;
+    }    
 
     valueset_atom_ptr valuesetassignment_entity::valueset() const {
         return valueset_;

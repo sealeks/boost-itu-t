@@ -159,8 +159,8 @@ namespace x680 {
         while (scp) {
             if (!((scp->as_typeassigment()) && (scp->as_typeassigment()->isstruct_of())))
                 rslt++;
-            /*if ((reffholder()) && (reffholder().get()!=this))
-                rslt+=reffholder()->level();*/
+            //if ((reffholder()) && (reffholder().get()!=this))
+               // rslt+=reffholder()->level();
             scp = scp->scope();
         }
         return rslt;
@@ -1526,6 +1526,7 @@ namespace x680 {
                         boost::shared_ptr<typeassignment_entity> tascopy = tas->clone<typeassignment_entity>(self());
                         if (!tascopy)
                             throw semantics::error("");
+                        tascopy->preresolve();
                         tascopy->resolve();
                         tascopy->apply_arguments(rslt->parameters());
                         assign_from(tascopy);
@@ -1543,8 +1544,9 @@ namespace x680 {
         if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
                 && (rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>())) {
             boost::shared_ptr<typeassignment_entity> tas = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>();
-            rslt = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>()->typed_atom();
+            rslt = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>()->atom();
             if (rslt) {
+                 tas->preresolve();
                  tas->resolve();
                  assign_from(tas);
             }     

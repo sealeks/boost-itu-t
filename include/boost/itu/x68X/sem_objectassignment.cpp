@@ -240,9 +240,9 @@ namespace x680 {
     assignment_entity(scope, nm, et_Object), class_(cls), object_(obj) {
     };
 
-    basic_atom_ptr objectassignment_entity::typed_atom() const {
-        return object();
-    }
+    basic_atom_ptr objectassignment_entity::atom() const {
+        return object_;
+    } 
 
     object_atom_ptr objectassignment_entity::object() const {
         return object_;

@@ -1238,9 +1238,6 @@ namespace x680 {
             return basic_atom_ptr();
         }
 
-        virtual basic_atom_ptr typed_atom() const {
-            return basic_atom_ptr();
-        }
 
         template<typename T>
         boost::shared_ptr<T> as_baseassignment() {
@@ -1342,7 +1339,7 @@ namespace x680 {
         if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
                 && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
             boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
-            rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->typed_atom();
+            rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->atom();
             if (rslt) {
                 tas->preresolve();
                 tas->resolve();

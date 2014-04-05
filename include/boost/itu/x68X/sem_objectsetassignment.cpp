@@ -124,9 +124,9 @@ namespace x680 {
     assignment_entity(scope, nm, et_ObjectSet), objectset_(objs), class_(cls) {
     };
 
-    basic_atom_ptr objectsetassignment_entity::typed_atom() const {
-        return objectset();
-    }
+    basic_atom_ptr objectsetassignment_entity::atom() const {
+        return objectset_;
+    }    
 
     objectset_atom_ptr objectsetassignment_entity::objectset() const {
         return objectset_;

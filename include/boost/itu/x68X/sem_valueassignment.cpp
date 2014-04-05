@@ -535,8 +535,8 @@ namespace x680 {
     assignment_entity(scope, nm, et_Value), type_(tp), value_(vl) {
     };
 
-    basic_atom_ptr valueassignment_entity::typed_atom() const {
-        return value();
+    basic_atom_ptr valueassignment_entity::atom() const {
+        return value_;
     }
 
     value_atom_ptr valueassignment_entity::value() const {

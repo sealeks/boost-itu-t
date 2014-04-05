@@ -1376,8 +1376,8 @@ namespace x680 {
     assignment_entity(scope, et_Type), named_(nmd) {
     };
 
-    basic_atom_ptr typeassignment_entity::typed_atom() const {
-        return type();
+    basic_atom_ptr typeassignment_entity::atom() const {
+        return type_;
     }
 
     type_atom_ptr typeassignment_entity::type() const {
