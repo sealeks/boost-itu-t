@@ -421,6 +421,24 @@ namespace x680 {
                 } else
                     scope()->referenceerror_throw("User constraint error : ", scope()->name());
             }
+            if ((*it)->parameter()) {
+                switch ((*it)->parameter()->check_reff()) {      
+                    case et_Type:
+                    case et_Value:
+                    case et_ValueSet:
+                    case et_ObjectSet:
+                    case et_Object:
+                    {
+                        (*it)->parameter()->resolve();
+                        break;
+                    }
+                    default:
+                    {
+                       // if ((*it)->has_undef_governor())
+                       // scope()->referenceerror_throw("Unresolve constraint error : ", scope()->name());
+                    }
+                }
+            }
         }
     }
 
@@ -523,7 +541,7 @@ namespace x680 {
 
     basic_atom_ptr valuesetassignment_entity::atom() const {
         return valueset_;
-    }    
+    }
 
     valueset_atom_ptr valuesetassignment_entity::valueset() const {
         return valueset_;
