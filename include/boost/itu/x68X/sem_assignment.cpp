@@ -805,7 +805,7 @@ namespace x680 {
         governor_ = vl;
     }
 
-    void argument_entity::apply_argument(setting_atom_ptr val) {
+    void argument_entity::apply_argument(setting_atom_ptr val, basic_entity_ptr scp) {
         if (!val->as_setting())
             throw semantics::error("");
         setting_atom_ptr vl = val->as_setting();
@@ -813,9 +813,13 @@ namespace x680 {
             case argm_Type:
             {
                 if (vl->type()) {
-                    if ((unspecified_) && (unspecified_->as_typeassigment())) {
+                    if ((unspecified_) && (unspecified_->as_typeassigment())) {                       
                         unspecified_->as_typeassigment()->type(vl->type());
                         unspecified_->as_typeassigment()->childs(vl->typeassignment()->childs());
+                        if (scp) {
+                             unspecified_->scope(scp);
+                             //unspecified_->as_typeassigment()->type()->scope(unspecified_);
+                        }                        
                     }
                     reff_ = vl->type();
                 } else
@@ -825,8 +829,13 @@ namespace x680 {
             case argm_Value:
             {
                 if (vl->value()) {
-                    if ((unspecified_) && (unspecified_->as_valueassigment()))
+                    if ((unspecified_) && (unspecified_->as_valueassigment())) {
                         unspecified_->as_valueassigment()->value(vl->value());
+                        if (scp) {
+                            unspecified_->scope(scp);
+                            //unspecified_->as_valueassigment()->value()->scope(unspecified_);
+                        }
+                    }    
                     reff_ = vl->value();
                 } else
                     throw semantics::error("");
@@ -837,8 +846,12 @@ namespace x680 {
                 if (vl->valueset()) {
                     if ((unspecified_) && (unspecified_->as_valuesetassigment())) {
                         unspecified_->as_valuesetassigment()->valueset(vl->valueset());
-                        reff_ = vl->valueset();
+                        if (scp) {
+                            unspecified_->scope(scp);
+                            //unspecified_->as_valuesetassigment()->valueset()->scope(unspecified_);
+                        }
                     }
+                    reff_ = vl->valueset();
                 } else
                     throw semantics::error("");
                 break;
@@ -849,6 +862,10 @@ namespace x680 {
                     if ((unspecified_) && (unspecified_->as_classassigment())) {
                         unspecified_->as_classassigment()->_class(vl->_class());
                         unspecified_->as_classassigment()->childs(vl->classassignment()->childs());
+                        if (scp) {
+                            unspecified_->scope(scp);
+                            //unspecified_->as_classassigment()->_class()->scope(unspecified_);;
+                        }
                     }
                     reff_ = vl->_class();
                 } else
@@ -858,8 +875,13 @@ namespace x680 {
             case argm_Object:
             {
                 if (vl->object()) {
-                    if ((unspecified_) && (unspecified_->as_objectassigment()))
+                    if ((unspecified_) && (unspecified_->as_objectassigment())){
                         unspecified_->as_objectassigment()->object(vl->object());
+                        if (scp) {
+                            unspecified_->scope(scp);
+                            //unspecified_->as_objectassigment()->object()->scope(unspecified_);;
+                        }
+                    }
                     reff_ = vl->object();
                 } else
                     throw semantics::error("");
@@ -868,17 +890,51 @@ namespace x680 {
             case argm_ObjectSet:
             {
                 if (vl->objectset()) {
-                    if ((unspecified_) && (unspecified_->as_objectsetassigment()))
+                    if ((unspecified_) && (unspecified_->as_objectsetassigment())) {
                         unspecified_->as_objectsetassigment()->objectset(vl->objectset());
+                        if (scp) {
+                            unspecified_->scope(scp);
+                            //unspecified_->as_objectsetassigment()->objectset()->scope(unspecified_);;
+                        }
+                    }
                     reff_ = vl->objectset();
                 } else
                     throw semantics::error("");
                 break;
             }
-            default:
-            {
+            default:{
+            //case argm_WillbeDef:{
+                if ( !has_governor()) {
+                     if (vl->type()){
+                         argumenttype_= argm_Type;
+                         assignment_entity_ptr unspecifiedn_ = assignment_entity_ptr(new typeassignment_entity(scope(), name()));                         
+                         unspecifiedn_->as_typeassigment()->type(vl->type());
+                         unspecifiedn_->as_typeassigment()->childs(vl->typeassignment()->childs());
+                         unspecifiedn_.swap(unspecified_);
+                        if (scp) {
+                            unspecified_->scope(scp);
+                            //unspecified_->as_typeassigment()->type()->scope(unspecified_);
+                        }                                                 
+                         break;
+                     } else if (vl->_class()){
+                         argumenttype_= argm_Class;
+                         assignment_entity_ptr unspecifiedn_ = assignment_entity_ptr(new classassignment_entity(scope(), name()));
+                         unspecifiedn_->as_classassigment()->_class(vl->_class());
+                         unspecifiedn_->as_classassigment()->childs(vl->classassignment()->childs());
+                         unspecifiedn_.swap(unspecified_);
+                        if (scp) {
+                            unspecified_->scope(scp);
+                            //unspecified_->as_classassigment()->_class()->scope(unspecified_);
+                        }                                                             
+                         break;
+                     }    
+                }
                 throw semantics::error("");
             }
+            /*default:
+            {
+                throw semantics::error("");
+            }*/
         }
     }
 
@@ -909,7 +965,11 @@ namespace x680 {
             } else if (val->as_class()) {
                 unspecified_ = assignment_entity_ptr(new classassignment_entity(scope(), name()));
                 argumenttype_ = argm_Class;
+            } else if (val->kind()==at_Nodef) {
+                unspecified_ = assignment_entity_ptr(new assignment_entity(scope(), name(), et_Nodef));
+                argumenttype_ = argm_WillbeDef;
             } else {
+                
 #ifdef  DEBUG_SEMANTIC                
                 debug_warning("Should be error argument type set");
 #else
@@ -991,6 +1051,9 @@ namespace x680 {
                 }
                 break;
             }
+            case argm_WillbeDef:{
+                break;
+            }
             default:
             {
 #ifdef  DEBUG_SEMANTIC                
@@ -1007,7 +1070,20 @@ namespace x680 {
     void argument_entity::resolve(basic_atom_ptr holder) {
         if (has_governor())
             governor()->resolve_reff();
-
+        if (unspecified_) {
+            if ((unspecified_->as_typeassigment()) && (unspecified_->as_typeassigment()->type()))
+                return unspecified_->resolve();
+            if ((unspecified_->as_valueassigment()) && (unspecified_->as_valueassigment()->value()))
+                return unspecified_->resolve();
+            if ((unspecified_->as_valuesetassigment()) && (unspecified_->as_valuesetassigment()->valueset()))
+                return unspecified_->resolve();
+            if ((unspecified_->as_classassigment()) && (unspecified_->as_classassigment()->_class()))
+                return unspecified_->resolve();
+            if ((unspecified_->as_objectassigment()) && (unspecified_->as_objectassigment()->object()))
+                return unspecified_->resolve();
+            if ((unspecified_->as_objectsetassigment()) && (unspecified_->as_objectsetassigment()->objectset()))
+                return unspecified_->resolve();
+        }
     }
 
 
@@ -1315,15 +1391,24 @@ namespace x680 {
                 return 0;
             }*/
 
-    void assignment_entity::apply_arguments(const setting_atom_vct& vl) {
+    void assignment_entity::apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scp) {
         if ((vl.empty()) || (vl.size() != arguments_.size()))
             throw semantics::error("");
         argument_entity_vct::const_iterator it2 = arguments_.begin();
         for (setting_atom_vct::const_iterator it1 = vl.begin(); it1 != vl.end(); ++it1) {
             if (!(*it1) || !(*it2))
                 throw semantics::error("");
-            (*it2)->apply_argument(*it1);
+            (*it2)->apply_argument(*it1, scp);
             ++it2;
+        }
+    }
+
+    void assignment_entity::resolve_arguments() {
+        for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
+            if ((*it) && (*it)->unspecified()) {
+                (*it)->unspecified()->preresolve();
+                (*it)->unspecified()->resolve();
+            }
         }
     }
 
@@ -1409,7 +1494,7 @@ namespace x680 {
 
     void assignment_entity::resolve(basic_atom_ptr holder) {
         for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it)
-            if ((*it)->governor())
+            if ((*it))
                 (*it)->resolve();
     }
 

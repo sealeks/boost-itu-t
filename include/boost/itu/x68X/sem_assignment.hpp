@@ -69,7 +69,8 @@ namespace x680 {
         argm_ValueSet,
         argm_Class,
         argm_Object,
-        argm_ObjectSet
+        argm_ObjectSet,
+        argm_WillbeDef
     };
 
 
@@ -830,7 +831,7 @@ namespace x680 {
             return dummyrefferences_.size();
         }
 
-        void apply_argument(setting_atom_ptr vl);
+        void apply_argument(setting_atom_ptr vl, basic_entity_ptr scope);
 
         void clear_argument();
 
@@ -1055,7 +1056,7 @@ namespace x680 {
 
         void resolve_reff(basic_atom_ptr holder = basic_atom_ptr(), search_marker sch = full_search);
 
-        entity_enum check_reff(basic_atom_ptr holder, search_marker sch = full_search);
+        entity_enum check_reff(basic_atom_ptr holder= basic_atom_ptr(), search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -1218,7 +1219,9 @@ namespace x680 {
 
         /////        
 
-        void apply_arguments(const setting_atom_vct& vl);
+        void apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scope = basic_entity_ptr());
+        
+        void resolve_arguments();
 
         void clear_argument();
 
@@ -1317,11 +1320,12 @@ namespace x680 {
                     boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
                     boost::shared_ptr<T> tascopy = tas->clone<T>(self());
                     if (!tascopy)
-                        throw semantics::error("");
+                        throw semantics::error("");    
                     tascopy->preresolve();
-                    tascopy->resolve();
-                    tascopy->apply_arguments(rslt->parameters());
+                    tascopy->resolve();                   
+                    tascopy->apply_arguments(rslt->parameters());                    
                     assign_from(tascopy);
+                    tascopy->resolve_arguments();
                 }
             } catch (const semantics::error&) {
                 debug_warning(std::string(" Arguments apply error ") + name());
@@ -1341,8 +1345,8 @@ namespace x680 {
             boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
             rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->atom();
             if (rslt) {
-                tas->preresolve();
-                tas->resolve();
+                //tas->preresolve();
+                //tas->resolve();
                 assign_from(tas);
                 rslt = atom();
                 if (rslt)
