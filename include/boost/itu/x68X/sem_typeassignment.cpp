@@ -1576,6 +1576,7 @@ namespace x680 {
                                             if (*itr){
                                                 (*itr)->preresolve();
                                                 (*itr)->resolve();
+                                                (*itr)->shadow_for(*it);
                                             }
                                         }
                                         childs().insert(childs().erase(it), tmpch.begin(), tmpch.end());

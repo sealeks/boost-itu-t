@@ -31,7 +31,7 @@ namespace x680 {
     
     std::ostream& from_template(std::ostream& stream, basic_entity_ptr self) {
         if (self) {
-            if (self->reffholder()){
+            if (self->reff_shadow()){
                  stream << "(%tmpl)";
             }             
             if ((self->as_assigment()) && (self->as_assigment()->shadow())){

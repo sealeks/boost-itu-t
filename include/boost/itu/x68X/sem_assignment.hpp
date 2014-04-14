@@ -508,11 +508,18 @@ namespace x680 {
 
         void scope(basic_entity_ptr vl);
 
-        basic_entity_ptr reffholder() const {
-            return reffholder_;
+        basic_entity_ptr reff_shadow() const {
+            return reff_shadow_;
         }
 
-        void reffholder(basic_entity_ptr vl) const;
+        void reff_shadow(basic_entity_ptr vl);
+        
+        
+        basic_entity_ptr shadow_for() const {
+            return !shadow_for_._empty() ? shadow_for_.lock() : basic_entity_ptr();
+        }
+        
+        void shadow_for(basic_entity_ptr vl);        
 
         basic_entity_vector& childs();
 
@@ -591,7 +598,8 @@ namespace x680 {
         void prefind(const std::string& nm, basic_entity_vector& elm);
 
         basic_entity_wptr scope_;
-        mutable basic_entity_ptr reffholder_;
+        mutable basic_entity_ptr reff_shadow_;
+        mutable basic_entity_wptr shadow_for_;
         basic_entity_vector childs_;
         std::string name_;
         entity_enum kind_;
@@ -1227,8 +1235,6 @@ namespace x680 {
 
         /////        
 
-        assignment_entity_ptr refference_to();
-
         assignment_entity_ptr find_component(const std::string& nm);
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
@@ -1251,12 +1257,6 @@ namespace x680 {
         }
 
         template<typename T>
-        void resolve_parametrezed();
-
-        template<typename T>
-        void resolve_argumented();
-
-        template<typename T>
         boost::shared_ptr<T> clone(basic_entity_ptr scope = basic_entity_ptr(), bool shadow = true) {
             return boost::shared_ptr<T>();
         }
@@ -1267,6 +1267,17 @@ namespace x680 {
         std::string subidentifier(std::string& nm);
 
         virtual void assign_from(assignment_entity_ptr from);
+        
+        
+    protected:        
+             
+        assignment_entity_ptr refference_to();
+
+        template<typename T>
+        void resolve_parametrezed();
+
+        template<typename T>
+        void resolve_argumented();
 
     private:
 

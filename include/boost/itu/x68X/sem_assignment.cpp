@@ -135,13 +135,20 @@ namespace x680 {
         scope_ = basic_entity_wptr(vl);
     }
 
-    void basic_entity::reffholder(basic_entity_ptr vl) const {
-        reffholder_ = vl;
+    void basic_entity::reff_shadow(basic_entity_ptr vl) {
+        reff_shadow_ = vl;
+        if (vl) 
+            vl->shadow_for(self());
     }
+    
+    void basic_entity::shadow_for(basic_entity_ptr vl) {
+        if (vl && (vl.get() == this))
+            throw semantics::error("Internal error selfscoping :" + name());
+        shadow_for_ = basic_entity_wptr(vl);
+    }    
+      
 
     basic_entity_vector& basic_entity::childs() {
-        //if (reffholder())
-        //return reffholder()->childs();
         return childs_;
     }
 
@@ -155,13 +162,15 @@ namespace x680 {
 
     std::size_t basic_entity::level() const {
         std::size_t rslt = 0;
-        basic_entity_ptr scp = scope();
+        basic_entity_ptr scp = (shadow_for()) ? shadow_for()->scope() : scope();
         while (scp) {
-            if (!((scp->as_typeassigment()) && (scp->as_typeassigment()->isstruct_of())))
-                rslt++;
-            //if ((reffholder()) && (reffholder().get()!=this))
-            // rslt+=reffholder()->level();
-            scp = scp->scope();
+            if (!(scp->shadow_for())) {
+                if (!((scp->as_typeassigment()) && (scp->as_typeassigment()->isstruct_of())))
+                    rslt++;
+                scp = scp->scope();
+            } else{
+                scp = scp->shadow_for();
+            }
         }
         return rslt;
     }
@@ -1384,8 +1393,8 @@ namespace x680 {
         assignment_entity_ptr tmta;
         if (has_arguments()) {
             tmta = as_assigment();
-        } else if ((reffholder()) && (reffholder()->as_assigment()) && (reffholder()->as_assigment()->has_arguments())) {
-            tmta = reffholder()->as_assigment();
+        } else if ((reff_shadow()) && (reff_shadow()->as_assigment()) && (reff_shadow()->as_assigment()->has_arguments())) {
+            tmta = reff_shadow()->as_assigment();
         }
         if (tmta) {
             for (argument_entity_vct::const_iterator it = tmta->arguments().begin(); it != tmta->arguments().end(); ++it) {
@@ -1398,47 +1407,7 @@ namespace x680 {
         return true;
     }
 
-    assignment_entity_ptr assignment_entity::refference_to() {
-        resolve();
-        if (as_typeassigment()) {
-            if ((as_typeassigment()->type())
-                    && (as_typeassigment()->type()->reff())
-                    && (as_typeassigment()->type()->reff()->as_assigment())) {
-                return as_typeassigment()->type()->reff()->as_assigment();
-            }
-        } else if (as_valueassigment()) {
-            if ((as_valueassigment()->value())
-                    && (as_valueassigment()->value()->reff())
-                    && (as_valueassigment()->value()->reff()->as_assigment())) {
-                return as_valueassigment()->value()->reff()->as_assigment();
-            }
-        } else if (as_valuesetassigment()) {
-            if ((as_valuesetassigment()->valueset())
-                    && (as_valuesetassigment()->valueset()->reff())
-                    && (as_valuesetassigment()->valueset()->reff()->as_assigment())) {
-                return as_valuesetassigment()->valueset()->reff()->as_assigment();
-            }
-        } else if (as_classassigment()) {
-            if ((as_classassigment()->_class())
-                    && (as_classassigment()->_class()->reff())
-                    && (as_classassigment()->_class()->reff()->as_assigment())) {
-                return as_classassigment()->_class()->reff()->as_assigment();
-            }
-        } else if (as_objectassigment()) {
-            if ((as_objectassigment()->object())
-                    && (as_objectassigment()->object()->reff())
-                    && (as_objectassigment()->object()->reff()->as_assigment())) {
-                return as_objectassigment()->object()->reff()->as_assigment();
-            }
-        } else if (as_objectsetassigment()) {
-            if ((as_objectsetassigment()->objectset())
-                    && (as_objectsetassigment()->objectset()->reff())
-                    && (as_objectsetassigment()->objectset()->reff()->as_assigment())) {
-                return as_objectsetassigment()->objectset()->reff()->as_assigment();
-            }
-        }
-        return as_assigment();
-    }
+
 
     assignment_entity_ptr assignment_entity::find_component(const std::string& nmf) {
         std::string nm = nmf;
@@ -1527,9 +1496,51 @@ namespace x680 {
     void assignment_entity::assign_from(assignment_entity_ptr from) {
         if (from) {
             childs() = from->childs();
-            reffholder(from);
+            reff_shadow(from);
         }
     }
+    
+    assignment_entity_ptr assignment_entity::refference_to() {
+        resolve();
+        if (as_typeassigment()) {
+            if ((as_typeassigment()->type())
+                    && (as_typeassigment()->type()->reff())
+                    && (as_typeassigment()->type()->reff()->as_assigment())) {
+                return as_typeassigment()->type()->reff()->as_assigment();
+            }
+        } else if (as_valueassigment()) {
+            if ((as_valueassigment()->value())
+                    && (as_valueassigment()->value()->reff())
+                    && (as_valueassigment()->value()->reff()->as_assigment())) {
+                return as_valueassigment()->value()->reff()->as_assigment();
+            }
+        } else if (as_valuesetassigment()) {
+            if ((as_valuesetassigment()->valueset())
+                    && (as_valuesetassigment()->valueset()->reff())
+                    && (as_valuesetassigment()->valueset()->reff()->as_assigment())) {
+                return as_valuesetassigment()->valueset()->reff()->as_assigment();
+            }
+        } else if (as_classassigment()) {
+            if ((as_classassigment()->_class())
+                    && (as_classassigment()->_class()->reff())
+                    && (as_classassigment()->_class()->reff()->as_assigment())) {
+                return as_classassigment()->_class()->reff()->as_assigment();
+            }
+        } else if (as_objectassigment()) {
+            if ((as_objectassigment()->object())
+                    && (as_objectassigment()->object()->reff())
+                    && (as_objectassigment()->object()->reff()->as_assigment())) {
+                return as_objectassigment()->object()->reff()->as_assigment();
+            }
+        } else if (as_objectsetassigment()) {
+            if ((as_objectsetassigment()->objectset())
+                    && (as_objectsetassigment()->objectset()->reff())
+                    && (as_objectsetassigment()->objectset()->reff()->as_assigment())) {
+                return as_objectsetassigment()->objectset()->reff()->as_assigment();
+            }
+        }
+        return as_assigment();
+    }    
 
     template<>
     typeassignment_entity_ptr assignment_entity::as_baseassignment() {
