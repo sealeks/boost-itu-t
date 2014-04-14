@@ -160,7 +160,7 @@ namespace x680 {
             if (!((scp->as_typeassigment()) && (scp->as_typeassigment()->isstruct_of())))
                 rslt++;
             //if ((reffholder()) && (reffholder().get()!=this))
-               // rslt+=reffholder()->level();
+            // rslt+=reffholder()->level();
             scp = scp->scope();
         }
         return rslt;
@@ -813,13 +813,13 @@ namespace x680 {
             case argm_Type:
             {
                 if (vl->type()) {
-                    if ((unspecified_) && (unspecified_->as_typeassigment())) {                       
+                    if ((unspecified_) && (unspecified_->as_typeassigment())) {
                         unspecified_->as_typeassigment()->type(vl->type());
                         unspecified_->as_typeassigment()->childs(vl->typeassignment()->childs());
                         if (scp) {
-                             unspecified_->scope(scp);
-                             //unspecified_->as_typeassigment()->type()->scope(unspecified_);
-                        }                        
+                            unspecified_->scope(scp);
+                            //unspecified_->as_typeassigment()->type()->scope(unspecified_);
+                        }
                     }
                     reff_ = vl->type();
                 } else
@@ -835,7 +835,7 @@ namespace x680 {
                             unspecified_->scope(scp);
                             //unspecified_->as_valueassigment()->value()->scope(unspecified_);
                         }
-                    }    
+                    }
                     reff_ = vl->value();
                 } else
                     throw semantics::error("");
@@ -875,7 +875,7 @@ namespace x680 {
             case argm_Object:
             {
                 if (vl->object()) {
-                    if ((unspecified_) && (unspecified_->as_objectassigment())){
+                    if ((unspecified_) && (unspecified_->as_objectassigment())) {
                         unspecified_->as_objectassigment()->object(vl->object());
                         if (scp) {
                             unspecified_->scope(scp);
@@ -902,39 +902,40 @@ namespace x680 {
                     throw semantics::error("");
                 break;
             }
-            default:{
-            //case argm_WillbeDef:{
-                if ( !has_governor()) {
-                     if (vl->type()){
-                         argumenttype_= argm_Type;
-                         assignment_entity_ptr unspecifiedn_ = assignment_entity_ptr(new typeassignment_entity(scope(), name()));                         
-                         unspecifiedn_->as_typeassigment()->type(vl->type());
-                         unspecifiedn_->as_typeassigment()->childs(vl->typeassignment()->childs());
-                         unspecifiedn_.swap(unspecified_);
+            default:
+            {
+                //case argm_WillbeDef:{
+                if (!has_governor()) {
+                    if (vl->type()) {
+                        argumenttype_ = argm_Type;
+                        assignment_entity_ptr unspecifiedn_ = assignment_entity_ptr(new typeassignment_entity(scope(), name()));
+                        unspecifiedn_->as_typeassigment()->type(vl->type());
+                        unspecifiedn_->as_typeassigment()->childs(vl->typeassignment()->childs());
+                        unspecifiedn_.swap(unspecified_);
                         if (scp) {
                             unspecified_->scope(scp);
                             //unspecified_->as_typeassigment()->type()->scope(unspecified_);
-                        }                                                 
-                         break;
-                     } else if (vl->_class()){
-                         argumenttype_= argm_Class;
-                         assignment_entity_ptr unspecifiedn_ = assignment_entity_ptr(new classassignment_entity(scope(), name()));
-                         unspecifiedn_->as_classassigment()->_class(vl->_class());
-                         unspecifiedn_->as_classassigment()->childs(vl->classassignment()->childs());
-                         unspecifiedn_.swap(unspecified_);
+                        }
+                        break;
+                    } else if (vl->_class()) {
+                        argumenttype_ = argm_Class;
+                        assignment_entity_ptr unspecifiedn_ = assignment_entity_ptr(new classassignment_entity(scope(), name()));
+                        unspecifiedn_->as_classassigment()->_class(vl->_class());
+                        unspecifiedn_->as_classassigment()->childs(vl->classassignment()->childs());
+                        unspecifiedn_.swap(unspecified_);
                         if (scp) {
                             unspecified_->scope(scp);
                             //unspecified_->as_classassigment()->_class()->scope(unspecified_);
-                        }                                                             
-                         break;
-                     }    
+                        }
+                        break;
+                    }
                 }
                 throw semantics::error("");
             }
-            /*default:
-            {
-                throw semantics::error("");
-            }*/
+                /*default:
+                {
+                    throw semantics::error("");
+                }*/
         }
     }
 
@@ -965,11 +966,11 @@ namespace x680 {
             } else if (val->as_class()) {
                 unspecified_ = assignment_entity_ptr(new classassignment_entity(scope(), name()));
                 argumenttype_ = argm_Class;
-            } else if (val->kind()==at_Nodef) {
+            } else if (val->kind() == at_Nodef) {
                 unspecified_ = assignment_entity_ptr(new assignment_entity(scope(), name(), et_Nodef));
                 argumenttype_ = argm_WillbeDef;
             } else {
-                
+
 #ifdef  DEBUG_SEMANTIC                
                 debug_warning("Should be error argument type set");
 #else
@@ -1051,7 +1052,8 @@ namespace x680 {
                 }
                 break;
             }
-            case argm_WillbeDef:{
+            case argm_WillbeDef:
+            {
                 break;
             }
             default:
@@ -1373,50 +1375,27 @@ namespace x680 {
     // assignment_entity
     /////////////////////////////////////////////////////////////////////////  
 
-    /*basic_entity* basic_atom::root_assignment(basic_entity* assign) {
-                if (!assign->reff())
-                    return assign;
-                if ((reff()->as_typeassigment()) && (reff()->as_typeassigment()->type()))
-                    return reff()->as_typeassigment()->type()->root_assignment();
-                if ((reff()->as_valueassigment()) && (reff()->as_valueassigment()->value()))
-                    return reff()->as_valueassigment()->value()->root_assignment();
-                if ((reff()->as_valuesetassigment()) && (reff()->as_valuesetassigment()->valueset()))
-                    return reff()->as_valuesetassigment()->valueset()->root_assignment();   
-                if ((reff()->as_classassigment()) && (reff()->as_classassigment()->_class()))
-                    return reff()->as_classassigment()->_class()->root_assignment();
-                if ((reff()->as_objectassigment()) && (reff()->as_objectassigment()->object()))
-                    return reff()->as_objectassigment()->object()->root_assignment();
-                if ((reff()->as_objectsetassigment()) && (reff()->as_objectsetassigment()->objectset()))
-                    return reff()->as_objectsetassigment()->objectset()->root_assignment();          
-                return 0;
-            }*/
-
-    void assignment_entity::apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scp) {
-        if ((vl.empty()) || (vl.size() != arguments_.size()))
-            throw semantics::error("");
-        argument_entity_vct::const_iterator it2 = arguments_.begin();
-        for (setting_atom_vct::const_iterator it1 = vl.begin(); it1 != vl.end(); ++it1) {
-            if (!(*it1) || !(*it2))
-                throw semantics::error("");
-            (*it2)->apply_argument(*it1, scp);
-            ++it2;
-        }
+    bool assignment_entity::parameterized() const {
+        basic_atom_ptr rslt = atom();
+        return rslt ? (rslt->parameterized()) : false;
     }
 
-    void assignment_entity::resolve_arguments() {
-        for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
-            if ((*it) && (*it)->unspecified()) {
-                (*it)->unspecified()->preresolve();
-                (*it)->unspecified()->resolve();
+    bool assignment_entity::argument_resolved() {
+        assignment_entity_ptr tmta;
+        if (has_arguments()) {
+            tmta = as_assigment();
+        } else if ((reffholder()) && (reffholder()->as_assigment()) && (reffholder()->as_assigment()->has_arguments())) {
+            tmta = reffholder()->as_assigment();
+        }
+        if (tmta) {
+            for (argument_entity_vct::const_iterator it = tmta->arguments().begin(); it != tmta->arguments().end(); ++it) {
+                if ((*it) && ((*it)->unspecified())) {
+                    if (!((*it)->unspecified()->atom()) && ((*it)->reffcount()))
+                        return false;
+                };
             }
         }
-    }
-
-    void assignment_entity::clear_argument() {
-        for (argument_entity_vct::iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
-            if (*it)
-                (*it)->clear_argument();
-        }
+        return true;
     }
 
     assignment_entity_ptr assignment_entity::refference_to() {
@@ -1459,10 +1438,6 @@ namespace x680 {
             }
         }
         return as_assigment();
-    }
-
-    basic_atom_ptr assignment_entity::dummy_reff() {
-        return basic_atom_ptr();
     }
 
     assignment_entity_ptr assignment_entity::find_component(const std::string& nmf) {
@@ -1517,6 +1492,27 @@ namespace x680 {
         }
     }
 
+    void assignment_entity::apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scp) {
+        if ((vl.empty()) || (vl.size() != arguments_.size()))
+            throw semantics::error("");
+        argument_entity_vct::const_iterator it2 = arguments_.begin();
+        for (setting_atom_vct::const_iterator it1 = vl.begin(); it1 != vl.end(); ++it1) {
+            if (!(*it1) || !(*it2))
+                throw semantics::error("");
+            (*it2)->apply_argument(*it1, scp);
+            ++it2;
+        }
+    }
+
+    void assignment_entity::resolve_arguments() {
+        for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
+            if ((*it) && (*it)->unspecified()) {
+                (*it)->unspecified()->preresolve();
+                (*it)->unspecified()->resolve();
+            }
+        }
+    }
+
     std::string assignment_entity::subidentifier(std::string& nm) {
         std::string rslt = nm;
         std::string::size_type it = nm.find_first_of('.');
@@ -1566,77 +1562,116 @@ namespace x680 {
     }
 
     template<>
-    typeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
-        return (as_typeassigment()) ?
-                x680::semantics::compile_typeassignment(scp ? scp : scope(), as_typeassigment()->synctas()) : typeassignment_entity_ptr();
+    typeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp, bool shdw) {
+        if (!as_typeassigment())
+            return typeassignment_entity_ptr();
+        typeassignment_entity_ptr tmp = x680::semantics::compile_typeassignment(scp ? scp : scope(), as_typeassigment()->synctas());
+        if (tmp && shdw)
+            tmp->shadow(true);
+        return tmp;
     }
 
     template<>
-    valueassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
-        return (as_valueassigment()) ?
-                x680::semantics::compile_valueassignment(scp ? scp : scope(), as_valueassigment()->synctas()) : valueassignment_entity_ptr();
+    namedtypeassignment_entity_ptr assignment_entity::assignment_entity::clone(basic_entity_ptr scp, bool shdw) {
+        if (!as_typeassigment())
+            return namedtypeassignment_entity_ptr();
+        if (!(as_typeassigment()->as_named()))
+            return namedtypeassignment_entity_ptr();
+        typeassignment_entity_ptr tmp = x680::semantics::compile_namedtype(scp ? scp : scope(), as_typeassigment()->synctas());
+        if (tmp && shdw)
+            tmp->shadow(true);
+        return tmp->as_named();
     }
 
     template<>
-    valuesetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
-        return (as_valuesetassigment()) ?
-                x680::semantics::compile_valuesetassignment(scp ? scp : scope(), as_valuesetassigment()->synctas()) : valuesetassignment_entity_ptr();
+    valueassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp, bool shdw) {
+        if (!as_valueassigment())
+            return valueassignment_entity_ptr();
+        valueassignment_entity_ptr tmp = x680::semantics::compile_valueassignment(scp ? scp : scope(), as_valueassigment()->synctas());
+        if (tmp && shdw)
+            tmp->shadow(true);
+        return tmp;
     }
 
     template<>
-    classassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
-        return (as_classassigment()) ?
-                x680::semantics::compile_classassignment(scp ? scp : scope(), as_classassigment()->synctas()) : classassignment_entity_ptr();
+    valuesetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp, bool shdw) {
+        if (!as_valuesetassigment())
+            return valuesetassignment_entity_ptr();
+        valuesetassignment_entity_ptr tmp = x680::semantics::compile_valuesetassignment(scp ? scp : scope(), as_valuesetassigment()->synctas());
+        if (tmp && shdw)
+            tmp->shadow(true);
+        return tmp;
     }
 
     template<>
-    objectassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
-        return (as_objectassigment()) ?
-                x680::semantics::compile_objectassignment(scp ? scp : scope(), as_objectassigment()->synctas()) : objectassignment_entity_ptr();
+    classassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp, bool shdw) {
+        if (!as_classassigment())
+            return classassignment_entity_ptr();
+        classassignment_entity_ptr tmp = x680::semantics::compile_classassignment(scp ? scp : scope(), as_classassigment()->synctas());
+        if (tmp && shdw)
+            tmp->shadow(true);
+        return tmp;
     }
 
     template<>
-    objectsetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp) {
-        return (as_objectsetassigment()) ?
-                x680::semantics::compile_objectsetassignment(scp ? scp : scope(), as_objectsetassigment()->synctas()) : objectsetassignment_entity_ptr();
+    objectassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp, bool shdw) {
+        if (!as_objectassigment())
+            return objectassignment_entity_ptr();
+        objectassignment_entity_ptr tmp = x680::semantics::compile_objectassignment(scp ? scp : scope(), as_objectassigment()->synctas());
+        if (tmp && shdw)
+            tmp->shadow(true);
+        return tmp;
     }
 
-    /*template<>
+    template<>
+    objectsetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp, bool shdw) {
+        if (!as_objectsetassigment())
+            return objectsetassignment_entity_ptr();
+        objectsetassignment_entity_ptr tmp = x680::semantics::compile_objectsetassignment(scp ? scp : scope(), as_objectsetassigment()->synctas());
+        if (tmp && shdw)
+            tmp->shadow(true);
+        return tmp;
+    }
+
+    /*    template<>
     void assignment_entity::resolve_parametrezed<typeassignment_entity>() {
+        typedef typeassignment_entity T;
         basic_atom_ptr rslt = atom();
-        if ((rslt) &&  (rslt->parameterized())) {
-                try {
-                    if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>())) {
-                        boost::shared_ptr<typeassignment_entity> tas = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>();
-                        boost::shared_ptr<typeassignment_entity> tascopy = tas->clone<typeassignment_entity>(self());
-                        if (!tascopy)
-                            throw semantics::error("");
-                        tascopy->preresolve();
-                        tascopy->resolve();
-                        tascopy->apply_arguments(rslt->parameters());
-                        assign_from(tascopy);
-                    }
-                } catch (const semantics::error&) {
-                    debug_warning(std::string(" Arguments apply error ") + name());
-                    //const_cast<typeassignment_entity*> (this)->referenceerror_throw("Arguments apply error ", name());
+        if ((!has_arguments()) && (rslt) && (rslt->parameterized())) {
+            try {
+                if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
+                    boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
+                    boost::shared_ptr<T> tascopy = tas->clone<T>();
+                    if (!tascopy)
+                        throw semantics::error("");
+                    tascopy->preresolve();
+                    tascopy->resolve();
+                    assign_from(tascopy);
+                    tascopy->apply_arguments(rslt->parameters(), self());
+                    tascopy->resolve_arguments();
+
                 }
+            } catch (const semantics::error&) {
+                debug_warning(std::string(" Arguments apply error ") + name());
+                //const_cast<T*> (this)->referenceerror_throw("Arguments apply error ", name());
             }
+        }
     }
 
-    template<>
-    void assignment_entity::resolve_argumented<typeassignment_entity>() {
-        basic_atom_ptr rslt = atom();
-        if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
-                && (rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>())) {
-            boost::shared_ptr<typeassignment_entity> tas = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>();
-            rslt = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>()->atom();
-            if (rslt) {
-                 tas->preresolve();
-                 tas->resolve();
-                 assign_from(tas);
-            }     
-        }
-    } */
+     template<>
+     void assignment_entity::resolve_argumented<typeassignment_entity>() {
+         basic_atom_ptr rslt = atom();
+         if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
+                 && (rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>())) {
+             boost::shared_ptr<typeassignment_entity> tas = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>();
+             rslt = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>()->atom();
+             if (rslt) {
+                  tas->preresolve();
+                  tas->resolve();
+                  assign_from(tas);
+             }     
+         }
+     } */
 
     /////////////////////////////////////////////////////////////////////////   
     // BIG

@@ -963,7 +963,6 @@ namespace x680 {
 
         basic_entity_ptr reff() const;
 
-
         module_entity_ptr moduleref() {
             return scope() ? scope()->moduleref() : module_entity_ptr();
         }
@@ -1056,7 +1055,7 @@ namespace x680 {
 
         void resolve_reff(basic_atom_ptr holder = basic_atom_ptr(), search_marker sch = full_search);
 
-        entity_enum check_reff(basic_atom_ptr holder= basic_atom_ptr(), search_marker sch = full_search);
+        entity_enum check_reff(basic_atom_ptr holder = basic_atom_ptr(), search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -1187,19 +1186,19 @@ namespace x680 {
     public:
 
         assignment_entity(basic_entity_ptr scope, const std::string& nm, entity_enum tp)
-        : basic_entity(scope, nm, tp) {
+        : basic_entity(scope, nm, tp), shadow_(false) {
         }
 
         assignment_entity(basic_entity_ptr scope, entity_enum tp)
-        : basic_entity(tp, scope) {
+        : basic_entity(tp, scope), shadow_(false) {
         }
 
         assignment_entity(const std::string& nm, entity_enum tp)
-        : basic_entity(nm, tp) {
+        : basic_entity(nm, tp), shadow_(false) {
         }
 
         assignment_entity(entity_enum tp)
-        : basic_entity(tp) {
+        : basic_entity(tp), shadow_(false) {
         }
 
         argument_entity_vct& arguments() {
@@ -1209,25 +1208,26 @@ namespace x680 {
         void arguments(argument_entity_vct vl) {
             arguments_ = vl;
         }
+        
+        bool shadow() const {
+            return shadow_;
+        }
+
+        void shadow(bool vl) {
+            shadow_ = vl;
+        }        
 
         bool has_arguments() const {
             return !arguments_.empty();
         }
 
-
-
+        bool argument_resolved();
+        
+        bool parameterized() const;        
 
         /////        
 
-        void apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scope = basic_entity_ptr());
-        
-        void resolve_arguments();
-
-        void clear_argument();
-
         assignment_entity_ptr refference_to();
-
-        basic_atom_ptr dummy_reff();
 
         assignment_entity_ptr find_component(const std::string& nm);
 
@@ -1236,11 +1236,14 @@ namespace x680 {
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual void preresolve();
+        
+        void apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scope = basic_entity_ptr());
+
+        void resolve_arguments();        
 
         virtual basic_atom_ptr atom() const {
             return basic_atom_ptr();
         }
-
 
         template<typename T>
         boost::shared_ptr<T> as_baseassignment() {
@@ -1254,7 +1257,7 @@ namespace x680 {
         void resolve_argumented();
 
         template<typename T>
-        boost::shared_ptr<T> clone(basic_entity_ptr scope = basic_entity_ptr()) {
+        boost::shared_ptr<T> clone(basic_entity_ptr scope = basic_entity_ptr(), bool shadow = true) {
             return boost::shared_ptr<T>();
         }
 
@@ -1268,6 +1271,7 @@ namespace x680 {
     private:
 
         argument_entity_vct arguments_;
+        bool shadow_;
 
     };
 
@@ -1294,38 +1298,42 @@ namespace x680 {
 
 
     template<>
-    typeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
+    typeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope, bool shadow);
 
     template<>
-    valueassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
+    namedtypeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope, bool shadow);
 
     template<>
-    valuesetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
+    valueassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope, bool shadow);
 
     template<>
-    classassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
+    valuesetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope, bool shadow);
 
     template<>
-    objectassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
+    classassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope, bool shadow);
 
     template<>
-    objectsetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope);
+    objectassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope, bool shadow);
+
+    template<>
+    objectsetassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scope, bool shadow);
 
     template<typename T>
     void assignment_entity::resolve_parametrezed() {
         basic_atom_ptr rslt = atom();
-        if ((rslt) && (rslt->parameterized())) {
+        if ((!has_arguments()) && (rslt) && (rslt->parameterized())) {
             try {
                 if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
                     boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
-                    boost::shared_ptr<T> tascopy = tas->clone<T>(self());
+                    boost::shared_ptr<T> tascopy = tas->clone<T>();
                     if (!tascopy)
-                        throw semantics::error("");    
+                        throw semantics::error("");
                     tascopy->preresolve();
-                    tascopy->resolve();                   
-                    tascopy->apply_arguments(rslt->parameters());                    
+                    tascopy->resolve();
                     assign_from(tascopy);
+                    tascopy->apply_arguments(rslt->parameters(), self());
                     tascopy->resolve_arguments();
+
                 }
             } catch (const semantics::error&) {
                 debug_warning(std::string(" Arguments apply error ") + name());
@@ -1345,7 +1353,6 @@ namespace x680 {
             boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
             rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->atom();
             if (rslt) {
-                //tas->preresolve();
                 //tas->resolve();
                 assign_from(tas);
                 rslt = atom();

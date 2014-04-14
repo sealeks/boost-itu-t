@@ -28,6 +28,18 @@ namespace x680 {
         }
         return stream;
     }    
+    
+    std::ostream& from_template(std::ostream& stream, basic_entity_ptr self) {
+        if (self) {
+            if (self->reffholder()){
+                 stream << "(%tmpl)";
+            }             
+            if ((self->as_assigment()) && (self->as_assigment()->shadow())){
+                 stream << "(%shdw)";
+            }              
+        }
+        return stream;
+    }        
 
     std::ostream& indent(std::ostream& stream, typeassignment_entity_ptr self) {
         if (self) {
@@ -215,10 +227,9 @@ namespace x680 {
                 return stream << "(...) " << "\n";
             else
                 stream << self->name() << "  ";
+            from_template(stream, self);
             dummymarker(stream, self->type());
             stream << self->type() << " ";
-            if (self->has_arguments())
-                self->clear_argument();
             operatorstruct(stream, self);
             if (self->type()->has_constraint())
                 stream << self->type()->constraints();
@@ -234,9 +245,10 @@ namespace x680 {
             stream << "(T) " << self->name();
             if (self->has_arguments())
                 stream << self->arguments();
-            stream << " :: = " << self->type();
-            if (self->has_arguments())
-                self->clear_argument();
+            stream << " :: = ";
+            from_template(stream, self);
+            dummymarker(stream, self->type());
+            stream << self->type();
             operatorstruct(stream, self);
             if (self->type()->has_constraint())
                 stream << self->type()->constraints();
@@ -495,8 +507,6 @@ namespace x680 {
         stream << "(v) " << self->name() << " [" << self->type() << "]";
         if (self->has_arguments())
             stream << self->arguments();
-        if (self->has_arguments())
-            self->clear_argument();
         stream << " :: = ";
         if (self->value())
             return stream << self->value() << "\n";
@@ -633,8 +643,6 @@ namespace x680 {
         stream << "(vS) " << self->name() << " [" << self->type() << "]";
         if (self->has_arguments())
             stream << self->arguments();
-        if (self->has_arguments())
-            self->clear_argument();
         return stream << ":: = " << self->valueset() << "\n";
     }
 
@@ -918,8 +926,6 @@ namespace x680 {
         stream << "(C) " << self->name();
         if (self->has_arguments())
             stream << self->arguments();
-        if (self->has_arguments())
-            self->clear_argument();
         stream << " :: = ";
         if (self->_class()->builtin() == cl_SpecDef) {
             stream << " CLASS { ";
@@ -1140,8 +1146,6 @@ namespace x680 {
         stream << "(o) " << self->name() << " [" << self->_class() << "]";
         if (self->has_arguments())
             stream << self->arguments();
-        if (self->has_arguments())
-            self->clear_argument();
         stream << " :: = ";
         if (self->childs().empty()) {
             if (self->object())
@@ -1373,8 +1377,6 @@ namespace x680 {
         stream << "(oS) " << self->name() << " [" << self->_class() << "]";
         if (self->has_arguments())
             stream << self->arguments();
-        if (self->has_arguments())
-            self->clear_argument();
         stream << " :: = ";
         if (self->objectset())
             return stream << self->objectset() << "\n";

@@ -209,6 +209,7 @@ namespace x680 {
                 };
             }
             tmpt->type()->constraints(compile_constraints_vct(tmpt, ent.type.constraints));
+            tmpt->synctas(ent);
             return tmpt;
         }
 
@@ -670,12 +671,12 @@ namespace x680 {
             tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
             return tmpc;
         }
-        
+
         classassignment_entity_ptr compile_classa(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {
             x680::syntactic::class_assignment tmp;
-            tmp.class_=ent;
-            tmp.identifier="";
-            return compile_classassignment(scope,tmp);
+            tmp.class_ = ent;
+            tmp.identifier = "";
+            return compile_classassignment(scope, tmp);
         }
 
         class_atom_ptr compile_classdefined(basic_entity_ptr scope, const x680::syntactic::class_element& ent) {

@@ -1535,7 +1535,11 @@ namespace x680 {
         post_resolve_check();
     }
 
-    void typeassignment_entity::post_resolve_apply_componentsof() {
+    void typeassignment_entity::post_resolve_apply_componentsof() {   
+        if (shadow())
+            return;            
+        if (parameterized() || (has_arguments()))
+            return;
         type_atom_ptr tmptype = type();
         if ((tmptype) && (!childs().empty())) {
             if ((tmptype->builtin() == t_SEQUENCE) || ((tmptype->builtin() == t_SET))) {
@@ -1545,42 +1549,38 @@ namespace x680 {
                     for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
                         if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
                             namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
-                            if (named->marker() == mk_components_of) {
-                                if (basic_entity_ptr namedreff = named->type()->reff()) {
+                            if ((named->marker() == mk_components_of)) {
+                                typeassignment_entity_ptr issue = named;
+                                if (basic_entity_ptr namedreff = named->type()->reff()) {                                    
+                                    issue = namedreff->as_typeassigment();
                                     namedreff->resolve();
-                                    basic_entity_vector tmpch;
-                                    if ((namedreff->as_typeassigment())
-                                            && (!namedreff->as_typeassigment()->childs().empty())) {
-                                        if (!namedreff->as_typeassigment()->type())
-                                            referenceerror_throw("Undefined type", name());
-                                        if (namedreff->as_typeassigment()->type()->root_builtin() != type()->builtin())
-                                            referenceerror_throw("Apply COMPONENT OF error", name());
-                                        for (basic_entity_vector::iterator its = namedreff->as_typeassigment()->childs().begin();
-                                                its != namedreff->as_typeassigment()->childs().end(); ++its) {
-                                            if ((*its)->as_typeassigment()->as_named()->marker() != mk_extention) {
-                                                namedtypeassignment_entity_ptr tmp;
-                                                if ((*its)->as_typeassigment()->as_named()->marker() == mk_default) {
-                                                    tmp = namedtypeassignment_entity_ptr(new namedtypeassignment_entity((*it)->scope(),
-                                                            (*its)->name(), (*its)->as_typeassigment()->as_named()->type(),
-                                                            (*its)->as_typeassigment()->as_named()->_default()));
-                                                    //if  (tmp->type()->scope()!=(*its)->as_typeassigment()->as_named()->type()->scope()){
-                                                    tmp->type()->scope((*its)->as_typeassigment()->as_named()->type()->scope()); //}
-                                                } else {
-                                                    tmp = namedtypeassignment_entity_ptr(new namedtypeassignment_entity((*it)->scope(),
-                                                            (*its)->name(), (*its)->as_typeassigment()->as_named()->type(),
-                                                            (*its)->as_typeassigment()->as_named()->marker()));
-                                                    //  if (tmp->type()->scope()!=(*its)->as_typeassigment()->as_named()->type()->scope()){                                                 
-                                                    tmp->type()->scope((*its)->as_typeassigment()->as_named()->type()->scope()); //}
-                                                }
+                                }
+                                basic_entity_vector tmpch;
+                                if ((issue) && (!issue->childs().empty())) {
+                                    if (!issue->type())
+                                        referenceerror_throw("Undefined type", name());
+                                    if (issue->type()->root_builtin() != type()->builtin())
+                                        referenceerror_throw("Apply COMPONENT OF error", name());
+                                    for (basic_entity_vector::iterator its = issue->childs().begin();
+                                            its != issue->childs().end(); ++its) {
+                                        if ((*its)->as_typeassigment()->as_named()->marker() != mk_extention) {
+                                            namedtypeassignment_entity_ptr tmp= (*its)->as_typeassigment()->clone<namedtypeassignment_entity>((*its)->scope(),false);
+                                            if (tmp)
                                                 tmpch.push_back(tmp);
-                                            } else
-                                                break;
-                                        }
-                                        if (!tmpch.empty()) {
-                                            childs().insert(childs().erase(it), tmpch.begin(), tmpch.end());
-                                            find_compomensof = true;
+                                        } else
                                             break;
+                                    }
+                                    if (!tmpch.empty()) {
+                                        for (basic_entity_vector::iterator itr = tmpch.begin();
+                                                itr != tmpch.end(); ++itr) {
+                                            if (*itr){
+                                                (*itr)->preresolve();
+                                                (*itr)->resolve();
+                                            }
                                         }
+                                        childs().insert(childs().erase(it), tmpch.begin(), tmpch.end());
+                                        find_compomensof = true;
+                                        break;
                                     }
                                 }
                             }
@@ -1593,6 +1593,10 @@ namespace x680 {
     }
 
     bool typeassignment_entity::is_resolve_autotag() {
+        if (parameterized() || (has_arguments()))
+            return false;
+        if (shadow())
+            return false;           
         type_atom_ptr tmptype = type();
         if ((tmptype) && (!childs().empty())) {
             bool automatic = true;
@@ -1619,6 +1623,10 @@ namespace x680 {
     }
 
     void typeassignment_entity::post_resolve_autotag() {
+        if (parameterized() || (has_arguments()))
+            return;    
+        if (shadow())
+            return;            
         int num = 0;
         basic_entity_vector::iterator fit = first_extention();
         basic_entity_vector::iterator sit = second_extention();
@@ -1669,8 +1677,10 @@ namespace x680 {
 
     void typeassignment_entity::post_resolve_check() {
         return;
-        if (has_arguments())
-            return;
+        if (shadow())
+            return;            
+        if (parameterized() || (has_arguments()))
+            return;       
         type_atom_ptr tmptype = type();
         if ((tmptype) && (!childs().empty())) {
             if ((tmptype->builtin() == t_SEQUENCE) || ((tmptype->builtin() == t_SET))) {
