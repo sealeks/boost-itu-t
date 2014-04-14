@@ -1228,25 +1228,10 @@ namespace x680 {
         bool has_arguments() const {
             return !arguments_.empty();
         }
-
-        bool argument_resolved();
         
-        bool parameterized() const;        
-
-        /////        
-
-        assignment_entity_ptr find_component(const std::string& nm);
-
-        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
-
-        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
-
-        virtual void preresolve();
+        bool parameterized() const;   
         
-        void apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scope = basic_entity_ptr());
-
-        void resolve_arguments();        
-
+        
         virtual basic_atom_ptr atom() const {
             return basic_atom_ptr();
         }
@@ -1259,25 +1244,39 @@ namespace x680 {
         template<typename T>
         boost::shared_ptr<T> clone(basic_entity_ptr scope = basic_entity_ptr(), bool shadow = true) {
             return boost::shared_ptr<T>();
-        }
+        }              
 
-        template<typename T>
-        void resolve_complex();
+        /////        
 
-        std::string subidentifier(std::string& nm);
+        assignment_entity_ptr find_component(const std::string& nm);
 
-        virtual void assign_from(assignment_entity_ptr from);
-        
+        virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
+
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+        virtual void preresolve();         
+
         
     protected:        
              
         assignment_entity_ptr refference_to();
+        
+        void apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scope = basic_entity_ptr());
+
+        void resolve_arguments();    
+        
+        std::string subidentifier(std::string& nm);    
+        
+        virtual void assign_from(assignment_entity_ptr from);       
 
         template<typename T>
         void resolve_parametrezed();
 
         template<typename T>
         void resolve_argumented();
+        
+        template<typename T>
+        void resolve_complex();        
 
     private:
 

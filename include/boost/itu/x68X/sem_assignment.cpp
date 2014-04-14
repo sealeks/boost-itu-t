@@ -1389,7 +1389,7 @@ namespace x680 {
         return rslt ? (rslt->parameterized()) : false;
     }
 
-    bool assignment_entity::argument_resolved() {
+    /*bool assignment_entity::argument_resolved() {
         assignment_entity_ptr tmta;
         if (has_arguments()) {
             tmta = as_assigment();
@@ -1405,7 +1405,7 @@ namespace x680 {
             }
         }
         return true;
-    }
+    }*/
 
 
 
@@ -1461,44 +1461,9 @@ namespace x680 {
         }
     }
 
-    void assignment_entity::apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scp) {
-        if ((vl.empty()) || (vl.size() != arguments_.size()))
-            throw semantics::error("");
-        argument_entity_vct::const_iterator it2 = arguments_.begin();
-        for (setting_atom_vct::const_iterator it1 = vl.begin(); it1 != vl.end(); ++it1) {
-            if (!(*it1) || !(*it2))
-                throw semantics::error("");
-            (*it2)->apply_argument(*it1, scp);
-            ++it2;
-        }
-    }
 
-    void assignment_entity::resolve_arguments() {
-        for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
-            if ((*it) && (*it)->unspecified()) {
-                (*it)->unspecified()->preresolve();
-                (*it)->unspecified()->resolve();
-            }
-        }
-    }
 
-    std::string assignment_entity::subidentifier(std::string& nm) {
-        std::string rslt = nm;
-        std::string::size_type it = nm.find_first_of('.');
-        if ((it != std::string::npos) && ((it) && (it < (nm.size() - 1)))) {
-            rslt = nm.substr(0, it);
-            nm = nm.substr(it + 1);
-        } else
-            nm = "";
-        return rslt;
-    }
 
-    void assignment_entity::assign_from(assignment_entity_ptr from) {
-        if (from) {
-            childs() = from->childs();
-            reff_shadow(from);
-        }
-    }
     
     assignment_entity_ptr assignment_entity::refference_to() {
         resolve();
@@ -1540,6 +1505,45 @@ namespace x680 {
             }
         }
         return as_assigment();
+    }    
+    
+    void assignment_entity::apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scp) {
+        if ((vl.empty()) || (vl.size() != arguments_.size()))
+            throw semantics::error("");
+        argument_entity_vct::const_iterator it2 = arguments_.begin();
+        for (setting_atom_vct::const_iterator it1 = vl.begin(); it1 != vl.end(); ++it1) {
+            if (!(*it1) || !(*it2))
+                throw semantics::error("");
+            (*it2)->apply_argument(*it1, scp);
+            ++it2;
+        }
+    }
+
+    void assignment_entity::resolve_arguments() {
+        for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
+            if ((*it) && (*it)->unspecified()) {
+                (*it)->unspecified()->preresolve();
+                (*it)->unspecified()->resolve();
+            }
+        }
+    }    
+    
+    std::string assignment_entity::subidentifier(std::string& nm) {
+        std::string rslt = nm;
+        std::string::size_type it = nm.find_first_of('.');
+        if ((it != std::string::npos) && ((it) && (it < (nm.size() - 1)))) {
+            rslt = nm.substr(0, it);
+            nm = nm.substr(it + 1);
+        } else
+            nm = "";
+        return rslt;
+    }
+
+    void assignment_entity::assign_from(assignment_entity_ptr from) {
+        if (from) {
+            childs() = from->childs();
+            reff_shadow(from);
+        }
     }    
 
     template<>
