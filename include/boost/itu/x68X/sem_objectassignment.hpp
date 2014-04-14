@@ -453,7 +453,9 @@ namespace x680 {
         void apply_fields();
 
         virtual basic_atom_ptr atom() const;
-        
+               
+    protected:        
+                  
         virtual void assign_from(assignment_entity_ptr from);        
 
     private:

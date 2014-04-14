@@ -519,6 +519,8 @@ namespace x680 {
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual basic_atom_ptr atom() const;
+                
+    protected:                
 
         virtual void assign_from(assignment_entity_ptr from);
 

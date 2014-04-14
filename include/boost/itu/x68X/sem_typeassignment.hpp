@@ -637,6 +637,9 @@ namespace x680 {
         basic_entity_vector::iterator second_extention();
 
         virtual basic_atom_ptr atom() const;
+        
+        
+    protected:                
 
         virtual void assign_from(assignment_entity_ptr from);
 

@@ -1592,6 +1592,7 @@ namespace x680 {
         }
         unicalelerror_throw(childs());
     }
+    
 
     bool typeassignment_entity::is_resolve_autotag() {
         if (parameterized() || (has_arguments()))
