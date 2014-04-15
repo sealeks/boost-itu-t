@@ -1587,7 +1587,7 @@ namespace x680 {
     }
 
     template<>
-    namedtypeassignment_entity_ptr assignment_entity::assignment_entity::clone(basic_entity_ptr scp, bool shdw) {
+    namedtypeassignment_entity_ptr assignment_entity::clone(basic_entity_ptr scp, bool shdw) {
         if (!as_typeassigment())
             return namedtypeassignment_entity_ptr();
         if (!(as_typeassigment()->as_named()))
