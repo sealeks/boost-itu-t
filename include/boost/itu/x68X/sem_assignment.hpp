@@ -1358,7 +1358,19 @@ namespace x680 {
     template<typename T>
     void assignment_entity::resolve_argumented() {
         basic_atom_ptr rslt = atom();
-        if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
+        boost::shared_ptr<T> tas;
+        while (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
+                && (rslt->reff()->as_assigment()->as_baseassignment<T>())){
+             tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
+             rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->atom();
+             if (rslt)
+                    rslt->isdummysource(true); 
+        }       
+        if (tas && rslt){
+            assign_from(tas);
+            rslt = atom();
+        }          
+        /*if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
                 && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
             boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
             rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->atom();
@@ -1369,7 +1381,7 @@ namespace x680 {
                 if (rslt)
                     rslt->isdummysource(true);
             }
-        }
+        }*/
     }
 
     //template<>

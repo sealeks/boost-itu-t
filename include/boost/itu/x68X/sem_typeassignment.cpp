@@ -1678,7 +1678,7 @@ namespace x680 {
     }
 
     void typeassignment_entity::post_resolve_check() {
-        return;
+        //return;
         if (shadow())
             return;            
         if (parameterized() || (has_arguments()))
@@ -1736,14 +1736,14 @@ namespace x680 {
         if (from->as_typeassigment()) {
             assignment_entity::assign_from(from);
             type_atom_ptr selftype = type_;
-            type_ = from->as_typeassigment()->type_;
+            type_ = type_atom_ptr ( new type_atom(*(from->as_typeassigment()->type_)));
             if (selftype && type_) {
                 if (selftype->constraints().empty())
                     type_->constraints().insert(type_->constraints().end(), selftype->constraints().begin(), selftype->constraints().end());
                 if ((selftype->tag()) && (!type_->tag()))
-                    type_->tag(selftype->tag());
+                    type_->tag(tagged_ptr( new tagged(*(selftype->tag()))));
                 if ((selftype->predefined()) && (!type_->predefined()))
-                    type_->predefined(selftype->predefined());
+                    type_->predefined( predefined_ptr( new x680::predefined(*(selftype->predefined()))));
             }
         }
     }
