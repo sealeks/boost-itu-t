@@ -26,7 +26,7 @@ namespace x680 {
             ObjectClassAssignment = objectclassreference_[phx::bind(&classa_reference, sprt::_val, sprt::_1)]
                     >> -(Parameters[phx::bind(&classa_arguments, sprt::_val, sprt::_1)])
                     >> qi::omit[qi::lexeme[qi::lit("::=")]]
-                    >> StrictObjectClass[phx::bind(&classa_class, sprt::_val, sprt::_1)];
+                    >> StrictObjectClassO[phx::bind(&classa_class, sprt::_val, sprt::_1)];
 
             ObjectClassAssignment0 = objectclassreference_[phx::bind(&classa_reference, sprt::_val, sprt::_1)]
                     >> -(Parameters[phx::bind(&classa_arguments, sprt::_val, sprt::_1)])
