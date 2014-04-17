@@ -23,6 +23,8 @@ namespace x680 {
             ObjectClass = UsefulObjectClass | ObjectClassDefn | ParameterizedObjectClass;
 
             StrictObjectClass = UsefulObjectClass | ObjectClassDefn;
+            
+            StrictObjectClassO = UsefulObjectClassO | ObjectClassDefn;            
 
             SimpleDefinedObjectClass = DefinedObjectClass_[phx::bind(&class_reference, sprt::_val, sprt::_1)];
 
@@ -32,6 +34,9 @@ namespace x680 {
 
             UsefulObjectClass = TYPE_IDENTIFIER_[sprt::_val = CLASS_TYPE_IDENTIFIER]
                     | ABSTRACT_SYNTAX_[sprt::_val = CLASS_ABSTRACT_SYNTAX];
+            
+            UsefulObjectClassO = distinct('.')[TYPE_IDENTIFIER_[sprt::_val = CLASS_TYPE_IDENTIFIER]
+                    | ABSTRACT_SYNTAX_[sprt::_val = CLASS_ABSTRACT_SYNTAX]];            
 
             DefinedObjectClass = UsefulObjectClass | SimpleDefinedObjectClass;
 
