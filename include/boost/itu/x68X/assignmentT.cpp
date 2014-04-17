@@ -50,7 +50,7 @@ namespace x680 {
 
             TypeA = Type[phx::bind(&typea_type, sprt::_val, sprt::_1) ];
 
-            StrictType = BuitinType | TaggedType | ConstraintReferencedType | StrictDefinedType;
+            StrictType = BuitinType | TaggedType | ConstraintReferencedType | ObjectClassFieldType | StrictDefinedType;
 
             ConstraintReferencedType = SimpleReferencedType[ sprt::_val = sprt::_1 ] 
                     >> Constraints[phx::bind(&type_constraints, sprt::_val, sprt::_1)];
@@ -200,7 +200,7 @@ namespace x680 {
                     >> -ExtensionAdditions >> -ExtensionEndMarker;
 
             ComponentTypeListsEx = ExtensionAndException
-                    >> -ExtensionEndMarker;
+                    >> -ExtensionEndMarker >> -(qi::omit[qi::lit(",")]  >> ComponentTypeList);
 
             ComponentTypeLists = -ComponentTypeList >> -qi::lit(",")
                     >> -ComponentTypeListsKrn >> -(qi::lit(",") >> ComponentTypeList);
@@ -228,11 +228,14 @@ namespace x680 {
             
             AlternativeTypeListsKrn = ExtensionAndException
                     >> -ExtensionAdditionAlternatives >> -ExtensionEndMarker;
+            
+            AlternativeTypeListsEx = ExtensionAndException
+                    >> -ExtensionEndMarker >> -(qi::omit[qi::lit(",")]  >> AlternativeTypeList);            
 
             AlternativeTypeLists = -AlternativeTypeList >> -qi::lit(",")
                     >> -AlternativeTypeListsKrn >> -(qi::lit(",") >> AlternativeTypeList);
 
-            RootAlternativeTypeLists = ComponentTypeListsEx | AlternativeTypeLists;
+            RootAlternativeTypeLists = AlternativeTypeListsEx | AlternativeTypeLists;
 
 
 
