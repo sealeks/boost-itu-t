@@ -374,7 +374,8 @@ namespace x680 {
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternativesGroup;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternatives;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAdditionAlternative;
-            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeListsKrn;            
+            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeListsKrn;  
+            qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeListsEx;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> AlternativeTypeLists;
 
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> ExceptionSpec;
@@ -466,8 +467,10 @@ namespace x680 {
 
             qi::rule<str_iterator, class_element(), skip_cmt_type> ObjectClass;
             qi::rule<str_iterator, class_element(), skip_cmt_type> StrictObjectClass;
+            qi::rule<str_iterator, class_element(), skip_cmt_type> StrictObjectClassO;            
             qi::rule<str_iterator, class_element(), skip_cmt_type> ObjectClassDefn;
             qi::rule<str_iterator, class_element(), skip_cmt_type> UsefulObjectClass;
+            qi::rule<str_iterator, class_element(), skip_cmt_type> UsefulObjectClassO;
             qi::rule<str_iterator, class_element(), skip_cmt_type> DefinedObjectClass;
             qi::rule<str_iterator, class_element(), skip_cmt_type> SimpleDefinedObjectClass;
             qi::rule<str_iterator, class_element(), skip_cmt_type> ParameterizedObjectClass;
