@@ -52,15 +52,15 @@ namespace x680 {
 
             TokenOrGroupSpec = (AiasTokenOToken | TokenOToken | RequiredToken | OptionalToken);
 
-            OptionalGroup = qi::omit[qi::lit("[")] >> (TokenOrGroupSpec >> +TokenOrGroupSpec) >> qi::omit[qi::lit("]")];
+            OptionalGroup = (TokenOrGroupSpec >> +TokenOrGroupSpec);
 
-            TokenOToken = OptionalGroup[phx::bind(&classsyntax_group, sprt::_val, sprt::_1)];
+            TokenOToken = (qi::omit[qi::lit("[")] >> OptionalGroup  >> qi::omit[qi::lit("]")])[phx::bind(&classsyntax_group, sprt::_val, sprt::_1)];
 
-            AiasTokenOToken = (SyntaxField_ >> OptionalGroup)
+            AiasTokenOToken = (qi::omit[qi::lit("[")] >>SyntaxField_ >> OptionalGroup >> qi::omit[qi::lit("]")])
                     [phx::bind(&classsyntax_agroup, sprt::_val, sprt::_1, sprt::_2)];
 
-            RequiredToken = (SyntaxField_[phx::bind(&classsyntax_alias, sprt::_val, sprt::_1)])
-                    || PrimitiveFieldName_[phx::bind(&classsyntax_field, sprt::_val, sprt::_1)];
+            RequiredToken = -(SyntaxField_[phx::bind(&classsyntax_alias, sprt::_val, sprt::_1)])
+                    >> PrimitiveFieldName_[phx::bind(&classsyntax_field, sprt::_val, sprt::_1)];
 
             OptionalToken %= (qi::omit[qi::lit("[")] >> RequiredToken >> qi::omit[qi::lit("]")]
                     )[phx::bind(&classsyntax_optional, sprt::_val)];
