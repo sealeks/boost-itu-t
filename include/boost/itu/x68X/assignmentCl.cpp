@@ -48,12 +48,11 @@ namespace x680 {
 
             WithSyntaxSpec = qi::omit[ qi::lexeme[WITH_ >> +qi::blank >> SYNTAX_]] >> SyntaxList;
 
-            SyntaxList = qi::omit[qi::lit("{")] >> TokenOrGroupSpec >> qi::omit[qi::lit("}")];
+            SyntaxList = qi::omit[qi::lit("{")] >> +TokenOrGroupSpec >> qi::omit[qi::lit("}")];
 
-            TokenOrGroupSpec = +(AiasTokenOToken | TokenOToken | RequiredToken | OptionalToken);
+            TokenOrGroupSpec = (AiasTokenOToken | TokenOToken | RequiredToken | OptionalToken);
 
-            OptionalGroup = qi::omit[qi::lit("[")] >> qi::repeat(2, qi::inf)[(AiasTokenOToken
-                    | TokenOToken | RequiredToken | OptionalToken)] >> qi::omit[qi::lit("]")];
+            OptionalGroup = qi::omit[qi::lit("[")] >> (TokenOrGroupSpec >> +TokenOrGroupSpec) >> qi::omit[qi::lit("]")];
 
             TokenOToken = OptionalGroup[phx::bind(&classsyntax_group, sprt::_val, sprt::_1)];
 
