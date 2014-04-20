@@ -350,16 +350,10 @@ namespace x680 {
             if (syn->isalias()) {
                 if (obj->find_literal(syn->alias())) {
                 } else {
-                    //std::cout << "not find  group  alias = '" <<  syn->alias()  << "'"  << std::endl;
-                    for (fieldsetting_atom_vct::iterator tit = obj->fieldsetting().begin(); tit != obj->fieldsetting().end(); ++tit)
-                        /*if ((*tit)->setting()->mask() & AS_LITERAL)
-                            std::cout << "'" <<  (*tit)->setting()->literal() << "'"  << std::endl;
-                        else
-                            std::cout <<  "&sett&" << std::endl;*/
-                        if ((!syn->optional()) && !optional)
-                            referenceerror_throw("Field object parsing error :", syn->alias());
-                        else
-                            return false;
+                    if ((!syn->optional()) && !optional)
+                        referenceerror_throw("Field object parsing error :", syn->alias());
+                    else
+                        return false;
                 }
             }
             for (syntax_atom_vct::iterator it = syn->as_group()->group().begin(); it != syn->as_group()->group().end(); ++it) {
@@ -381,9 +375,17 @@ namespace x680 {
                     if ((!syn->optional()) && !optional) {
                         if (!obj->fieldsetting().empty()) {
                             if (obj->fieldsetting().front()->setting()->mask() & AS_LITERAL)
-                                std::cout << "is letral = " << obj->fieldsetting().front()->setting()->literal() << " for alias " << syn->alias() << " sc " << scope()->name() <<  " mod = " <<  (moduleref() ? moduleref()->name() : "" ) << std::endl;
+                                std::cout << "is letral = " << obj->fieldsetting().front()->setting()->literal() << " for alias " 
+                                        << syn->alias() << " sc " << syn->scope()->name() <<  " mod = " <<  (syn->moduleref() ? syn->moduleref()->name() : "" ) << std::endl;
                             else
                                 std::cout << "not letral!!!!!! " << std::endl;
+                            for (fieldsetting_atom_vct::iterator tit = obj->fieldsetting().begin(); tit != obj->fieldsetting().end(); ++tit){
+                                if ((*tit)->setting()->mask() & AS_LITERAL)
+                                    std::cout << "'" << (*tit)->setting()->literal() << "'" << std::endl;
+                                else
+                                    std::cout << "&sett&" << std::endl;
+                                
+                            }
                             obj->fieldsetting().erase(obj->fieldsetting().begin());
                             if (!obj->fieldsetting().empty())
                                 return calculate_fields(syn, obj, newvct, optional);
