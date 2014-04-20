@@ -70,12 +70,12 @@ namespace x680 {
 
             SettingM1NA = SettingTypeNA | SettingValueNA | SettingValueSetNA | SettingObjectNA | SettingObjectSetNA | SettingSLiteral;
 
-            SettingNA = ((qi::hold[TypeNA[phx::bind(&setting_settype, sprt::_val, sprt::_1)] >> qi::omit[';']])
-                    | (qi::hold[ValueNA[phx::bind(&setting_value, sprt::_val, sprt::_1)] >> qi::omit[';']])
-                    | (qi::hold[ValueSetNA[phx::bind(&setting_valueset, sprt::_val, sprt::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectNA[phx::bind(&setting_object, sprt::_val, sprt::_1)] >> qi::omit[';']])
-                    | (qi::hold[ObjectSetNA[phx::bind(&setting_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']])
-                    | (qi::hold[Literal_[phx::bind(&setting_literal, sprt::_val, sprt::_1)] >> qi::omit[';']])) | SettingM1NA;
+            SettingNA = ((qi::hold[Type[phx::bind(&setting_settype, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Value[phx::bind(&setting_value, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ValueSet[phx::bind(&setting_valueset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Object[phx::bind(&setting_object, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[ObjectSet[phx::bind(&setting_objectset, sprt::_val, sprt::_1)] >> qi::omit[';']])
+                    | (qi::hold[Literal_[phx::bind(&setting_literal, sprt::_val, sprt::_1)] >> qi::omit[';']])) |  SettingM1NA;
 
             SettingM2 = SettingType | SettingValue | SettingValueSet | SettingClass | SettingObject | SettingObjectSet | SettingArgument;
 

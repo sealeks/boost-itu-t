@@ -376,7 +376,7 @@ namespace x680 {
             case t_ClassField:
             {
                 stream << "(C)" << self->as_classfield()->_class() << "."
-                        << self->as_classfield()->field()->reff()->name();
+                        << ( ((self->as_classfield()->field()) && (self->as_classfield()->field()->reff())) ? self->as_classfield()->field()->reff()->name() : "???");
                 break;
             }
             case t_Instance_Of:
@@ -387,7 +387,7 @@ namespace x680 {
             case t_TypeFromObject:
             {
                 stream << "(o)" << self->as_fromobject()->object() << "."
-                        << self->as_fromobject()->field()->reff()->name();
+                        << ( ((self->as_fromobject()->field()) && (self->as_fromobject()->field()->reff())) ? self->as_fromobject()->field()->reff()->name() : "???");
                 if (self->rooted())
                     stream << "(@" << self->root() << ")";
                 break;
@@ -395,7 +395,7 @@ namespace x680 {
             case t_ValueSetFromObjects:
             {
                 stream << "(oS)" << self->as_fromobjectset()->objectset() << "."
-                        << self->as_fromobjectset()->field()->reff()->name();
+                        << ( ((self->as_fromobjectset()->field()) && (self->as_fromobjectset()->field()->reff())) ? self->as_fromobjectset()->field()->reff()->name() : "???");
                 break;
             }
             default:

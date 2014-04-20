@@ -1331,7 +1331,7 @@ namespace x680 {
     template<typename T>
     void assignment_entity::resolve_parametrezed() {
         basic_atom_ptr rslt = atom();
-        if ((!has_arguments()) && (rslt) && (rslt->parameterized())) {
+        if (/*(!has_arguments()) && */(rslt) && (rslt->parameterized())) {
             try {
                 if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
                     boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();

@@ -722,7 +722,7 @@ namespace x680 {
         // classsintax setter
 
         void classsyntax_alias(classsyntax_type& holder, const std::string& val) {
-            holder.alias = val;
+            holder.alias = boost::algorithm::trim_right_copy(val);
         }
 
         void classsyntax_field(classsyntax_type& holder, const std::string& val) {
@@ -730,7 +730,7 @@ namespace x680 {
         }
 
         void classsyntax_agroup(classsyntax_type& holder, const std::string& alias, const classsyntax_vector& group) {
-            holder.alias = alias;
+            holder.alias = boost::algorithm::trim_right_copy(alias);
             holder.group = group;
             holder.optional = true;
         }

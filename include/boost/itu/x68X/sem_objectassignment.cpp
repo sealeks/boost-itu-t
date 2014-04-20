@@ -189,16 +189,19 @@ namespace x680 {
                 return (*it);
         return fieldsetting_atom_ptr();
     }
-
-    bool defsyntax_object_atom::find_literal(const std::string& name) {
+    
+    bool static find_literal_static(fieldsetting_atom_vct&  vl,const std::string& name){
         std::string tmpl = "";
-        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
+        while ((!vl.empty()) && !(vl.front()->setting()->mask() & AS_LITERAL)) {
+            vl.erase(vl.begin());
+        }
+        for (fieldsetting_atom_vct::iterator it = vl.begin(); it != vl.end(); ++it) {
             if (!(*it)->setting()->literal().empty()) {
                 tmpl += (*it)->setting()->literal();
                 if ((name.size() >= tmpl.size())
                         && (name.substr(0, tmpl.size()) == tmpl)) {
                     if (name == tmpl) {
-                        fieldsetting_.erase(fieldsetting_.begin(), ++it);
+                        vl.erase(vl.begin(), ++it);
                         return true;
                     } else
                         tmpl += " ";
@@ -207,7 +210,14 @@ namespace x680 {
             } else
                 return false;
         }
-        return false;
+        return false;        
+    }
+
+    bool defsyntax_object_atom::find_literal(const std::string& name) {
+        /*fieldsetting_atom_vct&  tmp = fieldsetting_;
+        if (!find_literal_static(tmp, name))
+            return false;*/
+        return find_literal_static(fieldsetting_, name);
     }
 
     /////////////////////////////////////////////////////////////////////////     
@@ -336,10 +346,18 @@ namespace x680 {
     }
 
     bool objectassignment_entity::calculate_fields(syntax_atom_ptr syn, defsyntax_object_atom_ptr obj, fieldsetting_atom_vct& newvct, bool optional) {
-        if (syn->as_group()) {
+        if (syn->as_group()) {           
             if (syn->isalias()) {
+                std::cout << "enter in group cycle with alias = '" <<  syn->alias()  << "'"  << std::endl;
                 if (obj->find_literal(syn->alias())) {
+                    std::cout << "find  group  alias = '" <<  syn->alias()  << "'"  << std::endl;
                 } else {
+                    std::cout << "not find  group  alias = '" <<  syn->alias()  << "'"  << std::endl;
+                    for (fieldsetting_atom_vct::iterator tit = obj->fieldsetting().begin(); tit != obj->fieldsetting().end(); ++tit)
+                        if ((*tit)->setting()->mask() & AS_LITERAL)
+                            std::cout << "'" <<  (*tit)->setting()->literal() << "'"  << std::endl;
+                        else
+                            std::cout <<  "&sett&" << std::endl;
                     if ((!syn->optional()) && !optional)
                         referenceerror_throw("Field object parsing error :", syn->alias());
                     else
@@ -350,8 +368,10 @@ namespace x680 {
                 if ((it == syn->as_group()->group().begin()) && syn->optional()) {
                     if (!calculate_fields((*it), obj, newvct, syn->optional()))
                         return false;
-                } else
-                    calculate_fields((*it), obj, newvct);
+                } else {
+                    if ((*it)->as_group())
+                        std::cout << "group cycle!!! '" <<  (*it)->as_group()->alias()  << "'"  << std::endl;
+                    calculate_fields((*it), obj, newvct);}
             }
             return true;
         } else {
@@ -365,9 +385,20 @@ namespace x680 {
                     newvct.push_back(fieldsetting_atom_ptr(new fieldsetting_atom(object()->scope(), syn->reff()->name(), obj->fieldsetting().front()->setting())));
                     obj->fieldsetting().erase(obj->fieldsetting().begin());
                     return true;
-                } else {
-                    if ((!syn->optional()) && !optional)
+                } else { 
+                    //std::cout << "3 parce alias: " << syn->alias()  << " sz " << (obj->fieldsetting().size()) <<std::endl;
+                    if ((!syn->optional()) && !optional) {
+                        if (!obj->fieldsetting().empty()) {
+                            if (obj->fieldsetting().front()->setting()->mask()&AS_LITERAL)
+                             std::cout << "is letral = " << obj->fieldsetting().front()->setting()->literal()  << " for alias " << syn->alias() << std::endl;
+                            else
+                            std::cout << "not letral!!!!!! "   <<std::endl;    
+                            obj->fieldsetting().erase(obj->fieldsetting().begin());
+                            if (!obj->fieldsetting().empty())
+                                return calculate_fields(syn, obj, newvct,optional);
+                        }
                         referenceerror_throw("Field object parsing error : ", syn->alias());
+                    }
                     else
                         return false;
                 }
@@ -482,9 +513,11 @@ namespace x680 {
             if (((*it)->name() == nm) && ((*it)->as_typeassigment())) {
                 return (*it);
             }
-            if (((*it)->name() == nm) && ((*it)->as_valueassigment()))
+            if (((*it)->name() == nm) && ((*it)->as_valueassigment()) 
+                    && ((*it)->as_valueassigment()->type()) && ((*it)->as_valueassigment()->type()->reff()))
                 return find_typefields((*it)->as_valueassigment()->type()->reff()->name());
-            if (((*it)->name() == nm) && ((*it)->as_valuesetassigment()))
+            if (((*it)->name() == nm) && ((*it)->as_valuesetassigment())  
+                    && ((*it)->as_valuesetassigment()->type()) && ((*it)->as_valuesetassigment()->type()->reff()))
                 return find_typefields((*it)->as_valuesetassigment()->type()->reff()->name());
         }
         referenceerror_throw("Field   refference error : ", nm);
