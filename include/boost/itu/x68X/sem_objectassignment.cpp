@@ -383,8 +383,7 @@ namespace x680 {
                                 if ((*tit)->setting()->mask() & AS_LITERAL)
                                     std::cout << "'" << (*tit)->setting()->literal() << "'" << std::endl;
                                 else
-                                    std::cout << "&sett&" << std::endl;
-                                
+                                    std::cout << "&sett&" << std::endl;                                                              
                             }
                             obj->fieldsetting().erase(obj->fieldsetting().begin());
                             if (!obj->fieldsetting().empty())
