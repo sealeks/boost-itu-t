@@ -1138,14 +1138,16 @@ namespace x680 {
         void classassignment(classassignment_entity_ptr vl) {
             classassignment_ = vl;
         }
-
-        object_atom_ptr object() {
-            return object_;
+        
+        objectassignment_entity_ptr objectassignment() {
+            return objectassignment_;
         }
 
-        void object(object_atom_ptr vl) {
-            object_ = vl;
-        }
+        void objectassignment(objectassignment_entity_ptr vl) {
+            objectassignment_ = vl;
+        }        
+
+        object_atom_ptr object();
 
         objectset_atom_ptr objectset() {
             return objectset_;
@@ -1171,8 +1173,7 @@ namespace x680 {
         value_atom_ptr value_;
         valueset_atom_ptr valueset_;
         classassignment_entity_ptr classassignment_;
-        ;
-        object_atom_ptr object_;
+        objectassignment_entity_ptr objectassignment_;
         objectset_atom_ptr objectset_;
         std::string literal_;
     };

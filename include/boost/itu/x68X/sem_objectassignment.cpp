@@ -373,7 +373,7 @@ namespace x680 {
                     return true;
                 } else {
                     if ((!syn->optional()) && !optional) {
-                        if (!obj->fieldsetting().empty()) {
+                        /*if (!obj->fieldsetting().empty()) {
                             if (obj->fieldsetting().front()->setting()->mask() & AS_LITERAL)
                                 std::cout << "is letral = " << obj->fieldsetting().front()->setting()->literal() << " for alias " 
                                         << syn->alias() << " sc " << syn->scope()->name() <<  " mod = " <<  (syn->moduleref() ? syn->moduleref()->name() : "" ) << std::endl;
@@ -388,7 +388,7 @@ namespace x680 {
                             obj->fieldsetting().erase(obj->fieldsetting().begin());
                             if (!obj->fieldsetting().empty())
                                 return calculate_fields(syn, obj, newvct, optional);
-                        }
+                        }*/
                         referenceerror_throw("Field object parsing error : ", syn->alias());
                     } else
                         return false;
@@ -409,6 +409,8 @@ namespace x680 {
             if (fld->as_typefield()) {
                 if (st->type()) {
                     childs_.push_back(typeassignment_entity_ptr(new typeassignment_entity(fld->scope(), fld->name(), st->type())));
+                    childs_.back()->preresolve();
+                    childs_.back()->resolve();
                 } else
                     referenceerror_throw("Field is not type : ", fld->name());
             } else if (fld->as_valuefield()) {

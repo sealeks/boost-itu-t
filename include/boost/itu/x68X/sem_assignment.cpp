@@ -1377,6 +1377,9 @@ namespace x680 {
         return classassignment_ ? classassignment_->_class() : class_atom_ptr();
     }
 
+    object_atom_ptr setting_atom::object() {
+        return objectassignment_ ? objectassignment_->object() : object_atom_ptr();
+    }
 
     /////////////////////////////////////////////////////////////////////////   
     // ASSIGNMENT

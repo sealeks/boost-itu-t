@@ -87,6 +87,7 @@ namespace x680 {
         // object         
         objectassignment_entity_ptr compile_objectassignment(basic_entity_ptr scope, const x680::syntactic::object_assignment& ent);
         object_atom_ptr compile_object(basic_entity_ptr scope, const x680::syntactic::object_element& ent);
+        objectassignment_entity_ptr compile_objecta(basic_entity_ptr scope, const x680::syntactic::object_element& ent);
         object_atom_ptr compile_object_impl(basic_entity_ptr scope, const x680::syntactic::object_element& ent);
         fieldsetting_atom_vct compile_object_fields(basic_entity_ptr scope, const x680::syntactic::objectfield_vector& ent);
         fieldsetting_atom_ptr compile_object_field(basic_entity_ptr scope, const x680::syntactic::objectfield_type& ent);

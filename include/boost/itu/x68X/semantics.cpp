@@ -579,12 +579,12 @@ namespace x680 {
             }
             scope->referenceerror_throw("Content constraint dos'nt set : ", scope->name());
             return constraint_atom_ptr();
-        }
-
+        }     
+        
         constraint_atom_ptr compile_tvosoconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
             tvosoconstraint_atom_ptr tmp(new tvosoconstraint_atom(scope));
             if (((*ent.setting).alternative & AS_TYPE) && ((*ent.setting).type))
-                tmp->type(compile_type(scope, (*((*ent.setting).type))));
+                tmp->typeassignment(compile_typea(scope, (*((*ent.setting).type))));
             if (((*ent.setting).alternative & AS_VALUESET) && ((*ent.setting).valueset))
                 tmp->valueset(compile_valueset(scope, (*((*ent.setting).valueset))));
             if (((*ent.setting).alternative & AS_OBJECTSET) && ((*ent.setting).objectset))
@@ -908,6 +908,16 @@ namespace x680 {
                 tmp->parameters(compile_parameters(scope, ent.parameters));
             return tmp;
         }
+        
+        objectassignment_entity_ptr compile_objecta(basic_entity_ptr scope, const x680::syntactic::object_element& ent) {
+            objectassignment_entity_ptr tmpc(new objectassignment_entity(scope, "", class_atom_ptr()));
+            //tmpc->synctas(tmp);
+            object_atom_ptr tmp = compile_object_impl(scope, ent);
+            if (tmp)
+                tmp->parameters(compile_parameters(scope, ent.parameters));
+            tmpc->object(tmp);
+            return tmpc;
+        }        
 
         object_atom_ptr compile_object_impl(basic_entity_ptr scope, const x680::syntactic::object_element& ent) {
             switch (ent.tp) {
@@ -956,7 +966,7 @@ namespace x680 {
             if ((ent.alternative & AS_CLASS) && (ent.class_))
                 tmp->classassignment(compile_classa(scope, *ent.class_));
             if ((ent.alternative & AS_OBJECT) && (ent.object))
-                tmp->object(compile_object(scope, *ent.object));
+                tmp->objectassignment(compile_objecta(scope, *ent.object));
             if ((ent.alternative & AS_OBJECTSET) && (ent.objectset))
                 tmp->objectset(compile_objectset(scope, *ent.objectset));
             if ((ent.alternative & AS_LITERAL))
