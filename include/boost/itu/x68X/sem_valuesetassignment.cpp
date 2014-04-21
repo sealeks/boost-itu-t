@@ -482,23 +482,32 @@ namespace x680 {
     tp_(argm_Nodef) {
     }
 
+    type_atom_ptr tvosoconstraint_atom::type() {
+        return typeassignment_ ? typeassignment_->type() : type_atom_ptr();
+    }
+
     void tvosoconstraint_atom::resolve(basic_atom_ptr holder) {
-        if (type() && (type()->reff())) {
-            basic_entity_ptr fnd = type()->scope()->find(type()->reff());
-            if (fnd)
-                if (fnd && ((fnd->as_typeassigment())
-                        || (fnd->as_argument()))) {
-                    if ((fnd->as_typeassigment()) || ((fnd->as_argument()->argumenttype() == argm_Nodef)
-                            || (fnd->as_argument()->argumenttype() == argm_Type))) {
-                        tp_ = argm_Type;
-                        if (objectset_)
-                            objectset_.reset();
-                        if (valueset_)
-                            valueset_.reset();
-                        type()->resolve();
-                        return;
+        if (type()) {
+            if (type()->reff()) {
+                basic_entity_ptr fnd = type()->scope()->find(type()->reff());
+                if (fnd)
+                    if (fnd && ((fnd->as_typeassigment())
+                            || (fnd->as_argument()))) {
+                        if ((fnd->as_typeassigment()) || ((fnd->as_argument()->argumenttype() == argm_Nodef)
+                                || (fnd->as_argument()->argumenttype() == argm_Type))) {
+                            tp_ = argm_Type;
+                            if (objectset_)
+                                objectset_.reset();
+                            if (valueset_)
+                                valueset_.reset();
+                            type()->resolve();
+                            return;
+                        }
                     }
-                }
+            }
+            //  if (typeassignment())
+            //  typeassignment()->resolve();
+
         }
         if (valueset() && (valueset()->reff())) {
             basic_entity_ptr fnd = valueset()->scope()->find(valueset()->reff());
@@ -507,8 +516,8 @@ namespace x680 {
                     tp_ = argm_ValueSet;
                     if (objectset_)
                         objectset_.reset();
-                    if (type_)
-                        type_.reset();
+                    if (type())
+                        type().reset();
                     valueset()->resolve();
                     return;
                 }
@@ -521,8 +530,8 @@ namespace x680 {
                     tp_ = argm_ObjectSet;
                     if (valueset_)
                         valueset_.reset();
-                    if (type_)
-                        type_.reset();
+                    if (type())
+                        type().reset();
                     objectset()->resolve();
                     return;
                 }

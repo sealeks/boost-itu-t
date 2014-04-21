@@ -816,12 +816,14 @@ namespace x680 {
 
         tvosoconstraint_atom(basic_entity_ptr scp, const std::string& reff = "");
 
-        type_atom_ptr type() const {
-            return type_;
+        type_atom_ptr type();
+
+        typeassignment_entity_ptr typeassignment() {
+            return typeassignment_;
         }
 
-        void type(type_atom_ptr val) {
-            type_ = val;
+        void typeassignment(typeassignment_entity_ptr vl) {
+            typeassignment_ = vl;
         }
 
         valueset_atom_ptr valueset() const {
@@ -855,7 +857,7 @@ namespace x680 {
 
         objectset_atom_ptr objectset_;
         valueset_atom_ptr valueset_;
-        type_atom_ptr type_;
+        typeassignment_entity_ptr typeassignment_;
         argument_enum tp_;
 
     };
