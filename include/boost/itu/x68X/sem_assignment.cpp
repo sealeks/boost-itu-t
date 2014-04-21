@@ -1177,6 +1177,10 @@ namespace x680 {
     basic_entity_ptr basic_atom::reff() const {
         return reff_;
     }
+    
+    void basic_atom::reff_resolver(basic_atom_ptr vl) {
+        reff_resolver_ = basic_atom_wptr(vl);
+    }        
 
     bool basic_atom::extesibility_implied() const {
         return (scope() && (scope()->moduleref())

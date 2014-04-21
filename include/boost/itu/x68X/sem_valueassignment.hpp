@@ -73,7 +73,7 @@ namespace x680 {
         boost::shared_ptr<T> get_value(bool except_abstract = false) {
             return boost::shared_ptr<T>();
         }
-
+        
         template< typename T>
         boost::shared_ptr<T> get_value_parent(bool except_abstract = false);
 

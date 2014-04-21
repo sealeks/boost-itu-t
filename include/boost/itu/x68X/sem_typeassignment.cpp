@@ -1057,6 +1057,21 @@ namespace x680 {
         }
         return false;
     }
+    
+    bool type_atom::isvaluestructure() {
+        switch (root_builtin()) {
+            case t_EXTERNAL:
+            case t_REAL:
+            case t_EMBEDDED_PDV:
+            case t_SEQUENCE:
+            case t_SET:
+            case t_CHARACTER_STRING: return true;
+            default:
+            {
+            }
+        }
+        return false;
+    }    
 
     bool type_atom::can_integer_constraints() {
         return (root_builtin() == t_INTEGER);
@@ -1777,8 +1792,10 @@ namespace x680 {
     }
 
     void namedtypeassignment_entity::resolve_default() {
-        if (_default())
+        if (_default()) {
+            _default()->reff_resolver(type());
             _default()->resolve(type());
+        }
     }
 
 

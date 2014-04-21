@@ -262,6 +262,8 @@ namespace x680 {
         bool can_size_constraints();
 
         bool can_integer_constraints();
+        
+        bool isvaluestructure();
 
         bool istextualy_choice();
 

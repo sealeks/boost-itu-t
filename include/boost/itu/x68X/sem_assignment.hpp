@@ -145,6 +145,7 @@ namespace x680 {
     class basic_atom;
     typedef boost::shared_ptr<basic_atom> basic_atom_ptr;
     typedef std::vector<basic_atom_ptr> basic_atom_vct;
+    typedef boost::weak_ptr<basic_atom> basic_atom_wptr;
 
     class setting_atom;
     typedef boost::shared_ptr<setting_atom> setting_atom_ptr;
@@ -523,8 +524,8 @@ namespace x680 {
             return !shadow_for_._empty() ? shadow_for_.lock() : basic_entity_ptr();
         }
         
-        void shadow_for(basic_entity_ptr vl);        
-
+        void shadow_for(basic_entity_ptr vl);    
+               
         basic_entity_vector& childs();
 
         void childs(basic_entity_vector& vl);
@@ -982,6 +983,12 @@ namespace x680 {
         void reff(basic_entity_ptr vl) {
             reff_ = vl;
         }
+        
+        basic_atom_ptr reff_resolver() const {
+            return !reff_resolver_._empty() ? reff_resolver_.lock() : basic_atom_ptr();
+        }
+        
+        void reff_resolver(basic_atom_ptr vl);         
 
         bool expecteddef() const {
             return ((reff_) && (reff_->as_expectdef()));
@@ -1078,6 +1085,7 @@ namespace x680 {
         basic_entity_ptr scope_;
         setting_atom_vct parameters_;
         mutable basic_atom_ptr subatom_;
+        mutable basic_atom_wptr reff_resolver_;
         bool extention_;
         bool isdummy_;
         bool isdummysource_;

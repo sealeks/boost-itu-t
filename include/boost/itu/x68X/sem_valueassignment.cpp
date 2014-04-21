@@ -134,6 +134,15 @@ namespace x680 {
     }
 
     void value_atom::resolve_vect(value_vct& vl, basic_atom_ptr holder) {
+        if ((reff_resolver()) && (reff_resolver()->as_type()) && (reff_resolver()->as_type()->isvaluestructure())) {
+            if (vl.size() == 2) {
+                if (vl.front()->as_defined()) {
+                    value_atom_ptr tmpvl = value_atom_ptr(new namedvalue_atom(vl.front()->as_defined()->reff()->name(), vl.back()));
+                    vl.clear();
+                    vl.push_back(tmpvl);
+                }
+            }
+        }
         for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
             (*it)->resolve_reff(holder);
     }
@@ -585,8 +594,9 @@ namespace x680 {
         resolve_child();
         type()->resolve();
         value_atom_ptr tmpvalue = value();
-        if (tmpvalue)
-            tmpvalue->resolve(type());
+        if (tmpvalue){
+            tmpvalue->reff_resolver(type());
+            tmpvalue->resolve(type());}
         assignment_entity::resolve_complex<valueassignment_entity>();
     }
 
