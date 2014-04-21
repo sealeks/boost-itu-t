@@ -497,6 +497,10 @@ namespace x680 {
         std::string name() const {
             return name_;
         }
+        
+        void name(const std::string& vl)  {
+            name_=vl;
+        }        
 
         entity_enum kind() const {
             return kind_;
@@ -1139,7 +1143,7 @@ namespace x680 {
             classassignment_ = vl;
         }
         
-        objectassignment_entity_ptr objectassignment() {
+        /*objectassignment_entity_ptr objectassignment() {
             return objectassignment_;
         }
 
@@ -1147,7 +1151,15 @@ namespace x680 {
             objectassignment_ = vl;
         }        
 
-        object_atom_ptr object();
+        object_atom_ptr object();*/
+        
+        object_atom_ptr object() {
+            return object_;
+        }
+
+        void object(object_atom_ptr vl) {
+            object_ = vl;
+        }
 
         objectset_atom_ptr objectset() {
             return objectset_;
@@ -1173,7 +1185,8 @@ namespace x680 {
         value_atom_ptr value_;
         valueset_atom_ptr valueset_;
         classassignment_entity_ptr classassignment_;
-        objectassignment_entity_ptr objectassignment_;
+        //objectassignment_entity_ptr objectassignment_;
+        object_atom_ptr object_;
         objectset_atom_ptr objectset_;
         std::string literal_;
     };

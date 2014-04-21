@@ -407,8 +407,8 @@ namespace x680 {
     void objectassignment_entity::create_fields(field_entity_ptr fld, setting_atom_ptr st) {
         if (st) {
             if (fld->as_typefield()) {
-                if (st->type()) {
-                    childs_.push_back(typeassignment_entity_ptr(new typeassignment_entity(fld->scope(), fld->name(), st->type())));
+                if (st->typeassignment()) {
+                    childs_.push_back(st->typeassignment());
                     childs_.back()->preresolve();
                     childs_.back()->resolve();
                 } else

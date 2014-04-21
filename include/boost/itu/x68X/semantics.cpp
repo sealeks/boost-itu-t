@@ -239,6 +239,10 @@ namespace x680 {
 
         typeassignment_entity_ptr compile_typea(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
             typeassignment_entity_ptr tmpt(new typeassignment_entity(scope, "", compile_type(scope, ent)));
+            x680::syntactic::type_assignment tmp;
+            tmp.identifier = "";
+            tmp.type = ent;
+            tmpt->synctas(tmp);
             switch (ent.builtin_t) {
                 case t_SEQUENCE:
                 case t_SEQUENCE_OF:
@@ -966,7 +970,7 @@ namespace x680 {
             if ((ent.alternative & AS_CLASS) && (ent.class_))
                 tmp->classassignment(compile_classa(scope, *ent.class_));
             if ((ent.alternative & AS_OBJECT) && (ent.object))
-                tmp->objectassignment(compile_objecta(scope, *ent.object));
+                tmp->object(compile_object(scope, *ent.object));
             if ((ent.alternative & AS_OBJECTSET) && (ent.objectset))
                 tmp->objectset(compile_objectset(scope, *ent.objectset));
             if ((ent.alternative & AS_LITERAL))
