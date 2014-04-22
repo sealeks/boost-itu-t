@@ -410,27 +410,32 @@ namespace x680 {
                 if (st->typeassignment()) {
                     childs_.push_back(st->typeassignment());
                     childs_.back()->preresolve();
-                    childs_.back()->resolve();
+                    //childs_.back()->resolve();
                 } else
                     referenceerror_throw("Field is not type : ", fld->name());
             } else if (fld->as_valuefield()) {
-                if (st->value())
-                    childs_.push_back(basic_entity_ptr(new valueassignment_entity(fld->scope(), fld->name(), fld->as_valuefield()->type(), st->value())));
+                if (st->value()){
+                    childs_.push_back(basic_entity_ptr(new valueassignment_entity(self(), fld->name(), fld->as_valuefield()->type(), st->value())));
+                    childs_.back()->preresolve();}
                 else
                     referenceerror_throw("Field is not value : ", fld->name());
             } else if (fld->as_valuesetfield()) {
-                if (st->valueset())
-                    childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(fld->scope(), fld->name(), fld->as_valuesetfield()->type(), st->valueset())));
+                if (st->valueset()){
+                    childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(self(), fld->name(), fld->as_valuesetfield()->type(), st->valueset())));
+                    childs_.back()->preresolve();}
                 else
                     referenceerror_throw("Field is not valueset : ", fld->name());
             } else if (fld->as_objectfield()) {
-                if (st->object())
-                    childs_.push_back(basic_entity_ptr(new objectassignment_entity(fld->scope(), fld->name(), fld->as_objectfield()->_class(), st->object())));
+                if (st->object()){                   
+                    childs_.push_back(basic_entity_ptr(new objectassignment_entity(self(), fld->name(), fld->as_objectfield()->_class(), st->object())));
+                    childs_.back()->preresolve();
+                    childs_.back()->as_objectassigment()->apply_fields();}
                 else
                     referenceerror_throw("Field is not object : ", fld->name());
             } else if (fld->as_objectsetfield()) {
-                if (st->objectset())
-                    childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(fld->scope(), fld->name(), fld->as_objectsetfield()->_class(), st->objectset())));
+                if (st->objectset()){
+                    childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(self(), fld->name(), fld->as_objectsetfield()->_class(), st->objectset())));
+                    childs_.back()->preresolve();}
                 else
                     referenceerror_throw("Field is not objectset : ", fld->name());
             }
@@ -518,7 +523,7 @@ namespace x680 {
     }
 
     void objectassignment_entity::assign_from(assignment_entity_ptr from) {
-        if (from->as_objectassigment()) {
+        if (from->as_objectassigment()) {          
             assignment_entity::assign_from(from);
             object_atom_ptr selftype = object_;
             object_ = from->as_objectassigment()->object_;

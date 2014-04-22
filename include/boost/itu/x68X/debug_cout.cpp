@@ -41,7 +41,7 @@ namespace x680 {
         return stream;
     }        
 
-    std::ostream& indent(std::ostream& stream, typeassignment_entity_ptr self) {
+    std::ostream& indent(std::ostream& stream, assignment_entity_ptr self) {
         if (self) {
             int inten = self->level();
             if (inten > 0) inten--;
@@ -1154,7 +1154,7 @@ namespace x680 {
             stream << " {\n";
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 if ((*it)->as_assigment()) {
-                    stream << "     ";
+                    indent(stream, self);
                     if ((*it)->as_typeassigment()) {
                         stream << (*it)->as_typeassigment();
                         continue;
@@ -1177,7 +1177,8 @@ namespace x680 {
                     }
                 }
 
-            }
+            }            
+            indent(stream, self);
             return stream << "}\n";
         }
         return stream << "???" << "\n";
