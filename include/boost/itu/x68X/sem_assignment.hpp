@@ -1361,6 +1361,8 @@ namespace x680 {
                     if (!tascopy)
                         throw semantics::error("");
                     tascopy->preresolve();
+                    if (tascopy->as_objectassigment())
+                        tascopy->as_objectassigment()->apply_fields();
                     tascopy->resolve();
                     assign_from(tascopy);
                     tascopy->apply_arguments(rslt->parameters(), self());
