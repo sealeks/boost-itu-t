@@ -906,14 +906,14 @@ namespace x680 {
             return tmpc;
         }
 
-        object_atom_ptr compile_object(basic_entity_ptr scope, const x680::syntactic::object_element& ent) {
-            object_atom_ptr tmp = compile_object_impl(scope, ent);
+        object_atom_ptr compile_object(basic_entity_ptr scope, const x680::syntactic::object_element& ent, class_atom_ptr cls) {
+            object_atom_ptr tmp = compile_object_impl(scope, ent, cls);
             if (tmp)
                 tmp->parameters(compile_parameters(scope, ent.parameters));
             return tmp;
         }
         
-        objectassignment_entity_ptr compile_objecta(basic_entity_ptr scope, const x680::syntactic::object_element& ent) {
+        objectassignment_entity_ptr compile_objecta(basic_entity_ptr scope, const x680::syntactic::object_element& ent, class_atom_ptr cls) {
             objectassignment_entity_ptr tmpc(new objectassignment_entity(scope, "", class_atom_ptr()));
             //tmpc->synctas(tmp);
             object_atom_ptr tmp = compile_object_impl(scope, ent);
@@ -923,7 +923,7 @@ namespace x680 {
             return tmpc;
         }        
 
-        object_atom_ptr compile_object_impl(basic_entity_ptr scope, const x680::syntactic::object_element& ent) {
+        object_atom_ptr compile_object_impl(basic_entity_ptr scope, const x680::syntactic::object_element& ent, class_atom_ptr cls) {
             switch (ent.tp) {
                 case ot_FromObject: return boost::make_shared< fromobject_object_atom>(scope, ent.fieldreference,
                             compile_object(scope, *ent.objectref));
@@ -932,9 +932,10 @@ namespace x680 {
                 case ot_ObjectSetFromObject: return boost::make_shared< fromdefined_object_atom>(scope, ent.fieldreference,
                             compile_object(scope, *ent.objectref));
                 case ot_Refference: return boost::make_shared< defined_object_atom>(scope, ent.reff);
-                case ot_DefinedObjectSet: return boost::make_shared< definedobjects_object_atom>(scope, compile_objectset(scope, *ent.objectsetref));
+                case ot_DefinedObjectSet: return boost::make_shared< definedobjects_object_atom>(scope, compile_objectset(scope, *ent.objectsetref, cls));
                 case ot_Object: return boost::make_shared< defltobject_atom>(scope, compile_object_fields(scope, ent.fields));
-                case ot_ObjectDefineSyn: return boost::make_shared< defsyntax_object_atom>(scope, compile_object_fields(scope, ent.fields));
+                case ot_ObjectDefineSyn: return cls ?  boost::make_shared< defsyntax_object_atom>(scope, cls,  compile_object_fields(scope, ent.fields)) :
+                    boost::make_shared< defsyntax_object_atom>(scope, compile_object_fields(scope, ent.fields));
                 case ot_UNION: return boost::make_shared< unionobject_atom>();
                 case ot_INTERSECTION: return boost::make_shared< intersectionobject_atom>();
                 case ot_EXCEPT: return boost::make_shared< exceptobject_atom>();
@@ -984,24 +985,24 @@ namespace x680 {
         objectsetassignment_entity_ptr compile_objectsetassignment(basic_entity_ptr scope, const x680::syntactic::objectset_assignment& tmp) {
             objectsetassignment_entity_ptr tmpc(new objectsetassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_)));
             tmpc->synctas(tmp);
-            objectset_atom_ptr objs = compile_objectset(tmpc, tmp.set);
+            objectset_atom_ptr objs = compile_objectset(tmpc, tmp.set, tmpc->_class());
             tmpc->objectset(objs);
             tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
             return tmpc;
         }
 
-        objectset_atom_ptr compile_objectset(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
-            objectset_atom_ptr tmp = compile_objectset_impl(scope, ent);
+        objectset_atom_ptr compile_objectset(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent, class_atom_ptr cls) {
+            objectset_atom_ptr tmp = compile_objectset_impl(scope, ent, cls);
             tmp->parameters(compile_parameters(scope, ent.parameters));
             return tmp;
         }
 
-        objectset_atom_ptr compile_objectset_impl(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
+        objectset_atom_ptr compile_objectset_impl(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent, class_atom_ptr cls) {
             switch (ent.tp) {
                 case os_ObjectSetFromObject: return boost::make_shared< fromobject_objectset_atom>(scope, ent.fieldreference, compile_object(scope, *ent.objectref));
                 case os_ObjectSetFromObjects: return boost::make_shared< fromobjects_objectset_atom>(scope, ent.fieldreference, compile_objectset(scope, *ent.objectsetref));
                     //case os_defined:
-                case os_Strait: return boost::make_shared< defn_objectset_atom>(scope, compile_objectset_vct(scope, ent));
+                case os_Strait: return boost::make_shared< defn_objectset_atom>(scope, compile_objectset_vct(scope, ent, cls));
                 default:
                 {
                 }
@@ -1009,10 +1010,10 @@ namespace x680 {
             return boost::make_shared< defined_objectset_atom>(scope, ent.reference);
         }
 
-        object_atom_vct compile_objectset_vct(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent) {
+        object_atom_vct compile_objectset_vct(basic_entity_ptr scope, const x680::syntactic::objectset_element& ent, class_atom_ptr cls) {
             object_atom_vct tmp;
             for (x680::syntactic::object_element_vector::const_iterator it = ent.set.begin(); it != ent.set.end(); ++it)
-                tmp.push_back(compile_object(scope, *it));
+                tmp.push_back(compile_object(scope, *it, cls));
             return tmp;
         }
 

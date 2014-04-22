@@ -1140,6 +1140,35 @@ namespace x680 {
         return stream;
     }
 
+    static std::ostream& plintassignment_static(std::ostream& stream, basic_entity_vector& self, assignment_entity_ptr scp= assignment_entity_ptr()) {      
+        for (basic_entity_vector::iterator it = self.begin(); it != self.end(); ++it) {
+            if ((*it)->as_assigment()) {
+                indent(stream, scp);
+                if ((*it)->as_typeassigment()) {
+                    stream << (*it)->as_typeassigment();
+                    continue;
+                }
+                if ((*it)->as_valueassigment()) {
+                    stream << (*it)->as_valueassigment();
+                    continue;
+                }
+                if ((*it)->as_valuesetassigment()) {
+                    stream << (*it)->as_valuesetassigment();
+                    continue;
+                }
+                if ((*it)->as_objectassigment()) {
+                    stream << (*it)->as_objectassigment();
+                    continue;
+                }
+                if ((*it)->as_objectsetassigment()) {
+                    stream << (*it)->as_objectsetassigment();
+                    continue;
+                }
+            }
+        }
+        return stream;
+    }
+
     // object
 
     std::ostream& operator<<(std::ostream& stream, objectassignment_entity_ptr self) {
@@ -1152,32 +1181,7 @@ namespace x680 {
                 return stream << self->object() << "\n";
         } else {
             stream << " {\n";
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if ((*it)->as_assigment()) {
-                    indent(stream, self);
-                    if ((*it)->as_typeassigment()) {
-                        stream << (*it)->as_typeassigment();
-                        continue;
-                    }
-                    if ((*it)->as_valueassigment()) {
-                        stream << (*it)->as_valueassigment();
-                        continue;
-                    }
-                    if ((*it)->as_valuesetassigment()) {
-                        stream << (*it)->as_valuesetassigment();
-                        continue;
-                    }
-                    if ((*it)->as_objectassigment()) {
-                        stream << (*it)->as_objectassigment();
-                        continue;
-                    }
-                    if ((*it)->as_objectsetassigment()) {
-                        stream << (*it)->as_objectsetassigment();
-                        continue;
-                    }
-                }
-
-            }            
+            plintassignment_static(stream, self->childs(),self);            
             indent(stream, self);
             return stream << "}\n";
         }
@@ -1247,9 +1251,15 @@ namespace x680 {
 
     std::ostream& operator<<(std::ostream& stream, defsyntax_object_atom_ptr self) {
         //return stream << self->fieldsetting();
-        stream << " {  ";
-        for (fieldsetting_atom_vct::const_iterator it = self->fieldsetting().begin(); it != self->fieldsetting().end(); ++it) {
-            fieldsettingstrm(stream, (*it));
+        if (!self->childs().empty()) {
+            stream << " {";
+            plintassignment_static(stream, self->childs());
+            return stream << " }";
+        } else {
+            stream << " {  ";
+            for (fieldsetting_atom_vct::const_iterator it = self->fieldsetting().begin(); it != self->fieldsetting().end(); ++it) {
+                fieldsettingstrm(stream, (*it));
+            };
         }
         return stream << " }";
     }

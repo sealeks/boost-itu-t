@@ -178,8 +178,26 @@ namespace x680 {
     // defsyntax_object_atom
     /////////////////////////////////////////////////////////////////////////  
 
+    defsyntax_object_atom::defsyntax_object_atom(basic_entity_ptr scp, class_atom_ptr cls, fieldsetting_atom_vct fldst)
+    : object_atom(scp, ot_ObjectDefineSyn), fieldsetting_(fldst), yetresolved_(false) {
+        objectassignment_ = objectassignment_entity_ptr(new objectassignment_entity(scp, "", cls, self()->as_object()));
+    };
+    
+    void defsyntax_object_atom::_class(class_atom_ptr cls) {
+        objectassignment_ = objectassignment_entity_ptr(new objectassignment_entity(scope(), "", cls, self()->as_object()));
+    }
+    
+    basic_entity_vector& defsyntax_object_atom::childs(){
+        return objectassignment_ ? objectassignment_->childs() : nullchilds_;
+    }
+    
+
     void defsyntax_object_atom::resolve(basic_atom_ptr holder) {
-        for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
+        if (objectassignment_ && !yetresolved_){
+            yetresolved_=true;
+            objectassignment_->preresolve();
+            objectassignment_->apply_fields();
+            objectassignment_->resolve(holder);
         }
     };
 
@@ -408,6 +426,7 @@ namespace x680 {
         if (st) {
             if (fld->as_typefield()) {
                 if (st->typeassignment()) {
+                    st->typeassignment()->name( fld->name());
                     childs_.push_back(st->typeassignment());
                     childs_.back()->preresolve();
                     //childs_.back()->resolve();
@@ -435,6 +454,16 @@ namespace x680 {
             } else if (fld->as_objectsetfield()) {
                 if (st->objectset()){
                     childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(self(), fld->name(), fld->as_objectsetfield()->_class(), st->objectset())));
+                    if  (childs_.back()->as_objectsetassigment()->objectset()) {
+                        objectset_atom_ptr tmpobjs = childs_.back()->as_objectsetassigment()->objectset();
+                        if (tmpobjs->as_defn()){
+                            for(object_atom_vct::iterator it =tmpobjs->as_defn()->objects().begin();it !=tmpobjs->as_defn()->objects().end();++it){
+                                if ((*it) && ((*it)->as_defnsyntx())){
+                                    (*it)->as_defnsyntx()->_class(fld->as_objectsetfield()->_class());
+                                }
+                            }
+                        }
+                    }
                     childs_.back()->preresolve();}
                 else
                     referenceerror_throw("Field is not objectset : ", fld->name());
