@@ -588,8 +588,9 @@ namespace x680 {
         assignment_entity::resolve(holder);
         resolve_child();
         type()->resolve();
-        if (valueset())
-            valueset()->resolve(type());
+        if (valueset()){
+            valueset()->reff_resolver(type());
+            valueset()->resolve(type());}
         assignment_entity::resolve_complex<valuesetassignment_entity>();
     }
 
