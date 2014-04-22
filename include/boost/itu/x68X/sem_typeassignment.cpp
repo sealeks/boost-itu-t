@@ -1072,6 +1072,31 @@ namespace x680 {
         }
         return false;
     }    
+    
+    
+    typeassignment_entity_ptr type_atom::valuestructure() {
+        if (isvaluestructure()) {
+            if ((reff()) && (reff()->as_typeassigment()) && (reff()->as_typeassigment()->type())) {
+                if ((reff()->as_typeassigment()->type()->builtin()==t_SEQUENCE) || (reff()->as_typeassigment()->type()->builtin()==t_SET))
+                    return reff()->as_typeassigment();
+                return reff()->as_typeassigment()->type()->valuestructure();
+            } else if ((scope()) && (scope()->as_typeassigment()) && (scope()->as_typeassigment()->type())) {
+                switch (builtin()) {
+                        //case t_EXTERNAL:
+                        //case t_REAL:
+                        //case t_EMBEDDED_PDV:
+                    case t_SEQUENCE:
+                    case t_SET:
+                        //case t_CHARACTER_STRING: 
+                        return scope()->as_typeassigment();
+                    default:
+                    {
+                    }
+                }
+            }
+        }
+        return typeassignment_entity_ptr();
+    }        
 
     bool type_atom::can_integer_constraints() {
         return (root_builtin() == t_INTEGER);

@@ -142,9 +142,24 @@ namespace x680 {
                     vl.push_back(tmpvl);
                 }
             }
+            typeassignment_entity_ptr structtp=reff_resolver()->as_type()->valuestructure();
+            if (structtp){
+                for (value_vct::iterator rit = vl.begin(); rit != vl.end(); ++rit){
+                    if ((*rit)->as_named()){
+                        assignment_entity_ptr fndtp = structtp->find_component((*rit)->as_named()->name());
+                        if (fndtp && (fndtp->as_typeassigment())){
+                            (*rit)->as_named()->scope(fndtp);
+                            if ((*rit)->as_named()->value()){
+                                (*rit)->as_named()->value()->scope(fndtp);
+                                (*rit)->as_named()->value()->reff_resolver(fndtp->as_typeassigment()->type());
+                            }
+                        }
+                    }
+                }                    
+            }                
         }
         for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
-            (*it)->resolve_reff(holder);
+            (*it)->resolve((*it)->reff_resolver() ? (*it)->reff_resolver() :  holder);
     }
 
     template<>
