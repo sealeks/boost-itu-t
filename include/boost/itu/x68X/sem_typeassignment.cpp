@@ -1073,6 +1073,19 @@ namespace x680 {
         return false;
     }    
     
+    bool type_atom::issubstitute() const {
+        switch (builtin()) {
+            case t_Selection:
+            case t_Instance_Of:
+            case t_TypeFromObject: return true;
+            //case t_ValueSetFromObjects: return true;
+            default:
+            {
+            }
+        }
+        return false;       
+    }
+    
     
     typeassignment_entity_ptr type_atom::valuestructure() {
         if (isvaluestructure()) {
@@ -1377,9 +1390,13 @@ namespace x680 {
         if (object()->reff()) {
             assignment_entity_ptr tmpasmt = object()->reff()->as_assigment();
             if (tmpasmt) {
-                if (tmpasmt->find_component(field_->expectedname())) {
-                    reff(tmpasmt->find_component(field_->expectedname()));
+                assignment_entity_ptr fnd = tmpasmt->find_component(field_->expectedname());
+                if (fnd && (fnd->as_typeassigment())) {
+                    reff(fnd);
+                    from_=fnd->as_typeassigment();
                 }
+                //else
+                    //scope()->referenceerror_throw("Type from object not resolved ");
             }
         }
         resolve_tag();
@@ -1524,6 +1541,9 @@ namespace x680 {
         assignment_entity::resolve(holder);
         if (type_)
             type_->resolve();
+        if (type_ && (type_->issubstitute())){
+            substitute();
+        }       
         assignment_entity::resolve_complex<typeassignment_entity>();
         resolve_child();
         post_resolve_child();
@@ -1795,6 +1815,14 @@ namespace x680 {
                     type_->tag(tagged_ptr( new tagged(*(selftype->tag()))));
                 if ((selftype->predefined()) && (!type_->predefined()))
                     type_->predefined( predefined_ptr( new x680::predefined(*(selftype->predefined()))));
+            }
+        }
+    }
+
+    void typeassignment_entity::substitute() {
+        if (type_->as_fromobject()) {
+            if (type_->as_fromobject()->from()) {
+                std::cout << "Need replace from object" << std::endl;
             }
         }
     }

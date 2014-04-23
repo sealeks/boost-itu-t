@@ -265,6 +265,8 @@ namespace x680 {
         
         bool isvaluestructure();
         
+        bool issubstitute() const;
+        
         typeassignment_entity_ptr valuestructure();
 
         bool istextualy_choice();
@@ -415,6 +417,10 @@ namespace x680 {
         void field(basic_atom_ptr vl) {
             field_ = vl;
         }
+        
+        typeassignment_entity_ptr from() const {
+            return from_;
+        }
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -422,6 +428,7 @@ namespace x680 {
 
         object_atom_ptr object_;
         basic_atom_ptr field_;
+        typeassignment_entity_ptr from_;
 
     };
 
@@ -646,6 +653,8 @@ namespace x680 {
     protected:                
 
         virtual void assign_from(assignment_entity_ptr from);
+        
+        void substitute();
 
     private:
 

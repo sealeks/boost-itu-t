@@ -1145,16 +1145,16 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
 
     basic_atom::basic_atom(assignment_enum tp, basic_entity_ptr scp) :
-    kind_(tp), scope_(scp), extention_(false), isdummy_(false), isdummysource_(false) {
+    kind_(tp), scope_(scp), extention_(false), isdummy_(false), isdummysource_(false), yetresolved_(false) {
     };
 
     basic_atom::basic_atom(assignment_enum tp, basic_entity_ptr scp, const std::string& reff) :
-    kind_(tp), scope_(scp), extention_(false), isdummy_(false), isdummysource_(false) {
+    kind_(tp), scope_(scp), extention_(false), isdummy_(false), isdummysource_(false), yetresolved_(false) {
         reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
     }
 
     basic_atom::basic_atom(basic_entity_ptr scp, const std::string& reff) :
-    kind_(at_Nodef), scope_(scp), extention_(false), isdummy_(false), isdummysource_(false) {
+    kind_(at_Nodef), scope_(scp), extention_(false), isdummy_(false), isdummysource_(false), yetresolved_(false) {
         reff_ = basic_entity_ptr(new expectdef_entity(scp, reff));
     }
 
@@ -1210,8 +1210,25 @@ namespace x680 {
                 (scope()->as_classassigment()->_class()) && (scope()->as_classassigment()->_class()->builtin() == cl_ABSTRACT_SYNTAX));
     }
 
+    bool basic_atom::islocaldef() const {
+        return localassignment_;
+    }     
+    
+
     bool basic_atom::rooted() {
         return ((root()) && (root() != self()));
+    }    
+
+    assignment_entity_ptr basic_atom::localassignment() const {
+        return localassignment_;
+    }
+
+    void basic_atom::localassignment(assignment_entity_ptr vl) {
+        localassignment_ = vl;
+    }    
+    
+    basic_entity_vector& basic_atom::childs(){
+        return localassignment_ ? localassignment_->childs() : nullchilds_;
     }
 
     type_atom_ptr basic_atom::as_type() {
@@ -1430,8 +1447,10 @@ namespace x680 {
                         return (*it)->as_assigment();
                     } else {
                         assignment_entity_ptr ref = (*it)->as_assigment()->refference_to();
-                        if (ref && (ref->as_assigment()))
+                        if (ref && (ref->as_assigment())){
+                            ref->as_assigment()->resolve();
                             return ref->as_assigment()->find_component(nm);
+                        }
                     }
                 } else
                     return assignment_entity_ptr();

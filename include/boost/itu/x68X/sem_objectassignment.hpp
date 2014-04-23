@@ -266,14 +266,12 @@ namespace x680 {
     public:
 
         defsyntax_object_atom(basic_entity_ptr scope, fieldsetting_atom_vct fldst = fieldsetting_atom_vct())
-        : object_atom(scope, ot_ObjectDefineSyn), fieldsetting_(fldst), yetresolved_(false) {
+        : object_atom(scope, ot_ObjectDefineSyn), fieldsetting_(fldst){
         };
         
         defsyntax_object_atom(basic_entity_ptr scope, class_atom_ptr cls,  fieldsetting_atom_vct fldst = fieldsetting_atom_vct());       
         
-        void _class(class_atom_ptr cls);
-        
-        basic_entity_vector& childs();
+        void _class(class_atom_ptr cls);      
 
         fieldsetting_atom_vct& fieldsetting() {
             return fieldsetting_;
@@ -291,11 +289,7 @@ namespace x680 {
 
     private:
          
-
         fieldsetting_atom_vct fieldsetting_;
-        objectassignment_entity_ptr objectassignment_;
-        basic_entity_vector nullchilds_;
-        bool yetresolved_;
 
     };
 

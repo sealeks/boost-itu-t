@@ -386,7 +386,7 @@ namespace x680 {
             case t_TypeFromObject:
             {
                 stream << "(o)" << self->as_fromobject()->object() << "."
-                        << ( ((self->as_fromobject()->field()) && (self->as_fromobject()->field()->reff())) ? self->as_fromobject()->field()->reff()->name() : "???");
+                        << ( ((self->as_fromobject()->field()) && (self->as_fromobject()->field()->reff())) ? self->as_fromobject()->field()->reff()->name() : "???" );
                 if (self->rooted())
                     stream << "(@" << self->root() << ")";
                 break;
