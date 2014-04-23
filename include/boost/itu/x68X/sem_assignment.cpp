@@ -1260,6 +1260,10 @@ namespace x680 {
 
     void basic_atom::resolve(basic_atom_ptr holder) {
     }
+    
+    assignment_entity_ptr basic_atom::find_complex_path(std::string& nm){
+        return assignment_entity_ptr();
+    }
 
     entity_enum basic_atom::check_reff(basic_atom_ptr holder, search_marker sch) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {

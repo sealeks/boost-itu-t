@@ -1077,9 +1077,11 @@ namespace x680 {
         entity_enum check_reff(basic_atom_ptr holder = basic_atom_ptr(), search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
-
-
+        
     protected:
+        
+        assignment_entity_ptr find_complex_path(std::string& nm);       
+        
         assignment_enum kind_;
         basic_entity_ptr reff_;
         basic_entity_ptr scope_;

@@ -375,8 +375,7 @@ namespace x680 {
             }
             case t_ClassField:
             {
-                stream/* << "(C)" */<< "(T)Classfield" ; //self->as_classfield()->_class() << "."
-                        //<< "&???";//( ((self->as_classfield()->field()) && (self->as_classfield()->field()->reff())) ? self->as_classfield()->field()->reff()->name() : "???");
+                stream << "(C)" <<  self->as_classfield()->_class() << "." << self->as_classfield()->field();
                 break;
             }
             case t_Instance_Of:

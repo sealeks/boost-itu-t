@@ -1352,7 +1352,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////      
 
     classfieldtype_atom::classfieldtype_atom(basic_entity_ptr scp, const std::string& reffcl, const std::string& refffld, tagged_ptr tg) :
-    type_atom(scp, t_ClassField, tg), class_(class_atom_ptr(new class_atom(scp, reffcl))), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
+    type_atom(scp, t_ClassField, tg), class_(class_atom_ptr(new class_atom(scp, reffcl))), field_(refffld) {
     };
 
     void classfieldtype_atom::resolve(basic_atom_ptr holder) {
@@ -1776,7 +1776,18 @@ namespace x680 {
         if (from->as_typeassigment()) {
             assignment_entity::assign_from(from);
             type_atom_ptr selftype = type_;
-            type_ = type_atom_ptr ( new type_atom(*(from->as_typeassigment()->type_)));
+            if (from->as_typeassigment()->type_) {
+                if (from->as_typeassigment()->type_->as_classfield())
+                    type_ = type_atom_ptr(new classfieldtype_atom(*(from->as_typeassigment()->type_->as_classfield())));
+                else if (from->as_typeassigment()->type_->as_fromobject())
+                    type_ = type_atom_ptr(new fromobject_type_atom(*(from->as_typeassigment()->type_->as_fromobject())));
+                else if (from->as_typeassigment()->type_->as_fromobjectset())
+                    type_ = type_atom_ptr(new fromobjects_type_atom(*(from->as_typeassigment()->type_->as_fromobjectset())));
+                else if (from->as_typeassigment()->type_->as_instance())
+                    type_ = type_atom_ptr(new instanceoftype_atom(*(from->as_typeassigment()->type_->as_instance())));
+                else
+                    type_ = type_atom_ptr(new type_atom(*(from->as_typeassigment()->type_)));
+            }
             if (selftype && type_) {
                 if (selftype->constraints().empty())
                     type_->constraints().insert(type_->constraints().end(), selftype->constraints().begin(), selftype->constraints().end());

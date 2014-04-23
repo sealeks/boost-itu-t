@@ -372,11 +372,11 @@ namespace x680 {
             class_ = vl;
         }
 
-        basic_atom_ptr field() const {
+        std::string field() const {
             return field_;
         }
 
-        void field(basic_atom_ptr vl) {
+        void field(const std::string& vl) {
             field_ = vl;
         }
 
@@ -385,7 +385,7 @@ namespace x680 {
     private:
 
         class_atom_ptr class_;
-        basic_atom_ptr field_;
+        std::string field_;
 
     };
 
