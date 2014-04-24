@@ -1275,8 +1275,7 @@ namespace x680 {
         return kind_ == at_Constraints ? boost::static_pointer_cast<constraints_atom> (self()) : constraints_atom_ptr();
     }
 
-    void basic_atom::resolve(basic_atom_ptr holder) {
-    }
+
     
     assignment_entity_ptr basic_atom::find_complex_path(std::string& nm){
         return assignment_entity_ptr();
@@ -1386,6 +1385,12 @@ namespace x680 {
             }
         }
     }
+    
+    void basic_atom::resolve(basic_atom_ptr holder) {
+    }    
+    
+    void basic_atom::resolve_substitute(){       
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1439,7 +1444,7 @@ namespace x680 {
 
     assignment_entity_ptr assignment_entity::find_component(const std::string& nmf) {
         std::string nm = nmf;
-        std::string search = subidentifier(nm);
+        std::string search = subidentifier(nm);        
         for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
             if ((*it)->name() == search) {
                 if ((*it)->as_assigment()) {

@@ -1048,6 +1048,10 @@ namespace x680 {
         
         bool islocaldef() const; 
         
+        virtual bool issubstitute() const{
+            return false;
+        }
+        
         bool rooted();        
        
        assignment_entity_ptr localassignment() const;
@@ -1086,6 +1090,8 @@ namespace x680 {
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
         
+        virtual void resolve_substitute();        
+        
     protected:
         
         assignment_entity_ptr find_complex_path(std::string& nm);       
@@ -1094,14 +1100,13 @@ namespace x680 {
         basic_entity_ptr reff_;
         basic_entity_ptr scope_;
         setting_atom_vct parameters_;
-        mutable basic_atom_ptr subatom_;
+        assignment_entity_ptr localassignment_;       
+        basic_entity_vector nullchilds_;         
         mutable basic_atom_wptr reff_resolver_;
-        assignment_entity_ptr localassignment_;           
         bool extention_;
         bool isdummy_;
         bool isdummysource_;
-        bool yetresolved_;
-        basic_entity_vector nullchilds_;  
+        bool yetresolved_;         
     };
 
 
@@ -1293,6 +1298,8 @@ namespace x680 {
 
         
     protected:        
+        
+        virtual void substitute(){};
              
         assignment_entity_ptr refference_to();
         
@@ -1406,19 +1413,7 @@ namespace x680 {
         if (tas && rslt){
             assign_from(tas);
             rslt = atom();
-        }          
-        /*if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
-                && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
-            boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
-            rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->atom();
-            if (rslt) {
-                //tas->resolve();
-                assign_from(tas);
-                rslt = atom();
-                if (rslt)
-                    rslt->isdummysource(true);
-            }
-        }*/
+        }
     }
 
     //template<>
