@@ -228,6 +228,12 @@ namespace x680 {
                 case t_ValueSetFromObjects: tmp = boost::make_shared< fromobjects_type_atom>(scope, ent.fieldreference,
                             compile_objectset(scope, *ent.objectsetref), compile_tag(scope, ent.tag));
                     break;
+                case t_Selection: {
+                    if(ent.elements.empty())
+                        scope->referenceerror_throw("Selection type empty");
+                    tmp = boost::make_shared< selection_type_atom>(scope, ent.elements.front().identifier,
+                            compile_type(scope, ent.elements.front().type), compile_tag(scope, ent.tag));
+                    break;}                    
                 default:
                     tmp = ent.reference.empty() ? boost::make_shared<type_atom>(scope, ent.builtin_t, compile_tag(scope, ent.tag)) :
                             boost::make_shared<type_atom>(scope, ent.reference, ent.builtin_t, compile_tag(scope, ent.tag));

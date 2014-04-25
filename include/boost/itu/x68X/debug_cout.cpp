@@ -397,6 +397,11 @@ namespace x680 {
                         << ( ((self->as_fromobjectset()->field()) && (self->as_fromobjectset()->field()->reff())) ? self->as_fromobjectset()->field()->reff()->name() : "???");
                 break;
             }
+            case t_Selection:
+            {
+                stream << "(@select)" << self->as_selection()->identifier() << " < " << self->as_selection()->type();
+                break;
+            }            
             default:
             {
                 stream << self->builtin();

@@ -1180,6 +1180,11 @@ namespace x680 {
         return builtin() == t_ValueSetFromObjects ?
                 boost::static_pointer_cast<fromobjects_type_atom> (self()) : fromobjects_type_atom_ptr();
     }
+    
+    selection_type_atom_ptr type_atom::as_selection() {
+        return builtin() == t_Selection ?
+                boost::static_pointer_cast<selection_type_atom> (self()) : selection_type_atom_ptr();
+    }    
 
     void type_atom::resolve(basic_atom_ptr holder) {
         resolve_reff();
@@ -1350,6 +1355,10 @@ namespace x680 {
     instanceoftype_atom::instanceoftype_atom(basic_entity_ptr scp, const std::string& reffcl, tagged_ptr tg) :
     type_atom(scp, t_Instance_Of, tg), class_(class_atom_ptr(new class_atom(scp, reffcl))) {
     };
+    
+    void instanceoftype_atom::resolve_substitute(){
+        
+    }    
 
     void instanceoftype_atom::resolve(basic_atom_ptr holder) {
         if (_class())
@@ -1384,21 +1393,24 @@ namespace x680 {
     type_atom(scp, t_TypeFromObject, tg), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
-    void fromobject_type_atom::resolve(basic_atom_ptr holder) {
-        if (object())
-            object()->resolve();
-        if (object()->reff()) {
+    void fromobject_type_atom::resolve_substitute() {
+        if ((object()) && (object()->reff())) {
             assignment_entity_ptr tmpasmt = object()->reff()->as_assigment();
-            if (tmpasmt) {
+            if (tmpasmt) { 
                 assignment_entity_ptr fnd = tmpasmt->find_component(field_->expectedname());
                 if (fnd && (fnd->as_typeassigment())) {
                     reff(fnd);
-                    from_=fnd->as_typeassigment();
+                    from_ = fnd->as_typeassigment();
                 }
                 //else
-                    //scope()->referenceerror_throw("Type from object not resolved ");
+                //scope()->referenceerror_throw("Type from object not resolved ");
             }
         }
+    }    
+
+    void fromobject_type_atom::resolve(basic_atom_ptr holder) {
+        if (object())
+            object()->resolve();
         resolve_tag();
         resolve_predef();
         resolve_constraints();
@@ -1411,6 +1423,11 @@ namespace x680 {
     fromobjects_type_atom::fromobjects_type_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj, tagged_ptr tg) :
     type_atom(scp, t_ValueSetFromObjects, tg), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
+    
+    
+    void fromobjects_type_atom::resolve_substitute(){
+        
+    }
 
     void fromobjects_type_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
@@ -1419,6 +1436,28 @@ namespace x680 {
         resolve_predef();
         resolve_constraints();
     }
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // selection_type_atom
+    /////////////////////////////////////////////////////////////////////////      
+
+    selection_type_atom::selection_type_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp, tagged_ptr tg) :
+    type_atom(scp, t_Selection, tg), type_(tp), nidentifier_(id) {
+    };
+    
+    
+    void selection_type_atom::resolve_substitute(){
+        
+    }
+
+    void selection_type_atom::resolve(basic_atom_ptr holder) {
+        if (type())
+            type()->resolve(holder);
+        resolve_tag();
+        resolve_predef();
+        resolve_constraints();
+    }    
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1541,9 +1580,6 @@ namespace x680 {
         assignment_entity::resolve(holder);
         if (type_)
             type_->resolve();
-        if (type_ && (type_->issubstitute())){
-            substitute();
-        }       
         assignment_entity::resolve_complex<typeassignment_entity>();
         resolve_child();
         post_resolve_child();
@@ -1600,6 +1636,9 @@ namespace x680 {
             return;            
         if (parameterized() || (has_arguments()))
             return;
+        if (type_ && (type_->issubstitute())) {
+            substitute();
+        }          
         type_atom_ptr tmptype = type();
         if ((tmptype) && (!childs().empty())) {
             if ((tmptype->builtin() == t_SEQUENCE) || ((tmptype->builtin() == t_SET))) {
@@ -1805,6 +1844,8 @@ namespace x680 {
                     type_ = type_atom_ptr(new fromobjects_type_atom(*(from->as_typeassigment()->type_->as_fromobjectset())));
                 else if (from->as_typeassigment()->type_->as_instance())
                     type_ = type_atom_ptr(new instanceoftype_atom(*(from->as_typeassigment()->type_->as_instance())));
+                else if (from->as_typeassigment()->type_->as_selection())
+                    type_ = type_atom_ptr(new selection_type_atom(*(from->as_typeassigment()->type_->as_selection())));                
                 else
                     type_ = type_atom_ptr(new type_atom(*(from->as_typeassigment()->type_)));
             }
@@ -1820,9 +1861,15 @@ namespace x680 {
     }
 
     void typeassignment_entity::substitute() {
-        if (type_->as_fromobject()) {
-            if (type_->as_fromobject()->from()) {
-                std::cout << "Need replace from object" << std::endl;
+        if (type_) {
+            type_->resolve_substitute();
+            if (type_->as_fromobject()) {
+                if (type_->as_fromobject()->from()) {
+                    std::cout << "Need replace from object :" << name() << (type_->as_fromobject()->object() ? " obj " : " null ") << " reff= " <<
+                            ((type_->as_fromobject()->field()) ? type_->as_fromobject()->field()->expectedname() : "???") << std::endl;
+                } else
+                    std::cout << "Need replace from object but not replace!!! :" << name() << (type_->as_fromobject()->object() ? " obj " : " null ") << " reff= " <<
+                    ((type_->as_fromobject()->field()) ? type_->as_fromobject()->field()->expectedname() : "???") << std::endl;
             }
         }
     }

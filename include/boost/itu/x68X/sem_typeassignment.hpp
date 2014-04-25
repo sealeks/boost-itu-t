@@ -187,6 +187,10 @@ namespace x680 {
         void tag(tagged_ptr vl) {
             tag_ = vl;
         }
+        
+        typeassignment_entity_ptr from() const {
+            return from_;
+        }        
 
         // canonical tag
         canonical_tag_ptr cncl_tag();
@@ -265,7 +269,7 @@ namespace x680 {
         
         bool isvaluestructure();
         
-        bool issubstitute() const;
+        virtual bool issubstitute() const;
         
         typeassignment_entity_ptr valuestructure();
 
@@ -285,6 +289,8 @@ namespace x680 {
         fromobject_type_atom_ptr as_fromobject();
 
         fromobjects_type_atom_ptr as_fromobjectset();
+        
+        selection_type_atom_ptr as_selection();        
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -303,6 +309,7 @@ namespace x680 {
         tagged_ptr tag_;
         predefined_ptr predefined_;
         constraints_atom_vct constraints_;
+        typeassignment_entity_ptr from_;
 
     };
 
@@ -344,7 +351,8 @@ namespace x680 {
             class_ = vl;
         }
 
-
+        virtual void resolve_substitute();       
+        
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
@@ -418,17 +426,14 @@ namespace x680 {
             field_ = vl;
         }
         
-        typeassignment_entity_ptr from() const {
-            return from_;
-        }
+        virtual void resolve_substitute();             
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
         object_atom_ptr object_;
-        basic_atom_ptr field_;
-        typeassignment_entity_ptr from_;
+        basic_atom_ptr field_;        
 
     };
 
@@ -458,6 +463,8 @@ namespace x680 {
         void field(basic_atom_ptr vl) {
             field_ = vl;
         }
+        
+        virtual void resolve_substitute();           
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -467,6 +474,44 @@ namespace x680 {
         basic_atom_ptr field_;
 
     };
+    
+    
+     /////////////////////////////////////////////////////////////////////////   
+    // selection_type_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class selection_type_atom : public type_atom {
+
+    public:
+
+        selection_type_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp = type_atom_ptr(), tagged_ptr tg = tagged_ptr());
+
+        type_atom_ptr type() const {
+            return type_;
+        }
+
+        void type(type_atom_ptr vl) {
+            type_ = vl;
+        }
+
+        std::string identifier() const {
+            return nidentifier_;
+        }
+
+        void identifier(const std::string& vl) {
+            nidentifier_ = vl;
+        }
+         
+        
+        virtual void resolve_substitute();       
+
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+    private:
+
+        type_atom_ptr type_;
+        std::string nidentifier_;
+    };   
 
 
 
@@ -654,7 +699,7 @@ namespace x680 {
 
         virtual void assign_from(assignment_entity_ptr from);
         
-        void substitute();
+        virtual void substitute();
 
     private:
 

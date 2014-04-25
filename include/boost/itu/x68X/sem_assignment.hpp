@@ -178,6 +178,9 @@ namespace x680 {
 
     class fromobjects_type_atom;
     typedef boost::shared_ptr<fromobjects_type_atom> fromobjects_type_atom_ptr;
+    
+    class selection_type_atom;
+    typedef boost::shared_ptr<selection_type_atom> selection_type_atom_ptr;    
 
 
     class value_atom;
