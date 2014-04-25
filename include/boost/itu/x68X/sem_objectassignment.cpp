@@ -180,22 +180,22 @@ namespace x680 {
 
     defsyntax_object_atom::defsyntax_object_atom(basic_entity_ptr scp, class_atom_ptr cls, fieldsetting_atom_vct fldst)
     : object_atom(scp, ot_ObjectDefineSyn), fieldsetting_(fldst) {
-        localassignment_ = objectassignment_entity_ptr(new objectassignment_entity(scp, "", cls, self()->as_object()));
+        embeded_assignment_ = objectassignment_entity_ptr(new objectassignment_entity(scp, "", cls, self()->as_object()));
     };
     
     void defsyntax_object_atom::_class(class_atom_ptr cls) {
-        localassignment_ = objectassignment_entity_ptr(new objectassignment_entity(scope(), "", cls, self()->as_object()));
+        embeded_assignment_ = objectassignment_entity_ptr(new objectassignment_entity(scope(), "", cls, self()->as_object()));
     }
     
 
     
 
     void defsyntax_object_atom::resolve(basic_atom_ptr holder) {
-        if (localassignment_ && (localassignment_->as_objectassigment()) && !yetresolved_){
+        if (embeded_assignment_ && (embeded_assignment_->as_objectassigment()) && !yetresolved_){
             yetresolved_=true;
-            localassignment_->as_objectassigment()->preresolve();
-            localassignment_->as_objectassigment()->apply_fields();
-            localassignment_->as_objectassigment()->resolve(holder);
+            embeded_assignment_->as_objectassigment()->preresolve();
+            embeded_assignment_->as_objectassigment()->apply_fields();
+            embeded_assignment_->as_objectassigment()->resolve(holder);
         }
     };
 

@@ -405,6 +405,9 @@ namespace x680 {
             default:
             {
                 stream << self->builtin();
+                /*if (self->isembeded()){
+                    operatorstruct(stream,self->embeded_assignment()->as_typeassigment());
+                }*/
             }
         }
         if (self->integer_constraint()) {

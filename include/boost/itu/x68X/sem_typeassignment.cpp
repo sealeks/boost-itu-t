@@ -1187,10 +1187,17 @@ namespace x680 {
     }    
 
     void type_atom::resolve(basic_atom_ptr holder) {
-        resolve_reff();
-        resolve_tag();
-        resolve_predef();
-        resolve_constraints();
+        if (embeded_assignment_ && (embeded_assignment_->as_typeassigment()) && !yetresolved_) {
+            yetresolved_ = true;
+            embeded_assignment_->as_typeassigment()->preresolve();
+            embeded_assignment_->as_typeassigment()->resolve(holder);
+            embeded_assignment_->as_typeassigment()->after_resolve();
+        } else {
+            resolve_reff();
+            resolve_tag();
+            resolve_predef();
+            resolve_constraints();
+        }
     }
 
     void type_atom::resolve_predef() {

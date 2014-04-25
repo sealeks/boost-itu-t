@@ -1049,7 +1049,7 @@ namespace x680 {
             isdummysource_ = vl;
         }
         
-        bool islocaldef() const; 
+        bool isembeded() const; 
         
         virtual bool issubstitute() const{
             return false;
@@ -1057,9 +1057,9 @@ namespace x680 {
         
         bool rooted();        
        
-       assignment_entity_ptr localassignment() const;
+       assignment_entity_ptr embeded_assignment() const;
 
-        void localassignment(assignment_entity_ptr vl);
+        void embeded_assignment(assignment_entity_ptr vl);
 
         basic_entity_vector& childs();
 
@@ -1103,7 +1103,7 @@ namespace x680 {
         basic_entity_ptr reff_;
         basic_entity_ptr scope_;
         setting_atom_vct parameters_;
-        assignment_entity_ptr localassignment_;       
+        assignment_entity_ptr embeded_assignment_;       
         basic_entity_vector nullchilds_;         
         mutable basic_atom_wptr reff_resolver_;
         bool extention_;

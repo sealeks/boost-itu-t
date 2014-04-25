@@ -1210,8 +1210,8 @@ namespace x680 {
                 (scope()->as_classassigment()->_class()) && (scope()->as_classassigment()->_class()->builtin() == cl_ABSTRACT_SYNTAX));
     }
 
-    bool basic_atom::islocaldef() const {
-        return localassignment_;
+    bool basic_atom::isembeded() const {
+        return embeded_assignment_;
     }     
     
 
@@ -1219,16 +1219,16 @@ namespace x680 {
         return ((root()) && (root() != self()));
     }    
 
-    assignment_entity_ptr basic_atom::localassignment() const {
-        return localassignment_;
+    assignment_entity_ptr basic_atom::embeded_assignment() const {
+        return embeded_assignment_;
     }
 
-    void basic_atom::localassignment(assignment_entity_ptr vl) {
-        localassignment_ = vl;
+    void basic_atom::embeded_assignment(assignment_entity_ptr vl) {
+        embeded_assignment_ = vl;
     }    
     
     basic_entity_vector& basic_atom::childs(){
-        return localassignment_ ? localassignment_->childs() : nullchilds_;
+        return embeded_assignment_ ? embeded_assignment_->childs() : nullchilds_;
     }
 
     type_atom_ptr basic_atom::as_type() {

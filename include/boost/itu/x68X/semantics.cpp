@@ -242,6 +242,28 @@ namespace x680 {
             tmp->parameters(compile_parameters(scope, ent.parameters));
             return tmp;
         }
+        
+        type_atom_ptr compile_typee(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
+            type_atom_ptr tmp=compile_type(scope,ent);
+             switch (ent.builtin_t) {
+                 case t_SEQUENCE:
+                 case t_SEQUENCE_OF:
+                 case t_SET:
+                 case t_SET_OF:
+                 case t_CHOICE:
+                {
+                    typeassignment_entity_ptr tmpt(new typeassignment_entity(scope, "", compile_type(scope, ent)));
+                    x680::syntactic::type_assignment tmpa;
+                    tmpa.identifier = "";
+                    tmpa.type = ent;
+                    tmpt->synctas(tmpa);
+                    tmp->embeded_assignment(tmpt);
+                    break;
+                 }
+                 default:{}
+             }
+             return tmp;
+        }
 
         typeassignment_entity_ptr compile_typea(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
             typeassignment_entity_ptr tmpt(new typeassignment_entity(scope, "", compile_type(scope, ent)));
@@ -411,7 +433,7 @@ namespace x680 {
 
         value_atom_ptr compile_openvalue(basic_entity_ptr scope, const x680::syntactic::value_element& ent) {
             if (ent.typevalue) {
-                return boost::make_shared< openvalue_atom>(compile_type(scope, ent.typevalue->type), compile_value(scope, ent.typevalue->value));
+                return boost::make_shared< openvalue_atom>(compile_typee(scope, ent.typevalue->type), compile_value(scope, ent.typevalue->value));
             }
             return boost::make_shared< value_atom>(scope, v_nodef);
         }
@@ -457,7 +479,7 @@ namespace x680 {
         // valueset
 
         valuesetassignment_entity_ptr compile_valuesetassignment(basic_entity_ptr scope, const x680::syntactic::valueset_assignment& tmp) {
-            valuesetassignment_entity_ptr tmpv(new valuesetassignment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
+            valuesetassignment_entity_ptr tmpv(new valuesetassignment_entity(scope, tmp.identifier, compile_typee(scope, tmp.type)));
             tmpv->synctas(tmp);
             tmpv->valueset(compile_valueset(tmpv, tmp.set));
             tmpv->arguments(compile_arguments(tmpv, tmp.arguments));
@@ -526,7 +548,7 @@ namespace x680 {
                             (((ent.totype_ == close_range) || (ent.totype_ == open_range)) ? compile_value(scope, ent.to_) : value_atom_ptr()), ent.totype_);
                 case cns_ContainedSubtype:
                 case cns_TypeConstraint: return boost::make_shared< typeconstraint_atom>(scope, ent.tp,
-                            compile_type(scope, ent.type), false);
+                            compile_typee(scope, ent.type), false);
                 case cns_PermittedAlphabet:
                 case cns_SizeConstraint:
                 case cns_SingleTypeConstraint: return boost::make_shared< complexconstraint_atom>(scope, ent.tp,
@@ -576,14 +598,14 @@ namespace x680 {
         }
 
         constraint_atom_ptr compile_exceptionconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
-            return boost::make_shared< exceptionconstraint_atom>(scope, compile_type(scope, ent.type), compile_value(scope, ent.value));
+            return boost::make_shared< exceptionconstraint_atom>(scope, compile_typee(scope, ent.type), compile_value(scope, ent.value));
         }
 
         constraint_atom_ptr compile_contentconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
             if ((ent.type.builtin_t != t_NODEF) && (ent.value.type != v_nodef)) {
-                return boost::make_shared< contentconstraint_atom>(scope, compile_type(scope, ent.type), compile_value(scope, ent.value));
+                return boost::make_shared< contentconstraint_atom>(scope, compile_typee(scope, ent.type), compile_value(scope, ent.value));
             } else if (ent.type.builtin_t != t_NODEF) {
-                return boost::make_shared< contentconstraint_atom>(scope, compile_type(scope, ent.type));
+                return boost::make_shared< contentconstraint_atom>(scope, compile_typee(scope, ent.type));
             } else if (ent.value.type != v_nodef) {
                 return boost::make_shared< contentconstraint_atom>(scope, compile_value(scope, ent.value));
             }
@@ -613,7 +635,7 @@ namespace x680 {
             switch (ent.tp) {
                 case gvr_Type:
                 {
-                    uargument_entity_ptr tmp(new uargument_entity(scope, compile_type(scope, ent.governortype)));
+                    uargument_entity_ptr tmp(new uargument_entity(scope, compile_typee(scope, ent.governortype)));
                     tmp->setting(compile_setting(tmp, ent.parameter));
                     return tmp;
                 }
@@ -736,7 +758,7 @@ namespace x680 {
             switch (ent.marker) {
                 case field_defaulttype:
                 {
-                    type_atom_ptr tp = compile_type(scope, ent.defaulttype);
+                    type_atom_ptr tp = compile_typee(scope, ent.defaulttype);
                     return boost::make_shared< typefield_entity>(scope, ent.field, tp);
                 }
                 case field_optional: return boost::make_shared< typefield_entity>(scope, ent.field, mk_optional);
@@ -748,7 +770,7 @@ namespace x680 {
         }
 
         basic_entity_ptr compile_valueclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
-            type_atom_ptr tp = compile_type(scope, ent.holdertype);
+            type_atom_ptr tp = compile_typee(scope, ent.holdertype);
             switch (ent.marker) {
                 case field_defaultvalue:
                 {
@@ -764,7 +786,7 @@ namespace x680 {
         }
 
         basic_entity_ptr compile_valuesetclassfield(basic_entity_ptr scope, const x680::syntactic::classfield_type& ent) {
-            type_atom_ptr tp = compile_type(scope, ent.holdertype);
+            type_atom_ptr tp = compile_typee(scope, ent.holdertype);
             switch (ent.marker) {
                 case field_defaultset:
                 {
