@@ -1297,7 +1297,9 @@ namespace x680 {
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
-        virtual void preresolve();         
+        virtual void preresolve();    
+        
+        virtual void resolve_all(basic_atom_ptr holder = basic_atom_ptr());        
 
         
     protected:        
@@ -1383,10 +1385,7 @@ namespace x680 {
                     boost::shared_ptr<T> tascopy = tas->clone<T>();
                     if (!tascopy)
                         throw semantics::error("");
-                    tascopy->preresolve();
-                    if (tascopy->as_objectassigment())
-                        tascopy->as_objectassigment()->apply_fields();
-                    tascopy->resolve();
+                    tascopy->resolve_all();
                     assign_from(tascopy);
                     tascopy->apply_arguments(rslt->parameters(), self());
                     tascopy->resolve_arguments();

@@ -1497,8 +1497,11 @@ namespace x680 {
         }
     }
 
-
-
+    void assignment_entity::resolve_all(basic_atom_ptr holder) {
+        preresolve();
+        resolve(holder);
+        after_resolve();
+    }
 
     
     assignment_entity_ptr assignment_entity::refference_to() {

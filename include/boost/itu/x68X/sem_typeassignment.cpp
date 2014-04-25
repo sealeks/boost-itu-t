@@ -1189,9 +1189,7 @@ namespace x680 {
     void type_atom::resolve(basic_atom_ptr holder) {
         if (embeded_assignment_ && (embeded_assignment_->as_typeassigment()) && !yetresolved_) {
             yetresolved_ = true;
-            embeded_assignment_->as_typeassigment()->preresolve();
-            embeded_assignment_->as_typeassigment()->resolve(holder);
-            embeded_assignment_->as_typeassigment()->after_resolve();
+            embeded_assignment_->resolve_all(holder);
         } else {
             resolve_reff();
             resolve_tag();
@@ -1891,6 +1889,8 @@ namespace x680 {
                     type_->tag(tagged_ptr( new tagged(*(selftype->tag()))));
                 if ((selftype->predefined()) && (!type_->predefined()))
                     type_->predefined( predefined_ptr( new x680::predefined(*(selftype->predefined()))));
+                if ((selftype->embeded_assignment()))
+                    type_->embeded_assignment(selftype->embeded_assignment());
             }
         }
     }
