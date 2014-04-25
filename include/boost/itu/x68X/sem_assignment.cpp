@@ -1445,7 +1445,8 @@ namespace x680 {
     assignment_entity_ptr assignment_entity::find_component(const std::string& nmf) {
         std::string nm = nmf;
         std::string search = subidentifier(nm);        
-        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+        assignment_entity_ptr slf=refference_to();
+        for (basic_entity_vector::iterator it = slf->childs().begin(); it !=  slf->childs().end(); ++it) {
             if ((*it)->name() == search) {
                 if ((*it)->as_assigment()) {
                     if (nm.empty()) {
@@ -1506,37 +1507,37 @@ namespace x680 {
             if ((as_typeassigment()->type())
                     && (as_typeassigment()->type()->reff())
                     && (as_typeassigment()->type()->reff()->as_assigment())) {
-                return as_typeassigment()->type()->reff()->as_assigment();
+                return as_typeassigment()->type()->reff()->as_assigment()->refference_to();
             }
         } else if (as_valueassigment()) {
             if ((as_valueassigment()->value())
                     && (as_valueassigment()->value()->reff())
                     && (as_valueassigment()->value()->reff()->as_assigment())) {
-                return as_valueassigment()->value()->reff()->as_assigment();
+                return as_valueassigment()->value()->reff()->as_assigment()->refference_to();
             }
         } else if (as_valuesetassigment()) {
             if ((as_valuesetassigment()->valueset())
                     && (as_valuesetassigment()->valueset()->reff())
                     && (as_valuesetassigment()->valueset()->reff()->as_assigment())) {
-                return as_valuesetassigment()->valueset()->reff()->as_assigment();
+                return as_valuesetassigment()->valueset()->reff()->as_assigment()->refference_to();
             }
         } else if (as_classassigment()) {
             if ((as_classassigment()->_class())
                     && (as_classassigment()->_class()->reff())
                     && (as_classassigment()->_class()->reff()->as_assigment())) {
-                return as_classassigment()->_class()->reff()->as_assigment();
+                return as_classassigment()->_class()->reff()->as_assigment()->refference_to();
             }
         } else if (as_objectassigment()) {
             if ((as_objectassigment()->object())
                     && (as_objectassigment()->object()->reff())
                     && (as_objectassigment()->object()->reff()->as_assigment())) {
-                return as_objectassigment()->object()->reff()->as_assigment();
+                return as_objectassigment()->object()->reff()->as_assigment()->refference_to();
             }
         } else if (as_objectsetassigment()) {
             if ((as_objectsetassigment()->objectset())
                     && (as_objectsetassigment()->objectset()->reff())
                     && (as_objectsetassigment()->objectset()->reff()->as_assigment())) {
-                return as_objectsetassigment()->objectset()->reff()->as_assigment();
+                return as_objectsetassigment()->objectset()->reff()->as_assigment()->refference_to();
             }
         }
         return as_assigment();
