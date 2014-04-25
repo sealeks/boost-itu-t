@@ -1357,7 +1357,21 @@ namespace x680 {
     };
     
     void instanceoftype_atom::resolve_substitute(){
-        
+        if (_class()){
+            from_ = typeassignment_entity_ptr(new typeassignment_entity(scope(),""));
+            tagged_ptr tmptg = tagged_ptr( new tagged(value_atom_ptr( new numvalue_atom(8)), tcl_universal));
+            type_atom_ptr tmptp = boost::make_shared<type_atom>(scope(), t_SEQUENCE, tmptg);
+            from_->type(tmptp);
+            from_->childs().push_back(typeassignment_entity_ptr( new namedtypeassignment_entity(from_, "type-id", type_atom_ptr(), mk_none)));
+            from_->childs().back()->as_typeassigment()->type(type_atom_ptr( new classfieldtype_atom(from_->childs().back())));
+            from_->childs().back()->as_typeassigment()->type()->as_classfield()->field("&id");
+            from_->childs().back()->as_typeassigment()->type()->as_classfield()->_class(_class());            
+            from_->childs().push_back(typeassignment_entity_ptr( new namedtypeassignment_entity(from_, "value", type_atom_ptr(), mk_none)));
+            from_->childs().back()->as_typeassigment()->type(type_atom_ptr( new classfieldtype_atom(from_->childs().back())));
+            from_->childs().back()->as_typeassigment()->type()->as_classfield()->field("&Type");
+            from_->childs().back()->as_typeassigment()->type()->as_classfield()->_class(_class());    
+            from_->childs().back()->as_typeassigment()->type()->as_classfield()->tag(tagged_ptr( new tagged(value_atom_ptr( new numvalue_atom(0)))));
+        }      
     }    
 
     void instanceoftype_atom::resolve(basic_atom_ptr holder) {
@@ -1394,11 +1408,13 @@ namespace x680 {
     };
 
     void fromobject_type_atom::resolve_substitute() {
-        if ((object()) && (object()->reff())) {
+        if ((object())) {
             assignment_entity_ptr tmpasmt = object()->reff()->as_assigment();
             if (tmpasmt) { 
                 assignment_entity_ptr fnd = tmpasmt->find_component(field_->expectedname());
                 if (fnd && (fnd->as_typeassigment())) {
+                    if (fnd->as_typeassigment()->type())
+                        fnd->as_typeassigment()->type()->resolve_substitute();
                     reff(fnd);
                     from_ = fnd->as_typeassigment();
                 }
@@ -1424,10 +1440,9 @@ namespace x680 {
     type_atom(scp, t_ValueSetFromObjects, tg), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
     
-    
-    void fromobjects_type_atom::resolve_substitute(){
-        
-    }
+    void fromobjects_type_atom::resolve_substitute() {
+
+    } 
 
     void fromobjects_type_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
@@ -1448,7 +1463,20 @@ namespace x680 {
     
     
     void selection_type_atom::resolve_substitute(){
-        
+         if ((type()) && (type()->reff())) {
+            assignment_entity_ptr tmpasmt = type()->reff()->as_assigment();
+            if (tmpasmt) { 
+                assignment_entity_ptr fnd = tmpasmt->find_component(nidentifier_);
+                if (fnd && (fnd->as_typeassigment())) {
+                    if (fnd->as_typeassigment()->type())
+                        fnd->as_typeassigment()->type()->resolve_substitute();
+                    reff(fnd);
+                    from_ = fnd->as_typeassigment();
+                }
+                //else
+                //scope()->referenceerror_throw("Type from object not resolved ");
+            }
+        }       
     }
 
     void selection_type_atom::resolve(basic_atom_ptr holder) {
@@ -1863,14 +1891,17 @@ namespace x680 {
     void typeassignment_entity::substitute() {
         if (type_) {
             type_->resolve_substitute();
-            if (type_->as_fromobject()) {
-                if (type_->as_fromobject()->from()) {
-                    std::cout << "Need replace from object :" << name() << (type_->as_fromobject()->object() ? " obj " : " null ") << " reff= " <<
-                            ((type_->as_fromobject()->field()) ? type_->as_fromobject()->field()->expectedname() : "???") << std::endl;
-                } else
-                    std::cout << "Need replace from object but not replace!!! :" << name() << (type_->as_fromobject()->object() ? " obj " : " null ") << " reff= " <<
-                    ((type_->as_fromobject()->field()) ? type_->as_fromobject()->field()->expectedname() : "???") << std::endl;
-            }
+            typeassignment_entity_ptr subtype = type_->from();
+            if (subtype) {
+                if (!type_->as_instance()) {
+                    subtype = subtype->clone<typeassignment_entity>(basic_entity_ptr(), false);  
+                    subtype->preresolve();
+                    subtype->resolve();
+                }
+            assign_from(subtype);   
+            } else
+                std::cout << "Need replace from object but not replace!!! :" << name() << (type_->as_fromobject()->object() ? " obj " : " null ") << " reff= " <<
+                ((type_->as_fromobject()->field()) ? type_->as_fromobject()->field()->expectedname() : "???") << std::endl;
         }
     }
 
