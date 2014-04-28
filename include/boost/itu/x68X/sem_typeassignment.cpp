@@ -1891,8 +1891,8 @@ namespace x680 {
                     type_->predefined( predefined_ptr( new x680::predefined(*(selftype->predefined()))));
                 if ((selftype->embeded_assignment()))
                     type_->embeded_assignment(selftype->embeded_assignment());
-            }
         }
+    }
     }
 
     void typeassignment_entity::substitute() {

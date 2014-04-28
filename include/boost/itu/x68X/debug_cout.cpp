@@ -753,6 +753,7 @@ namespace x680 {
             case cns_PropertySettings: return stream << self->as_property();
             case cns_MultipleTypeConstraints: return stream << self->as_multipletypeconstraint();
             case cns_NamedConstraint: return stream << self->as_named();
+            case cns_ValueSet: return stream << self->as_valuesetconstraint();            
             case cns_ValueSetFromObjects: return stream << self->as_fromdefinedset();
             case cns_ValueSetFromObject: return stream << self->as_fromdefined();
             case cns_UserDefinedConstraint: return stream << self->as_user();
@@ -782,6 +783,10 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, fromdefined_objects_constraint_atom_ptr self) {
         return stream << "(oS) " << self->objectset() << "." << self->field()->reff()->name();
     }
+    
+    std::ostream& operator<<(std::ostream& stream, valuesetconstraint_atom_ptr self) {
+        return stream << "(vS) " << self->valueset();
+    }    
 
     std::ostream& operator<<(std::ostream& stream, fromdefined_constraint_atom_ptr self) {
         return stream << "(o) " << self->object() << "." << self->field()->reff()->name();

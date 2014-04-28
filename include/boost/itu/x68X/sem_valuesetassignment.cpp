@@ -96,17 +96,18 @@ namespace x680 {
     // constraints_atom
     /////////////////////////////////////////////////////////////////////////
 
-    static void resolve_tsvo(constraint_atom_vct& vl) {
+    static void resolve_tsvo(constraint_atom_vct& vl) {              
         for (constraint_atom_vct::iterator it = vl.begin(); it != vl.end(); ++it) {
             if ((*it)->as_tvoso()) {
-                if ((*it)->as_tvoso()->type())
-                    (*it) = typeconstraint_atom_ptr(new typeconstraint_atom((*it)->as_tvoso()->scope(), cns_ContainedSubtype, (*it)->as_tvoso()->type(), false));
-                else if ((*it)->as_tvoso()->objectset())
-                    (*it) = tableconstraint_atom_ptr(new tableconstraint_atom((*it)->as_tvoso()->scope(), (*it)->as_tvoso()->objectset()));
-                //else if ((*it)->as_tvoso()->valueset()))
-                //(*it) =tableconstraint_atom_ptr( new tableconstraint_atom((*it)->as_tvoso()->scope()(*it)->as_tvoso()->objectset()));                
-            } /*else if (((*it)->as_complex()) && ((*it)->as_complex()->constraints()))
-                resolve_tsvo(*((*it)->as_complex()->constraints()));*/
+                (*it)->as_tvoso()->resolve();
+                if (((*it)->as_tvoso()->tp()==argm_Type) && ((*it)->as_tvoso()->type())) {
+                    (*it) = typeconstraint_atom_ptr(new typeconstraint_atom((*it)->as_tvoso()->scope(), cns_ContainedSubtype, (*it)->as_tvoso()->type(), false));}
+                else if (((*it)->as_tvoso()->tp()==argm_ObjectSet) && ((*it)->as_tvoso()->objectset())) {
+                    (*it) = tableconstraint_atom_ptr(new tableconstraint_atom((*it)->as_tvoso()->scope(), (*it)->as_tvoso()->objectset()));}
+                else if (((*it)->as_tvoso()->tp()==argm_ValueSet) && ((*it)->as_tvoso()->valueset())){
+                    (*it) = valuesetconstraint_atom_ptr(new valuesetconstraint_atom((*it)->as_tvoso()->scope(),(*it)->as_tvoso()->valueset()));
+                }
+            } 
         }
     }
 
@@ -146,6 +147,11 @@ namespace x680 {
         return cotstrtype_ == cns_SingleValue ?
                 boost::static_pointer_cast<valueconstraint_atom> (self()) : valueconstraint_atom_ptr();
     }
+    
+    valuesetconstraint_atom_ptr constraint_atom::as_valuesetconstraint() {
+        return cotstrtype_ == cns_ValueSet ?
+                boost::static_pointer_cast<valuesetconstraint_atom> (self()) : valuesetconstraint_atom_ptr();
+    }    
 
     fromdefined_objects_constraint_atom_ptr constraint_atom::as_fromdefinedset() {
         return cotstrtype_ == cns_ValueSetFromObjects ?
@@ -296,6 +302,16 @@ namespace x680 {
         if (value_)
             value_->resolve_reff();
     }
+    
+    
+    /////////////////////////////////////////////////////////////////////////   
+    // valuesetconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    void valuesetconstraint_atom::resolve(basic_atom_ptr holder) {
+        if (valueset_)
+            valueset_->resolve_reff();
+    }    
 
 
 
@@ -491,15 +507,10 @@ namespace x680 {
             if (type()->reff()) {
                 basic_entity_ptr fnd = type()->scope()->find(type()->reff());
                 if (fnd)
-                    if (fnd && ((fnd->as_typeassigment())
-                            || (fnd->as_argument()))) {
-                        if ((fnd->as_typeassigment()) || ((fnd->as_argument()->argumenttype() == argm_Nodef)
-                                || (fnd->as_argument()->argumenttype() == argm_Type))) {
+                    if (fnd && ((fnd->as_typeassigment())  || (fnd->as_argument()))) {
+                        if ((fnd->as_typeassigment()) || ((fnd->as_argument()) && ((fnd->as_argument()->argumenttype() == argm_Nodef)
+                                || (fnd->as_argument()->argumenttype() == argm_Type)))) {
                             tp_ = argm_Type;
-                            if (objectset_)
-                                objectset_.reset();
-                            if (valueset_)
-                                valueset_.reset();
                             type()->resolve();
                             return;
                         }
@@ -512,12 +523,8 @@ namespace x680 {
         if (valueset() && (valueset()->reff())) {
             basic_entity_ptr fnd = valueset()->scope()->find(valueset()->reff());
             if (fnd && ((fnd->as_valuesetassigment()) || (fnd->as_argument()))) {
-                if ((fnd->as_valuesetassigment()) || (fnd->as_argument()->argumenttype() == argm_ValueSet)) {
+                if ((fnd->as_valuesetassigment()) || ((fnd->as_argument()) && (fnd->as_argument()->argumenttype() == argm_ValueSet))) {
                     tp_ = argm_ValueSet;
-                    if (objectset_)
-                        objectset_.reset();
-                    if (type())
-                        type().reset();
                     valueset()->resolve();
                     return;
                 }
@@ -526,12 +533,8 @@ namespace x680 {
         if (objectset() && (objectset()->reff())) {
             basic_entity_ptr fnd = objectset()->scope()->find(objectset()->reff());
             if (fnd && ((fnd->as_objectsetassigment()) || (fnd->as_argument()))) {
-                if ((fnd->as_objectsetassigment()) || (fnd->as_argument()->argumenttype() == argm_ObjectSet)) {
+                if ((fnd->as_objectsetassigment()) || ((fnd->as_argument()) && (fnd->as_argument()->argumenttype() == argm_ObjectSet))) {
                     tp_ = argm_ObjectSet;
-                    if (valueset_)
-                        valueset_.reset();
-                    if (type())
-                        type().reset();
                     objectset()->resolve();
                     return;
                 }

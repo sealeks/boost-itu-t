@@ -253,6 +253,9 @@ namespace x680 {
 
     class valueconstraint_atom;
     typedef boost::shared_ptr<valueconstraint_atom> valueconstraint_atom_ptr;
+    
+    class valuesetconstraint_atom;
+    typedef boost::shared_ptr<valuesetconstraint_atom> valuesetconstraint_atom_ptr;    
 
     class fromdefined_objects_constraint_atom;
     typedef boost::shared_ptr<fromdefined_objects_constraint_atom> fromdefined_objects_constraint_atom_ptr;
@@ -1385,8 +1388,8 @@ namespace x680 {
                     boost::shared_ptr<T> tascopy = tas->clone<T>();
                     if (!tascopy)
                         throw semantics::error("");
-                    tascopy->resolve_all();
                     assign_from(tascopy);
+                    tascopy->resolve_all();                 
                     tascopy->apply_arguments(rslt->parameters(), self());
                     tascopy->resolve_arguments();
 

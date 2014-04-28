@@ -65,6 +65,7 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, constraint_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, valueconstraint_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, fromdefined_objects_constraint_atom_ptr self);
+    std::ostream& operator<<(std::ostream& stream, valuesetconstraint_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, fromdefined_constraint_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, typeconstraint_atom_ptr self);
     std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom_ptr self);

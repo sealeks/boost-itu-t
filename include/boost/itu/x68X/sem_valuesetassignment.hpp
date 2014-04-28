@@ -194,6 +194,8 @@ namespace x680 {
         }
 
         valueconstraint_atom_ptr as_valueconstraint();
+        
+        valuesetconstraint_atom_ptr as_valuesetconstraint();        
 
         fromdefined_objects_constraint_atom_ptr as_fromdefinedset();
 
@@ -281,6 +283,30 @@ namespace x680 {
         value_atom_ptr value_;
 
     };
+    
+    
+       /////////////////////////////////////////////////////////////////////////   
+    // valuesetconstraint_atom
+    /////////////////////////////////////////////////////////////////////////  
+
+    class valuesetconstraint_atom : public constraint_atom {
+
+    public:
+
+        valuesetconstraint_atom(basic_entity_ptr scp, valueset_atom_ptr vl) : constraint_atom(scp, cns_ValueSet), valueset_(vl) {
+        };
+
+        valueset_atom_ptr valueset() {
+            return valueset_;
+        }
+
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+    private:
+
+        valueset_atom_ptr valueset_;
+
+    }; 
 
 
     /////////////////////////////////////////////////////////////////////////        
