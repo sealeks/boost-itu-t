@@ -1896,7 +1896,7 @@ namespace x680 {
     }
 
     void typeassignment_entity::substitute() {
-        if (type_) {
+        if (type_ && !(has_rootarguments())) {
             type_->resolve_substitute();
             typeassignment_entity_ptr subtype = type_->from();
             if (subtype) {
@@ -1907,8 +1907,7 @@ namespace x680 {
                 }
             assign_from(subtype);   
             } else
-                std::cout << "Need replace from object but not replace!!! :" << name() << (type_->as_fromobject()->object() ? " obj " : " null ") << " reff= " <<
-                ((type_->as_fromobject()->field()) ? type_->as_fromobject()->field()->expectedname() : "???") << std::endl;
+                referenceerror_throw("Subtitute type error :");
         }
     }
 

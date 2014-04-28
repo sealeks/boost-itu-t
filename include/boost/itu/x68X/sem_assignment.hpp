@@ -1015,6 +1015,8 @@ namespace x680 {
         bool parameterized() const {
             return !parameters_.empty();
         }
+        
+        bool has_rootargumented() const; 
 
         std::string expectedname() const {
             return expecteddef() ? reff_->name() : "";
@@ -1275,6 +1277,8 @@ namespace x680 {
             return !arguments_.empty();
         }
         
+        bool has_rootarguments() const;  
+        
         bool parameterized() const;   
         
         
@@ -1388,8 +1392,8 @@ namespace x680 {
                     boost::shared_ptr<T> tascopy = tas->clone<T>();
                     if (!tascopy)
                         throw semantics::error("");
-                    assign_from(tascopy);
-                    tascopy->resolve_all();                 
+                    tascopy->resolve_all();
+                    assign_from(tascopy);                    
                     tascopy->apply_arguments(rslt->parameters(), self());
                     tascopy->resolve_arguments();
 

@@ -100,8 +100,8 @@ namespace x680 {
         for (constraint_atom_vct::iterator it = vl.begin(); it != vl.end(); ++it) {
             if ((*it)->as_tvoso()) {
                 (*it)->as_tvoso()->resolve();
-                if (((*it)->as_tvoso()->tp()==argm_Type) && ((*it)->as_tvoso()->type())) {
-                    (*it) = typeconstraint_atom_ptr(new typeconstraint_atom((*it)->as_tvoso()->scope(), cns_ContainedSubtype, (*it)->as_tvoso()->type(), false));}
+                if (((*it)->as_tvoso()->tp()==argm_Type) && ((*it)->as_tvoso()->typeassignment())) {
+                    (*it) = typeconstraint_atom_ptr(new typeconstraint_atom((*it)->as_tvoso()->scope(), cns_ContainedSubtype, (*it)->as_tvoso()->typeassignment(), false));}
                 else if (((*it)->as_tvoso()->tp()==argm_ObjectSet) && ((*it)->as_tvoso()->objectset())) {
                     (*it) = tableconstraint_atom_ptr(new tableconstraint_atom((*it)->as_tvoso()->scope(), (*it)->as_tvoso()->objectset()));}
                 else if (((*it)->as_tvoso()->tp()==argm_ValueSet) && ((*it)->as_tvoso()->valueset())){
@@ -347,9 +347,13 @@ namespace x680 {
     // typeconstraint_atom
     /////////////////////////////////////////////////////////////////////////
 
+    type_atom_ptr typeconstraint_atom::type() {
+        return typeassignment_ ? typeassignment_->type() : type_atom_ptr();
+    }
+
     void typeconstraint_atom::resolve(basic_atom_ptr holder) {
-        if (type_)
-            type_->resolve();
+        if (typeassignment_)
+            typeassignment_->resolve(holder);
     }
 
     /////////////////////////////////////////////////////////////////////////   

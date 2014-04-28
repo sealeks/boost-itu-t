@@ -548,7 +548,7 @@ namespace x680 {
                             (((ent.totype_ == close_range) || (ent.totype_ == open_range)) ? compile_value(scope, ent.to_) : value_atom_ptr()), ent.totype_);
                 case cns_ContainedSubtype:
                 case cns_TypeConstraint: return boost::make_shared< typeconstraint_atom>(scope, ent.tp,
-                            compile_typee(scope, ent.type), false);
+                            compile_typea(scope, ent.type), false);
                 case cns_PermittedAlphabet:
                 case cns_SizeConstraint:
                 case cns_SingleTypeConstraint: return boost::make_shared< complexconstraint_atom>(scope, ent.tp,

@@ -1162,6 +1162,10 @@ namespace x680 {
         return false;
     }
 
+    bool basic_atom::has_rootargumented() const {     
+        return ((scope()) &&(scope()->as_assigment())) ? scope()->as_assigment()->has_rootarguments() :  false;
+    }       
+        
     module_entity_ptr basic_atom::external() const {
         if ((scope()) && (reff()) /*&& (!reff()->as_expectdef()) */ && (scope()->moduleref()) && (reff()->moduleref()))
             return ((scope()->moduleref()) != (reff()->moduleref())) ? reff()->moduleref() : module_entity_ptr();
@@ -1416,6 +1420,20 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////         
     // assignment_entity
     /////////////////////////////////////////////////////////////////////////  
+    bool assignment_entity::has_rootarguments() const {
+        if (has_arguments()) {
+            if ((shadow_for()) && (shadow_for()->as_assigment()))
+                return shadow_for()->as_assigment()->has_rootarguments();
+            return true;
+        }
+        if (scope()) {
+            assignment_entity_ptr scp = scope()->as_assigment();
+            if (scp) {
+                return scp->has_rootarguments();
+            }
+        }
+        return false;
+    }
 
     bool assignment_entity::parameterized() const {
         basic_atom_ptr rslt = atom();
@@ -1499,6 +1517,8 @@ namespace x680 {
 
     void assignment_entity::resolve_all(basic_atom_ptr holder) {
         preresolve();
+        if (as_objectassigment())
+            as_objectassigment()->apply_fields();
         resolve(holder);
         after_resolve();
     }

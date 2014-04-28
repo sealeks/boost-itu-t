@@ -27,7 +27,13 @@ namespace x680 {
             }                       
         }
         return stream;
-    }    
+    }  
+    
+    std::ostream& argumentmarker(std::ostream& stream, basic_entity_ptr self) {
+        if (self && (self->as_assigment()) && (self->as_assigment()->has_rootarguments()))
+            stream << "($arg$)";
+        return stream;
+    }        
     
     std::ostream& from_template(std::ostream& stream, basic_entity_ptr self) {
         if (self) {
@@ -229,6 +235,7 @@ namespace x680 {
                 stream << self->name() << "  ";
             from_template(stream, self);
             dummymarker(stream, self->type());
+            argumentmarker(stream, self);
             stream << self->type() << " ";
             operatorstruct(stream, self);
             if (self->type()->has_constraint())
@@ -248,6 +255,7 @@ namespace x680 {
             stream << " :: = ";
             from_template(stream, self);
             dummymarker(stream, self->type());
+            argumentmarker(stream, self);            
             stream << self->type();
             operatorstruct(stream, self);
             if (self->type()->has_constraint())

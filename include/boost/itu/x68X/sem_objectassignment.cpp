@@ -298,13 +298,6 @@ namespace x680 {
         resolve_child();
     }
 
-    void objectassignment_entity::resolve_all(basic_atom_ptr holder) {
-        preresolve();
-        apply_fields();
-        resolve(holder);
-        after_resolve();
-    }
-    
     void objectassignment_entity::apply_fields() {
         if (!((object()->as_deflt()) || (object()->as_defnsyntx())))
             return;

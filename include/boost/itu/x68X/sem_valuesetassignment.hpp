@@ -389,13 +389,19 @@ namespace x680 {
 
     public:
 
-        typeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, type_atom_ptr tp, bool incl) :
-        constraint_atom(scp, tpc), type_(tp), includes_(incl) {
+        typeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, typeassignment_entity_ptr tp, bool incl) :
+        constraint_atom(scp, tpc), typeassignment_(tp), includes_(incl) {
         };
-
-        type_atom_ptr type() {
-            return type_;
+        
+        type_atom_ptr type();
+        
+        typeassignment_entity_ptr typeassignment() {
+            return typeassignment_;
         }
+
+        void typeassignment(typeassignment_entity_ptr vl) {
+            typeassignment_ = vl;
+        }        
 
         bool includdes() {
             return includes_;
@@ -405,7 +411,7 @@ namespace x680 {
 
     private:
 
-        type_atom_ptr type_;
+        typeassignment_entity_ptr typeassignment_;
         bool includes_;
 
     };
