@@ -1391,7 +1391,7 @@ namespace x680 {
                     boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
                     boost::shared_ptr<T> tascopy = tas->clone<T>();
                     if (!tascopy)
-                        throw semantics::error("");
+                        referenceerror_throw("Internal error for clone assignment ", name());
                     tascopy->resolve_all();
                     assign_from(tascopy);                    
                     tascopy->apply_arguments(rslt->parameters(), self());
