@@ -50,7 +50,8 @@ namespace x680 {
 
             TypeA = Type[phx::bind(&typea_type, sprt::_val, sprt::_1) ];
 
-            StrictType = BuitinType | TaggedType | ConstraintReferencedType | ObjectClassFieldType | StrictDefinedType;
+            StrictType = BuitinType | TaggedType | ConstraintReferencedType | ObjectClassFieldType
+                    | StrictDefinedType | SimpleTypeFromObject | SimpleValueSetFromObjects;
 
             ConstraintReferencedType = SimpleReferencedType[ sprt::_val = sprt::_1 ] 
                     >> Constraints[phx::bind(&type_constraints, sprt::_val, sprt::_1)];

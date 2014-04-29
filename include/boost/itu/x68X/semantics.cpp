@@ -261,7 +261,6 @@ namespace x680 {
                     tmp = tmpt->type();
                     if (tmp)
                          tmp->embeded_assignment(tmpt);
-                    std::cout << "compile_typee"   << std::endl;
                     break;
                  }
                  default:
