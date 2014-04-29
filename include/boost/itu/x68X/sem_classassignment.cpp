@@ -78,7 +78,7 @@ namespace x680 {
 
     void valuefield_entity::resolve(basic_atom_ptr holder) {
         if (type())
-            type()->resolve_reff();
+            type()->resolve();
         if (_default())
             _default()->resolve_reff(type());
     }
@@ -90,7 +90,7 @@ namespace x680 {
 
     void valuesetfield_entity::resolve(basic_atom_ptr holder) {
         if (type())
-            type()->resolve_reff();
+            type()->resolve();
         if (_default())
             _default()->resolve_reff(type());
     }
@@ -142,7 +142,7 @@ namespace x680 {
 
     void objectfield_entity::resolve(basic_atom_ptr holder) {
         if (_class())
-            _class()->resolve_reff();
+            _class()->resolve();
         if (_default())
             _default()->resolve_reff();
     }
@@ -154,7 +154,7 @@ namespace x680 {
 
     void objectsetfield_entity::resolve(basic_atom_ptr holder) {
         if (_class())
-            _class()->resolve_reff();
+            _class()->resolve();
         if (_default())
             _default()->resolve_reff();
     }

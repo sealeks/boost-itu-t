@@ -19,30 +19,33 @@ namespace x680 {
             if (self->isdummy()){
                  stream << "(%d)";
             }
-            if (self->isdummysource()){
+            /*if (self->isdummysource()){
                  stream << "(%ds)";
-            }           
+            }*/           
             if (self->isdummyAS()){
                  stream << "(%dsA)";
-            }                       
+            }    
+            if (self->isembeded()) {
+                 stream << "(%emb)";
+            }          
         }
         return stream;
     }  
     
     std::ostream& argumentmarker(std::ostream& stream, basic_entity_ptr self) {
-        if (self && (self->as_assigment()) && (self->as_assigment()->has_rootarguments()))
-            stream << "($arg$)";
+        /*if (self && (self->as_assigment()) && (self->as_assigment()->has_rootarguments()))
+            stream << "($arg$)";*/
         return stream;
     }        
     
     std::ostream& from_template(std::ostream& stream, basic_entity_ptr self) {
         if (self) {
-            if (self->reff_shadow()){
-                 stream << "(%tmpl)";
-            }             
-            if ((self->as_assigment()) && (self->as_assigment()->shadow())){
-                 stream << "(%shdw)";
-            }              
+           /* if (self->reff_shadow()){
+                  stream << "(%tmpl)";
+             }             
+             if ((self->as_assigment()) && (self->as_assigment()->shadow())){
+                  stream << "(%shdw)";
+             }*/
         }
         return stream;
     }        
@@ -234,7 +237,6 @@ namespace x680 {
             else
                 stream << self->name() << "  ";
             from_template(stream, self);
-            dummymarker(stream, self->type());
             argumentmarker(stream, self);
             stream << self->type() << " ";
             operatorstruct(stream, self);
@@ -254,7 +256,6 @@ namespace x680 {
                 stream << self->arguments();
             stream << " :: = ";
             from_template(stream, self);
-            dummymarker(stream, self->type());
             argumentmarker(stream, self);            
             stream << self->type();
             operatorstruct(stream, self);
@@ -364,6 +365,7 @@ namespace x680 {
             stream << self->cncl_tag();        
         if ((self->textualy_tag())  && (self->cncl_tag()!=self->textualy_tag())) 
             stream << "{{" << self->textualy_tag()  << "}}" ;*/
+        dummymarker(stream,self);        
         if (self->tag())
             stream << *(self->tag());
         switch (self->builtin()) {
@@ -413,9 +415,9 @@ namespace x680 {
             default:
             {
                 stream << self->builtin();
-                /*if (self->isembeded()){
+                if (self->isembeded()){
                     operatorstruct(stream,self->embeded_assignment()->as_typeassigment());
-                }*/
+                }
             }
         }
         if (self->integer_constraint()) {
@@ -1039,7 +1041,8 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, valuefield_entity_ptr self) {
-        stream << "\n      (v  )  " << self->name() << " " << self->type();
+        stream << "\n      (v  )  " << self->name() << " ";
+        stream << self->type();
         if (self->unique())
             stream << " UNIQUE";
         stream << " " << self->marker();
@@ -1049,7 +1052,8 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, valuesetfield_entity_ptr self) {
-        stream << "\n      (vS )  " << self->name() << " " << self->type();
+        stream << "\n      (vS )  " << self->name() << " ";
+        stream << self->type();
         stream << " " << self->marker();
         if (self->_default())
             stream << " " << self->_default();

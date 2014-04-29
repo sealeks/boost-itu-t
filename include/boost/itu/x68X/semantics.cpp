@@ -142,7 +142,8 @@ namespace x680 {
         //  type
 
         typeassignment_entity_ptr compile_typeassignment(basic_entity_ptr scope, const x680::syntactic::type_assignment& tmp) {
-            typeassignment_entity_ptr tmpt(new typeassignment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
+            typeassignment_entity_ptr tmpt(new typeassignment_entity(scope, tmp.identifier));
+            tmpt->type(compile_type(tmpt, tmp.type));
             tmpt->synctas(tmp);
             switch (tmp.type.builtin_t) {
                 case t_SEQUENCE:
@@ -252,36 +253,30 @@ namespace x680 {
                  case t_SET_OF:
                  case t_CHOICE:
                 {
-                    typeassignment_entity_ptr tmpt(new typeassignment_entity(scope, "", compile_type(scope, ent)));
                     x680::syntactic::type_assignment tmpa;
                     tmpa.identifier = "";
                     tmpa.type = ent;
+                    typeassignment_entity_ptr tmpt = compile_typeassignment(scope, tmpa);
                     tmpt->synctas(tmpa);
-                    tmp->embeded_assignment(tmpt);
+                    tmp = tmpt->type();
+                    if (tmp)
+                         tmp->embeded_assignment(tmpt);
+                    std::cout << "compile_typee"   << std::endl;
                     break;
                  }
-                 default:{}
+                 default:
+                {
+                    tmp = compile_type(scope, ent);
+                 }
              }
              return tmp;
         }
 
         typeassignment_entity_ptr compile_typea(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
-            typeassignment_entity_ptr tmpt(new typeassignment_entity(scope, "", compile_type(scope, ent)));
             x680::syntactic::type_assignment tmp;
             tmp.identifier = "";
             tmp.type = ent;
-            tmpt->synctas(tmp);
-            switch (ent.builtin_t) {
-                case t_SEQUENCE:
-                case t_SEQUENCE_OF:
-                case t_SET:
-                case t_SET_OF:
-                case t_CHOICE: tmpt->childs() = compile_structtype(tmpt, ent);
-                default:
-                {
-                };
-            }
-            return tmpt;
+            return compile_typeassignment(scope, tmp);
         }
 
         predefined_ptr compile_typepredef(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
@@ -346,8 +341,7 @@ namespace x680 {
         valueassignment_entity_ptr compile_valueassignment(basic_entity_ptr scope, const x680::syntactic::value_assignment& tmp) {
             valueassignment_entity_ptr tmpt(new valueassignment_entity(scope, tmp.identifier, compile_type(scope, tmp.type)));
             tmpt->synctas(tmp);
-            value_atom_ptr tmpv = compile_value(tmpt, tmp.value);
-            tmpt->value(tmpv);
+            tmpt->value(compile_value(tmpt, tmp.value));
             tmpt->type()->predefined(compile_typepredef(tmpt, tmp.type));
             tmpt->arguments(compile_arguments(tmpt, tmp.arguments));
             return tmpt;
@@ -928,8 +922,7 @@ namespace x680 {
         objectassignment_entity_ptr compile_objectassignment(basic_entity_ptr scope, const x680::syntactic::object_assignment& tmp) {
             objectassignment_entity_ptr tmpc(new objectassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_)));
             tmpc->synctas(tmp);
-            object_atom_ptr obj = compile_object(tmpc, tmp.object);
-            tmpc->object(obj);
+            tmpc->object(compile_object(tmpc, tmp.object));
             tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
             return tmpc;
         }
@@ -1013,8 +1006,7 @@ namespace x680 {
         objectsetassignment_entity_ptr compile_objectsetassignment(basic_entity_ptr scope, const x680::syntactic::objectset_assignment& tmp) {
             objectsetassignment_entity_ptr tmpc(new objectsetassignment_entity(scope, tmp.identifier, compile_classdefined(scope, tmp.class_)));
             tmpc->synctas(tmp);
-            objectset_atom_ptr objs = compile_objectset(tmpc, tmp.set, tmpc->_class());
-            tmpc->objectset(objs);
+            tmpc->objectset(compile_objectset(tmpc, tmp.set, tmpc->_class()));
             tmpc->arguments(compile_arguments(tmpc, tmp.arguments));
             return tmpc;
         }
