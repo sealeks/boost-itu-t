@@ -443,11 +443,10 @@ namespace x680 {
             }
             if (!(*it)->governor()) {
                 if ((*it)->setting()->mask() & AS_TYPE) {
-                        //std::cout << "User def constraint resolve as type" << std::endl;
                         (*it)->setting()->typeassignment()->resolve_all();
+                        (*it)->setting()->type()->embeded_assignment((*it)->setting()->typeassignment());
                         (*it)->parameter((*it)->setting()->type());
-                        continue;
-                }
+                } 
             }
             else{
                 if ((*it)->governor()->as_value()){
@@ -471,31 +470,6 @@ namespace x680 {
                     }                      
                 }              
             }
-           /* if ((*it)->setting()->mask() & AS_TYPE) {
-                if ((*it)->setting()->type()->check_reff()==et_Type){
-                    (*it)->parameter((*it)->setting()->type());
-                    continue;}
-            }                    
-                switch ((*it)->setting()->check_reff()) {      
-                    case et_Type:
-                    case et_Value:
-                    case et_ValueSet:
-                    case et_ObjectSet:
-                    case et_Object:
-                    {
-                        std::cout << "User def constraint tp="  << (int)((*it)->setting()->check_reff()) << std::endl;
-                        
-                        (*it)->setting()->resolve();
-                        break;
-                    }
-                    default:
-                    {
-                        std::cout << "User def constraint tp="  << (int)((*it)->setting()->check_reff()) << std::endl;
-                       // if ((*it)->has_undef_governor())
-                       // scope()->referenceerror_throw("Unresolve constraint error : ", scope()->name());
-                    }
-                }
-            }*/
         }
     }
 
