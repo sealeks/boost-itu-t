@@ -12,43 +12,42 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
     // std::cout  tree
     /////////////////////////////////////////////////////////////////////////       
-    
-    
+
     std::ostream& dummymarker(std::ostream& stream, basic_atom_ptr self) {
         if (self) {
-            if (self->isdummy()){
-                 stream << "(%d)";
+            if (self->isdummy()) {
+                stream << "(%d)";
             }
             /*if (self->isdummysource()){
                  stream << "(%ds)";
-            }*/           
-            if (self->isdummyAS()){
-                 stream << "(%dsA)";
-            }    
+            }*/
+            if (self->isdummyAS()) {
+                stream << "(%dsA)";
+            }
             if (self->isembeded()) {
-                 stream << "(%emb)";
-            }          
+                stream << "(%emb)";
+            }
         }
         return stream;
-    }  
-    
+    }
+
     std::ostream& argumentmarker(std::ostream& stream, basic_entity_ptr self) {
         /*if (self && (self->as_assigment()) && (self->as_assigment()->has_rootarguments()))
             stream << "($arg$)";*/
         return stream;
-    }        
-    
+    }
+
     std::ostream& from_template(std::ostream& stream, basic_entity_ptr self) {
         if (self) {
-           /* if (self->reff_shadow()){
-                  stream << "(%tmpl)";
-             }             
-             if ((self->as_assigment()) && (self->as_assigment()->shadow())){
-                  stream << "(%shdw)";
-             }*/
+            /* if (self->reff_shadow()){
+                   stream << "(%tmpl)";
+              }             
+              if ((self->as_assigment()) && (self->as_assigment()->shadow())){
+                   stream << "(%shdw)";
+              }*/
         }
         return stream;
-    }        
+    }
 
     std::ostream& indent(std::ostream& stream, assignment_entity_ptr self) {
         if (self) {
@@ -256,7 +255,7 @@ namespace x680 {
                 stream << self->arguments();
             stream << " :: = ";
             from_template(stream, self);
-            argumentmarker(stream, self);            
+            argumentmarker(stream, self);
             stream << self->type();
             operatorstruct(stream, self);
             if (self->type()->has_constraint())
@@ -365,7 +364,7 @@ namespace x680 {
             stream << self->cncl_tag();        
         if ((self->textualy_tag())  && (self->cncl_tag()!=self->textualy_tag())) 
             stream << "{{" << self->textualy_tag()  << "}}" ;*/
-        dummymarker(stream,self);        
+        dummymarker(stream, self);
         if (self->tag())
             stream << *(self->tag());
         switch (self->builtin()) {
@@ -385,7 +384,7 @@ namespace x680 {
             }
             case t_ClassField:
             {
-                stream << "(C)" <<  self->as_classfield()->_class() << "." << self->as_classfield()->field();
+                stream << "(C)" << self->as_classfield()->_class() << "." << self->as_classfield()->field();
                 break;
             }
             case t_Instance_Of:
@@ -396,7 +395,7 @@ namespace x680 {
             case t_TypeFromObject:
             {
                 stream << "(o)" << self->as_fromobject()->object() << "."
-                        << ( ((self->as_fromobject()->field()) && (self->as_fromobject()->field()->reff())) ? self->as_fromobject()->field()->reff()->name() : "???" );
+                        << (((self->as_fromobject()->field()) && (self->as_fromobject()->field()->reff())) ? self->as_fromobject()->field()->reff()->name() : "???");
                 if (self->rooted())
                     stream << "(@" << self->root() << ")";
                 break;
@@ -404,19 +403,19 @@ namespace x680 {
             case t_ValueSetFromObjects:
             {
                 stream << "(oS)" << self->as_fromobjectset()->objectset() << "."
-                        << ( ((self->as_fromobjectset()->field()) && (self->as_fromobjectset()->field()->reff())) ? self->as_fromobjectset()->field()->reff()->name() : "???");
+                        << (((self->as_fromobjectset()->field()) && (self->as_fromobjectset()->field()->reff())) ? self->as_fromobjectset()->field()->reff()->name() : "???");
                 break;
             }
             case t_Selection:
             {
                 stream << "(@select)" << self->as_selection()->identifier() << " < " << self->as_selection()->type();
                 break;
-            }            
+            }
             default:
             {
                 stream << self->builtin();
-                if (self->isembeded()){
-                    operatorstruct(stream,self->embeded_assignment()->as_typeassigment());
+                if (self->isembeded()) {
+                    operatorstruct(stream, self->embeded_assignment()->as_typeassigment());
                 }
             }
         }
@@ -763,7 +762,7 @@ namespace x680 {
             case cns_PropertySettings: return stream << self->as_property();
             case cns_MultipleTypeConstraints: return stream << self->as_multipletypeconstraint();
             case cns_NamedConstraint: return stream << self->as_named();
-            case cns_ValueSet: return stream << self->as_valuesetconstraint();            
+            case cns_ValueSet: return stream << self->as_valuesetconstraint();
             case cns_ValueSetFromObjects: return stream << self->as_fromdefinedset();
             case cns_ValueSetFromObject: return stream << self->as_fromdefined();
             case cns_UserDefinedConstraint: return stream << self->as_user();
@@ -793,10 +792,10 @@ namespace x680 {
     std::ostream& operator<<(std::ostream& stream, fromdefined_objects_constraint_atom_ptr self) {
         return stream << "(oS) " << self->objectset() << "." << self->field()->reff()->name();
     }
-    
+
     std::ostream& operator<<(std::ostream& stream, valuesetconstraint_atom_ptr self) {
         return stream << "(vS) " << self->valueset();
-    }    
+    }
 
     std::ostream& operator<<(std::ostream& stream, fromdefined_constraint_atom_ptr self) {
         return stream << "(o) " << self->object() << "." << self->field()->reff()->name();
@@ -888,30 +887,37 @@ namespace x680 {
         for (uargument_entity_vct::const_iterator it = self.begin(); it != self.end(); ++it) {
             if (it != self.begin())
                 stream << " ,";
-            if ((*it)->parameter()){
-                if ((*it)->parameter()->as_type()){
+
+            if ((*it)->parameter()) {
+                stream << "[";
+                if ((*it)->governor()) {
+                    if ((*it)->governor()->as_type()) {
+                        stream << (*it)->parameter()->as_type();
+                    } else if ((*it)->governor()->as_class()) {
+                        stream << (*it)->parameter()->as_class();
+                    }
+                }
+                if ((*it)->parameter()->as_type()) {
                     stream << (*it)->parameter()->as_type();
-                } 
-                else if ((*it)->parameter()->as_value()){
+                }
+                else if ((*it)->parameter()->as_value()) {
                     stream << (*it)->parameter()->as_value();
-                }
-                else if ((*it)->parameter()->as_valueset()){
+                } else if ((*it)->parameter()->as_valueset()) {
                     stream << (*it)->parameter()->as_valueset();
-                } 
-                else if ((*it)->parameter()->as_class()){
-                    stream << (*it)->parameter()->as_class();
-                } 
-                else if ((*it)->parameter()->as_object()){
-                    stream << (*it)->parameter()->as_object();
                 }
-                else if ((*it)->parameter()->as_objectset()){
+                else if ((*it)->parameter()->as_class()) {
+                    stream << (*it)->parameter()->as_class();
+                }
+                else if ((*it)->parameter()->as_object()) {
+                    stream << (*it)->parameter()->as_object();
+                } else if ((*it)->parameter()->as_objectset()) {
                     stream << (*it)->parameter()->as_objectset();
-                }                 
+                }
                 else
                     stream << "&par";
-            }
-            else
-            stream << (*it);
+                stream << "]";
+            } else
+                stream << (*it);
         }
         return stream << " }";
     }
@@ -1187,7 +1193,7 @@ namespace x680 {
         return stream;
     }
 
-    static std::ostream& plintassignment_static(std::ostream& stream, basic_entity_vector& self, assignment_entity_ptr scp= assignment_entity_ptr()) {      
+    static std::ostream& plintassignment_static(std::ostream& stream, basic_entity_vector& self, assignment_entity_ptr scp = assignment_entity_ptr()) {
         for (basic_entity_vector::iterator it = self.begin(); it != self.end(); ++it) {
             if ((*it)->as_assigment()) {
                 indent(stream, scp);
@@ -1228,7 +1234,7 @@ namespace x680 {
                 return stream << self->object() << "\n";
         } else {
             stream << " {\n";
-            plintassignment_static(stream, self->childs(),self);            
+            plintassignment_static(stream, self->childs(), self);
             indent(stream, self);
             return stream << "}\n";
         }
