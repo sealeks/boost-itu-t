@@ -137,16 +137,15 @@ namespace x680 {
 
     void basic_entity::reff_shadow(basic_entity_ptr vl) {
         reff_shadow_ = vl;
-        if (vl) 
+        if (vl)
             vl->shadow_for(self());
     }
-    
+
     void basic_entity::shadow_for(basic_entity_ptr vl) {
         if (vl && (vl.get() == this))
             throw semantics::error("Internal error selfscoping :" + name());
         shadow_for_ = basic_entity_wptr(vl);
-    }    
-      
+    }
 
     basic_entity_vector& basic_entity::childs() {
         return childs_;
@@ -168,7 +167,7 @@ namespace x680 {
                 if (!((scp->as_typeassigment()) && (scp->as_typeassigment()->isstruct_of())))
                     rslt++;
                 scp = scp->scope();
-            } else{
+            } else {
                 scp = scp->shadow_for();
             }
         }
@@ -1162,10 +1161,10 @@ namespace x680 {
         return false;
     }
 
-    bool basic_atom::has_rootargumented() const {     
-        return ((scope()) &&(scope()->as_assigment())) ? scope()->as_assigment()->has_rootarguments() :  false;
-    }       
-        
+    bool basic_atom::has_rootargumented() const {
+        return ((scope()) &&(scope()->as_assigment())) ? scope()->as_assigment()->has_rootarguments() : false;
+    }
+
     module_entity_ptr basic_atom::external() const {
         if ((scope()) && (reff()) /*&& (!reff()->as_expectdef()) */ && (scope()->moduleref()) && (reff()->moduleref()))
             return ((scope()->moduleref()) != (reff()->moduleref())) ? reff()->moduleref() : module_entity_ptr();
@@ -1181,10 +1180,10 @@ namespace x680 {
     basic_entity_ptr basic_atom::reff() const {
         return reff_;
     }
-    
+
     void basic_atom::reff_resolver(basic_atom_ptr vl) {
         reff_resolver_ = basic_atom_wptr(vl);
-    }        
+    }
 
     bool basic_atom::extesibility_implied() const {
         return (scope() && (scope()->moduleref())
@@ -1216,12 +1215,11 @@ namespace x680 {
 
     bool basic_atom::isembeded() const {
         return embeded_assignment_;
-    }     
-    
+    }
 
     bool basic_atom::rooted() {
         return ((root()) && (root() != self()));
-    }    
+    }
 
     assignment_entity_ptr basic_atom::embeded_assignment() const {
         return embeded_assignment_;
@@ -1229,9 +1227,9 @@ namespace x680 {
 
     void basic_atom::embeded_assignment(assignment_entity_ptr vl) {
         embeded_assignment_ = vl;
-    }    
-    
-    basic_entity_vector& basic_atom::childs(){
+    }
+
+    basic_entity_vector& basic_atom::childs() {
         return embeded_assignment_ ? embeded_assignment_->childs() : nullchilds_;
     }
 
@@ -1279,9 +1277,7 @@ namespace x680 {
         return kind_ == at_Constraints ? boost::static_pointer_cast<constraints_atom> (self()) : constraints_atom_ptr();
     }
 
-
-    
-    assignment_entity_ptr basic_atom::find_complex_path(std::string& nm){
+    assignment_entity_ptr basic_atom::find_complex_path(std::string& nm) {
         return assignment_entity_ptr();
     }
 
@@ -1389,11 +1385,11 @@ namespace x680 {
             }
         }
     }
-    
+
     void basic_atom::resolve(basic_atom_ptr holder) {
-    }    
-    
-    void basic_atom::resolve_substitute(){       
+    }
+
+    void basic_atom::resolve_substitute() {
     }
 
 
@@ -1420,6 +1416,7 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////         
     // assignment_entity
     /////////////////////////////////////////////////////////////////////////  
+
     bool assignment_entity::has_rootarguments() const {
         if (has_arguments()) {
             if ((shadow_for()) && (shadow_for()->as_assigment()))
@@ -1462,16 +1459,16 @@ namespace x680 {
 
     assignment_entity_ptr assignment_entity::find_component(const std::string& nmf) {
         std::string nm = nmf;
-        std::string search = subidentifier(nm);        
-        assignment_entity_ptr slf=refference_to();
-        for (basic_entity_vector::iterator it = slf->childs().begin(); it !=  slf->childs().end(); ++it) {
+        std::string search = subidentifier(nm);
+        assignment_entity_ptr slf = refference_to();
+        for (basic_entity_vector::iterator it = slf->childs().begin(); it != slf->childs().end(); ++it) {
             if ((*it)->name() == search) {
                 if ((*it)->as_assigment()) {
                     if (nm.empty()) {
                         return (*it)->as_assigment();
                     } else {
                         assignment_entity_ptr ref = (*it)->as_assigment()->refference_to();
-                        if (ref && (ref->as_assigment())){
+                        if (ref && (ref->as_assigment())) {
                             ref->as_assigment()->resolve();
                             return ref->as_assigment()->find_component(nm);
                         }
@@ -1523,9 +1520,7 @@ namespace x680 {
         after_resolve();
     }
 
-    
     assignment_entity_ptr assignment_entity::refference_to() {
-        resolve();
         if (as_typeassigment()) {
             if ((as_typeassigment()->type())
                     && (as_typeassigment()->type()->reff())
@@ -1564,13 +1559,14 @@ namespace x680 {
             }
         }
         return as_assigment();
-    }    
-    
+    }
+
     void assignment_entity::apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scp) {
         if ((vl.empty()) || (vl.size() != arguments_.size()))
             throw semantics::error("");
         argument_entity_vct::const_iterator it2 = arguments_.begin();
         for (setting_atom_vct::const_iterator it1 = vl.begin(); it1 != vl.end(); ++it1) {
+
             if (!(*it1) || !(*it2))
                 throw semantics::error("");
             (*it2)->apply_argument(*it1, scp);
@@ -1581,12 +1577,14 @@ namespace x680 {
     void assignment_entity::resolve_arguments() {
         for (argument_entity_vct::const_iterator it = arguments_.begin(); it != arguments_.end(); ++it) {
             if ((*it) && (*it)->unspecified()) {
-                (*it)->unspecified()->preresolve();
+                (
+
+                        *it)->unspecified()->preresolve();
                 (*it)->unspecified()->resolve();
             }
         }
-    }    
-    
+    }
+
     std::string assignment_entity::subidentifier(std::string& nm) {
         std::string rslt = nm;
         std::string::size_type it = nm.find_first_of('.');
@@ -1595,43 +1593,51 @@ namespace x680 {
             nm = nm.substr(it + 1);
         } else
             nm = "";
+
         return rslt;
     }
 
     void assignment_entity::assign_from(assignment_entity_ptr from) {
         if (from) {
+
             childs() = from->childs();
             reff_shadow(from);
         }
-    }    
+    }
 
     template<>
     typeassignment_entity_ptr assignment_entity::as_baseassignment() {
+
         return as_typeassigment();
     }
 
     template<>
     valueassignment_entity_ptr assignment_entity::as_baseassignment() {
+
         return as_valueassigment();
     }
 
     template<>
     valuesetassignment_entity_ptr assignment_entity::as_baseassignment() {
+
         return as_valuesetassigment();
     }
 
     template<>
     classassignment_entity_ptr assignment_entity::as_baseassignment() {
+
         return as_classassigment();
     }
 
     template<>
     objectassignment_entity_ptr assignment_entity::as_baseassignment() {
+
         return as_objectassigment();
     }
 
     template<>
     objectsetassignment_entity_ptr assignment_entity::as_baseassignment() {
+
         return as_objectsetassigment();
     }
 
@@ -1642,6 +1648,7 @@ namespace x680 {
         typeassignment_entity_ptr tmp = x680::semantics::compile_typeassignment(scp ? scp : scope(), as_typeassigment()->synctas());
         if (tmp && shdw)
             tmp->shadow(true);
+
         return tmp;
     }
 
@@ -1654,6 +1661,7 @@ namespace x680 {
         typeassignment_entity_ptr tmp = x680::semantics::compile_namedtype(scp ? scp : scope(), as_typeassigment()->synctas());
         if (tmp && shdw)
             tmp->shadow(true);
+
         return tmp->as_named();
     }
 
@@ -1664,6 +1672,7 @@ namespace x680 {
         valueassignment_entity_ptr tmp = x680::semantics::compile_valueassignment(scp ? scp : scope(), as_valueassigment()->synctas());
         if (tmp && shdw)
             tmp->shadow(true);
+
         return tmp;
     }
 
@@ -1674,6 +1683,7 @@ namespace x680 {
         valuesetassignment_entity_ptr tmp = x680::semantics::compile_valuesetassignment(scp ? scp : scope(), as_valuesetassigment()->synctas());
         if (tmp && shdw)
             tmp->shadow(true);
+
         return tmp;
     }
 
@@ -1684,6 +1694,7 @@ namespace x680 {
         classassignment_entity_ptr tmp = x680::semantics::compile_classassignment(scp ? scp : scope(), as_classassigment()->synctas());
         if (tmp && shdw)
             tmp->shadow(true);
+
         return tmp;
     }
 
@@ -1694,6 +1705,7 @@ namespace x680 {
         objectassignment_entity_ptr tmp = x680::semantics::compile_objectassignment(scp ? scp : scope(), as_objectassigment()->synctas());
         if (tmp && shdw)
             tmp->shadow(true);
+
         return tmp;
     }
 
@@ -1704,6 +1716,7 @@ namespace x680 {
         objectsetassignment_entity_ptr tmp = x680::semantics::compile_objectsetassignment(scp ? scp : scope(), as_objectsetassigment()->synctas());
         if (tmp && shdw)
             tmp->shadow(true);
+
         return tmp;
     }
 
@@ -1758,10 +1771,12 @@ namespace x680 {
     };
 
     x680::syntactic::type_assignment bigassignment_entity::synctasT() const {
+
         return synctas_.typea ? (*(synctas_.typea)) : x680::syntactic::type_assignment();
     }
 
     x680::syntactic::class_assignment bigassignment_entity::synctasC() const {
+
         return synctas_.classa ? (*(synctas_.classa)) : x680::syntactic::class_assignment();
     }
 
@@ -1773,6 +1788,7 @@ namespace x680 {
                 return *it;
         if (scope())
             return scope()->find_by_name(nm);
+
         return basic_entity_ptr();
     }
 
@@ -1793,16 +1809,19 @@ namespace x680 {
     /////////
 
     x680::syntactic::value_assignment voassignment_entity::synctasT() const {
+
         return synctas_.valuea ? (*(synctas_.valuea)) : x680::syntactic::value_assignment();
     }
 
     x680::syntactic::object_assignment voassignment_entity::synctasC() const {
+
         return synctas_.objecta ? (*(synctas_.objecta)) : x680::syntactic::object_assignment();
     }
 
     basic_entity_ptr voassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
         if (scope())
             return scope()->find_by_name(nm, sch);
+
         return basic_entity_ptr();
     }
 
@@ -1818,10 +1837,12 @@ namespace x680 {
     };
 
     x680::syntactic::valueset_assignment soassignment_entity::synctasT() const {
+
         return synctas_.valueseta ? (*(synctas_.valueseta)) : x680::syntactic::valueset_assignment();
     }
 
     x680::syntactic::objectset_assignment soassignment_entity::synctasC() const {
+
         return synctas_.objectseta ? (*(synctas_.objectseta)) : x680::syntactic::objectset_assignment();
     }
 
