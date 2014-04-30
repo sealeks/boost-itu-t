@@ -888,6 +888,29 @@ namespace x680 {
         for (uargument_entity_vct::const_iterator it = self.begin(); it != self.end(); ++it) {
             if (it != self.begin())
                 stream << " ,";
+            if ((*it)->parameter()){
+                if ((*it)->parameter()->as_type()){
+                    stream << (*it)->parameter()->as_type();
+                } 
+                else if ((*it)->parameter()->as_value()){
+                    stream << (*it)->parameter()->as_value();
+                }
+                else if ((*it)->parameter()->as_valueset()){
+                    stream << (*it)->parameter()->as_valueset();
+                } 
+                else if ((*it)->parameter()->as_class()){
+                    stream << (*it)->parameter()->as_class();
+                } 
+                else if ((*it)->parameter()->as_object()){
+                    stream << (*it)->parameter()->as_object();
+                }
+                else if ((*it)->parameter()->as_objectset()){
+                    stream << (*it)->parameter()->as_objectset();
+                }                 
+                else
+                    stream << "&par";
+            }
+            else
             stream << (*it);
         }
         return stream << " }";

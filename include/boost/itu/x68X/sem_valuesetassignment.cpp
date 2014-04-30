@@ -441,24 +441,61 @@ namespace x680 {
                 } else
                     scope()->referenceerror_throw("User constraint error : ", scope()->name());
             }
-            if ((*it)->parameter()) {
-                switch ((*it)->parameter()->check_reff()) {      
+            if (!(*it)->governor()) {
+                if ((*it)->setting()->mask() & AS_TYPE) {
+                        //std::cout << "User def constraint resolve as type" << std::endl;
+                        (*it)->setting()->typeassignment()->resolve_all();
+                        (*it)->parameter((*it)->setting()->type());
+                        continue;
+                }
+            }
+            else{
+                if ((*it)->governor()->as_value()){
+                    if (((*it)->setting()->value()->check_reff()==et_Value) && ((*it)->setting()->mask() & AS_VALUE)) {
+                        (*it)->setting()->value()->resolve();
+                        (*it)->parameter((*it)->setting()->value());                        
+                    }  
+                    else  if (((*it)->setting()->value()->check_reff()==et_ValueSet) && ((*it)->setting()->mask() & AS_VALUESET)) {
+                        (*it)->setting()->valueset()->resolve();
+                        (*it)->parameter((*it)->setting()->valueset());                       
+                    }  
+                }
+                else if ((*it)->governor()->as_class()){
+                    if (((*it)->setting()->object()->check_reff()==et_Object) && ((*it)->setting()->mask() & AS_OBJECT)) {
+                        (*it)->setting()->object()->resolve();
+                        (*it)->parameter((*it)->setting()->object());                        
+                    }  
+                    else  if (((*it)->setting()->object()->check_reff()==et_ObjectSet) && ((*it)->setting()->mask() & AS_OBJECTSET)) {
+                        (*it)->setting()->objectset()->resolve();
+                        (*it)->parameter((*it)->setting()->objectset());                       
+                    }                      
+                }              
+            }
+           /* if ((*it)->setting()->mask() & AS_TYPE) {
+                if ((*it)->setting()->type()->check_reff()==et_Type){
+                    (*it)->parameter((*it)->setting()->type());
+                    continue;}
+            }                    
+                switch ((*it)->setting()->check_reff()) {      
                     case et_Type:
                     case et_Value:
                     case et_ValueSet:
                     case et_ObjectSet:
                     case et_Object:
                     {
-                        (*it)->parameter()->resolve();
+                        std::cout << "User def constraint tp="  << (int)((*it)->setting()->check_reff()) << std::endl;
+                        
+                        (*it)->setting()->resolve();
                         break;
                     }
                     default:
                     {
+                        std::cout << "User def constraint tp="  << (int)((*it)->setting()->check_reff()) << std::endl;
                        // if ((*it)->has_undef_governor())
                        // scope()->referenceerror_throw("Unresolve constraint error : ", scope()->name());
                     }
                 }
-            }
+            }*/
         }
     }
 
