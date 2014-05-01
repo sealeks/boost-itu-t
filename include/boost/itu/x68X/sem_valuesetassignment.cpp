@@ -100,8 +100,8 @@ namespace x680 {
         for (constraint_atom_vct::iterator it = vl.begin(); it != vl.end(); ++it) {
             if ((*it)->as_tvoso()) {
                 (*it)->as_tvoso()->resolve();
-                if (((*it)->as_tvoso()->tp()==argm_Type) && ((*it)->as_tvoso()->typeassignment())) {
-                    (*it) = typeconstraint_atom_ptr(new typeconstraint_atom((*it)->as_tvoso()->scope(), cns_ContainedSubtype, (*it)->as_tvoso()->typeassignment(), false));}
+                if (((*it)->as_tvoso()->tp()==argm_Type) && ((*it)->as_tvoso()->type())) {
+                    (*it) = typeconstraint_atom_ptr(new typeconstraint_atom((*it)->as_tvoso()->scope(), cns_ContainedSubtype, (*it)->as_tvoso()->type(), false));}
                 else if (((*it)->as_tvoso()->tp()==argm_ObjectSet) && ((*it)->as_tvoso()->objectset())) {
                     (*it) = tableconstraint_atom_ptr(new tableconstraint_atom((*it)->as_tvoso()->scope(), (*it)->as_tvoso()->objectset()));}
                 else if (((*it)->as_tvoso()->tp()==argm_ValueSet) && ((*it)->as_tvoso()->valueset())){
@@ -347,13 +347,10 @@ namespace x680 {
     // typeconstraint_atom
     /////////////////////////////////////////////////////////////////////////
 
-    type_atom_ptr typeconstraint_atom::type() {
-        return typeassignment_ ? typeassignment_->type() : type_atom_ptr();
-    }
 
     void typeconstraint_atom::resolve(basic_atom_ptr holder) {
-        if (typeassignment_)
-            typeassignment_->resolve(holder);
+        if (type_)
+            type_->resolve(holder);
     }
 
     /////////////////////////////////////////////////////////////////////////   
@@ -511,10 +508,6 @@ namespace x680 {
     tvosoconstraint_atom::tvosoconstraint_atom(basic_entity_ptr scp, const std::string& reff)
     : constraint_atom(scp, cns_Undef_T_ST_VS),
     tp_(argm_Nodef) {
-    }
-
-    type_atom_ptr tvosoconstraint_atom::type() {
-        return typeassignment_ ? typeassignment_->type() : type_atom_ptr();
     }
 
     void tvosoconstraint_atom::resolve(basic_atom_ptr holder) {

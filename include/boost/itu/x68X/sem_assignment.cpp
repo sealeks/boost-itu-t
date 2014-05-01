@@ -1451,23 +1451,6 @@ namespace x680 {
         return rslt ? (rslt->parameterized()) : false;
     }
 
-    /*bool assignment_entity::argument_resolved() {
-        assignment_entity_ptr tmta;
-        if (has_arguments()) {
-            tmta = as_assigment();
-        } else if ((reff_shadow()) && (reff_shadow()->as_assigment()) && (reff_shadow()->as_assigment()->has_arguments())) {
-            tmta = reff_shadow()->as_assigment();
-        }
-        if (tmta) {
-            for (argument_entity_vct::const_iterator it = tmta->arguments().begin(); it != tmta->arguments().end(); ++it) {
-                if ((*it) && ((*it)->unspecified())) {
-                    if (!((*it)->unspecified()->atom()) && ((*it)->reffcount()))
-                        return false;
-                };
-            }
-        }
-        return true;
-    }*/
 
 
 

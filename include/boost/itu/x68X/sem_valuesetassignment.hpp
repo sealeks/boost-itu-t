@@ -389,18 +389,17 @@ namespace x680 {
 
     public:
 
-        typeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, typeassignment_entity_ptr tp, bool incl) :
-        constraint_atom(scp, tpc), typeassignment_(tp), includes_(incl) {
+        typeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, type_atom_ptr  tp, bool incl) :
+        constraint_atom(scp, tpc), type_(tp), includes_(incl) {
         };
         
-        type_atom_ptr type();
         
-        typeassignment_entity_ptr typeassignment() {
-            return typeassignment_;
+        type_atom_ptr type() {
+            return type_;
         }
 
-        void typeassignment(typeassignment_entity_ptr vl) {
-            typeassignment_ = vl;
+        void type(type_atom_ptr vl) {
+            type_ = vl;
         }        
 
         bool includdes() {
@@ -411,7 +410,7 @@ namespace x680 {
 
     private:
 
-        typeassignment_entity_ptr typeassignment_;
+         type_atom_ptr type_;
         bool includes_;
 
     };
@@ -848,14 +847,13 @@ namespace x680 {
 
         tvosoconstraint_atom(basic_entity_ptr scp, const std::string& reff = "");
 
-        type_atom_ptr type();
 
-        typeassignment_entity_ptr typeassignment() {
-            return typeassignment_;
+        type_atom_ptr  type() {
+            return type_;
         }
 
-        void typeassignment(typeassignment_entity_ptr vl) {
-            typeassignment_ = vl;
+        void type(type_atom_ptr  vl) {
+            type_ = vl;
         }
 
         valueset_atom_ptr valueset() const {
@@ -889,7 +887,7 @@ namespace x680 {
 
         objectset_atom_ptr objectset_;
         valueset_atom_ptr valueset_;
-        typeassignment_entity_ptr typeassignment_;
+        type_atom_ptr  type_;
         argument_enum tp_;
 
     };

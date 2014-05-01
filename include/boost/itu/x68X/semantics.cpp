@@ -541,7 +541,7 @@ namespace x680 {
                             (((ent.totype_ == close_range) || (ent.totype_ == open_range)) ? compile_value(scope, ent.to_) : value_atom_ptr()), ent.totype_);
                 case cns_ContainedSubtype:
                 case cns_TypeConstraint: return boost::make_shared< typeconstraint_atom>(scope, ent.tp,
-                            compile_typea(scope, ent.type), false);
+                            compile_typee(scope, ent.type), false);
                 case cns_PermittedAlphabet:
                 case cns_SizeConstraint:
                 case cns_SingleTypeConstraint: return boost::make_shared< complexconstraint_atom>(scope, ent.tp,
@@ -609,7 +609,7 @@ namespace x680 {
         constraint_atom_ptr compile_tvosoconstraint(basic_entity_ptr scope, const x680::syntactic::constraint_element& ent) {
             tvosoconstraint_atom_ptr tmp(new tvosoconstraint_atom(scope));
             if (((*ent.setting).alternative & AS_TYPE) && ((*ent.setting).type))
-                tmp->typeassignment(compile_typea(scope, (*((*ent.setting).type))));
+                tmp->type(compile_typee(scope, (*((*ent.setting).type))));
             if (((*ent.setting).alternative & AS_VALUESET) && ((*ent.setting).valueset))
                 tmp->valueset(compile_valueset(scope, (*((*ent.setting).valueset))));
             if (((*ent.setting).alternative & AS_OBJECTSET) && ((*ent.setting).objectset))

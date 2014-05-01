@@ -814,7 +814,6 @@ namespace x680 {
         return stream << "!!! NULL coctraint  !!!!";
     }
     
-    
 
     std::ostream& operator<<(std::ostream& stream, valueconstraint_atom_ptr self) {
         if (self->cotstrtype() == cns_PatternConstraint)
