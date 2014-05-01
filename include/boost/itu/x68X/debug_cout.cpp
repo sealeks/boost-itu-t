@@ -746,30 +746,61 @@ namespace x680 {
         return stream;
     }
 
+    std::ostream& operator<<(std::ostream& stream, constraint_type self) {
+        switch (self) {
+            case cns_PatternConstraint: stream << "(@pc)";
+            case cns_SingleValue: return stream << "(@vc)";
+            case cns_ValueRange: return stream << "(@vrc)";
+            case cns_DurationRange: return stream << "(@dc)";
+            case cns_TimePointRange:return stream << "(@tmc)";
+            case cns_RecurrenceRange: return stream << "(@rc)";
+            case cns_ContainedSubtype: return stream << "(@cstc)";
+            case cns_TypeConstraint: return stream << "(@tc)";
+            case cns_PermittedAlphabet:return stream << "(@abc)";
+            case cns_SizeConstraint: return stream << "(@szc)";
+            case cns_SingleTypeConstraint: return stream << "(@stc)";
+            case cns_PropertySettings: return stream << "(@psc)";
+            case cns_MultipleTypeConstraints: return stream << "(@mtc)";
+            case cns_NamedConstraint: return stream << "(@nmc)";
+            case cns_ValueSet: return stream << "(@vsc)";
+            case cns_ValueSetFromObjects: return stream << "(@vsoc)";
+            case cns_ValueSetFromObject: return stream << "(@vsosc)";
+            case cns_UserDefinedConstraint: return stream << "(@uc)";
+            case cns_Contents: return stream << "(@cc)";
+            case cns_ComponentRelation: return stream << "(@crc)";
+            case cns_SimpleTableConstraint: return stream << "(@tblc)";
+            case cns_Undef_T_ST_VS: return stream << "(@?tvsoc)";
+            default:
+            {
+            }
+        }
+        return stream;
+    }
+
     std::ostream& operator<<(std::ostream& stream, constraint_atom_ptr self) {
         switch (self->cotstrtype()) {
-            case cns_PatternConstraint: stream << self->as_pattern();
-            case cns_SingleValue: return stream << self->as_valueconstraint();
-            case cns_ValueRange: return stream << self->as_range();
-            case cns_DurationRange: return stream << self->as_duration();
-            case cns_TimePointRange:return stream << self->as_timepoint();
-            case cns_RecurrenceRange: return stream << self->as_reccurence();
-            case cns_ContainedSubtype: return stream << self->as_subtypeconstraint();
-            case cns_TypeConstraint: return stream << self->as_typeconstraint();
-            case cns_PermittedAlphabet:return stream << self->as_permitted();
-            case cns_SizeConstraint: return stream << self->as_size();
-            case cns_SingleTypeConstraint: return stream << self->as_singletype();
-            case cns_PropertySettings: return stream << self->as_property();
-            case cns_MultipleTypeConstraints: return stream << self->as_multipletypeconstraint();
-            case cns_NamedConstraint: return stream << self->as_named();
-            case cns_ValueSet: return stream << self->as_valuesetconstraint();
-            case cns_ValueSetFromObjects: return stream << self->as_fromdefinedset();
-            case cns_ValueSetFromObject: return stream << self->as_fromdefined();
-            case cns_UserDefinedConstraint: return stream << self->as_user();
-            case cns_Contents: return stream << self->as_content();
-            case cns_ComponentRelation: return stream << self->as_relation();
-            case cns_SimpleTableConstraint: return stream << self->as_table();
-            case cns_Undef_T_ST_VS: return stream << self->as_tvoso();
+            case cns_PatternConstraint: stream << self->cotstrtype() << self->as_pattern();
+            case cns_SingleValue: return stream << self->cotstrtype() << self->as_valueconstraint();
+            case cns_ValueRange: return stream << self->cotstrtype() << self->as_range();
+            case cns_DurationRange: return stream << self->cotstrtype() << self->as_duration();
+            case cns_TimePointRange:return stream << self->cotstrtype() << self->as_timepoint();
+            case cns_RecurrenceRange: return stream << self->cotstrtype() << self->as_reccurence();
+            case cns_ContainedSubtype: return stream << self->cotstrtype() << self->as_subtypeconstraint();
+            case cns_TypeConstraint: return stream << self->cotstrtype() << self->as_typeconstraint();
+            case cns_PermittedAlphabet:return stream << self->cotstrtype() << self->as_permitted();
+            case cns_SizeConstraint: return stream << self->cotstrtype() << self->as_size();
+            case cns_SingleTypeConstraint: return stream << self->cotstrtype() << self->as_singletype();
+            case cns_PropertySettings: return stream << self->cotstrtype() << self->as_property();
+            case cns_MultipleTypeConstraints: return stream<< self->cotstrtype() << self->as_multipletypeconstraint();
+            case cns_NamedConstraint: return stream << self->cotstrtype() << self->as_named();
+            case cns_ValueSet: return stream << self->cotstrtype() << self->as_valuesetconstraint();
+            case cns_ValueSetFromObjects: return stream << self->cotstrtype() << self->as_fromdefinedset();
+            case cns_ValueSetFromObject: return stream << self->cotstrtype() << self->as_fromdefined();
+            case cns_UserDefinedConstraint: return stream << self->cotstrtype() << self->as_user();
+            case cns_Contents: return stream << self->cotstrtype() << self->as_content();
+            case cns_ComponentRelation: return stream << self->cotstrtype() << self->as_relation();
+            case cns_SimpleTableConstraint: return stream << self->cotstrtype() << self->as_table();
+            case cns_Undef_T_ST_VS: return stream << self->cotstrtype() << self->as_tvoso();
             case cns_UNION: return stream << " | ";
             case cns_INTERSECTION: return stream << " & ";
             case cns_EXCEPT: return stream << " ^ ";
@@ -782,6 +813,8 @@ namespace x680 {
         }
         return stream << "!!! NULL coctraint  !!!!";
     }
+    
+    
 
     std::ostream& operator<<(std::ostream& stream, valueconstraint_atom_ptr self) {
         if (self->cotstrtype() == cns_PatternConstraint)
@@ -946,7 +979,7 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, relationconstraint_atom_ptr self) {
-        stream << "(RC){" << self->objectset() << "}{";
+        stream << "{" << self->objectset() << "}{";
         for (snotation_vector::const_iterator it = self->snotation().begin(); it != self->snotation().end(); ++it)
             if (it != self->snotation().begin())
                 stream << " ," << *it;
@@ -956,7 +989,7 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, tableconstraint_atom_ptr self) {
-        return stream << "(ST){" << self->objectset() << "}";
+        return stream << "{" << self->objectset() << "}";
     }
 
     std::ostream& operator<<(std::ostream& stream, tvosoconstraint_atom_ptr self) {
@@ -968,7 +1001,7 @@ namespace x680 {
             {
             }
         }
-        return stream << "TVOSO(" << self->tp() << ")";
+        return stream << "(" << self->tp() << ")";
     }
 
     // class
