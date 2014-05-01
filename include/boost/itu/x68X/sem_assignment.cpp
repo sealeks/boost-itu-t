@@ -1295,6 +1295,20 @@ namespace x680 {
                 }
             }
         }
+        if (reff()->as_assigment())
+            return reff()->as_assigment()->kind();
+        if (as_type())
+            return et_Type;
+        else if (as_value())
+            return et_Value;
+        else if (as_valueset())
+            return et_ValueSet;
+        else if (as_class())
+            return et_Class;
+        else if (as_object())
+            return et_Object;
+        else if (as_objectset())
+            return et_ObjectSet;
         return et_Nodef;
     }
 
