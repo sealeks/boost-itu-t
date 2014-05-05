@@ -96,18 +96,18 @@ namespace x680 {
     // constraints_atom
     /////////////////////////////////////////////////////////////////////////
 
-    static void resolve_tsvo(constraint_atom_vct& vl) {              
+    static void resolve_tsvo(constraint_atom_vct& vl) {
         for (constraint_atom_vct::iterator it = vl.begin(); it != vl.end(); ++it) {
             if ((*it)->as_tvoso()) {
                 (*it)->as_tvoso()->resolve();
-                if (((*it)->as_tvoso()->tp()==argm_Type) && ((*it)->as_tvoso()->type())) {
-                    (*it) = typeconstraint_atom_ptr(new typeconstraint_atom((*it)->as_tvoso()->scope(), cns_ContainedSubtype, (*it)->as_tvoso()->type(), false));}
-                else if (((*it)->as_tvoso()->tp()==argm_ObjectSet) && ((*it)->as_tvoso()->objectset())) {
-                    (*it) = tableconstraint_atom_ptr(new tableconstraint_atom((*it)->as_tvoso()->scope(), (*it)->as_tvoso()->objectset()));}
-                else if (((*it)->as_tvoso()->tp()==argm_ValueSet) && ((*it)->as_tvoso()->valueset())){
-                    (*it) = valuesetconstraint_atom_ptr(new valuesetconstraint_atom((*it)->as_tvoso()->scope(),(*it)->as_tvoso()->valueset()));
+                if (((*it)->as_tvoso()->tp() == argm_Type) && ((*it)->as_tvoso()->type())) {
+                    (*it) = typeconstraint_atom_ptr(new typeconstraint_atom((*it)->as_tvoso()->scope(), cns_ContainedSubtype, (*it)->as_tvoso()->type(), false));
+                } else if (((*it)->as_tvoso()->tp() == argm_ObjectSet) && ((*it)->as_tvoso()->objectset())) {
+                    (*it) = tableconstraint_atom_ptr(new tableconstraint_atom((*it)->as_tvoso()->scope(), (*it)->as_tvoso()->objectset()));
+                } else if (((*it)->as_tvoso()->tp() == argm_ValueSet) && ((*it)->as_tvoso()->valueset())) {
+                    (*it) = valuesetconstraint_atom_ptr(new valuesetconstraint_atom((*it)->as_tvoso()->scope(), (*it)->as_tvoso()->valueset()));
                 }
-            } 
+            }
         }
     }
 
@@ -147,11 +147,11 @@ namespace x680 {
         return cotstrtype_ == cns_SingleValue ?
                 boost::static_pointer_cast<valueconstraint_atom> (self()) : valueconstraint_atom_ptr();
     }
-    
+
     valuesetconstraint_atom_ptr constraint_atom::as_valuesetconstraint() {
         return cotstrtype_ == cns_ValueSet ?
                 boost::static_pointer_cast<valuesetconstraint_atom> (self()) : valuesetconstraint_atom_ptr();
-    }    
+    }
 
     fromdefined_objects_constraint_atom_ptr constraint_atom::as_fromdefinedset() {
         return cotstrtype_ == cns_ValueSetFromObjects ?
@@ -302,8 +302,8 @@ namespace x680 {
         if (value_)
             value_->resolve_reff();
     }
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////   
     // valuesetconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
@@ -311,7 +311,7 @@ namespace x680 {
     void valuesetconstraint_atom::resolve(basic_atom_ptr holder) {
         if (valueset_)
             valueset_->resolve_reff();
-    }    
+    }
 
 
 
@@ -346,7 +346,6 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
     // typeconstraint_atom
     /////////////////////////////////////////////////////////////////////////
-
 
     void typeconstraint_atom::resolve(basic_atom_ptr holder) {
         if (type_)
@@ -440,32 +439,30 @@ namespace x680 {
             }
             if (!(*it)->governor()) {
                 if ((*it)->setting()->mask() & AS_TYPE) {
-                        (*it)->setting()->typeassignment()->resolve_all();
-                        (*it)->setting()->type()->embeded_assignment((*it)->setting()->typeassignment());
-                        (*it)->parameter((*it)->setting()->type());
-                } 
-            }
-            else{
-                if ((*it)->governor()->as_value()){
-                    if (((*it)->setting()->value()->check_reff()==et_Value) && ((*it)->setting()->mask() & AS_VALUE)) {
-                        (*it)->setting()->value()->resolve();
-                        (*it)->parameter((*it)->setting()->value());                        
-                    }  
-                    else  if (((*it)->setting()->value()->check_reff()==et_ValueSet) && ((*it)->setting()->mask() & AS_VALUESET)) {
-                        (*it)->setting()->valueset()->resolve();
-                        (*it)->parameter((*it)->setting()->valueset());                       
-                    }  
+                    (*it)->setting()->typeassignment()->resolve_all();
+                    (*it)->setting()->type()->embeded_assignment((*it)->setting()->typeassignment());
+                    (*it)->parameter((*it)->setting()->type());
                 }
-                else if ((*it)->governor()->as_class()){
-                    if (((*it)->setting()->object()->check_reff()==et_Object) && ((*it)->setting()->mask() & AS_OBJECT)) {
+            } else {
+                if ((*it)->governor()->as_value()) {
+                    if (((*it)->setting()->value()->check_reff() == et_Value) && ((*it)->setting()->mask() & AS_VALUE)) {
+                        (*it)->setting()->value()->resolve();
+                        (*it)->parameter((*it)->setting()->value());
+                    }
+                    else if (((*it)->setting()->value()->check_reff() == et_ValueSet) && ((*it)->setting()->mask() & AS_VALUESET)) {
+                        (*it)->setting()->valueset()->resolve();
+                        (*it)->parameter((*it)->setting()->valueset());
+                    }
+                } else if ((*it)->governor()->as_class()) {
+                    if (((*it)->setting()->object()->check_reff() == et_Object) && ((*it)->setting()->mask() & AS_OBJECT)) {
                         (*it)->setting()->object()->resolve();
-                        (*it)->parameter((*it)->setting()->object());                        
-                    }  
-                    else  if (((*it)->setting()->object()->check_reff()==et_ObjectSet) && ((*it)->setting()->mask() & AS_OBJECTSET)) {
+                        (*it)->parameter((*it)->setting()->object());
+                    }
+                    else if (((*it)->setting()->object()->check_reff() == et_ObjectSet) && ((*it)->setting()->mask() & AS_OBJECTSET)) {
                         (*it)->setting()->objectset()->resolve();
-                        (*it)->parameter((*it)->setting()->objectset());                       
-                    }                      
-                }              
+                        (*it)->parameter((*it)->setting()->objectset());
+                    }
+                }
             }
         }
     }
@@ -515,7 +512,7 @@ namespace x680 {
             if (type()->reff()) {
                 basic_entity_ptr fnd = type()->scope()->find(type()->reff());
                 if (fnd)
-                    if (fnd && ((fnd->as_typeassigment())  || (fnd->as_argument()))) {
+                    if (fnd && ((fnd->as_typeassigment()) || (fnd->as_argument()))) {
                         if ((fnd->as_typeassigment()) || ((fnd->as_argument()) && ((fnd->as_argument()->argumenttype() == argm_Nodef)
                                 || (fnd->as_argument()->argumenttype() == argm_Type)))) {
                             tp_ = argm_Type;
@@ -595,13 +592,18 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
+    void valuesetassignment_entity::after_resolve() {
+
+    }
+
     void valuesetassignment_entity::resolve(basic_atom_ptr holder) {
         assignment_entity::resolve(holder);
         resolve_child();
         type()->resolve();
-        if (valueset()){
+        if (valueset()) {
             valueset()->reff_resolver(type());
-            valueset()->resolve(type());}
+            valueset()->resolve(type());
+        }
         assignment_entity::resolve_complex<valuesetassignment_entity>();
     }
 

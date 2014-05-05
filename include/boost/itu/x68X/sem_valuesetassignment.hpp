@@ -194,8 +194,8 @@ namespace x680 {
         }
 
         valueconstraint_atom_ptr as_valueconstraint();
-        
-        valuesetconstraint_atom_ptr as_valuesetconstraint();        
+
+        valuesetconstraint_atom_ptr as_valuesetconstraint();
 
         fromdefined_objects_constraint_atom_ptr as_fromdefinedset();
 
@@ -283,9 +283,9 @@ namespace x680 {
         value_atom_ptr value_;
 
     };
-    
-    
-       /////////////////////////////////////////////////////////////////////////   
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // valuesetconstraint_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -306,7 +306,7 @@ namespace x680 {
 
         valueset_atom_ptr valueset_;
 
-    }; 
+    };
 
 
     /////////////////////////////////////////////////////////////////////////        
@@ -389,18 +389,17 @@ namespace x680 {
 
     public:
 
-        typeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, type_atom_ptr  tp, bool incl) :
+        typeconstraint_atom(basic_entity_ptr scp, constraint_type tpc, type_atom_ptr tp, bool incl) :
         constraint_atom(scp, tpc), type_(tp), includes_(incl) {
         };
-        
-        
+
         type_atom_ptr type() {
             return type_;
         }
 
         void type(type_atom_ptr vl) {
             type_ = vl;
-        }        
+        }
 
         bool includdes() {
             return includes_;
@@ -410,7 +409,7 @@ namespace x680 {
 
     private:
 
-         type_atom_ptr type_;
+        type_atom_ptr type_;
         bool includes_;
 
     };
@@ -847,12 +846,11 @@ namespace x680 {
 
         tvosoconstraint_atom(basic_entity_ptr scp, const std::string& reff = "");
 
-
-        type_atom_ptr  type() {
+        type_atom_ptr type() {
             return type_;
         }
 
-        void type(type_atom_ptr  vl) {
+        void type(type_atom_ptr vl) {
             type_ = vl;
         }
 
@@ -887,7 +885,7 @@ namespace x680 {
 
         objectset_atom_ptr objectset_;
         valueset_atom_ptr valueset_;
-        type_atom_ptr  type_;
+        type_atom_ptr type_;
         argument_enum tp_;
 
     };
@@ -931,12 +929,14 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
+        virtual void after_resolve();
+
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual basic_atom_ptr atom() const;
-              
-    protected:        
-              
+
+    protected:
+
         virtual void assign_from(assignment_entity_ptr from);
 
     private:

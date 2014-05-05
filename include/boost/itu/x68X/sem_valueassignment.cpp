@@ -142,24 +142,24 @@ namespace x680 {
                     vl.push_back(tmpvl);
                 }
             }
-            typeassignment_entity_ptr structtp=reff_resolver()->as_type()->valuestructure();
-            if (structtp){
-                for (value_vct::iterator rit = vl.begin(); rit != vl.end(); ++rit){
-                    if ((*rit)->as_named()){
+            typeassignment_entity_ptr structtp = reff_resolver()->as_type()->valuestructure();
+            if (structtp) {
+                for (value_vct::iterator rit = vl.begin(); rit != vl.end(); ++rit) {
+                    if ((*rit)->as_named()) {
                         assignment_entity_ptr fndtp = structtp->find_component((*rit)->as_named()->name());
-                        if (fndtp && (fndtp->as_typeassigment())){
+                        if (fndtp && (fndtp->as_typeassigment())) {
                             (*rit)->as_named()->scope(fndtp);
-                            if ((*rit)->as_named()->value()){
+                            if ((*rit)->as_named()->value()) {
                                 (*rit)->as_named()->value()->scope(fndtp);
                                 (*rit)->as_named()->value()->reff_resolver(fndtp->as_typeassigment()->type());
                             }
                         }
                     }
-                }                    
-            }                
+                }
+            }
         }
         for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
-            (*it)->resolve((*it)->reff_resolver() ? (*it)->reff_resolver() :  holder);
+            (*it)->resolve((*it)->reff_resolver() ? (*it)->reff_resolver() : holder);
     }
 
     template<>
@@ -604,14 +604,19 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
+    void valueassignment_entity::after_resolve() {
+
+    }
+
     void valueassignment_entity::resolve(basic_atom_ptr holder) {
         assignment_entity::resolve(holder);
         resolve_child();
         type()->resolve();
         value_atom_ptr tmpvalue = value();
-        if (tmpvalue){
+        if (tmpvalue) {
             tmpvalue->reff_resolver(type());
-            tmpvalue->resolve(type());}
+            tmpvalue->resolve(type());
+        }
         assignment_entity::resolve_complex<valueassignment_entity>();
     }
 

@@ -73,7 +73,7 @@ namespace x680 {
         boost::shared_ptr<T> get_value(bool except_abstract = false) {
             return boost::shared_ptr<T>();
         }
-        
+
         template< typename T>
         boost::shared_ptr<T> get_value_parent(bool except_abstract = false);
 
@@ -516,11 +516,13 @@ namespace x680 {
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
+        virtual void after_resolve();
+
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual basic_atom_ptr atom() const;
-                
-    protected:                
+
+    protected:
 
         virtual void assign_from(assignment_entity_ptr from);
 
