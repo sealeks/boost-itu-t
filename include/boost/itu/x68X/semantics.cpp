@@ -244,8 +244,21 @@ namespace x680 {
             return tmp;
         }
         
+        
+        static type_atom_ptr compile_typee_static(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
+            type_atom_ptr tmp = compile_type(scope, ent);
+            x680::syntactic::type_assignment tmpa;
+            tmpa.identifier = "";
+            tmpa.type = ent;
+            typeassignment_entity_ptr tmpt = compile_typeassignment(scope, tmpa);
+            tmpt->synctas(tmpa);
+            tmp = tmpt->type();
+            if (tmp)
+                tmp->embeded_assignment(tmpt);
+            return tmp;
+        }
+        
         type_atom_ptr compile_typee(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
-            type_atom_ptr tmp=compile_type(scope,ent);
              switch (ent.builtin_t) {
                  case t_SEQUENCE:
                  case t_SEQUENCE_OF:
@@ -253,22 +266,16 @@ namespace x680 {
                  case t_SET_OF:
                  case t_CHOICE:
                 {
-                    x680::syntactic::type_assignment tmpa;
-                    tmpa.identifier = "";
-                    tmpa.type = ent;
-                    typeassignment_entity_ptr tmpt = compile_typeassignment(scope, tmpa);
-                    tmpt->synctas(tmpa);
-                    tmp = tmpt->type();
-                    if (tmp)
-                         tmp->embeded_assignment(tmpt);
+                    return compile_typee_static( scope, ent);
                     break;
                  }
                  default:
                 {
-                    tmp = compile_type(scope, ent);
+                    if (!ent.parameters.empty())
+                        return compile_typee_static( scope, ent);
                  }
              }
-             return tmp;
+             return compile_type(scope, ent);
         }
 
         typeassignment_entity_ptr compile_typea(basic_entity_ptr scope, const x680::syntactic::type_element& ent) {
