@@ -364,7 +364,15 @@ namespace x680 {
             stream << self->cncl_tag();        
         if ((self->textualy_tag())  && (self->cncl_tag()!=self->textualy_tag())) 
             stream << "{{" << self->textualy_tag()  << "}}" ;*/
-        dummymarker(stream, self);
+        if (self && (self->embeded_assignment()) &&
+                (self->embeded_assignment()->as_typeassigment()) &&
+                (self->embeded_assignment()->as_typeassigment()->type()) &&
+                (self->embeded_assignment()->as_typeassigment()->type().get() != self.get())) {
+            stream << self->embeded_assignment()->as_typeassigment()->type();
+            operatorstruct(stream, self->embeded_assignment()->as_typeassigment());
+            return stream;
+        } else
+            dummymarker(stream, self);
         if (self->tag())
             stream << *(self->tag());
         switch (self->builtin()) {
@@ -834,7 +842,7 @@ namespace x680 {
     }
 
     std::ostream& operator<<(std::ostream& stream, typeconstraint_atom_ptr self) {
-        return stream << (self->type());
+        return  stream << self->type();
     }
 
     std::ostream& operator<<(std::ostream& stream, rangeconstraint_atom_ptr self) {
@@ -1488,6 +1496,9 @@ namespace x680 {
                     for (object_atom_vct::const_iterator it = self->as_defn()->objects().begin(); it != self->as_defn()->objects().end(); ++it)
                         stream << " " << (*it);
                     stream << " $)";
+                    objectassignment_entity_vct objs = self->get_objects();
+                    if (!objs.empty())
+                        stream << "[%cntobj " << objs.size() << "%] ";                    
                     return stream;
                 } else
                     return stream << "(oS)??? ";
@@ -1532,6 +1543,9 @@ namespace x680 {
         }
         if (self->parameterized())
             stream << self->parameters();
+        objectassignment_entity_vct objs =self->get_objects();
+        if (!objs.empty())
+            stream << "[%cntobj " << objs.size() << "%] ";
         return stream;
     }
 
