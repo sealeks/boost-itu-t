@@ -96,6 +96,10 @@ namespace x680 {
 
         extentionobject_atom_ptr as_extention();
 
+        virtual objectassignment_entity_ptr get_object(bool strict = false);
+
+        virtual objectassignment_entity_vct get_objects(bool strict = false);
+
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual fieldsetting_atom_ptr find_field(const std::string& name) {
@@ -120,6 +124,8 @@ namespace x680 {
         defined_object_atom(basic_entity_ptr scope, const std::string& reff) : object_atom(scope, reff, ot_Refference) {
         };
 
+        virtual objectassignment_entity_ptr get_object(bool strict = false);
+
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
 
@@ -143,6 +149,11 @@ namespace x680 {
         void objectset(objectset_atom_ptr vl) {
             objectset_ = vl;
         }
+
+
+        virtual objectassignment_entity_ptr get_object(bool strict = false);
+
+        virtual objectassignment_entity_vct get_objects(bool strict = false);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -178,6 +189,10 @@ namespace x680 {
         void field(basic_atom_ptr vl) {
             field_ = vl;
         }
+
+        virtual objectassignment_entity_ptr get_object(bool strict = false);
+
+        virtual objectassignment_entity_vct get_objects(bool strict = false);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -215,6 +230,10 @@ namespace x680 {
             field_ = vl;
         }
 
+        virtual objectassignment_entity_ptr get_object(bool strict = false);
+
+        virtual objectassignment_entity_vct get_objects(bool strict = false);
+
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
@@ -245,6 +264,8 @@ namespace x680 {
             fieldsetting_ = vl;
         }
 
+        virtual objectassignment_entity_ptr get_object(bool strict = false);
+
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual fieldsetting_atom_ptr find_field(const std::string& name);
@@ -266,12 +287,12 @@ namespace x680 {
     public:
 
         defsyntax_object_atom(basic_entity_ptr scope, fieldsetting_atom_vct fldst = fieldsetting_atom_vct())
-        : object_atom(scope, ot_ObjectDefineSyn), fieldsetting_(fldst){
+        : object_atom(scope, ot_ObjectDefineSyn), fieldsetting_(fldst) {
         };
-        
-        defsyntax_object_atom(basic_entity_ptr scope, class_atom_ptr cls,  fieldsetting_atom_vct fldst = fieldsetting_atom_vct());       
-        
-        void _class(class_atom_ptr cls);      
+
+        defsyntax_object_atom(basic_entity_ptr scope, class_atom_ptr cls, fieldsetting_atom_vct fldst = fieldsetting_atom_vct());
+
+        void _class(class_atom_ptr cls);
 
         fieldsetting_atom_vct& fieldsetting() {
             return fieldsetting_;
@@ -281,6 +302,8 @@ namespace x680 {
             fieldsetting_ = vl;
         }
 
+        virtual objectassignment_entity_ptr get_object(bool strict = false);
+
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual fieldsetting_atom_ptr find_field(const std::string& name);
@@ -288,7 +311,7 @@ namespace x680 {
         bool find_literal(const std::string& name);
 
     private:
-         
+
         fieldsetting_atom_vct fieldsetting_;
 
     };
@@ -319,6 +342,10 @@ namespace x680 {
         void field(basic_atom_ptr vl) {
             field_ = vl;
         }
+
+        virtual objectassignment_entity_ptr get_object(bool strict = false);
+        
+        virtual objectassignment_entity_vct get_objects(bool strict = false);        
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -439,28 +466,30 @@ namespace x680 {
         void _class(class_atom_ptr vl) {
             class_ = vl;
         }
-        
-        const  x680::syntactic::object_assignment& synctas() const{
+
+        const x680::syntactic::object_assignment& synctas() const {
             return synctas_;
         }
 
         void synctas(const x680::syntactic::object_assignment& vl) {
             synctas_ = vl;
-        }         
+        }
 
         /////        
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
 
-        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr()); 
+        virtual void after_resolve();
+
+        virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         void apply_fields();
 
         virtual basic_atom_ptr atom() const;
-               
-    protected:        
-                  
-        virtual void assign_from(assignment_entity_ptr from);        
+
+    protected:
+
+        virtual void assign_from(assignment_entity_ptr from);
 
     private:
 
@@ -480,7 +509,7 @@ namespace x680 {
 
         class_atom_ptr class_;
         object_atom_ptr object_;
-        x680::syntactic::object_assignment synctas_;         
+        x680::syntactic::object_assignment synctas_;
     };
 
 

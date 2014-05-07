@@ -96,6 +96,20 @@ namespace x680 {
                 boost::static_pointer_cast<extentionobject_atom> (self()) : extentionobject_atom_ptr();
     }
 
+    objectassignment_entity_ptr object_atom::get_object(bool strict) {
+        return objectassignment_entity_ptr();
+    }
+
+    objectassignment_entity_vct object_atom::get_objects(bool strict) {
+        objectassignment_entity_ptr tmp = get_object(strict);
+        if (tmp) {
+            objectassignment_entity_vct tmpr;
+            tmpr.push_back(tmp);
+            return tmpr;
+        }
+        return objectassignment_entity_vct();
+    }
+
     void object_atom::resolve(basic_atom_ptr holder) {
         if (builtin_ == ot_Refference)
             resolve_reff();
@@ -105,6 +119,15 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////        
     // defenedobject_atom
     /////////////////////////////////////////////////////////////////////////  
+
+    objectassignment_entity_ptr defined_object_atom::get_object(bool strict) {
+        if ((reff()) && (reff()->as_objectassigment())) {
+            assignment_entity_ptr tmp = reff()->as_objectassigment()->refference_to();
+            if (tmp->as_objectassigment())
+                return tmp->as_objectassigment();
+        }
+        return objectassignment_entity_ptr();
+    }
 
     void defined_object_atom::resolve(basic_atom_ptr holder) {
         // if (builtin() == ot_Refference)
@@ -119,6 +142,16 @@ namespace x680 {
     definedobjects_object_atom::definedobjects_object_atom(basic_entity_ptr scope, objectset_atom_ptr objs) :
     object_atom(scope, ot_DefinedObjectSet), objectset_(objs) {
     };
+
+    objectassignment_entity_ptr definedobjects_object_atom::get_object(bool strict) {
+        return objectassignment_entity_ptr();
+    }
+
+    objectassignment_entity_vct definedobjects_object_atom::get_objects(bool strict) {
+        if (objectset_)
+            return objectset_->get_objects(strict);
+        return objectassignment_entity_vct();
+    }
 
     void definedobjects_object_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
@@ -135,6 +168,14 @@ namespace x680 {
 
     }
 
+    objectassignment_entity_ptr fromdefined_objects_object_atom::get_object(bool strict) {
+        return objectassignment_entity_ptr();
+    }
+
+    objectassignment_entity_vct fromdefined_objects_object_atom::get_objects(bool strict) {
+        return calculate_objects(objectset_, field_, strict);
+    }
+
     void fromdefined_objects_object_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
@@ -149,6 +190,22 @@ namespace x680 {
 
     }
 
+    objectassignment_entity_ptr fromdefined_object_atom::get_object(bool strict) {
+        if (object_ && field_) {
+            assignment_entity_ptr tmp = object_->find_component(field_->expectedname());
+            if (tmp) {
+                if ((tmp->as_objectassigment()) && (tmp->as_objectassigment()->object())) {
+                    return tmp->as_objectassigment()->object()->get_object(strict);
+                }
+            }
+        }
+        return objectassignment_entity_ptr();
+    }
+
+    objectassignment_entity_vct fromdefined_object_atom::get_objects(bool strict) {
+        return calculate_objects(object_, field_, strict);
+    }
+
     void fromdefined_object_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
@@ -158,6 +215,12 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////        
     // defltobject_atom
     /////////////////////////////////////////////////////////////////////////  
+
+    objectassignment_entity_ptr defltobject_atom::get_object(bool strict) {
+        objectassignment_entity_ptr rt = ((scope()) && (scope()->as_objectassigment())) ?
+                scope()->as_objectassigment() : objectassignment_entity_ptr();
+        return rt ? rt : objectassignment_entity_ptr(new objectassignment_entity(scope(), "", class_atom_ptr(), self()->as_object()));
+    }
 
     void defltobject_atom::resolve(basic_atom_ptr holder) {
         for (fieldsetting_atom_vct::iterator it = fieldsetting_.begin(); it != fieldsetting_.end(); ++it) {
@@ -182,17 +245,20 @@ namespace x680 {
     : object_atom(scp, ot_ObjectDefineSyn), fieldsetting_(fldst) {
         embeded_assignment_ = objectassignment_entity_ptr(new objectassignment_entity(scp, "", cls, self()->as_object()));
     };
-    
+
     void defsyntax_object_atom::_class(class_atom_ptr cls) {
         embeded_assignment_ = objectassignment_entity_ptr(new objectassignment_entity(scope(), "", cls, self()->as_object()));
     }
-    
 
-    
+    objectassignment_entity_ptr defsyntax_object_atom::get_object(bool strict) {
+        objectassignment_entity_ptr rt = ((scope()) && (scope()->as_objectassigment())) ?
+                scope()->as_objectassigment() : objectassignment_entity_ptr();
+        return rt ? rt : objectassignment_entity_ptr(new objectassignment_entity(scope(), "", class_atom_ptr(), self()->as_object()));
+    }
 
     void defsyntax_object_atom::resolve(basic_atom_ptr holder) {
-        if (embeded_assignment_ && (embeded_assignment_->as_objectassigment()) && !yetresolved_){
-            yetresolved_=true;
+        if (embeded_assignment_ && (embeded_assignment_->as_objectassigment()) && !yetresolved_) {
+            yetresolved_ = true;
             embeded_assignment_->as_objectassigment()->preresolve();
             embeded_assignment_->as_objectassigment()->apply_fields();
             embeded_assignment_->as_objectassigment()->resolve(holder);
@@ -244,6 +310,22 @@ namespace x680 {
     : object_atom(scp, ot_FromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
+    objectassignment_entity_ptr fromobject_object_atom::get_object(bool strict) {
+        if (object_ && field_) {
+            assignment_entity_ptr tmp = object_->find_component(field_->expectedname());
+            if (tmp) {
+                if ((tmp->as_objectassigment()) && (tmp->as_objectassigment()->object())) {
+                    return tmp->as_objectassigment()->object()->get_object(strict);
+                }
+            }
+        }
+        return objectassignment_entity_ptr();
+    }
+
+    objectassignment_entity_vct fromobject_object_atom::get_objects(bool strict) {
+        return calculate_objects(object_, field_, strict);
+    }
+
     void fromobject_object_atom::resolve(basic_atom_ptr holder) {
         if (object())
             object()->resolve();
@@ -286,6 +368,10 @@ namespace x680 {
         if (scope())
             return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
+    }
+
+    void objectassignment_entity::after_resolve() {
+
     }
 
     void objectassignment_entity::resolve(basic_atom_ptr holder) {
@@ -424,46 +510,46 @@ namespace x680 {
         if (st) {
             if (fld->as_typefield()) {
                 if (st->typeassignment()) {
-                    st->typeassignment()->name( fld->name());
+                    st->typeassignment()->name(fld->name());
                     childs_.push_back(st->typeassignment());
                     childs_.back()->preresolve();
                     //childs_.back()->resolve();
                 } else
                     referenceerror_throw("Field is not type : ", fld->name());
             } else if (fld->as_valuefield()) {
-                if (st->value()){
+                if (st->value()) {
                     childs_.push_back(basic_entity_ptr(new valueassignment_entity(self(), fld->name(), fld->as_valuefield()->type(), st->value())));
-                    childs_.back()->preresolve();}
-                else
+                    childs_.back()->preresolve();
+                } else
                     referenceerror_throw("Field is not value : ", fld->name());
             } else if (fld->as_valuesetfield()) {
-                if (st->valueset()){
+                if (st->valueset()) {
                     childs_.push_back(basic_entity_ptr(new valuesetassignment_entity(self(), fld->name(), fld->as_valuesetfield()->type(), st->valueset())));
-                    childs_.back()->preresolve();}
-                else
+                    childs_.back()->preresolve();
+                } else
                     referenceerror_throw("Field is not valueset : ", fld->name());
             } else if (fld->as_objectfield()) {
-                if (st->object()){                   
+                if (st->object()) {
                     childs_.push_back(basic_entity_ptr(new objectassignment_entity(self(), fld->name(), fld->as_objectfield()->_class(), st->object())));
                     childs_.back()->preresolve();
-                    childs_.back()->as_objectassigment()->apply_fields();}
-                else
+                    childs_.back()->as_objectassigment()->apply_fields();
+                } else
                     referenceerror_throw("Field is not object : ", fld->name());
             } else if (fld->as_objectsetfield()) {
-                if (st->objectset()){
+                if (st->objectset()) {
                     childs_.push_back(basic_entity_ptr(new objectsetassignment_entity(self(), fld->name(), fld->as_objectsetfield()->_class(), st->objectset())));
-                    if  (childs_.back()->as_objectsetassigment()->objectset()) {
+                    if (childs_.back()->as_objectsetassigment()->objectset()) {
                         objectset_atom_ptr tmpobjs = childs_.back()->as_objectsetassigment()->objectset();
-                        if (tmpobjs->as_defn()){
-                            for(object_atom_vct::iterator it =tmpobjs->as_defn()->objects().begin();it !=tmpobjs->as_defn()->objects().end();++it){
-                                if ((*it) && ((*it)->as_defnsyntx())){
+                        if (tmpobjs->as_defn()) {
+                            for (object_atom_vct::iterator it = tmpobjs->as_defn()->objects().begin(); it != tmpobjs->as_defn()->objects().end(); ++it) {
+                                if ((*it) && ((*it)->as_defnsyntx())) {
                                     (*it)->as_defnsyntx()->_class(fld->as_objectsetfield()->_class());
                                 }
                             }
                         }
                     }
-                    childs_.back()->preresolve();}
-                else
+                    childs_.back()->preresolve();
+                } else
                     referenceerror_throw("Field is not objectset : ", fld->name());
             }
         } else {
@@ -550,7 +636,7 @@ namespace x680 {
     }
 
     void objectassignment_entity::assign_from(assignment_entity_ptr from) {
-        if (from->as_objectassigment()) {          
+        if (from->as_objectassigment()) {
             assignment_entity::assign_from(from);
             object_atom_ptr selftype = object_;
             object_ = from->as_objectassigment()->object_;

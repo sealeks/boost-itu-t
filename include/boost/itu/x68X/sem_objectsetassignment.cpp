@@ -50,6 +50,10 @@ namespace x680 {
                 boost::static_pointer_cast<fromobjects_objectset_atom> (self()) : fromobjects_objectset_atom_ptr();
     }
 
+    objectassignment_entity_vct objectset_atom::get_objects(bool strict) {
+        return objectassignment_entity_vct();
+    }
+
     void objectset_atom::resolve(basic_atom_ptr holder) {
         if (builtin_ == os_defined)
             resolve_reff();
@@ -59,6 +63,15 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////        
     // defineobjectset_atom
     /////////////////////////////////////////////////////////////////////////    
+
+    objectassignment_entity_vct defined_objectset_atom::get_objects(bool strict) {
+        if ((reff()) && (reff()->as_objectsetassigment())) {
+            assignment_entity_ptr tmp = reff()->as_objectsetassigment()->refference_to();
+            if ((tmp->as_objectsetassigment()) && (tmp->as_objectsetassigment()->objectset()))
+                return tmp->as_objectsetassigment()->objectset()->get_objects(strict);
+        }
+        return objectassignment_entity_vct();
+    }
 
     void defined_objectset_atom::resolve(basic_atom_ptr holder) {
         resolve_reff();
@@ -71,6 +84,10 @@ namespace x680 {
     fromobject_objectset_atom::fromobject_objectset_atom(basic_entity_ptr scp, const std::string& refffld, object_atom_ptr obj) :
     objectset_atom(scp, os_ObjectSetFromObject), object_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
+
+    objectassignment_entity_vct fromobject_objectset_atom::get_objects(bool strict) {
+        return calculate_objects(object_, field_, strict);
+    }
 
     void fromobject_objectset_atom::resolve(basic_atom_ptr holder) {
         if (object())
@@ -93,6 +110,10 @@ namespace x680 {
     objectset_atom(scp, os_ObjectSetFromObjects), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
 
+    objectassignment_entity_vct fromobjects_objectset_atom::get_objects(bool strict) {
+        return calculate_objects(objectset_, field_, strict);
+    }
+
     void fromobjects_objectset_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
             objectset()->resolve();
@@ -110,6 +131,16 @@ namespace x680 {
     // defn_objectset_atom
     /////////////////////////////////////////////////////////////////////////      
 
+    objectassignment_entity_vct defn_objectset_atom::get_objects(bool strict) {
+        objectassignment_entity_vct tmp;
+        for (object_atom_vct::iterator it = objects_.begin(); it != objects_.end(); ++it) {
+            objectassignment_entity_vct tmpl = (*it)->get_objects(strict);
+            if (!tmpl.empty())
+                tmp.insert(tmp.end(), tmpl.begin(), tmpl.end());
+        }
+        return tmp;
+    }
+
     void defn_objectset_atom::resolve(basic_atom_ptr holder) {
         for (object_atom_vct::iterator it = objects_.begin(); it != objects_.end(); ++it) {
             (*it)->resolve();
@@ -126,7 +157,7 @@ namespace x680 {
 
     basic_atom_ptr objectsetassignment_entity::atom() const {
         return objectset_;
-    }    
+    }
 
     objectset_atom_ptr objectsetassignment_entity::objectset() const {
         return objectset_;
@@ -145,6 +176,10 @@ namespace x680 {
         if (scope())
             return scope()->find_by_name(nm, sch);
         return basic_entity_ptr();
+    }
+
+    void objectsetassignment_entity::after_resolve() {
+
     }
 
     void objectsetassignment_entity::resolve(basic_atom_ptr holder) {
