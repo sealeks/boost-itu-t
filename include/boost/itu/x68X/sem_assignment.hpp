@@ -127,6 +127,7 @@ namespace x680 {
 
     class objectassignment_entity;
     typedef boost::shared_ptr<objectassignment_entity> objectassignment_entity_ptr;
+    typedef std::vector<objectassignment_entity_ptr> objectassignment_entity_vct;
 
     class objectsetassignment_entity;
     typedef boost::shared_ptr<objectsetassignment_entity> objectsetassignment_entity_ptr;
@@ -178,9 +179,9 @@ namespace x680 {
 
     class fromobjects_type_atom;
     typedef boost::shared_ptr<fromobjects_type_atom> fromobjects_type_atom_ptr;
-    
+
     class selection_type_atom;
-    typedef boost::shared_ptr<selection_type_atom> selection_type_atom_ptr;    
+    typedef boost::shared_ptr<selection_type_atom> selection_type_atom_ptr;
 
 
     class value_atom;
@@ -253,9 +254,9 @@ namespace x680 {
 
     class valueconstraint_atom;
     typedef boost::shared_ptr<valueconstraint_atom> valueconstraint_atom_ptr;
-    
+
     class valuesetconstraint_atom;
-    typedef boost::shared_ptr<valuesetconstraint_atom> valuesetconstraint_atom_ptr;    
+    typedef boost::shared_ptr<valuesetconstraint_atom> valuesetconstraint_atom_ptr;
 
     class fromdefined_objects_constraint_atom;
     typedef boost::shared_ptr<fromdefined_objects_constraint_atom> fromdefined_objects_constraint_atom_ptr;
@@ -504,10 +505,10 @@ namespace x680 {
         std::string name() const {
             return name_;
         }
-        
-        void name(const std::string& vl)  {
-            name_=vl;
-        }        
+
+        void name(const std::string& vl) {
+            name_ = vl;
+        }
 
         entity_enum kind() const {
             return kind_;
@@ -524,14 +525,13 @@ namespace x680 {
         }
 
         void reff_shadow(basic_entity_ptr vl);
-        
-        
+
         basic_entity_ptr shadow_for() const {
             return !shadow_for_._empty() ? shadow_for_.lock() : basic_entity_ptr();
         }
-        
-        void shadow_for(basic_entity_ptr vl);    
-               
+
+        void shadow_for(basic_entity_ptr vl);
+
         basic_entity_vector& childs();
 
         void childs(basic_entity_vector& vl);
@@ -989,12 +989,12 @@ namespace x680 {
         void reff(basic_entity_ptr vl) {
             reff_ = vl;
         }
-        
+
         basic_atom_ptr reff_resolver() const {
             return !reff_resolver_._empty() ? reff_resolver_.lock() : basic_atom_ptr();
         }
-        
-        void reff_resolver(basic_atom_ptr vl);         
+
+        void reff_resolver(basic_atom_ptr vl);
 
         bool expecteddef() const {
             return ((reff_) && (reff_->as_expectdef()));
@@ -1015,8 +1015,8 @@ namespace x680 {
         bool parameterized() const {
             return !parameters_.empty();
         }
-        
-        bool has_rootargumented() const; 
+
+        bool has_rootargumented() const;
 
         std::string expectedname() const {
             return expecteddef() ? reff_->name() : "";
@@ -1053,16 +1053,16 @@ namespace x680 {
         void isdummysource(bool vl) {
             isdummysource_ = vl;
         }
-        
-        bool isembeded() const; 
-        
-        virtual bool issubstitute() const{
+
+        bool isembeded() const;
+
+        virtual bool issubstitute() const {
             return false;
         }
-        
-        bool rooted();        
-       
-       assignment_entity_ptr embeded_assignment() const;
+
+        bool rooted();
+
+        assignment_entity_ptr embeded_assignment() const;
 
         void embeded_assignment(assignment_entity_ptr vl);
 
@@ -1097,24 +1097,26 @@ namespace x680 {
         entity_enum check_reff(basic_atom_ptr holder = basic_atom_ptr(), search_marker sch = full_search);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
+
+        virtual void resolve_substitute();
         
-        virtual void resolve_substitute();        
-        
+        assignment_entity_ptr find_component(const std::string& nmf);
+
     protected:
         
-        assignment_entity_ptr find_complex_path(std::string& nm);       
-        
+        objectassignment_entity_vct calculate_objects(basic_atom_ptr atm, basic_atom_ptr fld , bool strict = false);        
+
         assignment_enum kind_;
         basic_entity_ptr reff_;
         basic_entity_ptr scope_;
         setting_atom_vct parameters_;
-        assignment_entity_ptr embeded_assignment_;       
-        basic_entity_vector nullchilds_;         
+        assignment_entity_ptr embeded_assignment_;
+        basic_entity_vector nullchilds_;
         mutable basic_atom_wptr reff_resolver_;
         bool extention_;
         bool isdummy_;
         bool isdummysource_;
-        bool yetresolved_;         
+        bool yetresolved_;
     };
 
 
@@ -1176,7 +1178,7 @@ namespace x680 {
         void classassignment(classassignment_entity_ptr vl) {
             classassignment_ = vl;
         }
-        
+
         /*objectassignment_entity_ptr objectassignment() {
             return objectassignment_;
         }
@@ -1186,7 +1188,7 @@ namespace x680 {
         }        
 
         object_atom_ptr object();*/
-        
+
         object_atom_ptr object() {
             return object_;
         }
@@ -1264,24 +1266,23 @@ namespace x680 {
         void arguments(argument_entity_vct vl) {
             arguments_ = vl;
         }
-        
+
         bool shadow() const {
             return shadow_;
         }
 
         void shadow(bool vl) {
             shadow_ = vl;
-        }        
+        }
 
         bool has_arguments() const {
             return !arguments_.empty();
         }
-        
-        bool has_rootarguments() const;  
-        
-        bool parameterized() const;   
-        
-        
+
+        bool has_rootarguments() const;
+
+        bool parameterized() const;
+
         virtual basic_atom_ptr atom() const {
             return basic_atom_ptr();
         }
@@ -1294,7 +1295,7 @@ namespace x680 {
         template<typename T>
         boost::shared_ptr<T> clone(basic_entity_ptr scope = basic_entity_ptr(), bool shadow = true) {
             return boost::shared_ptr<T>();
-        }              
+        }
 
         /////        
 
@@ -1304,34 +1305,34 @@ namespace x680 {
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
-        virtual void preresolve();    
-        
-        virtual void resolve_all(basic_atom_ptr holder = basic_atom_ptr());        
+        virtual void preresolve();
 
-        
-    protected:        
-        
-        virtual void substitute(){};
-             
+        virtual void resolve_all(basic_atom_ptr holder = basic_atom_ptr());
+
         assignment_entity_ptr refference_to();
         
+    protected:
+
+        virtual void substitute() {
+        };
+
         void apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scope = basic_entity_ptr());
 
-        void resolve_arguments();    
-        
-        std::string subidentifier(std::string& nm);    
-        
-        virtual void assign_from(assignment_entity_ptr from);       
+        void resolve_arguments();
+
+        std::string subidentifier(std::string& nm);
+
+        virtual void assign_from(assignment_entity_ptr from);
 
         template<typename T>
         void resolve_parametrezed();
 
         template<typename T>
         void resolve_argumented();
-        
-        template<typename T>
-        void resolve_complex();        
 
+        template<typename T>
+        void resolve_complex();
+        
     private:
 
         argument_entity_vct arguments_;
@@ -1393,7 +1394,7 @@ namespace x680 {
                     if (!tascopy)
                         referenceerror_throw("Internal error for clone assignment ", name());
                     tascopy->resolve_all();
-                    assign_from(tascopy);                    
+                    assign_from(tascopy);
                     tascopy->apply_arguments(rslt->parameters(), self());
                     tascopy->resolve_arguments();
 
@@ -1413,13 +1414,13 @@ namespace x680 {
         basic_atom_ptr rslt = atom();
         boost::shared_ptr<T> tas;
         while (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
-                && (rslt->reff()->as_assigment()->as_baseassignment<T>())){
-             tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
-             rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->atom();
-             if (rslt)
-                    rslt->isdummysource(true); 
-        }       
-        if (tas && rslt){
+                && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
+            tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
+            rslt = rslt->reff()->as_assigment()->as_baseassignment<T>()->atom();
+            if (rslt)
+                rslt->isdummysource(true);
+        }
+        if (tas && rslt) {
             assign_from(tas);
             rslt = atom();
         }

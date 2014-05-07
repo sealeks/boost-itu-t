@@ -1277,10 +1277,6 @@ namespace x680 {
         return kind_ == at_Constraints ? boost::static_pointer_cast<constraints_atom> (self()) : constraints_atom_ptr();
     }
 
-    assignment_entity_ptr basic_atom::find_complex_path(std::string& nm) {
-        return assignment_entity_ptr();
-    }
-
     entity_enum basic_atom::check_reff(basic_atom_ptr holder, search_marker sch) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {
             basic_entity_ptr source = holder ?
@@ -1406,6 +1402,50 @@ namespace x680 {
     void basic_atom::resolve_substitute() {
     }
 
+    assignment_entity_ptr basic_atom::find_component(const std::string& nmf) {
+        assignment_entity_ptr rslt;
+        if (embeded_assignment_) {
+            rslt = embeded_assignment_;
+        } else
+            if ((reff()) && (reff()->as_assigment())) {
+            rslt = reff()->as_assigment();
+        } else if ((scope()) && (scope()->as_assigment())
+                && (scope()->as_assigment()->atom())
+                && (scope()->as_assigment()->atom().get() == this))
+            rslt = scope()->as_assigment();
+        if (rslt)
+            rslt = rslt->refference_to();
+        if (rslt)
+            return rslt->find_component(nmf);
+        return assignment_entity_ptr();
+    }
+
+    objectassignment_entity_vct basic_atom::calculate_objects(basic_atom_ptr atm, basic_atom_ptr fld, bool strict) {
+        objectassignment_entity_vct rslt;
+        if (atm && fld) {
+            objectassignment_entity_vct vct;
+            if (atm->as_object())
+                vct = atm->as_object()->get_objects(strict);
+            if (atm->as_objectset())
+                vct = atm->as_objectset()->get_objects(strict);
+            for (objectassignment_entity_vct::iterator it = vct.begin(); it != vct.end(); ++it) {
+                if ((*it) && ((*it)->object())) {
+                    assignment_entity_ptr tmp = (*it)->object()->find_component(fld->expectedname());
+                    if (tmp) {
+                        objectassignment_entity_vct subrslt;
+                        if ((tmp->as_objectsetassigment()) && (tmp->as_objectsetassigment()->objectset()))
+                            subrslt = tmp->as_objectsetassigment()->objectset()->get_objects(strict);
+                        if ((tmp->as_objectassigment()) && (tmp->as_objectassigment()->object()))
+                            subrslt = tmp->as_objectassigment()->object()->get_objects(strict);
+                        if (!subrslt.empty())
+                            rslt.insert(rslt.end(), subrslt.begin(), subrslt.end());
+                    }
+                }
+            }
+        }
+        return rslt;
+    }
+
 
     /////////////////////////////////////////////////////////////////////////   
     // SETTING
@@ -1450,9 +1490,6 @@ namespace x680 {
         basic_atom_ptr rslt = atom();
         return rslt ? (rslt->parameterized()) : false;
     }
-
-
-
 
     assignment_entity_ptr assignment_entity::find_component(const std::string& nmf) {
         std::string nm = nmf;
@@ -1554,6 +1591,9 @@ namespace x680 {
                     && (as_objectsetassigment()->objectset()->reff()->as_assigment())) {
                 return as_objectsetassigment()->objectset()->reff()->as_assigment()->refference_to();
             }
+        }
+        if ((as_assigment()) && (as_assigment()->atom()) && (as_assigment()->atom()->embeded_assignment())) {
+            return as_assigment()->atom()->embeded_assignment()->refference_to();
         }
         return as_assigment();
     }
