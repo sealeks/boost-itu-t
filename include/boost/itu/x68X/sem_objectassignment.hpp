@@ -486,7 +486,9 @@ namespace x680 {
         void apply_fields();
 
         virtual basic_atom_ptr atom() const;
-
+            
+        friend bool operator<(const objectassignment_entity& l , const objectassignment_entity& r);
+        
     protected:
 
         virtual void assign_from(assignment_entity_ptr from);

@@ -7,6 +7,12 @@
 
 namespace x680 {
 
+    bool objectassignment_entity_ptr_less::operator()(const objectassignment_entity_ptr& l, const objectassignment_entity_ptr& r)  const {
+        if (l && r)
+            return (*l) < (*r);
+        return r ? true : false;
+    }
+
     namespace semantics {
 
         std::ostream& operator<<(std::ostream& stream, const error& self) {

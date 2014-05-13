@@ -1487,6 +1487,24 @@ namespace x680 {
         return stream << "???" << "\n";
     }
 
+    static void prinobjectset(std::ostream& stream, objectset_atom_ptr self) {
+        objectassignment_entity_set objs = self->get_unicalobjects();
+        if (!objs.empty()) {
+            stream << "[%cntobj " << objs.size() << " ";
+            for (objectassignment_entity_set::const_iterator it = objs.begin(); it != objs.end(); ++it) {
+                if (*it) {
+                    if (it != objs.begin())
+                        stream << ", ";
+                    if ((*it)->name().empty())
+                        stream << "&local";
+                    else
+                        stream << (*it)->name();
+                }
+            }
+            stream << " %] ";
+        }
+    }
+
     std::ostream& operator<<(std::ostream& stream, objectset_atom_ptr self) {
         switch (self->builtin()) {
             case os_Strait:
@@ -1496,9 +1514,7 @@ namespace x680 {
                     for (object_atom_vct::const_iterator it = self->as_defn()->objects().begin(); it != self->as_defn()->objects().end(); ++it)
                         stream << " " << (*it);
                     stream << " $)";
-                    objectassignment_entity_vct objs = self->get_objects();
-                    if (!objs.empty())
-                        stream << "[%cntobj " << objs.size() << "%] ";                    
+                    prinobjectset(stream,self);                    
                     return stream;
                 } else
                     return stream << "(oS)??? ";
@@ -1543,9 +1559,7 @@ namespace x680 {
         }
         if (self->parameterized())
             stream << self->parameters();
-        objectassignment_entity_vct objs =self->get_objects();
-        if (!objs.empty())
-            stream << "[%cntobj " << objs.size() << "%] ";
+        prinobjectset(stream,self); 
         return stream;
     }
 

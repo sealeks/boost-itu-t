@@ -39,6 +39,8 @@ namespace x680 {
         fromobjects_objectset_atom_ptr as_fromobjectset();
 
         virtual objectassignment_entity_vct get_objects(bool strict = false);
+        
+        objectassignment_entity_set get_unicalobjects(bool strict = false);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 

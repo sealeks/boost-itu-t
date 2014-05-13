@@ -129,6 +129,12 @@ namespace x680 {
     typedef boost::shared_ptr<objectassignment_entity> objectassignment_entity_ptr;
     typedef std::vector<objectassignment_entity_ptr> objectassignment_entity_vct;
 
+    struct objectassignment_entity_ptr_less  {
+        bool operator()(const objectassignment_entity_ptr& l, const objectassignment_entity_ptr& r) const;
+    };
+    
+    typedef std::set<objectassignment_entity_ptr, objectassignment_entity_ptr_less > objectassignment_entity_set;
+
     class objectsetassignment_entity;
     typedef boost::shared_ptr<objectsetassignment_entity> objectsetassignment_entity_ptr;
 
@@ -1099,12 +1105,12 @@ namespace x680 {
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
         virtual void resolve_substitute();
-        
+
         assignment_entity_ptr find_component(const std::string& nmf);
 
     protected:
-        
-        objectassignment_entity_vct calculate_objects(basic_atom_ptr atm, basic_atom_ptr fld , bool strict = false);        
+
+        objectassignment_entity_vct calculate_objects(basic_atom_ptr atm, basic_atom_ptr fld, bool strict = false);
 
         assignment_enum kind_;
         basic_entity_ptr reff_;
@@ -1310,7 +1316,7 @@ namespace x680 {
         virtual void resolve_all(basic_atom_ptr holder = basic_atom_ptr());
 
         assignment_entity_ptr refference_to();
-        
+
     protected:
 
         virtual void substitute() {
@@ -1332,7 +1338,7 @@ namespace x680 {
 
         template<typename T>
         void resolve_complex();
-        
+
     private:
 
         argument_entity_vct arguments_;

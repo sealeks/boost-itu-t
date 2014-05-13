@@ -351,6 +351,14 @@ namespace x680 {
     basic_atom_ptr objectassignment_entity::atom() const {
         return object_;
     }
+    
+    bool operator<(const objectassignment_entity& l , const objectassignment_entity& r) {
+        if ((!r.name().empty()) || (!l.name().empty()))
+            return l.name() < r.name();
+        if ((l.object_) && (r.object_))
+            return l.object_.get() < r.object_.get();
+        return false;
+    }
 
     object_atom_ptr objectassignment_entity::object() const {
         return object_;

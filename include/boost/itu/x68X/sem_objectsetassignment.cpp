@@ -53,6 +53,15 @@ namespace x680 {
     objectassignment_entity_vct objectset_atom::get_objects(bool strict) {
         return objectassignment_entity_vct();
     }
+    
+    objectassignment_entity_set objectset_atom::get_unicalobjects(bool strict){
+        objectassignment_entity_vct tmp=get_objects(strict);
+        objectassignment_entity_set tmpset;
+        if (!tmp.empty()){
+            tmpset.insert(tmp.begin(), tmp.end());
+        }
+        return tmpset;
+    }
 
     void objectset_atom::resolve(basic_atom_ptr holder) {
         if (builtin_ == os_defined)
