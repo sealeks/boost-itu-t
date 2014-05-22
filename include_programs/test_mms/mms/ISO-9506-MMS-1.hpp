@@ -214,22 +214,22 @@ namespace ISO_9506_MMS_1 {
     struct Write_Response_sequence_of;
 
 
-    typedef octetstring_type TimeOfDay;
+    typedef octetstring_type TimeOfDay; //    Sc (  [ 4  ...   6 ]   
     typedef visiblestring_type Identifier;
-    typedef int Integer8;
-    typedef int Integer16;
-    typedef int Integer32;
-    typedef int Unsigned8;
-    typedef int Unsigned16;
-    typedef int Unsigned32;
+    typedef int Integer8; //   Ic(  [ -128  ...   127 ]   
+    typedef int Integer16; //   Ic(  [ -32768  ...   32767 ]   
+    typedef int Integer32; //   Ic(  [ -2147483648  ...   2147483647 ]   
+    typedef int Unsigned8; //   Ic(  [ 0  ...   127 ]   
+    typedef int Unsigned16; //   Ic(  [ 0  ...   32767 ]   
+    typedef int Unsigned32; //   Ic(  [ 0  ...   2147483647 ]   
     typedef visiblestring_type MMSString;
     typedef visiblestring_type MMS255String;
     typedef null_type Conclude_RequestPDU;
     typedef null_type Conclude_ResponsePDU;
     typedef null_type DefineAccessControlList_Response;
     typedef null_type DeleteAccessControlList_Response;
-    typedef int OperationState;
-    typedef bitstring_type ExtendedStatus;
+    typedef int OperationState; //   Ic(  [ 0  ...   5 ]   
+    typedef bitstring_type ExtendedStatus; //    Sc (  [ 4 ]   
     typedef bool Status_Request;
     typedef null_type Identify_Request;
     typedef null_type Rename_Response;
@@ -245,7 +245,7 @@ namespace ISO_9506_MMS_1 {
     typedef null_type StoreDomainContent_Response;
     typedef null_type DeleteDomain_Response;
     typedef null_type CreateProgramInvocation_Response;
-    typedef int CS_CreateProgramInvocation_Request;
+    typedef int CS_CreateProgramInvocation_Request; //   Ic(  [ 0  ...   2 ]   
     typedef null_type DeleteProgramInvocation_Response;
     typedef null_type Start_Response;
     typedef null_type Stop_Response;
@@ -265,7 +265,7 @@ namespace ISO_9506_MMS_1 {
     typedef null_type StoreUnitControlToFile_Response;
     typedef null_type DeleteUnitControl_Response;
     typedef octetstring_type FloatingPoint;
-    typedef int DataAccessError;
+    typedef int DataAccessError; //   Ic(  [ 0  ...   11 ]   
     typedef null_type DefineNamedVariable_Response;
     typedef null_type DefineNamedVariableList_Response;
     typedef null_type DefineNamedType_Response;
@@ -292,17 +292,17 @@ namespace ISO_9506_MMS_1 {
 
     typedef ServiceError Initiate_ErrorPDU;
     typedef ServiceError Conclude_ErrorPDU;
-    typedef Unsigned32 Cancel_RequestPDU;
-    typedef Unsigned32 Cancel_ResponsePDU;
+    typedef Unsigned32 Cancel_RequestPDU; //   Ic(  [ 0  ...   2147483647 ]   
+    typedef Unsigned32 Cancel_ResponsePDU; //   Ic(  [ 0  ...   2147483647 ]   
     typedef Identifier DeleteAccessControlList_Request;
-    typedef Unsigned32 ChangeAccessControl_Error;
+    typedef Unsigned32 ChangeAccessControl_Error; //   Ic(  [ 0  ...   2147483647 ]   
     typedef StatusResponse Status_Response;
     typedef StatusResponse UnsolicitedStatus;
     typedef StatusResponse VMDReset_Response;
     typedef Identifier DownloadSegment_Request;
     typedef Identifier InitiateUploadSequence_Request;
-    typedef Integer32 UploadSegment_Request;
-    typedef Integer32 TerminateUploadSequence_Request;
+    typedef Integer32 UploadSegment_Request; //   Ic(  [ -2147483648  ...   2147483647 ]   
+    typedef Integer32 TerminateUploadSequence_Request; //   Ic(  [ -2147483648  ...   2147483647 ]   
     typedef Identifier DeleteDomain_Request;
     typedef Identifier GetDomainAttributes_Request;
     typedef Identifier DeleteProgramInvocation_Request;
@@ -314,11 +314,11 @@ namespace ISO_9506_MMS_1 {
     typedef Identifier StopUnitControl_Request;
     typedef Identifier GetUnitControlAttributes_Request;
     typedef Identifier DeleteUnitControl_Request;
-    typedef Unsigned32 DeleteVariableAccess_Error;
+    typedef Unsigned32 DeleteVariableAccess_Error; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName GetNamedVariableListAttributes_Request;
-    typedef Unsigned32 DeleteNamedVariableList_Error;
+    typedef Unsigned32 DeleteNamedVariableList_Error; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName GetNamedTypeAttributes_Request;
-    typedef Unsigned32 DeleteNamedType_Error;
+    typedef Unsigned32 DeleteNamedType_Error; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName GetDataExchangeAttributes_Request;
     typedef ObjectName DeleteSemaphore_Request;
     typedef ObjectName ReportSemaphoreStatus_Request;
@@ -326,22 +326,22 @@ namespace ISO_9506_MMS_1 {
     ITU_T_EXPLICIT_TYPEDEF(CS_EventNotification, CS_EventNotification_impl, 0, CONTEXT_CLASS);
     ITU_T_EXPLICIT_TYPEDEF(EN_Additional_Detail, EN_Additional_Detail_impl, 0, CONTEXT_CLASS);
     ITU_T_EXPLICIT_TYPEDEF(CS_DefineEventCondition_Request, CS_DefineEventCondition_Request_impl, 0, CONTEXT_CLASS);
-    typedef Unsigned32 DeleteEventCondition_Response;
+    typedef Unsigned32 DeleteEventCondition_Response; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName GetEventConditionAttributes_Request;
     typedef ObjectName ReportEventConditionStatus_Request;
-    typedef Unsigned32 DeleteEventAction_Response;
+    typedef Unsigned32 DeleteEventAction_Response; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName GetEventActionAttributes_Request;
     typedef ObjectName ReportEventActionStatus_Request;
-    typedef Unsigned32 ReportEventActionStatus_Response;
+    typedef Unsigned32 ReportEventActionStatus_Response; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName DefineEventEnrollment_Error;
     ITU_T_EXPLICIT_TYPEDEF(CS_DefineEventEnrollment_Request, CS_DefineEventEnrollment_Request_impl, 0, CONTEXT_CLASS);
-    typedef Unsigned32 DeleteEventEnrollment_Response;
+    typedef Unsigned32 DeleteEventEnrollment_Response; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName ReportEventEnrollmentStatus_Request;
     typedef ObjectName DefineEventConditionList_Error;
     typedef ObjectName DeleteEventConditionList_Request;
     typedef ObjectName AddEventConditionListReference_Error;
     typedef ObjectName GetEventConditionListAttributes_Request;
-    typedef Unsigned32 InitializeJournal_Response;
+    typedef Unsigned32 InitializeJournal_Response; //   Ic(  [ 0  ...   2147483647 ]   
     typedef ObjectName ReportJournalStatus_Request;
     typedef std::vector< AlternateAccess_sequence_of > AlternateAccess;
     typedef std::vector< Write_Response_sequence_of > Write_Response;
@@ -397,10 +397,10 @@ namespace ISO_9506_MMS_1 {
 
 
 
-    typedef MMS_Object_Module_1::ProgramInvocationState Start_Error;
-    typedef MMS_Object_Module_1::ProgramInvocationState Stop_Error;
-    typedef MMS_Object_Module_1::ProgramInvocationState Resume_Error;
-    typedef MMS_Object_Module_1::ProgramInvocationState Reset_Error;
+    typedef MMS_Object_Module_1::ProgramInvocationState Start_Error; //   Ic(  [ 0  ...   8 ]   
+    typedef MMS_Object_Module_1::ProgramInvocationState Stop_Error; //   Ic(  [ 0  ...   8 ]   
+    typedef MMS_Object_Module_1::ProgramInvocationState Resume_Error; //   Ic(  [ 0  ...   8 ]   
+    typedef MMS_Object_Module_1::ProgramInvocationState Reset_Error; //   Ic(  [ 0  ...   8 ]   
     // choice MMSpdu
 
     enum MMSpdu_enum {
@@ -440,8 +440,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICEC_DECL(confirmed_ErrorPDU, Confirmed_ErrorPDU, MMSpdu_confirmed_ErrorPDU);
         ITU_T_CHOICEC_DECL(unconfirmed_PDU, Unconfirmed_PDU, MMSpdu_unconfirmed_PDU);
         ITU_T_CHOICEC_DECL(rejectPDU, RejectPDU, MMSpdu_rejectPDU);
-        ITU_T_CHOICES_DECL(cancel_RequestPDU, Cancel_RequestPDU, MMSpdu_cancel_RequestPDU); // primitive
-        ITU_T_CHOICES_DECL(cancel_ResponsePDU, Cancel_ResponsePDU, MMSpdu_cancel_ResponsePDU); // primitive
+        ITU_T_CHOICES_DECL(cancel_RequestPDU, Cancel_RequestPDU, MMSpdu_cancel_RequestPDU); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
+        ITU_T_CHOICES_DECL(cancel_ResponsePDU, Cancel_ResponsePDU, MMSpdu_cancel_ResponsePDU); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_CHOICEC_DECL(cancel_ErrorPDU, Cancel_ErrorPDU, MMSpdu_cancel_ErrorPDU);
         ITU_T_CHOICEC_DECL(initiate_RequestPDU, Initiate_RequestPDU, MMSpdu_initiate_RequestPDU);
         ITU_T_CHOICEC_DECL(initiate_ResponsePDU, Initiate_ResponsePDU, MMSpdu_initiate_ResponsePDU);
@@ -469,7 +469,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ConfirmedServiceRequest> arg__service,
                 boost::shared_ptr< Request_Detail> arg__service_ext = boost::shared_ptr< Request_Detail>());
 
-        ITU_T_HOLDERH_DECL(invokeID, Unsigned32);
+        ITU_T_HOLDERH_DECL(invokeID, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_OPTIONAL_DECL(listOfModifiers, ListOfModifiers_type);
         ITU_T_HOLDERH_DECL(service, ConfirmedServiceRequest);
         ITU_T_OPTIONAL_DECL(service_ext, Request_Detail);
@@ -613,8 +613,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICES_DECL(downloadSegment, DownloadSegment_Request, ConfirmedServiceRequest_downloadSegment); // primitive
         ITU_T_CHOICEC_DECL(terminateDownloadSequence, TerminateDownloadSequence_Request, ConfirmedServiceRequest_terminateDownloadSequence);
         ITU_T_CHOICES_DECL(initiateUploadSequence, InitiateUploadSequence_Request, ConfirmedServiceRequest_initiateUploadSequence); // primitive
-        ITU_T_CHOICES_DECL(uploadSegment, UploadSegment_Request, ConfirmedServiceRequest_uploadSegment); // primitive
-        ITU_T_CHOICES_DECL(terminateUploadSequence, TerminateUploadSequence_Request, ConfirmedServiceRequest_terminateUploadSequence); // primitive
+        ITU_T_CHOICES_DECL(uploadSegment, UploadSegment_Request, ConfirmedServiceRequest_uploadSegment); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
+        ITU_T_CHOICES_DECL(terminateUploadSequence, TerminateUploadSequence_Request, ConfirmedServiceRequest_terminateUploadSequence); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
         ITU_T_CHOICEC_DECL(requestDomainDownload, RequestDomainDownload_Request, ConfirmedServiceRequest_requestDomainDownload);
         ITU_T_CHOICEC_DECL(requestDomainUpload, RequestDomainUpload_Request, ConfirmedServiceRequest_requestDomainUpload);
         ITU_T_CHOICEC_DECL(loadDomainContent, LoadDomainContent_Request, ConfirmedServiceRequest_loadDomainContent);
@@ -656,8 +656,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICEC_DECL(deleteJournal, DeleteJournal_Request, ConfirmedServiceRequest_deleteJournal);
         ITU_T_CHOICEC_DECL(getCapabilityList, GetCapabilityList_Request, ConfirmedServiceRequest_getCapabilityList);
         ITU_T_CHOICEC_DECL(fileOpen, ISO_9506_MMS_1A::FileOpen_Request, ConfirmedServiceRequest_fileOpen);
-        ITU_T_CHOICES_DECL(fileRead, Integer32, ConfirmedServiceRequest_fileRead); // primitive
-        ITU_T_CHOICES_DECL(fileClose, Integer32, ConfirmedServiceRequest_fileClose); // primitive
+        ITU_T_CHOICES_DECL(fileRead, Integer32, ConfirmedServiceRequest_fileRead); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
+        ITU_T_CHOICES_DECL(fileClose, Integer32, ConfirmedServiceRequest_fileClose); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
         ITU_T_CHOICEC_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Request, ConfirmedServiceRequest_fileRename);
         ITU_T_CHOICEC_DECL(fileDelete, FileName, ConfirmedServiceRequest_fileDelete);
         ITU_T_CHOICEC_DECL(fileDirectory, ISO_9506_MMS_1A::FileDirectory_Request, ConfirmedServiceRequest_fileDirectory);
@@ -772,7 +772,7 @@ namespace ISO_9506_MMS_1 {
         }
 
         ITU_T_CHOICES_DECL(otherRequests, null_type, Request_Detail_otherRequests); // primitive
-        ITU_T_CHOICES_DECL(createProgramInvocation, CS_CreateProgramInvocation_Request, Request_Detail_createProgramInvocation); // primitive
+        ITU_T_CHOICES_DECL(createProgramInvocation, CS_CreateProgramInvocation_Request, Request_Detail_createProgramInvocation); // primitive  //   Ic(  [ 0  ...   2 ]   
         ITU_T_CHOICEC_DECL(start, CS_Start_Request, Request_Detail_start);
         ITU_T_CHOICEC_DECL(resume, CS_Resume_Request, Request_Detail_resume);
         ITU_T_CHOICEC_DECL(defineEventCondition, CS_DefineEventCondition_Request, Request_Detail_defineEventCondition);
@@ -871,7 +871,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ConfirmedServiceResponse> arg__service,
                 boost::shared_ptr< Response_Detail> arg__service_ext = boost::shared_ptr< Response_Detail>());
 
-        ITU_T_HOLDERH_DECL(invokeID, Unsigned32);
+        ITU_T_HOLDERH_DECL(invokeID, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_HOLDERH_DECL(service, ConfirmedServiceResponse);
         ITU_T_OPTIONAL_DECL(service_ext, Response_Detail);
 
@@ -1030,17 +1030,17 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICEC_DECL(getProgramInvocationAttributes, GetProgramInvocationAttributes_Response, ConfirmedServiceResponse_getProgramInvocationAttributes);
         ITU_T_CHOICES_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Response, ConfirmedServiceResponse_obtainFile); // primitive
         ITU_T_CHOICES_DECL(defineEventCondition, DefineEventCondition_Response, ConfirmedServiceResponse_defineEventCondition); // primitive
-        ITU_T_CHOICES_DECL(deleteEventCondition, DeleteEventCondition_Response, ConfirmedServiceResponse_deleteEventCondition); // primitive
+        ITU_T_CHOICES_DECL(deleteEventCondition, DeleteEventCondition_Response, ConfirmedServiceResponse_deleteEventCondition); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_CHOICEC_DECL(getEventConditionAttributes, GetEventConditionAttributes_Response, ConfirmedServiceResponse_getEventConditionAttributes);
         ITU_T_CHOICEC_DECL(reportEventConditionStatus, ReportEventConditionStatus_Response, ConfirmedServiceResponse_reportEventConditionStatus);
         ITU_T_CHOICES_DECL(alterEventConditionMonitoring, AlterEventConditionMonitoring_Response, ConfirmedServiceResponse_alterEventConditionMonitoring); // primitive
         ITU_T_CHOICES_DECL(triggerEvent, TriggerEvent_Response, ConfirmedServiceResponse_triggerEvent); // primitive
         ITU_T_CHOICES_DECL(defineEventAction, DefineEventAction_Response, ConfirmedServiceResponse_defineEventAction); // primitive
-        ITU_T_CHOICES_DECL(deleteEventAction, DeleteEventAction_Response, ConfirmedServiceResponse_deleteEventAction); // primitive
+        ITU_T_CHOICES_DECL(deleteEventAction, DeleteEventAction_Response, ConfirmedServiceResponse_deleteEventAction); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_CHOICEC_DECL(getEventActionAttributes, GetEventActionAttributes_Response, ConfirmedServiceResponse_getEventActionAttributes);
-        ITU_T_CHOICES_DECL(reportEventActionStatus, ReportEventActionStatus_Response, ConfirmedServiceResponse_reportEventActionStatus); // primitive
+        ITU_T_CHOICES_DECL(reportEventActionStatus, ReportEventActionStatus_Response, ConfirmedServiceResponse_reportEventActionStatus); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_CHOICES_DECL(defineEventEnrollment, DefineEventEnrollment_Response, ConfirmedServiceResponse_defineEventEnrollment); // primitive
-        ITU_T_CHOICES_DECL(deleteEventEnrollment, DeleteEventEnrollment_Response, ConfirmedServiceResponse_deleteEventEnrollment); // primitive
+        ITU_T_CHOICES_DECL(deleteEventEnrollment, DeleteEventEnrollment_Response, ConfirmedServiceResponse_deleteEventEnrollment); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_CHOICEC_DECL(alterEventEnrollment, AlterEventEnrollment_Response, ConfirmedServiceResponse_alterEventEnrollment);
         ITU_T_CHOICEC_DECL(reportEventEnrollmentStatus, ReportEventEnrollmentStatus_Response, ConfirmedServiceResponse_reportEventEnrollmentStatus);
         ITU_T_CHOICEC_DECL(getEventEnrollmentAttributes, GetEventEnrollmentAttributes_Response, ConfirmedServiceResponse_getEventEnrollmentAttributes);
@@ -1049,7 +1049,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICEC_DECL(getAlarmEnrollmentSummary, GetAlarmEnrollmentSummary_Response, ConfirmedServiceResponse_getAlarmEnrollmentSummary);
         ITU_T_CHOICEC_DECL(readJournal, ReadJournal_Response, ConfirmedServiceResponse_readJournal);
         ITU_T_CHOICES_DECL(writeJournal, WriteJournal_Response, ConfirmedServiceResponse_writeJournal); // primitive
-        ITU_T_CHOICES_DECL(initializeJournal, InitializeJournal_Response, ConfirmedServiceResponse_initializeJournal); // primitive
+        ITU_T_CHOICES_DECL(initializeJournal, InitializeJournal_Response, ConfirmedServiceResponse_initializeJournal); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_CHOICEC_DECL(reportJournalStatus, ReportJournalStatus_Response, ConfirmedServiceResponse_reportJournalStatus);
         ITU_T_CHOICES_DECL(createJournal, CreateJournal_Response, ConfirmedServiceResponse_createJournal); // primitive
         ITU_T_CHOICES_DECL(deleteJournal, DeleteJournal_Response, ConfirmedServiceResponse_deleteJournal); // primitive
@@ -1187,8 +1187,8 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Unsigned32> arg__modifierPosition,
                 boost::shared_ptr< ServiceError> arg__serviceError);
 
-        ITU_T_HOLDERH_DECL(invokeID, Unsigned32);
-        ITU_T_OPTIONAL_DECL(modifierPosition, Unsigned32);
+        ITU_T_HOLDERH_DECL(invokeID, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
+        ITU_T_OPTIONAL_DECL(modifierPosition, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_HOLDERH_DECL(serviceError, ServiceError);
 
         ITU_T_ARCHIVE_FUNC;
@@ -1304,18 +1304,18 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_CHOICE(ErrorClass_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(vmd_state, int, ErrorClass_type_vmd_state); // primitive
-            ITU_T_CHOICES_DECL(application_reference, int, ErrorClass_type_application_reference); // primitive
-            ITU_T_CHOICES_DECL(definition, int, ErrorClass_type_definition); // primitive
-            ITU_T_CHOICES_DECL(resource, int, ErrorClass_type_resource); // primitive
-            ITU_T_CHOICES_DECL(service, int, ErrorClass_type_service); // primitive
-            ITU_T_CHOICES_DECL(service_preempt, int, ErrorClass_type_service_preempt); // primitive
-            ITU_T_CHOICES_DECL(time_resolution, int, ErrorClass_type_time_resolution); // primitive
-            ITU_T_CHOICES_DECL(access, int, ErrorClass_type_access); // primitive
-            ITU_T_CHOICES_DECL(initiate, int, ErrorClass_type_initiate); // primitive
-            ITU_T_CHOICES_DECL(conclude, int, ErrorClass_type_conclude); // primitive
-            ITU_T_CHOICES_DECL(cancel, int, ErrorClass_type_cancel); // primitive
-            ITU_T_CHOICES_DECL(file, int, ErrorClass_type_file); // primitive
+            ITU_T_CHOICES_DECL(vmd_state, int, ErrorClass_type_vmd_state); // primitive  //   Ic(  [ 0  ...   4 ]   
+            ITU_T_CHOICES_DECL(application_reference, int, ErrorClass_type_application_reference); // primitive  //   Ic(  [ 0  ...   4 ]   
+            ITU_T_CHOICES_DECL(definition, int, ErrorClass_type_definition); // primitive  //   Ic(  [ 0  ...   6 ]   
+            ITU_T_CHOICES_DECL(resource, int, ErrorClass_type_resource); // primitive  //   Ic(  [ 0  ...   5 ]   
+            ITU_T_CHOICES_DECL(service, int, ErrorClass_type_service); // primitive  //   Ic(  [ 0  ...   5 ]   
+            ITU_T_CHOICES_DECL(service_preempt, int, ErrorClass_type_service_preempt); // primitive  //   Ic(  [ 0  ...   3 ]   
+            ITU_T_CHOICES_DECL(time_resolution, int, ErrorClass_type_time_resolution); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(access, int, ErrorClass_type_access); // primitive  //   Ic(  [ 0  ...   4 ]   
+            ITU_T_CHOICES_DECL(initiate, int, ErrorClass_type_initiate); // primitive  //   Ic(  [ 0  ...   7 ]   
+            ITU_T_CHOICES_DECL(conclude, int, ErrorClass_type_conclude); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(cancel, int, ErrorClass_type_cancel); // primitive  //   Ic(  [ 0  ...   2 ]   
+            ITU_T_CHOICES_DECL(file, int, ErrorClass_type_file); // primitive  //   Ic(  [ 0  ...   9 ]   
             ITU_T_CHOICES_DECL(others, int, ErrorClass_type_others); // primitive
 
             ITU_T_ARCHIVE_FUNC;
@@ -1351,18 +1351,18 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_CHOICE(ServiceSpecificInfo_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Error, ServiceSpecificInfo_type_obtainFile); // primitive
-            ITU_T_CHOICES_DECL(start, Start_Error, ServiceSpecificInfo_type_start); // primitive
-            ITU_T_CHOICES_DECL(stop, Stop_Error, ServiceSpecificInfo_type_stop); // primitive
-            ITU_T_CHOICES_DECL(resume, Resume_Error, ServiceSpecificInfo_type_resume); // primitive
-            ITU_T_CHOICES_DECL(reset, Reset_Error, ServiceSpecificInfo_type_reset); // primitive
-            ITU_T_CHOICES_DECL(deleteVariableAccess, DeleteVariableAccess_Error, ServiceSpecificInfo_type_deleteVariableAccess); // primitive
-            ITU_T_CHOICES_DECL(deleteNamedVariableList, DeleteNamedVariableList_Error, ServiceSpecificInfo_type_deleteNamedVariableList); // primitive
-            ITU_T_CHOICES_DECL(deleteNamedType, DeleteNamedType_Error, ServiceSpecificInfo_type_deleteNamedType); // primitive
+            ITU_T_CHOICES_DECL(obtainFile, ISO_9506_MMS_1A::ObtainFile_Error, ServiceSpecificInfo_type_obtainFile); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(start, Start_Error, ServiceSpecificInfo_type_start); // primitive  //   Ic(  [ 0  ...   8 ]   
+            ITU_T_CHOICES_DECL(stop, Stop_Error, ServiceSpecificInfo_type_stop); // primitive  //   Ic(  [ 0  ...   8 ]   
+            ITU_T_CHOICES_DECL(resume, Resume_Error, ServiceSpecificInfo_type_resume); // primitive  //   Ic(  [ 0  ...   8 ]   
+            ITU_T_CHOICES_DECL(reset, Reset_Error, ServiceSpecificInfo_type_reset); // primitive  //   Ic(  [ 0  ...   8 ]   
+            ITU_T_CHOICES_DECL(deleteVariableAccess, DeleteVariableAccess_Error, ServiceSpecificInfo_type_deleteVariableAccess); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
+            ITU_T_CHOICES_DECL(deleteNamedVariableList, DeleteNamedVariableList_Error, ServiceSpecificInfo_type_deleteNamedVariableList); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
+            ITU_T_CHOICES_DECL(deleteNamedType, DeleteNamedType_Error, ServiceSpecificInfo_type_deleteNamedType); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
             ITU_T_CHOICEC_DECL(defineEventEnrollment_Error, DefineEventEnrollment_Error, ServiceSpecificInfo_type_defineEventEnrollment_Error);
-            ITU_T_CHOICES_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Error, ServiceSpecificInfo_type_fileRename); // primitive
+            ITU_T_CHOICES_DECL(fileRename, ISO_9506_MMS_1A::FileRename_Error, ServiceSpecificInfo_type_fileRename); // primitive  //   Ic(  [ 0  ...   1 ]   
             ITU_T_CHOICEC_DECL(additionalService, AdditionalService_Error, ServiceSpecificInfo_type_additionalService);
-            ITU_T_CHOICES_DECL(changeAccessControl, ChangeAccessControl_Error, ServiceSpecificInfo_type_changeAccessControl); // primitive
+            ITU_T_CHOICES_DECL(changeAccessControl, ChangeAccessControl_Error, ServiceSpecificInfo_type_changeAccessControl); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1511,8 +1511,8 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(ObjectClass_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(basicObjectClass, int, ObjectClass_basicObjectClass); // primitive
-        ITU_T_CHOICES_DECL(csObjectClass, int, ObjectClass_csObjectClass); // primitive
+        ITU_T_CHOICES_DECL(basicObjectClass, int, ObjectClass_basicObjectClass); // primitive  //   Ic(  [ 0  ...   13 ]   
+        ITU_T_CHOICES_DECL(csObjectClass, int, ObjectClass_csObjectClass); // primitive  //   Ic(  [ 0  ...   1 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1538,11 +1538,11 @@ namespace ISO_9506_MMS_1 {
                     boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalling = boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
                     boost::shared_ptr< visiblestring_type> arg__privilegeClassIdentityCalling = boost::shared_ptr< visiblestring_type>());
 
-            ITU_T_HOLDERH_DECL(proposedVersionNumber, Integer16);
-            ITU_T_HOLDERH_DECL(proposedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions);
-            ITU_T_HOLDERH_DECL(servicesSupportedCalling, MMS_Object_Module_1::ServiceSupportOptions);
-            ITU_T_OPTIONAL_DECL(additionalSupportedCalling, MMS_Object_Module_1::AdditionalSupportOptions);
-            ITU_T_OPTIONAL_DECL(additionalCbbSupportedCalling, MMS_Object_Module_1::AdditionalCBBOptions);
+            ITU_T_HOLDERH_DECL(proposedVersionNumber, Integer16); //   Ic(  [ -32768  ...   32767 ]   
+            ITU_T_HOLDERH_DECL(proposedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions); //    Sc (  [ 18 ]   
+            ITU_T_HOLDERH_DECL(servicesSupportedCalling, MMS_Object_Module_1::ServiceSupportOptions); //    Sc (  [ 93 ]   
+            ITU_T_OPTIONAL_DECL(additionalSupportedCalling, MMS_Object_Module_1::AdditionalSupportOptions); //    Sc (  [ 23 ]   
+            ITU_T_OPTIONAL_DECL(additionalCbbSupportedCalling, MMS_Object_Module_1::AdditionalCBBOptions); //    Sc (  [ 3 ]   
             ITU_T_OPTIONAL_DECL(privilegeClassIdentityCalling, visiblestring_type);
 
             ITU_T_ARCHIVE_FUNC;
@@ -1561,10 +1561,10 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Integer8> arg__proposedDataStructureNestingLevel,
                 boost::shared_ptr< InitRequestDetail_type> arg__initRequestDetail);
 
-        ITU_T_OPTIONAL_DECL(localDetailCalling, Integer32);
-        ITU_T_HOLDERH_DECL(proposedMaxServOutstandingCalling, Integer16);
-        ITU_T_HOLDERH_DECL(proposedMaxServOutstandingCalled, Integer16);
-        ITU_T_OPTIONAL_DECL(proposedDataStructureNestingLevel, Integer8);
+        ITU_T_OPTIONAL_DECL(localDetailCalling, Integer32); //   Ic(  [ -2147483648  ...   2147483647 ]   
+        ITU_T_HOLDERH_DECL(proposedMaxServOutstandingCalling, Integer16); //   Ic(  [ -32768  ...   32767 ]   
+        ITU_T_HOLDERH_DECL(proposedMaxServOutstandingCalled, Integer16); //   Ic(  [ -32768  ...   32767 ]   
+        ITU_T_OPTIONAL_DECL(proposedDataStructureNestingLevel, Integer8); //   Ic(  [ -128  ...   127 ]   
         ITU_T_HOLDERH_DECL(initRequestDetail, InitRequestDetail_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -1591,11 +1591,11 @@ namespace ISO_9506_MMS_1 {
                     boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions> arg__additionalCbbSupportedCalled = boost::shared_ptr< MMS_Object_Module_1::AdditionalCBBOptions>(),
                     boost::shared_ptr< visiblestring_type> arg__privilegeClassIdentityCalled = boost::shared_ptr< visiblestring_type>());
 
-            ITU_T_HOLDERH_DECL(negotiatedVersionNumber, Integer16);
-            ITU_T_HOLDERH_DECL(negotiatedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions);
-            ITU_T_HOLDERH_DECL(servicesSupportedCalled, MMS_Object_Module_1::ServiceSupportOptions);
-            ITU_T_OPTIONAL_DECL(additionalSupportedCalled, MMS_Object_Module_1::AdditionalSupportOptions);
-            ITU_T_OPTIONAL_DECL(additionalCbbSupportedCalled, MMS_Object_Module_1::AdditionalCBBOptions);
+            ITU_T_HOLDERH_DECL(negotiatedVersionNumber, Integer16); //   Ic(  [ -32768  ...   32767 ]   
+            ITU_T_HOLDERH_DECL(negotiatedParameterCBB, MMS_Object_Module_1::ParameterSupportOptions); //    Sc (  [ 18 ]   
+            ITU_T_HOLDERH_DECL(servicesSupportedCalled, MMS_Object_Module_1::ServiceSupportOptions); //    Sc (  [ 93 ]   
+            ITU_T_OPTIONAL_DECL(additionalSupportedCalled, MMS_Object_Module_1::AdditionalSupportOptions); //    Sc (  [ 23 ]   
+            ITU_T_OPTIONAL_DECL(additionalCbbSupportedCalled, MMS_Object_Module_1::AdditionalCBBOptions); //    Sc (  [ 3 ]   
             ITU_T_OPTIONAL_DECL(privilegeClassIdentityCalled, visiblestring_type);
 
             ITU_T_ARCHIVE_FUNC;
@@ -1614,10 +1614,10 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Integer8> arg__negotiatedDataStructureNestingLevel,
                 boost::shared_ptr< InitResponseDetail_type> arg__initResponseDetail);
 
-        ITU_T_OPTIONAL_DECL(localDetailCalled, Integer32);
-        ITU_T_HOLDERH_DECL(negotiatedMaxServOutstandingCalling, Integer16);
-        ITU_T_HOLDERH_DECL(negotiatedMaxServOutstandingCalled, Integer16);
-        ITU_T_OPTIONAL_DECL(negotiatedDataStructureNestingLevel, Integer8);
+        ITU_T_OPTIONAL_DECL(localDetailCalled, Integer32); //   Ic(  [ -2147483648  ...   2147483647 ]   
+        ITU_T_HOLDERH_DECL(negotiatedMaxServOutstandingCalling, Integer16); //   Ic(  [ -32768  ...   32767 ]   
+        ITU_T_HOLDERH_DECL(negotiatedMaxServOutstandingCalled, Integer16); //   Ic(  [ -32768  ...   32767 ]   
+        ITU_T_OPTIONAL_DECL(negotiatedDataStructureNestingLevel, Integer8); //   Ic(  [ -128  ...   127 ]   
         ITU_T_HOLDERH_DECL(initResponseDetail, InitResponseDetail_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -1632,7 +1632,7 @@ namespace ISO_9506_MMS_1 {
         Cancel_ErrorPDU(const Unsigned32& arg__originalInvokeID,
                 const ServiceError& arg__serviceError);
 
-        ITU_T_HOLDERH_DECL(originalInvokeID, Unsigned32);
+        ITU_T_HOLDERH_DECL(originalInvokeID, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_HOLDERH_DECL(serviceError, ServiceError);
 
         ITU_T_ARCHIVE_FUNC;
@@ -1727,17 +1727,17 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_CHOICE(RejectReason_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(confirmed_requestPDU, int, RejectReason_type_confirmed_requestPDU); // primitive
-            ITU_T_CHOICES_DECL(confirmed_responsePDU, int, RejectReason_type_confirmed_responsePDU); // primitive
-            ITU_T_CHOICES_DECL(confirmed_errorPDU, int, RejectReason_type_confirmed_errorPDU); // primitive
-            ITU_T_CHOICES_DECL(unconfirmedPDU, int, RejectReason_type_unconfirmedPDU); // primitive
+            ITU_T_CHOICES_DECL(confirmed_requestPDU, int, RejectReason_type_confirmed_requestPDU); // primitive  //   Ic(  [ 0  ...   9 ]   
+            ITU_T_CHOICES_DECL(confirmed_responsePDU, int, RejectReason_type_confirmed_responsePDU); // primitive  //   Ic(  [ 0  ...   6 ]   
+            ITU_T_CHOICES_DECL(confirmed_errorPDU, int, RejectReason_type_confirmed_errorPDU); // primitive  //   Ic(  [ 0  ...   4 ]   
+            ITU_T_CHOICES_DECL(unconfirmedPDU, int, RejectReason_type_unconfirmedPDU); // primitive  //   Ic(  [ 0  ...   4 ]   
             ITU_T_CHOICES_DECL(pdu_error, int, RejectReason_type_pdu_error); // primitive
-            ITU_T_CHOICES_DECL(cancel_requestPDU, int, RejectReason_type_cancel_requestPDU); // primitive
-            ITU_T_CHOICES_DECL(cancel_responsePDU, int, RejectReason_type_cancel_responsePDU); // primitive
-            ITU_T_CHOICES_DECL(cancel_errorPDU, int, RejectReason_type_cancel_errorPDU); // primitive
-            ITU_T_CHOICES_DECL(conclude_requestPDU, int, RejectReason_type_conclude_requestPDU); // primitive
-            ITU_T_CHOICES_DECL(conclude_responsePDU, int, RejectReason_type_conclude_responsePDU); // primitive
-            ITU_T_CHOICES_DECL(conclude_errorPDU, int, RejectReason_type_conclude_errorPDU); // primitive
+            ITU_T_CHOICES_DECL(cancel_requestPDU, int, RejectReason_type_cancel_requestPDU); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(cancel_responsePDU, int, RejectReason_type_cancel_responsePDU); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(cancel_errorPDU, int, RejectReason_type_cancel_errorPDU); // primitive  //   Ic(  [ 0  ...   3 ]   
+            ITU_T_CHOICES_DECL(conclude_requestPDU, int, RejectReason_type_conclude_requestPDU); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(conclude_responsePDU, int, RejectReason_type_conclude_responsePDU); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(conclude_errorPDU, int, RejectReason_type_conclude_errorPDU); // primitive  //   Ic(  [ 0  ...   2 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1750,7 +1750,7 @@ namespace ISO_9506_MMS_1 {
         RejectPDU(boost::shared_ptr< Unsigned32> arg__originalInvokeID,
                 boost::shared_ptr< RejectReason_type> arg__rejectReason);
 
-        ITU_T_OPTIONAL_DECL(originalInvokeID, Unsigned32);
+        ITU_T_OPTIONAL_DECL(originalInvokeID, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_HOLDERH_DECL(rejectReason, RejectReason_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -2060,8 +2060,8 @@ namespace ISO_9506_MMS_1 {
         ChangeAccessControl_Response(const Unsigned32& arg__numberMatched,
                 const Unsigned32& arg__numberChanged);
 
-        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32);
-        ITU_T_HOLDERH_DECL(numberChanged, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
+        ITU_T_HOLDERH_DECL(numberChanged, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2090,9 +2090,9 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< int> arg__vmdPhysicalStatus,
                 boost::shared_ptr< bitstring_type> arg__localDetail);
 
-        ITU_T_HOLDERH_DECL(vmdLogicalStatus, int);
-        ITU_T_HOLDERH_DECL(vmdPhysicalStatus, int);
-        ITU_T_OPTIONAL_DECL(localDetail, bitstring_type);
+        ITU_T_HOLDERH_DECL(vmdLogicalStatus, int); //   Ic(  [ 0  ...   3 ]   
+        ITU_T_HOLDERH_DECL(vmdPhysicalStatus, int); //   Ic(  [ 0  ...   3 ]   
+        ITU_T_OPTIONAL_DECL(localDetail, bitstring_type); //    Sc (  [ 0  ...   128 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2154,9 +2154,9 @@ namespace ISO_9506_MMS_1 {
                     boost::shared_ptr< ExtendedStatus> arg__extendedStatusMask,
                     boost::shared_ptr< SelectedProgramInvocation_type> arg__selectedProgramInvocation);
 
-            ITU_T_HOLDERH_DECL(operationState, OperationState);
-            ITU_T_HOLDERH_DECL(extendedStatus, ExtendedStatus);
-            ITU_T_DEFAULTH_DECL(extendedStatusMask, ExtendedStatus, extendedStatusMask__default);
+            ITU_T_HOLDERH_DECL(operationState, OperationState); //   Ic(  [ 0  ...   5 ]   
+            ITU_T_HOLDERH_DECL(extendedStatus, ExtendedStatus); //    Sc (  [ 4 ]   
+            ITU_T_DEFAULTH_DECL(extendedStatusMask, ExtendedStatus, extendedStatusMask__default); //    Sc (  [ 4 ]   
             ITU_T_HOLDERH_DECL(selectedProgramInvocation, SelectedProgramInvocation_type);
 
             ITU_T_ARCHIVE_FUNC;
@@ -2438,7 +2438,7 @@ namespace ISO_9506_MMS_1 {
         InitiateUploadSequence_Response(const Integer32& arg__ulsmID,
                 const ListOfCapabilities_type& arg__listOfCapabilities);
 
-        ITU_T_HOLDERH_DECL(ulsmID, Integer32);
+        ITU_T_HOLDERH_DECL(ulsmID, Integer32); //   Ic(  [ -2147483648  ...   2147483647 ]   
         ITU_T_HOLDERH_DECL(listOfCapabilities, ListOfCapabilities_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -2578,11 +2578,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
         ITU_T_HOLDERH_DECL(listOfCapabilities, ListOfCapabilities_type);
-        ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState);
+        ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState); //   Ic(  [ 0  ...   15 ]   
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
         ITU_T_HOLDERH_DECL(sharable, bool);
         ITU_T_HOLDERH_DECL(listOfProgramInvocations, ListOfProgramInvocations_type);
-        ITU_T_HOLDERH_DECL(uploadInProgress, Integer8);
+        ITU_T_HOLDERH_DECL(uploadInProgress, Integer8); //   Ic(  [ -128  ...   127 ]   
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -2954,7 +2954,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ExecutionArgument_type> arg__executionArgument,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::ProgramInvocationState);
+        ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::ProgramInvocationState); //   Ic(  [ 0  ...   8 ]   
         ITU_T_HOLDERH_DECL(listOfDomainNames, ListOfDomainNames_type);
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
         ITU_T_HOLDERH_DECL(reusable, bool);
@@ -3232,7 +3232,7 @@ namespace ISO_9506_MMS_1 {
             ITU_T_HOLDERH_DECL(listOfDomains, ListOfDomains_type);
             ITU_T_DEFAULTH_DECL(reusable, bool, reusable__default);
             ITU_T_OPTIONAL_DECL(monitorType, bool);
-            ITU_T_OPTIONAL_DECL(pIState, MMS_Object_Module_1::ProgramInvocationState);
+            ITU_T_OPTIONAL_DECL(pIState, MMS_Object_Module_1::ProgramInvocationState); //   Ic(  [ 0  ...   8 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -3463,7 +3463,7 @@ namespace ISO_9506_MMS_1 {
                 const MMS_Object_Module_1::ProgramInvocationState& arg__programInvocationState);
 
         ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
-        ITU_T_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
+        ITU_T_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState); //   Ic(  [ 0  ...   8 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3478,7 +3478,7 @@ namespace ISO_9506_MMS_1 {
                 const MMS_Object_Module_1::ProgramInvocationState& arg__programInvocationState);
 
         ITU_T_HOLDERH_DECL(programInvocationName, Identifier);
-        ITU_T_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
+        ITU_T_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState); //   Ic(  [ 0  ...   8 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -3773,8 +3773,8 @@ namespace ISO_9506_MMS_1 {
                     IndexRange_type(const Unsigned32& arg__lowIndex,
                             const Unsigned32& arg__numberOfElements);
 
-                    ITU_T_HOLDERH_DECL(lowIndex, Unsigned32);
-                    ITU_T_HOLDERH_DECL(numberOfElements, Unsigned32);
+                    ITU_T_HOLDERH_DECL(lowIndex, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
+                    ITU_T_HOLDERH_DECL(numberOfElements, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
                     ITU_T_ARCHIVE_FUNC;
                 };
@@ -3791,7 +3791,7 @@ namespace ISO_9506_MMS_1 {
                 }
 
                 ITU_T_CHOICES_DECL(component, Identifier, AccessSelection_type_component); // primitive
-                ITU_T_CHOICES_DECL(index, Unsigned32, AccessSelection_type_index); // primitive
+                ITU_T_CHOICES_DECL(index, Unsigned32, AccessSelection_type_index); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
                 ITU_T_CHOICEC_DECL(indexRange, IndexRange_type, AccessSelection_type_indexRange);
                 ITU_T_CHOICES_DECL(allElements, null_type, AccessSelection_type_allElements); // primitive
 
@@ -3831,8 +3831,8 @@ namespace ISO_9506_MMS_1 {
                 IndexRange_type(const Unsigned32& arg__lowIndex,
                         const Unsigned32& arg__numberOfElements);
 
-                ITU_T_HOLDERH_DECL(lowIndex, Unsigned32);
-                ITU_T_HOLDERH_DECL(numberOfElements, Unsigned32);
+                ITU_T_HOLDERH_DECL(lowIndex, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
+                ITU_T_HOLDERH_DECL(numberOfElements, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
                 ITU_T_ARCHIVE_FUNC;
             };
@@ -3849,7 +3849,7 @@ namespace ISO_9506_MMS_1 {
             }
 
             ITU_T_CHOICES_DECL(component, Identifier, SelectAccess_type_component); // primitive
-            ITU_T_CHOICES_DECL(index, Unsigned32, SelectAccess_type_index); // primitive
+            ITU_T_CHOICES_DECL(index, Unsigned32, SelectAccess_type_index); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
             ITU_T_CHOICEC_DECL(indexRange, IndexRange_type, SelectAccess_type_indexRange);
             ITU_T_CHOICES_DECL(allElements, null_type, SelectAccess_type_allElements); // primitive
 
@@ -3895,7 +3895,7 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(AccessResult_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(failure, DataAccessError, AccessResult_failure); // primitive
+        ITU_T_CHOICES_DECL(failure, DataAccessError, AccessResult_failure); // primitive  //   Ic(  [ 0  ...   11 ]   
         ITU_T_CHOICEC_DECL(success, Data, AccessResult_success);
 
         ITU_T_ARCHIVE_FUNC;
@@ -3951,7 +3951,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICES_DECL(octet_string, octetstring_type, Data_octet_string); // primitive
         ITU_T_CHOICES_DECL(visible_string, visiblestring_type, Data_visible_string); // primitive
         ITU_T_CHOICES_DECL(generalized_time, gentime_type, Data_generalized_time); // primitive
-        ITU_T_CHOICES_DECL(binary_time, TimeOfDay, Data_binary_time); // primitive
+        ITU_T_CHOICES_DECL(binary_time, TimeOfDay, Data_binary_time); // primitive  //    Sc (  [ 4  ...   6 ]   
         ITU_T_CHOICES_DECL(bcd, int, Data_bcd); // primitive
         ITU_T_CHOICES_DECL(booleanArray, bitstring_type, Data_booleanArray); // primitive
         ITU_T_CHOICES_DECL(objId, oid_type, Data_objId); // primitive
@@ -4150,7 +4150,7 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_CHOICE(Write_Response_sequence_of_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(failure, DataAccessError, Write_Response_sequence_of_failure); // primitive
+        ITU_T_CHOICES_DECL(failure, DataAccessError, Write_Response_sequence_of_failure); // primitive  //   Ic(  [ 0  ...   11 ]   
         ITU_T_CHOICES_DECL(success, null_type, Write_Response_sequence_of_success); // primitive
 
         ITU_T_ARCHIVE_FUNC;
@@ -4265,7 +4265,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ListOfName_type> arg__listOfName,
                 boost::shared_ptr< Identifier> arg__domainName);
 
-        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default);
+        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(listOfName, ListOfName_type);
         ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
@@ -4281,8 +4281,8 @@ namespace ISO_9506_MMS_1 {
         DeleteVariableAccess_Response(const Unsigned32& arg__numberMatched,
                 const Unsigned32& arg__numberDeleted);
 
-        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32);
-        ITU_T_HOLDERH_DECL(numberDeleted, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
+        ITU_T_HOLDERH_DECL(numberDeleted, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4385,7 +4385,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ListOfVariableListName_type> arg__listOfVariableListName,
                 boost::shared_ptr< Identifier> arg__domainName);
 
-        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default);
+        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(listOfVariableListName, ListOfVariableListName_type);
         ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
@@ -4401,8 +4401,8 @@ namespace ISO_9506_MMS_1 {
         DeleteNamedVariableList_Response(const Unsigned32& arg__numberMatched,
                 const Unsigned32& arg__numberDeleted);
 
-        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32);
-        ITU_T_HOLDERH_DECL(numberDeleted, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
+        ITU_T_HOLDERH_DECL(numberDeleted, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4463,7 +4463,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ListOfTypeName_type> arg__listOfTypeName,
                 boost::shared_ptr< Identifier> arg__domainName);
 
-        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default);
+        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(listOfTypeName, ListOfTypeName_type);
         ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
@@ -4479,8 +4479,8 @@ namespace ISO_9506_MMS_1 {
         DeleteNamedType_Response(const Unsigned32& arg__numberMatched,
                 const Unsigned32& arg__numberDeleted);
 
-        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32);
-        ITU_T_HOLDERH_DECL(numberDeleted, Unsigned32);
+        ITU_T_HOLDERH_DECL(numberMatched, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
+        ITU_T_HOLDERH_DECL(numberDeleted, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4569,9 +4569,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
         ITU_T_OPTIONAL_DECL(namedToken, Identifier);
-        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
-        ITU_T_OPTIONAL_DECL(acceptableDelay, Unsigned32);
-        ITU_T_OPTIONAL_DECL(controlTimeOut, Unsigned32);
+        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default); //   Ic(  [ 0  ...   127 ]   
+        ITU_T_OPTIONAL_DECL(acceptableDelay, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
+        ITU_T_OPTIONAL_DECL(controlTimeOut, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_OPTIONAL_DECL(abortOnTimeOut, bool);
         ITU_T_DEFAULTH_DECL(relinquishIfConnectionLost, bool, relinquishIfConnectionLost__default);
         ITU_T_OPTIONAL_DECL(applicationToPreempt, MMS_Environment_1::ApplicationReference);
@@ -4634,7 +4634,7 @@ namespace ISO_9506_MMS_1 {
                 const Unsigned16& arg__numberOfTokens);
 
         ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
-        ITU_T_HOLDERH_DECL(numberOfTokens, Unsigned16);
+        ITU_T_HOLDERH_DECL(numberOfTokens, Unsigned16); //   Ic(  [ 0  ...   32767 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4663,10 +4663,10 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
-        ITU_T_HOLDERH_DECL(classV, int);
-        ITU_T_HOLDERH_DECL(numberOfTokens, Unsigned16);
-        ITU_T_HOLDERH_DECL(numberOfOwnedTokens, Unsigned16);
-        ITU_T_HOLDERH_DECL(numberOfHungTokens, Unsigned16);
+        ITU_T_HOLDERH_DECL(classV, int); //   Ic(  [ 0  ...   1 ]   
+        ITU_T_HOLDERH_DECL(numberOfTokens, Unsigned16); //   Ic(  [ 0  ...   32767 ]   
+        ITU_T_HOLDERH_DECL(numberOfOwnedTokens, Unsigned16); //   Ic(  [ 0  ...   32767 ]   
+        ITU_T_HOLDERH_DECL(numberOfHungTokens, Unsigned16); //   Ic(  [ 0  ...   32767 ]   
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4761,7 +4761,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< octetstring_type> arg__entryIDToStartAfter);
 
         ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
-        ITU_T_HOLDERH_DECL(state, int);
+        ITU_T_HOLDERH_DECL(state, int); //   Ic(  [ 0  ...   2 ]   
         ITU_T_OPTIONAL_DECL(entryIDToStartAfter, octetstring_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4814,11 +4814,11 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< bool> arg__relinquishIfConnectionLost);
 
         ITU_T_HOLDERH_DECL(entryID, octetstring_type);
-        ITU_T_HOLDERH_DECL(entryClass, int);
+        ITU_T_HOLDERH_DECL(entryClass, int); //   Ic(  [ 0  ...   1 ]   
         ITU_T_HOLDERH_DECL(applicationReference, MMS_Environment_1::ApplicationReference);
         ITU_T_OPTIONAL_DECL(namedToken, Identifier);
-        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
-        ITU_T_OPTIONAL_DECL(remainingTimeOut, Unsigned32);
+        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default); //   Ic(  [ 0  ...   127 ]   
+        ITU_T_OPTIONAL_DECL(remainingTimeOut, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_OPTIONAL_DECL(abortOnTimeOut, bool);
         ITU_T_DEFAULTH_DECL(relinquishIfConnectionLost, bool, relinquishIfConnectionLost__default);
 
@@ -4846,9 +4846,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
         ITU_T_OPTIONAL_DECL(namedToken, Identifier);
-        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
-        ITU_T_OPTIONAL_DECL(acceptableDelay, Unsigned32);
-        ITU_T_OPTIONAL_DECL(controlTimeOut, Unsigned32);
+        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default); //   Ic(  [ 0  ...   127 ]   
+        ITU_T_OPTIONAL_DECL(acceptableDelay, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
+        ITU_T_OPTIONAL_DECL(controlTimeOut, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_OPTIONAL_DECL(abortOnTimeOut, bool);
         ITU_T_DEFAULTH_DECL(relinquishIfConnectionLost, bool, relinquishIfConnectionLost__default);
 
@@ -4875,7 +4875,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_HOLDERH_DECL(operatorStationName, Identifier);
         ITU_T_DEFAULTH_DECL(echo, bool, echo__default);
         ITU_T_OPTIONAL_DECL(listOfPromptData, ListOfPromptData_type);
-        ITU_T_OPTIONAL_DECL(inputTimeOut, Unsigned32);
+        ITU_T_OPTIONAL_DECL(inputTimeOut, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4910,7 +4910,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::Priority> arg__priority);
 
         ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
-        ITU_T_OPTIONAL_DECL(priority, MMS_Object_Module_1::Priority);
+        ITU_T_OPTIONAL_DECL(priority, MMS_Object_Module_1::Priority); //   Ic(  [ 0  ...   127 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -4962,7 +4962,7 @@ namespace ISO_9506_MMS_1 {
                     Failure_type(boost::shared_ptr< Unsigned32> arg__modifierPosition,
                             boost::shared_ptr< ServiceError> arg__serviceError);
 
-                    ITU_T_OPTIONAL_DECL(modifierPosition, Unsigned32);
+                    ITU_T_OPTIONAL_DECL(modifierPosition, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
                     ITU_T_HOLDERH_DECL(serviceError, ServiceError);
 
                     ITU_T_ARCHIVE_FUNC;
@@ -5017,11 +5017,11 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
-        ITU_T_HOLDERH_DECL(severity, MMS_Object_Module_1::Severity);
-        ITU_T_OPTIONAL_DECL(currentState, MMS_Object_Module_1::EC_State);
+        ITU_T_HOLDERH_DECL(severity, MMS_Object_Module_1::Severity); //   Ic(  [ 0  ...   127 ]   
+        ITU_T_OPTIONAL_DECL(currentState, MMS_Object_Module_1::EC_State); //   Ic(  [ 0  ...   2 ]   
         ITU_T_HOLDERH_DECL(transitionTime, MMS_Object_Module_1::EventTime);
         ITU_T_DEFAULTH_DECL(notificationLost, bool, notificationLost__default);
-        ITU_T_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
+        ITU_T_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(actionResult, ActionResult_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -5068,7 +5068,7 @@ namespace ISO_9506_MMS_1 {
                 const MMS_Object_Module_1::EventTime& arg__timeOfAcknowledgedTransition);
 
         ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
-        ITU_T_HOLDERH_DECL(acknowledgedState, MMS_Object_Module_1::EC_State);
+        ITU_T_HOLDERH_DECL(acknowledgedState, MMS_Object_Module_1::EC_State); //   Ic(  [ 0  ...   2 ]   
         ITU_T_HOLDERH_DECL(timeOfAcknowledgedTransition, MMS_Object_Module_1::EventTime);
 
         ITU_T_ARCHIVE_FUNC;
@@ -5087,8 +5087,8 @@ namespace ISO_9506_MMS_1 {
             SeverityFilter_type(const Unsigned8& arg__mostSevere,
                     const Unsigned8& arg__leastSevere);
 
-            ITU_T_HOLDERH_DECL(mostSevere, Unsigned8);
-            ITU_T_HOLDERH_DECL(leastSevere, Unsigned8);
+            ITU_T_HOLDERH_DECL(mostSevere, Unsigned8); //   Ic(  [ 0  ...   127 ]   
+            ITU_T_HOLDERH_DECL(leastSevere, Unsigned8); //   Ic(  [ 0  ...   127 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5111,7 +5111,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_DEFAULTH_DECL(enrollmentsOnly, bool, enrollmentsOnly__default);
         ITU_T_DEFAULTH_DECL(activeAlarmsOnly, bool, activeAlarmsOnly__default);
-        ITU_T_DEFAULTH_DECL(acknowledgementFilter, int, acknowledgementFilter__default);
+        ITU_T_DEFAULTH_DECL(acknowledgementFilter, int, acknowledgementFilter__default); //   Ic(  [ 0  ...   2 ]   
         ITU_T_OPTIONAL_DECL(severityFilter, SeverityFilter_type);
         ITU_T_OPTIONAL_DECL(continueAfter, ObjectName);
 
@@ -5165,9 +5165,9 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle);
 
         ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
-        ITU_T_HOLDERH_DECL(severity, Unsigned8);
-        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
-        ITU_T_HOLDERH_DECL(unacknowledgedState, int);
+        ITU_T_HOLDERH_DECL(severity, Unsigned8); //   Ic(  [ 0  ...   127 ]   
+        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State); //   Ic(  [ 0  ...   2 ]   
+        ITU_T_HOLDERH_DECL(unacknowledgedState, int); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(displayEnhancement, EN_Additional_Detail);
         ITU_T_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
         ITU_T_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
@@ -5218,8 +5218,8 @@ namespace ISO_9506_MMS_1 {
             SeverityFilter_type(const Unsigned8& arg__mostSevere,
                     const Unsigned8& arg__leastSevere);
 
-            ITU_T_HOLDERH_DECL(mostSevere, Unsigned8);
-            ITU_T_HOLDERH_DECL(leastSevere, Unsigned8);
+            ITU_T_HOLDERH_DECL(mostSevere, Unsigned8); //   Ic(  [ 0  ...   127 ]   
+            ITU_T_HOLDERH_DECL(leastSevere, Unsigned8); //   Ic(  [ 0  ...   127 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -5242,7 +5242,7 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_DEFAULTH_DECL(enrollmentsOnly, bool, enrollmentsOnly__default);
         ITU_T_DEFAULTH_DECL(activeAlarmsOnly, bool, activeAlarmsOnly__default);
-        ITU_T_DEFAULTH_DECL(acknowledgementFilter, int, acknowledgementFilter__default);
+        ITU_T_DEFAULTH_DECL(acknowledgementFilter, int, acknowledgementFilter__default); //   Ic(  [ 0  ...   2 ]   
         ITU_T_OPTIONAL_DECL(severityFilter, SeverityFilter_type);
         ITU_T_OPTIONAL_DECL(continueAfter, ObjectName);
 
@@ -5298,11 +5298,11 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
-        ITU_T_HOLDERH_DECL(severity, Unsigned8);
-        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
+        ITU_T_HOLDERH_DECL(severity, Unsigned8); //   Ic(  [ 0  ...   127 ]   
+        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State); //   Ic(  [ 0  ...   2 ]   
         ITU_T_OPTIONAL_DECL(displayEnhancement, EN_Additional_Detail);
         ITU_T_DEFAULTH_DECL(notificationLost, bool, notificationLost__default);
-        ITU_T_HOLDERH_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
+        ITU_T_HOLDERH_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(enrollmentState, EE_State);
         ITU_T_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
         ITU_T_OPTIONAL_DECL(timeActiveAcknowledged, MMS_Object_Module_1::EventTime);
@@ -5329,8 +5329,8 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
-        ITU_T_HOLDERH_DECL(causingTransitions, MMS_Object_Module_1::Transitions);
-        ITU_T_OPTIONAL_DECL(acceptableDelay, Unsigned32);
+        ITU_T_HOLDERH_DECL(causingTransitions, MMS_Object_Module_1::Transitions); //    Sc (  [ 7 ]   
+        ITU_T_OPTIONAL_DECL(acceptableDelay, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5356,12 +5356,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Unsigned32> arg__evaluationInterval);
 
         ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
-        ITU_T_HOLDERH_DECL(classV, MMS_Object_Module_1::EC_Class);
-        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
-        ITU_T_DEFAULTH_DECL(severity, Unsigned8, severity__default);
+        ITU_T_HOLDERH_DECL(classV, MMS_Object_Module_1::EC_Class); //   Ic(  [ 0  ...   1 ]   
+        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default); //   Ic(  [ 0  ...   127 ]   
+        ITU_T_DEFAULTH_DECL(severity, Unsigned8, severity__default); //   Ic(  [ 0  ...   127 ]   
         ITU_T_OPTIONAL_DECL(alarmSummaryReports, bool);
         ITU_T_OPTIONAL_DECL(monitoredVariable, VariableSpecification);
-        ITU_T_OPTIONAL_DECL(evaluationInterval, Unsigned32);
+        ITU_T_OPTIONAL_DECL(evaluationInterval, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5483,12 +5483,12 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
         ITU_T_DEFAULTH_DECL(mmsDeletable, bool, mmsDeletable__default);
-        ITU_T_HOLDERH_DECL(classV, MMS_Object_Module_1::EC_Class);
-        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default);
-        ITU_T_DEFAULTH_DECL(severity, Unsigned8, severity__default);
+        ITU_T_HOLDERH_DECL(classV, MMS_Object_Module_1::EC_Class); //   Ic(  [ 0  ...   1 ]   
+        ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default); //   Ic(  [ 0  ...   127 ]   
+        ITU_T_DEFAULTH_DECL(severity, Unsigned8, severity__default); //   Ic(  [ 0  ...   127 ]   
         ITU_T_DEFAULTH_DECL(alarmSummaryReports, bool, alarmSummaryReports__default);
         ITU_T_OPTIONAL_DECL(monitoredVariable, MonitoredVariable_type);
-        ITU_T_OPTIONAL_DECL(evaluationInterval, Unsigned32);
+        ITU_T_OPTIONAL_DECL(evaluationInterval, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
         ITU_T_ARCHIVE_FUNC;
@@ -5521,7 +5521,7 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_CHOICE(GroupPriorityOverride_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, GroupPriorityOverride_type_priority); // primitive
+            ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, GroupPriorityOverride_type_priority); // primitive  //   Ic(  [ 0  ...   127 ]   
             ITU_T_CHOICES_DECL(undefined, null_type, GroupPriorityOverride_type_undefined); // primitive
 
             ITU_T_ARCHIVE_FUNC;
@@ -5590,8 +5590,8 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToActive,
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle);
 
-        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
-        ITU_T_HOLDERH_DECL(numberOfEventEnrollments, Unsigned32);
+        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State); //   Ic(  [ 0  ...   2 ]   
+        ITU_T_HOLDERH_DECL(numberOfEventEnrollments, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_OPTIONAL_DECL(enabled, bool);
         ITU_T_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
         ITU_T_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
@@ -5615,9 +5615,9 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
         ITU_T_OPTIONAL_DECL(enabled, bool);
-        ITU_T_OPTIONAL_DECL(priority, MMS_Object_Module_1::Priority);
+        ITU_T_OPTIONAL_DECL(priority, MMS_Object_Module_1::Priority); //   Ic(  [ 0  ...   127 ]   
         ITU_T_OPTIONAL_DECL(alarmSummaryReports, bool);
-        ITU_T_OPTIONAL_DECL(evaluationInterval, Unsigned32);
+        ITU_T_OPTIONAL_DECL(evaluationInterval, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -5773,8 +5773,8 @@ namespace ISO_9506_MMS_1 {
 
         ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
         ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
-        ITU_T_HOLDERH_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
-        ITU_T_HOLDERH_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
+        ITU_T_HOLDERH_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions); //    Sc (  [ 7 ]   
+        ITU_T_HOLDERH_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(eventActionName, ObjectName);
         ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
 
@@ -5867,7 +5867,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< ObjectName> arg__eventActionName,
                 boost::shared_ptr< ObjectName> arg__continueAfter);
 
-        ITU_T_DEFAULTH_DECL(scopeOfRequest, int, scopeOfRequest__default);
+        ITU_T_DEFAULTH_DECL(scopeOfRequest, int, scopeOfRequest__default); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(eventEnrollmentNames, EventEnrollmentNames_type);
         ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
         ITU_T_OPTIONAL_DECL(eventConditionName, ObjectName);
@@ -6012,10 +6012,10 @@ namespace ISO_9506_MMS_1 {
         ITU_T_OPTIONAL_DECL(eventActionName, EventActionName_type);
         ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
         ITU_T_DEFAULTH_DECL(mmsDeletable, bool, mmsDeletable__default);
-        ITU_T_HOLDERH_DECL(enrollmentClass, MMS_Object_Module_1::EE_Class);
-        ITU_T_DEFAULTH_DECL(duration, MMS_Object_Module_1::EE_Duration, duration__default);
-        ITU_T_OPTIONAL_DECL(invokeID, Unsigned32);
-        ITU_T_OPTIONAL_DECL(remainingAcceptableDelay, Unsigned32);
+        ITU_T_HOLDERH_DECL(enrollmentClass, MMS_Object_Module_1::EE_Class); //   Ic(  [ 0  ...   1 ]   
+        ITU_T_DEFAULTH_DECL(duration, MMS_Object_Module_1::EE_Duration, duration__default); //   Ic(  [ 0  ...   1 ]   
+        ITU_T_OPTIONAL_DECL(invokeID, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
+        ITU_T_OPTIONAL_DECL(remainingAcceptableDelay, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_HOLDERH_DECL(displayEnhancement, DisplayEnhancement_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -6039,10 +6039,10 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule,
                 boost::shared_ptr< EE_State> arg__currentState);
 
-        ITU_T_HOLDERH_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
+        ITU_T_HOLDERH_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions); //    Sc (  [ 7 ]   
         ITU_T_DEFAULTH_DECL(notificationLost, bool, notificationLost__default);
-        ITU_T_HOLDERH_DECL(duration, MMS_Object_Module_1::EE_Duration);
-        ITU_T_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
+        ITU_T_HOLDERH_DECL(duration, MMS_Object_Module_1::EE_Duration); //   Ic(  [ 0  ...   1 ]   
+        ITU_T_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule); //   Ic(  [ 0  ...   3 ]   
         ITU_T_HOLDERH_DECL(currentState, EE_State);
 
         ITU_T_ARCHIVE_FUNC;
@@ -6061,8 +6061,8 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::AlarmAckRule> arg__alarmAcknowledgmentRule);
 
         ITU_T_HOLDERH_DECL(eventEnrollmentName, ObjectName);
-        ITU_T_OPTIONAL_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions);
-        ITU_T_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule);
+        ITU_T_OPTIONAL_DECL(eventConditionTransitions, MMS_Object_Module_1::Transitions); //    Sc (  [ 7 ]   
+        ITU_T_OPTIONAL_DECL(alarmAcknowledgmentRule, MMS_Object_Module_1::AlarmAckRule); //   Ic(  [ 0  ...   3 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -6339,8 +6339,8 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle);
 
         ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
-        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
-        ITU_T_HOLDERH_DECL(numberOfEventEnrollments, Unsigned32);
+        ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State); //   Ic(  [ 0  ...   2 ]   
+        ITU_T_HOLDERH_DECL(numberOfEventEnrollments, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_OPTIONAL_DECL(enabled, bool);
         ITU_T_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
         ITU_T_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
@@ -6425,7 +6425,7 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_CHOICE(RangeStartSpecification_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(startingTime, TimeOfDay, RangeStartSpecification_type_startingTime); // primitive
+            ITU_T_CHOICES_DECL(startingTime, TimeOfDay, RangeStartSpecification_type_startingTime); // primitive  //    Sc (  [ 4  ...   6 ]   
             ITU_T_CHOICES_DECL(startingEntry, octetstring_type, RangeStartSpecification_type_startingEntry); // primitive
 
             ITU_T_ARCHIVE_FUNC;
@@ -6451,8 +6451,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_CHOICE(RangeStopSpecification_type_enum) (new T(vl), static_cast<int> (enm)) {
             }
 
-            ITU_T_CHOICES_DECL(endingTime, TimeOfDay, RangeStopSpecification_type_endingTime); // primitive
-            ITU_T_CHOICES_DECL(numberOfEntries, Integer32, RangeStopSpecification_type_numberOfEntries); // primitive
+            ITU_T_CHOICES_DECL(endingTime, TimeOfDay, RangeStopSpecification_type_endingTime); // primitive  //    Sc (  [ 4  ...   6 ]   
+            ITU_T_CHOICES_DECL(numberOfEntries, Integer32, RangeStopSpecification_type_numberOfEntries); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -6464,7 +6464,7 @@ namespace ISO_9506_MMS_1 {
             EntryToStartAfter_type(const TimeOfDay& arg__timeSpecification,
                     const octetstring_type& arg__entrySpecification);
 
-            ITU_T_HOLDERH_DECL(timeSpecification, TimeOfDay);
+            ITU_T_HOLDERH_DECL(timeSpecification, TimeOfDay); //    Sc (  [ 4  ...   6 ]   
             ITU_T_HOLDERH_DECL(entrySpecification, octetstring_type);
 
             ITU_T_ARCHIVE_FUNC;
@@ -6565,7 +6565,7 @@ namespace ISO_9506_MMS_1 {
             LimitSpecification_type(boost::shared_ptr< TimeOfDay> arg__limitingTime,
                     boost::shared_ptr< octetstring_type> arg__limitingEntry);
 
-            ITU_T_HOLDERH_DECL(limitingTime, TimeOfDay);
+            ITU_T_HOLDERH_DECL(limitingTime, TimeOfDay); //    Sc (  [ 4  ...   6 ]   
             ITU_T_OPTIONAL_DECL(limitingEntry, octetstring_type);
 
             ITU_T_ARCHIVE_FUNC;
@@ -6598,7 +6598,7 @@ namespace ISO_9506_MMS_1 {
                 boost::shared_ptr< bool> arg__mmsDeletable,
                 boost::shared_ptr< Identifier> arg__accessControlList);
 
-        ITU_T_HOLDERH_DECL(currentEntries, Unsigned32);
+        ITU_T_HOLDERH_DECL(currentEntries, Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
         ITU_T_OPTIONAL_DECL(accessControlList, Identifier);
 
@@ -6661,7 +6661,7 @@ namespace ISO_9506_MMS_1 {
                             const MMS_Object_Module_1::EC_State& arg__currentState);
 
                     ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
-                    ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
+                    ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State); //   Ic(  [ 0  ...   2 ]   
 
                     ITU_T_ARCHIVE_FUNC;
                 };
@@ -6705,7 +6705,7 @@ namespace ISO_9506_MMS_1 {
         EntryContent(const TimeOfDay& arg__occurrenceTime,
                 const EntryForm_type& arg__entryForm);
 
-        ITU_T_HOLDERH_DECL(occurrenceTime, TimeOfDay);
+        ITU_T_HOLDERH_DECL(occurrenceTime, TimeOfDay); //    Sc (  [ 4  ...   6 ]   
         ITU_T_HOLDERH_DECL(entryForm, EntryForm_type);
 
         ITU_T_ARCHIVE_FUNC;

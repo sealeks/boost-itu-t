@@ -52,26 +52,26 @@ namespace MMS_Object_Module_1 {
     struct Journal_Variable;
 
 
-    typedef int VMDState;
-    typedef bitstring_type ServiceSupportOptions;
-    typedef bitstring_type ParameterSupportOptions;
-    typedef bitstring_type AdditionalSupportOptions;
-    typedef bitstring_type AdditionalCBBOptions;
-    typedef int DomainState;
-    typedef int ULState;
-    typedef int ProgramInvocationState;
-    typedef int Control_State;
-    typedef int Running_Mode;
-    typedef int Priority;
-    typedef int EC_Class;
-    typedef int EC_State;
-    typedef int Severity;
-    typedef int EE_Class;
-    typedef bitstring_type Transitions;
-    typedef int EE_Duration;
-    typedef int AlarmAckRule;
-    ITU_T_IMPLICIT_TYPEDEF(LogicalStatus, int, 0, CONTEXT_CLASS);
-    ITU_T_IMPLICIT_TYPEDEF(PhysicalStatus, int, 1, CONTEXT_CLASS);
+    typedef int VMDState; //   Ic(  [ 0  ...   5 ]   
+    typedef bitstring_type ServiceSupportOptions; //    Sc (  [ 93 ]   
+    typedef bitstring_type ParameterSupportOptions; //    Sc (  [ 18 ]   
+    typedef bitstring_type AdditionalSupportOptions; //    Sc (  [ 23 ]   
+    typedef bitstring_type AdditionalCBBOptions; //    Sc (  [ 3 ]   
+    typedef int DomainState; //   Ic(  [ 0  ...   15 ]   
+    typedef int ULState; //   Ic(  [ 0  ...   6 ]   
+    typedef int ProgramInvocationState; //   Ic(  [ 0  ...   8 ]   
+    typedef int Control_State; //   Ic(  [ 0  ...   2 ]   
+    typedef int Running_Mode; //   Ic(  [ 0  ...   2 ]   
+    typedef int Priority; //   Ic(  [ 0  ...   127 ]   
+    typedef int EC_Class; //   Ic(  [ 0  ...   1 ]   
+    typedef int EC_State; //   Ic(  [ 0  ...   2 ]   
+    typedef int Severity; //   Ic(  [ 0  ...   127 ]   
+    typedef int EE_Class; //   Ic(  [ 0  ...   1 ]   
+    typedef bitstring_type Transitions; //    Sc (  [ 7 ]   
+    typedef int EE_Duration; //   Ic(  [ 0  ...   1 ]   
+    typedef int AlarmAckRule; //   Ic(  [ 0  ...   3 ]   
+    ITU_T_IMPLICIT_TYPEDEF(LogicalStatus, int, 0, CONTEXT_CLASS); //   Ic(  [ 0  ...   3 ]   
+    ITU_T_IMPLICIT_TYPEDEF(PhysicalStatus, int, 1, CONTEXT_CLASS); //   Ic(  [ 0  ...   3 ]   
 
     extern const Priority normalPriority;
     extern const Severity normalSeverity;
@@ -449,7 +449,7 @@ namespace MMS_Object_Module_1 {
                 ITU_T_CHOICE(Address_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(numericAddress, ISO_9506_MMS_1::Unsigned32, Address_numericAddress); // primitive
+        ITU_T_CHOICES_DECL(numericAddress, ISO_9506_MMS_1::Unsigned32, Address_numericAddress); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_CHOICES_DECL(symbolicAddress, ISO_9506_MMS_1::MMSString, Address_symbolicAddress); // primitive
         ITU_T_CHOICES_DECL(unconstrainedAddress, octetstring_type, Address_unconstrainedAddress); // primitive
 
@@ -498,7 +498,7 @@ namespace MMS_Object_Module_1 {
                     boost::shared_ptr< ISO_9506_MMS_1::TypeSpecification> arg__elementType);
 
             ITU_T_DEFAULTH_DECL(packed, bool, packed__default);
-            ITU_T_HOLDERH_DECL(numberOfElements, ISO_9506_MMS_1::Unsigned32);
+            ITU_T_HOLDERH_DECL(numberOfElements, ISO_9506_MMS_1::Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
             ITU_T_HOLDERH_DECL(elementType, ISO_9506_MMS_1::TypeSpecification);
 
             ITU_T_ARCHIVE_FUNC;
@@ -549,8 +549,8 @@ namespace MMS_Object_Module_1 {
             Floating_point_type(const ISO_9506_MMS_1::Unsigned8& arg__format_width,
                     const ISO_9506_MMS_1::Unsigned8& arg__exponent_width);
 
-            ITU_T_HOLDERH_DECL(format_width, ISO_9506_MMS_1::Unsigned8);
-            ITU_T_HOLDERH_DECL(exponent_width, ISO_9506_MMS_1::Unsigned8);
+            ITU_T_HOLDERH_DECL(format_width, ISO_9506_MMS_1::Unsigned8); //   Ic(  [ 0  ...   127 ]   
+            ITU_T_HOLDERH_DECL(exponent_width, ISO_9506_MMS_1::Unsigned8); //   Ic(  [ 0  ...   127 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -569,17 +569,17 @@ namespace MMS_Object_Module_1 {
         ITU_T_CHOICEC_DECL(array, Array_type, TypeDescription_array);
         ITU_T_CHOICEC_DECL(structure, Structure_type, TypeDescription_structure);
         ITU_T_CHOICES_DECL(boolean, null_type, TypeDescription_boolean); // primitive
-        ITU_T_CHOICES_DECL(bit_string, ISO_9506_MMS_1::Integer32, TypeDescription_bit_string); // primitive
-        ITU_T_CHOICES_DECL(integer, ISO_9506_MMS_1::Unsigned8, TypeDescription_integer); // primitive
-        ITU_T_CHOICES_DECL(unsignedV, ISO_9506_MMS_1::Unsigned8, TypeDescription_unsignedV); // primitive
+        ITU_T_CHOICES_DECL(bit_string, ISO_9506_MMS_1::Integer32, TypeDescription_bit_string); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
+        ITU_T_CHOICES_DECL(integer, ISO_9506_MMS_1::Unsigned8, TypeDescription_integer); // primitive  //   Ic(  [ 0  ...   127 ]   
+        ITU_T_CHOICES_DECL(unsignedV, ISO_9506_MMS_1::Unsigned8, TypeDescription_unsignedV); // primitive  //   Ic(  [ 0  ...   127 ]   
         ITU_T_CHOICEC_DECL(floating_point, Floating_point_type, TypeDescription_floating_point);
-        ITU_T_CHOICES_DECL(octet_string, ISO_9506_MMS_1::Integer32, TypeDescription_octet_string); // primitive
-        ITU_T_CHOICES_DECL(visible_string, ISO_9506_MMS_1::Integer32, TypeDescription_visible_string); // primitive
+        ITU_T_CHOICES_DECL(octet_string, ISO_9506_MMS_1::Integer32, TypeDescription_octet_string); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
+        ITU_T_CHOICES_DECL(visible_string, ISO_9506_MMS_1::Integer32, TypeDescription_visible_string); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
         ITU_T_CHOICES_DECL(generalized_time, null_type, TypeDescription_generalized_time); // primitive
         ITU_T_CHOICES_DECL(binary_time, bool, TypeDescription_binary_time); // primitive
-        ITU_T_CHOICES_DECL(bcd, ISO_9506_MMS_1::Unsigned8, TypeDescription_bcd); // primitive
+        ITU_T_CHOICES_DECL(bcd, ISO_9506_MMS_1::Unsigned8, TypeDescription_bcd); // primitive  //   Ic(  [ 0  ...   127 ]   
         ITU_T_CHOICES_DECL(objId, null_type, TypeDescription_objId); // primitive
-        ITU_T_CHOICES_DECL(mMSString, ISO_9506_MMS_1::Integer32, TypeDescription_mMSString); // primitive
+        ITU_T_CHOICES_DECL(mMSString, ISO_9506_MMS_1::Integer32, TypeDescription_mMSString); // primitive  //   Ic(  [ -2147483648  ...   2147483647 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -614,8 +614,8 @@ namespace MMS_Object_Module_1 {
                 ITU_T_CHOICE(EventTime_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(timeOfDay, ISO_9506_MMS_1::TimeOfDay, EventTime_timeOfDay); // primitive
-        ITU_T_CHOICES_DECL(timeSequenceIdentifier, ISO_9506_MMS_1::Unsigned32, EventTime_timeSequenceIdentifier); // primitive
+        ITU_T_CHOICES_DECL(timeOfDay, ISO_9506_MMS_1::TimeOfDay, EventTime_timeOfDay); // primitive  //    Sc (  [ 4  ...   6 ]   
+        ITU_T_CHOICES_DECL(timeSequenceIdentifier, ISO_9506_MMS_1::Unsigned32, EventTime_timeSequenceIdentifier); // primitive  //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_CHOICES_DECL(undefined, null_type, EventTime_undefined); // primitive
 
         ITU_T_ARCHIVE_FUNC;

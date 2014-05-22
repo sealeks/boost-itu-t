@@ -58,10 +58,10 @@ namespace ISO_9506_MMS_1A {
 
 
     typedef null_type ObtainFile_Response;
-    typedef int ObtainFile_Error;
+    typedef int ObtainFile_Error; //   Ic(  [ 0  ...   1 ]   
     typedef null_type FileClose_Response;
     typedef null_type FileRename_Response;
-    typedef int FileRename_Error;
+    typedef int FileRename_Error; //   Ic(  [ 0  ...   1 ]   
     typedef null_type FileDelete_Response;
     typedef null_type DefineScatteredAccess_Response;
 
@@ -92,8 +92,8 @@ namespace ISO_9506_MMS_1A {
 
 
 
-    typedef ISO_9506_MMS_1::Integer32 FileRead_Request;
-    typedef ISO_9506_MMS_1::Integer32 FileClose_Request;
+    typedef ISO_9506_MMS_1::Integer32 FileRead_Request; //   Ic(  [ -2147483648  ...   2147483647 ]   
+    typedef ISO_9506_MMS_1::Integer32 FileClose_Request; //   Ic(  [ -2147483648  ...   2147483647 ]   
     typedef ISO_9506_MMS_1::FileName FileDelete_Request;
     typedef ISO_9506_MMS_1::ObjectName GetScatteredAccessAttributes_Request;
     // sequence ObtainFile-Request
@@ -129,7 +129,7 @@ namespace ISO_9506_MMS_1A {
                 const ISO_9506_MMS_1::Unsigned32& arg__initialPosition);
 
         ITU_T_HOLDERH_DECL(fileName, ISO_9506_MMS_1::FileName);
-        ITU_T_HOLDERH_DECL(initialPosition, ISO_9506_MMS_1::Unsigned32);
+        ITU_T_HOLDERH_DECL(initialPosition, ISO_9506_MMS_1::Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -143,7 +143,7 @@ namespace ISO_9506_MMS_1A {
         FileOpen_Response(const ISO_9506_MMS_1::Integer32& arg__frsmID,
                 const FileAttributes& arg__fileAttributes);
 
-        ITU_T_HOLDERH_DECL(frsmID, ISO_9506_MMS_1::Integer32);
+        ITU_T_HOLDERH_DECL(frsmID, ISO_9506_MMS_1::Integer32); //   Ic(  [ -2147483648  ...   2147483647 ]   
         ITU_T_HOLDERH_DECL(fileAttributes, FileAttributes);
 
         ITU_T_ARCHIVE_FUNC;
@@ -248,7 +248,7 @@ namespace ISO_9506_MMS_1A {
         FileAttributes(boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__sizeOfFile,
                 boost::shared_ptr< gentime_type> arg__lastModified);
 
-        ITU_T_HOLDERH_DECL(sizeOfFile, ISO_9506_MMS_1::Unsigned32);
+        ITU_T_HOLDERH_DECL(sizeOfFile, ISO_9506_MMS_1::Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_OPTIONAL_DECL(lastModified, gentime_type);
 
         ITU_T_ARCHIVE_FUNC;

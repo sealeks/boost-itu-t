@@ -6859,7 +6859,7 @@ namespace ISO_9506_MMS_1 {
     }
 
 
-    const ExtendedStatus CS_Status_Response::FullResponse_type::extendedStatusMask__default = ExtendedStatus(boost::asn1::bitstring_type(static_cast<uint8_t> (15), 4));
+    const ExtendedStatus CS_Status_Response::FullResponse_type::extendedStatusMask__default = ExtendedStatus(boost::asn1::bitstring_type(std::string("\xF", 1), 4));
 
     template<> void CS_Status_Response::FullResponse_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(operationState_, 0);

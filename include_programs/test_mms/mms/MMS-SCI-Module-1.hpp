@@ -260,9 +260,9 @@ namespace MMS_SCI_Module_1 {
         ITU_T_HOLDERH_DECL(revision, ISO_9506_MMS_1::MMSString);
         ITU_T_HOLDERH_DECL(abstractSyntaxes, oid_type);
         ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-        ITU_T_HOLDERH_DECL(logicalStatus, MMS_Object_Module_1::LogicalStatus);
+        ITU_T_HOLDERH_DECL(logicalStatus, MMS_Object_Module_1::LogicalStatus); //   Ic(  [ 0  ...   3 ]   
         ITU_T_HOLDERH_DECL(capabilities, Capabilities_type);
-        ITU_T_HOLDERH_DECL(physicalStatus, MMS_Object_Module_1::PhysicalStatus);
+        ITU_T_HOLDERH_DECL(physicalStatus, MMS_Object_Module_1::PhysicalStatus); //   Ic(  [ 0  ...   3 ]   
         ITU_T_HOLDERH_DECL(local_detail, bitstring_type);
         ITU_T_HOLDERH_DECL(accessControlLists, AccessControlLists_type);
         ITU_T_HOLDERH_DECL(domains, Domains_type);
@@ -471,7 +471,7 @@ namespace MMS_SCI_Module_1 {
                         const EventConditionLists_type& arg__eventConditionLists);
 
                 ITU_T_HOLDERH_DECL(capabilities, Capabilities_type);
-                ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState);
+                ITU_T_HOLDERH_DECL(state, MMS_Object_Module_1::DomainState); //   Ic(  [ 0  ...   15 ]   
                 ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
                 ITU_T_HOLDERH_DECL(sharable, bool);
                 ITU_T_HOLDERH_DECL(programInvocations, ProgramInvocations_type);
@@ -565,7 +565,7 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< Program_Invocation_instance> arg__controlling_Program_Invocation = boost::shared_ptr< Program_Invocation_instance>(),
                         boost::shared_ptr< Controlled_Program_Invocations_type> arg__controlled_Program_Invocations = boost::shared_ptr< Controlled_Program_Invocations_type>());
 
-                ITU_T_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState);
+                ITU_T_HOLDERH_DECL(programInvocationState, MMS_Object_Module_1::ProgramInvocationState); //   Ic(  [ 0  ...   8 ]   
                 ITU_T_HOLDERH_DECL(domains, Domains_type);
                 ITU_T_HOLDERH_DECL(accessControl, AccessControl_type);
                 ITU_T_HOLDERH_DECL(reusable, bool);
@@ -574,7 +574,7 @@ namespace MMS_SCI_Module_1 {
                 ITU_T_OPTIONAL_DECL(eventAction, EventAction_type);
                 ITU_T_OPTIONAL_DECL(eventEnrollment, EventEnrollment_type);
                 ITU_T_HOLDERH_DECL(executionArgument, ISO_9506_MMS_1::MMSString);
-                ITU_T_OPTIONAL_DECL(control, MMS_Object_Module_1::Control_State);
+                ITU_T_OPTIONAL_DECL(control, MMS_Object_Module_1::Control_State); //   Ic(  [ 0  ...   2 ]   
                 ITU_T_OPTIONAL_DECL(controlling_Program_Invocation, Program_Invocation_instance);
                 ITU_T_OPTIONAL_DECL(controlled_Program_Invocations, Controlled_Program_Invocations_type);
 
@@ -1220,7 +1220,7 @@ namespace MMS_SCI_Module_1 {
                             ITU_T_CHOICE(Group_Priority_Override_type_enum) (new T(vl), static_cast<int> (enm)) {
                     }
 
-                    ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, Group_Priority_Override_type_priority); // primitive
+                    ITU_T_CHOICES_DECL(priority, MMS_Object_Module_1::Priority, Group_Priority_Override_type_priority); // primitive  //   Ic(  [ 0  ...   127 ]   
                     ITU_T_CHOICES_DECL(undefined, null_type, Group_Priority_Override_type_undefined); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
@@ -1256,10 +1256,10 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< ReferencingEventConditionLists_type> arg__referencingEventConditionLists = boost::shared_ptr< ReferencingEventConditionLists_type>());
 
                 ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                ITU_T_HOLDERH_DECL(ecClass, MMS_Object_Module_1::EC_Class);
-                ITU_T_HOLDERH_DECL(ecState, MMS_Object_Module_1::EC_State);
-                ITU_T_HOLDERH_DECL(priority, MMS_Object_Module_1::Priority);
-                ITU_T_HOLDERH_DECL(severity, MMS_Object_Module_1::Severity);
+                ITU_T_HOLDERH_DECL(ecClass, MMS_Object_Module_1::EC_Class); //   Ic(  [ 0  ...   1 ]   
+                ITU_T_HOLDERH_DECL(ecState, MMS_Object_Module_1::EC_State); //   Ic(  [ 0  ...   2 ]   
+                ITU_T_HOLDERH_DECL(priority, MMS_Object_Module_1::Priority); //   Ic(  [ 0  ...   127 ]   
+                ITU_T_HOLDERH_DECL(severity, MMS_Object_Module_1::Severity); //   Ic(  [ 0  ...   127 ]   
                 ITU_T_HOLDERH_DECL(eventEnrollments, EventEnrollments_type);
                 ITU_T_OPTIONAL_DECL(enabled, bool);
                 ITU_T_OPTIONAL_DECL(alarmSummaryReports, bool);
@@ -1466,14 +1466,14 @@ namespace MMS_SCI_Module_1 {
                         boost::shared_ptr< DisplayEnhancement_type> arg__displayEnhancement = boost::shared_ptr< DisplayEnhancement_type>());
 
                 ITU_T_HOLDERH_DECL(accessControl, Access_Control_List_instance);
-                ITU_T_HOLDERH_DECL(eeClass, MMS_Object_Module_1::EE_Class);
+                ITU_T_HOLDERH_DECL(eeClass, MMS_Object_Module_1::EE_Class); //   Ic(  [ 0  ...   1 ]   
                 ITU_T_HOLDERH_DECL(eventCondition, Event_Condition_instance);
-                ITU_T_HOLDERH_DECL(ecTransitions, MMS_Object_Module_1::Transitions);
+                ITU_T_HOLDERH_DECL(ecTransitions, MMS_Object_Module_1::Transitions); //    Sc (  [ 7 ]   
                 ITU_T_OPTIONAL_DECL(remainingDelay, RemainingDelay_type);
                 ITU_T_OPTIONAL_DECL(eventAction, Event_Action_instance);
-                ITU_T_OPTIONAL_DECL(duration, MMS_Object_Module_1::EE_Duration);
+                ITU_T_OPTIONAL_DECL(duration, MMS_Object_Module_1::EE_Duration); //   Ic(  [ 0  ...   1 ]   
                 ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
-                ITU_T_OPTIONAL_DECL(aaRule, MMS_Object_Module_1::AlarmAckRule);
+                ITU_T_OPTIONAL_DECL(aaRule, MMS_Object_Module_1::AlarmAckRule); //   Ic(  [ 0  ...   3 ]   
                 ITU_T_OPTIONAL_DECL(displayEnhancement, DisplayEnhancement_type);
 
                 ITU_T_ARCHIVE_FUNC;
@@ -1655,7 +1655,7 @@ namespace MMS_SCI_Module_1 {
                     const MMS_Object_Module_1::EC_State& arg__currentState);
 
             ITU_T_HOLDERH_DECL(name, ISO_9506_MMS_1::ObjectName);
-            ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State);
+            ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State); //   Ic(  [ 0  ...   2 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1704,7 +1704,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_HOLDERH_DECL(journal, Journal_instance);
         ITU_T_HOLDERH_DECL(entry, octetstring_type);
         ITU_T_HOLDERH_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
-        ITU_T_HOLDERH_DECL(timeStamp, ISO_9506_MMS_1::TimeOfDay);
+        ITU_T_HOLDERH_DECL(timeStamp, ISO_9506_MMS_1::TimeOfDay); //    Sc (  [ 4  ...   6 ]   
         ITU_T_HOLDERH_DECL(orderOfReceipt, int);
         ITU_T_HOLDERH_DECL(informationType, enumerated_type);
         ITU_T_OPTIONAL_DECL(textComment, ISO_9506_MMS_1::MMS255String);
@@ -1738,13 +1738,13 @@ namespace MMS_SCI_Module_1 {
                 const ErrorParameters& arg__errors,
                 const FileManagementParameters& arg__fileManagement);
 
-        ITU_T_HOLDERH_DECL(services_Client, MMS_Object_Module_1::ServiceSupportOptions);
-        ITU_T_HOLDERH_DECL(services_Server, MMS_Object_Module_1::ServiceSupportOptions);
-        ITU_T_HOLDERH_DECL(parameters, MMS_Object_Module_1::ParameterSupportOptions);
+        ITU_T_HOLDERH_DECL(services_Client, MMS_Object_Module_1::ServiceSupportOptions); //    Sc (  [ 93 ]   
+        ITU_T_HOLDERH_DECL(services_Server, MMS_Object_Module_1::ServiceSupportOptions); //    Sc (  [ 93 ]   
+        ITU_T_HOLDERH_DECL(parameters, MMS_Object_Module_1::ParameterSupportOptions); //    Sc (  [ 18 ]   
         ITU_T_HOLDERH_DECL(nest, int);
-        ITU_T_HOLDERH_DECL(extendedServices_Client, MMS_Object_Module_1::AdditionalSupportOptions);
-        ITU_T_HOLDERH_DECL(extendedServices_Server, MMS_Object_Module_1::AdditionalSupportOptions);
-        ITU_T_HOLDERH_DECL(extendedParameters, MMS_Object_Module_1::AdditionalCBBOptions);
+        ITU_T_HOLDERH_DECL(extendedServices_Client, MMS_Object_Module_1::AdditionalSupportOptions); //    Sc (  [ 23 ]   
+        ITU_T_HOLDERH_DECL(extendedServices_Server, MMS_Object_Module_1::AdditionalSupportOptions); //    Sc (  [ 23 ]   
+        ITU_T_HOLDERH_DECL(extendedParameters, MMS_Object_Module_1::AdditionalCBBOptions); //    Sc (  [ 3 ]   
         ITU_T_HOLDERH_DECL(generalManagement, GeneralManagementParameters);
         ITU_T_HOLDERH_DECL(vMDSupport, VMDSupportParameters);
         ITU_T_HOLDERH_DECL(domainManagement, DomainManagementParameters);
