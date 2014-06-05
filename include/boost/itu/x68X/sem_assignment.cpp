@@ -1283,6 +1283,11 @@ namespace x680 {
         return kind_ == at_Constraints ? boost::static_pointer_cast<constraints_atom> (self()) : constraints_atom_ptr();
     }
 
+    effective_tabconstraint_ptr basic_atom::as_effective_tab() {
+        return kind_ == at_EffectiveTabConstraint ? 
+            boost::static_pointer_cast<effective_tabconstraint> (self()) : effective_tabconstraint_ptr();
+    }
+
     entity_enum basic_atom::check_reff(basic_atom_ptr holder, search_marker sch) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {
             basic_entity_ptr source = holder ?

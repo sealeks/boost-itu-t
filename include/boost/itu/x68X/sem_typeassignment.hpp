@@ -164,9 +164,36 @@ namespace x680 {
     };
 
 
+    /////////////////////////////////////////////////////////////////////////   
+    // effective_tabconstraint
+    /////////////////////////////////////////////////////////////////////////  
 
+    class effective_tabconstraint : public basic_atom {
 
+    public:
+        
+        typedef std::vector<std::string> fieldname_vct;
+        
+        effective_tabconstraint(basic_entity_ptr scp, objectassignment_entity_set oset) : 
+        basic_atom(at_EffectiveTabConstraint, scp), objectset_(oset) {}
+        
+        objectassignment_entity_set& objectset() {
+            return objectset_;
+        }
 
+        void objectset(objectassignment_entity_set vl) {
+            objectset_ = vl;
+        }    
+        
+        fieldname_vct& fieldnames() {
+            return fieldnames_;
+        }        
+
+    private:
+        
+        objectassignment_entity_set objectset_;
+        fieldname_vct fieldnames_;
+    };
 
     /////////////////////////////////////////////////////////////////////////   
     // type_atom
@@ -212,7 +239,7 @@ namespace x680 {
 
         void constraints(constraints_atom_vct vl) {
             constraints_ = vl;
-        }
+        }  
 
         bool has_constraint() const {
             return !constraints_.empty();
@@ -222,7 +249,7 @@ namespace x680 {
         boost::shared_ptr<range_constraints<T> > effective_constraint() {
             return boost::shared_ptr<range_constraints<T> >();
         }
-
+                
         integer_constraints_ptr integer_constraint();
 
         size_constraints_ptr size_constraint();
@@ -232,6 +259,31 @@ namespace x680 {
         quadruple_constraints_ptr quadruple_constraint();
 
         tuple_constraints_ptr tuple_constraint();
+        
+        
+        effective_tabconstraint_ptr tabconstraint() {
+            return tabconstraint_;
+        }
+
+        void tabconstraint(effective_tabconstraint_ptr vl) {
+            tabconstraint_ = vl;
+        }          
+        
+        effective_tabconstraint_ptr reff_tabconstraint() {
+            return reff_tabconstraint_;
+        }
+
+        void reff_tabconstraint(effective_tabconstraint_ptr vl) {
+            reff_tabconstraint_ = vl;
+        }   
+        
+        bool unicalfield() {
+            return unicalfield_;
+        }
+
+        void unicalfield(bool vl) {
+            unicalfield_ = vl;
+        } 
 
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
@@ -310,6 +362,9 @@ namespace x680 {
         predefined_ptr predefined_;
         constraints_atom_vct constraints_;
         typeassignment_entity_ptr from_;
+        effective_tabconstraint_ptr tabconstraint_;
+        effective_tabconstraint_ptr reff_tabconstraint_;    
+        bool unicalfield_;
 
     };
 

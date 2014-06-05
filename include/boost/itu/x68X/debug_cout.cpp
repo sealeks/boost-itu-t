@@ -1496,9 +1496,9 @@ namespace x680 {
                     if (it != objs.begin())
                         stream << ", ";
                     if ((*it)->name().empty())
-                        stream << "&local";
+                        stream << "&&local [ch cnt " << (*it)->childs().size() << "]";
                     else
-                        stream << (*it)->name();
+                        stream << (*it)->name() << "[ch cnt " <<(*it)->childs().size() << "]";
                 }
             }
             stream << " %] ";
@@ -1558,7 +1558,7 @@ namespace x680 {
             }
         }
         if (self->parameterized())
-            stream << self->parameters();
+            stream << self->parameters();      
         prinobjectset(stream,self); 
         return stream;
     }

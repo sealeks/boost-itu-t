@@ -798,11 +798,11 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
 
     type_atom::type_atom(basic_entity_ptr scp, defined_type tp, tagged_ptr tg)
-    : basic_atom(at_Type, scp), builtin_(tp), tag_(tg) {
+    : basic_atom(at_Type, scp), builtin_(tp), tag_(tg), unicalfield_(false) {
     }
 
     type_atom::type_atom(basic_entity_ptr scp, const std::string& reff, defined_type tp, tagged_ptr tg)
-    : basic_atom(at_Type, scp, reff), builtin_(tp), tag_(tg) {
+    : basic_atom(at_Type, scp, reff), builtin_(tp), tag_(tg), unicalfield_(false) {
     }
 
     defined_type type_atom::builtin() const {

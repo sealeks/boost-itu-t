@@ -58,7 +58,8 @@ namespace x680 {
         at_Syntax,
         at_FieldSetting,
         at_Constraint,
-        at_Constraints
+        at_Constraints,
+        at_EffectiveTabConstraint
     };
 
     enum argument_enum {
@@ -439,6 +440,9 @@ namespace x680 {
 
     class defn_objectset_atom;
     typedef boost::shared_ptr<defn_objectset_atom> defn_objectset_atom_ptr;
+    
+    class effective_tabconstraint;
+    typedef boost::shared_ptr<effective_tabconstraint> effective_tabconstraint_ptr;    
 
 
 
@@ -1095,6 +1099,8 @@ namespace x680 {
         constraint_atom_ptr as_constraint();
 
         constraints_atom_ptr as_constraints();
+        
+        effective_tabconstraint_ptr as_effective_tab();        
 
         ////////
 
