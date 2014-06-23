@@ -266,6 +266,31 @@ namespace x680 {
         return basic_entity_ptr();
     }
 
+    field_entity_ptr classassignment_entity::find_field_by_name(const std::string& nmf) {
+        std::string nm = nmf;
+        std::string search = subidentifier(nm);
+        assignment_entity_ptr slf = refference_to();
+        if (slf->as_classassigment()) {
+            for (basic_entity_vector::iterator it = slf->childs().begin(); it != slf->childs().end(); ++it) {
+                if ((*it)->name() == search) {
+                    if ((*it)->as_classfield()) {
+                        if (nm.empty()) {
+                            return (*it)->as_classfield();
+                        } else {
+                            /*assignment_entity_ptr ref = (*it)->as_assigment()->refference_to();
+                            if (ref && (ref->as_assigment())) {
+                                ref->as_assigment()->resolve();
+                                return ref->as_assigment()->find_component(nm);
+                            }*/
+                        }
+                    } else
+                        return field_entity_ptr();
+                }
+            }
+        }
+        return field_entity_ptr();
+    }
+
     void classassignment_entity::resolve(basic_atom_ptr holder) {
         assignment_entity::resolve(holder);
         if (_class())

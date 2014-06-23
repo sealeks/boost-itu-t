@@ -618,6 +618,8 @@ namespace x680 {
 
         void prefind(const std::string& nm, basic_entity_vector& elm);
 
+        std::string subidentifier(std::string& nm);
+
         basic_entity_wptr scope_;
         mutable basic_entity_ptr reff_shadow_;
         mutable basic_entity_wptr shadow_for_;
@@ -1331,8 +1333,6 @@ namespace x680 {
         void apply_arguments(const setting_atom_vct& vl, basic_entity_ptr scope = basic_entity_ptr());
 
         void resolve_arguments();
-
-        std::string subidentifier(std::string& nm);
 
         virtual void assign_from(assignment_entity_ptr from);
 

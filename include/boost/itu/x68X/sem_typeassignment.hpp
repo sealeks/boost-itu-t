@@ -175,7 +175,7 @@ namespace x680 {
         typedef std::vector<std::string> fieldname_vct;
         
         effective_tabconstraint(basic_entity_ptr scp, objectassignment_entity_set oset) : 
-        basic_atom(at_EffectiveTabConstraint, scp), objectset_(oset) {}
+        basic_atom(at_EffectiveTabConstraint, scp), objectset_(oset), unical_(false) {}
         
         objectassignment_entity_set& objectset() {
             return objectset_;
@@ -187,12 +187,21 @@ namespace x680 {
         
         fieldname_vct& fieldnames() {
             return fieldnames_;
-        }        
+        }       
+        
+        bool unical() {
+            return unical_;
+        }
+
+        void unical(bool vl) {
+            unical_ = vl;
+        }      
 
     private:
         
         objectassignment_entity_set objectset_;
         fieldname_vct fieldnames_;
+        bool unical_;
     };
 
     /////////////////////////////////////////////////////////////////////////   
@@ -767,6 +776,8 @@ namespace x680 {
         void post_resolve_autotag();
 
         void post_resolve_check();
+        
+        void post_resolve_tabconstraint();        
 
         type_atom_ptr type_;
         bool named_;

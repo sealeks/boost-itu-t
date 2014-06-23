@@ -1488,6 +1488,7 @@ namespace x680 {
     }
 
     static void prinobjectset(std::ostream& stream, objectset_atom_ptr self) {
+        return;
         objectassignment_entity_set objs = self->get_unicalobjects();
         if (!objs.empty()) {
             stream << "[%cntobj " << objs.size() << " ";

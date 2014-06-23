@@ -397,6 +397,17 @@ namespace x680 {
             }
         }
     }
+    
+    std::string basic_entity::subidentifier(std::string& nm) {
+        std::string rslt = nm;
+        std::string::size_type it = nm.find_first_of('.');
+        if ((it != std::string::npos) && ((it) && (it < (nm.size() - 1)))) {
+            rslt = nm.substr(0, it);
+            nm = nm.substr(it + 1);
+        } else
+            nm = "";
+        return rslt;
+    }    
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1631,18 +1642,6 @@ namespace x680 {
                 (*it)->unspecified()->resolve();
             }
         }
-    }
-
-    std::string assignment_entity::subidentifier(std::string& nm) {
-        std::string rslt = nm;
-        std::string::size_type it = nm.find_first_of('.');
-        if ((it != std::string::npos) && ((it) && (it < (nm.size() - 1)))) {
-            rslt = nm.substr(0, it);
-            nm = nm.substr(it + 1);
-        } else
-            nm = "";
-
-        return rslt;
     }
 
     void assignment_entity::assign_from(assignment_entity_ptr from) {

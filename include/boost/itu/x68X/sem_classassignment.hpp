@@ -607,6 +607,8 @@ namespace x680 {
         /////        
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
+        
+        field_entity_ptr find_field_by_name(const std::string& nmf);
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 

@@ -1633,6 +1633,7 @@ namespace x680 {
             }
         }
         after_resolve_child();
+        post_resolve_tabconstraint();       
     }
 
     basic_entity_vector::iterator typeassignment_entity::first_extention() {
@@ -1804,6 +1805,97 @@ namespace x680 {
                     } else
                         if ((*it)->as_typeassigment()->as_named()->marker() != mk_extention)
                         num++;
+                }
+            }
+        }
+    }
+
+    static objectsetassignment_entity_ptr find_os_assign_tc_helper(objectset_atom_ptr vl) {
+        if (vl->as_defn()) {
+            if (vl->as_defn()->objects().size() == 1) {
+                object_atom_ptr obj = vl->as_defn()->objects().front();
+                if (obj->as_definedset()) {
+                    objectset_atom_ptr objset = obj->as_definedset()->objectset();
+                    if (objset && (objset->reff()) && (objset->reff()->as_objectsetassigment())) {
+                        return objset->reff()->as_objectsetassigment();
+                    }
+                }
+            }
+        }
+        return objectsetassignment_entity_ptr();
+    }
+    
+    static classassignment_entity_ptr find_cl_assign_tc_helper(objectset_atom_ptr vl) {
+        objectsetassignment_entity_ptr objsetass = find_os_assign_tc_helper(vl);
+        if (objsetass && (objsetass->_class()) && (objsetass->_class()->reff())) {
+           if (objsetass->_class()->reff()->as_classassigment())
+               return objsetass->_class()->reff()->as_classassigment();
+        }
+        return classassignment_entity_ptr();
+    }  
+    
+
+    
+    static field_entity_ptr find_field_tc_helper(objectset_atom_ptr vl, const std::string& fld) {
+        classassignment_entity_ptr classass = find_cl_assign_tc_helper(vl);
+        if (classass && (classass->find_field_by_name(fld))) {
+               return classass->find_field_by_name(fld);
+        }
+        return field_entity_ptr();
+    }      
+    
+    static defined_type legal_valuefield_helper(type_atom_ptr vl) {
+        switch (vl->root_builtin()){
+            case t_INTEGER:
+            case t_BIT_STRING:
+            case t_OCTET_STRING:
+            case t_OBJECT_IDENTIFIER:
+            case t_ENUMERATED:
+            case t_UTF8String:
+            case t_PrintableString:
+            case t_RELATIVE_OID: return vl->root_builtin();
+            default:{}
+        }
+        return t_NODEF;
+    }
+
+    void typeassignment_entity::post_resolve_tabconstraint() {
+        if ((type()) && (!type()->constraints().empty())) {
+            if (type()->constraints().size() == 1) {
+                constraints_atom_ptr tmpcnstrs = type()->constraints().front();
+                if (tmpcnstrs && (tmpcnstrs->constraintline().size() == 1)) {
+                    constraint_atom_ptr tmpcnstr = tmpcnstrs->constraintline().front();
+                    if (tmpcnstr->as_table()) {
+                        tableconstraint_atom_ptr tmptabcnstr = tmpcnstr->as_table();
+                        if (tmptabcnstr) {
+                            if (as_named()) {
+                                if ((as_named()->scope()) && (!as_named()->scope()->childs().empty())
+                                        && (as_named()->scope()->childs().front() == self())) {
+                                    objectset_atom_ptr objst = tmptabcnstr->objectset();
+                                    classassignment_entity_ptr clsass = find_cl_assign_tc_helper(objst);
+                                    if ((type()) && (type()->as_classfield())) {
+                                        field_entity_ptr fld = find_field_tc_helper(objst, type()->as_classfield()->field());
+                                        if (fld && clsass && (fld ->as_valuefield())) {
+                                            type_atom_ptr typevl = fld ->as_valuefield()->type();
+                                            if (legal_valuefield_helper(typevl) != t_NODEF) {
+                                                std::cout << " find field for field: " << type()->as_classfield()->field() << std::endl;
+                                            } else
+                                                std::cout << "warning: Table constraint have not resolved. Governer field type not supported." << std::endl;
+                                        } else
+                                            std::cout << "warning: Table constraint have not resolved. Class field sould be valuefield." << std::endl;
+                                    } else
+                                        std::cout << "warning: Table constraint have not resolved. Type sould be classfield type." << std::endl;
+                                } else
+                                    std::cout << "warning: Table constraint have not resolved. Governer field should be first." << std::endl;
+                            } else
+                                std::cout << "warning: Table constraint have not resolved. Should be nested type. " << std::endl;
+                        }
+                    } else if (tmpcnstr->as_relation()) {
+                        relationconstraint_atom_ptr tmprelcnstr = tmpcnstr->as_relation();
+                        if (tmprelcnstr) {
+                            std::cout << "find relation constraint" << std::endl;
+                        }
+                    }
                 }
             }
         }
