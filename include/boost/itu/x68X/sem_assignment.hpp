@@ -111,6 +111,7 @@ namespace x680 {
 
     class typeassignment_entity;
     typedef boost::shared_ptr<typeassignment_entity> typeassignment_entity_ptr;
+    typedef std::vector<typeassignment_entity_ptr> typeassignment_entity_vct;
 
     class namedtypeassignment_entity;
     typedef boost::shared_ptr<namedtypeassignment_entity> namedtypeassignment_entity_ptr;
@@ -443,7 +444,7 @@ namespace x680 {
     
     class effective_tabconstraint;
     typedef boost::shared_ptr<effective_tabconstraint> effective_tabconstraint_ptr;    
-
+    typedef boost::weak_ptr<effective_tabconstraint> effective_tabconstraint_wptr;
 
 
     typedef std::vector<std::string> export_vector;
@@ -529,6 +530,8 @@ namespace x680 {
         }
 
         void scope(basic_entity_ptr vl);
+        
+        assignment_entity_ptr parent(std::size_t rng = 0);
 
         basic_entity_ptr reff_shadow() const {
             return reff_shadow_;

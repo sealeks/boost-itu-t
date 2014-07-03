@@ -26,7 +26,7 @@ namespace x680 {
             }
             if (self->isembeded()) {
                 stream << "(%emb)";
-            }
+            }           
         }
         return stream;
     }
@@ -239,6 +239,28 @@ namespace x680 {
             argumentmarker(stream, self);
             stream << self->type() << " ";
             operatorstruct(stream, self);
+            if ((self->reff_tabconstraint()) && (self->type()->as_classfield())) {
+                if (self->unicalfield()) {
+                    value_vct values = self->reff_tabconstraint()->fields();
+                    stream << " unic |";
+                    for (value_vct::const_iterator it = values.begin(); it != values.end(); ++it) {
+                        if (it != values.begin())
+                            stream << ",";
+                        stream << *it;
+                    }
+                    stream << "|";
+                } else {
+                     typeassignment_entity_vct values = self->reff_tabconstraint()->fields(self->type()->as_classfield()->field());
+                    stream << "  |";
+                    for (typeassignment_entity_vct::const_iterator it = values.begin(); it != values.end(); ++it) {
+                        if (it != values.begin())
+                            stream << ",";
+                        if (*it)
+                            stream << (*it)->type();
+                    }
+                    stream << "|";
+                }
+            }
             if (self->type()->has_constraint())
                 stream << self->type()->constraints();
             stream << self->as_named()->marker();
@@ -273,6 +295,14 @@ namespace x680 {
             case t_SET_OF:
             case t_CHOICE:;
             {
+                if (self->tabconstraint()){
+                    stream << " ( has table constrant ";
+                    stream << "  {cnt = "  << self->tabconstraint()->count()  << "}";
+                    stream  << "["  << self->tabconstraint()->unicalfield()   << "]";
+                    for (effective_tabconstraint::fieldname_vct::const_iterator it = self->tabconstraint()->fieldnames().begin();
+                            it !=  self->tabconstraint()->fieldnames().end(); ++it) 
+                        stream << ", "  << (*it);
+                    stream  << "))";}
                 if (self->type()->has_extention())
                     stream << " {" << "(has ...)\n";
                 else

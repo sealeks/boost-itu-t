@@ -141,6 +141,20 @@ namespace x680 {
         scope_ = basic_entity_wptr(vl);
     }
 
+    assignment_entity_ptr basic_entity::parent(std::size_t rng) {
+        if (as_assigment()) {
+            basic_entity_ptr self = as_assigment();/*(as_assigment()->shadow_for()) ? as_assigment()->shadow_for() : as_assigment()*/;
+            basic_entity_ptr scp = ((self->scope()) && (self->scope()->reff_shadow())) ? self->scope()->reff_shadow() : self->scope();
+            if (scp) {
+                if (rng)
+                    return scp->parent(--rng);
+                if (scp->as_assigment())
+                    return scp->as_assigment();
+            }
+        }
+        return assignment_entity_ptr();
+    }         
+
     void basic_entity::reff_shadow(basic_entity_ptr vl) {
         reff_shadow_ = vl;
         if (vl)

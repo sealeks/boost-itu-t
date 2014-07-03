@@ -794,15 +794,76 @@ namespace x680 {
     }
 
     /////////////////////////////////////////////////////////////////////////   
+    // effective_tabconstraint
+    /////////////////////////////////////////////////////////////////////////     
+
+    bool effective_tabconstraint::find_field(const std::string& vl) {
+        return std::find(fieldnames_.begin(), fieldnames_.end(), vl) != fieldnames_.end();
+    }
+
+    typeassignment_entity_vct effective_tabconstraint::fields(const std::string& nm) {
+        typeassignment_entity_vct rslt;
+        if (objectsetassignment_ && (objectsetassignment_->objectset())) {
+            objectassignment_entity_set oset = objectsetassignment_->objectset()->get_unicalobjects();
+            for (objectassignment_entity_set::const_iterator it = oset.begin(); it != oset.end(); ++it) {
+                assignment_entity_ptr fndfield = (*it)->find_component(nm);
+                if (fndfield) {
+                    if (fndfield->as_typeassigment())
+                        rslt.push_back(fndfield->as_typeassigment());
+                    else if (fndfield->as_valueassigment()) {
+                        if (fndfield->as_valueassigment()->type()->valuestructure())
+                            rslt.push_back(fndfield->as_valueassigment()->type()->valuestructure());
+                    } else if (fndfield->as_valuesetassigment()) {
+                        if (fndfield->as_valuesetassigment()->type()->valuestructure())
+                            rslt.push_back(fndfield->as_valuesetassigment()->type()->valuestructure());
+                    }
+                }
+            }
+        }
+        return rslt;
+    }
+
+    value_vct effective_tabconstraint::fields() {
+        value_vct rslt;
+        if (objectsetassignment_ && (objectsetassignment_->objectset())) {
+            objectassignment_entity_set oset = objectsetassignment_->objectset()->get_unicalobjects();
+            for (objectassignment_entity_set::const_iterator it = oset.begin(); it != oset.end(); ++it) {
+                assignment_entity_ptr fndfield = (*it)->find_component(unicalfield());
+                if (fndfield && (fndfield->as_valueassigment()) && (fndfield->as_valueassigment()->value()))
+                    rslt.push_back(fndfield->as_valueassigment()->value());
+            }
+        }
+        return rslt;
+    }
+
+    objectassignment_entity_set effective_tabconstraint::objectset() {
+        return objectassignment_entity_set();
+    }
+
+    std::size_t effective_tabconstraint::count() {
+        return (objectsetassignment_ && (objectsetassignment_->objectset())) ?
+                objectsetassignment_->objectset()->get_unicalobjects().size() : 0;
+    }
+
+    bool effective_tabconstraint::valid() {
+        return false;
+    }
+
+    bool effective_tabconstraint::check() {
+        return false;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // type_atom
     /////////////////////////////////////////////////////////////////////////   
 
     type_atom::type_atom(basic_entity_ptr scp, defined_type tp, tagged_ptr tg)
-    : basic_atom(at_Type, scp), builtin_(tp), tag_(tg), unicalfield_(false) {
+    : basic_atom(at_Type, scp), builtin_(tp), tag_(tg) {
     }
 
     type_atom::type_atom(basic_entity_ptr scp, const std::string& reff, defined_type tp, tagged_ptr tg)
-    : basic_atom(at_Type, scp, reff), builtin_(tp), tag_(tg), unicalfield_(false) {
+    : basic_atom(at_Type, scp, reff), builtin_(tp), tag_(tg) {
     }
 
     defined_type type_atom::builtin() const {
@@ -810,7 +871,7 @@ namespace x680 {
     }
 
     tagged_ptr type_atom::tag() const {
-        return  tag_;
+        return tag_;
     }
 
     defined_type type_atom::root_builtin() {
@@ -1057,7 +1118,7 @@ namespace x680 {
         }
         return false;
     }
-    
+
     bool type_atom::isvaluestructure() {
         switch (root_builtin()) {
             case t_EXTERNAL:
@@ -1071,26 +1132,25 @@ namespace x680 {
             }
         }
         return false;
-    }    
-    
+    }
+
     bool type_atom::issubstitute() const {
         switch (builtin()) {
             case t_Selection:
             case t_Instance_Of:
             case t_TypeFromObject: return true;
-            //case t_ValueSetFromObjects: return true;
+                //case t_ValueSetFromObjects: return true;
             default:
             {
             }
         }
-        return false;       
+        return false;
     }
-    
-    
+
     typeassignment_entity_ptr type_atom::valuestructure() {
         if (isvaluestructure()) {
             if ((reff()) && (reff()->as_typeassigment()) && (reff()->as_typeassigment()->type())) {
-                if ((reff()->as_typeassigment()->type()->builtin()==t_SEQUENCE) || (reff()->as_typeassigment()->type()->builtin()==t_SET))
+                if ((reff()->as_typeassigment()->type()->builtin() == t_SEQUENCE) || (reff()->as_typeassigment()->type()->builtin() == t_SET))
                     return reff()->as_typeassigment();
                 return reff()->as_typeassigment()->type()->valuestructure();
             } else if ((scope()) && (scope()->as_typeassigment()) && (scope()->as_typeassigment()->type())) {
@@ -1109,7 +1169,7 @@ namespace x680 {
             }
         }
         return typeassignment_entity_ptr();
-    }        
+    }
 
     bool type_atom::can_integer_constraints() {
         return (root_builtin() == t_INTEGER);
@@ -1180,11 +1240,11 @@ namespace x680 {
         return builtin() == t_ValueSetFromObjects ?
                 boost::static_pointer_cast<fromobjects_type_atom> (self()) : fromobjects_type_atom_ptr();
     }
-    
+
     selection_type_atom_ptr type_atom::as_selection() {
         return builtin() == t_Selection ?
                 boost::static_pointer_cast<selection_type_atom> (self()) : selection_type_atom_ptr();
-    }    
+    }
 
     void type_atom::resolve(basic_atom_ptr holder) {
         if (embeded_assignment_ && (embeded_assignment_->as_typeassigment()) && !yetresolved_) {
@@ -1360,24 +1420,24 @@ namespace x680 {
     instanceoftype_atom::instanceoftype_atom(basic_entity_ptr scp, const std::string& reffcl, tagged_ptr tg) :
     type_atom(scp, t_Instance_Of, tg), class_(class_atom_ptr(new class_atom(scp, reffcl))) {
     };
-    
-    void instanceoftype_atom::resolve_substitute(){
-        if (_class()){
-            from_ = typeassignment_entity_ptr(new typeassignment_entity(scope(),""));
-            tagged_ptr tmptg = tagged_ptr( new tagged(value_atom_ptr( new numvalue_atom(8)), tcl_universal));
+
+    void instanceoftype_atom::resolve_substitute() {
+        if (_class()) {
+            from_ = typeassignment_entity_ptr(new typeassignment_entity(scope(), ""));
+            tagged_ptr tmptg = tagged_ptr(new tagged(value_atom_ptr(new numvalue_atom(8)), tcl_universal));
             type_atom_ptr tmptp = boost::make_shared<type_atom>(scope(), t_SEQUENCE, tmptg);
             from_->type(tmptp);
-            from_->childs().push_back(typeassignment_entity_ptr( new namedtypeassignment_entity(from_, "type-id", type_atom_ptr(), mk_none)));
-            from_->childs().back()->as_typeassigment()->type(type_atom_ptr( new classfieldtype_atom(from_->childs().back())));
+            from_->childs().push_back(typeassignment_entity_ptr(new namedtypeassignment_entity(from_, "type-id", type_atom_ptr(), mk_none)));
+            from_->childs().back()->as_typeassigment()->type(type_atom_ptr(new classfieldtype_atom(from_->childs().back())));
             from_->childs().back()->as_typeassigment()->type()->as_classfield()->field("&id");
-            from_->childs().back()->as_typeassigment()->type()->as_classfield()->_class(_class());            
-            from_->childs().push_back(typeassignment_entity_ptr( new namedtypeassignment_entity(from_, "value", type_atom_ptr(), mk_none)));
-            from_->childs().back()->as_typeassigment()->type(type_atom_ptr( new classfieldtype_atom(from_->childs().back())));
+            from_->childs().back()->as_typeassigment()->type()->as_classfield()->_class(_class());
+            from_->childs().push_back(typeassignment_entity_ptr(new namedtypeassignment_entity(from_, "value", type_atom_ptr(), mk_none)));
+            from_->childs().back()->as_typeassigment()->type(type_atom_ptr(new classfieldtype_atom(from_->childs().back())));
             from_->childs().back()->as_typeassigment()->type()->as_classfield()->field("&Type");
-            from_->childs().back()->as_typeassigment()->type()->as_classfield()->_class(_class());    
-            from_->childs().back()->as_typeassigment()->type()->as_classfield()->tag(tagged_ptr( new tagged(value_atom_ptr( new numvalue_atom(0)))));
-        }      
-    }    
+            from_->childs().back()->as_typeassigment()->type()->as_classfield()->_class(_class());
+            from_->childs().back()->as_typeassigment()->type()->as_classfield()->tag(tagged_ptr(new tagged(value_atom_ptr(new numvalue_atom(0)))));
+        }
+    }
 
     void instanceoftype_atom::resolve(basic_atom_ptr holder) {
         if (_class())
@@ -1415,7 +1475,7 @@ namespace x680 {
     void fromobject_type_atom::resolve_substitute() {
         if ((object())) {
             assignment_entity_ptr tmpasmt = object()->reff()->as_assigment();
-            if (tmpasmt) { 
+            if (tmpasmt) {
                 assignment_entity_ptr fnd = tmpasmt->find_component(field_->expectedname());
                 if (fnd && (fnd->as_typeassigment())) {
                     if (fnd->as_typeassigment()->type())
@@ -1427,7 +1487,7 @@ namespace x680 {
                 //scope()->referenceerror_throw("Type from object not resolved ");
             }
         }
-    }    
+    }
 
     void fromobject_type_atom::resolve(basic_atom_ptr holder) {
         if (object())
@@ -1444,10 +1504,10 @@ namespace x680 {
     fromobjects_type_atom::fromobjects_type_atom(basic_entity_ptr scp, const std::string& refffld, objectset_atom_ptr obj, tagged_ptr tg) :
     type_atom(scp, t_ValueSetFromObjects, tg), objectset_(obj), field_(basic_atom_ptr(new basic_atom(scp, refffld))) {
     };
-    
+
     void fromobjects_type_atom::resolve_substitute() {
 
-    } 
+    }
 
     void fromobjects_type_atom::resolve(basic_atom_ptr holder) {
         if (objectset())
@@ -1456,8 +1516,8 @@ namespace x680 {
         resolve_predef();
         resolve_constraints();
     }
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////   
     // selection_type_atom
     /////////////////////////////////////////////////////////////////////////      
@@ -1465,12 +1525,11 @@ namespace x680 {
     selection_type_atom::selection_type_atom(basic_entity_ptr scp, const std::string& id, type_atom_ptr tp, tagged_ptr tg) :
     type_atom(scp, t_Selection, tg), type_(tp), nidentifier_(id) {
     };
-    
-    
-    void selection_type_atom::resolve_substitute(){
-         if ((type()) && (type()->reff())) {
+
+    void selection_type_atom::resolve_substitute() {
+        if ((type()) && (type()->reff())) {
             assignment_entity_ptr tmpasmt = type()->reff()->as_assigment();
-            if (tmpasmt) { 
+            if (tmpasmt) {
                 assignment_entity_ptr fnd = tmpasmt->find_component(nidentifier_);
                 if (fnd && (fnd->as_typeassigment())) {
                     if (fnd->as_typeassigment()->type())
@@ -1481,7 +1540,7 @@ namespace x680 {
                 //else
                 //scope()->referenceerror_throw("Type from object not resolved ");
             }
-        }       
+        }
     }
 
     void selection_type_atom::resolve(basic_atom_ptr holder) {
@@ -1490,7 +1549,7 @@ namespace x680 {
         resolve_tag();
         resolve_predef();
         resolve_constraints();
-    }    
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1498,11 +1557,11 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     typeassignment_entity::typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, bool nmd) :
-    assignment_entity(scope, nm, et_Type), type_(tp), named_(nmd) {
+    assignment_entity(scope, nm, et_Type), type_(tp), named_(nmd), unicalfield_(false) {
     };
 
     typeassignment_entity::typeassignment_entity(basic_entity_ptr scope, bool nmd) :
-    assignment_entity(scope, et_Type), named_(nmd) {
+    assignment_entity(scope, et_Type), named_(nmd), unicalfield_(false) {
     };
 
     basic_atom_ptr typeassignment_entity::atom() const {
@@ -1633,7 +1692,7 @@ namespace x680 {
             }
         }
         after_resolve_child();
-        post_resolve_tabconstraint();       
+        post_resolve_tabconstraint();
     }
 
     basic_entity_vector::iterator typeassignment_entity::first_extention() {
@@ -1665,14 +1724,14 @@ namespace x680 {
         post_resolve_check();
     }
 
-    void typeassignment_entity::post_resolve_apply_componentsof() {   
+    void typeassignment_entity::post_resolve_apply_componentsof() {
         if (shadow())
-            return;            
+            return;
         if (parameterized() || (has_arguments()))
             return;
         if (type_ && (type_->issubstitute())) {
             substitute();
-        }          
+        }
         type_atom_ptr tmptype = type();
         if ((tmptype) && (!childs().empty())) {
             if ((tmptype->builtin() == t_SEQUENCE) || ((tmptype->builtin() == t_SET))) {
@@ -1684,7 +1743,7 @@ namespace x680 {
                             namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
                             if ((named->marker() == mk_components_of)) {
                                 typeassignment_entity_ptr issue = named;
-                                if (basic_entity_ptr namedreff = named->type()->reff()) {                                    
+                                if (basic_entity_ptr namedreff = named->type()->reff()) {
                                     issue = namedreff->as_typeassigment();
                                     namedreff->resolve();
                                 }
@@ -1697,7 +1756,7 @@ namespace x680 {
                                     for (basic_entity_vector::iterator its = issue->childs().begin();
                                             its != issue->childs().end(); ++its) {
                                         if ((*its)->as_typeassigment()->as_named()->marker() != mk_extention) {
-                                            namedtypeassignment_entity_ptr tmp= (*its)->as_typeassigment()->clone<namedtypeassignment_entity>((*its)->scope(),false);
+                                            namedtypeassignment_entity_ptr tmp = (*its)->as_typeassigment()->clone<namedtypeassignment_entity>((*its)->scope(), false);
                                             if (tmp)
                                                 tmpch.push_back(tmp);
                                         } else
@@ -1706,7 +1765,7 @@ namespace x680 {
                                     if (!tmpch.empty()) {
                                         for (basic_entity_vector::iterator itr = tmpch.begin();
                                                 itr != tmpch.end(); ++itr) {
-                                            if (*itr){
+                                            if (*itr) {
                                                 (*itr)->preresolve();
                                                 (*itr)->resolve();
                                                 (*itr)->shadow_for(*it);
@@ -1725,13 +1784,12 @@ namespace x680 {
         }
         unicalelerror_throw(childs());
     }
-    
 
     bool typeassignment_entity::is_resolve_autotag() {
         if (parameterized() || (has_arguments()))
             return false;
         if (shadow())
-            return false;           
+            return false;
         type_atom_ptr tmptype = type();
         if ((tmptype) && (!childs().empty())) {
             bool automatic = true;
@@ -1759,9 +1817,9 @@ namespace x680 {
 
     void typeassignment_entity::post_resolve_autotag() {
         if (parameterized() || (has_arguments()))
-            return;    
+            return;
         if (shadow())
-            return;            
+            return;
         int num = 0;
         basic_entity_vector::iterator fit = first_extention();
         basic_entity_vector::iterator sit = second_extention();
@@ -1810,91 +1868,140 @@ namespace x680 {
         }
     }
 
+    std::string subidentifier_helper(std::string& nm) {
+        std::string rslt = nm;
+        std::string::size_type it = nm.find_first_of('.');
+        if ((it != std::string::npos) && ((it) && (it < (nm.size() - 1)))) {
+            rslt = nm.substr(0, it);
+            nm = nm.substr(it + 1);
+        } else
+            nm = "";
+        return rslt;
+    }
+
     static objectsetassignment_entity_ptr find_os_assign_tc_helper(objectset_atom_ptr vl) {
         if (vl->as_defn()) {
             if (vl->as_defn()->objects().size() == 1) {
                 object_atom_ptr obj = vl->as_defn()->objects().front();
                 if (obj->as_definedset()) {
                     objectset_atom_ptr objset = obj->as_definedset()->objectset();
-                    if (objset && (objset->reff()) && (objset->reff()->as_objectsetassigment())) {
+                    if (objset && (objset->reff()) && (objset->reff()->as_objectsetassigment()))
                         return objset->reff()->as_objectsetassigment();
-                    }
                 }
             }
+        } else if (vl->as_defined()) {
+            if ((vl->reff()) && (vl->reff()->as_objectsetassigment()))
+                return vl->reff()->as_objectsetassigment();
         }
         return objectsetassignment_entity_ptr();
     }
-    
+
     static classassignment_entity_ptr find_cl_assign_tc_helper(objectset_atom_ptr vl) {
         objectsetassignment_entity_ptr objsetass = find_os_assign_tc_helper(vl);
-        if (objsetass && (objsetass->_class()) && (objsetass->_class()->reff())) {
-           if (objsetass->_class()->reff()->as_classassigment())
-               return objsetass->_class()->reff()->as_classassigment();
-        }
+        if (objsetass && (objsetass->_class()) && (objsetass->_class()->reff()))
+            if (objsetass->_class()->reff()->as_classassigment())
+                return objsetass->_class()->reff()->as_classassigment();
         return classassignment_entity_ptr();
-    }  
-    
+    }
 
-    
     static field_entity_ptr find_field_tc_helper(objectset_atom_ptr vl, const std::string& fld) {
+        std::string tmp = fld;
         classassignment_entity_ptr classass = find_cl_assign_tc_helper(vl);
-        if (classass && (classass->find_field_by_name(fld))) {
-               return classass->find_field_by_name(fld);
+        while (classass) {
+            std::string tmpfldname = subidentifier_helper(tmp);
+            field_entity_ptr tmpfld = classass->find_field_by_name(tmpfldname);
+            if (classass && tmpfld) {
+                if (tmp.empty())
+                    return tmpfld;
+                class_atom_ptr clatm;
+                if ((tmpfld->as_objectsetfield()) && (tmpfld->as_objectsetfield()->_class()))
+                    clatm = tmpfld->as_objectsetfield()->_class();
+                else if ((tmpfld->as_objectsetfield()) && (tmpfld->as_objectfield()->_class()))
+                    clatm = tmpfld->as_objectsetfield()->_class();
+                else
+                    break;
+                if (clatm && (clatm->reff()) && (clatm->reff()->as_classassigment())) {
+                    if ((clatm->reff()->as_classassigment()->refference_to())
+                            && (clatm->reff()->as_classassigment()->refference_to()->as_classassigment())) {
+                        classass = clatm->reff()->as_classassigment()->refference_to()->as_classassigment();
+                    } else
+                        break;
+                } else
+                    break;
+            } else
+                break;
         }
         return field_entity_ptr();
-    }      
-    
-    static defined_type legal_valuefield_helper(type_atom_ptr vl) {
-        switch (vl->root_builtin()){
-            case t_INTEGER:
-            case t_BIT_STRING:
-            case t_OCTET_STRING:
-            case t_OBJECT_IDENTIFIER:
-            case t_ENUMERATED:
-            case t_UTF8String:
-            case t_PrintableString:
-            case t_RELATIVE_OID: return vl->root_builtin();
-            default:{}
-        }
-        return t_NODEF;
+    }
+
+    static typeassignment_entity_ptr find_parent_constraint_holder_helper(typeassignment_entity_ptr vl) {
+        if (vl->tabconstraint())
+            return vl;
+        if ((vl->parent()) && (vl->parent()->as_typeassigment()))
+            return find_parent_constraint_holder_helper(vl->parent()->as_typeassigment());
+        return typeassignment_entity_ptr();
     }
 
     void typeassignment_entity::post_resolve_tabconstraint() {
-        if ((type()) && (!type()->constraints().empty())) {
-            if (type()->constraints().size() == 1) {
-                constraints_atom_ptr tmpcnstrs = type()->constraints().front();
-                if (tmpcnstrs && (tmpcnstrs->constraintline().size() == 1)) {
-                    constraint_atom_ptr tmpcnstr = tmpcnstrs->constraintline().front();
-                    if (tmpcnstr->as_table()) {
-                        tableconstraint_atom_ptr tmptabcnstr = tmpcnstr->as_table();
-                        if (tmptabcnstr) {
-                            if (as_named()) {
-                                if ((as_named()->scope()) && (!as_named()->scope()->childs().empty())
-                                        && (as_named()->scope()->childs().front() == self())) {
-                                    objectset_atom_ptr objst = tmptabcnstr->objectset();
-                                    classassignment_entity_ptr clsass = find_cl_assign_tc_helper(objst);
-                                    if ((type()) && (type()->as_classfield())) {
-                                        field_entity_ptr fld = find_field_tc_helper(objst, type()->as_classfield()->field());
-                                        if (fld && clsass && (fld ->as_valuefield())) {
-                                            type_atom_ptr typevl = fld ->as_valuefield()->type();
-                                            if (legal_valuefield_helper(typevl) != t_NODEF) {
-                                                std::cout << " find field for field: " << type()->as_classfield()->field() << std::endl;
-                                            } else
-                                                std::cout << "warning: Table constraint have not resolved. Governer field type not supported." << std::endl;
-                                        } else
-                                            std::cout << "warning: Table constraint have not resolved. Class field sould be valuefield." << std::endl;
+        typeassignment_entity_ptr prnt = parent() ? parent()->as_typeassigment() : typeassignment_entity_ptr();
+        if ((type()) && (!type()->constraints().empty())
+                && (as_named()) && (type()->constraints().size() == 1) && prnt) {
+            constraints_atom_ptr tmpcnstrs = type()->constraints().front();
+            if (tmpcnstrs && (tmpcnstrs->constraintline().size() == 1)) {
+                constraint_atom_ptr tmpcnstr = tmpcnstrs->constraintline().front();
+                if (tmpcnstr->as_table()) {
+                    tableconstraint_atom_ptr tmptabcnstr = tmpcnstr->as_table();
+                    if (tmptabcnstr) {
+                        if ((!prnt->childs().empty())
+                                /*&& (scope()->childs().front() == self())*/) {
+                            objectset_atom_ptr objst = tmptabcnstr->objectset();
+                            objectsetassignment_entity_ptr objass = find_os_assign_tc_helper(objst);
+                            classassignment_entity_ptr clsass = find_cl_assign_tc_helper(objst);
+                            if ((type()) && (type()->as_classfield())) {
+                                field_entity_ptr fld = find_field_tc_helper(objst, type()->as_classfield()->field());
+                                if (fld && clsass && (fld ->as_valuefield())) {
+                                    type_atom_ptr typevl = fld ->as_valuefield()->type();
+                                    defined_type untp = typevl->root_builtin();
+                                    if (untp != t_NODEF) {
+                                        if (prnt) {
+                                            unicalfield(true);
+                                            prnt->tabconstraint(effective_tabconstraint_ptr(new effective_tabconstraint(scope(), clsass, objass, untp)));
+                                            prnt->tabconstraint()->unicalfield(type()->as_classfield()->field());
+                                            reff_tabconstraint(prnt->tabconstraint());
+                                        }
                                     } else
-                                        std::cout << "warning: Table constraint have not resolved. Type sould be classfield type." << std::endl;
+                                        std::cout << "warning: Table constraint have not resolved. Governer field type not supported." << std::endl;
                                 } else
-                                    std::cout << "warning: Table constraint have not resolved. Governer field should be first." << std::endl;
+                                    std::cout << "warning: Table constraint have not resolved. Class field sould be valuefield." << std::endl;
                             } else
-                                std::cout << "warning: Table constraint have not resolved. Should be nested type. " << std::endl;
-                        }
-                    } else if (tmpcnstr->as_relation()) {
-                        relationconstraint_atom_ptr tmprelcnstr = tmpcnstr->as_relation();
-                        if (tmprelcnstr) {
-                            std::cout << "find relation constraint" << std::endl;
-                        }
+                                std::cout << "warning: Table constraint have not resolved. Type sould be classfield type." << std::endl;
+                        } else
+                            std::cout << "warning: Table constraint have not resolved. Governer field should be first." << std::endl;
+                        //if ((type()) && (type()->as_classfield()))
+                        //std::cout << type()->as_classfield()->field() << std::endl;
+                    }
+                } else if (tmpcnstr->as_relation()) {
+                    relationconstraint_atom_ptr tmprelcnstr = tmpcnstr->as_relation();
+                    if (tmprelcnstr) {
+                        prnt = find_parent_constraint_holder_helper(prnt);
+                        if (prnt && (prnt->tabconstraint())) {
+                            objectset_atom_ptr objst = tmprelcnstr->objectset();
+                            objectsetassignment_entity_ptr objass = find_os_assign_tc_helper(objst);
+                            classassignment_entity_ptr clsass = find_cl_assign_tc_helper(objst);
+                            effective_tabconstraint_ptr efftab = prnt->tabconstraint();
+                            if (efftab && clsass && objass && (efftab->_class() == clsass) && (efftab->objectsetassignment() == objass)) {
+                                if ((type()) && (type()->as_classfield())) {
+                                    if (!prnt->tabconstraint()->find_field(type()->as_classfield()->field()))
+                                        efftab->fieldnames().push_back(type()->as_classfield()->field());
+                                    reff_tabconstraint(prnt->tabconstraint());
+                                } else
+                                    std::cout << "warning: Relation constraint have not resolved. Type sould be classfield type." << std::endl;
+                            } else
+                                std::cout << "warning: Relation constraint have not resolved. Class or Objectassignment notequal with table constrant." << std::endl;
+                        } else
+                            std::cout << "warning: Relation constraint have not resolved. Table constraint have not find.." << std::endl;
+                        //if ((type()) && (type()->as_classfield()))
+                        // std::cout << type()->as_classfield()->field() << std::endl;                        
                     }
                 }
             }
@@ -1904,9 +2011,9 @@ namespace x680 {
     void typeassignment_entity::post_resolve_check() {
         //return;
         if (shadow())
-            return;            
+            return;
         if (parameterized() || (has_arguments()))
-            return;       
+            return;
         type_atom_ptr tmptype = type();
         if ((tmptype) && (!childs().empty())) {
             if ((tmptype->builtin() == t_SEQUENCE) || ((tmptype->builtin() == t_SET))) {
@@ -1970,7 +2077,7 @@ namespace x680 {
                 else if (from->as_typeassigment()->type_->as_instance())
                     type_ = type_atom_ptr(new instanceoftype_atom(*(from->as_typeassigment()->type_->as_instance())));
                 else if (from->as_typeassigment()->type_->as_selection())
-                    type_ = type_atom_ptr(new selection_type_atom(*(from->as_typeassigment()->type_->as_selection())));                
+                    type_ = type_atom_ptr(new selection_type_atom(*(from->as_typeassigment()->type_->as_selection())));
                 else
                     type_ = type_atom_ptr(new type_atom(*(from->as_typeassigment()->type_)));
             }
@@ -1978,13 +2085,15 @@ namespace x680 {
                 if (selftype->constraints().empty())
                     type_->constraints().insert(type_->constraints().end(), selftype->constraints().begin(), selftype->constraints().end());
                 if ((selftype->tag()) && (!type_->tag()))
-                    type_->tag(tagged_ptr( new tagged(*(selftype->tag()))));
+                    type_->tag(tagged_ptr(new tagged(*(selftype->tag()))));
                 if ((selftype->predefined()) && (!type_->predefined()))
-                    type_->predefined( predefined_ptr( new x680::predefined(*(selftype->predefined()))));
+                    type_->predefined(predefined_ptr(new x680::predefined(*(selftype->predefined()))));
                 if ((selftype->embeded_assignment()))
                     type_->embeded_assignment(selftype->embeded_assignment());
+            }
+            if (from->as_typeassigment()->tabconstraint_)
+                tabconstraint_ = from->as_typeassigment()->tabconstraint_;
         }
-    }
     }
 
     void typeassignment_entity::substitute() {
@@ -1993,11 +2102,11 @@ namespace x680 {
             typeassignment_entity_ptr subtype = type_->from();
             if (subtype) {
                 if (!type_->as_instance()) {
-                    subtype = subtype->clone<typeassignment_entity>(basic_entity_ptr(), false);  
+                    subtype = subtype->clone<typeassignment_entity>(basic_entity_ptr(), false);
                     subtype->preresolve();
                     subtype->resolve();
                 }
-            assign_from(subtype);   
+                assign_from(subtype);
             } else
                 referenceerror_throw("Subtitute type error :");
         }

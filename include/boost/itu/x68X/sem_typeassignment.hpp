@@ -174,34 +174,73 @@ namespace x680 {
         
         typedef std::vector<std::string> fieldname_vct;
         
-        effective_tabconstraint(basic_entity_ptr scp, objectassignment_entity_set oset) : 
-        basic_atom(at_EffectiveTabConstraint, scp), objectset_(oset), unical_(false) {}
+        effective_tabconstraint(basic_entity_ptr scp, classassignment_entity_ptr cls, objectsetassignment_entity_ptr objs, defined_type untp) : 
+        basic_atom(at_EffectiveTabConstraint, scp), class_(cls), objectsetassignment_(objs), unicaltype_(untp)  {}
         
-        objectassignment_entity_set& objectset() {
-            return objectset_;
+        classassignment_entity_ptr _class() {
+            return class_;
         }
 
-        void objectset(objectassignment_entity_set vl) {
-            objectset_ = vl;
-        }    
+        void _class(classassignment_entity_ptr vl) {
+            class_ = vl;
+        }   
         
+        objectsetassignment_entity_ptr objectsetassignment() {
+            return objectsetassignment_;
+        }
+
+        void objectsetassignment(objectsetassignment_entity_ptr vl) {
+            objectsetassignment_ = vl;
+        }         
+        
+      
         fieldname_vct& fieldnames() {
             return fieldnames_;
-        }       
+        }     
         
-        bool unical() {
-            return unical_;
+        std::string unicalfield() {
+            return unicalfield_;
         }
 
-        void unical(bool vl) {
-            unical_ = vl;
+        void unicalfield(const std::string& vl) {
+            unicalfield_ = vl;
         }      
+        
+        defined_type unicaltype() {
+            return unicaltype_;
+        }
+
+        void unicaltype(defined_type vl) {
+            unicaltype_ = vl;
+        }           
+        
+        bool find_field(const std::string& vl);  
+        
+        typeassignment_entity_vct fields(const std::string& nm);
+                      
+        objectassignment_entity_set objectset();        
+        
+        value_vct fields();
+        
+        std::size_t count();        
+        
+        bool valid();   
+        
+        bool check();
+
+        
+        
+        
+           
 
     private:
         
-        objectassignment_entity_set objectset_;
+        classassignment_entity_ptr class_;
+        objectsetassignment_entity_ptr objectsetassignment_;
         fieldname_vct fieldnames_;
-        bool unical_;
+        std::string unicalfield_;
+        defined_type unicaltype_;
+        
     };
 
     /////////////////////////////////////////////////////////////////////////   
@@ -267,32 +306,7 @@ namespace x680 {
 
         quadruple_constraints_ptr quadruple_constraint();
 
-        tuple_constraints_ptr tuple_constraint();
-        
-        
-        effective_tabconstraint_ptr tabconstraint() {
-            return tabconstraint_;
-        }
-
-        void tabconstraint(effective_tabconstraint_ptr vl) {
-            tabconstraint_ = vl;
-        }          
-        
-        effective_tabconstraint_ptr reff_tabconstraint() {
-            return reff_tabconstraint_;
-        }
-
-        void reff_tabconstraint(effective_tabconstraint_ptr vl) {
-            reff_tabconstraint_ = vl;
-        }   
-        
-        bool unicalfield() {
-            return unicalfield_;
-        }
-
-        void unicalfield(bool vl) {
-            unicalfield_ = vl;
-        } 
+        tuple_constraints_ptr tuple_constraint();             
 
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
@@ -371,9 +385,6 @@ namespace x680 {
         predefined_ptr predefined_;
         constraints_atom_vct constraints_;
         typeassignment_entity_ptr from_;
-        effective_tabconstraint_ptr tabconstraint_;
-        effective_tabconstraint_ptr reff_tabconstraint_;    
-        bool unicalfield_;
 
     };
 
@@ -758,6 +769,30 @@ namespace x680 {
 
         virtual basic_atom_ptr atom() const;
         
+        effective_tabconstraint_ptr tabconstraint() const {
+            return tabconstraint_;
+        }
+
+        void tabconstraint(effective_tabconstraint_ptr vl) {
+            tabconstraint_ = vl;
+        }          
+        
+        effective_tabconstraint_ptr reff_tabconstraint() const {
+            return !reff_tabconstraint_._empty() ? reff_tabconstraint_.lock() : effective_tabconstraint_ptr();
+        }
+
+        void reff_tabconstraint(effective_tabconstraint_ptr vl) {
+            reff_tabconstraint_ = effective_tabconstraint_wptr(vl);
+        }   
+        
+        bool unicalfield() {
+            return unicalfield_;
+        }
+
+        void unicalfield(bool vl) {
+            unicalfield_ = vl;
+        }         
+        
         
     protected:                
 
@@ -782,6 +817,9 @@ namespace x680 {
         type_atom_ptr type_;
         bool named_;
         x680::syntactic::type_assignment synctas_;
+        effective_tabconstraint_ptr tabconstraint_;
+        effective_tabconstraint_wptr reff_tabconstraint_;    
+        bool unicalfield_;        
     };
 
 
