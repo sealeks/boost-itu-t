@@ -1313,6 +1313,12 @@ namespace x680 {
             boost::static_pointer_cast<effective_tabconstraint> (self()) : effective_tabconstraint_ptr();
     }
 
+    assignment_entity_ptr basic_atom::refference_to() {
+        if ((reff()) && (reff()->as_assigment()))
+            return reff()->as_assigment()->refference_to();
+        return assignment_entity_ptr();
+    }   
+
     entity_enum basic_atom::check_reff(basic_atom_ptr holder, search_marker sch) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {
             basic_entity_ptr source = holder ?

@@ -481,7 +481,32 @@ namespace x680 {
     }
 
 
+    /////////////////////////////////////////////////////////////////////////      
+    // namedvalue_initer
+    /////////////////////////////////////////////////////////////////////////     
 
+    struct namedvalue_initer {
+
+        namedvalue_initer() : str(), val() {
+        }
+
+        namedvalue_initer(const std::string vl, value_atom_ptr v = value_atom_ptr()) : str(vl), val(v) {
+        }
+        
+        friend bool operator<(const namedvalue_initer& ls, const namedvalue_initer& rs){
+            return ls.str < rs.str;
+        }
+        
+        friend bool operator==(const namedvalue_initer& ls, const namedvalue_initer& rs){
+            return ls.str == rs.str;
+        }
+
+        std::string str;
+        value_atom_ptr val;
+    };
+
+
+    typedef std::set<namedvalue_initer> namedvalue_initer_set;
 
 
 
@@ -1105,7 +1130,9 @@ namespace x680 {
 
         constraints_atom_ptr as_constraints();
         
-        effective_tabconstraint_ptr as_effective_tab();        
+        effective_tabconstraint_ptr as_effective_tab();       
+        
+        assignment_entity_ptr refference_to();
 
         ////////
 

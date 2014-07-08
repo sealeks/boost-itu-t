@@ -53,7 +53,8 @@ namespace x680 {
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self);
         bool value_oid_str(value_atom_ptr self, std::vector<std::string>& rslt);
         std::string valueassmnt_str(valueassignment_entity_ptr self);
-        std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "");
+        std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "", bool ext = false);
+        std::string value_struct_str(value_atom_ptr vl, type_atom_ptr tp);
         std::string nameconvert(std::string name);
         std::string argumentname(std::string name);
         std::string tabformat(basic_entity_ptr selft = basic_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
@@ -64,7 +65,7 @@ namespace x680 {
         std::string tagged_class_str(tagged_ptr self);
         std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name);
         std::string struct_meth_str(typeassignment_entity_ptr self, const std::string& tp);
-        std::string nested_init_str(type_atom_ptr self, const std::string& nm);
+        std::string nested_init_str(type_atom_ptr self, const std::string& nm, bool ext = false);
 
         bool expressed_import(module_entity_ptr self, const std::string& name);
         member_vect parse_membervct(const member_vect& vct, bool obligate);

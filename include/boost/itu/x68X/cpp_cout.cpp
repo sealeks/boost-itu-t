@@ -495,17 +495,47 @@ namespace x680 {
             return valueassmnt_str(self->type(), self->value(), nameconvert(self->name()));
         }
 
-        std::string valueassmnt_str(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm) {
+        std::string value_struct_str(value_atom_ptr vl, type_atom_ptr tp) {
+            std::string rslt=fromtype_str(tp) + "(";
+            if (tp && (tp->refference_to()) && (tp->refference_to()->as_typeassigment())) {
+                typeassignment_entity_ptr tpassmt = tp->refference_to()->as_typeassigment();             
+                if (tpassmt->type()) {                
+                    boost::shared_ptr<namedvalue_initer_set> values = vl->get_value<namedvalue_initer_set>();
+                    bool first = true;
+                    if (values) {
+                        for (basic_entity_vector::iterator it = tpassmt->childs().begin(); it != tpassmt->childs().end(); ++it) {
+                            typeassignment_entity_ptr subtpassmt = (*it)->as_typeassigment();
+                            if (subtpassmt) {
+                                if (first)
+                                    first = false;
+                                else
+                                    rslt += ", ";
+                                std::string subelmt = "";
+                                namedvalue_initer_set::iterator fid = values->find(namedvalue_initer(subtpassmt->name()));
+                                if (fid!=values->end())
+                                    subelmt = " new " + valueassmnt_str(subtpassmt->type(),fid->val, fid->str, true) + "";
+                                    rslt += ("boost::shared_ptr<" + fromtype_str((*it)->as_typeassigment()->type()) +
+                                        " >(" + subelmt +")");
+                            }
+                        }
+                    }
+                }
+            }
+            rslt+=")";
+            return rslt;
+        }
+
+        std::string valueassmnt_str(type_atom_ptr tp, value_atom_ptr vl, const std::string& nm, bool ext) {
             switch (tp->root_builtin()) {
-                case t_NULL: return nested_init_str(tp, value_null_str(vl));
-                case t_INTEGER: return nested_init_str(tp, value_int_str(vl));
-                case t_BOOLEAN: return nested_init_str(tp, value_bool_str(vl));
-                case t_REAL: return nested_init_str(tp, value_real_str(vl));
-                case t_BIT_STRING: return nested_init_str(tp, value_bs_str(vl));
-                case t_OCTET_STRING: return nested_init_str(tp, value_os_str(vl));
-                case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl));
-                case t_OBJECT_IDENTIFIER: return nested_init_str(tp, "boost::asn1::oid_type(" + nm + "_OID_ARR )");
-                case t_RELATIVE_OID: return nested_init_str(tp, "boost::asn1::reloid_type(" + nm + "_OID_ARR )");
+                case t_NULL: return nested_init_str(tp, value_null_str(vl),ext);
+                case t_INTEGER: return nested_init_str(tp, value_int_str(vl),ext);
+                case t_BOOLEAN: return nested_init_str(tp, value_bool_str(vl),ext);
+                case t_REAL: return nested_init_str(tp, value_real_str(vl),ext);
+                case t_BIT_STRING: return nested_init_str(tp, value_bs_str(vl),ext);
+                case t_OCTET_STRING: return nested_init_str(tp, value_os_str(vl),ext);
+                case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl),ext);
+                case t_OBJECT_IDENTIFIER: return nested_init_str(tp, "boost::asn1::oid_type(" + nm + "_OID_ARR )",ext);
+                case t_RELATIVE_OID: return nested_init_str(tp, "boost::asn1::reloid_type(" + nm + "_OID_ARR )",ext);
                 case t_NumericString:
                 case t_PrintableString:
                 case t_T61String:
@@ -514,10 +544,15 @@ namespace x680 {
                 case t_VisibleString:
                 case t_GeneralString:
                 case t_ObjectDescriptor:
-                case t_IA5String: return nested_init_str(tp, value_chars8_str(vl, tp->root_builtin() == t_IA5String));
-                case t_BMPString: return nested_init_str(tp, value_chars16_str(vl));
+                case t_IA5String: return nested_init_str(tp, value_chars8_str(vl, tp->root_builtin() == t_IA5String),ext);
+                case t_BMPString: return nested_init_str(tp, value_chars16_str(vl),ext);
                 case t_UniversalString:
-                case t_UTF8String: return nested_init_str(tp, value_utfchars_str(vl));
+                case t_UTF8String: return nested_init_str(tp, value_utfchars_str(vl),ext);
+                //case t_SEQUENCE:
+                //case t_SET: return nested_init_str(tp, value_struct_str(vl, tp),ext);
+                /*case t_SEQUENCE_OF:  return nested_init_str(tp, value_struct_str(vl, tp));               
+                case t_SET_OF:
+                case t_CHOICE:  return nested_init_str(tp, value_struct_str(vl, tp)); */                   
                 default:
                 {
                 }
@@ -725,7 +760,7 @@ namespace x680 {
                     tp + "& arch)";
         }
 
-        std::string nested_init_str(type_atom_ptr self, const std::string& nm) {
+        std::string nested_init_str(type_atom_ptr self, const std::string& nm,  bool ext) {
             type_atom_ptr next = self->textualy_type();
             if ((!next) || (next == self) || (!next->reff()))
                 return ((next) && (next->tag()) && (next->isrefferrence())) ? (fromtype_str(next) + "(" + nm + ")") : nm;
@@ -733,7 +768,6 @@ namespace x680 {
                 return fromtype_str(next) + "(" + nm + ")";
             if (!next->reff()->as_typeassigment()->type())
                 return fromtype_str(next) + "(" + nm + ")";
-
             return fromtype_str(next) + "(" + nested_init_str(next->reff()->as_typeassigment()->type(), nm) + ")";
         }
 
@@ -1491,6 +1525,8 @@ namespace x680 {
                         case t_VisibleString:
                         case t_GeneralString:
                         case t_ObjectDescriptor:
+                        //case t_SEQUENCE:
+                        //case t_SET:                            
                         {
                             stream << "\n" << tabformat() << "const " << fromtype_str(self->type()) << " "
                                     << nameconvert(self->name()) << " = " << valueassmnt_str(self) << ";\n";

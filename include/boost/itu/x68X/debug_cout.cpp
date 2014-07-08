@@ -298,6 +298,10 @@ namespace x680 {
                 if (self->tabconstraint()){
                     stream << " ( has table constrant ";
                     stream << "  {cnt = "  << self->tabconstraint()->count()  << "}";
+                    if (self->tabconstraint()->valid())
+                        stream << "  {valid}";
+                    else
+                        stream << "  {?????}";
                     stream  << "["  << self->tabconstraint()->unicalfield()   << "]";
                     for (effective_tabconstraint::fieldname_vct::const_iterator it = self->tabconstraint()->fieldnames().begin();
                             it !=  self->tabconstraint()->fieldnames().end(); ++it) 
