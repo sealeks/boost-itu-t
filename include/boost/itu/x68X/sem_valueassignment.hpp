@@ -73,7 +73,7 @@ namespace x680 {
         boost::shared_ptr<T> get_value(bool except_abstract = false) {
             return boost::shared_ptr<T>();
         }
-
+        
         template< typename T>
         boost::shared_ptr<T> get_value_parent(bool except_abstract = false);
 
@@ -87,6 +87,15 @@ namespace x680 {
         value_type valtype_;
 
     };
+
+    template<>
+    boost::shared_ptr<namedvalue_initer> value_atom::get_value(bool except_abstract);
+
+    template<>
+    boost::shared_ptr<namedvalue_initer_set> value_atom::get_value(bool except_abstract); 
+    
+    template<>
+    boost::shared_ptr<value_vct> value_atom::get_value(bool except_abstract); 
 
     template<>
     boost::shared_ptr<null_initer> value_atom::get_value(bool except_abstract);
@@ -132,9 +141,7 @@ namespace x680 {
 
     template<>
     boost::shared_ptr<tuple_vector> value_atom::get_value(bool except_abstract);
-
-    template<>
-    boost::shared_ptr<quadruple_vector> value_atom::get_value(bool except_abstract);
+ 
 
 
 

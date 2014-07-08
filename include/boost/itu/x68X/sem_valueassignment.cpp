@@ -161,6 +161,36 @@ namespace x680 {
         for (value_vct::iterator it = vl.begin(); it != vl.end(); ++it)
             (*it)->resolve((*it)->reff_resolver() ? (*it)->reff_resolver() : holder);
     }
+    
+    
+  
+    template<>    
+    boost::shared_ptr<namedvalue_initer> value_atom::get_value(bool except_abstract){
+        if (as_named()){
+            return boost::shared_ptr<namedvalue_initer>( new namedvalue_initer(as_named()->name(),as_named()->value()));
+        }
+        return boost::shared_ptr<namedvalue_initer>();
+    }
+    
+    template<>    
+     boost::shared_ptr<namedvalue_initer_set> value_atom::get_value(bool except_abstract){
+         if ((as_struct())) {
+                 namedvalue_initer_set rslt;
+                 for (value_vct::iterator it = as_struct()->values().begin(); it != as_struct()->values().end(); ++it) {
+                     if ((*it)->as_named()){
+                             rslt.insert(namedvalue_initer((*it)->as_named()->name(),(*it)->as_named()->value()));               
+                     }
+                     else break;
+                 }
+                 return boost::shared_ptr<namedvalue_initer_set>( new namedvalue_initer_set(rslt));
+         }
+         return boost::shared_ptr<namedvalue_initer_set>();
+     }    
+     
+    template<>
+    boost::shared_ptr<value_vct> value_atom::get_value(bool except_abstract){
+        return boost::shared_ptr<value_vct>();
+    } 
 
     template<>
     boost::shared_ptr<null_initer> value_atom::get_value(bool except_abstract) {
@@ -462,7 +492,7 @@ namespace x680 {
         }
         return boost::shared_ptr<quadruple_vector>();
     }
-
+    
 
 
 

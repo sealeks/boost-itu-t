@@ -818,6 +818,9 @@ namespace x680 {
                             rslt.push_back(fndfield->as_valuesetassigment()->type()->valuestructure());
                     }
                 }
+                /*else{
+                    std::cout << "Field not found :" << nm << std::endl;
+                }*/
             }
         }
         return rslt;
@@ -846,6 +849,16 @@ namespace x680 {
     }
 
     bool effective_tabconstraint::valid() {
+        std::size_t cnt=count();
+        if (cnt){
+            if (fields().size()!=cnt)
+                return false;
+            for (fieldname_vct::const_iterator it = fieldnames().begin(); it != fieldnames().end(); ++it) {
+                if (fields(*it).size()!=cnt)
+                    return false;
+            }
+            return true;            
+        }
         return false;
     }
 
