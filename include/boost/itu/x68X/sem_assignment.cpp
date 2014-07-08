@@ -1787,45 +1787,7 @@ namespace x680 {
         return tmp;
     }
 
-    /*    template<>
-    void assignment_entity::resolve_parametrezed<typeassignment_entity>() {
-        typedef typeassignment_entity T;
-        basic_atom_ptr rslt = atom();
-        if ((!has_arguments()) && (rslt) && (rslt->parameterized())) {
-            try {
-                if ((rslt->reff()) && (rslt->reff()->as_assigment()) && (rslt->reff()->as_assigment()->as_baseassignment<T>())) {
-                    boost::shared_ptr<T> tas = rslt->reff()->as_assigment()->as_baseassignment<T>();
-                    boost::shared_ptr<T> tascopy = tas->clone<T>();
-                    if (!tascopy)
-                        throw semantics::error("");
-                    tascopy->preresolve();
-                    tascopy->resolve();
-                    assign_from(tascopy);
-                    tascopy->apply_arguments(rslt->parameters(), self());
-                    tascopy->resolve_arguments();
 
-                }
-            } catch (const semantics::error&) {
-                debug_warning(std::string(" Arguments apply error ") + name());
-                //const_cast<T*> (this)->referenceerror_throw("Arguments apply error ", name());
-            }
-        }
-    }
-
-     template<>
-     void assignment_entity::resolve_argumented<typeassignment_entity>() {
-         basic_atom_ptr rslt = atom();
-         if (rslt && (rslt->isdummy()) && (rslt->reff()) && (rslt->reff()->as_assigment())
-                 && (rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>())) {
-             boost::shared_ptr<typeassignment_entity> tas = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>();
-             rslt = rslt->reff()->as_assigment()->as_baseassignment<typeassignment_entity>()->atom();
-             if (rslt) {
-                  tas->preresolve();
-                  tas->resolve();
-                  assign_from(tas);
-             }     
-         }
-     } */
 
     /////////////////////////////////////////////////////////////////////////   
     // BIG
