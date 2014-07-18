@@ -80,16 +80,23 @@ namespace boost {\
 #define ITU_T_CHOICE_REGESTRATE(regtype)\
 namespace boost {\
         namespace asn1 {\
+            template<>\
+        struct bind_element< regtype > {\
             template<typename Archive>\
-                void bind_element(Archive& arch, const regtype & vl){\
-                    boost::asn1::bind_choice(arch, vl);\
-                }  \
+                    static bool op(Archive& arch, regtype & vl) {\
+                return boost::asn1::bind_choice(arch, vl);\
+            }\
             template<typename Archive>\
-                void bind_element(Archive& arch, regtype & vl){\
-                    boost::asn1::bind_choice(arch, vl);\
-                }  \
-        }\
-}\
+                    static bool op(Archive& arch, const regtype & vl) {\
+                return boost::asn1::bind_choice(arch, vl);\
+            }\
+            template<typename Archive>\
+                    static bool op(Archive& arch, value_holder< regtype >& vl) {\
+                return op(arch, (*vl));\
+            }\
+        };\
+                }\
+            }\
 
 #define ITU_T_INTERNAL_REGESTRATE(regtype, id) \
             template<>\
@@ -345,7 +352,7 @@ namespace boost {
             explicit bitstring_type(const std::vector<bool>& vl);
 
             explicit bitstring_type(bool vl, std::size_t n);
-            
+
             explicit bitstring_type(const std::string& vl, std::size_t unuse = 0);
 
             bitstring_type(const dynamic_bitset_type& vl) : std::vector<octet_type>() {
@@ -1791,17 +1798,29 @@ namespace boost {
             return false;
         }
 
-        template<typename Archive, typename T>
-        inline bool bind_element(Archive& arch, T& vl) {
-            std::size_t tst = arch.size();
-            arch & vl;
-            return (arch.size() != tst);
-        }
+        template<typename T>
+        struct bind_element {
 
-        template<typename Archive, typename T>
-        inline bool bind_element(Archive& arch, value_holder<T>& vl) {
-            return bind_element(arch, (*vl));
-        }
+            template<typename Archive>
+                    static bool op(Archive& arch, T& vl) {
+                std::size_t tst = arch.size();
+                arch & vl;
+                return (arch.size() != tst);
+            }
+
+            template<typename Archive>
+                    static bool op(Archive& arch, const T& vl) {
+                std::size_t tst = arch.size();
+                arch & vl;
+                return (arch.size() != tst);
+            }
+
+            template<typename Archive>
+                    static bool op(Archive& arch, value_holder<T>& vl) {
+                return op(arch, (*vl));
+            }
+
+        };
 
 
 
