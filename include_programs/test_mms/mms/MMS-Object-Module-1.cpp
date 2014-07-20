@@ -967,7 +967,7 @@ namespace MMS_Object_Module_1 {
             }
             case TypeDescription_mMSString:
             {
-                ITU_T_EXPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_mMSString), 16);
+                ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_mMSString), 16);
                 break;
             }
             default:
@@ -1078,7 +1078,7 @@ namespace MMS_Object_Module_1 {
                     }
                     case 16:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_mMSString), 16)) return;
+                        if (ITU_T_IMPLICIT_TAG(value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_mMSString), 16)) return;
                         else free();
                         break;
                     }

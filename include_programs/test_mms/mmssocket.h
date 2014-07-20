@@ -52,6 +52,7 @@ namespace prot9506 {
 
     template< typename REQ, typename RSP, MMS::ConfirmedServiceRequest_enum REQID, MMS::ConfirmedServiceResponse_enum RSPID>
     class confirmed_operation {
+
     public:
 
         typedef REQ request_type;
@@ -65,6 +66,7 @@ namespace prot9506 {
         typedef boost::shared_ptr<serviceerror_type> serviceerror_type_ptr;
 
         enum state_type {
+
             noproccess_state,
             ok_state,
             rejected_state,
@@ -197,6 +199,9 @@ namespace prot9506 {
     typedef confirmed_operation<MMS::Read_Request, MMS::Read_Response,
     MMS::ConfirmedServiceRequest_read, MMS::ConfirmedServiceResponse_read > read_operation_type;
 
+    typedef confirmed_operation<MMS::DefineNamedVariableList_Request, MMS::DefineNamedVariableList_Response,
+    MMS::ConfirmedServiceRequest_defineNamedVariableList, MMS::ConfirmedServiceResponse_defineNamedVariableList > definelist_operation_type;
+
     //typedef confirmed_operation<MMS::Write_Request , MMS::Write_Response ,
     //MMS::ConfirmedServiceRequest_write  , MMS::ConfirmedServiceResponse_write >                                                                                     write_operation_type;   
 
@@ -220,6 +225,7 @@ namespace prot9506 {
     const application_context MMS_APPLICATION_CONTEXT = application_context(MMSA_OID, MMS_CONTEXT);
 
     class mms_socket : public boost::itu::x227impl::application_socket {
+
         typedef boost::itu::x227impl::application_socket super_type;
         typedef boost::itu::x226impl::defined_context_ptr application_context_ptr;
 
@@ -253,6 +259,7 @@ namespace prot9506 {
 
         template <typename ConnectHandler>
         class connect_operation {
+
         public:
 
             connect_operation(mms_socket& sock, const ConnectHandler handlr) : socket(sock), handler(handlr) {
@@ -303,9 +310,11 @@ namespace prot9506 {
 
         template <typename ConfirmRequestHandler, typename REQ, typename RSP, MMS::ConfirmedServiceRequest_enum REQID, MMS::ConfirmedServiceResponse_enum RSPID>
         class confirm_request_op {
+
             typedef boost::shared_ptr<confirmed_operation<REQ, RSP, REQID, RSPID > > operation_type;
 
             enum state_type {
+
                 request,
                 response,
                 error
@@ -340,8 +349,7 @@ namespace prot9506 {
                         {
                         }
                     }
-                }
-                else {
+                } else {
                     operation_->error(ec);
                 }
                 handler_(operation_);
@@ -361,12 +369,10 @@ namespace prot9506 {
                                 const MMS::ConfirmedServiceResponse& confirmresp = mmsresp.service();
                                 if (confirmresp.type() == operation_->rspid()) {
                                     operation_->response(confirmresp.get< RSP > (operation_->rspid()));
-                                }
-                                else {
+                                } else {
                                     operation_->setunexpetedresp();
                                 }
-                            }
-                            else {
+                            } else {
                                 operation_->setunexpetedIvoke();
                             }
                             break;
@@ -376,8 +382,7 @@ namespace prot9506 {
                             const MMS::Confirmed_ErrorPDU& mmsresp = *mms.confirmed_ErrorPDU();
                             if ((mmsresp.invokeID()) == operation_->invokeid()) {
                                 operation_->serviceerror(boost::shared_ptr<MMS::ServiceError > (new MMS::ServiceError(mmsresp.serviceError())));
-                            }
-                            else {
+                            } else {
                                 operation_->setunexpetedIvoke();
                             }
                             break;
@@ -393,12 +398,10 @@ namespace prot9506 {
                         }
                     }
                     return;
-                }
-                catch (const boost::system::system_error& cerr) {
+                }                catch (const boost::system::system_error& cerr) {
                     operation_->error(cerr.code());
                     return;
-                }
-                catch (...) {
+                }                catch (...) {
                 }
                 operation_->error(boost::itu::ER_PROTOCOL);
             }
@@ -426,7 +429,7 @@ namespace prot9506 {
             mms.confirmed_RequestPDU__new();
             MMS::Confirmed_RequestPDU& cfpdu = *mms.confirmed_RequestPDU();
             operation->invokeid(invoke_id());
-            cfpdu.invokeID (operation->invokeid());
+            cfpdu.invokeID(operation->invokeid());
             cfpdu.service().set(operation->request(), operation->reqid());
             mmsdcs()->set(mms);
 
@@ -480,6 +483,7 @@ namespace prot9506 {
     /////////////////////////////
 
     class socket_acceptor : public boost::itu::x227impl::socket_acceptor {
+
         typedef boost::itu::x227impl::socket_acceptor super_type;
 
     public:
@@ -566,6 +570,7 @@ namespace prot9506 {
 }
 
 class iso9506 {
+
 public:
     /// The type of a TCP endpoint.
 

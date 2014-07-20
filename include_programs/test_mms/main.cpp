@@ -1,7 +1,7 @@
 /*  * File:   main.cpp
  * Author: sealeks@mail.ru
  *
- * Created on 27 Р В  Р В Р вЂ№Р В  Р вЂ™Р’ВµР В  Р В РІР‚В¦Р В Р Р‹Р Р†Р вЂљРЎв„ўР В Р Р‹Р В Р РЏР В  Р вЂ™Р’В±Р В Р Р‹Р В РІР‚С™Р В Р Р‹Р В Р вЂ° 2012 Р В  Р РЋРІР‚вЂњ., 15:58
+ * Created on 27 Р В Р’В  Р В Р’В Р В РІР‚в„–Р В Р’В  Р В РІР‚в„ўР вЂ™Р’ВµР В Р’В  Р В Р’В Р Р†Р вЂљР’В¦Р В Р’В Р В Р вЂ№Р В Р вЂ Р В РІР‚С™Р РЋРІвЂћСћР В Р’В Р В Р вЂ№Р В Р’В Р В Р РЏР В Р’В  Р В РІР‚в„ўР вЂ™Р’В±Р В Р’В Р В Р вЂ№Р В Р’В Р Р†Р вЂљРЎв„ўР В Р’В Р В Р вЂ№Р В Р’В Р В РІР‚В° 2012 Р В Р’В  Р В Р Р‹Р Р†Р вЂљРІР‚Сљ., 15:58
  */
 
 
@@ -127,8 +127,7 @@ private:
             const boost::system::error_code& error) {
         if (!error) {
             new_session->start();
-        }
-        else {
+        } else {
             delete new_session;
         }
 
@@ -147,6 +146,7 @@ public:
     typedef prot9506::getnamelist_operation_type getnamelist_operation_type;
     typedef prot9506::getvaraccess_operation_type getvaraccess_operation_type;
     typedef prot9506::read_operation_type read_operation_type;
+    typedef prot9506::definelist_operation_type definelist_operation_type;
 
     client(boost::asio::io_service& io_service,
             resolver_type::iterator endpoint_iterator, const std::string& called = "")
@@ -184,8 +184,6 @@ private:
 
         }
     }
-    
-    
 
     void handle_idenify_response(boost::shared_ptr<identify_operation_type> rslt) {
         if (rslt->response()) {
@@ -202,8 +200,7 @@ private:
             socket_.async_confirm_request(operation,
                     boost::bind(&client::handle_domainlist_response, this, operation));
 
-        }
-        else {
+        } else {
             std::cout << "handle_idenify_response: " << std::endl;
         }
     }
@@ -227,8 +224,7 @@ private:
             socket_.async_confirm_request(operation,
                     boost::bind(&client::handle_variablelist_response, this, operation));
 
-        }
-        else {
+        } else {
             std::cout << "handle_domainlist_response: " << std::endl;
         }
     }
@@ -259,8 +255,7 @@ private:
                         boost::bind(&client::handle_variablelist_response, this, operation));
 
 
-            }
-            else {
+            } else {
 
                 for (std::vector<std::string>::const_iterator it = fulllist.begin(); it != fulllist.end(); ++it) {
                     std::cout << " full lst var name: " << (*it) << std::endl;
@@ -286,13 +281,11 @@ private:
 
 
             }
-        }
-        else {
+        } else {
             std::cout << "handle_domainlist_response: " << std::endl;
         }
     }
 
-    
     void handle_accesslist_response(boost::shared_ptr<getvaraccess_operation_type> rslt) {
         if (rslt->response()) {
 
@@ -302,7 +295,9 @@ private:
                 simplelist.push_back(fulllist[fullcnt]);
 
 
+
             fullcnt++;
+
 
             if (fullcnt < fulllist.size()) {
 
@@ -319,8 +314,7 @@ private:
                         boost::bind(&client::handle_accesslist_response, this, operation));
 
 
-            }
-            else {
+            } else {
                 for (std::vector<std::string>::const_iterator it = simplelist.begin(); it != simplelist.end(); ++it)
                     std::cout << " simple lst var name: " << (*it) << std::endl;
 
@@ -333,6 +327,7 @@ private:
 
                 if (!(simplecnt < simplelist.size())) return;
 
+
                 operationl->request_new();
                 operationl->request()->variableAccessSpecification().listOfVariable__new();
 
@@ -342,7 +337,9 @@ private:
                 vacs.variableSpecification().name__new();
                 vacs.variableSpecification().name()->domain_specific__new();
                 vacs.variableSpecification().name()->domain_specific()->domainID(domain);
-                vacs.variableSpecification().name()->domain_specific()->itemID( simplelist[simplecnt]);
+                vacs.variableSpecification().name()->domain_specific()->itemID(simplelist[simplecnt]);
+
+
 
                 operationl->request()->variableAccessSpecification().listOfVariable()->push_back(vacs);
 
@@ -353,8 +350,7 @@ private:
 
             }
 
-        }
-        else {
+        } else {
             std::cout << "handle_accesslist_response: " << std::endl;
         }
     }
@@ -362,14 +358,131 @@ private:
     void handle_readlist_response(boost::shared_ptr<read_operation_type> rslt) {
         if (rslt->response()) {
 
+            if (rslt->response()->listOfAccessResult().size()) {
+                typedef ISO_9506_MMS_1::Read_Response::ListOfAccessResult_type resultlist_type;
+                const resultlist_type& lst = rslt->response()->listOfAccessResult();
+                for (resultlist_type::const_iterator it = lst.begin(); it != lst.end(); ++it) {
+                    if (it->success()) {
+                        std::cout << "success read  var  : " << simplelist[simplecnt] << " = ";
+                        switch (it->success()->type()) {
+                            case ISO_9506_MMS_1::Data_boolean:
+                            {
+                                std::cout << *(it->success()->boolean()) << std::endl;
+                                break;
+                            }
+                            case ISO_9506_MMS_1::Data_bit_string:
+                            {
+                                std::cout << *(it->success()->bit_string()) << std::endl;
+                                break;
+                            }
+                            case ISO_9506_MMS_1::Data_integer:
+                            {
+                                std::cout << *(it->success()->integer()) << std::endl;
+                                break;
+                            }
+                            case ISO_9506_MMS_1::Data_unsignedV:
+                            {
+                                std::cout << *(it->success()->unsignedV()) << std::endl;
+                                break;
+                            }
+                            case ISO_9506_MMS_1::Data_floating_point:
+                            {
+                                std::cout << *(it->success()->floating_point()) << std::endl;
+                                break;
+                            }
+                            case ISO_9506_MMS_1::Data_octet_string:
+                            {
+                                std::cout << *(it->success()->octet_string()) << std::endl;
+                                break;
+                            }
+                            case ISO_9506_MMS_1::Data_visible_string:
+                            {
+                                std::cout << *(it->success()->visible_string()) << std::endl;
+                                break;
+                            }
+                            case ISO_9506_MMS_1::Data_generalized_time:
+                            {
+                                std::cout << *(it->success()->generalized_time()) << std::endl;
+                                break;
+                            }
+                                /*case Data_binary_time:
+                                {
+                                    ITU_T_IMPLICIT_TAG(value<TimeOfDay > (false, Data_binary_time), 12);
+                                    break;
+                                }*/
+                            case ISO_9506_MMS_1::Data_bcd:
+                            {
+                                std::cout << *(it->success()->bcd()) << std::endl;
+                                break;
+                            }
+                                /*case Data_booleanArray:
+                                {
+                                    ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, Data_booleanArray), 14);
+                                    break;
+                                }*/
+                            case ISO_9506_MMS_1::Data_objId:
+                            {
+                                std::cout << *(it->success()->objId()) << std::endl;
+                                break;
+                            }
+                            case ISO_9506_MMS_1::Data_mMSString:
+                            {
+                                std::cout << *(it->success()->mMSString()) << std::endl;
+                                break;
+                            }
+                            default:
+                            {
+                                std::cout << "???" << std::endl;
+                            }
+                        }
 
-            std::cout << "access var val: " /*<<     rslt->response()->listOfAccessResult->operator [](0)->*/ << std::endl;
+                    } else {
+                        std::cout << "failure read  var  : " << simplelist[simplecnt] << std::endl;
+                    }
+                }
+            } else
+                std::cout << "null read  var  : " << simplelist[simplecnt] << std::endl;
+
+            boost::shared_ptr<read_operation_type > operationl =
+                    boost::shared_ptr<read_operation_type > (new read_operation_type());
+
+
+            simplecnt++;
+
+            if (simplecnt < simplelist.size()) {
+
+                operationl->request_new();
+                operationl->request()->variableAccessSpecification().listOfVariable__new();
+
+
+                MMS::VariableAccessSpecification::ListOfVariable_type_sequence_of vacs;
+
+                vacs.variableSpecification().name__new();
+                vacs.variableSpecification().name()->domain_specific__new();
+                vacs.variableSpecification().name()->domain_specific()->domainID(domain);
+                vacs.variableSpecification().name()->domain_specific()->itemID(simplelist[simplecnt]);
+
+                operationl->request()->variableAccessSpecification().listOfVariable()->push_back(vacs);
 
 
 
-        }
-        else {
+                socket_.async_confirm_request(operationl,
+                        boost::bind(&client::handle_readlist_response, this, operationl));
+
+
+
+            } else {
+            }
+        } else {
             std::cout << "handle_readlist_response: " << std::endl;
+        }
+    }
+
+    void handle_createnamelist_response(boost::shared_ptr<definelist_operation_type> rslt) {
+        if (rslt->response()) {
+
+        } else {
+            std::cout << "handle_createnamelist_response error" << std::endl;
         }
     }
 
@@ -394,6 +507,9 @@ private:
     std::size_t simplecnt;
 
 };
+
+
+
 
 #else
 
@@ -692,8 +808,7 @@ int main(int argc, char* argv[]) {
 
 
 
-        }
-        else {
+        } else {
 
             boost::asio::io_service io_service;
 
@@ -723,8 +838,7 @@ int main(int argc, char* argv[]) {
 
         }
 
-    }
-    catch (std::exception& e) {
+    } catch (std::exception& e) {
         std::cerr << "Exception: " << e.what() << "\n";
     }
 
