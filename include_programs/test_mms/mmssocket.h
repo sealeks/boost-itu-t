@@ -50,7 +50,7 @@ namespace prot9506 {
     //  confirmed_operation  template//
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 
-    template< typename REQ, typename RSP, MMS::ConfirmedServiceRequest_enum REQID, MMS::ConfirmedServiceResponse_enum RSPID>
+    template< typename REQ, typename RSP, MMS::ConfirmedServiceRequest_enum REQID, MMS::ConfirmedServiceResponse_enum RSPID = MMS::ConfirmedServiceResponse_null >
     class confirmed_operation {
 
     public:
@@ -202,8 +202,8 @@ namespace prot9506 {
     typedef confirmed_operation<MMS::DefineNamedVariableList_Request, MMS::DefineNamedVariableList_Response,
     MMS::ConfirmedServiceRequest_defineNamedVariableList, MMS::ConfirmedServiceResponse_defineNamedVariableList > definelist_operation_type;
 
-    //typedef confirmed_operation<MMS::Write_Request , MMS::Write_Response ,
-    //MMS::ConfirmedServiceRequest_write  , MMS::ConfirmedServiceResponse_write >                                                                                     write_operation_type;   
+    typedef confirmed_operation<MMS::Write_Request , MMS::Write_Response ,
+    MMS::ConfirmedServiceRequest_write >   write_operation_type;   
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
@@ -442,11 +442,68 @@ namespace prot9506 {
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //  Other operations  //
+        //  Release operations  //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////               
 
+    private:
 
+        template <typename ReleaseRequestHandler>
+        class release_request_op {
 
+            enum state_type {
+                request,
+                response,
+                error
+            };
+
+        public:
+
+            
+            release_request_op(mms_socket* socket, ReleaseRequestHandler handler) :
+            socket_(socket), handler_(handler),  state(request) {
+            }              
+
+            void operator()(const boost::system::error_code& ec) {
+                if (!ec) {
+                    socket_->super_type::async_release(boost::bind(&release_request_op<ReleaseRequestHandler>::release,
+                            this, boost::asio::placeholders::error));
+                }  
+                handler_(ec);
+            }
+            
+            void release(const boost::system::error_code& ec) {
+                if (!ec) {
+
+                }  
+                handler_(ec);
+            }            
+            
+        private:
+            
+            mms_socket* socket_;
+            ReleaseRequestHandler handler_;
+            state_type state;            
+            
+        };     
+        
+        
+    public:        
+        
+        template <typename ReleaseRequestHandler>
+        void async_release(BOOST_ASIO_MOVE_ARG(ReleaseRequestHandler) handler) {
+            
+            
+            MMS::MMSpdu mms;
+            mms.conclude_RequestPDU__new();
+            mmsdcs()->set(mms);
+            
+            typedef release_request_op<ReleaseRequestHandler> release_operation_type;
+            
+
+            super_type::async_request(boost::bind(&release_operation_type::operator(),
+                    release_operation_type (const_cast<mms_socket*> (this), handler), boost::asio::placeholders::error));            
+            
+        }
 
     protected:
 
@@ -464,6 +521,7 @@ namespace prot9506 {
 
 
 
+        
 
     private:
 
