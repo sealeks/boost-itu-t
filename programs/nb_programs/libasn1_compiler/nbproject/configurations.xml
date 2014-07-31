@@ -12,9 +12,11 @@
           <itemPath>../../../include/boost/itu/x68X/assignmentT.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/assignmentV.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/assignmentVS.cpp</itemPath>
-          <itemPath>F:/Project/itu-t/include/boost/itu/x68X/assignments.cpp</itemPath>
-          <itemPath>F:/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp</itemPath>
-          <itemPath>F:/Project/itu-t/include/boost/itu/x68X/cpp_cout.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/assignments.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/constraint_templates.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/constraint_templates.h</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/cpp_cout.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x68X/cpp_cout.hpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/debug_cout.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/debug_cout.hpp</itemPath>
           <itemPath>../../../include/boost/itu/x68X/modules.cpp</itemPath>
@@ -66,8 +68,6 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
-        <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -125,6 +125,31 @@
       <item path="../../../include/boost/itu/x68X/assignmentVS.cpp"
             ex="false"
             tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/assignments.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/constraint_templates.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/constraint_templates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/cpp_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/cpp_cout.hpp"
+            ex="false"
+            tool="3"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x68X/debug_cout.cpp"
@@ -253,21 +278,6 @@
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x68X/x680.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/assignments.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/cpp_cout.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -277,8 +287,6 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
-        <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -338,6 +346,31 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x68X/assignments.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/constraint_templates.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/constraint_templates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/cpp_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/cpp_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x68X/debug_cout.cpp"
             ex="false"
             tool="1"
@@ -468,28 +501,11 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/assignments.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/cpp_cout.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
     </conf>
     <conf name="nb_gcc_db_LIN64" type="3">
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
-        <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -548,6 +564,31 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x68X/assignments.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/constraint_templates.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/constraint_templates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/cpp_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/cpp_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x68X/debug_cout.cpp"
             ex="false"
             tool="1"
@@ -678,28 +719,11 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/assignments.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/cpp_cout.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
     </conf>
     <conf name="nb_gcc_rl_LIN64" type="3">
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
-        <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -756,6 +780,31 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x68X/assignments.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/constraint_templates.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/constraint_templates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/cpp_cout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x68X/cpp_cout.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x68X/debug_cout.cpp"
             ex="false"
             tool="1"
@@ -882,21 +931,6 @@
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x68X/x680.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/assignments.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="F:/Project/itu-t/include/boost/itu/x68X/cpp_cout.hpp"
             ex="false"
             tool="3"
             flavor2="0">

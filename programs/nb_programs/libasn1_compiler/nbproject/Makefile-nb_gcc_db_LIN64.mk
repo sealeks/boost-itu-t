@@ -43,6 +43,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/787997029/assignmentT.o \
 	${OBJECTDIR}/_ext/787997029/assignmentV.o \
 	${OBJECTDIR}/_ext/787997029/assignmentVS.o \
+	${OBJECTDIR}/_ext/787997029/assignments.o \
+	${OBJECTDIR}/_ext/787997029/constraint_templates.o \
+	${OBJECTDIR}/_ext/787997029/cpp_cout.o \
 	${OBJECTDIR}/_ext/787997029/debug_cout.o \
 	${OBJECTDIR}/_ext/787997029/modules.o \
 	${OBJECTDIR}/_ext/787997029/parser.o \
@@ -55,9 +58,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/787997029/sem_valuesetassignment.o \
 	${OBJECTDIR}/_ext/787997029/semantics.o \
 	${OBJECTDIR}/_ext/787997029/setters.o \
-	${OBJECTDIR}/_ext/787997029/x680.o \
-	${OBJECTDIR}/_ext/627700379/assignments.o \
-	${OBJECTDIR}/_ext/627700379/cpp_cout.o
+	${OBJECTDIR}/_ext/787997029/x680.o
 
 
 # C Compiler Flags
@@ -126,6 +127,21 @@ ${OBJECTDIR}/_ext/787997029/assignmentVS.o: ../../../include/boost/itu/x68X/assi
 	${RM} $@.d
 	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignmentVS.o ../../../include/boost/itu/x68X/assignmentVS.cpp
 
+${OBJECTDIR}/_ext/787997029/assignments.o: ../../../include/boost/itu/x68X/assignments.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/assignments.o ../../../include/boost/itu/x68X/assignments.cpp
+
+${OBJECTDIR}/_ext/787997029/constraint_templates.o: ../../../include/boost/itu/x68X/constraint_templates.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/constraint_templates.o ../../../include/boost/itu/x68X/constraint_templates.cpp
+
+${OBJECTDIR}/_ext/787997029/cpp_cout.o: ../../../include/boost/itu/x68X/cpp_cout.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
+	${RM} $@.d
+	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/cpp_cout.o ../../../include/boost/itu/x68X/cpp_cout.cpp
+
 ${OBJECTDIR}/_ext/787997029/debug_cout.o: ../../../include/boost/itu/x68X/debug_cout.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
@@ -190,16 +206,6 @@ ${OBJECTDIR}/_ext/787997029/x680.o: ../../../include/boost/itu/x68X/x680.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997029
 	${RM} $@.d
 	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997029/x680.o ../../../include/boost/itu/x68X/x680.cpp
-
-${OBJECTDIR}/_ext/627700379/assignments.o: /F/Project/itu-t/include/boost/itu/x68X/assignments.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/627700379
-	${RM} $@.d
-	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/627700379/assignments.o /F/Project/itu-t/include/boost/itu/x68X/assignments.cpp
-
-${OBJECTDIR}/_ext/627700379/cpp_cout.o: /F/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/627700379
-	${RM} $@.d
-	$(COMPILE.cc) -g -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/627700379/cpp_cout.o /F/Project/itu-t/include/boost/itu/x68X/cpp_cout.cpp
 
 # Subprojects
 .build-subprojects:
