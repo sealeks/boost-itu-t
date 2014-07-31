@@ -3921,6 +3921,7 @@ namespace ISO_9506_MMS_1 {
         Data_booleanArray,
         Data_objId,
         Data_mMSString,
+        Data_utcTime,
     };
 
     struct Data : public ITU_T_CHOICE(Data_enum) {
@@ -3956,6 +3957,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICES_DECL(booleanArray, bitstring_type, Data_booleanArray); // primitive
         ITU_T_CHOICES_DECL(objId, oid_type, Data_objId); // primitive
         ITU_T_CHOICES_DECL(mMSString, MMSString, Data_mMSString); // primitive
+        ITU_T_CHOICES_DECL(utcTime, utctime_type , Data_utcTime); // primitive        
 
         ITU_T_ARCHIVE_FUNC;
     };

@@ -12444,6 +12444,11 @@ namespace ISO_9506_MMS_1 {
                 ITU_T_IMPLICIT_TAG(value<MMSString > (false, Data_mMSString), 16);
                 break;
             }
+            case Data_utcTime:
+            {
+                ITU_T_IMPLICIT_TAG(value<utctime_type > (false, Data_utcTime), 17);
+                break;
+            }            
             default:
             {
             }
@@ -12562,6 +12567,12 @@ namespace ISO_9506_MMS_1 {
                         else free();
                         break;
                     }
+                    case 17:
+                    {
+                        if (ITU_T_IMPLICIT_TAG(value<utctime_type > (true, Data_utcTime), 17)) return;
+                        else free();
+                        break;
+                    }                    
                     default:
                     {
                     }
