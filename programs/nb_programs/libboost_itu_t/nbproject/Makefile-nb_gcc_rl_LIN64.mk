@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux-x86
-CND_DLIB_EXT=so
+CND_PLATFORM=GNU-Windows
+CND_DLIB_EXT=dll
 CND_CONF=nb_gcc_rl_LIN64
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -42,6 +42,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/689007315/rfc1006.o \
 	${OBJECTDIR}/_ext/1342771574/temlate.o \
 	${OBJECTDIR}/_ext/1342771574/utils.o \
+	${OBJECTDIR}/_ext/1476397404/ACSE-1.o \
+	${OBJECTDIR}/_ext/2001438338/ISO8823-PRESENTATION.o \
+	${OBJECTDIR}/_ext/2001438338/Reliable-Transfer-APDU.o \
 	${OBJECTDIR}/_ext/787992999/selectors.o \
 	${OBJECTDIR}/_ext/787992999/x224.o \
 	${OBJECTDIR}/_ext/787992999/x225.o \
@@ -110,6 +113,21 @@ ${OBJECTDIR}/_ext/1342771574/utils.o: ../../../include/boost/itu/utils/utils.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/1342771574
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Wall -I../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1342771574/utils.o ../../../include/boost/itu/utils/utils.cpp
+
+${OBJECTDIR}/_ext/1476397404/ACSE-1.o: ../../../include/boost/itu/x22X/acse/ACSE-1.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1476397404
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1476397404/ACSE-1.o ../../../include/boost/itu/x22X/acse/ACSE-1.cpp
+
+${OBJECTDIR}/_ext/2001438338/ISO8823-PRESENTATION.o: ../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/2001438338
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/2001438338/ISO8823-PRESENTATION.o ../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp
+
+${OBJECTDIR}/_ext/2001438338/Reliable-Transfer-APDU.o: ../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/2001438338
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/2001438338/Reliable-Transfer-APDU.o ../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp
 
 ${OBJECTDIR}/_ext/787992999/selectors.o: ../../../include/boost/itu/x22X/selectors.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787992999

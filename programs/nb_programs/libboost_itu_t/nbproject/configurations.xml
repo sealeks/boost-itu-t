@@ -30,14 +30,17 @@
         <logicalFolder name="x22X" displayName="x22X" projectFiles="true">
           <logicalFolder name="acse" displayName="acse" projectFiles="true">
             <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1.asn</itemPath>
+            <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1.cpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1.hpp</itemPath>
           </logicalFolder>
           <logicalFolder name="presentation"
                          displayName="presentation"
                          projectFiles="true">
             <itemPath>../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn</itemPath>
+            <itemPath>../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn</itemPath>
+            <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDUs.hpp</itemPath>
           </logicalFolder>
           <itemPath>../../../include/boost/itu/x22X/selectors.cpp</itemPath>
@@ -79,6 +82,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -174,6 +179,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/acse/ACSE-1.hpp"
             ex="false"
             tool="3"
@@ -184,6 +194,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
             ex="false"
             tool="3"
@@ -192,6 +207,11 @@
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDUs.hpp"
@@ -264,6 +284,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -358,6 +380,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/acse/ACSE-1.hpp"
             ex="false"
             tool="3"
@@ -368,6 +395,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
             ex="false"
             tool="3"
@@ -376,6 +408,11 @@
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDUs.hpp"
@@ -448,6 +485,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -541,6 +580,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/acse/ACSE-1.hpp"
             ex="false"
             tool="3"
@@ -551,6 +595,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
             ex="false"
             tool="3"
@@ -559,6 +608,11 @@
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDUs.hpp"
@@ -631,6 +685,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -722,6 +778,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/acse/ACSE-1.hpp"
             ex="false"
             tool="3"
@@ -732,6 +793,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
             ex="false"
             tool="3"
@@ -740,6 +806,11 @@
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDUs.hpp"

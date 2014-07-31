@@ -42,6 +42,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/689007315/rfc1006.o \
 	${OBJECTDIR}/_ext/1342771574/temlate.o \
 	${OBJECTDIR}/_ext/1342771574/utils.o \
+	${OBJECTDIR}/_ext/1476397404/ACSE-1.o \
+	${OBJECTDIR}/_ext/2001438338/ISO8823-PRESENTATION.o \
+	${OBJECTDIR}/_ext/2001438338/Reliable-Transfer-APDU.o \
 	${OBJECTDIR}/_ext/787992999/selectors.o \
 	${OBJECTDIR}/_ext/787992999/x224.o \
 	${OBJECTDIR}/_ext/787992999/x225.o \
@@ -79,67 +82,82 @@ LDLIBSOPTIONS=
 ${OBJECTDIR}/_ext/787372092/asnbase.o: ../../../include/boost/itu/asn1/asnbase.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787372092
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787372092/asnbase.o ../../../include/boost/itu/asn1/asnbase.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787372092/asnbase.o ../../../include/boost/itu/asn1/asnbase.cpp
 
 ${OBJECTDIR}/_ext/787372092/utf8.o: ../../../include/boost/itu/asn1/utf8.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787372092
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787372092/utf8.o ../../../include/boost/itu/asn1/utf8.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787372092/utf8.o ../../../include/boost/itu/asn1/utf8.cpp
 
 ${OBJECTDIR}/_ext/1359548930/base_coder.o: ../../../include/boost/itu/coder/base_coder.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1359548930
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1359548930/base_coder.o ../../../include/boost/itu/coder/base_coder.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1359548930/base_coder.o ../../../include/boost/itu/coder/base_coder.cpp
 
 ${OBJECTDIR}/_ext/823522712/error.o: ../../../include/boost/itu/detail/error.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/823522712
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/823522712/error.o ../../../include/boost/itu/detail/error.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/823522712/error.o ../../../include/boost/itu/detail/error.cpp
 
 ${OBJECTDIR}/_ext/689007315/rfc1006.o: ../../../include/boost/itu/rfc1006/rfc1006.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/689007315
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/689007315/rfc1006.o ../../../include/boost/itu/rfc1006/rfc1006.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/689007315/rfc1006.o ../../../include/boost/itu/rfc1006/rfc1006.cpp
 
 ${OBJECTDIR}/_ext/1342771574/temlate.o: ../../../include/boost/itu/utils/temlate.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1342771574
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1342771574/temlate.o ../../../include/boost/itu/utils/temlate.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1342771574/temlate.o ../../../include/boost/itu/utils/temlate.cpp
 
 ${OBJECTDIR}/_ext/1342771574/utils.o: ../../../include/boost/itu/utils/utils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/1342771574
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1342771574/utils.o ../../../include/boost/itu/utils/utils.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1342771574/utils.o ../../../include/boost/itu/utils/utils.cpp
+
+${OBJECTDIR}/_ext/1476397404/ACSE-1.o: ../../../include/boost/itu/x22X/acse/ACSE-1.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/1476397404
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/1476397404/ACSE-1.o ../../../include/boost/itu/x22X/acse/ACSE-1.cpp
+
+${OBJECTDIR}/_ext/2001438338/ISO8823-PRESENTATION.o: ../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/2001438338
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/2001438338/ISO8823-PRESENTATION.o ../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp
+
+${OBJECTDIR}/_ext/2001438338/Reliable-Transfer-APDU.o: ../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/2001438338
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/2001438338/Reliable-Transfer-APDU.o ../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp
 
 ${OBJECTDIR}/_ext/787992999/selectors.o: ../../../include/boost/itu/x22X/selectors.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787992999
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787992999/selectors.o ../../../include/boost/itu/x22X/selectors.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787992999/selectors.o ../../../include/boost/itu/x22X/selectors.cpp
 
 ${OBJECTDIR}/_ext/787992999/x224.o: ../../../include/boost/itu/x22X/x224.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787992999
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787992999/x224.o ../../../include/boost/itu/x22X/x224.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787992999/x224.o ../../../include/boost/itu/x22X/x224.cpp
 
 ${OBJECTDIR}/_ext/787992999/x225.o: ../../../include/boost/itu/x22X/x225.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787992999
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787992999/x225.o ../../../include/boost/itu/x22X/x225.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787992999/x225.o ../../../include/boost/itu/x22X/x225.cpp
 
 ${OBJECTDIR}/_ext/787992999/x226.o: ../../../include/boost/itu/x22X/x226.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787992999
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787992999/x226.o ../../../include/boost/itu/x22X/x226.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787992999/x226.o ../../../include/boost/itu/x22X/x226.cpp
 
 ${OBJECTDIR}/_ext/787992999/x227.o: ../../../include/boost/itu/x22X/x227.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787992999
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787992999/x227.o ../../../include/boost/itu/x22X/x227.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787992999/x227.o ../../../include/boost/itu/x22X/x227.cpp
 
 ${OBJECTDIR}/_ext/787997060/x690.o: ../../../include/boost/itu/x69X/x690.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/787997060
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -D_WIN32_WINNT=0x0601 -DDEBUG -DITUX200_DEBUG -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997060/x690.o ../../../include/boost/itu/x69X/x690.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/787997060/x690.o ../../../include/boost/itu/x69X/x690.cpp
 
 # Subprojects
 .build-subprojects:
