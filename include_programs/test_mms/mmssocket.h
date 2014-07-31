@@ -367,8 +367,11 @@ namespace prot9506 {
                             const MMS::Confirmed_ResponsePDU& mmsresp = *mms.confirmed_ResponsePDU();
                             if ((mmsresp.invokeID()) == operation_->invokeid()) {
                                 const MMS::ConfirmedServiceResponse& confirmresp = mmsresp.service();
-                                if (confirmresp.type() == operation_->rspid()) {
-                                    operation_->response(confirmresp.get< RSP > (operation_->rspid()));
+                                if (confirmresp.type() == operation_->rspid()) {                                    
+                                    if (!operation_->rspid())
+                                        operation_->response_new();
+                                    else
+                                        operation_->response(confirmresp.get< RSP > (operation_->rspid()));
                                 } else {
                                     operation_->setunexpetedresp();
                                 }
