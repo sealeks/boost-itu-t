@@ -341,8 +341,12 @@ namespace prot9506 {
                         }
                         case response:
                         {
-                            parse_response();
-                            handler_(operation_);
+                            if (!parse_response())
+                                handler_(operation_);
+                            else {
+                                state = response;
+                                socket_->super_type::async_response(boost::bind(& confirm_request_op<ConfirmRequestHandler, REQ, RSP, REQID, RSPID >::run, *this, boost::asio::placeholders::error));
+                            }
                             return;
                         }
                         default:
@@ -357,7 +361,8 @@ namespace prot9506 {
 
         protected:
 
-            void parse_response() {
+            bool parse_response() {
+                bool contin = false;
                 try {
                     MMS::MMSpdu mms;
                     socket_->mmsdcs()->get(mms);
@@ -390,6 +395,11 @@ namespace prot9506 {
                             }
                             break;
                         }
+                        case MMS::MMSpdu_unconfirmed_PDU: {
+                            const MMS::Unconfirmed_PDU&  mmsresp = *mms.unconfirmed_PDU();
+                            socket_->information_report(mmsresp);
+                            contin = true;
+                        }                        
                         case MMS::MMSpdu_rejectPDU:
                         {
                             operation_->reject(mms.get<MMS::RejectPDU > (MMS::MMSpdu_rejectPDU));
@@ -400,13 +410,14 @@ namespace prot9506 {
                             operation_->setunexpetedresp();
                         }
                     }
-                    return;
+                    return contin;
                 }                catch (const boost::system::system_error& cerr) {
                     operation_->error(cerr.code());
-                    return;
+                    return contin;
                 }                catch (...) {
                 }
                 operation_->error(boost::itu::ER_PROTOCOL);
+                return contin;
             }
 
         private:
@@ -506,6 +517,11 @@ namespace prot9506 {
             super_type::async_request(boost::bind(&release_operation_type::operator(),
                     release_operation_type (const_cast<mms_socket*> (this), handler), boost::asio::placeholders::error));            
             
+        }
+        
+        
+        void information_report(const MMS::Unconfirmed_PDU& val){
+            std::cout  << "information_report"   << std::endl;
         }
 
     protected:
