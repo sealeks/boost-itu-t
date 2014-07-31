@@ -428,7 +428,7 @@ namespace boost {
                 std::size_t sz = stream.size();
                 typedef typename std::vector<T>::const_iterator vect_type_iterator;
                 for (vect_type_iterator itr = vl.value().begin(); itr != vl.value().end(); ++itr)
-                    boost::asn1::bind_element(stream, (*itr));
+                    boost::asn1::bind_element<T>::op(stream, (*itr));
                 sz = stream.size(sz);
                 ++it;
 
@@ -450,7 +450,7 @@ namespace boost {
                 std::size_t sz = stream.size();
                 typedef typename std::deque<T>::const_iterator vect_type_iterator;
                 for (vect_type_iterator itr = vl.value().begin(); itr != vl.value().end(); ++itr)
-                    boost::asn1::bind_element(stream, (*itr));
+                    boost::asn1::bind_element<T>::op(stream, (*itr));
                 sz = stream.size(sz);
                 ++it;
 
@@ -985,14 +985,14 @@ namespace boost {
                     if (tmpsize.undefsize()) {
                         while (!stream.is_endof() && stream.size()) {
                             T tmp;
-                            boost::asn1::bind_element(stream, tmp);
+                            boost::asn1::bind_element<T>::op(stream, tmp);
                             const_cast<std::vector<T>*> (&(vl.value()))->push_back(tmp);
                         }
                     } else {
                         std::size_t sz = tmpsize.size();
                         while ((beg - stream.size()) < sz) {
                             T tmp;
-                            boost::asn1::bind_element(stream, tmp);
+                            boost::asn1::bind_element<T>::op(stream, tmp);
                             const_cast<std::vector<T>*> (&(vl.value()))->push_back(tmp);
                         }
                     }
@@ -1009,14 +1009,14 @@ namespace boost {
                     if (tmpsize.undefsize()) {
                         while (!stream.is_endof() && stream.size()) {
                             T tmp;
-                            boost::asn1::bind_element(stream, tmp);
+                            boost::asn1::bind_element<T>::op(stream, tmp);
                             const_cast<std::deque<T>*> (&(vl.value()))->push_back(tmp);
                         }
                     } else {
                         std::size_t sz = tmpsize.size();
                         while ((beg - stream.size()) < sz) {
                             T tmp;
-                            boost::asn1::bind_element(stream, tmp);
+                            boost::asn1::bind_element<T>::op(stream, tmp);
                             const_cast<std::deque<T>*> (&(vl.value()))->push_back(tmp);
                         }
                     }
