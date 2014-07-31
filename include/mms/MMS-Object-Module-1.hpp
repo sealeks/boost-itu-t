@@ -81,9 +81,9 @@ namespace MMS_Object_Module_1 {
 
 }
 
-#include "MMS-Environment-1.hpp"
+#include <mms/MMS-Environment-1.hpp>
 #include <boost/itu/x22X/acse/ACSE-1.hpp>
-#include "ISO-9506-MMS-1.hpp"
+#include <mms/ISO-9506-MMS-1.hpp>
 
 namespace MMS_Object_Module_1 {
 

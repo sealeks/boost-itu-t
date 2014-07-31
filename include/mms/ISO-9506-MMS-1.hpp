@@ -350,10 +350,10 @@ namespace ISO_9506_MMS_1 {
 
 }
 
-#include "MMS-Environment-1.hpp"
-#include "MMS-Environment-1.hpp"
-#include "ISO-9506-MMS-1A.hpp"
-#include "MMS-Object-Module-1.hpp"
+#include <mms/MMS-Environment-1.hpp>
+#include <mms/MMS-Environment-1.hpp>
+#include <mms/ISO-9506-MMS-1A.hpp>
+#include <mms/MMS-Object-Module-1.hpp>
 
 namespace ISO_9506_MMS_1 {
 

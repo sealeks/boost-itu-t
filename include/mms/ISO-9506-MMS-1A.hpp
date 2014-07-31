@@ -70,8 +70,8 @@ namespace ISO_9506_MMS_1A {
 
 }
 
-#include "ISO-9506-MMS-1.hpp"
-#include "MMS-Environment-1.hpp"
+#include <mms/ISO-9506-MMS-1.hpp>
+#include <mms/MMS-Environment-1.hpp>
 
 namespace ISO_9506_MMS_1A {
 
