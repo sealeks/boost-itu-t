@@ -40,7 +40,10 @@ namespace prot9506 {
     maxcalling_(1),
     maxcalled_(5),
     nested_(5),
-    version_(DEFAULT_MMS_VER) {
+    version_(DEFAULT_MMS_VER),
+    exservice_(),
+    exparameter_(),
+    privilege_(){
     }
 
     protocol_option::protocol_option(const application_selector& asel,
@@ -50,7 +53,10 @@ namespace prot9506 {
             boost::uint32_t _maxcalling,
             boost::uint32_t _maxcalled,
             boost::uint32_t _nested,
-            boost::uint32_t _version
+            boost::uint32_t _version,
+            const exservice_option_type& _exservice,
+            const exparameter_option_type& _exparameter,
+            const privilege_type& _privilege
             ) : asel_(asel),
     acontext_(MMS_APPLICATION_CONTEXT),
     service_(_service),
@@ -59,7 +65,10 @@ namespace prot9506 {
     maxcalling_(_maxcalling),
     maxcalled_(_maxcalled),
     nested_(_nested),
-    version_(_version) {
+    version_(_version),
+    exservice_(_exservice),
+    exparameter_(_exparameter),
+    privilege_(_privilege){
     }
 
     protocol_option::protocol_option(const std::string& asel,
@@ -69,7 +78,10 @@ namespace prot9506 {
             boost::uint32_t _maxcalling,
             boost::uint32_t _maxcalled,
             boost::uint32_t _nested,
-            boost::uint32_t _version
+            boost::uint32_t _version,
+            const exservice_option_type& _exservice,
+            const exparameter_option_type& _exparameter,
+            const privilege_type& _privilege              
             ) : asel_(asel),
     acontext_(MMS_APPLICATION_CONTEXT),
     service_(_service),
@@ -78,7 +90,10 @@ namespace prot9506 {
     maxcalling_(_maxcalling),
     maxcalled_(_maxcalled),
     nested_(_nested),
-    version_(_version) {
+    version_(_version),
+    exservice_(_exservice),
+    exparameter_(_exparameter),
+     privilege_(_privilege){
     }
 
     protocol_option::protocol_option(const service_option_type& _service,
@@ -87,7 +102,10 @@ namespace prot9506 {
             boost::uint32_t _maxcalling,
             boost::uint32_t _maxcalled,
             boost::uint32_t _nested,
-            boost::uint32_t _version
+            boost::uint32_t _version,
+            const exservice_option_type& _exservice,
+            const exparameter_option_type& _exparameter,
+            const privilege_type& _privilege              
             ) : asel_(NULL_APPLICATION_SELECTOR),
     acontext_(MMS_APPLICATION_CONTEXT),
     service_(_service),
@@ -96,7 +114,10 @@ namespace prot9506 {
     maxcalling_(_maxcalling),
     maxcalled_(_maxcalled),
     nested_(_nested),
-    version_(_version) {
+    version_(_version),
+    exservice_(_exservice),
+    exparameter_(_exparameter),
+    privilege_(_privilege){
     }
 
 
@@ -136,6 +157,10 @@ namespace prot9506 {
         initpdu.initRequestDetail().proposedVersionNumber(mmsoption_.version());
         initpdu.initRequestDetail().servicesSupportedCalling(mmsoption_.service());
         initpdu.initRequestDetail().proposedParameterCBB(mmsoption_.parameter());
+        /*if (!mmsoption_.exparameter().empty())
+            initpdu.initRequestDetail().additionalCbbSupportedCalled(mmsoption_.exparameter());
+        if (!mmsoption_.exservice().empty())
+            initpdu.initRequestDetail().additionalSupportedCalled(mmsoption_.exservice()); */      
 
         mmsdcs()->set(mms);
 
@@ -157,6 +182,7 @@ namespace prot9506 {
                 case MMS::MMSpdu_initiate_ResponsePDU:
                 {
                     const MMS::Initiate_ResponsePDU& mmsresp = *mms.initiate_ResponsePDU();
+                    mmsoption(mmsresp);
                     //mmsresp.
                     return boost::system::error_code();
                 }
@@ -175,6 +201,41 @@ namespace prot9506 {
         return boost::itu::ER_NAADDRESS;
     }
 
+    void mms_socket::mmsoption(const Initiate_ResponsePDU& opt) {
+        std::cout << "server negotiate option"  << std::endl;
+        if (opt.localDetailCalled()) {
+            std::cout << "localDetailCalled : " << (*(opt.localDetailCalled())) << std::endl;
+            mmsoption_.localdetail(*(opt.localDetailCalled()));
+        }
+        if (opt.negotiatedDataStructureNestingLevel()) {
+            std::cout << "NestingLevel : " << (*(opt.negotiatedDataStructureNestingLevel())) << std::endl;
+            mmsoption_.nested(*(opt.negotiatedDataStructureNestingLevel()));
+        }        
+        std::cout << "MaxServOutstandingCalling : " << (opt.negotiatedMaxServOutstandingCalling()) << std::endl;
+        mmsoption_.maxcalling(opt.negotiatedMaxServOutstandingCalling());
+        std::cout << "MaxServOutstandingCalled : " << (opt.negotiatedMaxServOutstandingCalled()) << std::endl;
+        mmsoption_.maxcalled(opt.negotiatedMaxServOutstandingCalled());
+        std::cout << "version : " << (opt.initResponseDetail().negotiatedVersionNumber()) << std::endl;
+        mmsoption_.version(opt.initResponseDetail().negotiatedVersionNumber());
+         std::cout << "parameter : " << (opt.initResponseDetail().negotiatedParameterCBB()) << std::endl;
+        mmsoption_.parameter()=opt.initResponseDetail().negotiatedParameterCBB();       
+         std::cout << "servicesSupportedCalled : " << (opt.initResponseDetail().servicesSupportedCalled()) << std::endl;
+        mmsoption_.service()=opt.initResponseDetail().servicesSupportedCalled();
+        if (opt.initResponseDetail().additionalSupportedCalled()) {
+            std::cout << "additionalSupportedCalled : " << (*(opt.initResponseDetail().additionalSupportedCalled())) << std::endl;
+            mmsoption_.exservice() = *(opt.initResponseDetail().additionalSupportedCalled());
+        }
+        if (opt.initResponseDetail().additionalSupportedCalled()) {
+            std::cout << "additionalCbbSupportedCalled : " << (*(opt.initResponseDetail().additionalCbbSupportedCalled())) << std::endl;
+            mmsoption_.exservice() = *(opt.initResponseDetail().additionalCbbSupportedCalled());
+        }        
+        if (opt.initResponseDetail().privilegeClassIdentityCalled()) {
+            std::cout << "privilegeClassIdentityCalled : " << (*(opt.initResponseDetail().privilegeClassIdentityCalled())) << std::endl;
+            mmsoption_.privilege() = *(opt.initResponseDetail().privilegeClassIdentityCalled());
+        }           
+    //    if (mmsoption_.service()=opt.initResponseDetail())
+
+    }
 
     /////////////////////////////////////////////////////
 

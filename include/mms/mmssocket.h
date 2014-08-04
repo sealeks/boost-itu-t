@@ -28,6 +28,7 @@ namespace prot9506 {
     using boost::itu::application_selector;
     using boost::itu::NULL_APPLICATION_SELECTOR;
     using boost::itu::x227impl::application_context;
+    using MMS::Initiate_ResponsePDU;
 
     extern const boost::asn1::oid_type MMS_OID;
     extern const boost::asn1::oid_type MMSA_OID;
@@ -37,6 +38,9 @@ namespace prot9506 {
 
     typedef MMS::ServiceSupportOptions service_option_type;
     typedef MMS::ParameterSupportOptions parameter_option_type;
+    typedef MMS::AdditionalSupportOptions exservice_option_type;
+    typedef MMS::AdditionalCBBOptions exparameter_option_type;
+    typedef boost::asn1::visiblestring_type privilege_type;
 
     extern const service_option_type MMS_SERVICE_OPTOION_DFLT;
     extern const parameter_option_type MMS_CBB_OPTION_DFLT;
@@ -57,7 +61,10 @@ namespace prot9506 {
                 boost::uint32_t _maxcalling = 1,
                 boost::uint32_t _maxcalled = 5,
                 boost::uint32_t _nested = 5,
-                boost::uint32_t _version = DEFAULT_MMS_VER
+                boost::uint32_t _version = DEFAULT_MMS_VER,
+                const exservice_option_type& _exservice  = exservice_option_type(),
+                const exparameter_option_type& _exparameter = exparameter_option_type(),   
+                const privilege_type&  _privilege = privilege_type()       
                 );
 
         protocol_option(const std::string& asel,
@@ -67,7 +74,10 @@ namespace prot9506 {
                 boost::uint32_t _maxcalling = 1,
                 boost::uint32_t _maxcalled = 5,
                 boost::uint32_t _nested = 5,
-                boost::uint32_t _version = DEFAULT_MMS_VER
+                boost::uint32_t _version = DEFAULT_MMS_VER,
+                const exservice_option_type& _exservice  = exservice_option_type(),
+                const exparameter_option_type& _exparameter = exparameter_option_type(),   
+                const privilege_type&  _privilege = privilege_type()              
                 );
 
         protocol_option(const service_option_type& _service,
@@ -76,7 +86,10 @@ namespace prot9506 {
                 boost::uint32_t _maxcalling = 1,
                 boost::uint32_t _maxcalled = 5,
                 boost::uint32_t _nested = 5,
-                boost::uint32_t _version = DEFAULT_MMS_VER
+                boost::uint32_t _version = DEFAULT_MMS_VER,
+                const exservice_option_type& _exservice  = exservice_option_type(),
+                const exparameter_option_type& _exparameter = exparameter_option_type(),   
+                const privilege_type&  _privilege = privilege_type()           
                 );
 
         const application_selector& aselector() const {
@@ -150,6 +163,30 @@ namespace prot9506 {
         parameter_option_type& parameter() {
             return parameter_;
         }
+        
+        const exservice_option_type& exservice() const {
+            return service_;
+        }
+
+        exservice_option_type& exservice() {
+            return exservice_;
+        }
+
+        const exparameter_option_type& exparameter() const {
+            return parameter_;
+        }
+
+        exparameter_option_type& exparameter() {
+            return exparameter_;
+        }  
+        
+        const privilege_type& privilege() const {
+            return privilege_;
+        }
+
+        privilege_type& privilege() {
+            return privilege_;
+        }        
 
     private:
 
@@ -162,7 +199,9 @@ namespace prot9506 {
         boost::uint32_t maxcalled_;
         boost::uint32_t nested_;
         boost::uint32_t version_;
-
+        exservice_option_type exservice_;
+        exparameter_option_type exparameter_;
+        privilege_type privilege_;
     };
 
 
@@ -706,6 +745,8 @@ namespace prot9506 {
         protocol_option & mmsoption() {
             return mmsoption_;
         }
+        
+       void mmsoption(const Initiate_ResponsePDU& opt);
         
         
 
