@@ -290,7 +290,7 @@ namespace boost {
             std::vector<bool> val = vl.operator bitstring_type::bool_vector_type();
             for (std::vector<bool>::const_iterator it = val.begin(); it != val.end(); ++it)
                 stream << (*it ? '1' : '0');
-            stream << std::endl;
+            //stream << std::endl;
             return stream;
         }
 
