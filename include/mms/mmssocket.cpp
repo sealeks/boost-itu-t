@@ -20,10 +20,91 @@ namespace prot9506 {
     const presentation_context_set MMS_CONTEXT = presentation_context_set(MMS_CONTEXT_arr, MMS_CONTEXT_arr + 1);
     const application_context MMS_APPLICATION_CONTEXT = application_context(MMSA_OID, MMS_CONTEXT);
 
-    const MMS::ServiceSupportOptions MMS_SERVICE_OPTOION_SUPPORT = MMSO::serviceSupportOptions_status | MMSO::serviceSupportOptions_getNameList | MMSO::serviceSupportOptions_identify | MMSO::serviceSupportOptions_read | MMSO::serviceSupportOptions_write |
+    const service_option_type MMS_SERVICE_OPTOION_DFLT = MMSO::serviceSupportOptions_status | MMSO::serviceSupportOptions_getNameList | MMSO::serviceSupportOptions_identify | MMSO::serviceSupportOptions_read | MMSO::serviceSupportOptions_write |
             MMSO::serviceSupportOptions_rename | MMSO::serviceSupportOptions_deleteNamedVariableList | MMSO::serviceSupportOptions_getVariableAccessAttributes | MMSO::serviceSupportOptions_informationReport;
-    const MMS::ParameterSupportOptions MMS_CBB_OPTION_SUPPORT = MMSO::parameterSupportOptions_str1 | MMSO::parameterSupportOptions_str2 | MMSO::parameterSupportOptions_valt | MMSO::parameterSupportOptions_valt |
+    const parameter_option_type MMS_CBB_OPTION_DFLT = MMSO::parameterSupportOptions_str1 | MMSO::parameterSupportOptions_str2 | MMSO::parameterSupportOptions_valt | MMSO::parameterSupportOptions_valt |
             MMSO::parameterSupportOptions_vnam | MMSO::parameterSupportOptions_vadr | MMSO::parameterSupportOptions_tpy | MMSO::parameterSupportOptions_vlis;
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////
+    ///  protocol_option
+    //////////////////////////////////////////////////////////////////////////    
+
+    protocol_option::protocol_option() : asel_(NULL_APPLICATION_SELECTOR),
+    acontext_(MMS_APPLICATION_CONTEXT),
+    service_(MMS_SERVICE_OPTOION_DFLT),
+    parameter_(MMS_CBB_OPTION_DFLT),
+    localdetail_(30000),
+    maxcalling_(1),
+    maxcalled_(5),
+    nested_(5),
+    version_(DEFAULT_MMS_VER) {
+    }
+
+    protocol_option::protocol_option(const application_selector& asel,
+            const service_option_type& _service,
+            const parameter_option_type& _parameter,
+            boost::uint32_t _localdetail,
+            boost::uint32_t _maxcalling,
+            boost::uint32_t _maxcalled,
+            boost::uint32_t _nested,
+            boost::uint32_t _version
+            ) : asel_(asel),
+    acontext_(MMS_APPLICATION_CONTEXT),
+    service_(_service),
+    parameter_(_parameter),
+    localdetail_(_localdetail),
+    maxcalling_(_maxcalling),
+    maxcalled_(_maxcalled),
+    nested_(_nested),
+    version_(_version) {
+    }
+
+    protocol_option::protocol_option(const std::string& asel,
+            const service_option_type& _service,
+            const parameter_option_type& _parameter,
+            boost::uint32_t _localdetail,
+            boost::uint32_t _maxcalling,
+            boost::uint32_t _maxcalled,
+            boost::uint32_t _nested,
+            boost::uint32_t _version
+            ) : asel_(asel),
+    acontext_(MMS_APPLICATION_CONTEXT),
+    service_(_service),
+    parameter_(_parameter),
+    localdetail_(_localdetail),
+    maxcalling_(_maxcalling),
+    maxcalled_(_maxcalled),
+    nested_(_nested),
+    version_(_version) {
+    }
+
+    protocol_option::protocol_option(const service_option_type& _service,
+            const parameter_option_type& _parameter,
+            boost::uint32_t _localdetail,
+            boost::uint32_t _maxcalling,
+            boost::uint32_t _maxcalled,
+            boost::uint32_t _nested,
+            boost::uint32_t _version
+            ) : asel_(NULL_APPLICATION_SELECTOR),
+    acontext_(MMS_APPLICATION_CONTEXT),
+    service_(_service),
+    parameter_(_parameter),
+    localdetail_(_localdetail),
+    maxcalling_(_maxcalling),
+    maxcalled_(_maxcalled),
+    nested_(_nested),
+    version_(_version) {
+    }
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////
+    ///  mms_socket
+    //////////////////////////////////////////////////////////////////////////
 
     mms_socket::mms_socket(boost::asio::io_service& io_service,
             const application_selector& asel)
@@ -53,8 +134,8 @@ namespace prot9506 {
         initpdu.proposedMaxServOutstandingCalled(5);
         initpdu.proposedDataStructureNestingLevel(5);
         initpdu.initRequestDetail().proposedVersionNumber(1);
-        initpdu.initRequestDetail().servicesSupportedCalling(MMS_SERVICE_OPTOION_SUPPORT);
-        initpdu.initRequestDetail().proposedParameterCBB(MMS_CBB_OPTION_SUPPORT);
+        initpdu.initRequestDetail().servicesSupportedCalling(MMS_SERVICE_OPTOION_DFLT);
+        initpdu.initRequestDetail().proposedParameterCBB(MMS_CBB_OPTION_DFLT);
 
         mmsdcs()->set(mms);
 

@@ -27,12 +27,143 @@ namespace prot9506 {
 
     using boost::itu::application_selector;
     using boost::itu::NULL_APPLICATION_SELECTOR;
+    using boost::itu::x227impl::application_context;
 
     extern const boost::asn1::oid_type MMS_OID;
     extern const boost::asn1::oid_type MMSA_OID;
 
+    const boost::uint32_t DEFAULT_MMS_VER = 1;
+
+
+    typedef MMS::ServiceSupportOptions service_option_type;
+    typedef MMS::ParameterSupportOptions parameter_option_type;
+
+    extern const service_option_type MMS_SERVICE_OPTOION_DFLT;
+    extern const parameter_option_type MMS_CBB_OPTION_DFLT;
+
 
     //presentation_option init_synaxes();
+
+    class protocol_option {
+
+    public:
+
+        protocol_option();
+
+        protocol_option(const application_selector& asel,
+                const service_option_type& _service,
+                const parameter_option_type& _parameter,
+                boost::uint32_t _localdetail = 30000,
+                boost::uint32_t _maxcalling = 1,
+                boost::uint32_t _maxcalled = 5,
+                boost::uint32_t _nested = 5,
+                boost::uint32_t _version = DEFAULT_MMS_VER
+                );
+
+        protocol_option(const std::string& asel,
+                const service_option_type& _service,
+                const parameter_option_type& _parameter,
+                boost::uint32_t _localdetail = 30000,
+                boost::uint32_t _maxcalling = 1,
+                boost::uint32_t _maxcalled = 5,
+                boost::uint32_t _nested = 5,
+                boost::uint32_t _version = DEFAULT_MMS_VER
+                );
+
+        protocol_option(const service_option_type& _service,
+                const parameter_option_type& _parameter,
+                boost::uint32_t _localdetail = 30000,
+                boost::uint32_t _maxcalling = 1,
+                boost::uint32_t _maxcalled = 5,
+                boost::uint32_t _nested = 5,
+                boost::uint32_t _version = DEFAULT_MMS_VER
+                );
+
+        const application_selector& aselector() const {
+            return asel_;
+        }
+
+        application_selector& aselector() {
+            return asel_;
+        }
+
+        const application_context& acontext() const {
+            return acontext_;
+        }
+
+        application_context& acontext() {
+            return acontext_;
+        }
+
+        boost::uint32_t localdetail() const {
+            return localdetail_;
+        }
+
+        void localdetail(boost::uint32_t val) {
+            localdetail_ = val;
+        }
+
+        boost::uint32_t maxcalling() const {
+            return maxcalling_;
+        }
+
+        void maxcalling(boost::uint32_t val) {
+            maxcalling_ = val;
+        }
+
+        boost::uint32_t maxcalled() const {
+            return maxcalled_;
+        }
+
+        void maxcalled(boost::uint32_t val) {
+            maxcalled_ = val;
+        }
+
+        boost::uint32_t nested() const {
+            return nested_;
+        }
+
+        void nested(boost::uint32_t val) {
+            nested_ = val;
+        }
+
+        boost::uint32_t version() const {
+            return version_;
+        }
+
+        void version(boost::uint32_t val) {
+            version_ = val;
+        }
+
+        const service_option_type& service() const {
+            return service_;
+        }
+
+        service_option_type& service() {
+            return service_;
+        }
+
+        const parameter_option_type& parameter() const {
+            return parameter_;
+        }
+
+        parameter_option_type& parameter() {
+            return parameter_;
+        }
+
+    private:
+
+        application_selector asel_;
+        application_context acontext_;
+        service_option_type service_;
+        parameter_option_type parameter_;
+        boost::uint32_t localdetail_;
+        boost::uint32_t maxcalling_;
+        boost::uint32_t maxcalled_;
+        boost::uint32_t nested_;
+        boost::uint32_t version_;
+
+    };
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
@@ -99,14 +230,14 @@ namespace prot9506 {
         operator bool() const {
             return state_ == ok_state;
         }
-        
-        friend bool operator==(const basic_confirmed_operation& ls, const basic_confirmed_operation& rs){
-            return (ls.invokeid()==rs.invokeid());
+
+        friend bool operator==(const basic_confirmed_operation& ls, const basic_confirmed_operation& rs) {
+            return (ls.invokeid() == rs.invokeid());
         }
-        
-        friend bool operator<(const basic_confirmed_operation& ls, const basic_confirmed_operation& rs){
-            return (ls.invokeid()<rs.invokeid());
-        }        
+
+        friend bool operator<(const basic_confirmed_operation& ls, const basic_confirmed_operation& rs) {
+            return (ls.invokeid() < rs.invokeid());
+        }
 
     protected:
 
@@ -115,10 +246,11 @@ namespace prot9506 {
         boost::system::error_code error_;
         state_type state_;
     };
-    
-    
-    
-    
+
+
+    typedef boost::shared_ptr<basic_confirmed_operation> confirmed_operation_ptr;
+    typedef std::set<confirmed_operation_ptr> confirmed_operation_set;
+    ;
 
     template< typename REQ, typename RSP, MMS::ConfirmedServiceRequest_enum REQID, MMS::ConfirmedServiceResponse_enum RSPID = MMS::ConfirmedServiceResponse_null >
     class confirmed_operation : public basic_confirmed_operation {
@@ -206,13 +338,13 @@ namespace prot9506 {
         MMS::ConfirmedServiceResponse_enum rspid() const {
             return RSPID;
         }
-        
-        virtual void operator()(const request_type& req){
-            
+
+        virtual void operator()(boost::shared_ptr<request_type> req) {
+
         }
-        
-        virtual void operator()(const response_type& resp){
-            
+
+        virtual void operator()(boost::shared_ptr<response_type_ptr> resp) {
+
         }
 
 
@@ -224,10 +356,8 @@ namespace prot9506 {
         serviceerror_type_ptr serviceerror_;
 
     };
-    
-    typedef boost::shared_ptr<confirmed_operation> confirmed_operation_ptr;
-    
-    typedef std::set<confirmed_operation_ptr> confirmed_operation_set;
+
+
 
     typedef confirmed_operation<MMS::Identify_Request, MMS::Identify_Response,
     MMS::ConfirmedServiceRequest_identify, MMS::ConfirmedServiceResponse_identify > identify_operation_type;
@@ -553,7 +683,7 @@ namespace prot9506 {
 
         void information_report(const MMS::Unconfirmed_PDU& val) {
             std::cout << "information_report" << std::endl;
-        } 
+        }
 
     protected:
 
@@ -564,7 +694,6 @@ namespace prot9506 {
         application_context_ptr mmsdcs() const {
             return mmsdcs_;
         }
-                
 
         invoke_id_type invoke_id() {
             return invoke_id_ = ((invoke_id_ < MAXINVOKEID) ? (++invoke_id_) : 1);
