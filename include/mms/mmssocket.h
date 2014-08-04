@@ -28,11 +28,8 @@ namespace prot9506 {
     using boost::itu::application_selector;
     using boost::itu::NULL_APPLICATION_SELECTOR;
 
-    const boost::array<boost::asn1::oidindx_type, 5 > MMS_ARR = {1, 0, 9506, 2, 1};
-    const boost::asn1::oid_type MMS_OID = boost::asn1::oid_type(MMS_ARR);
-
-    const boost::array<boost::asn1::oidindx_type, 5 > MMSA_ARR = {1, 0, 9506, 2, 3};
-    const boost::asn1::oid_type MMSA_OID = boost::asn1::oid_type(MMSA_ARR);
+    extern const boost::asn1::oid_type MMS_OID;
+    extern const boost::asn1::oid_type MMSA_OID;
 
 
     //presentation_option init_synaxes();
@@ -50,8 +47,81 @@ namespace prot9506 {
     //  confirmed_operation  template//
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 
+    class mms_socket;
+
+    class basic_confirmed_operation {
+
+    public:
+
+        enum state_type {
+
+            noproccess_state,
+            ok_state,
+            rejected_state,
+            error_state,
+            proterror_state,
+            unexpid_state,
+            unexp_resp_state
+        };
+
+        basic_confirmed_operation(mms_socket* sct) : socket_(sct), invokeid_(), error_(), state_(noproccess_state) {
+        }
+
+        virtual ~basic_confirmed_operation() {
+        }
+
+        void error(const boost::system::error_code& val) {
+            error_ = val;
+            if (error_)
+                state_ = proterror_state;
+        }
+
+        state_type state() const {
+            return state_;
+        }
+
+        invoke_id_type invokeid() const {
+            return invokeid_;
+        }
+
+        void invokeid(invoke_id_type val) {
+            invokeid_ = val;
+        }
+
+        void setunexpetedIvoke() {
+            state_ = error_state;
+        }
+
+        void setunexpetedresp() {
+            state_ = unexp_resp_state;
+        }
+
+        operator bool() const {
+            return state_ == ok_state;
+        }
+        
+        friend bool operator==(const basic_confirmed_operation& ls, const basic_confirmed_operation& rs){
+            return (ls.invokeid()==rs.invokeid());
+        }
+        
+        friend bool operator<(const basic_confirmed_operation& ls, const basic_confirmed_operation& rs){
+            return (ls.invokeid()<rs.invokeid());
+        }        
+
+    protected:
+
+        mms_socket* socket_;
+        invoke_id_type invokeid_;
+        boost::system::error_code error_;
+        state_type state_;
+    };
+    
+    
+    
+    
+
     template< typename REQ, typename RSP, MMS::ConfirmedServiceRequest_enum REQID, MMS::ConfirmedServiceResponse_enum RSPID = MMS::ConfirmedServiceResponse_null >
-    class confirmed_operation {
+    class confirmed_operation : public basic_confirmed_operation {
 
     public:
 
@@ -65,18 +135,10 @@ namespace prot9506 {
         typedef boost::shared_ptr<reject_type> reject_type_ptr;
         typedef boost::shared_ptr<serviceerror_type> serviceerror_type_ptr;
 
-        enum state_type {
+        confirmed_operation(mms_socket* sct) : basic_confirmed_operation(sct) {
+        }
 
-            noproccess_state,
-            ok_state,
-            rejected_state,
-            error_state,
-            proterror_state,
-            unexpid_state,
-            unexp_resp_state
-        };
-
-        confirmed_operation() : invokeid_(), error_(), state_(noproccess_state) {
+        virtual ~confirmed_operation() {
         }
 
         request_type_ptr request() const {
@@ -137,32 +199,6 @@ namespace prot9506 {
             return serviceerror_;
         }
 
-        invoke_id_type invokeid() const {
-            return invokeid_;
-        }
-
-        void invokeid(invoke_id_type val) {
-            invokeid_ = val;
-        }
-
-        void error(const boost::system::error_code& val) {
-            error_ = val;
-            if (error_)
-                state_ = proterror_state;
-        }
-
-        state_type state() const {
-            return state_;
-        }
-
-        void setunexpetedIvoke() {
-            state_ = error_state;
-        }
-
-        void setunexpetedresp() {
-            state_ = unexp_resp_state;
-        }
-
         MMS::ConfirmedServiceRequest_enum reqid() const {
             return REQID;
         }
@@ -170,22 +206,28 @@ namespace prot9506 {
         MMS::ConfirmedServiceResponse_enum rspid() const {
             return RSPID;
         }
-
-        operator bool() const {
-            return state_ == ok_state;
+        
+        virtual void operator()(const request_type& req){
+            
+        }
+        
+        virtual void operator()(const response_type& resp){
+            
         }
 
 
-    private:
-        invoke_id_type invokeid_;
+    protected:
+
         request_type_ptr request_;
         response_type_ptr response_;
         reject_type_ptr reject_;
         serviceerror_type_ptr serviceerror_;
-        boost::system::error_code error_;
-        state_type state_;
-    };
 
+    };
+    
+    typedef boost::shared_ptr<confirmed_operation> confirmed_operation_ptr;
+    
+    typedef std::set<confirmed_operation_ptr> confirmed_operation_set;
 
     typedef confirmed_operation<MMS::Identify_Request, MMS::Identify_Response,
     MMS::ConfirmedServiceRequest_identify, MMS::ConfirmedServiceResponse_identify > identify_operation_type;
@@ -202,8 +244,8 @@ namespace prot9506 {
     typedef confirmed_operation<MMS::DefineNamedVariableList_Request, MMS::DefineNamedVariableList_Response,
     MMS::ConfirmedServiceRequest_defineNamedVariableList, MMS::ConfirmedServiceResponse_defineNamedVariableList > definelist_operation_type;
 
-    typedef confirmed_operation<MMS::Write_Request , MMS::Write_Response ,
-    MMS::ConfirmedServiceRequest_write >   write_operation_type;   
+    typedef confirmed_operation<MMS::Write_Request, MMS::Write_Response,
+    MMS::ConfirmedServiceRequest_write > write_operation_type;
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
@@ -216,13 +258,6 @@ namespace prot9506 {
     using boost::itu::x226impl::presentation_context;
     using boost::itu::x226impl::presentation_context_set;
     using boost::itu::x227impl::application_context;
-
-
-    const presentation_context MMS_CONTEXT_arr[] = {presentation_context(MMS_OID)};
-
-    const presentation_context_set MMS_CONTEXT = presentation_context_set(MMS_CONTEXT_arr, MMS_CONTEXT_arr + 1);
-
-    const application_context MMS_APPLICATION_CONTEXT = application_context(MMSA_OID, MMS_CONTEXT);
 
     class mms_socket : public boost::itu::x227impl::application_socket {
 
@@ -239,15 +274,11 @@ namespace prot9506 {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
         explicit mms_socket(boost::asio::io_service& io_service,
-                const application_selector& asel = NULL_APPLICATION_SELECTOR)
-        : super_type(io_service, MMS_APPLICATION_CONTEXT, asel), invoke_id_(0) {
-        }
+                const application_selector& asel = NULL_APPLICATION_SELECTOR);
 
         mms_socket(boost::asio::io_service& io_service,
                 const endpoint_type& endpoint,
-                const application_selector& asel = NULL_APPLICATION_SELECTOR)
-        : super_type(io_service, endpoint, MMS_APPLICATION_CONTEXT, asel), invoke_id_(0) {
-        }
+                const application_selector& asel = NULL_APPLICATION_SELECTOR);
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -372,7 +403,7 @@ namespace prot9506 {
                             const MMS::Confirmed_ResponsePDU& mmsresp = *mms.confirmed_ResponsePDU();
                             if ((mmsresp.invokeID()) == operation_->invokeid()) {
                                 const MMS::ConfirmedServiceResponse& confirmresp = mmsresp.service();
-                                if (confirmresp.type() == operation_->rspid()) {                                    
+                                if (confirmresp.type() == operation_->rspid()) {
                                     if (!operation_->rspid())
                                         operation_->response_new();
                                     else
@@ -395,11 +426,12 @@ namespace prot9506 {
                             }
                             break;
                         }
-                        case MMS::MMSpdu_unconfirmed_PDU: {
-                            const MMS::Unconfirmed_PDU&  mmsresp = *mms.unconfirmed_PDU();
+                        case MMS::MMSpdu_unconfirmed_PDU:
+                        {
+                            const MMS::Unconfirmed_PDU& mmsresp = *mms.unconfirmed_PDU();
                             socket_->information_report(mmsresp);
                             contin = true;
-                        }                        
+                        }
                         case MMS::MMSpdu_rejectPDU:
                         {
                             operation_->reject(mms.get<MMS::RejectPDU > (MMS::MMSpdu_rejectPDU));
@@ -411,10 +443,10 @@ namespace prot9506 {
                         }
                     }
                     return contin;
-                }                catch (const boost::system::system_error& cerr) {
+                } catch (const boost::system::system_error& cerr) {
                     operation_->error(cerr.code());
                     return contin;
-                }                catch (...) {
+                } catch (...) {
                 }
                 operation_->error(boost::itu::ER_PROTOCOL);
                 return contin;
@@ -465,6 +497,7 @@ namespace prot9506 {
         class release_request_op {
 
             enum state_type {
+
                 request,
                 response,
                 error
@@ -472,57 +505,55 @@ namespace prot9506 {
 
         public:
 
-            
             release_request_op(mms_socket* socket, ReleaseRequestHandler handler) :
-            socket_(socket), handler_(handler),  state(request) {
-            }              
+            socket_(socket), handler_(handler), state(request) {
+            }
 
             void operator()(const boost::system::error_code& ec) {
                 if (!ec) {
                     socket_->super_type::async_release(boost::bind(&release_request_op<ReleaseRequestHandler>::release,
                             this, boost::asio::placeholders::error));
-                }  
+                }
                 handler_(ec);
             }
-            
+
             void release(const boost::system::error_code& ec) {
                 if (!ec) {
 
-                }  
+                }
                 handler_(ec);
-            }            
-            
+            }
+
         private:
-            
+
             mms_socket* socket_;
             ReleaseRequestHandler handler_;
-            state_type state;            
-            
-        };     
-        
-        
-    public:        
-        
+            state_type state;
+
+        };
+
+
+    public:
+
         template <typename ReleaseRequestHandler>
         void async_release(BOOST_ASIO_MOVE_ARG(ReleaseRequestHandler) handler) {
-            
-            
+
+
             MMS::MMSpdu mms;
             mms.conclude_RequestPDU__new();
             mmsdcs()->set(mms);
-            
+
             typedef release_request_op<ReleaseRequestHandler> release_operation_type;
-            
+
 
             super_type::async_request(boost::bind(&release_operation_type::operator(),
-                    release_operation_type (const_cast<mms_socket*> (this), handler), boost::asio::placeholders::error));            
-            
+                    release_operation_type(const_cast<mms_socket*> (this), handler), boost::asio::placeholders::error));
+
         }
-        
-        
-        void information_report(const MMS::Unconfirmed_PDU& val){
-            std::cout  << "information_report"   << std::endl;
-        }
+
+        void information_report(const MMS::Unconfirmed_PDU& val) {
+            std::cout << "information_report" << std::endl;
+        } 
 
     protected:
 
@@ -533,6 +564,7 @@ namespace prot9506 {
         application_context_ptr mmsdcs() const {
             return mmsdcs_;
         }
+                
 
         invoke_id_type invoke_id() {
             return invoke_id_ = ((invoke_id_ < MAXINVOKEID) ? (++invoke_id_) : 1);
@@ -540,7 +572,7 @@ namespace prot9506 {
 
 
 
-        
+
 
     private:
 
@@ -565,14 +597,10 @@ namespace prot9506 {
 
     public:
 
-        explicit socket_acceptor(boost::asio::io_service& io_service)
-        : super_type(io_service, MMS_APPLICATION_CONTEXT) {
-        }
+        explicit socket_acceptor(boost::asio::io_service& io_service);
 
         socket_acceptor(boost::asio::io_service& io_service,
-                const endpoint_type& endpoint, bool reuse_addr = true)
-        : super_type(io_service, endpoint, MMS_APPLICATION_CONTEXT) {
-        }
+                const endpoint_type& endpoint, bool reuse_addr = true);
 
 
 
