@@ -107,14 +107,14 @@ namespace prot9506 {
     //////////////////////////////////////////////////////////////////////////
 
     mms_socket::mms_socket(boost::asio::io_service& io_service,
-            const application_selector& asel)
-    : super_type(io_service, MMS_APPLICATION_CONTEXT, asel), invoke_id_(0) {
+            const protocol_option& protopt)
+    : super_type(io_service, protopt.acontext(), protopt.aselector()), invoke_id_(0), mmsoption_(protopt) {
     }
 
     mms_socket::mms_socket(boost::asio::io_service& io_service,
             const endpoint_type& endpoint,
-            const application_selector& asel)
-    : super_type(io_service, endpoint, MMS_APPLICATION_CONTEXT, asel), invoke_id_(0) {
+            const protocol_option& protopt)
+    : super_type(io_service, endpoint, protopt.acontext(), protopt.aselector()), invoke_id_(0), mmsoption_(protopt) {
     }
 
     boost::system::error_code mms_socket::init_request() {
@@ -129,13 +129,13 @@ namespace prot9506 {
         mms.initiate_RequestPDU__new();
         MMS::Initiate_RequestPDU& initpdu = *mms.initiate_RequestPDU();
 
-        initpdu.localDetailCalling(30000);
-        initpdu.proposedMaxServOutstandingCalling(1);
-        initpdu.proposedMaxServOutstandingCalled(5);
-        initpdu.proposedDataStructureNestingLevel(5);
-        initpdu.initRequestDetail().proposedVersionNumber(1);
-        initpdu.initRequestDetail().servicesSupportedCalling(MMS_SERVICE_OPTOION_DFLT);
-        initpdu.initRequestDetail().proposedParameterCBB(MMS_CBB_OPTION_DFLT);
+        initpdu.localDetailCalling(mmsoption_.localdetail());
+        initpdu.proposedMaxServOutstandingCalling(mmsoption_.maxcalling());
+        initpdu.proposedMaxServOutstandingCalled(mmsoption_.maxcalled());
+        initpdu.proposedDataStructureNestingLevel(mmsoption_.nested());
+        initpdu.initRequestDetail().proposedVersionNumber(mmsoption_.version());
+        initpdu.initRequestDetail().servicesSupportedCalling(mmsoption_.service());
+        initpdu.initRequestDetail().proposedParameterCBB(mmsoption_.parameter());
 
         mmsdcs()->set(mms);
 

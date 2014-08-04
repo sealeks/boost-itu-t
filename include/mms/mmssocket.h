@@ -404,11 +404,11 @@ namespace prot9506 {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
 
         explicit mms_socket(boost::asio::io_service& io_service,
-                const application_selector& asel = NULL_APPLICATION_SELECTOR);
+                const protocol_option& protopt);
 
         mms_socket(boost::asio::io_service& io_service,
                 const endpoint_type& endpoint,
-                const application_selector& asel = NULL_APPLICATION_SELECTOR);
+                const protocol_option& protopt);
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -699,9 +699,15 @@ namespace prot9506 {
             return invoke_id_ = ((invoke_id_ < MAXINVOKEID) ? (++invoke_id_) : 1);
         }
 
+        const protocol_option & mmsoption() const {
+            return mmsoption_;
+        }
 
-
-
+        protocol_option & mmsoption() {
+            return mmsoption_;
+        }
+        
+        
 
     private:
 
@@ -714,6 +720,7 @@ namespace prot9506 {
 
         application_context_ptr mmsdcs_;
         invoke_id_type invoke_id_;
+        protocol_option mmsoption_;
 
     };
 
