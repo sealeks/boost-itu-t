@@ -555,6 +555,72 @@ namespace prot9506 {
         }
 
 
+         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  Request operation  //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+
+
+
+    public:
+
+        template< typename ConfirmRequestHandler, typename REQ, typename RSP, MMS::ConfirmedServiceRequest_enum REQID, MMS::ConfirmedServiceResponse_enum RSPID>
+        void async_request(boost::shared_ptr<confirmed_operation<REQ, RSP, REQID, RSPID > > operation,
+                ConfirmRequestHandler handler) {
+
+            if (!operation->request()) {
+                handler(operation);
+                return;
+            }
+
+            MMS::MMSpdu mms;
+            mms.confirmed_RequestPDU__new();
+            MMS::Confirmed_RequestPDU& cfpdu = *mms.confirmed_RequestPDU();
+            operation->invokeid(invoke_id());
+            cfpdu.invokeID(operation->invokeid());
+            cfpdu.service().set(operation->request(), operation->reqid());
+            mmsdcs()->set(mms);
+
+
+            super_type::async_request(&handler, boost::asio::placeholders::error);
+
+        }
+
+        template< typename REQ, typename RSP, MMS::ConfirmedServiceRequest_enum REQID, MMS::ConfirmedServiceResponse_enum RSPID>
+        void async_request(boost::shared_ptr<confirmed_operation<REQ, RSP, REQID, RSPID > > operation) {
+                 async_request(boost::bind(&confirmed_operation<REQ, RSP, REQID, RSPID >::response_operator, operation.get() , operation));
+        }        
+        
+        
+          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  Response operation  //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+
+
+
+    /*public:
+
+        template< typename ConfirmRequestHandler>
+        void async_response(ConfirmRequestHandler handler) {
+
+
+            MMS::MMSpdu mms;
+            mms.confirmed_RequestPDU__new();
+            MMS::Confirmed_RequestPDU& cfpdu = *mms.confirmed_RequestPDU();
+            operation->invokeid(invoke_id());
+            cfpdu.invokeID(operation->invokeid());
+            cfpdu.service().set(operation->request(), operation->reqid());
+            mmsdcs()->set(mms);
+
+
+            super_type::async_request(&handler, boost::asio::placeholders::error);
+
+        }
+
+        template< typename REQ, typename RSP, MMS::ConfirmedServiceRequest_enum REQID, MMS::ConfirmedServiceResponse_enum RSPID>
+        void async_request(boost::shared_ptr<confirmed_operation<REQ, RSP, REQID, RSPID > > operation) {
+                 async_request(boost::bind(&confirmed_operation<REQ, RSP, REQID, RSPID >::response_operator, operation.get() , operation));
+        }*/          
+        
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //  Confirm request operation  //
@@ -806,7 +872,10 @@ namespace prot9506 {
         application_context_ptr mmsdcs_;
         invoke_id_type invoke_id_;
         protocol_option mmsoption_;
-
+        confirmed_operation_set out_requst_set_;
+        confirmed_operation_set in_requst_set_;
+        confirmed_operation_set out_response_set_;
+        confirmed_operation_set in_response_set_;
     };
 
 
@@ -906,7 +975,7 @@ namespace prot9506 {
                 void async_accept_impl(mms_socket& peer,
                         endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
                     //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
-                    peer.mmsoption(mmsoption_);
+                    peer.mmsoption()=mmsoption_;
                     super_type::async_accept(peer, peer_endpoint, handler);
                 }
 
@@ -914,23 +983,23 @@ namespace prot9506 {
                 void async_accept_impl(mms_socket& peer,
                         BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
                     //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
-                    peer.mmsoption(mmsoption_);
+                    peer.mmsoption()=mmsoption_;
                     super_type::async_accept(peer, handler);
                 }
 
                 boost::system::error_code accept_impl(
                         mms_socket& peer,
                         endpoint_type& peer_endpoint, boost::system::error_code& ec) {
-                    peer.mmsoption(mmsoption_);
-                    super_type::accept(peer, peer_endpoint, ec);
+                    peer.mmsoption()=mmsoption_;
+                    //super_type::accept(peer, peer_endpoint, ec);
                     return ec;
                 }
 
                 boost::system::error_code accept_impl(
                         mms_socket& peer,
                         boost::system::error_code& ec) {
-                    peer.mmsoption(mmsoption_);
-                    super_type::accept(peer, ec);
+                    peer.mmsoption()=mmsoption_;
+                    //super_type::accept(peer, ec);
                     return ec;
                 }
 
