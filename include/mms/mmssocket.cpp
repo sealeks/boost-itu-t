@@ -237,6 +237,22 @@ namespace prot9506 {
 
     }
 
+    void mms_socket::information_report(const MMS::Unconfirmed_PDU& val) {
+        std::cout << "information_report" << std::endl;
+    }
+
+    mms_socket::application_context_ptr mms_socket::mmsdcs() {
+        return mmsdcs_;
+    }
+
+    mms_socket::application_context_ptr mms_socket::mmsdcs() const {
+        return mmsdcs_;
+    }
+
+    invoke_id_type mms_socket::invoke_id() {
+        return invoke_id_ = ((invoke_id_ < MAXINVOKEID) ? (++invoke_id_) : 1);
+    }    
+
     /////////////////////////////////////////////////////
 
     socket_acceptor::socket_acceptor(boost::asio::io_service& io_service)

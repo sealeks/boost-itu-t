@@ -378,11 +378,11 @@ namespace prot9506 {
             return RSPID;
         }
 
-        virtual void operator()(boost::shared_ptr<request_type> req) {
+        virtual void request_operator(boost::shared_ptr<request_type> req) {
 
         }
 
-        virtual void operator()(boost::shared_ptr<response_type_ptr> resp) {
+        virtual void response_operator(boost::shared_ptr<response_type_ptr> resp) {
 
         }
 
@@ -428,15 +428,71 @@ namespace prot9506 {
     using boost::itu::x226impl::presentation_context_set;
     using boost::itu::x227impl::application_context;
 
-    class mms_socket : public boost::itu::x227impl::application_socket {
+    class mms_socket : protected boost::itu::x227impl::application_socket {
 
         typedef boost::itu::x227impl::application_socket super_type;
-        typedef boost::itu::x226impl::defined_context_ptr application_context_ptr;
+        typedef super_type::defined_context_ptr    defined_context_ptr; 
+        typedef super_type::defined_context_ptr application_context_ptr;
+        typedef super_type::defined_context_map  defined_context_map;
 
 
     public:
 
+        typedef super_type::protocol_type protocol_type;
+        typedef super_type::lowest_layer_type lowest_layer_type;
+        typedef super_type::native_handle_type native_handle_type;
+        typedef super_type::native_type native_type;
+        typedef super_type::message_flags message_flags;
+        typedef super_type::endpoint_type endpoint_type;
+        typedef super_type::service_type service_type;
+        typedef super_type::shutdown_type shutdown_type;
+        typedef super_type::implementation_type implementation_type;
 
+
+        using super_type::assign;
+        using super_type::at_mark;
+        using super_type::available;
+        using super_type::bind;
+        using super_type::cancel;
+        using super_type::close;
+        using super_type::get_io_service;
+        using super_type::get_option;
+        using super_type::io_control;
+        using super_type::is_open;
+        using super_type::lowest_layer;
+        using super_type::native;
+        using super_type::native_handle;
+        using super_type::native_non_blocking;
+        using super_type::non_blocking;
+        using super_type::open;
+        using super_type::remote_endpoint;
+        using super_type::set_option;
+        using super_type::shutdown;
+
+        //using super_type::ready;
+        using super_type::is_acceptor;
+
+        using super_type::request;
+        using super_type::async_request;
+        using super_type::response;
+        using super_type::async_response;
+        using super_type::conversation;
+        using super_type::async_conversation;
+
+    protected:
+
+        using super_type::get_service;
+        using super_type::get_implementation;
+
+        //using super_type::coder;
+        using super_type::dcs;
+        using super_type::clear_input;
+        using super_type::clear_output;
+        using super_type::negotiate_presentation_accept;
+        using super_type::presentation_contexts;        
+
+
+    public:
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //  Constructors  //
@@ -654,7 +710,10 @@ namespace prot9506 {
 
         }
 
-
+        template< typename REQ, typename RSP, MMS::ConfirmedServiceRequest_enum REQID, MMS::ConfirmedServiceResponse_enum RSPID>
+        void async_confirm_request(boost::shared_ptr<confirmed_operation<REQ, RSP, REQID, RSPID > > operation) {
+                 async_confirm_request(boost::bind(&confirmed_operation<REQ, RSP, REQID, RSPID >::response_operator, operation.get() , operation));
+        }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //  Release operations  //
@@ -720,31 +779,19 @@ namespace prot9506 {
 
         }
 
-        void information_report(const MMS::Unconfirmed_PDU& val) {
-            std::cout << "information_report" << std::endl;
-        }
+        virtual void information_report(const MMS::Unconfirmed_PDU& val);
+        
+        const protocol_option & mmsoption() const;
+
+        protocol_option & mmsoption();        
 
     protected:
 
-        application_context_ptr mmsdcs() {
-            return mmsdcs_;
-        }
+        application_context_ptr mmsdcs();
 
-        application_context_ptr mmsdcs() const {
-            return mmsdcs_;
-        }
+        application_context_ptr mmsdcs() const;
 
-        invoke_id_type invoke_id() {
-            return invoke_id_ = ((invoke_id_ < MAXINVOKEID) ? (++invoke_id_) : 1);
-        }
-
-        const protocol_option & mmsoption() const {
-            return mmsoption_;
-        }
-
-        protocol_option & mmsoption() {
-            return mmsoption_;
-        }
+        invoke_id_type invoke_id();
         
        void mmsoption(const Initiate_ResponsePDU& opt);
         
@@ -753,11 +800,8 @@ namespace prot9506 {
     private:
 
 
-
         boost::system::error_code init_request();
         boost::system::error_code init_response();
-
-
 
         application_context_ptr mmsdcs_;
         invoke_id_type invoke_id_;
@@ -772,6 +816,43 @@ namespace prot9506 {
 
         typedef boost::itu::x227impl::socket_acceptor super_type;
 
+        friend class mms_socket;
+
+    public:
+
+        typedef super_type::protocol_type protocol_type;
+        typedef super_type::endpoint_type endpoint_type;
+        typedef super_type::implementation_type implementation_type;
+        typedef super_type::service_type service_type;
+        typedef super_type::message_flags message_flags;
+        typedef super_type::native_handle_type native_handle_type;
+        typedef super_type::native_type native_type;
+
+        using super_type::assign;
+        using super_type::bind;
+        using super_type::cancel;
+        using super_type::close;
+        using super_type::get_io_service;
+        using super_type::get_option;
+        using super_type::io_control;
+        using super_type::is_open;
+        using super_type::listen;
+        using super_type::local_endpoint;
+        using super_type::native;
+        using super_type::native_handle;
+        using super_type::native_non_blocking;
+        using super_type::non_blocking;
+        using super_type::open;
+        using super_type::set_option;
+
+
+    protected:
+
+        using super_type::get_service;
+        using super_type::get_implementation;
+
+    public:
+
     public:
 
         explicit socket_acceptor(boost::asio::io_service& io_service);
@@ -782,72 +863,81 @@ namespace prot9506 {
 
 
 
-        /* template <typename SocketService>
-         boost::system::error_code accept(
-                 basic_socket<protocol_type, SocketService>& peer,
-                 boost::system::error_code& ec) {
-             return accept_impl(peer, ec);
-         }
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //  Accept operation  //
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                          
 
-         template <typename SocketService>
-         boost::system::error_code accept(
-                 basic_socket<protocol_type, SocketService>& peer,
-                 endpoint_type& peer_endpoint, boost::system::error_code& ec) {
-             return accept_impl(peer, peer_endpoint, ec);
-         }
+                boost::system::error_code accept(
+                        mms_socket& peer,
+                        boost::system::error_code& ec) {
+                    return accept_impl(peer, ec);
+                }
 
-         template <typename SocketService, typename AcceptHandler>
-         void async_accept(basic_socket<protocol_type, SocketService>& peer,
-                 BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
-             BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
-             async_accept_impl(peer,  BOOST_ASIO_MOVE_CAST(AcceptHandler)(handler));
-         }
+                boost::system::error_code accept(
+                        mms_socket& peer,
+                        endpoint_type& peer_endpoint, boost::system::error_code& ec) {
+                    return accept_impl(peer, peer_endpoint, ec);
+                }
 
-         template <typename SocketService, typename AcceptHandler>
-         void async_accept(basic_socket<protocol_type, SocketService>& peer,
-                 endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
-             BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
-             async_accept_impl(peer, peer_endpoint , BOOST_ASIO_MOVE_CAST(AcceptHandler)(handler));
-         }
+                template <typename AcceptHandler>
+                void async_accept(mms_socket& peer,
+                        BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                    //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
+                    async_accept_impl(peer, BOOST_ASIO_MOVE_CAST(AcceptHandler)(handler));
+                }
+
+                template <typename AcceptHandler>
+                void async_accept(mms_socket& peer,
+                        endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                    //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
+                    async_accept_impl(peer, peer_endpoint, BOOST_ASIO_MOVE_CAST(AcceptHandler)(handler));
+                }
 
 
 
-     private:
+            private:
 
-         template <typename SocketService, typename AcceptHandler>
-         void async_accept_impl(basic_socket<protocol_type, SocketService>& peer,
-                 endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
-             BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
-             static_cast<mms_socket*> ( &peer)->option(option_);
-             super_type::async_accept(peer,  peer_endpoint, static_cast<mms_socket*> (&peer)->coder(), handler);
-         }
 
-         template <typename SocketService, typename AcceptHandler>
-         void async_accept_impl(basic_socket<protocol_type, SocketService>& peer,
-                 BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
-             BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
-             static_cast<mms_socket*> ( &peer)->option(option_);
-             super_type::async_accept(peer,   static_cast<mms_socket*> (&peer)->coder(), handler);
-         }
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //  Private implementator  //
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                     
 
-         template <typename SocketService>
-         boost::system::error_code accept_impl(
-                 basic_socket<protocol_type, SocketService>& peer,
-                 endpoint_type& peer_endpoint, boost::system::error_code& ec) {
-             static_cast<mms_socket*> ( &peer)->option(option_);
-             super_type::accept(peer, peer_endpoint, static_cast<mms_socket*> ( &peer)->coder(),  ec);
-             return ec;
-         }
+                template <typename AcceptHandler>
+                void async_accept_impl(mms_socket& peer,
+                        endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                    //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
+                    peer.mmsoption(mmsoption_);
+                    super_type::async_accept(peer, peer_endpoint, handler);
+                }
 
-         template <typename SocketService>
-         boost::system::error_code accept_impl(
-                 basic_socket<protocol_type, SocketService>& peer,
-                 boost::system::error_code& ec) {
-             static_cast<mms_socket*> ( &peer)->option(option_);
-             super_type::accept(peer, static_cast<mms_socket*> ( &peer)->coder(),  ec);
-             return ec;
-         }*/
-    };
+                template <typename AcceptHandler>
+                void async_accept_impl(mms_socket& peer,
+                        BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                    //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
+                    peer.mmsoption(mmsoption_);
+                    super_type::async_accept(peer, handler);
+                }
+
+                boost::system::error_code accept_impl(
+                        mms_socket& peer,
+                        endpoint_type& peer_endpoint, boost::system::error_code& ec) {
+                    peer.mmsoption(mmsoption_);
+                    super_type::accept(peer, peer_endpoint, ec);
+                    return ec;
+                }
+
+                boost::system::error_code accept_impl(
+                        mms_socket& peer,
+                        boost::system::error_code& ec) {
+                    peer.mmsoption(mmsoption_);
+                    super_type::accept(peer, ec);
+                    return ec;
+                }
+
+
+                protocol_option mmsoption_;
+
+            };
 
 }
 
