@@ -232,7 +232,9 @@ namespace prot9506 {
     }
 
     invoke_id_type mms_socket::invoke_id() {
-        return invoke_id_ = ((invoke_id_ < MAXINVOKEID) ? (++invoke_id_) : 1);
+        if (invoke_id_ < MAXINVOKEID)
+            return ++invoke_id_;
+        return invoke_id_=1;
     }    
 
     /////////////////////////////////////////////////////
