@@ -202,43 +202,25 @@ namespace prot9506 {
     }
 
     void mms_socket::mmsoption(const Initiate_ResponsePDU& opt) {
-        std::cout << "server negotiate option"  << std::endl;
-        if (opt.localDetailCalled()) {
-            std::cout << "localDetailCalled : " << (*(opt.localDetailCalled())) << std::endl;
+        if (opt.localDetailCalled()) 
             mmsoption_.localdetail(*(opt.localDetailCalled()));
-        }
-        if (opt.negotiatedDataStructureNestingLevel()) {
-            std::cout << "NestingLevel : " << (*(opt.negotiatedDataStructureNestingLevel())) << std::endl;
+        if (opt.negotiatedDataStructureNestingLevel())
             mmsoption_.nested(*(opt.negotiatedDataStructureNestingLevel()));
-        }        
-        std::cout << "MaxServOutstandingCalling : " << (opt.negotiatedMaxServOutstandingCalling()) << std::endl;
         mmsoption_.maxcalling(opt.negotiatedMaxServOutstandingCalling());
-        std::cout << "MaxServOutstandingCalled : " << (opt.negotiatedMaxServOutstandingCalled()) << std::endl;
         mmsoption_.maxcalled(opt.negotiatedMaxServOutstandingCalled());
-        std::cout << "version : " << (opt.initResponseDetail().negotiatedVersionNumber()) << std::endl;
         mmsoption_.version(opt.initResponseDetail().negotiatedVersionNumber());
-         std::cout << "parameter : " << (opt.initResponseDetail().negotiatedParameterCBB()) << std::endl;
-        mmsoption_.parameter()=opt.initResponseDetail().negotiatedParameterCBB();       
-         std::cout << "servicesSupportedCalled : " << (opt.initResponseDetail().servicesSupportedCalled()) << std::endl;
+        mmsoption_.parameter()=opt.initResponseDetail().negotiatedParameterCBB();
         mmsoption_.service()=opt.initResponseDetail().servicesSupportedCalled();
-        if (opt.initResponseDetail().additionalSupportedCalled()) {
-            std::cout << "additionalSupportedCalled : " << (*(opt.initResponseDetail().additionalSupportedCalled())) << std::endl;
+        if (opt.initResponseDetail().additionalSupportedCalled())
             mmsoption_.exservice() = *(opt.initResponseDetail().additionalSupportedCalled());
-        }
-        if (opt.initResponseDetail().additionalSupportedCalled()) {
-            std::cout << "additionalCbbSupportedCalled : " << (*(opt.initResponseDetail().additionalCbbSupportedCalled())) << std::endl;
+        if (opt.initResponseDetail().additionalSupportedCalled())
             mmsoption_.exservice() = *(opt.initResponseDetail().additionalCbbSupportedCalled());
-        }        
-        if (opt.initResponseDetail().privilegeClassIdentityCalled()) {
-            std::cout << "privilegeClassIdentityCalled : " << (*(opt.initResponseDetail().privilegeClassIdentityCalled())) << std::endl;
-            mmsoption_.privilege() = *(opt.initResponseDetail().privilegeClassIdentityCalled());
-        }           
-    //    if (mmsoption_.service()=opt.initResponseDetail())
-
+        if (opt.initResponseDetail().privilegeClassIdentityCalled())
+            mmsoption_.privilege() = *(opt.initResponseDetail().privilegeClassIdentityCalled());        
     }
 
     void mms_socket::information_report(const MMS::Unconfirmed_PDU& val) {
-        std::cout << "information_report" << std::endl;
+        //std::cout << "information_report" << std::endl;
     }
 
     mms_socket::application_context_ptr mms_socket::mmsdcs() {

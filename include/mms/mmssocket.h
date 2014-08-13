@@ -234,7 +234,7 @@ namespace prot9506 {
             unexp_resp_state
         };
 
-        basic_confirmed_operation(mms_socket* sct) : socket_(sct), invokeid_(), error_(), state_(noproccess_state) {
+        basic_confirmed_operation(mms_socket* sct = 0) : socket_(sct), invokeid_(), error_(), state_(noproccess_state) {
         }
 
         virtual ~basic_confirmed_operation() {
@@ -245,6 +245,10 @@ namespace prot9506 {
             if (error_)
                 state_ = proterror_state;
         }
+        
+        boost::system::error_code error() const {
+            return error_;
+        }        
 
         state_type state() const {
             return state_;
@@ -277,6 +281,8 @@ namespace prot9506 {
         friend bool operator<(const basic_confirmed_operation& ls, const basic_confirmed_operation& rs) {
             return (ls.invokeid() < rs.invokeid());
         }
+        
+        
 
     protected:
 
@@ -306,7 +312,7 @@ namespace prot9506 {
         typedef boost::shared_ptr<reject_type> reject_type_ptr;
         typedef boost::shared_ptr<serviceerror_type> serviceerror_type_ptr;
 
-        confirmed_operation(mms_socket* sct) : basic_confirmed_operation(sct) {
+        confirmed_operation(mms_socket* sct = 0) : basic_confirmed_operation(sct) {
         }
 
         virtual ~confirmed_operation() {
@@ -363,7 +369,7 @@ namespace prot9506 {
             if (!reject_) reject_ = reject_type_ptr(new reject_type());
             return reject_;
         }
-
+        
         serviceerror_type_ptr serviceerror_new() {
             state_ = error_state;
             if (!serviceerror_) serviceerror_ = serviceerror_type_ptr(new serviceerror_type_ptr());
@@ -412,6 +418,9 @@ namespace prot9506 {
 
     typedef confirmed_operation<MMS::DefineNamedVariableList_Request, MMS::DefineNamedVariableList_Response,
     MMS::ConfirmedServiceRequest_defineNamedVariableList, MMS::ConfirmedServiceResponse_defineNamedVariableList > definelist_operation_type;
+    
+    typedef confirmed_operation<MMS::DeleteNamedVariableList_Request, MMS::DeleteNamedVariableList_Response,
+    MMS::ConfirmedServiceRequest_deleteNamedVariableList, MMS::ConfirmedServiceResponse_deleteNamedVariableList > deletelist_operation_type;    
 
     typedef confirmed_operation<MMS::Write_Request, MMS::Write_Response,
     MMS::ConfirmedServiceRequest_write > write_operation_type;
