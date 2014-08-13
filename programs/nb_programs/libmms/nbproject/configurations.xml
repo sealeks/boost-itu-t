@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="88">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+      <itemPath>../../../doc</itemPath>
+    </logicalFolder>
+    <itemPath>../../../include/mms/ISO-9506-MMS-1.cpp</itemPath>
+    <itemPath>../../../include/mms/ISO-9506-MMS-1.hpp</itemPath>
+    <itemPath>../../../include/mms/ISO-9506-MMS-1A.cpp</itemPath>
+    <itemPath>../../../include/mms/ISO-9506-MMS-1A.hpp</itemPath>
+    <itemPath>../../../include/mms/MMS-Environment-1.cpp</itemPath>
+    <itemPath>../../../include/mms/MMS-Environment-1.hpp</itemPath>
+    <itemPath>../../../include/mms/MMS-Object-Module-1.cpp</itemPath>
+    <itemPath>../../../include/mms/MMS-Object-Module-1.hpp</itemPath>
+    <itemPath>../../../include/mms/MMS-SCI-Module-1.cpp</itemPath>
+    <itemPath>../../../include/mms/MMS-SCI-Module-1.hpp</itemPath>
+    <itemPath>../../../include/mms/mmssocket.cpp</itemPath>
+    <itemPath>../../../include/mms/mmssocket.h</itemPath>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>../../../include</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="nb_gcc_db_WIN32" type="3">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>ITUX200_DEBUG</Elem>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
+          </preprocessorList>
+        </ccTool>
+        <archiverTool>
+          <output>../../../lib/${CND_CONF}/libmms.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="../../../include/mms/ISO-9506-MMS-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Object-Module-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Object-Module-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmssocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="nb_gcc_rl_WIN32" type="3">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
+          <preprocessorList>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
+          </preprocessorList>
+          <warningLevel>2</warningLevel>
+        </ccTool>
+        <archiverTool>
+          <output>../../../lib/${CND_CONF}/libmms.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="../../../include/mms/ISO-9506-MMS-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Object-Module-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Object-Module-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmssocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="nb_gcc_db_LIN64" type="3">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <architecture>2</architecture>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+          <commandLine>-fno-strict-aliasing</commandLine>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>ITUX200_DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+        <archiverTool>
+          <output>../../../lib/${CND_CONF}/libmms.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="../../../include/mms/ISO-9506-MMS-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Object-Module-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Object-Module-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmssocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="nb_gcc_rl_LIN64" type="3">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <architecture>2</architecture>
+          <incDir>
+            <pElem>../../../include</pElem>
+            <pElem>${BOOST_DIR}</pElem>
+          </incDir>
+          <commandLine>-fno-strict-aliasing</commandLine>
+          <warningLevel>2</warningLevel>
+        </ccTool>
+        <archiverTool>
+          <output>../../../lib/${CND_CONF}/libmms.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="../../../include/mms/ISO-9506-MMS-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Object-Module-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Object-Module-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmssocket.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
