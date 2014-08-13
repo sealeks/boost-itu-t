@@ -223,6 +223,14 @@ namespace prot9506 {
         //std::cout << "information_report" << std::endl;
     }
 
+    const protocol_option & mms_socket::mmsoption() const {
+        return mmsoption_;
+    }
+
+    protocol_option & mms_socket::mmsoption() {
+        return mmsoption_;
+    }      
+
     mms_socket::application_context_ptr mms_socket::mmsdcs() {
         return mmsdcs_;
     }

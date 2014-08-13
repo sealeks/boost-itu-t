@@ -438,6 +438,8 @@ namespace prot9506 {
     using boost::itu::x227impl::application_context;
 
     class mms_socket : protected boost::itu::x227impl::application_socket {
+        
+        friend class socket_acceptor;
 
         typedef boost::itu::x227impl::application_socket super_type;
         typedef super_type::defined_context_ptr    defined_context_ptr; 
@@ -858,9 +860,9 @@ namespace prot9506 {
         
         const protocol_option & mmsoption() const;
 
-        protocol_option & mmsoption();        
-
     protected:
+        
+        protocol_option & mmsoption();             
 
         application_context_ptr mmsdcs();
 
