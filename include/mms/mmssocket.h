@@ -1018,6 +1018,12 @@ namespace prot9506 {
                 protocol_option mmsoption_;
 
             };
+            
+
+    double from_mmsfloat(const MMS::FloatingPoint& vl);
+    MMS::FloatingPoint to_mmsfloat(const float& vl);
+    MMS::FloatingPoint to_mmsfloat(const double& vl);
+    MMS::FloatingPoint to_mmsfloat(const long double& vl);   
 
 }
 

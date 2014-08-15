@@ -255,5 +255,74 @@ namespace prot9506 {
             const endpoint_type& endpoint, bool reuse_addr)
     : super_type(io_service, endpoint, MMS_APPLICATION_CONTEXT) {
     }
+    
+    
+    
+    
+    double from_mmsfloat(const MMS::FloatingPoint& vlt) {
+        std::size_t sz = vlt.size();
+        if (sz) {
+#ifdef BIG_ENDIAN_ARCHITECTURE
+            const  MMS::FloatingPoint vl&=vlt;    
+#else
+            MMS::FloatingPoint vl;
+            vl.push_back(vlt[0]);
+            std::reverse_copy(++vlt.begin(), vlt.end(), std::insert_iterator<MMS::FloatingPoint>(vl, vl.end()));
+#endif            
+            std::size_t esz = static_cast<std::size_t> (vl[0]);
+            if ((sz == 5) && (esz == 8)) 
+                return  *reinterpret_cast<const float*> (&vl[1]);
+            else  if ((sz == 9) && (esz == 11)) 
+                return  *reinterpret_cast<const double*> (&vl[1]);
+            else  if ((sz ==17) && (esz == 15)) 
+                return  *reinterpret_cast<const long double*> (&vl[1]);           
+        }        
+        return std::numeric_limits<double>::quiet_NaN();
+    }
 
+    MMS::FloatingPoint to_mmsfloat(const float& vl) {
+#ifdef BIG_ENDIAN_ARCHITECTURE        
+        MMS::FloatingPoint tmp;
+        tmp.push_back('\x8');
+        tmp.insert(tmp.end(), (const char*) (&vl), (const char*) (&vl) + 4);
+#else
+        MMS::FloatingPoint tmp;
+        MMS::FloatingPoint tmpT;        
+        tmp.push_back('\x8');
+        tmpT.insert(tmpT.end(), (const char*) (&vl), (const char*) (&vl) + 4);      
+        tmp.insert(tmp.end(), tmpT.rbegin(), tmpT.rend());
+#endif          
+        return tmp;
+    }
+
+    MMS::FloatingPoint to_mmsfloat(const double& vl) {
+#ifdef BIG_ENDIAN_ARCHITECTURE        
+        MMS::FloatingPoint tmp;
+        tmp.push_back('\xB');
+        tmp.insert(tmp.end(), (const char*) (&vl), (const char*) (&vl) + 8);
+#else
+        MMS::FloatingPoint tmp;
+        MMS::FloatingPoint tmpT;        
+        tmp.push_back('\xB');
+        tmpT.insert(tmpT.end(), (const char*) (&vl), (const char*) (&vl) + 8);      
+        tmp.insert(tmp.end(), tmpT.rbegin(), tmpT.rend());
+#endif          
+        return tmp;
+    }
+
+    MMS::FloatingPoint to_mmsfloat(const long double& vl) {
+#ifdef BIG_ENDIAN_ARCHITECTURE        
+        MMS::FloatingPoint tmp;
+        tmp.push_back('\xF');
+        tmp.insert(tmp.end(), (const char*) (&vl), (const char*) (&vl) + 16);
+#else
+        MMS::FloatingPoint tmp;
+        MMS::FloatingPoint tmpT;
+        tmp.push_back('\xF');
+        tmpT.insert(tmpT.end(), (const char*) (&vl), (const char*) (&vl) + 16);      
+        tmp.insert(tmp.end(), tmpT.rbegin(), tmpT.rend());
+#endif          
+        return tmp;
+    }
+    
 }
