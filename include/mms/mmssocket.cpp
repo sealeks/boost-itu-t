@@ -325,4 +325,12 @@ namespace prot9506 {
         return tmp;
     }
     
+    boost::posix_time::ptime from_mms_datetime(const MMS::TimeOfDay& vl){
+        return boost::posix_time::ptime();
+    };
+    
+    MMS::TimeOfDay to_mms_datetime(const boost::posix_time::ptime& vl){
+        return MMS::TimeOfDay();
+    }   
+    
 }

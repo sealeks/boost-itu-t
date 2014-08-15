@@ -1024,6 +1024,9 @@ namespace prot9506 {
     MMS::FloatingPoint to_mmsfloat(const float& vl);
     MMS::FloatingPoint to_mmsfloat(const double& vl);
     MMS::FloatingPoint to_mmsfloat(const long double& vl);   
+    
+    boost::posix_time::ptime from_mms_datetime(const MMS::TimeOfDay& vl);
+    MMS::TimeOfDay to_mms_datetime(const boost::posix_time::ptime& vl);    
 
 }
 
