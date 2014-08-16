@@ -48,7 +48,7 @@ namespace prot9506 {
     exparameter_(),
     privilege_() {
     }
-
+    
     protocol_option::protocol_option(const application_selector& asel,
             const service_option_type& _service,
             const parameter_option_type& _parameter,
@@ -228,6 +228,10 @@ namespace prot9506 {
 
     const protocol_option & mms_socket::mmsoption() const {
         return mmsoption_;
+    }
+
+    void mms_socket::aselector(const std::string& vl) {
+        mmsoption_.aselector()=boost::itu::application_selector(vl);
     }
 
     protocol_option & mms_socket::mmsoption() {

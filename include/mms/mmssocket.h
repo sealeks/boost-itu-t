@@ -53,7 +53,7 @@ namespace prot9506 {
     public:
 
         protocol_option();
-
+        
         protocol_option(const application_selector& asel,
                 const service_option_type& _service,
                 const parameter_option_type& _parameter,
@@ -859,6 +859,8 @@ namespace prot9506 {
         virtual void information_report(const MMS::Unconfirmed_PDU& val);
         
         const protocol_option & mmsoption() const;
+        
+        void  aselector(const std::string& vl);        
 
     protected:
         
