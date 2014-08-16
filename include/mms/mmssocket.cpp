@@ -9,6 +9,9 @@
 
 namespace prot9506 {
 
+    const boost::posix_time::ptime mmsepoch_time = boost::posix_time::ptime(boost::gregorian::date(1970, 1, 1));
+    const boost::posix_time::ptime tofdepoch_time = boost::posix_time::ptime(boost::gregorian::date(1984, 1, 1));
+
 
     const boost::array<boost::asn1::oidindx_type, 5 > MMS_ARR = {1, 0, 9506, 2, 1};
     const boost::asn1::oid_type MMS_OID = boost::asn1::oid_type(MMS_ARR);
@@ -43,7 +46,7 @@ namespace prot9506 {
     version_(DEFAULT_MMS_VER),
     exservice_(),
     exparameter_(),
-    privilege_(){
+    privilege_() {
     }
 
     protocol_option::protocol_option(const application_selector& asel,
@@ -68,7 +71,7 @@ namespace prot9506 {
     version_(_version),
     exservice_(_exservice),
     exparameter_(_exparameter),
-    privilege_(_privilege){
+    privilege_(_privilege) {
     }
 
     protocol_option::protocol_option(const std::string& asel,
@@ -81,7 +84,7 @@ namespace prot9506 {
             boost::uint32_t _version,
             const exservice_option_type& _exservice,
             const exparameter_option_type& _exparameter,
-            const privilege_type& _privilege              
+            const privilege_type& _privilege
             ) : asel_(asel),
     acontext_(MMS_APPLICATION_CONTEXT),
     service_(_service),
@@ -93,7 +96,7 @@ namespace prot9506 {
     version_(_version),
     exservice_(_exservice),
     exparameter_(_exparameter),
-     privilege_(_privilege){
+    privilege_(_privilege) {
     }
 
     protocol_option::protocol_option(const service_option_type& _service,
@@ -105,7 +108,7 @@ namespace prot9506 {
             boost::uint32_t _version,
             const exservice_option_type& _exservice,
             const exparameter_option_type& _exparameter,
-            const privilege_type& _privilege              
+            const privilege_type& _privilege
             ) : asel_(NULL_APPLICATION_SELECTOR),
     acontext_(MMS_APPLICATION_CONTEXT),
     service_(_service),
@@ -117,7 +120,7 @@ namespace prot9506 {
     version_(_version),
     exservice_(_exservice),
     exparameter_(_exparameter),
-    privilege_(_privilege){
+    privilege_(_privilege) {
     }
 
 
@@ -160,7 +163,7 @@ namespace prot9506 {
         /*if (!mmsoption_.exparameter().empty())
             initpdu.initRequestDetail().additionalCbbSupportedCalled(mmsoption_.exparameter());
         if (!mmsoption_.exservice().empty())
-            initpdu.initRequestDetail().additionalSupportedCalled(mmsoption_.exservice()); */      
+            initpdu.initRequestDetail().additionalSupportedCalled(mmsoption_.exservice()); */
 
         mmsdcs()->set(mms);
 
@@ -202,21 +205,21 @@ namespace prot9506 {
     }
 
     void mms_socket::mmsoption(const Initiate_ResponsePDU& opt) {
-        if (opt.localDetailCalled()) 
+        if (opt.localDetailCalled())
             mmsoption_.localdetail(*(opt.localDetailCalled()));
         if (opt.negotiatedDataStructureNestingLevel())
             mmsoption_.nested(*(opt.negotiatedDataStructureNestingLevel()));
         mmsoption_.maxcalling(opt.negotiatedMaxServOutstandingCalling());
         mmsoption_.maxcalled(opt.negotiatedMaxServOutstandingCalled());
         mmsoption_.version(opt.initResponseDetail().negotiatedVersionNumber());
-        mmsoption_.parameter()=opt.initResponseDetail().negotiatedParameterCBB();
-        mmsoption_.service()=opt.initResponseDetail().servicesSupportedCalled();
+        mmsoption_.parameter() = opt.initResponseDetail().negotiatedParameterCBB();
+        mmsoption_.service() = opt.initResponseDetail().servicesSupportedCalled();
         if (opt.initResponseDetail().additionalSupportedCalled())
             mmsoption_.exservice() = *(opt.initResponseDetail().additionalSupportedCalled());
         if (opt.initResponseDetail().additionalSupportedCalled())
             mmsoption_.exservice() = *(opt.initResponseDetail().additionalCbbSupportedCalled());
         if (opt.initResponseDetail().privilegeClassIdentityCalled())
-            mmsoption_.privilege() = *(opt.initResponseDetail().privilegeClassIdentityCalled());        
+            mmsoption_.privilege() = *(opt.initResponseDetail().privilegeClassIdentityCalled());
     }
 
     void mms_socket::information_report(const MMS::Unconfirmed_PDU& val) {
@@ -229,7 +232,7 @@ namespace prot9506 {
 
     protocol_option & mms_socket::mmsoption() {
         return mmsoption_;
-    }      
+    }
 
     mms_socket::application_context_ptr mms_socket::mmsdcs() {
         return mmsdcs_;
@@ -242,8 +245,8 @@ namespace prot9506 {
     invoke_id_type mms_socket::invoke_id() {
         if (invoke_id_ < MAXINVOKEID)
             return ++invoke_id_;
-        return invoke_id_=1;
-    }    
+        return invoke_id_ = 1;
+    }
 
     /////////////////////////////////////////////////////
 
@@ -255,28 +258,25 @@ namespace prot9506 {
             const endpoint_type& endpoint, bool reuse_addr)
     : super_type(io_service, endpoint, MMS_APPLICATION_CONTEXT) {
     }
-    
-    
-    
-    
+
     double from_mmsfloat(const MMS::FloatingPoint& vlt) {
         std::size_t sz = vlt.size();
         if (sz) {
 #ifdef BIG_ENDIAN_ARCHITECTURE
-            const  MMS::FloatingPoint vl&=vlt;    
+            const MMS::FloatingPoint& vl = vlt;
 #else
             MMS::FloatingPoint vl;
             vl.push_back(vlt[0]);
-            std::reverse_copy(++vlt.begin(), vlt.end(), std::insert_iterator<MMS::FloatingPoint>(vl, vl.end()));
+            std::reverse_copy(++vlt.begin(), vlt.end(), std::back_inserter<MMS::FloatingPoint>(vl));
 #endif            
             std::size_t esz = static_cast<std::size_t> (vl[0]);
-            if ((sz == 5) && (esz == 8)) 
-                return  *reinterpret_cast<const float*> (&vl[1]);
-            else  if ((sz == 9) && (esz == 11)) 
-                return  *reinterpret_cast<const double*> (&vl[1]);
-            else  if ((sz ==17) && (esz == 15)) 
-                return  *reinterpret_cast<const long double*> (&vl[1]);           
-        }        
+            if ((sz == 5) && (esz == 8))
+                return *reinterpret_cast<const float*> (&vl[1]);
+            else if ((sz == 9) && (esz == 11))
+                return *reinterpret_cast<const double*> (&vl[1]);
+            else if ((sz == 17) && (esz == 15))
+                return *reinterpret_cast<const long double*> (&vl[1]);
+        }
         return std::numeric_limits<double>::quiet_NaN();
     }
 
@@ -287,9 +287,9 @@ namespace prot9506 {
         tmp.insert(tmp.end(), (const char*) (&vl), (const char*) (&vl) + 4);
 #else
         MMS::FloatingPoint tmp;
-        MMS::FloatingPoint tmpT;        
+        MMS::FloatingPoint tmpT;
         tmp.push_back('\x8');
-        tmpT.insert(tmpT.end(), (const char*) (&vl), (const char*) (&vl) + 4);      
+        tmpT.insert(tmpT.end(), (const char*) (&vl), (const char*) (&vl) + 4);
         tmp.insert(tmp.end(), tmpT.rbegin(), tmpT.rend());
 #endif          
         return tmp;
@@ -302,9 +302,9 @@ namespace prot9506 {
         tmp.insert(tmp.end(), (const char*) (&vl), (const char*) (&vl) + 8);
 #else
         MMS::FloatingPoint tmp;
-        MMS::FloatingPoint tmpT;        
+        MMS::FloatingPoint tmpT;
         tmp.push_back('\xB');
-        tmpT.insert(tmpT.end(), (const char*) (&vl), (const char*) (&vl) + 8);      
+        tmpT.insert(tmpT.end(), (const char*) (&vl), (const char*) (&vl) + 8);
         tmp.insert(tmp.end(), tmpT.rbegin(), tmpT.rend());
 #endif          
         return tmp;
@@ -319,18 +319,82 @@ namespace prot9506 {
         MMS::FloatingPoint tmp;
         MMS::FloatingPoint tmpT;
         tmp.push_back('\xF');
-        tmpT.insert(tmpT.end(), (const char*) (&vl), (const char*) (&vl) + 16);      
+        tmpT.insert(tmpT.end(), (const char*) (&vl), (const char*) (&vl) + 16);
         tmp.insert(tmp.end(), tmpT.rbegin(), tmpT.rend());
 #endif          
         return tmp;
     }
-    
-    boost::posix_time::ptime from_mms_datetime(const MMS::TimeOfDay& vl){
-        return boost::posix_time::ptime();
+
+    boost::posix_time::ptime from_mms_datetime(const MMS::TimeOfDay& vlt) {
+        if ((vlt.size() == 6) || (vlt.size() == 4)) {
+#ifdef BIG_ENDIAN_ARCHITECTUREs
+            const boost::asn1::octetstring_type& vl = vlt;
+#else
+            MMS::TimeOfDay vl;
+            std::reverse_copy(vlt.begin(), vlt.end(), std::back_inserter<MMS::TimeOfDay>(vl));
+#endif       
+            boost::uint16_t dval = 0;
+            boost::uint32_t msval = *reinterpret_cast<boost::uint32_t*> (&vl[0]);
+            if (vlt.size()==6)
+                dval = *reinterpret_cast<boost::uint16_t*> (&vl[4]);
+            return tofdepoch_time + boost::gregorian::days(dval) + boost::posix_time::time_duration(0, msval / 1000 , msval % 1000);
+        }
+        return boost::posix_time::ptime(); 
     };
-    
-    MMS::TimeOfDay to_mms_datetime(const boost::posix_time::ptime& vl){
+
+    MMS::TimeOfDay to_mms_datetime(const boost::posix_time::ptime& vl) {
+        if (!vl.is_special()){         
+            boost::gregorian::date_period tday(tofdepoch_time.date(), vl.date());
+            boost::uint16_t dval =  static_cast<uint16_t>(tday.length().days());
+            boost::uint32_t tval =  static_cast<uint32_t>(vl.time_of_day().total_milliseconds());
+            MMS::TimeOfDay tmpT;
+            tmpT.insert(tmpT.end(), (const char*) (&tval), (const char*) (&tval) + 4);
+            tmpT.insert(tmpT.end(), (const char*) (&dval), (const char*) (&dval) + 2);
+#ifndef BIG_ENDIAN_ARCHITECTURE
+            MMS::TimeOfDay tmpR;
+            std::reverse_copy(tmpT.begin(), tmpT.end(), std::back_inserter<boost::asn1::octetstring_type>(tmpR));
+            return tmpR;
+#else
+            return tmpT;
+#endif               
+        }
         return MMS::TimeOfDay();
-    }   
-    
+    }
+
+    boost::posix_time::ptime from_mms_utctime(const boost::asn1::octetstring_type& vlt) {
+        if (vlt.size() == 8) {
+#ifdef BIG_ENDIAN_ARCHITECTURE
+            const boost::asn1::octetstring_type& vl = vlt;
+#else
+            boost::asn1::octetstring_type vl;
+            std::reverse_copy(vlt.begin(), vlt.end(), std::back_inserter<boost::asn1::octetstring_type>(vl));
+#endif       
+            boost::uint32_t fval = *reinterpret_cast<boost::uint32_t*> (&vl[0]);
+            boost::uint64_t mcsec = 1000000 / 2 * fval / 0x7FFFFFFF;
+            boost::uint32_t tval = *reinterpret_cast<boost::uint32_t*> (&vl[4]);
+            return mmsepoch_time + boost::posix_time::time_duration(0, 0, tval, mcsec);
+        }
+        return boost::posix_time::ptime();
+    }
+
+    boost::asn1::octetstring_type to_mms_utctime(const boost::posix_time::ptime& vl) {
+        if (!vl.is_special()){
+        boost::posix_time::time_period td(mmsepoch_time, vl);
+        boost::uint32_t tval = td.length().seconds();
+        boost::uint64_t mcsec = vl.time_of_day().total_microseconds() * 0x7FFFFFFF / 500000;
+        boost::uint32_t fval = static_cast<boost::uint32_t> (mcsec);
+        boost::asn1::octetstring_type tmpT;
+        tmpT.insert(tmpT.end(), (const char*) (&fval), (const char*) (&fval) + 4);
+        tmpT.insert(tmpT.end(), (const char*) (&tval), (const char*) (&tval) + 4);
+#ifndef BIG_ENDIAN_ARCHITECTURE
+        boost::asn1::octetstring_type tmpR;
+        std::reverse_copy(tmpT.begin(), tmpT.end(), std::back_inserter<boost::asn1::octetstring_type>(tmpR));
+        return tmpR;
+#else
+        return tmpT;
+#endif   
+        }
+        return boost::asn1::octetstring_type();
+    }
+
 }

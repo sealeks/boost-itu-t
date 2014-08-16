@@ -1027,6 +1027,9 @@ namespace prot9506 {
     
     boost::posix_time::ptime from_mms_datetime(const MMS::TimeOfDay& vl);
     MMS::TimeOfDay to_mms_datetime(const boost::posix_time::ptime& vl);    
+    
+    boost::posix_time::ptime from_mms_utctime(const  boost::asn1::octetstring_type& vl);
+    boost::asn1::octetstring_type to_mms_utctime(const boost::posix_time::ptime& vl);      
 
 }
 
