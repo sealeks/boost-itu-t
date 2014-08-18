@@ -193,6 +193,18 @@ namespace boost {
         const char hex_char_array_const[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         const char bad_hex_char = '\xFF';
 
+        void reverse_bit(octet_type& bits) {
+            bits = ((bits & 0x0F) << 4) | ((bits & 0xF0) >> 4);
+            bits = ((bits & 0x33) << 2) | ((bits & 0xcc) >> 2);
+            bits = ((bits & 0x55) << 1) | ((bits & 0xaa) >> 1);
+        }
+
+        octet_type reverse_bit_copy(const octet_type& vl){
+            octet_type bits=vl;
+            reverse_bit(bits);
+            return bits;
+        }    
+
         static inline std::string num8t_to_hexstr(char vl) {
             return std::string(static_cast<const char*> (&hex_char_array_const[((vl >> 4) & 0xF)]), 1) +
                     std::string(static_cast<const char*> (&hex_char_array_const[((vl) & 0xF)]), 1);

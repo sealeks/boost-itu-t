@@ -141,6 +141,9 @@ namespace boost {
         const octet_sequnce NULL_OCTET_SEQUENCE = octet_sequnce();
         const const_sequences NULL_CONST_SEQUENCE = const_sequences();
 
+        void reverse_bit(octet_type& bits);
+        octet_type reverse_bit_copy(const octet_type& bits);   
+
 
 
 
