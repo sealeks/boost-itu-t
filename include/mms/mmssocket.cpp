@@ -23,10 +23,16 @@ namespace prot9506 {
     const presentation_context_set MMS_CONTEXT = presentation_context_set(MMS_CONTEXT_arr, MMS_CONTEXT_arr + 1);
     const application_context MMS_APPLICATION_CONTEXT = application_context(MMSA_OID, MMS_CONTEXT);
 
-    const service_option_type MMS_SERVICE_OPTOION_DFLT = MMSO::serviceSupportOptions_status | MMSO::serviceSupportOptions_getNameList | MMSO::serviceSupportOptions_identify | MMSO::serviceSupportOptions_read | MMSO::serviceSupportOptions_write |
-            MMSO::serviceSupportOptions_rename | MMSO::serviceSupportOptions_deleteNamedVariableList | MMSO::serviceSupportOptions_getVariableAccessAttributes | MMSO::serviceSupportOptions_informationReport;
-    const parameter_option_type MMS_CBB_OPTION_DFLT = MMSO::parameterSupportOptions_str1 | MMSO::parameterSupportOptions_str2 | MMSO::parameterSupportOptions_valt | MMSO::parameterSupportOptions_valt |
+    const service_option_type& MMS_SERVICE_OPTOION_DFLT() {
+        static service_option_type vl = MMSO::serviceSupportOptions_status | MMSO::serviceSupportOptions_getNameList | MMSO::serviceSupportOptions_identify | MMSO::serviceSupportOptions_read | MMSO::serviceSupportOptions_write |
+                MMSO::serviceSupportOptions_rename | MMSO::serviceSupportOptions_deleteNamedVariableList | MMSO::serviceSupportOptions_getVariableAccessAttributes | MMSO::serviceSupportOptions_informationReport;
+        return vl;
+    }
+    
+    const parameter_option_type& MMS_CBB_OPTION_DFLT() {
+         static parameter_option_type vl = MMSO::parameterSupportOptions_str1 | MMSO::parameterSupportOptions_str2 | MMSO::parameterSupportOptions_valt | MMSO::parameterSupportOptions_valt |
             MMSO::parameterSupportOptions_vnam | MMSO::parameterSupportOptions_vadr | MMSO::parameterSupportOptions_tpy | MMSO::parameterSupportOptions_vlis;
+         return vl;}
 
 
 
@@ -37,8 +43,8 @@ namespace prot9506 {
 
     protocol_option::protocol_option() : asel_(NULL_APPLICATION_SELECTOR),
     acontext_(MMS_APPLICATION_CONTEXT),
-    service_(MMS_SERVICE_OPTOION_DFLT),
-    parameter_(MMS_CBB_OPTION_DFLT),
+    service_(MMS_SERVICE_OPTOION_DFLT()),
+    parameter_(MMS_CBB_OPTION_DFLT()),
     localdetail_(30000),
     maxcalling_(1),
     maxcalled_(5),
@@ -212,14 +218,14 @@ namespace prot9506 {
         mmsoption_.maxcalling(opt.negotiatedMaxServOutstandingCalling());
         mmsoption_.maxcalled(opt.negotiatedMaxServOutstandingCalled());
         mmsoption_.version(opt.initResponseDetail().negotiatedVersionNumber());
-        mmsoption_.parameter() = opt.initResponseDetail().negotiatedParameterCBB();
-        mmsoption_.service() = opt.initResponseDetail().servicesSupportedCalled();
+        mmsoption_.parameter(opt.initResponseDetail().negotiatedParameterCBB());
+        mmsoption_.service(opt.initResponseDetail().servicesSupportedCalled());
         if (opt.initResponseDetail().additionalSupportedCalled())
-            mmsoption_.exservice() = *(opt.initResponseDetail().additionalSupportedCalled());
+            mmsoption_.exservice(*(opt.initResponseDetail().additionalSupportedCalled()));
         if (opt.initResponseDetail().additionalSupportedCalled())
-            mmsoption_.exservice() = *(opt.initResponseDetail().additionalCbbSupportedCalled());
+            mmsoption_.exservice(*(opt.initResponseDetail().additionalCbbSupportedCalled()));
         if (opt.initResponseDetail().privilegeClassIdentityCalled())
-            mmsoption_.privilege() = *(opt.initResponseDetail().privilegeClassIdentityCalled());
+            mmsoption_.privilege(*(opt.initResponseDetail().privilegeClassIdentityCalled()));
     }
 
     void mms_socket::information_report(const MMS::Unconfirmed_PDU& val) {
@@ -231,7 +237,7 @@ namespace prot9506 {
     }
 
     void mms_socket::aselector(const std::string& vl) {
-        mmsoption_.aselector()=boost::itu::application_selector(vl);
+        mmsoption_.aselector(boost::itu::application_selector(vl));
     }
 
     protocol_option & mms_socket::mmsoption() {

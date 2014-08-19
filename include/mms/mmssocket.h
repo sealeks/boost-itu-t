@@ -42,9 +42,6 @@ namespace prot9506 {
     typedef MMS::AdditionalCBBOptions exparameter_option_type;
     typedef boost::asn1::visiblestring_type privilege_type;
 
-    extern const service_option_type MMS_SERVICE_OPTOION_DFLT;
-    extern const parameter_option_type MMS_CBB_OPTION_DFLT;
-
 
     //presentation_option init_synaxes();
 
@@ -96,8 +93,8 @@ namespace prot9506 {
             return asel_;
         }
 
-        application_selector& aselector() {
-            return asel_;
+        void aselector(const application_selector& vl) {
+             asel_=vl;
         }
 
         const application_context& acontext() const {
@@ -152,40 +149,40 @@ namespace prot9506 {
             return service_;
         }
 
-        service_option_type& service() {
-            return service_;
+        void service(const service_option_type& vl) {
+            service_=vl;
         }
 
         const parameter_option_type& parameter() const {
             return parameter_;
         }
 
-        parameter_option_type& parameter() {
-            return parameter_;
+         void parameter(const parameter_option_type& vl) {
+            parameter_=vl;
         }
         
         const exservice_option_type& exservice() const {
-            return service_;
-        }
-
-        exservice_option_type& exservice() {
             return exservice_;
         }
 
-        const exparameter_option_type& exparameter() const {
-            return parameter_;
+        void exservice(const exservice_option_type& vl) {
+            exservice_=vl;
         }
 
-        exparameter_option_type& exparameter() {
+        const exparameter_option_type& exparameter() const {
             return exparameter_;
+        }
+
+        void exparameter(const exparameter_option_type& vl) {
+            exparameter_=vl;
         }  
         
         const privilege_type& privilege() const {
             return privilege_;
         }
 
-        privilege_type& privilege() {
-            return privilege_;
+        void privilege(const privilege_type& vl) {
+            privilege_=vl;
         }        
 
     private:
