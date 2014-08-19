@@ -5,6 +5,7 @@
 
 
 #include <boost/itu/asn1/asnbase.hpp>
+#include <algorithm>
 
 namespace boost {
     namespace asn1 {
@@ -87,35 +88,38 @@ namespace boost {
 
         /// bitstring type
 
-        bitstring_type::bitstring_type(uint8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
+        bitstring_type::bitstring_type() : std::vector<octet_type>(), unuse_(0) {
+        };        
+
+        bitstring_type::bitstring_type(uint8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
             construct(vl, unuse);
         };
 
-        bitstring_type::bitstring_type(uint16_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
+        bitstring_type::bitstring_type(uint16_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
             construct(vl, unuse);
         };
 
-        bitstring_type::bitstring_type(uint32_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
+        bitstring_type::bitstring_type(uint32_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
             construct(vl, unuse);
         };
 
-        bitstring_type::bitstring_type(uint64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
+        bitstring_type::bitstring_type(uint64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
             construct(vl, unuse);
         };
 
-        bitstring_type::bitstring_type(int8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
+        bitstring_type::bitstring_type(int8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
             construct(*reinterpret_cast<uint8_t*> (&vl), unuse);
         };
 
-        bitstring_type::bitstring_type(int16_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
+        bitstring_type::bitstring_type(int16_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
             construct(*reinterpret_cast<uint16_t*> (&vl), unuse);
         };
 
-        bitstring_type::bitstring_type(int32_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
+        bitstring_type::bitstring_type(int32_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
             construct(*reinterpret_cast<uint32_t*> (&vl), unuse);
         };
 
-        bitstring_type::bitstring_type(int64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
+        bitstring_type::bitstring_type(int64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
             construct(*reinterpret_cast<uint64_t*> (&vl), unuse);
         };
 
@@ -139,9 +143,34 @@ namespace boost {
         }
 
         void bitstring_type::insert_bitstring(const octet_sequnce& val, std::size_t unuse) {
-            unuse_ = unuse % 8;
-            std::copy(val.begin(), val.end(), std::back_inserter(*this));
+            if (!val.empty()) {
+                unuse_ = unuse % 8;
+                std::copy(val.begin(), val.end(), std::back_inserter(*this));
+                if (unuse_ && size())
+                    back() &= ('\xFF' << unuse_);
+            } else
+                if (!size())
+                unuse_ = 0;
         };
+
+        std::size_t bitstring_type::unusebits(std::size_t vl) {
+            if (!empty()) {
+                unuse_ = vl % 8;
+                if (unuse_ && size())
+                    back() &= ('\xFF' << unuse_);
+            }
+            return unuse_;
+        }              
+
+        bitstring_type bitstring_type::create_from_string(const std::string& vl) {
+            if (!vl.empty()) {
+                std::vector<bool> tmpV;
+                for (std::size_t i = 0; i < vl.size(); ++i)
+                    tmpV.push_back(vl[i]=='0' ? false : true);
+                return bitstring_type(tmpV);
+            }
+            return bitstring_type();
+        }  
 
         bool bitstring_type::bit(std::size_t num) const {
             if (sizebits() > num) {
@@ -184,81 +213,86 @@ namespace boost {
         }
 
         bitstring_type::operator uint8_t() const {
-            bool_vector_type tmp;
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.push_back(bit(i));
             return return_int<uint8_t > ();
         }
 
         bitstring_type::operator uint16_t() const {
-            bool_vector_type tmp;
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.push_back(bit(i));
             return return_int<uint16_t > ();
         }
 
         bitstring_type::operator uint32_t() const {
-            bool_vector_type tmp;
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.push_back(bit(i));
-            return return_int<uint16_t > ();
+            return return_int<uint32_t > ();
         }
 
         bitstring_type::operator uint64_t() const {
-            bool_vector_type tmp;
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.push_back(bit(i));
-            return return_int<uint16_t > ();
+            return return_int<uint64_t > ();
         }
 
         bitstring_type::operator int8_t() const {
-            bool_vector_type tmp;
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.push_back(bit(i));
             return return_int<int8_t > ();
         }
 
         bitstring_type::operator int16_t() const {
-            bool_vector_type tmp;
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.push_back(bit(i));
             return return_int<int16_t > ();
         }
 
         bitstring_type::operator int32_t() const {
-            bool_vector_type tmp;
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.push_back(bit(i));
-            return return_int<int16_t > ();
+            return return_int<int32_t > ();
         }
 
         bitstring_type::operator int64_t() const {
-            bool_vector_type tmp;
-            for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.push_back(bit(i));
-            return return_int<int16_t > ();
+            return return_int<int64_t > ();
         }
+
+        bitstring_type::operator bool() const {
+            for (const_reverse_iterator it = rbegin(); it != rend(); ++it) {
+                if (*it) {
+                    if ((it == rbegin()) &&(unuse_) && !((*it) & ('\xFF' << unuse_)))
+                        continue;
+                    return true;
+                }
+            }
+            return false;
+        }      
 
         //bitstring_type::operator octet_sequnce() const{
         //    return  *this;
         //}    
 
         bitstring_type operator|(const bitstring_type& ls, const bitstring_type& rs) {
-            std::size_t mxsize = ls.sizebits() < rs.sizebits() ? rs.sizebits() : ls.sizebits();
-            bitstring_type::dynamic_bitset_type lsb = ls.dynamic_bitset();
-            bitstring_type::dynamic_bitset_type rsb = rs.dynamic_bitset();
-            lsb.resize(mxsize, false);
-            rsb.resize(mxsize, false);
-            return lsb | rsb;
+            if (ls.size() || rs.size()){
+                bitstring_type tmp;
+                const bitstring_type& maxsb=(ls.size() > rs.size()) ? ls : rs;
+                const bitstring_type& minsb=(ls.size() > rs.size()) ? rs : ls;
+                tmp.assign(maxsb.begin(),maxsb.end());
+                for (std::size_t i=0;i<minsb.size();++i){
+                    tmp[i]|=minsb[i];
+                }
+                if (maxsb.size()==minsb.size())
+                    tmp.unuse_=std::min(minsb.unuse_,maxsb.unuse_);
+                else
+                    tmp.unuse_=maxsb.unuse_;
+                return tmp;
+            }
+            return bitstring_type();
         }
 
         bitstring_type operator&(const bitstring_type& ls, const bitstring_type& rs) {
-            std::size_t mxsize = ls.sizebits() < rs.sizebits() ? rs.sizebits() : ls.sizebits();
-            bitstring_type::dynamic_bitset_type lsb = ls.dynamic_bitset();
-            bitstring_type::dynamic_bitset_type rsb = rs.dynamic_bitset();
-            lsb.resize(mxsize, false);
-            rsb.resize(mxsize, false);
-            return lsb & rsb;
+            if (ls.size() && rs.size()){
+                bitstring_type tmp;
+                const bitstring_type& maxsb=(ls.size() > rs.size()) ? ls : rs;
+                const bitstring_type& minsb=(ls.size() > rs.size()) ? rs : ls;
+                tmp.assign(minsb.begin(),minsb.end());
+                for (std::size_t i=0;i<minsb.size();++i){
+                    tmp[i]&=maxsb[i];
+                }
+                if (maxsb.size()==minsb.size())
+                    tmp.unuse_=std::max(minsb.unuse_,maxsb.unuse_);
+                else
+                    tmp.unuse_=minsb.unuse_;
+                return tmp;
+            }
+            return bitstring_type();
         }
 
         bitstring_type operator^(const bitstring_type& ls, const bitstring_type& rs) {
@@ -272,7 +306,7 @@ namespace boost {
 
         void bitstring_type::construct(const std::vector<bool>& vl) {
             assign((vl.size() % 8) ? (vl.size() / 8 + 1) : (vl.size() / 8), 0);
-            unuse_ = 8 - (vl.size() % 8);
+            unuse_ = (8- vl.size() % 8) % 8;
             std::size_t sz = 0;
             for (std::vector<bool>::const_iterator it = vl.begin(); it != vl.end(); ++it)
                 bit(sz++, *it);
@@ -280,7 +314,7 @@ namespace boost {
 
         void bitstring_type::construct(const dynamic_bitset_type& vl) {
             assign((vl.size() % 8) ? (vl.size() / 8 + 1) : (vl.size() / 8), 0);
-            unuse_ = 8 - (vl.size() % 8);
+            unuse_ = (8- vl.size() % 8) % 8;
             std::size_t sz = 0;
             for (std::size_t it = 0; it < vl.size(); ++it)
                 bit(sz++, vl.operator [](it));
@@ -288,9 +322,12 @@ namespace boost {
 
         std::ostream& operator<<(std::ostream& stream, const bitstring_type& vl) {
             std::vector<bool> val = vl.operator bitstring_type::bool_vector_type();
-            for (std::vector<bool>::const_iterator it = val.begin(); it != val.end(); ++it)
-                stream << (*it ? '1' : '0');
-            //stream << std::endl;
+            std::size_t n=0;
+            for (std::vector<bool>::const_iterator it = val.begin(); it != val.end(); ++it){
+                if (n && !(n%8))
+                    stream << " ";
+                n++;
+                stream << (*it ? '1' : '0');}
             return stream;
         }
 

@@ -328,8 +328,7 @@ namespace boost {
             typedef std::vector<bool> bool_vector_type;
             typedef boost::dynamic_bitset<> dynamic_bitset_type;
 
-            bitstring_type() : std::vector<octet_type>(), unuse_(0) {
-            };
+            bitstring_type();
 
             explicit bitstring_type(uint8_t vl, std::size_t unuse = 0);
 
@@ -360,18 +359,22 @@ namespace boost {
             };
 
             void insert_bitstring(const octet_sequnce& val, std::size_t unuse = 0);
+            
+            static bitstring_type create_from_string(const std::string& vl);            
 
             std::size_t unusebits() const {
-                return size() ? (unuse_ % 8) : 0;
+                return size() ? unuse_ : 0;
             }
 
+            std::size_t unusebits(std::size_t vl);
+
             std::size_t sizebits() const {
-                return size() * 8 - unusebits();
+                return empty() ? 0 : (size() * 8 - unusebits());
             }
 
             bool bit(std::size_t num) const;
 
-            void bit(std::size_t num, bool val);
+            void bit(std::size_t num, bool val);          
 
             operator bool_vector_type() const;
 
@@ -394,6 +397,8 @@ namespace boost {
             operator int32_t() const;
 
             operator int64_t() const;
+            
+            operator bool() const;
 
             friend bitstring_type operator|(const bitstring_type& ls, const bitstring_type& rs);
 
@@ -406,36 +411,38 @@ namespace boost {
         private:
 
             template<typename T>
-            void construct(T val, std::size_t unuse) {
+            void construct(T val, std::size_t unuse) {               
                 if (unuse<sizeof (T)*8) {
-                    std::size_t cnt = 0;
-                    octet_type tmp = 0;
-                    while (cnt < (sizeof (T)*8 - unuse)) {
-                        if ((T(1) << cnt) & val)
-                            tmp |= octet_type(1) << (7 - (cnt % 8));
-
-
-                        if (!((++cnt) % 8)) {
-                            push_back(tmp);
-                            tmp = 0;
-                        }
-
-                    }
-                    if ((unuse % 8))
-                        push_back(tmp);
-                }
-                unuse %= 8;
+                    reserve(sizeof (T));
+                    insert(end(), (const char*) (&val), (const char*) (&val) +(sizeof (T) - unuse / 8));
+                    for (iterator it = begin(); it != end(); ++it)
+                        boost::itu::reverse_bit(*it);                  
+#ifdef BIG_ENDIAN_ARCHITECTURE
+                    std::reverse(begin(),end());
+#endif                 
+                    unuse_ = unuse % 8;
+                    back()&=('\xFF' << unuse_);
+                } else
+                    unuse_ = 0;
             }
 
             void construct(const std::vector<bool>& vl);
 
             template<typename T>
             T return_int() const {
-                T tmp(0);
-                std::size_t sz = std::min(sizebits(), sizeof (T)*8);
-                for (std::size_t i = 0; i < sz; ++i)
-                    tmp |= T(1) << i;
-                return tmp;
+                if (!empty()){
+                    std::vector<octet_type> tmp(begin(),end());   
+                    tmp.back()&=('\xFF' << unuse_);
+                    for (std::vector<octet_type>::iterator it=tmp.begin();it!=tmp.end();++it)
+                        boost::itu::reverse_bit(*it);                            
+                    if (tmp.size()<sizeof (T)) 
+                        tmp.insert(tmp.end(),sizeof (T)-size(),0);
+#ifdef BIG_ENDIAN_ARCHITECTURE
+                    std::reverse(tmp.begin(),tmp.end());
+#endif                      
+                    return  *reinterpret_cast<T*> (&tmp[0]);
+                }
+                return 0;
             }
 
             void construct(const dynamic_bitset_type& vl);
