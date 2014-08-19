@@ -132,10 +132,13 @@ namespace boost {
         };
 
         bitstring_type::bitstring_type(bool vl, std::size_t n) : std::vector<octet_type>(), unuse_(7 - n % 8) {
-            if ((vl) && (n < 256)) {
+            if ((vl) && (n < 0xFFFFF)) {
+                reserve((n / 8 + 1));
                 insert(begin(), (n / 8 + 1), 0);
                 back() = (0x1 << (7 - (n % 8)));
             }
+            else{
+               unuse_=0;
         }
         
         bitstring_type::bitstring_type(const std::string& vl, std::size_t unuse) : unuse_(unuse % 8){
