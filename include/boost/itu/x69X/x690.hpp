@@ -1043,6 +1043,15 @@ namespace boost {
                 }
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
+            
+            template<typename T>
+            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, T& vl) {
+                return seq.begin();
+            } 
+            
+            template<>
+            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq,  bitstring_type& vl);
+            
 
             template<typename T>
             bool stringtype_reader(input_coder& stream, T& vl, id_type id, octet_type mask) {
@@ -1061,9 +1070,10 @@ namespace boost {
                         } else {
                             std::size_t sz = 0;
                             if (boost::itu::find_eof(stream.buffers(), stream.buffers().begin(), sz)) {
-                                octet_sequnce data;
+                                octet_sequnce data;                                
                                 if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
-                                    vl.insert(vl.end(), data.begin(), data.end());
+                                    octet_sequnce::iterator fit= reader_setunuse(data,vl);
+                                    vl.insert(vl.end(), fit , data.end());
                                     return true;
                                 }
                             }
@@ -1081,7 +1091,8 @@ namespace boost {
                         } else {
                             octet_sequnce data;
                             if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, tmpsize.size())) {
-                                vl.insert(vl.end(), data.begin(), data.end());
+                                octet_sequnce::iterator fit= reader_setunuse(data,vl);
+                                vl.insert(vl.end(), fit , data.end());
                                 stream.pop_stack();
                                 return true;
                             }
@@ -1090,6 +1101,7 @@ namespace boost {
                 }
                 return false;
             }
+                   
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<int8_t>& vl);

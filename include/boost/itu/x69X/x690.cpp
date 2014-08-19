@@ -1000,6 +1000,17 @@ namespace boost {
                 val.set(src);
                 return true;
             }
+            
+            template<>
+            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq,  bitstring_type& vl) {
+                octet_sequnce::iterator it=seq.begin();
+                if (it!=seq.end()){
+                    vl.unusebits(static_cast<std::size_t>(*it));
+                    it++;
+                }
+                return it;
+            }              
+
 
 
             ////////////////////////////////////////////
