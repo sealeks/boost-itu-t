@@ -137,7 +137,7 @@ namespace boost {
                 insert(begin(), (n / 8 + 1), 0);
                 back() = (0x1 << (7 - (n % 8)));
             }
-            else{
+            else
                unuse_=0;
         }
         
