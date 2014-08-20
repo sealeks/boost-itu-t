@@ -1316,7 +1316,7 @@ namespace boost {
                         if (is_endof())
                             pop_front(2);
                         else
-                            std::cout << "NEED FIND EOF, EOF NOT FOUND: " << std::endl;
+                            throw boost::system::system_error(boost::itu::ER_BEDSEQ);
                     } else {
                         pop_front(stack_.top().sizeinfo.size);
                     }
