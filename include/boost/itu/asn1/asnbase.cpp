@@ -159,10 +159,11 @@ namespace boost {
         std::size_t bitstring_type::unusebits(std::size_t vl) {
             if (!empty()) {
                 unuse_ = vl % 8;
-                if (unuse_ && size())
+                if (unuse_ )
                     back() &= ('\xFF' << unuse_);
+				return unuse_;
             }
-            return unuse_;
+            return unuse_=0;
         }              
 
         bitstring_type bitstring_type::create_from_string(const std::string& vl) {
@@ -250,7 +251,7 @@ namespace boost {
         bitstring_type::operator bool() const {
             for (const_reverse_iterator it = rbegin(); it != rend(); ++it) {
                 if (*it) {
-                    if ((it == rbegin()) &&(unuse_) && !((*it) & ('\xFF' << unuse_)))
+                    if ((it == rbegin()) &&(unusebits()) && !((*it) & ('\xFF' << unusebits())))
                         continue;
                     return true;
                 }
@@ -272,9 +273,9 @@ namespace boost {
                     tmp[i]|=minsb[i];
                 }
                 if (maxsb.size()==minsb.size())
-                    tmp.unuse_=std::min(minsb.unuse_,maxsb.unuse_);
+                    tmp.unusebits(std::min(minsb.unusebits(),maxsb.unusebits()));
                 else
-                    tmp.unuse_=maxsb.unuse_;
+                    tmp.unusebits(maxsb.unusebits());
                 return tmp;
             }
             return bitstring_type();
@@ -290,9 +291,9 @@ namespace boost {
                     tmp[i]&=maxsb[i];
                 }
                 if (maxsb.size()==minsb.size())
-                    tmp.unuse_=std::max(minsb.unuse_,maxsb.unuse_);
+                    tmp.unusebits(std::max(minsb.unusebits(),maxsb.unusebits()));
                 else
-                    tmp.unuse_=minsb.unuse_;
+                    tmp.unusebits(minsb.unusebits());
                 return tmp;
             }
             return bitstring_type();

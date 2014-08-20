@@ -363,7 +363,7 @@ namespace boost {
             static bitstring_type create_from_string(const std::string& vl);            
 
             std::size_t unusebits() const {
-                return size() ? unuse_ : 0;
+                return empty() ? 0 : (unuse_);
             }
 
             std::size_t unusebits(std::size_t vl);
@@ -420,10 +420,8 @@ namespace boost {
 #ifdef BIG_ENDIAN_ARCHITECTURE
                     std::reverse(begin(),end());
 #endif                 
-                    unuse_ = unuse % 8;
-                    back()&=('\xFF' << unuse_);
-                } else
-                    unuse_ = 0;
+                }
+                unusebits(unuse % 8);
             }
 
             void construct(const std::vector<bool>& vl);
@@ -432,7 +430,7 @@ namespace boost {
             T return_int() const {
                 if (!empty()){
                     std::vector<octet_type> tmp(begin(),end());   
-                    tmp.back()&=('\xFF' << unuse_);
+                    tmp.back()&=('\xFF' << unusebits());
                     for (std::vector<octet_type>::iterator it=tmp.begin();it!=tmp.end();++it)
                         boost::itu::reverse_bit(*it);                            
                     if (tmp.size()<sizeof (T)) 
