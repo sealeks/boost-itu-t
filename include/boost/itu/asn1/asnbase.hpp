@@ -399,6 +399,8 @@ namespace boost {
             operator int64_t() const;
             
             operator bool() const;
+            
+           bitstring_type operator~() const;
 
             friend bitstring_type operator|(const bitstring_type& ls, const bitstring_type& rs);
 

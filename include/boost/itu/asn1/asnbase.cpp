@@ -257,7 +257,19 @@ namespace boost {
                 }
             }
             return false;
-        }      
+        } 
+               
+        
+        bitstring_type bitstring_type::operator~() const {
+            if (!empty()) {
+                bitstring_type tmp=*this;
+                for (iterator it = tmp.begin(); it != tmp.end(); ++it)
+                    *it= ~(*it);
+                tmp.unusebits(tmp.unusebits());
+                return tmp;
+            }
+            return bitstring_type();
+        }
 
         //bitstring_type::operator octet_sequnce() const{
         //    return  *this;
@@ -300,12 +312,21 @@ namespace boost {
         }
 
         bitstring_type operator^(const bitstring_type& ls, const bitstring_type& rs) {
-            std::size_t mxsize = ls.sizebits() < rs.sizebits() ? rs.sizebits() : ls.sizebits();
-            bitstring_type::dynamic_bitset_type lsb = ls.dynamic_bitset();
-            bitstring_type::dynamic_bitset_type rsb = rs.dynamic_bitset();
-            lsb.resize(mxsize, false);
-            rsb.resize(mxsize, false);
-            return lsb ^ rsb;
+            if (ls.size() || rs.size()) {
+                bitstring_type tmp;
+                const bitstring_type& maxsb = (ls.size() > rs.size()) ? ls : rs;
+                const bitstring_type& minsb = (ls.size() > rs.size()) ? rs : ls;
+                tmp.assign(maxsb.begin(), maxsb.end());
+                for (std::size_t i = 0; i < minsb.size(); ++i) {
+                    tmp[i] ^= minsb[i];
+                }
+                if (maxsb.size() == minsb.size())
+                    tmp.unusebits(std::min(minsb.unusebits(), maxsb.unusebits()));
+                else
+                    tmp.unusebits(maxsb.unusebits());
+                return tmp;
+            }
+            return bitstring_type();
         }
 
         void bitstring_type::construct(const std::vector<bool>& vl) {
