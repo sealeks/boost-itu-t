@@ -401,6 +401,32 @@ namespace prot9506 {
 
 
 
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  infomationrepor_listner//
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    class informationreport_listner {
+
+    public:
+
+        informationreport_listner() {
+        }
+
+        virtual ~informationreport_listner() {
+        }
+
+        virtual void operator()(const MMS::Unconfirmed_PDU& val) {
+        }
+    };
+
+    typedef boost::shared_ptr<informationreport_listner> informationreport_listner_ptr;
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  operation //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     typedef confirmed_operation<MMS::Identify_Request, MMS::Identify_Response,
     MMS::ConfirmedServiceRequest_identify, MMS::ConfirmedServiceResponse_identify > identify_operation_type;
 
@@ -513,6 +539,8 @@ namespace prot9506 {
                 const endpoint_type& endpoint,
                 const protocol_option& protopt);
 
+
+        void assign_informationreport_listener(informationreport_listner_ptr vl = informationreport_listner_ptr());
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //  Connect operation  //
@@ -855,7 +883,7 @@ namespace prot9506 {
 
         }
 
-        virtual void information_report(const MMS::Unconfirmed_PDU& val);
+        void information_report(const MMS::Unconfirmed_PDU& val);
 
         const protocol_option & mmsoption() const;
 
@@ -884,10 +912,7 @@ namespace prot9506 {
         application_context_ptr mmsdcs_;
         invoke_id_type invoke_id_;
         protocol_option mmsoption_;
-        confirmed_operation_set out_requst_set_;
-        confirmed_operation_set in_requst_set_;
-        confirmed_operation_set out_response_set_;
-        confirmed_operation_set in_response_set_;
+        informationreport_listner_ptr informationreportlistener_;
     };
 
 

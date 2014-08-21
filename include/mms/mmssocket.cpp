@@ -147,6 +147,10 @@ namespace prot9506 {
     : super_type(io_service, endpoint, protopt.acontext(), protopt.aselector()), invoke_id_(0), mmsoption_(protopt) {
     }
 
+    void mms_socket::assign_informationreport_listener(informationreport_listner_ptr vl) {
+        informationreportlistener_ = vl;
+    }     
+
     boost::system::error_code mms_socket::init_request() {
 
         mmsdcs_ = dcs()->context(MMS_OID);
@@ -229,7 +233,9 @@ namespace prot9506 {
     }
 
     void mms_socket::information_report(const MMS::Unconfirmed_PDU& val) {
-        //std::cout << "information_report" << std::endl;
+        if (informationreportlistener_){
+            informationreportlistener_->operator ()(val);
+        }       
     }
 
     const protocol_option & mms_socket::mmsoption() const {
