@@ -23,6 +23,8 @@
     <itemPath>../../../include/mms/MMS-Object-Module-1.hpp</itemPath>
     <itemPath>../../../include/mms/MMS-SCI-Module-1.cpp</itemPath>
     <itemPath>../../../include/mms/MMS-SCI-Module-1.hpp</itemPath>
+    <itemPath>../../../include/mms/mmsioclient.cpp</itemPath>
+    <itemPath>../../../include/mms/mmsioclient.h</itemPath>
     <itemPath>../../../include/mms/mmssocket.cpp</itemPath>
     <itemPath>../../../include/mms/mmssocket.h</itemPath>
   </logicalFolder>
@@ -107,6 +109,13 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/mmsioclient.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsioclient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../../../include/mms/mmssocket.h" ex="false" tool="3" flavor2="0">
@@ -187,6 +196,13 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/mmsioclient.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsioclient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../../../include/mms/mmssocket.h" ex="false" tool="3" flavor2="0">
@@ -266,6 +282,13 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/mmsioclient.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsioclient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../../../include/mms/mmssocket.h" ex="false" tool="3" flavor2="0">
@@ -342,6 +365,13 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsioclient.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsioclient.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
       </item>
