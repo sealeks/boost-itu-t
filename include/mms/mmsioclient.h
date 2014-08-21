@@ -11,6 +11,7 @@
 
 #include <boost/asio/read_at.hpp>
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/make_shared.hpp>
 #include <mms/mmssocket.h>
 
 
@@ -31,7 +32,11 @@ namespace prot9506 {
     class mmsioclient;
     typedef boost::shared_ptr<mmsioclient> mmsioclient_ptr;
 
-    class mmsioclient : public boost::enable_shared_from_this<mmsioclient> {
+    //template<typename T = mms_socket>
+
+    class mmsioclient : public boost::enable_shared_from_this<mmsioclient > {
+
+        //typedef T socket_type;
 
     public:
 
@@ -82,7 +87,6 @@ namespace prot9506 {
                         io_service_.stop();
                     } catch (...) {
                     };
-                    //throw dvnci::dvncierror(dvnci::ERROR_FAILNET_CONNECTED);
                     throw boost::itu::ER_NOLINK;
                 }
 
@@ -97,9 +101,9 @@ namespace prot9506 {
                     if ((error_cod == 10054) || (error_cod == 10053))
                         throw boost::itu::ER_NOLINK;
                     else if (error_cod == boost::itu::ER_BEDSEQ.value())
-                        throw boost::itu::ER_BEDSEQ; //dvnci::dvncierror(dvnci::ERROR_PROTOCOL_SEQ);
+                        throw boost::itu::ER_BEDSEQ;
                     else if (error_cod == boost::itu::ER_PROTOCOL.value())
-                        throw boost::itu::ER_PROTOCOL; //dvnci::dvncierror(dvnci::ERROR_PROTOCOL_ERROR);
+                        throw boost::itu::ER_PROTOCOL;
                 }
                 return true;
             } else
@@ -145,8 +149,8 @@ namespace prot9506 {
 
         boost::asio::io_service io_service_;
         prot9506::mms_socket socket_;
-        connectionState state_;
         boost::asio::deadline_timer tmout_timer;
+        connectionState state_;
         std::size_t timout;
 
         volatile bool is_data_ready;

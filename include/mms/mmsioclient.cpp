@@ -16,8 +16,8 @@ namespace prot9506 {
         return vl;}
 
     mmsioclient::mmsioclient() : io_service_(), socket_(io_service_, 
-            prot9506::protocol_option(MMS_SERVICE_OPTOION_CLNT(), MMS_CBB_OPTION_CLNT())), state_(disconnected), 
-            tmout_timer(io_service_), timout(),  is_data_ready(false), is_timout(false), 
+            prot9506::protocol_option(MMS_SERVICE_OPTOION_CLNT(), MMS_CBB_OPTION_CLNT())),  
+            tmout_timer(io_service_), state_(disconnected), timout(),  is_data_ready(false), is_timout(false), 
             is_connect(false), is_error(false), error_cod(0) {
     }
 
