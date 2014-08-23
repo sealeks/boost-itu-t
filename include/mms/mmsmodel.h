@@ -8,6 +8,8 @@
 #ifndef MMSMODEL_H
 #define	MMSMODEL_H
 
+#include <boost/weak_ptr.hpp>
+
 #include <mms/mmssocket.h>
 #include <mms/MMS-Object-Module-1.hpp>
 #include <mms/ISO-9506-MMS-1.hpp>
