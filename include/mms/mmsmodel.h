@@ -16,7 +16,7 @@
 
 namespace prot9506 {
 
-   
+
     namespace MMS = ISO_9506_MMS_1;
     namespace MMSO = MMS_Object_Module_1;
 
@@ -25,24 +25,29 @@ namespace prot9506 {
 
     typedef MMSO::Identifier mmsidentifier_type;
     typedef MMS::ObjectName mmsobject_type;
-    typedef MMS::Data mmsdata_type;
+    typedef MMS::ObjectClass mmsclass_type;
     typedef MMS::GetVariableAccessAttributes_Response access_attribute_type;
+    typedef MMS::Data mmsdata_type;
     typedef MMS::AccessResult mmsresult_type;
     typedef MMS::Read_Response::ListOfAccessResult_type resultslist_type;
     typedef MMS::ServiceError serviceerror_type;
-    
-    
+
+
     typedef boost::shared_ptr<mmsobject_type> mmsobject_ptr;
+    typedef boost::shared_ptr<mmsclass_type> mmsclass_ptr;
     typedef boost::shared_ptr<access_attribute_type> access_attribute_ptr;
-    typedef boost::shared_ptr<mmsresult_type> mmsresult_ptr; 
+    typedef boost::shared_ptr<mmsresult_type> mmsresult_ptr;
     typedef boost::shared_ptr< serviceerror_type> serviceerror_ptr;
 
 
-    typedef boost::shared_ptr<objectname> objectname_ptr; 
+    typedef boost::shared_ptr<objectname> objectname_ptr;
     typedef boost::weak_ptr<objectname> objectname_wptr;
-    
+
     typedef std::vector<objectname_ptr> objectname_vct;
-    typedef std::set<objectname_ptr> objectname_set;    
+    typedef std::set<objectname_ptr> objectname_set;
+
+
+    const mmsidentifier_type NULL_MMSID = "";
 
 
 
@@ -68,8 +73,7 @@ namespace prot9506 {
         //                         b) "xxxx : yyyy" domain specific @xxxx | @yyyy !!!! high prior  defdomain ignore if exists
         //                         c) "@xxxx" application spesific @xxxx
         static objectname_ptr create_from_bind(const std::string& id, const std::string& defdomain = "");
-        
-        
+
         objectname_ptr parent() const {
             return !parent_._empty() ? parent_.lock() : objectname_ptr();
         }
@@ -77,18 +81,18 @@ namespace prot9506 {
         void parent(objectname_ptr vl) {
             parent_ = objectname_wptr(vl);
         }
-        
+
         const objectname_vct& childs() const {
             return childs_;
         }
 
         objectname_vct& childs() {
             return childs_;
-        }        
+        }
 
         void childs(const objectname_vct& vl) {
             childs_.assign(vl.begin(), vl.end());
-        }        
+        }
 
         mmsobject_type obj() const {
             return obj_ ? (*obj_) : mmsobject_type();
@@ -98,6 +102,10 @@ namespace prot9506 {
             return obj_;
         }
 
+        const mmsidentifier_type& path() const;
+
+        std::string name() const;
+
         access_attribute_ptr access() const {
             return access_;
         }
@@ -106,15 +114,25 @@ namespace prot9506 {
             access_ = vl;
         }
 
-       mmsresult_ptr data() const {
+        mmsclass_ptr _class() const {
+            return class_;
+        }
+
+        void _class(mmsclass_ptr vl) {
+            class_ = vl;
+        }
+
+        mmsresult_ptr data() const {
             return data_;
         }
 
         virtual void data(mmsresult_ptr vl) {
             data_ = vl;
-        }        
+        }
 
         operator bool() const;
+
+        objectname_ptr find_child(const std::string& vl);
 
         friend bool operator==(const objectname& ls, const objectname& rs);
         friend bool operator<(const objectname& ls, const objectname& rs);
@@ -128,52 +146,62 @@ namespace prot9506 {
         mmsobject_ptr obj_;
         objectname_wptr parent_;
         objectname_vct childs_;
+        mmsclass_ptr class_;
         access_attribute_ptr access_;
-        mmsresult_ptr data_;      
+        mmsresult_ptr data_;
     };
-    
-    
+
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //////// mmsserver_model
     /////////////////////////////////////////////////////////////////////////////////////////////////        
-    
-        class mmsserver_model {
-            
-        public:
-            
-            mmsserver_model(){}
-            virtual ~mmsserver_model(){}       
-            
+
+    class mmsserver_model {
+
+    public:
+
+        mmsserver_model() {
+        }
+
+        virtual ~mmsserver_model() {
+        }
+
         const objectname_set& objs() const {
             return objs_;
         }
 
         objectname_set& objs() {
             return objs_;
-        }        
+        }
 
         void objs(const objectname_set& vl) {
             objs_.insert(vl.begin(), vl.end());
         }
 
+
+
         bool insert(objectname_ptr vl);
-        
-        objectname_ptr insert(const std::string& vl);       
+
+        bool insert_domain(const mmsidentifier_type& vl);
+
+        bool insert_in(objectname_ptr v, const mmsidentifier_type& path);
+
+        objectname_ptr insert(const std::string& vl);
 
         bool remove(objectname_ptr vl);
-        
+
         objectname_ptr remove(const std::string& vl);
 
         bool find(objectname_ptr vl);
 
-        objectname_ptr find(const std::string& vl);     
-            
-        private:           
-            
-            objectname_set objs_;
-            
-        };
+        objectname_ptr find(const std::string& vl);
+
+    private:
+
+        objectname_set objs_;
+
+    };
 
 
 }

@@ -8,6 +8,34 @@
 
 namespace prot9506 {
 
+    static std::string first_sub_path(std::string& vl) {
+        std::string rslt = vl;
+        std::string::size_type fit = vl.find_first_of('$');
+        if (fit != std::string::npos) {
+            std::string rslt = vl.substr(0, fit);
+            if (fit >= (vl.size() - 1))
+                vl = "";
+            else
+                vl = vl.substr(fit + 1);
+        } else
+            vl = "";
+        return rslt;
+    }
+
+    static std::string end_sub_path(std::string& vl) {
+        std::string rslt = vl;
+        std::string::size_type fit = vl.find_last_of('$');
+        if (fit != std::string::npos) {
+            std::string rslt = vl.substr(0, fit);
+            if (fit >= (vl.size() - 1))
+                vl = "";
+            else
+                vl = vl.substr(fit + 1);
+        } else
+            vl = "";
+        return rslt;
+    }
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //////// objectname
@@ -15,9 +43,9 @@ namespace prot9506 {
 
     objectname::objectname() : obj_(new mmsobject_type()) {
     }
-    
-    objectname::objectname(mmsobject_ptr ob): obj_(ob) {
-    }   
+
+    objectname::objectname(mmsobject_ptr ob) : obj_(ob) {
+    }
 
     objectname::objectname(const std::string& id, const std::string& domain) :
     obj_(domain.size() ? new mmsobject_type(MMS::ObjectName::Domain_specific_type(mmsidentifier_type(domain),
@@ -56,6 +84,32 @@ namespace prot9506 {
         }
         if (tstid.size())
             return create(tstid, tstdom);
+        return objectname_ptr();
+    }
+
+    const mmsidentifier_type& objectname::path() const {
+        if (obj_ptr()) {
+            if (obj_ptr()->domain_specific())
+                return obj_ptr()->domain_specific()->itemID();
+            else if (obj_ptr()->aa_specific())
+                return *obj_ptr()->aa_specific();
+            else if (obj_ptr()->vmd_specific())
+                return *obj_ptr()->vmd_specific();
+        }
+        return NULL_MMSID;
+    }
+
+    std::string objectname::name() const {
+        const mmsidentifier_type& tmp = path();
+        std::string tmps = tmp;
+        return end_sub_path(tmps);
+    }
+
+    objectname_ptr objectname::find_child(const std::string& vl) {
+        for (objectname_vct::iterator it = childs_.begin(); it != childs_.end(); ++it) {
+            if ((*it)->name() == vl)
+                return *it;
+        }
         return objectname_ptr();
     }
 
@@ -136,12 +190,49 @@ namespace prot9506 {
     }
 
 
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //////// mmsserver_model
     ///////////////////////////////////////////////////////////////////////////////////////////////// 
 
     bool mmsserver_model::insert(objectname_ptr vl) {
+        if ((vl->obj_ptr())) {
+            if (vl->obj_ptr()->vmd_specific()) {
+                objs_.insert(vl);
+                return true;
+            } else if (vl->obj_ptr()->domain_specific()) {
+                mmsobject_ptr dom = mmsobject_ptr(new mmsobject_type(vl->obj_ptr()->domain_specific()->domainID(), MMS::ObjectName_vmd_specific));
+                objectname_set::iterator fit = objs_.find(objectname_ptr(new objectname(dom)));
+                if (fit != objs_.end()) {
+                    return insert_in(*fit, vl->obj_ptr()->domain_specific()->itemID());
+                }
+            }
+        }
         return false;
+    }
+
+    bool mmsserver_model::insert_in(objectname_ptr vl, const mmsidentifier_type& path) {
+        if (path.empty())
+            return true;
+        std::string full = path;
+        std::string first = first_sub_path(full);
+        if (!first.empty()) {
+            objectname_ptr fit = vl->find_child(first);
+            if (!fit) {
+                const mmsidentifier_type& domname = vl->obj_ptr()->vmd_specific() ? (*vl->obj_ptr()->vmd_specific()) : (vl->obj_ptr()->domain_specific()->domainID());
+                vl->childs().push_back(objectname_ptr(new objectname(mmsobject_ptr(new mmsobject_type(
+                        MMS::ObjectName::Domain_specific_type(domname, mmsidentifier_type(path)), MMS::ObjectName_domain_specific)))));
+                fit = vl->childs().back();
+            }
+            return insert_in(fit, mmsidentifier_type(full));
+        }
+        return false;
+    }
+
+    bool mmsserver_model::insert_domain(const mmsidentifier_type& vl) {
+        mmsobject_ptr dom = mmsobject_ptr(new mmsobject_type(vl, MMS::ObjectName_vmd_specific));
+        return insert(objectname_ptr(new objectname(dom)));
     }
 
     objectname_ptr mmsserver_model::insert(const std::string& vl) {
@@ -162,7 +253,7 @@ namespace prot9506 {
 
     objectname_ptr mmsserver_model::find(const std::string& vl) {
         return objectname_ptr();
-    }       
+    }
 
 
 }
