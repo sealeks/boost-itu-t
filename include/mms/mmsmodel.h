@@ -55,6 +55,7 @@ namespace prot9506 {
     public:
 
         objectname();
+        objectname(mmsobject_ptr ob);
         objectname(const std::string& id, const std::string& domain = "");
 
         virtual ~objectname();
@@ -124,9 +125,9 @@ namespace prot9506 {
 
     private:
 
+        mmsobject_ptr obj_;
         objectname_wptr parent_;
         objectname_vct childs_;
-        mmsobject_ptr obj_;
         access_attribute_ptr access_;
         mmsresult_ptr data_;      
     };

@@ -15,6 +15,9 @@ namespace prot9506 {
 
     objectname::objectname() : obj_(new mmsobject_type()) {
     }
+    
+    objectname::objectname(mmsobject_ptr ob): obj_(ob) {
+    }   
 
     objectname::objectname(const std::string& id, const std::string& domain) :
     obj_(domain.size() ? new mmsobject_type(MMS::ObjectName::Domain_specific_type(mmsidentifier_type(domain),
