@@ -128,6 +128,49 @@ namespace prot9506 {
         access_attribute_ptr access_;
         mmsresult_ptr data_;      
     };
+    
+    
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //////// mmsserver_model
+    /////////////////////////////////////////////////////////////////////////////////////////////////        
+    
+        class mmsserver_model {
+            
+        public:
+            
+            mmsserver_model(){}
+            virtual ~mmsserver_model(){}       
+            
+        const objectname_set& objs() const {
+            return objs_;
+        }
+
+        objectname_set& objs() {
+            return objs_;
+        }        
+
+        void objs(const objectname_set& vl) {
+            objs_.insert(vl.begin(), vl.end());
+        }
+
+        bool insert(objectname_ptr vl);
+        
+        objectname_ptr insert(const std::string& vl);       
+
+        bool remove(objectname_ptr vl);
+        
+        objectname_ptr remove(const std::string& vl);
+
+        bool find(objectname_ptr vl);
+
+        objectname_ptr find(const std::string& vl);     
+            
+        private:           
+            
+            objectname_set objs_;
+            
+        };
 
 
 }

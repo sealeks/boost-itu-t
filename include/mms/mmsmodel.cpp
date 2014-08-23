@@ -133,6 +133,33 @@ namespace prot9506 {
     }
 
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //////// mmsserver_model
+    ///////////////////////////////////////////////////////////////////////////////////////////////// 
+
+    bool mmsserver_model::insert(objectname_ptr vl) {
+        return false;
+    }
+
+    objectname_ptr mmsserver_model::insert(const std::string& vl) {
+        return objectname_ptr();
+    }
+
+    bool mmsserver_model::remove(objectname_ptr vl) {
+        return false;
+    }
+
+    objectname_ptr mmsserver_model::remove(const std::string& vl) {
+        return objectname_ptr();
+    }
+
+    bool mmsserver_model::find(objectname_ptr vl) {
+        return false;
+    }
+
+    objectname_ptr mmsserver_model::find(const std::string& vl) {
+        return objectname_ptr();
+    }       
 
 
 }
