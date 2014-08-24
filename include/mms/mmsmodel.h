@@ -86,13 +86,9 @@ namespace prot9506 {
             return childs_;
         }
 
-        objectname_vct& childs() {
-            return childs_;
-        }
+        objectname_ptr insert_child(objectname_ptr vl);
 
-        void childs(const objectname_vct& vl) {
-            childs_.assign(vl.begin(), vl.end());
-        }
+        void remove_child(objectname_ptr vl);
 
         mmsobject_type obj() const {
             return obj_ ? (*obj_) : mmsobject_type();
@@ -130,6 +126,8 @@ namespace prot9506 {
             data_ = vl;
         }
 
+        std::size_t level() const;
+
         operator bool() const;
 
         objectname_ptr find_child(const std::string& vl);
@@ -152,6 +150,8 @@ namespace prot9506 {
     };
 
 
+    std::ostream& operator<<(std::ostream& stream, const objectname& vl);
+    std::ostream& operator<<(std::ostream& stream, objectname_ptr vl);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //////// mmsserver_model
@@ -171,37 +171,29 @@ namespace prot9506 {
             return objs_;
         }
 
-        objectname_set& objs() {
-            return objs_;
-        }
-
-        void objs(const objectname_set& vl) {
-            objs_.insert(vl.begin(), vl.end());
-        }
-
-
-
-        bool insert(objectname_ptr vl);
-
         bool insert_domain(const mmsidentifier_type& vl);
 
-        bool insert_in(objectname_ptr v, const mmsidentifier_type& path);
+        bool insert_in(objectname_ptr vl, const mmsidentifier_type& path);
 
-        objectname_ptr insert(const std::string& vl);
+        bool insert_in(const mmsidentifier_type& vl, const mmsidentifier_type& path);
 
         bool remove(objectname_ptr vl);
 
-        objectname_ptr remove(const std::string& vl);
+        objectname_ptr find(objectname_ptr vl);
 
-        bool find(objectname_ptr vl);
+    protected:
 
-        objectname_ptr find(const std::string& vl);
-
-    private:
+        bool insert(objectname_ptr vl);
+        bool insert_key(objectname_ptr vl);
+        void insert_keys(const objectname_set& vl);
+        bool remove_key(objectname_ptr vl);
 
         objectname_set objs_;
+        objectname_set keys_;
 
     };
+
+    std::ostream& operator<<(std::ostream& stream, const mmsserver_model& vl);
 
 
 }
