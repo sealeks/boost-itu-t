@@ -345,7 +345,7 @@ namespace prot9506 {
     boost::posix_time::ptime from_mms_datetime(const MMS::TimeOfDay& vlt) {
         try {
             if ((vlt.size() == 6) || (vlt.size() == 4)) {
-#ifdef BIG_ENDIAN_ARCHITECTUREs
+#ifdef BIG_ENDIAN_ARCHITECTURE
                 const boost::asn1::octetstring_type& vl = vlt;
 #else
                 MMS::TimeOfDay vl;
