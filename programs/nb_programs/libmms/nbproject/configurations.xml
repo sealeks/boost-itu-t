@@ -25,6 +25,8 @@
     <itemPath>../../../include/mms/MMS-SCI-Module-1.hpp</itemPath>
     <itemPath>../../../include/mms/mmsioclient.cpp</itemPath>
     <itemPath>../../../include/mms/mmsioclient.h</itemPath>
+    <itemPath>../../../include/mms/mmsmodel.cpp</itemPath>
+    <itemPath>../../../include/mms/mmsmodel.h</itemPath>
     <itemPath>../../../include/mms/mmssocket.cpp</itemPath>
     <itemPath>../../../include/mms/mmssocket.h</itemPath>
   </logicalFolder>
@@ -52,7 +54,7 @@
           <preprocessorList>
             <Elem>DEBUG</Elem>
             <Elem>ITUX200_DEBUG</Elem>
-            <Elem>_WIN32_WINNT=0x0601</Elem>
+            <Elem>_WIN32_WINNT=0x0501</Elem>
           </preprocessorList>
         </ccTool>
         <archiverTool>
@@ -116,6 +118,10 @@
       </item>
       <item path="../../../include/mms/mmsioclient.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="../../../include/mms/mmsmodel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsmodel.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../../../include/mms/mmssocket.h" ex="false" tool="3" flavor2="0">
@@ -138,7 +144,7 @@
           </incDir>
           <commandLine>-mthreads -fno-strict-aliasing</commandLine>
           <preprocessorList>
-            <Elem>_WIN32_WINNT=0x0601</Elem>
+            <Elem>_WIN32_WINNT=0x0501</Elem>
           </preprocessorList>
           <warningLevel>2</warningLevel>
         </ccTool>
@@ -202,6 +208,10 @@
             flavor2="0">
       </item>
       <item path="../../../include/mms/mmsioclient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsmodel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsmodel.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -289,6 +299,10 @@
       </item>
       <item path="../../../include/mms/mmsioclient.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="../../../include/mms/mmsmodel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsmodel.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../../../include/mms/mmssocket.h" ex="false" tool="3" flavor2="0">
@@ -372,6 +386,10 @@
             flavor2="0">
       </item>
       <item path="../../../include/mms/mmsioclient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsmodel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../../include/mms/mmsmodel.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../../../include/mms/mmssocket.cpp" ex="false" tool="1" flavor2="0">
       </item>

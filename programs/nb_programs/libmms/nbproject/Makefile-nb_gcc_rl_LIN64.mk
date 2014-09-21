@@ -41,6 +41,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/467100861/MMS-Object-Module-1.o \
 	${OBJECTDIR}/_ext/467100861/MMS-SCI-Module-1.o \
 	${OBJECTDIR}/_ext/467100861/mmsioclient.o \
+	${OBJECTDIR}/_ext/467100861/mmsmodel.o \
 	${OBJECTDIR}/_ext/467100861/mmssocket.o
 
 
@@ -99,6 +100,11 @@ ${OBJECTDIR}/_ext/467100861/mmsioclient.o: ../../../include/mms/mmsioclient.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/467100861
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/mmsioclient.o ../../../include/mms/mmsioclient.cpp
+
+${OBJECTDIR}/_ext/467100861/mmsmodel.o: ../../../include/mms/mmsmodel.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/467100861
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Wall -I../../../include -I${BOOST_DIR} -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/mmsmodel.o ../../../include/mms/mmsmodel.cpp
 
 ${OBJECTDIR}/_ext/467100861/mmssocket.o: ../../../include/mms/mmssocket.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/467100861

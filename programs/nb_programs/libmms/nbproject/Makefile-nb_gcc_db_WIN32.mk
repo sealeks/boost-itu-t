@@ -41,6 +41,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/467100861/MMS-Object-Module-1.o \
 	${OBJECTDIR}/_ext/467100861/MMS-SCI-Module-1.o \
 	${OBJECTDIR}/_ext/467100861/mmsioclient.o \
+	${OBJECTDIR}/_ext/467100861/mmsmodel.o \
 	${OBJECTDIR}/_ext/467100861/mmssocket.o
 
 
@@ -73,37 +74,42 @@ LDLIBSOPTIONS=
 ${OBJECTDIR}/_ext/467100861/ISO-9506-MMS-1.o: ../../../include/mms/ISO-9506-MMS-1.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/467100861
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/ISO-9506-MMS-1.o ../../../include/mms/ISO-9506-MMS-1.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0501 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/ISO-9506-MMS-1.o ../../../include/mms/ISO-9506-MMS-1.cpp
 
 ${OBJECTDIR}/_ext/467100861/ISO-9506-MMS-1A.o: ../../../include/mms/ISO-9506-MMS-1A.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/467100861
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/ISO-9506-MMS-1A.o ../../../include/mms/ISO-9506-MMS-1A.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0501 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/ISO-9506-MMS-1A.o ../../../include/mms/ISO-9506-MMS-1A.cpp
 
 ${OBJECTDIR}/_ext/467100861/MMS-Environment-1.o: ../../../include/mms/MMS-Environment-1.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/467100861
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/MMS-Environment-1.o ../../../include/mms/MMS-Environment-1.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0501 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/MMS-Environment-1.o ../../../include/mms/MMS-Environment-1.cpp
 
 ${OBJECTDIR}/_ext/467100861/MMS-Object-Module-1.o: ../../../include/mms/MMS-Object-Module-1.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/467100861
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/MMS-Object-Module-1.o ../../../include/mms/MMS-Object-Module-1.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0501 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/MMS-Object-Module-1.o ../../../include/mms/MMS-Object-Module-1.cpp
 
 ${OBJECTDIR}/_ext/467100861/MMS-SCI-Module-1.o: ../../../include/mms/MMS-SCI-Module-1.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/467100861
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/MMS-SCI-Module-1.o ../../../include/mms/MMS-SCI-Module-1.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0501 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/MMS-SCI-Module-1.o ../../../include/mms/MMS-SCI-Module-1.cpp
 
 ${OBJECTDIR}/_ext/467100861/mmsioclient.o: ../../../include/mms/mmsioclient.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/467100861
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/mmsioclient.o ../../../include/mms/mmsioclient.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0501 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/mmsioclient.o ../../../include/mms/mmsioclient.cpp
+
+${OBJECTDIR}/_ext/467100861/mmsmodel.o: ../../../include/mms/mmsmodel.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/467100861
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0501 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/mmsmodel.o ../../../include/mms/mmsmodel.cpp
 
 ${OBJECTDIR}/_ext/467100861/mmssocket.o: ../../../include/mms/mmssocket.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/467100861
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0601 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/mmssocket.o ../../../include/mms/mmssocket.cpp
+	$(COMPILE.cc) -O2 -DDEBUG -DITUX200_DEBUG -D_WIN32_WINNT=0x0501 -I../../../include -I${BOOST_DIR} -mthreads -fno-strict-aliasing -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/467100861/mmssocket.o ../../../include/mms/mmssocket.cpp
 
 # Subprojects
 .build-subprojects:
