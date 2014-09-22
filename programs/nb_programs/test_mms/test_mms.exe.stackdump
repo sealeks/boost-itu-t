@@ -1,3 +1,0 @@
-Exception: STATUS_ACCESS_VIOLATION at eip=610DBFAB
-eax=00000001 ebx=00000000 ecx=00000000 edx=02D7ABB0 esi=00000210 edi=02D7AC44
-ebp=02D7AB7C esp=02D7AA64 program=\\?\F:\Project\itu-t\bin\nb_gcc_db_WIN32\test_mms.exe, pid 11296, thread unknown (0x2E98)
