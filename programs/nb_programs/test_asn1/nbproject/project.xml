@@ -10,7 +10,6 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>../../../include</sourceRootElem>
                 <sourceRootElem>../../../include_programs/test_asn1</sourceRootElem>
             </sourceRootList>
             <confList>

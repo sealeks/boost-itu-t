@@ -21,7 +21,6 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../../../include</Elem>
     <Elem>../../../include_programs/test_snumber</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>

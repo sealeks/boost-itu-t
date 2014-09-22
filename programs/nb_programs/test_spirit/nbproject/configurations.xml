@@ -20,7 +20,6 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../../../include</Elem>
     <Elem>../../../include_programs/test_spirit</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>

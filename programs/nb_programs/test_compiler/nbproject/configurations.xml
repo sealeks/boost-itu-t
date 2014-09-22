@@ -19,7 +19,6 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../../../include</Elem>
     <Elem>../../../include_programs/test_compiler</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
