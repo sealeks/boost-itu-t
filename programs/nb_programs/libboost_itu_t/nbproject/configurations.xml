@@ -74,7 +74,7 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../../../include</Elem>
+    <Elem>../../../include/boost</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
