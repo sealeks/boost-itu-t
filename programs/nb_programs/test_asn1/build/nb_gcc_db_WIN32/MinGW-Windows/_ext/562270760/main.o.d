@@ -919,8 +919,7 @@ build/nb_gcc_db_WIN32/MinGW-Windows/_ext/562270760/main.o: \
  ../../../include/boost/itu/utils/template.hpp \
  ../../../include/boost/itu/asn1/utf8.hpp \
  ../../../include/boost/itu/x22X/selectors.hpp \
- ../../../include/boost/itu/detail/error.hpp \
- ../../../include_programs/test_asn1/Test1.hpp
+ ../../../include/boost/itu/detail/error.hpp
 
 ../../../include/boost/itu/x69X/x690.hpp:
 
@@ -2761,5 +2760,3 @@ F:/Project/boost_1_54_0/boost/asio/impl/write_at.hpp:
 ../../../include/boost/itu/x22X/selectors.hpp:
 
 ../../../include/boost/itu/detail/error.hpp:
-
-../../../include_programs/test_asn1/Test1.hpp:
