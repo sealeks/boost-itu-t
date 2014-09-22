@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="88">
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="nb_gcc_db_WIN32" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>3</platform>
+      </toolsSet>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 80</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 8078</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" localhost rrr</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" localhost </runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" localhost 33</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" </runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" localhost 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" ALEXEEV 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.56.101 102</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}" 192.168.56.101 102</runcommand>
+        <rundir></rundir>
+        <buildfirst>true</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+    <conf name="nb_gcc_rl_WIN32" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>3</platform>
+      </toolsSet>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.3.1 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.3.1</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.2.19 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" alexeev102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.4.18 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.4.19 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" localhost 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.0.102 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.2.18 102</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}" 192.168.2.18 102</runcommand>
+        <rundir></rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+    <conf name="nb_gcc_rl_LIN64" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>3</platform>
+      </toolsSet>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir></rundir>
+        <buildfirst>true</buildfirst>
+        <console-type>1</console-type>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+    <conf name="nb_gcc_db_LIN64" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>3</platform>
+      </toolsSet>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 8087</runcommandpicklistitem>
+          <runcommandpicklistitem>sudo "${OUTPUT_PATH}" 102</runcommandpicklistitem>
+          <runcommandpicklistitem>sudo "${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>sudo "${OUTPUT_PATH}" localhost 102</runcommandpicklistitem>
+          <runcommandpicklistitem> "${OUTPUT_PATH}" localhost 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" Alexeev 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" localhost 102</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 192.168.2.18 102</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}" 192.168.2.18 102</runcommand>
+        <rundir></rundir>
+        <buildfirst>true</buildfirst>
+        <console-type>1</console-type>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>
