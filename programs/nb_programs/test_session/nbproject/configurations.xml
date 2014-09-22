@@ -24,6 +24,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -35,6 +37,7 @@
           <preprocessorList>
             <Elem>DEBUG</Elem>
             <Elem>ITUX200_DEBUG</Elem>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
           </preprocessorList>
         </ccTool>
         <linkerTool>
@@ -53,6 +56,7 @@
             <linkerLibLibItem>wsock32</linkerLibLibItem>
             <linkerLibLibItem>oleaut32</linkerLibLibItem>
             <linkerLibLibItem>ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -66,6 +70,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -74,6 +80,10 @@
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
+          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
+          <preprocessorList>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
+          </preprocessorList>
         </ccTool>
         <linkerTool>
           <output>../../../bin/${CND_CONF}/test_session</output>
@@ -91,6 +101,7 @@
             <linkerLibLibItem>wsock32</linkerLibLibItem>
             <linkerLibLibItem>oleaut32</linkerLibLibItem>
             <linkerLibLibItem>ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -104,6 +115,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -146,6 +159,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
