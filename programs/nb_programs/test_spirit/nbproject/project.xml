@@ -9,7 +9,10 @@
             <header-extensions>hpp</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
-            <sourceRootList/>
+            <sourceRootList>
+                <sourceRootElem>../../../include</sourceRootElem>
+                <sourceRootElem>../../../include_programs/test_spirit</sourceRootElem>
+            </sourceRootList>
             <confList>
                 <confElem>
                     <name>nb_gcc_db_WIN32</name>
