@@ -225,7 +225,7 @@ void test_key(const rsa_key& key, size_num sz){
 typedef  rsa_util::util<2048> util_RSA;
 typedef  util_RSA::key_type   key_type512;
 typedef  util_RSA::keypair_type   keypair_type512;
-    
+
 int
 main()
 {

@@ -20,6 +20,10 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>../../../include</Elem>
+    <Elem>../../../include_programs/test_snumber</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="nb_gcc_db_WIN32" type="1">
@@ -59,6 +63,7 @@
             <linkerLibLibItem>wsock32</linkerLibLibItem>
             <linkerLibLibItem>oleaut32</linkerLibLibItem>
             <linkerLibLibItem>ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -92,6 +97,7 @@
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
+          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
           <preprocessorList>
             <Elem>_WIN32_WINNT=0x0601</Elem>
           </preprocessorList>
@@ -104,6 +110,7 @@
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
+            <linkerLibLibItem>boost_random</linkerLibLibItem>
             <linkerLibLibItem>boost_date_time</linkerLibLibItem>
             <linkerLibLibItem>boost_system</linkerLibLibItem>
             <linkerLibLibItem>boost_thread</linkerLibLibItem>
@@ -112,6 +119,7 @@
             <linkerLibLibItem>wsock32</linkerLibLibItem>
             <linkerLibLibItem>oleaut32</linkerLibLibItem>
             <linkerLibLibItem>ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
