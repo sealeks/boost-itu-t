@@ -31,7 +31,7 @@
     <itemPath>../../../include/mms/mmssocket.h</itemPath>
   </logicalFolder>
   <sourceRootList>
-    <Elem>../../../include</Elem>
+    <Elem>../../../include/mms</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
