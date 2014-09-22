@@ -97,7 +97,7 @@
           <preprocessorList>
             <Elem>DEBUG</Elem>
             <Elem>ITUX200_DEBUG</Elem>
-            <Elem>_WIN32_WINNT=0x0601</Elem>
+            <Elem>_WIN32_WINNT=0x0501</Elem>
           </preprocessorList>
         </ccTool>
         <archiverTool>
@@ -297,7 +297,7 @@
           </incDir>
           <commandLine>-mthreads -fno-strict-aliasing</commandLine>
           <preprocessorList>
-            <Elem>_WIN32_WINNT=0x0601</Elem>
+            <Elem>_WIN32_WINNT=0x0501</Elem>
           </preprocessorList>
           <warningLevel>2</warningLevel>
         </ccTool>
@@ -492,7 +492,7 @@
         <ccTool>
           <architecture>2</architecture>
           <incDir>
-            <pElem>../../include</pElem>
+            <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
           <commandLine>-fno-strict-aliasing</commandLine>
@@ -693,7 +693,7 @@
           <developmentMode>5</developmentMode>
           <architecture>2</architecture>
           <incDir>
-            <pElem>../../include</pElem>
+            <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
           <commandLine>-fno-strict-aliasing</commandLine>
