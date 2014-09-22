@@ -10,7 +10,8 @@
 
 #include <boost/thread/thread.hpp>
 #include <boost/itu/utils/utils.h>
-#include "mmssocket.h"
+#include <mms/mmssocket.h>
+#include <mms/mmsmodel.h>
 
 
 typedef iso9506 protocol_type;
@@ -25,6 +26,8 @@ const application_selector ASELECTOR = application_selector(std::string("{{1, 3,
 namespace MMS = ISO_9506_MMS_1;
 namespace MMSO = MMS_Object_Module_1;
 
+prot9506::mmsserver_model TestModel;
+
 int port = 102;
 
 #ifndef NET_BLOCKING
@@ -33,7 +36,7 @@ class session {
 public:
 
     session(boost::asio::io_service& io_service)
-    : socket_(io_service, ASELECTOR) {
+    : socket_(io_service, prot9506::protocol_option()) {
         std::cout << "New sesion\n";
     }
 
@@ -107,10 +110,10 @@ private:
 
 
 
-        acceptor_.async_accept(new_session->socket(),
+        //acceptor_.async_accept(new_session->socket(),
 
-                boost::bind(&server::handle_accept, this, new_session,
-                boost::asio::placeholders::error));
+            //    boost::bind(&server::handle_accept, this, new_session,
+            //    boost::asio::placeholders::error));
     }
 
     void handle_accept(session* new_session,
@@ -137,12 +140,13 @@ public:
     typedef prot9506::getvaraccess_operation_type getvaraccess_operation_type;
     typedef prot9506::read_operation_type read_operation_type;
     typedef prot9506::definelist_operation_type definelist_operation_type;
+    typedef prot9506::deletelist_operation_type deletelist_operation_type;    
     typedef prot9506::write_operation_type write_operation_type;
 
     client(boost::asio::io_service& io_service,
             resolver_type::iterator endpoint_iterator, const std::string& called = "")
     : io_service_(io_service),
-    socket_(io_service, ASELECTOR) {
+    socket_(io_service, prot9506::protocol_option()) {
         endpoint_type endpoint = *endpoint_iterator;
         socket_.async_connect(endpoint,
                 boost::bind(&client::handle_connect, this,
@@ -165,7 +169,7 @@ private:
         if (!error) {
 
             boost::shared_ptr<identify_operation_type> operation =
-                    boost::shared_ptr<identify_operation_type > (new identify_operation_type());
+                    boost::shared_ptr<identify_operation_type > (new identify_operation_type(&socket_));
 
             operation->request_new();
             socket_.async_confirm_request(operation,
@@ -182,7 +186,7 @@ private:
             std::cout << "Vendor: " << rslt->response()->vendorName() << " Model: " << rslt->response()->modelName() << " Rev: " << rslt->response()->revision() << std::endl;
 
             boost::shared_ptr<getnamelist_operation_type > operation =
-                    boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type());
+                    boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type(&socket_));
 
             operation->request_new();
             operation->request()->objectClass().basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_domain));
@@ -200,13 +204,34 @@ private:
         if (rslt->response()) {
 
             domain = rslt->response()->listOfIdentifier().operator [](0);
+            
+           typedef MMS::GetNameList_Response::ListOfIdentifier_type domain_list_type;
+           
+           for (domain_list_type::iterator it = rslt->response()->listOfIdentifier().begin(); it != rslt->response()->listOfIdentifier().end(); ++it)               
+                TestModel.insert_domain(*it);
+
+            if (rslt->response()->moreFollows()) {
+                
+                boost::shared_ptr<getnamelist_operation_type > operationnext =
+                        boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type(&socket_));
+
+                operationnext->request_new();
+                operationnext->request()->objectClass().basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_domain));
+                operationnext->request()->objectScope().vmdSpecific__new();
+                operationnext->request()->continueAfter(rslt->response()->listOfIdentifier().back());
+
+                socket_.async_confirm_request(operationnext,
+                        boost::bind(&client::handle_domainlist_response, this, operationnext));
+                return;
+            }
+            
 
             std::cout << " domain name: " << domain << std::endl;
 
 
 
             boost::shared_ptr<getnamelist_operation_type > operation =
-                    boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type());
+                    boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type(&socket_));
 
             operation->request_new();
             operation->request()->objectClass().basicObjectClass(new int(MMS::ObjectClass::basicObjectClass_namedVariable));
@@ -228,13 +253,14 @@ private:
             typedef MMS::GetNameList_Response::ListOfIdentifier_type namedlist_type;
             for (namedlist_type::iterator it = rslt->response()->listOfIdentifier().begin(); it != rslt->response()->listOfIdentifier().end(); ++it) {
                 fulllist.push_back((*it));
+                TestModel.insert_in(*(rslt->request()->objectScope().domainSpecific()),*it);
                 last = (*it);
             }
 
             if ((!domain.empty()) && (rslt->response()->moreFollows())) {
 
                 boost::shared_ptr<getnamelist_operation_type > operation =
-                        boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type());
+                        boost::shared_ptr<getnamelist_operation_type > (new getnamelist_operation_type(&socket_));
 
                 operation->request_new();
                 operation->request()->objectClass().basicObjectClass(new int( MMS::ObjectClass::basicObjectClass_namedVariable));
@@ -248,18 +274,18 @@ private:
 
             } else {
 
-                for (std::vector<std::string>::const_iterator it = fulllist.begin(); it != fulllist.end(); ++it) {
+                std::cout <<  TestModel;
+                /*for (std::vector<std::string>::const_iterator it = fulllist.begin(); it != fulllist.end(); ++it) {
                     std::cout << " full lst var name: " << (*it) << std::endl;
                 }
-                std::cout << " full lst var size: " << fulllist.size() << std::endl;
-
+                std::cout << " full lst var size: " << fulllist.size() << std::endl;*/
 
                 fullcnt = 0;
 
                 if (!(fullcnt < fulllist.size())) return;
 
                 boost::shared_ptr<getvaraccess_operation_type > operation =
-                        boost::shared_ptr<getvaraccess_operation_type > (new getvaraccess_operation_type());
+                        boost::shared_ptr<getvaraccess_operation_type > (new getvaraccess_operation_type(&socket_));
 
                 operation->request_new();
                 operation->request()->name__new();
@@ -293,7 +319,7 @@ private:
             if (fullcnt < fulllist.size()) {
 
                 boost::shared_ptr<getvaraccess_operation_type > operation =
-                        boost::shared_ptr<getvaraccess_operation_type > (new getvaraccess_operation_type());
+                        boost::shared_ptr<getvaraccess_operation_type > (new getvaraccess_operation_type(&socket_));
 
                 operation->request_new();
                 operation->request()->name__new();
@@ -311,8 +337,8 @@ private:
 
                 std::cout << " simple lst var size: " << simplelist.size() << std::endl;
 
-                boost::shared_ptr<read_operation_type > operationl =
-                        boost::shared_ptr<read_operation_type > (new read_operation_type());
+                /*boost::shared_ptr<read_operation_type > operationl =
+                        boost::shared_ptr<read_operation_type > (new read_operation_type(&socket_));
 
                 simplecnt = 0;
 
@@ -337,14 +363,14 @@ private:
 
 
                 socket_.async_confirm_request(operationl,
-                        boost::bind(&client::handle_readlist_response, this, operationl));
+                        boost::bind(&client::handle_readlist_response, this, operationl));*/
                 
                 
-               /* boost::shared_ptr<definelist_operation_type> operationl =
-                        boost::shared_ptr<definelist_operation_type > (new definelist_operation_type());
+                boost::shared_ptr<definelist_operation_type> operationl =
+                        boost::shared_ptr<definelist_operation_type > (new definelist_operation_type(&socket_));
                 
                 operationl->request_new();
-                operationl->request()->variableListName(MMS::ObjectName(MMS::Identifier("testVar1"),MMS::ObjectName_aa_specific));  
+                operationl->request()->variableListName(MMS::ObjectName(MMS::Identifier("@testVar1"),MMS::ObjectName_aa_specific));  
                 std::size_t jcnt=0;
                 for (std::vector<std::string>::const_iterator it = simplelist.begin(); it != simplelist.end(); ++it){
                     if (jcnt++>20)
@@ -355,7 +381,7 @@ private:
                         MMS::VariableSpecification_name)));}
                 
                  socket_.async_confirm_request(operationl,
-                        boost::bind(&client::handle_createnamelist_response, this, operationl));*/
+                        boost::bind(&client::handle_createnamelist_response, this, operationl));
 
             }
 
@@ -489,8 +515,8 @@ private:
 
             } else {*/
 
-                boost::shared_ptr<write_operation_type > operationl =
-                        boost::shared_ptr<write_operation_type > (new write_operation_type());
+           /*     boost::shared_ptr<write_operation_type > operationl =
+                        boost::shared_ptr<write_operation_type > (new write_operation_type(&socket_));
 
                 operationl->request_new();
 
@@ -511,9 +537,21 @@ private:
                 
 
                 socket_.async_confirm_request(operationl,
-                        boost::bind(&client::handle_write_response, this, operationl));
+                        boost::bind(&client::handle_write_response, this, operationl));*/
+            
+            
+                boost::shared_ptr<deletelist_operation_type> operationl =
+                        boost::shared_ptr<deletelist_operation_type > (new deletelist_operation_type(&socket_));
                 
+                operationl->request_new();
                 
+                MMS::DeleteNamedVariableList_Request::ListOfVariableListName_type lst;
+                lst.push_back(MMS::ObjectName(MMS::Identifier("@testVar1"),MMS::ObjectName_aa_specific));
+                
+                operationl->request()->listOfVariableListName(lst);
+                
+                socket_.async_confirm_request(operationl,
+                        boost::bind(&client::handle_deletenamelist_response, this, operationl));
                 
             //}
         } else {
@@ -525,25 +563,14 @@ private:
         if (rslt->response()) {
             
                boost::shared_ptr<read_operation_type > operationl =
-                        boost::shared_ptr<read_operation_type > (new read_operation_type());
+                        boost::shared_ptr<read_operation_type > (new read_operation_type(&socket_));
 
               
                 
 
                 operationl->request_new();
-                operationl->request()->variableAccessSpecification().listOfVariable__new();
-
-
-                MMS::VariableAccessSpecification::ListOfVariable_type_sequence_of vacs;
-
-                vacs.variableSpecification().name__new();
-                vacs.variableSpecification().name()->domain_specific__new();
-                vacs.variableSpecification().name()->domain_specific()->domainID(domain);
-                vacs.variableSpecification().name()->domain_specific()->itemID(MMS::Identifier("testVar1"));
-
-
-                operationl->request()->variableAccessSpecification().listOfVariable()->push_back(vacs);
-
+                operationl->request()->variableAccessSpecification(
+                MMS::VariableAccessSpecification(MMS::ObjectName(MMS::Identifier("@testVar1"),MMS::ObjectName_aa_specific),MMS::VariableAccessSpecification_variableListName));
 
 
                 socket_.async_confirm_request(operationl,
@@ -553,13 +580,48 @@ private:
         }
     }
     
+    void handle_deletenamelist_response(boost::shared_ptr<deletelist_operation_type> rslt) {
+        if (rslt->response()) {
+            
+            std::cout << "success delete list" << std::endl;
+            socket_.async_release( boost::bind(&client::handle_release, this, boost::asio::placeholders::error));;
+
+        } else {
+            std::cout << "deletelist error" << std::endl;
+        }
+        socket_.async_release( boost::bind(&client::handle_release, this, boost::asio::placeholders::error));;
+    } 
+    
+    
     void handle_write_response(boost::shared_ptr<write_operation_type> rslt) {
         if (rslt->response()) {
-             std::cout << "handle_write_response success" << std::endl;
-             socket_.async_release( boost::bind(&client::handle_release, this, boost::asio::placeholders::error));
+            
+            boost::shared_ptr<identify_operation_type> operation =
+                    boost::shared_ptr<identify_operation_type > (new identify_operation_type(&socket_));
+
+            operation->request_new();
+            socket_.async_confirm_request(operation,
+                    boost::bind(&client::handle_keepallive_response, this, operation));
+            
         } else {
             std::cout << "handle_write_response error" << std::endl;
             socket_.async_release( boost::bind(&client::handle_release, this, boost::asio::placeholders::error));
+        }
+    }        
+    
+    void handle_keepallive_response(boost::shared_ptr<identify_operation_type> rslt) {
+        if (rslt->response()) {
+
+            boost::shared_ptr<identify_operation_type> operation =
+                    boost::shared_ptr<identify_operation_type > (new identify_operation_type(&socket_));
+
+            operation->request_new();
+            socket_.async_confirm_request(operation,
+                    boost::bind(&client::handle_keepallive_response, this, operation));
+            
+
+        } else {
+            std::cout << "handle_idenify_response: " << std::endl;
         }
     }    
 

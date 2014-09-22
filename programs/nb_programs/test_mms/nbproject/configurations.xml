@@ -2,16 +2,7 @@
 <configurationDescriptor version="88">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="test_mms" displayName="test_mms" projectFiles="true">
-      <logicalFolder name="mms" displayName="mms" projectFiles="true">
-        <itemPath>../../../include_programs/test_mms/mms/ISO-9506-MMS-1.h</itemPath>
-        <itemPath>../../../include_programs/test_mms/mms/ISO-9506-MMS-1A.h</itemPath>
-        <itemPath>../../../include_programs/test_mms/mms/MMS-Environment-1.h</itemPath>
-        <itemPath>../../../include_programs/test_mms/mms/MMS-Object-Module-1.h</itemPath>
-        <itemPath>../../../include_programs/test_mms/mms/MMS-SCI-Module-1.h</itemPath>
-      </logicalFolder>
       <itemPath>../../../include_programs/test_mms/main.cpp</itemPath>
-      <itemPath>../../../include_programs/test_mms/mmssocket.cpp</itemPath>
-      <itemPath>../../../include_programs/test_mms/mmssocket.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы "
@@ -38,6 +29,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -45,6 +38,9 @@
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
+          </preprocessorList>
         </ccTool>
         <linkerTool>
           <output>../../../bin/${CND_CONF}/test_mms</output>
@@ -53,6 +49,7 @@
             <pElem>../../../lib/boost/${CND_CONF}</pElem>
           </linkerAddLib>
           <linkerLibItems>
+            <linkerLibLibItem>mms</linkerLibLibItem>
             <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
             <linkerLibLibItem>boost_date_time</linkerLibLibItem>
             <linkerLibLibItem>boost_system</linkerLibLibItem>
@@ -62,47 +59,13 @@
             <linkerLibLibItem>wsock32</linkerLibLibItem>
             <linkerLibLibItem>oleaut32</linkerLibLibItem>
             <linkerLibLibItem>ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
       <item path="../../../include_programs/test_mms/main.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/ISO-9506-MMS-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/ISO-9506-MMS-1A.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-Environment-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-Object-Module-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-SCI-Module-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mmssocket.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mmssocket.h"
-            ex="false"
-            tool="3"
             flavor2="0">
       </item>
     </conf>
@@ -110,14 +73,20 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>6</developmentMode>
           <incDir>
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
+          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
+          <preprocessorList>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
+          </preprocessorList>
         </ccTool>
         <linkerTool>
           <output>../../../bin/${CND_CONF}/test_mms</output>
@@ -126,6 +95,7 @@
             <pElem>../../../lib/boost/${CND_CONF}</pElem>
           </linkerAddLib>
           <linkerLibItems>
+            <linkerLibLibItem>mms</linkerLibLibItem>
             <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
             <linkerLibLibItem>boost_date_time</linkerLibLibItem>
             <linkerLibLibItem>boost_system</linkerLibLibItem>
@@ -135,6 +105,7 @@
             <linkerLibLibItem>wsock32</linkerLibLibItem>
             <linkerLibLibItem>oleaut32</linkerLibLibItem>
             <linkerLibLibItem>ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -143,46 +114,13 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include_programs/test_mms/mms/ISO-9506-MMS-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/ISO-9506-MMS-1A.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-Environment-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-Object-Module-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-SCI-Module-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mmssocket.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mmssocket.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
     </conf>
     <conf name="nb_gcc_rl_LIN64" type="1">
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -199,6 +137,7 @@
             <pElem>../../../lib/boost/${CND_CONF}</pElem>
           </linkerAddLib>
           <linkerLibItems>
+            <linkerLibLibItem>mms</linkerLibLibItem>
             <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
             <linkerLibLibItem>boost_date_time</linkerLibLibItem>
             <linkerLibLibItem>boost_system</linkerLibLibItem>
@@ -213,46 +152,13 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include_programs/test_mms/mms/ISO-9506-MMS-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/ISO-9506-MMS-1A.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-Environment-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-Object-Module-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-SCI-Module-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mmssocket.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mmssocket.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
     </conf>
     <conf name="nb_gcc_db_LIN64" type="1">
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -268,6 +174,7 @@
             <pElem>../../../lib/boost/${CND_CONF}</pElem>
           </linkerAddLib>
           <linkerLibItems>
+            <linkerLibLibItem>mms</linkerLibLibItem>
             <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
             <linkerLibLibItem>boost_date_time</linkerLibLibItem>
             <linkerLibLibItem>boost_system</linkerLibLibItem>
@@ -280,41 +187,6 @@
       <item path="../../../include_programs/test_mms/main.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/ISO-9506-MMS-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/ISO-9506-MMS-1A.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-Environment-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-Object-Module-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mms/MMS-SCI-Module-1.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mmssocket.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_mms/mmssocket.h"
-            ex="false"
-            tool="3"
             flavor2="0">
       </item>
     </conf>
