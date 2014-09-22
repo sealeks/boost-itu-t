@@ -24,6 +24,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -35,6 +37,7 @@
           <preprocessorList>
             <Elem>DEBUG</Elem>
             <Elem>ITUX200_DEBUG</Elem>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
           </preprocessorList>
           <useLinkerLibraries>false</useLinkerLibraries>
         </ccTool>
@@ -67,6 +70,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -75,8 +80,9 @@
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
+          <commandLine>-mthreads -fno-strict-aliasing</commandLine>
           <preprocessorList>
-            <Elem>ITUX200_DEBUG</Elem>
+            <Elem>_WIN32_WINNT=0x0601</Elem>
           </preprocessorList>
           <useLinkerLibraries>false</useLinkerLibraries>
         </ccTool>
@@ -109,6 +115,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -154,6 +162,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -163,6 +173,7 @@
           </incDir>
           <preprocessorList>
             <Elem>ITUX200_DEBUG</Elem>
+            <Elem>_DEBUG_</Elem>
           </preprocessorList>
         </ccTool>
         <linkerTool>
