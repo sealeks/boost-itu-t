@@ -21,6 +21,7 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
+    <Elem>../../../include</Elem>
     <Elem>../../../include_programs/test_mms</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
