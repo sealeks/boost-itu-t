@@ -382,21 +382,21 @@ namespace boost {
 
             dynamic_bitset_type dynamic_bitset() const;
 
-            operator uint8_t() const;
+            operator boost::uint8_t() const;
 
-            operator uint16_t() const;
+            operator boost::uint16_t() const;
 
-            operator uint32_t() const;
+            operator boost::uint32_t() const;
 
-            operator uint64_t() const;
+            operator boost::uint64_t() const;
 
-            operator int8_t() const;
+            operator boost::int8_t() const;
 
-            operator int16_t() const;
+            operator boost::int16_t() const;
 
-            operator int32_t() const;
+            operator boost::int32_t() const;
 
-            operator int64_t() const;
+            operator boost::int64_t() const;
             
             operator bool() const;
             

@@ -216,35 +216,35 @@ namespace boost {
             return tmp;
         }
 
-        bitstring_type::operator uint8_t() const {
+        bitstring_type::operator boost::uint8_t() const {
             return return_int<uint8_t > ();
         }
 
-        bitstring_type::operator uint16_t() const {
+        bitstring_type::operator boost::uint16_t() const {
             return return_int<uint16_t > ();
         }
 
-        bitstring_type::operator uint32_t() const {
+        bitstring_type::operator boost::uint32_t() const {
             return return_int<uint32_t > ();
         }
 
-        bitstring_type::operator uint64_t() const {
+        bitstring_type::operator boost::uint64_t() const {
             return return_int<uint64_t > ();
         }
 
-        bitstring_type::operator int8_t() const {
+        bitstring_type::operator boost::int8_t() const {
             return return_int<int8_t > ();
         }
 
-        bitstring_type::operator int16_t() const {
+        bitstring_type::operator boost::int16_t() const {
             return return_int<int16_t > ();
         }
 
-        bitstring_type::operator int32_t() const {
+        bitstring_type::operator boost::int32_t() const {
             return return_int<int32_t > ();
         }
 
-        bitstring_type::operator int64_t() const {
+        bitstring_type::operator boost::int64_t() const {
             return return_int<int64_t > ();
         }
 
