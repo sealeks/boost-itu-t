@@ -6,6 +6,8 @@
 #ifndef         _ITU_BASECODER_IMPLEMENTATIUON_H_
 #define         _ITU_BASECODER_IMPLEMENTATIUON_H_
 
+#include <boost/config.hpp>
+#include <boost/cstdint.hpp>
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 #include <boost/asio/buffers_iterator.hpp>
