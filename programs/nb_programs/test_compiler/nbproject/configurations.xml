@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="88">
+<configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы "
@@ -25,14 +25,13 @@
   <confs>
     <conf name="nb_gcc_db_WIN32" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
-        <compilerSet>default</compilerSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
-          <commandlineTool>i686-w64-mingw32-gcc-4.8.0</commandlineTool>
+          <commandlineTool>g++</commandlineTool>
           <incDir>
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
@@ -56,7 +55,7 @@
             <linkerLibLibItem>ws2_32</linkerLibLibItem>
             <linkerLibLibItem>ole32</linkerLibLibItem>
             <linkerLibLibItem>wsock32</linkerLibLibItem>
-            <linkerLibFileItem>E:/Qt/Win32/Tools/mingw48_32/lib/gcc/i686-w64-mingw32/4.8.0/libstdc++.a</linkerLibFileItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -68,8 +67,7 @@
     </conf>
     <conf name="nb_gcc_rl_WIN32" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
-        <compilerSet>default</compilerSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -100,7 +98,7 @@
             <linkerLibLibItem>wsock32</linkerLibLibItem>
             <linkerLibLibItem>oleaut32</linkerLibLibItem>
             <linkerLibLibItem>ws2_32</linkerLibLibItem>
-            <linkerLibFileItem>E:/Qt/Win32/Tools/mingw48_32/lib/gcc/i686-w64-mingw32/4.8.0/libstdc++.a</linkerLibFileItem>
+            <linkerLibLibItem>libstc++</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -112,7 +110,6 @@
     </conf>
     <conf name="nb_gcc_rl_LIN64" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -157,7 +154,6 @@
     </conf>
     <conf name="nb_gcc_db_LIN64" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
