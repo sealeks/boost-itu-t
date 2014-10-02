@@ -704,7 +704,7 @@
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
           </incDir>
-          <commandLine>-fno-strict-aliasing</commandLine>
+          <commandLine>-fno-strict-aliasing -Wparentheses</commandLine>
           <warningLevel>2</warningLevel>
         </ccTool>
         <archiverTool>

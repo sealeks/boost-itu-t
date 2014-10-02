@@ -1450,7 +1450,6 @@ namespace boost {
             template<typename T>
             boost::shared_ptr<T>& value(bool isinput, E tp) {
                 typedef choice_holder<T> choice_holder_type;
-                typedef boost::shared_ptr<choice_holder_type> choice_holder_ptr;
                 if (isinput)
                     set(new T(), tp);
                 return boost::static_pointer_cast< choice_holder_type > (val_)->value();
@@ -1459,7 +1458,6 @@ namespace boost {
             template<typename T>
             boost::shared_ptr<T> get(E ID) const {
                 typedef choice_holder<T> choice_holder_type;
-                typedef boost::shared_ptr<choice_holder_type> choice_holder_ptr;
                 return (type() == ID) ?
                         boost::static_pointer_cast< choice_holder_type > (val_)->value() :
                         boost::shared_ptr<T > ();
@@ -1467,22 +1465,16 @@ namespace boost {
 
             template<typename T>
             void set(T* vl, E ID) {
-                typedef choice_holder<T> choice_holder_type;
-                typedef boost::shared_ptr<choice_holder_type> choice_holder_ptr;
                 val_ = type_ptr(new choice_holder<T > (vl, static_cast<int> (ID)));
             }
 
             template<typename T>
             void set(boost::shared_ptr<T> vl, E ID) {
-                typedef choice_holder<T> choice_holder_type;
-                typedef boost::shared_ptr<choice_holder_type> choice_holder_ptr;
                 val_ = type_ptr(new choice_holder<T > (vl, static_cast<int> (ID)));
             }
 
             template<typename T>
             void set(E ID) {
-                typedef choice_holder<T> choice_holder_type;
-                typedef boost::shared_ptr<choice_holder_type> choice_holder_ptr;
                 val_ = type_ptr(new choice_holder<T > (new T(), static_cast<int> (ID)));
             }
 

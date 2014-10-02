@@ -795,7 +795,7 @@ namespace boost {
                         mant <<= 1;
                     }
                     if (exp_b < 0) {
-                        vl = negat ? -0.0 : 0;
+                        vl = static_cast<T>(negat ? -0.0 : 0);
                         return true;
                     }
                     B exp = static_cast<B> (exp_b);

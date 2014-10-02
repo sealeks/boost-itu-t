@@ -6,6 +6,10 @@
 #ifndef _BOOST_ITU_X224_IMPLEMENTATIUON_H_
 #define _BOOST_ITU_X224_IMPLEMENTATIUON_H_
 
+
+#include <boost/itu/x22X/selectors.hpp>
+#include <boost/itu/detail/error.hpp>
+
 #include <boost/asio/basic_socket_acceptor.hpp>
 #include <boost/asio/basic_socket_iostream.hpp>
 #include <boost/asio/basic_stream_socket.hpp>
@@ -18,8 +22,6 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/bind.hpp>
 
-#include <boost/itu/x22X/selectors.hpp>
-#include <boost/itu/detail/error.hpp>
 
 
 namespace boost {
