@@ -1534,15 +1534,15 @@ namespace boost {
         template<typename T, const T& DT>
         struct default_holder {
 
-            default_holder() : DF(DT) {
+            default_holder()  {
             }
 
             explicit default_holder(const T & vl) :
-            internal_(vl != DT ? new T(vl) : boost::shared_ptr<T>()), DF(DT)  {
+            internal_(vl != DT ? new T(vl) : boost::shared_ptr<T>()) {
             }
 
             explicit default_holder(boost::shared_ptr<T> vl) :
-            internal_(vl ? (((*vl) != DT) ? vl : boost::shared_ptr<T>()) : vl), DF(DT)  {
+            internal_(vl ? (((*vl) != DT) ? vl : boost::shared_ptr<T>()) : vl) {
             }
 
             const T& operator*() const {
@@ -1572,16 +1572,15 @@ namespace boost {
             T * operator-> () const {
                 return internal_.get();
             }
-
+            
 
         private:
 
             boost::shared_ptr<T> internal_;
-            const T& DF;
 
         };
-
-
+        
+  
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         template<typename Archive, typename T>
