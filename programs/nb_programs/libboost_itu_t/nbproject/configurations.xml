@@ -41,7 +41,7 @@
             <itemPath>../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp</itemPath>
-            <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDUs.hpp</itemPath>
+            <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp</itemPath>
           </logicalFolder>
           <itemPath>../../../include/boost/itu/x22X/selectors.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x22X/selectors.hpp</itemPath>
@@ -225,7 +225,7 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDUs.hpp"
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -425,7 +425,7 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDUs.hpp"
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -624,7 +624,7 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDUs.hpp"
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -821,7 +821,7 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDUs.hpp"
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp"
             ex="false"
             tool="3"
             flavor2="0">
