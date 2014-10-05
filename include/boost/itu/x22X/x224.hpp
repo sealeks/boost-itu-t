@@ -6,6 +6,9 @@
 #ifndef _BOOST_ITU_X224_IMPLEMENTATIUON_H_
 #define _BOOST_ITU_X224_IMPLEMENTATIUON_H_
 
+#ifndef BOOST_ITU_MOVE_ARG
+#define BOOST_ITU_MOVE_ARG(type) const type&
+#endif
 
 #include <boost/itu/x22X/selectors.hpp>
 #include <boost/itu/detail/error.hpp>

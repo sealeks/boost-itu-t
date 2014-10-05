@@ -226,7 +226,7 @@ namespace boost {
                 bool encoding(encoding_rule val);
 
                 bool valid() {
-                    return coder_;
+                    return static_cast<bool>(coder_);
                 }
 
                 asn_coder_ptr coder() {
@@ -1034,14 +1034,14 @@ namespace boost {
 
                 template <typename AcceptHandler>
                 void async_accept(presentation_socket& peer,
-                        BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
                     //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
                     async_accept_impl(peer, BOOST_ASIO_MOVE_CAST(AcceptHandler)(handler));
                 }
 
                 template <typename AcceptHandler>
                 void async_accept(presentation_socket& peer,
-                        endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        endpoint_type& peer_endpoint, BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
                     //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
                     async_accept_impl(peer, peer_endpoint, BOOST_ASIO_MOVE_CAST(AcceptHandler)(handler));
                 }
@@ -1057,7 +1057,7 @@ namespace boost {
 
                 template <typename AcceptHandler>
                 void async_accept_impl(presentation_socket& peer,
-                        endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        endpoint_type& peer_endpoint, BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
                     //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
                     peer.option(contexts_, psel_);
                     super_type::async_accept(peer, peer_endpoint, handler);
@@ -1065,7 +1065,7 @@ namespace boost {
 
                 template <typename AcceptHandler>
                 void async_accept_impl(presentation_socket& peer,
-                        BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
                     //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
                     peer.option(contexts_, psel_);
                     super_type::async_accept(peer, handler);

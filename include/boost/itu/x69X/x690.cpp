@@ -1456,14 +1456,14 @@ namespace boost {
             ITU_T_BIND_TAG(direct_reference_);
             ITU_T_BIND_TAG(indirect_reference_);
             ITU_T_BIND_TAG(data_value_descriptor_);
-            ITU_T_BIND_CHOICE(encoding_);
+            ITU_T_BIND_CHOICE(*encoding_);
         }
 
         template<> void external_type::serialize(boost::asn1::x690::input_coder& arch) {
             ITU_T_BIND_TAG(direct_reference_);
             ITU_T_BIND_TAG(indirect_reference_);
             ITU_T_BIND_TAG(data_value_descriptor_);
-            ITU_T_BIND_CHOICE(encoding_);
+            ITU_T_BIND_CHOICE(*encoding_);
         }
 
 
@@ -1473,23 +1473,23 @@ namespace boost {
         //embeded_type
 
         template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(abstract_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_, 1);
+            ITU_T_IMPLICIT_TAG(*abstract_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
         template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(abstract_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_, 1);
+            ITU_T_IMPLICIT_TAG(*abstract_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
         template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
         template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
         template<> void embeded_type::Identification_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -1608,13 +1608,13 @@ namespace boost {
         }
 
         template<> void embeded_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_CHOICE_TAG(identification_, 0);
-            ITU_T_IMPLICIT_TAG(data_value_, 1);
+            ITU_T_CHOICE_TAG(*identification_, 0);
+            ITU_T_IMPLICIT_TAG(*data_value_, 1);
         }
 
         template<> void embeded_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_CHOICE_TAG(identification_, 0);
-            ITU_T_IMPLICIT_TAG(data_value_, 1);
+            ITU_T_CHOICE_TAG(*identification_, 0);
+            ITU_T_IMPLICIT_TAG(*data_value_, 1);
         }
 
 
@@ -1622,23 +1622,23 @@ namespace boost {
         //////////////////////////////////////////////////////////////
 
         template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(abstract_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_, 1);
+            ITU_T_IMPLICIT_TAG(*abstract_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
         template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(abstract_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_, 1);
+            ITU_T_IMPLICIT_TAG(*abstract_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
         template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
         template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
         template<> void characterstring_type::Identification_type::serialize(boost::asn1::x690::output_coder& arch) {
@@ -1757,13 +1757,13 @@ namespace boost {
         }
 
         template<> void characterstring_type::serialize(boost::asn1::x690::output_coder& arch) {
-            ITU_T_CHOICE_TAG(identification_, 0);
-            ITU_T_IMPLICIT_TAG(string_value_, 1);
+            ITU_T_CHOICE_TAG(*identification_, 0);
+            ITU_T_IMPLICIT_TAG(*string_value_, 1);
         }
 
         template<> void characterstring_type::serialize(boost::asn1::x690::input_coder& arch) {
-            ITU_T_CHOICE_TAG(identification_, 0);
-            ITU_T_IMPLICIT_TAG(string_value_, 1);
+            ITU_T_CHOICE_TAG(*identification_, 0);
+            ITU_T_IMPLICIT_TAG(*string_value_, 1);
         }
 
 #ifdef _MSC_VER

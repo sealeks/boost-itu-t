@@ -12,6 +12,8 @@
 #include <boost/itu/x22X/x224.hpp>
 
 
+
+
 namespace boost {
     namespace itu {
         namespace rfc1006impl {
@@ -75,6 +77,7 @@ namespace boost {
 
             template <typename ConstBufferSequence>
             class data_sender_sequences : public basic_sender_sequences {
+
             public:
 
                 data_sender_sequences(const ConstBufferSequence& bf, const tpdu_size& pdusize, std::size_t constraint_size) :
@@ -123,8 +126,7 @@ namespace boost {
                                 buff().push_back(boost::asio::buffer(val, pdusz - tmpsize));
                                 val = val + (pdusz - tmpsize);
                                 tmpsize = 0;
-                            }
-                            else {
+                            } else {
                                 if (ended) {
                                     uint16_t eofsz = endiancnv_copy(static_cast<uint16_t> (boost::asio::buffer_size(val) + boost::asio::buffer_size(tmp) + 7));
                                     headereof_.reserve(DT_SEND_BUFF_HEADER);
@@ -141,15 +143,13 @@ namespace boost {
                                     buff().push_back(const_buffer(val));
                                     val = val + pdusz;
                                     tmpsize = 0;
-                                }
-                                else {
+                                } else {
                                     tmp.push_back(const_buffer(val));
                                     tmpsize += boost::asio::buffer_size(val);
                                     val = val + pdusz;
                                 }
                             }
-                        }
-                        while (boost::asio::buffer_size(val));
+                        }                        while (boost::asio::buffer_size(val));
                         ++it;
                         ended = (it == end) || (it == pend);
                     }
@@ -168,6 +168,7 @@ namespace boost {
 
             template<>
             class data_sender_sequences<const_sequences> : public basic_sender_sequences {
+
             public:
 
                 data_sender_sequences<const_sequences>(const const_sequences& bf, const tpdu_size& pdusize, std::size_t constraint_size) :
@@ -188,8 +189,7 @@ namespace boost {
 
                     if (constraint_size && (pdusz >= constraint_size)) {
                         tmpsize = constraint_size;
-                    }
-                    else {
+                    } else {
                         while (it != buff().end()) {
                             buffsize = boost::asio::buffer_size(*it);
                             if ((buffsize + tmpsize) >= pdusz) {
@@ -211,8 +211,7 @@ namespace boost {
                                     insert_pos = it;
                                     ++insert_pos;
                                     tmpsize = 0;
-                                }
-                                else {
+                                } else {
                                     const_buffer firstpart = boost::asio::buffer(*it, (pdusz - tmpsize));
                                     const_buffer secondpart = (*it)+(pdusz - tmpsize);
                                     buff().insert(insert_pos, const_buffer(static_cast<const octet_type*> (&headercontinue_[0]), headercontinue_.size()));
@@ -220,8 +219,7 @@ namespace boost {
                                     it = buff().insert(insert_pos, firstpart);
                                     tmpsize = 0;
                                 }
-                            }
-                            else
+                            } else
                                 tmpsize += buffsize;
                             ++it;
                         }
@@ -255,6 +253,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                  
 
             class sender {
+
             public:
 
                 sender(tpdu_type type) :
@@ -314,6 +313,7 @@ namespace boost {
 
             template <typename ConstBufferSequence >
             class data_sender : public sender {
+
             public:
 
                 data_sender(const ConstBufferSequence& buff, const tpdu_size& pdusize, std::size_t constraint_size) : sender(DT) {
@@ -336,11 +336,13 @@ namespace boost {
             const std::size_t TKPT_WITH_LI = 5;
 
             class receiver {
+
             public:
 
                 typedef boost::shared_ptr< protocol_options > protocol_options_ptr;
 
                 enum operation_state {
+
                     waittkpt,
                     waitheader,
                     waitdata,
@@ -433,6 +435,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 
             class itu_socket : protected boost::asio::basic_stream_socket<boost::asio::ip::tcp > {
+
                 typedef boost::shared_ptr<receiver> receiver_ptr;
                 typedef boost::shared_ptr<sender> sender_ptr;
                 typedef boost::asio::basic_stream_socket<boost::asio::ip::tcp > super_type;
@@ -486,7 +489,7 @@ namespace boost {
 
                 explicit itu_socket(boost::asio::io_service& io_service, const transport_selector& tsel = NULL_TRANSPORT_SELECTOR)
                 : super_type(io_service),
-                transport_option_(0, 1, DEFAULT_TPDU_SIZE, tsel.called(), tsel.calling()), 
+                transport_option_(0, 1, DEFAULT_TPDU_SIZE, tsel.called(), tsel.calling()),
                 tpdusize_(DEFAULT_TPDU_SIZE), waiting_data_size_(0), eof_state_(true), is_acceptor_(false) {
                 }
 
@@ -494,7 +497,7 @@ namespace boost {
                         const endpoint_type& endpoint, const transport_selector& tsel = NULL_TRANSPORT_SELECTOR)
                 : super_type(io_service, endpoint),
                 transport_option_(0, 1, DEFAULT_TPDU_SIZE, tsel.called(), tsel.calling()),
-                 tpdusize_(DEFAULT_TPDU_SIZE), waiting_data_size_(0), eof_state_(true), is_acceptor_(false) {
+                tpdusize_(DEFAULT_TPDU_SIZE), waiting_data_size_(0), eof_state_(true), is_acceptor_(false) {
                 }
 
 
@@ -538,9 +541,11 @@ namespace boost {
 
                 template <typename ConnectHandler>
                 class connect_operation {
+
                     typedef connect_operation <ConnectHandler> operation_type;
 
                     enum stateconnection {
+
                         request,
                         response
                     };
@@ -571,8 +576,7 @@ namespace boost {
                                     if (!sender_->ready()) {
                                         socket.super_type::async_send(sender_->pop(), 0, *this);
                                         return;
-                                    }
-                                    else {
+                                    } else {
                                         state(response);
                                         operator()(ec, 0);
                                         return;
@@ -621,6 +625,9 @@ namespace boost {
                                         return;
                                     }
                                 }
+                                default:
+                                {
+                                }
                                 break;
                             }
                             case receiver::error:
@@ -629,6 +636,9 @@ namespace boost {
                                 socket.async_internal_close();
                                 handler(receiver_->errcode());
                                 return;
+                            }
+                            default:
+                            {
                             }
                         }
                         // Release by means implicit variant  *ref X224 6.7.1.4
@@ -657,7 +667,7 @@ namespace boost {
 
                 template <typename ConnectHandler>
                 void async_connect(const endpoint_type& peer_endpoint,
-                        BOOST_ASIO_MOVE_ARG(ConnectHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(ConnectHandler) handler) {
 
                     //BOOST_ASIO_CONNECT_HANDLER_CHECK(ConnectHandler, handler) type_check;
 
@@ -700,6 +710,7 @@ namespace boost {
 
                 template <typename ReleaseHandler>
                 class release_operation {
+
                     typedef release_operation<ReleaseHandler> operation_type;
 
                 public:
@@ -740,7 +751,7 @@ namespace boost {
             public:
 
                 template <typename ReleaseHandler>
-                void async_release(BOOST_ASIO_MOVE_ARG(ReleaseHandler) handler,
+                void async_release(BOOST_ITU_MOVE_ARG(ReleaseHandler) handler,
                         octet_type rsn = DR_REASON_NORM) {
 
                     typedef release_operation<ReleaseHandler > release_operation_type;
@@ -774,9 +785,11 @@ namespace boost {
 
                 template <typename CheckAcceptHandler>
                 class check_accept_operation {
+
                     typedef check_accept_operation<CheckAcceptHandler> operation_type;
 
                     enum stateconnection {
+
                         response,
                         request,
                         refuse
@@ -919,7 +932,7 @@ namespace boost {
             protected:
 
                 template <typename CheckAcceptHandler>
-                void async_check_accept(BOOST_ASIO_MOVE_ARG(CheckAcceptHandler) handler) {
+                void async_check_accept(BOOST_ITU_MOVE_ARG(CheckAcceptHandler) handler) {
 
                     typedef check_accept_operation<CheckAcceptHandler > check_accept_operation_type;
 
@@ -986,6 +999,7 @@ namespace boost {
 
                 template <typename SendHandler, typename ConstBufferSequence>
                 class send_operation {
+
                     typedef send_operation<SendHandler, ConstBufferSequence> operation_type;
 
 
@@ -1033,14 +1047,14 @@ namespace boost {
 
                 template <typename ConstBufferSequence, typename WriteHandler>
                 void async_send(const ConstBufferSequence& buffers,
-                        BOOST_ASIO_MOVE_ARG(WriteHandler) handler, std::size_t constraint_size = 0) {
+                        BOOST_ITU_MOVE_ARG(WriteHandler) handler, std::size_t constraint_size = 0) {
 
                     async_send(buffers, 0, handler, constraint_size);
                 }
 
                 template <typename ConstBufferSequence, typename WriteHandler>
                 void async_write_some(const ConstBufferSequence& buffers,
-                        BOOST_ASIO_MOVE_ARG(WriteHandler) handler, std::size_t constraint_size = 0) {
+                        BOOST_ITU_MOVE_ARG(WriteHandler) handler, std::size_t constraint_size = 0) {
 
                     async_send<ConstBufferSequence, WriteHandler > (buffers, 0, handler, constraint_size);
                 }
@@ -1048,7 +1062,7 @@ namespace boost {
                 template <typename ConstBufferSequence, typename WriteHandler>
                 void async_send(const ConstBufferSequence& buffers,
                         message_flags flags,
-                        BOOST_ASIO_MOVE_ARG(WriteHandler) handler, std::size_t constraint_size = 0) {
+                        BOOST_ITU_MOVE_ARG(WriteHandler) handler, std::size_t constraint_size = 0) {
                     //BOOST_ASIO_WRITE_HANDLER_CHECK(WriteHandler, handler) type_check;
 
                     typedef send_operation<WriteHandler, ConstBufferSequence> send_operation_type;
@@ -1119,9 +1133,11 @@ namespace boost {
 
                 template <typename ReceiveHandler, typename Mutable_Buffers>
                 class receive_operation {
+
                     typedef receive_operation<ReceiveHandler, Mutable_Buffers> operation_type;
 
                     enum stateconnection {
+
                         response,
                         refuse
                     };
@@ -1263,14 +1279,14 @@ namespace boost {
 
                 template <typename MutableBufferSequence, typename ReadHandler>
                 void async_receive(const MutableBufferSequence& buffers,
-                        BOOST_ASIO_MOVE_ARG(ReadHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(ReadHandler) handler) {
 
                     async_receive<MutableBufferSequence, ReadHandler > (buffers, handler, 0);
                 }
 
                 template <typename MutableBufferSequence, typename ReadHandler>
                 void async_read_some(const MutableBufferSequence& buffers,
-                        BOOST_ASIO_MOVE_ARG(ReadHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(ReadHandler) handler) {
 
                     async_receive<MutableBufferSequence, ReadHandler > (buffers, 0, handler);
                 }
@@ -1278,7 +1294,7 @@ namespace boost {
                 template <typename MutableBufferSequence, typename ReadHandler>
                 void async_receive(const MutableBufferSequence& buffers,
                         message_flags flags,
-                        BOOST_ASIO_MOVE_ARG(ReadHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(ReadHandler) handler) {
 
                     //BOOST_ASIO_READ_HANDLER_CHECK(ReadHandler, handler) type_check;
 
@@ -1454,8 +1470,7 @@ namespace boost {
                                             //  Not negotiated.  send DR
                                             canceled = true;
                                             sender_ = sender_ptr(new sender(DR, transport_option(), error_accept));
-                                        }
-                                        else {
+                                        } else {
                                             //  Accepted.  send CC
                                             pdusize(less_tpdu(receiver_->options().pdusize(), transport_option().pdusize()));
                                             dst_tsap(receiver_->options().src_tsap());
@@ -1588,7 +1603,7 @@ namespace boost {
                     return 0;
                 }
 
-                protocol_options transport_option_;                
+                protocol_options transport_option_;
                 tpdu_size tpdusize_;
                 std::size_t waiting_data_size_;
                 bool eof_state_;
@@ -1607,6 +1622,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
 
             class socket_acceptor : protected basic_socket_acceptor<boost::asio::ip::tcp> {
+
                 typedef basic_socket_acceptor<boost::asio::ip::tcp> super_type;
 
                 friend class itu_socket;
@@ -1691,14 +1707,14 @@ namespace boost {
 
                 template <typename AcceptHandler>
                 void async_accept(itu_socket& peer,
-                        endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        endpoint_type& peer_endpoint, BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
 
                     async_accept_impl(peer, peer_endpoint, handler);
                 }
 
                 template <typename AcceptHandler>
                 void async_accept(itu_socket& peer,
-                        BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
 
                     async_accept_impl(peer, handler);
                 }
@@ -1710,6 +1726,7 @@ namespace boost {
 
                 template <typename AcceptHandler>
                 class accept_operation {
+
                     typedef accept_operation<AcceptHandler> operation_type;
 
                 public:
@@ -1741,7 +1758,7 @@ namespace boost {
 
                 template <typename AcceptHandler>
                 void async_accept_impl(itu_socket& peer,
-                        endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        endpoint_type& peer_endpoint, BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
 
                     //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
 
@@ -1757,7 +1774,7 @@ namespace boost {
 
                 template < typename AcceptHandler>
                 void async_accept_impl(itu_socket& peer,
-                        BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
 
                     //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
 
@@ -1823,6 +1840,7 @@ namespace boost {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
 
         class rfc1006 {
+
         public:
 
             typedef boost::asio::ip::basic_endpoint<boost::asio::ip::tcp> endpoint;

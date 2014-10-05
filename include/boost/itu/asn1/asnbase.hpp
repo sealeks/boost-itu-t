@@ -1582,27 +1582,12 @@ namespace boost {
         
   
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        
         template<typename Archive, typename T>
         inline bool bind_basic(Archive & arch, T& vl) {
             std::size_t tst = arch.size();
             arch & implicit_value<T > (vl);
             return (arch.size() != tst);
-        }
-
-        template<typename Archive, typename T>
-        inline bool bind_basic(Archive & arch, value_holder<T>& vl) {
-            return bind_basic(arch, *vl);
-        }
-
-        /*template<typename Archive, typename T, T DT>
-        inline bool bind_basic(Archive & arch, default_holder<T, DT>& vl) {
-            return bind_basic(arch, vl.get_shared());
-        }*/
-
-        template<typename Archive, typename T, const T& DT>
-        inline bool bind_basic(Archive & arch, default_holder<T, DT>& vl) {
-            return bind_basic(arch, vl.get_shared());
         }
 
         template<typename Archive, typename T>
@@ -1648,21 +1633,6 @@ namespace boost {
         }
 
         template<typename Archive, typename T>
-        inline bool bind_explicit(Archive & arch, value_holder<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-            return bind_explicit(arch, *vl, id, type);
-        }
-
-        /*template<typename Archive, typename T, T DT>
-        inline bool bind_explicit(Archive & arch, default_holder<T, DT>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-            return bind_explicit(arch, vl.get_shared(), id, type);
-        }*/
-
-        template<typename Archive, typename T, const T& DT>
-        inline bool bind_explicit(Archive & arch, default_holder<T, DT>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-            return bind_explicit(arch, vl.get_shared(), id, type);
-        }
-
-        template<typename Archive, typename T>
         inline bool bind_explicit(Archive & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
             std::size_t tst = arch.size();
             arch & optional_explicit_value<T > (vl, id, type);
@@ -1676,12 +1646,6 @@ namespace boost {
             return (arch.size() != tst);
         }
 
-        /*     template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
-             inline bool bind_explicit(Archive & arch, boost::shared_ptr< explicit_typedef<T, Tag, ID, TYPE> >& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-                 std::size_t tst = arch.size();
-                 arch & optional_explicit_value< optional_explicit_value<T > > (optional_explicit_value<T > (vl->shared_value(), ID, TYPE), id , type);
-                 return (arch.size() != tst);
-             }*/
 
         template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
         inline bool bind_explicit(Archive & arch, implicit_typedef<T, Tag, ID, TYPE>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
@@ -1689,34 +1653,12 @@ namespace boost {
             arch & explicit_value< implicit_value<T > > (implicit_value<T > (vl.value(), ID, TYPE), id, type);
             return (arch.size() != tst);
         }
-
-        /*   template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
-           inline bool bind_explicit(Archive & arch, boost::shared_ptr< implicit_typedef<T, Tag, ID, TYPE> >& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-               std::size_t tst = arch.size();
-               arch & optional_explicit_value< optional_implicit_value<T > > (optional_implicit_value<T > (vl->shared_value(), ID, TYPE), id , type);
-               return (arch.size() != tst);
-           }*/
-
+        
         template<typename Archive, typename T>
         inline bool bind_implicit(Archive & arch, T& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
             std::size_t tst = arch.size();
             arch & implicit_value<T > (vl, id, type);
             return (arch.size() != tst);
-        }
-
-        template<typename Archive, typename T>
-        inline bool bind_implicit(Archive & arch, value_holder<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-            return bind_implicit(arch, *vl, id, type);
-        }
-
-        /*template<typename Archive, typename T, T DT>
-        inline bool bind_implicit(Archive & arch, default_holder<T, DT>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-            return bind_implicit(arch, vl.get_shared(), id, type);
-        }*/
-
-        template<typename Archive, typename T, const T& DT>
-        inline bool bind_implicit(Archive & arch, default_holder<T, DT>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-            return bind_implicit(arch, vl.get_shared(), id, type);
         }
 
         template<typename Archive, typename T>

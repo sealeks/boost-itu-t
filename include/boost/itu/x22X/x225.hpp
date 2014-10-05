@@ -1077,7 +1077,7 @@ namespace boost {
 
                 template <typename ConnectHandler>
                 void async_connect(const endpoint_type& peer_endpoint,
-                        BOOST_ASIO_MOVE_ARG(ConnectHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(ConnectHandler) handler) {
 
                     //BOOST_ASIO_CONNECT_HANDLER_CHECK(ConnectHandler, handler) type_check;
 
@@ -1310,7 +1310,7 @@ namespace boost {
             public:
 
                 template <typename ReleaseHandler>
-                void async_release(BOOST_ASIO_MOVE_ARG(ReleaseHandler) handler) {
+                void async_release(BOOST_ITU_MOVE_ARG(ReleaseHandler) handler) {
 
                     typedef release_operation<ReleaseHandler > release_operation_type;
 
@@ -1322,7 +1322,7 @@ namespace boost {
                 }
 
                 template <typename ReleaseHandler>
-                void async_abort(BOOST_ASIO_MOVE_ARG(ReleaseHandler) handler) {
+                void async_abort(BOOST_ITU_MOVE_ARG(ReleaseHandler) handler) {
 
                     typedef release_operation<ReleaseHandler > release_operation_type;
 
@@ -1567,7 +1567,7 @@ namespace boost {
             protected:
 
                 template <typename CheckAcceptHandler>
-                void async_check_accept(BOOST_ASIO_MOVE_ARG(CheckAcceptHandler) handler) {
+                void async_check_accept(BOOST_ITU_MOVE_ARG(CheckAcceptHandler) handler) {
 
                     typedef check_accept_operation<CheckAcceptHandler > check_accept_operation_type;
 
@@ -1699,14 +1699,14 @@ namespace boost {
 
                 template <typename ConstBufferSequence, typename WriteHandler>
                 void async_send(const ConstBufferSequence& buffers,
-                        BOOST_ASIO_MOVE_ARG(WriteHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(WriteHandler) handler) {
 
                     async_send(buffers, 0, handler);
                 }
 
                 template <typename ConstBufferSequence, typename WriteHandler>
                 void async_write_some(const ConstBufferSequence& buffers,
-                        BOOST_ASIO_MOVE_ARG(WriteHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(WriteHandler) handler) {
 
                     async_send<ConstBufferSequence, WriteHandler > (buffers, 0, handler);
                 }
@@ -1714,7 +1714,7 @@ namespace boost {
                 template <typename ConstBufferSequence, typename WriteHandler>
                 void async_send(const ConstBufferSequence& buffers,
                         message_flags flags,
-                        BOOST_ASIO_MOVE_ARG(WriteHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(WriteHandler) handler) {
 
                     //BOOST_ASIO_WRITE_HANDLER_CHECK(WriteHandler, handler) type_check;
 
@@ -1815,7 +1815,7 @@ namespace boost {
             public:
 
                 template <typename RequestHandler>
-                void async_request(BOOST_ASIO_MOVE_ARG(RequestHandler) handler) {
+                void async_request(BOOST_ITU_MOVE_ARG(RequestHandler) handler) {
 
                     typedef request_operation<RequestHandler> request_operation_type;
 
@@ -2024,22 +2024,22 @@ namespace boost {
 
                 template <typename MutableBufferSequence, typename ReadHandler>
                 void async_receive(const MutableBufferSequence& buffers,
-                        BOOST_ASIO_MOVE_ARG(ReadHandler) handler) {
+                        ReadHandler handler) {
 
-                    async_receive<MutableBufferSequence, ReadHandler > (buffers, handler, 0);
+                    async_receive<MutableBufferSequence, ReadHandler >(buffers, handler, 0);
                 }
 
                 template <typename MutableBufferSequence, typename ReadHandler>
                 void async_read_some(const MutableBufferSequence& buffers,
-                        BOOST_ASIO_MOVE_ARG(ReadHandler) handler) {
+                        ReadHandler handler) {
 
-                    async_receive<MutableBufferSequence, ReadHandler > (buffers, 0, handler);
+                    async_receive<MutableBufferSequence, ReadHandler >(buffers, 0, handler);
                 }
 
                 template <typename MutableBufferSequence, typename ReadHandler>
                 void async_receive(const MutableBufferSequence& buffers,
                         message_flags flags,
-                        BOOST_ASIO_MOVE_ARG(ReadHandler) handler) {
+                        ReadHandler handler) {
 
                     //BOOST_ASIO_READ_HANDLER_CHECK(ReadHandler, handler) type_check;
 
@@ -2138,7 +2138,7 @@ namespace boost {
             public:
 
                 template <typename ResponseHandler>
-                void async_response(BOOST_ASIO_MOVE_ARG(ResponseHandler) handler) {
+                void async_response(BOOST_ITU_MOVE_ARG(ResponseHandler) handler) {
 
                     typedef response_operation<ResponseHandler> response_operation_type;
 
@@ -2230,7 +2230,7 @@ namespace boost {
             public:
 
                 template <typename ConversationHandler>
-                void async_conversation(BOOST_ASIO_MOVE_ARG(ConversationHandler) handler) {
+                void async_conversation(BOOST_ITU_MOVE_ARG(ConversationHandler) handler) {
 
                     typedef conversation_operation<ConversationHandler> conversation_operation_type;
 
@@ -2862,14 +2862,14 @@ namespace boost {
                 template <typename AcceptHandler>
                 void async_accept(itu_socket& peer,
                         endpoint_type& peer_endpoint,
-                        BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
 
                     async_accept_impl(peer, peer_endpoint, handler);
                 }
 
                 template <typename AcceptHandler>
                 void async_accept(itu_socket& peer,
-                        BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
 
                     async_accept_impl(peer, handler);
                 }
@@ -2912,7 +2912,7 @@ namespace boost {
 
                 template <typename AcceptHandler>
                 void async_accept_impl(itu_socket& peer,
-                        endpoint_type& peer_endpoint, BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        endpoint_type& peer_endpoint, BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
 
                     //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
 
@@ -2926,7 +2926,7 @@ namespace boost {
 
                 template <typename AcceptHandler>
                 void async_accept_impl(itu_socket& peer,
-                        BOOST_ASIO_MOVE_ARG(AcceptHandler) handler) {
+                        BOOST_ITU_MOVE_ARG(AcceptHandler) handler) {
 
                     //BOOST_ASIO_ACCEPT_HANDLER_CHECK(AcceptHandler, handler) type_check;
 

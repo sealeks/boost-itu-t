@@ -739,13 +739,13 @@ namespace x680 {
             if ((self->isdefined_choice())) {
                 if (self->tag()) {
                     switch (self->tag()->_class()) {
-                        case tcl_application: return "ITU_T_CHOICE_APPLICATION_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                        case tcl_universal: return "ITU_T_CHOICE_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                        case tcl_private: return "ITU_T_CHOICE_PRIVATE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                        default: return "ITU_T_CHOICE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                        case tcl_application: return "ITU_T_CHOICE_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        case tcl_universal: return "ITU_T_CHOICE_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        case tcl_private: return "ITU_T_CHOICE_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        default: return "ITU_T_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
                     }
                 } else
-                    return "ITU_T_BIND_CHOICE(" + name + ")";
+                    return "ITU_T_BIND_CHOICE(" + name_arch(name, dfltopt) + ")";
             } else {                
                 if (self->tag()) {
                     if (self->tag()->rule() == implicit_tags) {
@@ -2141,7 +2141,7 @@ namespace x680 {
             if (self->type()) {
 
                 stream << "\n";
-                stream << tabformat(scp, 3) << archive_member_ber_str(self, nameconvert(self->name()) + "_") << ";";
+                stream << tabformat(scp, 3) << archive_member_ber_str(self, nameconvert(self->name()) + "_", afterext) << ";";
             }
         }
 

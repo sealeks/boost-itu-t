@@ -67,7 +67,7 @@ namespace ACSE_1 {
 
 
     typedef enumerated_type ABRT_diagnostic;
-    typedef int ABRT_source;
+    typedef int ABRT_source; //   Ic(  [ 0  ...   1 ]   ...ext...) 
     typedef bitstring_type ACSE_requirements;
     typedef oid_type ASO_context_name;
     typedef octetstring_type AP_title_form1;
@@ -80,18 +80,18 @@ namespace ACSE_1 {
     typedef oid_type AE_title_form2;
     typedef int AE_invocation_identifier;
     typedef int AP_invocation_identifier;
-    typedef int ASOI_identifier;
+    typedef int ASOI_identifier; //   Ic(  [ 1  ...   128 ]   ...ext...) 
     typedef oid_type Abstract_syntax_name;
     typedef int Result;
     typedef oid_type Transfer_syntax_name;
-    typedef int Associate_result;
+    typedef int Associate_result; //   Ic(  [ 0  ...   2 ]   ...ext...) 
     typedef octetstring_type Simply_encoded_data;
     typedef int Presentation_context_identifier;
     typedef graphicstring_type Implementation_data;
     typedef oid_type Mechanism_name;
-    typedef int Release_request_reason;
-    typedef int Release_response_reason;
-    typedef std::vector< external_type > Association_data;
+    typedef int Release_request_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
+    typedef int Release_response_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
+    typedef std::vector< external_type > Association_data; //    Sc (  [ 1 ]   ...ext...) 
 
     ITU_T_IMPLICIT_TYPEDEF(AARQ_apdu, AARQ_apdu_impl, 0, APPLICATION_CLASS);
     ITU_T_IMPLICIT_TYPEDEF(AARE_apdu, AARE_apdu_impl, 1, APPLICATION_CLASS);
@@ -104,8 +104,8 @@ namespace ACSE_1 {
     typedef ASO_context_name Application_context_name;
     typedef ASO_qualifier AE_qualifier;
     typedef Transfer_syntax_name Concrete_syntax_name;
-    typedef Association_data User_information;
-    typedef std::vector< ASOI_tag_sequence_of > ASOI_tag;
+    typedef Association_data User_information; //    Sc (  [ 1 ]   ...ext...) 
+    typedef std::vector< ASOI_tag_sequence_of > ASOI_tag; //    Sc (  [ 0  ...   7 ]   ...ext...) 
     typedef std::vector< ASO_context_name > ASO_context_name_list;
     typedef std::vector< Context_list_sequence_of > Context_list;
     typedef std::vector< Default_Context_List_sequence_of > Default_Context_List;
@@ -208,9 +208,9 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_DECL(aSO_context_name_list, ASO_context_name_list);
         ITU_T_OPTIONAL_DECL(implementation_information, Implementation_data);
         ITU_T_OPTIONAL_DECL(p_context_definition_list, Syntactic_context_list);
-        ITU_T_OPTIONAL_DECL(called_asoi_tag, ASOI_tag);
-        ITU_T_OPTIONAL_DECL(calling_asoi_tag, ASOI_tag);
-        ITU_T_OPTIONAL_DECL(user_information, Association_data);
+        ITU_T_OPTIONAL_DECL(called_asoi_tag, ASOI_tag); //    Sc (  [ 0  ...   7 ]   ...ext...) 
+        ITU_T_OPTIONAL_DECL(calling_asoi_tag, ASOI_tag); //    Sc (  [ 0  ...   7 ]   ...ext...) 
+        ITU_T_OPTIONAL_DECL(user_information, Association_data); //    Sc (  [ 1 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -249,7 +249,7 @@ namespace ACSE_1 {
 
         ITU_T_DEFAULTH_DECL(protocol_version, bitstring_type, protocol_version__default);
         ITU_T_HOLDERH_DECL(aSO_context_name, ASO_context_name);
-        ITU_T_HOLDERH_DECL(result, Associate_result);
+        ITU_T_HOLDERH_DECL(result, Associate_result); //   Ic(  [ 0  ...   2 ]   ...ext...) 
         ITU_T_HOLDERH_DECL(result_source_diagnostic, Associate_source_diagnostic);
         ITU_T_OPTIONAL_DECL(responding_AP_title, AP_title);
         ITU_T_OPTIONAL_DECL(responding_AE_qualifier, AE_qualifier);
@@ -261,9 +261,9 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_DECL(aSO_context_name_list, ASO_context_name_list);
         ITU_T_OPTIONAL_DECL(implementation_information, Implementation_data);
         ITU_T_OPTIONAL_DECL(p_context_result_list, P_context_result_list);
-        ITU_T_OPTIONAL_DECL(called_asoi_tag, ASOI_tag);
-        ITU_T_OPTIONAL_DECL(calling_asoi_tag, ASOI_tag);
-        ITU_T_OPTIONAL_DECL(user_information, Association_data);
+        ITU_T_OPTIONAL_DECL(called_asoi_tag, ASOI_tag); //    Sc (  [ 0  ...   7 ]   ...ext...) 
+        ITU_T_OPTIONAL_DECL(calling_asoi_tag, ASOI_tag); //    Sc (  [ 0  ...   7 ]   ...ext...) 
+        ITU_T_OPTIONAL_DECL(user_information, Association_data); //    Sc (  [ 1 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -279,10 +279,10 @@ namespace ACSE_1 {
                 boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 boost::shared_ptr< Association_data> arg__user_information);
 
-        ITU_T_OPTIONAL_DECL(reason, Release_request_reason);
+        ITU_T_OPTIONAL_DECL(reason, Release_request_reason); //   Ic(  [ 0  ...   30 ]   ...ext...) 
         ITU_T_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
-        ITU_T_OPTIONAL_DECL(user_information, Association_data);
+        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier); //   Ic(  [ 1  ...   128 ]   ...ext...) 
+        ITU_T_OPTIONAL_DECL(user_information, Association_data); //    Sc (  [ 1 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -298,10 +298,10 @@ namespace ACSE_1 {
                 boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 boost::shared_ptr< Association_data> arg__user_information);
 
-        ITU_T_OPTIONAL_DECL(reason, Release_response_reason);
+        ITU_T_OPTIONAL_DECL(reason, Release_response_reason); //   Ic(  [ 0  ...   30 ]   ...ext...) 
         ITU_T_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
-        ITU_T_OPTIONAL_DECL(user_information, Association_data);
+        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier); //   Ic(  [ 1  ...   128 ]   ...ext...) 
+        ITU_T_OPTIONAL_DECL(user_information, Association_data); //    Sc (  [ 1 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -320,11 +320,11 @@ namespace ACSE_1 {
                 boost::shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 boost::shared_ptr< Association_data> arg__user_information);
 
-        ITU_T_HOLDERH_DECL(abort_source, ABRT_source);
+        ITU_T_HOLDERH_DECL(abort_source, ABRT_source); //   Ic(  [ 0  ...   1 ]   ...ext...) 
         ITU_T_OPTIONAL_DECL(abort_diagnostic, ABRT_diagnostic);
         ITU_T_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
-        ITU_T_OPTIONAL_DECL(user_information, Association_data);
+        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier); //   Ic(  [ 1  ...   128 ]   ...ext...) 
+        ITU_T_OPTIONAL_DECL(user_information, Association_data); //    Sc (  [ 1 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -342,7 +342,7 @@ namespace ACSE_1 {
                 boost::shared_ptr< User_Data> arg__a_user_data);
 
         ITU_T_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
+        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier); //   Ic(  [ 1  ...   128 ]   ...ext...) 
         ITU_T_HOLDERH_DECL(a_user_data, User_Data);
 
         ITU_T_ARCHIVE_FUNC;
@@ -362,11 +362,11 @@ namespace ACSE_1 {
                 boost::shared_ptr< User_information> arg__user_information);
 
         ITU_T_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
+        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier); //   Ic(  [ 1  ...   128 ]   ...ext...) 
         ITU_T_OPTIONAL_DECL(aSO_context_name, ASO_context_name);
         ITU_T_OPTIONAL_DECL(aSO_context_name_list, ASO_context_name_list);
         ITU_T_OPTIONAL_DECL(p_context_definition_list, Syntactic_context_list);
-        ITU_T_OPTIONAL_DECL(user_information, User_information);
+        ITU_T_OPTIONAL_DECL(user_information, User_information); //    Sc (  [ 1 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -384,10 +384,10 @@ namespace ACSE_1 {
                 boost::shared_ptr< User_information> arg__user_information);
 
         ITU_T_OPTIONAL_DECL(aso_qualifier, ASO_qualifier);
-        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier);
+        ITU_T_OPTIONAL_DECL(asoi_identifier, ASOI_identifier); //   Ic(  [ 1  ...   128 ]   ...ext...) 
         ITU_T_OPTIONAL_DECL(aSO_context_name, ASO_context_name_list);
         ITU_T_OPTIONAL_DECL(p_context_result_list, P_context_result_list);
-        ITU_T_OPTIONAL_DECL(user_information, User_information);
+        ITU_T_OPTIONAL_DECL(user_information, User_information); //    Sc (  [ 1 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -503,7 +503,7 @@ namespace ACSE_1 {
                 boost::shared_ptr< ASOI_identifier> arg__identifier);
 
         ITU_T_OPTIONAL_DECL(qualifier, ASO_qualifier);
-        ITU_T_OPTIONAL_DECL(identifier, ASOI_identifier);
+        ITU_T_OPTIONAL_DECL(identifier, ASOI_identifier); //   Ic(  [ 1  ...   128 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -642,8 +642,8 @@ namespace ACSE_1 {
                 ITU_T_CHOICE(Associate_source_diagnostic_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICES_DECL(acse_service_user, int, Associate_source_diagnostic_acse_service_user); // primitive
-        ITU_T_CHOICES_DECL(acse_service_provider, int, Associate_source_diagnostic_acse_service_provider); // primitive
+        ITU_T_CHOICES_DECL(acse_service_user, int, Associate_source_diagnostic_acse_service_user); // primitive  //   Ic(  [ 0  ...   14 ]   ...ext...) 
+        ITU_T_CHOICES_DECL(acse_service_provider, int, Associate_source_diagnostic_acse_service_provider); // primitive  //   Ic(  [ 0  ...   2 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -671,7 +671,7 @@ namespace ACSE_1 {
                 ITU_T_CHOICE(User_Data_enum) (new T(vl), static_cast<int> (enm)) {
         }
 
-        ITU_T_CHOICEC_DECL(user_information, User_information, User_Data_user_information);
+        ITU_T_CHOICEC_DECL(user_information, User_information, User_Data_user_information); //    Sc (  [ 1 ]   ...ext...) 
         ITU_T_CHOICES_DECL(simply_encoded_data, Simply_encoded_data, User_Data_simply_encoded_data); // primitive
         ITU_T_CHOICEC_DECL(fully_encoded_data, PDV_list, User_Data_fully_encoded_data);
 

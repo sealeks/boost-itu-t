@@ -26,32 +26,32 @@ namespace Reliable_Transfer_APDU {
         switch (type()) {
             case RTSE_apdus_rtorq_apdu:
             {
-                ITU_T_IMPLICIT_TAG(value<RTORQapdu > (false, RTSE_apdus_rtorq_apdu), 16);
+                ITU_T_IMPLICIT_TAG(*value<RTORQapdu > (false, RTSE_apdus_rtorq_apdu), 16);
                 break;
             }
             case RTSE_apdus_rtoac_apdu:
             {
-                ITU_T_IMPLICIT_TAG(value<RTOACapdu > (false, RTSE_apdus_rtoac_apdu), 17);
+                ITU_T_IMPLICIT_TAG(*value<RTOACapdu > (false, RTSE_apdus_rtoac_apdu), 17);
                 break;
             }
             case RTSE_apdus_rtorj_apdu:
             {
-                ITU_T_IMPLICIT_TAG(value<RTORJapdu > (false, RTSE_apdus_rtorj_apdu), 18);
+                ITU_T_IMPLICIT_TAG(*value<RTORJapdu > (false, RTSE_apdus_rtorj_apdu), 18);
                 break;
             }
             case RTSE_apdus_rttp_apdu:
             {
-                ITU_T_BIND_TAG(value<RTTPapdu > (false, RTSE_apdus_rttp_apdu));
+                ITU_T_BIND_TAG(*value<RTTPapdu > (false, RTSE_apdus_rttp_apdu));
                 break;
             }
             case RTSE_apdus_rttr_apdu:
             {
-                ITU_T_BIND_TAG(value<RTTRapdu > (false, RTSE_apdus_rttr_apdu));
+                ITU_T_BIND_TAG(*value<RTTRapdu > (false, RTSE_apdus_rttr_apdu));
                 break;
             }
             case RTSE_apdus_rtab_apdu:
             {
-                ITU_T_IMPLICIT_TAG(value<RTABapdu > (false, RTSE_apdus_rtab_apdu), 22);
+                ITU_T_IMPLICIT_TAG(*value<RTABapdu > (false, RTSE_apdus_rtab_apdu), 22);
                 break;
             }
             default:
@@ -84,25 +84,25 @@ namespace Reliable_Transfer_APDU {
                 switch (__tag_id__) {
                     case 16:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<RTORQapdu > (true, RTSE_apdus_rtorq_apdu), 16)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<RTORQapdu > (true, RTSE_apdus_rtorq_apdu), 16)) return;
                         else free();
                         break;
                     }
                     case 17:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<RTOACapdu > (true, RTSE_apdus_rtoac_apdu), 17)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<RTOACapdu > (true, RTSE_apdus_rtoac_apdu), 17)) return;
                         else free();
                         break;
                     }
                     case 18:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<RTORJapdu > (true, RTSE_apdus_rtorj_apdu), 18)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<RTORJapdu > (true, RTSE_apdus_rtorj_apdu), 18)) return;
                         else free();
                         break;
                     }
                     case 22:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<RTABapdu > (true, RTSE_apdus_rtab_apdu), 22)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<RTABapdu > (true, RTSE_apdus_rtab_apdu), 22)) return;
                         else free();
                         break;
                     }
@@ -121,9 +121,9 @@ namespace Reliable_Transfer_APDU {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<RTTPapdu > (true, RTSE_apdus_rttp_apdu))) return;
+                if (ITU_T_BIND_TAG(*value<RTTPapdu > (true, RTSE_apdus_rttp_apdu))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<RTTRapdu > (true, RTSE_apdus_rttr_apdu))) return;
+                if (ITU_T_BIND_TAG(*value<RTTRapdu > (true, RTSE_apdus_rttr_apdu))) return;
                 else free();
             }
         }
@@ -160,18 +160,18 @@ namespace Reliable_Transfer_APDU {
     const int RTORQapdu::dialogueMode__default = 0;
 
     template<> void RTORQapdu::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
-        ITU_T_IMPLICIT_TAG(windowSize_, 1);
-        ITU_T_IMPLICIT_TAG(dialogueMode_, 2);
-        ITU_T_CHOICE_TAG(connectionDataRQ_, 3);
+        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
+        ITU_T_IMPLICIT_TAG(dialogueMode_.get_shared(), 2);
+        ITU_T_CHOICE_TAG(*connectionDataRQ_, 3);
         ITU_T_IMPLICIT_TAG(applicationProtocol_, 4);
     }
 
     template<> void RTORQapdu::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
-        ITU_T_IMPLICIT_TAG(windowSize_, 1);
-        ITU_T_IMPLICIT_TAG(dialogueMode_, 2);
-        ITU_T_CHOICE_TAG(connectionDataRQ_, 3);
+        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
+        ITU_T_IMPLICIT_TAG(dialogueMode_.get_shared(), 2);
+        ITU_T_CHOICE_TAG(*connectionDataRQ_, 3);
         ITU_T_IMPLICIT_TAG(applicationProtocol_, 4);
     }
 
@@ -258,15 +258,15 @@ namespace Reliable_Transfer_APDU {
     const int RTOACapdu::windowSize__default = 3;
 
     template<> void RTOACapdu::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
-        ITU_T_IMPLICIT_TAG(windowSize_, 1);
-        ITU_T_CHOICE_TAG(connectionDataAC_, 2);
+        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
+        ITU_T_CHOICE_TAG(*connectionDataAC_, 2);
     }
 
     template<> void RTOACapdu::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
-        ITU_T_IMPLICIT_TAG(windowSize_, 1);
-        ITU_T_CHOICE_TAG(connectionDataAC_, 2);
+        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
+        ITU_T_CHOICE_TAG(*connectionDataAC_, 2);
     }
 
     const int& RTOACapdu::checkpointSize() const {
@@ -408,12 +408,12 @@ namespace Reliable_Transfer_APDU {
         switch (type()) {
             case ConnectionData_open:
             {
-                ITU_T_EXPLICIT_TAG(value<any_type > (false, ConnectionData_open), 0);
+                ITU_T_EXPLICIT_TAG(*value<any_type > (false, ConnectionData_open), 0);
                 break;
             }
             case ConnectionData_recover:
             {
-                ITU_T_IMPLICIT_TAG(value<SessionConnectionIdentifier > (false, ConnectionData_recover), 1);
+                ITU_T_IMPLICIT_TAG(*value<SessionConnectionIdentifier > (false, ConnectionData_recover), 1);
                 break;
             }
             default:
@@ -446,13 +446,13 @@ namespace Reliable_Transfer_APDU {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<any_type > (true, ConnectionData_open), 0)) return;
+                        if (ITU_T_EXPLICIT_TAG(*value<any_type > (true, ConnectionData_open), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<SessionConnectionIdentifier > (true, ConnectionData_recover), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<SessionConnectionIdentifier > (true, ConnectionData_recover), 1)) return;
                         else free();
                         break;
                     }
@@ -496,14 +496,14 @@ namespace Reliable_Transfer_APDU {
     };
 
     template<> void SessionConnectionIdentifier::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_CHOICE(callingSSuserReference_);
-        ITU_T_BIND_TAG(commonReference_);
+        ITU_T_BIND_CHOICE(*callingSSuserReference_);
+        ITU_T_BIND_TAG(*commonReference_);
         ITU_T_IMPLICIT_TAG(additionalReferenceInformation_, 0);
     }
 
     template<> void SessionConnectionIdentifier::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_CHOICE(callingSSuserReference_);
-        ITU_T_BIND_TAG(commonReference_);
+        ITU_T_BIND_CHOICE(*callingSSuserReference_);
+        ITU_T_BIND_TAG(*commonReference_);
         ITU_T_IMPLICIT_TAG(additionalReferenceInformation_, 0);
     }
 
@@ -567,12 +567,12 @@ namespace Reliable_Transfer_APDU {
         switch (type()) {
             case CallingSSuserReference_t61String:
             {
-                ITU_T_BIND_TAG(value<t61string_type > (false, CallingSSuserReference_t61String));
+                ITU_T_BIND_TAG(*value<t61string_type > (false, CallingSSuserReference_t61String));
                 break;
             }
             case CallingSSuserReference_octetString:
             {
-                ITU_T_BIND_TAG(value<octetstring_type > (false, CallingSSuserReference_octetString));
+                ITU_T_BIND_TAG(*value<octetstring_type > (false, CallingSSuserReference_octetString));
                 break;
             }
             default:
@@ -618,9 +618,9 @@ namespace Reliable_Transfer_APDU {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<t61string_type > (true, CallingSSuserReference_t61String))) return;
+                if (ITU_T_BIND_TAG(*value<t61string_type > (true, CallingSSuserReference_t61String))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<octetstring_type > (true, CallingSSuserReference_octetString))) return;
+                if (ITU_T_BIND_TAG(*value<octetstring_type > (true, CallingSSuserReference_octetString))) return;
                 else free();
             }
         }

@@ -21,42 +21,42 @@ namespace ACSE_1 {
         switch (type()) {
             case ACSE_apdu_aarq:
             {
-                ITU_T_BIND_TAG(value<AARQ_apdu > (false, ACSE_apdu_aarq));
+                ITU_T_BIND_TAG(*value<AARQ_apdu > (false, ACSE_apdu_aarq));
                 break;
             }
             case ACSE_apdu_aare:
             {
-                ITU_T_BIND_TAG(value<AARE_apdu > (false, ACSE_apdu_aare));
+                ITU_T_BIND_TAG(*value<AARE_apdu > (false, ACSE_apdu_aare));
                 break;
             }
             case ACSE_apdu_rlrq:
             {
-                ITU_T_BIND_TAG(value<RLRQ_apdu > (false, ACSE_apdu_rlrq));
+                ITU_T_BIND_TAG(*value<RLRQ_apdu > (false, ACSE_apdu_rlrq));
                 break;
             }
             case ACSE_apdu_rlre:
             {
-                ITU_T_BIND_TAG(value<RLRE_apdu > (false, ACSE_apdu_rlre));
+                ITU_T_BIND_TAG(*value<RLRE_apdu > (false, ACSE_apdu_rlre));
                 break;
             }
             case ACSE_apdu_abrt:
             {
-                ITU_T_BIND_TAG(value<ABRT_apdu > (false, ACSE_apdu_abrt));
+                ITU_T_BIND_TAG(*value<ABRT_apdu > (false, ACSE_apdu_abrt));
                 break;
             }
             case ACSE_apdu_adt:
             {
-                ITU_T_BIND_TAG(value<A_DT_apdu > (false, ACSE_apdu_adt));
+                ITU_T_BIND_TAG(*value<A_DT_apdu > (false, ACSE_apdu_adt));
                 break;
             }
             case ACSE_apdu_acrq:
             {
-                ITU_T_BIND_TAG(value<ACRQ_apdu > (false, ACSE_apdu_acrq));
+                ITU_T_BIND_TAG(*value<ACRQ_apdu > (false, ACSE_apdu_acrq));
                 break;
             }
             case ACSE_apdu_acrp:
             {
-                ITU_T_BIND_TAG(value<ACRP_apdu > (false, ACSE_apdu_acrp));
+                ITU_T_BIND_TAG(*value<ACRP_apdu > (false, ACSE_apdu_acrp));
                 break;
             }
             default:
@@ -102,21 +102,21 @@ namespace ACSE_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<AARQ_apdu > (true, ACSE_apdu_aarq))) return;
+                if (ITU_T_BIND_TAG(*value<AARQ_apdu > (true, ACSE_apdu_aarq))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<AARE_apdu > (true, ACSE_apdu_aare))) return;
+                if (ITU_T_BIND_TAG(*value<AARE_apdu > (true, ACSE_apdu_aare))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<RLRQ_apdu > (true, ACSE_apdu_rlrq))) return;
+                if (ITU_T_BIND_TAG(*value<RLRQ_apdu > (true, ACSE_apdu_rlrq))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<RLRE_apdu > (true, ACSE_apdu_rlre))) return;
+                if (ITU_T_BIND_TAG(*value<RLRE_apdu > (true, ACSE_apdu_rlre))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<ABRT_apdu > (true, ACSE_apdu_abrt))) return;
+                if (ITU_T_BIND_TAG(*value<ABRT_apdu > (true, ACSE_apdu_abrt))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<A_DT_apdu > (true, ACSE_apdu_adt))) return;
+                if (ITU_T_BIND_TAG(*value<A_DT_apdu > (true, ACSE_apdu_adt))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<ACRQ_apdu > (true, ACSE_apdu_acrq))) return;
+                if (ITU_T_BIND_TAG(*value<ACRQ_apdu > (true, ACSE_apdu_acrq))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<ACRP_apdu > (true, ACSE_apdu_acrp))) return;
+                if (ITU_T_BIND_TAG(*value<ACRP_apdu > (true, ACSE_apdu_acrp))) return;
                 else free();
             }
         }
@@ -176,8 +176,8 @@ namespace ACSE_1 {
     const bitstring_type AARQ_apdu_impl::protocol_version__default = protocol_version_version1;
 
     template<> void AARQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
-        ITU_T_EXPLICIT_TAG(aSO_context_name_, 1);
+        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_EXPLICIT_TAG(*aSO_context_name_, 1);
         ITU_T_CHOICE_TAG(called_AP_title_, 2);
         ITU_T_CHOICE_TAG(called_AE_qualifier_, 3);
         ITU_T_EXPLICIT_TAG(called_AP_invocation_identifier_, 4);
@@ -198,8 +198,8 @@ namespace ACSE_1 {
     }
 
     template<> void AARQ_apdu_impl::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
-        ITU_T_EXPLICIT_TAG(aSO_context_name_, 1);
+        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_EXPLICIT_TAG(*aSO_context_name_, 1);
         ITU_T_CHOICE_TAG(called_AP_title_, 2);
         ITU_T_CHOICE_TAG(called_AE_qualifier_, 3);
         ITU_T_EXPLICIT_TAG(called_AP_invocation_identifier_, 4);
@@ -437,10 +437,10 @@ namespace ACSE_1 {
     const bitstring_type AARE_apdu_impl::protocol_version__default = protocol_version_version1;
 
     template<> void AARE_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
-        ITU_T_EXPLICIT_TAG(aSO_context_name_, 1);
-        ITU_T_EXPLICIT_TAG(result_, 2);
-        ITU_T_CHOICE_TAG(result_source_diagnostic_, 3);
+        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_EXPLICIT_TAG(*aSO_context_name_, 1);
+        ITU_T_EXPLICIT_TAG(*result_, 2);
+        ITU_T_CHOICE_TAG(*result_source_diagnostic_, 3);
         ITU_T_CHOICE_TAG(responding_AP_title_, 4);
         ITU_T_CHOICE_TAG(responding_AE_qualifier_, 5);
         ITU_T_EXPLICIT_TAG(responding_AP_invocation_identifier_, 6);
@@ -457,10 +457,10 @@ namespace ACSE_1 {
     }
 
     template<> void AARE_apdu_impl::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
-        ITU_T_EXPLICIT_TAG(aSO_context_name_, 1);
-        ITU_T_EXPLICIT_TAG(result_, 2);
-        ITU_T_CHOICE_TAG(result_source_diagnostic_, 3);
+        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_EXPLICIT_TAG(*aSO_context_name_, 1);
+        ITU_T_EXPLICIT_TAG(*result_, 2);
+        ITU_T_CHOICE_TAG(*result_source_diagnostic_, 3);
         ITU_T_CHOICE_TAG(responding_AP_title_, 4);
         ITU_T_CHOICE_TAG(responding_AE_qualifier_, 5);
         ITU_T_EXPLICIT_TAG(responding_AP_invocation_identifier_, 6);
@@ -787,7 +787,7 @@ namespace ACSE_1 {
     };
 
     template<> void ABRT_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(abort_source_, 0);
+        ITU_T_IMPLICIT_TAG(*abort_source_, 0);
         ITU_T_IMPLICIT_TAG(abort_diagnostic_, 1);
         ITU_T_CHOICE_TAG(aso_qualifier_, 13);
         ITU_T_IMPLICIT_TAG(asoi_identifier_, 14);
@@ -795,7 +795,7 @@ namespace ACSE_1 {
     }
 
     template<> void ABRT_apdu_impl::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(abort_source_, 0);
+        ITU_T_IMPLICIT_TAG(*abort_source_, 0);
         ITU_T_IMPLICIT_TAG(abort_diagnostic_, 1);
         ITU_T_CHOICE_TAG(aso_qualifier_, 13);
         ITU_T_IMPLICIT_TAG(asoi_identifier_, 14);
@@ -871,13 +871,13 @@ namespace ACSE_1 {
     template<> void A_DT_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(aso_qualifier_, 0);
         ITU_T_IMPLICIT_TAG(asoi_identifier_, 1);
-        ITU_T_CHOICE_TAG(a_user_data_, 30);
+        ITU_T_CHOICE_TAG(*a_user_data_, 30);
     }
 
     template<> void A_DT_apdu_impl::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_CHOICE_TAG(aso_qualifier_, 0);
         ITU_T_IMPLICIT_TAG(asoi_identifier_, 1);
-        ITU_T_CHOICE_TAG(a_user_data_, 30);
+        ITU_T_CHOICE_TAG(*a_user_data_, 30);
     }
 
     boost::shared_ptr<ASO_qualifier> A_DT_apdu_impl::aso_qualifier__new() {
@@ -1106,17 +1106,17 @@ namespace ACSE_1 {
         switch (type()) {
             case AP_title_ap_title_form1:
             {
-                ITU_T_BIND_TAG(value<AP_title_form1 > (false, AP_title_ap_title_form1));
+                ITU_T_BIND_TAG(*value<AP_title_form1 > (false, AP_title_ap_title_form1));
                 break;
             }
             case AP_title_ap_title_form2:
             {
-                ITU_T_BIND_TAG(value<AP_title_form2 > (false, AP_title_ap_title_form2));
+                ITU_T_BIND_TAG(*value<AP_title_form2 > (false, AP_title_ap_title_form2));
                 break;
             }
             case AP_title_ap_title_form3:
             {
-                ITU_T_BIND_TAG(value<AP_title_form3 > (false, AP_title_ap_title_form3));
+                ITU_T_BIND_TAG(*value<AP_title_form3 > (false, AP_title_ap_title_form3));
                 break;
             }
             default:
@@ -1162,11 +1162,11 @@ namespace ACSE_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<AP_title_form1 > (true, AP_title_ap_title_form1))) return;
+                if (ITU_T_BIND_TAG(*value<AP_title_form1 > (true, AP_title_ap_title_form1))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<AP_title_form2 > (true, AP_title_ap_title_form2))) return;
+                if (ITU_T_BIND_TAG(*value<AP_title_form2 > (true, AP_title_ap_title_form2))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<AP_title_form3 > (true, AP_title_ap_title_form3))) return;
+                if (ITU_T_BIND_TAG(*value<AP_title_form3 > (true, AP_title_ap_title_form3))) return;
                 else free();
             }
         }
@@ -1191,17 +1191,17 @@ namespace ACSE_1 {
         switch (type()) {
             case ASO_qualifier_aso_qualifier_form1:
             {
-                ITU_T_BIND_TAG(value<ASO_qualifier_form1 > (false, ASO_qualifier_aso_qualifier_form1));
+                ITU_T_BIND_TAG(*value<ASO_qualifier_form1 > (false, ASO_qualifier_aso_qualifier_form1));
                 break;
             }
             case ASO_qualifier_aso_qualifier_form2:
             {
-                ITU_T_BIND_TAG(value<ASO_qualifier_form2 > (false, ASO_qualifier_aso_qualifier_form2));
+                ITU_T_BIND_TAG(*value<ASO_qualifier_form2 > (false, ASO_qualifier_aso_qualifier_form2));
                 break;
             }
             case ASO_qualifier_aso_qualifier_form3:
             {
-                ITU_T_BIND_TAG(value<ASO_qualifier_form3 > (false, ASO_qualifier_aso_qualifier_form3));
+                ITU_T_BIND_TAG(*value<ASO_qualifier_form3 > (false, ASO_qualifier_aso_qualifier_form3));
                 break;
             }
             default:
@@ -1247,11 +1247,11 @@ namespace ACSE_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<ASO_qualifier_form1 > (true, ASO_qualifier_aso_qualifier_form1))) return;
+                if (ITU_T_BIND_TAG(*value<ASO_qualifier_form1 > (true, ASO_qualifier_aso_qualifier_form1))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<ASO_qualifier_form2 > (true, ASO_qualifier_aso_qualifier_form2))) return;
+                if (ITU_T_BIND_TAG(*value<ASO_qualifier_form2 > (true, ASO_qualifier_aso_qualifier_form2))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<ASO_qualifier_form3 > (true, ASO_qualifier_aso_qualifier_form3))) return;
+                if (ITU_T_BIND_TAG(*value<ASO_qualifier_form3 > (true, ASO_qualifier_aso_qualifier_form3))) return;
                 else free();
             }
         }
@@ -1272,12 +1272,12 @@ namespace ACSE_1 {
         switch (type()) {
             case AE_title_ae_title_form1:
             {
-                ITU_T_BIND_TAG(value<AE_title_form1 > (false, AE_title_ae_title_form1));
+                ITU_T_BIND_TAG(*value<AE_title_form1 > (false, AE_title_ae_title_form1));
                 break;
             }
             case AE_title_ae_title_form2:
             {
-                ITU_T_BIND_TAG(value<AE_title_form2 > (false, AE_title_ae_title_form2));
+                ITU_T_BIND_TAG(*value<AE_title_form2 > (false, AE_title_ae_title_form2));
                 break;
             }
             default:
@@ -1323,9 +1323,9 @@ namespace ACSE_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<AE_title_form1 > (true, AE_title_ae_title_form1))) return;
+                if (ITU_T_BIND_TAG(*value<AE_title_form1 > (true, AE_title_ae_title_form1))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<AE_title_form2 > (true, AE_title_ae_title_form2))) return;
+                if (ITU_T_BIND_TAG(*value<AE_title_form2 > (true, AE_title_ae_title_form2))) return;
                 else free();
             }
         }
@@ -1373,12 +1373,12 @@ namespace ACSE_1 {
         switch (type()) {
             case Syntactic_context_list_context_list:
             {
-                ITU_T_EXPLICIT_TAG(value<Context_list > (false, Syntactic_context_list_context_list), 0);
+                ITU_T_EXPLICIT_TAG(*value<Context_list > (false, Syntactic_context_list_context_list), 0);
                 break;
             }
             case Syntactic_context_list_default_contact_list:
             {
-                ITU_T_EXPLICIT_TAG(value<Default_Context_List > (false, Syntactic_context_list_default_contact_list), 1);
+                ITU_T_EXPLICIT_TAG(*value<Default_Context_List > (false, Syntactic_context_list_default_contact_list), 1);
                 break;
             }
             default:
@@ -1411,13 +1411,13 @@ namespace ACSE_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<Context_list > (true, Syntactic_context_list_context_list), 0)) return;
+                        if (ITU_T_EXPLICIT_TAG(*value<Context_list > (true, Syntactic_context_list_context_list), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<Default_Context_List > (true, Syntactic_context_list_default_contact_list), 1)) return;
+                        if (ITU_T_EXPLICIT_TAG(*value<Default_Context_List > (true, Syntactic_context_list_default_contact_list), 1)) return;
                         else free();
                         break;
                     }
@@ -1452,15 +1452,15 @@ namespace ACSE_1 {
     };
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_TAG(pci_);
-        ITU_T_BIND_TAG(abstract_syntax_);
-        ITU_T_BIND_TAG(transfer_syntaxes_);
+        ITU_T_BIND_TAG(*pci_);
+        ITU_T_BIND_TAG(*abstract_syntax_);
+        ITU_T_BIND_TAG(*transfer_syntaxes_);
     }
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_TAG(pci_);
-        ITU_T_BIND_TAG(abstract_syntax_);
-        ITU_T_BIND_TAG(transfer_syntaxes_);
+        ITU_T_BIND_TAG(*pci_);
+        ITU_T_BIND_TAG(*abstract_syntax_);
+        ITU_T_BIND_TAG(*transfer_syntaxes_);
     }
 
     Presentation_context_identifier& Context_list_sequence_of::pci() {
@@ -1526,12 +1526,12 @@ namespace ACSE_1 {
 
     template<> void Default_Context_List_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(abstract_syntax_name_, 0);
-        ITU_T_IMPLICIT_TAG(transfer_syntax_name_, 1);
+        ITU_T_IMPLICIT_TAG(*transfer_syntax_name_, 1);
     }
 
     template<> void Default_Context_List_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(abstract_syntax_name_, 0);
-        ITU_T_IMPLICIT_TAG(transfer_syntax_name_, 1);
+        ITU_T_IMPLICIT_TAG(*transfer_syntax_name_, 1);
     }
 
     boost::shared_ptr<Abstract_syntax_name> Default_Context_List_sequence_of::abstract_syntax_name__new() {
@@ -1581,13 +1581,13 @@ namespace ACSE_1 {
     };
 
     template<> void P_context_result_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(result_, 0);
+        ITU_T_IMPLICIT_TAG(*result_, 0);
         ITU_T_IMPLICIT_TAG(concrete_syntax_name_, 1);
         ITU_T_IMPLICIT_TAG(provider_reason_, 2);
     }
 
     template<> void P_context_result_list_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(result_, 0);
+        ITU_T_IMPLICIT_TAG(*result_, 0);
         ITU_T_IMPLICIT_TAG(concrete_syntax_name_, 1);
         ITU_T_IMPLICIT_TAG(provider_reason_, 2);
     }
@@ -1666,12 +1666,12 @@ namespace ACSE_1 {
         switch (type()) {
             case Associate_source_diagnostic_acse_service_user:
             {
-                ITU_T_EXPLICIT_TAG(value<int > (false, Associate_source_diagnostic_acse_service_user), 1);
+                ITU_T_EXPLICIT_TAG(*value<int > (false, Associate_source_diagnostic_acse_service_user), 1);
                 break;
             }
             case Associate_source_diagnostic_acse_service_provider:
             {
-                ITU_T_EXPLICIT_TAG(value<int > (false, Associate_source_diagnostic_acse_service_provider), 2);
+                ITU_T_EXPLICIT_TAG(*value<int > (false, Associate_source_diagnostic_acse_service_provider), 2);
                 break;
             }
             default:
@@ -1704,13 +1704,13 @@ namespace ACSE_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<int > (true, Associate_source_diagnostic_acse_service_user), 1)) return;
+                        if (ITU_T_EXPLICIT_TAG(*value<int > (true, Associate_source_diagnostic_acse_service_user), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<int > (true, Associate_source_diagnostic_acse_service_provider), 2)) return;
+                        if (ITU_T_EXPLICIT_TAG(*value<int > (true, Associate_source_diagnostic_acse_service_provider), 2)) return;
                         else free();
                         break;
                     }
@@ -1744,17 +1744,17 @@ namespace ACSE_1 {
         switch (type()) {
             case User_Data_user_information:
             {
-                ITU_T_BIND_TAG(value<User_information > (false, User_Data_user_information));
+                ITU_T_BIND_TAG(*value<User_information > (false, User_Data_user_information));
                 break;
             }
             case User_Data_simply_encoded_data:
             {
-                ITU_T_BIND_TAG(value<Simply_encoded_data > (false, User_Data_simply_encoded_data));
+                ITU_T_BIND_TAG(*value<Simply_encoded_data > (false, User_Data_simply_encoded_data));
                 break;
             }
             case User_Data_fully_encoded_data:
             {
-                ITU_T_EXPLICIT_TAG(value<PDV_list > (false, User_Data_fully_encoded_data), 0);
+                ITU_T_EXPLICIT_TAG(*value<PDV_list > (false, User_Data_fully_encoded_data), 0);
                 break;
             }
             default:
@@ -1787,7 +1787,7 @@ namespace ACSE_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<PDV_list > (true, User_Data_fully_encoded_data), 0)) return;
+                        if (ITU_T_EXPLICIT_TAG(*value<PDV_list > (true, User_Data_fully_encoded_data), 0)) return;
                         else free();
                         break;
                     }
@@ -1806,9 +1806,9 @@ namespace ACSE_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(value<User_information > (true, User_Data_user_information))) return;
+                if (ITU_T_BIND_TAG(*value<User_information > (true, User_Data_user_information))) return;
                 else free();
-                if (ITU_T_BIND_TAG(value<Simply_encoded_data > (true, User_Data_simply_encoded_data))) return;
+                if (ITU_T_BIND_TAG(*value<Simply_encoded_data > (true, User_Data_simply_encoded_data))) return;
                 else free();
             }
         }
@@ -1850,17 +1850,17 @@ namespace ACSE_1 {
         switch (type()) {
             case Presentation_data_values_type_simple_ASN1_type:
             {
-                ITU_T_EXPLICIT_TAG(value<any_type > (false, Presentation_data_values_type_simple_ASN1_type), 0);
+                ITU_T_EXPLICIT_TAG(*value<any_type > (false, Presentation_data_values_type_simple_ASN1_type), 0);
                 break;
             }
             case Presentation_data_values_type_octet_aligned:
             {
-                ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, Presentation_data_values_type_octet_aligned), 1);
+                ITU_T_IMPLICIT_TAG(*value<octetstring_type > (false, Presentation_data_values_type_octet_aligned), 1);
                 break;
             }
             case Presentation_data_values_type_arbitrary:
             {
-                ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, Presentation_data_values_type_arbitrary), 2);
+                ITU_T_IMPLICIT_TAG(*value<bitstring_type > (false, Presentation_data_values_type_arbitrary), 2);
                 break;
             }
             default:
@@ -1893,19 +1893,19 @@ namespace ACSE_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_EXPLICIT_TAG(value<any_type > (true, Presentation_data_values_type_simple_ASN1_type), 0)) return;
+                        if (ITU_T_EXPLICIT_TAG(*value<any_type > (true, Presentation_data_values_type_simple_ASN1_type), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, Presentation_data_values_type_octet_aligned), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<octetstring_type > (true, Presentation_data_values_type_octet_aligned), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, Presentation_data_values_type_arbitrary), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<bitstring_type > (true, Presentation_data_values_type_arbitrary), 2)) return;
                         else free();
                         break;
                     }
@@ -1930,14 +1930,14 @@ namespace ACSE_1 {
 
     template<> void PDV_list::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(transfer_syntax_name_);
-        ITU_T_BIND_TAG(presentation_context_identifier_);
-        ITU_T_BIND_CHOICE(presentation_data_values_);
+        ITU_T_BIND_TAG(*presentation_context_identifier_);
+        ITU_T_BIND_CHOICE(*presentation_data_values_);
     }
 
     template<> void PDV_list::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_TAG(transfer_syntax_name_);
-        ITU_T_BIND_TAG(presentation_context_identifier_);
-        ITU_T_BIND_CHOICE(presentation_data_values_);
+        ITU_T_BIND_TAG(*presentation_context_identifier_);
+        ITU_T_BIND_CHOICE(*presentation_data_values_);
     }
 
     boost::shared_ptr<Transfer_syntax_name> PDV_list::transfer_syntax_name__new() {
@@ -1993,13 +1993,13 @@ namespace ACSE_1 {
     };
 
     template<> void Authentication_value::Other_type::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_BIND_TAG(other_mechanism_name_);
-        ITU_T_BIND_TAG(other_mechanism_value_);
+        ITU_T_BIND_TAG(*other_mechanism_name_);
+        ITU_T_BIND_TAG(*other_mechanism_value_);
     }
 
     template<> void Authentication_value::Other_type::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_BIND_TAG(other_mechanism_name_);
-        ITU_T_BIND_TAG(other_mechanism_value_);
+        ITU_T_BIND_TAG(*other_mechanism_name_);
+        ITU_T_BIND_TAG(*other_mechanism_value_);
     }
 
     any_type& Authentication_value::Other_type::other_mechanism_name() {
@@ -2050,22 +2050,22 @@ namespace ACSE_1 {
         switch (type()) {
             case Authentication_value_charstring:
             {
-                ITU_T_IMPLICIT_TAG(value<graphicstring_type > (false, Authentication_value_charstring), 0);
+                ITU_T_IMPLICIT_TAG(*value<graphicstring_type > (false, Authentication_value_charstring), 0);
                 break;
             }
             case Authentication_value_bitstring:
             {
-                ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, Authentication_value_bitstring), 1);
+                ITU_T_IMPLICIT_TAG(*value<bitstring_type > (false, Authentication_value_bitstring), 1);
                 break;
             }
             case Authentication_value_external:
             {
-                ITU_T_IMPLICIT_TAG(value<external_type > (false, Authentication_value_external), 2);
+                ITU_T_IMPLICIT_TAG(*value<external_type > (false, Authentication_value_external), 2);
                 break;
             }
             case Authentication_value_other:
             {
-                ITU_T_IMPLICIT_TAG(value<Other_type > (false, Authentication_value_other), 3);
+                ITU_T_IMPLICIT_TAG(*value<Other_type > (false, Authentication_value_other), 3);
                 break;
             }
             default:
@@ -2098,25 +2098,25 @@ namespace ACSE_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<graphicstring_type > (true, Authentication_value_charstring), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<graphicstring_type > (true, Authentication_value_charstring), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, Authentication_value_bitstring), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<bitstring_type > (true, Authentication_value_bitstring), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<external_type > (true, Authentication_value_external), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<external_type > (true, Authentication_value_external), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(value<Other_type > (true, Authentication_value_other), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<Other_type > (true, Authentication_value_other), 3)) return;
                         else free();
                         break;
                     }

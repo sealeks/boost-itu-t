@@ -66,9 +66,9 @@ namespace ISO8823_PRESENTATION {
     typedef int Abort_reason;
     typedef oid_type Abstract_syntax_name;
     typedef int Event_identifier;
-    typedef int Presentation_context_identifier;
+    typedef int Presentation_context_identifier; //   Ic(  [ 1  ...   127 ]   ...ext...) 
     typedef bitstring_type Presentation_requirements;
-    typedef octetstring_type Presentation_selector;
+    typedef octetstring_type Presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
     typedef bitstring_type Protocol_options;
     typedef bitstring_type Protocol_version;
     typedef int Provider_reason;
@@ -76,22 +76,22 @@ namespace ISO8823_PRESENTATION {
     typedef oid_type Transfer_syntax_name;
     typedef octetstring_type Simply_encoded_data;
     typedef bitstring_type User_session_requirements;
-    typedef std::vector< int > Presentation_context_deletion_result_list;
+    typedef std::vector< int > Presentation_context_deletion_result_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
 
     typedef User_data CPC_type;
-    typedef Presentation_selector Called_presentation_selector;
-    typedef Presentation_selector Calling_presentation_selector;
+    typedef Presentation_selector Called_presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
+    typedef Presentation_selector Calling_presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
     typedef Result Default_context_result;
-    typedef Presentation_selector Responding_presentation_selector;
-    typedef std::vector< Context_list_sequence_of > Context_list;
-    typedef Context_list Presentation_context_definition_list;
-    typedef Context_list Presentation_context_addition_list;
-    typedef std::vector< Presentation_context_identifier > Presentation_context_deletion_list;
-    typedef std::vector< Presentation_context_identifier_list_sequence_of > Presentation_context_identifier_list;
-    typedef std::vector< Result_list_sequence_of > Result_list;
-    typedef Result_list Presentation_context_addition_result_list;
-    typedef Result_list Presentation_context_definition_result_list;
-    typedef std::vector< PDV_list > Fully_encoded_data;
+    typedef Presentation_selector Responding_presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
+    typedef std::vector< Context_list_sequence_of > Context_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef Context_list Presentation_context_definition_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef Context_list Presentation_context_addition_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef std::vector< Presentation_context_identifier > Presentation_context_deletion_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef std::vector< Presentation_context_identifier_list_sequence_of > Presentation_context_identifier_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef std::vector< Result_list_sequence_of > Result_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef Result_list Presentation_context_addition_result_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef Result_list Presentation_context_definition_result_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef std::vector< PDV_list > Fully_encoded_data; //    Sc (  [ 1 ]   ...ext...) 
 
 
 }
@@ -146,16 +146,6 @@ namespace ISO8823_PRESENTATION {
 
         struct Normal_mode_parameters_type {
 
-            struct Extensions_type;
-
-            struct Extensions_type {
-
-                Extensions_type();
-
-
-                ITU_T_ARCHIVE_FUNC;
-            };
-
             static const Protocol_version protocol_version__default;
             static const Protocol_options protocol_options__default;
 
@@ -170,19 +160,17 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< User_session_requirements> arg__user_session_requirements,
                     boost::shared_ptr< Protocol_options> arg__protocol_options,
                     boost::shared_ptr< Presentation_context_identifier> arg__initiators_nominated_context,
-                    boost::shared_ptr< Extensions_type> arg__extensions,
                     boost::shared_ptr< User_data> arg__user_data);
 
             ITU_T_DEFAULTH_DECL(protocol_version, Protocol_version, protocol_version__default);
-            ITU_T_OPTIONAL_DECL(calling_presentation_selector, Calling_presentation_selector);
-            ITU_T_OPTIONAL_DECL(called_presentation_selector, Called_presentation_selector);
-            ITU_T_OPTIONAL_DECL(presentation_context_definition_list, Presentation_context_definition_list);
+            ITU_T_OPTIONAL_DECL(calling_presentation_selector, Calling_presentation_selector); //    Sc (  [ 1  ...   4 ]   ...ext...) 
+            ITU_T_OPTIONAL_DECL(called_presentation_selector, Called_presentation_selector); //    Sc (  [ 1  ...   4 ]   ...ext...) 
+            ITU_T_OPTIONAL_DECL(presentation_context_definition_list, Presentation_context_definition_list); //    Sc (  [ 0  ...   7 ]   ...ext...) 
             ITU_T_OPTIONAL_DECL(default_context_name, Default_context_name);
             ITU_T_OPTIONAL_DECL(presentation_requirements, Presentation_requirements);
             ITU_T_OPTIONAL_DECL(user_session_requirements, User_session_requirements);
             ITU_T_DEFAULTH_DECL(protocol_options, Protocol_options, protocol_options__default);
-            ITU_T_OPTIONAL_DECL(initiators_nominated_context, Presentation_context_identifier);
-            ITU_T_OPTIONAL_DECL(extensions, Extensions_type);
+            ITU_T_OPTIONAL_DECL(initiators_nominated_context, Presentation_context_identifier); //   Ic(  [ 1  ...   127 ]   ...ext...) 
             ITU_T_OPTIONAL_DECL(user_data, User_data);
 
             ITU_T_ARCHIVE_FUNC;
@@ -248,12 +236,12 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< User_data> arg__user_data);
 
             ITU_T_DEFAULTH_DECL(protocol_version, Protocol_version, protocol_version__default);
-            ITU_T_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector);
-            ITU_T_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list);
+            ITU_T_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector); //    Sc (  [ 1  ...   4 ]   ...ext...) 
+            ITU_T_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list); //    Sc (  [ 0  ...   7 ]   ...ext...) 
             ITU_T_OPTIONAL_DECL(presentation_requirements, Presentation_requirements);
             ITU_T_OPTIONAL_DECL(user_session_requirements, User_session_requirements);
             ITU_T_DEFAULTH_DECL(protocol_options, Protocol_options, protocol_options__default);
-            ITU_T_OPTIONAL_DECL(responders_nominated_context, Presentation_context_identifier);
+            ITU_T_OPTIONAL_DECL(responders_nominated_context, Presentation_context_identifier); //   Ic(  [ 1  ...   127 ]   ...ext...) 
             ITU_T_OPTIONAL_DECL(user_data, User_data);
 
             ITU_T_ARCHIVE_FUNC;
@@ -317,8 +305,8 @@ namespace ISO8823_PRESENTATION {
                     boost::shared_ptr< User_data> arg__user_data);
 
             ITU_T_DEFAULTH_DECL(protocol_version, Protocol_version, protocol_version__default);
-            ITU_T_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector);
-            ITU_T_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list);
+            ITU_T_OPTIONAL_DECL(responding_presentation_selector, Responding_presentation_selector); //    Sc (  [ 1  ...   4 ]   ...ext...) 
+            ITU_T_OPTIONAL_DECL(presentation_context_definition_result_list, Presentation_context_definition_result_list); //    Sc (  [ 0  ...   7 ]   ...ext...) 
             ITU_T_OPTIONAL_DECL(default_context_result, Default_context_result);
             ITU_T_OPTIONAL_DECL(provider_reason, Provider_reason);
             ITU_T_OPTIONAL_DECL(user_data, User_data);
@@ -408,7 +396,7 @@ namespace ISO8823_PRESENTATION {
             Normal_mode_parameters_type(boost::shared_ptr< Presentation_context_identifier_list> arg__presentation_context_identifier_list,
                     boost::shared_ptr< User_data> arg__user_data);
 
-            ITU_T_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list);
+            ITU_T_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list); //    Sc (  [ 0  ...   7 ]   ...ext...) 
             ITU_T_OPTIONAL_DECL(user_data, User_data);
 
             ITU_T_ARCHIVE_FUNC;
@@ -486,8 +474,8 @@ namespace ISO8823_PRESENTATION {
                 boost::shared_ptr< Presentation_context_deletion_list> arg__presentation_context_deletion_list,
                 boost::shared_ptr< User_data> arg__user_data);
 
-        ITU_T_OPTIONAL_DECL(presentation_context_addition_list, Presentation_context_addition_list);
-        ITU_T_OPTIONAL_DECL(presentation_context_deletion_list, Presentation_context_deletion_list);
+        ITU_T_OPTIONAL_DECL(presentation_context_addition_list, Presentation_context_addition_list); //    Sc (  [ 0  ...   7 ]   ...ext...) 
+        ITU_T_OPTIONAL_DECL(presentation_context_deletion_list, Presentation_context_deletion_list); //    Sc (  [ 0  ...   7 ]   ...ext...) 
         ITU_T_OPTIONAL_DECL(user_data, User_data);
 
         ITU_T_ARCHIVE_FUNC;
@@ -503,8 +491,8 @@ namespace ISO8823_PRESENTATION {
                 boost::shared_ptr< Presentation_context_deletion_result_list> arg__presentation_context_deletion_result_list,
                 boost::shared_ptr< User_data> arg__user_data);
 
-        ITU_T_OPTIONAL_DECL(presentation_context_addition_result_list, Presentation_context_addition_result_list);
-        ITU_T_OPTIONAL_DECL(presentation_context_deletion_result_list, Presentation_context_deletion_result_list);
+        ITU_T_OPTIONAL_DECL(presentation_context_addition_result_list, Presentation_context_addition_result_list); //    Sc (  [ 0  ...   7 ]   ...ext...) 
+        ITU_T_OPTIONAL_DECL(presentation_context_deletion_result_list, Presentation_context_deletion_result_list); //    Sc (  [ 0  ...   7 ]   ...ext...) 
         ITU_T_OPTIONAL_DECL(user_data, User_data);
 
         ITU_T_ARCHIVE_FUNC;
@@ -519,7 +507,7 @@ namespace ISO8823_PRESENTATION {
         RS_PPDU(boost::shared_ptr< Presentation_context_identifier_list> arg__presentation_context_identifier_list,
                 boost::shared_ptr< User_data> arg__user_data);
 
-        ITU_T_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list);
+        ITU_T_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list); //    Sc (  [ 0  ...   7 ]   ...ext...) 
         ITU_T_OPTIONAL_DECL(user_data, User_data);
 
         ITU_T_ARCHIVE_FUNC;
@@ -534,7 +522,7 @@ namespace ISO8823_PRESENTATION {
         RSA_PPDU(boost::shared_ptr< Presentation_context_identifier_list> arg__presentation_context_identifier_list,
                 boost::shared_ptr< User_data> arg__user_data);
 
-        ITU_T_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list);
+        ITU_T_OPTIONAL_DECL(presentation_context_identifier_list, Presentation_context_identifier_list); //    Sc (  [ 0  ...   7 ]   ...ext...) 
         ITU_T_OPTIONAL_DECL(user_data, User_data);
 
         ITU_T_ARCHIVE_FUNC;
@@ -559,7 +547,7 @@ namespace ISO8823_PRESENTATION {
                 const Abstract_syntax_name& arg__abstract_syntax_name,
                 const Transfer_syntax_name_list_type& arg__transfer_syntax_name_list);
 
-        ITU_T_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
+        ITU_T_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier); //   Ic(  [ 1  ...   127 ]   ...ext...) 
         ITU_T_HOLDERH_DECL(abstract_syntax_name, Abstract_syntax_name);
         ITU_T_HOLDERH_DECL(transfer_syntax_name_list, Transfer_syntax_name_list_type);
 
@@ -639,7 +627,7 @@ namespace ISO8823_PRESENTATION {
         Presentation_context_identifier_list_sequence_of(const Presentation_context_identifier& arg__presentation_context_identifier,
                 const Transfer_syntax_name& arg__transfer_syntax_name);
 
-        ITU_T_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
+        ITU_T_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier); //   Ic(  [ 1  ...   127 ]   ...ext...) 
         ITU_T_HOLDERH_DECL(transfer_syntax_name, Transfer_syntax_name);
 
         ITU_T_ARCHIVE_FUNC;
@@ -713,7 +701,7 @@ namespace ISO8823_PRESENTATION {
         }
 
         ITU_T_CHOICES_DECL(simply_encoded_data, Simply_encoded_data, User_data_simply_encoded_data); // primitive
-        ITU_T_CHOICEC_DECL(fully_encoded_data, Fully_encoded_data, User_data_fully_encoded_data);
+        ITU_T_CHOICEC_DECL(fully_encoded_data, Fully_encoded_data, User_data_fully_encoded_data); //    Sc (  [ 1 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -763,7 +751,7 @@ namespace ISO8823_PRESENTATION {
                 boost::shared_ptr< Presentation_data_values_type> arg__presentation_data_values);
 
         ITU_T_OPTIONAL_DECL(transfer_syntax_name, Transfer_syntax_name);
-        ITU_T_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier);
+        ITU_T_HOLDERH_DECL(presentation_context_identifier, Presentation_context_identifier); //   Ic(  [ 1  ...   127 ]   ...ext...) 
         ITU_T_HOLDERH_DECL(presentation_data_values, Presentation_data_values_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -789,8 +777,6 @@ namespace ISO8823_PRESENTATION {
     template<> void CP_type::X410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CP_type::Normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CP_type::Normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void CP_type::Normal_mode_parameters_type::Extensions_type::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void CP_type::Normal_mode_parameters_type::Extensions_type::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CPA_PPDU::serialize(boost::asn1::x690::output_coder& arch);
     template<> void CPA_PPDU::serialize(boost::asn1::x690::input_coder& arch);
     template<> void CPA_PPDU::X410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch);
