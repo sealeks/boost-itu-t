@@ -1769,7 +1769,7 @@ namespace x680 {
                                     for (basic_entity_vector::iterator its = issue->childs().begin();
                                             its != issue->childs().end(); ++its) {
                                         if ((*its)->as_typeassigment()->as_named()->marker() != mk_extention) {
-                                            namedtypeassignment_entity_ptr tmp = (*its)->as_typeassigment()->clone<namedtypeassignment_entity>((*its)->scope(), false);
+                                            namedtypeassignment_entity_ptr tmp = (*its)->as_typeassigment()->clone<namedtypeassignment_entity>(scope(), false);
                                             if (tmp)
                                                 tmpch.push_back(tmp);
                                         } else
@@ -1781,7 +1781,7 @@ namespace x680 {
                                             if (*itr) {
                                                 (*itr)->preresolve();
                                                 (*itr)->resolve();
-                                                (*itr)->shadow_for(*it);
+                                                (*itr)->shadow_for(issue);
                                             }
                                         }
                                         childs().insert(childs().erase(it), tmpch.begin(), tmpch.end());

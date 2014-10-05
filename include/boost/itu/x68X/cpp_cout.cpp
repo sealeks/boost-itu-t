@@ -565,6 +565,10 @@ namespace x680 {
             if (self->isrefferrence()) {
                 typeassignment_entity_ptr frtp = ((self->type()->reff()) && (self->type()->reff()->as_typeassigment())) ?
                         self->type()->reff()->as_typeassigment() : typeassignment_entity_ptr();
+                if ((self->shadow_for()) 
+                        && (self->shadow_for()->moduleref()!=self->moduleref()) 
+                        && (self->shadow_for()->as_typeassigment()))
+                    frtp=self->shadow_for()->as_typeassigment();
                 module_entity_ptr extmod = (frtp && (frtp->moduleref() != self->moduleref())) ? frtp->moduleref() : module_entity_ptr();
                 std::string pref = extmod ? (nameconvert(extmod->name()) + "::") : "";
                 return (pref + nameupper(nameconvert(self->type()->reff()->name())));
@@ -718,8 +722,20 @@ namespace x680 {
 
             return "CONTEXT_CLASS";
         }
+        
+        static std::string name_arch(const std::string& nm, tagmarker_type mkr) {
+            switch (mkr) {
+                case mk_default: return nm + ".get_shared()";
+                case mk_none: return "*" + nm;
+                default:
+                {
+                }
+            }
+            return nm;
+        }
 
-        std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name) {
+        std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext) {
+            tagmarker_type dfltopt = afterext ? mk_optional : self->marker();
             if ((self->isdefined_choice())) {
                 if (self->tag()) {
                     switch (self->tag()->_class()) {
@@ -730,25 +746,25 @@ namespace x680 {
                     }
                 } else
                     return "ITU_T_BIND_CHOICE(" + name + ")";
-            } else {
+            } else {                
                 if (self->tag()) {
                     if (self->tag()->rule() == implicit_tags) {
                         switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_T_IMPLICIT_APPLICATION_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_T_IMPLICIT_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_T_IMPLICIT_PRIVATE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_T_IMPLICIT_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_application: return "ITU_T_IMPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_universal: return "ITU_T_IMPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_private: return "ITU_T_IMPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            default: return "ITU_T_IMPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
                         }
                     } else {
                         switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_T_EXPLICIT_APPLICATION_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_T_EXPLICIT_UNIVERSAL_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_T_EXPLICIT_PRIVATE_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_T_EXPLICIT_TAG(" + name + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_application: return "ITU_T_EXPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_universal: return "ITU_T_EXPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_private: return "ITU_T_EXPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            default: return "ITU_T_EXPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
                         }
                     }
                 } else
-                    return "ITU_T_BIND_TAG(" + name + ")";
+                    return "ITU_T_BIND_TAG(" + name_arch(name, dfltopt) + ")";
             }
             return "";
         }
@@ -2097,6 +2113,7 @@ namespace x680 {
 
         void fileout::execute_archive_ber_struct(std::ofstream& stream, typeassignment_entity_ptr self) {
             basic_entity_ptr scp;
+            bool afterext=false;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if ((tpas) && (tpas->as_named())) {
@@ -2104,20 +2121,22 @@ namespace x680 {
                     tagmarker_type mkr = named->marker();
                     if (named->type()) {
                         if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
-                            execute_archive_ber_member(stream, named);
-                    } else if (mkr == mk_extention)
-                        stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";
+                            execute_archive_ber_member(stream, named,afterext);
+                    } else if (mkr == mk_extention){
+                        afterext=!afterext;
+                        stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";}
                 }
 
-                if ((*it)->as_extention())
-                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";
+                if ((*it)->as_extention()){
+                    afterext=!afterext;
+                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";}
             }
             stream << "\n";
             stream << tabformat(scp, 2) << "}";
             stream << "\n";
         }
 
-        void fileout::execute_archive_ber_member(std::ofstream& stream, namedtypeassignment_entity_ptr self) {
+        void fileout::execute_archive_ber_member(std::ofstream& stream, namedtypeassignment_entity_ptr self,  bool afterext) {
             basic_entity_ptr scp;
             if (self->type()) {
 
