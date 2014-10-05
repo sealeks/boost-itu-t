@@ -281,7 +281,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventConditionLists_, 24);
         ITU_T_IMPLICIT_TAG(*journals_, 25);
         ITU_T_EXTENTION;
-        ITU_T_BIND_CHOICE(*selected_Program_Invocation_);
+        ITU_T_BIND_CHOICE(selected_Program_Invocation_);
     }
 
     template<> void VMD_File::serialize(boost::asn1::x690::input_coder& arch) {
@@ -312,7 +312,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventConditionLists_, 24);
         ITU_T_IMPLICIT_TAG(*journals_, 25);
         ITU_T_EXTENTION;
-        ITU_T_BIND_CHOICE(*selected_Program_Invocation_);
+        ITU_T_BIND_CHOICE(selected_Program_Invocation_);
     }
 
     MMS_Environment_1::ApplicationReference& VMD_File::executiveFunction() {
@@ -863,7 +863,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventEnrollments_, 24);
         ITU_T_IMPLICIT_TAG(*journals_, 25);
         ITU_T_EXTENTION;
-        ITU_T_IMPLICIT_TAG(*eventConditionLists_, 26);
+        ITU_T_IMPLICIT_TAG(eventConditionLists_, 26);
     }
 
     template<> void Access_Control_List_instance::Definition_type::Details_type::serialize(boost::asn1::x690::input_coder& arch) {
@@ -891,7 +891,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventEnrollments_, 24);
         ITU_T_IMPLICIT_TAG(*journals_, 25);
         ITU_T_EXTENTION;
-        ITU_T_IMPLICIT_TAG(*eventConditionLists_, 26);
+        ITU_T_IMPLICIT_TAG(eventConditionLists_, 26);
     }
 
     Access_Control_List_instance& Access_Control_List_instance::Definition_type::Details_type::accessControl() {
@@ -1777,8 +1777,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(eventEnrollment_, 10);
         ITU_T_EXPLICIT_TAG(*executionArgument_, 11);
         ITU_T_EXTENTION;
-        ITU_T_IMPLICIT_TAG(*control_, 12);
-        ITU_T_IMPLICIT_TAG(*controlling_Program_Invocation_, 13);
+        ITU_T_IMPLICIT_TAG(control_, 12);
+        ITU_T_IMPLICIT_TAG(controlling_Program_Invocation_, 13);
         ITU_T_IMPLICIT_TAG(controlled_Program_Invocations_, 14);
     }
 
@@ -1793,8 +1793,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(eventEnrollment_, 10);
         ITU_T_EXPLICIT_TAG(*executionArgument_, 11);
         ITU_T_EXTENTION;
-        ITU_T_IMPLICIT_TAG(*control_, 12);
-        ITU_T_IMPLICIT_TAG(*controlling_Program_Invocation_, 13);
+        ITU_T_IMPLICIT_TAG(control_, 12);
+        ITU_T_IMPLICIT_TAG(controlling_Program_Invocation_, 13);
         ITU_T_IMPLICIT_TAG(controlled_Program_Invocations_, 14);
     }
 
@@ -3964,9 +3964,9 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_CHOICE(monitoredVariable_);
         ITU_T_IMPLICIT_TAG(evaluationInterval_, 14);
         ITU_T_EXTENTION;
-        ITU_T_BIND_CHOICE(*displayEnhancement_);
+        ITU_T_BIND_CHOICE(displayEnhancement_);
         ITU_T_BIND_CHOICE(group_Priority_Override_);
-        ITU_T_IMPLICIT_TAG(*referencingEventConditionLists_, 20);
+        ITU_T_IMPLICIT_TAG(referencingEventConditionLists_, 20);
     }
 
     template<> void Event_Condition_instance::Definition_type::Details_type::serialize(boost::asn1::x690::input_coder& arch) {
@@ -3981,9 +3981,9 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_CHOICE(monitoredVariable_);
         ITU_T_IMPLICIT_TAG(evaluationInterval_, 14);
         ITU_T_EXTENTION;
-        ITU_T_BIND_CHOICE(*displayEnhancement_);
+        ITU_T_BIND_CHOICE(displayEnhancement_);
         ITU_T_BIND_CHOICE(group_Priority_Override_);
-        ITU_T_IMPLICIT_TAG(*referencingEventConditionLists_, 20);
+        ITU_T_IMPLICIT_TAG(referencingEventConditionLists_, 20);
     }
 
     Access_Control_List_instance& Event_Condition_instance::Definition_type::Details_type::accessControl() {
@@ -4706,7 +4706,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(clientApplication_, 11);
         ITU_T_IMPLICIT_TAG(aaRule_, 12);
         ITU_T_EXTENTION;
-        ITU_T_BIND_CHOICE(*displayEnhancement_);
+        ITU_T_BIND_CHOICE(displayEnhancement_);
     }
 
     template<> void Event_Enrollment_instance::Definition_type::Details_type::serialize(boost::asn1::x690::input_coder& arch) {
@@ -4720,7 +4720,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(clientApplication_, 11);
         ITU_T_IMPLICIT_TAG(aaRule_, 12);
         ITU_T_EXTENTION;
-        ITU_T_BIND_CHOICE(*displayEnhancement_);
+        ITU_T_BIND_CHOICE(displayEnhancement_);
     }
 
     Access_Control_List_instance& Event_Enrollment_instance::Definition_type::Details_type::accessControl() {

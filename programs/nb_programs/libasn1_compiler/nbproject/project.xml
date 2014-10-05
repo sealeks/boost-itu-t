@@ -11,7 +11,7 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>../../../include</sourceRootElem>
+                <sourceRootElem>../../../include/boost/itu/x68X</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
@@ -31,6 +31,9 @@
                     <type>3</type>
                 </confElem>
             </confList>
+            <formatting>
+                <project-formatting-style>false</project-formatting-style>
+            </formatting>
         </data>
     </configuration>
 </project>

@@ -4889,9 +4889,9 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*proposedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(*servicesSupportedCalling_, 2);
         ITU_T_EXTENTION;
-        ITU_T_IMPLICIT_TAG(*additionalSupportedCalling_, 3);
-        ITU_T_IMPLICIT_TAG(*additionalCbbSupportedCalling_, 4);
-        ITU_T_IMPLICIT_TAG(*privilegeClassIdentityCalling_, 5);
+        ITU_T_IMPLICIT_TAG(additionalSupportedCalling_, 3);
+        ITU_T_IMPLICIT_TAG(additionalCbbSupportedCalling_, 4);
+        ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalling_, 5);
     }
 
     template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x690::input_coder& arch) {
@@ -4899,9 +4899,9 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*proposedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(*servicesSupportedCalling_, 2);
         ITU_T_EXTENTION;
-        ITU_T_IMPLICIT_TAG(*additionalSupportedCalling_, 3);
-        ITU_T_IMPLICIT_TAG(*additionalCbbSupportedCalling_, 4);
-        ITU_T_IMPLICIT_TAG(*privilegeClassIdentityCalling_, 5);
+        ITU_T_IMPLICIT_TAG(additionalSupportedCalling_, 3);
+        ITU_T_IMPLICIT_TAG(additionalCbbSupportedCalling_, 4);
+        ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalling_, 5);
     }
 
     Integer16& Initiate_RequestPDU::InitRequestDetail_type::proposedVersionNumber() {
@@ -5112,9 +5112,9 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*negotiatedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(*servicesSupportedCalled_, 2);
         ITU_T_EXTENTION;
-        ITU_T_IMPLICIT_TAG(*additionalSupportedCalled_, 3);
-        ITU_T_IMPLICIT_TAG(*additionalCbbSupportedCalled_, 4);
-        ITU_T_IMPLICIT_TAG(*privilegeClassIdentityCalled_, 5);
+        ITU_T_IMPLICIT_TAG(additionalSupportedCalled_, 3);
+        ITU_T_IMPLICIT_TAG(additionalCbbSupportedCalled_, 4);
+        ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalled_, 5);
     }
 
     template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x690::input_coder& arch) {
@@ -5122,9 +5122,9 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*negotiatedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(*servicesSupportedCalled_, 2);
         ITU_T_EXTENTION;
-        ITU_T_IMPLICIT_TAG(*additionalSupportedCalled_, 3);
-        ITU_T_IMPLICIT_TAG(*additionalCbbSupportedCalled_, 4);
-        ITU_T_IMPLICIT_TAG(*privilegeClassIdentityCalled_, 5);
+        ITU_T_IMPLICIT_TAG(additionalSupportedCalled_, 3);
+        ITU_T_IMPLICIT_TAG(additionalCbbSupportedCalled_, 4);
+        ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalled_, 5);
     }
 
     Integer16& Initiate_ResponsePDU::InitResponseDetail_type::negotiatedVersionNumber() {
