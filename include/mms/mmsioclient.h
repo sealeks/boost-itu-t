@@ -7,7 +7,11 @@
 #ifndef _DVNCI_KRNL_NS_MMSCLIENT_H
 #define	_DVNCI_KRNL_NS_MMSCLIENT_H
 
-
+#ifdef _MSC_VER
+#if _MSC_VER >= 1800
+#define UNICODE
+#endif
+#endif
 
 #include <boost/asio/read_at.hpp>
 #include <boost/enable_shared_from_this.hpp>

@@ -8,6 +8,14 @@
 #ifndef MMSSOCKET_H
 #define	MMSSOCKET_H
 
+#ifdef _MSC_VER
+#if _MSC_VER >= 1800
+#define UNICODE
+#endif
+#endif
+
+#define BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS
+
 #include <boost/itu/x22X/x227.hpp>
 #include <mms/MMS-SCI-Module-1.hpp>
 
