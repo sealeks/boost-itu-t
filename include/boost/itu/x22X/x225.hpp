@@ -231,6 +231,7 @@ namespace boost {
             const octet_sequnce ECHO_NEGOTIATE = octet_sequnce(ECHO_NEGOTIATEarr, ECHO_NEGOTIATEarr + 6);
 
             enum release_type {
+
                 SESSION_FN_RELEASE = FN_SPDU_ID,
                 SESSION_AB_RELEASE = AB_SPDU_ID
             };
@@ -272,6 +273,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                 
 
             class spdudata {
+
                 typedef boost::shared_ptr<spdudata_type> spdudata_type_ptr;
 
             public:
@@ -376,6 +378,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
 
             struct protocol_options {
+
                 typedef boost::shared_ptr<spdudata> spdudata_ptr;
 
                 protocol_options() : vars_(new spdudata()) {
@@ -504,6 +507,7 @@ namespace boost {
 
             template <typename ConstBufferSequence>
             class data_sender_sequences : public basic_sender_sequences {
+
             public:
 
                 data_sender_sequences(const ConstBufferSequence& bf) : basic_sender_sequences() {
@@ -534,6 +538,7 @@ namespace boost {
 
             template<>
             class data_sender_sequences<const_sequences> : public basic_sender_sequences {
+
             public:
 
                 data_sender_sequences<const_sequences>(const const_sequences& bf) :
@@ -554,6 +559,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////              
 
             class sender {
+
             public:
 
                 sender(spdu_type type) : type_(type), segment_size(0), option(NULL_PROTOCOL_OPTION) {
@@ -678,6 +684,7 @@ namespace boost {
 
             template <typename ConstBufferSequence >
             class data_sender : public sender {
+
             public:
 
                 data_sender(const ConstBufferSequence& buff) : sender(DN_SPDU_ID) {
@@ -704,11 +711,13 @@ namespace boost {
             const std::size_t HDR_LI = 2;
 
             class receiver {
+
             public:
 
                 typedef boost::shared_ptr< protocol_options > protocol_options_ptr;
 
                 enum operation_state {
+
                     waittype,
                     waitsize,
                     waitheader,
@@ -816,6 +825,7 @@ namespace boost {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
             class itu_socket : protected boost::itu::rfc1006::socket {
+
                 static const std::size_t RESPONSE_BUFFER_SIZE = 1024;
 
                 typedef boost::itu::rfc1006::socket super_type;
@@ -931,9 +941,11 @@ namespace boost {
 
                 template <typename ConnectHandler>
                 class connect_operation {
+
                     typedef connect_operation <ConnectHandler> operation_type;
 
                     enum stateconnection {
+
                         request,
                         response,
                         refuse
@@ -957,8 +969,7 @@ namespace boost {
                                 receiver_->errcode(ER_NOBUFFER);
                             }
                             operator()(ec, 0);
-                        }
-                        else
+                        } else
                             exit_handler(ec);
                     }
 
@@ -971,8 +982,7 @@ namespace boost {
                                     if (!sender_->ready()) {
                                         socket.super_type::async_send(sender_->pop(), 0, *this, sender_->constraint());
                                         return;
-                                    }
-                                    else {
+                                    } else {
                                         state(response);
                                         operator()(ec, 0);
                                         return;
@@ -1042,6 +1052,9 @@ namespace boost {
                                         state(request);
                                         operator()(ec, 0);
                                         return;
+                                    }
+                                    default:
+                                    {
                                     }
                                 }
                                 break;
@@ -1126,9 +1139,11 @@ namespace boost {
 
                 template <typename ReleaseHandler>
                 class release_operation {
+
                     typedef release_operation<ReleaseHandler> operation_type;
 
                     enum stateconnection {
+
                         request,
                         response,
                         refuse
@@ -1208,8 +1223,7 @@ namespace boost {
                                         if (type_ == SESSION_FN_RELEASE) {
                                             //Accepted disconnect. *ref X225 7.7
                                             socket.rootcoder()->in()->add(receiver_->options().data());
-                                        }
-                                        else {
+                                        } else {
                                             // unexpected;
                                             errorrelease_ = ER_PROTOCOL;
                                         }
@@ -1252,8 +1266,7 @@ namespace boost {
                                             socket.rootcoder()->in()->clear();
                                             socket.rootcoder()->in()->add(receiver_->options().data());
                                             socket.negotiate_session_abort();
-                                        }
-                                        else {
+                                        } else {
                                             // initiators preference
                                             if (socket.is_acceptor()) {
                                                 socket.rootcoder()->in()->clear();
@@ -1360,9 +1373,11 @@ namespace boost {
 
                 template <typename CheckAcceptHandler>
                 class check_accept_operation {
+
                     typedef check_accept_operation<CheckAcceptHandler> operation_type;
 
                     enum stateconnection {
+
                         response,
                         request,
                         overflow,
@@ -1637,6 +1652,7 @@ namespace boost {
 
                 template <typename SendHandler, typename ConstBufferSequence>
                 class send_operation {
+
                     typedef send_operation<SendHandler, ConstBufferSequence> operation_type;
 
                 public:
@@ -1726,8 +1742,7 @@ namespace boost {
                         async_request(boost::bind(&send_operation_type::execute,
                                 send_operation_type(*this, handler, rslt), boost::asio::placeholders::error));
 
-                    }
-                    else {
+                    } else {
                         get_io_service().post(boost::bind(&send_operation_type::start,
                                 send_operation_type(*this, handler, buffers, flags)));
                     }
@@ -1762,6 +1777,7 @@ namespace boost {
 
                 template <typename RequestHandler>
                 class request_operation {
+
                     typedef request_operation<RequestHandler> operation_type;
 
                 public:
@@ -1884,9 +1900,11 @@ namespace boost {
 
                 template <typename ReceiveHandler, typename Mutable_Buffers>
                 class receive_operation {
+
                     typedef receive_operation<ReceiveHandler, Mutable_Buffers> operation_type;
 
                     enum stateconnection {
+
                         request,
                         response,
                         refuse
@@ -2050,8 +2068,7 @@ namespace boost {
 
                         get_io_service().post(boost::bind(&receive_operation_type::start, receive_operation_type(*this, handler,
                                 receiver_ptr(new receiver(sequence_adapter_type::first(buffers))), buffers, flags)));
-                    }
-                    else
+                    } else
                         super_type::async_receive(buffers, flags, handler);
 
                 }
@@ -2095,6 +2112,7 @@ namespace boost {
 
                 template <typename ResponseHandler>
                 class response_operation {
+
                     typedef response_operation<ResponseHandler> operation_type;
 
                 public:
@@ -2179,6 +2197,7 @@ namespace boost {
 
                 template <typename ConversationHandler>
                 class conversation_operation {
+
                     typedef conversation_operation<ConversationHandler> operation_type;
 
                 public:
@@ -2461,8 +2480,7 @@ namespace boost {
                                             if (type == SESSION_FN_RELEASE) {
                                                 //Accepted disconnect. *ref X225 7.7
                                                 rootcoder()->in()->add(receiver_->options().data());
-                                            }
-                                            else {
+                                            } else {
                                                 // unexpected;
                                                 ec = ER_PROTOCOL;
                                             }
@@ -2503,8 +2521,7 @@ namespace boost {
                                                 rootcoder()->in()->clear();
                                                 rootcoder()->in()->add(receiver_->options().data());
                                                 negotiate_session_abort();
-                                            }
-                                            else {
+                                            } else {
                                                 // initiators preference
                                                 if (is_acceptor()) {
                                                     rootcoder()->in()->clear();
@@ -2665,8 +2682,7 @@ namespace boost {
                             rslt = 0;
                         return rslt;
 
-                    }
-                    else {
+                    } else {
 
                         sender_ptr sender_(new data_sender<ConstBufferSequence > (buffers));
                         while (!ec && !sender_->ready())
@@ -2774,6 +2790,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             class socket_acceptor : protected boost::itu::rfc1006impl::socket_acceptor {
+
                 typedef boost::itu::rfc1006impl::socket_acceptor super_type;
 
                 friend class itu_socket;
@@ -2881,6 +2898,7 @@ namespace boost {
 
                 template <typename AcceptHandler>
                 class accept_operation {
+
                     typedef accept_operation<AcceptHandler> operation_type;
 
                 public:
@@ -2977,6 +2995,7 @@ namespace boost {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
 
         class x225 {
+
         public:
 
             typedef boost::asio::ip::basic_endpoint<boost::asio::ip::tcp> endpoint;
