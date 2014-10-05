@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <stack>
+#include <regex>
 
 
 #include <boost/itu/x69X/x690.hpp>
@@ -59,6 +60,8 @@ private:
 
 typedef boost::asn1::bitstring_type bitstring_type;
 
+typedef std::vector<std::string> intvector_type;
+
 //using namespace Test1;
 
 //typedef asn1_stream_adaptor<std::istream, std::ostream> asn1_adaptor;
@@ -66,6 +69,43 @@ typedef boost::asn1::bitstring_type bitstring_type;
 
 int main(int argc, char* argv[]) {
 
+     intvector_type tp {"111", "222", "333"};
+     for(const auto itt : tp ) {
+        std::cout << itt << " " << std::endl;
+     }
+
+    std::vector<int> someList{1,3,2,4,5};
+    int total = 0;
+    std::for_each(someList.begin(), someList.end(), [&total](int x) {
+        total += x;
+    });
+    std::cout << total;
+    
+    typedef std::shared_ptr<int> intshared_type;
+    
+     intshared_type tstint( new int(10));
+     
+     std::string ttt =u8"yyyyy : \u2018";
+
+
+    const char *reg_esp = "[ ,.\\t\\n;:]"; 
+
+    /*std::regex rgx(reg_esp);
+    std::cmatch match;
+    const char *target = "Unseen, University - Ankh-Morpork";*/
+
+    //if (std::regex_search(target, match, rgx)) {
+
+      /*  const size_t n = match.size();
+        for (size_t a = 0; a < n; a++) {
+            std::string str(match[a].first, match[a].second);
+            std::cout << str << "\n";
+        }*/
+    //}
+    
+    
+    
+     
     bitstring_type tV0(static_cast<boost::int8_t>('\xFF'),7);
     bitstring_type tV1(static_cast<boost::int8_t>('\xFF'),4);
     bitstring_type tV2=bitstring_type::create_from_string("0111010101011101010101011101010");
