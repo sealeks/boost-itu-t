@@ -8595,12 +8595,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(startLocation_, 0);
-        ITU_T_CHOICE_TAG(startCount_.get_shared(), 1);
+        ITU_T_CHOICE_TAG(startCount_, 1);
     }
 
     template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(startLocation_, 0);
-        ITU_T_CHOICE_TAG(startCount_.get_shared(), 1);
+        ITU_T_CHOICE_TAG(startCount_, 1);
     }
 
     boost::shared_ptr<visiblestring_type> CS_Start_Request_impl::Controlling_type::startLocation__new() {
@@ -9881,12 +9881,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AlterProgramInvocationAttributes_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocation_, 0);
-        ITU_T_CHOICE_TAG(startCount_.get_shared(), 1);
+        ITU_T_CHOICE_TAG(startCount_, 1);
     }
 
     template<> void AlterProgramInvocationAttributes_Request::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocation_, 0);
-        ITU_T_CHOICE_TAG(startCount_.get_shared(), 1);
+        ITU_T_CHOICE_TAG(startCount_, 1);
     }
 
     Identifier& AlterProgramInvocationAttributes_Request::programInvocation() {
@@ -16185,7 +16185,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(enrollmentsOnly_.get_shared(), 0);
         ITU_T_IMPLICIT_TAG(activeAlarmsOnly_.get_shared(), 1);
         ITU_T_IMPLICIT_TAG(acknowledgementFilter_.get_shared(), 2);
-        ITU_T_IMPLICIT_TAG(severityFilter_.get_shared(), 3);
+        ITU_T_IMPLICIT_TAG(severityFilter_, 3);
         ITU_T_CHOICE_TAG(continueAfter_, 5);
     }
 
@@ -16193,7 +16193,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(enrollmentsOnly_.get_shared(), 0);
         ITU_T_IMPLICIT_TAG(activeAlarmsOnly_.get_shared(), 1);
         ITU_T_IMPLICIT_TAG(acknowledgementFilter_.get_shared(), 2);
-        ITU_T_IMPLICIT_TAG(severityFilter_.get_shared(), 3);
+        ITU_T_IMPLICIT_TAG(severityFilter_, 3);
         ITU_T_CHOICE_TAG(continueAfter_, 5);
     }
 
@@ -16625,7 +16625,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(enrollmentsOnly_.get_shared(), 0);
         ITU_T_IMPLICIT_TAG(activeAlarmsOnly_.get_shared(), 1);
         ITU_T_IMPLICIT_TAG(acknowledgementFilter_.get_shared(), 2);
-        ITU_T_IMPLICIT_TAG(severityFilter_.get_shared(), 3);
+        ITU_T_IMPLICIT_TAG(severityFilter_, 3);
         ITU_T_CHOICE_TAG(continueAfter_, 5);
     }
 
@@ -16633,7 +16633,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(enrollmentsOnly_.get_shared(), 0);
         ITU_T_IMPLICIT_TAG(activeAlarmsOnly_.get_shared(), 1);
         ITU_T_IMPLICIT_TAG(acknowledgementFilter_.get_shared(), 2);
-        ITU_T_IMPLICIT_TAG(severityFilter_.get_shared(), 3);
+        ITU_T_IMPLICIT_TAG(severityFilter_, 3);
         ITU_T_CHOICE_TAG(continueAfter_, 5);
     }
 

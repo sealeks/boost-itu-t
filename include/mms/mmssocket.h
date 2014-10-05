@@ -10,7 +10,9 @@
 
 #ifdef _MSC_VER
 #if _MSC_VER >= 1800
+#ifndef UNICODE
 #define UNICODE
+#endif
 #endif
 #endif
 

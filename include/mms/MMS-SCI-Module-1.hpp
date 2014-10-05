@@ -79,9 +79,9 @@ namespace MMS_SCI_Module_1 {
 
 }
 
-#include <mms/MMS-Environment-1.hpp>
-#include <mms/MMS-Object-Module-1.hpp>
-#include <mms/ISO-9506-MMS-1.hpp>
+#include "MMS-Environment-1.hpp"
+#include "MMS-Object-Module-1.hpp"
+#include "ISO-9506-MMS-1.hpp"
 
 namespace MMS_SCI_Module_1 {
 
