@@ -142,7 +142,8 @@ namespace x680 {
     template<>
     boost::shared_ptr<tuple_vector> value_atom::get_value(bool except_abstract);
  
-
+    template<>
+    boost::shared_ptr<quadruple_vector> value_atom::get_value(bool except_abstract);
 
 
     /////////////////////////////////////////////////////////////////////////   
