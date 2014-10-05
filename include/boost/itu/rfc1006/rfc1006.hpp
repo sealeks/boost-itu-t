@@ -149,7 +149,7 @@ namespace boost {
                                     val = val + pdusz;
                                 }
                             }
-                        }                        while (boost::asio::buffer_size(val));
+                        } while (boost::asio::buffer_size(val));
                         ++it;
                         ended = (it == end) || (it == pend);
                     }
@@ -624,9 +624,9 @@ namespace boost {
                                         handler(receiver_->errcode());
                                         return;
                                     }
-                                }
-                                default:
-                                {
+                                    default:
+                                    {
+                                    }
                                 }
                                 break;
                             }
@@ -1148,8 +1148,8 @@ namespace boost {
                             receiver_ptr receive, const Mutable_Buffers& buff, message_flags flags) :
                     socket(sock),
                     handler(handlr),
-                    receiver_(receive),
                     buff_(buff),
+                    receiver_(receive),
                     flags_(flags),
                     state_(response) {
                     }
@@ -1185,6 +1185,9 @@ namespace boost {
                                     socket.async_internal_close();
                                     handler(ER_PROTOPT, 0);
                                     return;
+                                }
+                                default:
+                                {
                                 }
                             }
                         }
@@ -1251,6 +1254,9 @@ namespace boost {
                                 return;
                                 break;
                             }
+                            default:
+                            {
+                            }                            
                         }
                         // Release by means implicit variant  *ref X224 6.7.1.4
                         socket.async_internal_close();

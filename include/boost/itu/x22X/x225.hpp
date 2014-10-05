@@ -1058,6 +1058,7 @@ namespace boost {
                                     }
                                 }
                                 break;
+                                default:{}
                             }
                         }
                         // allways  transport disconnect
