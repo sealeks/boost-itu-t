@@ -63,7 +63,7 @@ namespace boost {
                     context_.encoding(val);
                     coder_ = build_by_context(context_);
                 }
-                return coder_;
+                return static_cast<bool>(coder_);
             }
 
 
@@ -90,7 +90,7 @@ namespace boost {
                 defined_context_map::iterator it = contexts_.find(id);
                 if (it != contexts_.end()) {
                     it->second->encoding(to_encoding(val));
-                    return it->second->coder();
+                    return static_cast<bool>(it->second->coder());
                 }
                 return false;
             }
@@ -99,7 +99,7 @@ namespace boost {
                 for (defined_context_map::iterator it = contexts_.begin(); it != contexts_.end(); ++it) {
                     if (it->second && it->second->abstract_syntax() == id) {
                         it->second->encoding(to_encoding(val));
-                        return it->second->coder();
+                        return static_cast<bool>(it->second->coder());
                     }
                 }
                 return false;
