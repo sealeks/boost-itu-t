@@ -98,7 +98,6 @@
             <linkerLibLibItem>wsock32</linkerLibLibItem>
             <linkerLibLibItem>oleaut32</linkerLibLibItem>
             <linkerLibLibItem>ws2_32</linkerLibLibItem>
-            <linkerLibLibItem>libstc++</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
