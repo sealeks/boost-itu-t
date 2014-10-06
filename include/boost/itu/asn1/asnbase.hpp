@@ -90,10 +90,6 @@ namespace boost {\
                     static bool op(Archive& arch, const regtype & vl) {\
                 return boost::asn1::bind_choice(arch, vl);\
             }\
-            template<typename Archive>\
-                    static bool op(Archive& arch, value_holder< regtype >& vl) {\
-                return op(arch, (*vl));\
-            }\
         };\
                 }\
             }\
@@ -1693,10 +1689,6 @@ namespace boost {
             return (arch.size() != tst);
         }
 
-        template<typename Archive, typename T>
-        inline bool bind_choice(Archive & arch, value_holder<T>& vl) {
-            return bind_choice(arch, *vl);
-        }
 
         template<typename Archive, typename T>
         inline bool bind_choice(Archive & arch, boost::shared_ptr< T >& vl) {
