@@ -1698,16 +1698,6 @@ namespace boost {
             return bind_choice(arch, *vl);
         }
 
-        template<typename Archive, typename T, T DT>
-        inline bool bind_choice(Archive & arch, default_holder<T, DT>& vl) {
-            return bind_choice(arch, vl.get_shared());
-        }
-
-        template<typename Archive, typename T, const T& DT>
-        inline bool bind_choice(Archive & arch, default_holder<T, DT>& vl) {
-            return bind_choice(arch, vl.get_shared());
-        }
-
         template<typename Archive, typename T>
         inline bool bind_choice(Archive & arch, boost::shared_ptr< T >& vl) {
             if (!vl) {
