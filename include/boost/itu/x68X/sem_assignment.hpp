@@ -867,7 +867,7 @@ namespace x680 {
         basic_atom_ptr reff();
 
         bool has_governor() const {
-            return governor_;
+            return static_cast<bool>(governor_);
         }
 
         bool has_undef_governor() const;
@@ -931,7 +931,7 @@ namespace x680 {
         }
 
         bool has_governor() const {
-            return governor_;
+            return  static_cast<bool>(governor_);
         }
 
 

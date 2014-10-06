@@ -1245,7 +1245,7 @@ namespace x680 {
     }
 
     bool basic_atom::isembeded() const {
-        return embeded_assignment_;
+        return static_cast<bool>(embeded_assignment_);
     }
 
     bool basic_atom::rooted() {
