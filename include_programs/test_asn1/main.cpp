@@ -16,6 +16,10 @@
 #include <boost/itu/coder/base_coder.hpp>
 #include <boost/itu/asn1/asnbase.hpp>
 
+#define ASN1TST
+
+#ifdef ASN1TST
+
 #include "Test1.hpp"
 
 typedef boost::asn1::x690::input_coder x690_input_coder_type;
@@ -56,59 +60,43 @@ private:
 };
 
 
+using namespace Test1;
+typedef asn1_stream_adaptor<std::istream, std::ostream> asn1_adaptor;
 
 
+#else
 
 #define DEBUG_BS(a)  std::cout << #a" = "  << a  << "    bitcnt=" <<  a.sizebits()   << "  unuse="  << a.unusebits()  << " to int="   <<  a.operator uint64_t()<<  std::endl;
-
 typedef boost::asn1::bitstring_type bitstring_type;
-typedef std::vector<std::string> intvector_type;
 
-using namespace Test1;
+#endif
 
-typedef asn1_stream_adaptor<std::istream, std::ostream> asn1_adaptor;
 
 
 int main(int argc, char* argv[]) {
 
-     /*intvector_type tp {"111", "222", "333"};
-     for(const auto itt : tp ) {
-        std::cout << itt << " " << std::endl;
-     }
 
-    std::vector<int> someList{1,3,2,4,5};
-    int total = 0;
-    std::for_each(someList.begin(), someList.end(), [&total](int x) {
-        total += x;
-    });
-    std::cout << total;
     
-    typedef std::shared_ptr<int> intshared_type;
+#ifdef ASN1TST    
     
-     intshared_type tstint( new int(10));
+  PersonnelRecord PR(PersonnelRecord_impl(Name(Name_impl(std::string("John"), std::string("P"), std::string("Smith"))),
+            "Director",
+            EmployeeNumber(51),
+            Date("19710917"),
+            Name(Name_impl(std::string("Mary"), std::string("T"), std::string("Smith")))));
+
+    PersonnelRecord_impl::Children_type& chlds = *(PR->children__new());
+    chlds.push_back(ChildInformation(Name(Name_impl(std::string("Ralph"), std::string("T"), std::string("Smith"))), Date("19571111")));
+    chlds.push_back(ChildInformation(Name(Name_impl(std::string("Susan"), std::string("B"), std::string("Jones"))), Date("19590717")));
+
+    asn1_adaptor adaptor(std::cin, std::cout);
+
+    adaptor << PR;   
+    
+    
+#else    
      
-    // std::string ttt =u8"yyyyy : \u2018";
-
-
-    const char *reg_esp = "[ ,.\\t\\n;:]"; 
-
-    std::regex rgx(reg_esp);
-    std::cmatch match;
-    const char *target = "Unseen, University - Ankh-Morpork";*/
-
-    //if (std::regex_search(target, match, rgx)) {
-
-      /*  const size_t n = match.size();
-        for (size_t a = 0; a < n; a++) {
-            std::string str(match[a].first, match[a].second);
-            std::cout << str << "\n";
-        }*/
-    //}
-    
-    
-    
-     
-    /*bitstring_type tV0(static_cast<boost::int8_t>('\xFF'),7);
+    bitstring_type tV0(static_cast<boost::int8_t>('\xFF'),7);
     bitstring_type tV1(static_cast<boost::int8_t>('\xFF'),4);
     bitstring_type tV2=bitstring_type::create_from_string("0111010101011101010101011101010");
     bitstring_type tV2n=~tV2;
@@ -131,24 +119,43 @@ int main(int argc, char* argv[]) {
     DEBUG_BS(tV2_3)   
     DEBUG_BS(tV3_4)               
     std::cout << "bool oper = " << (bool)tV2_3  << std::endl;
-    std::cout << "bool oper = " << (bool)tV3_4  << std::endl;  */
+    std::cout << "bool oper = " << (bool)tV3_4  << std::endl;  
     
     
+#endif
+   
 
-    PersonnelRecord PR(PersonnelRecord_impl(Name(Name_impl(std::string("John"), std::string("P"), std::string("Smith"))),
-            "Director",
-            EmployeeNumber(51),
-            Date("19710917"),
-            Name(Name_impl(std::string("Mary"), std::string("T"), std::string("Smith")))));
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     /*
+     typedef std::vector<std::string> intvector_type;
 
-    PersonnelRecord_impl::Children_type& chlds = *(PR->children__new());
-    chlds.push_back(ChildInformation(Name(Name_impl(std::string("Ralph"), std::string("T"), std::string("Smith"))), Date("19571111")));
-    chlds.push_back(ChildInformation(Name(Name_impl(std::string("Susan"), std::string("B"), std::string("Jones"))), Date("19590717")));
+     intvector_type tp {"111", "222", "333"};
+     for(const auto itt : tp ) {
+        std::cout << itt << " " << std::endl;
+     }
 
-    asn1_adaptor adaptor(std::cin, std::cout);
-
-    adaptor << PR;
-
+    std::vector<int> someList{1,3,2,4,5};
+    int total = 0;
+    std::for_each(someList.begin(), someList.end(), [&total](int x) {
+        total += x;
+    });
+      * 
+    std::cout << total;
+    
+    typedef std::shared_ptr<int> intshared_type;
+    
+     intshared_type tstint( new int(10));
+    }*/    
+    
+    
 
 }
 
