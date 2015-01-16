@@ -12,12 +12,11 @@
 #include <stack>
 #include <regex>
 
-
 #include <boost/itu/x69X/x690.hpp>
 #include <boost/itu/coder/base_coder.hpp>
 #include <boost/itu/asn1/asnbase.hpp>
 
-/*#include "Test1.hpp"
+#include "Test1.hpp"
 
 typedef boost::asn1::x690::input_coder x690_input_coder_type;
 typedef boost::asn1::x690::output_coder x690_output_coder_type;
@@ -40,7 +39,7 @@ public:
 
     template<typename T>
     friend self_type& operator<<(self_type& stream, const T& vl) {
-        boost::asn1::bind_element(stream.coder.output(), vl);
+        /*boost::asn1::bind_basic(*/stream.coder.output() & vl/*)*/;
         const boost::itu::const_sequences& seq = stream.coder.output().buffers();
         for (boost::itu::const_sequences::const_iterator it = seq.begin(); it != seq.end(); ++it) {
             stream.out << boost::itu::binary_to_hexsequence_debug(std::string(boost::asio::buffer_cast<const char*>(*it), boost::asio::buffer_size(*it)));
@@ -54,22 +53,25 @@ private:
     input_stream_type& in;
     output_stream_type& out;
     x690_coder_type coder;
-};*/
+};
+
+
+
+
 
 #define DEBUG_BS(a)  std::cout << #a" = "  << a  << "    bitcnt=" <<  a.sizebits()   << "  unuse="  << a.unusebits()  << " to int="   <<  a.operator uint64_t()<<  std::endl;
 
 typedef boost::asn1::bitstring_type bitstring_type;
-
 typedef std::vector<std::string> intvector_type;
 
-//using namespace Test1;
+using namespace Test1;
 
-//typedef asn1_stream_adaptor<std::istream, std::ostream> asn1_adaptor;
+typedef asn1_stream_adaptor<std::istream, std::ostream> asn1_adaptor;
 
 
 int main(int argc, char* argv[]) {
 
-     intvector_type tp {"111", "222", "333"};
+     /*intvector_type tp {"111", "222", "333"};
      for(const auto itt : tp ) {
         std::cout << itt << " " << std::endl;
      }
@@ -85,12 +87,12 @@ int main(int argc, char* argv[]) {
     
      intshared_type tstint( new int(10));
      
-     std::string ttt =u8"yyyyy : \u2018";
+    // std::string ttt =u8"yyyyy : \u2018";
 
 
     const char *reg_esp = "[ ,.\\t\\n;:]"; 
 
-    /*std::regex rgx(reg_esp);
+    std::regex rgx(reg_esp);
     std::cmatch match;
     const char *target = "Unseen, University - Ankh-Morpork";*/
 
@@ -106,7 +108,7 @@ int main(int argc, char* argv[]) {
     
     
      
-    bitstring_type tV0(static_cast<boost::int8_t>('\xFF'),7);
+    /*bitstring_type tV0(static_cast<boost::int8_t>('\xFF'),7);
     bitstring_type tV1(static_cast<boost::int8_t>('\xFF'),4);
     bitstring_type tV2=bitstring_type::create_from_string("0111010101011101010101011101010");
     bitstring_type tV2n=~tV2;
@@ -129,20 +131,23 @@ int main(int argc, char* argv[]) {
     DEBUG_BS(tV2_3)   
     DEBUG_BS(tV3_4)               
     std::cout << "bool oper = " << (bool)tV2_3  << std::endl;
-    std::cout << "bool oper = " << (bool)tV3_4  << std::endl;  
-        /*PersonnelRecord PR(PersonnelRecord_impl(Name(Name_impl(std::string("John"), std::string("P"), std::string("Smith"))), 
-                "Director", 
-                EmployeeNumber(51), 
-                Date("19710917"), 
-                Name(Name_impl(std::string("Mary"), std::string("T"), std::string("Smith")))));
+    std::cout << "bool oper = " << (bool)tV3_4  << std::endl;  */
     
-        PersonnelRecord_impl::Children_type& chlds = *(PR->children__new());
-        chlds.push_back(ChildInformation(Name(Name_impl(std::string("Ralph"), std::string("T"), std::string("Smith"))), Date("19571111")));
-        chlds.push_back(ChildInformation(Name(Name_impl(std::string("Susan"), std::string("B"), std::string("Jones"))), Date("19590717")));
+    
 
-        asn1_adaptor adaptor(std::cin,std::cout);
-    
-       adaptor << PR;*/
+    PersonnelRecord PR(PersonnelRecord_impl(Name(Name_impl(std::string("John"), std::string("P"), std::string("Smith"))),
+            "Director",
+            EmployeeNumber(51),
+            Date("19710917"),
+            Name(Name_impl(std::string("Mary"), std::string("T"), std::string("Smith")))));
+
+    PersonnelRecord_impl::Children_type& chlds = *(PR->children__new());
+    chlds.push_back(ChildInformation(Name(Name_impl(std::string("Ralph"), std::string("T"), std::string("Smith"))), Date("19571111")));
+    chlds.push_back(ChildInformation(Name(Name_impl(std::string("Susan"), std::string("B"), std::string("Jones"))), Date("19590717")));
+
+    asn1_adaptor adaptor(std::cin, std::cout);
+
+    adaptor << PR;
 
 
 }
