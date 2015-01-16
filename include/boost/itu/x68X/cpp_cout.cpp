@@ -736,6 +736,8 @@ namespace x680 {
 
         std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext) {
             tagmarker_type dfltopt = afterext ? mk_optional : self->marker();
+            if ((dfltopt==mk_default) && (self->isstruct_of()))
+                dfltopt=mk_optional;
             if ((self->isdefined_choice())) {
                 if (self->tag()) {
                     switch (self->tag()->_class()) {
