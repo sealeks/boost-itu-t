@@ -111,7 +111,7 @@ namespace boost {
             /////  CAST FROM AND TO TYPE
 
             ///////////////////////////////////////////////////////////////////////////////////////////////
-            // integer to X.690
+            // integer to X.691
 
             template<typename T>
             std::size_t to_x691_cast(T val, octet_sequnce& src) {
@@ -162,7 +162,7 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // tag to X.690
+            // tag to X.691
 
 
             std::size_t to_x691_cast(const tag& val, octet_sequnce& src);
@@ -171,7 +171,7 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // size_class to X.690
+            // size_class to X.691
 
 
             std::size_t to_x691_cast(const size_class& val, octet_sequnce& src);
@@ -180,7 +180,7 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // real to X.690
+            // real to X.691
 
 
             template<>
@@ -195,48 +195,48 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // bool to X.690
+            // bool to X.691
 
             template<>
             std::size_t to_x691_cast(bool val, octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // null to X.690
+            // null to X.691
 
             std::size_t to_x691_cast(const null_type& val, octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // enumerated_type to X.690
+            // enumerated_type to X.691
 
             std::size_t to_x691_cast(const enumerated_type& val, octet_sequnce& src);
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // oid to X.690
+            // oid to X.691
 
 
             std::size_t to_x691_cast(const oid_type& val, octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // relative oid to X.690
+            // relative oid to X.691
 
 
             std::size_t to_x691_cast(const reloid_type& val, octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // utctime to X.690
+            // utctime to X.691
 
 
             std::size_t to_x691_cast(const utctime_type& val, octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // gentime to X.690
+            // gentime to X.691
 
 
             std::size_t to_x691_cast(const gentime_type& val, octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // any_type to X.690
+            // any_type to X.691
 
 
             std::size_t to_x691_cast(const any_type& val, octet_sequnce& src);
@@ -670,7 +670,7 @@ namespace boost {
             /////  CAST FROM AND TO TYPE
 
             ///////////////////////////////////////////////////////////////////////////////////////////////
-            // integer from X.690          
+            // integer from X.691          
 
             template<typename T>
             bool from_x691_cast(T& vl, const octet_sequnce& dt) {
@@ -690,19 +690,19 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // tag from X.690
+            // tag from X.691
 
             std::size_t tag_from_x691_cast(const tag& val, const octet_sequnce& src);
 
             std::size_t tag_x691_cast(tag& val, const mutable_sequences& src, mutable_sequences::const_iterator bit, std::size_t beg = 0);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // size_class from X.690
+            // size_class from X.691
 
             std::size_t size_x691_cast(size_class& val, const mutable_sequences& src, mutable_sequences::const_iterator bit, std::size_t beg = 0);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // real from X.690
+            // real from X.691
 
             template<>
             bool from_x691_cast(float& vl, const octet_sequnce& val);
@@ -715,51 +715,51 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // bool from X.690
+            // bool from X.691
 
             template<>
             bool from_x691_cast(bool& vl, const octet_sequnce& val);
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // null from X.690
+            // null from X.691
 
             template<>
             bool from_x691_cast(null_type& val, const octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // enumerated_type from X.690
+            // enumerated_type from X.691
 
             template<>
             bool from_x691_cast(enumerated_type& val, const octet_sequnce& src);
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // oid from X.690
+            // oid from X.691
 
             template<>
             bool from_x691_cast(oid_type& val, const octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // relative from to X.690
+            // relative from to X.691
 
             template<>
             bool from_x691_cast(reloid_type& val, const octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // utctime_type from to X.690
+            // utctime_type from to X.691
 
             template<>
             bool from_x691_cast(utctime_type& val, const octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // gentime_type from to X.690
+            // gentime_type from to X.691
 
             template<>
             bool from_x691_cast(gentime_type& val, const octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // any_type from to X.690
+            // any_type from to X.691
 
             template<>
             bool from_x691_cast(any_type& val, const octet_sequnce& src);
@@ -1043,6 +1043,15 @@ namespace boost {
                 }
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
+            
+            template<typename T>
+            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, T& vl) {
+                return seq.begin();
+            } 
+            
+            template<>
+            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq,  bitstring_type& vl);
+            
 
             template<typename T>
             bool stringtype_reader(input_coder& stream, T& vl, id_type id, octet_type mask) {
@@ -1061,9 +1070,10 @@ namespace boost {
                         } else {
                             std::size_t sz = 0;
                             if (boost::itu::find_eof(stream.buffers(), stream.buffers().begin(), sz)) {
-                                octet_sequnce data;
+                                octet_sequnce data;                                
                                 if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
-                                    vl.insert(vl.end(), data.begin(), data.end());
+                                    octet_sequnce::iterator fit= reader_setunuse(data,vl);
+                                    vl.insert(vl.end(), fit , data.end());
                                     return true;
                                 }
                             }
@@ -1081,7 +1091,8 @@ namespace boost {
                         } else {
                             octet_sequnce data;
                             if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, tmpsize.size())) {
-                                vl.insert(vl.end(), data.begin(), data.end());
+                                octet_sequnce::iterator fit= reader_setunuse(data,vl);
+                                vl.insert(vl.end(), fit , data.end());
                                 stream.pop_stack();
                                 return true;
                             }
@@ -1090,6 +1101,7 @@ namespace boost {
                 }
                 return false;
             }
+                   
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<int8_t>& vl);

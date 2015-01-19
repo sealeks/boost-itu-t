@@ -89,7 +89,7 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // size_class to X.690
+            // size_class to X.691
 
             std::size_t to_x691_cast(const size_class& val, octet_sequnce& src) {
                 if (!val.undefsize()) {
@@ -287,7 +287,7 @@ namespace boost {
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // utctime to X.690
+            // utctime to X.691
 
             std::size_t to_x691_cast(const utctime_type& val, octet_sequnce& src) {
                 std::size_t strtsz = src.size();
@@ -297,7 +297,7 @@ namespace boost {
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // gentime to X.690
+            // gentime to X.691
 
             std::size_t to_x691_cast(const gentime_type& val, octet_sequnce& src) {
                 std::size_t strtsz = src.size();
@@ -307,7 +307,7 @@ namespace boost {
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // any_type to X.690
+            // any_type to X.691
 
             std::size_t to_x691_cast(const any_type& val, octet_sequnce& src) {
                 std::size_t strtsz = src.size();
@@ -617,7 +617,7 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // tag from X.690                 
+            // tag from X.691                 
 
             std::size_t tag_from_x691_cast(const tag& val, const octet_sequnce& src) {
                 octet_sequnce tmp = to_x691_cast(val);
@@ -648,7 +648,7 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // size_class from X.690                
+            // size_class from X.691                
 
             std::size_t size_x691_cast(size_class& val, const mutable_sequences& src, mutable_sequences::const_iterator bit, std::size_t beg) {
                 octet_sequnce s1;
@@ -689,7 +689,7 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // real from X.690
+            // real from X.691
 
             template<typename T>
             static bool from_x691_real_cast_special(T& vl, const octet_sequnce& val) {
@@ -795,7 +795,7 @@ namespace boost {
                         mant <<= 1;
                     }
                     if (exp_b < 0) {
-                        vl = negat ? -0.0 : 0;
+                        vl = static_cast<T>(negat ? -0.0 : 0);
                         return true;
                     }
                     B exp = static_cast<B> (exp_b);
@@ -866,7 +866,7 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // bool from X.690
+            // bool from X.691
 
             template<>
             bool from_x691_cast(bool& vl, const octet_sequnce& val) {
@@ -878,7 +878,7 @@ namespace boost {
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // null from X.690               
+            // null from X.691               
 
             template<>
             bool from_x691_cast(null_type& val, const octet_sequnce& vl) {
@@ -890,7 +890,7 @@ namespace boost {
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // enumerated_type from X.690
+            // enumerated_type from X.691
 
             template<>
             bool from_x691_cast(enumerated_type& val, const octet_sequnce& src) {
@@ -904,7 +904,7 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // oid from X.690
+            // oid from X.691
 
             bool from_x691_impl_cast(oidindx_type& val, const octet_sequnce& vl, octet_sequnce::const_iterator& its) {
                 val = 0;
@@ -921,7 +921,7 @@ namespace boost {
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // relative from to X.690
+            // relative from to X.691
 
             template<>
             bool from_x691_cast(oid_type& val, const octet_sequnce& vl) {
@@ -956,7 +956,7 @@ namespace boost {
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // relative from to X.690
+            // relative from to X.691
 
             template<>
             bool from_x691_cast(reloid_type& val, const octet_sequnce& vl) {
@@ -975,7 +975,7 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // utctime_type from to X.690
+            // utctime_type from to X.691
 
             template<>
             bool from_x691_cast(utctime_type& val, const octet_sequnce& src) {
@@ -984,7 +984,7 @@ namespace boost {
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // gentime_type from to X.690
+            // gentime_type from to X.691
 
             template<>
             bool from_x691_cast(gentime_type& val, const octet_sequnce& src) {
@@ -993,13 +993,24 @@ namespace boost {
             }
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // any_type from to X.690
+            // any_type from to X.691
 
             template<>
             bool from_x691_cast(any_type& val, const octet_sequnce& src) {
                 val.set(src);
                 return true;
             }
+            
+            template<>
+            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq,  bitstring_type& vl) {
+                octet_sequnce::iterator it=seq.begin();
+                if (it!=seq.end()){
+                    vl.unusebits(static_cast<std::size_t>(*it));
+                    it++;
+                }
+                return it;
+            }              
+
 
 
             ////////////////////////////////////////////
@@ -1305,7 +1316,7 @@ namespace boost {
                         if (is_endof())
                             pop_front(2);
                         else
-                            std::cout << "NEED FIND EOF, EOF NOT FOUND: " << std::endl;
+                            throw boost::system::system_error(boost::itu::ER_BEDSEQ);
                     } else {
                         pop_front(stack_.top().sizeinfo.size);
                     }
@@ -1445,14 +1456,14 @@ namespace boost {
             ITU_T_BIND_TAG(direct_reference_);
             ITU_T_BIND_TAG(indirect_reference_);
             ITU_T_BIND_TAG(data_value_descriptor_);
-            ITU_T_BIND_CHOICE(encoding_);
+            ITU_T_BIND_CHOICE(*encoding_);
         }
 
         template<> void external_type::serialize(boost::asn1::x691::input_coder& arch) {
             ITU_T_BIND_TAG(direct_reference_);
             ITU_T_BIND_TAG(indirect_reference_);
             ITU_T_BIND_TAG(data_value_descriptor_);
-            ITU_T_BIND_CHOICE(encoding_);
+            ITU_T_BIND_CHOICE(*encoding_);
         }
 
 
@@ -1462,23 +1473,23 @@ namespace boost {
         //embeded_type
 
         template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(abstract_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_, 1);
+            ITU_T_IMPLICIT_TAG(*abstract_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
         template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(abstract_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_, 1);
+            ITU_T_IMPLICIT_TAG(*abstract_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
         template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
         template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
         template<> void embeded_type::Identification_type::serialize(boost::asn1::x691::output_coder& arch) {
@@ -1597,13 +1608,13 @@ namespace boost {
         }
 
         template<> void embeded_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_CHOICE_TAG(identification_, 0);
-            ITU_T_IMPLICIT_TAG(data_value_, 1);
+            ITU_T_CHOICE_TAG(*identification_, 0);
+            ITU_T_IMPLICIT_TAG(*data_value_, 1);
         }
 
         template<> void embeded_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_CHOICE_TAG(identification_, 0);
-            ITU_T_IMPLICIT_TAG(data_value_, 1);
+            ITU_T_CHOICE_TAG(*identification_, 0);
+            ITU_T_IMPLICIT_TAG(*data_value_, 1);
         }
 
 
@@ -1611,23 +1622,23 @@ namespace boost {
         //////////////////////////////////////////////////////////////
 
         template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(abstract_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_, 1);
+            ITU_T_IMPLICIT_TAG(*abstract_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
         template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(abstract_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_, 1);
+            ITU_T_IMPLICIT_TAG(*abstract_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
         template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
         template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_IMPLICIT_TAG(presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(transfer_syntax_, 1);
+            ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
+            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);
         }
 
         template<> void characterstring_type::Identification_type::serialize(boost::asn1::x691::output_coder& arch) {
@@ -1746,13 +1757,13 @@ namespace boost {
         }
 
         template<> void characterstring_type::serialize(boost::asn1::x691::output_coder& arch) {
-            ITU_T_CHOICE_TAG(identification_, 0);
-            ITU_T_IMPLICIT_TAG(string_value_, 1);
+            ITU_T_CHOICE_TAG(*identification_, 0);
+            ITU_T_IMPLICIT_TAG(*string_value_, 1);
         }
 
         template<> void characterstring_type::serialize(boost::asn1::x691::input_coder& arch) {
-            ITU_T_CHOICE_TAG(identification_, 0);
-            ITU_T_IMPLICIT_TAG(string_value_, 1);
+            ITU_T_CHOICE_TAG(*identification_, 0);
+            ITU_T_IMPLICIT_TAG(*string_value_, 1);
         }
 
 #ifdef _MSC_VER
