@@ -373,6 +373,13 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const implicit_value<int32_t>& vl) {
                 return primitive_sirialize(stream, vl);
             }
+            
+                         
+            
+            output_coder& operator<<(output_coder& stream, const int32_t& vl) {
+                return primitive_int_sirialize(stream, vl);
+            }            
+            
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<uint32_t>& vl) {
@@ -540,6 +547,10 @@ namespace boost {
 
 
             /// output_coder
+
+            void output_coder::operator&(const int32_t& vl) {
+                *this << vl;
+            }    
 
             output_coder::iterator_type output_coder::addtag(const tag& tg, bool settype) {
                 if (/*false*/rule_ != boost::itu::CER_ENCODING) return add(to_x691_cast(tg));

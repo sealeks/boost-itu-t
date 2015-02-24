@@ -296,6 +296,13 @@ namespace boost {
                 void operator&(const T& vl) {
                     *this << implicit_value<T > (vl);
                 }
+                
+                void operator&(const int32_t& vl);             
+                
+                template<typename T, T MIN, T MAX, bool EXT>
+                void operator&(const int_constrainter<T, MIN, MAX, EXT >& vl) {
+                    *this << vl;
+                }                
 
                 template<typename T>
                 void operator&(const explicit_value<T >& vl) {
@@ -463,6 +470,24 @@ namespace boost {
                 return stream;
             }
 
+            template<typename T, T MIN, T MAX, bool EXT>
+            output_coder& operator<<(output_coder& stream, const int_constrainter<T, MIN, MAX, EXT >& vl) {
+
+                typedef int_constrainter<T, MIN, MAX, EXT > self_type;
+                
+                if ((vl.extended()) && (vl.can_extended()))
+                    return primitive_int_sirialize(stream, vl.value());
+                
+                switch (vl.type()) {
+                    case self_type::halfoctet: return primitive_constr1_int_sirialize(stream,vl.sendval(), vl.bitsize());
+                    case  self_type::oneoctet: return primitive_constr1_int_sirialize(stream,vl.sendval(), 8);
+                    case  self_type::twooctet: return primitive_constr2_int_sirialize(stream,vl.sendval());
+                    default:{                       
+                    }                
+                }
+                return primitive_int_sirialize(stream, vl.sendval());
+            }            
+
             template<typename T>
             output_coder& primitive_sirialize(output_coder& stream, const implicit_value<T>& vl) {
 
@@ -478,6 +503,39 @@ namespace boost {
                 stream.pop_stack();
                 return stream;
             }
+            
+            template<typename T>
+            output_coder& primitive_int_sirialize(output_coder& stream, const T& vl) {
+
+                bool emp = stream.buffers().empty(); 
+                const_sequences::iterator it = stream.last();
+                std::size_t sz = stream.size();
+                stream.add(to_x691_cast(vl));
+                sz = stream.size(sz);
+                if (emp){
+                    stream.add(to_x691_cast(size_class(sz)), stream.buffers().begin());
+                }
+                else{
+                    ++it;
+                    stream.add(to_x691_cast(size_class(sz)), it);
+                }
+                return stream;
+                
+            }  
+            
+            
+            template<typename T>
+            output_coder& primitive_constr1_int_sirialize(output_coder& stream, const T& vl, const std::size_t bs) {
+                stream.add_bitmap(bitstring_type(octet_sequnce(1, static_cast<octet_sequnce::value_type>(vl) << (8-bs)),(8-bs)), false);
+                return stream;              
+            }                          
+            
+            template<typename T>
+            output_coder& primitive_constr2_int_sirialize(output_coder& stream, const T& vl) {
+
+                stream.add(to_x691_cast(vl));
+                return stream;                   
+            }                 
 
             template<typename T>
             output_coder& operator<<(output_coder& stream, const optional_explicit_value<T>& vl) {
@@ -570,6 +628,8 @@ namespace boost {
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<int32_t>& vl);
+            
+            output_coder& operator<<(output_coder& stream, const int32_t& vl);            
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<uint32_t>& vl);

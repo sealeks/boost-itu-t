@@ -124,7 +124,7 @@ namespace x680 {
         }
 
 
-        const std::string FHHEADER = "#include <boost/itu/asn1/asnbase.hpp>\n#include <boost/itu/x69X/x690.hpp>\n\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
+        const std::string FHHEADER = "#include <boost/itu/asn1/asnbase.hpp>\n#include <boost/itu/x69X/x690.hpp>\n#include <boost/itu/x69X/x691.hpp>\n\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
         const std::string FHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n\n#endif";
         const std::string CHHEADER = "\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
         const std::string CHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n";
@@ -835,7 +835,7 @@ namespace x680 {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         fileout::fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir, bool revrs, bool nohldr)
-        : path_(path), outdir_(outdir), global_(glb), reverse_(revrs), noholder_(nohldr) {
+        : path_(path), outdir_(outdir), global_(glb), reverse_(revrs), noholder_(nohldr), with691_(true) {
         }
 
         fileout::~fileout() {
@@ -905,7 +905,11 @@ namespace x680 {
             else
                 execute_typeassignments_hpp<basic_entity_vector::const_iterator>(stream, self->childs().begin(), self->childs().end());
 
-            execute_struct_meth_hpp(stream, self);
+            if (execute_struct_meth_hpp(stream, self))
+                stream << "\n";
+            
+            if (with691_)
+                execute_struct_meth_hpp(stream, self, "x691");
 
             execute_stop_ns(stream, self);
 
@@ -1808,6 +1812,10 @@ namespace x680 {
             execute_access_member_cpp(stream, self);
 
             execute_archive_meth_cpp(stream, self);
+            
+            if (with691_)
+                execute_archive_meth_cpp(stream, self, "x691");
+            
             stream << "\n ";
         }
 
@@ -1865,6 +1873,9 @@ namespace x680 {
             execute_default_cpp(stream, self);
 
             execute_archive_meth_cpp(stream, self);
+
+            if (with691_)
+                execute_archive_meth_cpp(stream, self, "x691");
 
             execute_access_member_cpp(stream, self);
 
@@ -2086,23 +2097,23 @@ namespace x680 {
             stream << "\n\n" << tabformat(scp, 1) << "ITU_T_ARCHIVE_FUNC;";
         }
 
-        void fileout::execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self) {
+        void fileout::execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self, const std::string& ctp) {
             switch (self->builtin()) {
                 case t_CHOICE: stream << "\n";
-                    stream << struct_meth_str(self, "boost::asn1::x690::output_coder");
+                    stream << struct_meth_str(self, "boost::asn1::"+ ctp +"::output_coder");
                     stream << "{";
                     execute_archive_ber_choice_cho(stream, self);
-                    stream << struct_meth_str(self, "boost::asn1::x690::input_coder");
+                    stream << struct_meth_str(self, "boost::asn1::"+ ctp +"::input_coder");
                     stream << "{";
                     execute_archive_ber_choice_chi(stream, self);
                     break;
                 case t_SET:
                 case t_SEQUENCE: stream << "\n";
 
-                    stream << struct_meth_str(self, "boost::asn1::x690::output_coder");
+                    stream << struct_meth_str(self, "boost::asn1::"+ ctp +"::output_coder");
                     stream << "{";
                     execute_archive_ber_struct(stream, self);
-                    stream << struct_meth_str(self, "boost::asn1::x690::input_coder");
+                    stream << struct_meth_str(self, "boost::asn1::"+ ctp +"::input_coder");
                     stream << "{";
                     execute_archive_ber_struct(stream, self);
 
@@ -2288,18 +2299,17 @@ namespace x680 {
             return cnt;
         }
 
-        std::size_t fileout::execute_struct_meth_hpp(std::ofstream& stream, basic_entity_ptr self) {
+        std::size_t fileout::execute_struct_meth_hpp(std::ofstream& stream, basic_entity_ptr self, const std::string& ctp) {
             std::size_t cnt = 0;
-            basic_entity_ptr scp;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if (tpas && (tpas->isstructure()) && (tpas->is_cpp_expressed())) {
                     if (tpas->isstruct()) {
-                        stream << struct_meth_str(tpas, "boost::asn1::x690::output_coder") << ";";
-                        stream << struct_meth_str(tpas, "boost::asn1::x690::input_coder") << ";";
+                        stream << struct_meth_str(tpas, "boost::asn1::"+ ctp +"::output_coder") << ";";
+                        stream << struct_meth_str(tpas, "boost::asn1::"+ ctp +"::input_coder") << ";";
                         cnt++;
                     }
-                    cnt += execute_struct_meth_hpp(stream, tpas);
+                    cnt += execute_struct_meth_hpp(stream, tpas, ctp);
                 }
             }
             return cnt;

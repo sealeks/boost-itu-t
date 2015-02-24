@@ -166,7 +166,7 @@ namespace x680 {
             void execute_structof_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
 
             void execute_archive_meth_hpp(std::ofstream& stream, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self, const std::string& ctp = "x690");
 
             void execute_archive_ber_struct(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_archive_ber_member(std::ofstream& stream, namedtypeassignment_entity_ptr self, bool afterext = false);
@@ -177,7 +177,7 @@ namespace x680 {
 
             std::size_t registrate_struct_choice(std::ofstream& stream, basic_entity_ptr self);
             std::size_t registrate_struct_set(std::ofstream& stream, basic_entity_ptr self);
-            std::size_t execute_struct_meth_hpp(std::ofstream& stream, basic_entity_ptr self);
+            std::size_t execute_struct_meth_hpp(std::ofstream& stream, basic_entity_ptr self, const std::string& ctp = "x690");
 
             template<typename Iter>
             void execute_typeassignments_hpp(std::ofstream& stream, Iter beg, Iter end) {
@@ -217,6 +217,7 @@ namespace x680 {
             global_entity_ptr global_;
             bool reverse_;
             bool noholder_;
+            bool with691_;
 
 
         };

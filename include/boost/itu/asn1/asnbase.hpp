@@ -315,165 +315,6 @@ namespace boost {
         }
 
 
-        ///  BITSTRING TYPE
-
-        class bitstring_type : public std::vector<octet_type> {
-
-        public:
-
-            typedef std::vector<bool> bool_vector_type;
-            typedef boost::dynamic_bitset<> dynamic_bitset_type;
-
-            bitstring_type();
-
-            explicit bitstring_type(uint8_t vl, std::size_t unuse = 0);
-
-            explicit bitstring_type(uint16_t vl, std::size_t unuse = 0);
-
-            explicit bitstring_type(uint32_t vl, std::size_t unuse = 0);
-
-            explicit bitstring_type(uint64_t vl, std::size_t unuse = 0);
-
-            explicit bitstring_type(int8_t vl, std::size_t unuse = 0);
-
-            explicit bitstring_type(int16_t vl, std::size_t unuse = 0);
-
-            explicit bitstring_type(int32_t vl, std::size_t unuse = 0);
-
-            explicit bitstring_type(int64_t vl, std::size_t unuse = 0);
-
-            explicit bitstring_type(const octet_sequnce& vl, std::size_t unuse = 0);
-
-            explicit bitstring_type(const std::vector<bool>& vl);
-
-            explicit bitstring_type(bool vl, std::size_t n);
-
-            explicit bitstring_type(const std::string& vl, std::size_t unuse = 0);
-
-            bitstring_type(const dynamic_bitset_type& vl) : std::vector<octet_type>() {
-                construct(vl);
-            };
-
-            void insert_bitstring(const octet_sequnce& val, std::size_t unuse = 0);
-            
-            static bitstring_type create_from_string(const std::string& vl);            
-
-            std::size_t unusebits() const {
-                return empty() ? 0 : (unuse_);
-            }
-
-            std::size_t unusebits(std::size_t vl);
-
-            std::size_t sizebits() const {
-                return empty() ? 0 : (size() * 8 - unusebits());
-            }
-
-            bool bit(std::size_t num) const;
-
-            void bit(std::size_t num, bool val);          
-
-            operator bool_vector_type() const;
-
-            operator dynamic_bitset_type() const;
-
-            dynamic_bitset_type dynamic_bitset() const;
-
-            operator boost::uint8_t() const;
-
-            operator boost::uint16_t() const;
-
-            operator boost::uint32_t() const;
-
-            operator boost::uint64_t() const;
-
-            operator boost::int8_t() const;
-
-            operator boost::int16_t() const;
-
-            operator boost::int32_t() const;
-
-            operator boost::int64_t() const;
-            
-            operator bool() const;
-            
-           bitstring_type operator~() const;
-
-            friend bitstring_type operator|(const bitstring_type& ls, const bitstring_type& rs);
-
-            friend bitstring_type operator&(const bitstring_type& ls, const bitstring_type& rs);
-
-            friend bitstring_type operator^(const bitstring_type& ls, const bitstring_type& rs);
-
-
-
-        private:
-
-            template<typename T>
-            void construct(T val, std::size_t unuse) {               
-                if (unuse<sizeof (T)*8) {
-                    reserve(sizeof (T));
-                    insert(end(), (const char*) (&val), (const char*) (&val) +(sizeof (T) - unuse / 8));
-                    for (iterator it = begin(); it != end(); ++it)
-                        boost::itu::reverse_bit(*it);                  
-#ifdef BIG_ENDIAN_ARCHITECTURE
-                    std::reverse(begin(),end());
-#endif                 
-                }
-                unusebits(unuse % 8);
-            }
-
-            void construct(const std::vector<bool>& vl);
-
-            template<typename T>
-            T return_int() const {
-                if (!empty()){
-                    std::vector<octet_type> tmp(begin(),end());   
-                    tmp.back()&=('\xFF' << unusebits());
-                    for (std::vector<octet_type>::iterator it=tmp.begin();it!=tmp.end();++it)
-                        boost::itu::reverse_bit(*it);                            
-                    if (tmp.size()<sizeof (T)) 
-                        tmp.insert(tmp.end(),sizeof (T)-size(),0);
-#ifdef BIG_ENDIAN_ARCHITECTURE
-                    std::reverse(tmp.begin(),tmp.end());
-#endif                      
-                    return  *reinterpret_cast<T*> (&tmp[0]);
-                }
-                return 0;
-            }
-
-            void construct(const dynamic_bitset_type& vl);
-
-            std::size_t unuse_;
-
-
-        };
-
-
-        std::ostream& operator<<(std::ostream& stream, const bitstring_type& vl);
-
-
-        ///  OCTETSTRING TYPE           
-
-        class octetstring_type : public std::vector<octet_type> {
-
-        public:
-
-            octetstring_type() : std::vector<octet_type>() {
-            }
-
-            explicit octetstring_type(const octet_sequnce& vl) : std::vector<octet_type>(vl.begin(), vl.end()) {
-            }
-
-            octetstring_type(const std::string& vl) : std::vector<octet_type>(vl.begin(), vl.end()) {
-            }
-            //operator octet_sequnce() const{
-            //     return  *this;}   
-        };
-
-
-        std::ostream& operator<<(std::ostream& stream, const octetstring_type& vl);
-
-
         ///  UTF8STRING TYPE           
 
         class utf8string_type : public std::string {
@@ -1575,6 +1416,100 @@ namespace boost {
             boost::shared_ptr<T> internal_;
 
         };
+        
+        
+        
+          
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        template<typename T, T MIN, T MAX, bool EXT>
+        struct int_constrainter {
+
+            enum encodetype {
+                nulloctet,
+                halfoctet,
+                oneoctet,
+                twooctet,
+                undeflen
+            };
+                    
+            int_constrainter(T& vl) : value_(vl) {
+            }
+            
+            static T min() {
+                return MIN;
+            }            
+            
+            static T max() {
+                return MAX;
+            }           
+            
+            static bool can_extended() {
+                return EXT;
+            }                  
+            
+            static std::size_t range() {
+                return MAX - MIN;
+            }
+            
+            static encodetype type(){
+                std::size_t rng=range();
+                if (rng){
+                    if (rng<0xFF)
+                        return halfoctet; 
+                    else if (rng>0xFF)
+                        return twooctet;
+                    return rng==0xFF ? oneoctet : undeflen;
+                }
+                return nulloctet;
+            }
+            
+            T& value() {
+                return value_;
+            }
+            
+            bool extended() const {
+                return ((value_<MIN) || (value_>MAX));
+            }           
+            
+            const T& value() const {
+                return value_;
+            }  
+            
+            
+            T sendval() const {
+                bool ext = extended();
+                if (can_extended())
+                    return ext ? value_ : (value_ - MIN);
+                return !ext ? (value_ - MIN) : (value_ < MIN ? 0 :  range());
+            }
+            
+            static std::size_t bitsize(){
+                std::size_t rng=range();
+                if ((rng<=0xFF) && rng) {
+                    std::size_t rslt= 1;
+                    while(rng>>=1)
+                        rslt++;
+                    return rslt;
+                }
+            return 8;    
+            }
+                     
+
+            
+        private:
+            
+            T& value_;
+
+        };
+        
+        
+        template<typename Archive, typename T>
+        inline bool bind_constraints(Archive & arch, T& vl, const T& MIN, const T& MAX) {
+            std::size_t tst = arch.size();
+            arch & int_constrainter<T, MIN, MAX, true> (vl);
+            return (arch.size() != tst);
+        }       
         
   
         ////////////////////////////////////////////////////////////////////////////////////////////////////

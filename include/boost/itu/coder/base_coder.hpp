@@ -22,6 +22,7 @@
 #include <boost/asio/buffers_iterator.hpp>
 #include <boost/array.hpp>
 #include <boost/cstdint.hpp>
+#include <boost/dynamic_bitset.hpp>
 
 #include <boost/itu/utils/template.hpp>
 
@@ -38,6 +39,7 @@ namespace boost {
         std::vector<oidindx_type> oid_from_string(const std::string val);
 
         class oid_type : public boost::itu::containers::vector<oidindx_type> {
+
         public:
 
             oid_type() : boost::itu::containers::vector<oidindx_type>() {
@@ -84,6 +86,7 @@ namespace boost {
 
 
         std::ostream& operator<<(std::ostream& stream, const oid_type& vl);
+
 
     }
 
@@ -151,11 +154,199 @@ namespace boost {
 
         const octet_sequnce NULL_OCTET_SEQUENCE = octet_sequnce();
         const const_sequences NULL_CONST_SEQUENCE = const_sequences();
+        
 
         void reverse_bit(octet_type& bits);
-        octet_type reverse_bit_copy(const octet_type& bits);   
+        octet_type reverse_bit_copy(const octet_type& bits);        
+        std::size_t split_bits_in_octets(octet_sequnce& inos, std::size_t unus1, const octet_sequnce& fromos, std::size_t unus2 = 0);        
+
+    }
+
+    namespace asn1 {
+        
+        ///  BITSTRING TYPE
+
+        using itu::octet_type;
+        using itu::octet_sequnce;
+        
+
+        class bitstring_type : public std::vector<octet_type> {
+
+        public:
+
+            typedef std::vector<bool> bool_vector_type;
+            typedef boost::dynamic_bitset<> dynamic_bitset_type;
+
+            bitstring_type();
+
+            explicit bitstring_type(uint8_t vl, std::size_t unuse = 0);
+
+            explicit bitstring_type(uint16_t vl, std::size_t unuse = 0);
+
+            explicit bitstring_type(uint32_t vl, std::size_t unuse = 0);
+
+            explicit bitstring_type(uint64_t vl, std::size_t unuse = 0);
+
+            explicit bitstring_type(int8_t vl, std::size_t unuse = 0);
+
+            explicit bitstring_type(int16_t vl, std::size_t unuse = 0);
+
+            explicit bitstring_type(int32_t vl, std::size_t unuse = 0);
+
+            explicit bitstring_type(int64_t vl, std::size_t unuse = 0);
+
+            explicit bitstring_type(const octet_sequnce& vl, std::size_t unuse = 0);
+
+            explicit bitstring_type(const std::vector<bool>& vl);
+
+            explicit bitstring_type(bool vl, std::size_t n = 0);
+
+            explicit bitstring_type(const std::string& vl, std::size_t unuse = 0);
+            
+            explicit bitstring_type(bool const * const arr , std::size_t cnt);
+
+            bitstring_type(const dynamic_bitset_type& vl) : std::vector<octet_type>() {
+                construct(vl);
+            };
+
+            void insert_bitstring(const octet_sequnce& val, std::size_t unuse = 0);
+
+            static bitstring_type create_from_string(const std::string& vl);
+
+            std::size_t unusebits() const {
+                return empty() ? 0 : (unuse_);
+            }
+
+            std::size_t unusebits(std::size_t vl);
+
+            std::size_t sizebits() const {
+                return empty() ? 0 : (size() * 8 - unusebits());
+            }
+
+            bool bit(std::size_t num) const;
+
+            void bit(std::size_t num, bool val);
+
+            operator bool_vector_type() const;
+
+            operator dynamic_bitset_type() const;
+
+            dynamic_bitset_type dynamic_bitset() const;
+
+            operator boost::uint8_t() const;
+
+            operator boost::uint16_t() const;
+
+            operator boost::uint32_t() const;
+
+            operator boost::uint64_t() const;
+
+            operator boost::int8_t() const;
+
+            operator boost::int16_t() const;
+
+            operator boost::int32_t() const;
+
+            operator boost::int64_t() const;
+
+            operator bool() const;
+            
+            operator octet_sequnce() const;
+            
+           octet_sequnce as_octet_sequnce() const; 
+
+            bitstring_type operator~() const;
+
+            friend bitstring_type operator|(const bitstring_type& ls, const bitstring_type& rs);
+
+            friend bitstring_type operator&(const bitstring_type& ls, const bitstring_type& rs);
+
+            friend bitstring_type operator^(const bitstring_type& ls, const bitstring_type& rs);
+            
+            friend bitstring_type operator+(const bitstring_type& ls, const bitstring_type& rs);
 
 
+
+        private:
+
+            template<typename T>
+            void construct(T val, std::size_t unuse) {
+                if (unuse<sizeof (T)*8) {
+                    reserve(sizeof (T));
+                    insert(end(), (const char*) (&val), (const char*) (&val) +(sizeof (T) - unuse / 8));
+                    for (iterator it = begin(); it != end(); ++it)
+                        boost::itu::reverse_bit(*it);
+#ifdef BIG_ENDIAN_ARCHITECTURE
+                    std::reverse(begin(), end());
+#endif                 
+                }
+                unusebits(unuse % 8);
+            }
+
+            void construct(const std::vector<bool>& vl);
+
+            template<typename T>
+            T return_int() const {
+                if (!empty()) {
+                    std::vector<octet_type> tmp(begin(), end());
+                    tmp.back() &= ('\xFF' << unusebits());
+                    for (std::vector<octet_type>::iterator it = tmp.begin(); it != tmp.end(); ++it)
+                        boost::itu::reverse_bit(*it);
+                    if (tmp.size()<sizeof (T))
+                        tmp.insert(tmp.end(), sizeof (T) - size(), 0);
+#ifdef BIG_ENDIAN_ARCHITECTURE
+                    std::reverse(tmp.begin(), tmp.end());
+#endif                      
+                    return *reinterpret_cast<T*> (&tmp[0]);
+                }
+                return 0;
+            }
+
+            void construct(const dynamic_bitset_type& vl);
+
+            std::size_t unuse_;
+
+
+        };
+
+
+        std::ostream& operator<<(std::ostream& stream, const bitstring_type& vl);
+
+
+        ///  OCTETSTRING TYPE           
+
+        class octetstring_type : public std::vector<octet_type> {
+
+        public:
+
+            octetstring_type() : std::vector<octet_type>() {
+            }
+
+            explicit octetstring_type(const octet_sequnce& vl) : std::vector<octet_type>(vl.begin(), vl.end()) {
+            }
+
+            octetstring_type(const std::string& vl) : std::vector<octet_type>(vl.begin(), vl.end()) {
+            }
+
+            operator octet_sequnce() const;
+
+            octet_sequnce as_octet_sequnce() const;             
+            //operator octet_sequnce() const{
+            //     return  *this;}   
+        };
+
+
+        std::ostream& operator<<(std::ostream& stream, const octetstring_type& vl);
+    }
+
+    
+    
+    
+    namespace itu {
+
+
+        typedef asn1::bitstring_type  bitmap_type;
+        using asn1::octetstring_type;
 
 
         std::string binary_to_hexsequence_debug(const std::string& vl);
@@ -221,6 +412,7 @@ namespace boost {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
         class base_output_coder {
+
         public:
 
 
@@ -230,7 +422,7 @@ namespace boost {
                 return false;
             }
 
-            base_output_coder(encoding_rule rl = NULL_ENCODING) : listbuffers_(new const_sequences()), size_(0) {
+            base_output_coder(encoding_rule rl = NULL_ENCODING) : unuse_(0), listbuffers_(new const_sequences()), size_(0) {
             }
 
             virtual ~base_output_coder() {
@@ -257,6 +449,10 @@ namespace boost {
             iterator_type add(const octet_sequnce& vl, iterator_type it);
 
             void add(const mutable_sequences& vl);
+            
+            virtual void add_bitmap(const bitmap_type & vl, bool alighn = false);
+            
+            virtual void add_octetmap(const octetstring_type & vl, bool alighn = false);            
 
             iterator_type last() {
                 return listbuffers_->empty() ? listbuffers_->end() : (--(listbuffers_->end()));
@@ -310,9 +506,21 @@ namespace boost {
                 return to_transfer_syntax(rule());
             }
 
+            std::size_t unusebits() const {
+                return unuse_;
+            }
+
+
+        protected:
+
+            std::size_t unusebits(std::size_t vl) {
+                return unuse_ = vl;
+            }
+
 
         private:
 
+            std::size_t unuse_;
             const_sequences_ptr listbuffers_;
             vect_octet_sequnce_ptr rows_vect;
             std::size_t size_;
@@ -324,6 +532,7 @@ namespace boost {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
         class base_input_coder {
+
         public:
 
             typedef mutable_sequences::iterator iterator_type;
@@ -332,7 +541,7 @@ namespace boost {
                 return true;
             }
 
-            base_input_coder() : listbuffers_(new mutable_sequences()), size_(0) {
+            base_input_coder() : unuse_(0), listbuffers_(new mutable_sequences()), size_(0) {
             }
 
             virtual ~base_input_coder() {
@@ -383,7 +592,15 @@ namespace boost {
             void resetextention() {
             }
 
+            std::size_t unusebits() const {
+                return unuse_;
+            }
+
         protected:
+
+            std::size_t unusebits(std::size_t vl) {
+                return unuse_ = vl;
+            }
 
             void decsize(std::size_t sz) {
                 size_ = size_ < sz ? 0 : (size_ - sz);
@@ -392,6 +609,7 @@ namespace boost {
 
         private:
 
+            std::size_t unuse_;
             mutable_sequences_ptr listbuffers_;
             vect_octet_sequnce_ptr rows_vect;
             std::size_t size_;
@@ -405,6 +623,7 @@ namespace boost {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
         class basic_coder {
+
         public:
 
             typedef boost::shared_ptr<base_input_coder> input_coder_ptr;
@@ -485,7 +704,8 @@ namespace boost {
         typedef boost::shared_ptr<basic_coder> asn_coder_ptr;
 
         template<typename INPUT_TYPE = base_input_coder, typename OUTPUT_TYPE = base_output_coder>
-                class asn_coder_templ : public basic_coder {
+        class asn_coder_templ : public basic_coder {
+
         public:
 
             typedef INPUT_TYPE input_coder_type;
@@ -554,6 +774,7 @@ namespace boost {
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
         class basic_sender_sequences {
+
             friend class basic_itu_sequences;
 
         public:
@@ -615,6 +836,7 @@ namespace boost {
         //////////////////////////////////////////////////////////////////////////////////////////////////////       
 
         class basic_itu_sequences : public basic_sender_sequences {
+
         public:
 
             basic_itu_sequences(asn_coder_ptr codr, std::size_t limit = 0) :
@@ -664,11 +886,11 @@ namespace boost {
     namespace asn1 {
 
         extern const boost::asn1::oid_type NULL_ENCODING_OID;
-        
+
         extern const boost::asn1::oid_type BASIC_ENCODING_OID;
-        
+
         extern const boost::asn1::oid_type CANONICAL_ENCODING_OID;
-        
+
         extern const boost::asn1::oid_type DISTINGUISH_ENCODING_OID;
 
     }
