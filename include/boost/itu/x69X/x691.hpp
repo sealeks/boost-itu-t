@@ -91,6 +91,17 @@ namespace boost {
             }
             
             
+            ///////////////////////////////////////////////////////////////////////////////////
+            // size_class to X.691
+
+
+            std::size_t to_x691_cast(const size_class& val, octet_sequnce& src);
+
+            octet_sequnce to_x691_cast(const size_class& val);         
+            
+            
+            
+            
             //  constrained whole number            
             
             template<typename T, T MIN, T MAX>
@@ -180,7 +191,75 @@ namespace boost {
 
             private:
                 internal_type value_;
-            };           
+            };     
+            
+            
+            //  semiconstrained whole number            
+            
+            template<typename T, T MIN>
+            class semiconstrained_wn_wnumber {
+
+            public:
+                
+                typedef T internal_type;
+
+                semiconstrained_wn_wnumber() : value_(MIN) {
+                }
+
+                semiconstrained_wn_wnumber(T vl) : value_((vl < MIN) ? MIN : vl) {
+                }
+
+                static T min() {
+                    return MIN;
+                }              
+
+                const internal_type& value() const {
+                    return value_;
+                }
+                           
+                 boost::uint64_t sendval() const {
+                    return value_ - MIN;
+                }
+
+                std::size_t bitsize() const {            
+                    if (boost::uint64_t rng = sendval()) {
+                        std::size_t rslt = 1;
+                        while (rng >>= 1)
+                            rslt++;
+                        return rslt;
+                    }
+                    return 0;
+                } 
+                
+                std::size_t octetsize() const {            
+                    if (std::size_t bssz = bitsize()) 
+                        return (bssz-1) / 8 +1;
+                    return 1;
+                }                 
+                
+
+                octetstring_type as_octetstring() const {
+                    boost::uint64_t val = sendval();
+                    if (std::size_t octsz = octetsize()) {
+                        octet_sequnce rslt = to_x691_cast(size_class(octsz));
+                        octet_sequnce vl = octet_sequnce(static_cast<octet_sequnce::value_type*> ((void*) &val),
+                                static_cast<octet_sequnce::value_type*> ((void*) &val) + octsz);
+#ifdef BIG_ENDIAN_ARCHITECTURE  
+                        rslt.insert(rslt.end(), vl.begin(), vl.end());
+#else                    
+                        rslt.insert(rslt.end(), vl.rbegin(), vl.rend());
+#endif                         
+
+                        return octetstring_type(rslt);
+                    }
+                    return octetstring_type(octet_sequnce(1,'\x0'));
+                }               
+                
+
+
+            private:
+                internal_type value_;
+            };                       
 
             
             
@@ -297,13 +376,7 @@ namespace boost {
             octet_sequnce to_x691_cast(const tag& val);
 
 
-            ///////////////////////////////////////////////////////////////////////////////////
-            // size_class to X.691
 
-
-            std::size_t to_x691_cast(const size_class& val, octet_sequnce& src);
-
-            octet_sequnce to_x691_cast(const size_class& val);
             
             
             
