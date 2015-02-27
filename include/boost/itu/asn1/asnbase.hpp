@@ -1442,18 +1442,22 @@ namespace boost {
             
             static T max() {
                 return MAX;
-            }           
+            }         
             
             static bool can_extended() {
                 return EXT;
             }                  
             
-            static std::size_t range() {
+            static boost::uint64_t range() {
                 return MAX - MIN;
             }
             
+            static bool null_range() {
+                return MAX = MIN;
+            }            
+            
             static encodetype type(){
-                std::size_t rng=range();
+                boost::uint64_t rng=range();
                 if (rng){
                     if (rng<0xFF)
                         return halfoctet; 
@@ -1485,14 +1489,14 @@ namespace boost {
             }
             
             static std::size_t bitsize(){
-                std::size_t rng=range();
-                if ((rng<=0xFF) && rng) {
+                boost::uint64_t rng=range();
+                if (rng) {
                     std::size_t rslt= 1;
                     while(rng>>=1)
                         rslt++;
                     return rslt;
                 }
-            return 8;    
+            return 0;    
             }
                      
 

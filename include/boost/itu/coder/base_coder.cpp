@@ -437,7 +437,7 @@ namespace boost {
         }         
 
         std::ostream& operator<<(std::ostream& stream, const octetstring_type& vl) {
-            stream << std::string(vl.begin(), vl.end());
+            stream << boost::itu::binary_to_hexsequence_debug(std::string(vl.begin(), vl.end()));
             return stream;
         }        
         
@@ -745,6 +745,7 @@ namespace boost {
                 listbuffers_->end();
             rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl)));
             size_ += vl.size();
+            unusebits(0);
             return listbuffers_->insert(listbuffers_->end(), const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size()));
         }
 
@@ -753,6 +754,7 @@ namespace boost {
                 listbuffers_->end();
             rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl)));
             size_ += vl.size();
+            unusebits(0);
             return listbuffers_->insert(it, const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size()));
         }
 
@@ -767,7 +769,7 @@ namespace boost {
                 vect_octet_sequnce_ptr::reverse_iterator dit = rows_vect.rbegin();
                 octet_sequnce_ptr lstdata_ptr = *dit;
                 octet_sequnce& lstdata=*lstdata_ptr;
-                split_bits_in_octets(lstdata ,alighn ? 0 : unusebits(), vl.as_octet_sequnce(), vl.unusebits());
+                unusebits(split_bits_in_octets(lstdata, alighn ? 0 : unusebits(), vl.as_octet_sequnce(), vl.unusebits()));
                 listbuffers_->back()=const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
             }
             else{

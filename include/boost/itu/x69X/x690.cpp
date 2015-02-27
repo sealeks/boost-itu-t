@@ -23,7 +23,7 @@ namespace boost {
 #ifdef BIG_ENDIAN_ARCHITECTURE
                 return val;
 #else
-                octet_sequnce tmp(val.size());
+                octet_sequnce tmp;// (val.size());
                 std::copy(val.rbegin(), val.rend(), std::back_inserter(tmp));
                 return tmp;
 #endif                                

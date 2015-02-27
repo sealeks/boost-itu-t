@@ -23,7 +23,7 @@ namespace boost {
 #ifdef BIG_ENDIAN_ARCHITECTURE
                 return val;
 #else
-                octet_sequnce tmp(val.size());
+                octet_sequnce tmp;
                 std::copy(val.rbegin(), val.rend(), std::back_inserter(tmp));
                 return tmp;
 #endif                                
@@ -92,25 +92,22 @@ namespace boost {
             // size_class to X.691
 
             std::size_t to_x691_cast(const size_class& val, octet_sequnce& src) {
-                if (!val.undefsize()) {
-                    if (val.size() < MAX_SIMPLELENGTH_SIZE) {
-                        src.push_back(static_cast<octet_type> (static_cast<octet_type> (val.size())));
-                        return 1;
-                    } else {
-                        octet_sequnce tmp;
-                        size_type vl = val.size();
-                        while (vl) {
-                            tmp.push_back(static_cast<octet_type> (0xFF & vl));
-                            vl >>= 8;
-                        }
-                        src.push_back(static_cast<octet_type> (CONTENT_CONIIUE | static_cast<octet_type> (tmp.size())));
-                        endian_push_pack(tmp, src);
-                        return (src.size() + 1);
-                    }
-                } else {
-                    src.push_back(static_cast<octet_type> (static_cast<octet_type> (UNDEF_BLOCK_SIZE)));
+                if (val.size() < MAX_SIMPLELENGTH_SIZE) {
+                    src.push_back(static_cast<octet_type> (static_cast<octet_type> (val.size())));
                     return 1;
                 }
+                else if (val.size() < MAX_DOUBLELENGTH_SIZE) {
+                    boost::uint16_t vl = static_cast<boost::uint16_t> (val.size());
+#ifdef BIG_ENDIAN_ARCHITECTURE              
+                    src.push_back(static_cast<octet_type> (((vl << 8) & 0x3FFF | ???0x8000));
+                    src.push_back(static_cast<octet_type> (vl & ?? 0xFF));                    
+#else                    
+                    src.push_back(static_cast<octet_type> (((vl >> 8) & 0x3F) | 0x80));
+                    src.push_back(static_cast<octet_type> (vl & 0xFF));
+#endif                    
+                    return 2;
+                }
+                return 0;
             }
 
             octet_sequnce to_x691_cast(const size_class& val) {
@@ -119,7 +116,9 @@ namespace boost {
                 return tmp;
             }
 
-
+ 
+            
+            
             //// real cast
 
             template<typename T, typename B, std::size_t MANT, std::size_t EXPB>
@@ -1280,10 +1279,10 @@ namespace boost {
                         if (szsize) {
                             std::size_t next_test = rsltsz.size();
 
-                            if (rsltsz.undefsize()) {
+                            /*if (rsltsz.undefsize()) {
                                 if (!next(next_test))
                                     return false;
-                            } else
+                            } else*/
                                 next_test += (szsize + sztag);
 
                             pop_front(szsize + sztag);
@@ -1291,7 +1290,7 @@ namespace boost {
                             if (!stack_.empty())
                                 stack_.top().sizeinfo.size = (stack_.top().sizeinfo.size >= next_test) ?
                                 (stack_.top().sizeinfo.size - next_test) : 0;
-                            stack_.push(tlv_item(settype, tlv_size(!rsltsz.undefsize(), (next_test - (szsize + sztag)))));
+                            stack_.push(tlv_item(settype, tlv_size(false, (next_test - (szsize + sztag)))));
                             return true;
                         }
                         return false;
@@ -1342,7 +1341,7 @@ namespace boost {
                     size_class tmpsize;
                     std::size_t szsize = size_x691_cast(tmpsize, buffers(), buffers().begin(), sztag + sz);
                     if (szsize) {
-                        if (tmpsize.undefsize()) {
+                        /*if (tmpsize.undefsize()) {
                             if (tmptag.constructed()) {
                                 sz += (szsize + sztag);
                                 while ((!is_endof(sz)) && (sz < size()))
@@ -1360,7 +1359,7 @@ namespace boost {
                                     return true;
                                 }
                             }
-                        } else {
+                        } else*/ {
                             sz += (szsize + sztag + tmpsize.size());
                             return true;
                         }
