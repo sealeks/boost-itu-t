@@ -95,12 +95,11 @@ namespace boost {
                 if (val.size() < MAX_SIMPLELENGTH_SIZE) {
                     src.push_back(static_cast<octet_type> (static_cast<octet_type> (val.size())));
                     return 1;
-                }
-                else if (val.size() < MAX_DOUBLELENGTH_SIZE) {
+                } else if (val.size() < MAX_DOUBLELENGTH_SIZE) {
                     boost::uint16_t vl = static_cast<boost::uint16_t> (val.size());
 #ifdef BIG_ENDIAN_ARCHITECTURE              
-                    src.push_back(static_cast<octet_type> (((vl << 8) & 0x3FFF | ???0x8000));
-                    src.push_back(static_cast<octet_type> (vl & ?? 0xFF));                    
+                    src.push_back(static_cast<octet_type> (((vl << 8) & 0x3FFF | ? ? ? 0x8000));
+                            src.push_back(static_cast<octet_type> (vl & ? ? 0xFF));
 #else                    
                     src.push_back(static_cast<octet_type> (((vl >> 8) & 0x3F) | 0x80));
                     src.push_back(static_cast<octet_type> (vl & 0xFF));
@@ -116,9 +115,9 @@ namespace boost {
                 return tmp;
             }
 
- 
-            
-            
+
+
+
             //// real cast
 
             template<typename T, typename B, std::size_t MANT, std::size_t EXPB>
@@ -319,7 +318,7 @@ namespace boost {
 
             template<>
             void x691_string_to_stream_cast(const bitstring_type& val, output_coder& stream, octet_type lentype) {
-                if (!lentype) {
+                /*if (!lentype) {
                     stream.add(octet_sequnce(1, static_cast<octet_type> (val.unusebits() % 8)));
                     stream.add(val);
                     return;
@@ -345,178 +344,156 @@ namespace boost {
                         it = it + diff;
                         stream.pop_stack();
                     }
-                }
+                }*/
             }
 
             output_coder& operator<<(output_coder& stream, const uint8_t& vl) {
                 return primitive_int_sirialize(stream, vl);
-            }      
-            
-                                  
+            }
+
             output_coder& operator<<(output_coder& stream, const int8_t& vl) {
                 return primitive_int_sirialize(stream, vl);
-            }            
-            
+            }
 
             output_coder& operator<<(output_coder& stream, const uint16_t& vl) {
                 return primitive_int_sirialize(stream, vl);
-            }      
-            
-                                  
+            }
+
             output_coder& operator<<(output_coder& stream, const int16_t& vl) {
                 return primitive_int_sirialize(stream, vl);
-            }  
+            }
 
             output_coder& operator<<(output_coder& stream, const uint32_t& vl) {
                 return primitive_int_sirialize(stream, vl);
-            }      
-            
-                                  
+            }
+
             output_coder& operator<<(output_coder& stream, const int32_t& vl) {
                 return primitive_int_sirialize(stream, vl);
-            }            
-            
+            }
 
             output_coder& operator<<(output_coder& stream, const uint64_t& vl) {
                 return primitive_int_sirialize(stream, vl);
-            }      
-            
-                                  
+            }
+
             output_coder& operator<<(output_coder& stream, const int64_t& vl) {
                 return primitive_int_sirialize(stream, vl);
-            }  
-            
+            }
+
             output_coder& operator<<(output_coder& stream, const enumerated_type& vl) {
-                return stream;// primitive_sirialize(stream, vl);
+                return stream; // primitive_sirialize(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const float& vl) {
-                return stream;// primitive_sirialize(stream, vl);
+                return stream; // primitive_sirialize(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const double& vl) {
-                return stream;// primitive_sirialize(stream, vl);
+                return stream; // primitive_sirialize(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const long double& vl) {
-                return stream;// primitive_sirialize(stream, vl);
+                return stream; // primitive_sirialize(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const bool& vl) {
-                return stream;// primitive_sirialize(stream, vl);
+                return stream; // primitive_sirialize(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const null_type& vl) {
-                return stream;// primitive_sirialize(stream, vl);
+                return stream; // primitive_sirialize(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const oid_type& vl) {
-                return stream;// primitive_sirialize(stream, vl);
+                return stream; // primitive_sirialize(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const reloid_type& vl) {
-                return stream;// primitive_sirialize(stream, vl);
+                return stream; // primitive_sirialize(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const any_type& vl) {
                 //vl.setcontructed();
-               /* if (vl.value().coder() && vl.value().type() != any_type::bind_simple) {
-                    if (vl.value().type() != any_type::bind_tie)
-                        stream.tie(vl.value().coder()->out());
-                    else
-                        stream.move_from(vl.value().coder()->out());
-                    return stream;
-                }*/
-                return stream;// << vl.value();
+                /* if (vl.value().coder() && vl.value().type() != any_type::bind_simple) {
+                     if (vl.value().type() != any_type::bind_tie)
+                         stream.tie(vl.value().coder()->out());
+                     else
+                         stream.move_from(vl.value().coder()->out());
+                     return stream;
+                 }*/
+                return stream; // << vl.value();
                 //return primitive_sirialize(stream, vl);
             }
 
-
-            output_coder& operator<<(output_coder& stream,const bitstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const bitstring_type& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
-
-            output_coder& operator<<(output_coder& stream,const octetstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const octetstring_type& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
-
-            output_coder& operator<<(output_coder& stream,const utf8string_type& vl) {
+            output_coder& operator<<(output_coder& stream, const utf8string_type& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
-
-            output_coder& operator<<(output_coder& stream,const numericstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const numericstring_type& vl) {
                 return defstring8_writer(stream, vl);
             }
 
-
-            output_coder& operator<<(output_coder& stream,const printablestring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const printablestring_type& vl) {
                 return defstring8_writer(stream, vl);
             }
 
-
-            output_coder& operator<<(output_coder& stream,const t61string_type& vl) {
+            output_coder& operator<<(output_coder& stream, const t61string_type& vl) {
                 return defstring8_writer(stream, vl);
             }
 
-
-            output_coder& operator<<(output_coder& stream,const videotexstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const videotexstring_type& vl) {
                 return defstring8_writer(stream, vl);
             }
 
-
-            output_coder& operator<<(output_coder& stream,const ia5string_type& vl) {
+            output_coder& operator<<(output_coder& stream, const ia5string_type& vl) {
                 return defstring8_writer(stream, vl);
             }
 
-
-            output_coder& operator<<(output_coder& stream,const graphicstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const graphicstring_type& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
-
-            output_coder& operator<<(output_coder& stream,const  objectdescriptor_type& vl) {
+            output_coder& operator<<(output_coder& stream, const objectdescriptor_type& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
-
-            output_coder& operator<<(output_coder& stream,const visiblestring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const visiblestring_type& vl) {
                 return defstring8_writer(stream, vl);
             }
 
-
-            output_coder& operator<<(output_coder& stream,const generalstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const generalstring_type& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
-
-            output_coder& operator<<(output_coder& stream,const universalstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const universalstring_type& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
-
-            output_coder& operator<<(output_coder& stream,const bmpstring_type& vl) {
+            output_coder& operator<<(output_coder& stream, const bmpstring_type& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
-
-            output_coder& operator<<(output_coder& stream,const utctime_type& vl) {
-                return stream;//primitive_sirialize(stream, vl);
+            output_coder& operator<<(output_coder& stream, const utctime_type& vl) {
+                return stream; //primitive_sirialize(stream, vl);
             }
 
-
-            output_coder& operator<<(output_coder& stream,const gentime_type& vl) {
-                return  stream;//primitive_sirialize(stream, vl);
+            output_coder& operator<<(output_coder& stream, const gentime_type& vl) {
+                return stream; //primitive_sirialize(stream, vl);
             }
 
 
@@ -524,44 +501,7 @@ namespace boost {
             /// output_coder
 
 
-            output_coder::iterator_type output_coder::addtag(const tag& tg, bool settype) {
-                if (/*false*/rule_ != boost::itu::CER_ENCODING) return add(to_x691_cast(tg));
-                iterator_type it = add(to_x691_cast(tg));
-                if (!stack_.empty() && stack_.top().is_set)
-                    stack_.top().tlv_iterators.push_back(tlv_info(tg, iterator_pair(it, it)));
-                stack_.push(stack_item(settype));
-                return it;
-            }
 
-            void output_coder::pop_stack() {
-                if (/*false*/rule_ != boost::itu::CER_ENCODING) return;
-                if (!stack_.empty()) {
-                    if (stack_.top().is_set)
-                        sort_tlv(stack_.top().tlv_iterators);
-                    stack_.pop();
-                    if ((!stack_.empty()) && (stack_.top().is_set) && (!stack_.top().tlv_iterators.empty()))
-                        stack_.top().tlv_iterators.back().iterators.second = last();
-                }
-            }
-
-            void output_coder::sort_tlv(tlv_vector& vct) {
-
-                typedef std::map<tag, iterator_pair> tlv_map;
-
-                tlv_map mps;
-                for (tlv_vector::iterator it = vct.begin(); it != vct.end(); ++it) {
-                    if (mps.upper_bound(it->tg) != mps.end())
-                        buffers().splice(mps.upper_bound(it->tg)->second.first, buffers(), it->iterators.first, ++iterator_type(it->iterators.second));
-                    mps.insert(std::make_pair(it->tg, iterator_pair(it->iterators.first, it->iterators.second)));
-                }
-            }
-
-            void output_coder::clear() {
-                while (!stack_.empty())
-                    stack_.pop();
-                boost::itu::base_output_coder::clear();
-
-            }
 
 
 
@@ -778,7 +718,7 @@ namespace boost {
                         mant <<= 1;
                     }
                     if (exp_b < 0) {
-                        vl = static_cast<T>(negat ? -0.0 : 0);
+                        vl = static_cast<T> (negat ? -0.0 : 0);
                         return true;
                     }
                     B exp = static_cast<B> (exp_b);
@@ -983,16 +923,16 @@ namespace boost {
                 val.set(src);
                 return true;
             }
-            
+
             template<>
-            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq,  bitstring_type& vl) {
-                octet_sequnce::iterator it=seq.begin();
-                if (it!=seq.end()){
-                    vl.unusebits(static_cast<std::size_t>(*it));
+            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, bitstring_type& vl) {
+                octet_sequnce::iterator it = seq.begin();
+                if (it != seq.end()) {
+                    vl.unusebits(static_cast<std::size_t> (*it));
                     it++;
                 }
                 return it;
-            }              
+            }
 
 
 
@@ -1080,13 +1020,13 @@ namespace boost {
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<any_type>& vl) {
-                std::size_t sz = stream.stack_size();
+                /*std::size_t sz = stream.stack_size();
                 octet_sequnce data;
                 if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
                     if (from_x691_cast(*const_cast<any_type*> (&vl.value()), data)) {
                         // stream.pop_stack();
                     }
-                }
+                }*/
                 return stream;
                 //return  primitive_desirialize(stream, vl);
             }
@@ -1201,150 +1141,8 @@ namespace boost {
 
             ////////  Archiver
 
-            tag input_coder::test_tl(size_class& sz) {
-
-                tag tmptag;
-                std::size_t sztag = tag_x691_cast(tmptag, buffers(), buffers().begin());
-                if (sztag) {
-                    std::size_t szsize = size_x691_cast(sz, buffers(), buffers().begin(), sztag);
-                    if (szsize)
-                        return tmptag;
-                }
-                return tag();
-            }
-
-            std::size_t input_coder::stack_size() {
-
-                if (!stack_.empty()) {
-                    return stack_.top().sizeinfo.defined ?
-                            stack_.top().sizeinfo.size : ((stack_.top().sizeinfo.size > 2) ?
-                            (stack_.top().sizeinfo.size - 2) : 0);
-                }
-                return 0;
-            }
-
-            bool input_coder::parse_tl(const tag& tg, size_class& rsltsz, bool settype, bool optional) {
-
-
-                std::size_t size_tlv = size();
-                bool is_set_child = false;
-                std::size_t size_test = 0;
-                tag tmptag;
-
-                if (!stack_.empty()) {
-                    is_set_child = stack_.top().is_set;
-                    size_tlv = stack_.top().sizeinfo.defined ?
-                            stack_.top().sizeinfo.size : ((stack_.top().sizeinfo.size > 2) ?
-                            (stack_.top().sizeinfo.size - 2) : 0);
-                    //std::cout << " size_tlv : " << size_tlv  << std::endl;
-                }
-
-                //std::cout << " buffer: ";
-                //boost::itu::operator <<(std::cout, buffers());
-                //std::cout << std::endl;
-
-                while (size_test < size_tlv) {
-                    std::size_t sztag = tag_x691_cast(tmptag, buffers(), buffers().begin());
-                    if (sztag && (tg == tmptag)) {
-                        if (optional)
-                            return true;
-                        std::size_t szsize = size_x691_cast(rsltsz, buffers(), buffers().begin(), sztag);
-                        if (szsize) {
-                            std::size_t next_test = rsltsz.size();
-
-                            /*if (rsltsz.undefsize()) {
-                                if (!next(next_test))
-                                    return false;
-                            } else*/
-                                next_test += (szsize + sztag);
-
-                            pop_front(szsize + sztag);
-
-                            if (!stack_.empty())
-                                stack_.top().sizeinfo.size = (stack_.top().sizeinfo.size >= next_test) ?
-                                (stack_.top().sizeinfo.size - next_test) : 0;
-                            stack_.push(tlv_item(settype, tlv_size(false, (next_test - (szsize + sztag)))));
-                            return true;
-                        }
-                        return false;
-                    } else {
-                        if (!sztag)
-                            return false;
-                        std::size_t next_test = 0;
-                        if (!next(next_test))
-                            return false;
-                        if (!is_set_child) {
-                            if (optional)
-                                return false;
-                            if (!stack_.empty())
-                                stack_.top().sizeinfo.size = (stack_.top().sizeinfo.size >= next_test) ?
-                                (stack_.top().sizeinfo.size - next_test) : 0;
-                            size_test += next_test;
-                            pop_front(next_test);
-                        } else {
-
-                            size_test += next_test;
-                            if (!boost::itu::splice_frontlist(buffers(), next_test, size_tlv))
-                                return false;
-
-                        }
-                    }
-                }
-                return false;
-            }
-
-            void input_coder::pop_stack() {
-                if (!stack_.empty()) {
-                    if (!stack_.top().sizeinfo.defined) {
-                        if (is_endof())
-                            pop_front(2);
-                        else
-                            throw boost::system::system_error(boost::itu::ER_BEDSEQ);
-                    } else {
-                        pop_front(stack_.top().sizeinfo.size);
-                    }
-                    stack_.pop();
-                }
-            }
-
-            bool input_coder::next(std::size_t & sz) const {
-                tag tmptag;
-                std::size_t sztag = tag_x691_cast(tmptag, buffers(), buffers().begin(), sz);
-                if (sztag) {
-                    size_class tmpsize;
-                    std::size_t szsize = size_x691_cast(tmpsize, buffers(), buffers().begin(), sztag + sz);
-                    if (szsize) {
-                        /*if (tmpsize.undefsize()) {
-                            if (tmptag.constructed()) {
-                                sz += (szsize + sztag);
-                                while ((!is_endof(sz)) && (sz < size()))
-                                    if (!next(sz))
-                                        return false;
-
-                                if (!is_endof(sz))
-                                    return false;
-                                sz += 2;
-                                return true;
-                            } else {
-                                std::size_t rsltsz = 0;
-                                if (boost::itu::find_eof(buffers(), buffers().begin(), rsltsz, sz)) {
-                                    sz += (szsize + sztag + rsltsz);
-                                    return true;
-                                }
-                            }
-                        } else*/ {
-                            sz += (szsize + sztag + tmpsize.size());
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-
 
         }
-        
-        
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -1354,99 +1152,99 @@ namespace boost {
         /////// external_type
 
         template<> void external_type::Encoding_type::serialize(boost::asn1::x691::output_coder& arch) {
-          /*  switch (type()) {
-                case Encoding_type_single_ASN1_type:
-                {
-                    ITU_T_EXPLICIT_TAG(value<any_type > (false, Encoding_type_single_ASN1_type), 0);
-                    break;
-                }
-                case Encoding_type_octet_aligned:
-                {
-                    ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, Encoding_type_octet_aligned), 1);
-                    break;
-                }
-                case Encoding_type_arbitrary:
-                {
-                    ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, Encoding_type_arbitrary), 2);
-                    break;
-                }
-                default:
-                {
-                }
-            }*/
+            /*  switch (type()) {
+                  case Encoding_type_single_ASN1_type:
+                  {
+                      ITU_T_EXPLICIT_TAG(value<any_type > (false, Encoding_type_single_ASN1_type), 0);
+                      break;
+                  }
+                  case Encoding_type_octet_aligned:
+                  {
+                      ITU_T_IMPLICIT_TAG(value<octetstring_type > (false, Encoding_type_octet_aligned), 1);
+                      break;
+                  }
+                  case Encoding_type_arbitrary:
+                  {
+                      ITU_T_IMPLICIT_TAG(value<bitstring_type > (false, Encoding_type_arbitrary), 2);
+                      break;
+                  }
+                  default:
+                  {
+                  }
+              }*/
         }
 
         template<> void external_type::Encoding_type::serialize(boost::asn1::x691::input_coder& arch) {
             int __tag_id__ = arch.test_id();
-         /*   switch (arch.test_class()) {
-                case 0x0:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0x40:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0x80:
-                {
-                    switch (__tag_id__) {
-                        case 0:
-                        {
-                            if (ITU_T_EXPLICIT_TAG(value<any_type > (true, Encoding_type_single_ASN1_type), 0)) return;
-                            else free();
-                            break;
-                        }
-                        case 1:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, Encoding_type_octet_aligned), 1)) return;
-                            else free();
-                            break;
-                        }
-                        case 2:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, Encoding_type_arbitrary), 2)) return;
-                            else free();
-                            break;
-                        }
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0xC0:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
-                default:
-                {
-                }
-            }*/
+            /*   switch (arch.test_class()) {
+                   case 0x0:
+                   {
+                       switch (__tag_id__) {
+                           default:
+                           {
+                           }
+                       }
+                   }
+                   case 0x40:
+                   {
+                       switch (__tag_id__) {
+                           default:
+                           {
+                           }
+                       }
+                   }
+                   case 0x80:
+                   {
+                       switch (__tag_id__) {
+                           case 0:
+                           {
+                               if (ITU_T_EXPLICIT_TAG(value<any_type > (true, Encoding_type_single_ASN1_type), 0)) return;
+                               else free();
+                               break;
+                           }
+                           case 1:
+                           {
+                               if (ITU_T_IMPLICIT_TAG(value<octetstring_type > (true, Encoding_type_octet_aligned), 1)) return;
+                               else free();
+                               break;
+                           }
+                           case 2:
+                           {
+                               if (ITU_T_IMPLICIT_TAG(value<bitstring_type > (true, Encoding_type_arbitrary), 2)) return;
+                               else free();
+                               break;
+                           }
+                           default:
+                           {
+                           }
+                       }
+                   }
+                   case 0xC0:
+                   {
+                       switch (__tag_id__) {
+                           default:
+                           {
+                           }
+                       }
+                   }
+                   default:
+                   {
+                   }
+               }*/
         }
 
         template<> void external_type::serialize(boost::asn1::x691::output_coder& arch) {
-           /* ITU_T_BIND_TAG(direct_reference_);
-            ITU_T_BIND_TAG(indirect_reference_);
-            ITU_T_BIND_TAG(data_value_descriptor_);
-            ITU_T_BIND_CHOICE(*encoding_);*/
+            /* ITU_T_BIND_TAG(direct_reference_);
+             ITU_T_BIND_TAG(indirect_reference_);
+             ITU_T_BIND_TAG(data_value_descriptor_);
+             ITU_T_BIND_CHOICE(*encoding_);*/
         }
 
         template<> void external_type::serialize(boost::asn1::x691::input_coder& arch) {
-       /*     ITU_T_BIND_TAG(direct_reference_);
-            ITU_T_BIND_TAG(indirect_reference_);
-            ITU_T_BIND_TAG(data_value_descriptor_);
-            ITU_T_BIND_CHOICE(*encoding_);*/
+            /*     ITU_T_BIND_TAG(direct_reference_);
+                 ITU_T_BIND_TAG(indirect_reference_);
+                 ITU_T_BIND_TAG(data_value_descriptor_);
+                 ITU_T_BIND_CHOICE(*encoding_);*/
         }
 
 
@@ -1457,12 +1255,12 @@ namespace boost {
 
         template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::output_coder& arch) {
             //ITU_T_IMPLICIT_TAG(*abstract_, 0);
-           // ITU_T_IMPLICIT_TAG(*transfer_, 1);
+            // ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
         template<> void embeded_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::input_coder& arch) {
-           // ITU_T_IMPLICIT_TAG(*abstract_, 0);
-           // ITU_T_IMPLICIT_TAG(*transfer_, 1);
+            // ITU_T_IMPLICIT_TAG(*abstract_, 0);
+            // ITU_T_IMPLICIT_TAG(*transfer_, 1);
         }
 
         template<> void embeded_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::output_coder& arch) {
@@ -1515,89 +1313,89 @@ namespace boost {
 
         template<> void embeded_type::Identification_type::serialize(boost::asn1::x691::input_coder& arch) {
             int __tag_id__ = arch.test_id();
-           /* switch (arch.test_class()) {
-                case 0x0:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0x40:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0x80:
-                {
-                    switch (__tag_id__) {
-                        case 0:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<Syntaxes_type > (true, Identification_type_syntaxes), 0)) return;
-                            else free();
-                            break;
-                        }
-                        case 1:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_syntax), 1)) return;
-                            else free();
-                            break;
-                        }
-                        case 2:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<int > (true, Identification_type_presentation_context_id), 2)) return;
-                            else free();
-                            break;
-                        }
-                        case 3:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<Context_negotiation_type > (true, Identification_type_context_negotiation), 3)) return;
-                            else free();
-                            break;
-                        }
-                        case 4:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_transfer_syntax), 4)) return;
-                            else free();
-                            break;
-                        }
-                        case 5:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<null_type > (true, Identification_type_fixed), 5)) return;
-                            else free();
-                            break;
-                        }
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0xC0:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
-                        }
-                    }
-                }
-                default:
-                {
-                }
-            }*/
+            /* switch (arch.test_class()) {
+                 case 0x0:
+                 {
+                     switch (__tag_id__) {
+                         default:
+                         {
+                         }
+                     }
+                 }
+                 case 0x40:
+                 {
+                     switch (__tag_id__) {
+                         default:
+                         {
+                         }
+                     }
+                 }
+                 case 0x80:
+                 {
+                     switch (__tag_id__) {
+                         case 0:
+                         {
+                             if (ITU_T_IMPLICIT_TAG(value<Syntaxes_type > (true, Identification_type_syntaxes), 0)) return;
+                             else free();
+                             break;
+                         }
+                         case 1:
+                         {
+                             if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_syntax), 1)) return;
+                             else free();
+                             break;
+                         }
+                         case 2:
+                         {
+                             if (ITU_T_IMPLICIT_TAG(value<int > (true, Identification_type_presentation_context_id), 2)) return;
+                             else free();
+                             break;
+                         }
+                         case 3:
+                         {
+                             if (ITU_T_IMPLICIT_TAG(value<Context_negotiation_type > (true, Identification_type_context_negotiation), 3)) return;
+                             else free();
+                             break;
+                         }
+                         case 4:
+                         {
+                             if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_transfer_syntax), 4)) return;
+                             else free();
+                             break;
+                         }
+                         case 5:
+                         {
+                             if (ITU_T_IMPLICIT_TAG(value<null_type > (true, Identification_type_fixed), 5)) return;
+                             else free();
+                             break;
+                         }
+                         default:
+                         {
+                         }
+                     }
+                 }
+                 case 0xC0:
+                 {
+                     switch (__tag_id__) {
+                         default:
+                         {
+                         }
+                     }
+                 }
+                 default:
+                 {
+                 }
+             }*/
         }
 
         template<> void embeded_type::serialize(boost::asn1::x691::output_coder& arch) {
-           /* ITU_T_CHOICE_TAG(*identification_, 0);
-            ITU_T_IMPLICIT_TAG(*data_value_, 1);*/
+            /* ITU_T_CHOICE_TAG(*identification_, 0);
+             ITU_T_IMPLICIT_TAG(*data_value_, 1);*/
         }
 
         template<> void embeded_type::serialize(boost::asn1::x691::input_coder& arch) {
-         /*   ITU_T_CHOICE_TAG(*identification_, 0);
-            ITU_T_IMPLICIT_TAG(*data_value_, 1);*/
+            /*   ITU_T_CHOICE_TAG(*identification_, 0);
+               ITU_T_IMPLICIT_TAG(*data_value_, 1);*/
         }
 
 
@@ -1605,154 +1403,154 @@ namespace boost {
         //////////////////////////////////////////////////////////////
 
         template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::output_coder& arch) {
-       /*     ITU_T_IMPLICIT_TAG(*abstract_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_, 1);*/
+            /*     ITU_T_IMPLICIT_TAG(*abstract_, 0);
+                 ITU_T_IMPLICIT_TAG(*transfer_, 1);*/
         }
 
         template<> void characterstring_type::Identification_type::Syntaxes_type::serialize(boost::asn1::x691::input_coder& arch) {
-           /* ITU_T_IMPLICIT_TAG(*abstract_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_, 1);*/
+            /* ITU_T_IMPLICIT_TAG(*abstract_, 0);
+             ITU_T_IMPLICIT_TAG(*transfer_, 1);*/
         }
 
         template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::output_coder& arch) {
-          /*  ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);*/
+            /*  ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
+              ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);*/
         }
 
         template<> void characterstring_type::Identification_type::Context_negotiation_type::serialize(boost::asn1::x691::input_coder& arch) {
-         /*   ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
-            ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);*/
+            /*   ITU_T_IMPLICIT_TAG(*presentation_context_id_, 0);
+               ITU_T_IMPLICIT_TAG(*transfer_syntax_, 1);*/
         }
 
         template<> void characterstring_type::Identification_type::serialize(boost::asn1::x691::output_coder& arch) {
-         /*   switch (type()) {
-                case Identification_type_syntaxes:
-                {
-                    ITU_T_IMPLICIT_TAG(value<Syntaxes_type > (false, Identification_type_syntaxes), 0);
-                    break;
-                }
-                case Identification_type_syntax:
-                {
-                    ITU_T_IMPLICIT_TAG(value<oid_type > (false, Identification_type_syntax), 1);
-                    break;
-                }
-                case Identification_type_presentation_context_id:
-                {
-                    ITU_T_IMPLICIT_TAG(value<int > (false, Identification_type_presentation_context_id), 2);
-                    break;
-                }
-                case Identification_type_context_negotiation:
-                {
-                    ITU_T_IMPLICIT_TAG(value<Context_negotiation_type > (false, Identification_type_context_negotiation), 3);
-                    break;
-                }
-                case Identification_type_transfer_syntax:
-                {
-                    ITU_T_IMPLICIT_TAG(value<oid_type > (false, Identification_type_transfer_syntax), 4);
-                    break;
-                }
-                case Identification_type_fixed:
-                {
-                    ITU_T_IMPLICIT_TAG(value<null_type > (false, Identification_type_fixed), 5);
-                    break;
-                }
-                default:
-                {
-                }
-            }*/
+            /*   switch (type()) {
+                   case Identification_type_syntaxes:
+                   {
+                       ITU_T_IMPLICIT_TAG(value<Syntaxes_type > (false, Identification_type_syntaxes), 0);
+                       break;
+                   }
+                   case Identification_type_syntax:
+                   {
+                       ITU_T_IMPLICIT_TAG(value<oid_type > (false, Identification_type_syntax), 1);
+                       break;
+                   }
+                   case Identification_type_presentation_context_id:
+                   {
+                       ITU_T_IMPLICIT_TAG(value<int > (false, Identification_type_presentation_context_id), 2);
+                       break;
+                   }
+                   case Identification_type_context_negotiation:
+                   {
+                       ITU_T_IMPLICIT_TAG(value<Context_negotiation_type > (false, Identification_type_context_negotiation), 3);
+                       break;
+                   }
+                   case Identification_type_transfer_syntax:
+                   {
+                       ITU_T_IMPLICIT_TAG(value<oid_type > (false, Identification_type_transfer_syntax), 4);
+                       break;
+                   }
+                   case Identification_type_fixed:
+                   {
+                       ITU_T_IMPLICIT_TAG(value<null_type > (false, Identification_type_fixed), 5);
+                       break;
+                   }
+                   default:
+                   {
+                   }
+               }*/
         }
 
         template<> void characterstring_type::Identification_type::serialize(boost::asn1::x691::input_coder& arch) {
             int __tag_id__ = arch.test_id();
-        /*    switch (arch.test_class()) {
-                case 0x0:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
+            /*    switch (arch.test_class()) {
+                    case 0x0:
+                    {
+                        switch (__tag_id__) {
+                            default:
+                            {
+                            }
                         }
                     }
-                }
-                case 0x40:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
+                    case 0x40:
+                    {
+                        switch (__tag_id__) {
+                            default:
+                            {
+                            }
                         }
                     }
-                }
-                case 0x80:
-                {
-                    switch (__tag_id__) {
-                        case 0:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<Syntaxes_type > (true, Identification_type_syntaxes), 0)) return;
-                            else free();
-                            break;
-                        }
-                        case 1:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_syntax), 1)) return;
-                            else free();
-                            break;
-                        }
-                        case 2:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<int > (true, Identification_type_presentation_context_id), 2)) return;
-                            else free();
-                            break;
-                        }
-                        case 3:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<Context_negotiation_type > (true, Identification_type_context_negotiation), 3)) return;
-                            else free();
-                            break;
-                        }
-                        case 4:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_transfer_syntax), 4)) return;
-                            else free();
-                            break;
-                        }
-                        case 5:
-                        {
-                            if (ITU_T_IMPLICIT_TAG(value<null_type > (true, Identification_type_fixed), 5)) return;
-                            else free();
-                            break;
-                        }
-                        default:
-                        {
-                        }
-                    }
-                }
-                case 0xC0:
-                {
-                    switch (__tag_id__) {
-                        default:
-                        {
+                    case 0x80:
+                    {
+                        switch (__tag_id__) {
+                            case 0:
+                            {
+                                if (ITU_T_IMPLICIT_TAG(value<Syntaxes_type > (true, Identification_type_syntaxes), 0)) return;
+                                else free();
+                                break;
+                            }
+                            case 1:
+                            {
+                                if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_syntax), 1)) return;
+                                else free();
+                                break;
+                            }
+                            case 2:
+                            {
+                                if (ITU_T_IMPLICIT_TAG(value<int > (true, Identification_type_presentation_context_id), 2)) return;
+                                else free();
+                                break;
+                            }
+                            case 3:
+                            {
+                                if (ITU_T_IMPLICIT_TAG(value<Context_negotiation_type > (true, Identification_type_context_negotiation), 3)) return;
+                                else free();
+                                break;
+                            }
+                            case 4:
+                            {
+                                if (ITU_T_IMPLICIT_TAG(value<oid_type > (true, Identification_type_transfer_syntax), 4)) return;
+                                else free();
+                                break;
+                            }
+                            case 5:
+                            {
+                                if (ITU_T_IMPLICIT_TAG(value<null_type > (true, Identification_type_fixed), 5)) return;
+                                else free();
+                                break;
+                            }
+                            default:
+                            {
+                            }
                         }
                     }
-                }
-                default:
-                {
-                }
-            }*/
+                    case 0xC0:
+                    {
+                        switch (__tag_id__) {
+                            default:
+                            {
+                            }
+                        }
+                    }
+                    default:
+                    {
+                    }
+                }*/
         }
 
         template<> void characterstring_type::serialize(boost::asn1::x691::output_coder& arch) {
             //ITU_T_CHOICE_TAG(*identification_, 0);
-           // ITU_T_IMPLICIT_TAG(*string_value_, 1);
+            // ITU_T_IMPLICIT_TAG(*string_value_, 1);
         }
 
         template<> void characterstring_type::serialize(boost::asn1::x691::input_coder& arch) {
-           // ITU_T_CHOICE_TAG(*identification_, 0);
-           // ITU_T_IMPLICIT_TAG(*string_value_, 1);
+            // ITU_T_CHOICE_TAG(*identification_, 0);
+            // ITU_T_IMPLICIT_TAG(*string_value_, 1);
         }
 
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
-        
+
     }
 }
 

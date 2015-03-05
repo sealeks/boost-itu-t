@@ -603,34 +603,7 @@ namespace boost {
 
             class output_coder : public boost::itu::base_output_coder {
 
-                typedef std::pair<iterator_type, iterator_type> iterator_pair;
 
-                struct tlv_info {
-
-                    tlv_info(const tag& t, const iterator_pair & itrs) : tg(t), iterators(itrs) {
-                    }
-                    tag tg;
-                    iterator_pair iterators;
-                };
-
-                typedef std::vector<tlv_info> tlv_vector;
-
-                struct stack_item {
-
-                    stack_item(bool isst, const tlv_vector & itrs) : is_set(isst), tlv_iterators(itrs) {
-                    }
-
-                    stack_item(bool isst) : is_set(isst) {
-                    }
-
-                    stack_item() : is_set(false) {
-                    }
-                    bool is_set;
-                    tlv_vector tlv_iterators;
-                };
-
-
-                typedef std::stack<stack_item > stack_type;
 
             public:
 
@@ -700,22 +673,12 @@ namespace boost {
                     *this << vl;
                 }
 
-                iterator_type addtag(const tag& tg, bool settype);
-
-                void pop_stack();
-
-                virtual void clear();
-
                 bool canonical() const {
                     return rule_ == boost::itu::CER_ENCODING;
                 }
 
             private:
 
-                void sort_tlv(tlv_vector& vct);
-
-
-                stack_type stack_;
                 encoding_rule rule_;
                 bool unaligned_;
 
@@ -732,100 +695,32 @@ namespace boost {
                 return stream;
             }
 
-            template<typename T>
-            output_coder& operator<<(output_coder& stream, const explicit_value<T>& vl) {
-
-                /*stream.addtag(tag(vl.id(), vl.mask() | CONSTRUCTED_ENCODING), (tag_traits<T>::number() == TYPE_SET));
-                const_sequences::iterator it = stream.last();
-
-                std::size_t sz = stream.size();
-                stream & vl.value();
-
-                sz = stream.size(sz);
-                ++it;
-
-                if ((stream.canonical())) {
-                    stream.add(to_x691_cast(size_class()), it);
-                    stream.add(octet_sequnce(2, 0));
-                } else
-                    stream.add(to_x691_cast(size_class(sz)), it);
-                stream.pop_stack();*/
-                return stream;
-            }
 
             template<typename T>
-            output_coder& operator<<(output_coder& stream, const explicit_value< std::vector<T> >& vl) {
-                return stream << implicit_value<std::vector<T> >(vl.value(), vl.id(), vl.type());
-            }
+            output_coder& operator<<(output_coder& stream, const std::vector<T>& vl) {
 
-            template<typename T>
-            output_coder& operator<<(output_coder& stream, const explicit_value< std::deque<T> >& vl) {
-                return stream << implicit_value<std::deque<T> >(vl.value(), vl.id(), vl.type());
-            }
+                stream.add(to_x691_cast(size_class(vl.size())));
 
-            template<typename T>
-            output_coder& operator<<(output_coder& stream, const implicit_value<T>& vl) {
-
-                stream.addtag(tag(vl.id(), vl.mask() | CONSTRUCTED_ENCODING), (tag_traits<T>::number() == TYPE_SET));
-                const_sequences::iterator it = stream.last();
-
-                std::size_t sz = stream.size();
-                const_cast<T*> (&(vl.value()))->serialize(stream);
-                sz = stream.size(sz);
-                ++it;
-
-
-                if (stream.canonical()) {
-                    stream.add(to_x691_cast(size_class()), it);
-                    stream.add(octet_sequnce(2, 0));
-                } else
-                    stream.add(to_x691_cast(size_class(sz)), it);
-                stream.pop_stack();
-                return stream;
-            }
-
-            template<typename T>
-            output_coder& operator<<(output_coder& stream, const implicit_value<std::vector<T> >& vl) {
-
-                stream.addtag(tag(vl.id(), vl.mask() | CONSTRUCTED_ENCODING), false);
-                const_sequences::iterator it = stream.last();
-
-                std::size_t sz = stream.size();
                 typedef typename std::vector<T>::const_iterator vect_type_iterator;
-                for (vect_type_iterator itr = vl.value().begin(); itr != vl.value().end(); ++itr)
-                    boost::asn1::bind_element<T>::op(stream, (*itr));
-                sz = stream.size(sz);
-                ++it;
-
-                if (stream.canonical()) {
-                    stream.add(to_x691_cast(size_class()), it);
-                    stream.add(octet_sequnce(2, 0));
-                } else
-                    stream.add(to_x691_cast(size_class(sz)), it);
-                stream.pop_stack();
+                for (vect_type_iterator itr = vl.begin(); itr != vl.end(); ++itr)
+                    //boost::asn1::bind_element<T>::op(stream, (*itr));
+                    stream & (*itr);
+             
                 return stream;
             }
 
             template<typename T>
-            output_coder& operator<<(output_coder& stream, const implicit_value<std::deque<T> >& vl) {
+            output_coder& operator<<(output_coder& stream, const std::deque<T>& vl) {
 
-                stream.addtag(tag(vl.id(), vl.mask() | CONSTRUCTED_ENCODING), false);
-                const_sequences::iterator it = stream.last();
+                stream.add(to_x691_cast(size_class(vl.size())));
 
-                std::size_t sz = stream.size();
                 typedef typename std::deque<T>::const_iterator vect_type_iterator;
-                for (vect_type_iterator itr = vl.value().begin(); itr != vl.value().end(); ++itr)
-                    boost::asn1::bind_element<T>::op(stream, (*itr));
-                sz = stream.size(sz);
-                ++it;
+                for (vect_type_iterator itr = vl.begin(); itr != vl.end(); ++itr)
+                    //boost::asn1::bind_element<T>::op(stream, (*itr));
+                    stream & (*itr);
+             
+                return stream;                    
 
-                if (stream.canonical()) {
-                    stream.add(to_x691_cast(size_class()), it);
-                    stream.add(octet_sequnce(2, 0));
-                } else
-                    stream.add(to_x691_cast(size_class(sz)), it);
-                stream.pop_stack();
-                return stream;
             }
 
             template<typename T, T MIN, T MAX, bool EXT>
@@ -869,21 +764,6 @@ namespace boost {
                 return stream;
         }            
 
-            template<typename T>
-            output_coder& primitive_sirialize(output_coder& stream, const implicit_value<T>& vl) {
-
-               /* stream.addtag(tag(vl.id(), vl.mask()), (tag_traits<T>::number() == TYPE_SET));
-                const_sequences::iterator it = stream.last();
-
-                std::size_t sz = stream.size();
-                stream << vl.value();
-                sz = stream.size(sz);
-                ++it;
-
-                stream.add(to_x691_cast(size_class(sz)), it);
-                stream.pop_stack();*/
-                return stream;
-            }
 
             template<typename T>
             output_coder& primitive_int_sirialize(output_coder& stream, const T& vl) {
@@ -897,28 +777,11 @@ namespace boost {
 
 
 
-            template<typename T>
-            output_coder& operator<<(output_coder& stream, const optional_explicit_value<T>& vl) {
-                if (vl.value())
-                    stream << explicit_value<T > (*vl.value(), vl.id(), vl.type());
-                return stream;
-            }
-
-            template<typename T>
-            output_coder& operator<<(output_coder& stream, const optional_implicit_value<T>& vl) {
-                if (vl.value())
-                    stream << implicit_value<T > (*vl.value(), vl.id(), vl.type());
-                return stream;
-            }
-
-
-
-
             ////////////////// STRING REALIZATION
 
             template<typename T>
             void x691_string_to_stream_cast(const T& val, output_coder& stream, octet_type lentype) {
-                if (!lentype) {
+               /* if (!lentype) {
                     stream.add(val);
                     return;
                 } else {
@@ -940,7 +803,7 @@ namespace boost {
                         it = it + diff;
                         stream.pop_stack();
                     }
-                }
+                }*/
             }
 
 
@@ -952,7 +815,7 @@ namespace boost {
 
 
 
-                octet_type construct = vl.size()<(tag_traits<T>::number() == TYPE_BITSTRING ? (CER_STRING_MAX_SIZE - 1) : CER_STRING_MAX_SIZE)
+                /*octet_type construct = vl.size()<(tag_traits<T>::number() == TYPE_BITSTRING ? (CER_STRING_MAX_SIZE - 1) : CER_STRING_MAX_SIZE)
                         ? PRIMITIVE_ENCODING : (stream.canonical() ? CONSTRUCTED_ENCODING : PRIMITIVE_ENCODING);
 
                 stream.addtag(tag(id, mask | construct), false);
@@ -968,7 +831,7 @@ namespace boost {
                     stream.add(octet_sequnce(2, 0));
                 } else
                     stream.add(to_x691_cast(size_class(sz)), it);
-                stream.pop_stack();
+                stream.pop_stack();*/
                 return stream;
             }
             
@@ -1162,26 +1025,7 @@ namespace boost {
 
             class input_coder : public boost::itu::base_input_coder {
 
-                struct tlv_size {
-
-                    tlv_size(bool def, std::size_t sz) : defined(def), size(sz) {
-                    }
-                    bool defined;
-                    std::size_t size;
-                };
-
-                struct tlv_item {
-
-                    tlv_item(bool st, const tlv_size & sz) : is_set(st), sizeinfo(sz) {
-                    }
-                    bool is_set;
-                    tlv_size sizeinfo;
-                };
-
-
-                typedef std::stack<tlv_item> tlv_stack;
-
-
+         
             public:
 
                 input_coder() : boost::itu::base_input_coder() {
@@ -1232,129 +1076,114 @@ namespace boost {
                     *this >> vl;
                 }
 
-                tag test_tl(size_class& sz);
-
-                bool parse_tl(const tag& tg, size_class& rsltsz, bool settype, bool optional = false);
-
-                std::size_t stack_size();
 
                 virtual int test_id() {
-                    tag tmptag;
+                    /*tag tmptag;
                     if (tag_x691_cast(tmptag, buffers(), buffers().begin()))
                         return tmptag.id();
-                    else
+                    else*/
                         return tag::null_tag;
                 }
 
                 virtual int test_class() {
-                    tag tmptag;
+                    /*tag tmptag;
                     if (tag_x691_cast(tmptag, buffers(), buffers().begin()))
                         return tmptag.mask() & 0xC0;
-                    else
+                    else*/
                         return tag::null_tag;
                 }
 
-                bool parse_tl(const tag& tg, bool settype, bool optional = false) {
-                    size_class rsltsz;
-                    return parse_tl(tg, rsltsz, settype, optional);
-                }
 
-                void pop_stack();
-
-                bool next(std::size_t & sz) const;
-
-            private:
-
-
-                tlv_stack stack_;
 
             };
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const explicit_value<T>& vl) {
 
-                if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET)) {
+               /* if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET)) {
                     stream & vl.value();
                     stream.pop_stack();
                     return stream;
-                }
+                }*/
+                return stream;
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const optional_explicit_value<T>& vl) {
                 typedef boost::shared_ptr<T> shared_type;
-                if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
+                /*if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
                     *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr<T > (new T());
                     stream & explicit_value<T > (*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
-                }
+                }*/
                 return stream;
             }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const optional_explicit_value< std::vector<T> >& vl) {
                 typedef boost::shared_ptr< std::vector<T> > shared_type;
-                if (stream.parse_tl(vl, false, true)) {
+                /*if (stream.parse_tl(vl, false, true)) {
                     *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
                     stream >> explicit_value<std::vector<T> >(*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
-                }
+                }*/
                 return stream;
             }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const optional_explicit_value< std::deque<T> >& vl) {
                 typedef boost::shared_ptr< std::deque<T> > shared_type;
-                if (stream.parse_tl(vl, false, true)) {
+                /*if (stream.parse_tl(vl, false, true)) {
                     *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
                     stream >> explicit_value<std::deque<T> >(*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
-                }
+                }*/
                 return stream;
             }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const implicit_value<T>& vl) {
 
-                if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET)) {
+                /*if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET)) {
                     const_cast<T*> (&(vl.value()))->serialize(stream);
                     stream.pop_stack();
                     return stream;
-                }
+                }*/
+                return stream;
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const optional_implicit_value<T>& vl) {
                 typedef boost::shared_ptr<T> shared_type;
-                if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
+                /*if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
                     *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr<T > (new T());
                     stream & implicit_value<T > (*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
-                }
+                }*/
                 return stream;
             }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const optional_implicit_value< std::vector<T> >& vl) {
                 typedef boost::shared_ptr< std::vector<T> > shared_type;
-                if (stream.parse_tl(vl, false, true)) {
+                /*if (stream.parse_tl(vl, false, true)) {
                     *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
                     stream >> implicit_value<std::vector<T> >(*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
-                }
+                }*/
                 return stream;
             }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const optional_implicit_value< std::deque<T> >& vl) {
                 typedef boost::shared_ptr< std::deque<T> > shared_type;
-                if (stream.parse_tl(vl, false, true)) {
+                /*if (stream.parse_tl(vl, false, true)) {
                     *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
                     stream >> implicit_value<std::deque<T> >(*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
-                }
+                }*/
                 return stream;
             }
 
@@ -1370,16 +1199,16 @@ namespace boost {
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const implicit_value< std::vector<T> >& vl) {
-                size_class tmpsize;
+                 /*size_class tmpsize;
                 if (stream.parse_tl(vl, tmpsize, false)) {
                     std::size_t beg = stream.size();
-                    /*if (tmpsize.undefsize()) {
+                   if (tmpsize.undefsize()) {
                         while (!stream.is_endof() && stream.size()) {
                             T tmp;
                             boost::asn1::bind_element<T>::op(stream, tmp);
                             const_cast<std::vector<T>*> (&(vl.value()))->push_back(tmp);
                         }
-                    } else */
+                    } else 
                     {
                         std::size_t sz = tmpsize.size();
                         while ((beg - stream.size()) < sz) {
@@ -1389,22 +1218,22 @@ namespace boost {
                         }
                     }
                     stream.pop_stack();
-                }
+                }*/
                 return stream;
             }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const implicit_value< std::deque<T> >& vl) {
-                size_class tmpsize;
+                /*size_class tmpsize;
                 if (stream.parse_tl(vl, tmpsize, false)) {
                     std::size_t beg = stream.size();
-                    /*if (tmpsize.undefsize()) {
+                    if (tmpsize.undefsize()) {
                         while (!stream.is_endof() && stream.size()) {
                             T tmp;
                             boost::asn1::bind_element<T>::op(stream, tmp);
                             const_cast<std::deque<T>*> (&(vl.value()))->push_back(tmp);
                         }
-                    } else*/
+                    } else
                     {
                         std::size_t sz = tmpsize.size();
                         while ((beg - stream.size()) < sz) {
@@ -1414,7 +1243,7 @@ namespace boost {
                         }
                     }
                     stream.pop_stack();
-                }
+                }*/
                 return stream;
             }
 
@@ -1423,7 +1252,7 @@ namespace boost {
 
             template<typename T>
             input_coder& primitive_desirialize(input_coder& stream, const implicit_value<T>& vl) {
-                size_class tmpsize;
+                /*size_class tmpsize;
                 if (stream.parse_tl(vl, tmpsize, tag_traits<T>::number() == TYPE_SET)) {
                     octet_sequnce data;
                     std::size_t sz = tmpsize.size();
@@ -1433,7 +1262,8 @@ namespace boost {
                     }
                     stream.pop_stack();
                     return stream;
-                }
+                }*/
+                return stream;
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
 
@@ -1448,10 +1278,10 @@ namespace boost {
             template<typename T>
             bool stringtype_reader(input_coder& stream, T& vl, id_type id, octet_type mask) {
 
-                size_class tmpsize;
+                /*size_class tmpsize;
                 tag tmptag = stream.test_tl(tmpsize);
                 if (stream.parse_tl(tag(id, mask), tmpsize, false)) {
-                    /*if (tmpsize.undefsize()) {
+                    if (tmpsize.undefsize()) {
                         if (tmptag.constructed()) {
                             while (!stream.is_endof() && !stream.buffers().empty()) {
                                 if (!stringtype_reader(stream, vl, tag_traits<T>::number(), 0))
@@ -1471,7 +1301,7 @@ namespace boost {
                             }
                             return false;
                         }
-                    } else*/
+                    } else
                     {
                         if (tmptag.constructed()) {
                             while (!stream.buffers().empty()) {
@@ -1491,7 +1321,7 @@ namespace boost {
                             }
                         }
                     }
-                }
+                }*/
                 return false;
             }
 

@@ -1584,12 +1584,16 @@ namespace boost {
         
         template<typename Archive, typename T>
         inline bool bind_per(Archive & arch, value_holder<T>& vl) {
-            return bind_per(*vl);
-        }        
+            return bind_per(arch, *vl);
+        }       
         
         template<typename Archive, typename T>
         inline bool bind_per(Archive & arch, boost::shared_ptr<T>& vl) {
-            return bind_per(*vl);
+            if (arch.__input__()) {
+                return false;
+            } else if (static_cast<bool> (vl))
+                return bind_per(arch, *vl);
+            return false;
         }         
         
         template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
