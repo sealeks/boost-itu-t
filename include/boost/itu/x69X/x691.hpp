@@ -111,10 +111,9 @@ namespace boost {
 
                 typedef T internal_type;
 
-                constrained_wnumber() : value_(MIN) {
-                }
-
-                constrained_wnumber(T vl) : value_((vl < MIN) ? MIN : (vl> MAX ? MAX : vl)) {
+                constrained_wnumber(T& vl) : value_(vl) {
+                    if ((vl<MIN) || (vl>MAX))
+                        vl  = (vl < MIN) ? MIN : MAX;
                 }
 
                 static T min() {
@@ -195,7 +194,7 @@ namespace boost {
 
 
             private:
-                internal_type value_;
+                internal_type& value_;
             };
 
 
@@ -283,10 +282,7 @@ namespace boost {
 
                 typedef T internal_type;
 
-                unconstrained_wnumber() : value_(0) {
-                }
-
-                unconstrained_wnumber(T vl) : value_(vl) {
+                unconstrained_wnumber(T& vl) : value_(vl) {
                 }
 
                 const internal_type& value() const {
@@ -340,7 +336,7 @@ namespace boost {
                     return value_;
                 }
 
-                internal_type value_;
+                internal_type& value_;
             };
 
 
@@ -390,7 +386,7 @@ namespace boost {
                 }
 
                 bitstring_type as_bitmap() const {
-                    return bitstring_type(octet_sequnce(1, static_cast<octet_sequnce::value_type> (((value() & 0x3F) << 1) &0x7F)), 1);
+                    return /*bitstring_type(false) +*/ bitstring_type(octet_sequnce(1, static_cast<octet_sequnce::value_type> (((value() & 0x3F) << 1) &0x7F)), 1);
                 }
 
                 octet_sequnce as_octetsequence() const {
@@ -638,12 +634,20 @@ namespace boost {
 
             public:
 
-                output_coder(encoding_rule rul = boost::itu::BER_ENCODING) : boost::itu::base_output_coder(), rule_(rul) {
+                output_coder(encoding_rule rul = boost::itu::BER_ENCODING) : boost::itu::base_output_coder(), rule_(rul), unaligned_(rul==boost::itu::PER_ALIGNED_ENCODING) {
                 }
 
                 virtual encoding_rule rule() const {
                     return rule_;
                 }
+                
+                bool  aligned() const {
+                    return !unaligned_;
+                }           
+                
+                bool  unaligned() const {
+                    return unaligned_;
+                }                      
 
                 template<typename T>
                 void operator&(const T& vl) {
@@ -714,6 +718,7 @@ namespace boost {
 
                 stack_type stack_;
                 encoding_rule rule_;
+                bool unaligned_;
 
             };
 
@@ -834,17 +839,35 @@ namespace boost {
                         return primitive_int_sirialize(stream, vl.value());
                 }
 
-                switch (vl.type()) {
-                    case self_type::nulloctet: return stream;
-                    case self_type::halfoctet: return primitive_constr1_int_sirialize(stream, vl.sendval(), vl.bitsize());
-                    case self_type::oneoctet: return primitive_constr1_int_sirialize(stream, vl.sendval(), 8);
-                    case self_type::twooctet: return primitive_constr2_int_sirialize(stream, vl.sendval());
-                    default:
-                    {
-                    }
+                if (vl.null_range())
+                    return stream;
+                
+                if ((vl.range()<=0xFFFF) || (stream.unaligned())) {
+                    constrained_wnumber<T, MIN, MAX> tmp(const_cast<T&>(vl.value()));
+                    if ((stream.unaligned()) || (tmp.is_minimal()))
+                         stream.add_bitmap(tmp.as_bitmap(), false);
+                    else
+                        stream.add(tmp.as_octetsequence());
+                    return stream;
                 }
-                return primitive_int_sirialize(stream, vl.sendval());
+
+                return primitive_int_sirialize(stream, vl.value());
             }
+
+            template<typename T, T MIN, bool EXT>
+            output_coder& operator<<(output_coder& stream, const num_semiconstrainter<T, MIN, EXT >& vl) {
+
+                typedef num_semiconstrainter<T, MIN, EXT > self_type;
+
+                if (vl.can_extended()) {
+                    stream.add_bitmap(bitstring_type(vl.extended()));
+                    if (vl.extended())
+                        return primitive_int_sirialize(stream, vl.value());
+                }
+                semiconstrained_wnumber<T, MIN> tmp(const_cast<T&> (vl.value()));
+                stream.add(tmp.as_octetsequence());
+                return stream;
+        }            
 
             template<typename T>
             output_coder& primitive_sirialize(output_coder& stream, const implicit_value<T>& vl) {
@@ -866,32 +889,13 @@ namespace boost {
             output_coder& primitive_int_sirialize(output_coder& stream, const T& vl) {
 
                 bool emp = stream.buffers().empty();
-                const_sequences::iterator it = stream.last();
-                std::size_t sz = stream.size();
-                stream.add(to_x691_cast(vl));
-                sz = stream.size(sz);
-                if (emp) {
-                    stream.add(to_x691_cast(size_class(sz)), stream.buffers().begin());
-                } else {
-                    ++it;
-                    stream.add(to_x691_cast(size_class(sz)), it);
-                }
+                unconstrained_wnumber<T> tmp(const_cast<T&>(vl));
+                stream.add(tmp.as_octetstring());
                 return stream;
 
             }
 
-            template<typename T>
-            output_coder& primitive_constr1_int_sirialize(output_coder& stream, const T& vl, const std::size_t bs) {
-                stream.add_bitmap(bitstring_type(octet_sequnce(1, static_cast<octet_sequnce::value_type> (vl) << (8 - bs)), (8 - bs)), false);
-                return stream;
-            }
 
-            template<typename T>
-            output_coder& primitive_constr2_int_sirialize(output_coder& stream, const T& vl) {
-
-                stream.add(to_x691_cast(vl));
-                return stream;
-            }
 
             template<typename T>
             output_coder& operator<<(output_coder& stream, const optional_explicit_value<T>& vl) {
