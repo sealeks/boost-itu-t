@@ -103,6 +103,8 @@ namespace boost {
         const encoding_rule BER_ENCODING = 0x1;
         const encoding_rule CER_ENCODING = 0x2;
         const encoding_rule DER_ENCODING = 0x4;
+        const encoding_rule PER_ALIGNED_ENCODING = 0x8;
+        const encoding_rule PER_UNALIGNED_ENCODING = 0x10;        
 
         const std::size_t ENCODING_RULE_MAX_BIT = 3;
 
