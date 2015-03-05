@@ -129,6 +129,8 @@ namespace boost {\
 
 #define ITU_T_EXTENTION   arch.resetextention();
 
+#define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
+
 #define ITU_T_CHOICE(enm)  boost::asn1::___asn__choice__base__< enm> 
 #define ITU_T_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
 
@@ -1423,18 +1425,28 @@ namespace boost {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         template<typename T, T MIN, T MAX, bool EXT>
-        struct int_constrainter {
-
-            enum encodetype {
-                nulloctet,
-                halfoctet,
-                oneoctet,
-                twooctet,
-                undeflen
-            };
-                    
-            int_constrainter(T& vl) : value_(vl) {
+        struct num_constrainter {
+       
+            num_constrainter(T& vl) : value_(vl) {
             }
+            
+            num_constrainter(value_holder<T>& vl) : value_(*vl) {
+            }
+            
+            num_constrainter(boost::shared_ptr<T>& vl) : value_(*vl) {              
+            }
+            
+            template<const T& DT>
+            num_constrainter(default_holder<T,DT>& vl) : value_(const_cast<T&>(*vl)) {
+            }           
+            
+           template<class Tag, id_type ID, class_type TYPE  >   
+            num_constrainter(implicit_typedef<T, Tag, ID, TYPE>& vl) : value_(*vl) {
+            }      
+           
+           template<class Tag, id_type ID, class_type TYPE  >   
+            num_constrainter(explicit_typedef<T, Tag, ID, TYPE>& vl) : value_(*vl) {
+            }             
             
             static T min() {
                 return MIN;
@@ -1453,54 +1465,21 @@ namespace boost {
             }
             
             static bool null_range() {
-                return MAX = MIN;
+                return MAX == MIN;
             }            
-            
-            static encodetype type(){
-                boost::uint64_t rng=range();
-                if (rng){
-                    if (rng<0xFF)
-                        return halfoctet; 
-                    else if (rng>0xFF)
-                        return twooctet;
-                    return rng==0xFF ? oneoctet : undeflen;
-                }
-                return nulloctet;
-            }
-            
+          
             T& value() {
                 return value_;
             }
             
+            const T& value() const {
+                return value_;
+            }              
+            
             bool extended() const {
                 return ((value_<MIN) || (value_>MAX));
             }           
-            
-            const T& value() const {
-                return value_;
-            }  
-            
-            
-            T sendval() const {
-                bool ext = extended();
-                if (can_extended())
-                    return ext ? value_ : (value_ - MIN);
-                return !ext ? (value_ - MIN) : (value_ < MIN ? 0 :  range());
-            }
-            
-            static std::size_t bitsize(){
-                boost::uint64_t rng=range();
-                if (rng) {
-                    std::size_t rslt= 1;
-                    while(rng>>=1)
-                        rslt++;
-                    return rslt;
-                }
-            return 0;    
-            }
-                     
-
-            
+          
         private:
             
             T& value_;
@@ -1511,12 +1490,125 @@ namespace boost {
         template<typename Archive, typename T>
         inline bool bind_constraints(Archive & arch, T& vl, const T& MIN, const T& MAX) {
             std::size_t tst = arch.size();
-            arch & int_constrainter<T, MIN, MAX, true> (vl);
+            arch & num_constrainter<T, MIN, MAX, false> (vl);
             return (arch.size() != tst);
         }       
         
+        template<typename Archive, typename T>
+        inline bool bind_constraints_ext(Archive & arch, T& vl, const T& MIN, const T& MAX) {
+            std::size_t tst = arch.size();
+            arch & num_constrainter<T, MIN, MAX, true> (vl);
+            return (arch.size() != tst);
+        }         
+        
   
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        template<typename T, T MIN, bool EXT>
+        struct num_semiconstrainter {
+       
+            num_semiconstrainter(T& vl) : value_(vl) {
+            }
+            
+            num_semiconstrainter(value_holder<T>& vl) : value_(*vl) {
+            }
+            
+            num_semiconstrainter(boost::shared_ptr<T>& vl) : value_(*vl) {              
+            }
+            
+            template<const T& DT>
+            num_semiconstrainter(default_holder<T,DT>& vl) : value_(const_cast<T&>(*vl)) {
+            }           
+            
+           template<class Tag, id_type ID, class_type TYPE  >   
+            num_semiconstrainter(implicit_typedef<T, Tag, ID, TYPE>& vl) : value_(*vl) {
+            }      
+           
+           template<class Tag, id_type ID, class_type TYPE  >   
+            num_semiconstrainter(explicit_typedef<T, Tag, ID, TYPE>& vl) : value_(*vl) {
+            }            
+            
+            static T min() {
+                return MIN;
+            }            
+            
+            
+            static bool can_extended() {
+                return EXT;
+            }                             
+          
+            T& value() {
+                return value_;
+            }
+            
+            const T& value() const {
+                return value_;
+            }              
+            
+            bool extended() const {
+                return (value_<MIN);
+            }           
+          
+        private:
+            
+            T& value_;
+
+        };
+        
+        
+        template<typename Archive, typename T>
+        inline bool bind_semiconstraints(Archive & arch, T& vl, const T& MIN, const bool& ext) {
+            std::size_t tst = arch.size();
+            arch & num_semiconstrainter<T, MIN,  false> (vl);
+            return (arch.size() != tst);
+        }       
+        
+        template<typename Archive, typename T>
+        inline bool bind_semiconstraints_ext(Archive & arch, T& vl, const T& MIN, const bool& ext) {
+            std::size_t tst = arch.size();
+            arch & num_semiconstrainter<T, MIN,  true> (vl);
+            return (arch.size() != tst);
+        }          
+        
+  
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        template<typename Archive, typename T>
+        inline bool bind_per(Archive & arch, T& vl) {
+            std::size_t tst = arch.size();
+            arch & vl;
+            return (arch.size() != tst);
+        }   
+        
+        template<typename Archive, typename T>
+        inline bool bind_per(Archive & arch, value_holder<T>& vl) {
+            return bind_per(*vl);
+        }        
+        
+        template<typename Archive, typename T>
+        inline bool bind_per(Archive & arch, boost::shared_ptr<T>& vl) {
+            return bind_per(*vl);
+        }         
+        
+        template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_per(Archive & arch, implicit_typedef<T, Tag, ID, TYPE>& vl) {
+            std::size_t tst = arch.size();
+            arch & vl.value();
+            return (arch.size() != tst);          
+        }   
+        
+        template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_per(Archive & arch, explicit_typedef<T, Tag, ID, TYPE>& vl) {
+            std::size_t tst = arch.size();
+            arch & vl.value();
+            return (arch.size() != tst);
+        }           
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////        
+
+        
         
         template<typename Archive, typename T>
         inline bool bind_basic(Archive & arch, T& vl) {

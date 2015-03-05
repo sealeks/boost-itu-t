@@ -651,24 +651,23 @@ namespace boost {
 
                 template<typename T>
                 void operator&(const T& vl) {
-                    *this << implicit_value<T > (vl);
+                    *this << vl;
                 }
-
-                void operator&(const int32_t& vl);
+                                                          
 
                 template<typename T, T MIN, T MAX, bool EXT>
-                void operator&(const int_constrainter<T, MIN, MAX, EXT >& vl) {
+                void operator&(const num_constrainter<T, MIN, MAX, EXT >& vl) {
                     *this << vl;
                 }
 
                 template<typename T>
                 void operator&(const explicit_value<T >& vl) {
-                    *this << vl;
+                    *this << vl.value();
                 }
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(const explicit_typedef <T, Tag, ID, TYPE>& vl) {
-                    *this << explicit_value<T > (vl.value(), ID, TYPE);
+                    *this << vl.value();
                 }
 
                 template<typename T>
@@ -683,7 +682,7 @@ namespace boost {
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(const implicit_typedef <T, Tag, ID, TYPE>& vl) {
-                    *this << implicit_value<T > (vl.value(), ID, TYPE);
+                    *this << vl.value();
                 }
 
                 template<typename T>
@@ -728,14 +727,15 @@ namespace boost {
 
             template<typename T>
             inline output_coder& operator<<(output_coder& stream, const T& vl) {
-                stream.add(to_x691_cast(vl));
+                //stream.add(to_x691_cast(vl));
+                const_cast<T&> (vl).serialize(stream);
                 return stream;
             }
 
             template<typename T>
             output_coder& operator<<(output_coder& stream, const explicit_value<T>& vl) {
 
-                stream.addtag(tag(vl.id(), vl.mask() | CONSTRUCTED_ENCODING), (tag_traits<T>::number() == TYPE_SET));
+                /*stream.addtag(tag(vl.id(), vl.mask() | CONSTRUCTED_ENCODING), (tag_traits<T>::number() == TYPE_SET));
                 const_sequences::iterator it = stream.last();
 
                 std::size_t sz = stream.size();
@@ -749,7 +749,7 @@ namespace boost {
                     stream.add(octet_sequnce(2, 0));
                 } else
                     stream.add(to_x691_cast(size_class(sz)), it);
-                stream.pop_stack();
+                stream.pop_stack();*/
                 return stream;
             }
 
@@ -829,9 +829,9 @@ namespace boost {
             }
 
             template<typename T, T MIN, T MAX, bool EXT>
-            output_coder& operator<<(output_coder& stream, const int_constrainter<T, MIN, MAX, EXT >& vl) {
+            output_coder& operator<<(output_coder& stream, const num_constrainter<T, MIN, MAX, EXT >& vl) {
 
-                typedef int_constrainter<T, MIN, MAX, EXT > self_type;
+                typedef num_constrainter<T, MIN, MAX, EXT > self_type;
 
                 if (vl.can_extended()) {
                     stream.add_bitmap(bitstring_type(vl.extended()));
@@ -872,7 +872,7 @@ namespace boost {
             template<typename T>
             output_coder& primitive_sirialize(output_coder& stream, const implicit_value<T>& vl) {
 
-                stream.addtag(tag(vl.id(), vl.mask()), (tag_traits<T>::number() == TYPE_SET));
+               /* stream.addtag(tag(vl.id(), vl.mask()), (tag_traits<T>::number() == TYPE_SET));
                 const_sequences::iterator it = stream.last();
 
                 std::size_t sz = stream.size();
@@ -881,7 +881,7 @@ namespace boost {
                 ++it;
 
                 stream.add(to_x691_cast(size_class(sz)), it);
-                stream.pop_stack();
+                stream.pop_stack();*/
                 return stream;
             }
 
@@ -971,110 +971,81 @@ namespace boost {
                 stream.pop_stack();
                 return stream;
             }
+            
+            template<typename T>
+            output_coder& defstring8_writer(output_coder& stream, const T& vl, const std::size_t sz=0) {
+                stream.add(to_x691_cast(size_class(vl.size())));
+                stream.add(octet_sequnce(vl.begin(), vl.end()));
+                return stream;
+            }            
 
 
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<int8_t>& vl);
+            output_coder& operator<<(output_coder& stream, const uint8_t& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<uint8_t>& vl);
+            output_coder& operator<<(output_coder& stream, const int8_t& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<int16_t>& vl);
+            output_coder& operator<<(output_coder& stream, const uint16_t& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<uint16_t>& vl);
+            output_coder& operator<<(output_coder& stream, const int16_t& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<int32_t>& vl);
+            output_coder& operator<<(output_coder& stream, const uint32_t& vl);
 
             output_coder& operator<<(output_coder& stream, const int32_t& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<uint32_t>& vl);
+            output_coder& operator<<(output_coder& stream, const uint64_t& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<int64_t>& vl);
+            output_coder& operator<<(output_coder& stream, const int64_t& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<uint64_t>& vl);
+            output_coder& operator<<(output_coder& stream, const enumerated_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<enumerated_type>& vl);
+            output_coder& operator<<(output_coder& stream, const float& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<float>& vl);
+            output_coder& operator<<(output_coder& stream, const double& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<double>& vl);
+            output_coder& operator<<(output_coder& stream, const long double& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<long double>& vl);
+            output_coder& operator<<(output_coder& stream, const bool& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<bool>& vl);
+            output_coder& operator<<(output_coder& stream, const null_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<null_type>& vl);
+            output_coder& operator<<(output_coder& stream, const oid_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<oid_type>& vl);
+            output_coder& operator<<(output_coder& stream, const reloid_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<reloid_type>& vl);
+            output_coder& operator<<(output_coder& stream, const any_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<any_type>& vl);
+            output_coder& operator<<(output_coder& stream, const bitstring_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<bitstring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const octetstring_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<octetstring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const utf8string_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<utf8string_type>& vl);
+            output_coder& operator<<(output_coder& stream, const numericstring_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<numericstring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const printablestring_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<printablestring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const t61string_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<t61string_type>& vl);
+            output_coder& operator<<(output_coder& stream, const videotexstring_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<videotexstring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const ia5string_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<ia5string_type>& vl);
+            output_coder& operator<<(output_coder& stream, const graphicstring_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<graphicstring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const objectdescriptor_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<objectdescriptor_type>& vl);
+            output_coder& operator<<(output_coder& stream, const visiblestring_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<visiblestring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const generalstring_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<generalstring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const universalstring_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<universalstring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const bmpstring_type& vl);
 
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<bmpstring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const utctime_type& vl);
 
-
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<utctime_type>& vl);
-
-            template<>
-            output_coder& operator<<(output_coder& stream, const implicit_value<gentime_type>& vl);
+            output_coder& operator<<(output_coder& stream, const gentime_type& vl);
 
 
 
