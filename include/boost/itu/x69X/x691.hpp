@@ -104,37 +104,37 @@ namespace boost {
 
             //  constrained whole number            
 
-            template<typename T, T MIN, T MAX>
+            template<typename T>
             class constrained_wnumber {
 
             public:
 
                 typedef T internal_type;
 
-                constrained_wnumber(T& vl) : value_(vl) {
-                    if ((vl<MIN) || (vl>MAX))
-                        vl  = (vl < MIN) ? MIN : MAX;
+                constrained_wnumber(T& vl, const T& min, const T& max) : value_(vl), MIN(min), MAX(max) {
+                    if ((vl < MIN) || (vl > MAX))
+                        vl = (vl < MIN) ? MIN : MAX;
                 }
 
-                static T min() {
+                const T& min() const {
                     return MIN;
                 }
 
-                static T max() {
+                const T& max() const {
                     return MAX;
                 }
 
-                static boost::uint64_t range() {
+                boost::uint64_t range() const {
                     return MAX - MIN;
                 }
 
-                static bool null_range() {
+                bool null_range() const {
                     return MAX = MIN;
                 }
 
                 // bitmap for alighned vaiant
 
-                static bool is_minimal() {
+                bool is_minimal() const {
                     return (range() <= MAX_OCTETLENGTH_SIZE);
                 }
 
@@ -146,7 +146,7 @@ namespace boost {
                     return value_ - MIN;
                 }
 
-                static std::size_t bitsize() {
+                std::size_t bitsize() const {
                     if (boost::uint64_t rng = range()) {
                         std::size_t rslt = 1;
                         while (rng >>= 1)
@@ -156,7 +156,7 @@ namespace boost {
                     return 0;
                 }
 
-                static std::size_t octetsize() {
+                std::size_t octetsize() const {
                     if (std::size_t bssz = bitsize())
                         return (bssz - 1) / 8 + 1;
                     return 0;
@@ -194,26 +194,28 @@ namespace boost {
 
 
             private:
+
                 internal_type& value_;
+                const internal_type& MIN;
+                const internal_type& MAX;
             };
 
 
             //  semiconstrained whole number            
 
-            template<typename T, T MIN>
+            template<typename T>
             class semiconstrained_wnumber {
 
             public:
 
                 typedef T internal_type;
 
-                semiconstrained_wnumber() : value_(MIN) {
+                semiconstrained_wnumber(T& vl, const T& min) : value_(vl), MIN(min) {
+                    if (vl < MIN)
+                        vl = MIN;
                 }
 
-                semiconstrained_wnumber(T vl) : value_((vl < MIN) ? MIN : vl) {
-                }
-
-                static T min() {
+                const T& min() const {
                     return MIN;
                 }
 
@@ -266,7 +268,9 @@ namespace boost {
 
 
             private:
-                internal_type value_;
+
+                internal_type& value_;
+                const internal_type& MIN;
             };
 
 
@@ -603,33 +607,30 @@ namespace boost {
 
             class output_coder : public boost::itu::base_output_coder {
 
-
-
             public:
 
-                output_coder(encoding_rule rul = boost::itu::BER_ENCODING) : boost::itu::base_output_coder(), rule_(rul), unaligned_(rul==boost::itu::PER_ALIGNED_ENCODING) {
+                output_coder(encoding_rule rul = boost::itu::BER_ENCODING) : boost::itu::base_output_coder(), rule_(rul), unaligned_(rul == boost::itu::PER_ALIGNED_ENCODING) {
                 }
 
                 virtual encoding_rule rule() const {
                     return rule_;
                 }
-                
-                bool  aligned() const {
+
+                bool aligned() const {
                     return !unaligned_;
-                }           
-                
-                bool  unaligned() const {
+                }
+
+                bool unaligned() const {
                     return unaligned_;
-                }                      
+                }
 
                 template<typename T>
                 void operator&(const T& vl) {
                     *this << vl;
                 }
-                                                          
 
-                template<typename T, T MIN, T MAX, bool EXT>
-                void operator&(const num_constrainter<T, MIN, MAX, EXT >& vl) {
+                template<typename T>
+                void operator&(const num_constrainter<T>& vl) {
                     *this << vl;
                 }
 
@@ -695,7 +696,6 @@ namespace boost {
                 return stream;
             }
 
-
             template<typename T>
             output_coder& operator<<(output_coder& stream, const std::vector<T>& vl) {
 
@@ -705,7 +705,7 @@ namespace boost {
                 for (vect_type_iterator itr = vl.begin(); itr != vl.end(); ++itr)
                     //boost::asn1::bind_element<T>::op(stream, (*itr));
                     stream & (*itr);
-             
+
                 return stream;
             }
 
@@ -718,15 +718,13 @@ namespace boost {
                 for (vect_type_iterator itr = vl.begin(); itr != vl.end(); ++itr)
                     //boost::asn1::bind_element<T>::op(stream, (*itr));
                     stream & (*itr);
-             
-                return stream;                    
+
+                return stream;
 
             }
 
-            template<typename T, T MIN, T MAX, bool EXT>
-            output_coder& operator<<(output_coder& stream, const num_constrainter<T, MIN, MAX, EXT >& vl) {
-
-                typedef num_constrainter<T, MIN, MAX, EXT > self_type;
+            template<typename T>
+            output_coder& operator<<(output_coder& stream, const num_constrainter<T >& vl) {
 
                 if (vl.can_extended()) {
                     stream.add_bitmap(bitstring_type(vl.extended()));
@@ -736,11 +734,11 @@ namespace boost {
 
                 if (vl.null_range())
                     return stream;
-                
-                if ((vl.range()<=0xFFFF) || (stream.unaligned())) {
-                    constrained_wnumber<T, MIN, MAX> tmp(const_cast<T&>(vl.value()));
+
+                if ((vl.range() <= 0xFFFF) || (stream.unaligned())) {
+                    constrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.max());
                     if ((stream.unaligned()) || (tmp.is_minimal()))
-                         stream.add_bitmap(tmp.as_bitmap(), false);
+                        stream.add_bitmap(tmp.as_bitmap(), false);
                     else
                         stream.add(tmp.as_octetsequence());
                     return stream;
@@ -749,27 +747,25 @@ namespace boost {
                 return primitive_int_sirialize(stream, vl.value());
             }
 
-            template<typename T, T MIN, bool EXT>
-            output_coder& operator<<(output_coder& stream, const num_semiconstrainter<T, MIN, EXT >& vl) {
+            template<typename T>
+            output_coder& operator<<(output_coder& stream, const num_semiconstrainter<T>& vl) {
 
-                typedef num_semiconstrainter<T, MIN, EXT > self_type;
 
                 if (vl.can_extended()) {
                     stream.add_bitmap(bitstring_type(vl.extended()));
                     if (vl.extended())
                         return primitive_int_sirialize(stream, vl.value());
                 }
-                semiconstrained_wnumber<T, MIN> tmp(const_cast<T&> (vl.value()));
+                semiconstrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.extended());
                 stream.add(tmp.as_octetsequence());
                 return stream;
-        }            
-
+            }
 
             template<typename T>
             output_coder& primitive_int_sirialize(output_coder& stream, const T& vl) {
 
                 bool emp = stream.buffers().empty();
-                unconstrained_wnumber<T> tmp(const_cast<T&>(vl));
+                unconstrained_wnumber<T> tmp(const_cast<T&> (vl));
                 stream.add(tmp.as_octetstring());
                 return stream;
 
@@ -781,29 +777,29 @@ namespace boost {
 
             template<typename T>
             void x691_string_to_stream_cast(const T& val, output_coder& stream, octet_type lentype) {
-               /* if (!lentype) {
-                    stream.add(val);
-                    return;
-                } else {
+                /* if (!lentype) {
+                     stream.add(val);
+                     return;
+                 } else {
 
-                    typedef typename T::const_iterator const_iterator_type;
-                    typedef typename T::difference_type difference_type;
+                     typedef typename T::const_iterator const_iterator_type;
+                     typedef typename T::difference_type difference_type;
 
-                    const_iterator_type it = val.begin();
-                    while (it != val.end()) {
-                        stream.addtag(tag(tag_traits<T>::number()), false);
-                        difference_type diff = std::distance(it, val.end());
-                        if (diff >static_cast<difference_type> (CER_STRING_MAX_SIZE)) {
-                            diff = static_cast<difference_type> (CER_STRING_MAX_SIZE);
-                            stream.add(to_x691_cast(size_class(static_cast<std::size_t> (diff))));
-                        } else {
-                            stream.add(to_x691_cast(size_class(static_cast<std::size_t> (diff))));
-                        }
-                        stream.add(octet_sequnce(it, it + diff));
-                        it = it + diff;
-                        stream.pop_stack();
-                    }
-                }*/
+                     const_iterator_type it = val.begin();
+                     while (it != val.end()) {
+                         stream.addtag(tag(tag_traits<T>::number()), false);
+                         difference_type diff = std::distance(it, val.end());
+                         if (diff >static_cast<difference_type> (CER_STRING_MAX_SIZE)) {
+                             diff = static_cast<difference_type> (CER_STRING_MAX_SIZE);
+                             stream.add(to_x691_cast(size_class(static_cast<std::size_t> (diff))));
+                         } else {
+                             stream.add(to_x691_cast(size_class(static_cast<std::size_t> (diff))));
+                         }
+                         stream.add(octet_sequnce(it, it + diff));
+                         it = it + diff;
+                         stream.pop_stack();
+                     }
+                 }*/
             }
 
 
@@ -834,13 +830,13 @@ namespace boost {
                 stream.pop_stack();*/
                 return stream;
             }
-            
+
             template<typename T>
-            output_coder& defstring8_writer(output_coder& stream, const T& vl, const std::size_t sz=0) {
+            output_coder& defstring8_writer(output_coder& stream, const T& vl, const std::size_t sz = 0) {
                 stream.add(to_x691_cast(size_class(vl.size())));
                 stream.add(octet_sequnce(vl.begin(), vl.end()));
                 return stream;
-            }            
+            }
 
 
 
@@ -1025,7 +1021,6 @@ namespace boost {
 
             class input_coder : public boost::itu::base_input_coder {
 
-         
             public:
 
                 input_coder() : boost::itu::base_input_coder() {
@@ -1076,13 +1071,12 @@ namespace boost {
                     *this >> vl;
                 }
 
-
                 virtual int test_id() {
                     /*tag tmptag;
                     if (tag_x691_cast(tmptag, buffers(), buffers().begin()))
                         return tmptag.id();
                     else*/
-                        return tag::null_tag;
+                    return tag::null_tag;
                 }
 
                 virtual int test_class() {
@@ -1090,7 +1084,7 @@ namespace boost {
                     if (tag_x691_cast(tmptag, buffers(), buffers().begin()))
                         return tmptag.mask() & 0xC0;
                     else*/
-                        return tag::null_tag;
+                    return tag::null_tag;
                 }
 
 
@@ -1100,11 +1094,11 @@ namespace boost {
             template<typename T>
             input_coder& operator>>(input_coder& stream, const explicit_value<T>& vl) {
 
-               /* if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET)) {
-                    stream & vl.value();
-                    stream.pop_stack();
-                    return stream;
-                }*/
+                /* if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET)) {
+                     stream & vl.value();
+                     stream.pop_stack();
+                     return stream;
+                 }*/
                 return stream;
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
@@ -1113,7 +1107,7 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, const optional_explicit_value<T>& vl) {
                 typedef boost::shared_ptr<T> shared_type;
                 /*if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
-                    *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr<T > (new T());
+                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr<T > (new T());
                     stream & explicit_value<T > (*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
                 }*/
@@ -1124,7 +1118,7 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, const optional_explicit_value< std::vector<T> >& vl) {
                 typedef boost::shared_ptr< std::vector<T> > shared_type;
                 /*if (stream.parse_tl(vl, false, true)) {
-                    *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
+                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
                     stream >> explicit_value<std::vector<T> >(*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
                 }*/
@@ -1135,7 +1129,7 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, const optional_explicit_value< std::deque<T> >& vl) {
                 typedef boost::shared_ptr< std::deque<T> > shared_type;
                 /*if (stream.parse_tl(vl, false, true)) {
-                    *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
+                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
                     stream >> explicit_value<std::deque<T> >(*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
                 }*/
@@ -1158,7 +1152,7 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, const optional_implicit_value<T>& vl) {
                 typedef boost::shared_ptr<T> shared_type;
                 /*if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
-                    *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr<T > (new T());
+                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr<T > (new T());
                     stream & implicit_value<T > (*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
                 }*/
@@ -1169,7 +1163,7 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, const optional_implicit_value< std::vector<T> >& vl) {
                 typedef boost::shared_ptr< std::vector<T> > shared_type;
                 /*if (stream.parse_tl(vl, false, true)) {
-                    *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
+                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
                     stream >> implicit_value<std::vector<T> >(*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
                 }*/
@@ -1180,7 +1174,7 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, const optional_implicit_value< std::deque<T> >& vl) {
                 typedef boost::shared_ptr< std::deque<T> > shared_type;
                 /*if (stream.parse_tl(vl, false, true)) {
-                    *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
+                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
                     stream >> implicit_value<std::deque<T> >(*vl.value(), vl.id(), vl.type());
                     //stream.pop_stack();
                 }*/
@@ -1199,26 +1193,26 @@ namespace boost {
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, const implicit_value< std::vector<T> >& vl) {
-                 /*size_class tmpsize;
-                if (stream.parse_tl(vl, tmpsize, false)) {
-                    std::size_t beg = stream.size();
-                   if (tmpsize.undefsize()) {
-                        while (!stream.is_endof() && stream.size()) {
-                            T tmp;
-                            boost::asn1::bind_element<T>::op(stream, tmp);
-                            const_cast<std::vector<T>*> (&(vl.value()))->push_back(tmp);
-                        }
-                    } else 
-                    {
-                        std::size_t sz = tmpsize.size();
-                        while ((beg - stream.size()) < sz) {
-                            T tmp;
-                            boost::asn1::bind_element<T>::op(stream, tmp);
-                            const_cast<std::vector<T>*> (&(vl.value()))->push_back(tmp);
-                        }
-                    }
-                    stream.pop_stack();
-                }*/
+                /*size_class tmpsize;
+               if (stream.parse_tl(vl, tmpsize, false)) {
+                   std::size_t beg = stream.size();
+                  if (tmpsize.undefsize()) {
+                       while (!stream.is_endof() && stream.size()) {
+                           T tmp;
+                           boost::asn1::bind_element<T>::op(stream, tmp);
+                           const_cast<std::vector<T>*> (&(vl.value()))->push_back(tmp);
+                       }
+                   } else 
+                   {
+                       std::size_t sz = tmpsize.size();
+                       while ((beg - stream.size()) < sz) {
+                           T tmp;
+                           boost::asn1::bind_element<T>::op(stream, tmp);
+                           const_cast<std::vector<T>*> (&(vl.value()))->push_back(tmp);
+                       }
+                   }
+                   stream.pop_stack();
+               }*/
                 return stream;
             }
 
