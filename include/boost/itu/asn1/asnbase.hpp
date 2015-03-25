@@ -130,6 +130,11 @@ namespace boost {\
 #define ITU_T_EXTENTION   arch.resetextention();
 
 #define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
+#define ITU_T_BIND_MUM_CONSTRS_NCHK(var, mn, mx) arch & boost::asn1::num_constrainter<int, mn, mx, false> (var)
+#define ITU_T_BIND_MUM_CONSTRS_CHK(var, mn, mx) if ( var ) arch & boost::asn1::num_constrainter<int, mn, mx, false> (var)
+#define ITU_T_BIND_MUM_CONSTRE(var, mn, mx) boost::asn1::bind_constraints_ext(arch, var, mn, mx)
+#define ITU_T_BIND_MUM_SIMICONS(var, mn) boost::asn1::bind_semiconstraints(arch, var, mn)
+#define ITU_T_BIND_MUM_SIMICONE(var, mn) boost::asn1::bind_semiconstraints_ext(arch, var, mn)
 
 #define ITU_T_CHOICE(enm)  boost::asn1::___asn__choice__base__< enm> 
 #define ITU_T_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
@@ -1421,7 +1426,8 @@ namespace boost {
         
         
         
-          
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  num_constrainter
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         template<typename T, T MIN, T MAX, bool EXT>
@@ -1446,7 +1452,7 @@ namespace boost {
            
            template<class Tag, id_type ID, class_type TYPE  >   
             num_constrainter(explicit_typedef<T, Tag, ID, TYPE>& vl) : value_(*vl) {
-            }             
+            }        
             
             static T min() {
                 return MIN;
@@ -1492,18 +1498,37 @@ namespace boost {
             std::size_t tst = arch.size();
             arch & num_constrainter<T, MIN, MAX, false> (vl);
             return (arch.size() != tst);
-        }       
+        }           
+        
+        /*template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_constraints(Archive & arch, implicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
+            return bind_constraints(arch, *vl, MIN, MAX);          
+        }    
+        
+        template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_constraints(Archive & arch, explicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
+            return bind_constraints(arch, *vl, MIN, MAX);          
+        }*/                  
         
         template<typename Archive, typename T>
         inline bool bind_constraints_ext(Archive & arch, T& vl, const T& MIN, const T& MAX) {
             std::size_t tst = arch.size();
             arch & num_constrainter<T, MIN, MAX, true> (vl);
             return (arch.size() != tst);
-        }         
+        }    
         
-  
+        /*template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_constraints_ext(Archive & arch, implicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
+            return false;//bind_constraints_ext(arch, *vl, MIN, MAX);          
+        }    
+        
+        template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_constraints_ext(Archive & arch, explicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
+            return false;//bind_constraints_ext(arch, *vl, MIN, MAX);          
+        }  */
+        
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+         //  num_semiconstrainter       
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         template<typename T, T MIN, bool EXT>
@@ -1557,7 +1582,7 @@ namespace boost {
 
         };
         
-        
+         
         template<typename Archive, typename T>
         inline bool bind_semiconstraints(Archive & arch, T& vl, const T& MIN, const bool& ext) {
             std::size_t tst = arch.size();
@@ -1570,7 +1595,82 @@ namespace boost {
             std::size_t tst = arch.size();
             arch & num_semiconstrainter<T, MIN,  true> (vl);
             return (arch.size() != tst);
-        }          
+        }        
+        
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  size_constrainter
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        template<typename T, std::size_t MIN, std::size_t MAX, bool EXT>
+        struct size_constrainter {
+            
+            typedef typename T::value_type arg_type;
+       
+            size_constrainter(T& vl) : value_(vl) {
+            }       
+            
+           template<class Tag, id_type ID, class_type TYPE  >   
+            size_constrainter(implicit_typedef<T, Tag, ID, TYPE>& vl) : value_(*vl) {
+            }      
+           
+           template<class Tag, id_type ID, class_type TYPE  >   
+            size_constrainter(explicit_typedef<T, Tag, ID, TYPE>& vl) : value_(*vl) {
+            }             
+            
+            static std::size_t min() {
+                return MIN;
+            }            
+            
+            static std::size_t max() {
+                return MAX;
+            }         
+            
+            static bool can_extended() {
+                return EXT;
+            }                  
+            
+            static boost::uint64_t range() {
+                return MAX - MIN;
+            }
+            
+            static bool null_range() {
+                return MAX == MIN;
+            }            
+          
+            T& value() {
+                return value_;
+            }
+            
+            const T& value() const {
+                return value_;
+            }              
+            
+            bool extended() const {
+                return ((value_<MIN) || (value_>MAX));
+            }           
+          
+        private:
+            
+            T& value_;
+
+        };        
+        
+        
+        template<typename Archive, typename T>
+        inline bool bind_sizeconstraints(Archive & arch, T& vl, const T& MIN, const T& MAX) {
+            std::size_t tst = arch.size();
+            arch & size_constrainter<T, MIN, MAX, false> (vl);
+            return (arch.size() != tst);
+        }       
+        
+        template<typename Archive, typename T>
+        inline bool bind_sizeconstraints_ext(Archive & arch, T& vl, const T& MIN, const T& MAX) {
+            std::size_t tst = arch.size();
+            arch & size_constrainter<T, MIN, MAX, true> (vl);
+            return (arch.size() != tst);
+        }      
         
   
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1608,7 +1708,9 @@ namespace boost {
             std::size_t tst = arch.size();
             arch & vl.value();
             return (arch.size() != tst);
-        }           
+        } 
+        
+    
         
         ////////////////////////////////////////////////////////////////////////////////////////////////////        
 
