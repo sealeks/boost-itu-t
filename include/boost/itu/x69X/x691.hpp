@@ -34,8 +34,9 @@ namespace boost {
             const octet_type NEGATINFINITY_REAL_ID = '\x41';
             const octet_type NEGATNULL_REAL_ID = '\x43';
 
-            const std::size_t MAX_SIMPLELENGTH_SIZE = 0x80;
-            const std::size_t MAX_DOUBLELENGTH_SIZE = 0x4000;
+            const std::size_t LENGH_128B = /*0x80;         // */ 0x4;
+            const std::size_t LENGH_16K = /*0x4000;  // */ 0x10;
+            const std::size_t LENGH_64K = /*0x10000;       //*/ 0x40;
             const std::size_t MAX_OCTETLENGTH_SIZE = 0x100;
             const std::size_t MAX_SMALL_NN_SIZE = 64;
 
@@ -48,9 +49,6 @@ namespace boost {
             const std::size_t LONGDOUBLE_MANTISSA_SIZE = 112;
             const std::size_t LONGDOUBLE_EXPONENTA_DELT = 16383;
 
-
-            const std::size_t CER_STRING_MAX_SIZE = 1000;
-            // const std::size_t CER_STRING_MAX_SIZE = 2;
 
 
             //////  Endian conv;
@@ -635,6 +633,11 @@ namespace boost {
                 }
 
                 template<typename T>
+                void operator&(const size_constrainter<T>& vl) {
+                    *this << vl;
+                }
+
+                template<typename T>
                 void operator&(const explicit_value<T >& vl) {
                     *this << vl.value();
                 }
@@ -645,11 +648,6 @@ namespace boost {
                 }
 
                 template<typename T>
-                void operator&(const optional_explicit_value<T >& vl) {
-                    *this << vl;
-                }
-
-                template<typename T>
                 void operator&(const implicit_value<T >& vl) {
                     *this << vl;
                 }
@@ -657,11 +655,6 @@ namespace boost {
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(const implicit_typedef <T, Tag, ID, TYPE>& vl) {
                     *this << vl.value();
-                }
-
-                template<typename T>
-                void operator&(const optional_implicit_value<T >& vl) {
-                    *this << vl;
                 }
 
                 template<typename T>
@@ -691,7 +684,6 @@ namespace boost {
 
             template<typename T>
             inline output_coder& operator<<(output_coder& stream, const T& vl) {
-                //stream.add(to_x691_cast(vl));
                 const_cast<T&> (vl).serialize(stream);
                 return stream;
             }
@@ -703,7 +695,6 @@ namespace boost {
 
                 typedef typename std::vector<T>::const_iterator vect_type_iterator;
                 for (vect_type_iterator itr = vl.begin(); itr != vl.end(); ++itr)
-                    //boost::asn1::bind_element<T>::op(stream, (*itr));
                     stream & (*itr);
 
                 return stream;
@@ -716,7 +707,6 @@ namespace boost {
 
                 typedef typename std::deque<T>::const_iterator vect_type_iterator;
                 for (vect_type_iterator itr = vl.begin(); itr != vl.end(); ++itr)
-                    //boost::asn1::bind_element<T>::op(stream, (*itr));
                     stream & (*itr);
 
                 return stream;
@@ -748,6 +738,12 @@ namespace boost {
             }
 
             template<typename T>
+            output_coder& operator<<(output_coder& stream, const size_constrainter<T >& vl) {
+
+                return stream << vl.value();
+            }
+
+            template<typename T>
             output_coder& operator<<(output_coder& stream, const num_semiconstrainter<T>& vl) {
 
 
@@ -764,7 +760,6 @@ namespace boost {
             template<typename T>
             output_coder& primitive_int_sirialize(output_coder& stream, const T& vl) {
 
-                bool emp = stream.buffers().empty();
                 unconstrained_wnumber<T> tmp(const_cast<T&> (vl));
                 stream.add(tmp.as_octetstring());
                 return stream;
@@ -775,68 +770,92 @@ namespace boost {
 
             ////////////////// STRING REALIZATION
 
+
+            output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const octet_sequnce& elms, bool align = true);
+
+            output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const bitstring_type& elms, bool align = true);
+
             template<typename T>
-            void x691_string_to_stream_cast(const T& val, output_coder& stream, octet_type lentype) {
-                /* if (!lentype) {
-                     stream.add(val);
-                     return;
-                 } else {
-
-                     typedef typename T::const_iterator const_iterator_type;
-                     typedef typename T::difference_type difference_type;
-
-                     const_iterator_type it = val.begin();
-                     while (it != val.end()) {
-                         stream.addtag(tag(tag_traits<T>::number()), false);
-                         difference_type diff = std::distance(it, val.end());
-                         if (diff >static_cast<difference_type> (CER_STRING_MAX_SIZE)) {
-                             diff = static_cast<difference_type> (CER_STRING_MAX_SIZE);
-                             stream.add(to_x691_cast(size_class(static_cast<std::size_t> (diff))));
-                         } else {
-                             stream.add(to_x691_cast(size_class(static_cast<std::size_t> (diff))));
-                         }
-                         stream.add(octet_sequnce(it, it + diff));
-                         it = it + diff;
-                         stream.pop_stack();
-                     }
-                 }*/
+            output_coder& elements_writer(output_coder& stream, const octet_sequnce& sz, T& beg, T& end, bool align = true) {
+                for (T it = beg; it != end; ++it)
+                    stream << (*it);
+                return stream;
             }
 
+            template<typename T>
+            output_coder& octet_writer_undefsz(output_coder& stream, const T& vl) {
+                std::size_t sz = vl.size();
+                std::size_t beg = 0;
+                while (beg < sz) {
+                    if ((sz - beg) < LENGH_16K) {
+                        octets_writer(stream, to_x691_cast(size_class(sz - beg)),
+                                octet_sequnce(vl.begin() + beg, vl.end()));
+                        beg = sz;
+                    } else {
+                        if ((sz - beg) < LENGH_64K) {
+                            std::size_t m = (sz - beg) / LENGH_16K;
+                            std::size_t nbeg = beg + LENGH_16K*m;
+                            octets_writer(stream, to_x691_cast(size_class(LENGH_16K * m)),
+                                    octet_sequnce(vl.begin() + beg, vl.begin() + nbeg));
+                            beg = nbeg;
+                        } else {
+                            octets_writer(stream, to_x691_cast(size_class(LENGH_64K)),
+                                    octet_sequnce(vl.begin() + beg, vl.begin() + beg + LENGH_64K));
+                            beg += LENGH_64K;
+                        }
+                    }
+                }
+                return stream;
+            }
 
             template<>
-            void x691_string_to_stream_cast(const bitstring_type& val, output_coder& stream, octet_type lentype);
+            output_coder& octet_writer_undefsz(output_coder& stream, const bitstring_type& vl);
 
             template<typename T>
-            output_coder& stringtype_writer(output_coder& stream, const T& vl, id_type id, octet_type mask) {
+            output_coder& element_writer_undefsz(output_coder& stream, const T& vl) {
+                std::size_t sz = vl.size();
+                std::size_t beg = 0;
+                while (beg < sz) {
+                    if ((sz - beg) < LENGH_16K) {
+                        stream.add(to_x691_cast(size_class(sz - beg)));
+                        elements_writer(vl.begin() + beg, vl.end());
+                        beg = sz;
+                    } else {
+                        if ((sz - beg) < LENGH_64K) {
+                            std::size_t m = (sz - beg) / LENGH_16K;
+                            std::size_t nbeg = beg + LENGH_16K*m;
+                            stream.add(to_x691_cast(size_class(LENGH_16K * m)));
+                            elements_writer(vl.begin() + beg, vl.begin() + nbeg);
+                            beg = nbeg;
+                        } else {
+                            stream.add(to_x691_cast(size_class(LENGH_64K)));
+                            elements_writer(vl.begin() + beg, vl.begin() + beg + LENGH_64K);
+                            beg += LENGH_64K;
+                        }
+                    }
+                }
+                return stream;
+            }
+            
+            
 
+            template<typename T>
+            output_coder& octet_writer_defsz(output_coder& stream, const size_constrainter<T>& vl) {
+                if (vl.constrained()) {
 
-
-                /*octet_type construct = vl.size()<(tag_traits<T>::number() == TYPE_BITSTRING ? (CER_STRING_MAX_SIZE - 1) : CER_STRING_MAX_SIZE)
-                        ? PRIMITIVE_ENCODING : (stream.canonical() ? CONSTRUCTED_ENCODING : PRIMITIVE_ENCODING);
-
-                stream.addtag(tag(id, mask | construct), false);
-                const_sequences::iterator it = stream.last();
-
-                std::size_t sz = stream.size();
-                x691_string_to_stream_cast(vl, stream, construct);
-                sz = stream.size(sz);
-                ++it;
-
-                if (construct) {
-                    stream.add(to_x691_cast(size_class()), it);
-                    stream.add(octet_sequnce(2, 0));
                 } else
-                    stream.add(to_x691_cast(size_class(sz)), it);
-                stream.pop_stack();*/
+                    octet_writer_undefsz(stream, vl.value());
                 return stream;
             }
-
+            
             template<typename T>
-            output_coder& defstring8_writer(output_coder& stream, const T& vl, const std::size_t sz = 0) {
-                stream.add(to_x691_cast(size_class(vl.size())));
-                stream.add(octet_sequnce(vl.begin(), vl.end()));
+            output_coder& element_writer_defsz(output_coder& stream, const size_constrainter<T>& vl) {
+                if (vl.constrained()) {
+
+                } else
+                    element_writer_undefsz(stream, vl.value());
                 return stream;
-            }
+            }            
 
 
 
@@ -873,34 +892,64 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const reloid_type& vl);
 
             output_coder& operator<<(output_coder& stream, const any_type& vl);
+            
+            // strings
 
             output_coder& operator<<(output_coder& stream, const bitstring_type& vl);
 
             output_coder& operator<<(output_coder& stream, const octetstring_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<octetstring_type>& vl);                 
 
             output_coder& operator<<(output_coder& stream, const utf8string_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<utf8string_type>& vl);            
 
             output_coder& operator<<(output_coder& stream, const numericstring_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type>& vl);            
 
             output_coder& operator<<(output_coder& stream, const printablestring_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<printablestring_type>& vl);              
 
             output_coder& operator<<(output_coder& stream, const t61string_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<t61string_type>& vl);            
 
             output_coder& operator<<(output_coder& stream, const videotexstring_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<videotexstring_type>& vl);             
 
             output_coder& operator<<(output_coder& stream, const ia5string_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<ia5string_type>& vl);             
 
             output_coder& operator<<(output_coder& stream, const graphicstring_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<graphicstring_type>& vl);            
 
             output_coder& operator<<(output_coder& stream, const objectdescriptor_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<objectdescriptor_type>& vl);            
 
             output_coder& operator<<(output_coder& stream, const visiblestring_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type>& vl);            
 
             output_coder& operator<<(output_coder& stream, const generalstring_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<generalstring_type>& vl);             
 
             output_coder& operator<<(output_coder& stream, const universalstring_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type>& vl);            
 
             output_coder& operator<<(output_coder& stream, const bmpstring_type& vl);
+            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<bmpstring_type>& vl);            
+            
+            
 
             output_coder& operator<<(output_coder& stream, const utctime_type& vl);
 

@@ -210,19 +210,19 @@ namespace boost {
 
         const id_type TYPE_SEQ = 0x10;
         const id_type TYPE_SET = 0x11;
-        const id_type TYPE_NUMERICSTRING = 0x12;
-        const id_type TYPE_PRINTABLESTRING = 0x13;
+        const id_type TYPE_NUMERICSTRING = 0x12; // known-multi 1 oct
+        const id_type TYPE_PRINTABLESTRING = 0x13; // known-multi 1 oct
         const id_type TYPE_T61STRING = 0x14;
         const id_type TYPE_VIDEOTEXSTRING = 0x15;
-        const id_type TYPE_IA5STRING = 0x16;
+        const id_type TYPE_IA5STRING = 0x16; // known-multi 1 oct
         const id_type TYPE_UTCTIME = 0x17;
         const id_type TYPE_GENERALZEDTIME = 0x18;
         const id_type TYPE_GRAPHICSTRING = 0x19;
-        const id_type TYPE_VISIBLESTRING = 0x1A;
+        const id_type TYPE_VISIBLESTRING = 0x1A; // known-multi 1 oct
         const id_type TYPE_GENERALSTRING = 0x1B;
-        const id_type TYPE_UNIVERSALSTRING = 0x1C;
+        const id_type TYPE_UNIVERSALSTRING = 0x1C; // known-multi 4 oct
         const id_type TYPE_CHARACTERSTRING = 0x1D;
-        const id_type TYPE_BMPSTRING = 0x1E;
+        const id_type TYPE_BMPSTRING = 0x1E; // known-multi 2 oct
 
         const id_type EXTENDED_TAGID = 31;
 
@@ -346,6 +346,10 @@ namespace boost {
             operator octet_sequnce() const {
                 return (valid()) ? octet_sequnce(begin(), end()) : octet_sequnce();
             }
+            
+            octet_sequnce as_octet_sequnce() const {
+                return (valid()) ? octet_sequnce(begin(), end()) : octet_sequnce();
+            }            
 
             std::wstring to_wstring() const {
                 return (valid()) ? utf8_to_wstr(*this) : std::wstring();
@@ -384,6 +388,10 @@ namespace boost {
             operator octet_sequnce() const {
                 return octet_sequnce(begin(), end());
             }
+            
+            octet_sequnce as_octet_sequnce() const {
+                return octet_sequnce(begin(), end());
+            }            
 
             operator std::string() const {
                 return *this;
@@ -396,14 +404,14 @@ namespace boost {
         };
 
 
-        typedef simplestring_type<TYPE_NUMERICSTRING> numericstring_type;
-        typedef simplestring_type<TYPE_PRINTABLESTRING> printablestring_type;
-        typedef simplestring_type<TYPE_T61STRING> t61string_type;
+        typedef simplestring_type<TYPE_NUMERICSTRING> numericstring_type; // known-multi 1 oct
+        typedef simplestring_type<TYPE_PRINTABLESTRING> printablestring_type; // known-multi 1 oct
+        typedef simplestring_type<TYPE_T61STRING> t61string_type; 
         typedef simplestring_type<TYPE_VIDEOTEXSTRING> videotexstring_type;
-        typedef simplestring_type<TYPE_IA5STRING> ia5string_type;
+        typedef simplestring_type<TYPE_IA5STRING> ia5string_type;  // known-multi 1 oct
         typedef simplestring_type<TYPE_GRAPHICSTRING> graphicstring_type;
         typedef simplestring_type<TYPE_OBJECT_DESCRIPTOR> objectdescriptor_type;
-        typedef simplestring_type<TYPE_VISIBLESTRING> visiblestring_type;
+        typedef simplestring_type<TYPE_VISIBLESTRING> visiblestring_type; // known-multi 1 oct
         typedef simplestring_type<TYPE_GENERALSTRING> generalstring_type;
 
         inline std::ostream& operator<<(std::ostream& stream, const numericstring_type& vl) {
@@ -444,9 +452,11 @@ namespace boost {
 
         ///universalstring_type
 
-        class universalstring_type : public std::string {
+        class universalstring_type : public std::string { // known-multi 4 oct
 
         public:
+            
+            typedef std::vector<boost::uint32_t>  rawarray_type;            
 
             universalstring_type() : std::string() {
             }
@@ -468,6 +478,10 @@ namespace boost {
             std::wstring to_wstring() const {
                 return universalstr_to_wstr(*this);
             }
+            
+            rawarray_type to_rawstring() const {
+                return rawarray_type();
+            }            
 
             std::string to_utf8() const {
                 return wstr_to_utf8(universalstr_to_wstr(*this));
@@ -489,9 +503,11 @@ namespace boost {
 
         ///bmpstring_type
 
-        class bmpstring_type : public std::string {
+        class bmpstring_type : public std::string { // known-multi 2 oct
 
         public:
+            
+            typedef std::vector<boost::uint16_t>  rawarray_type;
 
             bmpstring_type() : std::string() {
             }
@@ -513,6 +529,10 @@ namespace boost {
             std::wstring to_wstring() const {
                 return bmpstr_to_wstr(*this);
             }
+            
+            rawarray_type to_rawstring() const {
+                return rawarray_type();
+            }                   
 
             std::string to_utf8() const {
                 return wstr_to_utf8(bmpstr_to_wstr(*this));
@@ -1619,19 +1639,19 @@ namespace boost {
         template<typename T>
         struct size_constrainter {
 
-            typedef typename T::value_type arg_type;
+            //typedef typename T::value_type arg_type;
 
-            size_constrainter(T& vl, const std::size_t& mn, const std::size_t& mx, bool ext) :
+            size_constrainter(T& vl, const std::size_t& mn = 0, const std::size_t& mx = 0, bool ext = false) :
             value_(vl), MIN(mn), MAX(mx), EXT(ext) {
             }
 
             template<class Tag, id_type ID, class_type TYPE >
-            size_constrainter(implicit_typedef<T, Tag, ID, TYPE>& vl, const std::size_t& mn, const std::size_t& mx, bool ext) :
+            size_constrainter(implicit_typedef<T, Tag, ID, TYPE>& vl, const std::size_t& mn = 0, const std::size_t& mx = 0, bool ext = false) :
             value_(*vl), MIN(mn), MAX(mx), EXT(ext) {
             }
 
             template<class Tag, id_type ID, class_type TYPE >
-            size_constrainter(explicit_typedef<T, Tag, ID, TYPE>& vl, const std::size_t& mn, const std::size_t& mx, bool ext) :
+            size_constrainter(explicit_typedef<T, Tag, ID, TYPE>& vl, const std::size_t& mn = 0, const std::size_t& mx = 0, bool ext = false) :
             value_(*vl), MIN(mn), MAX(mx), EXT(ext) {
             }
 
@@ -1654,6 +1674,14 @@ namespace boost {
             bool null_range() const {
                 return MAX == MIN;
             }
+            
+            bool constrained() const {
+                return !(MIN  && MAX) ;
+            }         
+            
+            bool semiconstrained() const {
+                return (!MIN  && MAX) ;
+            }              
 
             T& value() {
                 return value_;
@@ -1676,19 +1704,24 @@ namespace boost {
         };
 
         template<typename Archive, typename T>
-        inline bool bind_sizeconstraints(Archive & arch, T& vl, const T& MIN, const T& MAX) {
+        inline bool bind_sizeconstraints(Archive & arch, T& vl, const std::size_t& MIN, const std::size_t& MAX) {
             std::size_t tst = arch.size();
             arch & size_constrainter<T> (vl, MIN, MAX, false);
             return (arch.size() != tst);
         }
 
         template<typename Archive, typename T>
-        inline bool bind_sizeconstraints_ext(Archive & arch, T& vl, const T& MIN, const T& MAX) {
+        inline bool bind_sizeconstraints_ext(Archive & arch, T& vl, const std::size_t& MIN, const std::size_t& MAX) {
             std::size_t tst = arch.size();
             arch & size_constrainter<T> (vl, MIN, MAX, false);
             return (arch.size() != tst);
         }
 
+        
+        
+        
+        
+        
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
