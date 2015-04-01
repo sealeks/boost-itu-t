@@ -329,6 +329,20 @@ namespace boost {
                 stream.add(elms);
                 return stream;
             }
+            
+            output_coder& octets_writer(output_coder& stream, const octet_sequnce& elms, std::size_t rlsz, bool align) {
+                if (rlsz) {
+                    if (rlsz == elms.size())
+                        stream.add(elms);
+                    else if (rlsz < elms.size())
+                        stream.add(octet_sequnce(elms.begin(), elms.begin() + rlsz));
+                    else{
+                        stream.add(elms);
+                        stream.add(octet_sequnce(rlsz - elms.size()));
+                    }
+                }
+                return stream;
+            }           
 
             template<>
             output_coder& octet_writer_undefsz(output_coder& stream, const bitstring_type& vl) {

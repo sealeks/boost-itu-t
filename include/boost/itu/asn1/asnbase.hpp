@@ -1672,15 +1672,15 @@ namespace boost {
             }
 
             bool null_range() const {
-                return MAX == MIN;
+                return (MAX == MIN) && (MAX<0x10000);
             }
             
             bool constrained() const {
-                return !(MIN  && MAX) ;
+                return MAX && (MAX<0x10000);
             }         
             
             bool semiconstrained() const {
-                return (!MIN  && MAX) ;
+                return MIN && !MAX;
             }              
 
             T& value() {
@@ -1691,8 +1691,8 @@ namespace boost {
                 return value_;
             }
 
-            bool extended() const {
-                return ((value_ < MIN) || (value_ > MAX));
+            bool extended(std::size_t sz) const {
+                return ((sz < MIN) || (sz > MAX));
             }
 
         private:
