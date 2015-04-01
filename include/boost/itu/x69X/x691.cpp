@@ -11,32 +11,6 @@ namespace boost {
     namespace asn1 {
         namespace x691 {
 
-            void endian_conv(octet_sequnce& val) {
-#ifdef BIG_ENDIAN_ARCHITECTURE                               
-#else
-                std::reverse(val.begin(), val.end());
-#endif               
-            }
-
-            octet_sequnce endian_conv_conv(const octet_sequnce& val) {
-#ifdef BIG_ENDIAN_ARCHITECTURE
-                return val;
-#else
-                octet_sequnce tmp;
-                std::copy(val.rbegin(), val.rend(), std::back_inserter(tmp));
-                return tmp;
-#endif                                
-            }
-
-            void endian_push_pack(const octet_sequnce& val, octet_sequnce& dst) {
-#ifdef BIG_ENDIAN_ARCHITECTURE
-                std::copy(val.begin(), val.end(), std::back_inserter(dst))
-#else
-                std::copy(val.rbegin(), val.rend(), std::back_inserter(dst));
-#endif    
-            }
-
-
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             /*OUTPUT STREAM                                                                                                                                                                                               */

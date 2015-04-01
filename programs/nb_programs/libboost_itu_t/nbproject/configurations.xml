@@ -59,6 +59,8 @@
           <itemPath>../../../include/boost/itu/x69X/x690.hpp</itemPath>
           <itemPath>../../../include/boost/itu/x69X/x691.cpp</itemPath>
           <itemPath>../../../include/boost/itu/x69X/x691.hpp</itemPath>
+          <itemPath>../../../include/boost/itu/x69X/x69x.cpp</itemPath>
+          <itemPath>../../../include/boost/itu/x69X/x69x.hpp</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
@@ -302,6 +304,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x69X/x69x.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
     </conf>
     <conf name="nb_gcc_rl_WIN32" type="3">
       <toolsSet>
@@ -508,6 +520,16 @@
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x69X/x691.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.hpp"
             ex="false"
             tool="3"
             flavor2="0">
@@ -721,6 +743,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x69X/x69x.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
     </conf>
     <conf name="nb_gcc_rl_LIN64" type="3">
       <toolsSet>
@@ -924,6 +956,16 @@
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x69X/x691.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x69X/x69x.hpp"
             ex="false"
             tool="3"
             flavor2="0">

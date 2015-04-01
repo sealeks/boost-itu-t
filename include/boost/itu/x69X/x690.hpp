@@ -16,47 +16,15 @@
 #include <boost/itu/coder/base_coder.hpp>
 #include <boost/itu/x22X/selectors.hpp>
 #include <boost/itu/detail/error.hpp>
+#include <boost/itu/x69X/x69x.hpp>
 
 
 namespace boost {
     namespace asn1 {
         namespace x690 {
 
-
-            const octet_type NEGATIVE_MARKER = '\x80';
-            const octet_type POSITIVE_START = '\xFF';
-
-            const octet_type CONTENT_CONIIUE = '\x80';
-            const octet_type UNDEF_BLOCK_SIZE = '\x80';
-
-            const octet_type NAN_REAL_ID = '\x42';
-            const octet_type INFINITY_REAL_ID = '\x40';
-            const octet_type NEGATINFINITY_REAL_ID = '\x41';
-            const octet_type NEGATNULL_REAL_ID = '\x43';
-
-            const std::size_t MAX_SIMPLELENGTH_SIZE = 0x80;
-
-            const std::size_t FLOAT_MANTISSA_SIZE = 23;
-            const std::size_t FLOAT_EXPONENTA_DELT = 127;
-
-            const std::size_t DOUBLE_MANTISSA_SIZE = 52;
-            const std::size_t DOUBLE_EXPONENTA_DELT = 1023;
-
-            const std::size_t LONGDOUBLE_MANTISSA_SIZE = 112;
-            const std::size_t LONGDOUBLE_EXPONENTA_DELT = 16383;
-
-
             const std::size_t CER_STRING_MAX_SIZE = 1000;
             // const std::size_t CER_STRING_MAX_SIZE = 2;
-
-
-            //////  Endian conv;
-
-            void endian_conv(octet_sequnce& val);
-
-            octet_sequnce endian_conv_conv(const octet_sequnce& val);
-
-            void endian_push_pack(const octet_sequnce& val, octet_sequnce& dst);
 
 
             /////// timeconv
