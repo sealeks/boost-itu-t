@@ -432,17 +432,6 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // bool to X.691
-
-            template<>
-            std::size_t to_x691_cast(bool val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // null to X.691
-
-            std::size_t to_x691_cast(const null_type& val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
             // enumerated_type to X.691
 
             std::size_t to_x691_cast(const enumerated_type& val, octet_sequnce& src);
@@ -740,7 +729,7 @@ namespace boost {
             template<typename T>
             output_coder& primitive_690_sirialize(output_coder& stream, const T& vl) {
                 octet_sequnce tmp;
-                std::size_t sz = to_x690_cast(vl, tmp);
+                to_x690_cast(vl, tmp);
                 octet_writer_undefsz(stream, tmp);
                 return stream;
             }

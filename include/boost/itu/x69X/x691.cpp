@@ -48,18 +48,8 @@ namespace boost {
                 return tmp;
             }
 
-            template<>
-            std::size_t to_x691_cast(bool val, octet_sequnce& src) {
-                src.push_back(static_cast<octet_type> (val ? 0xFF : 0));
-                return 1;
-            }
 
 
-            //// null cast            
-
-            std::size_t to_x691_cast(const null_type& val, octet_sequnce& src) {
-                return 0;
-            }
 
 
             //// enumerated_type cast                          
@@ -182,7 +172,8 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const bool& vl) {
-                return stream; // primitive_sirialize(stream, vl);
+                stream.add_bitmap(bitstring_type(vl));
+                return stream;                
             }
 
             output_coder& operator<<(output_coder& stream, const null_type& vl) {
@@ -438,7 +429,7 @@ namespace boost {
 
             template<>
             bool from_x691_cast(enumerated_type& val, const octet_sequnce& src) {
-                enumerated_base_type tmp;
+                enumerated_base_type tmp=0;
                 if (from_x691_cast(tmp, src)) {
                     val = tmp;
                     return true;
