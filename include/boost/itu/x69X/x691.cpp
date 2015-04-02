@@ -303,20 +303,20 @@ namespace boost {
                 stream.add(elms);
                 return stream;
             }
-            
+
             output_coder& octets_writer(output_coder& stream, const octet_sequnce& elms, std::size_t rlsz, bool align) {
                 if (rlsz) {
                     if (rlsz == elms.size())
                         stream.add(elms);
                     else if (rlsz < elms.size())
                         stream.add(octet_sequnce(elms.begin(), elms.begin() + rlsz));
-                    else{
+                    else {
                         stream.add(elms);
                         stream.add(octet_sequnce(rlsz - elms.size()));
                     }
                 }
                 return stream;
-            }           
+            }
 
             template<>
             output_coder& octet_writer_undefsz(output_coder& stream, const bitstring_type& vl) {
@@ -419,110 +419,110 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const octetstring_type& vl) {
                 return octet_writer_undefsz(stream, vl);
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<octetstring_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<octetstring_type>& vl) {
                 return octet_writer_defsz(stream, vl); // as known-multi 1 oct                
-            }            
+            }
 
             output_coder& operator<<(output_coder& stream, const utf8string_type& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce());
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<utf8string_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<utf8string_type>& vl) {
                 return stream << vl.value();
-            }            
+            }
 
             output_coder& operator<<(output_coder& stream, const numericstring_type& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type>& vl) {
                 return octet_writer_defsz(stream, vl); // known-multi 1 oct
-            }            
+            }
 
             output_coder& operator<<(output_coder& stream, const printablestring_type& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<printablestring_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<printablestring_type>& vl) {
                 return octet_writer_defsz(stream, vl); // known-multi 1 oct
-            }                    
+            }
 
             output_coder& operator<<(output_coder& stream, const t61string_type& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce());
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<t61string_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<t61string_type>& vl) {
                 return stream << vl.value();
-            }                
+            }
 
             output_coder& operator<<(output_coder& stream, const videotexstring_type& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce());
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<videotexstring_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<videotexstring_type>& vl) {
                 return stream << vl.value();
-            }              
+            }
 
             output_coder& operator<<(output_coder& stream, const ia5string_type& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<ia5string_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<ia5string_type>& vl) {
                 return octet_writer_defsz(stream, vl); // known-multi 1 oct
-            }            
+            }
 
             output_coder& operator<<(output_coder& stream, const graphicstring_type& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce());
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<graphicstring_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<graphicstring_type>& vl) {
                 return stream << vl.value();
-            }         
+            }
 
             output_coder& operator<<(output_coder& stream, const objectdescriptor_type& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce());
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<objectdescriptor_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<objectdescriptor_type>& vl) {
                 return stream << vl.value();
-            }                 
+            }
 
             output_coder& operator<<(output_coder& stream, const visiblestring_type& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type>& vl) {
                 return octet_writer_defsz(stream, vl); // known-multi 1 oct
-            }             
+            }
 
             output_coder& operator<<(output_coder& stream, const generalstring_type& vl) {
                 return octet_writer_undefsz(stream, vl.as_octet_sequnce());
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<generalstring_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<generalstring_type>& vl) {
                 return stream << vl.value();
-            }            
+            }
 
             output_coder& operator<<(output_coder& stream, const universalstring_type& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream; // known-multi 4 oct
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type>& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream; // known-multi 4 oct
-            }            
+            }
 
             output_coder& operator<<(output_coder& stream, const bmpstring_type& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream; // known-multi 2 oct
             }
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<bmpstring_type>& vl){
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<bmpstring_type>& vl) {
                 //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
                 return stream; // known-multi 2 oct
-            }               
+            }
 
             output_coder& operator<<(output_coder& stream, const utctime_type& vl) {
                 return stream; //primitive_sirialize(stream, vl);

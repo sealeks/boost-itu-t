@@ -76,146 +76,16 @@ namespace boost {
 
 
 
-            /////  CAST FROM AND TO TYPE
 
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-            // integer to X.690
-
-            template<typename T>
-            std::size_t to_x690_cast(T val, octet_sequnce& src) {
-                octet_sequnce tmp;
-                bool negat = (val < 0);
-
-
-
-#ifdef BIG_ENDIAN_ARCHITECTURE      
-                !!!not implement
-#else
-
-                if (negat)
-                    if (val & (T(1) << (sizeof (T)*8 - 1))) {
-                        val &= ~(T(1) << (sizeof (T)*8 - 1));
-                        tmp.push_back(static_cast<octet_type> (POSITIVE_START & val));
-                        val >>= 8;
-                        val |= (T(1) << ((sizeof (T) - 1)*8 - 1));
-                    }
-                while (val) {
-                    tmp.push_back(static_cast<octet_type> (POSITIVE_START & val));
-                    val >>= 8;
-                }
-                if (negat && !tmp.empty())
-                    while ((tmp.size() > 1) && (tmp.back() == static_cast<octet_type> (POSITIVE_START)))
-                        tmp.pop_back();
-
-                if ((tmp.empty() || (!negat && (tmp.back() & NEGATIVE_MARKER))))
-                    tmp.push_back(static_cast<octet_type> (0));
-                else {
-                    if (negat && !(tmp.back() & NEGATIVE_MARKER))
-                        tmp.push_back(static_cast<octet_type> (POSITIVE_START));
-                }
-                endian_push_pack(tmp, src);
-
-#endif                              
-                return tmp.size();
-            }
-
-            template<>
-            std::size_t to_x690_cast(int8_t val, octet_sequnce& src);
-
-            template<>
-            std::size_t to_x690_cast(uint8_t val, octet_sequnce& src);
-
-
-
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // tag to X.690
-
-
-            std::size_t to_x690_cast(const tag& val, octet_sequnce& src);
-
-            octet_sequnce to_x690_cast(const tag& val);
 
 
             ///////////////////////////////////////////////////////////////////////////////////
             // size_class to X.690
 
 
-            std::size_t to_x690_cast(const size_class& val, octet_sequnce& src);
+            std::size_t tosize_x690_cast(const size_class& val, octet_sequnce& src);
 
-            octet_sequnce to_x690_cast(const size_class& val);
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // real to X.690
-
-
-            template<>
-            std::size_t to_x690_cast(double val, octet_sequnce& src);
-
-            template<>
-            std::size_t to_x690_cast(float val, octet_sequnce& src);
-
-            template<>
-            std::size_t to_x690_cast(long double val, octet_sequnce& src);
-
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // bool to X.690
-
-            template<>
-            std::size_t to_x690_cast(bool val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // null to X.690
-
-            std::size_t to_x690_cast(const null_type& val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // enumerated_type to X.690
-
-            std::size_t to_x690_cast(const enumerated_type& val, octet_sequnce& src);
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // oid to X.690
-
-
-            std::size_t to_x690_cast(const oid_type& val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // relative oid to X.690
-
-
-            std::size_t to_x690_cast(const reloid_type& val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // utctime to X.690
-
-
-            std::size_t to_x690_cast(const utctime_type& val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // gentime to X.690
-
-
-            std::size_t to_x690_cast(const gentime_type& val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // any_type to X.690
-
-
-            std::size_t to_x690_cast(const any_type& val, octet_sequnce& src);
-
-            template<typename T>
-            octet_sequnce to_x690_cast(const T& val) {
-                octet_sequnce rslt;
-                to_x690_cast(val, rslt);
-                return rslt;
-            }
-
+            octet_sequnce tosize_x690_cast(const size_class& val);
 
             //////////////////////////////////////////////////////////////////////////////////////////
             ///  archiver                
@@ -348,10 +218,10 @@ namespace boost {
                 ++it;
 
                 if ((stream.canonical())) {
-                    stream.add(to_x690_cast(size_class()), it);
+                    stream.add(tosize_x690_cast(size_class()), it);
                     stream.add(octet_sequnce(2, 0));
                 } else
-                    stream.add(to_x690_cast(size_class(sz)), it);
+                    stream.add(tosize_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
             }
@@ -379,10 +249,10 @@ namespace boost {
 
 
                 if (stream.canonical()) {
-                    stream.add(to_x690_cast(size_class()), it);
+                    stream.add(tosize_x690_cast(size_class()), it);
                     stream.add(octet_sequnce(2, 0));
                 } else
-                    stream.add(to_x690_cast(size_class(sz)), it);
+                    stream.add(tosize_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
             }
@@ -401,10 +271,10 @@ namespace boost {
                 ++it;
 
                 if (stream.canonical()) {
-                    stream.add(to_x690_cast(size_class()), it);
+                    stream.add(tosize_x690_cast(size_class()), it);
                     stream.add(octet_sequnce(2, 0));
                 } else
-                    stream.add(to_x690_cast(size_class(sz)), it);
+                    stream.add(tosize_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
             }
@@ -423,10 +293,10 @@ namespace boost {
                 ++it;
 
                 if (stream.canonical()) {
-                    stream.add(to_x690_cast(size_class()), it);
+                    stream.add(tosize_x690_cast(size_class()), it);
                     stream.add(octet_sequnce(2, 0));
                 } else
-                    stream.add(to_x690_cast(size_class(sz)), it);
+                    stream.add(tosize_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
             }
@@ -442,7 +312,7 @@ namespace boost {
                 sz = stream.size(sz);
                 ++it;
 
-                stream.add(to_x690_cast(size_class(sz)), it);
+                stream.add(tosize_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
             }
@@ -482,9 +352,9 @@ namespace boost {
                         difference_type diff = std::distance(it, val.end());
                         if (diff >static_cast<difference_type> (CER_STRING_MAX_SIZE)) {
                             diff = static_cast<difference_type> (CER_STRING_MAX_SIZE);
-                            stream.add(to_x690_cast(size_class(static_cast<std::size_t> (diff))));
+                            stream.add(tosize_x690_cast(size_class(static_cast<std::size_t> (diff))));
                         } else {
-                            stream.add(to_x690_cast(size_class(static_cast<std::size_t> (diff))));
+                            stream.add(tosize_x690_cast(size_class(static_cast<std::size_t> (diff))));
                         }
                         stream.add(octet_sequnce(it, it + diff));
                         it = it + diff;
@@ -514,10 +384,10 @@ namespace boost {
                 ++it;
 
                 if (construct) {
-                    stream.add(to_x690_cast(size_class()), it);
+                    stream.add(tosize_x690_cast(size_class()), it);
                     stream.add(octet_sequnce(2, 0));
                 } else
-                    stream.add(to_x690_cast(size_class(sz)), it);
+                    stream.add(tosize_x690_cast(size_class(sz)), it);
                 stream.pop_stack();
                 return stream;
             }
@@ -632,105 +502,16 @@ namespace boost {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-            bool find_marked_sequece(const mutable_sequences& val, mutable_sequences::const_iterator bit, octet_sequnce& raw, std::size_t start = 0);
 
 
             /////  CAST FROM AND TO TYPE
 
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-            // integer from X.690          
 
-            template<typename T>
-            bool from_x690_cast(T& vl, const octet_sequnce& dt) {
-                octet_sequnce val = dt;
-#ifdef BIG_ENDIAN_ARCHITECTURE 
-                !!!not implement
-#else              
-                endian_conv(val);
-                if (sizeof (T) > val.size())
-                    val.resize(sizeof (T), octet_type((val.empty() || (val.back() & NEGATIVE_MARKER)) ? POSITIVE_START : 0));
-                vl = (*(T*) (&val[0]));
-#endif                  
-                return true;
-            }
-
-
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // tag from X.690
-
-            std::size_t tag_from_x690_cast(const tag& val, const octet_sequnce& src);
-
-            std::size_t tag_x690_cast(tag& val, const mutable_sequences& src, mutable_sequences::const_iterator bit, std::size_t beg = 0);
 
             ///////////////////////////////////////////////////////////////////////////////////
             // size_class from X.690
 
             std::size_t size_x690_cast(size_class& val, const mutable_sequences& src, mutable_sequences::const_iterator bit, std::size_t beg = 0);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // real from X.690
-
-            template<>
-            bool from_x690_cast(float& vl, const octet_sequnce& val);
-
-            template<>
-            bool from_x690_cast(double& vl, const octet_sequnce& val);
-
-            template<>
-            bool from_x690_cast(long double& vl, const octet_sequnce& val);
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // bool from X.690
-
-            template<>
-            bool from_x690_cast(bool& vl, const octet_sequnce& val);
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // null from X.690
-
-            template<>
-            bool from_x690_cast(null_type& val, const octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // enumerated_type from X.690
-
-            template<>
-            bool from_x690_cast(enumerated_type& val, const octet_sequnce& src);
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // oid from X.690
-
-            template<>
-            bool from_x690_cast(oid_type& val, const octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // relative from to X.690
-
-            template<>
-            bool from_x690_cast(reloid_type& val, const octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // utctime_type from to X.690
-
-            template<>
-            bool from_x690_cast(utctime_type& val, const octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // gentime_type from to X.690
-
-            template<>
-            bool from_x690_cast(gentime_type& val, const octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // any_type from to X.690
-
-            template<>
-            bool from_x690_cast(any_type& val, const octet_sequnce& src);
 
 
 
@@ -1011,15 +792,14 @@ namespace boost {
                 }
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
-            
+
             template<typename T>
             octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, T& vl) {
                 return seq.begin();
-            } 
-            
+            }
+
             template<>
-            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq,  bitstring_type& vl);
-            
+            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, bitstring_type& vl);
 
             template<typename T>
             bool stringtype_reader(input_coder& stream, T& vl, id_type id, octet_type mask) {
@@ -1038,10 +818,10 @@ namespace boost {
                         } else {
                             std::size_t sz = 0;
                             if (boost::itu::find_eof(stream.buffers(), stream.buffers().begin(), sz)) {
-                                octet_sequnce data;                                
+                                octet_sequnce data;
                                 if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
-                                    octet_sequnce::iterator fit= reader_setunuse(data,vl);
-                                    vl.insert(vl.end(), fit , data.end());
+                                    octet_sequnce::iterator fit = reader_setunuse(data, vl);
+                                    vl.insert(vl.end(), fit, data.end());
                                     return true;
                                 }
                             }
@@ -1059,8 +839,8 @@ namespace boost {
                         } else {
                             octet_sequnce data;
                             if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, tmpsize.size())) {
-                                octet_sequnce::iterator fit= reader_setunuse(data,vl);
-                                vl.insert(vl.end(), fit , data.end());
+                                octet_sequnce::iterator fit = reader_setunuse(data, vl);
+                                vl.insert(vl.end(), fit, data.end());
                                 stream.pop_stack();
                                 return true;
                             }
@@ -1069,7 +849,7 @@ namespace boost {
                 }
                 return false;
             }
-                   
+
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<int8_t>& vl);
@@ -1173,7 +953,7 @@ namespace boost {
 
 
         }
-        
+
 
         template<> void external_type::serialize(boost::asn1::x690::output_coder& arch);
         template<> void external_type::serialize(boost::asn1::x690::input_coder& arch);

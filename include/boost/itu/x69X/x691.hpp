@@ -23,9 +23,9 @@ namespace boost {
         namespace x691 {
 
 
-            const std::size_t LENGH_128B = 0x80;         //  0x4;
-            const std::size_t LENGH_16K = 0x4000;  //  0x10;
-            const std::size_t LENGH_64K = 0x10000;       //0x40;
+            const std::size_t LENGH_128B = 0x80; //  0x4;
+            const std::size_t LENGH_16K = 0x4000; //  0x10;
+            const std::size_t LENGH_64K = 0x10000; //0x40;
             const std::size_t MAX_OCTETLENGTH_SIZE = 0x100;
             const std::size_t MAX_SMALL_NN_SIZE = 64;
 
@@ -744,8 +744,8 @@ namespace boost {
             output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const octet_sequnce& elms, bool align = true);
 
             output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const bitstring_type& elms, bool align = true);
-            
-            output_coder& octets_writer(output_coder& stream, const octet_sequnce& elms, std::size_t rlsz, bool align = true);    
+
+            output_coder& octets_writer(output_coder& stream, const octet_sequnce& elms, std::size_t rlsz, bool align = true);
 
             template<typename T>
             output_coder& elements_writer(output_coder& stream, const octet_sequnce& sz, T& beg, T& end, bool align = true) {
@@ -808,7 +808,7 @@ namespace boost {
                 }
                 return stream;
             }
-   
+
             template<typename T>
             output_coder& octet_writer_defsz(output_coder& stream, const size_constrainter<T>& vl) {
 
@@ -832,7 +832,7 @@ namespace boost {
                 }
                 return octet_writer_undefsz(stream, vl.value());
             }
-            
+
             template<typename T>
             output_coder& element_writer_defsz(output_coder& stream, const size_constrainter<T>& vl) {
                 if (vl.constrained()) {
@@ -840,7 +840,7 @@ namespace boost {
                 } else
                     element_writer_undefsz(stream, vl.value());
                 return stream;
-            }            
+            }
 
 
 
@@ -877,64 +877,64 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const reloid_type& vl);
 
             output_coder& operator<<(output_coder& stream, const any_type& vl);
-            
+
             // strings
 
             output_coder& operator<<(output_coder& stream, const bitstring_type& vl);
 
             output_coder& operator<<(output_coder& stream, const octetstring_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<octetstring_type>& vl);                 
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<octetstring_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const utf8string_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<utf8string_type>& vl);            
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<utf8string_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const numericstring_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type>& vl);            
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const printablestring_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<printablestring_type>& vl);              
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<printablestring_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const t61string_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<t61string_type>& vl);            
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<t61string_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const videotexstring_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<videotexstring_type>& vl);             
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<videotexstring_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const ia5string_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<ia5string_type>& vl);             
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<ia5string_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const graphicstring_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<graphicstring_type>& vl);            
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<graphicstring_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const objectdescriptor_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<objectdescriptor_type>& vl);            
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<objectdescriptor_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const visiblestring_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type>& vl);            
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const generalstring_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<generalstring_type>& vl);             
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<generalstring_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const universalstring_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type>& vl);            
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const bmpstring_type& vl);
-            
-            output_coder& operator<<(output_coder& stream, const size_constrainter<bmpstring_type>& vl);            
-            
-            
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<bmpstring_type>& vl);
+
+
 
             output_coder& operator<<(output_coder& stream, const utctime_type& vl);
 
