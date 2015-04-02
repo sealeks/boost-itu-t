@@ -391,89 +391,20 @@ namespace boost {
 
 
 
-
-
-
-
-            ///////////////////
-
-
-
-
-
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             /*OUTPUT STREAM                                                                                                                                                                                           */
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
             /////  CAST FROM AND TO TYPE
 
             ///////////////////////////////////////////////////////////////////////////////////////////////
-            // integer to X.691
+            // null to X.691
 
             template<typename T>
             std::size_t to_x691_cast(T val, octet_sequnce& src) {
-                octet_sequnce tmp;
-                bool negat = (val < 0);
-
-
-
-#ifdef BIG_ENDIAN_ARCHITECTURE      
-                !!!not implement
-#else
-
-                if (negat)
-                    if (val & (T(1) << (sizeof (T)*8 - 1))) {
-                        val &= ~(T(1) << (sizeof (T)*8 - 1));
-                        tmp.push_back(static_cast<octet_type> (POSITIVE_START & val));
-                        val >>= 8;
-                        val |= (T(1) << ((sizeof (T) - 1)*8 - 1));
-                    }
-                while (val) {
-                    tmp.push_back(static_cast<octet_type> (POSITIVE_START & val));
-                    val >>= 8;
-                }
-                if (negat && !tmp.empty())
-                    while ((tmp.size() > 1) && (tmp.back() == static_cast<octet_type> (POSITIVE_START)))
-                        tmp.pop_back();
-
-                if ((tmp.empty() || (!negat && (tmp.back() & NEGATIVE_MARKER))))
-                    tmp.push_back(static_cast<octet_type> (0));
-                else {
-                    if (negat && !(tmp.back() & NEGATIVE_MARKER))
-                        tmp.push_back(static_cast<octet_type> (POSITIVE_START));
-                }
-                endian_push_pack(tmp, src);
-
-#endif                              
-                return tmp.size();
+                return 0;
             }
-
-            template<>
-            std::size_t to_x691_cast(int8_t val, octet_sequnce& src);
-
-            template<>
-            std::size_t to_x691_cast(uint8_t val, octet_sequnce& src);
-
-
-
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // tag to X.691
-
-
-            std::size_t to_x691_cast(const tag& val, octet_sequnce& src);
-
-            octet_sequnce to_x691_cast(const tag& val);
-
-
-
-
-
-
 
             ///////////////////////////////////////////////////////////////////////////////////
             // small_nn_wnumber to X.691
@@ -501,21 +432,6 @@ namespace boost {
 
 
             ///////////////////////////////////////////////////////////////////////////////////
-            // real to X.691
-
-
-            template<>
-            std::size_t to_x691_cast(double val, octet_sequnce& src);
-
-            template<>
-            std::size_t to_x691_cast(float val, octet_sequnce& src);
-
-            template<>
-            std::size_t to_x691_cast(long double val, octet_sequnce& src);
-
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
             // bool to X.691
 
             template<>
@@ -531,30 +447,6 @@ namespace boost {
 
             std::size_t to_x691_cast(const enumerated_type& val, octet_sequnce& src);
 
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // oid to X.691
-
-
-            std::size_t to_x691_cast(const oid_type& val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // relative oid to X.691
-
-
-            std::size_t to_x691_cast(const reloid_type& val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // utctime to X.691
-
-
-            std::size_t to_x691_cast(const utctime_type& val, octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // gentime to X.691
-
-
-            std::size_t to_x691_cast(const gentime_type& val, octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
             // any_type to X.691
@@ -738,6 +630,9 @@ namespace boost {
 
 
 
+
+
+
             ////////////////// STRING REALIZATION
 
 
@@ -839,6 +734,14 @@ namespace boost {
 
                 } else
                     element_writer_undefsz(stream, vl.value());
+                return stream;
+            }
+
+            template<typename T>
+            output_coder& primitive_690_sirialize(output_coder& stream, const T& vl) {
+                octet_sequnce tmp;
+                std::size_t sz = to_x690_cast(vl, tmp);
+                octet_writer_undefsz(stream, tmp);
                 return stream;
             }
 
@@ -948,9 +851,6 @@ namespace boost {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-            bool find_marked_sequece(const mutable_sequences& val, mutable_sequences::const_iterator bit, octet_sequnce& raw, std::size_t start = 0);
-
-
             /////  CAST FROM AND TO TYPE
 
             ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -958,15 +858,15 @@ namespace boost {
 
             template<typename T>
             bool from_x691_cast(T& vl, const octet_sequnce& dt) {
-                octet_sequnce val = dt;
-#ifdef BIG_ENDIAN_ARCHITECTURE 
-                !!!not implement
-#else              
-                endian_conv(val);
-                if (sizeof (T) > val.size())
-                    val.resize(sizeof (T), octet_type((val.empty() || (val.back() & NEGATIVE_MARKER)) ? POSITIVE_START : 0));
-                vl = (*(T*) (&val[0]));
-#endif                  
+                /*  octet_sequnce val = dt;
+  #ifdef BIG_ENDIAN_ARCHITECTURE 
+                  !!!not implement
+  #else              
+                  endian_conv(val);
+                  if (sizeof (T) > val.size())
+                      val.resize(sizeof (T), octet_type((val.empty() || (val.back() & NEGATIVE_MARKER)) ? POSITIVE_START : 0));
+                  vl = (*(T*) (&val[0]));
+  #endif      */
                 return true;
             }
 
@@ -984,18 +884,6 @@ namespace boost {
             // size_class from X.691
 
             std::size_t size_x691_cast(size_class& val, const mutable_sequences& src, mutable_sequences::const_iterator bit, std::size_t beg = 0);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // real from X.691
-
-            template<>
-            bool from_x691_cast(float& vl, const octet_sequnce& val);
-
-            template<>
-            bool from_x691_cast(double& vl, const octet_sequnce& val);
-
-            template<>
-            bool from_x691_cast(long double& vl, const octet_sequnce& val);
 
 
             ///////////////////////////////////////////////////////////////////////////////////
@@ -1018,29 +906,6 @@ namespace boost {
             bool from_x691_cast(enumerated_type& val, const octet_sequnce& src);
 
 
-            ///////////////////////////////////////////////////////////////////////////////////
-            // oid from X.691
-
-            template<>
-            bool from_x691_cast(oid_type& val, const octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // relative from to X.691
-
-            template<>
-            bool from_x691_cast(reloid_type& val, const octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // utctime_type from to X.691
-
-            template<>
-            bool from_x691_cast(utctime_type& val, const octet_sequnce& src);
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // gentime_type from to X.691
-
-            template<>
-            bool from_x691_cast(gentime_type& val, const octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
             // any_type from to X.691
@@ -1294,14 +1159,6 @@ namespace boost {
                 return stream;
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
-
-            template<typename T>
-            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, T& vl) {
-                return seq.begin();
-            }
-
-            template<>
-            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, bitstring_type& vl);
 
             template<typename T>
             bool stringtype_reader(input_coder& stream, T& vl, id_type id, octet_type mask) {
