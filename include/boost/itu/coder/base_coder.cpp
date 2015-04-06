@@ -35,8 +35,7 @@ namespace boost {
                         return std::vector<oidindx_type > ();
                     if (boost::itu::string_to(dig, un)) {
                         rslt.push_back(un);
-                    }
-                    else {
+                    } else {
                         if (!boost::itu::oid_component_by_name(dig, un))
                             return std::vector<oidindx_type > ();
                         else
@@ -48,8 +47,7 @@ namespace boost {
                 if (boost::itu::string_to(val, un)) {
                     rslt.push_back(un);
                     return rslt;
-                }
-                else {
+                } else {
                     if (!boost::itu::oid_component_by_name(val, un))
                         return std::vector<oidindx_type > ();
                     else
@@ -139,12 +137,12 @@ namespace boost {
             //stream << std::endl;
             return stream;
         }
-        
-        
-       /// bitstring type
+
+
+        /// bitstring type
 
         bitstring_type::bitstring_type() : std::vector<octet_type>(), unuse_(0) {
-        };        
+        };
 
         bitstring_type::bitstring_type(uint8_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
             construct(vl, unuse);
@@ -177,10 +175,10 @@ namespace boost {
         bitstring_type::bitstring_type(int64_t vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse) {
             construct(*reinterpret_cast<uint64_t*> (&vl), unuse);
         };
-        
-        bitstring_type::bitstring_type(bool const * const  arr , std::size_t cnt) : std::vector<octet_type>(){
-            construct(std::vector<bool>(arr, arr+cnt));
-        }     
+
+        bitstring_type::bitstring_type(bool const * const arr, std::size_t cnt) : std::vector<octet_type>() {
+            construct(std::vector<bool>(arr, arr + cnt));
+        }
 
         bitstring_type::bitstring_type(const octet_sequnce& vl, std::size_t unuse) : std::vector<octet_type>(), unuse_(unuse % 8) {
             insert_bitstring(vl, unuse);
@@ -191,13 +189,13 @@ namespace boost {
         };
 
         bitstring_type::bitstring_type(bool vl, std::size_t n) : std::vector<octet_type>(), unuse_(7 - n % 8) {
-                reserve((n / 8 + 1));
-                insert(begin(), (n / 8 + 1), 0);
-                if (vl)
-                    back() = (0x1 << (7 - (n % 8)));
+            reserve((n / 8 + 1));
+            insert(begin(), (n / 8 + 1), 0);
+            if (vl)
+                back() = (0x1 << (7 - (n % 8)));
         }
-        
-        bitstring_type::bitstring_type(const std::string& vl, std::size_t unuse) : unuse_(unuse % 8){
+
+        bitstring_type::bitstring_type(const std::string& vl, std::size_t unuse) : unuse_(unuse % 8) {
             std::copy(vl.begin(), vl.end(), std::back_inserter(*this));
         }
 
@@ -215,22 +213,22 @@ namespace boost {
         std::size_t bitstring_type::unusebits(std::size_t vl) {
             if (!empty()) {
                 unuse_ = vl % 8;
-                if (unuse_ )
+                if (unuse_)
                     back() &= ('\xFF' << unuse_);
-				return unuse_;
+                return unuse_;
             }
-            return unuse_=0;
-        }              
+            return unuse_ = 0;
+        }
 
         bitstring_type bitstring_type::create_from_string(const std::string& vl) {
             if (!vl.empty()) {
                 std::vector<bool> tmpV;
                 for (std::size_t i = 0; i < vl.size(); ++i)
-                    tmpV.push_back(vl[i]=='0' ? false : true);
+                    tmpV.push_back(vl[i] == '0' ? false : true);
                 return bitstring_type(tmpV);
             }
             return bitstring_type();
-        }  
+        }
 
         bool bitstring_type::bit(std::size_t num) const {
             if (sizebits() > num) {
@@ -261,14 +259,14 @@ namespace boost {
         bitstring_type::operator bitstring_type::dynamic_bitset_type() const {
             bitstring_type::dynamic_bitset_type tmp(sizebits());
             for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.operator [](i) = bit(i);
+                tmp.operator[](i) = bit(i);
             return tmp;
         }
 
         bitstring_type::dynamic_bitset_type bitstring_type::dynamic_bitset() const {
             bitstring_type::dynamic_bitset_type tmp(sizebits());
             for (std::size_t i = 0; i < sizebits(); ++i)
-                tmp.operator [](i) = bit(i);
+                tmp.operator[](i) = bit(i);
             return tmp;
         }
 
@@ -313,22 +311,21 @@ namespace boost {
                 }
             }
             return false;
-        } 
-        
+        }
+
         bitstring_type::operator octet_sequnce() const {
             return octet_sequnce(begin(), end());
-        }       
-        
+        }
+
         octet_sequnce bitstring_type::as_octet_sequnce() const {
             return octet_sequnce(begin(), end());
-        }        
-               
-        
+        }
+
         bitstring_type bitstring_type::operator~() const {
             if (!empty()) {
-                bitstring_type tmp=*this;
+                bitstring_type tmp = *this;
                 for (iterator it = tmp.begin(); it != tmp.end(); ++it)
-                    *it= ~(*it);
+                    *it = ~(*it);
                 tmp.unusebits(tmp.unusebits());
                 return tmp;
             }
@@ -340,16 +337,16 @@ namespace boost {
         //}    
 
         bitstring_type operator|(const bitstring_type& ls, const bitstring_type& rs) {
-            if (ls.size() || rs.size()){
+            if (ls.size() || rs.size()) {
                 bitstring_type tmp;
-                const bitstring_type& maxsb=(ls.size() > rs.size()) ? ls : rs;
-                const bitstring_type& minsb=(ls.size() > rs.size()) ? rs : ls;
-                tmp.assign(maxsb.begin(),maxsb.end());
-                for (std::size_t i=0;i<minsb.size();++i){
-                    tmp[i]|=minsb[i];
+                const bitstring_type& maxsb = (ls.size() > rs.size()) ? ls : rs;
+                const bitstring_type& minsb = (ls.size() > rs.size()) ? rs : ls;
+                tmp.assign(maxsb.begin(), maxsb.end());
+                for (std::size_t i = 0; i < minsb.size(); ++i) {
+                    tmp[i] |= minsb[i];
                 }
-                if (maxsb.size()==minsb.size())
-                    tmp.unusebits(std::min(minsb.unusebits(),maxsb.unusebits()));
+                if (maxsb.size() == minsb.size())
+                    tmp.unusebits(std::min(minsb.unusebits(), maxsb.unusebits()));
                 else
                     tmp.unusebits(maxsb.unusebits());
                 return tmp;
@@ -358,16 +355,16 @@ namespace boost {
         }
 
         bitstring_type operator&(const bitstring_type& ls, const bitstring_type& rs) {
-            if (ls.size() && rs.size()){
+            if (ls.size() && rs.size()) {
                 bitstring_type tmp;
-                const bitstring_type& maxsb=(ls.size() > rs.size()) ? ls : rs;
-                const bitstring_type& minsb=(ls.size() > rs.size()) ? rs : ls;
-                tmp.assign(minsb.begin(),minsb.end());
-                for (std::size_t i=0;i<minsb.size();++i){
-                    tmp[i]&=maxsb[i];
+                const bitstring_type& maxsb = (ls.size() > rs.size()) ? ls : rs;
+                const bitstring_type& minsb = (ls.size() > rs.size()) ? rs : ls;
+                tmp.assign(minsb.begin(), minsb.end());
+                for (std::size_t i = 0; i < minsb.size(); ++i) {
+                    tmp[i] &= maxsb[i];
                 }
-                if (maxsb.size()==minsb.size())
-                    tmp.unusebits(std::max(minsb.unusebits(),maxsb.unusebits()));
+                if (maxsb.size() == minsb.size())
+                    tmp.unusebits(std::max(minsb.unusebits(), maxsb.unusebits()));
                 else
                     tmp.unusebits(minsb.unusebits());
                 return tmp;
@@ -392,16 +389,16 @@ namespace boost {
             }
             return bitstring_type();
         }
-        
-       bitstring_type operator+(const bitstring_type& ls, const bitstring_type& rs){
-           octet_sequnce rslt = ls.as_octet_sequnce();
-           std::size_t rsltsize=itu::split_bits_in_octets(rslt, ls.unusebits(), rs.as_octet_sequnce(), rs.unusebits());
-           return bitstring_type(rslt, rsltsize);
-       }     
+
+        bitstring_type operator+(const bitstring_type& ls, const bitstring_type& rs) {
+            octet_sequnce rslt = ls.as_octet_sequnce();
+            std::size_t rsltsize = itu::split_bits_in_octets(rslt, ls.unusebits(), rs.as_octet_sequnce(), rs.unusebits());
+            return bitstring_type(rslt, rsltsize);
+        }
 
         void bitstring_type::construct(const std::vector<bool>& vl) {
             assign((vl.size() % 8) ? (vl.size() / 8 + 1) : (vl.size() / 8), 0);
-            unuse_ = (8- vl.size() % 8) % 8;
+            unuse_ = (8 - vl.size() % 8) % 8;
             std::size_t sz = 0;
             for (std::vector<bool>::const_iterator it = vl.begin(); it != vl.end(); ++it)
                 bit(sz++, *it);
@@ -409,38 +406,39 @@ namespace boost {
 
         void bitstring_type::construct(const dynamic_bitset_type& vl) {
             assign((vl.size() % 8) ? (vl.size() / 8 + 1) : (vl.size() / 8), 0);
-            unuse_ = (8- vl.size() % 8) % 8;
+            unuse_ = (8 - vl.size() % 8) % 8;
             std::size_t sz = 0;
             for (std::size_t it = 0; it < vl.size(); ++it)
-                bit(sz++, vl.operator [](it));
+                bit(sz++, vl.operator[](it));
         };
 
         std::ostream& operator<<(std::ostream& stream, const bitstring_type& vl) {
             std::vector<bool> val = vl.operator bitstring_type::bool_vector_type();
-            std::size_t n=0;
-            for (std::vector<bool>::const_iterator it = val.begin(); it != val.end(); ++it){
-                if (n && !(n%8))
+            std::size_t n = 0;
+            for (std::vector<bool>::const_iterator it = val.begin(); it != val.end(); ++it) {
+                if (n && !(n % 8))
                     stream << " ";
                 n++;
-                stream << (*it ? '1' : '0');}
+                stream << (*it ? '1' : '0');
+            }
             return stream;
         }
 
         // octetstring_type
-        
+
         octetstring_type::operator octet_sequnce() const {
             return octet_sequnce(begin(), end());
-        }       
-        
+        }
+
         octet_sequnce octetstring_type::as_octet_sequnce() const {
             return octet_sequnce(begin(), end());
-        }         
+        }
 
         std::ostream& operator<<(std::ostream& stream, const octetstring_type& vl) {
             stream << boost::itu::binary_to_hexsequence_debug(std::string(vl.begin(), vl.end()));
             return stream;
-        }        
-        
+        }
+
 
     }
 
@@ -515,22 +513,22 @@ namespace boost {
                 unus1 %= 8;
                 unus2 %= 8;
                 if (unus1) {
-                    if (!fromos.empty()) {                     
-                        std::size_t from_bitcnt= fromos.size()*8-unus2;
+                    if (!fromos.empty()) {
+                        std::size_t from_bitcnt = fromos.size()*8 - unus2;
                         const octet_sequnce::value_type msk = (0xFF << unus1);
-                        octet_sequnce::const_iterator fit =fromos.begin();
-                        while((from_bitcnt) && (fit !=fromos.end())) {
+                        octet_sequnce::const_iterator fit = fromos.begin();
+                        while ((from_bitcnt) && (fit != fromos.end())) {
                             inos.back() &= msk;
-                            inos.back() |= (((*fit) >> (8-unus1)) & ~msk);
-                            if (from_bitcnt>unus1)
-                                from_bitcnt-=unus1; 
-                            else     
+                            inos.back() |= (((*fit) >> (8 - unus1)) & ~msk);
+                            if (from_bitcnt > unus1)
+                                from_bitcnt -= unus1;
+                            else
                                 break;
                             inos.push_back(((*fit) << unus1) & msk);
-                            if (from_bitcnt>(8-unus1))
-                                from_bitcnt-=(8-unus1); 
-                            else     
-                                break;       
+                            if (from_bitcnt > (8 - unus1))
+                                from_bitcnt -= (8 - unus1);
+                            else
+                                break;
                             ++fit;
                         }
                     } else {
@@ -540,8 +538,32 @@ namespace boost {
                     inos.insert(inos.end(), fromos.begin(), fromos.end());
             }
             return inos.empty() ? 0 : ((unus1 + unus2) % 8);
-        }    
-        
+        }
+
+        std::size_t left_shift_bits_in_octets(octet_sequnce& vl, std::size_t shft) {
+            if (vl.size()) {
+                if (shft > 7) {
+                    std::size_t er = shft / 8;
+                    if (vl.size() < er)
+                        return 0;
+                    vl.erase(vl.begin(), vl.begin() + er);
+                    shft %= 8;
+                }
+                if (shft) {
+                    const octet_sequnce::value_type msk = ~static_cast<octet_sequnce::value_type>(0xFF << shft);
+                    for (octet_sequnce::iterator it = vl.begin(); it != vl.end(); ++it) {
+                        *it <<= shft;
+                        if ((it + 1) != vl.end()){ 
+                            octet_sequnce::value_type nxt=*(it + 1);
+                            *it |=(msk & (nxt >> (8 - shft )));}
+                        else
+                            *it &=('\xFF')<<shft;
+                    }
+                }
+                return 1;
+            }
+            return 0;
+        }        
 
         static inline std::string num8t_to_hexstr(char vl) {
             return std::string(static_cast<const char*> (&hex_char_array_const[((vl >> 4) & 0xF)]), 1) +
@@ -563,8 +585,7 @@ namespace boost {
                     start -= boost::asio::buffer_size(val.front());
                     rslt += boost::asio::buffer_size(val.front());
                     val.erase(val.begin());
-                }
-                else {
+                } else {
                     rslt += start;
                     val.front() = val.front() + start;
                     return rslt;
@@ -592,8 +613,7 @@ namespace boost {
                         if (size == firstend) {
                             fit = it;
                             fset = true;
-                        }
-                        else {
+                        } else {
                             size = firstend;
                             it = val.insert(val.erase(it), tmp + firstend);
                             fit = it = val.insert(it, boost::asio::buffer(tmp, firstend));
@@ -608,8 +628,7 @@ namespace boost {
                             sit = it;
                             sset = true;
                             break;
-                        }
-                        else {
+                        } else {
                             size = secondend;
                             it = val.insert(val.erase(it), tmp + secondend);
                             sit = it = val.insert(it, boost::asio::buffer(tmp, secondend));
@@ -652,14 +671,12 @@ namespace boost {
                                     return true;
                                 }
                                 findend = false;
-                            }
-                            else
+                            } else
                                 findend = !(*boost::asio::buffer_cast<octet_sequnce::value_type*>(boost::asio::buffer(tmp + i, 1)));
                         }
                         rslt++;
                     }
-                }
-                else
+                } else
                     rslt += size;
 
                 if (start)
@@ -762,35 +779,37 @@ namespace boost {
             for (mutable_sequences::const_iterator it = vl.begin(); it != vl.end(); ++it)
                 add(buffer_to_raw(*it));
         }
-        
-        void base_output_coder::add_bitmap(const bitmap_type & vl, bool alighn){
+
+        void base_output_coder::add_bitmap(const bitmap_type & vl, bool alighn) {
             if (unusebits()) {
                 //const_sequences::reverse_iterator it = listbuffers_->rbegin();
                 vect_octet_sequnce_ptr::reverse_iterator dit = rows_vect.rbegin();
                 octet_sequnce_ptr lstdata_ptr = *dit;
-                octet_sequnce& lstdata=*lstdata_ptr;
+                octet_sequnce& lstdata = *lstdata_ptr;
                 unusebits(split_bits_in_octets(lstdata, alighn ? 0 : unusebits(), vl.as_octet_sequnce(), vl.unusebits()));
-                listbuffers_->back()=const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
-            }
-            else{
+                listbuffers_->back() = const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
+            } else {
                 add(vl.as_octet_sequnce());
                 unusebits(vl.unusebits());
-            }            
-        }   
-        
-       void base_output_coder::add_octetmap(const octetstring_type & vl, bool alighn){
-             if (unusebits()) {
+            }
+        }
+
+        void base_output_coder::add_octets(const octet_sequnce& vl, bool alighn) {
+            if (unusebits()) {
                 //const_sequences::reverse_iterator it = listbuffers_->rbegin();
                 vect_octet_sequnce_ptr::reverse_iterator dit = rows_vect.rbegin();
                 octet_sequnce_ptr lstdata_ptr = *dit;
-                octet_sequnce& lstdata=*lstdata_ptr;
-                split_bits_in_octets(lstdata ,alighn ? 0 : unusebits(), vl.as_octet_sequnce());               
-                listbuffers_->back()=const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
+                octet_sequnce& lstdata = *lstdata_ptr;
+                split_bits_in_octets(lstdata, alighn ? 0 : unusebits(), vl);
+                listbuffers_->back() = const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
+            } else {
+                add(vl);
             }
-            else{
-                add(vl.as_octet_sequnce());
-            }               
-       }    
+        }
+
+        void base_output_coder::add_octets(const octetstring_type & vl, bool alighn) {
+            add_octets(vl.as_octet_sequnce(), alighn);
+        }
 
         std::size_t base_output_coder::load_sequence(const_sequences& val, std::size_t lim) {
             if (!lim) return 0;
@@ -803,8 +822,7 @@ namespace boost {
                     *it = *it + (lim - rslt);
                     size_ = size(lim - rslt);
                     return lim;
-                }
-                else {
+                } else {
                     val.push_back(*it);
                     it = listbuffers_->erase(it);
                     size_ = size(itbuffsz);
@@ -833,13 +851,91 @@ namespace boost {
         void base_input_coder::add(const octet_sequnce& vl) {
             rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl.begin(), vl.end())));
             size_ += vl.size();
-            listbuffers_->push_back(mutable_buffer(&rows_vect.back()->operator [](0), rows_vect.back()->size()));
+            listbuffers_->push_back(mutable_buffer(&rows_vect.back()->operator[](0), rows_vect.back()->size()));
         }
 
         void base_input_coder::add(const const_sequences& vl) {
             for (const_sequences::const_iterator it = vl.begin(); it != vl.end(); ++it)
                 add(buffer_to_raw(*it));
         }
+
+        std::size_t base_input_coder::get_bitmap(std::size_t sz, bitmap_type& vl, bool alighn) {
+            if (!sz)
+                return 1;
+            std::size_t usbit=usebits();            
+            std::size_t octsize=1;
+            if (usbit<sz) 
+                octsize+=((sz-usbit - 1) / 8 + 1);
+            std::size_t bmp_octsize= (sz-1) / 8 + 1; 
+            octet_sequnce raw;
+            row_cast(buffers(), buffers().begin(), raw, 0, octsize);
+            if (unusebits()) {
+                left_shift_bits_in_octets(raw, unusebits());
+                if (bmp_octsize < raw.size())
+                    raw.erase(raw.begin()+bmp_octsize , raw.end());              
+            };
+            vl = bitmap_type(raw, sz ? (8 - sz % 8) : 0);            
+            return 1;
+        }
+
+        std::size_t base_input_coder::get_octets(std::size_t sz, octet_sequnce& vl, bool alighn) {
+            if (!sz)
+                return 1;
+            if (unusebits())
+                sz++;
+            octet_sequnce raw;
+            row_cast(buffers(), buffers().begin(), raw, 0, sz);
+            if (unusebits()){
+                
+            }
+            else {
+                //row_cast();
+            }            
+            return 1;
+        }
+
+        std::size_t base_input_coder::pop_bitmap(std::size_t sz, bool alighn) {
+            if (!sz)
+                return 1;
+            std::size_t usbit=usebits();            
+            std::size_t octsize=0;  
+            if (usbit<sz) 
+                octsize+=((sz-usbit - 1) / 8 + 1);
+            if (octsize)
+                pop_front(octsize);
+            unusebits(unusebits()+sz);
+            return 1;
+        }
+        
+
+        std::size_t base_input_coder::pop_octets(std::size_t sz, bool alighn) {
+            if (!sz)
+                return 1;            
+            pop_front(sz);
+            return 1;
+        }
+
+        std::size_t base_input_coder::get_pop_bitmap(std::size_t sz, bitmap_type& vl, bool alighn) {
+            get_bitmap(sz, vl, alighn);
+            return pop_bitmap(sz, alighn);
+        }
+
+        std::size_t base_input_coder::get_pop_octets(std::size_t sz, octet_sequnce& vl, bool alighn) {
+            get_octets(sz, vl, alighn);
+            return pop_octets(sz, alighn);
+        }
+        
+        bitmap_type base_input_coder::get_pop_bmp(std::size_t sz,bool alighn) {
+            bitmap_type tmp;
+            get_pop_bitmap(sz, tmp, alighn);
+            return tmp;
+        }
+
+        octet_sequnce base_input_coder::get_pop_octs(std::size_t sz,  bool alighn) {
+            octet_sequnce tmp;
+            get_pop_octets(sz, tmp, alighn);
+            return tmp;
+        }        
 
         bool base_input_coder::is_endof(std::size_t beg) const {
             octet_sequnce data;
@@ -917,8 +1013,7 @@ namespace boost {
                 if (tmpsize < boost::asio::buffer_size(*it)) {
                     *it = const_buffer((*it) + sz);
                     return size_ += sz;
-                }
-                else {
+                } else {
                     tmpsize = boost::asio::buffer_size(*it) > tmpsize ? 0 : (tmpsize - boost::asio::buffer_size(*it));
                     buff().erase(it);
                 }

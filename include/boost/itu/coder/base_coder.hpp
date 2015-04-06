@@ -104,7 +104,7 @@ namespace boost {
         const encoding_rule CER_ENCODING = 0x2;
         const encoding_rule DER_ENCODING = 0x4;
         const encoding_rule PER_ALIGNED_ENCODING = 0x8;
-        const encoding_rule PER_UNALIGNED_ENCODING = 0x10;        
+        const encoding_rule PER_UNALIGNED_ENCODING = 0x10;
 
         const std::size_t ENCODING_RULE_MAX_BIT = 3;
 
@@ -156,21 +156,21 @@ namespace boost {
 
         const octet_sequnce NULL_OCTET_SEQUENCE = octet_sequnce();
         const const_sequences NULL_CONST_SEQUENCE = const_sequences();
-        
+
 
         void reverse_bit(octet_type& bits);
-        octet_type reverse_bit_copy(const octet_type& bits);        
-        std::size_t split_bits_in_octets(octet_sequnce& inos, std::size_t unus1, const octet_sequnce& fromos, std::size_t unus2 = 0);        
+        octet_type reverse_bit_copy(const octet_type& bits);
+        std::size_t split_bits_in_octets(octet_sequnce& inos, std::size_t unus1, const octet_sequnce& fromos, std::size_t unus2 = 0);
+        std::size_t left_shift_bits_in_octets(octet_sequnce& vl, std::size_t shft);        
 
     }
 
     namespace asn1 {
-        
+
         ///  BITSTRING TYPE
 
         using itu::octet_type;
         using itu::octet_sequnce;
-        
 
         class bitstring_type : public std::vector<octet_type> {
 
@@ -204,8 +204,8 @@ namespace boost {
             explicit bitstring_type(bool vl, std::size_t n = 0);
 
             explicit bitstring_type(const std::string& vl, std::size_t unuse = 0);
-            
-            explicit bitstring_type(bool const * const arr , std::size_t cnt);
+
+            explicit bitstring_type(bool const * const arr, std::size_t cnt);
 
             bitstring_type(const dynamic_bitset_type& vl) : std::vector<octet_type>() {
                 construct(vl);
@@ -252,10 +252,10 @@ namespace boost {
             operator boost::int64_t() const;
 
             operator bool() const;
-            
+
             operator octet_sequnce() const;
-            
-           octet_sequnce as_octet_sequnce() const; 
+
+            octet_sequnce as_octet_sequnce() const;
 
             bitstring_type operator~() const;
 
@@ -264,7 +264,7 @@ namespace boost {
             friend bitstring_type operator&(const bitstring_type& ls, const bitstring_type& rs);
 
             friend bitstring_type operator^(const bitstring_type& ls, const bitstring_type& rs);
-            
+
             friend bitstring_type operator+(const bitstring_type& ls, const bitstring_type& rs);
 
 
@@ -332,7 +332,7 @@ namespace boost {
 
             operator octet_sequnce() const;
 
-            octet_sequnce as_octet_sequnce() const;             
+            octet_sequnce as_octet_sequnce() const;
             //operator octet_sequnce() const{
             //     return  *this;}   
         };
@@ -341,13 +341,13 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const octetstring_type& vl);
     }
 
-    
-    
-    
+
+
+
     namespace itu {
 
 
-        typedef asn1::bitstring_type  bitmap_type;
+        typedef asn1::bitstring_type bitmap_type;
         using asn1::octetstring_type;
 
 
@@ -451,10 +451,12 @@ namespace boost {
             iterator_type add(const octet_sequnce& vl, iterator_type it);
 
             void add(const mutable_sequences& vl);
-            
-            virtual void add_bitmap(const bitmap_type & vl, bool alighn = false);
-            
-            virtual void add_octetmap(const octetstring_type & vl, bool alighn = false);            
+
+            void add_bitmap(const bitmap_type & vl, bool alighn = false);
+
+            void add_octets(const octet_sequnce& vl, bool alighn = false);
+
+            void add_octets(const octetstring_type & vl, bool alighn = false);
 
             iterator_type last() {
                 return listbuffers_->empty() ? listbuffers_->end() : (--(listbuffers_->end()));
@@ -509,14 +511,17 @@ namespace boost {
             }
 
             std::size_t unusebits() const {
-                return unuse_;
+                return unuse_ % 8;
             }
 
-
+            std::size_t usebits() const {
+                return 8 - unusebits();
+            }
+            
         protected:
 
             std::size_t unusebits(std::size_t vl) {
-                return unuse_ = vl;
+                return unuse_ = vl % 8;
             }
 
 
@@ -565,6 +570,24 @@ namespace boost {
                 decsize(pop_frontlist(*listbuffers_, sz));
             }
 
+            std::size_t get_bitmap(std::size_t sz, bitmap_type& vl, bool alighn = false);
+
+            std::size_t get_octets(std::size_t sz, octet_sequnce& vl, bool alighn = false);
+
+            std::size_t pop_bitmap(std::size_t sz, bool alighn = false);
+
+            std::size_t pop_octets(std::size_t sz, bool alighn = false);
+
+            std::size_t get_pop_bitmap(std::size_t sz, bitmap_type& vl, bool alighn = false);
+
+            std::size_t get_pop_octets(std::size_t sz, octet_sequnce& vl, bool alighn = false);
+
+            bitmap_type get_pop_bmp(std::size_t sz, bool alighn = false);
+
+            octet_sequnce get_pop_octs(std::size_t sz, bool alighn = false);         
+            
+
+            
             bool is_endof(std::size_t beg = 0) const;
 
             iterator_type last() {
@@ -595,13 +618,17 @@ namespace boost {
             }
 
             std::size_t unusebits() const {
-                return unuse_;
+                return unuse_ % 8;
             }
+            
+            std::size_t usebits() const {
+                return 8 - unusebits();
+            }            
 
         protected:
 
             std::size_t unusebits(std::size_t vl) {
-                return unuse_ = vl;
+                return unuse_ = vl % 8;
             }
 
             void decsize(std::size_t sz) {
