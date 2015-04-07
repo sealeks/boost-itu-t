@@ -610,12 +610,6 @@ namespace boost {
             }
 
             template<typename T>
-            output_coder& operator<<(output_coder& stream, const size_constrainter<T >& vl) {
-
-                return stream << vl.value();
-            }
-
-            template<typename T>
             output_coder& operator<<(output_coder& stream, const num_semiconstrainter<T>& vl) {
 
 
@@ -627,6 +621,11 @@ namespace boost {
                 semiconstrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.extended());
                 stream.add(tmp.as_octetsequence());
                 return stream;
+            }
+
+            template<typename T>
+            output_coder& operator<<(output_coder& stream, const size_constrainter<T >& vl) {
+                return stream << vl.value();
             }
 
             template<typename T>
@@ -965,7 +964,7 @@ namespace boost {
 
                 template<typename T>
                 void operator&(const T& vl) {
-                    *this >> vl;
+                    //*this >> vl;
                 }
 
                 template<typename T>
@@ -1051,69 +1050,56 @@ namespace boost {
 
             template<typename T>
             input_coder& primitive_int_deserialize(input_coder& stream, const T& vl) {
-                /*size_class tmpsize;
-                if (stream.parse_tl(vl, tmpsize, tag_traits<T>::number() == TYPE_SET)) {
-                    octet_sequnce data;
-                    std::size_t sz = tmpsize.size();
-                    if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
-                        if (from_x691_cast(*const_cast<T*> (&vl.value()), data)) {
-                        }
-                    }
-                    stream.pop_stack();
-                    return stream;
-                }*/
                 return stream;
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
 
             template<typename T>
             bool stringtype_reader(input_coder& stream, T& vl, id_type id, octet_type mask) {
-
-                /*size_class tmpsize;
-                tag tmptag = stream.test_tl(tmpsize);
-                if (stream.parse_tl(tag(id, mask), tmpsize, false)) {
-                    if (tmpsize.undefsize()) {
-                        if (tmptag.constructed()) {
-                            while (!stream.is_endof() && !stream.buffers().empty()) {
-                                if (!stringtype_reader(stream, vl, tag_traits<T>::number(), 0))
-                                    return false;
-                            }
-                            stream.pop_stack();
-                            return true;
-                        } else {
-                            std::size_t sz = 0;
-                            if (boost::itu::find_eof(stream.buffers(), stream.buffers().begin(), sz)) {
-                                octet_sequnce data;                                
-                                if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
-                                    octet_sequnce::iterator fit= reader_setunuse(data,vl);
-                                    vl.insert(vl.end(), fit , data.end());
-                                    return true;
-                                }
-                            }
-                            return false;
-                        }
-                    } else
-                    {
-                        if (tmptag.constructed()) {
-                            while (!stream.buffers().empty()) {
-                                if (!stringtype_reader(stream, vl, tag_traits<T>::number(), 0)) {
-                                    return true;
-                                }
-                                stream.pop_stack();
-                            }
-                            return false;
-                        } else {
-                            octet_sequnce data;
-                            if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, tmpsize.size())) {
-                                octet_sequnce::iterator fit = reader_setunuse(data, vl);
-                                vl.insert(vl.end(), fit, data.end());
-                                stream.pop_stack();
-                                return true;
-                            }
-                        }
-                    }
-                }*/
                 return false;
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, const num_constrainter<T >& vl) {
+
+                if (vl.can_extended()) {
+                    bitstring_type extendbit = stream.get_pop_bmp(1);
+                    if (extendbit.bit(1))
+                        return primitive_int_deserialize(stream, vl.value());
+                }
+
+                if (vl.null_range())
+                    return stream;
+
+                /*if ((vl.range() <= 0xFFFF) || (stream.unaligned())) {
+                    constrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.max());
+                    if ((stream.unaligned()) || (tmp.is_minimal()))
+                        stream.add_bitmap(tmp.as_bitmap(), false);
+                    else
+                        stream.add(tmp.as_octetsequence());
+                    return stream;
+                }*/
+
+                return primitive_int_deserialize(stream, vl.value());
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, const num_semiconstrainter<T>& vl) {
+
+
+                if (vl.can_extended()) {
+                    bitstring_type extendbit = stream.get_pop_bmp(1);
+                    if (extendbit.bit(1))
+                        return primitive_int_serialize(stream, vl.value());
+                }
+                //semiconstrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.extended());
+                //stream.add(tmp.as_octetsequence());
+                return primitive_int_deserialize(stream, vl.value());
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, const size_constrainter<T >& vl) {
+                return stream >> vl.value();
             }
 
 
