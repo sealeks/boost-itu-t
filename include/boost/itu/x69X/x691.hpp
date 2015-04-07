@@ -282,22 +282,23 @@ namespace boost {
 
                 octet_sequnce as_octetsequence() const {
                     if (std::size_t octsz = octetsize()) {
-                        octet_sequnce rslt = to_x691_cast(size_class(octsz));
-                        octet_sequnce vl = octet_sequnce(static_cast<octet_sequnce::value_type*> ((void*) &value()),
+                        /*octet_sequnce vl = octet_sequnce(static_cast<octet_sequnce::value_type*> ((void*) &value()),
                                 static_cast<octet_sequnce::value_type*> ((void*) &value()) + octsz);
-#ifdef BIG_ENDIAN_ARCHITECTURE  
-                        rslt.insert(rslt.end(), vl.begin(), vl.end());
-#else                    
-                        rslt.insert(rslt.end(), vl.rbegin(), vl.rend());
-#endif                         
-
-                        return rslt;
+                        endian_conv(vl);                         
+                        return vl;*/
+                        octet_sequnce vl;
+                        to_x690_cast<internal_type>(value_, vl);
+                        return vl;
                     }
                     return octet_sequnce(1, '\x0');
                 }
 
                 octetstring_type as_octetstring() const {
                     return octetstring_type(as_octetsequence());
+                }
+
+                bool from_octetsequence(const octet_sequnce& dt) {
+                    return from_x690_cast(value_, dt);
                 }
 
 
@@ -628,17 +629,6 @@ namespace boost {
                 return stream << vl.value();
             }
 
-            template<typename T>
-            output_coder& primitive_int_serialize(output_coder& stream, const T& vl) {
-
-                unconstrained_wnumber<T> tmp(const_cast<T&> (vl));
-                stream.add(tmp.as_octetstring());
-                return stream;
-
-            }
-
-
-
 
 
 
@@ -679,6 +669,9 @@ namespace boost {
                                     octet_sequnce(vl.begin() + beg, vl.begin() + beg + LENGH_64K));
                             beg += LENGH_64K;
                         }
+                        if (beg == sz)
+                            octets_writer(stream, to_x691_cast(size_class(0)),
+                                octet_sequnce());
                     }
                 }
                 return stream;
@@ -708,6 +701,9 @@ namespace boost {
                             elements_writer(vl.begin() + beg, vl.begin() + beg + LENGH_64K);
                             beg += LENGH_64K;
                         }
+                        if (beg == sz)
+                            octets_writer(stream, to_x691_cast(size_class(0)),
+                                octet_sequnce());
                     }
                 }
                 return stream;
@@ -744,6 +740,16 @@ namespace boost {
                 } else
                     element_writer_undefsz(stream, vl.value());
                 return stream;
+            }
+
+            template<typename T>
+            output_coder& primitive_int_serialize(output_coder& stream, const T& vl) {
+
+                unconstrained_wnumber<T> tmp(const_cast<T&> (vl));
+                octet_sequnce data = tmp.as_octetsequence();
+                octet_writer_undefsz(stream, data);
+                return stream;
+
             }
 
             template<typename T>
@@ -964,7 +970,7 @@ namespace boost {
 
                 template<typename T>
                 void operator&(const T& vl) {
-                    //*this >> vl;
+                    *this >> vl;
                 }
 
                 template<typename T>
@@ -994,7 +1000,7 @@ namespace boost {
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(const implicit_typedef <T, Tag, ID, TYPE>& vl) {
-                    *this >> implicit_value<T > (vl.value(), ID, TYPE);
+                    *this >> vl.value();
                 }
 
                 template<typename T>
@@ -1031,32 +1037,38 @@ namespace boost {
 
             //////////////////////////////////////////////////////////////////////////////////
 
+
+            input_coder& octet_reader_undefsz(input_coder& stream, octet_sequnce& vl);
+
             template<typename T>
             input_coder& primitive_deserialize(input_coder& stream, const T& vl) {
-                /*size_class tmpsize;
-                if (stream.parse_tl(vl, tmpsize, tag_traits<T>::number() == TYPE_SET)) {
-                    octet_sequnce data;
-                    std::size_t sz = tmpsize.size();
-                    if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
-                        if (from_x691_cast(*const_cast<T*> (&vl.value()), data)) {
-                        }
-                    }
-                    stream.pop_stack();
-                    return stream;
-                }*/
+                /*octet_sequnce data;
+                octet_reader_undefsz(stream, data);
+                from_x690_cast<T>(const_cast<T&> (vl), data);*/
                 return stream;
-                throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+            }
+
+            template<typename T>
+            input_coder& primitive_690_deserialize(input_coder& stream, const T& vl) {
+                octet_sequnce data;
+                octet_reader_undefsz(stream, data);
+                from_x690_cast<T>(const_cast<T&> (vl), data);
+                return stream;
             }
 
             template<typename T>
             input_coder& primitive_int_deserialize(input_coder& stream, const T& vl) {
+                octet_sequnce data;
+                octet_reader_undefsz(stream, data);
+                unconstrained_wnumber<T> tmp(const_cast<T&> (vl));
+                tmp.from_octetsequence(data);
                 return stream;
-                throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
 
             template<typename T>
-            bool stringtype_reader(input_coder& stream, T& vl, id_type id, octet_type mask) {
-                return false;
+            inline input_coder& operator>>(input_coder& stream, const T& vl) {
+                const_cast<T&> (vl).serialize(stream);
+                return stream;
             }
 
             template<typename T>
@@ -1065,7 +1077,7 @@ namespace boost {
                 if (vl.can_extended()) {
                     bitstring_type extendbit = stream.get_pop_bmp(1);
                     if (extendbit.bit(1))
-                        return primitive_int_deserialize(stream, vl.value());
+                        return primitive_int_deserialize<T>(stream, vl.value());
                 }
 
                 if (vl.null_range())
@@ -1080,7 +1092,7 @@ namespace boost {
                     return stream;
                 }*/
 
-                return primitive_int_deserialize(stream, vl.value());
+                return primitive_int_deserialize<T>(stream, vl.value());
             }
 
             template<typename T>

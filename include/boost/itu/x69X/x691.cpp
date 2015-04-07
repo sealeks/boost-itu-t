@@ -155,6 +155,9 @@ namespace boost {
                                     octet_sequnce(vl.begin() + beg / 8, vl.begin() + (beg + LENGH_64K) / 8));
                             beg += LENGH_64K;
                         }
+                        if (beg == sz)
+                            octets_writer(stream, to_x691_cast(size_class(0)),
+                                octet_sequnce());
                     }
                 }
                 return stream;
@@ -408,24 +411,30 @@ namespace boost {
             }
 
             std::size_t input_coder::pop_octets(std::size_t sz, bool alighn) {
-                if (sz) {
-                    return 1;
+                if (sz)
                     pop_front(sz);
-                }
                 return sz;
             }
 
             std::size_t input_coder::get_pop_bitmap(std::size_t sz, bitstring_type& vl, bool alighn) {
                 std::size_t rslt = get_bitmap(sz, vl, alighn);
-                if (rslt)
+                if (rslt) {
                     pop_bitmap(sz, alighn);
+                } else {
+                    if (sz)
+                        throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                }
                 return rslt;
             }
 
             std::size_t input_coder::get_pop_octets(std::size_t sz, octet_sequnce& vl, bool alighn) {
                 std::size_t rslt = get_octets(sz, vl, alighn);
-                if (rslt)
+                if (rslt) {
                     pop_octets(sz, alighn);
+                } else {
+                    if (sz)
+                        throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                }
                 return rslt;
             }
 
@@ -538,6 +547,52 @@ namespace boost {
 
             ////////////////////////////////////////////
 
+            input_coder& octet_reader_undefsz(input_coder& stream, octet_sequnce& vl) {
+                while (true) {
+                    octet_sequnce strt = stream.get_pop_octs(1);
+                    if (strt.size()) {
+                        octet_sequnce::value_type dtrm = strt[0];
+                        switch (dtrm & '\xC0') {
+                            case '\xC0':
+                            {
+                                octet_sequnce nxt = stream.get_pop_octs(1);
+                                std::size_t sz = LENGH_16K;
+                                if ((nxt.size()) && ((0x7 & nxt[0]) <= 4))
+                                    sz *= static_cast<std::size_t> (0x7 & nxt[0]);
+                                else
+                                    throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                                octet_sequnce dt = stream.get_pop_octs(sz);
+                                vl.insert(vl.end(), dt.begin(), dt.end());
+                                break;
+                            }
+                            case '\x80':
+                            {
+                                octet_sequnce nxt = stream.get_pop_octs(1);
+                                boost::uint16_t dtrm16 = dtrm & '\x3f';
+                                dtrm16 <<= 8;
+                                if (nxt.size())
+                                    dtrm16 |= nxt[0];
+                                else
+                                    throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                                std::size_t sz = static_cast<std::size_t> (dtrm16 & 0x3FFF);
+                                octet_sequnce dt = stream.get_pop_octs(sz);
+                                vl.insert(vl.end(), dt.begin(), dt.end());
+                                return stream;
+                            }
+                            default:
+                            {
+                                std::size_t sz = static_cast<std::size_t> (dtrm & '\x7F');
+                                octet_sequnce dt = stream.get_pop_octs(sz);
+                                vl.insert(vl.end(), dt.begin(), dt.end());
+                                return stream;
+                            }
+                        }
+                    } else
+                        throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                }
+                return stream;
+            }
+
             input_coder& operator>>(input_coder& stream, const int8_t & vl) {
                 return primitive_int_deserialize(stream, vl);
             }
@@ -571,35 +626,37 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, const enumerated_type& vl) {
-                return primitive_deserialize(stream, vl);
+                return stream; //primitive_deserialize(stream, vl);
             }
 
             input_coder& operator>>(input_coder& stream, const float& vl) {
-                return primitive_deserialize(stream, vl);
+                return primitive_690_deserialize(stream, vl);
             }
 
             input_coder& operator>>(input_coder& stream, const double& vl) {
-                return primitive_deserialize(stream, vl);
+                return primitive_690_deserialize(stream, vl);
             }
 
             input_coder& operator>>(input_coder& stream, const long double& vl) {
-                return primitive_deserialize(stream, vl);
+                return primitive_690_deserialize(stream, vl);
             }
 
             input_coder& operator>>(input_coder& stream, const bool& vl) {
-                return primitive_deserialize(stream, vl);
+                bitstring_type rslt = stream.get_pop_bmp(1);
+                const_cast<bool&> (vl) = rslt.bit(1);
+                return stream;
             }
 
             input_coder& operator>>(input_coder& stream, const null_type& vl) {
-                return primitive_deserialize(stream, vl);
+                return stream;
             }
 
             input_coder& operator>>(input_coder& stream, const oid_type& vl) {
-                return primitive_deserialize(stream, vl);
+                return primitive_690_deserialize(stream, vl);
             }
 
             input_coder& operator>>(input_coder& stream, const reloid_type& vl) {
-                return primitive_deserialize(stream, vl);
+                return primitive_690_deserialize(stream, vl);
             }
 
             input_coder& operator>>(input_coder& stream, const any_type& vl) {
