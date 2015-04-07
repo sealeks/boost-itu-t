@@ -87,82 +87,82 @@ namespace boost {
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<int8_t>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<uint8_t>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<int16_t>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<uint16_t>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<int32_t>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<uint32_t>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<int64_t>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<uint64_t>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<enumerated_type>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<float>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<double>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<long double>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<bool>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<null_type>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<oid_type>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<reloid_type>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
@@ -176,7 +176,7 @@ namespace boost {
                     return stream;
                 }
                 return stream << vl.value();
-                //return primitive_sirialize(stream, vl);
+                //return primitive_serialize(stream, vl);
             }
 
             template<>
@@ -265,12 +265,12 @@ namespace boost {
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<utctime_type>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
             template<>
             output_coder& operator<<(output_coder& stream, const implicit_value<gentime_type>& vl) {
-                return primitive_sirialize(stream, vl);
+                return primitive_serialize(stream, vl);
             }
 
 
@@ -382,82 +382,82 @@ namespace boost {
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<int8_t>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<uint8_t>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<int16_t>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<uint16_t>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<int32_t>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<uint32_t>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<int64_t>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<uint64_t>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<enumerated_type>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<float>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<double>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<long double>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<bool>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<null_type>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<oid_type>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<reloid_type>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
@@ -470,7 +470,7 @@ namespace boost {
                     }
                 }
                 return stream;
-                //return  primitive_desirialize(stream, vl);
+                //return  primitive_deserialize(stream, vl);
             }
 
             template<>
@@ -573,12 +573,12 @@ namespace boost {
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<utctime_type>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<gentime_type>& vl) {
-                return primitive_desirialize(stream, vl);
+                return primitive_deserialize(stream, vl);
             }
 
             ////////  Archiver

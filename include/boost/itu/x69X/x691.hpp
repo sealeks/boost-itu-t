@@ -479,7 +479,6 @@ namespace boost {
                 void add_octets(const octet_sequnce& vl, bool alighn = false);
 
                 void add_octets(const octetstring_type & vl, bool alighn = false);
-            
 
                 template<typename T>
                 void operator&(const T& vl) {
@@ -501,14 +500,14 @@ namespace boost {
                     *this << vl.value();
                 }
 
-                template<typename T, class Tag, id_type ID, class_type TYPE >
-                void operator&(const explicit_typedef <T, Tag, ID, TYPE>& vl) {
-                    *this << vl.value();
-                }
-
                 template<typename T>
                 void operator&(const implicit_value<T >& vl) {
                     *this << vl;
+                }
+
+                template<typename T, class Tag, id_type ID, class_type TYPE >
+                void operator&(const explicit_typedef <T, Tag, ID, TYPE>& vl) {
+                    *this << vl.value();
                 }
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
@@ -529,14 +528,14 @@ namespace boost {
                 bool canonical() const {
                     return rule_ == boost::itu::CER_ENCODING;
                 }
-                
+
                 std::size_t unusebits() const {
                     return unuse_ % 8;
                 }
 
                 std::size_t usebits() const {
                     return 8 - unusebits();
-                }                
+                }
 
             protected:
 
@@ -592,7 +591,7 @@ namespace boost {
                 if (vl.can_extended()) {
                     stream.add_bitmap(bitstring_type(vl.extended()));
                     if (vl.extended())
-                        return primitive_int_sirialize(stream, vl.value());
+                        return primitive_int_serialize(stream, vl.value());
                 }
 
                 if (vl.null_range())
@@ -607,7 +606,7 @@ namespace boost {
                     return stream;
                 }
 
-                return primitive_int_sirialize(stream, vl.value());
+                return primitive_int_serialize(stream, vl.value());
             }
 
             template<typename T>
@@ -623,7 +622,7 @@ namespace boost {
                 if (vl.can_extended()) {
                     stream.add_bitmap(bitstring_type(vl.extended()));
                     if (vl.extended())
-                        return primitive_int_sirialize(stream, vl.value());
+                        return primitive_int_serialize(stream, vl.value());
                 }
                 semiconstrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.extended());
                 stream.add(tmp.as_octetsequence());
@@ -631,7 +630,7 @@ namespace boost {
             }
 
             template<typename T>
-            output_coder& primitive_int_sirialize(output_coder& stream, const T& vl) {
+            output_coder& primitive_int_serialize(output_coder& stream, const T& vl) {
 
                 unconstrained_wnumber<T> tmp(const_cast<T&> (vl));
                 stream.add(tmp.as_octetstring());
@@ -749,7 +748,7 @@ namespace boost {
             }
 
             template<typename T>
-            output_coder& primitive_690_sirialize(output_coder& stream, const T& vl) {
+            output_coder& primitive_690_serialize(output_coder& stream, const T& vl) {
                 octet_sequnce tmp;
                 to_x690_cast(vl, tmp);
                 octet_writer_undefsz(stream, tmp);
@@ -933,9 +932,20 @@ namespace boost {
 
             public:
 
-                input_coder() : boost::itu::base_input_coder() {
+                input_coder(encoding_rule rul = boost::itu::BER_ENCODING) : boost::itu::base_input_coder(), rule_(rul), unaligned_(rul == boost::itu::PER_ALIGNED_ENCODING) {
                 }
 
+                virtual encoding_rule rule() const {
+                    return rule_;
+                }
+
+                bool aligned() const {
+                    return !unaligned_;
+                }
+
+                bool unaligned() const {
+                    return unaligned_;
+                }
 
                 std::size_t get_bitmap(std::size_t sz, bitstring_type& vl, bool alighn = false);
 
@@ -951,41 +961,41 @@ namespace boost {
 
                 bitstring_type get_pop_bmp(std::size_t sz, bool alighn = false);
 
-                octet_sequnce get_pop_octs(std::size_t sz, bool alighn = false);                
+                octet_sequnce get_pop_octs(std::size_t sz, bool alighn = false);
 
                 template<typename T>
                 void operator&(const T& vl) {
-                    *this >> implicit_value<T > (vl);
+                    *this >> vl;
+                }
+
+                template<typename T>
+                void operator&(const num_constrainter<T>& vl) {
+                    *this >> vl;
+                }
+
+                template<typename T>
+                void operator&(const size_constrainter<T>& vl) {
+                    *this >> vl;
                 }
 
                 template<typename T>
                 void operator&(const explicit_value<T >& vl) {
-                    *this >> vl;
+                    *this >> vl.value();
                 }
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(const explicit_typedef <T, Tag, ID, TYPE>& vl) {
-                    *this >> explicit_value<T > (vl.value(), ID, TYPE);
-                }
-
-                template<typename T>
-                void operator&(const optional_explicit_value<T >& vl) {
-                    *this >> vl;
+                    *this >> vl.value();
                 }
 
                 template<typename T>
                 void operator&(const implicit_value<T >& vl) {
-                    *this >> vl;
+                    *this >> vl.value();
                 }
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(const implicit_typedef <T, Tag, ID, TYPE>& vl) {
                     *this >> implicit_value<T > (vl.value(), ID, TYPE);
-                }
-
-                template<typename T>
-                void operator&(const optional_implicit_value<T >& vl) {
-                    *this >> vl;
                 }
 
                 template<typename T>
@@ -998,90 +1008,40 @@ namespace boost {
                     *this >> vl;
                 }
 
-                virtual int test_id() {
-                    /*tag tmptag;
-                    if (tag_x691_cast(tmptag, buffers(), buffers().begin()))
-                        return tmptag.id();
-                    else*/
-                    return tag::null_tag;
-                }
-
-                virtual int test_class() {
-                    /*tag tmptag;
-                    if (tag_x691_cast(tmptag, buffers(), buffers().begin()))
-                        return tmptag.mask() & 0xC0;
-                    else*/
-                    return tag::null_tag;
-                }
-                             
                 std::size_t unusebits() const {
                     return unuse_ % 8;
                 }
 
                 std::size_t usebits() const {
                     return 8 - unusebits();
-                }                
- 
-            protected:               
+                }
 
-
+            protected:
 
                 std::size_t unusebits(std::size_t vl) {
                     return unuse_ = vl % 8;
-                }   
+                }
+
+            private:
+
+                encoding_rule rule_;
+                bool unaligned_;
 
             };
 
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, const explicit_value<T>& vl) {
 
-                /* if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET)) {
-                     stream & vl.value();
-                     stream.pop_stack();
-                     return stream;
-                 }*/
-                return stream;
-                throw boost::system::system_error(boost::itu::ER_BEDSEQ);
-            }
+            //////////////////////////////////////////////////////////////////////////////////
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, const optional_explicit_value<T>& vl) {
-                typedef boost::shared_ptr<T> shared_type;
-                /*if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
-                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr<T > (new T());
-                    stream & explicit_value<T > (*vl.value(), vl.id(), vl.type());
-                    //stream.pop_stack();
-                }*/
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, const optional_explicit_value< std::vector<T> >& vl) {
-                typedef boost::shared_ptr< std::vector<T> > shared_type;
-                /*if (stream.parse_tl(vl, false, true)) {
-                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
-                    stream >> explicit_value<std::vector<T> >(*vl.value(), vl.id(), vl.type());
-                    //stream.pop_stack();
-                }*/
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, const optional_explicit_value< std::deque<T> >& vl) {
-                typedef boost::shared_ptr< std::deque<T> > shared_type;
-                /*if (stream.parse_tl(vl, false, true)) {
-                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
-                    stream >> explicit_value<std::deque<T> >(*vl.value(), vl.id(), vl.type());
-                    //stream.pop_stack();
-                }*/
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, const implicit_value<T>& vl) {
-
-                /*if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET)) {
-                    const_cast<T*> (&(vl.value()))->serialize(stream);
+            input_coder& primitive_deserialize(input_coder& stream, const T& vl) {
+                /*size_class tmpsize;
+                if (stream.parse_tl(vl, tmpsize, tag_traits<T>::number() == TYPE_SET)) {
+                    octet_sequnce data;
+                    std::size_t sz = tmpsize.size();
+                    if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
+                        if (from_x691_cast(*const_cast<T*> (&vl.value()), data)) {
+                        }
+                    }
                     stream.pop_stack();
                     return stream;
                 }*/
@@ -1090,103 +1050,7 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, const optional_implicit_value<T>& vl) {
-                typedef boost::shared_ptr<T> shared_type;
-                /*if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
-                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr<T > (new T());
-                    stream & implicit_value<T > (*vl.value(), vl.id(), vl.type());
-                    //stream.pop_stack();
-                }*/
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, const optional_implicit_value< std::vector<T> >& vl) {
-                typedef boost::shared_ptr< std::vector<T> > shared_type;
-                /*if (stream.parse_tl(vl, false, true)) {
-                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
-                    stream >> implicit_value<std::vector<T> >(*vl.value(), vl.id(), vl.type());
-                    //stream.pop_stack();
-                }*/
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, const optional_implicit_value< std::deque<T> >& vl) {
-                typedef boost::shared_ptr< std::deque<T> > shared_type;
-                /*if (stream.parse_tl(vl, false, true)) {
-                 *const_cast<shared_type*> (&(vl.value())) = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
-                    stream >> implicit_value<std::deque<T> >(*vl.value(), vl.id(), vl.type());
-                    //stream.pop_stack();
-                }*/
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, const explicit_value< std::vector<T> >& vl) {
-                return stream >> implicit_value<std::vector<T> >(vl.value(), vl.id(), vl.type());
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, const explicit_value< std::deque<T> >& vl) {
-                return stream >> implicit_value< std::deque<T> >(vl.value(), vl.id(), vl.type());
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, const implicit_value< std::vector<T> >& vl) {
-                /*size_class tmpsize;
-               if (stream.parse_tl(vl, tmpsize, false)) {
-                   std::size_t beg = stream.size();
-                  if (tmpsize.undefsize()) {
-                       while (!stream.is_endof() && stream.size()) {
-                           T tmp;
-                           boost::asn1::bind_element<T>::op(stream, tmp);
-                           const_cast<std::vector<T>*> (&(vl.value()))->push_back(tmp);
-                       }
-                   } else 
-                   {
-                       std::size_t sz = tmpsize.size();
-                       while ((beg - stream.size()) < sz) {
-                           T tmp;
-                           boost::asn1::bind_element<T>::op(stream, tmp);
-                           const_cast<std::vector<T>*> (&(vl.value()))->push_back(tmp);
-                       }
-                   }
-                   stream.pop_stack();
-               }*/
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, const implicit_value< std::deque<T> >& vl) {
-                /*size_class tmpsize;
-                if (stream.parse_tl(vl, tmpsize, false)) {
-                    std::size_t beg = stream.size();
-                    if (tmpsize.undefsize()) {
-                        while (!stream.is_endof() && stream.size()) {
-                            T tmp;
-                            boost::asn1::bind_element<T>::op(stream, tmp);
-                            const_cast<std::deque<T>*> (&(vl.value()))->push_back(tmp);
-                        }
-                    } else
-                    {
-                        std::size_t sz = tmpsize.size();
-                        while ((beg - stream.size()) < sz) {
-                            T tmp;
-                            boost::asn1::bind_element<T>::op(stream, tmp);
-                            const_cast<std::deque<T>*> (&(vl.value()))->push_back(tmp);
-                        }
-                    }
-                    stream.pop_stack();
-                }*/
-                return stream;
-            }
-
-
-            //////////////////////////////////////////////////////////////////////////////////
-
-            template<typename T>
-            input_coder& primitive_desirialize(input_coder& stream, const implicit_value<T>& vl) {
+            input_coder& primitive_int_deserialize(input_coder& stream, const T& vl) {
                 /*size_class tmpsize;
                 if (stream.parse_tl(vl, tmpsize, tag_traits<T>::number() == TYPE_SET)) {
                     octet_sequnce data;
@@ -1253,104 +1117,72 @@ namespace boost {
             }
 
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<int8_t>& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<uint8_t>& vl);
+            input_coder& operator>>(input_coder& stream, const int8_t& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<int16_t>& vl);
+            input_coder& operator>>(input_coder& stream, const uint8_t& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<uint16_t>& vl);
+            input_coder& operator>>(input_coder& stream, const int16_t& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<int32_t>& vl);
+            input_coder& operator>>(input_coder& stream, const uint16_t& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<uint32_t>& vl);
+            input_coder& operator>>(input_coder& stream, const int32_t& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<int64_t>& vl);
+            input_coder& operator>>(input_coder& stream, const uint32_t& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<uint64_t>& vl);
+            input_coder& operator>>(input_coder& stream, const int64_t& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<enumerated_type>& vl);
+            input_coder& operator>>(input_coder& stream, const uint64_t& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<float>& vl);
+            input_coder& operator>>(input_coder& stream, const enumerated_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<double>& vl);
+            input_coder& operator>>(input_coder& stream, const float& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<long double>& vl);
+            input_coder& operator>>(input_coder& stream, const double& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<bool>& vl);
+            input_coder& operator>>(input_coder& stream, const long double& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<null_type>& vl);
+            input_coder& operator>>(input_coder& stream, const bool& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<oid_type>& vl);
+            input_coder& operator>>(input_coder& stream, const null_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<reloid_type>& vl);
+            input_coder& operator>>(input_coder& stream, const oid_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<any_type>& vl);
+            input_coder& operator>>(input_coder& stream, const reloid_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<bitstring_type>& vl);
+            input_coder& operator>>(input_coder& stream, const any_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<octetstring_type>& vl);
+            input_coder& operator>>(input_coder& stream, const bitstring_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<utf8string_type>& vl);
+            input_coder& operator>>(input_coder& stream, const octetstring_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<numericstring_type>& vl);
+            input_coder& operator>>(input_coder& stream, const utf8string_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<printablestring_type>& vl);
+            input_coder& operator>>(input_coder& stream, const numericstring_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<t61string_type>& vl);
+            input_coder& operator>>(input_coder& stream, const printablestring_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<videotexstring_type>& vl);
+            input_coder& operator>>(input_coder& stream, const t61string_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<ia5string_type>& vl);
+            input_coder& operator>>(input_coder& stream, const videotexstring_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<graphicstring_type>& vl);
+            input_coder& operator>>(input_coder& stream, const ia5string_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<objectdescriptor_type>& vl);
+            input_coder& operator>>(input_coder& stream, const graphicstring_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<visiblestring_type>& vl);
+            input_coder& operator>>(input_coder& stream, const objectdescriptor_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<generalstring_type>& vl);
+            input_coder& operator>>(input_coder& stream, const visiblestring_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<universalstring_type>& vl);
+            input_coder& operator>>(input_coder& stream, const generalstring_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<bmpstring_type>& vl);
+            input_coder& operator>>(input_coder& stream, const universalstring_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<utctime_type>& vl);
+            input_coder& operator>>(input_coder& stream, const bmpstring_type& vl);
 
-            template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<gentime_type>& vl);
+            input_coder& operator>>(input_coder& stream, const utctime_type& vl);
+
+            input_coder& operator>>(input_coder& stream, const gentime_type& vl);
 
 
 

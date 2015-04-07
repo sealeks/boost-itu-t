@@ -302,7 +302,7 @@ namespace boost {
             }
 
             template<typename T>
-            output_coder& primitive_sirialize(output_coder& stream, const implicit_value<T>& vl) {
+            output_coder& primitive_serialize(output_coder& stream, const implicit_value<T>& vl) {
 
                 stream.addtag(tag(vl.id(), vl.mask()), (tag_traits<T>::number() == TYPE_SET));
                 const_sequences::iterator it = stream.last();
@@ -778,7 +778,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////
 
             template<typename T>
-            input_coder& primitive_desirialize(input_coder& stream, const implicit_value<T>& vl) {
+            input_coder& primitive_deserialize(input_coder& stream, const implicit_value<T>& vl) {
                 size_class tmpsize;
                 if (stream.parse_tl(vl, tmpsize, tag_traits<T>::number() == TYPE_SET)) {
                     octet_sequnce data;
