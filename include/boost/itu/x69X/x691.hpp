@@ -473,6 +473,14 @@ namespace boost {
                     return unaligned_;
                 }
 
+
+                void add_bitmap(const bitstring_type & vl, bool alighn = false);
+
+                void add_octets(const octet_sequnce& vl, bool alighn = false);
+
+                void add_octets(const octetstring_type & vl, bool alighn = false);
+            
+
                 template<typename T>
                 void operator&(const T& vl) {
                     *this << vl;
@@ -520,6 +528,20 @@ namespace boost {
 
                 bool canonical() const {
                     return rule_ == boost::itu::CER_ENCODING;
+                }
+                
+                std::size_t unusebits() const {
+                    return unuse_ % 8;
+                }
+
+                std::size_t usebits() const {
+                    return 8 - unusebits();
+                }                
+
+            protected:
+
+                std::size_t unusebits(std::size_t vl) {
+                    return unuse_ = vl % 8;
                 }
 
             private:
@@ -914,6 +936,23 @@ namespace boost {
                 input_coder() : boost::itu::base_input_coder() {
                 }
 
+
+                std::size_t get_bitmap(std::size_t sz, bitstring_type& vl, bool alighn = false);
+
+                std::size_t get_octets(std::size_t sz, octet_sequnce& vl, bool alighn = false);
+
+                std::size_t pop_bitmap(std::size_t sz, bool alighn = false);
+
+                std::size_t pop_octets(std::size_t sz, bool alighn = false);
+
+                std::size_t get_pop_bitmap(std::size_t sz, bitstring_type& vl, bool alighn = false);
+
+                std::size_t get_pop_octets(std::size_t sz, octet_sequnce& vl, bool alighn = false);
+
+                bitstring_type get_pop_bmp(std::size_t sz, bool alighn = false);
+
+                octet_sequnce get_pop_octs(std::size_t sz, bool alighn = false);                
+
                 template<typename T>
                 void operator&(const T& vl) {
                     *this >> implicit_value<T > (vl);
@@ -974,8 +1013,22 @@ namespace boost {
                     else*/
                     return tag::null_tag;
                 }
+                             
+                std::size_t unusebits() const {
+                    return unuse_ % 8;
+                }
+
+                std::size_t usebits() const {
+                    return 8 - unusebits();
+                }                
+ 
+            protected:               
 
 
+
+                std::size_t unusebits(std::size_t vl) {
+                    return unuse_ = vl % 8;
+                }   
 
             };
 

@@ -761,7 +761,7 @@ namespace boost {
                 listbuffers_->end();
             rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl)));
             size_ += vl.size();
-            unusebits(0);
+            unuse_=0;
             return listbuffers_->insert(listbuffers_->end(), const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size()));
         }
 
@@ -770,7 +770,7 @@ namespace boost {
                 listbuffers_->end();
             rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl)));
             size_ += vl.size();
-            unusebits(0);
+            unuse_=0;
             return listbuffers_->insert(it, const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size()));
         }
 
@@ -779,36 +779,6 @@ namespace boost {
                 add(buffer_to_raw(*it));
         }
 
-        void base_output_coder::add_bitmap(const bitmap_type & vl, bool alighn) {
-            if (unusebits()) {
-                //const_sequences::reverse_iterator it = listbuffers_->rbegin();
-                vect_octet_sequnce_ptr::reverse_iterator dit = rows_vect.rbegin();
-                octet_sequnce_ptr lstdata_ptr = *dit;
-                octet_sequnce& lstdata = *lstdata_ptr;
-                unusebits(split_bits_in_octets(lstdata, alighn ? 0 : unusebits(), vl.as_octet_sequnce(), vl.unusebits()));
-                listbuffers_->back() = const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
-            } else {
-                add(vl.as_octet_sequnce());
-                unusebits(vl.unusebits());
-            }
-        }
-
-        void base_output_coder::add_octets(const octet_sequnce& vl, bool alighn) {
-            if (unusebits()) {
-                //const_sequences::reverse_iterator it = listbuffers_->rbegin();
-                vect_octet_sequnce_ptr::reverse_iterator dit = rows_vect.rbegin();
-                octet_sequnce_ptr lstdata_ptr = *dit;
-                octet_sequnce& lstdata = *lstdata_ptr;
-                split_bits_in_octets(lstdata, alighn ? 0 : unusebits(), vl);
-                listbuffers_->back() = const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
-            } else {
-                add(vl);
-            }
-        }
-
-        void base_output_coder::add_octets(const octetstring_type & vl, bool alighn) {
-            add_octets(vl.as_octet_sequnce(), alighn);
-        }
 
         std::size_t base_output_coder::load_sequence(const_sequences& val, std::size_t lim) {
             if (!lim) return 0;
@@ -857,88 +827,7 @@ namespace boost {
             for (const_sequences::const_iterator it = vl.begin(); it != vl.end(); ++it)
                 add(buffer_to_raw(*it));
         }
-
-        std::size_t base_input_coder::get_bitmap(std::size_t sz, bitmap_type& vl, bool alighn) {
-            if (sz) {
-                std::size_t usbit = usebits();
-                std::size_t octsize = 1;
-                if (usbit < sz)
-                    octsize += ((sz - usbit - 1) / 8 + 1);
-                std::size_t bmp_octsize = (sz - 1) / 8 + 1;
-                octet_sequnce raw;
-                if (!(row_cast(buffers(), buffers().begin(), raw, 0, octsize)))
-                        return 0;
-                if (unusebits()) {
-                    left_shift_bits_in_octets(raw, unusebits());
-                    if (bmp_octsize < raw.size())
-                        raw.erase(raw.begin() + bmp_octsize, raw.end());
-                };
-                vl = bitmap_type(raw, sz ? (8 - sz % 8) : 0);
-            }
-            return sz;
-        }
-
-        std::size_t base_input_coder::get_octets(std::size_t sz, octet_sequnce& vl, bool alighn) {
-            if (sz) {
-                if (unusebits())
-                    sz++;
-                vl.clear();
-                if (!row_cast(buffers(), buffers().begin(), vl, 0, sz))
-                    return 0;
-                if (unusebits()) {
-                    left_shift_bits_in_octets(vl, unusebits());
-                    vl.erase(vl.begin()+(sz - 1), vl.end());
-                }
-            }
-            return sz;
-        }
-
-        std::size_t base_input_coder::pop_bitmap(std::size_t sz, bool alighn) {
-            if (sz) {
-                std::size_t usbit = usebits();
-                std::size_t octsize = 0;
-                if (usbit < sz)
-                    octsize += ((sz - usbit - 1) / 8 + 1);
-                if (octsize)
-                    pop_front(octsize);
-                unusebits(unusebits() + sz);
-            }
-            return sz;
-        }
-        
-
-        std::size_t base_input_coder::pop_octets(std::size_t sz, bool alighn) {
-            if (sz){
-                return 1;            
-            pop_front(sz);}
-            return sz;
-        }
-
-        std::size_t base_input_coder::get_pop_bitmap(std::size_t sz, bitmap_type& vl, bool alighn) {
-            std::size_t rslt = get_bitmap(sz, vl, alighn);
-            if (rslt)
-                pop_bitmap(sz, alighn);
-            return rslt;
-        }
-
-        std::size_t base_input_coder::get_pop_octets(std::size_t sz, octet_sequnce& vl, bool alighn) {
-            std::size_t rslt =get_octets(sz, vl, alighn);
-            if (rslt)
-                pop_octets(sz, alighn);
-            return rslt;            
-        }
-        
-        bitmap_type base_input_coder::get_pop_bmp(std::size_t sz,bool alighn) {
-            bitmap_type tmp;
-            get_pop_bitmap(sz, tmp, alighn);
-            return tmp;
-        }
-
-        octet_sequnce base_input_coder::get_pop_octs(std::size_t sz,  bool alighn) {
-            octet_sequnce tmp;
-            get_pop_octets(sz, tmp, alighn);
-            return tmp;
-        }        
+      
 
         bool base_input_coder::is_endof(std::size_t beg) const {
             octet_sequnce data;

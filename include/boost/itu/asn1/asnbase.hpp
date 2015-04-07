@@ -135,6 +135,13 @@ namespace boost {\
 #define ITU_T_BIND_NUM_SIMICONS(var, mn) boost::asn1::bind_semiconstraints(arch, var, mn)
 #define ITU_T_BIND_NUM_SIMICONE(var, mn) boost::asn1::bind_semiconstraints_ext(arch, var, mn)
 
+#define ITU_T_BIND_SIZE_RNGCONSTRS(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx)
+#define ITU_T_BIND_SIZE_RNGCONSTRE(var, mn, mx) boost::asn1::bind_sizeconstraints_ext(arch, var, mn, mx)
+#define ITU_T_BIND_SIZE_SEMICONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0)
+#define ITU_T_BIND_SIZE_SEMICONSTRE(var, mn) boost::asn1::bind_sizeconstraints_ext(arch, var, mn, 0)
+#define ITU_T_BIND_SIZE_SNGLCONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn)
+#define ITU_T_BIND_SIZE_SNGLCONSTRE(var, mn) boost::asn1::bind_sizeconstraints_ext(arch, var, mn, mn)
+
 #define ITU_T_CHOICE(enm)  boost::asn1::___asn__choice__base__< enm> 
 #define ITU_T_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
 
@@ -1630,6 +1637,21 @@ namespace boost {
             arch & num_semiconstrainter<T> (vl, MIN, false);
             return (arch.size() != tst);
         }
+        
+        template<typename Archive, typename T>
+        inline bool bind_semiconstraints(Archive & arch, value_holder<T>& vl, const T& MIN, const T& MAX) {
+            return bind_semiconstraints(arch, *vl, MIN, MAX);
+        }        
+
+        template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_semiconstraints(Archive & arch, implicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
+            return bind_semiconstraints(arch, *vl, MIN, MAX);          
+        }    
+        
+        template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_semiconstraints(Archive & arch, explicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
+            return bind_semiconstraints(arch, *vl, MIN, MAX);          
+        }        
 
         template<typename Archive, typename T>
         inline bool bind_semiconstraints_ext(Archive & arch, T& vl, const T& MIN) {
@@ -1638,7 +1660,20 @@ namespace boost {
             return (arch.size() != tst);
         }
 
+        template<typename Archive, typename T>
+        inline bool bind_semiconstraints_ext(Archive & arch, value_holder<T>& vl, const T& MIN, const T& MAX) {
+            return bind_semiconstraints_ext(arch, *vl, MIN, MAX);
+        }        
 
+        template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_semiconstraints_ext(Archive & arch, implicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
+            return bind_semiconstraints_ext(arch, *vl, MIN, MAX);          
+        }    
+        
+        template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_semiconstraints_ext(Archive & arch, explicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
+            return bind_semiconstraints_ext(arch, *vl, MIN, MAX);          
+        }      
 
 
 

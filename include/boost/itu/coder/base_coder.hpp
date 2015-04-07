@@ -452,12 +452,6 @@ namespace boost {
 
             void add(const mutable_sequences& vl);
 
-            void add_bitmap(const bitmap_type & vl, bool alighn = false);
-
-            void add_octets(const octet_sequnce& vl, bool alighn = false);
-
-            void add_octets(const octetstring_type & vl, bool alighn = false);
-
             iterator_type last() {
                 return listbuffers_->empty() ? listbuffers_->end() : (--(listbuffers_->end()));
             }
@@ -509,28 +503,15 @@ namespace boost {
             const oid_type& transfer_syntax() const {
                 return to_transfer_syntax(rule());
             }
-
-            std::size_t unusebits() const {
-                return unuse_ % 8;
-            }
-
-            std::size_t usebits() const {
-                return 8 - unusebits();
-            }
-            
+    
         protected:
 
-            std::size_t unusebits(std::size_t vl) {
-                return unuse_ = vl % 8;
-            }
-
-
-        private:
 
             std::size_t unuse_;
             const_sequences_ptr listbuffers_;
             vect_octet_sequnce_ptr rows_vect;
             std::size_t size_;
+            
         };
 
 
@@ -569,25 +550,8 @@ namespace boost {
             void pop_front(std::size_t sz) {
                 decsize(pop_frontlist(*listbuffers_, sz));
             }
-
-            std::size_t get_bitmap(std::size_t sz, bitmap_type& vl, bool alighn = false);
-
-            std::size_t get_octets(std::size_t sz, octet_sequnce& vl, bool alighn = false);
-
-            std::size_t pop_bitmap(std::size_t sz, bool alighn = false);
-
-            std::size_t pop_octets(std::size_t sz, bool alighn = false);
-
-            std::size_t get_pop_bitmap(std::size_t sz, bitmap_type& vl, bool alighn = false);
-
-            std::size_t get_pop_octets(std::size_t sz, octet_sequnce& vl, bool alighn = false);
-
-            bitmap_type get_pop_bmp(std::size_t sz, bool alighn = false);
-
-            octet_sequnce get_pop_octs(std::size_t sz, bool alighn = false);         
-            
-
-            
+         
+  
             bool is_endof(std::size_t beg = 0) const;
 
             iterator_type last() {
@@ -616,27 +580,14 @@ namespace boost {
 
             void resetextention() {
             }
-
-            std::size_t unusebits() const {
-                return unuse_ % 8;
-            }
-            
-            std::size_t usebits() const {
-                return 8 - unusebits();
-            }            
+         
 
         protected:
-
-            std::size_t unusebits(std::size_t vl) {
-                return unuse_ = vl % 8;
-            }
 
             void decsize(std::size_t sz) {
                 size_ = size_ < sz ? 0 : (size_ - sz);
                 //std::cout << "decsize IARCHVE size:"  << size_  << std::endl;
             }
-
-        private:
 
             std::size_t unuse_;
             mutable_sequences_ptr listbuffers_;

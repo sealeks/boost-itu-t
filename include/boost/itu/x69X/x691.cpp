@@ -69,6 +69,43 @@ namespace boost {
             }
 
 
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            /*OUTPUT STREAM                                                                                                                                                                                               */
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
+
+            void output_coder::add_bitmap(const bitstring_type & vl, bool alighn) {
+                if (unusebits()) {
+                    //const_sequences::reverse_iterator it = listbuffers_->rbegin();
+                    boost::itu::vect_octet_sequnce_ptr::reverse_iterator dit = rows_vect.rbegin();
+                    boost::itu::octet_sequnce_ptr lstdata_ptr = *dit;
+                    octet_sequnce& lstdata = *lstdata_ptr;
+                    unusebits(boost::itu::split_bits_in_octets(lstdata, alighn ? 0 : unusebits(), vl.as_octet_sequnce(), vl.unusebits()));
+                    listbuffers_->back() = const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
+                } else {
+                    add(vl.as_octet_sequnce());
+                    unusebits(vl.unusebits());
+                }
+            }
+
+            void output_coder::add_octets(const octet_sequnce& vl, bool alighn) {
+                if (unusebits()) {
+                    //const_sequences::reverse_iterator it = listbuffers_->rbegin();
+                    boost::itu::vect_octet_sequnce_ptr::reverse_iterator dit = rows_vect.rbegin();
+                    boost::itu::octet_sequnce_ptr lstdata_ptr = *dit;
+                    octet_sequnce& lstdata = *lstdata_ptr;
+                    boost::itu::split_bits_in_octets(lstdata, alighn ? 0 : unusebits(), vl);
+                    listbuffers_->back() = const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
+                } else {
+                    add(vl);
+                }
+            }
+
+            void output_coder::add_octets(const octetstring_type & vl, bool alighn) {
+                add_octets(vl.as_octet_sequnce(), alighn);
+            }
+
+
             // STRING REALISZATION
 
             output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const octet_sequnce& elms, bool align) {
@@ -173,7 +210,7 @@ namespace boost {
 
             output_coder& operator<<(output_coder& stream, const bool& vl) {
                 stream.add_bitmap(bitstring_type(vl));
-                return stream;                
+                return stream;
             }
 
             output_coder& operator<<(output_coder& stream, const null_type& vl) {
@@ -314,9 +351,6 @@ namespace boost {
 
 
 
-            /// output_coder
-
-
 
 
 
@@ -325,33 +359,86 @@ namespace boost {
             /*INPUT STREAM                                                                                                                                                                                               */
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            bool find_marked_sequece(const mutable_sequences& val, mutable_sequences::const_iterator bit, octet_sequnce& raw, std::size_t start) {
-                mutable_sequences::const_iterator it = bit;
-                std::size_t sz = 0;
-                std::size_t szc = 0;
-                std::size_t szb = 0;
-                std::size_t sze = 0;
-                bool find = false;
-                while ((it != val.end()) && (!find)) {
-                    szc = boost::asio::buffer_size(*it);
-                    if ((sz + szc) > start) {
-                        szb = sz > start ? 0 : start - sz;
-                        sze = szc - szb;
-                        mutable_buffer tmp = boost::asio::buffer(*it + szb, sze);
-                        std::size_t szf = boost::asio::buffer_size(tmp);
-                        std::size_t szi = 0;
-                        while ((szi < szf) && (!find)) {
-                            if (!((*(boost::asio::buffer_cast<octet_type*>(tmp) + szi)) & '\x80'))
-                                find = true;
-                            raw.push_back((*(boost::asio::buffer_cast<octet_type*>(tmp) + szi) & '\x7F'));
-                            szi++;
-                        }
-
-                    }
-                    sz += szc;
-                    ++it;
+            std::size_t input_coder::get_bitmap(std::size_t sz, bitstring_type& vl, bool alighn) {
+                if (sz) {
+                    std::size_t usbit = usebits();
+                    std::size_t octsize = 1;
+                    if (usbit < sz)
+                        octsize += ((sz - usbit - 1) / 8 + 1);
+                    std::size_t bmp_octsize = (sz - 1) / 8 + 1;
+                    octet_sequnce raw;
+                    if (!(boost::itu::row_cast(buffers(), buffers().begin(), raw, 0, octsize)))
+                        return 0;
+                    if (unusebits()) {
+                        boost::itu::left_shift_bits_in_octets(raw, unusebits());
+                        if (bmp_octsize < raw.size())
+                            raw.erase(raw.begin() + bmp_octsize, raw.end());
+                    };
+                    vl = bitstring_type(raw, sz ? (8 - sz % 8) : 0);
                 }
-                return find;
+                return sz;
+            }
+
+            std::size_t input_coder::get_octets(std::size_t sz, octet_sequnce& vl, bool alighn) {
+                if (sz) {
+                    if (unusebits())
+                        sz++;
+                    vl.clear();
+                    if (!boost::itu::row_cast(buffers(), buffers().begin(), vl, 0, sz))
+                        return 0;
+                    if (unusebits()) {
+                        boost::itu::left_shift_bits_in_octets(vl, unusebits());
+                        vl.erase(vl.begin()+(sz - 1), vl.end());
+                    }
+                }
+                return sz;
+            }
+
+            std::size_t input_coder::pop_bitmap(std::size_t sz, bool alighn) {
+                if (sz) {
+                    std::size_t usbit = usebits();
+                    std::size_t octsize = 0;
+                    if (usbit < sz)
+                        octsize += ((sz - usbit - 1) / 8 + 1);
+                    if (octsize)
+                        pop_front(octsize);
+                    unusebits(unusebits() + sz);
+                }
+                return sz;
+            }
+
+            std::size_t input_coder::pop_octets(std::size_t sz, bool alighn) {
+                if (sz) {
+                    return 1;
+                    pop_front(sz);
+                }
+                return sz;
+            }
+
+            std::size_t input_coder::get_pop_bitmap(std::size_t sz, bitstring_type& vl, bool alighn) {
+                std::size_t rslt = get_bitmap(sz, vl, alighn);
+                if (rslt)
+                    pop_bitmap(sz, alighn);
+                return rslt;
+            }
+
+            std::size_t input_coder::get_pop_octets(std::size_t sz, octet_sequnce& vl, bool alighn) {
+                std::size_t rslt = get_octets(sz, vl, alighn);
+                if (rslt)
+                    pop_octets(sz, alighn);
+                return rslt;
+            }
+
+            bitstring_type input_coder::get_pop_bmp(std::size_t sz, bool alighn) {
+                bitstring_type tmp;
+                get_pop_bitmap(sz, tmp, alighn);
+                return tmp;
+            }
+
+            octet_sequnce input_coder::get_pop_octs(std::size_t sz, bool alighn) {
+                octet_sequnce tmp;
+                get_pop_octets(sz, tmp, alighn);
+                return tmp;
             }
 
 
@@ -429,7 +516,7 @@ namespace boost {
 
             template<>
             bool from_x691_cast(enumerated_type& val, const octet_sequnce& src) {
-                enumerated_base_type tmp=0;
+                enumerated_base_type tmp = 0;
                 if (from_x691_cast(tmp, src)) {
                     val = tmp;
                     return true;
