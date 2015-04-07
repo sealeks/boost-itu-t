@@ -1525,8 +1525,13 @@ namespace boost {
             arch & num_constrainter<T> (vl, MIN, MAX, false);
             return (arch.size() != tst);
         }
+        
+        template<typename Archive, typename T>
+        inline bool bind_constraints(Archive & arch, value_holder<T>& vl, const T& MIN, const T& MAX) {
+            return bind_constraints(arch, *vl, MIN, MAX);
+        }        
 
-        /*template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
         inline bool bind_constraints(Archive & arch, implicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
             return bind_constraints(arch, *vl, MIN, MAX);          
         }    
@@ -1534,7 +1539,7 @@ namespace boost {
         template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
         inline bool bind_constraints(Archive & arch, explicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
             return bind_constraints(arch, *vl, MIN, MAX);          
-        }*/
+        }
 
         template<typename Archive, typename T>
         inline bool bind_constraints_ext(Archive & arch, T& vl, const T& MIN, const T& MAX) {
@@ -1542,16 +1547,21 @@ namespace boost {
             arch & num_constrainter<T> (vl, MIN, MAX, true);
             return (arch.size() != tst);
         }
+        
+        template<typename Archive, typename T>
+        inline bool bind_constraints_ext(Archive & arch, value_holder<T>& vl, const T& MIN, const T& MAX) {
+            return bind_constraints_ext(arch, *vl, MIN, MAX);
+        }                
 
-        /*template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
+        template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
         inline bool bind_constraints_ext(Archive & arch, implicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
-            return false;//bind_constraints_ext(arch, *vl, MIN, MAX);          
+            return bind_constraints_ext(arch, *vl, MIN, MAX);          
         }    
         
         template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
         inline bool bind_constraints_ext(Archive & arch, explicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
-            return false;//bind_constraints_ext(arch, *vl, MIN, MAX);          
-        }  */
+            return bind_constraints_ext(arch, *vl, MIN, MAX);          
+        }  
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  num_semiconstrainter       

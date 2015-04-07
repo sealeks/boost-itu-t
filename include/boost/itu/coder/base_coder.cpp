@@ -553,9 +553,8 @@ namespace boost {
                     const octet_sequnce::value_type msk = ~static_cast<octet_sequnce::value_type>(0xFF << shft);
                     for (octet_sequnce::iterator it = vl.begin(); it != vl.end(); ++it) {
                         *it <<= shft;
-                        if ((it + 1) != vl.end()){ 
-                            octet_sequnce::value_type nxt=*(it + 1);
-                            *it |=(msk & (nxt >> (8 - shft )));}
+                        if ((it + 1) != vl.end())
+                            *it |=(msk & ((*(it + 1))>> (8 - shft )));
                         else
                             *it &=('\xFF')<<shft;
                     }
@@ -860,69 +859,73 @@ namespace boost {
         }
 
         std::size_t base_input_coder::get_bitmap(std::size_t sz, bitmap_type& vl, bool alighn) {
-            if (!sz)
-                return 1;
-            std::size_t usbit=usebits();            
-            std::size_t octsize=1;
-            if (usbit<sz) 
-                octsize+=((sz-usbit - 1) / 8 + 1);
-            std::size_t bmp_octsize= (sz-1) / 8 + 1; 
-            octet_sequnce raw;
-            row_cast(buffers(), buffers().begin(), raw, 0, octsize);
-            if (unusebits()) {
-                left_shift_bits_in_octets(raw, unusebits());
-                if (bmp_octsize < raw.size())
-                    raw.erase(raw.begin()+bmp_octsize , raw.end());              
-            };
-            vl = bitmap_type(raw, sz ? (8 - sz % 8) : 0);            
-            return 1;
+            if (sz) {
+                std::size_t usbit = usebits();
+                std::size_t octsize = 1;
+                if (usbit < sz)
+                    octsize += ((sz - usbit - 1) / 8 + 1);
+                std::size_t bmp_octsize = (sz - 1) / 8 + 1;
+                octet_sequnce raw;
+                if (!(row_cast(buffers(), buffers().begin(), raw, 0, octsize)))
+                        return 0;
+                if (unusebits()) {
+                    left_shift_bits_in_octets(raw, unusebits());
+                    if (bmp_octsize < raw.size())
+                        raw.erase(raw.begin() + bmp_octsize, raw.end());
+                };
+                vl = bitmap_type(raw, sz ? (8 - sz % 8) : 0);
+            }
+            return sz;
         }
 
         std::size_t base_input_coder::get_octets(std::size_t sz, octet_sequnce& vl, bool alighn) {
-            if (!sz)
-                return 1;
-            if (unusebits())
-                sz++;
-            octet_sequnce raw;
-            row_cast(buffers(), buffers().begin(), raw, 0, sz);
-            if (unusebits()){
-                
+            if (sz) {
+                if (unusebits())
+                    sz++;
+                vl.clear();
+                if (!row_cast(buffers(), buffers().begin(), vl, 0, sz))
+                    return 0;
+                if (unusebits()) {
+                    left_shift_bits_in_octets(vl, unusebits());
+                    vl.erase(vl.begin()+(sz - 1), vl.end());
+                }
             }
-            else {
-                //row_cast();
-            }            
-            return 1;
+            return sz;
         }
 
         std::size_t base_input_coder::pop_bitmap(std::size_t sz, bool alighn) {
-            if (!sz)
-                return 1;
-            std::size_t usbit=usebits();            
-            std::size_t octsize=0;  
-            if (usbit<sz) 
-                octsize+=((sz-usbit - 1) / 8 + 1);
-            if (octsize)
-                pop_front(octsize);
-            unusebits(unusebits()+sz);
-            return 1;
+            if (sz) {
+                std::size_t usbit = usebits();
+                std::size_t octsize = 0;
+                if (usbit < sz)
+                    octsize += ((sz - usbit - 1) / 8 + 1);
+                if (octsize)
+                    pop_front(octsize);
+                unusebits(unusebits() + sz);
+            }
+            return sz;
         }
         
 
         std::size_t base_input_coder::pop_octets(std::size_t sz, bool alighn) {
-            if (!sz)
+            if (sz){
                 return 1;            
-            pop_front(sz);
-            return 1;
+            pop_front(sz);}
+            return sz;
         }
 
         std::size_t base_input_coder::get_pop_bitmap(std::size_t sz, bitmap_type& vl, bool alighn) {
-            get_bitmap(sz, vl, alighn);
-            return pop_bitmap(sz, alighn);
+            std::size_t rslt = get_bitmap(sz, vl, alighn);
+            if (rslt)
+                pop_bitmap(sz, alighn);
+            return rslt;
         }
 
         std::size_t base_input_coder::get_pop_octets(std::size_t sz, octet_sequnce& vl, bool alighn) {
-            get_octets(sz, vl, alighn);
-            return pop_octets(sz, alighn);
+            std::size_t rslt =get_octets(sz, vl, alighn);
+            if (rslt)
+                pop_octets(sz, alighn);
+            return rslt;            
         }
         
         bitmap_type base_input_coder::get_pop_bmp(std::size_t sz,bool alighn) {
