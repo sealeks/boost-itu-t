@@ -619,8 +619,10 @@ namespace boost {
                     if (vl.extended())
                         return primitive_int_serialize(stream, vl.value());
                 }
+
                 semiconstrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.extended());
                 stream.add(tmp.as_octetsequence());
+
                 return stream;
             }
 
@@ -1037,8 +1039,76 @@ namespace boost {
 
             //////////////////////////////////////////////////////////////////////////////////
 
+            template<typename T>
+            input_coder& octet_reader_undefsz(input_coder& stream, T& vl) {
+                while (true) {
+                    octet_sequnce strt = stream.get_pop_octs(1);
+                    if (strt.size()) {
+                        octet_sequnce::value_type dtrm = strt[0];
+                        switch (dtrm & '\xC0') {
+                            case '\xC0':
+                            {
+                                octet_sequnce nxt = stream.get_pop_octs(1);
+                                std::size_t sz = LENGH_16K;
+                                if ((nxt.size()) && ((0x7 & nxt[0]) <= 4))
+                                    sz *= static_cast<std::size_t> (0x7 & nxt[0]);
+                                else
+                                    throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                                octet_sequnce dt = stream.get_pop_octs(sz);
+                                vl.insert(vl.end(), dt.begin(), dt.end());
+                                break;
+                            }
+                            case '\x80':
+                            {
+                                octet_sequnce nxt = stream.get_pop_octs(1);
+                                boost::uint16_t dtrm16 = dtrm & '\x3f';
+                                dtrm16 <<= 8;
+                                if (nxt.size())
+                                    dtrm16 |= nxt[0];
+                                else
+                                    throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                                std::size_t sz = static_cast<std::size_t> (dtrm16 & 0x3FFF);
+                                octet_sequnce dt = stream.get_pop_octs(sz);
+                                vl.insert(vl.end(), dt.begin(), dt.end());
+                                return stream;
+                            }
+                            default:
+                            {
+                                std::size_t sz = static_cast<std::size_t> (dtrm & '\x7F');
+                                octet_sequnce dt = stream.get_pop_octs(sz);
+                                vl.insert(vl.end(), dt.begin(), dt.end());
+                                return stream;
+                            }
+                        }
+                    } else
+                        throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                }
+                return stream;
+            }
 
-            input_coder& octet_reader_undefsz(input_coder& stream, octet_sequnce& vl);
+            template<typename T>
+            input_coder& octet_reader_defsz(input_coder& stream, const size_constrainter<T>& vl) {
+
+                /*if (vl.can_extended())
+                    stream.add_bitmap(bitstring_type(vl.extended(vl.value().size())));
+
+                if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
+
+                    std::size_t tmpsz = vl.value().size();
+
+                    if (vl.max() < LENGH_64K) {
+                        if (!vl.null_range()) {
+                            constrained_wnumber<std::size_t> tmp(tmpsz, vl.min(), vl.max());
+                            if ((stream.unaligned()) || (tmp.is_minimal()))
+                                stream.add_bitmap(tmp.as_bitmap(), false);
+                            else
+                                stream.add(tmp.as_octetsequence());
+                        }
+                        return octets_writer(stream, octet_sequnce(vl.value()), tmpsz, vl.max() <= 2);
+                    }
+                }*/
+                return octet_reader_undefsz(stream, const_cast<T&> (vl.value()));
+            }
 
             template<typename T>
             input_coder& primitive_deserialize(input_coder& stream, const T& vl) {
@@ -1150,33 +1220,63 @@ namespace boost {
 
             input_coder& operator>>(input_coder& stream, const any_type& vl);
 
+
             input_coder& operator>>(input_coder& stream, const bitstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, const size_constrainter<bitstring_type>& vl);
 
             input_coder& operator>>(input_coder& stream, const octetstring_type& vl);
 
+            input_coder& operator>>(input_coder& stream, const size_constrainter<octetstring_type>& vl);
+
             input_coder& operator>>(input_coder& stream, const utf8string_type& vl);
+
+            input_coder& operator>>(input_coder& stream, const size_constrainter<utf8string_type>& vl);
 
             input_coder& operator>>(input_coder& stream, const numericstring_type& vl);
 
+            input_coder& operator>>(input_coder& stream, const size_constrainter<numericstring_type>& vl);
+
             input_coder& operator>>(input_coder& stream, const printablestring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, const size_constrainter<printablestring_type>& vl);
 
             input_coder& operator>>(input_coder& stream, const t61string_type& vl);
 
+            input_coder& operator>>(input_coder& stream, const size_constrainter<t61string_type>& vl);
+
             input_coder& operator>>(input_coder& stream, const videotexstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, const size_constrainter<videotexstring_type>& vl);
 
             input_coder& operator>>(input_coder& stream, const ia5string_type& vl);
 
+            input_coder& operator>>(input_coder& stream, const size_constrainter<ia5string_type>& vl);
+
             input_coder& operator>>(input_coder& stream, const graphicstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, const size_constrainter<graphicstring_type>& vl);
 
             input_coder& operator>>(input_coder& stream, const objectdescriptor_type& vl);
 
+            input_coder& operator>>(input_coder& stream, const size_constrainter<objectdescriptor_type>& vl);
+
             input_coder& operator>>(input_coder& stream, const visiblestring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, const size_constrainter<visiblestring_type>& vl);
 
             input_coder& operator>>(input_coder& stream, const generalstring_type& vl);
 
+            input_coder& operator>>(input_coder& stream, const size_constrainter<generalstring_type>& vl);
+
             input_coder& operator>>(input_coder& stream, const universalstring_type& vl);
 
+            input_coder& operator>>(input_coder& stream, const size_constrainter<universalstring_type>& vl);
+
             input_coder& operator>>(input_coder& stream, const bmpstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, const size_constrainter<bmpstring_type>& vl);
+
 
             input_coder& operator>>(input_coder& stream, const utctime_type& vl);
 
