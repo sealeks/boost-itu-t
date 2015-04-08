@@ -64,6 +64,7 @@ namespace x680 {
         std::string tagged_str(tagged_ptr self);
         std::string tagged_class_str(tagged_ptr self);
         std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext = false);
+        std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext = false);        
         std::string struct_meth_str(typeassignment_entity_ptr self, const std::string& tp);
         std::string nested_init_str(type_atom_ptr self, const std::string& nm, bool ext = false);
 
@@ -166,14 +167,25 @@ namespace x680 {
             void execute_structof_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
 
             void execute_archive_meth_hpp(std::ofstream& stream, basic_entity_ptr scp = basic_entity_ptr());
-            void execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self, const std::string& ctp = "x690");
+            void execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_meth_per_cpp(std::ofstream& stream, typeassignment_entity_ptr self);            
 
+            // ber
             void execute_archive_ber_struct(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_archive_ber_member(std::ofstream& stream, namedtypeassignment_entity_ptr self, bool afterext = false);
             void execute_archive_ber_choice_chi(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_archive_ber_choice_cho(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_archive_ber_member_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag = false);
             void execute_archive_ber_member_cho(std::ofstream& stream, typeassignment_entity_ptr self);
+               
+            // per
+            void execute_archive_per_struct(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_per_member(std::ofstream& stream, namedtypeassignment_entity_ptr self, bool afterext = false);
+            void execute_archive_per_choice_chi(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_per_choice_cho(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_per_member_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag = false);
+            void execute_archive_per_member_cho(std::ofstream& stream, typeassignment_entity_ptr self);
+            
 
             std::size_t registrate_struct_choice(std::ofstream& stream, basic_entity_ptr self);
             std::size_t registrate_struct_set(std::ofstream& stream, basic_entity_ptr self);

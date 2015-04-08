@@ -770,6 +770,43 @@ namespace x680 {
             }
             return "";
         }
+        
+        std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext) {
+           tagmarker_type dfltopt = afterext ? mk_optional : self->marker();
+            if ((dfltopt==mk_default) && (self->isstruct_of()))
+                dfltopt=mk_optional;
+             /*if ((self->isdefined_choice())) {
+                if (self->tag()) {
+                    switch (self->tag()->_class()) {
+                        case tcl_application: return "ITU_T_CHOICE_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        case tcl_universal: return "ITU_T_CHOICE_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        case tcl_private: return "ITU_T_CHOICE_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        default: return "ITU_T_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                    }
+                } else
+                    return "ITU_T_BIND_CHOICE(" + name_arch(name, dfltopt) + ")";
+            } else {                
+                if (self->tag()) {
+                    if (self->tag()->rule() == implicit_tags) {
+                        switch (self->tag()->_class()) {
+                            case tcl_application: return "ITU_T_IMPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_universal: return "ITU_T_IMPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_private: return "ITU_T_IMPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            default: return "ITU_T_IMPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        }
+                    } else {
+                        switch (self->tag()->_class()) {
+                            case tcl_application: return "ITU_T_EXPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_universal: return "ITU_T_EXPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_private: return "ITU_T_EXPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            default: return "ITU_T_EXPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        }
+                    }
+                } else*/
+                    return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
+            /*}
+            return "";*/
+        }        
 
         std::string struct_meth_str(typeassignment_entity_ptr self, const std::string& tp) {
 
@@ -1814,7 +1851,7 @@ namespace x680 {
             execute_archive_meth_cpp(stream, self);
             
             if (with691_)
-                execute_archive_meth_cpp(stream, self, "x691");
+                execute_archive_meth_per_cpp(stream, self);
             
             stream << "\n ";
         }
@@ -1875,7 +1912,7 @@ namespace x680 {
             execute_archive_meth_cpp(stream, self);
 
             if (with691_)
-                execute_archive_meth_cpp(stream, self, "x691");
+                execute_archive_meth_per_cpp(stream, self);
 
             execute_access_member_cpp(stream, self);
 
@@ -2097,7 +2134,8 @@ namespace x680 {
             stream << "\n\n" << tabformat(scp, 1) << "ITU_T_ARCHIVE_FUNC;";
         }
 
-        void fileout::execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self, const std::string& ctp) {
+        void fileout::execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self) {
+            std::string ctp = "x690";
             switch (self->builtin()) {
                 case t_CHOICE: stream << "\n";
                     stream << struct_meth_str(self, "boost::asn1::"+ ctp +"::output_coder");
@@ -2123,6 +2161,37 @@ namespace x680 {
                 }
             }
         }
+        
+        void fileout::execute_archive_meth_per_cpp(std::ofstream& stream, typeassignment_entity_ptr self) {
+            std::string ctp = "x691";
+            switch (self->builtin()) {
+                case t_CHOICE: stream << "\n";
+                    stream << struct_meth_str(self, "boost::asn1::"+ ctp +"::output_coder");
+                    stream << "{";
+                    execute_archive_per_choice_cho(stream, self);
+                    stream << struct_meth_str(self, "boost::asn1::"+ ctp +"::input_coder");
+                    stream << "{";
+                    execute_archive_per_choice_chi(stream, self);
+                    break;
+                case t_SET:
+                case t_SEQUENCE: stream << "\n";
+
+                    stream << struct_meth_str(self, "boost::asn1::"+ ctp +"::output_coder");
+                    stream << "{";
+                    execute_archive_per_struct(stream, self);
+                    stream << struct_meth_str(self, "boost::asn1::"+ ctp +"::input_coder");
+                    stream << "{";
+                    execute_archive_per_struct(stream, self);
+
+                    break;
+                default:
+                {
+                }
+            }
+        }        
+        
+        
+        ///   BER
 
         void fileout::execute_archive_ber_struct(std::ofstream& stream, typeassignment_entity_ptr self) {
             basic_entity_ptr scp;
@@ -2262,6 +2331,154 @@ namespace x680 {
             }
             stream << "\n" << tabformat(scp, 4) << "default:{}";
         }
+        
+        
+        // PER
+        
+        void fileout::execute_archive_per_struct(std::ofstream& stream, typeassignment_entity_ptr self) {
+            basic_entity_ptr scp;
+            bool afterext=false;
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if ((tpas) && (tpas->as_named())) {
+                    namedtypeassignment_entity_ptr named = tpas->as_named();
+                    tagmarker_type mkr = named->marker();
+                    if (named->type()) {
+                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
+                            execute_archive_per_member(stream, named,afterext);
+                    } else if (mkr == mk_extention){
+                        afterext=!afterext;
+                        stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";}
+                }
+
+                if ((*it)->as_extention()){
+                    afterext=!afterext;
+                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";}
+            }
+            stream << "\n";
+            stream << tabformat(scp, 2) << "}";
+            stream << "\n";
+        }        
+        
+        
+        void fileout::execute_archive_per_member(std::ofstream& stream, namedtypeassignment_entity_ptr self,  bool afterext) {
+            basic_entity_ptr scp;
+            if (self->type()) {
+
+                stream << "\n";
+                stream << tabformat(scp, 3) << archive_member_per_str(self, nameconvert(self->name()) + "_", afterext) << ";";
+            }
+        }     
+       
+        void fileout::execute_archive_per_choice_chi(std::ofstream& stream, typeassignment_entity_ptr self) {
+
+            basic_entity_ptr scp;
+            stream << "\n" << tabformat(scp, 3) <<
+                    "int __tag_id__ =arch.test_id();";
+            stream << "\n" << tabformat(scp, 3) <<
+                    "switch(arch.test_class()){";
+
+            execute_archive_per_member_chi(stream, self, tcl_universal, false);
+            execute_archive_per_member_chi(stream, self, tcl_application, false);
+            execute_archive_per_member_chi(stream, self, tcl_context, false);
+            execute_archive_per_member_chi(stream, self, tcl_private, false);
+            execute_archive_per_member_chi(stream, self, tcl_universal, true);
+            stream << "\n" << tabformat(scp, 3) << "}";
+            stream << "\n";
+            stream << tabformat(scp, 2) << "}";
+            stream << "\n";
+        }
+
+        void fileout::execute_archive_per_choice_cho(std::ofstream& stream, typeassignment_entity_ptr self) {
+
+            basic_entity_ptr scp;
+            stream << "\n" << tabformat(scp, 3) <<
+                    "switch(type()){";
+            execute_archive_per_member_cho(stream, self);
+            stream << "\n" << tabformat(scp, 3) << "}";
+            stream << "\n";
+            stream << tabformat(scp, 2) << "}";
+            stream << "\n";
+        }
+
+        void fileout::execute_archive_per_member_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag) {
+            basic_entity_ptr scp;
+            if (notag) {
+                stream << "\n" << tabformat(scp, 4) << "default: {";
+            } else {
+                stream << "\n" << tabformat(scp, 4) << "case ";
+                switch (cls) {
+                    case tcl_universal: stream << "0x0: {";
+                        break;
+                    case tcl_application: stream << "0x40: {";
+                        break;
+                    case tcl_context: stream << "0x80: {";
+                        break;
+                    case tcl_private: stream << "0xC0: {";
+                        break;
+                }
+            }
+            if (!notag)
+                stream << "\n" << tabformat(scp, 5) << "switch(__tag_id__){";
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if ((tpas) && (tpas->as_named())) {
+                    namedtypeassignment_entity_ptr named = tpas->as_named();
+
+                    if (named->type()) {
+                        tagmarker_type mkr = named->marker();
+                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                            if (named->tag()) {
+                                if (cls == named->tag()->_class()) {
+                                    stream << "\n" << tabformat(scp, 6) << "case ";
+                                    stream << tagged_str(named->tag()) << ":  { if (";
+                                    std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
+                                    stream << archive_member_per_str(named, tmpval);
+                                    stream << ") return; else free(); break;}";
+                                }
+                            } else {
+                                if (notag) {
+                                    stream << "\n" << tabformat(scp, 6) << " if (";
+                                    std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
+                                    stream << archive_member_per_str(named, tmpval);
+                                    stream << ") return; else free();";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (!notag) {
+
+                stream << "\n" << tabformat(scp, 5) << "default:{}";
+                stream << "\n" << tabformat(scp, 5) << "}";
+            }
+            stream << "\n" << tabformat(scp, 4) << "}";
+        }
+
+        void fileout::execute_archive_per_member_cho(std::ofstream& stream, typeassignment_entity_ptr self) {
+            basic_entity_ptr scp;
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                if ((tpas) && (tpas->as_named())) {
+                    namedtypeassignment_entity_ptr named = tpas->as_named();
+                    if (named->type()) {
+
+                        stream << "\n" << tabformat(scp, 4) << "case ";
+                        stream << choice_enum_str(self, (*it)) << ":  {";
+                        std::string tmpval = "value<" + fromtype_str(named) + " > (false , " + choice_enum_str(self, (*it)) + ")";
+                        stream << archive_member_per_str(named, tmpval);
+                        stream << "; break; }";
+                    }
+                }
+            }
+            stream << "\n" << tabformat(scp, 4) << "default:{}";
+        }        
+        
+        
+        
+        
+        //////////////////////////////////////////////////////////////
 
         std::size_t fileout::registrate_struct_choice(std::ofstream& stream, basic_entity_ptr self) {
             std::size_t cnt = 0;
