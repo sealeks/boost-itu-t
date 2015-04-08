@@ -889,32 +889,11 @@ namespace boost {
 
 
 
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // tag from X.691
-
-            std::size_t tag_from_x691_cast(const tag& val, const octet_sequnce& src);
-
-            std::size_t tag_x691_cast(tag& val, const mutable_sequences& src, mutable_sequences::const_iterator bit, std::size_t beg = 0);
-
             ///////////////////////////////////////////////////////////////////////////////////
             // size_class from X.691
 
             std::size_t size_x691_cast(size_class& val, const mutable_sequences& src, mutable_sequences::const_iterator bit, std::size_t beg = 0);
 
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // bool from X.691
-
-            template<>
-            bool from_x691_cast(bool& vl, const octet_sequnce& val);
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // null from X.691
-
-            template<>
-            bool from_x691_cast(null_type& val, const octet_sequnce& src);
 
             ///////////////////////////////////////////////////////////////////////////////////
             // enumerated_type from X.691

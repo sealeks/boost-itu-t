@@ -504,29 +504,6 @@ namespace boost {
 
 
 
-            ///////////////////////////////////////////////////////////////////////////////////
-            // bool from X.691
-
-            template<>
-            bool from_x691_cast(bool& vl, const octet_sequnce& val) {
-                if (val.empty())
-                    vl = false;
-                else
-                    vl = val[0];
-                return true;
-            }
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // null from X.691               
-
-            template<>
-            bool from_x691_cast(null_type& val, const octet_sequnce& vl) {
-                if (vl.empty()) {
-                    val = null_type();
-                    return true;
-                }
-                return false;
-            }
 
             ///////////////////////////////////////////////////////////////////////////////////
             // enumerated_type from X.691
