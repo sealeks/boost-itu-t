@@ -1785,7 +1785,9 @@ namespace boost {
         template<typename Archive, typename T>
         inline bool bind_per(Archive & arch, boost::shared_ptr<T>& vl) {
             if (arch.__input__()) {
-                return false;
+                if (!static_cast<bool> (vl))
+                    vl = boost::shared_ptr<T>(new T());
+                return bind_per(arch, *vl);
             } else if (static_cast<bool> (vl))
                 return bind_per(arch, *vl);
             return false;

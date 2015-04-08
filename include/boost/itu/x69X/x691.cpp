@@ -109,14 +109,14 @@ namespace boost {
             // STRING REALISZATION
 
             output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const octet_sequnce& elms, bool align) {
-                stream.add(sz);
-                stream.add(elms);
+                stream.add_octets(sz, align);
+                stream.add_octets(elms, stream.aligned());
                 return stream;
             }
 
             output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const bitstring_type& elms, bool align) {
-                stream.add(sz);
-                stream.add(elms);
+                stream.add_octets(sz, align);
+                stream.add_octets(elms, stream.aligned());
                 return stream;
             }
 
@@ -141,23 +141,23 @@ namespace boost {
                 while (beg < sz) {
                     if ((sz - beg) < LENGH_16K) {
                         octets_writer(stream, to_x691_cast(size_class(sz - beg)),
-                                bitstring_type(octet_sequnce(vl.begin() + beg / 8, vl.end())), vl.unusebits());
+                                bitstring_type(octet_sequnce(vl.begin() + beg / 8, vl.end()), vl.unusebits()), stream.aligned());
                         beg = sz;
                     } else {
                         if ((sz - beg) < LENGH_64K) {
                             std::size_t m = (sz - beg) / LENGH_16K;
                             std::size_t nbeg = beg + LENGH_16K*m;
                             octets_writer(stream, to_x691_cast(size_class(LENGH_16K * m)),
-                                    octet_sequnce(vl.begin() + beg / 8, vl.begin() + nbeg / 8));
+                                    octet_sequnce(vl.begin() + beg / 8, vl.begin() + nbeg / 8), stream.aligned());
                             beg = nbeg;
                         } else {
                             octets_writer(stream, to_x691_cast(size_class(LENGH_64K)),
-                                    octet_sequnce(vl.begin() + beg / 8, vl.begin() + (beg + LENGH_64K) / 8));
+                                    octet_sequnce(vl.begin() + beg / 8, vl.begin() + (beg + LENGH_64K) / 8), stream.aligned());
                             beg += LENGH_64K;
                         }
                         if (beg == sz)
                             octets_writer(stream, to_x691_cast(size_class(0)),
-                                octet_sequnce());
+                                octet_sequnce(), stream.aligned());
                     }
                 }
                 return stream;
@@ -390,8 +390,12 @@ namespace boost {
                     if (!boost::itu::row_cast(buffers(), buffers().begin(), vl, 0, sz))
                         return 0;
                     if (unusebits()) {
-                        boost::itu::left_shift_bits_in_octets(vl, unusebits());
-                        vl.erase(vl.begin()+(sz - 1), vl.end());
+                        if (alighn) {
+                            vl.erase(vl.begin());
+                        } else {
+                            boost::itu::left_shift_bits_in_octets(vl, unusebits());
+                            vl.erase(vl.begin()+(sz - 1), vl.end());
+                        }
                     }
                 }
                 return sz;
@@ -411,8 +415,12 @@ namespace boost {
             }
 
             std::size_t input_coder::pop_octets(std::size_t sz, bool alighn) {
-                if (sz)
-                    pop_front(sz);
+                if (alighn && (unusebits())) {
+                    pop_front(sz + 1);
+                    unusebits(0);
+                    return (sz + 1);
+                }
+                pop_front(sz);
                 return sz;
             }
 
