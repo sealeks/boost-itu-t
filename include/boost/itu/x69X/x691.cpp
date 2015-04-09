@@ -532,73 +532,73 @@ namespace boost {
 
             ////////////////////////////////////////////
 
-            input_coder& operator>>(input_coder& stream, const int8_t & vl) {
+            input_coder& operator>>(input_coder& stream, int8_t & vl) {
                 return primitive_int_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const uint8_t & vl) {
+            input_coder& operator>>(input_coder& stream, uint8_t & vl) {
                 return primitive_int_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const int16_t & vl) {
+            input_coder& operator>>(input_coder& stream, int16_t & vl) {
                 return primitive_int_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const uint16_t & vl) {
+            input_coder& operator>>(input_coder& stream, uint16_t & vl) {
                 return primitive_int_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const int32_t & vl) {
+            input_coder& operator>>(input_coder& stream, int32_t & vl) {
                 return primitive_int_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const uint32_t & vl) {
+            input_coder& operator>>(input_coder& stream, uint32_t & vl) {
                 return primitive_int_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const int64_t & vl) {
+            input_coder& operator>>(input_coder& stream, int64_t & vl) {
                 return primitive_int_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const uint64_t & vl) {
+            input_coder& operator>>(input_coder& stream, uint64_t & vl) {
                 return primitive_int_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const enumerated_type& vl) {
+            input_coder& operator>>(input_coder& stream, enumerated_type& vl) {
                 return stream; //primitive_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const float& vl) {
+            input_coder& operator>>(input_coder& stream, float& vl) {
                 return primitive_690_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const double& vl) {
+            input_coder& operator>>(input_coder& stream, double& vl) {
                 return primitive_690_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const long double& vl) {
+            input_coder& operator>>(input_coder& stream, long double& vl) {
                 return primitive_690_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const bool& vl) {
+            input_coder& operator>>(input_coder& stream, bool& vl) {
                 bitstring_type rslt = stream.get_pop_bmp(1);
                 const_cast<bool&> (vl) = rslt.bit(1);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const null_type& vl) {
+            input_coder& operator>>(input_coder& stream, null_type& vl) {
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const oid_type& vl) {
+            input_coder& operator>>(input_coder& stream, oid_type& vl) {
                 return primitive_690_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const reloid_type& vl) {
+            input_coder& operator>>(input_coder& stream, reloid_type& vl) {
                 return primitive_690_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const any_type& vl) {
+            input_coder& operator>>(input_coder& stream, any_type& vl) {
                 /*std::size_t sz = stream.stack_size();
                 octet_sequnce data;
                 if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
@@ -610,144 +610,144 @@ namespace boost {
                 //return  primitive_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const bitstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, bitstring_type& vl) {
                 //octet_reader_undefsz(stream, const_cast<bitstring_type&> ((vl.value()))):
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<bitstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<bitstring_type>& vl) {
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const octetstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, octetstring_type& vl) {
                 octet_reader_undefsz(stream, const_cast<octetstring_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<octetstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<octetstring_type>& vl) {
                 octet_reader_defsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const utf8string_type& vl) {
+            input_coder& operator>>(input_coder& stream, utf8string_type& vl) {
                 octet_reader_undefsz(stream, const_cast<utf8string_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<utf8string_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<utf8string_type>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, const numericstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, numericstring_type& vl) {
                 octet_reader_undefsz(stream, const_cast<numericstring_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<numericstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<numericstring_type>& vl) {
                 octet_reader_defsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const printablestring_type& vl) {
+            input_coder& operator>>(input_coder& stream, printablestring_type& vl) {
                 octet_reader_undefsz(stream, const_cast<printablestring_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<printablestring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<printablestring_type>& vl) {
                 octet_reader_defsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const t61string_type& vl) {
+            input_coder& operator>>(input_coder& stream, t61string_type& vl) {
                 octet_reader_undefsz(stream, const_cast<t61string_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<t61string_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<t61string_type>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, const videotexstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, videotexstring_type& vl) {
                 octet_reader_undefsz(stream, const_cast<videotexstring_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<videotexstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<videotexstring_type>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, const ia5string_type& vl) {
+            input_coder& operator>>(input_coder& stream, ia5string_type& vl) {
                 octet_reader_undefsz(stream, const_cast<ia5string_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<ia5string_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<ia5string_type>& vl) {
                 octet_reader_defsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const graphicstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, graphicstring_type& vl) {
                 octet_reader_undefsz(stream, const_cast<graphicstring_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<graphicstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<graphicstring_type>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, const objectdescriptor_type& vl) {
+            input_coder& operator>>(input_coder& stream, objectdescriptor_type& vl) {
                 octet_reader_undefsz(stream, const_cast<objectdescriptor_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<objectdescriptor_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<objectdescriptor_type>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, const visiblestring_type& vl) {
+            input_coder& operator>>(input_coder& stream, visiblestring_type& vl) {
                 octet_reader_undefsz(stream, const_cast<visiblestring_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<visiblestring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<visiblestring_type>& vl) {
                 octet_reader_defsz(stream, vl);
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const generalstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, generalstring_type& vl) {
                 octet_reader_undefsz(stream, const_cast<generalstring_type&> (vl));
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<generalstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<generalstring_type>& vl) {
                 return stream >> vl.value();
             }
 
-            input_coder& operator>>(input_coder& stream, const universalstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, universalstring_type& vl) {
                 /*const_cast<universalstring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<universalstring_type*> (&(vl.value())), vl.id(), vl.mask());*/
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<universalstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<universalstring_type>& vl) {
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const bmpstring_type& vl) {
+            input_coder& operator>>(input_coder& stream, bmpstring_type& vl) {
                 /*const_cast<bmpstring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<bmpstring_type*> (&(vl.value())), vl.id(), vl.mask());*/
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const size_constrainter<bmpstring_type>& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<bmpstring_type>& vl) {
                 return stream;
             }
 
-            input_coder& operator>>(input_coder& stream, const utctime_type& vl) {
+            input_coder& operator>>(input_coder& stream, utctime_type& vl) {
                 return primitive_690_deserialize(stream, vl);
             }
 
-            input_coder& operator>>(input_coder& stream, const gentime_type& vl) {
+            input_coder& operator>>(input_coder& stream, gentime_type& vl) {
                 return primitive_690_deserialize(stream, vl);
             }
 

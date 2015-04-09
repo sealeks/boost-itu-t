@@ -931,7 +931,7 @@ namespace boost {
 
                 template<typename T>
                 void operator&(const T& vl) {
-                    *this >> vl;
+                    *this >> const_cast<T&>(vl);
                 }
 
                 template<typename T>
@@ -1081,7 +1081,7 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& octet_reader_defsz(input_coder& stream, const size_constrainter<T>& vl) {
+            input_coder& octet_reader_defsz(input_coder& stream, size_constrainter<T>& vl) {
 
                 if (vl.can_extended()) {
                     bitstring_type extendbit = stream.get_pop_bmp(1);
@@ -1109,7 +1109,7 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& primitive_deserialize(input_coder& stream, const T& vl) {
+            input_coder& primitive_deserialize(input_coder& stream, T& vl) {
                 /*octet_sequnce data;
                 octet_reader_undefsz(stream, data);
                 from_x690_cast<T>(const_cast<T&> (vl), data);*/
@@ -1117,7 +1117,7 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& primitive_690_deserialize(input_coder& stream, const T& vl) {
+            input_coder& primitive_690_deserialize(input_coder& stream, T& vl) {
                 octet_sequnce data;
                 octet_reader_undefsz(stream, data);
                 from_x690_cast<T>(const_cast<T&> (vl), data);
@@ -1125,7 +1125,7 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& primitive_int_deserialize(input_coder& stream, const T& vl) {
+            input_coder& primitive_int_deserialize(input_coder& stream, T& vl) {
                 octet_sequnce data;
                 octet_reader_undefsz(stream, data);
                 unconstrained_wnumber<T> tmp(const_cast<T&> (vl));
@@ -1134,25 +1134,25 @@ namespace boost {
             }
 
             template<typename T>
-            inline input_coder& operator>>(input_coder& stream, const T& vl) {
+            inline input_coder& operator>>(input_coder& stream, T& vl) {
                 const_cast<T&> (vl).serialize(stream);
                 return stream;
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, const std::vector<T>& vl) {
+            input_coder& operator>>(input_coder& stream, std::vector<T>& vl) {
                 element_reader_undefsz(stream, const_cast<std::vector<T>&> (vl));
                 return stream;
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, const std::deque<T>& vl) {
+            input_coder& operator>>(input_coder& stream, std::deque<T>& vl) {
                 element_reader_undefsz(stream, const_cast<std::vector<T>&> (vl));
                 return stream;
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, const num_constrainter<T >& vl) {
+            input_coder& operator>>(input_coder& stream, num_constrainter<T >& vl) {
 
                 if (vl.can_extended()) {
                     bitstring_type extendbit = stream.get_pop_bmp(1);
@@ -1176,7 +1176,7 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, const num_semiconstrainter<T>& vl) {
+            input_coder& operator>>(input_coder& stream, num_semiconstrainter<T>& vl) {
 
 
                 if (vl.can_extended()) {
@@ -1190,107 +1190,107 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, const size_constrainter<T >& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<T >& vl) {
                 return stream >> vl.value();
             }
 
 
 
-            input_coder& operator>>(input_coder& stream, const int8_t& vl);
+            input_coder& operator>>(input_coder& stream, int8_t& vl);
 
-            input_coder& operator>>(input_coder& stream, const uint8_t& vl);
+            input_coder& operator>>(input_coder& stream, uint8_t& vl);
 
-            input_coder& operator>>(input_coder& stream, const int16_t& vl);
+            input_coder& operator>>(input_coder& stream, int16_t& vl);
 
-            input_coder& operator>>(input_coder& stream, const uint16_t& vl);
+            input_coder& operator>>(input_coder& stream, uint16_t& vl);
 
-            input_coder& operator>>(input_coder& stream, const int32_t& vl);
+            input_coder& operator>>(input_coder& stream, int32_t& vl);
 
-            input_coder& operator>>(input_coder& stream, const uint32_t& vl);
+            input_coder& operator>>(input_coder& stream, uint32_t& vl);
 
-            input_coder& operator>>(input_coder& stream, const int64_t& vl);
+            input_coder& operator>>(input_coder& stream, int64_t& vl);
 
-            input_coder& operator>>(input_coder& stream, const uint64_t& vl);
+            input_coder& operator>>(input_coder& stream, uint64_t& vl);
 
-            input_coder& operator>>(input_coder& stream, const enumerated_type& vl);
+            input_coder& operator>>(input_coder& stream, enumerated_type& vl);
 
-            input_coder& operator>>(input_coder& stream, const float& vl);
+            input_coder& operator>>(input_coder& stream, float& vl);
 
-            input_coder& operator>>(input_coder& stream, const double& vl);
+            input_coder& operator>>(input_coder& stream, double& vl);
 
-            input_coder& operator>>(input_coder& stream, const long double& vl);
+            input_coder& operator>>(input_coder& stream, long double& vl);
 
-            input_coder& operator>>(input_coder& stream, const bool& vl);
+            input_coder& operator>>(input_coder& stream, bool& vl);
 
-            input_coder& operator>>(input_coder& stream, const null_type& vl);
+            input_coder& operator>>(input_coder& stream, null_type& vl);
 
-            input_coder& operator>>(input_coder& stream, const oid_type& vl);
+            input_coder& operator>>(input_coder& stream, oid_type& vl);
 
-            input_coder& operator>>(input_coder& stream, const reloid_type& vl);
+            input_coder& operator>>(input_coder& stream, reloid_type& vl);
 
-            input_coder& operator>>(input_coder& stream, const any_type& vl);
-
-
-            input_coder& operator>>(input_coder& stream, const bitstring_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<bitstring_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const octetstring_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<octetstring_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const utf8string_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<utf8string_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const numericstring_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<numericstring_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const printablestring_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<printablestring_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const t61string_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<t61string_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const videotexstring_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<videotexstring_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const ia5string_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<ia5string_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const graphicstring_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<graphicstring_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const objectdescriptor_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<objectdescriptor_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const visiblestring_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<visiblestring_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const generalstring_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<generalstring_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const universalstring_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<universalstring_type>& vl);
-
-            input_coder& operator>>(input_coder& stream, const bmpstring_type& vl);
-
-            input_coder& operator>>(input_coder& stream, const size_constrainter<bmpstring_type>& vl);
+            input_coder& operator>>(input_coder& stream, any_type& vl);
 
 
-            input_coder& operator>>(input_coder& stream, const utctime_type& vl);
+            input_coder& operator>>(input_coder& stream, bitstring_type& vl);
 
-            input_coder& operator>>(input_coder& stream, const gentime_type& vl);
+            input_coder& operator>>(input_coder& stream, size_constrainter<bitstring_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, octetstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<octetstring_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, utf8string_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<utf8string_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, numericstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<numericstring_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, printablestring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<printablestring_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, t61string_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<t61string_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, videotexstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<videotexstring_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, ia5string_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<ia5string_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, graphicstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<graphicstring_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, objectdescriptor_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<objectdescriptor_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, visiblestring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<visiblestring_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, generalstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<generalstring_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, universalstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<universalstring_type>& vl);
+
+            input_coder& operator>>(input_coder& stream, bmpstring_type& vl);
+
+            input_coder& operator>>(input_coder& stream, size_constrainter<bmpstring_type>& vl);
+
+
+            input_coder& operator>>(input_coder& stream, utctime_type& vl);
+
+            input_coder& operator>>(input_coder& stream, gentime_type& vl);
 
 
 
