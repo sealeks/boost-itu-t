@@ -459,7 +459,7 @@ namespace boost {
 
             public:
 
-                output_coder(encoding_rule rul = boost::itu::BER_ENCODING) : boost::itu::base_output_coder(), rule_(rul), unaligned_(rul == boost::itu::PER_ALIGNED_ENCODING) {
+                output_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) : boost::itu::base_output_coder(), rule_(rul), unaligned_(true/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
                 }
 
                 virtual encoding_rule rule() const {
@@ -487,43 +487,23 @@ namespace boost {
                 }
 
                 template<typename T>
-                void operator&(const num_constrainter<T>& vl) {
-                    *this << vl;
-                }
-
-                template<typename T>
-                void operator&(const size_constrainter<T>& vl) {
-                    *this << vl;
-                }
-
-                template<typename T>
                 void operator&(const explicit_value<T >& vl) {
-                    *this << vl.value();
+                    *this & vl.value();
                 }
 
                 template<typename T>
                 void operator&(const implicit_value<T >& vl) {
-                    *this << vl;
+                    *this & vl.value();
                 }
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(const explicit_typedef <T, Tag, ID, TYPE>& vl) {
-                    *this << vl.value();
+                    *this & vl.value();
                 }
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(const implicit_typedef <T, Tag, ID, TYPE>& vl) {
-                    *this << vl.value();
-                }
-
-                template<typename T>
-                void operator&(const std::vector<T >& vl) {
-                    *this << vl;
-                }
-
-                template<typename T>
-                void operator&(const std::deque<T >& vl) {
-                    *this << vl;
+                    *this & vl.value();
                 }
 
                 bool canonical() const {
@@ -918,7 +898,7 @@ namespace boost {
 
             public:
 
-                input_coder(encoding_rule rul = boost::itu::BER_ENCODING) : boost::itu::base_input_coder(), rule_(rul), unaligned_(rul == boost::itu::PER_ALIGNED_ENCODING) {
+                input_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) : boost::itu::base_input_coder(), rule_(rul), unaligned_(true/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
                 }
 
                 virtual encoding_rule rule() const {
@@ -955,16 +935,6 @@ namespace boost {
                 }
 
                 template<typename T>
-                void operator&(const num_constrainter<T>& vl) {
-                    *this >> vl;
-                }
-
-                template<typename T>
-                void operator&(const size_constrainter<T>& vl) {
-                    *this >> vl;
-                }
-
-                template<typename T>
                 void operator&(const explicit_value<T >& vl) {
                     *this & vl.value();
                 }
@@ -982,16 +952,6 @@ namespace boost {
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(const implicit_typedef <T, Tag, ID, TYPE>& vl) {
                     *this & vl.value();
-                }
-
-                template<typename T>
-                void operator&(const std::vector<T >& vl) {
-                    *this >> vl;
-                }
-
-                template<typename T>
-                void operator&(const std::deque<T >& vl) {
-                    *this >> vl;
                 }
 
                 std::size_t unusebits() const {
