@@ -869,11 +869,6 @@ namespace boost {
 
 
 
-            ///////////////////////////////////////////////////////////////////////////////////
-            // size_class from X.691
-
-            std::size_t size_x691_cast(size_class& val, const mutable_sequences& src, mutable_sequences::const_iterator bit, std::size_t beg = 0);
-
 
             ///////////////////////////////////////////////////////////////////////////////////
             // enumerated_type from X.691

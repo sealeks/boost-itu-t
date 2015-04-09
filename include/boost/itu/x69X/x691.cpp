@@ -461,49 +461,6 @@ namespace boost {
 
 
 
-            ///////////////////////////////////////////////////////////////////////////////////
-            // size_class from X.691                
-
-            std::size_t size_x691_cast(size_class& val, const mutable_sequences& src, mutable_sequences::const_iterator bit, std::size_t beg) {
-                octet_sequnce s1;
-                if (boost::itu::row_cast(src, bit, s1, beg, 1) && (!s1.empty())) {
-                    if (!(s1[0] & '\x80')) {
-                        val = size_class(s1[0] & '\x7F');
-                        return 1;
-                    } else {
-                        if ((s1[0] != '\x80')) {
-                            std::size_t szblk = static_cast<std::size_t> (s1[0] & '\x7F');
-                            octet_sequnce s2;
-                            if (boost::itu::row_cast(src, bit, s2, beg + 1, szblk) && (!s2.empty()) && (s2.size() <= sizeof (std::size_t))) {
-                                if (s2.front() & '\x80') {
-                                    s2.insert(s2.begin(), '\x0');
-                                    std::size_t bodysize = 0;
-                                    if (!from_x691_cast<std::size_t > (bodysize, s2))
-                                        return 0;
-                                    val = size_class(bodysize);
-                                    return s2.size();
-                                } else {
-                                    std::size_t bodysize = 0;
-                                    if (!from_x691_cast<std::size_t > (bodysize, s2))
-                                        return 0;
-                                    val = size_class(bodysize);
-                                    return 1 + s2.size();
-                                }
-                            }
-                        } else {
-                            val = size_class();
-                            return 1;
-                        }
-                    }
-                }
-                return 0;
-            }
-
-
-
-
-
-
 
             ///////////////////////////////////////////////////////////////////////////////////
             // enumerated_type from X.691
@@ -582,7 +539,7 @@ namespace boost {
 
             input_coder& operator>>(input_coder& stream, bool& vl) {
                 bitstring_type rslt = stream.get_pop_bmp(1);
-                const_cast<bool&> (vl) = rslt.bit(1);
+                vl= rslt.bit(1);
                 return stream;
             }
 
@@ -611,7 +568,6 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, bitstring_type& vl) {
-                //octet_reader_undefsz(stream, const_cast<bitstring_type&> ((vl.value()))):
                 return stream;
             }
 
@@ -620,7 +576,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, octetstring_type& vl) {
-                octet_reader_undefsz(stream, const_cast<octetstring_type&> (vl));
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
@@ -630,7 +586,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, utf8string_type& vl) {
-                octet_reader_undefsz(stream, const_cast<utf8string_type&> (vl));
+                octet_reader_undefsz(stream,vl);
                 return stream;
             }
 
@@ -639,7 +595,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, numericstring_type& vl) {
-                octet_reader_undefsz(stream, const_cast<numericstring_type&> (vl));
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
@@ -649,7 +605,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, printablestring_type& vl) {
-                octet_reader_undefsz(stream, const_cast<printablestring_type&> (vl));
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
@@ -659,7 +615,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, t61string_type& vl) {
-                octet_reader_undefsz(stream, const_cast<t61string_type&> (vl));
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
@@ -668,7 +624,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, videotexstring_type& vl) {
-                octet_reader_undefsz(stream, const_cast<videotexstring_type&> (vl));
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
@@ -677,7 +633,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, ia5string_type& vl) {
-                octet_reader_undefsz(stream, const_cast<ia5string_type&> (vl));
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
@@ -687,7 +643,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, graphicstring_type& vl) {
-                octet_reader_undefsz(stream, const_cast<graphicstring_type&> (vl));
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
@@ -696,7 +652,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, objectdescriptor_type& vl) {
-                octet_reader_undefsz(stream, const_cast<objectdescriptor_type&> (vl));
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
@@ -705,7 +661,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, visiblestring_type& vl) {
-                octet_reader_undefsz(stream, const_cast<visiblestring_type&> (vl));
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
@@ -715,7 +671,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, generalstring_type& vl) {
-                octet_reader_undefsz(stream, const_cast<generalstring_type&> (vl));
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
@@ -724,8 +680,6 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, universalstring_type& vl) {
-                /*const_cast<universalstring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<universalstring_type*> (&(vl.value())), vl.id(), vl.mask());*/
                 return stream;
             }
 
@@ -734,8 +688,6 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, bmpstring_type& vl) {
-                /*const_cast<bmpstring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<bmpstring_type*> (&(vl.value())), vl.id(), vl.mask());*/
                 return stream;
             }
 
