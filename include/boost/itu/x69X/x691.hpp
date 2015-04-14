@@ -22,7 +22,7 @@ namespace boost {
     namespace asn1 {
         namespace x691 {
 
-;
+            ;
             const std::size_t MAX_OCTETLENGTH_SIZE = 0x100;
             const std::size_t MAX_SMALL_NN_SIZE = 64;
 
@@ -454,8 +454,20 @@ namespace boost {
             struct numericstring_ec {
 
                 static bitstring_type out(octet_sequnce::value_type vl, bool alighn) {
-                    return bitstring_type(vl, 4);
+                    return bitstring_type(vl - '\x20', 4);
                 }
+
+                static std::size_t size(bool alighn) {
+                    return 4;
+                }
+
+                octet_sequnce::value_type in(const bitstring_type& vl, bool alighn) {
+                    octet_sequnce tmp = vl.as_octet_sequnce();
+                    if (!tmp.empty())
+                        return ((tmp[0] >> 4) & '\x7F') + '\x20';
+                    return 0;
+                }
+
             };
 
             struct visiblestring_ec {
@@ -463,6 +475,18 @@ namespace boost {
                 static bitstring_type out(octet_sequnce::value_type vl, bool alighn) {
                     return bitstring_type(octet_sequnce(1, alighn ? octet_sequnce::value_type(vl) : octet_sequnce::value_type(vl << 1)), alighn ? 0 : 1);
                 }
+
+                static std::size_t size(bool alighn) {
+                    return alighn ? 8 : 7;
+                }
+
+                octet_sequnce::value_type in(const bitstring_type& vl, bool alighn) {
+                    octet_sequnce tmp = vl.as_octet_sequnce();
+                    if (!tmp.empty())
+                        return (tmp[0] >> 1) & '\x7F';
+                    return 0;
+                }
+
             };
 
 
