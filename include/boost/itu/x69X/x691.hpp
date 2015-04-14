@@ -620,7 +620,7 @@ namespace boost {
                 if (vl.null_range())
                     return stream;
 
-                if ((vl.range() <= 0xFFFF) || (stream.unaligned())) {
+                if ((vl.range() < LENGH_64K) || (stream.unaligned())) {
                     constrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.max());
                     if ((stream.unaligned()) || (tmp.is_minimal()))
                         stream.add_bitmap(tmp.as_bitmap(), false);
@@ -1051,7 +1051,7 @@ namespace boost {
   #endif      */
                 return true;
             }
-
+            
 
 
 
@@ -1333,29 +1333,107 @@ namespace boost {
             template<typename T>
             input_coder& octet_reader_defsz(input_coder& stream, size_constrainter<T>& vl) {
 
-                if (vl.can_extended()) {
-                    bitstring_type extendbit = stream.get_pop_bmp(1);
-                    if (extendbit.bit(1)) {
-                        return octet_reader_undefsz(stream, const_cast<T&> (vl.value()));
+
+                if (vl.available()) {
+
+                    if (vl.can_extended()) {
+                        bitstring_type extendbit = stream.get_pop_bmp(1);
+                        if (extendbit.bit(1)) {
+                            return octet_reader_undefsz(stream, vl.value());
+                        }
+                    }
+
+                    if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
+
+                        if (vl.max() < LENGH_64K) {
+
+                            std::size_t sz = 0;
+                            if (!vl.null_range()) {
+                                /*constrained_wnumber<std::size_t> tmp(tmpsz, vl.min(), vl.max());
+                                if ((stream.unaligned()) || (tmp.is_minimal()))
+                                    stream.add_bitmap(tmp.as_bitmap(), false);
+                                else
+                                    stream.add(tmp.as_octetsequence());*/
+                            } else
+                                sz = vl.max();
+
+                            octet_sequnce dt = stream.get_pop_octs(sz, stream.aligned());
+                            vl.value().insert(vl.value().end(), dt.begin(), dt.end());
+                            return stream;
+                        }
                     }
                 }
+                return octet_reader_undefsz(stream, vl.value());
+            }
 
-                /*if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
+            template<typename T>
+            input_coder& element_reader_defsz(input_coder& stream, size_constrainter<T>& vl) {
 
-                    std::size_t tmpsz = vl.value().size();
 
-                    if (vl.max() < LENGH_64K) {
-                        if (!vl.null_range()) {
-                            constrained_wnumber<std::size_t> tmp(tmpsz, vl.min(), vl.max());
-                            if ((stream.unaligned()) || (tmp.is_minimal()))
-                                stream.add_bitmap(tmp.as_bitmap(), false);
-                            else
-                                stream.add(tmp.as_octetsequence());
+                if (vl.available()) {
+
+                    if (vl.can_extended()) {
+                        bitstring_type extendbit = stream.get_pop_bmp(1);
+                        if (extendbit.bit(1)) {
+                            return element_reader_defsz(stream, vl.value());
                         }
-                        return octets_writer(stream, octet_sequnce(vl.value()), tmpsz, vl.max() <= 2);
                     }
-                }*/
-                return octet_reader_undefsz(stream, const_cast<T&> (vl.value()));
+
+                    if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
+
+                        if (vl.max() < LENGH_64K) {
+
+                            std::size_t sz = 0;
+                            if (!vl.null_range()) {
+                                /*constrained_wnumber<std::size_t> tmp(tmpsz, vl.min(), vl.max());
+                                if ((stream.unaligned()) || (tmp.is_minimal()))
+                                    stream.add_bitmap(tmp.as_bitmap(), false);
+                                else
+                                    stream.add(tmp.as_octetsequence());*/
+                            } else
+                                sz = vl.max();
+
+                            element_reader(stream, vl.value(), sz);
+                            return stream;
+                        }
+                    }
+                }
+                return element_reader_defsz(stream, vl.value());
+            }
+
+            template<typename T, typename EC>
+            input_coder& spec_element_reader_defsz(input_coder& stream, size_constrainter<T, EC>& vl) {
+
+
+                if (vl.available()) {
+
+                    if (vl.can_extended()) {
+                        bitstring_type extendbit = stream.get_pop_bmp(1);
+                        if (extendbit.bit(1)) {
+                            return spec_element_reader_defsz<T, EC>(stream, vl.value());
+                        }
+                    }
+
+                    if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
+
+                        if (vl.max() < LENGH_64K) {
+
+                            std::size_t sz = 0;
+                            if (!vl.null_range()) {
+                                /*constrained_wnumber<std::size_t> tmp(tmpsz, vl.min(), vl.max());
+                                if ((stream.unaligned()) || (tmp.is_minimal()))
+                                    stream.add_bitmap(tmp.as_bitmap(), false);
+                                else
+                                    stream.add(tmp.as_octetsequence());*/
+                            } else
+                                sz = vl.max();
+
+                            spec_element_reader<T, EC>(stream, vl.value(), sz);
+                            return stream;
+                        }
+                    }
+                }
+                return spec_element_reader_defsz<T, EC>(stream, vl.value());
             }
 
             template<typename T>
@@ -1387,7 +1465,7 @@ namespace boost {
                 if (vl.null_range())
                     return stream;
 
-                /*if ((vl.range() <= 0xFFFF) || (stream.unaligned())) {
+                /*if ((vl.range() <= LENGH_64K) || (stream.unaligned())) {
                     constrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.max());
                     if ((stream.unaligned()) || (tmp.is_minimal()))
                         stream.add_bitmap(tmp.as_bitmap(), false);
