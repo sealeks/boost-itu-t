@@ -309,11 +309,15 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const visiblestring_type& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
+                //return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
+                return stream << size_constrainter<visiblestring_type, visiblestring_ec>(const_cast<visiblestring_type&>(vl)); // known-multi 1 oct
+                //return stream;
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type>& vl) {
-                return octet_writer_defsz(stream, vl); // known-multi 1 oct
+                //return octet_writer_defsz(stream, vl); // known-multi 1 oct
+                return stream << size_constrainter<visiblestring_type, visiblestring_ec>(const_cast<visiblestring_type&>(vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
+                //return stream;
             }
 
             output_coder& operator<<(output_coder& stream, const generalstring_type& vl) {

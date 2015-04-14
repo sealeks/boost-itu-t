@@ -450,6 +450,21 @@ namespace boost {
                 to_x691_cast(val, rslt);
                 return rslt;
             }
+            
+            
+            // element constrainter
+            
+            struct numericstring_ec {
+                static bitstring_type out(octet_sequnce::value_type vl, bool alighn){
+                    return bitstring_type(vl,  4);
+                }
+            };      
+            
+            struct visiblestring_ec {
+                static bitstring_type out(octet_sequnce::value_type vl, bool alighn){
+                    return bitstring_type(octet_sequnce(1, octet_sequnce::value_type(vl << 1)) , 1);
+                }
+            };              
 
 
             //////////////////////////////////////////////////////////////////////////////////////////
@@ -607,9 +622,14 @@ namespace boost {
             }
 
             template<typename T>
-            output_coder& operator<<(output_coder& stream, const size_constrainter<T >& vl) {
+            output_coder& operator<<(output_coder& stream, const size_constrainter<T, null_constrainter >& vl) {
                 return stream << vl.value();
             }
+            
+            template<typename T, typename EC>
+            output_coder& operator<<(output_coder& stream, const size_constrainter<T, EC >& vl) {
+                return stream << vl.value();
+            }            
 
 
 
@@ -629,6 +649,14 @@ namespace boost {
                     stream << (*it);
                 return stream;
             }
+            
+            template<typename T, typename EC>
+            output_coder& spec_elements_writer(output_coder& stream, const octet_sequnce& sz,  T& beg, T& end, bool align = false) {
+                stream.add_octets(sz, align);
+                for (T it = beg; it !=end; ++it)
+                    stream.add_bitmap(EC::out(*it, stream.aligned()));
+                return stream;
+            }            
 
             template<typename T>
             output_coder& octet_writer_undefsz(output_coder& stream, const T& vl) {
@@ -659,6 +687,36 @@ namespace boost {
                 return stream;
             }
 
+            template<typename T, typename EC>
+            output_coder& spec_octet_writer_undefsz(output_coder& stream, const T& vl) {
+                std::size_t sz = vl.size();
+                std::size_t beg = 0;
+                while (beg < sz) {
+                    if ((sz - beg) < LENGH_16K) {
+                        spec_elements_writer<octet_sequnce, EC>(stream, to_x691_cast(size_class(sz - beg)),
+                                vl.begin() + beg, vl.end(), stream.aligned());
+                        beg = sz;
+                    } else {
+                        if ((sz - beg) < LENGH_64K) {
+                            std::size_t m = (sz - beg) / LENGH_16K;
+                            std::size_t nbeg = beg + LENGH_16K*m;
+                            spec_elements_writer<octet_sequnce, EC>(stream, to_x691_cast(size_class(LENGH_16K * m)),
+                                    vl.begin() + beg, vl.begin() + nbeg, stream.aligned());
+                            beg = nbeg;
+                        } else {
+                            spec_elements_writer<octet_sequnce, EC>(stream, to_x691_cast(size_class(LENGH_64K)),
+                                    vl.begin() + beg, vl.begin() + beg + LENGH_64K, stream.aligned());
+                            beg += LENGH_64K;
+                        }
+                        if (beg == sz){
+                            octet_sequnce tmp;
+                            spec_elements_writer<octet_sequnce, EC>(stream, to_x691_cast(size_class(0)),
+                                tmp.begin(), tmp.end(), stream.aligned());}
+                    }
+                }
+                return stream;
+            }            
+            
             template<>
             output_coder& octet_writer_undefsz(output_coder& stream, const bitstring_type& vl);
 
@@ -791,8 +849,13 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const size_constrainter<utf8string_type>& vl);
 
             output_coder& operator<<(output_coder& stream, const numericstring_type& vl);
-
+            
             output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type>& vl);
+            
+            template<typename EC>            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type, EC>& vl){
+                return spec_octet_writer_undefsz<numericstring_type, EC>(stream, vl.value());
+            }            
 
             output_coder& operator<<(output_coder& stream, const printablestring_type& vl);
 
@@ -821,6 +884,11 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const visiblestring_type& vl);
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type>& vl);
+            
+            template<typename EC>            
+            output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type, EC>& vl){
+                return spec_octet_writer_undefsz<visiblestring_type, EC>(stream,  vl.value());
+            }                 
 
             output_coder& operator<<(output_coder& stream, const generalstring_type& vl);
 
@@ -1185,9 +1253,14 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, size_constrainter<T >& vl) {
+            input_coder& operator>>(input_coder& stream, size_constrainter<T , null_constrainter>& vl) {
                 return stream >> vl.value();
             }
+            
+            template<typename T, typename EC>
+            input_coder& operator>>(input_coder& stream, size_constrainter<T , EC>& vl) {
+                return stream >> vl.value();
+            }            
 
 
 
@@ -1241,6 +1314,11 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, numericstring_type& vl);
 
             input_coder& operator>>(input_coder& stream, size_constrainter<numericstring_type>& vl);
+            
+            template<typename EC>            
+            input_coder& operator>>(input_coder& stream, size_constrainter<numericstring_type>& vl){
+                return stream;
+            }           
 
             input_coder& operator>>(input_coder& stream, printablestring_type& vl);
 

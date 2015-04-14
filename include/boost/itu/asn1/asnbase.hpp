@@ -1676,15 +1676,25 @@ namespace boost {
         }      
 
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  element_constrainter
+        ////////////////////////////////////////////////////////////////////////////////////////////////////        
+        
+
+        struct null_constrainter {     
+        };        
+        
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  size_constrainter
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        template<typename T>
+        template<typename T, typename EC = null_constrainter>
         struct size_constrainter {
 
             //typedef typename T::value_type arg_type;
+            typedef  EC elements_constrainter_type;
+            
 
             size_constrainter(T& vl, const std::size_t& mn = 0, const std::size_t& mx = 0, bool ext = false) :
             value_(vl), MIN(mn), MAX(mx), EXT(ext) {
