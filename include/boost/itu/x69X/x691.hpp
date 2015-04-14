@@ -22,7 +22,7 @@ namespace boost {
     namespace asn1 {
         namespace x691 {
 
-            ;
+
             const std::size_t MAX_OCTETLENGTH_SIZE = 0x100;
             const std::size_t MAX_SMALL_NN_SIZE = 64;
 
@@ -451,79 +451,45 @@ namespace boost {
 
             // element constrainter
 
+            class input_coder;
+
             struct numericstring_ec {
 
-                static bitstring_type out(octet_sequnce::value_type vl, bool alighn) {
+                static bitstring_type out(numericstring_type::value_type vl, bool alighn) {
                     return bitstring_type(vl - '\x20', 4);
                 }
 
-                static std::size_t size(bool alighn) {
-                    return 4;
-                }
-
-                octet_sequnce::value_type in(const bitstring_type& vl, bool alighn) {
-                    octet_sequnce tmp = vl.as_octet_sequnce();
-                    if (!tmp.empty())
-                        return ((tmp[0] >> 4) & '\x7F') + '\x20';
-                    return 0;
-                }
+                static numericstring_type::value_type in(boost::asn1::x691::input_coder& stream);
 
             };
 
             struct printablestring_ec {
 
-                static bitstring_type out(octet_sequnce::value_type vl, bool alighn) {
+                static bitstring_type out(printablestring_type::value_type vl, bool alighn) {
                     return bitstring_type(vl - '\x20', 4);
                 }
 
-                static std::size_t size(bool alighn) {
-                    return 4;
-                }
-
-                octet_sequnce::value_type in(const bitstring_type& vl, bool alighn) {
-                    octet_sequnce tmp = vl.as_octet_sequnce();
-                    if (!tmp.empty())
-                        return ((tmp[0] >> 4) & '\x7F') + '\x20';
-                    return 0;
-                }
+                static printablestring_type::value_type in(boost::asn1::x691::input_coder& stream);
 
             };
 
             struct ia5string_ec {
 
-                static bitstring_type out(octet_sequnce::value_type vl, bool alighn) {
+                static bitstring_type out(ia5string_type::value_type vl, bool alighn) {
                     return bitstring_type(vl - '\x20', 4);
                 }
 
-                static std::size_t size(bool alighn) {
-                    return 4;
-                }
-
-                octet_sequnce::value_type in(const bitstring_type& vl, bool alighn) {
-                    octet_sequnce tmp = vl.as_octet_sequnce();
-                    if (!tmp.empty())
-                        return ((tmp[0] >> 4) & '\x7F') + '\x20';
-                    return 0;
-                }
+                static ia5string_type::value_type in(boost::asn1::x691::input_coder& stream);
 
             };
 
             struct visiblestring_ec {
 
-                static bitstring_type out(octet_sequnce::value_type vl, bool alighn) {
+                static bitstring_type out(visiblestring_type::value_type vl, bool alighn) {
                     return bitstring_type(octet_sequnce(1, alighn ? octet_sequnce::value_type(vl) : octet_sequnce::value_type(vl << 1)), alighn ? 0 : 1);
                 }
 
-                static std::size_t size(bool alighn) {
-                    return alighn ? 8 : 7;
-                }
-
-                octet_sequnce::value_type in(const bitstring_type& vl, bool alighn) {
-                    octet_sequnce tmp = vl.as_octet_sequnce();
-                    if (!tmp.empty())
-                        return (tmp[0] >> 1) & '\x7F';
-                    return 0;
-                }
+                static visiblestring_type::value_type in(boost::asn1::x691::input_coder& stream);
 
             };
 
@@ -1189,6 +1155,23 @@ namespace boost {
 
             };
 
+            template<typename T>
+            inline input_coder& operator>>(input_coder& stream, T& vl) {
+                const_cast<T&> (vl).serialize(stream);
+                return stream;
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, std::vector<T>& vl) {
+                element_reader_undefsz(stream, vl);
+                return stream;
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, std::deque<T>& vl) {
+                element_reader_undefsz(stream, vl);
+                return stream;
+            }
 
             //////////////////////////////////////////////////////////////////////////////////
 
@@ -1199,6 +1182,15 @@ namespace boost {
                     value_type tmp;
                     stream & tmp;
                     vl.push_back(tmp);
+                }
+                return stream;
+            }
+
+            template<typename T, typename EC>
+            input_coder& spec_element_reader(input_coder& stream, T& vl, std::size_t sz) {
+                //std::back_insert_iterator<T> biter(T);
+                while (sz--) {
+                    std::back_inserter<T>(vl) = EC::in(stream);
                 }
                 return stream;
             }
@@ -1294,6 +1286,50 @@ namespace boost {
                 return stream;
             }
 
+            template<typename T, typename EC>
+            input_coder& spec_element_reader_undefsz(input_coder& stream, T& vl) {
+                while (true) {
+                    octet_sequnce strt = stream.get_pop_octs(1, stream.aligned());
+                    if (strt.size()) {
+                        octet_sequnce::value_type dtrm = strt[0];
+                        switch (dtrm & '\xC0') {
+                            case '\xC0':
+                            {
+                                octet_sequnce nxt = stream.get_pop_octs(1, stream.aligned());
+                                std::size_t sz = LENGH_16K;
+                                if ((nxt.size()) && ((0x7 & nxt[0]) <= 4))
+                                    sz *= static_cast<std::size_t> (0x7 & nxt[0]);
+                                else
+                                    throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                                spec_element_reader<T, EC>(stream, vl, sz);
+                                break;
+                            }
+                            case '\x80':
+                            {
+                                octet_sequnce nxt = stream.get_pop_octs(1, stream.aligned());
+                                boost::uint16_t dtrm16 = dtrm & '\x3f';
+                                dtrm16 <<= 8;
+                                if (nxt.size())
+                                    dtrm16 |= nxt[0];
+                                else
+                                    throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                                std::size_t sz = static_cast<std::size_t> (dtrm16 & 0x3FFF);
+                                spec_element_reader<T, EC>(stream, vl, sz);
+                                return stream;
+                            }
+                            default:
+                            {
+                                std::size_t sz = static_cast<std::size_t> (dtrm & '\x7F');
+                                spec_element_reader<T, EC>(stream, vl, sz);
+                                return stream;
+                            }
+                        }
+                    } else
+                        throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+                }
+                return stream;
+            }
+
             template<typename T>
             input_coder& octet_reader_defsz(input_coder& stream, size_constrainter<T>& vl) {
 
@@ -1323,14 +1359,6 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& primitive_deserialize(input_coder& stream, T& vl) {
-                /*octet_sequnce data;
-                octet_reader_undefsz(stream, data);
-                from_x690_cast<T>(const_cast<T&> (vl), data);*/
-                return stream;
-            }
-
-            template<typename T>
             input_coder& primitive_690_deserialize(input_coder& stream, T& vl) {
                 octet_sequnce data;
                 octet_reader_undefsz(stream, data);
@@ -1344,24 +1372,6 @@ namespace boost {
                 octet_reader_undefsz(stream, data);
                 unconstrained_wnumber<T> tmp(const_cast<T&> (vl));
                 tmp.from_octetsequence(data);
-                return stream;
-            }
-
-            template<typename T>
-            inline input_coder& operator>>(input_coder& stream, T& vl) {
-                const_cast<T&> (vl).serialize(stream);
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, std::vector<T>& vl) {
-                element_reader_undefsz(stream, const_cast<std::vector<T>&> (vl));
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, std::deque<T>& vl) {
-                element_reader_undefsz(stream, const_cast<std::vector<T>&> (vl));
                 return stream;
             }
 
@@ -1462,18 +1472,26 @@ namespace boost {
 
             input_coder& operator>>(input_coder& stream, size_constrainter<utf8string_type>& vl);
 
+
             input_coder& operator>>(input_coder& stream, numericstring_type& vl);
 
             input_coder& operator>>(input_coder& stream, size_constrainter<numericstring_type>& vl);
 
             template<typename EC>
-            input_coder& operator>>(input_coder& stream, size_constrainter<numericstring_type>& vl) {
-                return stream;
+            input_coder& operator>>(input_coder& stream, size_constrainter<numericstring_type, EC>& vl) {
+                return spec_element_reader_undefsz<numericstring_type, EC>(stream, vl.value());
             }
+
 
             input_coder& operator>>(input_coder& stream, printablestring_type& vl);
 
             input_coder& operator>>(input_coder& stream, size_constrainter<printablestring_type>& vl);
+
+            template<typename EC>
+            input_coder& operator>>(input_coder& stream, size_constrainter<printablestring_type, EC>& vl) {
+                return spec_element_reader_undefsz<printablestring_type, EC>(stream, vl.value());
+            }
+
 
             input_coder& operator>>(input_coder& stream, t61string_type& vl);
 
@@ -1483,9 +1501,18 @@ namespace boost {
 
             input_coder& operator>>(input_coder& stream, size_constrainter<videotexstring_type>& vl);
 
+
+
             input_coder& operator>>(input_coder& stream, ia5string_type& vl);
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<ia5string_type>& vl);
+            input_coder& operator>>(input_coder& stream, size_constrainter< ia5string_type>& vl);
+
+            template<typename EC>
+            input_coder& operator>>(input_coder& stream, size_constrainter< ia5string_type, EC>& vl) {
+                return spec_element_reader_undefsz< ia5string_type, EC>(stream, vl.value());
+            }
+
+
 
             input_coder& operator>>(input_coder& stream, graphicstring_type& vl);
 
@@ -1495,9 +1522,18 @@ namespace boost {
 
             input_coder& operator>>(input_coder& stream, size_constrainter<objectdescriptor_type>& vl);
 
+
+
             input_coder& operator>>(input_coder& stream, visiblestring_type& vl);
 
             input_coder& operator>>(input_coder& stream, size_constrainter<visiblestring_type>& vl);
+
+            template<typename EC>
+            input_coder& operator>>(input_coder& stream, size_constrainter<visiblestring_type, EC>& vl) {
+                return spec_element_reader_undefsz<visiblestring_type, EC>(stream, vl.value());
+            }
+
+
 
             input_coder& operator>>(input_coder& stream, generalstring_type& vl);
 

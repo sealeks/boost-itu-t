@@ -69,6 +69,41 @@ namespace boost {
             }
 
 
+            // element constrainter
+
+            numericstring_type::value_type numericstring_ec::in(boost::asn1::x691::input_coder& stream) {
+                bitstring_type vl = stream.get_pop_bmp(4);
+                octet_sequnce tmp = vl.as_octet_sequnce();
+                if (!tmp.empty())
+                    return ((tmp[0] >> 4) & '\x7F') + '\x20';
+                return 0;
+            }
+
+            printablestring_type::value_type printablestring_ec::in(boost::asn1::x691::input_coder& stream) {
+                bitstring_type vl = stream.get_pop_bmp(stream.aligned() ? 8 : 7);
+                octet_sequnce tmp = vl.as_octet_sequnce();
+                if (!tmp.empty())
+                    return stream.aligned() ? (tmp[0] & '\x7F') : ((tmp[0] >> 1) & '\x7F');
+                return 0;
+            }
+
+            ia5string_type::value_type ia5string_ec::in(boost::asn1::x691::input_coder& stream) {
+                bitstring_type vl = stream.get_pop_bmp(stream.aligned() ? 8 : 7);
+                octet_sequnce tmp = vl.as_octet_sequnce();
+                if (!tmp.empty())
+                    return stream.aligned() ? (tmp[0] & '\x7F') : ((tmp[0] >> 1) & '\x7F');
+                return 0;
+            }
+
+            visiblestring_type::value_type visiblestring_ec::in(boost::asn1::x691::input_coder& stream) {
+                bitstring_type vl = stream.get_pop_bmp(stream.aligned() ? 8 : 7);
+                octet_sequnce tmp = vl.as_octet_sequnce();
+                if (!tmp.empty())
+                    return stream.aligned() ? (tmp[0] & '\x7F') : ((tmp[0] >> 1) & '\x7F');
+                return 0;
+            }
+
+
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             /*OUTPUT STREAM                                                                                                                                                                                               */
@@ -104,6 +139,10 @@ namespace boost {
             void output_coder::add_octets(const octetstring_type & vl, bool alighn) {
                 add_octets(vl.as_octet_sequnce(), alighn);
             }
+
+
+
+
 
 
             // STRING REALISZATION
@@ -399,8 +438,8 @@ namespace boost {
                 if (sz) {
                     std::size_t usbit = usebits();
                     std::size_t octsize = 0;
-                    if (usbit < sz)
-                        octsize += ((sz - usbit - 1) / 8 + 1);
+                    if (usbit <= sz)
+                        octsize += ((sz - usbit ) / 8 + 1);
                     if (octsize)
                         pop_front(octsize);
                     unusebits(unusebits() + sz);
@@ -516,7 +555,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, enumerated_type& vl) {
-                return stream; //primitive_deserialize(stream, vl);
+                return stream;
             }
 
             input_coder& operator>>(input_coder& stream, float& vl) {
@@ -589,23 +628,23 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, numericstring_type& vl) {
-                octet_reader_undefsz(stream, vl);
-                return stream;
+                size_constrainter<numericstring_type, numericstring_ec> tmp(vl);
+                return stream >> tmp; // known-multi 1 oct
             }
 
             input_coder& operator>>(input_coder& stream, size_constrainter<numericstring_type>& vl) {
-                octet_reader_defsz(stream, vl);
-                return stream;
+                size_constrainter<numericstring_type, numericstring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+                return stream >> tmp; // known-multi 1 oct
             }
 
             input_coder& operator>>(input_coder& stream, printablestring_type& vl) {
-                octet_reader_undefsz(stream, vl);
-                return stream;
+                size_constrainter<printablestring_type, printablestring_ec> tmp(vl);
+                return stream >> tmp; // known-multi 1 oct
             }
 
             input_coder& operator>>(input_coder& stream, size_constrainter<printablestring_type>& vl) {
-                octet_reader_defsz(stream, vl);
-                return stream;
+                size_constrainter<printablestring_type, printablestring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+                return stream >> tmp; // known-multi 1 oct
             }
 
             input_coder& operator>>(input_coder& stream, t61string_type& vl) {
@@ -627,13 +666,13 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, ia5string_type& vl) {
-                octet_reader_undefsz(stream, vl);
-                return stream;
+                size_constrainter< ia5string_type, ia5string_ec> tmp(vl);
+                return stream >> tmp; // known-multi 1 oct
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<ia5string_type>& vl) {
-                octet_reader_defsz(stream, vl);
-                return stream;
+            input_coder& operator>>(input_coder& stream, size_constrainter< ia5string_type>& vl) {
+                size_constrainter< ia5string_type, ia5string_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+                return stream >> tmp; // known-multi 1 oct
             }
 
             input_coder& operator>>(input_coder& stream, graphicstring_type& vl) {
@@ -655,13 +694,13 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, visiblestring_type& vl) {
-                octet_reader_undefsz(stream, vl);
-                return stream;
+                size_constrainter<visiblestring_type, visiblestring_ec> tmp(vl);
+                return stream >> tmp; // known-multi 1 oct
             }
 
             input_coder& operator>>(input_coder& stream, size_constrainter<visiblestring_type>& vl) {
-                octet_reader_defsz(stream, vl);
-                return stream;
+                size_constrainter<visiblestring_type, visiblestring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+                return stream >> tmp; // known-multi 1 oct
             }
 
             input_coder& operator>>(input_coder& stream, generalstring_type& vl) {
