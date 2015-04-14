@@ -470,6 +470,44 @@ namespace boost {
 
             };
 
+            struct printablestring_ec {
+
+                static bitstring_type out(octet_sequnce::value_type vl, bool alighn) {
+                    return bitstring_type(vl - '\x20', 4);
+                }
+
+                static std::size_t size(bool alighn) {
+                    return 4;
+                }
+
+                octet_sequnce::value_type in(const bitstring_type& vl, bool alighn) {
+                    octet_sequnce tmp = vl.as_octet_sequnce();
+                    if (!tmp.empty())
+                        return ((tmp[0] >> 4) & '\x7F') + '\x20';
+                    return 0;
+                }
+
+            };
+
+            struct ia5string_ec {
+
+                static bitstring_type out(octet_sequnce::value_type vl, bool alighn) {
+                    return bitstring_type(vl - '\x20', 4);
+                }
+
+                static std::size_t size(bool alighn) {
+                    return 4;
+                }
+
+                octet_sequnce::value_type in(const bitstring_type& vl, bool alighn) {
+                    octet_sequnce tmp = vl.as_octet_sequnce();
+                    if (!tmp.empty())
+                        return ((tmp[0] >> 4) & '\x7F') + '\x20';
+                    return 0;
+                }
+
+            };
+
             struct visiblestring_ec {
 
                 static bitstring_type out(octet_sequnce::value_type vl, bool alighn) {
@@ -952,29 +990,45 @@ namespace boost {
                 return spec_element_writer_defsz<numericstring_type, EC>(stream, vl);
             }
 
+
             output_coder& operator<<(output_coder& stream, const printablestring_type& vl);
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<printablestring_type>& vl);
+
+            template<typename EC>
+            output_coder& operator<<(output_coder& stream, const size_constrainter<printablestring_type, EC>& vl) {
+                return spec_element_writer_defsz<printablestring_type, EC>(stream, vl);
+            }
+
 
             output_coder& operator<<(output_coder& stream, const t61string_type& vl);
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<t61string_type>& vl);
 
+
             output_coder& operator<<(output_coder& stream, const videotexstring_type& vl);
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<videotexstring_type>& vl);
 
+
             output_coder& operator<<(output_coder& stream, const ia5string_type& vl);
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<ia5string_type>& vl);
+            output_coder& operator<<(output_coder& stream, const size_constrainter< ia5string_type>& vl);
+
+            template<typename EC>
+            output_coder& operator<<(output_coder& stream, const size_constrainter< ia5string_type, EC>& vl) {
+                return spec_element_writer_defsz< ia5string_type, EC>(stream, vl);
+            }
 
             output_coder& operator<<(output_coder& stream, const graphicstring_type& vl);
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<graphicstring_type>& vl);
 
+
             output_coder& operator<<(output_coder& stream, const objectdescriptor_type& vl);
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<objectdescriptor_type>& vl);
+
 
             output_coder& operator<<(output_coder& stream, const visiblestring_type& vl);
 
@@ -989,9 +1043,11 @@ namespace boost {
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<generalstring_type>& vl);
 
+
             output_coder& operator<<(output_coder& stream, const universalstring_type& vl);
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type>& vl);
+
 
             output_coder& operator<<(output_coder& stream, const bmpstring_type& vl);
 

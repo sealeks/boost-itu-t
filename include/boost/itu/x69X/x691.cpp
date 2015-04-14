@@ -247,19 +247,19 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const numericstring_type& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
+                return stream << size_constrainter<numericstring_type, numericstring_ec>(const_cast<numericstring_type&> (vl)); // known-multi 1 oct
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type>& vl) {
-                return octet_writer_defsz(stream, vl); // known-multi 1 oct
+                return stream << size_constrainter<numericstring_type, numericstring_ec>(const_cast<numericstring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
             }
 
             output_coder& operator<<(output_coder& stream, const printablestring_type& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
+                return stream << size_constrainter<printablestring_type, printablestring_ec>(const_cast<printablestring_type&> (vl)); // known-multi 1 oct
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<printablestring_type>& vl) {
-                return octet_writer_defsz(stream, vl); // known-multi 1 oct
+                return stream << size_constrainter<printablestring_type, printablestring_ec>(const_cast<printablestring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
             }
 
             output_coder& operator<<(output_coder& stream, const t61string_type& vl) {
@@ -279,11 +279,11 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const ia5string_type& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
+                return stream << size_constrainter< ia5string_type, ia5string_ec>(const_cast<ia5string_type&> (vl)); // known-multi 1 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<ia5string_type>& vl) {
-                return octet_writer_defsz(stream, vl); // known-multi 1 oct
+            output_coder& operator<<(output_coder& stream, const size_constrainter< ia5string_type>& vl) {
+                return stream << size_constrainter< ia5string_type, ia5string_ec>(const_cast<ia5string_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
             }
 
             output_coder& operator<<(output_coder& stream, const graphicstring_type& vl) {
@@ -303,15 +303,11 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const visiblestring_type& vl) {
-                //return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
                 return stream << size_constrainter<visiblestring_type, visiblestring_ec>(const_cast<visiblestring_type&> (vl)); // known-multi 1 oct
-                //return stream;
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type>& vl) {
-                //return octet_writer_defsz(stream, vl); // known-multi 1 oct
                 return stream << size_constrainter<visiblestring_type, visiblestring_ec>(const_cast<visiblestring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
-                //return stream;
             }
 
             output_coder& operator<<(output_coder& stream, const generalstring_type& vl) {
