@@ -22,10 +22,7 @@ namespace boost {
     namespace asn1 {
         namespace x691 {
 
-
-            const std::size_t LENGH_128B = 0x80; //  0x4;
-            const std::size_t LENGH_16K = 0x4000; //  0x10;
-            const std::size_t LENGH_64K = 0x10000; //0x40;
+;
             const std::size_t MAX_OCTETLENGTH_SIZE = 0x100;
             const std::size_t MAX_SMALL_NN_SIZE = 64;
 
@@ -674,6 +671,38 @@ namespace boost {
             }
 
             template<typename T>
+            void writer_defsz(output_coder& stream, const size_constrainter<T>& vl) {
+
+                std::size_t tmpsz = vl.value().size();
+                if (!vl.check(tmpsz))
+                    throw boost::system::system_error(boost::itu::ER_PROTOCOL);
+
+                if (!vl.null_range()) {
+                    constrained_wnumber<std::size_t> tmp(tmpsz, vl.min(), vl.max());
+                    if ((stream.unaligned()) || (tmp.is_minimal()))
+                        stream.add_bitmap(tmp.as_bitmap(), false);
+                    else
+                        stream.add_octets(tmp.as_octetsequence(), true);
+                }
+            }
+
+            template<typename T, typename EC>
+            void writer_defsz(output_coder& stream, const size_constrainter<T, EC>& vl) {
+
+                std::size_t tmpsz = vl.value().size();
+                if (!vl.check(tmpsz))
+                    throw boost::system::system_error(boost::itu::ER_PROTOCOL);
+
+                if (!vl.null_range()) {
+                    constrained_wnumber<std::size_t> tmp(tmpsz, vl.min(), vl.max());
+                    if ((stream.unaligned()) || (tmp.is_minimal()))
+                        stream.add_bitmap(tmp.as_bitmap(), false);
+                    else
+                        stream.add_octets(tmp.as_octetsequence(), true);
+                }
+            }
+
+            template<typename T>
             output_coder& octet_writer_undefsz(output_coder& stream, const T& vl) {
                 std::size_t sz = vl.size();
                 std::size_t beg = 0;
@@ -768,23 +797,18 @@ namespace boost {
             template<typename T>
             output_coder& octet_writer_defsz(output_coder& stream, const size_constrainter<T>& vl) {
 
-                if (vl.unable()) {
+                if (vl.available()) {
                     if (vl.can_extended())
                         stream.add_bitmap(bitstring_type(vl.extended(vl.value().size())));
 
                     if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
 
                         std::size_t tmpsz = vl.value().size();
-                        //throw boost::system::system_error(boost::itu::ER_PROTOCOL);
+                        if (!vl.check(tmpsz))
+                            throw boost::system::system_error(boost::itu::ER_PROTOCOL);
 
                         if (vl.max() < LENGH_64K) {
-                            if (!vl.null_range()) {
-                                constrained_wnumber<std::size_t> tmp(tmpsz, vl.min(), vl.max());
-                                if ((stream.unaligned()) || (tmp.is_minimal()))
-                                    stream.add_bitmap(tmp.as_bitmap(), false);
-                                else
-                                    stream.add_octets(tmp.as_octetsequence(), true);
-                            }
+                            writer_defsz(stream, vl);
                             return octets_writer(stream, octet_sequnce(vl.value()), vl.max() <= 2);
                         }
                     }
@@ -796,22 +820,14 @@ namespace boost {
             output_coder& element_writer_defsz(output_coder& stream, const size_constrainter<T>& vl) {
 
 
-                if (vl.unable()) {
+                if (vl.available()) {
                     if (vl.can_extended())
                         stream.add_bitmap(bitstring_type(vl.extended(vl.value().size())));
 
                     if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
 
-                        std::size_t tmpsz = vl.value().size();
-
                         if (vl.max() < LENGH_64K) {
-                            if (!vl.null_range()) {
-                                constrained_wnumber<std::size_t> tmp(tmpsz, vl.min(), vl.max());
-                                if ((stream.unaligned()) || (tmp.is_minimal()))
-                                    stream.add_bitmap(tmp.as_bitmap(), false);
-                                else
-                                    stream.add_octets(tmp.as_octetsequence(), true);
-                            }
+                            writer_defsz(stream, vl);
                             return elements_writer(stream, vl.value().begin(), vl.value().end(), stream.aligned());
                         }
                     }
@@ -822,23 +838,15 @@ namespace boost {
             template<typename T, typename EC>
             output_coder& spec_element_writer_defsz(output_coder& stream, const size_constrainter<T, EC>& vl) {
 
-                if (vl.unable()) {
+                if (vl.available()) {
                     if (vl.can_extended())
                         stream.add_bitmap(bitstring_type(vl.extended(vl.value().size())));
 
                     if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
 
-                        std::size_t tmpsz = vl.value().size();
-
                         if (vl.max() < LENGH_64K) {
-                            if (!vl.null_range()) {
-                                constrained_wnumber<std::size_t> tmp(tmpsz, vl.min(), vl.max());
-                                if ((stream.unaligned()) || (tmp.is_minimal()))
-                                    stream.add_bitmap(tmp.as_bitmap(), false);
-                                else
-                                    stream.add_octets(tmp.as_octetsequence(), true);
-                            }
-                            return spec_elements_writer<T, EC>(stream, vl.value().begin(), vl.value().end(), stream.aligned());
+                            writer_defsz(stream, vl);
+                            return spec_elements_writer<typename T::const_iterator, EC > (stream, vl.value().begin(), vl.value().end(), stream.aligned());
                         }
                     }
                 }
@@ -917,7 +925,7 @@ namespace boost {
 
             template<typename EC>
             output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type, EC>& vl) {
-                return spec_element_writer_undefsz<numericstring_type, EC>(stream, vl.value());
+                return spec_element_writer_defsz<numericstring_type, EC>(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const printablestring_type& vl);
@@ -950,7 +958,7 @@ namespace boost {
 
             template<typename EC>
             output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type, EC>& vl) {
-                return spec_element_writer_undefsz<visiblestring_type, EC>(stream, vl.value());
+                return spec_element_writer_defsz<visiblestring_type, EC>(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const generalstring_type& vl);

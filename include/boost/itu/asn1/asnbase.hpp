@@ -172,6 +172,12 @@ namespace boost {\
 
 namespace boost {
     namespace asn1 {
+        
+        
+
+        const std::size_t LENGH_128B = 0x80; //  0x4;
+        const std::size_t LENGH_16K = 0x4000; //  0x10;
+        const std::size_t LENGH_64K = 0x10000; //0x40        
 
 
         using boost::asio::const_buffer;
@@ -1735,11 +1741,11 @@ namespace boost {
             }
 
             bool null_range() const {
-                return (MAX == MIN) && (MAX<0x10000);
+                return (MAX == MIN) && (MAX<LENGH_64K);
             }
             
             bool constrained() const {
-                return MAX && (MAX<0x10000);
+                return MAX && (MAX<LENGH_64K);
             }         
             
             bool semiconstrained() const {
@@ -1758,12 +1764,13 @@ namespace boost {
                 return ((sz < MIN) || (sz > MAX));
             }
 
-            /*bool check(std::size_t sz) const {
-                if (available())
-                    return  extended(sz) ? true : 
-
-                    return true;
-            }*/
+            bool check(std::size_t sz) const {
+                if (available()) {
+                    if ((extended(sz)) && (!can_extended()))
+                        return false;
+                }
+                return true;
+            }
 
         private:
 
