@@ -1717,6 +1717,14 @@ namespace boost {
             const std::size_t& max() const {
                 return MAX;
             }
+            
+            bool available() const {
+                return MAX || MIN || EXT;
+            }           
+            
+            bool unable() const {
+                return !(MAX || MIN || EXT);
+            }                
 
             bool can_extended() const {
                 return EXT;
@@ -1749,6 +1757,13 @@ namespace boost {
             bool extended(std::size_t sz) const {
                 return ((sz < MIN) || (sz > MAX));
             }
+
+            /*bool check(std::size_t sz) const {
+                if (available())
+                    return  extended(sz) ? true : 
+
+                    return true;
+            }*/
 
         private:
 

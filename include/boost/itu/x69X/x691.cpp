@@ -108,30 +108,24 @@ namespace boost {
 
             // STRING REALISZATION
 
+            output_coder& octets_writer(output_coder& stream, const octet_sequnce& elms, bool align) {
+                stream.add_octets(elms, stream.aligned());
+                return stream;
+            }
+
             output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const octet_sequnce& elms, bool align) {
                 stream.add_octets(sz, align);
-                stream.add_octets(elms, stream.aligned());
+                return octets_writer(stream, elms, align);
+            }
+
+            output_coder& octets_writer(output_coder& stream, const bitstring_type& elms, bool align) {
+                stream.add_bitmap(elms, stream.aligned());
                 return stream;
             }
 
             output_coder& octets_writer(output_coder& stream, const octet_sequnce& sz, const bitstring_type& elms, bool align) {
                 stream.add_octets(sz, align);
-                stream.add_octets(elms, stream.aligned());
-                return stream;
-            }
-
-            output_coder& octets_writer(output_coder& stream, const octet_sequnce& elms, std::size_t rlsz, bool align) {
-                if (rlsz) {
-                    if (rlsz == elms.size())
-                        stream.add(elms);
-                    else if (rlsz < elms.size())
-                        stream.add(octet_sequnce(elms.begin(), elms.begin() + rlsz));
-                    else {
-                        stream.add(elms);
-                        stream.add(octet_sequnce(rlsz - elms.size()));
-                    }
-                }
-                return stream;
+                return octets_writer(stream, elms, align);
             }
 
             template<>
@@ -310,13 +304,13 @@ namespace boost {
 
             output_coder& operator<<(output_coder& stream, const visiblestring_type& vl) {
                 //return octet_writer_undefsz(stream, vl.as_octet_sequnce()); // known-multi 1 oct
-                return stream << size_constrainter<visiblestring_type, visiblestring_ec>(const_cast<visiblestring_type&>(vl)); // known-multi 1 oct
+                return stream << size_constrainter<visiblestring_type, visiblestring_ec>(const_cast<visiblestring_type&> (vl)); // known-multi 1 oct
                 //return stream;
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type>& vl) {
                 //return octet_writer_defsz(stream, vl); // known-multi 1 oct
-                return stream << size_constrainter<visiblestring_type, visiblestring_ec>(const_cast<visiblestring_type&>(vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
+                return stream << size_constrainter<visiblestring_type, visiblestring_ec>(const_cast<visiblestring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 1 oct
                 //return stream;
             }
 
@@ -543,7 +537,7 @@ namespace boost {
 
             input_coder& operator>>(input_coder& stream, bool& vl) {
                 bitstring_type rslt = stream.get_pop_bmp(1);
-                vl= rslt.bit(1);
+                vl = rslt.bit(1);
                 return stream;
             }
 
@@ -590,7 +584,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, utf8string_type& vl) {
-                octet_reader_undefsz(stream,vl);
+                octet_reader_undefsz(stream, vl);
                 return stream;
             }
 
