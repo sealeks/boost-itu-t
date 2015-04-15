@@ -432,7 +432,7 @@ namespace boost {
 
             public:
 
-                output_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) : boost::itu::base_output_coder(), rule_(rul), unaligned_(true/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
+                output_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) : boost::itu::base_output_coder(), rule_(rul), unaligned_(false/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
                 }
 
                 virtual encoding_rule rule() const {
@@ -457,6 +457,12 @@ namespace boost {
                 template<typename T>
                 void operator&(const T& vl) {
                     *this << vl;
+                }
+
+                template<typename T>
+                void operator&(const boost::shared_ptr<T >& vl) {
+                    if (static_cast<bool> (vl))
+                        * this & (*vl);
                 }
 
                 template<typename T>
@@ -557,17 +563,6 @@ namespace boost {
 
                 return stream;
             }
-
-            template<typename T>
-            output_coder& operator<<(output_coder& stream, const size_constrainter<T, null_constrainter >& vl) {
-                return stream << vl.value();
-            }
-
-            template<typename T, typename EC>
-            output_coder& operator<<(output_coder& stream, const size_constrainter<T, EC >& vl) {
-                return stream << vl;
-            }
-
 
 
 
@@ -771,7 +766,7 @@ namespace boost {
 
                         if (vl.max() < LENGH_64K) {
                             writer_defsz(stream, vl);
-                            return elements_writer(stream, vl.value().begin(), vl.value().end(), stream.aligned());
+                            return elements_writer(stream, vl.value().begin(), vl.value().end());
                         }
                     }
                 }
@@ -823,6 +818,19 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const std::deque<T>& vl) {
                 return element_writer_undefsz(stream, vl);
             }
+
+            template<typename T>
+            output_coder& operator<<(output_coder& stream, const size_constrainter<T >& vl) {
+                element_writer_defsz(stream, vl);
+                return stream;
+            }
+
+            template<typename T, typename EC>
+            output_coder& operator<<(output_coder& stream, const size_constrainter<T, EC >& vl) {
+                spec_element_writer_defsz<T, EC>(stream, vl);
+                return stream;
+            }
+
 
 
 
@@ -1003,7 +1011,7 @@ namespace boost {
 
             public:
 
-                input_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) : boost::itu::base_input_coder(), rule_(rul), unaligned_(true/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
+                input_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) : boost::itu::base_input_coder(), rule_(rul), unaligned_(false/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
                 }
 
                 virtual encoding_rule rule() const {
@@ -1037,6 +1045,13 @@ namespace boost {
                 template<typename T>
                 void operator&(const T& vl) {
                     *this >> const_cast<T&> (vl);
+                }
+
+                template<typename T>
+                void operator&(const boost::shared_ptr<T >& vl) {
+                    if (!static_cast<bool> (vl))
+                        const_cast<boost::shared_ptr<T >&> (vl) = boost::shared_ptr<T >(new T());
+                    * this & (*vl);
                 }
 
                 template<typename T>
@@ -1291,18 +1306,6 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, std::vector<T>& vl) {
-                element_reader_undefsz(stream, vl);
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, std::deque<T>& vl) {
-                element_reader_undefsz(stream, vl);
-                return stream;
-            }
-
-            template<typename T>
             input_coder& octet_reader_defsz(input_coder& stream, size_constrainter<T>& vl) {
 
 
@@ -1449,19 +1452,29 @@ namespace boost {
                     if (extendbit.bit(1))
                         return primitive_int_serialize(stream, vl.value());
                 }
-                //semiconstrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.extended());
-                //stream.add(tmp.as_octetsequence());
                 return primitive_int_deserialize(stream, vl.value());
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, size_constrainter<T, null_constrainter>& vl) {
-                return stream >> vl.value();
+            input_coder& operator>>(input_coder& stream, std::vector<T>& vl) {
+                element_reader_undefsz(stream, vl);
+                return stream;
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, std::deque<T>& vl) {
+                element_reader_undefsz(stream, vl);
+                return stream;
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, size_constrainter<T>& vl) {
+                return element_reader_defsz(stream, vl);
             }
 
             template<typename T, typename EC>
             input_coder& operator>>(input_coder& stream, size_constrainter<T, EC>& vl) {
-                return stream >> vl.value();
+                return spec_element_reader_defsz<T, EC>(stream, vl);
             }
 
 

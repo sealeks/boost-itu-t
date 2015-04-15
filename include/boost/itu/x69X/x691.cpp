@@ -143,7 +143,7 @@ namespace boost {
             }
 
             void output_coder::add_octets(const octet_sequnce& vl, bool alighn) {
-                if (unusebits()) {
+                if ((!alighn) && (unusebits())) {
                     //const_sequences::reverse_iterator it = listbuffers_->rbegin();
                     boost::itu::vect_octet_sequnce_ptr::reverse_iterator dit = rows_vect.rbegin();
                     boost::itu::octet_sequnce_ptr lstdata_ptr = *dit;
