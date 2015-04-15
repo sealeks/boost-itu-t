@@ -161,11 +161,6 @@ namespace boost {
                     return octet_sequnce();
                 }
 
-                octetstring_type as_octetstring() const {
-                    return octetstring_type(as_octetsequence());
-                }
-
-
 
             private:
 
@@ -548,21 +543,7 @@ namespace boost {
                 return primitive_int_serialize(stream, vl.value());
             }
 
-            template<typename T>
-            output_coder& operator<<(output_coder& stream, const num_semiconstrainter<T>& vl) {
 
-
-                if (vl.can_extended()) {
-                    stream.add_bitmap(bitstring_type(vl.extended()));
-                    if (vl.extended())
-                        return primitive_int_serialize(stream, vl.value());
-                }
-
-                semiconstrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.extended());
-                stream.add(tmp.as_octetsequence());
-
-                return stream;
-            }
 
 
 
@@ -1443,17 +1424,7 @@ namespace boost {
                 return primitive_int_deserialize<T>(stream, vl.value());
             }
 
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, num_semiconstrainter<T>& vl) {
 
-
-                if (vl.can_extended()) {
-                    bitstring_type extendbit = stream.get_pop_bmp(1);
-                    if (extendbit.bit(1))
-                        return primitive_int_serialize(stream, vl.value());
-                }
-                return primitive_int_deserialize(stream, vl.value());
-            }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, std::vector<T>& vl) {
