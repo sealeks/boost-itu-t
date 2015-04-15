@@ -71,12 +71,21 @@ namespace boost {
 
             // element constrainter
 
+            void numericstring_ec::out(boost::asn1::x691::output_coder& stream, numericstring_type::value_type vl) {
+                stream.add_bitmap(bitstring_type(vl - '\x20', 4));
+            }
+
             numericstring_type::value_type numericstring_ec::in(boost::asn1::x691::input_coder& stream) {
                 bitstring_type vl = stream.get_pop_bmp(4);
                 octet_sequnce tmp = vl.as_octet_sequnce();
                 if (!tmp.empty())
                     return ((tmp[0] >> 4) & '\x7F') + '\x20';
                 return 0;
+            }
+
+            void printablestring_ec::out(boost::asn1::x691::output_coder& stream, printablestring_type::value_type vl) {
+                stream.add_bitmap(bitstring_type(octet_sequnce(1, stream.aligned() ?
+                        octet_sequnce::value_type(vl) : octet_sequnce::value_type(vl << 1)), stream.aligned() ? 0 : 1));
             }
 
             printablestring_type::value_type printablestring_ec::in(boost::asn1::x691::input_coder& stream) {
@@ -87,12 +96,22 @@ namespace boost {
                 return 0;
             }
 
+            void ia5string_ec::out(boost::asn1::x691::output_coder& stream, ia5string_type::value_type vl) {
+                stream.add_bitmap(bitstring_type(octet_sequnce(1, stream.aligned() ?
+                        octet_sequnce::value_type(vl) : octet_sequnce::value_type(vl << 1)), stream.aligned() ? 0 : 1));
+            }
+
             ia5string_type::value_type ia5string_ec::in(boost::asn1::x691::input_coder& stream) {
                 bitstring_type vl = stream.get_pop_bmp(stream.aligned() ? 8 : 7);
                 octet_sequnce tmp = vl.as_octet_sequnce();
                 if (!tmp.empty())
                     return stream.aligned() ? (tmp[0] & '\x7F') : ((tmp[0] >> 1) & '\x7F');
                 return 0;
+            }
+
+            void visiblestring_ec::out(boost::asn1::x691::output_coder& stream, visiblestring_type::value_type vl) {
+                stream.add_bitmap(bitstring_type(octet_sequnce(1, stream.aligned() ?
+                        octet_sequnce::value_type(vl) : octet_sequnce::value_type(vl << 1)), stream.aligned() ? 0 : 1));
             }
 
             visiblestring_type::value_type visiblestring_ec::in(boost::asn1::x691::input_coder& stream) {
@@ -439,7 +458,7 @@ namespace boost {
                     std::size_t usbit = usebits();
                     std::size_t octsize = 0;
                     if (usbit <= sz)
-                        octsize += ((sz - usbit ) / 8 + 1);
+                        octsize += ((sz - usbit) / 8 + 1);
                     if (octsize)
                         pop_front(octsize);
                     unusebits(unusebits() + sz);

@@ -314,11 +314,17 @@ namespace boost {
         }
 
         bitstring_type::operator octet_sequnce() const {
-            return octet_sequnce(begin(), end());
+            octet_sequnce tmp(begin(), end());
+            if ((!tmp.empty()) && (unusebits()))
+                tmp.back() &= ('\xFF' << unusebits());
+            return tmp;
         }
 
         octet_sequnce bitstring_type::as_octet_sequnce() const {
-            return octet_sequnce(begin(), end());
+            octet_sequnce tmp(begin(), end());
+            if ((!tmp.empty()) && (unusebits()))
+                tmp.back() &= ('\xFF' << unusebits());
+            return tmp;
         }
 
         bitstring_type bitstring_type::operator~() const {
@@ -550,19 +556,19 @@ namespace boost {
                     shft %= 8;
                 }
                 if (shft) {
-                    const octet_sequnce::value_type msk = ~static_cast<octet_sequnce::value_type>(0xFF << shft);
+                    const octet_sequnce::value_type msk = ~static_cast<octet_sequnce::value_type> (0xFF << shft);
                     for (octet_sequnce::iterator it = vl.begin(); it != vl.end(); ++it) {
                         *it <<= shft;
                         if ((it + 1) != vl.end())
-                            *it |=(msk & ((*(it + 1))>> (8 - shft )));
+                            *it |= (msk & ((*(it + 1))>> (8 - shft)));
                         else
-                            *it &=('\xFF')<<shft;
+                            *it &= ('\xFF') << shft;
                     }
                 }
                 return 1;
             }
             return 0;
-        }        
+        }
 
         static inline std::string num8t_to_hexstr(char vl) {
             return std::string(static_cast<const char*> (&hex_char_array_const[((vl >> 4) & 0xF)]), 1) +
@@ -761,7 +767,7 @@ namespace boost {
                 listbuffers_->end();
             rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl)));
             size_ += vl.size();
-            unuse_=0;
+            unuse_ = 0;
             return listbuffers_->insert(listbuffers_->end(), const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size()));
         }
 
@@ -770,7 +776,7 @@ namespace boost {
                 listbuffers_->end();
             rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl)));
             size_ += vl.size();
-            unuse_=0;
+            unuse_ = 0;
             return listbuffers_->insert(it, const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size()));
         }
 
@@ -778,7 +784,6 @@ namespace boost {
             for (mutable_sequences::const_iterator it = vl.begin(); it != vl.end(); ++it)
                 add(buffer_to_raw(*it));
         }
-
 
         std::size_t base_output_coder::load_sequence(const_sequences& val, std::size_t lim) {
             if (!lim) return 0;
@@ -827,7 +832,6 @@ namespace boost {
             for (const_sequences::const_iterator it = vl.begin(); it != vl.end(); ++it)
                 add(buffer_to_raw(*it));
         }
-      
 
         bool base_input_coder::is_endof(std::size_t beg) const {
             octet_sequnce data;
