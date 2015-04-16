@@ -113,7 +113,7 @@ namespace boost {
                     boost::uint64_t tmp;
                     from_x690_cast(tmp, vl);
                     tmp += MIN;
-                    value_ = tmp > MAX ? MAX : tmp;
+                    value_ = tmp > MAX ? MAX : static_cast<T>(tmp);
                 }
 
                 void value(const bitstring_type& vl) {
