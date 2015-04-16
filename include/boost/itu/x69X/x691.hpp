@@ -95,14 +95,14 @@ namespace boost {
                     return MAX - MIN;
                 }
 
-                bool null_range() const {
+                bool is_single() const {
                     return MAX = MIN;
                 }
 
                 // bitmap for alighned vaiant
 
                 bool is_minimal() const {
-                    return (range() <= MAX_OCTETLENGTH_SIZE);
+                    return (range() < MAX_OCTETLENGTH_SIZE);
                 }
 
                 const internal_type& value() const {
@@ -110,10 +110,18 @@ namespace boost {
                 }
 
                 void value(const octet_sequnce& vl) {
-                    std::size_t tmp;
+                    boost::uint64_t tmp;
                     from_x690_cast(tmp, vl);
                     tmp += MIN;
                     value_ = tmp > MAX ? MAX : tmp;
+                }
+
+                void value(const bitstring_type& vl) {
+                    if (vl.unusebits() % 8) {
+                        bitstring_type tmp = bitstring_type(NULL_OCTET, 8 - vl.unusebits() % 8) + vl;
+                        value(tmp.as_octet_sequnce());
+                    } else
+                        value(vl.as_octet_sequnce());
                 }
 
                 boost::uint64_t sendval() const {
@@ -199,8 +207,28 @@ namespace boost {
                     value_ = tmp + MIN;
                 }
 
+                void value(boost::uint64_t vl) {
+                    value_ = static_cast<T> (vl + MIN);
+                }
+
                 boost::uint64_t sendval() const {
                     return value_ - MIN;
+                }
+
+                std::size_t bitsize() const {
+                    if (boost::uint64_t rng = sendval()) {
+                        std::size_t rslt = 1;
+                        while (rng >>= 1)
+                            rslt++;
+                        return rslt;
+                    }
+                    return 0;
+                }
+
+                std::size_t octetsize() const {
+                    if (std::size_t bssz = bitsize())
+                        return (bssz - 1) / 8 + 1;
+                    return 0;
                 }
 
             private:
@@ -255,10 +283,6 @@ namespace boost {
                         return vl;
                     }
                     return NULL_OCTET;
-                }
-
-                octetstring_type as_octetstring() const {
-                    return octetstring_type(as_octetsequence());
                 }
 
                 bool from_octetsequence(const octet_sequnce& dt) {
@@ -524,28 +548,6 @@ namespace boost {
                 return stream;
             }
 
-            template<typename T>
-            output_coder& operator<<(output_coder& stream, const num_constrainter<T >& vl) {
-
-                if (vl.can_extended()) {
-                    stream.add_bitmap(bitstring_type(vl.extended()));
-                    if (vl.extended())
-                        return primitive_int_serialize(stream, vl.value());
-                }
-
-                if (vl.null_range())
-                    return stream;
-
-                if ((vl.range() < LENGH_64K) || (stream.unaligned())) {
-                    return stream << constrained_wnumber<T>(const_cast<T&> (vl.value()), vl.min(), vl.max());
-                }
-
-                return primitive_int_serialize(stream, vl.value());
-            }
-
-
-
-
 
             ////////////////// STRING REALIZATION
 
@@ -591,7 +593,7 @@ namespace boost {
                 if (!vl.check(tmpsz))
                     throw boost::system::system_error(boost::itu::ER_PROTOCOL);
 
-                if (!vl.null_range())
+                if (!vl.is_single())
                     stream << constrained_wnumber<std::size_t>(tmpsz, vl.min(), vl.max());
 
             }
@@ -603,7 +605,7 @@ namespace boost {
                 if (!vl.check(tmpsz))
                     throw boost::system::system_error(boost::itu::ER_PROTOCOL);
 
-                if (!vl.null_range())
+                if (!vl.is_single())
                     stream << constrained_wnumber<std::size_t>(tmpsz, vl.min(), vl.max());
 
             }
@@ -783,6 +785,28 @@ namespace boost {
             }
 
             template<typename T>
+            output_coder& alighned_int_serialize(output_coder& stream, const num_constrainter<T >& vl) {
+
+                constrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.max());
+                boost::uint64_t semi = tmp.sendval();
+
+                octet_sequnce data;
+                to_x690_cast<boost::uint64_t>(semi, data);
+
+                if (data.empty())
+                    data = NULL_OCTET;
+
+                std::size_t octsz = data.size();
+
+                constrained_wnumber<T> rng(octsz, 1, tmp.octetsize());
+
+                stream.add_bitmap(rng.as_bitmap());
+                stream.add_octets(data, true);
+
+                return stream;
+            }
+
+            template<typename T>
             output_coder& primitive_690_serialize(output_coder& stream, const T& vl) {
                 octet_sequnce tmp;
                 to_x690_cast(vl, tmp);
@@ -812,8 +836,38 @@ namespace boost {
                 return stream;
             }
 
+            template<typename T>
+            output_coder& operator<<(output_coder& stream, const num_constrainter<T >& vl) {
 
+                if (vl.can_extended()) {
+                    if (vl.nill_extended()) {
+                        stream.add_bitmap(bitstring_type(false));
+                        return primitive_int_serialize(stream, vl.value());
+                    } else {
+                        stream.add_bitmap(bitstring_type(vl.extended()));
+                        if (vl.extended())
+                            return primitive_int_serialize(stream, vl.value());
+                    }
+                }
 
+                if (vl.is_single())
+                    return stream;
+
+                if (vl.constrained()) {
+                    if (vl.semi()) {
+                        semiconstrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min());
+                        boost::uint64_t stmp = tmp.sendval();
+                        return primitive_int_serialize(stream, stmp);
+                    } else {
+                        if ((vl.range() <= LENGH_64K) || (stream.unaligned()))
+                            return stream << constrained_wnumber<T>(const_cast<T&> (vl.value()), vl.min(), vl.max());
+                        else
+                            alighned_int_serialize(stream, vl);
+                    }
+                }
+
+                return primitive_int_serialize(stream, vl.value());
+            }
 
             output_coder& operator<<(output_coder& stream, const uint8_t& vl);
 
@@ -1093,13 +1147,7 @@ namespace boost {
             inline input_coder& operator>>(input_coder& stream, constrained_wnumber<T>& vl) {
                 if ((stream.unaligned()) || (vl.is_minimal())) {
                     std::size_t bitsz = vl.bitsize();
-                    if (bitsz % 8) {
-                        bitstring_type tmpb = bitstring_type(NULL_OCTET, bitsz % 8) + stream.get_pop_bmp(bitsz);
-                        vl.value(tmpb.as_octet_sequnce());
-                    } else {
-                        bitstring_type tmpb = stream.get_pop_bmp(bitsz);
-                        vl.value(tmpb.as_octet_sequnce());
-                    }
+                    vl.value(stream.get_pop_bmp(bitsz));
                 } else
                     vl.value(stream.get_pop_octs(vl.octetsize()));
                 return stream;
@@ -1304,7 +1352,7 @@ namespace boost {
                         if (vl.max() < LENGH_64K) {
 
                             std::size_t sz = 0;
-                            if (!vl.null_range()) {
+                            if (!vl.is_single()) {
                                 constrained_wnumber<std::size_t> tmpsz(sz, vl.min(), vl.max());
                                 stream >> tmpsz;
                             } else
@@ -1337,7 +1385,7 @@ namespace boost {
                         if (vl.max() < LENGH_64K) {
 
                             std::size_t sz = 0;
-                            if (!vl.null_range()) {
+                            if (!vl.is_single()) {
                                 constrained_wnumber<std::size_t> tmpsz(sz, vl.min(), vl.max());
                                 stream >> tmpsz;
                             } else
@@ -1369,7 +1417,7 @@ namespace boost {
                         if (vl.max() < LENGH_64K) {
 
                             std::size_t sz = 0;
-                            if (!vl.null_range()) {
+                            if (!vl.is_single()) {
                                 constrained_wnumber<std::size_t> tmpsz(sz, vl.min(), vl.max());
                                 stream >> tmpsz;
                             } else
@@ -1401,30 +1449,56 @@ namespace boost {
             }
 
             template<typename T>
+            input_coder& alighned_int_deserialize(input_coder& stream, num_constrainter<T >& vl) {
+
+
+                constrained_wnumber<T> tmp(vl.value(), vl.min(), vl.max());
+                boost::uint64_t semi = tmp.sendval();
+
+                std::size_t octsz = 1;
+                constrained_wnumber<std::size_t> rng(octsz, 1, tmp.octetsize());
+
+                rng.value(stream.get_pop_bmp(rng.bitsize()));
+
+
+                octet_sequnce data = stream.get_pop_octs(octsz, true);
+
+                tmp.value(data);
+
+                return stream;
+            }
+
+            template<typename T>
             input_coder& operator>>(input_coder& stream, num_constrainter<T >& vl) {
+
 
                 if (vl.can_extended()) {
                     bitstring_type extendbit = stream.get_pop_bmp(1);
-                    if (extendbit.bit(1))
-                        return primitive_int_deserialize<T>(stream, vl.value());
+                    if ((extendbit.bit(1)) && (vl.nill_extended()))
+                        return primitive_int_deserialize(stream, vl.value());
                 }
 
-                if (vl.null_range())
+                if (vl.is_single()) {
+                    vl.to_single();
                     return stream;
+                }
 
-                /*if ((vl.range() <= LENGH_64K) || (stream.unaligned())) {
-                    constrained_wnumber<T> tmp(const_cast<T&> (vl.value()), vl.min(), vl.max());
-                    if ((stream.unaligned()) || (tmp.is_minimal()))
-                        stream.add_bitmap(tmp.as_bitmap(), false);
-                    else
-                        stream.add(tmp.as_octetsequence());
-                    return stream;
-                }*/
+                if (vl.constrained()) {
+                    if (vl.semi()) {
+                        boost::uint64_t stmp = 0;
+                        primitive_int_deserialize(stream, stmp);
+                        semiconstrained_wnumber<T> tmp(vl.value(), vl.min());
+                        tmp.value(stmp);
+                        return stream;
+                    } else {
+                        if ((vl.range() <= LENGH_64K) || (stream.unaligned())) {
+                            return stream >> constrained_wnumber<T>(vl.value(), vl.min(), vl.max());
+                        }
+                    }
+                }
 
-                return primitive_int_deserialize<T>(stream, vl.value());
+                return primitive_int_deserialize(stream, vl.value());
             }
-
-
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, std::vector<T>& vl) {

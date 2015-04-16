@@ -1533,6 +1533,14 @@ namespace boost {
                 return EXT;
             }
             
+            bool nill_extended() const  {
+                return (!MIN && !MAX && EXT);
+            }  
+            
+            bool constrained() const {
+                return MIN || MAX || SEMI;
+            }              
+            
             bool semi() const {
                 return SEMI;
             }            
@@ -1541,7 +1549,7 @@ namespace boost {
                 return MAX - MIN;
             }
 
-            bool null_range() const {
+            bool is_single() const {
                 return MAX == MIN;
             }
 
@@ -1556,6 +1564,10 @@ namespace boost {
             bool extended() const {
                 return SEMI ? (value_ < MIN) : ((value_ < MIN) || (value_ > MAX));
             }
+            
+            void to_single() const {
+                return value=MIN;
+            }            
 
         private:
 
@@ -1708,6 +1720,14 @@ namespace boost {
             bool unable() const {
                 return !(MAX || MIN || EXT);
             }
+            
+            bool nill_extended() const  {
+                return (!MIN && !MAX && EXT);
+            } 
+            
+            bool semi() const {
+                return (MIN && !MAX);
+            }             
 
             bool can_extended() const {
                 return EXT;
@@ -1717,7 +1737,7 @@ namespace boost {
                 return MAX - MIN;
             }
 
-            bool null_range() const {
+            bool is_single() const {
                 return (MAX == MIN) && (MAX < LENGH_64K);
             }
 
