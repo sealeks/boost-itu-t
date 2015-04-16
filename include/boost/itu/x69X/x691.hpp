@@ -798,7 +798,7 @@ namespace boost {
 
                 std::size_t octsz = data.size();
 
-                constrained_wnumber<T> rng(octsz, 1, tmp.octetsize());
+                constrained_wnumber<std::size_t> rng(octsz, 1, tmp.octetsize());
 
                 stream.add_bitmap(rng.as_bitmap());
                 stream.add_octets(data, true);
@@ -862,7 +862,7 @@ namespace boost {
                         if ((vl.range() <= LENGH_64K) || (stream.unaligned()))
                             return stream << constrained_wnumber<T>(const_cast<T&> (vl.value()), vl.min(), vl.max());
                         else
-                            alighned_int_serialize(stream, vl);
+                            return alighned_int_serialize(stream, vl);
                     }
                 }
 
@@ -1492,7 +1492,8 @@ namespace boost {
                         return stream;
                     } else {
                         if ((vl.range() <= LENGH_64K) || (stream.unaligned())) {
-                            return stream >> constrained_wnumber<T>(vl.value(), vl.min(), vl.max());
+                            constrained_wnumber<T> tmp(vl.value(), vl.min(), vl.max());
+                            return stream >> tmp;
                         }
                     }
                 }

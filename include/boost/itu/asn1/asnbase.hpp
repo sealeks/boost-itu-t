@@ -1565,8 +1565,8 @@ namespace boost {
                 return SEMI ? (value_ < MIN) : ((value_ < MIN) || (value_ > MAX));
             }
             
-            void to_single() const {
-                return value=MIN;
+            void to_single()  {
+                value_=MIN;
             }            
 
         private:
