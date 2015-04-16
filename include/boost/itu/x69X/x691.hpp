@@ -1494,7 +1494,8 @@ namespace boost {
                         if ((vl.range() <= LENGH_64K) || (stream.unaligned())) {
                             constrained_wnumber<T> tmp(vl.value(), vl.min(), vl.max());
                             return stream >> tmp;
-                        }
+                        } else
+                            return alighned_int_deserialize(stream, vl);
                     }
                 }
 
