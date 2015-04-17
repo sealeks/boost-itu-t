@@ -26,7 +26,8 @@ namespace boost {
             const std::size_t MAX_OCTETLENGTH_SIZE = 0x100;
             const std::size_t MAX_SMALL_NN_SIZE = 64;
 
-            const octet_sequnce NULL_OCTET = octet_sequnce(1, '\x0');
+            const octet_sequnce S0_OCTET = octet_sequnce(1, '\x0');
+            const bitstring_type NULL_BITMAP = bitstring_type();
 
 
             /////// timeconv
@@ -66,7 +67,24 @@ namespace boost {
 
             octet_sequnce to_x691_cast(const size_class& val);
 
+            template<typename T>
+            std::size_t calculate_bitsize(T vl) {
+                if (vl) {
+                    if (vl > 0) {
+                        std::size_t rslt = 1;
+                        while (vl >>= 1)
+                            rslt++;
+                        return rslt;
+                    } else
+                        return sizeof (T)*8;
+                }
+                return 0;
+            }
 
+            template<typename T>
+            T calculate_octetsize(T sz) {
+                return sz ? ((sz - 1) / 8 + 1) : 0;
+            }
 
 
             //  constrained whole number            
@@ -113,12 +131,12 @@ namespace boost {
                     boost::uint64_t tmp;
                     from_x690_cast(tmp, vl);
                     tmp += MIN;
-                    value_ = tmp > MAX ? MAX : static_cast<T>(tmp);
+                    value_ = tmp > MAX ? MAX : static_cast<T> (tmp);
                 }
 
                 void value(const bitstring_type& vl) {
                     if (vl.unusebits() % 8) {
-                        bitstring_type tmp = bitstring_type(NULL_OCTET, 8 - vl.unusebits() % 8) + vl;
+                        bitstring_type tmp = bitstring_type(S0_OCTET, 8 - vl.unusebits() % 8) + vl;
                         value(tmp.as_octet_sequnce());
                     } else
                         value(vl.as_octet_sequnce());
@@ -129,39 +147,31 @@ namespace boost {
                 }
 
                 std::size_t bitsize() const {
-                    if (boost::uint64_t rng = range()) {
-                        std::size_t rslt = 1;
-                        while (rng >>= 1)
-                            rslt++;
-                        return rslt;
-                    }
-                    return 0;
+                    return calculate_bitsize(range());
                 }
 
                 std::size_t octetsize() const {
-                    if (std::size_t bssz = bitsize())
-                        return (bssz - 1) / 8 + 1;
-                    return 0;
+                    return calculate_octetsize(bitsize());
                 }
 
                 bitstring_type as_bitmap() const {
-                    std::size_t bssz = bitsize();
-                    if (!bssz)
-                        return bitstring_type();
-                    boost::uint64_t val = sendval();
-                    std::size_t octsz = (bssz - 1) / 8 + 1;
-                    octet_sequnce tmp = endian_conv_conv(octet_sequnce(static_cast<octet_sequnce::value_type*> ((void*) &val),
-                            static_cast<octet_sequnce::value_type*> ((void*) &val) + octsz));
+                    if (std::size_t bssz = bitsize()) {
+                        boost::uint64_t val = sendval();
+                        std::size_t octsz = (bssz - 1) / 8 + 1;
+                        octet_sequnce tmp = endian_conv_conv(octet_sequnce(static_cast<octet_sequnce::value_type*> ((void*) &val),
+                                static_cast<octet_sequnce::value_type*> ((void*) &val) + octsz));
 #ifdef BIG_ENDIAN_ARCHITECTURE  
-                    ?
+                        ?
 #else                    
-                    if (bssz % 8)
-                        tmp.back() <<= (8 - bssz % 8);
+                        if (bssz % 8)
+                            tmp.back() <<= (8 - bssz % 8);
 #endif                    
-                    return bitstring_type(tmp, (bssz % 8) ? (8 - bssz % 8) : 0);
+                        return bitstring_type(tmp, (bssz % 8) ? (8 - bssz % 8) : 0);
+                    }
+                    return NULL_BITMAP;
                 }
 
-                octet_sequnce as_octetsequence() const {
+                octet_sequnce as_octets() const {
                     boost::uint64_t val = sendval();
                     if (std::size_t octsz = octetsize())
                         return endian_conv_conv(octet_sequnce(static_cast<octet_sequnce::value_type*> ((void*) &val),
@@ -201,10 +211,9 @@ namespace boost {
                 }
 
                 void value(const octet_sequnce& vl) {
-                    T tmp;
+                    boost::uint64_t tmp = 0;
                     from_x690_cast(tmp, vl);
-                    tmp += MIN;
-                    value_ = tmp + MIN;
+                    value(tmp);
                 }
 
                 void value(boost::uint64_t vl) {
@@ -216,20 +225,15 @@ namespace boost {
                 }
 
                 std::size_t bitsize() const {
-                    if (boost::uint64_t rng = sendval()) {
-                        std::size_t rslt = 1;
-                        while (rng >>= 1)
-                            rslt++;
-                        return rslt;
-                    }
-                    return 0;
+                    return calculate_bitsize(sendval());
                 }
 
                 std::size_t octetsize() const {
-                    if (std::size_t bssz = bitsize())
-                        return (bssz - 1) / 8 + 1;
-                    return 0;
+                    if (std::size_t rslt = calculate_octetsize(bitsize()))
+                        return rslt;
+                    return 1;
                 }
+
 
             private:
 
@@ -257,45 +261,18 @@ namespace boost {
                     return value_;
                 }
 
-                std::size_t bitsize() const {
-                    if (value_ >= 0) {
-                        if (T rng = value_) {
-                            std::size_t rslt = 1;
-                            while (rng >>= 1)
-                                rslt++;
-                            return rslt;
-                        }
-                        return 0;
-                    } else
-                        return sizeof (T)*8;
-                }
-
-                std::size_t octetsize() const {
-                    if (std::size_t bssz = bitsize())
-                        return (bssz - 1) / 8 + 1;
-                    return 1;
-                }
-
-                octet_sequnce as_octetsequence() const {
-                    if (std::size_t octsz = octetsize()) {
-                        octet_sequnce vl;
-                        to_x690_cast<internal_type>(value_, vl);
-                        return vl;
-                    }
-                    return NULL_OCTET;
-                }
-
-                bool from_octetsequence(const octet_sequnce& dt) {
+                bool value(const octet_sequnce& dt) {
                     return from_x690_cast(value_, dt);
                 }
 
+                octet_sequnce as_octets() const {
+                    octet_sequnce vl;
+                    to_x690_cast<internal_type>(value_, vl);
+                    return vl.empty() ? S0_OCTET : vl;
+                }
 
 
             private:
-
-                internal_type& value() {
-                    return value_;
-                }
 
                 internal_type& value_;
             };
@@ -334,21 +311,12 @@ namespace boost {
                 }
 
                 std::size_t bitsize() const {
-                    if (value_ >= 0) {
-                        if (T rng = value_) {
-                            std::size_t rslt = 1;
-                            while (rng >>= 1)
-                                rslt++;
-                            return rslt;
-                        }
-                        return 0;
-                    } else
-                        return sizeof (T)*8;
+                    return calculate_bitsize(value_);
                 }
 
                 std::size_t octetsize() const {
-                    if (std::size_t bssz = bitsize())
-                        return (bssz - 1) / 8 + 1;
+                    if (std::size_t rslt = calculate_octetsize(bitsize()))
+                        return rslt;
                     return 1;
                 }
 
@@ -544,7 +512,7 @@ namespace boost {
                 if ((stream.unaligned()) || (vl.is_minimal()))
                     stream.add_bitmap(vl.as_bitmap(), false);
                 else
-                    stream.add(vl.as_octetsequence());
+                    stream.add(vl.as_octets());
                 return stream;
             }
 
@@ -701,7 +669,7 @@ namespace boost {
 
             template<typename T>
             inline output_coder& operator<<(output_coder& stream, const semiconstrained_wnumber<T>& vl) {
-                return octet_writer_undefsz(stream, vl.as_octetsequence());
+                return octet_writer_undefsz(stream, vl.as_octets());
             }
 
             template<typename T>
@@ -778,7 +746,7 @@ namespace boost {
             output_coder& primitive_int_serialize(output_coder& stream, const T& vl) {
 
                 unconstrained_wnumber<T> tmp(const_cast<T&> (vl));
-                octet_sequnce data = tmp.as_octetsequence();
+                octet_sequnce data = tmp.as_octets();
                 octet_writer_undefsz(stream, data);
                 return stream;
 
@@ -794,7 +762,7 @@ namespace boost {
                 to_x690_cast<boost::uint64_t>(semi, data);
 
                 if (data.empty())
-                    data = NULL_OCTET;
+                    data = S0_OCTET;
 
                 std::size_t octsz = data.size();
 
@@ -1169,7 +1137,6 @@ namespace boost {
 
             template<typename T, typename EC>
             input_coder& spec_element_reader(input_coder& stream, T& vl, std::size_t sz) {
-                //std::back_insert_iterator<T> biter(T);
                 while (sz--) {
                     std::back_inserter<T>(vl) = EC::in(stream);
                 }
@@ -1329,7 +1296,7 @@ namespace boost {
                     vl.value(tmp);
                     return stream;
                 }
-                bitstring_type valuebit = bitstring_type(NULL_OCTET, 6) + stream.get_pop_bmp(6);
+                bitstring_type valuebit = bitstring_type(S0_OCTET, 6) + stream.get_pop_bmp(6);
                 vl.value(valuebit.as_octet_sequnce());
                 return stream;
             }
@@ -1444,7 +1411,7 @@ namespace boost {
                 octet_sequnce data;
                 octet_reader_undefsz(stream, data);
                 unconstrained_wnumber<T> tmp(const_cast<T&> (vl));
-                tmp.from_octetsequence(data);
+                tmp.value(data);
                 return stream;
             }
 
