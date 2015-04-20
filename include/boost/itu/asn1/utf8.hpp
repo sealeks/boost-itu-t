@@ -31,6 +31,7 @@ DEALINGS IN THE SOFTWARE.
 #include <string>
 #include <stdexcept>
 #include <vector>
+#include <iterator>
 
 namespace boost {
     namespace asn1 {
@@ -537,7 +538,7 @@ namespace boost {
                                 throw invalid_utf16(static_cast<uint16_t> (trail_surrogate));
                         } else
                             throw invalid_utf16(static_cast<uint16_t> (cp));
-                    }                        // Lone trail surrogate
+                    }// Lone trail surrogate
                     else if (internal::is_trail_surrogate(cp))
                         throw invalid_utf16(static_cast<uint16_t> (cp));
 
@@ -601,38 +602,38 @@ namespace boost {
                     return it;
                 }
 
-                uint32_t operator *() const {
+                uint32_t operator*() const {
                     octet_iterator temp = it;
                     return next(temp, range_end);
                 }
 
-                bool operator ==(const iterator& rhs) const {
+                bool operator==(const iterator& rhs) const {
                     if (range_start != rhs.range_start || range_end != rhs.range_end)
                         throw std::logic_error("Comparing utf-8 iterators defined with different ranges");
                     return (it == rhs.it);
                 }
 
-                bool operator !=(const iterator& rhs) const {
-                    return !(operator ==(rhs));
+                bool operator!=(const iterator& rhs) const {
+                    return !(operator==(rhs));
                 }
 
-                iterator& operator ++() {
+                iterator& operator++() {
                     next(it, range_end);
                     return *this;
                 }
 
-                iterator operator ++(int) {
+                iterator operator++(int) {
                     iterator temp = *this;
                     next(it, range_end);
                     return temp;
                 }
 
-                iterator& operator --() {
+                iterator& operator--() {
                     prior(it, range_start);
                     return *this;
                 }
 
-                iterator operator --(int) {
+                iterator operator--(int) {
                     iterator temp = *this;
                     prior(it, range_start);
                     return temp;
@@ -789,42 +790,109 @@ namespace boost {
                         return it;
                     }
 
-                    uint32_t operator *() const {
+                    uint32_t operator*() const {
                         octet_iterator temp = it;
                         return next(temp);
                     }
 
-                    bool operator ==(const iterator& rhs) const {
+                    bool operator==(const iterator& rhs) const {
                         return (it == rhs.it);
                     }
 
-                    bool operator !=(const iterator& rhs) const {
-                        return !(operator ==(rhs));
+                    bool operator!=(const iterator& rhs) const {
+                        return !(operator==(rhs));
                     }
 
-                    iterator& operator ++() {
+                    iterator& operator++() {
                         std::advance(it, internal::sequence_length(it));
                         return *this;
                     }
 
-                    iterator operator ++(int) {
+                    iterator operator++(int) {
                         iterator temp = *this;
                         std::advance(it, internal::sequence_length(it));
                         return temp;
                     }
 
-                    iterator& operator --() {
+                    iterator& operator--() {
                         prior(it);
                         return *this;
                     }
 
-                    iterator operator --(int) {
+                    iterator operator--(int) {
                         iterator temp = *this;
                         prior(it);
                         return temp;
                     }
                 };
             }
+        }
+
+        template<typename T>
+        T utf8_to_16str(const std::string& val) {
+            try {
+                std::string::const_iterator end_it = boost::asn1::utf8::find_invalid(val.begin(), val.end());
+                if (end_it != val.end())
+                    return T();
+                std::size_t length = boost::asn1::utf8::distance(val.begin(), end_it);
+                T unicodeline;
+                if (length)
+                    unicodeline.reserve(length);
+                boost::asn1::utf8::utf8to16(val.begin(), end_it, std::back_inserter(unicodeline));
+                return unicodeline;
+            } catch (...) {
+            }
+            return T();
+        }
+
+        template<typename T>
+        T utf8_to_32str(const std::string& val) {
+            try {
+                std::string::const_iterator end_it = boost::asn1::utf8::find_invalid(val.begin(), val.end());
+                if (end_it != val.end())
+                    return T();
+                std::size_t length = boost::asn1::utf8::distance(val.begin(), end_it);
+                T unicodeline;
+                if (length)
+                    unicodeline.reserve(length);
+                boost::asn1::utf8::utf8to32(val.begin(), end_it, std::back_inserter(unicodeline));
+                return unicodeline;
+            } catch (...) {
+            }
+            return T();
+        }
+
+        template<typename T>
+        std::string utf16_to_8str(const T& val) {
+            try {
+                std::string utf8line;
+                boost::asn1::utf8::utf16to8(val.begin(), val.end(), std::back_inserter(utf8line));
+                return utf8line;
+            } catch (...) {
+            }
+            return "";
+        }
+
+        template<typename T>
+        std::string utf32_to_8str(const T& val) {
+            try {
+                std::string utf8line;
+                boost::asn1::utf8::utf16to8(val.begin(), val.end(), std::back_inserter(utf8line));
+                return utf8line;
+            } catch (...) {
+            }
+            return "";
+        }
+
+        template<typename R, typename S>
+        R utf_to_utf(const S& val) {
+            R rslt;
+            if (!val.empty()) {
+                rslt.reserve(val.size());
+                for (typename S::const_iterator it = val.begin(); it != val.end(); ++it)
+                    std::back_inserter<R > (rslt) = static_cast<typename R::value_type> (*it);
+            }
+            return rslt;
         }
 
         bool check_utf8(const std::string& val);

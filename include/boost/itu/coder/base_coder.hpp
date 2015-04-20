@@ -503,9 +503,20 @@ namespace boost {
             const oid_type& transfer_syntax() const {
                 return to_transfer_syntax(rule());
             }
+
+            std::size_t unusebits() const {
+                return unuse_ % 8;
+            }
+
+            std::size_t usebits() const {
+                return 8 - unusebits();
+            }            
     
         protected:
 
+            std::size_t unusebits(std::size_t vl) {
+                return unuse_ = vl % 8;
+            }            
 
             std::size_t unuse_;
             const_sequences_ptr listbuffers_;
@@ -580,9 +591,20 @@ namespace boost {
 
             void resetextention() {
             }
-         
+
+            std::size_t unusebits() const {
+                return unuse_ % 8;
+            }
+
+            std::size_t usebits() const {
+                return 8 - unusebits();
+            }            
 
         protected:
+
+            std::size_t unusebits(std::size_t vl) {
+                return unuse_ = vl % 8;
+            }            
 
             void decsize(std::size_t sz) {
                 size_ = size_ < sz ? 0 : (size_ - sz);

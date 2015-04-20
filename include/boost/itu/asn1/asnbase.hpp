@@ -18,6 +18,7 @@
 
 
 #include <boost/dynamic_bitset.hpp>
+#include <boost/static_assert.hpp>
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
@@ -173,6 +174,21 @@ namespace boost {\
 namespace boost {
     namespace asn1 {
 
+
+#if ((__WCHAR_MAX__) && (__WCHAR_MAX__ > 0x10000))
+        typedef wchar_t universalchar_t; // 32 bit
+        typedef boost::uint16_t bmpchar_t; // 16 bit
+        typedef std::wstring base_universalstring_type;
+        typedef std::basic_string<universalchar_t> base_bmpstring_type;
+        BOOST_STATIC_ASSERT(sizeof (wchar_t) == 4);
+#else   
+#define __ITU_ISBPM_WCHAR__         
+        typedef wchar_t bmpchar_t; // 16 bit
+        typedef boost::uint32_t universalchar_t;
+        typedef std::wstring base_bmpstring_type;
+        typedef std::basic_string<universalchar_t> base_universalstring_type;
+        BOOST_STATIC_ASSERT(sizeof (wchar_t) == 2);
+#endif
 
 
         const std::size_t LENGH_128B = 0x80; //  0x4;
@@ -465,46 +481,72 @@ namespace boost {
 
         ///universalstring_type
 
-        class universalstring_type : public std::string {
-// known-multi 4 oct
+        class universalstring_type : public base_universalstring_type {
+
+            // known-multi 4 oct
 
         public:
 
-            typedef std::vector<boost::uint32_t> rawarray_type;
-
-            universalstring_type() : std::string() {
+            universalstring_type() : base_universalstring_type() {
             }
 
-            universalstring_type(const std::wstring& vl) : std::string(wstr_to_universalstr(vl)) {
+            // from utf-8
+
+            explicit universalstring_type(const std::string& vl) :
+            base_universalstring_type(utf8_to_32str<base_universalstring_type>(vl)) {
             }
 
-            explicit universalstring_type(const std::string& vl) : std::string(wstr_to_universalstr(utf8_to_wstr(vl))) {
+
+#ifdef __ITU_ISBPM_WCHAR__
+
+            universalstring_type(const std::wstring& vl) :
+            base_universalstring_type(utf_to_utf<base_universalstring_type, std::wstring>(vl)) {
             }
 
             operator std::wstring() const {
-                return universalstr_to_wstr(*this);
-            }
-
-            operator octet_sequnce() const {
-                return octet_sequnce(begin(), end());
+                return utf_to_utf< std::wstring, base_universalstring_type>(*this);
             }
 
             std::wstring to_wstring() const {
-                return universalstr_to_wstr(*this);
+                return utf_to_utf< std::wstring, base_universalstring_type>(*this);
             }
 
-            rawarray_type to_rawstring() const {
-                return rawarray_type();
+
+#else            
+
+            universalstring_type(const std::wstring& vl) :
+            base_universalstring_type(vl) {
             }
 
-            std::string to_utf8() const {
-                return wstr_to_utf8(universalstr_to_wstr(*this));
-            }
-
-            operator std::string() const {
+            operator std::wstring() const {
                 return *this;
             }
 
+            std::wstring to_wstring() const {
+                return *this;
+            }
+
+
+#endif
+
+            std::string to_utf8() const {
+                return utf32_to_8str(*this);
+            }
+
+            operator std::string() const {
+                return to_utf8();
+            }
+
+            octet_sequnce as_octets() const {
+                return empty() ? octet_sequnce() : octet_sequnce(reinterpret_cast<const octet_sequnce::value_type*> (data()),
+                        reinterpret_cast<const octet_sequnce::value_type*> (data()) + size()*4);
+            }
+
+            bool append_octets(const octet_sequnce& vl) {
+                if (vl.size() / 4)
+                    append(reinterpret_cast<const value_type*> (vl.data()), vl.size() / 4);
+                return ((!vl.size()) || ((vl.size() / 4) && !(vl.size() % 4)));
+            }
 
         };
 
@@ -512,52 +554,79 @@ namespace boost {
             return stream << vl.operator std::string();
         }
 
+
+
         //UNICOD BMP STRING  
         //  16bit
 
         ///bmpstring_type
 
-        class bmpstring_type : public std::string {
-// known-multi 2 oct
+        class bmpstring_type : public /*std::string*/ base_bmpstring_type {
+
+            // known-multi 2 oct
 
         public:
 
-            typedef std::vector<boost::uint16_t> rawarray_type;
-
-            bmpstring_type() : std::string() {
+            bmpstring_type() : base_bmpstring_type() {
             }
 
-            bmpstring_type(const std::wstring& vl) : std::string(wstr_to_bmpstr(vl)) {
+            // frrom utf-8
+
+            explicit bmpstring_type(const std::string& vl) :
+            base_bmpstring_type(utf8_to_16str<base_bmpstring_type>(vl)) {
             }
 
-            explicit bmpstring_type(const std::string& vl) : std::string(wstr_to_bmpstr(utf8_to_wstr(vl))) {
+#ifdef __ITU_ISBPM_WCHAR__     
+
+            bmpstring_type(const std::wstring& vl) : base_bmpstring_type(vl) {
             }
 
             operator std::wstring() const {
-                return bmpstr_to_wstr(*this);
-            }
-
-            operator octet_sequnce() const {
-                return octet_sequnce(begin(), end());
+                return *this;
             }
 
             std::wstring to_wstring() const {
-                return bmpstr_to_wstr(*this);
-            }
-
-            rawarray_type to_rawstring() const {
-                return rawarray_type();
-            }
-
-            std::string to_utf8() const {
-                return wstr_to_utf8(bmpstr_to_wstr(*this));
-            }
-
-            operator std::string() const {
                 return *this;
             }
 
 
+
+#else          
+
+            bmpstring_type(const std::wstring& vl) :
+            base_bmpstring_type(utf_to_utf<base_bmpstring_type, std::wstring>(vl)) {
+            }
+
+            operator std::wstring() const {
+                return utf_to_utf<std::wstring, base_bmpstring_type>(*this);
+            }
+
+            std::wstring to_wstring() const {
+                return utf_to_utf<std::wstring, base_bmpstring_type>(*this);
+            }
+
+
+
+#endif  
+
+            std::string to_utf8() const {
+                return utf16_to_8str(*this);
+            }
+
+            operator std::string() const {
+                return to_utf8();
+            }
+
+            octet_sequnce as_octets() const {
+                return empty() ? octet_sequnce() : octet_sequnce(reinterpret_cast<const octet_sequnce::value_type*> (data()),
+                        reinterpret_cast<const octet_sequnce::value_type*> (data()) + size()*2);
+            }
+
+            bool append_octets(const octet_sequnce& vl) {
+                if (vl.size() / 2)
+                    append(reinterpret_cast<const value_type*> (vl.data()), vl.size() / 2);
+                return ((!vl.size()) || ((vl.size() / 2) && !(vl.size() % 2)));
+            }
 
         };
 
@@ -1493,33 +1562,33 @@ namespace boost {
             num_constrainter(explicit_typedef<T, Tag, ID, TYPE>& vl, const T& mn, const T& mx, bool ext) :
             value_(*vl), MIN(mn), MAX(mx), EXT(ext), SEMI(false) {
             }
-            
-            num_constrainter(T& vl, const T& mn,  bool ext) :
+
+            num_constrainter(T& vl, const T& mn, bool ext) :
             value_(vl), MIN(mn), MAX(), EXT(ext), SEMI(true) {
             }
 
-            num_constrainter(value_holder<T>& vl, const T& mn,  bool ext) :
+            num_constrainter(value_holder<T>& vl, const T& mn, bool ext) :
             value_(*vl), MIN(mn), MAX(), EXT(ext), SEMI(true) {
             }
 
-            num_constrainter(boost::shared_ptr<T>& vl, const T& mn,  bool ext) :
+            num_constrainter(boost::shared_ptr<T>& vl, const T& mn, bool ext) :
             value_(*vl), MIN(mn), MAX(), EXT(ext), SEMI(true) {
             }
 
             template<const T& DT>
-            num_constrainter(default_holder<T, DT>& vl, const T& mn,  bool ext) :
+            num_constrainter(default_holder<T, DT>& vl, const T& mn, bool ext) :
             value_(const_cast<T&> (*vl)), MIN(mn), MAX(), EXT(ext), SEMI(true) {
             }
 
             template<class Tag, id_type ID, class_type TYPE >
-            num_constrainter(implicit_typedef<T, Tag, ID, TYPE>& vl, const T& mn,  bool ext) :
+            num_constrainter(implicit_typedef<T, Tag, ID, TYPE>& vl, const T& mn, bool ext) :
             value_(*vl), MIN(mn), MAX(), EXT(ext), SEMI(true) {
             }
 
             template<class Tag, id_type ID, class_type TYPE >
-            num_constrainter(explicit_typedef<T, Tag, ID, TYPE>& vl, const T& mn,  bool ext) :
+            num_constrainter(explicit_typedef<T, Tag, ID, TYPE>& vl, const T& mn, bool ext) :
             value_(*vl), MIN(mn), MAX(), EXT(ext), SEMI(true) {
-            }            
+            }
 
             const T& min() const {
                 return MIN;
@@ -1532,18 +1601,18 @@ namespace boost {
             bool can_extended() const {
                 return EXT;
             }
-            
-            bool nill_extended() const  {
+
+            bool nill_extended() const {
                 return (!MIN && !MAX && EXT);
-            }  
-            
+            }
+
             bool constrained() const {
                 return MIN || MAX || SEMI;
-            }              
-            
+            }
+
             bool semi() const {
                 return SEMI;
-            }            
+            }
 
             boost::uint64_t range() const {
                 return MAX - MIN;
@@ -1564,10 +1633,10 @@ namespace boost {
             bool extended() const {
                 return SEMI ? (value_ < MIN) : ((value_ < MIN) || (value_ > MAX));
             }
-            
-            void to_single()  {
-                value_=MIN;
-            }            
+
+            void to_single() {
+                value_ = MIN;
+            }
 
         private:
 
@@ -1621,9 +1690,9 @@ namespace boost {
         inline bool bind_constraints_ext(Archive & arch, explicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN, const T& MAX) {
             return bind_constraints_ext(arch, *vl, MIN, MAX);
         }
-        
+
         //
-        
+
         template<typename Archive, typename T>
         inline bool bind_semiconstraints(Archive & arch, T& vl, const T& MIN) {
             std::size_t tst = arch.size();
@@ -1665,11 +1734,11 @@ namespace boost {
         template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
         inline bool bind_semiconstraints_ext(Archive & arch, explicit_typedef<T, Tag, ID, TYPE>& vl, const T& MIN) {
             return bind_semiconstraints_ext(arch, *vl, MIN);
-        }        
+        }
 
 
 
-        
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1720,14 +1789,14 @@ namespace boost {
             bool unable() const {
                 return !(MAX || MIN || EXT);
             }
-            
-            bool nill_extended() const  {
+
+            bool nill_extended() const {
                 return (!MIN && !MAX && EXT);
-            } 
-            
+            }
+
             bool semi() const {
                 return (MIN && !MAX);
-            }             
+            }
 
             bool can_extended() const {
                 return EXT;

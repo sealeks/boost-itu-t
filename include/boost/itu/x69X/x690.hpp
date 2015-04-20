@@ -367,12 +367,22 @@ namespace boost {
             template<>
             void x690_string_to_stream_cast(const bitstring_type& val, output_coder& stream, octet_type lentype);
 
+            template<>
+            void x690_string_to_stream_cast(const bmpstring_type& val, output_coder& stream, octet_type lentype);
+
+            template<>
+            void x690_string_to_stream_cast(const universalstring_type& val, output_coder& stream, octet_type lentype);
+
             template<typename T>
             output_coder& stringtype_writer(output_coder& stream, const T& vl, id_type id, octet_type mask) {
 
+                std::size_t strsz = vl.size();
+                if (tag_traits<T>::number() == TYPE_BMPSTRING)
+                    strsz *= 2;
+                if (tag_traits<T>::number() == TYPE_UNIVERSALSTRING)
+                    strsz *= 4;
 
-
-                octet_type construct = vl.size()<(tag_traits<T>::number() == TYPE_BITSTRING ? (CER_STRING_MAX_SIZE - 1) : CER_STRING_MAX_SIZE)
+                octet_type construct = strsz < (tag_traits<T>::number() == TYPE_BITSTRING ? (CER_STRING_MAX_SIZE - 1) : CER_STRING_MAX_SIZE)
                         ? PRIMITIVE_ENCODING : (stream.canonical() ? CONSTRUCTED_ENCODING : PRIMITIVE_ENCODING);
 
                 stream.addtag(tag(id, mask | construct), false);
@@ -802,6 +812,17 @@ namespace boost {
             octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, bitstring_type& vl);
 
             template<typename T>
+            void stringtype_inserter(T& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end) {
+                vl.insert(vl.end(), beg, end);
+            }
+
+            template<>
+            void stringtype_inserter(universalstring_type& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end);
+
+            template<>
+            void stringtype_inserter(bmpstring_type& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end);
+
+            template<typename T>
             bool stringtype_reader(input_coder& stream, T& vl, id_type id, octet_type mask) {
 
                 size_class tmpsize;
@@ -821,7 +842,7 @@ namespace boost {
                                 octet_sequnce data;
                                 if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
                                     octet_sequnce::iterator fit = reader_setunuse(data, vl);
-                                    vl.insert(vl.end(), fit, data.end());
+                                    stringtype_inserter(vl, fit, data.end());
                                     return true;
                                 }
                             }
@@ -840,7 +861,7 @@ namespace boost {
                             octet_sequnce data;
                             if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, tmpsize.size())) {
                                 octet_sequnce::iterator fit = reader_setunuse(data, vl);
-                                vl.insert(vl.end(), fit, data.end());
+                                stringtype_inserter(vl, fit, data.end());
                                 stream.pop_stack();
                                 return true;
                             }

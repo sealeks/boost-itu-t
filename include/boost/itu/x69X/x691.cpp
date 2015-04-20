@@ -122,6 +122,26 @@ namespace boost {
                 return 0;
             }
 
+            void bmpstring_ec::out(boost::asn1::x691::output_coder& stream, bmpstring_type::value_type vl) {
+                stream.add_octets(octet_sequnce(reinterpret_cast<const octet_sequnce::value_type*> (&vl),
+                        reinterpret_cast<const octet_sequnce::value_type*> (&vl) + 2), stream.aligned());
+            }
+
+            bmpstring_type::value_type bmpstring_ec::in(boost::asn1::x691::input_coder& stream) {
+                octet_sequnce tmp = stream.get_pop_octs(2, stream.aligned());
+                return *reinterpret_cast<const bmpstring_type::value_type*> (tmp.data());
+            }
+
+            void universalstring_ec::out(boost::asn1::x691::output_coder& stream, universalstring_type::value_type vl) {
+                stream.add_octets(octet_sequnce(reinterpret_cast<const octet_sequnce::value_type*> (&vl),
+                        reinterpret_cast<const octet_sequnce::value_type*> (&vl) + 4), stream.aligned());
+            }
+
+            universalstring_type::value_type universalstring_ec::in(boost::asn1::x691::input_coder& stream) {
+                octet_sequnce tmp = stream.get_pop_octs(4, stream.aligned());
+                return *reinterpret_cast<const universalstring_type::value_type*> (tmp.data());
+            }
+
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
@@ -377,23 +397,19 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const universalstring_type& vl) {
-                //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
-                return stream; // known-multi 4 oct
+                return stream << size_constrainter<universalstring_type, universalstring_ec>(const_cast<universalstring_type&> (vl)); // known-multi 4 oct
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type>& vl) {
-                //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
-                return stream; // known-multi 4 oct
+                return stream << size_constrainter<universalstring_type, universalstring_ec>(const_cast<universalstring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 4 oct
             }
 
             output_coder& operator<<(output_coder& stream, const bmpstring_type& vl) {
-                //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
-                return stream; // known-multi 2 oct
+                return stream << size_constrainter< bmpstring_type, bmpstring_ec>(const_cast<bmpstring_type&> (vl)); // known-multi 2 oct
             }
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<bmpstring_type>& vl) {
-                //stringtype_writer(stream, vl.value(), vl.id(), vl.mask());
-                return stream; // known-multi 2 oct
+            output_coder& operator<<(output_coder& stream, const size_constrainter< bmpstring_type>& vl) {
+                return stream << size_constrainter< bmpstring_type, bmpstring_ec>(const_cast<bmpstring_type&> (vl.value()), vl.min(), vl.max(), vl.can_extended()); // known-multi 2 oct
             }
 
             output_coder& operator<<(output_coder& stream, const utctime_type& vl) {
@@ -732,19 +748,23 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, universalstring_type& vl) {
-                return stream;
+                size_constrainter<universalstring_type, universalstring_ec> tmp(vl);
+                return stream >> tmp; // known-multi 4 oct
             }
 
             input_coder& operator>>(input_coder& stream, size_constrainter<universalstring_type>& vl) {
-                return stream;
+                size_constrainter<universalstring_type, universalstring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+                return stream >> tmp; // known-multi 4 oct
             }
 
             input_coder& operator>>(input_coder& stream, bmpstring_type& vl) {
-                return stream;
+                size_constrainter< bmpstring_type, bmpstring_ec> tmp(vl);
+                return stream >> tmp; // known-multi 2 oct
             }
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<bmpstring_type>& vl) {
-                return stream;
+            input_coder& operator>>(input_coder& stream, size_constrainter< bmpstring_type>& vl) {
+                size_constrainter< bmpstring_type, bmpstring_ec> tmp(vl.value(), vl.min(), vl.max(), vl.can_extended());
+                return stream >> tmp; // known-multi 2 oct
             }
 
             input_coder& operator>>(input_coder& stream, utctime_type& vl) {

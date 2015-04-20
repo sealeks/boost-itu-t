@@ -404,10 +404,21 @@ namespace boost {
 
             };
 
+            struct bmpstring_ec {
 
+                static void out(boost::asn1::x691::output_coder& stream, bmpstring_type::value_type vl);
 
+                static bmpstring_type::value_type in(boost::asn1::x691::input_coder& stream);
 
+            };
 
+            struct universalstring_ec {
+
+                static void out(boost::asn1::x691::output_coder& stream, universalstring_type::value_type vl);
+
+                static universalstring_type::value_type in(boost::asn1::x691::input_coder& stream);
+
+            };
 
 
 
@@ -476,19 +487,7 @@ namespace boost {
                     return rule_ == boost::itu::CER_ENCODING;
                 }
 
-                std::size_t unusebits() const {
-                    return unuse_ % 8;
-                }
 
-                std::size_t usebits() const {
-                    return 8 - unusebits();
-                }
-
-            protected:
-
-                std::size_t unusebits(std::size_t vl) {
-                    return unuse_ = vl % 8;
-                }
 
             private:
 
@@ -950,10 +949,20 @@ namespace boost {
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type>& vl);
 
+            template<typename EC>
+            output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type, EC>& vl) {
+                return spec_element_writer_defsz<universalstring_type, EC>(stream, vl);
+            }
+
 
             output_coder& operator<<(output_coder& stream, const bmpstring_type& vl);
 
-            output_coder& operator<<(output_coder& stream, const size_constrainter<bmpstring_type>& vl);
+            output_coder& operator<<(output_coder& stream, const size_constrainter< bmpstring_type>& vl);
+
+            template<typename EC>
+            output_coder& operator<<(output_coder& stream, const size_constrainter< bmpstring_type, EC>& vl) {
+                return spec_element_writer_defsz< bmpstring_type, EC>(stream, vl);
+            }
 
 
 
@@ -1077,19 +1086,6 @@ namespace boost {
                     *this & vl.value();
                 }
 
-                std::size_t unusebits() const {
-                    return unuse_ % 8;
-                }
-
-                std::size_t usebits() const {
-                    return 8 - unusebits();
-                }
-
-            protected:
-
-                std::size_t unusebits(std::size_t vl) {
-                    return unuse_ = vl % 8;
-                }
 
             private:
 
@@ -1607,13 +1603,27 @@ namespace boost {
 
             input_coder& operator>>(input_coder& stream, size_constrainter<generalstring_type>& vl);
 
+
+
             input_coder& operator>>(input_coder& stream, universalstring_type& vl);
 
             input_coder& operator>>(input_coder& stream, size_constrainter<universalstring_type>& vl);
 
+            template<typename EC>
+            input_coder& operator>>(input_coder& stream, size_constrainter<universalstring_type, EC>& vl) {
+                return spec_element_reader_defsz<universalstring_type, EC>(stream, vl);
+            }
+
+
             input_coder& operator>>(input_coder& stream, bmpstring_type& vl);
 
-            input_coder& operator>>(input_coder& stream, size_constrainter<bmpstring_type>& vl);
+            input_coder& operator>>(input_coder& stream, size_constrainter< bmpstring_type>& vl);
+
+            template<typename EC>
+            input_coder& operator>>(input_coder& stream, size_constrainter< bmpstring_type, EC>& vl) {
+                return spec_element_reader_defsz< bmpstring_type, EC>(stream, vl);
+            }
+
 
 
             input_coder& operator>>(input_coder& stream, utctime_type& vl);

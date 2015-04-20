@@ -50,7 +50,7 @@ namespace boost {
             }
 
 
-         
+
 
             // STRING REALISZATION
 
@@ -83,6 +83,16 @@ namespace boost {
                         stream.pop_stack();
                     }
                 }
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const bmpstring_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(val.as_octets(), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const universalstring_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(val.as_octets(), stream, lentype);
             }
 
             template<>
@@ -297,7 +307,7 @@ namespace boost {
                 }
             }
 
-            void output_coder::sort_tlv(tlv_vector& vct) {
+            void output_coder::sort_tlv(tlv_vector & vct) {
 
                 typedef std::map<tag, iterator_pair> tlv_map;
 
@@ -365,18 +375,25 @@ namespace boost {
                 return 0;
             }
 
-  
             template<>
-            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq,  bitstring_type& vl) {
-                octet_sequnce::iterator it=seq.begin();
-                if (it!=seq.end()){
-                    vl.unusebits(static_cast<std::size_t>(*it));
+            octet_sequnce::iterator reader_setunuse(octet_sequnce& seq, bitstring_type & vl) {
+                octet_sequnce::iterator it = seq.begin();
+                if (it != seq.end()) {
+                    vl.unusebits(static_cast<std::size_t> (*it));
                     it++;
                 }
                 return it;
-            }              
+            }
 
+            template<>
+            void stringtype_inserter(universalstring_type& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end) {
+                vl.append_octets(octet_sequnce(beg, end));
+            }
 
+            template<>
+            void stringtype_inserter(bmpstring_type& vl, octet_sequnce::iterator beg, octet_sequnce::iterator end) {
+                vl.append_octets(octet_sequnce(beg, end));
+            }
 
             ////////////////////////////////////////////
 
@@ -475,98 +492,98 @@ namespace boost {
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<bitstring_type>& vl) {
-                const_cast<bitstring_type*> (&(vl.value()))->clear();
+                //const_cast<bitstring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<bitstring_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<octetstring_type>& vl) {
-                const_cast<octetstring_type*> (&(vl.value()))->clear();
+                //const_cast<octetstring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<octetstring_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<utf8string_type>& vl) {
-                const_cast<utf8string_type*> (&(vl.value()))->clear();
+                //const_cast<utf8string_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<utf8string_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<numericstring_type>& vl) {
-                const_cast<numericstring_type*> (&(vl.value()))->clear();
+                //const_cast<numericstring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<numericstring_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<printablestring_type>& vl) {
-                const_cast<printablestring_type*> (&(vl.value()))->clear();
+                //const_cast<printablestring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<printablestring_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<t61string_type>& vl) {
-                const_cast<t61string_type*> (&(vl.value()))->clear();
+                //const_cast<t61string_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<t61string_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<videotexstring_type>& vl) {
-                const_cast<videotexstring_type*> (&(vl.value()))->clear();
+                //const_cast<videotexstring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<videotexstring_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<ia5string_type>& vl) {
-                const_cast<ia5string_type*> (&(vl.value()))->clear();
+                //const_cast<ia5string_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<ia5string_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<graphicstring_type>& vl) {
-                const_cast<graphicstring_type*> (&(vl.value()))->clear();
+                //const_cast<graphicstring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<graphicstring_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<objectdescriptor_type>& vl) {
-                const_cast<objectdescriptor_type*> (&(vl.value()))->clear();
+                //const_cast<objectdescriptor_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<objectdescriptor_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<visiblestring_type>& vl) {
-                const_cast<visiblestring_type*> (&(vl.value()))->clear();
+                //const_cast<visiblestring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<visiblestring_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<generalstring_type>& vl) {
-                const_cast<generalstring_type*> (&(vl.value()))->clear();
+                //const_cast<generalstring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<generalstring_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<universalstring_type>& vl) {
-                const_cast<universalstring_type*> (&(vl.value()))->clear();
+                //const_cast<universalstring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<universalstring_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
             input_coder& operator>>(input_coder& stream, const implicit_value<bmpstring_type>& vl) {
-                const_cast<bmpstring_type*> (&(vl.value()))->clear();
+                //const_cast<bmpstring_type*> (&(vl.value()))->clear();
                 stringtype_reader(stream, *const_cast<bmpstring_type*> (&(vl.value())), vl.id(), vl.mask());
                 return stream;
             }
@@ -583,7 +600,7 @@ namespace boost {
 
             ////////  Archiver
 
-            tag input_coder::test_tl(size_class& sz) {
+            tag input_coder::test_tl(size_class & sz) {
 
                 tag tmptag;
                 std::size_t sztag = tag_x690_cast(tmptag, buffers(), buffers().begin());
@@ -725,8 +742,8 @@ namespace boost {
 
 
         }
-        
-        
+
+
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -1134,7 +1151,7 @@ namespace boost {
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
-        
+
     }
 }
 
