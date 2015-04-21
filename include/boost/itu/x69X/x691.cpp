@@ -207,6 +207,11 @@ namespace boost {
             }
 
             template<>
+            bool check_alighn(const size_constrainter<bitstring_type >& vl) {
+                return (!(vl.is_single()) || ((vl.is_single()) && (vl.value().sizebits() > MIN_NOT_ALIGN_BITSIZE)));
+            }
+
+            template<>
             output_coder& octet_writer_undefsz(output_coder& stream, const bitstring_type& vl) {
                 std::size_t sz = vl.sizebits();
                 std::size_t beg = 0;
@@ -233,6 +238,28 @@ namespace boost {
                     }
                 }
                 return stream;
+            }
+
+            template<>
+            output_coder& octet_writer_defsz(output_coder& stream, const size_constrainter<bitstring_type>& vl) {
+
+                if (vl.available()) {
+                    if (vl.can_extended())
+                        stream.add_bitmap(bitstring_type(vl.extended(vl.value().size())));
+
+                    if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
+
+                        std::size_t tmpsz = vl.value().sizebits();
+                        if (!vl.check(tmpsz))
+                            throw boost::system::system_error(boost::itu::ER_PROTOCOL);
+
+                        if (vl.max() < LENGH_64K) {
+                            writer_defsz(stream, vl);
+                            return octets_writer(stream, vl.value(), stream.aligned() ? check_alighn(vl) : false);
+                        }
+                    }
+                }
+                return octet_writer_undefsz(stream, vl.value());
             }
 
             output_coder& operator<<(output_coder& stream, const uint8_t& vl) {

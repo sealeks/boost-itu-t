@@ -510,6 +510,11 @@ namespace boost {
 
             std::size_t usebits() const {
                 return 8 - unusebits();
+            }   
+            
+            void force_alighn() {
+                if (unusebits()) 
+                    unusebits(0);
             }            
     
         protected:
@@ -598,7 +603,14 @@ namespace boost {
 
             std::size_t usebits() const {
                 return 8 - unusebits();
-            }            
+            }     
+            
+            void force_alighn() {
+                if ((size()) && (unusebits())) {
+                    pop_front(1);
+                    unusebits(0);
+                }
+            }
 
         protected:
 

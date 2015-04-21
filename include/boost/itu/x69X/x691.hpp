@@ -25,6 +25,8 @@ namespace boost {
 
             const std::size_t MAX_OCTETLENGTH_SIZE = 0x100;
             const std::size_t MAX_SMALL_NN_SIZE = 64;
+            const std::size_t MIN_NOT_ALIGN_BITSIZE = 16;
+            const std::size_t MIN_NOT_ALIGN_OCTSIZE = 2;
 
             const octet_sequnce S0_OCTET = octet_sequnce(1, '\x0');
             const bitstring_type NULL_BITMAP = bitstring_type();
@@ -378,6 +380,10 @@ namespace boost {
 
                 static numericstring_type::value_type in(boost::asn1::x691::input_coder& stream);
 
+                static std::size_t bits_count() {
+                    return /*aligned ? 4 :*/ 4;
+                }
+
             };
 
             struct printablestring_ec {
@@ -385,6 +391,10 @@ namespace boost {
                 static void out(boost::asn1::x691::output_coder& stream, printablestring_type::value_type vl);
 
                 static printablestring_type::value_type in(boost::asn1::x691::input_coder& stream);
+
+                static std::size_t bits_count(bool aligned) {
+                    return aligned ? 8 : 7;
+                }
 
             };
 
@@ -394,6 +404,10 @@ namespace boost {
 
                 static ia5string_type::value_type in(boost::asn1::x691::input_coder& stream);
 
+                static std::size_t bits_count(bool aligned) {
+                    return aligned ? 8 : 7;
+                }
+
             };
 
             struct visiblestring_ec {
@@ -401,6 +415,10 @@ namespace boost {
                 static void out(boost::asn1::x691::output_coder& stream, visiblestring_type::value_type vl);
 
                 static visiblestring_type::value_type in(boost::asn1::x691::input_coder& stream);
+
+                static std::size_t bits_count(bool aligned) {
+                    return aligned ? 8 : 7;
+                }
 
             };
 
@@ -410,6 +428,10 @@ namespace boost {
 
                 static bmpstring_type::value_type in(boost::asn1::x691::input_coder& stream);
 
+                static std::size_t bits_count(bool aligned) {
+                    return /*aligned ? 8 :*/ 16;
+                }
+
             };
 
             struct universalstring_ec {
@@ -417,6 +439,10 @@ namespace boost {
                 static void out(boost::asn1::x691::output_coder& stream, universalstring_type::value_type vl);
 
                 static universalstring_type::value_type in(boost::asn1::x691::input_coder& stream);
+
+                static std::size_t bits_count(bool aligned) {
+                    return /*aligned ? 8 :*/ 32;
+                }
 
             };
 
@@ -430,7 +456,8 @@ namespace boost {
 
             public:
 
-                output_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) : boost::itu::base_output_coder(), rule_(rul), unaligned_(false/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
+                output_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) :
+                boost::itu::base_output_coder(), rule_(rul), unaligned_(false/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
                 }
 
                 virtual encoding_rule rule() const {
@@ -516,7 +543,7 @@ namespace boost {
             }
 
 
-            ////////////////// STRING REALIZATION
+            ////////////////// ELEMENTS AND STRINGS
 
             output_coder& octets_writer(output_coder& stream, const octet_sequnce& elms, bool align = false);
 
@@ -553,6 +580,11 @@ namespace boost {
                 return spec_elements_writer<T, EC>(stream, beg, end);
             }
 
+
+
+
+            //  writer_defsz
+
             template<typename T>
             void writer_defsz(output_coder& stream, const size_constrainter<T>& vl) {
 
@@ -576,6 +608,26 @@ namespace boost {
                     stream << constrained_wnumber<std::size_t>(tmpsz, vl.min(), vl.max());
 
             }
+
+
+            //  check_alighn                      
+
+            template<typename T>
+            bool check_alighn(const size_constrainter<T >& vl) {
+                return (!(vl.is_single()) || ((vl.is_single()) &&(vl.value().size() > MIN_NOT_ALIGN_OCTSIZE)));
+            }
+
+            template<>
+            bool check_alighn(const size_constrainter<bitstring_type >& vl);
+
+            template<typename T, typename EC>
+            bool spec_check_alighn(const size_constrainter<T, EC >& vl) {
+                return (!(vl.is_single()) || ((vl.is_single()) && ((vl.value().size() * EC::bits_count(true)) > MIN_NOT_ALIGN_BITSIZE)));
+            }
+
+
+
+            //   undef size writer
 
             template<typename T>
             output_coder& octet_writer_undefsz(output_coder& stream, const T& vl) {
@@ -666,6 +718,11 @@ namespace boost {
                 return stream;
             }
 
+
+
+
+            /////////////////////////////////////////////////////           
+
             template<typename T>
             inline output_coder& operator<<(output_coder& stream, const semiconstrained_wnumber<T>& vl) {
                 return octet_writer_undefsz(stream, vl.as_octets());
@@ -682,6 +739,11 @@ namespace boost {
                 return stream;
             }
 
+
+
+
+            //   def size writer            
+
             template<typename T>
             output_coder& octet_writer_defsz(output_coder& stream, const size_constrainter<T>& vl) {
 
@@ -697,12 +759,15 @@ namespace boost {
 
                         if (vl.max() < LENGH_64K) {
                             writer_defsz(stream, vl);
-                            return octets_writer(stream, octet_sequnce(vl.value()), vl.max() <= 2);
+                            return octets_writer(stream, octet_sequnce(vl.value()), stream.aligned() ? check_alighn<T>(vl) : false);
                         }
                     }
                 }
                 return octet_writer_undefsz(stream, vl.value());
             }
+
+            template<>
+            output_coder& octet_writer_defsz(output_coder& stream, const size_constrainter<bitstring_type>& vl);
 
             template<typename T>
             output_coder& element_writer_defsz(output_coder& stream, const size_constrainter<T>& vl) {
@@ -724,7 +789,7 @@ namespace boost {
             }
 
             template<typename T, typename EC>
-            output_coder& spec_element_writer_defsz(output_coder& stream, const size_constrainter<T, EC>& vl) {
+            output_coder& spec_element_writer_defsz(output_coder& stream, const size_constrainter<T, EC>& vl, bool checkal = false) {
 
                 if (vl.available()) {
                     if (vl.can_extended())
@@ -734,12 +799,19 @@ namespace boost {
 
                         if (vl.max() < LENGH_64K) {
                             writer_defsz(stream, vl);
+                            if ((stream.aligned()) && checkal && (spec_check_alighn<T, EC>(vl)))
+                                stream.force_alighn();
                             return spec_elements_writer<typename T::const_iterator, EC > (stream, vl.value().begin(), vl.value().end());
                         }
                     }
                 }
                 return spec_element_writer_undefsz<T, EC>(stream, vl.value());
             }
+
+
+
+
+            ///////////////////////////////////////////////////////////////////////
 
             template<typename T>
             output_coder& primitive_int_serialize(output_coder& stream, const T& vl) {
@@ -780,6 +852,9 @@ namespace boost {
                 octet_writer_undefsz(stream, tmp);
                 return stream;
             }
+
+
+            ////////////////////////////////////////////////////////////////////
 
             template<typename T>
             output_coder& operator<<(output_coder& stream, const std::vector<T>& vl) {
@@ -1023,7 +1098,8 @@ namespace boost {
 
             public:
 
-                input_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) : boost::itu::base_input_coder(), rule_(rul), unaligned_(false/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
+                input_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) :
+                boost::itu::base_input_coder(), rule_(rul), unaligned_(false/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
                 }
 
                 virtual encoding_rule rule() const {
