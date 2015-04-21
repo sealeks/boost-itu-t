@@ -661,7 +661,7 @@ namespace boost {
 
             input_coder& operator>>(input_coder& stream, bool& vl) {
                 bitstring_type rslt = stream.get_pop_bmp(1);
-                vl = rslt.bit(1);
+                vl = rslt.bit(0);
                 return stream;
             }
 
