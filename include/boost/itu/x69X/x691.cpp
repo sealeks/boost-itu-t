@@ -13,7 +13,7 @@ namespace boost {
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
-            /*OUTPUT STREAM                                                                                                                                                                                               */
+            /*OUTPUT STREAM                                                                                                                                                      */
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////               
 
 
@@ -332,15 +332,19 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const bitstring_type& vl) {
-                return octet_writer_undefsz(stream, vl);
+                return octet_writer_undefsz(stream, vl.as_octet_sequnce());
+            }
+
+            output_coder& operator<<(output_coder& stream, const size_constrainter<bitstring_type>& vl) {
+                return stream << vl.value();
             }
 
             output_coder& operator<<(output_coder& stream, const octetstring_type& vl) {
-                return octet_writer_undefsz(stream, vl);
+                return octet_writer_undefsz(stream, vl.as_octet_sequnce());
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<octetstring_type>& vl) {
-                return octet_writer_defsz(stream, vl); // as known-multi 1 oct                
+                return stream << vl.value();
             }
 
             output_coder& operator<<(output_coder& stream, const utf8string_type& vl) {
@@ -579,6 +583,29 @@ namespace boost {
             bool from_x691_cast(any_type& val, const octet_sequnce& src) {
                 val.set(src);
                 return true;
+            }
+
+
+
+
+
+
+
+
+
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+            /*INPUT STREAM                                                                                                                                                                                               */
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////                     
+
+            template<>
+            input_coder& octet_reader(input_coder& stream, bitstring_type& vl, std::size_t sz, bool alighn) {
+                if (sz) {
+                    bitstring_type readvl = stream.get_pop_bmp(sz, alighn);
+                    vl.append(readvl);
+                }
+                return stream;
             }
 
 

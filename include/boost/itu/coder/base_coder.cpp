@@ -402,6 +402,14 @@ namespace boost {
             return bitstring_type(rslt, rsltsize);
         }
 
+        void bitstring_type::append(const bitstring_type& vl) {
+            itu::split_bits_in_octets(*this, unusebits(), vl, vl.unusebits());
+        }
+
+        void bitstring_type::append(const octetstring_type& vl) {
+            itu::split_bits_in_octets(*this, unusebits(), vl, 0);
+        }
+
         void bitstring_type::construct(const std::vector<bool>& vl) {
             assign((vl.size() % 8) ? (vl.size() / 8 + 1) : (vl.size() / 8), 0);
             unuse_ = (8 - vl.size() % 8) % 8;
@@ -429,6 +437,8 @@ namespace boost {
             }
             return stream;
         }
+
+
 
         // octetstring_type
 

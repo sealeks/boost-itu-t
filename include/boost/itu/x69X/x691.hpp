@@ -380,7 +380,7 @@ namespace boost {
 
                 static numericstring_type::value_type in(boost::asn1::x691::input_coder& stream);
 
-                static std::size_t bits_count() {
+                static std::size_t bits_count(bool aligned) {
                     return /*aligned ? 4 :*/ 4;
                 }
 
@@ -949,6 +949,8 @@ namespace boost {
 
             output_coder& operator<<(output_coder& stream, const bitstring_type& vl);
 
+            output_coder& operator<<(output_coder& stream, const size_constrainter<bitstring_type>& vl);
+
             output_coder& operator<<(output_coder& stream, const octetstring_type& vl);
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<octetstring_type>& vl);
@@ -963,7 +965,7 @@ namespace boost {
 
             template<typename EC>
             output_coder& operator<<(output_coder& stream, const size_constrainter<numericstring_type, EC>& vl) {
-                return spec_element_writer_defsz<numericstring_type, EC>(stream, vl);
+                return spec_element_writer_defsz<numericstring_type, EC>(stream, vl, true);
             }
 
 
@@ -973,7 +975,7 @@ namespace boost {
 
             template<typename EC>
             output_coder& operator<<(output_coder& stream, const size_constrainter<printablestring_type, EC>& vl) {
-                return spec_element_writer_defsz<printablestring_type, EC>(stream, vl);
+                return spec_element_writer_defsz<printablestring_type, EC>(stream, vl, true);
             }
 
 
@@ -993,7 +995,7 @@ namespace boost {
 
             template<typename EC>
             output_coder& operator<<(output_coder& stream, const size_constrainter< ia5string_type, EC>& vl) {
-                return spec_element_writer_defsz< ia5string_type, EC>(stream, vl);
+                return spec_element_writer_defsz< ia5string_type, EC>(stream, vl, true);
             }
 
             output_coder& operator<<(output_coder& stream, const graphicstring_type& vl);
@@ -1012,7 +1014,7 @@ namespace boost {
 
             template<typename EC>
             output_coder& operator<<(output_coder& stream, const size_constrainter<visiblestring_type, EC>& vl) {
-                return spec_element_writer_defsz<visiblestring_type, EC>(stream, vl);
+                return spec_element_writer_defsz<visiblestring_type, EC>(stream, vl, true);
             }
 
             output_coder& operator<<(output_coder& stream, const generalstring_type& vl);
@@ -1026,7 +1028,7 @@ namespace boost {
 
             template<typename EC>
             output_coder& operator<<(output_coder& stream, const size_constrainter<universalstring_type, EC>& vl) {
-                return spec_element_writer_defsz<universalstring_type, EC>(stream, vl);
+                return spec_element_writer_defsz<universalstring_type, EC>(stream, vl, true);
             }
 
 
@@ -1036,7 +1038,7 @@ namespace boost {
 
             template<typename EC>
             output_coder& operator<<(output_coder& stream, const size_constrainter< bmpstring_type, EC>& vl) {
-                return spec_element_writer_defsz< bmpstring_type, EC>(stream, vl);
+                return spec_element_writer_defsz< bmpstring_type, EC>(stream, vl, true);
             }
 
 
@@ -1197,6 +1199,18 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////
 
             template<typename T>
+            input_coder& octet_reader(input_coder& stream, T& vl, std::size_t sz, bool alighn = false) {
+                if (sz) {
+                    octet_sequnce readvl = stream.get_pop_octs(sz, alighn);
+                    vl.insert(vl.end(), readvl.begin(), readvl.end());
+                }
+                return stream;
+            }
+
+            template<>
+            input_coder& octet_reader(input_coder& stream, bitstring_type& vl, std::size_t sz, bool alighn);
+
+            template<typename T>
             input_coder& element_reader(input_coder& stream, T& vl, std::size_t sz) {
                 typedef typename T::value_type value_type;
                 while (sz--) {
@@ -1230,8 +1244,7 @@ namespace boost {
                                     sz *= static_cast<std::size_t> (0x7 & nxt[0]);
                                 else
                                     throw boost::system::system_error(boost::itu::ER_BEDSEQ);
-                                octet_sequnce dt = stream.get_pop_octs(sz, stream.aligned());
-                                vl.insert(vl.end(), dt.begin(), dt.end());
+                                octet_reader(stream, vl, sz, stream.aligned());
                                 break;
                             }
                             case '\x80':
@@ -1243,17 +1256,11 @@ namespace boost {
                                     dtrm16 |= nxt[0];
                                 else
                                     throw boost::system::system_error(boost::itu::ER_BEDSEQ);
-                                std::size_t sz = static_cast<std::size_t> (dtrm16 & 0x3FFF);
-                                octet_sequnce dt = stream.get_pop_octs(sz, stream.aligned());
-                                vl.insert(vl.end(), dt.begin(), dt.end());
-                                return stream;
+                                return octet_reader(stream, vl, static_cast<std::size_t> (dtrm16 & 0x3FFF), stream.aligned());
                             }
                             default:
                             {
-                                std::size_t sz = static_cast<std::size_t> (dtrm & '\x7F');
-                                octet_sequnce dt = stream.get_pop_octs(sz, stream.aligned());
-                                vl.insert(vl.end(), dt.begin(), dt.end());
-                                return stream;
+                                return octet_reader(stream, vl, static_cast<std::size_t> (dtrm & '\x7F'), stream.aligned());
                             }
                         }
                     } else
@@ -1289,15 +1296,11 @@ namespace boost {
                                     dtrm16 |= nxt[0];
                                 else
                                     throw boost::system::system_error(boost::itu::ER_BEDSEQ);
-                                std::size_t sz = static_cast<std::size_t> (dtrm16 & 0x3FFF);
-                                element_reader(stream, vl, sz);
-                                return stream;
+                                return element_reader(stream, vl, static_cast<std::size_t> (dtrm16 & 0x3FFF));
                             }
                             default:
                             {
-                                std::size_t sz = static_cast<std::size_t> (dtrm & '\x7F');
-                                element_reader(stream, vl, sz);
-                                return stream;
+                                return element_reader(stream, vl, static_cast<std::size_t> (dtrm & '\x7F'));
                             }
                         }
                     } else
@@ -1333,15 +1336,12 @@ namespace boost {
                                     dtrm16 |= nxt[0];
                                 else
                                     throw boost::system::system_error(boost::itu::ER_BEDSEQ);
-                                std::size_t sz = static_cast<std::size_t> (dtrm16 & 0x3FFF);
-                                spec_element_reader<T, EC>(stream, vl, sz);
-                                return stream;
+                                return spec_element_reader<T, EC>(stream, vl, static_cast<std::size_t> (dtrm16 & 0x3FFF));
                             }
                             default:
                             {
                                 std::size_t sz = static_cast<std::size_t> (dtrm & '\x7F');
-                                spec_element_reader<T, EC>(stream, vl, sz);
-                                return stream;
+                                return spec_element_reader<T, EC>(stream, vl, static_cast<std::size_t> (dtrm & '\x7F'));
                             }
                         }
                     } else
@@ -1396,10 +1396,7 @@ namespace boost {
                                 stream >> tmpsz;
                             } else
                                 sz = vl.max();
-
-                            octet_sequnce dt = stream.get_pop_octs(sz, stream.aligned());
-                            vl.value().insert(vl.value().end(), dt.begin(), dt.end());
-                            return stream;
+                            return octet_reader(stream, vl.value(), sz, stream.aligned() ? check_alighn<T>(vl) : false);
                         }
                     }
                 }
@@ -1439,7 +1436,7 @@ namespace boost {
             }
 
             template<typename T, typename EC>
-            input_coder& spec_element_reader_defsz(input_coder& stream, size_constrainter<T, EC>& vl) {
+            input_coder& spec_element_reader_defsz(input_coder& stream, size_constrainter<T, EC>& vl, bool checkal = false) {
 
 
                 if (vl.available()) {
@@ -1461,6 +1458,9 @@ namespace boost {
                                 stream >> tmpsz;
                             } else
                                 sz = vl.max();
+
+                            if ((stream.aligned()) && checkal && (spec_check_alighn<T, EC>(vl)))
+                                stream.force_alighn();
 
                             spec_element_reader<T, EC>(stream, vl.value(), sz);
                             return stream;
@@ -1619,7 +1619,7 @@ namespace boost {
 
             template<typename EC>
             input_coder& operator>>(input_coder& stream, size_constrainter<numericstring_type, EC>& vl) {
-                return spec_element_reader_defsz<numericstring_type, EC>(stream, vl);
+                return spec_element_reader_defsz<numericstring_type, EC>(stream, vl, true);
             }
 
 
@@ -1629,7 +1629,7 @@ namespace boost {
 
             template<typename EC>
             input_coder& operator>>(input_coder& stream, size_constrainter<printablestring_type, EC>& vl) {
-                return spec_element_reader_defsz<printablestring_type, EC>(stream, vl);
+                return spec_element_reader_defsz<printablestring_type, EC>(stream, vl, true);
             }
 
 
@@ -1649,7 +1649,7 @@ namespace boost {
 
             template<typename EC>
             input_coder& operator>>(input_coder& stream, size_constrainter< ia5string_type, EC>& vl) {
-                return spec_element_reader_defsz< ia5string_type, EC>(stream, vl);
+                return spec_element_reader_defsz< ia5string_type, EC>(stream, vl, true);
             }
 
 
@@ -1670,7 +1670,7 @@ namespace boost {
 
             template<typename EC>
             input_coder& operator>>(input_coder& stream, size_constrainter<visiblestring_type, EC>& vl) {
-                return spec_element_reader_defsz<visiblestring_type, EC>(stream, vl);
+                return spec_element_reader_defsz<visiblestring_type, EC>(stream, vl, true);
             }
 
 
@@ -1687,7 +1687,7 @@ namespace boost {
 
             template<typename EC>
             input_coder& operator>>(input_coder& stream, size_constrainter<universalstring_type, EC>& vl) {
-                return spec_element_reader_defsz<universalstring_type, EC>(stream, vl);
+                return spec_element_reader_defsz<universalstring_type, EC>(stream, vl, true);
             }
 
 
@@ -1697,7 +1697,7 @@ namespace boost {
 
             template<typename EC>
             input_coder& operator>>(input_coder& stream, size_constrainter< bmpstring_type, EC>& vl) {
-                return spec_element_reader_defsz< bmpstring_type, EC>(stream, vl);
+                return spec_element_reader_defsz< bmpstring_type, EC>(stream, vl, true);
             }
 
 

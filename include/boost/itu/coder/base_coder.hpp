@@ -161,7 +161,7 @@ namespace boost {
         void reverse_bit(octet_type& bits);
         octet_type reverse_bit_copy(const octet_type& bits);
         std::size_t split_bits_in_octets(octet_sequnce& inos, std::size_t unus1, const octet_sequnce& fromos, std::size_t unus2 = 0);
-        std::size_t left_shift_bits_in_octets(octet_sequnce& vl, std::size_t shft);        
+        std::size_t left_shift_bits_in_octets(octet_sequnce& vl, std::size_t shft);
 
     }
 
@@ -172,7 +172,9 @@ namespace boost {
         using itu::octet_type;
         using itu::octet_sequnce;
 
-        class bitstring_type : public std::vector<octet_type> {
+        class octetstring_type;
+
+        class bitstring_type : public itu::octet_sequnce {
 
         public:
 
@@ -267,6 +269,10 @@ namespace boost {
 
             friend bitstring_type operator+(const bitstring_type& ls, const bitstring_type& rs);
 
+            void append(const bitstring_type& vl);
+
+            void append(const octetstring_type& vl);
+
 
 
         private:
@@ -317,7 +323,7 @@ namespace boost {
 
         ///  OCTETSTRING TYPE           
 
-        class octetstring_type : public std::vector<octet_type> {
+        class octetstring_type : public itu::octet_sequnce {
 
         public:
 
@@ -510,24 +516,24 @@ namespace boost {
 
             std::size_t usebits() const {
                 return 8 - unusebits();
-            }   
-            
+            }
+
             void force_alighn() {
-                if (unusebits()) 
+                if (unusebits())
                     unusebits(0);
-            }            
-    
+            }
+
         protected:
 
             std::size_t unusebits(std::size_t vl) {
                 return unuse_ = vl % 8;
-            }            
+            }
 
             std::size_t unuse_;
             const_sequences_ptr listbuffers_;
             vect_octet_sequnce_ptr rows_vect;
             std::size_t size_;
-            
+
         };
 
 
@@ -566,8 +572,8 @@ namespace boost {
             void pop_front(std::size_t sz) {
                 decsize(pop_frontlist(*listbuffers_, sz));
             }
-         
-  
+
+
             bool is_endof(std::size_t beg = 0) const;
 
             iterator_type last() {
@@ -603,8 +609,8 @@ namespace boost {
 
             std::size_t usebits() const {
                 return 8 - unusebits();
-            }     
-            
+            }
+
             void force_alighn() {
                 if ((size()) && (unusebits())) {
                     pop_front(1);
@@ -616,7 +622,7 @@ namespace boost {
 
             std::size_t unusebits(std::size_t vl) {
                 return unuse_ = vl % 8;
-            }            
+            }
 
             void decsize(std::size_t sz) {
                 size_ = size_ < sz ? 0 : (size_ - sz);
