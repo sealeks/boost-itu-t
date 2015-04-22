@@ -9,11 +9,9 @@
 
 namespace ACSE_1 {
 
-    const boost::array<boost::asn1::oidindx_type, 5> acse_as_id_OID_ARR = {2, 2, 1, 0, 1};
-    const oid_type acse_as_id = boost::asn1::oid_type(acse_as_id_OID_ARR);
+    ITU_T_OID( acse_as_id  , ITU_T_VARRAY(2, 2, 1, 0, 1));
+    ITU_T_OID( aCSE_id  , ITU_T_VARRAY(2, 2, 3, 1, 1));    
 
-    const boost::array<boost::asn1::oidindx_type, 5> aCSE_id_OID_ARR = {2, 2, 3, 1, 1};
-    const oid_type aCSE_id = boost::asn1::oid_type(aCSE_id_OID_ARR);
 
     // choice ACSE-apdu
 

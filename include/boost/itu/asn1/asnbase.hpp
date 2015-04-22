@@ -272,29 +272,33 @@ namespace boost {
         // enumerated_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        typedef int32_t enumerated_base_type;
+        typedef int32_t enum_base_type;
 
         class enumerated_type {
 
         public:
 
-            enumerated_type(enumerated_base_type vl = 0) : value_(vl) {
+            enumerated_type(enum_base_type vl = 0) : value_(vl) {
             }
 
-            void value(enumerated_base_type vl) {
+            void value(enum_base_type vl) {
                 value_ = vl;
             }
 
-            enumerated_base_type value() const {
+            enum_base_type value() const {
                 return value_;
             }
 
-            operator enumerated_base_type() const {
+            operator enum_base_type() const {
                 return value_;
             }
+
+            enum_base_type as_base() const {
+                return value_;
+            }            
 
         private:
-            enumerated_base_type value_;
+            enum_base_type value_;
         };
 
 
@@ -315,24 +319,6 @@ namespace boost {
             }
 
             reloid_type(const oidindx_type * vl, std::size_t size);
-
-            reloid_type(const boost::array<oidindx_type, 2 > & vl);
-
-            reloid_type(const boost::array<oidindx_type, 3 > & vl);
-
-            reloid_type(const boost::array<oidindx_type, 4 > & vl);
-
-            reloid_type(const boost::array<oidindx_type, 5 > & vl);
-
-            reloid_type(const boost::array<oidindx_type, 6 > & vl);
-
-            reloid_type(const boost::array<oidindx_type, 7 > & vl);
-
-            reloid_type(const boost::array<oidindx_type, 8 > & vl);
-
-            reloid_type(const boost::array<oidindx_type, 9 > & vl);
-
-            reloid_type(const boost::array<oidindx_type, 10 > & vl);
 
         };
 

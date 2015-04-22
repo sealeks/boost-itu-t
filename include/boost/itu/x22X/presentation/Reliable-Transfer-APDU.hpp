@@ -60,7 +60,7 @@ namespace Reliable_Transfer_APDU {
     typedef t61string_type AdditionalReferenceInformation;
     typedef int AbortReason;
 
-    extern const oid_type rTSE_abstract_syntax;
+    ITU_T_OID( rTSE_abstract_syntax , ITU_T_VARRAY(2, 3, 2));
 
 }
 

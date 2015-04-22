@@ -566,7 +566,7 @@ namespace boost {
 
             template<>
             bool from_x691_cast(enumerated_type& val, const octet_sequnce& src) {
-                enumerated_base_type tmp = 0;
+                enum_base_type tmp = 0;
                 if (from_x691_cast(tmp, src)) {
                     val = tmp;
                     return true;

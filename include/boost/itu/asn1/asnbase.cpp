@@ -37,42 +37,6 @@ namespace boost {
         boost::itu::containers::vector<oidindx_type>(vl, vl + size) {
         }
 
-        reloid_type::reloid_type(const boost::array<oidindx_type, 2 > & vl) :
-        boost::itu::containers::vector<oidindx_type>(vl.begin(), vl.end()) {
-        }
-
-        reloid_type::reloid_type(const boost::array<oidindx_type, 3 > & vl) :
-        boost::itu::containers::vector<oidindx_type>(vl.begin(), vl.end()) {
-        }
-
-        reloid_type::reloid_type(const boost::array<oidindx_type, 4 > & vl) :
-        boost::itu::containers::vector<oidindx_type>(vl.begin(), vl.end()) {
-        }
-
-        reloid_type::reloid_type(const boost::array<oidindx_type, 5 > & vl) :
-        boost::itu::containers::vector<oidindx_type>(vl.begin(), vl.end()) {
-        }
-
-        reloid_type::reloid_type(const boost::array<oidindx_type, 6 > & vl) :
-        boost::itu::containers::vector<oidindx_type>(vl.begin(), vl.end()) {
-        }
-
-        reloid_type::reloid_type(const boost::array<oidindx_type, 7 > & vl) :
-        boost::itu::containers::vector<oidindx_type>(vl.begin(), vl.end()) {
-        }
-
-        reloid_type::reloid_type(const boost::array<oidindx_type, 8 > & vl) :
-        boost::itu::containers::vector<oidindx_type>(vl.begin(), vl.end()) {
-        }
-
-        reloid_type::reloid_type(const boost::array<oidindx_type, 9 > & vl) :
-        boost::itu::containers::vector<oidindx_type>(vl.begin(), vl.end()) {
-        }
-
-        reloid_type::reloid_type(const boost::array<oidindx_type, 10 > & vl) :
-        boost::itu::containers::vector<oidindx_type>(vl.begin(), vl.end()) {
-        }
-
         std::ostream& operator<<(std::ostream& stream, const reloid_type& vl) {
             for (reloid_type::const_iterator it = vl.begin(); it != vl.end(); ++it)
                 if (it == vl.begin())

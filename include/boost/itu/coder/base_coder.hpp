@@ -20,12 +20,16 @@
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 #include <boost/asio/buffers_iterator.hpp>
-#include <boost/array.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/dynamic_bitset.hpp>
 
 #include <boost/itu/utils/template.hpp>
 
+#define ITU_T_VARRAY(...) __VA_ARGS__
+ #define ITU_T_OID(nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
+        const boost::asn1::oid_type  nm  = boost::asn1::oid_type(nm ## ___ARR, sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
+ #define ITU_T_RELOID(nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
+        const boost::asn1::reloid_type  nm  = boost::asn1::reloid_type(nm ## ___ARR, sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
 
 
 namespace boost {
@@ -48,36 +52,6 @@ namespace boost {
             oid_type(const std::string& vl);
 
             explicit oid_type(const oidindx_type * vl, std::size_t size);
-
-            explicit oid_type(const boost::array<oidindx_type, 2 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 3 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 4 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 5 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 6 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 7 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 8 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 9 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 10 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 11 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 12 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 13 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 14 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 15 > & vl);
-
-            explicit oid_type(const boost::array<oidindx_type, 16 > & vl);
 
         };
 

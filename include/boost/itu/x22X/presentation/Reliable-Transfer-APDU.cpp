@@ -9,8 +9,6 @@
 
 namespace Reliable_Transfer_APDU {
 
-    const boost::array<boost::asn1::oidindx_type, 3> rTSE_abstract_syntax_OID_ARR = {2, 3, 2};
-    const oid_type rTSE_abstract_syntax = boost::asn1::oid_type(rTSE_abstract_syntax_OID_ARR);
 
     // choice RTSE-apdus
 

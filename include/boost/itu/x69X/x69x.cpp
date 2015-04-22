@@ -549,7 +549,7 @@ namespace boost {
 
         template<>
         bool from_x690_cast(enumerated_type& val, const octet_sequnce& src) {
-            enumerated_base_type tmp;
+            enum_base_type tmp;
             if (from_x690_cast(tmp, src)) {
                 val = tmp;
                 return true;
