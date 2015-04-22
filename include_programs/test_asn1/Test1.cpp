@@ -11,25 +11,29 @@ namespace Test1 {
 
         // set PersonnelRecord
 
-    PersonnelRecord_impl::PersonnelRecord_impl() : name_(), title_(), number_(), dateOfHire_(), nameOfSpouse_() {}; 
+    PersonnelRecord_impl::PersonnelRecord_impl() : tst_(), name_(), title_(), number_(), dateOfHire_(), nameOfSpouse_() {}; 
  
-    PersonnelRecord_impl::PersonnelRecord_impl(const Name&  arg__name,
+    PersonnelRecord_impl::PersonnelRecord_impl(const Tst_type&  arg__tst,
+        const Name&  arg__name,
         const visiblestring_type&  arg__title,
         const EmployeeNumber&  arg__number,
         const Date&  arg__dateOfHire,
         const Name&  arg__nameOfSpouse) : 
+        tst_(arg__tst),
         name_(arg__name),
         title_(arg__title),
         number_(arg__number),
         dateOfHire_(arg__dateOfHire),
         nameOfSpouse_(arg__nameOfSpouse) {}; 
  
-    PersonnelRecord_impl::PersonnelRecord_impl(boost::shared_ptr< Name>  arg__name,
+    PersonnelRecord_impl::PersonnelRecord_impl(boost::shared_ptr< Tst_type>  arg__tst,
+        boost::shared_ptr< Name>  arg__name,
         boost::shared_ptr< visiblestring_type>  arg__title,
         boost::shared_ptr< EmployeeNumber>  arg__number,
         boost::shared_ptr< Date>  arg__dateOfHire,
         boost::shared_ptr< Name>  arg__nameOfSpouse,
         boost::shared_ptr< Children_type>  arg__children) : 
+        tst_(arg__tst),
         name_(arg__name),
         title_(arg__title),
         number_(arg__number),
@@ -39,6 +43,7 @@ namespace Test1 {
  
 
         template<> void PersonnelRecord_impl::serialize(boost::asn1::x690::output_coder& arch){
+            ITU_T_BIND_TAG(*tst_);
             ITU_T_BIND_TAG(*name_);
             ITU_T_EXPLICIT_TAG(*title_, 0);
             ITU_T_BIND_TAG(*number_);
@@ -48,6 +53,7 @@ namespace Test1 {
         }
 
         template<> void PersonnelRecord_impl::serialize(boost::asn1::x690::input_coder& arch){
+            ITU_T_BIND_TAG(*tst_);
             ITU_T_BIND_TAG(*name_);
             ITU_T_EXPLICIT_TAG(*title_, 0);
             ITU_T_BIND_TAG(*number_);
@@ -55,6 +61,39 @@ namespace Test1 {
             ITU_T_EXPLICIT_TAG(*nameOfSpouse_, 2);
             ITU_T_IMPLICIT_TAG(children_, 3);
         }
+
+        typedef boost::asn1::___integer_tmpl_ec___<int, 0, 200, true> tst_constr;
+        
+        template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::output_coder& arch){
+            arch & boost::asn1::size_constrainter<std::vector<int>,  tst_constr> (*tst_, 0, 0, false);
+            ITU_T_BIND_PER(*tst_);
+            ITU_T_BIND_PER(*name_);
+            ITU_T_BIND_PER(*title_);
+            ITU_T_BIND_PER(*number_);
+            ITU_T_BIND_PER(*dateOfHire_);
+            ITU_T_BIND_PER(*nameOfSpouse_);
+            ITU_T_BIND_PER(children_);
+        }
+
+        template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::input_coder& arch) {
+            arch & boost::asn1::size_constrainter<std::vector<int>, tst_constr> (*tst_, 0, 0, false);            
+            ITU_T_BIND_PER(*tst_);
+            ITU_T_BIND_PER(*name_);
+            ITU_T_BIND_PER(*title_);
+            ITU_T_BIND_PER(*number_);
+            ITU_T_BIND_PER(*dateOfHire_);
+            ITU_T_BIND_PER(*nameOfSpouse_);
+            ITU_T_BIND_PER(children_);
+        }
+
+
+        PersonnelRecord_impl::Tst_type& PersonnelRecord_impl::tst(){ return *tst_ ;}
+
+        const PersonnelRecord_impl::Tst_type& PersonnelRecord_impl::tst() const { return *tst_ ;}
+
+        void PersonnelRecord_impl::tst( const Tst_type& vl){ tst_ =vl ;}
+
+        void PersonnelRecord_impl::tst( boost::shared_ptr< Tst_type>  vl){ tst_ =vl ;}
 
 
         Name& PersonnelRecord_impl::name(){ return *name_ ;}
@@ -128,6 +167,17 @@ namespace Test1 {
         }
 
 
+        template<> void ChildInformation::serialize(boost::asn1::x691::output_coder& arch){
+            ITU_T_BIND_PER(*name_);
+            ITU_T_BIND_PER(*dateOfBirth_);
+        }
+
+        template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch){
+            ITU_T_BIND_PER(*name_);
+            ITU_T_BIND_PER(*dateOfBirth_);
+        }
+
+
         Name& ChildInformation::name(){ return *name_ ;}
 
         const Name& ChildInformation::name() const { return *name_ ;}
@@ -168,6 +218,19 @@ namespace Test1 {
             ITU_T_BIND_TAG(*givenName_);
             ITU_T_BIND_TAG(*initial_);
             ITU_T_BIND_TAG(*familyName_);
+        }
+
+
+        template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch){
+            ITU_T_BIND_PER(*givenName_);
+            ITU_T_BIND_PER(*initial_);
+            ITU_T_BIND_PER(*familyName_);
+        }
+
+        template<> void Name_impl::serialize(boost::asn1::x691::input_coder& arch){
+            ITU_T_BIND_PER(*givenName_);
+            ITU_T_BIND_PER(*initial_);
+            ITU_T_BIND_PER(*familyName_);
         }
 
 
