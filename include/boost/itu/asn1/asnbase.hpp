@@ -1800,8 +1800,8 @@ namespace boost {
 
         template<typename Archive, typename T>
         inline bool bind_semiconstraints(Archive & arch, T& vl, const T& MIN) {
-            std::size_t tst = arch.size();
             arch & num_constrainter<T> (vl, MIN, false);
+            return true;
         }
 
         template<typename Archive, typename T>
@@ -1821,9 +1821,8 @@ namespace boost {
 
         template<typename Archive, typename T>
         inline bool bind_semiconstraints_ext(Archive & arch, T& vl, const T& MIN) {
-            std::size_t tst = arch.size();
             arch & num_constrainter<T> (vl, MIN, true);
-            return (arch.size() != tst);
+            return true;
         }
 
         template<typename Archive, typename T>
@@ -1851,7 +1850,6 @@ namespace boost {
         ////////////////////////////////////////////////////////////////////////////////////////////////////        
 
         struct null_constrainter {
-
         };
 
 

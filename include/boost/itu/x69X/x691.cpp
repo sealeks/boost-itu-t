@@ -865,7 +865,7 @@ namespace boost {
         }
 
         template<> void external_type::Encoding_type::serialize(boost::asn1::x691::input_coder& arch) {
-            int __tag_id__ = arch.test_id();
+            //int __tag_id__ = arch.test_id();
             /*   switch (arch.test_class()) {
                    case 0x0:
                    {
@@ -1002,7 +1002,7 @@ namespace boost {
         }
 
         template<> void embeded_type::Identification_type::serialize(boost::asn1::x691::input_coder& arch) {
-            int __tag_id__ = arch.test_id();
+            //int __tag_id__ = arch.test_id();
             /* switch (arch.test_class()) {
                  case 0x0:
                  {
@@ -1151,7 +1151,7 @@ namespace boost {
         }
 
         template<> void characterstring_type::Identification_type::serialize(boost::asn1::x691::input_coder& arch) {
-            int __tag_id__ = arch.test_id();
+            //int __tag_id__ = arch.test_id();
             /*    switch (arch.test_class()) {
                     case 0x0:
                     {

@@ -1343,7 +1343,6 @@ namespace boost {
                             }
                             default:
                             {
-                                std::size_t sz = static_cast<std::size_t> (dtrm & '\x7F');
                                 return spec_element_reader<T, EC>(stream, vl, static_cast<std::size_t> (dtrm & '\x7F'));
                             }
                         }
