@@ -445,6 +445,9 @@ namespace boost {
                 }
 
             };
+            
+            
+            
 
 
 
@@ -1709,6 +1712,29 @@ namespace boost {
 
 
         }
+        
+        
+        
+           // integer element constrainter
+
+        template<typename T, T mn, T mx, bool ext>
+        struct ___integer_tmpl_ec___ {
+
+            static void out(boost::asn1::x691::output_coder& stream, T vl) {
+                stream & num_constrainter<T>(vl, mn, mx, ext);
+            }
+
+            static T in(boost::asn1::x691::input_coder& stream) {
+                T inv;
+                stream & num_constrainter<T>(inv, mn, mx, ext);
+                return inv;
+            }
+
+            static std::size_t bits_count(bool aligned) {
+                return 0xFF;
+            }
+
+        };        
 
 
         template<> void external_type::serialize(boost::asn1::x691::output_coder& arch);
