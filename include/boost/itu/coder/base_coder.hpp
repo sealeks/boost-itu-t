@@ -105,6 +105,8 @@ namespace boost {
         const encoding_rule DER_ENCODING = 0x4;
         const encoding_rule PER_ALIGNED_ENCODING = 0x8;
         const encoding_rule PER_UNALIGNED_ENCODING = 0x10;
+        const encoding_rule CPER_ALIGNED_ENCODING = 0x12;
+        const encoding_rule CPER_UNALIGNED_ENCODING = 0x14;        
 
         const std::size_t ENCODING_RULE_MAX_BIT = 3;
 
@@ -905,13 +907,28 @@ namespace boost {
 
     namespace asn1 {
 
-        extern const boost::asn1::oid_type NULL_ENCODING_OID;
+        const boost::asn1::oid_type NULL_ENCODING_OID = boost::asn1::oid_type();
 
-        extern const boost::asn1::oid_type BASIC_ENCODING_OID;
+        const boost::asn1::oidindx_type BASIC_ENCODING_ARR[] = {2, 1, 1};
+        const boost::asn1::oid_type BASIC_ENCODING_OID = boost::asn1::oid_type(BASIC_ENCODING_ARR, 3);
 
-        extern const boost::asn1::oid_type CANONICAL_ENCODING_OID;
+        const boost::asn1::oidindx_type CANONICAL_ENCODING_ARR[] = {2, 1, 2, 0};
+        const boost::asn1::oid_type CANONICAL_ENCODING_OID = boost::asn1::oid_type(CANONICAL_ENCODING_ARR, 4);
 
-        extern const boost::asn1::oid_type DISTINGUISH_ENCODING_OID;
+        const boost::asn1::oidindx_type DISTINGUISH_ENCODING_ARR[] = {2, 1, 2, 1};
+        const boost::asn1::oid_type DISTINGUISH_ENCODING_OID = boost::asn1::oid_type(DISTINGUISH_ENCODING_ARR, 4);
+        
+        const boost::asn1::oidindx_type PER_ALIGNED_ENCODING_ARR[] = {2, 1, 3, 0, 0};        
+        const boost::asn1::oid_type PER_ALIGNED_ENCODING_OID = boost::asn1::oid_type(PER_ALIGNED_ENCODING_ARR, 5);
+        
+        const boost::asn1::oidindx_type PER_UNALIGNED_ENCODING_ARR[] = {2, 1, 3, 0, 1};        
+        const boost::asn1::oid_type PER_UNALIGNED_ENCODING_OID = boost::asn1::oid_type(PER_UNALIGNED_ENCODING_ARR, 5);
+        
+        const boost::asn1::oidindx_type CPER_ALIGNED_ENCODING_ARR[] = {2, 1, 3, 1, 0};        
+        const boost::asn1::oid_type CPER_ALIGNED_ENCODING_OID = boost::asn1::oid_type(CPER_ALIGNED_ENCODING_ARR, 5);
+        
+        const boost::asn1::oidindx_type CPER_UNALIGNED_ENCODING_ARR[] = {2, 1, 3, 1, 1};        
+        const boost::asn1::oid_type CPER_UNALIGNED_ENCODING_OID = boost::asn1::oid_type(CPER_UNALIGNED_ENCODING_ARR, 5);        
 
     }
 

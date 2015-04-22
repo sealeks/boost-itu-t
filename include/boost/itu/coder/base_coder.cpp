@@ -466,6 +466,10 @@ namespace boost {
                 case BER_ENCODING: return boost::asn1::BASIC_ENCODING_OID;
                 case CER_ENCODING: return boost::asn1::CANONICAL_ENCODING_OID;
                 case DER_ENCODING: return boost::asn1::DISTINGUISH_ENCODING_OID;
+                case PER_ALIGNED_ENCODING: return boost::asn1::PER_ALIGNED_ENCODING_OID; 
+                case PER_UNALIGNED_ENCODING: return boost::asn1::PER_UNALIGNED_ENCODING_OID;        
+                case CPER_ALIGNED_ENCODING: return boost::asn1::CPER_ALIGNED_ENCODING_OID; 
+                case CPER_UNALIGNED_ENCODING: return boost::asn1::CPER_UNALIGNED_ENCODING_OID;                 
                 default:
                 {
                 }
@@ -480,6 +484,14 @@ namespace boost {
                 return CER_ENCODING;
             if (val == boost::asn1::DISTINGUISH_ENCODING_OID)
                 return DER_ENCODING;
+            if (val == boost::asn1::PER_ALIGNED_ENCODING_OID)
+                return PER_ALIGNED_ENCODING;      
+            if (val == boost::asn1::PER_UNALIGNED_ENCODING_OID)
+                return PER_UNALIGNED_ENCODING;  
+            if (val == boost::asn1::CPER_ALIGNED_ENCODING_OID)
+                return CPER_ALIGNED_ENCODING;      
+            if (val == boost::asn1::CPER_UNALIGNED_ENCODING_OID)
+                return CPER_UNALIGNED_ENCODING;                
             return NULL_ENCODING;
         }
 
@@ -929,18 +941,5 @@ namespace boost {
 
     }
 
-    namespace asn1 {
 
-        const boost::asn1::oid_type NULL_ENCODING_OID = boost::asn1::oid_type();
-
-        const boost::asn1::oidindx_type BASIC_ENCODING_ARR[] = {2, 1, 1};
-        const boost::asn1::oid_type BASIC_ENCODING_OID = boost::asn1::oid_type(BASIC_ENCODING_ARR, 3);
-
-        const boost::asn1::oidindx_type CANONICAL_ENCODING_ARR[] = {2, 1, 2, 0};
-        const boost::asn1::oid_type CANONICAL_ENCODING_OID = boost::asn1::oid_type(CANONICAL_ENCODING_ARR, 4);
-
-        const boost::asn1::oidindx_type DISTINGUISH_ENCODING_ARR[] = {2, 1, 2, 1};
-        const boost::asn1::oid_type DISTINGUISH_ENCODING_OID = boost::asn1::oid_type(DISTINGUISH_ENCODING_ARR, 4);
-
-    }
 }
