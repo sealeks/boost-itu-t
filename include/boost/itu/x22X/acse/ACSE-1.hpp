@@ -111,8 +111,8 @@ namespace ACSE_1 {
     typedef std::vector< Default_Context_List_sequence_of > Default_Context_List;
     typedef std::vector< P_context_result_list_sequence_of > P_context_result_list;
 
-    extern const oid_type acse_as_id;
-    extern const oid_type aCSE_id;
+    ITU_T_OID( acse_as_id  , ITU_T_VARRAY(2, 2, 1, 0, 1));
+    ITU_T_OID( aCSE_id  , ITU_T_VARRAY(2, 2, 3, 1, 1));
 
 }
 

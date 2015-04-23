@@ -883,27 +883,14 @@ namespace boost {
 
         const boost::asn1::oid_type NULL_ENCODING_OID = boost::asn1::oid_type();
 
-        const boost::asn1::oidindx_type BASIC_ENCODING_ARR[] = {2, 1, 1};
-        const boost::asn1::oid_type BASIC_ENCODING_OID = boost::asn1::oid_type(BASIC_ENCODING_ARR, 3);
-
-        const boost::asn1::oidindx_type CANONICAL_ENCODING_ARR[] = {2, 1, 2, 0};
-        const boost::asn1::oid_type CANONICAL_ENCODING_OID = boost::asn1::oid_type(CANONICAL_ENCODING_ARR, 4);
-
-        const boost::asn1::oidindx_type DISTINGUISH_ENCODING_ARR[] = {2, 1, 2, 1};
-        const boost::asn1::oid_type DISTINGUISH_ENCODING_OID = boost::asn1::oid_type(DISTINGUISH_ENCODING_ARR, 4);
+        ITU_T_OID(BASIC_ENCODING_OID, ITU_T_VARRAY(2, 1, 1));
+        ITU_T_OID(CANONICAL_ENCODING_OID, ITU_T_VARRAY(2, 1, 2, 0));       
+        ITU_T_OID(DISTINGUISH_ENCODING_OID, ITU_T_VARRAY(2, 1, 2, 1));
+        ITU_T_OID(PER_ALIGNED_ENCODING_OID, ITU_T_VARRAY(2, 1, 3, 0, 0));
+        ITU_T_OID(PER_UNALIGNED_ENCODING_OID, ITU_T_VARRAY(2, 1, 3, 0, 1));
+        ITU_T_OID(CPER_ALIGNED_ENCODING_OID, ITU_T_VARRAY(2, 1, 3, 1, 0));
+        ITU_T_OID(CPER_UNALIGNED_ENCODING_OID, ITU_T_VARRAY(2, 1, 1, 0, 1));
         
-        const boost::asn1::oidindx_type PER_ALIGNED_ENCODING_ARR[] = {2, 1, 3, 0, 0};        
-        const boost::asn1::oid_type PER_ALIGNED_ENCODING_OID = boost::asn1::oid_type(PER_ALIGNED_ENCODING_ARR, 5);
-        
-        const boost::asn1::oidindx_type PER_UNALIGNED_ENCODING_ARR[] = {2, 1, 3, 0, 1};        
-        const boost::asn1::oid_type PER_UNALIGNED_ENCODING_OID = boost::asn1::oid_type(PER_UNALIGNED_ENCODING_ARR, 5);
-        
-        const boost::asn1::oidindx_type CPER_ALIGNED_ENCODING_ARR[] = {2, 1, 3, 1, 0};        
-        const boost::asn1::oid_type CPER_ALIGNED_ENCODING_OID = boost::asn1::oid_type(CPER_ALIGNED_ENCODING_ARR, 5);
-        
-        const boost::asn1::oidindx_type CPER_UNALIGNED_ENCODING_ARR[] = {2, 1, 3, 1, 1};        
-        const boost::asn1::oid_type CPER_UNALIGNED_ENCODING_OID = boost::asn1::oid_type(CPER_UNALIGNED_ENCODING_ARR, 5);        
-
     }
 
 
