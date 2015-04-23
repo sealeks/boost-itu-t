@@ -20,18 +20,19 @@
 
 
 #define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
+#define ITU_T_BIND_PER_ENUM(var, nm) boost::asn1::bind_per_enum< nm ## __coder >(arch, var);
 
-#define ITU_T_BIND_NUM_CONSTRS(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx)
-#define ITU_T_BIND_NUM_CONSTRE(var, mn, mx) boost::asn1::bind_constraints_ext(arch, var, mn, mx)
-#define ITU_T_BIND_NUM_SIMICONS(var, mn) boost::asn1::bind_semiconstraints(arch, var, mn)
-#define ITU_T_BIND_NUM_SIMICONE(var, mn) boost::asn1::bind_semiconstraints_ext(arch, var, mn)
+#define ITU_T_BIND_NUM_CONSTRS(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx);
+#define ITU_T_BIND_NUM_CONSTRE(var, mn, mx) boost::asn1::bind_constraints_ext(arch, var, mn, mx);
+#define ITU_T_BIND_NUM_SIMICONS(var, mn) boost::asn1::bind_semiconstraints(arch, var, mn);
+#define ITU_T_BIND_NUM_SIMICONE(var, mn) boost::asn1::bind_semiconstraints_ext(arch, var, mn);
 
-#define ITU_T_BIND_SIZE_RNGCONSTRS(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx)
-#define ITU_T_BIND_SIZE_RNGCONSTRE(var, mn, mx) boost::asn1::bind_sizeconstraints_ext(arch, var, mn, mx)
-#define ITU_T_BIND_SIZE_SEMICONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0)
-#define ITU_T_BIND_SIZE_SEMICONSTRE(var, mn) boost::asn1::bind_sizeconstraints_ext(arch, var, mn, 0)
-#define ITU_T_BIND_SIZE_SNGLCONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn)
-#define ITU_T_BIND_SIZE_SNGLCONSTRE(var, mn) boost::asn1::bind_sizeconstraints_ext(arch, var, mn, mn)
+#define ITU_T_BIND_SIZE_RNGCONSTRS(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx);
+#define ITU_T_BIND_SIZE_RNGCONSTRE(var, mn, mx) boost::asn1::bind_sizeconstraints_ext(arch, var, mn, mx);
+#define ITU_T_BIND_SIZE_SEMICONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0);
+#define ITU_T_BIND_SIZE_SEMICONSTRE(var, mn) boost::asn1::bind_sizeconstraints_ext(arch, var, mn, 0);
+#define ITU_T_BIND_SIZE_SNGLCONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn);
+#define ITU_T_BIND_SIZE_SNGLCONSTRE(var, mn) boost::asn1::bind_sizeconstraints_ext(arch, var, mn, mn);
 
 
 #define  ITU_T_PER_ENUMCODER(nm  , arrmain, arrext ) struct nm ## __coder { \
@@ -68,8 +69,19 @@
       boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));\
       boost::asn1::enumerated_indx_map  nm ## __coder::enumerated_index_ext = boost::asn1::create_enumerated_indx(EARR, sizeof(EARR)/ sizeof(boost::asn1::enum_base_type));
 
+
+
+
+
+
+
 namespace boost {
     namespace asn1 {
+
+
+        //////////////////////////////////////////////
+        //per_enumerated_holder
+        //////////////////////////////////////////////
 
         template<typename T>
         struct per_enumerated_holder {
@@ -105,7 +117,7 @@ namespace boost {
             }
 
             std::size_t to() const {
-                return coder_type::is_root() ? coder_type::from_root(value_) :
+                return coder_type::is_root(value_) ? coder_type::from_root(value_) :
                         coder_type::from_ext(value_);
             }
 
@@ -128,6 +140,17 @@ namespace boost {
 
             enumerated_type& value_;
         };
+
+
+
+
+
+
+
+
+
+
+
 
         namespace x691 {
 
@@ -609,7 +632,7 @@ namespace boost {
 
                 template<typename T>
                 void operator&(const per_enumerated_holder<T >& vl) {
-                    *this & vl.value();
+                    *this << vl;
                 }
 
                 template<typename T>
@@ -983,7 +1006,7 @@ namespace boost {
                     //root
                 } else {
                     //ext
-                    stream << small_nn_wnumber<std::size_t>(sval);
+                    //stream << small_nn_wnumber<std::size_t>(sval);
                 }
                 return stream;
             }
@@ -1280,7 +1303,7 @@ namespace boost {
 
                 template<typename T>
                 void operator&(const per_enumerated_holder<T >& vl) {
-                    *this & vl.value();
+                    *this >> const_cast<per_enumerated_holder<T >&> (vl);
                 }
 
                 template<typename T>
@@ -1687,7 +1710,7 @@ namespace boost {
                     if (extendbit.bit(0)) {
                         //ext                        
                         small_nn_wnumber<std::size_t> rtmp(rval);
-                        stream >> rtmp;
+                        //stream >> rtmp;
                         vl.from(rval, true);
                         return stream;
                     }
@@ -1936,7 +1959,20 @@ namespace boost {
         }
 
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        template<typename T>
+        inline bool bind_per_enum(boost::asn1::x691::output_coder & arch, enumerated_type& vl) {
+            arch & per_enumerated_holder<T>(vl);
+            return true;
+        }
+
+        template<typename T>
+        inline bool bind_per_enum(boost::asn1::x691::input_coder & arch, enumerated_type& vl) {
+            arch & per_enumerated_holder<T>(vl);
+            return true;
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////       
 
