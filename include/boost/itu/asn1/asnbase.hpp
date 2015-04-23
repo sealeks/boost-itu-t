@@ -302,6 +302,7 @@ namespace boost {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         struct eoc_type {
+
         };
 
 
@@ -333,16 +334,16 @@ namespace boost {
 
             enum_base_type as_base() const {
                 return value_;
-            }            
-            
-            friend bool operator<(const enumerated_type& ls, const enumerated_type& rs){
-                return ls.value_<rs.value_;
             }
-            
-            friend bool operator==(const enumerated_type& ls, const enumerated_type& rs){
-                return ls.value_==rs.value_;
-            }      
-                  
+
+            friend bool operator<(const enumerated_type& ls, const enumerated_type& rs) {
+                return ls.value_ < rs.value_;
+            }
+
+            friend bool operator==(const enumerated_type& ls, const enumerated_type& rs) {
+                return ls.value_ == rs.value_;
+            }
+
 
         private:
             enum_base_type value_;
@@ -353,14 +354,13 @@ namespace boost {
         typedef std::map<enumerated_type, std::size_t> enumerated_indx_map;
 
         indx_enumerated_map create_indx_enumerated(const enum_base_type* ev, std::size_t sz);
-        enumerated_indx_map create_enumerated_indx(const enum_base_type* ev, std::size_t sz);       
+        enumerated_indx_map create_enumerated_indx(const enum_base_type* ev, std::size_t sz);
 
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // reloid_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        
 
         class reloid_type : public boost::itu::containers::vector<oidindx_type> {
 
@@ -376,11 +376,11 @@ namespace boost {
 
 
         std::ostream& operator<<(std::ostream& stream, const reloid_type& vl);
-        
-        
-        
 
-        
+
+
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // null_type
@@ -398,8 +398,8 @@ namespace boost {
             return stream << "NULL TYPE" << std::endl;
         }
 
-    
-        
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // utf8string_type
@@ -446,16 +446,15 @@ namespace boost {
 
         std::ostream& operator<<(std::ostream& stream, const utf8string_type& vl);
 
-        
-        
-        
-        
-        
+
+
+
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  SIMLE STRING TYPE
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        
 
         template<id_type TAGID>
         class simplestring_type : public std::string {
@@ -536,11 +535,11 @@ namespace boost {
         }
 
 
-        
-        
-        
-        
-        
+
+
+
+
+
         //UNICOD UNI STRING  
         //  32bit
 
@@ -622,10 +621,10 @@ namespace boost {
         }
 
 
-        
-        
-        
-        
+
+
+
+
 
         //UNICOD BMP STRING  
         //  16bit
@@ -710,9 +709,9 @@ namespace boost {
 
 
 
-        
-        
-        
+
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // utctime_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -731,8 +730,8 @@ namespace boost {
         //      return boost::posix_time::ptime(boost::gregorian::date(2012,11,29));
         //}            
 
-        
-        
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // gentime_type
@@ -825,10 +824,10 @@ namespace boost {
 
 
 
-        
-        
-        
-        
+
+
+
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -846,10 +845,6 @@ namespace boost {
 
         class_type to_class_type(octet_type vl);
 
-
-
-        
-        
         template<typename T>
         struct tag_traits {
 
@@ -911,8 +906,8 @@ namespace boost {
 
 
 
-        
-        
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  tag
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -978,7 +973,7 @@ namespace boost {
 
 
 
-        
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  explicit_value
@@ -1035,12 +1030,11 @@ namespace boost {
 
 
 
-        
-        
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  implicit_value
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-     
 
         template<typename T>
         class implicit_value {
@@ -1177,8 +1171,8 @@ namespace boost {
 
 
 
-        
-        
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  optional_implicit_value 
@@ -1252,11 +1246,11 @@ namespace boost {
         };
 
 
-        
-        
-        
-        
-        
+
+
+
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  implicit_typedef 
         ////////////////////////////////////////////////////////////////////////////////////////////////////  
@@ -1332,11 +1326,11 @@ namespace boost {
         };
 
 
-        
-        
-        
-        
-        
+
+
+
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  explicit_typedef 
         ////////////////////////////////////////////////////////////////////////////////////////////////////  
@@ -1412,18 +1406,17 @@ namespace boost {
 
 
 
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  ___asn__choice__base__
         ////////////////////////////////////////////////////////////////////////////////////////////////////                    
-                       
 
         template<typename E>
         class ___asn__choice__base__ {
@@ -1452,11 +1445,7 @@ namespace boost {
             protected:
                 int type_;
             };
-            
-            
-                   
-                 
-            
+
             template<typename T>
             class choice_holder : public base_choice_holder {
 
@@ -1559,12 +1548,12 @@ namespace boost {
             type_ptr val_;
 
         };
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  value_holder
         ////////////////////////////////////////////////////////////////////////////////////////////////////        
@@ -1611,10 +1600,10 @@ namespace boost {
 
             boost::shared_ptr<T> internal_;
         };
-        
-        
 
-        
+
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  default_holder
@@ -1887,6 +1876,7 @@ namespace boost {
         ////////////////////////////////////////////////////////////////////////////////////////////////////        
 
         struct null_constrainter {
+
         };
 
 
@@ -2025,7 +2015,7 @@ namespace boost {
             }
             return false;
         }
-        
+
 
 
 
@@ -2080,7 +2070,7 @@ namespace boost {
         template<typename Archive, typename T>
         inline bool bind_basic(Archive & arch, boost::shared_ptr<T>& vl) {
             std::size_t tst = arch.size();
-            arch & optional_implicit_value<T > (vl);
+                arch & optional_implicit_value<T > (vl);
             return (arch.size() != tst);
         }
 
@@ -2108,7 +2098,7 @@ namespace boost {
         template<typename Archive, typename T>
         inline bool bind_explicit(Archive & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
             std::size_t tst = arch.size();
-            arch & optional_explicit_value<T > (vl, id, type);
+                arch & optional_explicit_value<T > (vl, id, type);
             return (arch.size() != tst);
         }
 
@@ -2136,7 +2126,7 @@ namespace boost {
         template<typename Archive, typename T>
         inline bool bind_implicit(Archive & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
             std::size_t tst = arch.size();
-            arch & optional_implicit_value<T > (vl, id, type);
+                arch & optional_implicit_value<T > (vl, id, type);
             return (arch.size() != tst);
         }
 
