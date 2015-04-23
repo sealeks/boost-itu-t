@@ -974,6 +974,247 @@ namespace boost {
 
 
         }
+        
+        
+        
+        /*template<typename T>
+        inline bool bind_basic(boost::asn1::x690::output_coder & arch, const T& vl) {
+            std::size_t tst = arch.size();
+            arch & implicit_value<T > (vl);
+            return (arch.size() != tst);
+        }
+        
+        template<typename T>
+        inline bool bind_basic(boost::asn1::x690::input_coder & arch, T& vl) {
+            std::size_t tst = arch.size();
+            arch & implicit_value<T > (vl);
+            return (arch.size() != tst);
+        }  
+        
+        template<typename T>
+        inline bool bind_basic(boost::asn1::x690::output_coder & arch, const boost::shared_ptr<T>& vl) {
+            if (static_cast<bool> (vl))
+                return bind_basic(arch, *vl);
+            return false;
+        }
+             
+        template<typename T>
+        inline bool bind_basic(boost::asn1::x690::input_coder & arch, boost::shared_ptr<T>& vl) {
+            std::size_t tst = arch.size();
+            arch & optional_implicit_value<T > (vl);
+            return (arch.size() != tst);
+        }        
+        
+   
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_basic(boost::asn1::x690::output_coder & arch, const implicit_typedef<T, Tag, ID, TYPE>& vl) {
+            std::size_t tst = arch.size();
+            arch & implicit_value<T > (vl.value(), ID, TYPE);
+            return (arch.size() != tst);
+        }        
+        
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_basic(boost::asn1::x690::input_coder & arch, implicit_typedef<T, Tag, ID, TYPE>& vl) {
+            std::size_t tst = arch.size();
+            arch & implicit_value<T > (vl.value(), ID, TYPE);
+            return (arch.size() != tst);
+        }
+        
+        
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_basic(boost::asn1::x690::output_coder & arch, const explicit_typedef<T, Tag, ID, TYPE>& vl) {
+            std::size_t tst = arch.size();
+            arch & explicit_value<T > (vl.value(), ID, TYPE);
+            return (arch.size() != tst);
+        }
+
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_basic(boost::asn1::x690::input_coder & arch, explicit_typedef<T, Tag, ID, TYPE>& vl) {
+            std::size_t tst = arch.size();
+            arch & explicit_value<T > (vl.value(), ID, TYPE);
+            return (arch.size() != tst);
+        }        
+        
+        template<typename T>
+        inline bool bind_explicit(boost::asn1::x690::output_coder & arch, const T& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & explicit_value<T > (vl, id, type);
+            return (arch.size() != tst);
+        }        
+        
+             
+        template<typename T>
+        inline bool bind_explicit(boost::asn1::x690::input_coder & arch, T& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & explicit_value<T > (vl, id, type);
+            return (arch.size() != tst);
+        }        
+ 
+        
+        template<typename T>
+        inline bool bind_explicit(boost::asn1::x690::output_coder & arch, const boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            if (static_cast<bool> (vl))
+                return bind_explicit(arch, *vl, id, type);
+            return false;
+        }
+
+        template<typename T>
+        inline bool bind_explicit(boost::asn1::x690::input_coder & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & optional_explicit_value<T > (vl, id, type);
+            return (arch.size() != tst);
+        }
+        
+
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_explicit(boost::asn1::x690::output_coder & arch, const explicit_typedef<T, Tag, ID, TYPE>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & explicit_value< explicit_value<T > > (explicit_value<T > (vl.value(), ID, TYPE), id, type);
+            return (arch.size() != tst);
+        }        
+        
+               
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_explicit(boost::asn1::x690::input_coder & arch, explicit_typedef<T, Tag, ID, TYPE>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & explicit_value< explicit_value<T > > (explicit_value<T > (vl.value(), ID, TYPE), id, type);
+            return (arch.size() != tst);
+        }
+        
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_explicit(boost::asn1::x690::output_coder & arch, const implicit_typedef<T, Tag, ID, TYPE>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & explicit_value< implicit_value<T > > (implicit_value<T > (vl.value(), ID, TYPE), id, type);
+            return (arch.size() != tst);
+        }        
+        
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_explicit(boost::asn1::x690::input_coder & arch, implicit_typedef<T, Tag, ID, TYPE>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & explicit_value< implicit_value<T > > (implicit_value<T > (vl.value(), ID, TYPE), id, type);
+            return (arch.size() != tst);
+        }
+        
+        template<typename T>
+        inline bool bind_implicit(boost::asn1::x690::output_coder & arch, const T& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & implicit_value<T > (vl, id, type);
+            return (arch.size() != tst);
+        }        
+        
+
+        template<typename T>
+        inline bool bind_implicit(boost::asn1::x690::input_coder & arch, T& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & implicit_value<T > (vl, id, type);
+            return (arch.size() != tst);
+        }
+        
+        template<typename Archive, typename T>
+        inline bool bind_implicit(boost::asn1::x690::output_coder & arch, const boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            if (static_cast<bool> (vl))
+                return bind_implicit(arch, *vl, id, type);
+            return false;
+        }        
+        
+        template<typename T>
+        inline bool bind_implicit(boost::asn1::x690::input_coder & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & optional_implicit_value<T > (vl, id, type);
+            return (arch.size() != tst);
+        }
+        
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_implicit(boost::asn1::x690::output_coder & arch, const explicit_typedef<T, Tag, ID, TYPE>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & explicit_value<T > (vl.value(), id, type);
+            return (arch.size() != tst);
+        }
+        
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_implicit(boost::asn1::x690::input_coder & arch, explicit_typedef<T, Tag, ID, TYPE>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & explicit_value<T > (vl.value(), id, type);
+            return (arch.size() != tst);
+        }
+             
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_implicit(boost::asn1::x690::output_coder & arch, const implicit_typedef<T, Tag, ID, TYPE>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & implicit_value<T > (vl.value(), id, type);
+            return (arch.size() != tst);
+        }
+        
+        
+        template<typename T, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_implicit(boost::asn1::x690::input_coder & arch, implicit_typedef<T, Tag, ID, TYPE>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
+            std::size_t tst = arch.size();
+            arch & implicit_value<T > (vl.value(), id, type);
+            return (arch.size() != tst);
+        }
+        
+        
+        template<typename T>
+        inline bool bind_choice(boost::asn1::x690::output_coder & arch, const T& vl) {
+            std::size_t tst = arch.size();
+            //vl.serialize(arch);
+            return (arch.size() != tst);
+        }   
+        
+        template<typename T>
+        inline bool bind_choice(boost::asn1::x690::input_coder & arch, T& vl) {
+            std::size_t tst = arch.size();
+            //vl.serialize(arch);
+            return (arch.size() != tst);
+        }
+
+
+        template<typename T>
+        inline bool bind_choice(boost::asn1::x690::output_coder & arch, const boost::shared_ptr< T >& vl) {
+            if (!static_cast<bool> (vl)) 
+                    return false;
+            if (bind_choice(arch, *vl))
+                return true;
+            vl.reset();
+            return false;
+        }
+        
+        template<typename T>
+        inline bool bind_choice(boost::asn1::x690::input_coder & arch, boost::shared_ptr< T >& vl) {
+            if (!static_cast<bool> (vl))
+                    vl = boost::shared_ptr< T > (new T());
+            if (bind_choice(arch, *vl))
+                return true;
+            vl.reset();
+            return false;
+        }
+        
+
+        template<typename T>
+        struct bind_element {
+
+
+            static bool op(boost::asn1::x690::output_coder& arch,  const T& vl) {
+                std::size_t tst = arch.size();
+                arch & vl;
+                return (arch.size() != tst);
+            }
+
+            static bool op(boost::asn1::x690::input_coder& arch, T& vl) {
+                std::size_t tst = arch.size();
+                arch & vl;
+                return (arch.size() != tst);
+            }
+
+            static bool op(boost::asn1::x690::output_coder& arch, const value_holder<T>& vl) {
+                return op(arch, (*vl));
+            }
+            
+            static bool op(boost::asn1::x690::input_coder& arch, value_holder<T>& vl) {
+                return op(arch, (*vl));
+            }          
+
+        };*/       
 
 
         template<> void external_type::serialize(boost::asn1::x690::output_coder& arch);
@@ -1004,6 +1245,7 @@ namespace boost {
 
     }
 }
+
 
 
 #endif	/* ASNBASE_H */
