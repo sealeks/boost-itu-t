@@ -20,6 +20,65 @@
 
 namespace boost {
     namespace asn1 {
+
+        template<typename T>
+        struct per_enumerated_holder {
+
+            typedef T coder_type;
+
+            per_enumerated_holder(const enumerated_type& vl) :
+            value_(const_cast<enumerated_type&> (vl)) {
+            }
+
+            per_enumerated_holder(enumerated_type& vl) :
+            value_(vl) {
+            }
+
+            const T& value() const {
+                return value_;
+            }
+
+            T& value() {
+                return value_;
+            }
+
+            bool can_extended() const {
+                return coder_type::ext();
+            }
+
+            bool is_root() const {
+                return coder_type::is_root(value_);
+            }
+
+            bool max() const {
+                return coder_type::max();
+            }
+
+            std::size_t to() const {
+                return coder_type::is_root() ? coder_type::from_root(value_) :
+                        coder_type::from_ext(value_);
+            }
+
+            void from(std::size_t vl, bool ext = false) {
+                if (ext)
+                    value_ = coder_type::to_ext(vl);
+                else
+                    value_ = coder_type::to_root(vl);
+            }
+
+            bool check_enum() const {
+                return coder_type::check_enum(value_);
+            }
+
+            bool check_data(std::size_t vl, bool ext = false) {
+                return coder_type::check_data(vl, ext);
+            }
+
+        private:
+
+            enumerated_type& value_;
+        };
+
         namespace x691 {
 
 
@@ -295,7 +354,7 @@ namespace boost {
                 small_nn_wnumber() : value_(0) {
                 }
 
-                small_nn_wnumber(T vl) : value_(vl < 0 ? 0 : vl) {
+                small_nn_wnumber(T& vl) : value_(vl < 0 ? 0 : vl) {
                 }
 
                 const internal_type& value() const {
@@ -327,7 +386,7 @@ namespace boost {
                 }
 
             private:
-                internal_type value_;
+                internal_type& value_;
             };
 
 
@@ -445,9 +504,9 @@ namespace boost {
                 }
 
             };
-            
-            
-            
+
+
+
 
 
 
@@ -495,6 +554,11 @@ namespace boost {
 
                 template<typename T>
                 void operator&(const explicit_value<T >& vl) {
+                    *this & vl.value();
+                }
+
+                template<typename T>
+                void operator&(const per_enumerated_holder<T >& vl) {
                     *this & vl.value();
                 }
 
@@ -856,6 +920,23 @@ namespace boost {
                 return stream;
             }
 
+            template<typename T>
+            output_coder& operator<<(output_coder& stream, const per_enumerated_holder<T >& vl) {
+                bool ext = false;
+                std::size_t sval = vl.to();
+                if (vl.can_extended()) {
+                    ext = !vl.is_root();
+                    stream.add_bitmap(bitstring_type(ext));
+                }
+                if (!ext) {                  
+                    stream << constrained_wnumber<std::size_t>(sval, 0,vl.max());
+                    //root
+                } else {
+                    //ext
+                    stream << small_nn_wnumber<std::size_t>(sval);
+                }
+                return stream;
+            }
 
             ////////////////////////////////////////////////////////////////////
 
@@ -1148,6 +1229,11 @@ namespace boost {
                 }
 
                 template<typename T>
+                void operator&(const per_enumerated_holder<T >& vl) {
+                    *this & vl.value();
+                }
+
+                template<typename T>
                 void operator&(const explicit_value<T >& vl) {
                     *this & vl.value();
                 }
@@ -1363,7 +1449,7 @@ namespace boost {
             template<typename T>
             inline input_coder& operator>>(input_coder& stream, small_nn_wnumber <T>& vl) {
                 bitstring_type markerbit = stream.get_pop_bmp(1);
-                if (markerbit.bit(1)) {
+                if (markerbit.bit(0)) {
                     boost::uint64_t tmpvl = 0;
                     semiconstrained_wnumber<boost::uint64_t> tmp(tmpvl, 0);
                     stream>> tmp;
@@ -1383,7 +1469,7 @@ namespace boost {
 
                     if (vl.can_extended()) {
                         bitstring_type extendbit = stream.get_pop_bmp(1);
-                        if (extendbit.bit(1)) {
+                        if (extendbit.bit(0)) {
                             return octet_reader_undefsz(stream, vl.value());
                         }
                     }
@@ -1413,7 +1499,7 @@ namespace boost {
 
                     if (vl.can_extended()) {
                         bitstring_type extendbit = stream.get_pop_bmp(1);
-                        if (extendbit.bit(1)) {
+                        if (extendbit.bit(0)) {
                             return element_reader_undefsz(stream, vl.value());
                         }
                     }
@@ -1445,7 +1531,7 @@ namespace boost {
 
                     if (vl.can_extended()) {
                         bitstring_type extendbit = stream.get_pop_bmp(1);
-                        if (extendbit.bit(1)) {
+                        if (extendbit.bit(0)) {
                             return spec_element_reader_undefsz<T, EC>(stream, vl.value());
                         }
                     }
@@ -1515,7 +1601,7 @@ namespace boost {
 
                 if (vl.can_extended()) {
                     bitstring_type extendbit = stream.get_pop_bmp(1);
-                    if ((extendbit.bit(1)) && (vl.nill_extended()))
+                    if ((extendbit.bit(0)) && (vl.nill_extended()))
                         return primitive_int_deserialize(stream, vl.value());
                 }
 
@@ -1541,6 +1627,26 @@ namespace boost {
                 }
 
                 return primitive_int_deserialize(stream, vl.value());
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, per_enumerated_holder<T >& vl) {
+                std::size_t rval=0;
+                if (vl.can_extended()) {
+                    bitstring_type extendbit = stream.get_pop_bmp(1);
+                    if (extendbit.bit(0)) {
+                        //ext                        
+                        small_nn_wnumber<std::size_t> rtmp(rval);
+                        stream >> rtmp;
+                        vl.from(rval, true);                        
+                        return stream;
+                    }
+                }         
+                //root
+                constrained_wnumber<std::size_t> rtmp(rval, 0,vl.max());
+                stream >> rtmp;
+                vl.from(rval, false);
+                return stream;
             }
 
             template<typename T>
@@ -1711,10 +1817,10 @@ namespace boost {
 
 
         }
-        
-        
-        
-           // integer element constrainter
+
+
+
+        // integer element constrainter
 
         template<typename T, T mn, T mx, bool ext>
         struct ___integer_tmpl_ec___ {
@@ -1733,7 +1839,7 @@ namespace boost {
                 return 0xFF;
             }
 
-        };        
+        };
 
 
         template<> void external_type::serialize(boost::asn1::x691::output_coder& arch);

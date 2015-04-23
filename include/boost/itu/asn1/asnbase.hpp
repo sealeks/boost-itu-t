@@ -175,7 +175,7 @@ namespace boost {\
     static boost::asn1::indx_enumerated_map index_enumerated_ext;\
     static boost::asn1::enumerated_indx_map enumerated_index;\
     static boost::asn1::enumerated_indx_map enumerated_index_ext;\
-    static bool is_main(const boost::asn1::enumerated_type& vl) {\
+    static bool is_root(const boost::asn1::enumerated_type& vl) {\
         return enumerated_index.find(vl) != enumerated_index.end();}\
      static  bool ext() {\
         return !index_enumerated_ext.empty();}\
@@ -185,7 +185,7 @@ namespace boost {\
      static enumerated_type to_ext(std::size_t vl) {\
          boost::asn1::indx_enumerated_map::const_iterator fit = index_enumerated_ext.find(vl);\
         return fit != index_enumerated_ext.end() ? fit->second : enumerated_type(0);}\
-     static std::size_t from_main(const enumerated_type& vl) {\
+     static std::size_t from_root(const enumerated_type& vl) {\
          boost::asn1::enumerated_indx_map::const_iterator fit = enumerated_index.find(vl);\
         return fit != enumerated_index.end() ? fit->second : 0;}\
      static std::size_t from_ext(const enumerated_type& vl) {\
