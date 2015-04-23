@@ -29,6 +29,43 @@ namespace boost {
             }
             return UNIVERSAL_CLASS;
         }
+        
+        
+        
+
+        // enumerated type        
+
+        indx_enumerated_map create_indx_enumerated(const enum_base_type* ev, std::size_t sz) {
+            indx_enumerated_map rslt;
+            if (sz) {
+                typedef std::set<enumerated_type > enumerated_type_set;
+                typedef std::pair<std::size_t, enumerated_type > indx_enumerated_pair;
+                enumerated_type_set tmpset;
+                std::size_t ind = 0;
+                while (sz--)
+                    tmpset.insert(*ev++);
+                for (enumerated_type_set::const_iterator it = tmpset.begin(); it != tmpset.end(); ++it)
+                    rslt.insert(indx_enumerated_pair(ind++, *it));
+            }
+            return rslt;
+        }
+
+        enumerated_indx_map create_enumerated_indx(const enum_base_type* ev, std::size_t sz) {
+            enumerated_indx_map rslt;
+            if (sz) {
+                typedef std::set<enumerated_type > enumerated_type_set;
+                typedef std::pair<enumerated_type, std::size_t> enumerated_indx_pair;
+                enumerated_type_set tmpset;
+                std::size_t ind = 0;
+                while (sz--)
+                    tmpset.insert(*ev++);
+                for (enumerated_type_set::const_iterator it = tmpset.begin(); it != tmpset.end(); ++it)
+                    rslt.insert(enumerated_indx_pair(*it, ind++));
+            }
+            return rslt;
+        }        
+
+
 
 
         // relative oid type

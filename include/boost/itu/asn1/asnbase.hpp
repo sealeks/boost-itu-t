@@ -31,7 +31,7 @@
 #include <boost/itu/asn1/utf8.hpp>
 
 
-
+#define ITU_T_ARRAY(...) __VA_ARGS__
 
 #define ITU_T_SET_REGESTRATE(regtype) \
 namespace boost {\
@@ -170,6 +170,40 @@ namespace boost {\
 
 #define ITU_T_ARCHIVE_FUNC    template<typename Archive> void serialize(Archive& arch){};
 
+#define  ITU_T_PER_ENUMCODER(nm  , arrmain, arrext ) struct nm ## __coder { \
+    static boost::asn1::indx_enumerated_map index_enumerated;\
+    static boost::asn1::indx_enumerated_map index_enumerated_ext;\
+    static boost::asn1::enumerated_indx_map enumerated_index;\
+    static boost::asn1::enumerated_indx_map enumerated_index_ext;\
+    static bool is_main(const boost::asn1::enumerated_type& vl) {\
+        return enumerated_index.find(vl) != enumerated_index.end();}\
+     static  bool ext() {\
+        return !index_enumerated_ext.empty();}\
+     static enumerated_type to_main(std::size_t vl) {\
+         boost::asn1::indx_enumerated_map::const_iterator fit=index_enumerated.find(vl);\
+        return fit != index_enumerated.end() ? fit->second : enumerated_type(0);}\
+     static enumerated_type to_ext(std::size_t vl) {\
+         boost::asn1::indx_enumerated_map::const_iterator fit = index_enumerated_ext.find(vl);\
+        return fit != index_enumerated_ext.end() ? fit->second : enumerated_type(0);}\
+     static std::size_t from_main(enumerated_type vl) {\
+         boost::asn1::enumerated_indx_map::const_iterator fit = enumerated_index.find(vl);\
+        return fit != enumerated_index.end() ? fit->second : 0;}\
+     static std::size_t from_ext(enumerated_type vl) {\
+         boost::asn1::enumerated_indx_map::const_iterator fit = enumerated_index_ext.find(vl);\
+        return fit != enumerated_index_ext.end() ? fit->second : 0;}\
+     static std::size_t max() {\
+        return index_enumerated.size();}};\
+     const boost::asn1::enum_base_type ARR[] = {arrmain};\
+     const boost::asn1::enum_base_type EARR[] = {arrext};\
+      boost::asn1::indx_enumerated_map nm## __coder::index_enumerated = boost::asn1::create_indx_enumerated(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));\
+      boost::asn1::indx_enumerated_map  nm ## __coder::index_enumerated_ext = boost::asn1::create_indx_enumerated(EARR, sizeof(EARR)/ sizeof(boost::asn1::enum_base_type));\
+      boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));\
+      boost::asn1::enumerated_indx_map  nm ## __coder::enumerated_index_ext = boost::asn1::create_enumerated_indx(EARR, sizeof(EARR)/ sizeof(boost::asn1::enum_base_type));
+
+
+
+
+
 
 
 namespace boost {
@@ -296,13 +330,26 @@ namespace boost {
             enum_base_type as_base() const {
                 return value_;
             }            
+            
+            friend bool operator<(const enumerated_type& ls, const enumerated_type& rs){
+                return ls.value_<rs.value_;
+            }
+            
+            friend bool operator==(const enumerated_type& ls, const enumerated_type& rs){
+                return ls.value_==rs.value_;
+            }      
+                  
 
         private:
             enum_base_type value_;
         };
 
 
+        typedef std::map<std::size_t, enumerated_type > indx_enumerated_map;
+        typedef std::map<enumerated_type, std::size_t> enumerated_indx_map;
 
+        indx_enumerated_map create_indx_enumerated(const enum_base_type* ev, std::size_t sz);
+        enumerated_indx_map create_enumerated_indx(const enum_base_type* ev, std::size_t sz);       
 
 
 
