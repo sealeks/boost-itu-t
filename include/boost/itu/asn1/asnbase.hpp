@@ -179,18 +179,22 @@ namespace boost {\
         return enumerated_index.find(vl) != enumerated_index.end();}\
      static  bool ext() {\
         return !index_enumerated_ext.empty();}\
-     static enumerated_type to_main(std::size_t vl) {\
+     static enumerated_type to_root(std::size_t vl) {\
          boost::asn1::indx_enumerated_map::const_iterator fit=index_enumerated.find(vl);\
         return fit != index_enumerated.end() ? fit->second : enumerated_type(0);}\
      static enumerated_type to_ext(std::size_t vl) {\
          boost::asn1::indx_enumerated_map::const_iterator fit = index_enumerated_ext.find(vl);\
         return fit != index_enumerated_ext.end() ? fit->second : enumerated_type(0);}\
-     static std::size_t from_main(enumerated_type vl) {\
+     static std::size_t from_main(const enumerated_type& vl) {\
          boost::asn1::enumerated_indx_map::const_iterator fit = enumerated_index.find(vl);\
         return fit != enumerated_index.end() ? fit->second : 0;}\
-     static std::size_t from_ext(enumerated_type vl) {\
+     static std::size_t from_ext(const enumerated_type& vl) {\
          boost::asn1::enumerated_indx_map::const_iterator fit = enumerated_index_ext.find(vl);\
         return fit != enumerated_index_ext.end() ? fit->second : 0;}\
+     static bool check_enum(enumerated_type vl) {\
+        return ((enumerated_index.find(vl)!= enumerated_index.end()) || (enumerated_index_ext.find(vl)!= enumerated_index_ext.end()));}\
+     static bool check_data(std::size_t vl, bool ext=false) {\
+        return ext ? (index_enumerated_ext.find(vl)!= index_enumerated_ext.end()) :  (index_enumerated.find(vl)!= index_enumerated.end());}\
      static std::size_t max() {\
         return index_enumerated.size();}};\
      const boost::asn1::enum_base_type ARR[] = {arrmain};\
