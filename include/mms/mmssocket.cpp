@@ -12,12 +12,9 @@ namespace prot9506 {
     const boost::posix_time::ptime mmsepoch_time = boost::posix_time::ptime(boost::gregorian::date(1970, 1, 1));
     const boost::posix_time::ptime tofdepoch_time = boost::posix_time::ptime(boost::gregorian::date(1984, 1, 1));
 
+    ITU_T_OID( MMS_OID , ITU_T_VARRAY(1, 0, 9506, 2, 1));
+    ITU_T_OID( MMSA_OID , ITU_T_VARRAY(1, 0, 9506, 2, 3));  
 
-    const boost::array<boost::asn1::oidindx_type, 5 > MMS_ARR = {1, 0, 9506, 2, 1};
-    const boost::asn1::oid_type MMS_OID = boost::asn1::oid_type(MMS_ARR);
-
-    const boost::array<boost::asn1::oidindx_type, 5 > MMSA_ARR = {1, 0, 9506, 2, 3};
-    const boost::asn1::oid_type MMSA_OID = boost::asn1::oid_type(MMSA_ARR);
 
     const presentation_context MMS_CONTEXT_arr[] = {presentation_context(MMS_OID)};
     const presentation_context_set MMS_CONTEXT = presentation_context_set(MMS_CONTEXT_arr, MMS_CONTEXT_arr + 1);

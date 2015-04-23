@@ -75,9 +75,9 @@ namespace MMS_Object_Module_1 {
 
     extern const Priority normalPriority;
     extern const Severity normalSeverity;
-    extern const oid_type mMSNamedVariable;
-    extern const oid_type mMSAccessControlList;
-    extern const oid_type mMSEventCondition;
+    ITU_T_OID( mMSNamedVariable , ITU_T_VARRAY(1, 0, 9506, 1, 5, 1));
+    ITU_T_OID( mMSAccessControlList , ITU_T_VARRAY(1, 0, 9506, 1, 5, 2));    
+    ITU_T_OID( mMSEventCondition , ITU_T_VARRAY(1, 0, 9506, 1, 5, 3)); 
 
 }
 

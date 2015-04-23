@@ -1275,22 +1275,15 @@ namespace MMS_Object_Module_1 {
     }
 
     void Journal_Variable::valueSpecification(const ISO_9506_MMS_1::Data& vl) {
-        valueSpecification_ = vl;
+        valueSpecification_ = vl;        
     }
 
     void Journal_Variable::valueSpecification(boost::shared_ptr< ISO_9506_MMS_1::Data> vl) {
         valueSpecification_ = vl;
     }
 
+        
 
-    const boost::array<boost::asn1::oidindx_type, 6> mMSNamedVariable_OID_ARR = {1, 0, 9506, 1, 5, 1};
-    const oid_type mMSNamedVariable = boost::asn1::oid_type(mMSNamedVariable_OID_ARR);
-
-    const boost::array<boost::asn1::oidindx_type, 6> mMSAccessControlList_OID_ARR = {1, 0, 9506, 1, 5, 2};
-    const oid_type mMSAccessControlList = boost::asn1::oid_type(mMSAccessControlList_OID_ARR);
-
-    const boost::array<boost::asn1::oidindx_type, 6> mMSEventCondition_OID_ARR = {1, 0, 9506, 1, 5, 3};
-    const oid_type mMSEventCondition = boost::asn1::oid_type(mMSEventCondition_OID_ARR);
 
 }
 

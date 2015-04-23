@@ -13,6 +13,18 @@
       <itemPath>Makefile</itemPath>
       <itemPath>../../../doc</itemPath>
     </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+      <itemPath>../../../doc</itemPath>
+    </logicalFolder>
     <itemPath>../../../include/mms/ISO-9506-MMS-1.cpp</itemPath>
     <itemPath>../../../include/mms/ISO-9506-MMS-1.hpp</itemPath>
     <itemPath>../../../include/mms/ISO-9506-MMS-1A.cpp</itemPath>
@@ -31,6 +43,7 @@
     <itemPath>../../../include/mms/mmssocket.h</itemPath>
   </logicalFolder>
   <sourceRootList>
+    <Elem>../../../include/mms</Elem>
     <Elem>../../../include/mms</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>

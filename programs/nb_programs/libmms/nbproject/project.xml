@@ -12,6 +12,7 @@
             <make-dep-projects/>
             <sourceRootList>
                 <sourceRootElem>../../../include/mms</sourceRootElem>
+                <sourceRootElem>../../../include/mms</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
