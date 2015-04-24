@@ -245,9 +245,9 @@ namespace boost {
                 return value_;
             }
 
-            operator enum_base_type() const {
+            /*operator enum_base_type() const {
                 return value_;
-            }
+            }*/
 
             enum_base_type as_base() const {
                 return value_;
@@ -1562,6 +1562,10 @@ namespace boost {
 
             boost::shared_ptr<T>& get_shared() {
                 return internal_;
+            }
+            
+            bool isdefault() const {
+                return  ((!internal_) || (* internal_==DT));
             }
 
             T * operator->() const {

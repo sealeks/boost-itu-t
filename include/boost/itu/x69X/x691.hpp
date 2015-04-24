@@ -204,13 +204,10 @@ namespace boost {
             template<typename T>
             std::size_t calculate_bitsize(T vl) {
                 if (vl) {
-                    if (vl > 0) {
-                        std::size_t rslt = 1;
-                        while (vl >>= 1)
-                            rslt++;
-                        return rslt;
-                    } else
-                        return sizeof (T)*8;
+                    std::size_t rslt = 1;
+                    while (vl >>= 1)
+                        rslt++;
+                    return rslt;
                 }
                 return 0;
             }
@@ -367,6 +364,12 @@ namespace boost {
                         return rslt;
                     return 1;
                 }
+                
+                octet_sequnce as_octets() const {
+                    octet_sequnce vl;
+                    to_x690_cast<internal_type>(sendval(), vl);
+                    return vl.empty() ? S0_OCTET : vl;
+                }                
 
 
             private:
@@ -387,7 +390,7 @@ namespace boost {
             public:
 
                 typedef T internal_type;
-
+                
                 unconstrained_wnumber(T& vl) : value_(vl) {
                 }
 
@@ -423,11 +426,10 @@ namespace boost {
             public:
 
                 typedef T internal_type;
+                BOOST_STATIC_ASSERT(!std::numeric_limits<internal_type>::is_signed);               
 
-                small_nn_wnumber() : value_(0) {
-                }
 
-                small_nn_wnumber(T& vl) : value_(vl < 0 ? 0 : vl) {
+                small_nn_wnumber(T& vl) : value_(vl) {
                 }
 
                 const internal_type& value() const {
@@ -1006,7 +1008,7 @@ namespace boost {
                     //root
                 } else {
                     //ext
-                    //stream << small_nn_wnumber<std::size_t>(sval);
+                    stream << small_nn_wnumber<std::size_t>(sval);
                 }
                 return stream;
             }
@@ -1526,7 +1528,7 @@ namespace boost {
                     boost::uint64_t tmpvl = 0;
                     semiconstrained_wnumber<boost::uint64_t> tmp(tmpvl, 0);
                     stream>> tmp;
-                    vl.value(tmp);
+                    vl.value(tmp.value());
                     return stream;
                 }
                 bitstring_type valuebit = bitstring_type(S0_OCTET, 6) + stream.get_pop_bmp(6);
@@ -1710,7 +1712,7 @@ namespace boost {
                     if (extendbit.bit(0)) {
                         //ext                        
                         small_nn_wnumber<std::size_t> rtmp(rval);
-                        //stream >> rtmp;
+                        stream >> rtmp;
                         vl.from(rval, true);
                         return stream;
                     }
