@@ -35,7 +35,35 @@
 #define ITU_T_BIND_SIZE_SNGLCONSTRE(var, mn) boost::asn1::bind_sizeconstraints_ext(arch, var, mn, mn);
 
 
-#define  ITU_T_PER_ENUMCODER(nm  , arrmain, arrext ) struct nm ## __coder { \
+#define  ITU_T_PER_ENUMCODER(nm  , arrmain ) struct nm ## __coder { \
+    static boost::asn1::indx_enumerated_map index_enumerated;\
+    static boost::asn1::enumerated_indx_map enumerated_index;\
+    static bool is_root(const boost::asn1::enumerated_type& vl) {\
+        return true;}\
+     static  bool ext() {\
+        return false;}\
+     static enumerated_type to_root(std::size_t vl) {\
+         boost::asn1::indx_enumerated_map::const_iterator fit=index_enumerated.find(vl);\
+        return fit != index_enumerated.end() ? fit->second : enumerated_type(0);}\
+     static enumerated_type to_ext(std::size_t vl) {\
+        return enumerated_type(0);}\
+     static std::size_t from_root(const enumerated_type& vl) {\
+         boost::asn1::enumerated_indx_map::const_iterator fit = enumerated_index.find(vl);\
+        return fit != enumerated_index.end() ? fit->second : 0;}\
+     static std::size_t from_ext(const enumerated_type& vl) {\
+        return 0;}\
+     static bool check_enum(enumerated_type vl) {\
+        return (enumerated_index.find(vl)!= enumerated_index.end());}\
+     static bool check_data(std::size_t vl, bool ext=false) {\
+        return index_enumerated.find(vl)!= index_enumerated.end();}\
+     static std::size_t rootsize() {\
+        return index_enumerated.size();}};\
+     const boost::asn1::enum_base_type ARR[] = {arrmain};\
+      boost::asn1::indx_enumerated_map nm## __coder::index_enumerated = boost::asn1::create_indx_enumerated(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));\
+      boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));
+
+
+#define  ITU_T_PER_ENUMCODER_EXT(nm  , arrmain, arrext ) struct nm ## __coder { \
     static boost::asn1::indx_enumerated_map index_enumerated;\
     static boost::asn1::indx_enumerated_map index_enumerated_ext;\
     static boost::asn1::enumerated_indx_map enumerated_index;\
@@ -60,7 +88,7 @@
         return ((enumerated_index.find(vl)!= enumerated_index.end()) || (enumerated_index_ext.find(vl)!= enumerated_index_ext.end()));}\
      static bool check_data(std::size_t vl, bool ext=false) {\
         return ext ? (index_enumerated_ext.find(vl)!= index_enumerated_ext.end()) :  (index_enumerated.find(vl)!= index_enumerated.end());}\
-     static std::size_t max() {\
+     static std::size_t rootsize() {\
         return index_enumerated.size();}};\
      const boost::asn1::enum_base_type ARR[] = {arrmain};\
      const boost::asn1::enum_base_type EARR[] = {arrext};\
@@ -112,8 +140,9 @@ namespace boost {
                 return coder_type::is_root(value_);
             }
 
-            bool max() const {
-                return coder_type::max();
+            std::size_t max() const {
+                std::size_t maxnum = coder_type::rootsize();
+                return maxnum ? (maxnum - 1) : 0;
             }
 
             std::size_t to() const {
@@ -367,7 +396,7 @@ namespace boost {
 
                 octet_sequnce as_octets() const {
                     octet_sequnce vl;
-                    to_x690_cast<internal_type>(sendval(), vl);
+                    to_x690_cast<boost::uint64_t>(sendval(), vl);
                     return vl.empty() ? S0_OCTET : vl;
                 }
 
@@ -1003,7 +1032,8 @@ namespace boost {
                     stream.add_bitmap(bitstring_type(ext));
                 }
                 if (!ext) {
-                    stream << constrained_wnumber<std::size_t>(sval, 0, vl.max());
+                    std::size_t maxnum = vl.max();
+                    stream << constrained_wnumber<std::size_t>(sval, 0, maxnum);
                     //root
                 } else {
                     //ext
