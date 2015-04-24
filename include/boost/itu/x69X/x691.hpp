@@ -364,12 +364,12 @@ namespace boost {
                         return rslt;
                     return 1;
                 }
-                
+
                 octet_sequnce as_octets() const {
                     octet_sequnce vl;
                     to_x690_cast<internal_type>(sendval(), vl);
                     return vl.empty() ? S0_OCTET : vl;
-                }                
+                }
 
 
             private:
@@ -390,7 +390,7 @@ namespace boost {
             public:
 
                 typedef T internal_type;
-                
+
                 unconstrained_wnumber(T& vl) : value_(vl) {
                 }
 
@@ -426,8 +426,7 @@ namespace boost {
             public:
 
                 typedef T internal_type;
-                BOOST_STATIC_ASSERT(!std::numeric_limits<internal_type>::is_signed);               
-
+                BOOST_STATIC_ASSERT(!std::numeric_limits<internal_type>::is_signed);
 
                 small_nn_wnumber(T& vl) : value_(vl) {
                 }
@@ -1937,31 +1936,45 @@ namespace boost {
             return bind_per(arch, *vl);
         }
 
-        template<typename Archive, typename T>
-        inline bool bind_per(Archive & arch, boost::shared_ptr<T>& vl) {
-            if (arch.__input__()) {
-                if (!static_cast<bool> (vl))
-                    vl = boost::shared_ptr<T>(new T());
-                return bind_per(arch, *vl);
-            } else if (static_cast<bool> (vl))
+        template<typename T>
+        inline bool bind_per(boost::asn1::x691::output_coder & arch, boost::shared_ptr<T>& vl) {
+            if (static_cast<bool> (vl))
                 return bind_per(arch, *vl);
             return false;
         }
 
+        template<typename T>
+        inline bool bind_per(boost::asn1::x691::input_coder & arch, boost::shared_ptr<T>& vl) {
+            if (!static_cast<bool> (vl))
+                vl = boost::shared_ptr<T>(new T());
+            return bind_per(arch, *vl);
+        }
+
+        template<typename T, const T& DT>
+        inline bool bind_per(boost::asn1::x691::output_coder & arch, default_holder<T, DT>& vl) {
+            if (!vl.isdefault())
+                return bind_per(arch, vl.get_shared());
+            return false;
+        }
+
+        template<typename T, const enumerated_type& DT>
+        inline bool bind_per(boost::asn1::x691::input_coder & arch, default_holder<T, DT>& vl) {
+            return bind_per(arch, vl.get_shared());
+        }
+
         template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
         inline bool bind_per(Archive & arch, implicit_typedef<T, Tag, ID, TYPE>& vl) {
-            arch & vl.value();
-            return true;
+            return bind_per(arch, vl.value());
         }
 
         template<typename Archive, typename T, class Tag, id_type ID, class_type TYPE>
         inline bool bind_per(Archive & arch, explicit_typedef<T, Tag, ID, TYPE>& vl) {
-            arch & vl.value();
-            return true;
+            return bind_per(arch, vl.value());
         }
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  Enum
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         template<typename T>
@@ -1974,6 +1987,52 @@ namespace boost {
         inline bool bind_per_enum(boost::asn1::x691::input_coder & arch, enumerated_type& vl) {
             arch & per_enumerated_holder<T>(vl);
             return true;
+        }
+
+        template<typename T>
+        inline bool bind_per_enum(boost::asn1::x691::output_coder & arch, value_holder<enumerated_type>& vl) {
+            return bind_per_enum<T>(arch, *vl);
+        }
+
+        template<typename T>
+        inline bool bind_per_enum(boost::asn1::x691::input_coder & arch, value_holder<enumerated_type>& vl) {
+            return bind_per_enum<T>(arch, *vl);
+        }
+
+        template<typename T>
+        inline bool bind_per_enum(boost::asn1::x691::output_coder & arch, boost::shared_ptr<enumerated_type>& vl) {
+            if (static_cast<bool> (vl))
+                return bind_per_enum<T>(arch, *vl);
+            return false;
+        }
+
+        template<typename T>
+        inline bool bind_per_enum(boost::asn1::x691::input_coder & arch, boost::shared_ptr<enumerated_type>& vl) {
+            if (!static_cast<bool> (vl))
+                vl = boost::shared_ptr<enumerated_type>(new enumerated_type());
+            return bind_per_enum<T>(arch, *vl);
+        }
+
+        template<typename T, const T& DT>
+        inline bool bind_per_enum(boost::asn1::x691::output_coder & arch, default_holder<enumerated_type, DT>& vl) {
+            if (!vl.isdefault())
+                return bind_per_enum<T>(arch, vl.get_shared());
+            return false;
+        }
+
+        template<typename T, const enumerated_type& DT>
+        inline bool bind_per_enum(boost::asn1::x691::input_coder & arch, default_holder<enumerated_type, DT>& vl) {
+            return bind_per_enum<T>(arch, vl.get_shared());
+        }
+
+        template<typename Archive, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_per_enum(Archive & arch, implicit_typedef<enumerated_type, Tag, ID, TYPE>& vl) {
+            return bind_per_enum(arch, vl.value());
+        }
+
+        template<typename Archive, class Tag, id_type ID, class_type TYPE>
+        inline bool bind_per(Archive & arch, explicit_typedef<enumerated_type, Tag, ID, TYPE>& vl) {
+            return bind_per_enum(arch, vl.value());
         }
 
         /////////////////////////////////////////////////////////////////////////////////////       
