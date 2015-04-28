@@ -1719,7 +1719,11 @@ namespace boost {
 
             //typedef typename T::value_type arg_type;
             typedef EC elements_constrainter_type;
-
+            
+            size_constrainter(T& vl, bool ext) :
+            value_(vl), MIN(0), MAX(0), EXT(ext) {
+            }            
+            
             size_constrainter(T& vl, const std::size_t& mn = 0, const std::size_t& mx = 0, bool ext = false) :
             value_(vl), MIN(mn), MAX(mx), EXT(ext) {
             }
