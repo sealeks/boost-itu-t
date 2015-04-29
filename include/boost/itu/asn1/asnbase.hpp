@@ -31,18 +31,18 @@
 #include <boost/itu/asn1/utf8.hpp>
 
 #if ((__WCHAR_MAX__) && (__WCHAR_MAX__ > 0x10000))
-        typedef wchar_t universalchar_t; // 32 bit
-        typedef boost::uint16_t bmpchar_t; // 16 bit
-        typedef std::wstring base_universalstring_type;
-        typedef std::basic_string<universalchar_t> base_bmpstring_type;
-        BOOST_STATIC_ASSERT(sizeof (wchar_t) == 4);
+typedef wchar_t universalchar_t; // 32 bit
+typedef boost::uint16_t bmpchar_t; // 16 bit
+typedef std::wstring base_universalstring_type;
+typedef std::basic_string<universalchar_t> base_bmpstring_type;
+BOOST_STATIC_ASSERT(sizeof (wchar_t) == 4);
 #else   
 #define __ITU_ISBPM_WCHAR__         
-        typedef wchar_t bmpchar_t; // 16 bit
-        typedef boost::uint32_t universalchar_t;
-        typedef std::wstring base_bmpstring_type;
-        typedef std::basic_string<universalchar_t> base_universalstring_type;
-        BOOST_STATIC_ASSERT(sizeof (wchar_t) == 2);
+typedef wchar_t bmpchar_t; // 16 bit
+typedef boost::uint32_t universalchar_t;
+typedef std::wstring base_bmpstring_type;
+typedef std::basic_string<universalchar_t> base_universalstring_type;
+BOOST_STATIC_ASSERT(sizeof (wchar_t) == 2);
 #endif
 
 
@@ -1563,9 +1563,9 @@ namespace boost {
             boost::shared_ptr<T>& get_shared() {
                 return internal_;
             }
-            
+
             bool isdefault() const {
-                return  ((!internal_) || (* internal_==DT));
+                return ((!internal_) || (* internal_ == DT));
             }
 
             T * operator->() const {
@@ -1717,25 +1717,28 @@ namespace boost {
         template<typename T, typename EC = null_constrainter>
         struct size_constrainter {
 
-            //typedef typename T::value_type arg_type;
             typedef EC elements_constrainter_type;
-            
+
+            size_constrainter(T& vl) :
+            value_(vl), MIN(0), MAX(0), EXT(false), AVAIL(false) {
+            }
+
             size_constrainter(T& vl, bool ext) :
-            value_(vl), MIN(0), MAX(0), EXT(ext) {
-            }            
-            
-            size_constrainter(T& vl, const std::size_t& mn = 0, const std::size_t& mx = 0, bool ext = false) :
-            value_(vl), MIN(mn), MAX(mx), EXT(ext) {
+            value_(vl), MIN(0), MAX(0), EXT(ext), AVAIL(true) {
+            }
+
+            size_constrainter(T& vl, const std::size_t& mn, const std::size_t& mx = 0, bool ext = false) :
+            value_(vl), MIN(mn), MAX(mx), EXT(ext), AVAIL(true) {
             }
 
             template<class Tag, id_type ID, class_type TYPE >
-            size_constrainter(implicit_typedef<T, Tag, ID, TYPE>& vl, const std::size_t& mn = 0, const std::size_t& mx = 0, bool ext = false) :
-            value_(*vl), MIN(mn), MAX(mx), EXT(ext) {
+            size_constrainter(implicit_typedef<T, Tag, ID, TYPE>& vl, const std::size_t& mn, const std::size_t& mx = 0, bool ext = false) :
+            value_(*vl), MIN(mn), MAX(mx), EXT(ext), AVAIL(true) {
             }
 
             template<class Tag, id_type ID, class_type TYPE >
-            size_constrainter(explicit_typedef<T, Tag, ID, TYPE>& vl, const std::size_t& mn = 0, const std::size_t& mx = 0, bool ext = false) :
-            value_(*vl), MIN(mn), MAX(mx), EXT(ext) {
+            size_constrainter(explicit_typedef<T, Tag, ID, TYPE>& vl, const std::size_t& mn, const std::size_t& mx = 0, bool ext = false) :
+            value_(*vl), MIN(mn), MAX(mx), EXT(ext), AVAIL(true) {
             }
 
             const std::size_t& min() const {
@@ -1747,39 +1750,31 @@ namespace boost {
             }
 
             bool available() const {
-                return MAX || MIN || EXT;
-            }
-
-            bool unable() const {
-                return !(MAX || MIN || EXT);
-            }
-
-            bool nill_extended() const {
-                return (!MIN && !MAX && EXT);
-            }
-
-            bool semi() const {
-                return (MIN && !MAX);
+                return AVAIL;
             }
 
             bool can_extended() const {
                 return EXT;
             }
 
-            boost::uint64_t range() const {
-                return MAX - MIN;
+            bool nill_extended() const {
+                return (AVAIL && !MIN && !MAX && EXT);
+            }
+
+            bool constrained() const {
+                return (MIN || MAX) && (MAX < LENGH_64K);
+            }
+
+            bool semi() const {
+                return (MIN && !MAX);
             }
 
             bool is_single() const {
                 return (MAX == MIN) && (MAX < LENGH_64K);
             }
 
-            bool constrained() const {
-                return MAX && (MAX < LENGH_64K);
-            }
-
-            bool semiconstrained() const {
-                return MIN && !MAX;
+            boost::uint64_t range() const {
+                return MAX - MIN;
             }
 
             T& value() {
@@ -1791,7 +1786,7 @@ namespace boost {
             }
 
             bool extended(std::size_t sz) const {
-                return ((sz < MIN) || (sz > MAX));
+                return semi() ? (sz < MIN) : ((sz < MIN) || (sz > MAX));
             }
 
             bool check(std::size_t sz) const {
@@ -1808,6 +1803,7 @@ namespace boost {
             const std::size_t& MIN;
             const std::size_t& MAX;
             bool EXT;
+            bool AVAIL;
         };
 
 

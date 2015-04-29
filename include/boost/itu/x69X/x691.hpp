@@ -777,8 +777,12 @@ namespace boost {
                 if (!vl.check(tmpsz))
                     throw boost::system::system_error(boost::itu::ER_PROTOCOL);
 
-                if (!vl.is_single())
-                    stream << constrained_wnumber<std::size_t>(tmpsz, vl.min(), vl.max());
+                if (!vl.is_single()) {
+                    if (vl.semi())
+                        stream << semiconstrained_wnumber<std::size_t>(tmpsz, vl.min());
+                    else
+                        stream << constrained_wnumber<std::size_t>(tmpsz, vl.min(), vl.max());
+                }
 
             }
 
@@ -789,8 +793,12 @@ namespace boost {
                 if (!vl.check(tmpsz))
                     throw boost::system::system_error(boost::itu::ER_PROTOCOL);
 
-                if (!vl.is_single())
-                    stream << constrained_wnumber<std::size_t>(tmpsz, vl.min(), vl.max());
+                if (!vl.is_single()) {
+                    if (vl.semi())
+                        stream << semiconstrained_wnumber<std::size_t>(tmpsz, vl.min());
+                    else
+                        stream << constrained_wnumber<std::size_t>(tmpsz, vl.min(), vl.max());
+                }
 
             }
 
@@ -938,14 +946,8 @@ namespace boost {
 
                     if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
 
-                        std::size_t tmpsz = vl.value().size();
-                        if (!vl.check(tmpsz))
-                            throw boost::system::system_error(boost::itu::ER_PROTOCOL);
-
-                        if (vl.max() < LENGH_64K) {
-                            writer_defsz(stream, vl);
-                            return octets_writer(stream, octet_sequnce(vl.value()), stream.aligned() ? check_alighn<T>(vl) : false);
-                        }
+                        writer_defsz(stream, vl);
+                        return octets_writer(stream, octet_sequnce(vl.value()), stream.aligned() ? check_alighn<T>(vl) : false);
                     }
                 }
                 return octet_writer_undefsz(stream, vl.value());
@@ -964,10 +966,8 @@ namespace boost {
 
                     if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
 
-                        if (vl.max() < LENGH_64K) {
-                            writer_defsz(stream, vl);
-                            return elements_writer(stream, vl.value().begin(), vl.value().end());
-                        }
+                        writer_defsz(stream, vl);
+                        return elements_writer(stream, vl.value().begin(), vl.value().end());
                     }
                 }
                 return element_writer_undefsz(stream, vl.value());
@@ -982,12 +982,10 @@ namespace boost {
 
                     if ((!vl.extended(vl.value().size())) && (vl.constrained())) {
 
-                        if (vl.max() < LENGH_64K) {
-                            writer_defsz(stream, vl);
-                            if ((stream.aligned()) && checkal && (spec_check_alighn<T, EC>(vl)))
-                                stream.force_alighn();
-                            return spec_elements_writer<typename T::const_iterator, EC > (stream, vl.value().begin(), vl.value().end());
-                        }
+                        writer_defsz(stream, vl);
+                        if ((stream.aligned()) && checkal && (spec_check_alighn<T, EC>(vl)))
+                            stream.force_alighn();
+                        return spec_elements_writer<typename T::const_iterator, EC > (stream, vl.value().begin(), vl.value().end());
                     }
                 }
                 return spec_element_writer_undefsz<T, EC>(stream, vl.value());
@@ -1399,7 +1397,7 @@ namespace boost {
                     std::size_t bitsz = vl.bitsize();
                     vl.value(stream.get_pop_bmp(bitsz));
                 } else
-                    vl.value(stream.get_pop_octs(vl.octetsize(),true));
+                    vl.value(stream.get_pop_octs(vl.octetsize(), true));
                 return stream;
             }
 
@@ -1595,16 +1593,18 @@ namespace boost {
 
                     if (vl.constrained()) {
 
-                        if (vl.max() < LENGH_64K) {
-
-                            std::size_t sz = 0;
-                            if (!vl.is_single()) {
+                        std::size_t sz = 0;
+                        if (!vl.is_single()) {
+                            if (vl.semi()) {
+                                semiconstrained_wnumber<std::size_t> tmpsz(sz, vl.min());
+                                stream >> tmpsz;
+                            } else {
                                 constrained_wnumber<std::size_t> tmpsz(sz, vl.min(), vl.max());
                                 stream >> tmpsz;
-                            } else
-                                sz = vl.max();
-                            return octet_reader(stream, vl.value(), sz, stream.aligned() ? check_alighn<T>(vl) : false);
-                        }
+                            }
+                        } else
+                            sz = vl.max();
+                        return octet_reader(stream, vl.value(), sz, stream.aligned() ? check_alighn<T>(vl) : false);
                     }
                 }
                 return octet_reader_undefsz(stream, vl.value());
@@ -1625,18 +1625,20 @@ namespace boost {
 
                     if (vl.constrained()) {
 
-                        if (vl.max() < LENGH_64K) {
-
-                            std::size_t sz = 0;
-                            if (!vl.is_single()) {
-                                constrained_wnumber<std::size_t> tmpsz(sz, vl.min(), vl.max());
+                        std::size_t sz = 0;
+                        if (!vl.is_single()) {
+                            if (vl.semi()) {
+                                semiconstrained_wnumber<std::size_t> tmpsz(sz, vl.min());
                                 stream >> tmpsz;
-                            } else
-                                sz = vl.max();
+                            } else {
+                                constrained_wnumber<std::size_t > tmpsz(sz, vl.min(), vl.max());
+                                stream >> tmpsz;
+                            }
+                        } else
+                            sz = vl.max();
+                        element_reader(stream, vl.value(), sz);
+                        return stream;
 
-                            element_reader(stream, vl.value(), sz);
-                            return stream;
-                        }
                     }
                 }
                 return element_reader_undefsz(stream, vl.value());
@@ -1657,21 +1659,24 @@ namespace boost {
 
                     if (vl.constrained()) {
 
-                        if (vl.max() < LENGH_64K) {
-
-                            std::size_t sz = 0;
-                            if (!vl.is_single()) {
+                        std::size_t sz = 0;
+                        if (!vl.is_single()) {
+                            if (vl.semi()) {
+                                semiconstrained_wnumber<std::size_t> tmpsz(sz, vl.min());
+                                stream >> tmpsz;
+                            } else {
                                 constrained_wnumber<std::size_t> tmpsz(sz, vl.min(), vl.max());
                                 stream >> tmpsz;
-                            } else
-                                sz = vl.max();
+                            }
+                        } else
+                            sz = vl.max();
 
-                            if ((stream.aligned()) && checkal && (spec_check_alighn<T, EC>(vl)))
-                                stream.force_alighn();
+                        if ((stream.aligned()) && checkal && (spec_check_alighn<T, EC>(vl)))
+                            stream.force_alighn();
 
-                            spec_element_reader<T, EC>(stream, vl.value(), sz);
-                            return stream;
-                        }
+                        spec_element_reader<T, EC>(stream, vl.value(), sz);
+                        return stream;
+
                     }
                 }
                 return spec_element_reader_undefsz<T, EC>(stream, vl.value());
