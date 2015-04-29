@@ -132,6 +132,8 @@ namespace x680 {
         mk_components_of,
         mk_extention,
         mk_exception,
+        mk_group_beg,
+        mk_group_end,
     };
 
     enum constraintmarker_type {
@@ -1154,9 +1156,12 @@ namespace x680 {
             qi::rule<str_iterator> skip;
         };
 
+
+
         typedef skip_comment_grammar skip_cmt_type;
 
-        extern skip_cmt_type comment_skip;
+        //extern skip_cmt_type comment_skip;
+        static skip_comment_grammar comment_skip;
 
         typedef qi::rule<str_iterator> term_rule;
 
@@ -1166,174 +1171,322 @@ namespace x680 {
         //typedef qi::rule<str_iterator, string_vector(), skip_cmt_type > strvect_sk_rule;
 
 
+       static  str_rule pos_number_str = distinct(qi::alnum | ('-' >> qi::alnum))[qi::char_("0")[ sprt::_val = sprt::_1 ]
+                | (qi::char_("1-9")[ sprt::_val = sprt::_1]
+                >> *(qi::char_("0-9")[ sprt::_val += sprt::_1]))];
 
-        extern str_rule pos_number_str;
-        extern str_rule pos_onumber_str;
-        extern str_rule number_str;
-        extern str_rule realnumber_str;
-        extern str_rule bstring_str;
-        extern str_rule hstring_str;
-        extern str_rule cstring_str;
-        extern str_rule IRIValue;
-        extern str_rule curly_barket_pair;
+       static  str_rule pos_onumber_str = distinct(qi::alnum | ('-' >> qi::alnum))[ (qi::char_("0-9")[ sprt::_val = sprt::_1]
+                >> *(qi::char_("0-9")[ sprt::_val += sprt::_1]))];
 
+       static  str_rule number_str = distinct(qi::alnum | ('-' >> qi::alnum))[(qi::string("-")[ sprt::_val = sprt::_1 ]
+                >> qi::omit[*qi::blank]
+                >> pos_number_str[ sprt::_val += sprt::_1 ])
+        | pos_number_str[ sprt::_val = sprt::_1 ]];
 
+       static  str_rule realnumber_str = distinct(qi::alnum | ('-' >> qi::alnum))[number_str[ sprt::_val = sprt::_1 ]
+                >> (qi::string(".")[ sprt::_val += sprt::_1 ] >> pos_onumber_str[ sprt::_val += sprt::_1 ])];
 
-        extern term_rule ECODED_;
-        extern term_rule INTERSECTION_;
-        extern term_rule SEQUENCE_;
-        extern term_rule ABSTRACT_SYNTAX_;
-        extern term_rule ABSENT_;
-        extern term_rule ENCODING_CONTROL_;
-        extern term_rule ISO646String_;
-        extern term_rule SET_;
-        extern term_rule ALL_;
-        extern term_rule END_;
-        extern term_rule MAX_;
-        extern term_rule SETTINGS_;
-        extern term_rule APPLICATION_;
-        extern term_rule ENUMERATED_;
-        extern term_rule MIN_;
-        extern term_rule SIZE_;
-        extern term_rule AUTOMATIC_;
-        extern term_rule EXCEPT_;
-        extern term_rule ENCODED_;
-        extern term_rule MINUS_INFINITY_;
-        extern term_rule STRING_;
-        extern term_rule BEGIN_;
-        extern term_rule EXPLICIT_;
-        extern term_rule NOT_A_NUMBER_;
-        extern term_rule SYNTAX_;
-        extern term_rule BIT_;
-        extern term_rule EXPORTS_;
-        extern term_rule NULL_;
-        extern term_rule T61String_;
-        extern term_rule BMPString_;
-        extern term_rule EXTENSIBILITY_;
-        extern term_rule NumericString_;
-        extern term_rule TAGS_;
-        extern term_rule BOOLEAN_;
-        extern term_rule EXTERNAL_;
-        extern term_rule OBJECT_;
-        extern term_rule TeletexString_;
-        extern term_rule BY_;
-        extern term_rule FALSE_;
-        extern term_rule ObjectDescriptor_;
-        extern term_rule TIME_;
-        extern term_rule CHARACTER_;
-        extern term_rule FROM_;
-        extern term_rule OCTET_;
-        extern term_rule TIME_OF_DAY_;
-        extern term_rule CHOICE_;
-        extern term_rule GeneralizedTime_;
-        extern term_rule OF_;
-        extern term_rule TRUE_;
-        extern term_rule CLASS_;
-        extern term_rule GeneralString_;
-        extern term_rule OID_IRI_;
-        extern term_rule TYPE_IDENTIFIER_;
-        extern term_rule COMPONENT_;
-        extern term_rule GraphicString_;
-        extern term_rule OPTIONAL_;
-        extern term_rule UNION_;
-        extern term_rule COMPONENTS_;
-        extern term_rule IA5String_;
-        extern term_rule PATTERN_;
-        extern term_rule UNIQUE_;
-        extern term_rule CONSTRAINED_;
-        extern term_rule IDENTIFIER_;
-        extern term_rule PDV_;
-        extern term_rule UNIVERSAL_;
-        extern term_rule CONTAINING_;
-        extern term_rule IMPLICIT_;
-        extern term_rule PLUS_INFINITY_;
-        extern term_rule UniversalString_;
-        extern term_rule DATE_;
-        extern term_rule IMPLIED_;
-        extern term_rule PRESENT_;
-        extern term_rule UTCTime_;
-        extern term_rule DATE_TIME_;
-        extern term_rule IMPORTS_;
-        extern term_rule PrintableString_;
-        extern term_rule UTF8String_;
-        extern term_rule DEFAULT_;
-        extern term_rule INCLUDES_;
-        extern term_rule PRIVATE_;
-        extern term_rule VideotexString_;
-        extern term_rule DEFINITIONS_;
-        extern term_rule INSTANCE_;
-        extern term_rule REAL_;
-        extern term_rule VisibleString_;
-        extern term_rule DURATION_;
-        extern term_rule INSTRUCTIONS_;
-        extern term_rule RELATIVE_OID_;
-        extern term_rule WITH_;
-        extern term_rule EMBEDDED_;
-        extern term_rule INTEGER_;
-        extern term_rule RELATIVE_OID_IRI_;
+       static  str_rule bstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::omit[qi::char_("'")]
+        >> *(qi::char_("0-1")[ sprt::_val += sprt::_1] | qi::omit[qi::space])
+        >> qi::omit[ qi::char_("'")
+        >> qi::char_("B")]];
 
-        extern str_rule TYPE_IDENTIFIER__;
-        extern str_rule ABSTRACT_SYNTAX__;
+       static  str_rule hstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::omit[qi::char_("'")]
+        >> *(qi::char_("0-9ABCDEF")[ sprt::_val += sprt::_1] | qi::omit[qi::space])
+        >> qi::omit[ qi::char_("'")
+        >> qi::char_("H")]];
 
+       static  str_rule cstring_str = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::char_("\"")
+        >> *((qi::print)[ sprt::_val += sprt::_1] - qi::char_("\""))
+        >> qi::char_("\"")];
 
-        extern str_rule literal_except_token;
-        extern str_rule word_;
-        extern str_rule spaces_;
-        extern str_rule Literal_;
-        extern str_rule SyntaxField_;
-        extern str_rule typereference_; //(=objectreference_, modulereference_ )
-        extern str_rule typereference_strict; //(!=objectreference_, modulereference_ )
-        extern str_rule identifier_; //(=objectsetreference,valuereference_ )
-        extern str_rule valuereference_; //(=objectsetreference,identifier_ )
-        extern str_rule valuesetreference_; //(=typereference_ )        
-        extern str_rule modulereference_; //(=typereference_,objectreference)
-        extern str_rule objectreference_; //(=typereference_,modulereference_)
-        extern str_rule objectsetreference_; //(=valuereference_,identifier_)
-        extern str_rule objectclassreference_; //(~typereference_)        
-        extern str_rule typefieldreference_; //(&typereference_)   
-        extern str_rule valuefieldreference_; //(&valuereference)        
-        extern str_rule valuesetfieldreference_; //(&typereference_)               
-        extern str_rule objectfieldreference_; //(&objectreference_)
-        extern str_rule objectsetfieldreference_; //(&objectsetreference_)  
-        extern str_rule bigreference_; //(typereference_ | objectfieldreference_)
-        extern str_rule littlereference_; //(valuefieldreference_ | valuesetfieldreference_ |objectsetfieldreference_ )     
-        extern str_rule bothreference_; //(valuefieldreference_ | valuesetfieldreference_ |objectsetfieldreference_ )        
-        extern str_rule bigfieldreference_; //(typefieldreference_ | objectfieldreference_)
-        extern str_rule littlefieldreference_; //(valuefieldreference_ | valuesetfieldreference_ |objectsetfieldreference_ )    
-        extern str_rule PrimitiveFieldName_;
-        extern str_rule FieldName_;
-        extern str_rule BFieldName_;
-        extern str_rule LFieldName_;
-
-
-        extern str_rule ExternalTypeReference_;
-        extern str_rule ExternalTypeReference_strict;
-        extern str_rule DefinedType_;
-        extern str_rule DefinedType_strict;
-        extern str_rule ExternalValueReference_;
-        extern str_rule DefinedValue_;
-        extern str_rule ExternalValueSetReference_;
-        extern str_rule DefinedValueSet_;
-        extern str_rule ExternalObjectClassReference_;
-        extern str_rule DefinedObjectClass_;
-        extern str_rule UsefulObjectClass_;
-        extern str_rule ExternalObjectReference_;
-        extern str_rule DefinedObject_;
-        extern str_rule ExternalObjectSetReference_;
-        extern str_rule DefinedObjectSet_;
-        extern str_rule ObjectClassFieldType_;
-        extern str_rule LittleFromObject_;
-        extern str_rule BigFromObjects_;
-
-        /*??*/ extern str_rule UserDefinedConstraintParameter_;
-        /*??*/ extern str_rule AtNotation_;
+       static  str_rule IRIValue = cstring_str;
 
 
 
+       static  str_rule curly_barket_pair = qi::char_("{")[ sprt::_val = sprt::_1 ]
+                >> *qi::space
+                >> qi::char_("}")[ sprt::_val += sprt::_1];
 
-        extern str_rule Reference_;
-        extern str_rule ParameterizedReference_; // x.683
-        extern str_rule Symbol_;
+       static term_rule ECODED_ = distinct(qi::alnum | ('-' >> qi::alnum))["ECODED"];
+       static term_rule INTERSECTION_ = distinct(qi::alnum | ('-' >> qi::alnum))["INTERSECTION"];
+       static term_rule SEQUENCE_ = distinct(qi::alnum | ('-' >> qi::alnum))["SEQUENCE"];
+       static term_rule ABSTRACT_SYNTAX_ = distinct(qi::alnum | ('-' >> qi::alnum))["ABSTRACT-SYNTAX"];
+       static term_rule ABSENT_ = distinct(qi::alnum | ('-' >> qi::alnum))["ABSENT"];
+       static term_rule ENCODING_CONTROL_ = distinct(qi::alnum | ('-' >> qi::alnum))["ENCODING-CONTROL"];
+       static term_rule ISO646String_ = distinct(qi::alnum | ('-' >> qi::alnum))["ISO646String"];
+       static term_rule SET_ = distinct(qi::alnum | ('-' >> qi::alnum))["SET"];
+       static term_rule ALL_ = distinct(qi::alnum | ('-' >> qi::alnum))["ALL"];
+       static term_rule END_ = distinct(qi::alnum | ('-' >> qi::alnum))["END"];
+       static term_rule MAX_ = distinct(qi::alnum | ('-' >> qi::alnum))["MAX"];
+       static term_rule SETTINGS_ = distinct(qi::alnum | ('-' >> qi::alnum))["SETTINGS"];
+       static term_rule APPLICATION_ = distinct(qi::alnum | ('-' >> qi::alnum))["APPLICATION"];
+       static term_rule ENUMERATED_ = distinct(qi::alnum | ('-' >> qi::alnum))["ENUMERATED"];
+       static term_rule MIN_ = distinct(qi::alnum | ('-' >> qi::alnum))["MIN"];
+       static term_rule SIZE_ = distinct(qi::alnum | ('-' >> qi::alnum))["SIZE"];
+       static term_rule AUTOMATIC_ = distinct(qi::alnum | ('-' >> qi::alnum))["AUTOMATIC"];
+       static term_rule EXCEPT_ = distinct(qi::alnum | ('-' >> qi::alnum))["EXCEPT"];
+       static term_rule ENCODED_ = distinct(qi::alnum | ('-' >> qi::alnum))["ENCODED"];
+       static term_rule MINUS_INFINITY_ = distinct(qi::alnum | ('-' >> qi::alnum))["MINUS-INFINITY"];
+       static term_rule STRING_ = distinct(qi::alnum | ('-' >> qi::alnum))["STRING"];
+       static term_rule BEGIN_ = distinct(qi::alnum | ('-' >> qi::alnum))["BEGIN"];
+       static term_rule EXPLICIT_ = distinct(qi::alnum | ('-' >> qi::alnum))["EXPLICIT"];
+       static term_rule NOT_A_NUMBER_ = distinct(qi::alnum | ('-' >> qi::alnum))["NOT-A-NUMBER"];
+       static term_rule SYNTAX_ = distinct(qi::alnum | ('-' >> qi::alnum))["SYNTAX"];
+       static term_rule BIT_ = distinct(qi::alnum | ('-' >> qi::alnum))["BIT"];
+       static term_rule EXPORTS_ = distinct(qi::alnum | ('-' >> qi::alnum))["EXPORTS"];
+       static term_rule NULL_ = distinct(qi::alnum | ('-' >> qi::alnum))["NULL"];
+       static term_rule T61String_ = distinct(qi::alnum | ('-' >> qi::alnum))["T61String"];
+       static term_rule BMPString_ = distinct(qi::alnum | ('-' >> qi::alnum))["BMPString"];
+       static term_rule EXTENSIBILITY_ = distinct(qi::alnum | ('-' >> qi::alnum))["EXTENSIBILITY"];
+       static term_rule NumericString_ = distinct(qi::alnum | ('-' >> qi::alnum))["NumericString"];
+       static term_rule TAGS_ = distinct(qi::alnum | ('-' >> qi::alnum))["TAGS"];
+       static term_rule BOOLEAN_ = distinct(qi::alnum | ('-' >> qi::alnum))["BOOLEAN"];
+       static term_rule EXTERNAL_ = distinct(qi::alnum | ('-' >> qi::alnum))["EXTERNAL "];
+       static term_rule OBJECT_ = distinct(qi::alnum | ('-' >> qi::alnum))["OBJECT"];
+       static term_rule TeletexString_ = distinct(qi::alnum | ('-' >> qi::alnum))["TeletexString"];
+       static term_rule BY_ = distinct(qi::alnum | ('-' >> qi::alnum))["BY"];
+       static term_rule FALSE_ = distinct(qi::alnum | ('-' >> qi::alnum))["FALSE"];
+       static term_rule ObjectDescriptor_ = distinct(qi::alnum | ('-' >> qi::alnum))["ObjectDescriptor"];
+       static term_rule TIME_ = distinct(qi::alnum | ('-' >> qi::alnum))["TIME"];
+       static term_rule CHARACTER_ = distinct(qi::alnum | ('-' >> qi::alnum))["CHARACTER"];
+       static term_rule FROM_ = distinct(qi::alnum | ('-' >> qi::alnum))["FROM"];
+       static term_rule OCTET_ = distinct(qi::alnum | ('-' >> qi::alnum))["OCTET"];
+       static term_rule TIME_OF_DAY_ = distinct(qi::alnum | ('-' >> qi::alnum))["TIME-OF-DAY"];
+       static term_rule CHOICE_ = distinct(qi::alnum | ('-' >> qi::alnum))["CHOICE"];
+       static term_rule GeneralizedTime_ = distinct(qi::alnum | ('-' >> qi::alnum))["GeneralizedTime"];
+       static term_rule OF_ = distinct(qi::alnum | ('-' >> qi::alnum))["OF"];
+       static term_rule TRUE_ = distinct(qi::alnum | ('-' >> qi::alnum))["TRUE"];
+       static term_rule CLASS_ = distinct(qi::alnum | ('-' >> qi::alnum))["CLASS"];
+       static term_rule GeneralString_ = distinct(qi::alnum | ('-' >> qi::alnum))["GeneralString"];
+       static term_rule OID_IRI_ = distinct(qi::alnum | ('-' >> qi::alnum))["OID-IRI"];
+       static term_rule TYPE_IDENTIFIER_ = distinct(qi::alnum | ('-' >> qi::alnum))["TYPE-IDENTIFIER"];
+       static term_rule COMPONENT_ = distinct(qi::alnum | ('-' >> qi::alnum))["COMPONENT"];
+       static term_rule GraphicString_ = distinct(qi::alnum | ('-' >> qi::alnum))["GraphicString"];
+       static term_rule OPTIONAL_ = distinct(qi::alnum | ('-' >> qi::alnum))["OPTIONAL"];
+       static term_rule UNION_ = distinct(qi::alnum | ('-' >> qi::alnum))["UNION"];
+       static term_rule COMPONENTS_ = distinct(qi::alnum | ('-' >> qi::alnum))["COMPONENTS"];
+       static term_rule IA5String_ = distinct(qi::alnum | ('-' >> qi::alnum))["IA5String"];
+       static term_rule PATTERN_ = distinct(qi::alnum | ('-' >> qi::alnum))["PATTERN"];
+       static term_rule UNIQUE_ = distinct(qi::alnum | ('-' >> qi::alnum))["UNIQUE"];
+       static term_rule CONSTRAINED_ = distinct(qi::alnum | ('-' >> qi::alnum))["CONSTRAINED"];
+       static term_rule IDENTIFIER_ = distinct(qi::alnum | ('-' >> qi::alnum))["IDENTIFIER"];
+       static term_rule PDV_ = distinct(qi::alnum | ('-' >> qi::alnum))["PDV"];
+       static term_rule UNIVERSAL_ = distinct(qi::alnum | ('-' >> qi::alnum))["UNIVERSAL"];
+       static term_rule CONTAINING_ = distinct(qi::alnum | ('-' >> qi::alnum))["CONTAINING"];
+       static term_rule IMPLICIT_ = distinct(qi::alnum | ('-' >> qi::alnum))["IMPLICIT"];
+       static term_rule PLUS_INFINITY_ = distinct(qi::alnum | ('-' >> qi::alnum))["PLUS-INFINITY"];
+       static term_rule UniversalString_ = distinct(qi::alnum | ('-' >> qi::alnum))["UniversalString"];
+       static term_rule DATE_ = distinct(qi::alnum | ('-' >> qi::alnum))["DATE"];
+       static term_rule IMPLIED_ = distinct(qi::alnum | ('-' >> qi::alnum))["IMPLIED"];
+       static term_rule PRESENT_ = distinct(qi::alnum | ('-' >> qi::alnum))["PRESENT"];
+       static term_rule UTCTime_ = distinct(qi::alnum | ('-' >> qi::alnum))["UTCTime"];
+       static term_rule DATE_TIME_ = distinct(qi::alnum | ('-' >> qi::alnum))["DATE-TIME"];
+       static term_rule IMPORTS_ = distinct(qi::alnum | ('-' >> qi::alnum))["IMPORTS"];
+       static term_rule PrintableString_ = distinct(qi::alnum | ('-' >> qi::alnum))["PrintableString"];
+       static term_rule UTF8String_ = distinct(qi::alnum | ('-' >> qi::alnum))["UTF8String"];
+       static term_rule DEFAULT_ = distinct(qi::alnum | ('-' >> qi::alnum))["DEFAULT"];
+       static term_rule INCLUDES_ = distinct(qi::alnum | ('-' >> qi::alnum))["INCLUDES"];
+       static term_rule PRIVATE_ = distinct(qi::alnum | ('-' >> qi::alnum))["PRIVATE"];
+       static term_rule VideotexString_ = distinct(qi::alnum | ('-' >> qi::alnum))["VideotexString"];
+       static term_rule DEFINITIONS_ = distinct(qi::alnum | ('-' >> qi::alnum))["DEFINITIONS"];
+       static term_rule INSTANCE_ = distinct(qi::alnum | ('-' >> qi::alnum))["INSTANCE"];
+       static term_rule REAL_ = distinct(qi::alnum | ('-' >> qi::alnum))["REAL"];
+       static term_rule VisibleString_ = distinct(qi::alnum | ('-' >> qi::alnum))["VisibleString"];
+       static term_rule DURATION_ = distinct(qi::alnum | ('-' >> qi::alnum))["DURATION"];
+       static term_rule INSTRUCTIONS_ = distinct(qi::alnum | ('-' >> qi::alnum))["INSTRUCTIONS"];
+       static term_rule RELATIVE_OID_ = distinct(qi::alnum | ('-' >> qi::alnum))["RELATIVE-OID"];
+       static term_rule WITH_ = distinct(qi::alnum | ('-' >> qi::alnum))["WITH"];
+       static term_rule EMBEDDED_ = distinct(qi::alnum | ('-' >> qi::alnum))["EMBEDDED"];
+       static term_rule INTEGER_ = distinct(qi::alnum | ('-' >> qi::alnum))["INTEGER"];
+       static term_rule RELATIVE_OID_IRI_ = distinct(qi::alnum | ('-' >> qi::alnum))["RELATIVE-OID-IRI"];
+
+       static  str_rule ABSTRACT_SYNTAX__ = distinct(qi::alnum | ('-' >> qi::alnum))["ABSTRACT-SYNTAX"];
+       static  str_rule TYPE_IDENTIFIER__ = distinct(qi::alnum | ('-' >> qi::alnum))["TYPE-IDENTIFIER"];
+
+       static  str_rule literal_except_token = distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("BIT")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("BOOLEAN")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("CHARACTER")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("CHOICE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("DATE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("DATE-TIME")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("DURATION")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("EMBEDDED")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("END")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("ENUMERATED")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("EXTERNAL")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("FALSE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("INSTANCE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("INTEGER")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("INTERSECTION")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("MINUS-INFINITY")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("NULL")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("OBJECT")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("OCTET")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("PLUS-INFINITY")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("REAL")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("RELATIVE-OID")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("SEQUENCE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("SET")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("TIME")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("TIME-OF-DAY")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("TRUE")]
+        | distinct(qi::alnum | ('-' >> qi::alnum))[qi::string("UNION")];
+
+
+       static  str_rule word_ = distinct(qi::alnum | ('-' >> qi::alnum))[ qi::lexeme[qi::upper[ sprt::_val = sprt::_1 ]
+                >> *(((qi::char_("-")[sprt::_val += sprt::_1]
+                >> qi::upper[sprt::_val += sprt::_1])
+                | (qi::upper[sprt::_val += sprt::_1]
+                >> -qi::upper[sprt::_val += sprt::_1])) - (qi::char_("-")
+                >> ((qi::char_("-") | !qi::upper))))]];
+
+       static  str_rule spaces_ = distinct((*qi::space) >> '&')[qi::space[ sprt::_val = sprt::_1 ] >> *(qi::space[sprt::_val += sprt::_1 ])];
+
+       static  str_rule Literal_ = (word_ - literal_except_token) | qi::string(",");
+
+       static  str_rule SyntaxField_ = Literal_[sprt::_val = sprt::_1 ] >> *(spaces_[ sprt::_val += ' '] >> Literal_[ sprt::_val += sprt::_1 ]);
+
+       static  str_rule typereference_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::upper[ sprt::_val = sprt::_1 ]
+                >> *(((qi::char_("-")[sprt::_val += sprt::_1]
+                >> qi::alnum[sprt::_val += sprt::_1])
+                | (qi::alnum[sprt::_val += sprt::_1]
+                >> -qi::alnum[sprt::_val += sprt::_1])) - (qi::char_("-")
+                >> ((qi::char_("-") | !qi::alnum))))]];
+
+       static  str_rule identifier_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::lower[sprt::_val = sprt::_1 ]
+                >> *(((qi::char_("-")[sprt::_val += sprt::_1]
+                >> qi::alnum[sprt::_val += sprt::_1])
+                | (qi::alnum[sprt::_val += sprt::_1]
+                >> -qi::alnum[sprt::_val += sprt::_1])) - (qi::char_("-")
+                >> ((qi::char_("-") | !qi::alnum))))]];
+
+       static  str_rule valuereference_ = identifier_;
+
+       static  str_rule valuesetreference_ = typereference_;
+
+       static  str_rule modulereference_ = typereference_;
+
+       static  str_rule objectreference_ = valuereference_;
+
+       static  str_rule objectsetreference_ = typereference_;
+
+       static  str_rule objectclassreference_ = distinct(qi::alnum | ('-' >> qi::alnum))[qi::lexeme[qi::upper[sprt::_val = sprt::_1 ]
+                >> *(((qi::char_("-")[sprt::_val += sprt::_1]
+                >> qi::char_("A-Z0-9")[sprt::_val += sprt::_1])
+                | (qi::char_("A-Z0-9")[sprt::_val += sprt::_1]
+                >> -qi::char_("A-Z0-9")[sprt::_val += sprt::_1])) - (qi::char_("-")
+                >> ((qi::char_("-") | !qi::char_("A-Z0-9")))))]]; //(~typereference_)      
+
+       static  str_rule typereference_strict = distinct(qi::alnum | ('-' >> qi::alnum))[typereference_ - qi::omit[objectclassreference_]];
+
+       static  str_rule typefieldreference_ = qi::lexeme[qi::string("&")[sprt::_val = sprt::_1 ] >> typereference_[sprt::_val += sprt::_1 ]]; //(&typereference_[sprt::_val += sprt::_1 ])   
+
+       static  str_rule valuefieldreference_ = qi::lexeme[qi::string("&")[sprt::_val = sprt::_1 ] >> valuereference_[sprt::_val += sprt::_1 ]]; //(&valuereference_)  
+
+       static  str_rule valuesetfieldreference_ = qi::lexeme[qi::string("&")[sprt::_val = sprt::_1 ] >> typereference_[sprt::_val += sprt::_1 ]]; //(&typereference_)   
+
+       static  str_rule objectfieldreference_ = qi::lexeme[qi::string("&")[sprt::_val = sprt::_1 ] >> objectreference_[sprt::_val += sprt::_1 ]]; //(&objectreference_)
+
+       static  str_rule objectsetfieldreference_ = qi::lexeme[qi::string("&")[sprt::_val = sprt::_1 ] >> objectsetreference_[sprt::_val += sprt::_1 ]]; //(&objectsetreference_)  
+
+
+       static  str_rule bigreference_ = typereference_;
+
+       static  str_rule littlereference_ = valuereference_;
+
+       static  str_rule bothreference_ = bigreference_ | littlereference_;
+
+       static  str_rule bigfieldreference_ = typefieldreference_;
+
+       static  str_rule littlefieldreference_ = valuefieldreference_;
+
+       static  str_rule PrimitiveFieldName_ = bigfieldreference_ | littlefieldreference_;
+
+       static  str_rule FieldName_ = PrimitiveFieldName_[sprt::_val = sprt::_1 ] >> -(qi::string(".")[sprt::_val += sprt::_1 ]
+                >> qi::omit[(*qi::space)] >> (PrimitiveFieldName_[sprt::_val += sprt::_1 ] % qi::string(".")[sprt::_val += sprt::_1 ]));
+
+       static  str_rule BFieldName_ = bigfieldreference_[sprt::_val = sprt::_1 ] >> -(qi::string(".")[sprt::_val += sprt::_1 ]
+                >> qi::omit[(*qi::space)] >> (bigfieldreference_[sprt::_val += sprt::_1 ] % qi::string(".")[sprt::_val += sprt::_1 ]));
+
+       static  str_rule LFieldName_ = littlefieldreference_[sprt::_val = sprt::_1 ] >> -(qi::string(".")[sprt::_val += sprt::_1 ]
+                >> qi::omit[(*qi::space)] >> (littlefieldreference_[sprt::_val += sprt::_1 ] % qi::string(".")[sprt::_val += sprt::_1 ]));
+
+
+
+       static  str_rule ExternalTypeReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> typereference_[sprt::_val += sprt::_1 ];
+
+       static  str_rule ExternalTypeReference_strict = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> typereference_strict[sprt::_val += sprt::_1 ];
+
+
+       static  str_rule ExternalValueReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> valuereference_[sprt::_val += sprt::_1 ];
+
+       static  str_rule ExternalValueSetReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> valuesetreference_[sprt::_val += sprt::_1 ];
+
+       static  str_rule ExternalObjectClassReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> objectclassreference_[sprt::_val += sprt::_1 ];
+
+       static  str_rule ExternalObjectReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> objectreference_[sprt::_val += sprt::_1 ];
+
+       static  str_rule ExternalObjectSetReference_ = modulereference_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ]
+                >> objectsetreference_[sprt::_val += sprt::_1 ];
+
+       static  str_rule UsefulObjectClass_ = TYPE_IDENTIFIER__
+                | ABSTRACT_SYNTAX__;
+
+       static  str_rule DefinedObjectClass_ = TYPE_IDENTIFIER__
+                | ABSTRACT_SYNTAX__
+                | ExternalObjectClassReference_
+                | objectclassreference_;
+
+
+
+       static  str_rule DefinedType_ = ExternalTypeReference_ | typereference_; //| ParameterizedType | ParameterizedValueSetType
+
+       static  str_rule DefinedType_strict = ExternalTypeReference_strict | typereference_strict; //| ParameterizedType | ParameterizedValueSetType        
+
+       static  str_rule DefinedValue_ = ExternalValueReference_ | valuereference_; //| ParameterizedValue        
+
+       static  str_rule DefinedValueSet_ = ExternalValueSetReference_ | valuesetreference_; //| ParameterizedValue          
+
+       static  str_rule DefinedObject_ = ExternalObjectReference_ | objectreference_;
+
+       static  str_rule DefinedObjectSet_ = ExternalObjectSetReference_ | objectsetreference_;
+
+       static  str_rule UserDefinedConstraintParameter_ = (DefinedType_ | DefinedObjectClass_)
+        >> -(qi::string(".") >> DefinedValue_);
+
+       static  str_rule AtNotation_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.' | '@')[qi::string("@")[sprt::_val = sprt::_1 ]
+                >> *(qi::string(".")[sprt::_val += sprt::_1 ]) >> (identifier_[sprt::_val += sprt::_1 ] % qi::string(".")[sprt::_val += sprt::_1 ])];
+
+       static  str_rule Reference_ = typereference_ | valuereference_;
+
+       static  str_rule ObjectClassFieldType_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectClass_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[sprt::_val += sprt::_1 ] ];
+
+       static  str_rule LittleFromObject_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObject_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[sprt::_val += sprt::_1 ]];
+
+       static  str_rule BigFromObjects_ = distinct(qi::alnum | ('-' >> qi::alnum) | '.')[DefinedObjectSet_[sprt::_val = sprt::_1 ]
+                >> qi::string(".")[sprt::_val += sprt::_1 ] >> qi::omit[(*qi::space)] >> FieldName_[sprt::_val += sprt::_1 ]];
+
+       static  str_rule ParameterizedReference_ = Reference_
+                >> qi::omit[*qi::space
+                >> curly_barket_pair];
+
+       static  str_rule Symbol_ = ParameterizedReference_ | Reference_;
 
 
 
