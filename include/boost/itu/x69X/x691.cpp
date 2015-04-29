@@ -50,25 +50,6 @@ namespace boost {
 
 
 
-
-
-            //// enumerated_type cast                          
-
-            std::size_t to_x691_cast(const enumerated_type& val, octet_sequnce& src) {
-                return to_x691_cast(val.value(), src);
-            }
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // any_type to X.691
-
-            std::size_t to_x691_cast(const any_type& val, octet_sequnce& src) {
-                std::size_t strtsz = src.size();
-                val.get(src);
-                return (src.size() - strtsz);
-            }
-
-
             // element constrainter
 
             void numericstring_ec::out(boost::asn1::x691::output_coder& stream, numericstring_type::value_type vl) {
@@ -292,10 +273,6 @@ namespace boost {
 
             output_coder& operator<<(output_coder& stream, const int64_t& vl) {
                 return primitive_int_serialize(stream, vl);
-            }
-
-            output_coder& operator<<(output_coder& stream, const enumerated_type& vl) {
-                return stream; // primitive_serialize(stream, vl);
             }
 
             output_coder& operator<<(output_coder& stream, const float& vl) {
@@ -561,37 +538,6 @@ namespace boost {
 
 
 
-            ///////////////////////////////////////////////////////////////////////////////////
-            // enumerated_type from X.691
-
-            template<>
-            bool from_x691_cast(enumerated_type& val, const octet_sequnce& src) {
-                enum_base_type tmp = 0;
-                if (from_x691_cast(tmp, src)) {
-                    val = tmp;
-                    return true;
-                }
-                return false;
-            }
-
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // any_type from to X.691
-
-            template<>
-            bool from_x691_cast(any_type& val, const octet_sequnce& src) {
-                val.set(src);
-                return true;
-            }
-
-
-
-
-
-
-
-
 
 
 
@@ -678,15 +624,7 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, any_type& vl) {
-                /*std::size_t sz = stream.stack_size();
-                octet_sequnce data;
-                if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
-                    if (from_x691_cast(*const_cast<any_type*> (&vl.value()), data)) {
-                        // stream.pop_stack();
-                    }
-                }*/
                 return stream;
-                //return  primitive_deserialize(stream, vl);
             }
 
             input_coder& operator>>(input_coder& stream, bitstring_type& vl) {

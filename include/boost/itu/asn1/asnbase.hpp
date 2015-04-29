@@ -1655,7 +1655,7 @@ namespace boost {
             }
 
             bool nill_extended() const {
-                return (!MIN && !MAX && EXT);
+                return (!MIN && !MAX && !EXT);
             }
 
             bool constrained() const {
@@ -1758,7 +1758,7 @@ namespace boost {
             }
 
             bool nill_extended() const {
-                return (AVAIL && !MIN && !MAX && EXT);
+                return (AVAIL && !MIN && !MAX);
             }
 
             bool constrained() const {

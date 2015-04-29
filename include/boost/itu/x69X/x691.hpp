@@ -192,10 +192,6 @@ namespace boost {
 
 
 
-
-
-
-
         namespace x691 {
 
 
@@ -513,37 +509,6 @@ namespace boost {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             /*OUTPUT STREAM                                                                                                                                                                                           */
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-            /////  CAST FROM AND TO TYPE
-
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-            // null to X.691
-
-            template<typename T>
-            std::size_t to_x691_cast(T val, octet_sequnce& src) {
-                return 0;
-            }
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // enumerated_type to X.691
-
-            std::size_t to_x691_cast(const enumerated_type& val, octet_sequnce& src);
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // any_type to X.691
-
-
-            std::size_t to_x691_cast(const any_type& val, octet_sequnce& src);
-
-            template<typename T>
-            octet_sequnce to_x691_cast(const T& val) {
-                octet_sequnce rslt;
-                to_x691_cast(val, rslt);
-                return rslt;
-            }
 
 
             // element constrainter
@@ -1083,14 +1048,12 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const num_constrainter<T >& vl) {
 
                 if (vl.can_extended()) {
-                    if (vl.nill_extended()) {
-                        stream.add_bitmap(bitstring_type(false));
+                    stream.add_bitmap(bitstring_type(vl.extended()));
+                    if (vl.extended())
                         return primitive_int_serialize(stream, vl.value());
-                    } else {
-                        stream.add_bitmap(bitstring_type(vl.extended()));
-                        if (vl.extended())
-                            return primitive_int_serialize(stream, vl.value());
-                    }
+                } else if (vl.nill_extended()) {
+                    stream.add_bitmap(bitstring_type(false));
+                    return primitive_int_serialize(stream, vl.value());
                 }
 
                 if (vl.is_single())
@@ -1254,44 +1217,6 @@ namespace boost {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             /*INPUT STREAM                                                                                                                                                                                               */
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-            /////  CAST FROM AND TO TYPE
-
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-            // integer from X.691          
-
-            template<typename T>
-            bool from_x691_cast(T& vl, const octet_sequnce& dt) {
-                /*  octet_sequnce val = dt;
-  #ifdef BIG_ENDIAN_ARCHITECTURE 
-                  !!!not implement
-  #else              
-                  endian_conv(val);
-                  if (sizeof (T) > val.size())
-                      val.resize(sizeof (T), octet_type((val.empty() || (val.back() & NEGATIVE_MARKER)) ? POSITIVE_START : 0));
-                  vl = (*(T*) (&val[0]));
-  #endif      */
-                return true;
-            }
-
-
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // enumerated_type from X.691
-
-            template<>
-            bool from_x691_cast(enumerated_type& val, const octet_sequnce& src);
-
-
-
-            ///////////////////////////////////////////////////////////////////////////////////
-            // any_type from to X.691
-
-            template<>
-            bool from_x691_cast(any_type& val, const octet_sequnce& src);
-
 
 
             //////////////////////////////////////////////////////////
@@ -1723,9 +1648,9 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, num_constrainter<T >& vl) {
 
 
-                if (vl.can_extended()) {
+                if ((vl.can_extended()) || (vl.nill_extended())) {
                     bitstring_type extendbit = stream.get_pop_bmp(1);
-                    if ((extendbit.bit(0)) && (vl.nill_extended()))
+                    if ((extendbit.bit(0)) || (vl.nill_extended()))
                         return primitive_int_deserialize(stream, vl.value());
                 }
 
@@ -1812,8 +1737,6 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, int64_t& vl);
 
             input_coder& operator>>(input_coder& stream, uint64_t& vl);
-
-            input_coder& operator>>(input_coder& stream, enumerated_type& vl);
 
             input_coder& operator>>(input_coder& stream, float& vl);
 
@@ -2267,7 +2190,7 @@ namespace boost {
 
 
 
-        
+
     }
 }
 
