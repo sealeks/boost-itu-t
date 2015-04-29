@@ -380,6 +380,8 @@ namespace x680 {
 
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> ExceptionSpec;
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> Extension;
+            qi::rule<str_iterator, type_assignment(), skip_cmt_type> OpenGroup;
+            qi::rule<str_iterator, type_assignment(), skip_cmt_type> CloseGroup;
             qi::rule<str_iterator, type_assignment_vector(), skip_cmt_type> ExtensionAndException;
             qi::rule<str_iterator, type_assignment(), skip_cmt_type> ExtensionEndMarker;
 
