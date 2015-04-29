@@ -29,9 +29,9 @@ namespace boost {
             }
             return UNIVERSAL_CLASS;
         }
-        
-        
-        
+
+
+
 
         // enumerated type        
 
@@ -63,7 +63,7 @@ namespace boost {
                     rslt.insert(enumerated_indx_pair(*it, ind++));
             }
             return rslt;
-        }        
+        }
 
 
 
@@ -87,7 +87,7 @@ namespace boost {
 
 
 
- 
+
 
         // utf8string_type
 
@@ -234,16 +234,32 @@ namespace boost {
             return from_impltime(val, false);
         }
 
+        visiblestring_type as_visiblestring(const utctime_type& val) {
+            return visiblestring_type(from_utctime(val));
+        }
+
         utctime_type to_utctime(const octet_sequnce& val) {
             return to_impl_time(val, false);
+        }
+
+        utctime_type to_utctime(const visiblestring_type& val) {
+            return to_utctime(val.as_octet_sequnce());
         }
 
         octet_sequnce from_gentime(const gentime_type& val) {
             return from_impltime(val.value(), true);
         }
 
+        visiblestring_type as_visiblestring(const gentime_type& val) {
+            return visiblestring_type(from_gentime(val));
+        }
+
         gentime_type to_gentime(const octet_sequnce& val) {
             return gentime_type(to_impl_time(val, true));
+        }
+
+        gentime_type to_gentime(const visiblestring_type& val) {
+            return to_gentime(val.as_octet_sequnce());
         }
 
         std::ostream& operator<<(std::ostream& stream, const gentime_type& vl) {

@@ -421,11 +421,13 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const utctime_type& vl) {
-                return primitive_690_serialize(stream, vl);
+                visiblestring_type tmp = as_visiblestring(vl);
+                return stream << tmp;
             }
 
             output_coder& operator<<(output_coder& stream, const gentime_type& vl) {
-                return primitive_690_serialize(stream, vl);
+                visiblestring_type tmp = as_visiblestring(vl);
+                return stream << tmp;
             }
 
 
@@ -760,11 +762,17 @@ namespace boost {
             }
 
             input_coder& operator>>(input_coder& stream, utctime_type& vl) {
-                return primitive_690_deserialize(stream, vl);
+                visiblestring_type tmp;
+                stream >> tmp;
+                vl = to_utctime(tmp);
+                return stream;
             }
 
             input_coder& operator>>(input_coder& stream, gentime_type& vl) {
-                return primitive_690_deserialize(stream, vl);
+                visiblestring_type tmp;
+                stream >> tmp;
+                vl = to_gentime(tmp);
+                return stream;
             }
 
             ////////  Archiver

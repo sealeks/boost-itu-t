@@ -136,6 +136,9 @@ namespace boost {\
 #define ITU_T_DEFAULTH_DECL(nm ,tp, dflt )    void nm ( const tp & vl);  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
                          private: boost::asn1::default_holder<tp  , dflt> nm ## _ ; public: 
 
+#define ITU_T_EXTENDED_DECL()  void extended ( bool vl ) {__extended__ = vl  ? boost::shared_ptr<bool>( new bool(vl)) : boost::shared_ptr<bool>(); } ; bool extended ()  const { return static_cast<bool>(__extended__);}; \
+                         private: boost::shared_ptr<bool>  __extended__ ; public: 
+
 
 #define ITU_T_ARCHIVE_FUNC    template<typename Archive> void serialize(Archive& arch){};
 
@@ -637,15 +640,15 @@ namespace boost {
 
         octet_sequnce from_utctime(const utctime_type& val);
 
+        visiblestring_type as_visiblestring(const utctime_type& val);
+
         utctime_type to_utctime(const octet_sequnce& val);
+
+        utctime_type to_utctime(const visiblestring_type& val);
 
         inline utctime_type now_generator() {
             return boost::posix_time::microsec_clock::universal_time();
         }
-
-        // inline utctime_type nowtest_generator() {
-        //      return boost::posix_time::ptime(boost::gregorian::date(2012,11,29));
-        //}            
 
 
 
@@ -679,6 +682,21 @@ namespace boost {
         private:
             boost::posix_time::ptime val_;
         };
+
+
+
+        octet_sequnce from_gentime(const gentime_type& val);
+
+        visiblestring_type as_visiblestring(const gentime_type& val);
+
+        gentime_type to_gentime(const octet_sequnce& val);
+
+        gentime_type to_gentime(const visiblestring_type& val);
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // any_type
+        ////////////////////////////////////////////////////////////////////////////////////////////////////          
 
         class any_type {
 
@@ -733,9 +751,6 @@ namespace boost {
         };
 
 
-        octet_sequnce from_gentime(const gentime_type& val);
-
-        gentime_type to_gentime(const octet_sequnce& val);
 
         std::ostream& operator<<(std::ostream& stream, const gentime_type& vl);
 
@@ -1545,6 +1560,10 @@ namespace boost {
                     return*internal_;
                 return DT;
             }
+            
+            operator bool() const {
+                return ((internal_) || (* internal_ != DT));
+            }            
 
             const T& operator=(const T & vl) {
                 internal_ = (vl != DT) ? boost::shared_ptr<T > (new T(vl)) : boost::shared_ptr<T>();
