@@ -233,6 +233,10 @@ namespace x680 {
                 stream << "! " << " ";
             else if (self->as_named()->marker() == mk_extention)
                 return stream << "(...) " << "\n";
+            else if (self->as_named()->marker() == mk_group_beg)
+                return stream << "[[ " << "\n";
+            else if (self->as_named()->marker() == mk_group_end)
+                return stream << "]] " << "\n";            
             else
                 stream << self->name() << "  ";
             from_template(stream, self);
