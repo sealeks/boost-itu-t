@@ -177,11 +177,11 @@ namespace x680 {
 
             ComponentTypeList = (ComponentType % qi::omit[qi::lit(",")]);
 
-            ExtensionAdditionGroup1 = qi::omit[qi::lit("[[")
-                    >> -(pos_number_str
+            ExtensionAdditionGroup1 = OpenGroup
+                    >> qi::omit[-(pos_number_str
                     >> qi::lit(":"))]
                     >> ComponentTypeList
-                    >> qi::omit[qi::lit("]]")];
+                    >> CloseGroup;
 
             ExtensionAdditionGroup = ExtensionAdditionGroup1 | ComponentTypeList;
 
@@ -192,6 +192,8 @@ namespace x680 {
                     >> -(ExtensionAddition);
 
             Extension = qi::lit("...")[sprt::_val = extention_type_assignment ];
+            OpenGroup = qi::lit("[[")[sprt::_val = groupbeg_type_assignment ];
+            CloseGroup = qi::lit("]]")[sprt::_val = groupend_type_assignment ];           
 
             ExtensionAndException = Extension >> -ExceptionSpec;
 
@@ -211,11 +213,11 @@ namespace x680 {
 
             AlternativeTypeList = (NamedType % qi::omit[qi::lit(",")]);
 
-            ExtensionAdditionAlternativesGroup1 = qi::omit[qi::lit("[[")
-                    >> -(pos_number_str
+            ExtensionAdditionAlternativesGroup1 = OpenGroup
+                    >> qi::omit[-(pos_number_str
                     >> qi::lit(":"))]
                     >> AlternativeTypeList
-                    >> qi::omit[qi::lit("]]")];
+                    >> CloseGroup;
 
             ExtensionAdditionAlternativesGroup = ExtensionAdditionAlternativesGroup1 
                     | AlternativeTypeList;
