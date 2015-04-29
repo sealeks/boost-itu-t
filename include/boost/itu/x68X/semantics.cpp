@@ -192,6 +192,10 @@ namespace x680 {
                     return tmpt;
                     break;
                 }
+                case mk_group_beg:  
+                case mk_group_end:{
+                    return boost::make_shared<namedtypeassignment_entity>(scope, ent.type.marker);
+                }                    
                 default:
                 {
                     tmpt = boost::make_shared<namedtypeassignment_entity>(scope, ent.identifier, type_atom_ptr(), ent.type.marker);
