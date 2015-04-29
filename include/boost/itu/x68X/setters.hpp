@@ -323,8 +323,8 @@ namespace x680 {
 
         const type_assignment extention_type_assignment(mk_extention);
         const type_assignment exception_type_assignment(mk_exception);
-
-
+        const type_assignment groupbeg_type_assignment(mk_group_beg);
+        const type_assignment groupend_type_assignment(mk_group_end);
 
 
 
