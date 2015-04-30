@@ -449,8 +449,10 @@ namespace x680 {
 
     typedef std::vector<std::string> export_vector;
     typedef std::vector<std::string> import_vector;
+    
 
-
+    typedef std::size_t extentionnum_type;
+    typedef boost::shared_ptr<extentionnum_type> extentionnum_ptr;
 
     void debug_warning(const std::string& msg);
 
