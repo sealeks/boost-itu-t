@@ -189,7 +189,7 @@ namespace x680 {
                     >> (ExtensionAdditionGroup | ComponentType);
 
             ExtensionAdditions = qi::omit[qi::lit(",")] >> ExtensionAdditionGroup
-                    >> -(ExtensionAddition);
+                    >> *(ExtensionAddition);
 
             Extension = qi::lit("...")[sprt::_val = extention_type_assignment ];
             OpenGroup = qi::lit("[[")[sprt::_val = groupbeg_type_assignment ];
@@ -227,7 +227,7 @@ namespace x680 {
 
             ExtensionAdditionAlternatives = qi::omit[qi::lit(",")]
                     >> ExtensionAdditionAlternativesGroup 
-                    >> -(ExtensionAdditionAlternative);
+                    >> *(ExtensionAdditionAlternative);
             
             AlternativeTypeListsKrn = ExtensionAndException
                     >> -ExtensionAdditionAlternatives >> -ExtensionEndMarker;
