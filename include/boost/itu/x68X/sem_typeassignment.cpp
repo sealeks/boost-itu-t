@@ -702,6 +702,10 @@ namespace x680 {
     // tagged
     /////////////////////////////////////////////////////////////////////////    
 
+    static void canonical_sort(namedtypeassignment_entity_vct& vl) {
+
+    }
+
 
     /////////////////////////////////////////////////////////////////////////   
     // canonical_tag
@@ -849,15 +853,15 @@ namespace x680 {
     }
 
     bool effective_tabconstraint::valid() {
-        std::size_t cnt=count();
-        if (cnt){
-            if (fields().size()!=cnt)
+        std::size_t cnt = count();
+        if (cnt) {
+            if (fields().size() != cnt)
                 return false;
             for (fieldname_vct::const_iterator it = fieldnames().begin(); it != fieldnames().end(); ++it) {
-                if (fields(*it).size()!=cnt)
+                if (fields(*it).size() != cnt)
                     return false;
             }
-            return true;            
+            return true;
         }
         return false;
     }
@@ -1570,11 +1574,11 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     typeassignment_entity::typeassignment_entity(basic_entity_ptr scope, const std::string& nm, type_atom_ptr tp, bool nmd) :
-    assignment_entity(scope, nm, et_Type), type_(tp), named_(nmd), unicalfield_(false) {
+    assignment_entity(scope, nm, et_Type), type_(tp), named_(nmd), unicalfield_(false), extention_count_(0) {
     };
 
     typeassignment_entity::typeassignment_entity(basic_entity_ptr scope, bool nmd) :
-    assignment_entity(scope, et_Type), named_(nmd), unicalfield_(false) {
+    assignment_entity(scope, et_Type), named_(nmd), unicalfield_(false), extention_count_(0) {
     };
 
     basic_atom_ptr typeassignment_entity::atom() const {
@@ -1680,6 +1684,27 @@ namespace x680 {
                 boost::static_pointer_cast<namedtypeassignment_entity> (self()) : namedtypeassignment_entity_ptr();
     }
 
+    namedtypeassignment_entity_vct typeassignment_entity::canonicalorder_root()  {
+        namedtypeassignment_entity_vct tmp;
+        for (basic_entity_vector::iterator it = childs().begin(); it != first_extention(); ++it) {
+            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                namedtypeassignment_entity_ptr tmpel = (*it)->as_typeassigment()->as_named();
+                if (is_named(tmpel->marker()))
+                    tmp.push_back(tmpel);
+            }
+        }
+        for (basic_entity_vector::iterator it = second_extention(); it != childs().end(); ++it) {
+            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                namedtypeassignment_entity_ptr tmpel = (*it)->as_typeassigment()->as_named();
+                if (is_named(tmpel->marker()))
+                    tmp.push_back(tmpel);
+            }
+        }
+        canonical_sort(tmp);
+        return tmp;
+    }
+
+
     void typeassignment_entity::resolve(basic_atom_ptr holder) {
         unicalelerror_throw(childs());
         assignment_entity::resolve(holder);
@@ -1735,6 +1760,7 @@ namespace x680 {
         if (autotag)
             post_resolve_autotag();
         post_resolve_check();
+        resolve_extention();
     }
 
     void typeassignment_entity::post_resolve_apply_componentsof() {
@@ -1796,6 +1822,44 @@ namespace x680 {
             }
         }
         unicalelerror_throw(childs());
+    }
+
+    bool typeassignment_entity::resolve_extention() {
+        extentionnum_type num = 0;
+        bool isgroup = false;
+        basic_entity_vector::iterator fit = first_extention();
+        basic_entity_vector::iterator sit = second_extention();
+        for (basic_entity_vector::iterator it = fit; it != sit; ++it) {
+            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                namedtypeassignment_entity_ptr tmpel = (*it)->as_typeassigment()->as_named();
+                switch (tmpel->marker()) {
+                    case mk_group_beg:
+                    {
+                        isgroup = true;
+                        break;
+                    }
+                    case mk_group_end:
+                    {
+                        isgroup = false;
+                        num++;
+                        break;
+                    }
+                    case mk_extention: break;
+                    case mk_exception: break;
+                    default:
+                    {
+                        if (isgroup)
+                            tmpel->extentionnum(num);
+                        else
+                            tmpel->extentionnum(num++);
+                        tmpel->extentiongroup(isgroup);
+                    }
+                }
+            }
+        }
+        if (num)
+            extention_count(num);
+        return true;
     }
 
     bool typeassignment_entity::is_resolve_autotag() {
@@ -2133,19 +2197,19 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////  
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker)
-    : typeassignment_entity(scp, nm, tp, true), marker_(mrker) {
+    : typeassignment_entity(scp, nm, tp, true), marker_(mrker), extentionnum_(), extentiongroup_(false) {
     }
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl)
-    : typeassignment_entity(scp, nm, tp, true), marker_(mk_default), default_(vl) {
+    : typeassignment_entity(scp, nm, tp, true), marker_(mk_default), default_(vl), extentionnum_(), extentiongroup_(false)  {
     }
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl)
-    : typeassignment_entity(scp, "", tp, true), marker_(mk_exception), default_(vl) {
+    : typeassignment_entity(scp, "", tp, true), marker_(mk_exception), default_(vl), extentionnum_(), extentiongroup_(false)  {
     }
 
-    namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp,  tagmarker_type mrker)
-    : typeassignment_entity(scp, "", type_atom_ptr(), true), marker_(mrker) {
+    namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, tagmarker_type mrker)
+    : typeassignment_entity(scp, "", type_atom_ptr(), true), marker_(mrker), extentionnum_(), extentiongroup_(false)  {
     }
 
     void namedtypeassignment_entity::resolve(basic_atom_ptr holder) {
