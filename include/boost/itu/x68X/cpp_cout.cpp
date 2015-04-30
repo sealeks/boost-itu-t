@@ -844,7 +844,7 @@ namespace x680 {
         member_vect parse_membervct(const member_vect& vct, bool obligate) {
             member_vect rslt;
             for (member_vect::const_iterator it = vct.begin(); it != vct.end(); ++it) {
-                if (it->marker != mk_extention) {
+                if (!is_extention(it->marker)) {
 
                     if ((obligate && ((it->marker == mk_none) && !(it->afterextention))) || (!obligate))
                         rslt.push_back(*it);
@@ -1202,7 +1202,7 @@ namespace x680 {
                     if (named->type()) {
                         if ((mkr == mk_default) && (!default_supported(named)))
                             mkr = mk_optional;
-                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
+                        if (is_named(mkr))
                             vct.push_back(member_atom(mkr, nameconvert(named->name()), fromtype_str(named),
                                 ((self->builtin() == t_CHOICE) ? (type_str(self) + "_" + nameconvert(named->name())) : ""),
                                 named, named->istextualy_choice(), afterextention));
@@ -2202,7 +2202,7 @@ namespace x680 {
                     namedtypeassignment_entity_ptr named = tpas->as_named();
                     tagmarker_type mkr = named->marker();
                     if (named->type()) {
-                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
+                        if (is_named(mkr))
                             execute_archive_ber_member(stream, named,afterext);
                     } else if (mkr == mk_extention){
                         afterext=!afterext;
@@ -2344,7 +2344,7 @@ namespace x680 {
                     namedtypeassignment_entity_ptr named = tpas->as_named();
                     tagmarker_type mkr = named->marker();
                     if (named->type()) {
-                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional))
+                        if (is_named(mkr))
                             execute_archive_per_member(stream, named,afterext);
                     } else if (mkr == mk_extention){
                         afterext=!afterext;
