@@ -1768,7 +1768,7 @@ namespace x680 {
                                         referenceerror_throw("Apply COMPONENT OF error", name());
                                     for (basic_entity_vector::iterator its = issue->childs().begin();
                                             its != issue->childs().end(); ++its) {
-                                        if ((*its)->as_typeassigment()->as_named()->marker() != mk_extention) {
+                                        if (!is_extention((*its)->as_typeassigment()->as_named()->marker())) {
                                             namedtypeassignment_entity_ptr tmp = (*its)->as_typeassigment()->clone<namedtypeassignment_entity>(scope(), false);
                                             if (tmp)
                                                 tmpch.push_back(tmp);
@@ -1845,7 +1845,7 @@ namespace x680 {
                     tmptype-> tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++),
                             tcl_context, isallways_expl ? explicit_tags : implicit_tags));
                 } else
-                    if ((*it)->as_typeassigment()->as_named()->marker() != mk_extention)
+                    if (!is_extention((*it)->as_typeassigment()->as_named()->marker()))
                     num++;
             }
         }
@@ -1859,7 +1859,7 @@ namespace x680 {
                         tmptype-> tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++),
                                 tcl_context, isallways_expl ? explicit_tags : implicit_tags));
                     } else
-                        if ((*it)->as_typeassigment()->as_named()->marker() != mk_extention)
+                        if (!is_extention((*it)->as_typeassigment()->as_named()->marker()))
                         num++;
                 }
             }
@@ -1874,7 +1874,7 @@ namespace x680 {
                         tmptype-> tag(boost::make_shared<tagged>(boost::make_shared<numvalue_atom>(num++),
                                 tcl_context, isallways_expl ? explicit_tags : implicit_tags));
                     } else
-                        if ((*it)->as_typeassigment()->as_named()->marker() != mk_extention)
+                        if (!is_extention((*it)->as_typeassigment()->as_named()->marker()))
                         num++;
                 }
             }
@@ -2144,8 +2144,8 @@ namespace x680 {
     : typeassignment_entity(scp, "", tp, true), marker_(mk_exception), default_(vl) {
     }
 
-    namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp)
-    : typeassignment_entity(scp, "", type_atom_ptr(), true), marker_(mk_extention) {
+    namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp,  tagmarker_type mrker)
+    : typeassignment_entity(scp, "", type_atom_ptr(), true), marker_(mrker) {
     }
 
     void namedtypeassignment_entity::resolve(basic_atom_ptr holder) {
