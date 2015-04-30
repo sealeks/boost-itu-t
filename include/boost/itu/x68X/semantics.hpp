@@ -15,6 +15,44 @@
 #include <boost/itu/x68X/sem_objectsetassignment.hpp>
 
 namespace x680 {
+          
+    
+    inline bool is_componentof(tagmarker_type vl){
+        return (vl ==  mk_components_of);
+    }      
+    
+    inline bool is_optional_or_default(tagmarker_type vl){
+        return ((vl ==  mk_optional) || (vl == mk_default));
+    }    
+    
+    inline bool is_none(tagmarker_type vl){
+        return (vl ==  mk_none);
+    }     
+    
+    inline bool is_named(tagmarker_type vl){
+        return (is_none(vl) || is_optional_or_default(vl));
+    }      
+    
+    inline bool is_named_ex(tagmarker_type vl){
+        return (is_named(vl) || is_componentof(vl));
+    }       
+    
+    inline bool is_group(tagmarker_type vl){
+        return ((vl == mk_group_beg) && (vl == mk_group_end));
+    }    
+    
+    inline bool is_extention(tagmarker_type vl){
+        return ((vl ==  mk_extention) || (vl == mk_group_beg) || (vl == mk_group_end));
+    }
+    
+    inline bool is_exception(tagmarker_type vl){
+        return (vl ==  mk_extention);
+    }    
+    
+    inline bool is_sevice(tagmarker_type vl){
+        return (is_extention(vl) ||  is_exception(vl));
+    }      
+    
     namespace semantics {
 
         /////////////////////////////////////////////////////////////////////////   
