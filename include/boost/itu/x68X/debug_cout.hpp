@@ -18,6 +18,7 @@ namespace x680 {
     // std::cout  tree
     /////////////////////////////////////////////////////////////////////////          
 
+    void print_canonical(std::ostream& stream, const namedtypeassignment_entity_vct& vl);
 
     std::ostream& operator<<(std::ostream& stream, global_entity_ptr self);
     std::ostream& operator<<(std::ostream& stream, module_entity_ptr self);

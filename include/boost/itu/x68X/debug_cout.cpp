@@ -12,6 +12,16 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////   
     // std::cout  tree
     /////////////////////////////////////////////////////////////////////////       
+    
+    void print_canonical(std::ostream& stream, const namedtypeassignment_entity_vct& vl){
+        stream << "  [  canonical_order root :  ";
+        for (namedtypeassignment_entity_vct::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+            if (it != vl.begin())
+                stream << "  ,  ";
+            stream << (*it)->name();              
+         }  
+        stream << "  ]  ";
+    }
 
     std::ostream& dummymarker(std::ostream& stream, basic_atom_ptr self) {
         if (self) {
@@ -231,14 +241,24 @@ namespace x680 {
                 stream << self->name() << " COMPONENTS OF ";
             else if (self->as_named()->marker() == mk_exception)
                 stream << "! " << " ";
-            else if (self->as_named()->marker() == mk_extention)
-                return stream << "(...) " << "\n";
+            else if (self->as_named()->marker() == mk_extention) {
+                if ((self->scope()) && (self->scope()->as_typeassigment()))
+                    return stream << "(...) [ext cnt=" << self->scope()->as_typeassigment()->extention_count() << "]\n";
+                else
+                    return stream << "(...) " << "\n";
+            }
             else if (self->as_named()->marker() == mk_group_beg)
                 return stream << "[[ " << "\n";
             else if (self->as_named()->marker() == mk_group_end)
                 return stream << "]] " << "\n";            
             else
-                stream << self->name() << "  ";
+                stream << self->name();
+            if (self->as_named()->has_extentionnum()) {
+                std::string igr = self->as_named()->extentiongroup() ? "grp" : "";
+                stream << "[ << " << igr << " extnum=" << (*self->as_named()->extentionnum()) << "]" << "  ";
+            }
+            else
+                stream << "  ";
             from_template(stream, self);
             argumentmarker(stream, self);
             stream << self->type() << " ";
@@ -324,6 +344,8 @@ namespace x680 {
                 }
                 indent(stream, self);
                 stream << "}" << " ";
+                if ((self->type()->builtin() == t_SET) || (self->type()->builtin() == t_CHOICE))
+                    print_canonical(stream, self->canonicalorder_root());    
                 break;
             }
             default:
