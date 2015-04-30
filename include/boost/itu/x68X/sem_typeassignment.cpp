@@ -702,8 +702,20 @@ namespace x680 {
     // tagged
     /////////////////////////////////////////////////////////////////////////    
 
-    static void canonical_sort(namedtypeassignment_entity_vct& vl) {
+    static bool canonical_ptr_less(canonical_tag_ptr ls, canonical_tag_ptr rs) {
+        if (ls && rs)
+            return (*ls) < (*rs);
+        return static_cast<bool>(rs);
+    }
+    
+    static bool named_canonical_less(namedtypeassignment_entity_ptr ls, namedtypeassignment_entity_ptr rs) {
+        if (ls && rs)
+            return canonical_ptr_less(ls->cncl_tag(), rs->cncl_tag());
+        return static_cast<bool>(rs);
+    };
 
+    static void canonical_sort(namedtypeassignment_entity_vct& vl) {
+        std::sort(vl.begin(), vl.end(), named_canonical_less);
     }
 
 
