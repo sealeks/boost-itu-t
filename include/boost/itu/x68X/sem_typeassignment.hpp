@@ -838,7 +838,7 @@ namespace x680 {
         namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker);
         namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
         namedtypeassignment_entity(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl);
-        namedtypeassignment_entity(basic_entity_ptr scp);
+        namedtypeassignment_entity(basic_entity_ptr scp, tagmarker_type mrker=mk_extention);
 
         value_atom_ptr _default() const {
             return default_;
