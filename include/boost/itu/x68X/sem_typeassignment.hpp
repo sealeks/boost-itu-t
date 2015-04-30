@@ -617,7 +617,15 @@ namespace x680 {
         bool named() const {
             return named_;
         }
-
+        
+        std::size_t extention_count() const {
+            return extention_count_;
+        }        
+  
+        void extention_count(std::size_t vl) {
+            extention_count_=vl;
+        }         
+       
         bool is_cpp_expressed() const {
             return ((type()) && (!has_arguments()));
         }
@@ -750,7 +758,8 @@ namespace x680 {
         typeassignment_entity_ptr superfluous_assignment(module_entity_ptr mod);
 
         namedtypeassignment_entity_ptr as_named();
-
+        
+        namedtypeassignment_entity_vct canonicalorder_root() ;
 
 
         /////        
@@ -805,6 +814,8 @@ namespace x680 {
         void post_resolve_child();
 
         void post_resolve_apply_componentsof();
+        
+        bool resolve_extention();        
 
         bool is_resolve_autotag();
 
@@ -819,7 +830,8 @@ namespace x680 {
         x680::syntactic::type_assignment synctas_;
         effective_tabconstraint_ptr tabconstraint_;
         effective_tabconstraint_wptr reff_tabconstraint_;    
-        bool unicalfield_;        
+        bool unicalfield_; 
+        std::size_t extention_count_;
     };
 
 
@@ -834,6 +846,8 @@ namespace x680 {
     class namedtypeassignment_entity : public typeassignment_entity {
 
     public:
+        
+
 
         namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker);
         namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
@@ -851,6 +865,30 @@ namespace x680 {
         tagmarker_type marker() const {
             return marker_;
         }
+        
+        extentionnum_ptr extentionnum() const {
+            return extentionnum_;
+        }        
+  
+        bool has_extentionnum() const {
+            return static_cast<bool>(extentionnum_);
+        }       
+        
+        void extentionnum(extentionnum_type vl) {
+            extentionnum_=extentionnum_ptr( new extentionnum_type(vl));
+        }          
+        
+        void extentionnum(extentionnum_ptr vl) {
+            extentionnum_=vl;
+        }       
+        
+        bool extentiongroup() const {
+            return extentiongroup_;
+        }        
+  
+        void extentiongroup(bool vl) {
+            extentiongroup_=vl;
+        }          
 
         //////
 
@@ -862,6 +900,8 @@ namespace x680 {
 
         tagmarker_type marker_;
         value_atom_ptr default_;
+        extentionnum_ptr extentionnum_;
+        bool extentiongroup_;        
 
     };
 
