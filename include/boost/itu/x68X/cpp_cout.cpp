@@ -772,40 +772,24 @@ namespace x680 {
         }
         
         std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext) {
-           tagmarker_type dfltopt = afterext ? mk_optional : self->marker();
-            if ((dfltopt==mk_default) && (self->isstruct_of()))
-                dfltopt=mk_optional;
-             /*if ((self->isdefined_choice())) {
-                if (self->tag()) {
-                    switch (self->tag()->_class()) {
-                        case tcl_application: return "ITU_T_CHOICE_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        case tcl_universal: return "ITU_T_CHOICE_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        case tcl_private: return "ITU_T_CHOICE_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        default: return "ITU_T_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                    }
-                } else
-                    return "ITU_T_BIND_CHOICE(" + name_arch(name, dfltopt) + ")";
-            } else {                
-                if (self->tag()) {
-                    if (self->tag()->rule() == implicit_tags) {
-                        switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_T_IMPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_T_IMPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_T_IMPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_T_IMPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        }
-                    } else {
-                        switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_T_EXPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_T_EXPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_T_EXPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_T_EXPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        }
-                    }
-                } else*/
-                    return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
-            /*}
-            return "";*/
+            tagmarker_type dfltopt = afterext ? mk_optional : self->marker();
+            if ((dfltopt == mk_default) && (self->isstruct_of()))
+                dfltopt = mk_optional;
+            if ((self->type()) && (self->type()->can_per_constraints())) {
+                type_atom_ptr tmp = self->type();
+                /*if (tmp->integer_constraint())
+                    stream << "  //   Ic" << (*(tmp->integer_constraint())).to_per() << " ";
+                if (tmp->size_constraint())
+                    stream << "  //    Sc " << (*(tmp->size_constraint())).to_per() << " ";
+                if (tmp->char8_constraint())
+                    stream << "  //    c8C " << (*(tmp->char8_constraint())).to_alphabet_per() << " ";
+                if (tmp->quadruple_constraint())
+                    stream << "  //   qC " << (*(tmp->quadruple_constraint())).to_alphabet_per() << " ";
+
+                if (tmp->tuple_constraint())
+                    stream << "  //   Tc " << (*(tmp->tuple_constraint())).to_alphabet_per() << " ";*/
+            }
+            return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
         }        
 
         std::string struct_meth_str(typeassignment_entity_ptr self, const std::string& tp) {

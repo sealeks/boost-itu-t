@@ -12,7 +12,6 @@
 
 
 namespace x680 {
-
     namespace cpp {
 
         struct declare_atom;

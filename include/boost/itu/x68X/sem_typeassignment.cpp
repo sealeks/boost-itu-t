@@ -705,13 +705,13 @@ namespace x680 {
     static bool canonical_ptr_less(canonical_tag_ptr ls, canonical_tag_ptr rs) {
         if (ls && rs)
             return (*ls) < (*rs);
-        return static_cast<bool>(rs);
+        return static_cast<bool> (rs);
     }
-    
+
     static bool named_canonical_less(namedtypeassignment_entity_ptr ls, namedtypeassignment_entity_ptr rs) {
         if (ls && rs)
             return canonical_ptr_less(ls->cncl_tag(), rs->cncl_tag());
-        return static_cast<bool>(rs);
+        return static_cast<bool> (rs);
     };
 
     static void canonical_sort(namedtypeassignment_entity_vct& vl) {
@@ -1696,7 +1696,7 @@ namespace x680 {
                 boost::static_pointer_cast<namedtypeassignment_entity> (self()) : namedtypeassignment_entity_ptr();
     }
 
-    namedtypeassignment_entity_vct typeassignment_entity::canonicalorder_root()  {
+    namedtypeassignment_entity_vct typeassignment_entity::canonicalorder_root() {
         namedtypeassignment_entity_vct tmp;
         for (basic_entity_vector::iterator it = childs().begin(); it != first_extention(); ++it) {
             if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
@@ -1715,7 +1715,6 @@ namespace x680 {
         canonical_sort(tmp);
         return tmp;
     }
-
 
     void typeassignment_entity::resolve(basic_atom_ptr holder) {
         unicalelerror_throw(childs());
@@ -1775,6 +1774,11 @@ namespace x680 {
         resolve_extention();
     }
 
+    static namedtypeassignment_entity_ptr as_namedasmt(basic_entity_vector::iterator it) {
+        return (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) ?
+                (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr();
+    }
+
     void typeassignment_entity::post_resolve_apply_componentsof() {
         if (shadow())
             return;
@@ -1790,8 +1794,7 @@ namespace x680 {
                 while (find_compomensof) {
                     find_compomensof = false;
                     for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-                        if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
-                            namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
+                        if (namedtypeassignment_entity_ptr named = as_namedasmt(it)) {
                             if ((named->marker() == mk_components_of)) {
                                 typeassignment_entity_ptr issue = named;
                                 if (basic_entity_ptr namedreff = named->type()->reff()) {
@@ -1839,11 +1842,8 @@ namespace x680 {
     bool typeassignment_entity::resolve_extention() {
         extentionnum_type num = 0;
         bool isgroup = false;
-        basic_entity_vector::iterator fit = first_extention();
-        basic_entity_vector::iterator sit = second_extention();
-        for (basic_entity_vector::iterator it = fit; it != sit; ++it) {
-            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
-                namedtypeassignment_entity_ptr tmpel = (*it)->as_typeassigment()->as_named();
+        for (basic_entity_vector::iterator it = first_extention(); it != second_extention(); ++it) {
+            if (namedtypeassignment_entity_ptr tmpel = as_namedasmt(it)) {
                 switch (tmpel->marker()) {
                     case mk_group_beg:
                     {
@@ -1885,8 +1885,7 @@ namespace x680 {
             std::size_t num = 0;
             if (tmptype->tagrule() == automatic_tags) {
                 for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-                    namedtypeassignment_entity_ptr tmpel = ((*it)->as_typeassigment() && (*it)->as_typeassigment()->as_named()) ?
-                            (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr();
+                    namedtypeassignment_entity_ptr tmpel = as_namedasmt(it);
                     type_atom_ptr tmptype1 = tmpel ? (tmpel->type()) : type_atom_ptr();
                     if ((tmptype1) && (tmptype1->tag()) &&
                             (tmpel->marker() != mk_components_of)) {
@@ -2213,15 +2212,15 @@ namespace x680 {
     }
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl)
-    : typeassignment_entity(scp, nm, tp, true), marker_(mk_default), default_(vl), extentionnum_(), extentiongroup_(false)  {
+    : typeassignment_entity(scp, nm, tp, true), marker_(mk_default), default_(vl), extentionnum_(), extentiongroup_(false) {
     }
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl)
-    : typeassignment_entity(scp, "", tp, true), marker_(mk_exception), default_(vl), extentionnum_(), extentiongroup_(false)  {
+    : typeassignment_entity(scp, "", tp, true), marker_(mk_exception), default_(vl), extentionnum_(), extentiongroup_(false) {
     }
 
     namedtypeassignment_entity::namedtypeassignment_entity(basic_entity_ptr scp, tagmarker_type mrker)
-    : typeassignment_entity(scp, "", type_atom_ptr(), true), marker_(mrker), extentionnum_(), extentiongroup_(false)  {
+    : typeassignment_entity(scp, "", type_atom_ptr(), true), marker_(mrker), extentionnum_(), extentiongroup_(false) {
     }
 
     void namedtypeassignment_entity::resolve(basic_atom_ptr holder) {

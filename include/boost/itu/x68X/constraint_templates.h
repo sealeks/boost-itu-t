@@ -281,7 +281,11 @@ namespace x680 {
 
         bool empty() const {
             return (right_ && left_ && (*right_<*left_));
-        }
+        }    
+        
+        bool single() const {
+            return (right_ && left_ && (*right_==*left_));
+        }        
 
         bool all() const {
             return ((!right_ && !left_) || (((left_) && (*left_ == min)) && ((right_) &&(*right_ == max))));
@@ -693,6 +697,11 @@ namespace x680 {
         const container_type& set() const {
             return range_;
         }
+        
+        bool single() const {
+            return ((range_.size()==1) && (range_.begin()->single()));
+        }   
+       
 
         bool has_extention() const {
             return !expention_.empty();
