@@ -178,7 +178,8 @@ namespace x680 {
             void execute_archive_ber_member_cho(std::ofstream& stream, typeassignment_entity_ptr self);
                
             // per
-            void execute_archive_per_struct(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_per_struct_in(std::ofstream& stream, typeassignment_entity_ptr self);
+            void execute_archive_per_struct_out(std::ofstream& stream, typeassignment_entity_ptr self);            
             void execute_archive_per_member(std::ofstream& stream, namedtypeassignment_entity_ptr self, bool afterext = false);
             void execute_archive_per_choice_chi(std::ofstream& stream, typeassignment_entity_ptr self);
             void execute_archive_per_choice_cho(std::ofstream& stream, typeassignment_entity_ptr self);

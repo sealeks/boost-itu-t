@@ -19,9 +19,10 @@ namespace x680 {
     /////////////////////////////////////////////////////////////////////////     
 
     struct null_initer {
+
     };
 
-    
+
     /////////////////////////////////////////////////////////////////////////      
     // bstring_initer
     /////////////////////////////////////////////////////////////////////////     
@@ -55,7 +56,7 @@ namespace x680 {
 
         std::string str;
     };
-    
+
     /////////////////////////////////////////////////////////////////////////      
     // quadruple
     /////////////////////////////////////////////////////////////////////////     
@@ -281,14 +282,26 @@ namespace x680 {
 
         bool empty() const {
             return (right_ && left_ && (*right_<*left_));
-        }    
-        
+        }
+
         bool single() const {
-            return (right_ && left_ && (*right_==*left_));
-        }        
+            return (right_ && left_ && (*right_ == *left_));
+        }
+
+        bool semi() const {
+            return ((left_semi()) || (right_semi()));
+        }
+
+        bool left_semi() const {
+            return ((right_ && !left_ && (*right_ != max)) || (left_ && (*left_ == min) && right_ && (*right_ != max)));
+        }
+
+        bool right_semi() const {
+            return ((!right_ && left_ && (*left_ != min)) || (right_ && (*right_ == max) && left_ && (*left_ != min)));
+        }
 
         bool all() const {
-            return ((!right_ && !left_) || (((left_) && (*left_ == min)) && ((right_) &&(*right_ == max))));
+            return ((!right_ && !left_) || (((left_) && (*left_ == min)) && ((right_) && (*right_ == max))));
         }
 
         static self_type create_empty() {
@@ -357,7 +370,7 @@ namespace x680 {
             return rslt;
         }
 
-        friend bool operator ==(const self_type& l, const self_type& r) {
+        friend bool operator==(const self_type& l, const self_type& r) {
             if (l.empty() && r.empty())
                 return true;
             if (l.all() && r.all())
@@ -445,7 +458,7 @@ namespace x680 {
             return range_container_type(tmpset.begin(), tmpset.end());
         }
 
-        friend self_type operator &(const self_type& l, const self_type& r) {
+        friend self_type operator&(const self_type& l, const self_type& r) {
             root_type_ptr nl;
             root_type_ptr nr;
             if (l.empty() || r.empty())
@@ -472,7 +485,7 @@ namespace x680 {
             return rslt.empty() ? create_empty() : rslt;
         }
 
-        friend range_container_type operator |(const self_type& l, const self_type& r) {
+        friend range_container_type operator|(const self_type& l, const self_type& r) {
             root_type_ptr nl;
             root_type_ptr nr;
             range_container_type rslt;
@@ -518,7 +531,7 @@ namespace x680 {
             return l & (r.operator range_container_type());
         }
 
-        friend range_container_type operator |(const range_container_type& l, const self_type& r) {
+        friend range_container_type operator|(const range_container_type& l, const self_type& r) {
             return l | (r.operator range_container_type());
         }
 
@@ -530,11 +543,11 @@ namespace x680 {
             return r & l;
         }
 
-        friend range_container_type operator |(const self_type& l, const range_container_type& r) {
+        friend range_container_type operator|(const self_type& l, const range_container_type& r) {
             return r | l;
         }
 
-        friend range_container_type operator -(const self_type& l, const range_container_type& r) {
+        friend range_container_type operator-(const self_type& l, const range_container_type& r) {
             return (l.operator range_container_type()) -r;
         }
 
@@ -555,7 +568,7 @@ namespace x680 {
             return self_type::normalize(rslt);
         }
 
-        friend range_container_type operator |(const range_container_type& l, const range_container_type& r) {
+        friend range_container_type operator|(const range_container_type& l, const range_container_type& r) {
             range_container_type tmp = normalize(l);
             range_container_type tmpr = normalize(r);
             tmp.insert(tmp.end(), tmpr.begin(), tmpr.end());
@@ -697,11 +710,30 @@ namespace x680 {
         const container_type& set() const {
             return range_;
         }
-        
+
         bool single() const {
-            return ((range_.size()==1) && (range_.begin()->single()));
-        }   
-       
+            return ((range_.size() == 1) && (range_.front().single()));
+        }
+
+        bool semi() const {
+            return ((left_semi()) || (right_semi()));
+        }
+
+        bool left_semi() const {
+            return ((range_.size() == 1) && (range_.front().left_semi()));
+        }
+
+        bool right_semi() const {
+            return ((range_.size() == 1) && (range_.front().right_semi()));
+        }
+
+        bool has_main() const {
+            return (range_.size());
+        }
+
+        range_type main() const {
+            return (range_.size()) ? range_.front() : range_type();
+        }
 
         bool has_extention() const {
             return !expention_.empty();
