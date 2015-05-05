@@ -1774,11 +1774,7 @@ namespace x680 {
         resolve_extention();
     }
 
-    static namedtypeassignment_entity_ptr as_namedasmt(basic_entity_vector::iterator it) {
-        return (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) ?
-                (*it)->as_typeassigment()->as_named() : namedtypeassignment_entity_ptr();
-    }
-
+    
     void typeassignment_entity::post_resolve_apply_componentsof() {
         if (shadow())
             return;
@@ -1794,7 +1790,7 @@ namespace x680 {
                 while (find_compomensof) {
                     find_compomensof = false;
                     for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-                        if (namedtypeassignment_entity_ptr named = as_namedasmt(it)) {
+                        if (namedtypeassignment_entity_ptr named = as_named_typeassigment(it)) {
                             if ((named->marker() == mk_components_of)) {
                                 typeassignment_entity_ptr issue = named;
                                 if (basic_entity_ptr namedreff = named->type()->reff()) {
@@ -1843,7 +1839,7 @@ namespace x680 {
         extentionnum_type num = 0;
         bool isgroup = false;
         for (basic_entity_vector::iterator it = first_extention(); it != second_extention(); ++it) {
-            if (namedtypeassignment_entity_ptr tmpel = as_namedasmt(it)) {
+            if (namedtypeassignment_entity_ptr tmpel = as_named_typeassigment(it)) {
                 switch (tmpel->marker()) {
                     case mk_group_beg:
                     {
@@ -1885,7 +1881,7 @@ namespace x680 {
             std::size_t num = 0;
             if (tmptype->tagrule() == automatic_tags) {
                 for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
-                    namedtypeassignment_entity_ptr tmpel = as_namedasmt(it);
+                    namedtypeassignment_entity_ptr tmpel = as_named_typeassigment(it);
                     type_atom_ptr tmptype1 = tmpel ? (tmpel->type()) : type_atom_ptr();
                     if ((tmptype1) && (tmptype1->tag()) &&
                             (tmpel->marker() != mk_components_of)) {
@@ -1912,7 +1908,7 @@ namespace x680 {
         basic_entity_vector::iterator fit = first_extention();
         basic_entity_vector::iterator sit = second_extention();
         for (basic_entity_vector::iterator it = childs().begin(); it != fit; ++it) {
-            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+            if (as_named_typeassigment(it)) {
                 type_atom_ptr tmptype = (*it)->as_typeassigment()->type();
                 if ((tmptype) && (!(tmptype->tag()))) {
                     bool isallways_expl = ((tmptype->istextualy_choice()) || (tmptype->isopen()) ||
@@ -1926,7 +1922,7 @@ namespace x680 {
         }
         if (sit != childs().end()) {
             for (basic_entity_vector::iterator it = sit; it != childs().end(); ++it) {
-                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                if (as_named_typeassigment(it)) {
                     type_atom_ptr tmptype = (*it)->as_typeassigment()->type();
                     if ((tmptype) && (!(tmptype->tag()))) {
                         bool isallways_expl = ((tmptype->istextualy_choice()) || (tmptype->isopen()) ||
@@ -1941,7 +1937,7 @@ namespace x680 {
         }
         if (sit != fit) {
             for (basic_entity_vector::iterator it = fit; it != sit; ++it) {
-                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                if (as_named_typeassigment(it)) {
                     type_atom_ptr tmptype = (*it)->as_typeassigment()->type();
                     if ((tmptype) && (!(tmptype->tag()))) {
                         bool isallways_expl = ((tmptype->istextualy_choice()) || (tmptype->isopen()) ||
