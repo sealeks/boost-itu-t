@@ -131,10 +131,11 @@ namespace x680 {
     typedef boost::shared_ptr<objectassignment_entity> objectassignment_entity_ptr;
     typedef std::vector<objectassignment_entity_ptr> objectassignment_entity_vct;
 
-    struct objectassignment_entity_ptr_less  {
+    struct objectassignment_entity_ptr_less {
+
         bool operator()(const objectassignment_entity_ptr& l, const objectassignment_entity_ptr& r) const;
     };
-    
+
     typedef std::set<objectassignment_entity_ptr, objectassignment_entity_ptr_less > objectassignment_entity_set;
 
     class objectsetassignment_entity;
@@ -441,15 +442,15 @@ namespace x680 {
 
     class defn_objectset_atom;
     typedef boost::shared_ptr<defn_objectset_atom> defn_objectset_atom_ptr;
-    
+
     class effective_tabconstraint;
-    typedef boost::shared_ptr<effective_tabconstraint> effective_tabconstraint_ptr;    
+    typedef boost::shared_ptr<effective_tabconstraint> effective_tabconstraint_ptr;
     typedef boost::weak_ptr<effective_tabconstraint> effective_tabconstraint_wptr;
 
 
     typedef std::vector<std::string> export_vector;
     typedef std::vector<std::string> import_vector;
-    
+
 
     typedef std::size_t extentionnum_type;
     typedef boost::shared_ptr<extentionnum_type> extentionnum_ptr;
@@ -494,12 +495,12 @@ namespace x680 {
 
         namedvalue_initer(const std::string vl, value_atom_ptr v = value_atom_ptr()) : str(vl), val(v) {
         }
-        
-        friend bool operator<(const namedvalue_initer& ls, const namedvalue_initer& rs){
+
+        friend bool operator<(const namedvalue_initer& ls, const namedvalue_initer& rs) {
             return ls.str < rs.str;
         }
-        
-        friend bool operator==(const namedvalue_initer& ls, const namedvalue_initer& rs){
+
+        friend bool operator==(const namedvalue_initer& ls, const namedvalue_initer& rs) {
             return ls.str == rs.str;
         }
 
@@ -557,7 +558,7 @@ namespace x680 {
         }
 
         void scope(basic_entity_ptr vl);
-        
+
         assignment_entity_ptr parent(std::size_t rng = 0);
 
         basic_entity_ptr reff_shadow() const {
@@ -607,6 +608,12 @@ namespace x680 {
         soassignment_entity_ptr as_soassigment();
 
         typeassignment_entity_ptr as_typeassigment();
+
+        typeassignment_entity_ptr as_typeassigment(basic_entity_vector::iterator it);
+
+        namedtypeassignment_entity_ptr as_named_typeassigment();
+
+        namedtypeassignment_entity_ptr as_named_typeassigment(basic_entity_vector::iterator it);
 
         valueassignment_entity_ptr as_valueassigment();
 
@@ -869,7 +876,7 @@ namespace x680 {
         basic_atom_ptr reff();
 
         bool has_governor() const {
-            return static_cast<bool>(governor_);
+            return static_cast<bool> (governor_);
         }
 
         bool has_undef_governor() const;
@@ -933,7 +940,7 @@ namespace x680 {
         }
 
         bool has_governor() const {
-            return  static_cast<bool>(governor_);
+            return static_cast<bool> (governor_);
         }
 
 
@@ -1131,9 +1138,9 @@ namespace x680 {
         constraint_atom_ptr as_constraint();
 
         constraints_atom_ptr as_constraints();
-        
-        effective_tabconstraint_ptr as_effective_tab();       
-        
+
+        effective_tabconstraint_ptr as_effective_tab();
+
         assignment_entity_ptr refference_to();
 
         ////////

@@ -7,7 +7,7 @@
 
 namespace x680 {
 
-    bool objectassignment_entity_ptr_less::operator()(const objectassignment_entity_ptr& l, const objectassignment_entity_ptr& r)  const {
+    bool objectassignment_entity_ptr_less::operator()(const objectassignment_entity_ptr& l, const objectassignment_entity_ptr& r) const {
         if (l && r)
             return (*l) < (*r);
         return r ? true : false;
@@ -143,7 +143,8 @@ namespace x680 {
 
     assignment_entity_ptr basic_entity::parent(std::size_t rng) {
         if (as_assigment()) {
-            basic_entity_ptr self = as_assigment();/*(as_assigment()->shadow_for()) ? as_assigment()->shadow_for() : as_assigment()*/;
+            basic_entity_ptr self = as_assigment();
+            /*(as_assigment()->shadow_for()) ? as_assigment()->shadow_for() : as_assigment()*/;
             basic_entity_ptr scp = ((self->scope()) && (self->scope()->reff_shadow())) ? self->scope()->reff_shadow() : self->scope();
             if (scp) {
                 if (rng)
@@ -153,7 +154,7 @@ namespace x680 {
             }
         }
         return assignment_entity_ptr();
-    }         
+    }
 
     void basic_entity::reff_shadow(basic_entity_ptr vl) {
         reff_shadow_ = vl;
@@ -241,6 +242,19 @@ namespace x680 {
 
     typeassignment_entity_ptr basic_entity::as_typeassigment() {
         return kind_ == et_Type ? boost::static_pointer_cast<typeassignment_entity> (self()) : typeassignment_entity_ptr();
+    }
+
+    typeassignment_entity_ptr basic_entity::as_typeassigment(basic_entity_vector::iterator it) {
+        return (*it) ? ((*it)->as_typeassigment()) : typeassignment_entity_ptr();
+    }
+
+    namedtypeassignment_entity_ptr basic_entity::as_named_typeassigment() {
+        typeassignment_entity_ptr tmp = as_typeassigment();
+        return tmp ? tmp->as_named() : namedtypeassignment_entity_ptr();
+    }
+
+    namedtypeassignment_entity_ptr basic_entity::as_named_typeassigment(basic_entity_vector::iterator it) {
+        return (*it) ? ((*it)->as_named_typeassigment()) : namedtypeassignment_entity_ptr();
     }
 
     valueassignment_entity_ptr basic_entity::as_valueassigment() {
@@ -411,7 +425,7 @@ namespace x680 {
             }
         }
     }
-    
+
     std::string basic_entity::subidentifier(std::string& nm) {
         std::string rslt = nm;
         std::string::size_type it = nm.find_first_of('.');
@@ -421,7 +435,7 @@ namespace x680 {
         } else
             nm = "";
         return rslt;
-    }    
+    }
 
 
     /////////////////////////////////////////////////////////////////////////   
@@ -1245,7 +1259,7 @@ namespace x680 {
     }
 
     bool basic_atom::isembeded() const {
-        return static_cast<bool>(embeded_assignment_);
+        return static_cast<bool> (embeded_assignment_);
     }
 
     bool basic_atom::rooted() {
@@ -1309,15 +1323,15 @@ namespace x680 {
     }
 
     effective_tabconstraint_ptr basic_atom::as_effective_tab() {
-        return kind_ == at_EffectiveTabConstraint ? 
-            boost::static_pointer_cast<effective_tabconstraint> (self()) : effective_tabconstraint_ptr();
+        return kind_ == at_EffectiveTabConstraint ?
+                boost::static_pointer_cast<effective_tabconstraint> (self()) : effective_tabconstraint_ptr();
     }
 
     assignment_entity_ptr basic_atom::refference_to() {
         if ((reff()) && (reff()->as_assigment()))
             return reff()->as_assigment()->refference_to();
         return assignment_entity_ptr();
-    }   
+    }
 
     entity_enum basic_atom::check_reff(basic_atom_ptr holder, search_marker sch) {
         if ((scope()) && (reff()) && (reff()->as_expectdef())) {
