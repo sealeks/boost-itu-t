@@ -6,7 +6,20 @@
                    projectFiles="true">
       <itemPath>../../../include_programs/test_asn1/Test1.cpp</itemPath>
       <itemPath>../../../include_programs/test_asn1/Test1.hpp</itemPath>
+      <itemPath>../../../include_programs/test_asn1/Test1_ber.cpp</itemPath>
+      <itemPath>../../../include_programs/test_asn1/Test1_per.cpp</itemPath>
       <itemPath>../../../include_programs/test_asn1/main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Файлы тестов"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Важные файлы"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Файлы тестов"
@@ -34,6 +47,7 @@
       <compileType>
         <ccTool>
           <standard>8</standard>
+          <commandlineTool>g++ </commandlineTool>
           <incDir>
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
@@ -73,6 +87,16 @@
       <item path="../../../include_programs/test_asn1/Test1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1_per.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include_programs/test_asn1/main.cpp"
@@ -129,6 +153,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include_programs/test_asn1/Test1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1_per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include_programs/test_asn1/main.cpp"
             ex="false"
             tool="1"
@@ -152,22 +186,16 @@
         <linkerTool>
           <output>../../../bin/${CND_CONF}/test_asn1</output>
           <linkerAddLib>
-            <pElem>../../lib/boost/${CND_CONF}</pElem>
+            <pElem>../../../lib/${CND_CONF}</pElem>
+            <pElem>../../../lib/boost/${CND_CONF}</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerLibLibItem>nskernel</linkerLibLibItem>
-            <linkerLibLibItem>isostack</linkerLibLibItem>
+            <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
             <linkerLibLibItem>boost_date_time</linkerLibLibItem>
-            <linkerLibLibItem>boost_filesystem</linkerLibLibItem>
-            <linkerLibLibItem>boost_program_options</linkerLibLibItem>
-            <linkerLibLibItem>boost_random</linkerLibLibItem>
-            <linkerLibLibItem>boost_regex</linkerLibLibItem>
-            <linkerLibLibItem>boost_serialization</linkerLibLibItem>
-            <linkerLibLibItem>boost_signals</linkerLibLibItem>
             <linkerLibLibItem>boost_system</linkerLibLibItem>
             <linkerLibLibItem>boost_thread</linkerLibLibItem>
             <linkerLibLibItem>boost_chrono</linkerLibLibItem>
-            <linkerLibLibItem>boost_wserialization</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
             <linkerLibLibItem>rt</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
@@ -180,6 +208,16 @@
       <item path="../../../include_programs/test_asn1/Test1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1_per.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include_programs/test_asn1/main.cpp"
@@ -196,6 +234,7 @@
       </toolsSet>
       <compileType>
         <ccTool>
+          <standard>8</standard>
           <incDir>
             <pElem>../../../include</pElem>
             <pElem>${BOOST_DIR}</pElem>
@@ -204,22 +243,16 @@
         <linkerTool>
           <output>../../../bin/${CND_CONF}/test_asn1</output>
           <linkerAddLib>
-            <pElem>../../lib/boost/${CND_CONF}</pElem>
+            <pElem>../../../lib/${CND_CONF}</pElem>
+            <pElem>../../../lib/boost/${CND_CONF}</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerLibLibItem>nskernel</linkerLibLibItem>
-            <linkerLibLibItem>isostack</linkerLibLibItem>
+            <linkerLibLibItem>boost_itu_t</linkerLibLibItem>
             <linkerLibLibItem>boost_date_time</linkerLibLibItem>
-            <linkerLibLibItem>boost_filesystem</linkerLibLibItem>
-            <linkerLibLibItem>boost_program_options</linkerLibLibItem>
-            <linkerLibLibItem>boost_random</linkerLibLibItem>
-            <linkerLibLibItem>boost_regex</linkerLibLibItem>
-            <linkerLibLibItem>boost_serialization</linkerLibLibItem>
-            <linkerLibLibItem>boost_signals</linkerLibLibItem>
             <linkerLibLibItem>boost_system</linkerLibLibItem>
             <linkerLibLibItem>boost_thread</linkerLibLibItem>
             <linkerLibLibItem>boost_chrono</linkerLibLibItem>
-            <linkerLibLibItem>boost_wserialization</linkerLibLibItem>
+            <linkerLibLibItem>stdc++</linkerLibLibItem>
             <linkerLibLibItem>rt</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
@@ -232,6 +265,16 @@
       <item path="../../../include_programs/test_asn1/Test1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1_per.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include_programs/test_asn1/main.cpp"

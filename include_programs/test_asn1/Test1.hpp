@@ -14,34 +14,7 @@
 
 namespace Test1 {
 
-    using  boost::asn1::null_type;
-    using  boost::asn1::enumerated_type;
-    using  boost::asn1::bitstring_type;
-    using  boost::asn1::octetstring_type;
-    using  boost::asn1::oid_type;
-    using  boost::asn1::reloid_type;
-    using  boost::asn1::utctime_type;
-    using  boost::asn1::gentime_type;
-    using  boost::asn1::ia5string_type;
-    using  boost::asn1::printablestring_type;
-    using  boost::asn1::visiblestring_type;
-    using  boost::asn1::visiblestring_type;
-    using  boost::asn1::numericstring_type;
-    using  boost::asn1::universalstring_type;
-    using  boost::asn1::bmpstring_type;
-    using  boost::asn1::utf8string_type;
-    using  boost::asn1::generalstring_type;
-    using  boost::asn1::graphicstring_type;
-    using  boost::asn1::t61string_type;
-    using  boost::asn1::t61string_type;
-    using  boost::asn1::videotexstring_type;
-    using  boost::asn1::objectdescriptor_type;
-    using  boost::asn1::external_type;
-    using  boost::asn1::embeded_type;
-    using  boost::asn1::characterstring_type;
-    using  boost::asn1::any_type;
-    using  boost::asn1::value_holder;
-    using  boost::asn1::default_holder;
+ITU_T_USE_UNIVESAL_DECL;
 
 
         struct PersonnelRecord_impl;
@@ -67,28 +40,24 @@ namespace Test1 {
 
 
 
-                typedef std::vector< int > Tst_type;
                 typedef std::vector< ChildInformation > Children_type;
 
 
             PersonnelRecord_impl(); 
 
-            PersonnelRecord_impl(const Tst_type&  arg__tst,
-                 const Name&  arg__name,
+            PersonnelRecord_impl(const Name&  arg__name,
                  const visiblestring_type&  arg__title,
                  const EmployeeNumber&  arg__number,
                  const Date&  arg__dateOfHire,
                  const Name&  arg__nameOfSpouse);
 
-            PersonnelRecord_impl(boost::shared_ptr< Tst_type>  arg__tst,
-                 boost::shared_ptr< Name>  arg__name,
+            PersonnelRecord_impl(boost::shared_ptr< Name>  arg__name,
                  boost::shared_ptr< visiblestring_type>  arg__title,
                  boost::shared_ptr< EmployeeNumber>  arg__number,
                  boost::shared_ptr< Date>  arg__dateOfHire,
                  boost::shared_ptr< Name>  arg__nameOfSpouse,
                  boost::shared_ptr< Children_type>  arg__children);
 
-            ITU_T_HOLDERH_DECL(tst, Tst_type);
             ITU_T_HOLDERH_DECL(name, Name);
             ITU_T_HOLDERH_DECL(title, visiblestring_type);
             ITU_T_HOLDERH_DECL(number, EmployeeNumber);
@@ -144,6 +113,7 @@ namespace Test1 {
         template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch);
         template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch);
         template<> void Name_impl::serialize(boost::asn1::x691::input_coder& arch);
+
 } 
 
 ITU_T_SET_REGESTRATE(Test1::PersonnelRecord_impl)

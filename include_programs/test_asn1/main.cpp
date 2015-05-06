@@ -16,6 +16,7 @@
 #include <boost/itu/x69X/x691.hpp>
 #include <boost/itu/coder/base_coder.hpp>
 #include <boost/itu/asn1/asnbase.hpp>
+#include <set>
 
 #define ASN1TST
 #define X961_TEST
@@ -169,50 +170,23 @@ typedef boost::asn1::bitstring_type bitstring_type;
 #endif
 
 
-typedef int enum_type;
-typedef std::vector<enum_type> enum_vect;
-typedef std::map<std::size_t , enum_type  > indx_enum_map;
-typedef std::map<enum_type, std::size_t> enum_indx_map;
 
-indx_enum_map  create_map(const enum_vect& ev, bool sort = true){
-    indx_enum_map rslt;
-    std::size_t ind=0;
-    for (enum_vect::const_iterator it = ev.begin(); it != ev.end(); ++it) 
-        rslt.insert(std::pair<std::size_t ,enum_type>(ind++,*it));       
-}
-
-enum_indx_map create_emap(const enum_vect& ev, bool sort = true){
-    enum_indx_map rslt;
-    std::size_t ind=0;
-    for (enum_vect::const_iterator it = ev.begin(); it != ev.end(); ++it) 
-        rslt.insert(std::pair<enum_type, std::size_t >(*it,ind++));       
-}
-
-const enum_type ARR[] = {1, 2, 3};
-const enum_type EARR[] = {4, 5, 6};
-
-template<const enum_type* TM, std::size_t N , const enum_type* TE, std::size_t E>
-struct enum_coder {
-    const enum_vect vct = std::vector<enum_type>(ARR, ARR + sizeof(ARR)/sizeof(int));
-    const enum_vect e_vct = std::vector<enum_type>(EARR, EARR + sizeof(EARR)/sizeof(int));
-    const indx_enum_map  ind_en = create_map(vct);
-    const indx_enum_map  e_ind_en = create_map(e_vct);    
-    const enum_indx_map  re_ind_en = create_emap(vct);
-    const enum_indx_map  re_e_ind_en = create_emap(e_vct);        
-    
-};
-
+ITU_T_OID( GBASIC_ENCODING_OID  , ITU_T_VARRAY(2, 1, 1, 45, 67))
+     
+//ITU_T_PER_ENUMCODER_EXT(test,  ITU_T_ARRAY(2, 1, 100, 45, -67), ITU_T_ARRAY(0))
 
 
 int main(int argc, char* argv[]) {
 
-    
+   //std::cout <<  "    "  <<  GBASIC_ENCODING_OID << std::endl;
+    //std::cout <<  "    "  <<  test__coder::from_root(45) <<  "    "  <<   test__coder::to_root(0)  <<   "   "  << test__coder::ext() << std::endl;
+
     
 #ifdef ASN1TST    
     
-  PersonnelRecord_impl::Tst_type tstvect({0x120, 0x140, 0x60, 0x121, 0x141, 0x61});
+  //PersonnelRecord_impl::Tst_type tstvect({0x120, 0x140, 0x60, 0x121, 0x141, 0x61});
     
-  PersonnelRecord PRt(PersonnelRecord_impl(tstvect, Name(Name_impl(std::string("John"), std::string("P"), std::string("Smith"))),
+  PersonnelRecord PRt(PersonnelRecord_impl(/*enum1_red, tstvect, */Name(Name_impl(std::string("John"), std::string("P"), std::string("Smith"))),
             "Director",
             EmployeeNumber(51),
             Date("19710917"),
