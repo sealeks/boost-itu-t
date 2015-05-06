@@ -137,7 +137,7 @@ namespace x680 {
         const std::string FHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n\n#endif";
         const std::string CHHEADER = "\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
         const std::string CHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n";
-        const std::string MNDCL = "    using  boost::asn1::null_type;\n"
+        const std::string MNDCL_OLD = "    using  boost::asn1::null_type;\n"
                 "    using  boost::asn1::enumerated_type;\n"
                 "    using  boost::asn1::bitstring_type;\n"
                 "    using  boost::asn1::octetstring_type;\n"
@@ -165,6 +165,8 @@ namespace x680 {
                 "    using  boost::asn1::any_type;\n"
                 "    using  boost::asn1::value_holder;\n"
                 "    using  boost::asn1::default_holder;\n";
+        
+        const std::string MNDCL  = "    ITU_T_USE_UNIVESAL_DECL;\n";
 
         std::string correct_name(std::string vl) {
             const std::set<std::string>& base = token_base();

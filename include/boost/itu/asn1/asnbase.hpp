@@ -106,6 +106,37 @@ namespace boost {\
                     return 0;\
                 }\
             } ;\
+            
+
+    #define ITU_T_USE_UNIVESAL_DECL using boost::asn1::null_type;\
+    using boost::asn1::enumerated_type;\
+    using boost::asn1::bitstring_type;\
+    using boost::asn1::octetstring_type;\
+    using boost::asn1::oid_type;\
+    using boost::asn1::reloid_type;\
+    using boost::asn1::utctime_type;\
+    using boost::asn1::gentime_type;\
+    using boost::asn1::ia5string_type;\
+    using boost::asn1::printablestring_type;\
+    using boost::asn1::visiblestring_type;\
+    using boost::asn1::visiblestring_type;\
+    using boost::asn1::numericstring_type;\
+    using boost::asn1::universalstring_type;\
+    using boost::asn1::bmpstring_type;\
+    using boost::asn1::utf8string_type;\
+    using boost::asn1::generalstring_type;\
+    using boost::asn1::graphicstring_type;\
+    using boost::asn1::t61string_type;\
+    using boost::asn1::t61string_type;\
+    using boost::asn1::videotexstring_type;\
+    using boost::asn1::objectdescriptor_type;\
+    using boost::asn1::external_type;\
+    using boost::asn1::embeded_type;\
+    using boost::asn1::characterstring_type;\
+    using boost::asn1::any_type;\
+    using boost::asn1::value_holder;\
+    using boost::asn1::default_holder;\
+
 
 #define ITU_T_TYPEDEF(regtype, type , id, cl)  typedef type  regtype;
 #define ITU_T_IMPLICIT_TYPEDEF(regtype, type , id, cl)  typedef boost::asn1::implicit_typedef< type, class _____TAGTYPE___##regtype ,  id , boost::asn1:: cl>  regtype;
