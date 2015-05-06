@@ -543,8 +543,8 @@ namespace x680 {
                 case t_BIT_STRING: return nested_init_str(tp, value_bs_str(vl), ext);
                 case t_OCTET_STRING: return nested_init_str(tp, value_os_str(vl), ext);
                 case t_ENUMERATED: return nested_init_str(tp, value_enum_str(tp, vl), ext);
-                case t_OBJECT_IDENTIFIER: return nested_init_str(tp, "boost::asn1::oid_type(" + nm + "_OID_ARR )", ext);
-                case t_RELATIVE_OID: return nested_init_str(tp, "boost::asn1::reloid_type(" + nm + "_OID_ARR )", ext);
+                case t_OBJECT_IDENTIFIER: return "#error iternal";
+                case t_RELATIVE_OID: return "#error iternal";
                 case t_NumericString:
                 case t_PrintableString:
                 case t_T61String:
@@ -1194,7 +1194,24 @@ namespace x680 {
             }
         }
 
+        void moduleout::execute_member(typeassignment_entity_ptr self) {
+            //if (self->builtin() == t_CHOICE)
+            return;
+            member_vect mmbr;
+            load_member(mmbr, self);
+            if (!mmbr.empty())
+                stream << "\n\n" << tabformat(self, 1) << "private:\n";
+            for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
+                if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
 
+                    stream << "\n";
+                    stream << tabformat(self, 1) <<
+                            member_marker_str(it->typenam, mkr, ((mkr == mk_default) ? (it->name + "__default") : ""), option_no_holder()) <<
+                            " " << it->name << "_;" << (it->afterextention ? " // after extention" : "");
+                }
+            }
+        }
 
 
 
@@ -1229,7 +1246,7 @@ namespace x680 {
             load_typedef(vct, module_);
             execute_typedef(vct, false);
 
-            if (opt_.revrs)
+            if (option_reverse_decl())
                 execute_valueassignments<basic_entity_vector::const_reverse_iterator>(module_->childs().rbegin(), module_->childs().rend());
             else
                 execute_valueassignments<basic_entity_vector::const_iterator>(module_->childs().begin(), module_->childs().end());
@@ -1247,7 +1264,7 @@ namespace x680 {
             execute_imports();
             execute_typedef(vct, true);
 
-            if (opt_.revrs)
+            if (option_reverse_decl())
                 execute_typeassignments<basic_entity_vector::const_reverse_iterator>(module_->childs().rbegin(), module_->childs().rend());
             else
                 execute_typeassignments<basic_entity_vector::const_iterator>(module_->childs().begin(), module_->childs().end());
@@ -1596,7 +1613,7 @@ namespace x680 {
                     stream << "\n";
                     if (!ischoice) {
                         switch (mkr) {
-                            case mk_none: stream << tabformat(self, 1) << "ITU_T_HOLDER" << (opt_.nohldr ? "N": "H") <<
+                            case mk_none: stream << tabformat(self, 1) << "ITU_T_HOLDER" << (option_no_holder() ? "N": "H") <<
                                 "_DECL(" << it->name << ", " << it->typenam << ");";
                                 break;
                             case mk_optional: stream << tabformat(self, 1) << "ITU_T_OPTIONAL_DECL(" << it->name <<
@@ -1795,7 +1812,7 @@ namespace x680 {
             stream << CHHEADER << "\n";
             execute_start_ns();
 
-            if (opt_.revrs)
+            if (option_reverse_decl())
                 execute_typeassignments<basic_entity_vector::const_reverse_iterator>(module_->childs().rbegin(), module_->childs().rend());
             else
                 execute_typeassignments<basic_entity_vector::const_iterator>(module_->childs().begin(), module_->childs().end());
@@ -1968,12 +1985,12 @@ namespace x680 {
                         switch (mkr) {
                             case mk_none:
                                 stream << "\n" << tabformat(scp, 2) << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
-                                        fulltype_str(self, false) << "::" << it->name << "(){ return " << (opt_.nohldr ? "" : "*") << it->name << "_ ;}\n";
+                                        fulltype_str(self, false) << "::" << it->name << "(){ return " << (option_no_holder() ? "" : "*") << it->name << "_ ;}\n";
                                 stream << "\n" << tabformat(scp, 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
-                                        fulltype_str(self, false) << "::" << it->name << "() const { return " << (opt_.nohldr ? "" : "*") << it->name << "_ ;}\n";
+                                        fulltype_str(self, false) << "::" << it->name << "() const { return " << (option_no_holder() ? "" : "*") << it->name << "_ ;}\n";
                                 stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
                                         "( const " << it->typenam << "& vl){ " << it->name << "_ =vl ;}\n";
-                                if (!opt_.nohldr) {
+                                if (!option_no_holder()) {
                                     stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
                                             "( boost::shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
                                 }
@@ -2136,7 +2153,7 @@ namespace x680 {
                                 if (it != nooblig.begin())
                                     stream << ",\n";
                                 stream << tabformat(scp, 2) << it->name << "_(";
-                                if (opt_.nohldr && (it->marker == mk_none) && (!it->afterextention))
+                                if (option_no_holder() && (it->marker == mk_none) && (!it->afterextention))
                                     stream << "*";
                                 stream << argumentname(it->name) << ")";
                             }
@@ -2268,29 +2285,7 @@ namespace x680 {
                         //  FileOUT
                         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                        fileout::fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir, bool revrs, bool nohldr)
-                        : path_(path), outdir_(outdir), global_(glb), reverse_(revrs), noholder_(nohldr), with691_(true) {
-                        }
 
-                        fileout::~fileout() {
-                        }
-
-                        void fileout::execute() {
-
-                            if (!dir_exists(path_))
-                                throw fsnsp::filesystem_error("File or directory error",
-                                    boost::system::error_code(boost::system::errc::io_error, boost::system::system_category()));
-                            if (!dir_create(path_, outdir_))
-                                throw fsnsp::filesystem_error("File or directory error",
-                                    boost::system::error_code(boost::system::errc::io_error, boost::system::system_category()));
-                            path_ = path_ + "\\" + outdir_ + "\\";
-
-                            for (basic_entity_vector::iterator it = global_->childs().begin(); it != global_->childs().end(); ++it) {
-
-                                if ((*it)->as_module())
-                                    execute_module((*it)->as_module());
-                            }
-                        }
 
                         void fileout::execute_module(module_entity_ptr self) {
 
@@ -2396,59 +2391,9 @@ namespace x680 {
 
 
 
-                        void fileout::execute_member(std::ofstream& stream, typeassignment_entity_ptr self) {
-                            //if (self->builtin() == t_CHOICE)
-                            return;
-                            member_vect mmbr;
-                            load_member(mmbr, self);
-                            if (!mmbr.empty())
-                                stream << "\n\n" << tabformat(self, 1) << "private:\n";
-                            for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
-                                tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
-                                if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
-
-                                    stream << "\n";
-                                    stream << tabformat(self, 1) <<
-                                            member_marker_str(it->typenam, mkr, ((mkr == mk_default) ? (it->name + "__default") : ""), noholder_) <<
-                                            " " << it->name << "_;" << (it->afterextention ? " // after extention" : "");
-                                }
-                            }
-                        }
-
-
-
-
-
-
-
-
-
-
-
                         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////           
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
-
-
-
-                
+ 
 
                         void fileout::execute_archive_meth_cpp(std::ofstream& stream, typeassignment_entity_ptr self) {
                             std::string ctp = "x690";

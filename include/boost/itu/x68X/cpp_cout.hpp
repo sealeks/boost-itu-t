@@ -102,6 +102,14 @@ namespace x680 {
 
             virtual void execute() = 0;
 
+            bool option_no_holder() const {
+                return opt_.nohldr;
+            }
+
+            bool option_reverse_decl() const {
+                return opt_.revrs;
+            }            
+
         protected:
 
             module_entity_ptr module_;
@@ -198,7 +206,7 @@ namespace x680 {
             void execute_imports();
 
             void mark_constraints(typeassignment_entity_ptr self);
-
+            void execute_member(typeassignment_entity_ptr self);
 
             virtual void execute_typeassignment(typeassignment_entity_ptr tpas) = 0;
             virtual void execute_valueassignment(valueassignment_entity_ptr self) = 0;
@@ -358,22 +366,8 @@ namespace x680 {
 
         /*class fileout {
 
-         public:
-
-             fileout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out", bool revrs = false, bool nohldr = false);
-             virtual ~fileout();
-
-             void execute();
 
          protected:
-
-
-             void execute_member(std::ofstream& stream, typeassignment_entity_ptr self);
-
-
-
-
-
 
 
              // ber
@@ -392,9 +386,6 @@ namespace x680 {
              void execute_archive_per_choice_cho(std::ofstream& stream, typeassignment_entity_ptr self);
              void execute_archive_per_member_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag = false);
              void execute_archive_per_member_cho(std::ofstream& stream, typeassignment_entity_ptr self);
-
-
-
 
 
 
