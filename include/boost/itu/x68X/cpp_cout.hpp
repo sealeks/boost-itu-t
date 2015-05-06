@@ -77,13 +77,14 @@ namespace x680 {
 
         struct compile_option {
 
-            compile_option(const std::string& pth, const std::string& outdr = "out", bool rev = false, bool nohld = false) :
-            path(pth), outdir(outdr), revrs(rev), nohldr(nohld) {
+            compile_option(const std::string& pth, const std::string& outdr = "out", bool rev = false, bool nohld = false, bool bermn = false) :
+            path(pth), outdir(outdr), revrs(rev), nohldr(nohld), ber_in_main(bermn) {
             }
             std::string path;
             std::string outdir;
             bool revrs;
             bool nohldr;
+            bool ber_in_main;
         };
 
 
@@ -108,7 +109,11 @@ namespace x680 {
 
             bool option_reverse_decl() const {
                 return opt_.revrs;
-            }            
+            }
+
+            bool option_ber_main() const {
+                return opt_.ber_in_main;
+            }
 
         protected:
 
@@ -133,7 +138,8 @@ namespace x680 {
 
         public:
 
-            cppout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out", bool revrs = false, bool nohldr = false);
+            cppout(global_entity_ptr glb, const std::string& path, const std::string& outdir = "out",
+                    bool revrs = false, bool nohldr = false, bool bermn = false);
 
             cppout(global_entity_ptr glb, const compile_option& opt) : global_(glb), opt_(opt) {
             };
@@ -307,16 +313,80 @@ namespace x680 {
 
 
 
+
+        //////////////////////////////////////////////////////
+        //  base_arch_out
+        //////////////////////////////////////////////////////
+
+        class base_arch_out : public moduleout {
+
+        public:
+
+            base_arch_out(const char* path, module_entity_ptr mod, const compile_option& opt) :
+            moduleout(path, mod, opt) {
+            };
+
+        protected:
+
+
+            virtual void execute_archive_meth_cpp(typeassignment_entity_ptr self, const std::string& ctp);
+
+            virtual void execute_archive_choice_out(typeassignment_entity_ptr self) = 0;
+            virtual void execute_archive_choice_input(typeassignment_entity_ptr self) = 0;
+            virtual void execute_archive_struct_out(typeassignment_entity_ptr self) = 0;
+            virtual void execute_archive_struct_input(typeassignment_entity_ptr self) = 0;
+
+        };
+
+
+
+
+
+
+        //////////////////////////////////////////////////////
+        //  base_ber_arch_out
+        //////////////////////////////////////////////////////
+
+        class base_ber_arch_out : public base_arch_out {
+
+        public:
+
+            base_ber_arch_out(const char* path, module_entity_ptr mod, const compile_option& opt) :
+            base_arch_out(path, mod, opt) {
+            };
+
+
+        protected:
+
+
+            virtual void execute_archive_choice_out(typeassignment_entity_ptr self);
+            virtual void execute_archive_choice_input(typeassignment_entity_ptr self);
+            virtual void execute_archive_struct_out(typeassignment_entity_ptr self);
+            virtual void execute_archive_struct_input(typeassignment_entity_ptr self);
+
+            void execute_archive_member(namedtypeassignment_entity_ptr self, bool afterext);
+            void execute_archive_member_chi(typeassignment_entity_ptr self, tagclass_type cls, bool notag);
+            void execute_archive_member_cho(typeassignment_entity_ptr self);
+
+        };
+
+
+
+
+
+
+
+
         //////////////////////////////////////////////////////
         //  mainhpp_out
         //////////////////////////////////////////////////////
 
-        class maincpp_out : public moduleout {
+        class maincpp_out : public base_ber_arch_out {
 
         public:
 
             maincpp_out(const char* path, module_entity_ptr mod, const compile_option& opt) :
-            moduleout(path, mod, opt) {
+            base_ber_arch_out(path, mod, opt) {
             };
 
             virtual void execute();
@@ -351,45 +421,69 @@ namespace x680 {
 
 
 
+        //////////////////////////////////////////////////////
+        //  ber_cpp_out
+        //////////////////////////////////////////////////////
+
+        class ber_cpp_out : public base_ber_arch_out {
+
+        public:
+
+            ber_cpp_out(const char* path, module_entity_ptr mod, const compile_option& opt) :
+            base_ber_arch_out(path, mod, opt) {
+            };
+
+            virtual void execute();
+
+        protected:
+
+            virtual void execute_valueassignment(valueassignment_entity_ptr self) {
+            };
+            
+            virtual void execute_typeassignment(typeassignment_entity_ptr tpas);
+
+        };
 
 
 
 
 
 
+        //////////////////////////////////////////////////////
+        //  per_cpp_out
+        //////////////////////////////////////////////////////
+
+        class per_cpp_out : public base_arch_out {
+
+        public:
+
+            per_cpp_out(const char* path, module_entity_ptr mod, const compile_option& opt) :
+            base_arch_out(path, mod, opt) {
+            };
+
+            virtual void execute();
+
+        protected:
+
+            virtual void execute_valueassignment(valueassignment_entity_ptr self) {
+            };
+            
+            virtual void execute_typeassignment(typeassignment_entity_ptr tpas);
+
+
+            virtual void execute_archive_choice_out(typeassignment_entity_ptr self);
+            virtual void execute_archive_choice_input(typeassignment_entity_ptr self);
+            virtual void execute_archive_struct_out(typeassignment_entity_ptr self);
+            virtual void execute_archive_struct_input(typeassignment_entity_ptr self);
+
+            void execute_archive_member(namedtypeassignment_entity_ptr self, bool afterext = false);
+            void execute_archive_member_chi(typeassignment_entity_ptr self, tagclass_type cls, bool notag = false);
+            void execute_archive_member_cho(typeassignment_entity_ptr self);
+
+        };
 
 
 
-
-
-
-
-        /*class fileout {
-
-
-         protected:
-
-
-             // ber
-             void execute_archive_ber_struct(std::ofstream& stream, typeassignment_entity_ptr self);
-             void execute_archive_ber_member(std::ofstream& stream, namedtypeassignment_entity_ptr self, bool afterext = false);
-             void execute_archive_ber_choice_chi(std::ofstream& stream, typeassignment_entity_ptr self);
-             void execute_archive_ber_choice_cho(std::ofstream& stream, typeassignment_entity_ptr self);
-             void execute_archive_ber_member_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag = false);
-             void execute_archive_ber_member_cho(std::ofstream& stream, typeassignment_entity_ptr self);
-
-             // per
-             void execute_archive_per_struct_in(std::ofstream& stream, typeassignment_entity_ptr self);
-             void execute_archive_per_struct_out(std::ofstream& stream, typeassignment_entity_ptr self);
-             void execute_archive_per_member(std::ofstream& stream, namedtypeassignment_entity_ptr self, bool afterext = false);
-             void execute_archive_per_choice_chi(std::ofstream& stream, typeassignment_entity_ptr self);
-             void execute_archive_per_choice_cho(std::ofstream& stream, typeassignment_entity_ptr self);
-             void execute_archive_per_member_chi(std::ofstream& stream, typeassignment_entity_ptr self, tagclass_type cls, bool notag = false);
-             void execute_archive_per_member_cho(std::ofstream& stream, typeassignment_entity_ptr self);
-
-
-
-         };*/
 
     }
 

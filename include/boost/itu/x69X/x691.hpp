@@ -26,6 +26,8 @@
 #define ITU_T_BIND_NUM_CONSTRE(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx, true);
 #define ITU_T_BIND_NUM_SIMICONS(var, mn) boost::asn1::bind_constraints(arch, var, mn, 0, false);
 #define ITU_T_BIND_NUM_SIMICONE(var, mn) boost::asn1::bind_constraints(arch, var, mn, 0, true);
+#define ITU_T_BIND_NUM_SNGLCONS(var, mn) boost::asn1::bind_constraints(arch, var, mn, mn, false);
+#define ITU_T_BIND_NUM_SNGLCONE(var, mn) boost::asn1::bind_constraints(arch, var, mn, mn, true);
 
 #define ITU_T_BIND_SIZE_RNGCONSTRS(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx, false);
 #define ITU_T_BIND_SIZE_RNGCONSTRE(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx, true);
@@ -39,7 +41,8 @@
 #define ITU_T_REGISTRATE_NUM_CONSTRE(var, tp, mn, mx) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mx , true>  var;
 #define ITU_T_REGISTRATE_NUM_SIMICONS(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , 0 , false>  var;
 #define ITU_T_REGISTRATE_NUM_SIMICONE(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , 0 , true>  var;
-
+#define ITU_T_REGISTRATE_NUM_SNGLCONS(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mn , false>  var;
+#define ITU_T_REGISTRATE_NUM_SNGLCONE(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mn , true>  var;
 
 #define ITU_T_BIND_EX_CONSTRS(tp, el, var) boost::asn1::bind_sizeconstraints_ext< tp, el > (arch, var, 0, 0, false);
 #define ITU_T_BIND_EXSIZE_RNGCONSTRS(tp, el, var, mn, mx) boost::asn1::bind_sizeconstraints_ext< tp, el > (arch, var, mn, mx, false);
