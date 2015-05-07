@@ -14,7 +14,7 @@
 
 namespace Test1 {
 
-ITU_T_USE_UNIVESAL_DECL;
+    ITU_T_USE_UNIVESAL_DECL;
 
 
         struct PersonnelRecord_impl;

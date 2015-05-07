@@ -11,21 +11,29 @@ namespace Test1 {
 
 
         template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::output_coder& arch){
+
+            ITU_T_OPTIONAL_DECL_PER =  ITU_T_OPTIONAL_PER(children_);
+
+            ITU_T_OPTIONAL_SET_PER;
+
             ITU_T_BIND_PER(*name_);
-            ITU_T_BIND_PER(*title_);
             ITU_T_BIND_PER(*number_);
+            ITU_T_BIND_PER(*title_);
             ITU_T_BIND_PER(*dateOfHire_);
             ITU_T_BIND_PER(*nameOfSpouse_);
             ITU_T_BIND_PER(children_);
         }
 
         template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::input_coder& arch){
+
+            ITU_T_OPTIONAL_GET_PER(1 );
+
             ITU_T_BIND_PER(*name_);
-            ITU_T_BIND_PER(*title_);
             ITU_T_BIND_PER(*number_);
+            ITU_T_BIND_PER(*title_);
             ITU_T_BIND_PER(*dateOfHire_);
             ITU_T_BIND_PER(*nameOfSpouse_);
-            ITU_T_BIND_PER(children_);
+            ITU_T_OPTIONAL_CHECK_PER(0)  ITU_T_BIND_PER(children_);
         }
 
 
