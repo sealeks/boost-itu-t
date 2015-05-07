@@ -2466,13 +2466,49 @@ namespace x680 {
 
         void per_cpp_out::execute_archive_struct_out(typeassignment_entity_ptr self) {
             basic_entity_ptr scp;
-            namedtypeassignment_entity_vct root = self->child_root_1();
-            for (namedtypeassignment_entity_vct::iterator it = root.begin(); it != root.end(); ++it) {
+            namedtypeassignment_entity_vct root1 = self->child_root_1();
+            namedtypeassignment_entity_vct root2 = self->child_root_2();
+            namedtypeassignment_entity_vct root = root1;
+            root.insert(root.end(), root2.begin(), root2.end());            
+            std::size_t opt_count = struct_optional_count(root);
+            //std::size_t opt_it = 0;
+            //if (self->)
+            if (opt_count) {
+                namedtypeassignment_entity_vct optels = struct_optional_element(root);
+                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_DECL_PER = ";
+                for (namedtypeassignment_entity_vct::iterator it = optels.begin(); it != optels.end(); ++it) {
+                    if (it !=  optels.begin())
+                        stream << " + ";
+                    stream << " ITU_T_OPTIONAL_PER(" << (*it)->name() << "_)";
+                }
+                stream << ";\n";
+                stream << "\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_SET_PER;";
+                stream << "\n";
+            }
+            for (namedtypeassignment_entity_vct::iterator it = root1.begin(); it != root1.end(); ++it) {
                 if ((*it)->type()) {
-                    if (is_named((*it)->marker()))
-                        execute_archive_member( *it, false);
+                    if (is_named((*it)->marker())){
+                        //bool is_opt = is_optional_or_default((*it)->marker());
+                        execute_archive_member(*it/*, is_opt, is_opt ?  opt_it : 0*/);
+                        /*if (is_opt)
+                            opt_it++;*/
+                    }
                 }
             }
+            ///  Some for extention
+
+            if (!root2.empty()) {
+                for (namedtypeassignment_entity_vct::iterator it = root2.begin(); it != root2.end(); ++it) {
+                    if ((*it)->type()) {
+                        if (is_named((*it)->marker())) {
+                            //bool is_opt = is_optional_or_default((*it)->marker());
+                            execute_archive_member(*it/*, is_opt, is_opt ? opt_it : 0*/);
+                            /*if (is_opt)
+                                opt_it++;*/
+                        }
+                    }
+                }
+            }            
             stream << "\n";
             stream << tabformat(scp, 2) << "}";
             stream << "\n";
@@ -2482,13 +2518,38 @@ namespace x680 {
 
         void per_cpp_out::execute_archive_struct_input(typeassignment_entity_ptr self) {
             basic_entity_ptr scp;
-            namedtypeassignment_entity_vct root = self->child_root_1();
-            for (namedtypeassignment_entity_vct::iterator it = root.begin(); it != root.end(); ++it) {
+            namedtypeassignment_entity_vct root1 = self->child_root_1();
+            namedtypeassignment_entity_vct root2 = self->child_root_2();
+            namedtypeassignment_entity_vct root = root1;
+            root.insert(root.end(), root2.begin(), root2.end());                      
+            std::size_t opt_count = struct_optional_count(root);
+            std::size_t opt_it = 0;
+            if (opt_count)
+                stream << "\n\n" << tabformat(scp, 3)  << "ITU_T_OPTIONAL_GET_PER("  << to_string(opt_count)   << " );\n";
+            for (namedtypeassignment_entity_vct::iterator it = root1.begin(); it != root1.end(); ++it) {
                 if ((*it)->type()) {
-                    if (is_named((*it)->marker()))
-                        execute_archive_member( *it, false);
+                    if (is_named((*it)->marker())){
+                        bool is_opt = is_optional_or_default((*it)->marker());
+                        execute_archive_member(*it, is_opt, is_opt ?  opt_it : 0);
+                        if (is_opt)
+                            opt_it++;
+                    }
                 }
             }
+            ///  Some for extention
+            
+            if (!root2.empty()) {
+                for (namedtypeassignment_entity_vct::iterator it = root2.begin(); it != root2.end(); ++it) {
+                    if ((*it)->type()) {
+                        if (is_named((*it)->marker())) {
+                            bool is_opt = is_optional_or_default((*it)->marker());
+                            execute_archive_member(*it, is_opt, is_opt ? opt_it : 0);
+                            if (is_opt)
+                                opt_it++;
+                        }
+                    }
+                }
+            }            
             stream << "\n";
             stream << tabformat(scp, 2) << "}";
             stream << "\n";
@@ -2549,7 +2610,10 @@ namespace x680 {
             basic_entity_ptr scp;
             if (self->type()) {
                 stream << "\n";
-                stream << tabformat(scp, 3) << archive_member_per_str(self, nameconvert(self->name()) + "_") << ";";
+                stream << tabformat(scp, 3);
+                if (opt)
+                    stream << "ITU_T_OPTIONAL_CHECK_PER(" << to_string(optnum) << ")  ";
+                stream << archive_member_per_str(self, nameconvert(self->name()) + "_") << ";";
             }
         }
 

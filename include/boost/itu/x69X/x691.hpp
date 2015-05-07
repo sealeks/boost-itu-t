@@ -18,6 +18,15 @@
 #include <boost/itu/detail/error.hpp>
 #include <boost/itu/x69X/x69x.hpp>
 
+#define ITU_T_EXTENTION_GET_PER  boost::asn1::bitstring_type __has_extention__ =  arch.get_pop_bmp(1).bit(0);
+#define ITU_T_EXTENTION_SET_PER  boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(false); arch.add_bitmap(__extention_bmp__);
+
+#define ITU_T_OPTIONAL_GET_PER(sz)  boost::asn1::bitstring_type __optional_bmp__ =  arch.get_pop_bmp(sz);
+#define ITU_T_OPTIONAL_CHECK_PER(num)   if (__optional_bmp__.bit( num ))
+#define ITU_T_OPTIONAL_DECL_PER  boost::asn1::bitstring_type __optional_bmp__ 
+#define ITU_T_OPTIONAL_PER(name)  boost::asn1::bitstring_type(static_cast<bool>(name))
+#define ITU_T_OPTIONAL_SET_PER arch.add_bitmap(__optional_bmp__);
+
 
 #define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
 #define ITU_T_BIND_PER_ENUM(var, nm) boost::asn1::bind_per_enum< nm ## __coder >(arch, var);
