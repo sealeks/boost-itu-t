@@ -617,6 +617,8 @@ namespace x680 {
 
         valueassignment_entity_ptr as_valueassigment();
 
+        valueassignment_entity_ptr as_valueassigment(basic_entity_vector::iterator it);
+
         valuesetassignment_entity_ptr as_valuesetassigment();
 
         classassignment_entity_ptr as_classassigment();
@@ -628,6 +630,18 @@ namespace x680 {
         field_entity_ptr as_classfield();
 
         extention_entity_ptr as_extention();
+
+        //////////////
+
+        type_atom_ptr extract_type();
+
+        type_atom_ptr extract_type(basic_entity_vector::iterator it);
+
+        value_atom_ptr extract_value();
+
+        value_atom_ptr extract_value(basic_entity_vector::iterator it);
+
+        /////////////       
 
         std::string source_throw();
 

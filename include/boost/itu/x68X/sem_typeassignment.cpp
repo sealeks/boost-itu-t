@@ -670,8 +670,8 @@ namespace x680 {
         boost::shared_ptr<range_constraints<T> > rsltc;
         if (can_effective_constraint<T>(vl)) {
             if ((vl->isrefferrence()) && (vl->reff())) {
-                if ((vl->reff()->as_typeassigment()) && (vl->reff()->as_typeassigment()->type()))
-                    rslt = vl->reff()->as_typeassigment()->type()->effective_constraint<T>();
+                if ((vl->reff()->extract_type()))
+                    rslt = vl->reff()->extract_type()->effective_constraint<T>();
             }
             if (vl->has_constraint())
                 rsltc = build_constraints<T>(vl->constraints(), vl->can_alphabet_constraints());
@@ -848,8 +848,8 @@ namespace x680 {
             objectassignment_entity_set oset = objectsetassignment_->objectset()->get_unicalobjects();
             for (objectassignment_entity_set::const_iterator it = oset.begin(); it != oset.end(); ++it) {
                 assignment_entity_ptr fndfield = (*it)->find_component(unicalfield());
-                if (fndfield && (fndfield->as_valueassigment()) && (fndfield->as_valueassigment()->value()))
-                    rslt.push_back(fndfield->as_valueassigment()->value());
+                if (fndfield && (fndfield->extract_value()))
+                    rslt.push_back(fndfield->extract_value());
             }
         }
         return rslt;
@@ -1697,25 +1697,62 @@ namespace x680 {
     }
 
     namedtypeassignment_entity_vct typeassignment_entity::canonicalorder_root() {
-        namedtypeassignment_entity_vct tmp;
+        namedtypeassignment_entity_vct rslt;
         for (basic_entity_vector::iterator it = childs().begin(); it != first_extention(); ++it) {
             if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
-                namedtypeassignment_entity_ptr tmpel = (*it)->as_typeassigment()->as_named();
-                if (is_named(tmpel->marker()))
-                    tmp.push_back(tmpel);
+                namedtypeassignment_entity_ptr rsltel = (*it)->as_typeassigment()->as_named();
+                if (is_named(rsltel->marker()))
+                    rslt.push_back(rsltel);
             }
         }
-        for (basic_entity_vector::iterator it = second_extention(); it != childs().end(); ++it) {
-            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
-                namedtypeassignment_entity_ptr tmpel = (*it)->as_typeassigment()->as_named();
-                if (is_named(tmpel->marker()))
-                    tmp.push_back(tmpel);
-            }
-        }
-        canonical_sort(tmp);
-        return tmp;
+        canonical_sort(rslt);
+        return rslt;
     }
 
+    bool typeassignment_entity::single_child_root() {
+        basic_entity_vector::iterator fit = first_extention();
+        basic_entity_vector::iterator sit = second_extention();
+        return ((fit == childs().end()) || ((fit != childs().end()) && (sit == childs().end())));
+    }
+
+    namedtypeassignment_entity_vct typeassignment_entity::child_root_1() {
+        namedtypeassignment_entity_vct rslt;
+        for (basic_entity_vector::iterator it = childs().begin(); it != first_extention(); ++it) {
+            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                namedtypeassignment_entity_ptr rsltel = (*it)->as_typeassigment()->as_named();
+                if (is_named(rsltel->marker()))
+                    rslt.push_back(rsltel);
+            }
+        }
+        if (builtin() == t_SET)
+            canonical_sort(rslt);
+        return rslt;
+    }
+
+    namedtypeassignment_entity_vct typeassignment_entity::child_root_2() {
+        namedtypeassignment_entity_vct rslt;
+        for (basic_entity_vector::iterator it = second_extention(); it != childs().end(); ++it) {
+            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                namedtypeassignment_entity_ptr rsltel = (*it)->as_typeassigment()->as_named();
+                if (is_named(rsltel->marker()))
+                    rslt.push_back(rsltel);
+            }
+        }
+        return rslt;
+    }
+
+    namedtypeassignment_entity_vct typeassignment_entity::extention_group(std::size_t num) {
+        namedtypeassignment_entity_vct rslt;
+        for (basic_entity_vector::iterator it = childs().begin(); it != childs().end(); ++it) {
+            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                namedtypeassignment_entity_ptr rsltel = (*it)->as_typeassigment()->as_named();
+                if ((is_named(rsltel->marker())) && (rsltel->extentionnum()) && (*(rsltel->extentionnum()) == num))
+                    rslt.push_back(rsltel);
+            }
+        }
+        return rslt;
+    }
+    
     void typeassignment_entity::resolve(basic_atom_ptr holder) {
         unicalelerror_throw(childs());
         assignment_entity::resolve(holder);

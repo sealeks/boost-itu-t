@@ -261,6 +261,10 @@ namespace x680 {
         return kind_ == et_Value ? boost::static_pointer_cast<valueassignment_entity> (self()) : valueassignment_entity_ptr();
     }
 
+    valueassignment_entity_ptr basic_entity::as_valueassigment(basic_entity_vector::iterator it) {
+        return (*it) ? ((*it)->as_valueassigment()) : valueassignment_entity_ptr();
+    }
+
     valuesetassignment_entity_ptr basic_entity::as_valuesetassigment() {
         return kind_ == et_ValueSet ? boost::static_pointer_cast<valuesetassignment_entity> (self()) : valuesetassignment_entity_ptr();
     }
@@ -283,6 +287,22 @@ namespace x680 {
 
     extention_entity_ptr basic_entity::as_extention() {
         return kind_ == et_Extention ? boost::static_pointer_cast<extention_entity> (self()) : extention_entity_ptr();
+    }
+
+    type_atom_ptr basic_entity::extract_type() {
+        return as_typeassigment() ? (as_typeassigment()->type()) : (type_atom_ptr());
+    }
+
+    type_atom_ptr basic_entity::extract_type(basic_entity_vector::iterator it) {
+        return (*it) ? ((*it)->extract_type()) : (type_atom_ptr());
+    }
+
+    value_atom_ptr basic_entity::extract_value() {
+        return as_valueassigment() ? (as_valueassigment()->value()) : (value_atom_ptr());
+    }
+
+    value_atom_ptr basic_entity::extract_value(basic_entity_vector::iterator it) {
+        return (*it) ? ((*it)->extract_value()) : (value_atom_ptr());
     }
 
     module_entity_ptr basic_entity::moduleref() {

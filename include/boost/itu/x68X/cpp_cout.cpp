@@ -165,8 +165,8 @@ namespace x680 {
                 "    using  boost::asn1::any_type;\n"
                 "    using  boost::asn1::value_holder;\n"
                 "    using  boost::asn1::default_holder;\n";
-        
-        const std::string MNDCL  = "    ITU_T_USE_UNIVESAL_DECL;\n";
+
+        const std::string MNDCL = "    ITU_T_USE_UNIVESAL_DECL;\n";
 
         std::string correct_name(std::string vl) {
             const std::set<std::string>& base = token_base();
@@ -745,94 +745,6 @@ namespace x680 {
             return nm;
         }
 
-        std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext) {
-            tagmarker_type dfltopt = afterext ? mk_optional : self->marker();
-            if ((dfltopt == mk_default) && (self->isstruct_of()))
-                dfltopt = mk_optional;
-            if ((self->isdefined_choice())) {
-                if (self->tag()) {
-                    switch (self->tag()->_class()) {
-                        case tcl_application: return "ITU_T_CHOICE_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        case tcl_universal: return "ITU_T_CHOICE_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        case tcl_private: return "ITU_T_CHOICE_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        default: return "ITU_T_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                    }
-                } else
-                    return "ITU_T_BIND_CHOICE(" + name_arch(name, dfltopt) + ")";
-            } else {
-                if (self->tag()) {
-                    if (self->tag()->rule() == implicit_tags) {
-                        switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_T_IMPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_T_IMPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_T_IMPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_T_IMPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        }
-                    } else {
-                        switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_T_EXPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_T_EXPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_T_EXPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_T_EXPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        }
-                    }
-                } else
-                    return "ITU_T_BIND_TAG(" + name_arch(name, dfltopt) + ")";
-            }
-            return "";
-        }
-
-        static std::string archive_member_per_constr(const std::string& name, tagmarker_type dfltopt, size_constraints_ptr sizeconst, integer_constraints_ptr intconstr, bool alpha) {
-            if (sizeconst) {
-                size_constraints::range_type main_size_cnstr = sizeconst->to_per().main();
-                bool ext_size_cnstr = sizeconst->to_per().has_extention();
-                if (intconstr) {
-
-                } else if (alpha) {
-
-                } else {
-                    if (main_size_cnstr.single())
-                        return "ITU_T_BIND_SIZE_SNGLCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
-                    else if (main_size_cnstr.right_semi())
-                        return "ITU_T_BIND_SIZE_SEMICONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
-                    else
-                        return "ITU_T_BIND_SIZE_RNGCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ", " +
-                        std::string(main_size_cnstr.right_ptr() ? to_string(main_size_cnstr.right()) : std::string(" ??? ")) + ")";
-                }
-            } else if (intconstr) {
-                integer_constraints::range_type main_int_cnstr = intconstr->to_per().main();
-                bool ext_int_cnstr = intconstr->to_per().has_extention();
-                if (main_int_cnstr.single())
-                    return "ITU_T_BIND_NUM_SNGLCON" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) + ")";
-                else if (main_int_cnstr.right_semi())
-                    return "ITU_T_BIND_NUM_SIMICON" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) + ")";
-                else
-                    return "ITU_T_BIND_NUM_CONSTR" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) + ", " +
-                    std::string(main_int_cnstr.right_ptr() ? to_string(main_int_cnstr.right()) : std::string(" ??? ")) + ")";
-            }
-            return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
-        }
-
-        std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext) {
-            tagmarker_type dfltopt = afterext ? mk_optional : self->marker();
-            if ((dfltopt == mk_default) && (self->isstruct_of()))
-                dfltopt = mk_optional;
-            if ((self->type()) && (self->type()->can_per_constraints())) {
-                type_atom_ptr tmp = self->type();
-                size_constraints_ptr szconstr = tmp->size_constraint() ? tmp->size_constraint() : size_constraints_ptr();
-                integer_constraints_ptr intconstr = tmp->integer_constraint() ? tmp->integer_constraint() : integer_constraints_ptr();
-                bool alpha = (((tmp->char8_constraint())) || (tmp->tuple_constraint()) || (tmp->quadruple_constraint()));
-                return archive_member_per_constr(name, dfltopt, szconstr, intconstr, alpha);
-            }
-            return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
-        }
-
         std::string struct_meth_str(typeassignment_entity_ptr self, const std::string& tp) {
 
             return "\n" + tabformat(basic_entity_ptr(), 2) + "template<> void " +
@@ -938,7 +850,7 @@ namespace x680 {
                         ber->execute();
                     }
                     moduleout_ptr per = generate<per_cpp_out>((*it)->as_module(), "_per", "cpp");
-                    per->execute();                    
+                    per->execute();
                     //execute_module((*it)->as_module());
                 }
             }
@@ -1097,22 +1009,19 @@ namespace x680 {
         void moduleout::load_member(member_vect& vct, typeassignment_entity_ptr self) {
             bool afterextention = false;
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if ((tpas) && (tpas->as_named())) {
-                    namedtypeassignment_entity_ptr named = tpas->as_named();
-                    tagmarker_type mkr = named->marker();
-                    if (named->type()) {
-                        if ((mkr == mk_default) && (!default_supported(named)))
-                            mkr = mk_optional;
-                        if (is_named(mkr))
-                            vct.push_back(member_atom(mkr, nameconvert(named->name()), fromtype_str(named),
-                                ((self->builtin() == t_CHOICE) ? (type_str(self) + "_" + nameconvert(named->name())) : ""),
-                                named, named->istextualy_choice(), afterextention));
-                    }
-                    if (mkr == mk_extention) {
-                        vct.push_back(member_atom());
-                        afterextention = !afterextention;
-                    }
+                namedtypeassignment_entity_ptr named = (*it)->as_named_typeassigment();
+                tagmarker_type mkr = named->marker();
+                if (named->type()) {
+                    if ((mkr == mk_default) && (!default_supported(named)))
+                        mkr = mk_optional;
+                    if (is_named(mkr))
+                        vct.push_back(member_atom(mkr, nameconvert(named->name()), fromtype_str(named),
+                            ((self->builtin() == t_CHOICE) ? (type_str(self) + "_" + nameconvert(named->name())) : ""),
+                            named, named->istextualy_choice(), afterextention));
+                }
+                if (mkr == mk_extention) {
+                    vct.push_back(member_atom());
+                    afterextention = !afterextention;
                 }
                 if ((*it)->as_extention()) {
 
@@ -1911,6 +1820,43 @@ namespace x680 {
             execute_archive_struct_out(self);
         }
 
+        std::string base_ber_arch_out::archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext) {
+            tagmarker_type dfltopt = afterext ? mk_optional : self->marker();
+            if ((dfltopt == mk_default) && (self->isstruct_of()))
+                dfltopt = mk_optional;
+            if ((self->isdefined_choice())) {
+                if (self->tag()) {
+                    switch (self->tag()->_class()) {
+                        case tcl_application: return "ITU_T_CHOICE_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        case tcl_universal: return "ITU_T_CHOICE_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        case tcl_private: return "ITU_T_CHOICE_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        default: return "ITU_T_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                    }
+                } else
+                    return "ITU_T_BIND_CHOICE(" + name_arch(name, dfltopt) + ")";
+            } else {
+                if (self->tag()) {
+                    if (self->tag()->rule() == implicit_tags) {
+                        switch (self->tag()->_class()) {
+                            case tcl_application: return "ITU_T_IMPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_universal: return "ITU_T_IMPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_private: return "ITU_T_IMPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            default: return "ITU_T_IMPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        }
+                    } else {
+                        switch (self->tag()->_class()) {
+                            case tcl_application: return "ITU_T_EXPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_universal: return "ITU_T_EXPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_private: return "ITU_T_EXPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            default: return "ITU_T_EXPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                        }
+                    }
+                } else
+                    return "ITU_T_BIND_TAG(" + name_arch(name, dfltopt) + ")";
+            }
+            return "";
+        }
+
         void base_ber_arch_out::execute_archive_member(namedtypeassignment_entity_ptr self, bool afterext) {
             basic_entity_ptr scp;
             if (self->type()) {
@@ -2496,54 +2442,51 @@ namespace x680 {
             stream << tabformat(scp, 2) << "}";
             stream << "\n";
         }
+        
+        
+        static namedtypeassignment_entity_vct struct_optional_element(const namedtypeassignment_entity_vct& vl){
+            namedtypeassignment_entity_vct rslt;
+            for (namedtypeassignment_entity_vct::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+                if (((*it)->as_named_typeassigment()) &&
+                        (is_optional_or_default((*it)->as_named_typeassigment()->marker())))
+                    rslt.push_back((*it));
+            }           
+            return rslt;
+        }        
+        
+        static std::size_t struct_optional_count(const namedtypeassignment_entity_vct& vl){
+            std::size_t rslt=0;
+            for (namedtypeassignment_entity_vct::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+                if (((*it)->as_named_typeassigment()) &&
+                        (is_optional_or_default((*it)->as_named_typeassigment()->marker())))
+                    rslt++;
+            }           
+            return rslt;
+        }
 
         void per_cpp_out::execute_archive_struct_out(typeassignment_entity_ptr self) {
             basic_entity_ptr scp;
-            bool afterext = false;
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if ((tpas) && (tpas->as_named())) {
-                    namedtypeassignment_entity_ptr named = tpas->as_named();
-                    tagmarker_type mkr = named->marker();
-                    if (named->type()) {
-                        if (is_named(mkr))
-                            execute_archive_member(named, afterext);
-                    } else if (mkr == mk_extention) {
-                        afterext = !afterext;
-                        stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";
-                    }
-                }
-
-                if ((*it)->as_extention()) {
-                    afterext = !afterext;
-                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";
+            namedtypeassignment_entity_vct root = self->child_root_1();
+            for (namedtypeassignment_entity_vct::iterator it = root.begin(); it != root.end(); ++it) {
+                if ((*it)->type()) {
+                    if (is_named((*it)->marker()))
+                        execute_archive_member( *it, false);
                 }
             }
             stream << "\n";
             stream << tabformat(scp, 2) << "}";
             stream << "\n";
         }
+        
+        
 
         void per_cpp_out::execute_archive_struct_input(typeassignment_entity_ptr self) {
             basic_entity_ptr scp;
-            bool afterext = false;
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if ((tpas) && (tpas->as_named())) {
-                    namedtypeassignment_entity_ptr named = tpas->as_named();
-                    tagmarker_type mkr = named->marker();
-                    if (named->type()) {
-                        if (is_named(mkr))
-                            execute_archive_member(named, afterext);
-                    } else if (mkr == mk_extention) {
-                        afterext = !afterext;
-                        stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";
-                    }
-                }
-
-                if ((*it)->as_extention()) {
-                    afterext = !afterext;
-                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";
+            namedtypeassignment_entity_vct root = self->child_root_1();
+            for (namedtypeassignment_entity_vct::iterator it = root.begin(); it != root.end(); ++it) {
+                if ((*it)->type()) {
+                    if (is_named((*it)->marker()))
+                        execute_archive_member( *it, false);
                 }
             }
             stream << "\n";
@@ -2551,11 +2494,62 @@ namespace x680 {
             stream << "\n";
         }
 
-        void per_cpp_out::execute_archive_member(namedtypeassignment_entity_ptr self, bool afterext) {
+        static std::string archive_member_per_constr(const std::string& name, tagmarker_type dfltopt, size_constraints_ptr sizeconst, integer_constraints_ptr intconstr, bool alpha) {
+            if (sizeconst) {
+                size_constraints::range_type main_size_cnstr = sizeconst->to_per().main();
+                bool ext_size_cnstr = sizeconst->to_per().has_extention();
+                if (intconstr) {
+
+                } else if (alpha) {
+
+                } else {
+                    if (main_size_cnstr.single())
+                        return "ITU_T_BIND_SIZE_SNGLCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
+                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
+                    else if (main_size_cnstr.right_semi())
+                        return "ITU_T_BIND_SIZE_SEMICONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
+                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
+                    else
+                        return "ITU_T_BIND_SIZE_RNGCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
+                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ", " +
+                        std::string(main_size_cnstr.right_ptr() ? to_string(main_size_cnstr.right()) : std::string(" ??? ")) + ")";
+                }
+            } else if (intconstr) {
+                integer_constraints::range_type main_int_cnstr = intconstr->to_per().main();
+                bool ext_int_cnstr = intconstr->to_per().has_extention();
+                if (main_int_cnstr.single())
+                    return "ITU_T_BIND_NUM_SNGLCON" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
+                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) + ")";
+                else if (main_int_cnstr.right_semi())
+                    return "ITU_T_BIND_NUM_SIMICON" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
+                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) + ")";
+                else
+                    return "ITU_T_BIND_NUM_CONSTR" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
+                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) + ", " +
+                    std::string(main_int_cnstr.right_ptr() ? to_string(main_int_cnstr.right()) : std::string(" ??? ")) + ")";
+            }
+            return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
+        }
+
+        std::string per_cpp_out::archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name) {
+            tagmarker_type dfltopt = self->marker();
+            if ((dfltopt == mk_default) && (self->isstruct_of()))
+                dfltopt = mk_optional;
+            if ((self->type()) && (self->type()->can_per_constraints())) {
+                type_atom_ptr tmp = self->type();
+                size_constraints_ptr szconstr = tmp->size_constraint() ? tmp->size_constraint() : size_constraints_ptr();
+                integer_constraints_ptr intconstr = tmp->integer_constraint() ? tmp->integer_constraint() : integer_constraints_ptr();
+                bool alpha = (((tmp->char8_constraint())) || (tmp->tuple_constraint()) || (tmp->quadruple_constraint()));
+                return archive_member_per_constr(name, dfltopt, szconstr, intconstr, alpha);
+            }
+            return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
+        }
+
+        void per_cpp_out::execute_archive_member(namedtypeassignment_entity_ptr self, bool opt, std::size_t optnum) {
             basic_entity_ptr scp;
             if (self->type()) {
                 stream << "\n";
-                stream << tabformat(scp, 3) << archive_member_per_str(self, nameconvert(self->name()) + "_", afterext) << ";";
+                stream << tabformat(scp, 3) << archive_member_per_str(self, nameconvert(self->name()) + "_") << ";";
             }
         }
 

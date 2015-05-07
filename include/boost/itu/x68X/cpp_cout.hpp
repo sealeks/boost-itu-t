@@ -61,9 +61,7 @@ namespace x680 {
         std::string seqof_str(typeassignment_entity_ptr self, const std::string& name);
         std::string choice_enum_str(typeassignment_entity_ptr self, basic_entity_ptr sub);
         std::string tagged_str(tagged_ptr self);
-        std::string tagged_class_str(tagged_ptr self);
-        std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext = false);
-        std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext = false);
+        std::string tagged_class_str(tagged_ptr self);      
         std::string struct_meth_str(typeassignment_entity_ptr self, const std::string& tp);
         std::string nested_init_str(type_atom_ptr self, const std::string& nm, bool ext = false);
 
@@ -364,6 +362,7 @@ namespace x680 {
             virtual void execute_archive_struct_out(typeassignment_entity_ptr self);
             virtual void execute_archive_struct_input(typeassignment_entity_ptr self);
 
+            std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext = false);            
             void execute_archive_member(namedtypeassignment_entity_ptr self, bool afterext);
             void execute_archive_member_chi(typeassignment_entity_ptr self, tagclass_type cls, bool notag);
             void execute_archive_member_cho(typeassignment_entity_ptr self);
@@ -476,7 +475,8 @@ namespace x680 {
             virtual void execute_archive_struct_out(typeassignment_entity_ptr self);
             virtual void execute_archive_struct_input(typeassignment_entity_ptr self);
 
-            void execute_archive_member(namedtypeassignment_entity_ptr self, bool afterext = false);
+            std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name);            
+            void execute_archive_member(namedtypeassignment_entity_ptr self, bool opt = false, std::size_t optnum=0);
             void execute_archive_member_chi(typeassignment_entity_ptr self, tagclass_type cls, bool notag = false);
             void execute_archive_member_cho(typeassignment_entity_ptr self);
 

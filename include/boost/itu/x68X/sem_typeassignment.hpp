@@ -760,8 +760,15 @@ namespace x680 {
         namedtypeassignment_entity_ptr as_named();
         
         namedtypeassignment_entity_vct canonicalorder_root() ;
+        
+        bool single_child_root();         
 
-
+        namedtypeassignment_entity_vct child_root_1() ;
+        
+        namedtypeassignment_entity_vct child_root_2() ;        
+        
+        namedtypeassignment_entity_vct extention_group(std::size_t num);    
+        
         /////        
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
