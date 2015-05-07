@@ -2410,13 +2410,35 @@ namespace x680 {
             }
 
         }
+        
+        void per_cpp_out::execute_archive_choice_out(typeassignment_entity_ptr self) {
+
+            basic_entity_ptr scp;
+            
+            if ((self->type()) && (self->type()->has_extention())) {
+                stream << "\n\n" << tabformat(scp, 3)  << "ITU_T_EXTENTION_SET_PER;";
+            }
+            
+            stream << "\n" << tabformat(scp, 3) <<
+                    "switch(type()){";
+            execute_archive_member_cho(self);
+            stream << "\n" << tabformat(scp, 3) << "}";
+            stream << "\n";
+            stream << tabformat(scp, 2) << "}";
+            stream << "\n";
+        }        
 
         void per_cpp_out::execute_archive_choice_input(typeassignment_entity_ptr self) {
 
             basic_entity_ptr scp;
+            
+            if ((self->type()) && (self->type()->has_extention())) {
+                stream << "\n\n" << tabformat(scp, 3)  << "ITU_T_EXTENTION_GET_PER;";
+            }            
+            
             stream << "\n" << tabformat(scp, 3) <<
                     "int __tag_id__ =arch.test_id();";
-            stream << "\n" << tabformat(scp, 3) <<
+            /*stream << "\n" << tabformat(scp, 3) <<
                     "switch(arch.test_class()){";
 
             execute_archive_member_chi(self, tcl_universal, false);
@@ -2426,22 +2448,12 @@ namespace x680 {
             execute_archive_member_chi(self, tcl_universal, true);
 
             stream << "\n" << tabformat(scp, 3) << "}";
-            stream << "\n";
+            stream << "\n";*/
             stream << tabformat(scp, 2) << "}";
             stream << "\n";
         }
 
-        void per_cpp_out::execute_archive_choice_out(typeassignment_entity_ptr self) {
 
-            basic_entity_ptr scp;
-            stream << "\n" << tabformat(scp, 3) <<
-                    "switch(type()){";
-            execute_archive_member_cho(self);
-            stream << "\n" << tabformat(scp, 3) << "}";
-            stream << "\n";
-            stream << tabformat(scp, 2) << "}";
-            stream << "\n";
-        }
         
         
         static namedtypeassignment_entity_vct struct_optional_element(const namedtypeassignment_entity_vct& vl){
@@ -2472,7 +2484,9 @@ namespace x680 {
             root.insert(root.end(), root2.begin(), root2.end());            
             std::size_t opt_count = struct_optional_count(root);
             //std::size_t opt_it = 0;
-            //if (self->)
+            if ((self->type()) && (self->type()->has_extention())) {
+                stream << "\n\n" << tabformat(scp, 3)  << "ITU_T_EXTENTION_SET_PER;";
+            }
             if (opt_count) {
                 namedtypeassignment_entity_vct optels = struct_optional_element(root);
                 stream << "\n\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_DECL_PER = ";
@@ -2524,6 +2538,9 @@ namespace x680 {
             root.insert(root.end(), root2.begin(), root2.end());                      
             std::size_t opt_count = struct_optional_count(root);
             std::size_t opt_it = 0;
+            if ((self->type()) && (self->type()->has_extention())) {
+                stream << "\n\n" << tabformat(scp, 3)  << "ITU_T_EXTENTION_GET_PER;";
+            }
             if (opt_count)
                 stream << "\n\n" << tabformat(scp, 3)  << "ITU_T_OPTIONAL_GET_PER("  << to_string(opt_count)   << " );\n";
             for (namedtypeassignment_entity_vct::iterator it = root1.begin(); it != root1.end(); ++it) {
@@ -2674,12 +2691,12 @@ namespace x680 {
 
         void per_cpp_out::execute_archive_member_cho(typeassignment_entity_ptr self) {
             basic_entity_ptr scp;
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if ((tpas) && (tpas->as_named())) {
-                    namedtypeassignment_entity_ptr named = tpas->as_named();
+            namedtypeassignment_entity_vct root = self->canonicalorder_root();
+            //namedtypeassignment_entity_vct rootcount = self->canonicalorder_root();            
+            for (namedtypeassignment_entity_vct::iterator it = root.begin(); it != root.end(); ++it) {
+                if ((*it)->as_named()) {
+                    namedtypeassignment_entity_ptr named = (*it)->as_named();
                     if (named->type()) {
-
                         stream << "\n" << tabformat(scp, 4) << "case ";
                         stream << choice_enum_str(self, (*it)) << ":  {";
                         std::string tmpval = "value<" + fromtype_str(named) + " > (false , " + choice_enum_str(self, (*it)) + ")";
