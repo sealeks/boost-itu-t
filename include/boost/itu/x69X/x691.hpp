@@ -153,17 +153,17 @@
  *                                             static ***string_type::value_type in(boost::asn1::x691::input_coder& stream); // char from stream
  *                                             static std::size_t bits_count(bool aligned);  //  chars size in bits
  *                         };
- *                       and use   ITU_T_BIND_EX_CONSTRS( type, helper_name, member);   NB: type is member type               
+ *                       and use   ITU_T_BIND_EX_CONSTRS( type, helper_name, member);   NB: The type is member type               
  * 
  *      2) Comlex case: (size constraint + )
  *              a)  enumerated_type  ( same helper 1.a + )
  *                       ITU_T_REGISTRATE_ENUM_CONSTRS(helper_name_cplx , helper_name)
- *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name_cplx,  .....) NB: type is member type 
+ *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name_cplx,  .....) NB: The type is member type 
  *              b) effective alphabet constraint ( same  helper 1.b) and 
- *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....) NB: type is member type
- *              c) integer constrant  
+ *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....) NB: The type is member type
+ *              c) integer constraint  
  *                       helper : ITU_T_REGISTRATE_NUM_******(helper_name,  type, min, ? max)  type is using ineger type  (see above)
- *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....) NB: type is member type
+ *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....) NB: The type is member type
  * 
 
     };
