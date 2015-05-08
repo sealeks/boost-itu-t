@@ -28,16 +28,18 @@
 #define ITU_T_OPTIONAL_PER(name)  boost::asn1::bitstring_type(static_cast<bool>(name))
 #define ITU_T_OPTIONAL_SET_PER arch.add_bitmap(__optional_bmp__);
 
-
-#define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
-#define ITU_T_BIND_PER_ENUM(var, nm) boost::asn1::bind_per_enum< nm ## __coder >(arch, var);
-
 #define ITU_T_SET_CONSTAINED_INDX(indx, max) arch.add_constrained<std::size_t >(indx, 0, max);
 #define ITU_T_GET_CONSTAINED_INDX( max) std::size_t __indx__ = arch.get_constrained<std::size_t >(0, max);
 
 #define ITU_T_SET_NSN_SMALL_INDX(indx) arch.add_nsn_small(indx);
 #define ITU_T_GET_NSN_SMALL_INDX std::size_t __indx__ = arch.get_nsn_small();
 
+
+//   main bind and bind per enum
+#define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
+#define ITU_T_BIND_PER_ENUM(var, nm) boost::asn1::bind_per_enum< nm ## __coder >(arch, var);
+
+// Integer constrant term ..S( not extended ) or ..E ( extended )  main, simiconstrained, single value
 #define ITU_T_BIND_NUM_CONSTRS(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx, false);
 #define ITU_T_BIND_NUM_CONSTRE(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx, true);
 #define ITU_T_BIND_NUM_SIMICONS(var, mn) boost::asn1::bind_constraints(arch, var, mn, 0, false);
@@ -45,14 +47,7 @@
 #define ITU_T_BIND_NUM_SNGLCONS(var, mn) boost::asn1::bind_constraints(arch, var, mn, mn, false);
 #define ITU_T_BIND_NUM_SNGLCONE(var, mn) boost::asn1::bind_constraints(arch, var, mn, mn, true);
 
-#define ITU_T_BIND_SIZE_RNGCONSTRS(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx, false);
-#define ITU_T_BIND_SIZE_RNGCONSTRE(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx, true);
-#define ITU_T_BIND_SIZE_SEMICONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0, false);
-#define ITU_T_BIND_SIZE_SEMICONSTRE(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0, true);
-#define ITU_T_BIND_SIZE_SNGLCONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn, false);
-#define ITU_T_BIND_SIZE_SNGLCONSTRE(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn, true);
-
-
+// Integer constrant helper for comlex case .   term ..S( not extended ) or ..E ( extended )
 #define ITU_T_REGISTRATE_NUM_CONSTRS(var, tp, mn, mx) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mx , false>  var;
 #define ITU_T_REGISTRATE_NUM_CONSTRE(var, tp, mn, mx) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mx , true>  var;
 #define ITU_T_REGISTRATE_NUM_SIMICONS(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , 0 , false>  var;
@@ -60,14 +55,25 @@
 #define ITU_T_REGISTRATE_NUM_SNGLCONS(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mn , false>  var;
 #define ITU_T_REGISTRATE_NUM_SNGLCONE(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mn , true>  var;
 
+// Size constrant term ..S( not extended ) or ..E ( extended ) main, simiconstrained, single value
+#define ITU_T_BIND_SIZE_CONSTRS(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx, false);
+#define ITU_T_BIND_SIZE_CONSTRE(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx, true);
+#define ITU_T_BIND_SIZE_SEMICONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0, false);
+#define ITU_T_BIND_SIZE_SEMICONSTRE(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0, true);
+#define ITU_T_BIND_SIZE_SNGLCONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn, false);
+#define ITU_T_BIND_SIZE_SNGLCONSTRE(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn, true);
+
+// Size constrant complex, term ..S( not extended ) or ..E ( extended ) nosize onle elements, main, simiconstrained, single value
 #define ITU_T_BIND_EX_CONSTRS(tp, el, var) boost::asn1::bind_sizeconstraints_ext< tp, el > (arch, var, 0, 0, false);
-#define ITU_T_BIND_EXSIZE_RNGCONSTRS(tp, el, var, mn, mx) boost::asn1::bind_sizeconstraints_ext< tp, el > (arch, var, mn, mx, false);
-#define ITU_T_BIND_EXSIZE_RNGCONSTRE(tp, el, var, mn, mx) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, mx, true);
+#define ITU_T_BIND_EXSIZE_CONSTRS(tp, el, var, mn, mx) boost::asn1::bind_sizeconstraints_ext< tp, el > (arch, var, mn, mx, false);
+#define ITU_T_BIND_EXSIZE_CONSTRE(tp, el, var, mn, mx) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, mx, true);
 #define ITU_T_BIND_EXSIZE_SEMICONSTRS(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, 0, false);
 #define ITU_T_BIND_EXSIZE_SEMICONSTRE(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, 0, true);
 #define ITU_T_BIND_EXSIZE_SNGLCONSTRS(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, mn, false);
 #define ITU_T_BIND_EXSIZE_SNGLCONSTRE(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, mn, true);
 
+//  enumerated complex case
+#define ITU_T_REGISTRATE_ENUM_CONSTRS(var, tp) typedef boost::asn1::___enumerated_tmpl_ec___<tp>  var;
 
 #define  ITU_T_PER_ENUMCODER(nm  , arrmain ) struct nm ## __coder { \
     static boost::asn1::indx_enumerated_map index_enumerated;\
@@ -133,7 +139,37 @@
 
 
 
+/* Need helper case :
+ *    1) Siimple case:
+ *              a)   enumerated_type   
+ *                       helper : no extention ITU_T_PER_ENUMCODER( helper_name, ITU_T_ARRAY( n1, n2....  nn))   or 
+ *                                     extention  ITU_T_PER_ENUMCODER_EXT( helper_name, ITU_T_ARRAY( n1, n2....  nn), ITU_T_ARRAY( m1, m2....  mn))
+ *                       and use   ITU_T_BIND_PER_ENUM( member, helper_name);
+ * 
+ *              b)   effective alphabet constraint
+ * 
+ *                         helper : struct printablestring_ec {
+ *                                             static void out(boost::asn1::x691::output_coder& stream, ****string_type::value_type vl);   // char to stream
+ *                                             static ***string_type::value_type in(boost::asn1::x691::input_coder& stream); // char from stream
+ *                                             static std::size_t bits_count(bool aligned);  //  chars size in bits
+ *                         };
+ * 
+ *      2) Comlex case: (size constraint + )
+ *              a)  enumerated_type  ( same helper 1.a + )
+ *                       ITU_T_REGISTRATE_ENUM_CONSTRS(helper_name_cplx , helper_name)
+ *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name_cplx,  .....)
+ *              b) effective alphabet constraint ( same  helper 1.b) and 
+ *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....)
+ *              c) integer constrant  
+ *                       helper : ITU_T_REGISTRATE_NUM_******(helper_name,  type, min, ? max)   (see above)
+ *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....)
+ * 
 
+    };
+ * 
+         
+         
+ */
 
 
 
@@ -621,7 +657,7 @@ namespace boost {
             public:
 
                 output_coder(encoding_rule rul = boost::itu::PER_ALIGNED_ENCODING) :
-                boost::itu::base_output_coder(rul),  unaligned_(rul == boost::itu::PER_UNALIGNED_ENCODING) {
+                boost::itu::base_output_coder(rul), unaligned_(rul == boost::itu::PER_UNALIGNED_ENCODING) {
                 }
 
                 bool aligned() const {
@@ -1246,7 +1282,7 @@ namespace boost {
             public:
 
                 input_coder(encoding_rule rul = boost::itu::PER_ALIGNED_ENCODING) :
-                boost::itu::base_input_coder(rul),  unaligned_(rul == boost::itu::PER_UNALIGNED_ENCODING) {
+                boost::itu::base_input_coder(rul), unaligned_(rul == boost::itu::PER_UNALIGNED_ENCODING) {
                 }
 
                 bool aligned() const {
@@ -1914,7 +1950,27 @@ namespace boost {
 
 
 
+        // integer element constrainter
 
+        template<typename T>
+        struct ___enumerated_tmpl_ec___ {
+
+            static void out(boost::asn1::x691::output_coder& stream, enumerated_type vl) {
+                stream & T(v);
+            }
+
+            static enumerated_type in(boost::asn1::x691::input_coder& stream) {
+                enumerated_type inv = 0;
+                T hlpr(inv);
+                stream & hlpr;
+                return inv;
+            }
+
+            static std::size_t bits_count(bool aligned) {
+                return 0xFF;
+            }
+
+        };
 
 
 
