@@ -153,16 +153,17 @@
  *                                             static ***string_type::value_type in(boost::asn1::x691::input_coder& stream); // char from stream
  *                                             static std::size_t bits_count(bool aligned);  //  chars size in bits
  *                         };
+ *                       and use   ITU_T_BIND_EX_CONSTRS( type, helper_name, member);                  
  * 
  *      2) Comlex case: (size constraint + )
  *              a)  enumerated_type  ( same helper 1.a + )
  *                       ITU_T_REGISTRATE_ENUM_CONSTRS(helper_name_cplx , helper_name)
- *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name_cplx,  .....)
+ *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name_cplx,  .....) NB: type is member type 
  *              b) effective alphabet constraint ( same  helper 1.b) and 
- *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....)
+ *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....) NB: type is member type
  *              c) integer constrant  
- *                       helper : ITU_T_REGISTRATE_NUM_******(helper_name,  type, min, ? max)   (see above)
- *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....)
+ *                       helper : ITU_T_REGISTRATE_NUM_******(helper_name,  type, min, ? max)  type is using ineger type  (see above)
+ *                       and ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....) NB: type is member type
  * 
 
     };
@@ -1956,7 +1957,7 @@ namespace boost {
         struct ___enumerated_tmpl_ec___ {
 
             static void out(boost::asn1::x691::output_coder& stream, enumerated_type vl) {
-                stream & T(v);
+                stream & T(vl);
             }
 
             static enumerated_type in(boost::asn1::x691::input_coder& stream) {
