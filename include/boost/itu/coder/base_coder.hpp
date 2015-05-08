@@ -26,9 +26,9 @@
 #include <boost/itu/utils/template.hpp>
 
 #define ITU_T_VARRAY(...) __VA_ARGS__
- #define ITU_T_OID(nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
+#define ITU_T_OID(nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
         const boost::asn1::oid_type  nm  = boost::asn1::oid_type(nm ## ___ARR, sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
- #define ITU_T_RELOID(nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
+#define ITU_T_RELOID(nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
         const boost::asn1::reloid_type  nm  = boost::asn1::reloid_type(nm ## ___ARR, sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
 
 
@@ -80,7 +80,7 @@ namespace boost {
         const encoding_rule PER_ALIGNED_ENCODING = 0x8;
         const encoding_rule PER_UNALIGNED_ENCODING = 0x10;
         const encoding_rule CPER_ALIGNED_ENCODING = 0x12;
-        const encoding_rule CPER_UNALIGNED_ENCODING = 0x14;        
+        const encoding_rule CPER_UNALIGNED_ENCODING = 0x14;
 
         const std::size_t ENCODING_RULE_MAX_BIT = 3;
 
@@ -333,7 +333,7 @@ namespace boost {
         using asn1::octetstring_type;
 
 
-        std::string binary_to_hexsequence_debug(const std::string& vl, std::size_t group = 1);        
+        std::string binary_to_hexsequence_debug(const std::string& vl, std::size_t group = 1);
 
         inline static octet_sequnce buffer_to_raw(const mutable_buffer& buff, std::size_t beg = 0, std::size_t len = 0) {
             std::size_t buffsize = boost::asio::buffer_size(buff);
@@ -406,10 +406,15 @@ namespace boost {
                 return false;
             }
 
-            base_output_coder(encoding_rule rl = NULL_ENCODING) : unuse_(0), listbuffers_(new const_sequences()), size_(0) {
+            base_output_coder(encoding_rule rl = NULL_ENCODING) :
+            rule_(rl), unuse_(0), listbuffers_(new const_sequences()), size_(0) {
             }
 
             virtual ~base_output_coder() {
+            }
+
+            encoding_rule rule() const {
+                return rule_;
             }
 
             const const_sequences& buffers() const {
@@ -478,10 +483,6 @@ namespace boost {
             void resetextention() {
             }
 
-            virtual encoding_rule rule() const {
-                return NULL_ENCODING;
-            }
-
             const oid_type& transfer_syntax() const {
                 return to_transfer_syntax(rule());
             }
@@ -505,6 +506,7 @@ namespace boost {
                 return unuse_ = vl % 8;
             }
 
+            encoding_rule rule_;
             std::size_t unuse_;
             const_sequences_ptr listbuffers_;
             vect_octet_sequnce_ptr rows_vect;
@@ -527,7 +529,16 @@ namespace boost {
                 return true;
             }
 
-            base_input_coder() : unuse_(0), listbuffers_(new mutable_sequences()), size_(0) {
+            base_input_coder(encoding_rule rl = NULL_ENCODING) :
+            rule_(rl), unuse_(0), listbuffers_(new mutable_sequences()), size_(0) {
+            }
+
+            encoding_rule rule() const {
+                return rule_;
+            }
+
+            const oid_type& transfer_syntax() const {
+                return to_transfer_syntax(rule());
             }
 
             virtual ~base_input_coder() {
@@ -605,6 +616,7 @@ namespace boost {
                 //std::cout << "decsize IARCHVE size:"  << size_  << std::endl;
             }
 
+            encoding_rule rule_;
             std::size_t unuse_;
             mutable_sequences_ptr listbuffers_;
             vect_octet_sequnce_ptr rows_vect;
@@ -708,7 +720,11 @@ namespace boost {
             typedef OUTPUT_TYPE output_coder_type;
 
             asn_coder_templ(const oid_type& asx = oid_type(), encoding_rule rul = NULL_ENCODING) :
-            basic_coder(new input_coder_type(), new output_coder_type(rul)), abstract_syntax_(asx) {
+            basic_coder(new input_coder_type(rul), new output_coder_type(rul)), abstract_syntax_(asx) {
+            }
+
+            asn_coder_templ(encoding_rule rul) :
+            basic_coder(new input_coder_type(rul), new output_coder_type(rul)), abstract_syntax_(oid_type()) {
             }
 
             input_coder_type& input() {
@@ -884,13 +900,13 @@ namespace boost {
         const boost::asn1::oid_type NULL_ENCODING_OID = boost::asn1::oid_type();
 
         ITU_T_OID(BASIC_ENCODING_OID, ITU_T_VARRAY(2, 1, 1));
-        ITU_T_OID(CANONICAL_ENCODING_OID, ITU_T_VARRAY(2, 1, 2, 0));       
+        ITU_T_OID(CANONICAL_ENCODING_OID, ITU_T_VARRAY(2, 1, 2, 0));
         ITU_T_OID(DISTINGUISH_ENCODING_OID, ITU_T_VARRAY(2, 1, 2, 1));
         ITU_T_OID(PER_ALIGNED_ENCODING_OID, ITU_T_VARRAY(2, 1, 3, 0, 0));
         ITU_T_OID(PER_UNALIGNED_ENCODING_OID, ITU_T_VARRAY(2, 1, 3, 0, 1));
         ITU_T_OID(CPER_ALIGNED_ENCODING_OID, ITU_T_VARRAY(2, 1, 3, 1, 0));
         ITU_T_OID(CPER_UNALIGNED_ENCODING_OID, ITU_T_VARRAY(2, 1, 1, 0, 1));
-        
+
     }
 
 

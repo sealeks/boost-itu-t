@@ -620,12 +620,8 @@ namespace boost {
 
             public:
 
-                output_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) :
-                boost::itu::base_output_coder(), rule_(rul), unaligned_(false/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
-                }
-
-                virtual encoding_rule rule() const {
-                    return rule_;
+                output_coder(encoding_rule rul = boost::itu::PER_ALIGNED_ENCODING) :
+                boost::itu::base_output_coder(rul),  unaligned_(rul == boost::itu::PER_UNALIGNED_ENCODING) {
                 }
 
                 bool aligned() const {
@@ -690,11 +686,8 @@ namespace boost {
                     return rule_ == boost::itu::CER_ENCODING;
                 }
 
-
-
             private:
 
-                encoding_rule rule_;
                 bool unaligned_;
 
             };
@@ -1252,12 +1245,8 @@ namespace boost {
 
             public:
 
-                input_coder(encoding_rule rul = boost::itu::PER_UNALIGNED_ENCODING) :
-                boost::itu::base_input_coder(), rule_(rul), unaligned_(false/*rul == boost::itu::PER_UNALIGNED_ENCODING*/) {
-                }
-
-                virtual encoding_rule rule() const {
-                    return rule_;
+                input_coder(encoding_rule rul = boost::itu::PER_ALIGNED_ENCODING) :
+                boost::itu::base_input_coder(rul),  unaligned_(rul == boost::itu::PER_UNALIGNED_ENCODING) {
                 }
 
                 bool aligned() const {
@@ -1334,7 +1323,6 @@ namespace boost {
 
             private:
 
-                encoding_rule rule_;
                 bool unaligned_;
 
             };

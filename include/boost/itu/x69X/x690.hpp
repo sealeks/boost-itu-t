@@ -156,12 +156,10 @@ namespace boost {
 
             public:
 
-                output_coder(encoding_rule rul = boost::itu::BER_ENCODING) : boost::itu::base_output_coder(), rule_(rul) {
+                output_coder(encoding_rule rul = boost::itu::BER_ENCODING) :
+                boost::itu::base_output_coder(rul)  {
                 }
 
-                virtual encoding_rule rule() const {
-                    return rule_;
-                }
 
                 template<typename T>
                 void operator&(const T& vl) {
@@ -214,7 +212,6 @@ namespace boost {
 
 
                 stack_type stack_;
-                encoding_rule rule_;
 
             };
 
@@ -563,7 +560,8 @@ namespace boost {
 
             public:
 
-                input_coder() : boost::itu::base_input_coder() {
+                input_coder(encoding_rule rul = boost::itu::BER_ENCODING) : 
+                boost::itu::base_input_coder(rul) {
                 }
 
                 template<typename T>
