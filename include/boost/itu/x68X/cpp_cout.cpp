@@ -2532,7 +2532,7 @@ namespace x680 {
                 std::size_t root_it = 0;
                 if (rootcnt) {
 
-                    stream << "\n" << tabformat(scp, 3 + scppad) << "ITU_T_GET_CONSTAINED_INDX(" << to_string(rootcnt) << ");\n";
+                    stream << "\n\n" << tabformat(scp, 3 + scppad) << "ITU_T_GET_CONSTAINED_INDX(" << to_string(rootcnt) << ");\n";
                     stream << "\n" << tabformat(scp, 3 + scppad) <<  "switch(__indx__){";
 
                     for (namedtypeassignment_entity_vct::iterator it = root.begin(); it != root.end(); ++it) {
@@ -2569,7 +2569,7 @@ namespace x680 {
                 
                 //// Extention
                 
-                    stream << "\n" << tabformat(scp, 3 + scppad) << "ITU_T_GET_NSN_SMALL_INDX;\n";
+                    stream << "\n\n" << tabformat(scp, 3 + scppad) << "ITU_T_GET_NSN_SMALL_INDX;\n";
                     stream << "\n" << tabformat(scp, 3 + scppad) << "switch(__indx__){";
 
                     for (namedtypeassignment_entity_vct::iterator it = extentions.begin(); it != extentions.end(); ++it) {

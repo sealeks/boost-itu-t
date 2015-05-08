@@ -334,6 +334,7 @@ namespace boost {
 
 
         std::string binary_to_hexsequence_debug(const std::string& vl);
+        std::string binary_to_hexsequence_debug_group(const std::string& vl, std::size_t group = 4);        
 
         inline static octet_sequnce buffer_to_raw(const mutable_buffer& buff, std::size_t beg = 0, std::size_t len = 0) {
             std::size_t buffsize = boost::asio::buffer_size(buff);

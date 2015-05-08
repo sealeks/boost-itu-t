@@ -546,6 +546,17 @@ namespace boost {
             }
             return rslt;
         }
+        
+        std::string binary_to_hexsequence_debug_group(const std::string& vl, std::size_t group) {
+            std::string rslt = "";
+            std::size_t cnt=0;
+            for (std::string::size_type it = 0; it < vl.size(); ++it) {               
+                if (!((++cnt)%4))
+                     rslt = rslt + "   ";
+                rslt = rslt + num8t_to_hexstr(vl.at(it));
+            }
+            return rslt;
+        }        
 
         std::size_t pop_frontlist(mutable_sequences& val, std::size_t start) {
             std::size_t rslt = 0;
