@@ -153,7 +153,7 @@
  *                                             static ***string_type::value_type in(boost::asn1::x691::input_coder& stream); // char from stream
  *                                             static std::size_t bits_count(bool aligned);  //  chars size in bits
  *                         };
- *                       and use   ITU_T_BIND_EX_CONSTRS( type, helper_name, member);                  
+ *                       and use   ITU_T_BIND_EX_CONSTRS( type, helper_name, member);   NB: type is member type               
  * 
  *      2) Comlex case: (size constraint + )
  *              a)  enumerated_type  ( same helper 1.a + )
