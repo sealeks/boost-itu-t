@@ -160,8 +160,9 @@ namespace boost {
                 add_octets(vl.as_octet_sequnce(), alighn);
             }
 
-
-
+            void output_coder::add_nsn_small(std::size_t indx) {
+                *this << small_nn_wnumber <std::size_t>(indx);
+            }
 
 
 
@@ -536,8 +537,12 @@ namespace boost {
                 return tmp;
             }
 
-
-
+            std::size_t input_coder::get_nsn_small() {
+                std::size_t rslt = 0;
+                small_nn_wnumber <std::size_t> vl(rslt);
+                *this >> vl;
+                return rslt;
+            }
 
 
 

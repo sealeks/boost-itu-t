@@ -329,9 +329,9 @@ namespace x680 {
 
             virtual void execute_archive_meth_cpp(typeassignment_entity_ptr self, const std::string& ctp);
 
-            virtual void execute_archive_choice_out(typeassignment_entity_ptr self) = 0;
+            virtual void execute_archive_choice_output(typeassignment_entity_ptr self) = 0;
             virtual void execute_archive_choice_input(typeassignment_entity_ptr self) = 0;
-            virtual void execute_archive_struct_out(typeassignment_entity_ptr self) = 0;
+            virtual void execute_archive_struct_output(typeassignment_entity_ptr self) = 0;
             virtual void execute_archive_struct_input(typeassignment_entity_ptr self) = 0;
 
         };
@@ -357,15 +357,15 @@ namespace x680 {
         protected:
 
 
-            virtual void execute_archive_choice_out(typeassignment_entity_ptr self);
+            virtual void execute_archive_choice_output(typeassignment_entity_ptr self);
             virtual void execute_archive_choice_input(typeassignment_entity_ptr self);
-            virtual void execute_archive_struct_out(typeassignment_entity_ptr self);
+            virtual void execute_archive_struct_output(typeassignment_entity_ptr self);
             virtual void execute_archive_struct_input(typeassignment_entity_ptr self);
 
             std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext = false);            
             void execute_archive_member(namedtypeassignment_entity_ptr self, bool afterext);
-            void execute_archive_member_chi(typeassignment_entity_ptr self, tagclass_type cls, bool notag);
-            void execute_archive_member_cho(typeassignment_entity_ptr self);
+            void execute_archive_choice_input_helper(typeassignment_entity_ptr self, tagclass_type cls, bool notag);
+            void execute_archive_choice_output_helper(typeassignment_entity_ptr self);
 
         };
 
@@ -470,15 +470,13 @@ namespace x680 {
             virtual void execute_typeassignment(typeassignment_entity_ptr tpas);
 
 
-            virtual void execute_archive_choice_out(typeassignment_entity_ptr self);
+            virtual void execute_archive_choice_output(typeassignment_entity_ptr self);
             virtual void execute_archive_choice_input(typeassignment_entity_ptr self);
-            virtual void execute_archive_struct_out(typeassignment_entity_ptr self);
+            virtual void execute_archive_struct_output(typeassignment_entity_ptr self);
             virtual void execute_archive_struct_input(typeassignment_entity_ptr self);
 
             std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name);            
             void execute_archive_member(namedtypeassignment_entity_ptr self, bool opt = false, std::size_t optnum=0);
-            void execute_archive_member_chi(typeassignment_entity_ptr self, tagclass_type cls, bool notag = false);
-            void execute_archive_member_cho(typeassignment_entity_ptr self);
 
         };
 

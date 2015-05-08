@@ -18,8 +18,9 @@
 #include <boost/itu/detail/error.hpp>
 #include <boost/itu/x69X/x69x.hpp>
 
-#define ITU_T_EXTENTION_GET_PER  boost::asn1::bitstring_type __has_extention__ =  arch.get_pop_bmp(1).bit(0);
-#define ITU_T_EXTENTION_SET_PER  boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(false); arch.add_bitmap(__extention_bmp__);
+#define ITU_T_EXTENTION_GET_PER  bool __is_extention__ =  arch.get_pop_bmp(1).bit(0);
+#define ITU_T_EXTENTION_SET_PER  bool __is_extention__ = false;boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
+#define ITU_T_EXTENTION_CHECK_PER  __is_extention__
 
 #define ITU_T_OPTIONAL_GET_PER(sz)  boost::asn1::bitstring_type __optional_bmp__ =  arch.get_pop_bmp(sz);
 #define ITU_T_OPTIONAL_CHECK_PER(num)   if (__optional_bmp__.bit( num ))
@@ -30,6 +31,12 @@
 
 #define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
 #define ITU_T_BIND_PER_ENUM(var, nm) boost::asn1::bind_per_enum< nm ## __coder >(arch, var);
+
+#define ITU_T_SET_CONSTAINED_INDX(indx, max) arch.add_constrained<std::size_t >(indx, 0, max);
+#define ITU_T_GET_CONSTAINED_INDX( max) std::size_t __indx__ = arch.get_constrained<std::size_t >(0, max);
+
+#define ITU_T_SET_NSN_SMALL_INDX(indx) arch.add_nsn_small(indx);
+#define ITU_T_GET_NSN_SMALL_INDX std::size_t __indx__ = arch.get_nsn_small();
 
 #define ITU_T_BIND_NUM_CONSTRS(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx, false);
 #define ITU_T_BIND_NUM_CONSTRE(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx, true);
@@ -635,6 +642,13 @@ namespace boost {
                 void add_octets(const octet_sequnce& vl, bool alighn = false);
 
                 void add_octets(const octetstring_type & vl, bool alighn = false);
+
+                template<typename T>
+                void add_constrained(T indx, T min, T max) {
+                    *this << constrained_wnumber<T>(indx, min, max);
+                }
+
+                void add_nsn_small(std::size_t indx);
 
                 template<typename T>
                 void operator&(const T& vl) {
@@ -1269,6 +1283,16 @@ namespace boost {
                 bitstring_type get_pop_bmp(std::size_t sz, bool alighn = false);
 
                 octet_sequnce get_pop_octs(std::size_t sz, bool alighn = false);
+
+                template<typename T>
+                T get_constrained(T min, T max) {
+                    T rslt = min;
+                    constrained_wnumber<T> vl(rslt, min, max);
+                    *this >> vl;
+                    return rslt;
+                }
+
+                std::size_t get_nsn_small();
 
                 template<typename T>
                 void operator&(const T& vl) {

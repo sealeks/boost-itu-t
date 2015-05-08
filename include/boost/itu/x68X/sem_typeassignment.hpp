@@ -769,6 +769,8 @@ namespace x680 {
         
         namedtypeassignment_entity_vct extention_group(std::size_t num);    
         
+        namedtypeassignment_entity_vct extentions();         
+        
         /////        
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);

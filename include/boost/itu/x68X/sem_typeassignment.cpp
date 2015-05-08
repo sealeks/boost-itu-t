@@ -1753,6 +1753,18 @@ namespace x680 {
         return rslt;
     }
     
+    namedtypeassignment_entity_vct typeassignment_entity::extentions() {
+        namedtypeassignment_entity_vct rslt;
+        for (basic_entity_vector::iterator it = first_extention(); it != second_extention(); ++it) {
+            if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                namedtypeassignment_entity_ptr rsltel = (*it)->as_typeassigment()->as_named();
+                if ((is_named(rsltel->marker())))
+                    rslt.push_back(rsltel);
+            }
+        }
+        return rslt;
+    }    
+    
     void typeassignment_entity::resolve(basic_atom_ptr holder) {
         unicalelerror_throw(childs());
         assignment_entity::resolve(holder);
