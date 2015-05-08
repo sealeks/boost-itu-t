@@ -538,21 +538,12 @@ namespace boost {
             return std::string(static_cast<const char*> (&hex_char_array_const[((vl >> 4) & 0xF)]), 1) +
                     std::string(static_cast<const char*> (&hex_char_array_const[((vl) & 0xF)]), 1);
         }
-
-        std::string binary_to_hexsequence_debug(const std::string& vl) {
-            std::string rslt = "";
-            for (std::string::size_type it = 0; it < vl.size(); ++it) {
-                rslt = rslt + " " + num8t_to_hexstr(vl.at(it));
-            }
-            return rslt;
-        }
         
-        std::string binary_to_hexsequence_debug_group(const std::string& vl, std::size_t group) {
+        std::string binary_to_hexsequence_debug(const std::string& vl, std::size_t group) {
             std::string rslt = "";
-            std::size_t cnt=0;
             for (std::string::size_type it = 0; it < vl.size(); ++it) {               
-                if (!((++cnt)%4))
-                     rslt = rslt + "   ";
+                if ((group>0) && it && !(it%group))
+                     rslt = rslt + "  ";
                 rslt = rslt + num8t_to_hexstr(vl.at(it));
             }
             return rslt;
