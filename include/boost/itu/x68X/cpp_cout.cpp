@@ -1125,6 +1125,14 @@ namespace x680 {
 
                 if (tmp->tuple_constraint())
                     stream << "  //   Tc " << (*(tmp->tuple_constraint())).to_alphabet_per() << " ";
+                if (typeassignment_entity_ptr root = self->root_typeassignment()){
+                    if ((root->isstruct_of()) && (!root->childs().empty()) 
+                            && (root->childs().front()->as_typeassigment())  &&
+                            (root->childs().front()->as_typeassigment()->can_per_constraints())){
+                        stream << "  //  struct of ->  ";
+                        mark_constraints(root->childs().front()->as_typeassigment());
+                    }
+                }
             }
         }
 
@@ -2407,6 +2415,8 @@ namespace x680 {
             stream << "\n";
             find_typeassignments<per_helper_finder>(module_);
             stream << "\n";
+            
+            print_helpers();
 
             if (option_reverse_decl())
                 execute_typeassignments<basic_entity_vector::const_reverse_iterator>(module_->childs().rbegin(), module_->childs().rend());
@@ -2942,20 +2952,54 @@ namespace x680 {
             return helper_ptr();
         }
 
-        void per_cpp_out::add_helpers(helper_ptr hlprs, typeassignment_entity_ptr self) {
-            if (hlprs) {
-                if (helpers_chk.find(*hlprs) == helpers_chk.end()) {
-                    helpers.push_back(*hlprs);
-                    helpers_chk.insert(*hlprs);
-                    basic_entity_ptr scp;
-                    stream << "\n";
-                    stream << tabformat(scp, 3);
-                    stream << "//  find helper name:   " << hlprs->name << "  type: " << (int) hlprs->type <<  "   ";
-                    mark_constraints(self);
-                    stream << "\n";
+        void per_cpp_out::add_helpers(helper_ptr hlpr) {
+            if (hlpr) {
+                if (helpers_chk.find(*hlpr) == helpers_chk.end()) {
+                    helpers.push_back(hlpr);
+                    helpers_chk.insert(*hlpr);
                 }
             }
         }
+
+        void per_cpp_out::print_helpers_header(helper_ptr hlpr) {
+            basic_entity_ptr scp;
+            stream << "\n\n";
+            stream << tabformat(scp, 3);
+            stream << "//  find helper name:   " << hlpr->name << "  type: ";
+            switch (hlpr->type) {
+                case pht_enumerated: stream << " enumerated helper ";
+                    break;
+                case pht_structof_int: stream << " struct of constrained int helper";
+                    break;
+                case pht_structof_enum: stream << " struct of enumerated helper";
+                    break;
+                case pht_char8_alhabet:
+                case pht_tuple_alhabet:
+                case pht_utf_alhabet: stream << " alphabet helper";
+                    break;
+                default:
+                {
+                }
+            }
+            stream << "   ";
+            mark_constraints(hlpr->ts);
+            stream << "\n";
+        }
+
+        void per_cpp_out::print_helper(helper_ptr hlpr) {
+             print_helpers_header(hlpr);
+        }      
+        
+        void per_cpp_out::print_helpers() {
+            for (helper_vct::iterator it = helpers.begin(); it != helpers.end(); ++it) {
+                if ((*it)->type == pht_enumerated)
+                    print_helper(*it);
+            }
+            for (helper_vct::iterator it = helpers.begin(); it != helpers.end(); ++it) {
+                if ((*it)->type != pht_enumerated)
+                    print_helper(*it);
+            }            
+        }         
 
     }
 }

@@ -171,76 +171,76 @@ namespace x680 {
     class effective_tabconstraint : public basic_atom {
 
     public:
-        
+
         typedef std::vector<std::string> fieldname_vct;
-        
-        effective_tabconstraint(basic_entity_ptr scp, classassignment_entity_ptr cls, objectsetassignment_entity_ptr objs, defined_type untp) : 
-        basic_atom(at_EffectiveTabConstraint, scp), class_(cls), objectsetassignment_(objs), unicaltype_(untp)  {}
-        
+
+        effective_tabconstraint(basic_entity_ptr scp, classassignment_entity_ptr cls, objectsetassignment_entity_ptr objs, defined_type untp) :
+        basic_atom(at_EffectiveTabConstraint, scp), class_(cls), objectsetassignment_(objs), unicaltype_(untp) {
+        }
+
         classassignment_entity_ptr _class() {
             return class_;
         }
 
         void _class(classassignment_entity_ptr vl) {
             class_ = vl;
-        }   
-        
+        }
+
         objectsetassignment_entity_ptr objectsetassignment() {
             return objectsetassignment_;
         }
 
         void objectsetassignment(objectsetassignment_entity_ptr vl) {
             objectsetassignment_ = vl;
-        }         
-        
-      
+        }
+
         fieldname_vct& fieldnames() {
             return fieldnames_;
-        }     
-        
+        }
+
         std::string unicalfield() {
             return unicalfield_;
         }
 
         void unicalfield(const std::string& vl) {
             unicalfield_ = vl;
-        }      
-        
+        }
+
         defined_type unicaltype() {
             return unicaltype_;
         }
 
         void unicaltype(defined_type vl) {
             unicaltype_ = vl;
-        }           
-        
-        bool find_field(const std::string& vl);  
-        
+        }
+
+        bool find_field(const std::string& vl);
+
         typeassignment_entity_vct fields(const std::string& nm);
-                      
-        objectassignment_entity_set objectset();        
-        
+
+        objectassignment_entity_set objectset();
+
         value_vct fields();
-        
-        std::size_t count();        
-        
-        bool valid();   
-        
+
+        std::size_t count();
+
+        bool valid();
+
         bool check();
 
-        
-        
-        
-           
+
+
+
+
 
     private:
-        
+
         classassignment_entity_ptr class_;
         objectsetassignment_entity_ptr objectsetassignment_;
         fieldname_vct fieldnames_;
         std::string unicalfield_;
         defined_type unicaltype_;
-        
+
     };
 
     /////////////////////////////////////////////////////////////////////////   
@@ -262,15 +262,15 @@ namespace x680 {
         void tag(tagged_ptr vl) {
             tag_ = vl;
         }
-        
+
         typeassignment_entity_ptr from() const {
             return from_;
-        }        
-        
+        }
+
         template<typename CriteriaTP>
-        type_atom_ptr criteria_type(){
+        type_atom_ptr criteria_type() {
             return CriteriaTP::calculate(as_type());
-        }              
+        }
 
         // canonical tag
         canonical_tag_ptr cncl_tag();
@@ -292,7 +292,7 @@ namespace x680 {
 
         void constraints(constraints_atom_vct vl) {
             constraints_ = vl;
-        }  
+        }
 
         bool has_constraint() const {
             return !constraints_.empty();
@@ -302,7 +302,7 @@ namespace x680 {
         boost::shared_ptr<range_constraints<T> > effective_constraint() {
             return boost::shared_ptr<range_constraints<T> >();
         }
-                
+
         integer_constraints_ptr integer_constraint();
 
         size_constraints_ptr size_constraint();
@@ -311,7 +311,7 @@ namespace x680 {
 
         quadruple_constraints_ptr quadruple_constraint();
 
-        tuple_constraints_ptr tuple_constraint();             
+        tuple_constraints_ptr tuple_constraint();
 
         void predefined(predefined_ptr vl) {
             predefined_ = vl;
@@ -346,11 +346,11 @@ namespace x680 {
         bool can_size_constraints();
 
         bool can_integer_constraints();
-        
+
         bool isvaluestructure();
-        
+
         virtual bool issubstitute() const;
-        
+
         typeassignment_entity_ptr valuestructure();
 
         bool istextualy_choice();
@@ -369,8 +369,8 @@ namespace x680 {
         fromobject_type_atom_ptr as_fromobject();
 
         fromobjects_type_atom_ptr as_fromobjectset();
-        
-        selection_type_atom_ptr as_selection();        
+
+        selection_type_atom_ptr as_selection();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -431,8 +431,8 @@ namespace x680 {
             class_ = vl;
         }
 
-        virtual void resolve_substitute();       
-        
+        virtual void resolve_substitute();
+
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
@@ -505,15 +505,15 @@ namespace x680 {
         void field(basic_atom_ptr vl) {
             field_ = vl;
         }
-        
-        virtual void resolve_substitute();             
+
+        virtual void resolve_substitute();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
     private:
 
         object_atom_ptr object_;
-        basic_atom_ptr field_;        
+        basic_atom_ptr field_;
 
     };
 
@@ -543,8 +543,8 @@ namespace x680 {
         void field(basic_atom_ptr vl) {
             field_ = vl;
         }
-        
-        virtual void resolve_substitute();           
+
+        virtual void resolve_substitute();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -554,9 +554,9 @@ namespace x680 {
         basic_atom_ptr field_;
 
     };
-    
-    
-     /////////////////////////////////////////////////////////////////////////   
+
+
+    /////////////////////////////////////////////////////////////////////////   
     // selection_type_atom
     /////////////////////////////////////////////////////////////////////////  
 
@@ -581,9 +581,9 @@ namespace x680 {
         void identifier(const std::string& vl) {
             nidentifier_ = vl;
         }
-         
-        
-        virtual void resolve_substitute();       
+
+
+        virtual void resolve_substitute();
 
         virtual void resolve(basic_atom_ptr holder = basic_atom_ptr());
 
@@ -591,7 +591,7 @@ namespace x680 {
 
         type_atom_ptr type_;
         std::string nidentifier_;
-    };   
+    };
 
 
 
@@ -622,15 +622,15 @@ namespace x680 {
         bool named() const {
             return named_;
         }
-        
+
         std::size_t extention_count() const {
             return extention_count_;
-        }        
-  
+        }
+
         void extention_count(std::size_t vl) {
-            extention_count_=vl;
-        }         
-       
+            extention_count_ = vl;
+        }
+
         bool is_cpp_expressed() const {
             return ((type()) && (!has_arguments()));
         }
@@ -644,11 +644,13 @@ namespace x680 {
             type_atom_ptr tmptype = type();
             return tmptype ? tmptype->root_builtin() : t_NODEF;
         }
-        
+
+        typeassignment_entity_ptr root_typeassignment();
+
         template<typename CriteriaTP>
-        typeassignment_entity_ptr criteria_typeassignment(){
+        typeassignment_entity_ptr criteria_typeassignment() {
             return CriteriaTP::calculate(as_typeassigment());
-        }        
+        }
 
         tagged_ptr tag() const {
             type_atom_ptr tmptype = type();
@@ -768,19 +770,19 @@ namespace x680 {
         typeassignment_entity_ptr superfluous_assignment(module_entity_ptr mod);
 
         namedtypeassignment_entity_ptr as_named();
-        
-        namedtypeassignment_entity_vct canonicalorder_root() ;
-        
-        bool single_child_root();         
 
-        namedtypeassignment_entity_vct child_root_1() ;
-        
-        namedtypeassignment_entity_vct child_root_2() ;        
-        
-        namedtypeassignment_entity_vct extention_group(std::size_t num);    
-        
-        namedtypeassignment_entity_vct extentions();         
-        
+        namedtypeassignment_entity_vct canonicalorder_root();
+
+        bool single_child_root();
+
+        namedtypeassignment_entity_vct child_root_1();
+
+        namedtypeassignment_entity_vct child_root_2();
+
+        namedtypeassignment_entity_vct extention_group(std::size_t num);
+
+        namedtypeassignment_entity_vct extentions();
+
         /////        
 
         virtual basic_entity_ptr find_by_name(const std::string& nm, search_marker sch = full_search);
@@ -796,36 +798,36 @@ namespace x680 {
         basic_entity_vector::iterator second_extention();
 
         virtual basic_atom_ptr atom() const;
-        
+
         effective_tabconstraint_ptr tabconstraint() const {
             return tabconstraint_;
         }
 
         void tabconstraint(effective_tabconstraint_ptr vl) {
             tabconstraint_ = vl;
-        }          
-        
+        }
+
         effective_tabconstraint_ptr reff_tabconstraint() const {
             return !reff_tabconstraint_._empty() ? reff_tabconstraint_.lock() : effective_tabconstraint_ptr();
         }
 
         void reff_tabconstraint(effective_tabconstraint_ptr vl) {
             reff_tabconstraint_ = effective_tabconstraint_wptr(vl);
-        }   
-        
+        }
+
         bool unicalfield() {
             return unicalfield_;
         }
 
         void unicalfield(bool vl) {
             unicalfield_ = vl;
-        }         
-        
-        
-    protected:                
+        }
+
+
+    protected:
 
         virtual void assign_from(assignment_entity_ptr from);
-        
+
         virtual void substitute();
 
     private:
@@ -833,23 +835,23 @@ namespace x680 {
         void post_resolve_child();
 
         void post_resolve_apply_componentsof();
-        
-        bool resolve_extention();        
+
+        bool resolve_extention();
 
         bool is_resolve_autotag();
 
         void post_resolve_autotag();
 
         void post_resolve_check();
-        
-        void post_resolve_tabconstraint();        
+
+        void post_resolve_tabconstraint();
 
         type_atom_ptr type_;
         bool named_;
         x680::syntactic::type_assignment synctas_;
         effective_tabconstraint_ptr tabconstraint_;
-        effective_tabconstraint_wptr reff_tabconstraint_;    
-        bool unicalfield_; 
+        effective_tabconstraint_wptr reff_tabconstraint_;
+        bool unicalfield_;
         std::size_t extention_count_;
     };
 
@@ -865,13 +867,13 @@ namespace x680 {
     class namedtypeassignment_entity : public typeassignment_entity {
 
     public:
-        
+
 
 
         namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, tagmarker_type mrker);
         namedtypeassignment_entity(basic_entity_ptr scp, const std::string& nm, type_atom_ptr tp, value_atom_ptr vl);
         namedtypeassignment_entity(basic_entity_ptr scp, type_atom_ptr tp, value_atom_ptr vl);
-        namedtypeassignment_entity(basic_entity_ptr scp, tagmarker_type mrker=mk_extention);
+        namedtypeassignment_entity(basic_entity_ptr scp, tagmarker_type mrker = mk_extention);
 
         value_atom_ptr _default() const {
             return default_;
@@ -884,30 +886,30 @@ namespace x680 {
         tagmarker_type marker() const {
             return marker_;
         }
-        
+
         extentionnum_ptr extentionnum() const {
             return extentionnum_;
-        }        
-  
+        }
+
         bool has_extentionnum() const {
-            return static_cast<bool>(extentionnum_);
-        }       
-        
+            return static_cast<bool> (extentionnum_);
+        }
+
         void extentionnum(extentionnum_type vl) {
-            extentionnum_=extentionnum_ptr( new extentionnum_type(vl));
-        }          
-        
+            extentionnum_ = extentionnum_ptr(new extentionnum_type(vl));
+        }
+
         void extentionnum(extentionnum_ptr vl) {
-            extentionnum_=vl;
-        }       
-        
+            extentionnum_ = vl;
+        }
+
         bool extentiongroup() const {
             return extentiongroup_;
-        }        
-  
+        }
+
         void extentiongroup(bool vl) {
-            extentiongroup_=vl;
-        }          
+            extentiongroup_ = vl;
+        }
 
         //////
 
@@ -920,7 +922,7 @@ namespace x680 {
         tagmarker_type marker_;
         value_atom_ptr default_;
         extentionnum_ptr extentionnum_;
-        bool extentiongroup_;        
+        bool extentiongroup_;
 
     };
 

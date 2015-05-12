@@ -474,7 +474,7 @@ namespace x680 {
                 
                 std::string name;
                 per_helper_type type;
-                typeassignment_entity_ptr ts;       
+                mutable typeassignment_entity_ptr ts;       
                 
                 friend bool operator==(const helper& ls, const helper& rs){
                     return (ls.name == rs.name);
@@ -487,8 +487,8 @@ namespace x680 {
             };
             
             typedef std::set<helper> helper_set;
-            typedef std::vector<helper> helper_vct;
-            typedef boost::shared_ptr<helper> helper_ptr;            
+            typedef boost::shared_ptr<helper> helper_ptr;              
+            typedef std::vector<helper_ptr> helper_vct;          
             
 
             struct per_helper_finder {
@@ -531,13 +531,16 @@ namespace x680 {
             void find_typeassignments(basic_entity_vector::const_iterator beg, basic_entity_vector::const_iterator end) {
                 for (basic_entity_vector::const_iterator it = beg; it != end; ++it) {
                     typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                    add_helpers(CriteriaT::check(tpas),tpas);
+                    add_helpers(CriteriaT::check(tpas));
                     if (tpas)
                         find_typeassignments<CriteriaT>(tpas);
                 }
             }
 
-            void add_helpers(helper_ptr hlprs, typeassignment_entity_ptr self);
+            void add_helpers(helper_ptr hlpr);
+            void print_helpers_header(helper_ptr hlpr);        
+            void print_helper(helper_ptr hlpr);   
+            void print_helpers();
            
         private:
 
