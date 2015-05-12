@@ -269,7 +269,7 @@ namespace x680 {
             return "";
         }
 
-        std::string fulltype_str(basic_entity_ptr self, bool withns) {
+        std::string fulltype_str(basic_entity_ptr self, bool withns, const std::string& delim) {
             if ((self->as_typeassigment()) || (self->as_module())) {
                 if (self->as_module()) {
                     if (withns)
@@ -280,7 +280,7 @@ namespace x680 {
                     typeassignment_entity_ptr ppas = self->as_typeassigment();
                     std::string tmp = fulltype_str(self->scope(), withns);
                     if ((ppas->type()) && (!ppas->isstruct_of()))
-                        return tmp.empty() ? type_str(ppas) : (tmp + "::" + type_str(ppas));
+                        return tmp.empty() ? type_str(ppas) : (tmp + delim + type_str(ppas));
                     else
                         return tmp;
                 }
@@ -2384,10 +2384,14 @@ namespace x680 {
         
         void per_cpp_out::execute() {
             execute_include(module_->name());
-
+            
             stream << CHHEADER << "\n";
             execute_start_ns();
-
+            
+            stream  << "\n";
+            find_typeassignments<per_helper_finder>(module_);            
+            stream  << "\n";
+            
             if (option_reverse_decl())
                 execute_typeassignments<basic_entity_vector::const_reverse_iterator>(module_->childs().rbegin(), module_->childs().rend());
             else
@@ -2778,7 +2782,68 @@ namespace x680 {
                 stream << archive_member_per_str(self, nameconvert(self->name()) + "_") << ";";
             }
         }
+        
+        static std::string get_per_helper_name(typeassignment_entity_ptr tp){
+            return fulltype_str(tp, false, "__");
+        }
+        
+        
+        
+        //  simple criteria
+        
+        struct find_simple_ta_criteria{
+            static typeassignment_entity_ptr calculate(typeassignment_entity_ptr vl){
+                if (vl && (vl->extract_type())  &&
+                        (vl->extract_type()->isrefferrence()) && 
+                        (vl->extract_type()->reff())){
+                    if (vl->extract_type()->reff()->as_typeassigment())
+                        return calculate(vl->extract_type()->reff()->as_typeassigment());
+                }
+                return vl;
+            }
+        };
 
+        per_cpp_out::helper_ptr per_cpp_out::per_helper_finder::check(typeassignment_entity_ptr tpas) {
+            if (tpas && (tpas->type()) && (tpas->is_cpp_expressed())) {
+                if (tpas->type()->root_builtin() == t_ENUMERATED) {
+                    typeassignment_entity_ptr fnd = tpas->criteria_typeassignment<find_simple_ta_criteria>();
+                    return helper_ptr(new helper(get_per_helper_name(fnd), pht_enumerated, fnd));
+                } else if ((tpas->type()->root_builtin() == t_SET_OF) || (tpas->type()->root_builtin() == t_SEQUENCE_OF)) {
+                    typeassignment_entity_ptr fnd = tpas->criteria_typeassignment<find_simple_ta_criteria>();
+                    if (fnd && (!fnd->childs().empty())) {
+                        typeassignment_entity_ptr cpas = fnd->childs().front()->as_typeassigment();
+                        if ((cpas->root_builtin() == t_ENUMERATED) || ((cpas->type()) && (cpas->type()->integer_constraint()))) {
+                            return helper_ptr(new helper(get_per_helper_name(fnd), cpas->root_builtin() == t_ENUMERATED ?
+                                    pht_structof_enum : pht_structof_int, fnd));
+                        }
+                    }
+                } else if (tpas->type()->char8_constraint()) {
+                    typeassignment_entity_ptr fnd = tpas->criteria_typeassignment<find_simple_ta_criteria>();
+                    return helper_ptr(new helper(get_per_helper_name(fnd), pht_char8_alhabet, fnd));
+                } else if (tpas->type()->tuple_constraint()) {
+                    typeassignment_entity_ptr fnd = tpas->criteria_typeassignment<find_simple_ta_criteria>();
+                    return helper_ptr(new helper(get_per_helper_name(tpas), pht_char16_alhabet, tpas));
+                } else if (tpas->type()->quadruple_constraint()) {
+                    typeassignment_entity_ptr fnd = tpas->criteria_typeassignment<find_simple_ta_criteria>();
+                    return helper_ptr(new helper(get_per_helper_name(tpas), pht_char32_alhabet, tpas));
+                }
+            }
+            return helper_ptr();
+        }
 
+        void per_cpp_out::add_helpers(helper_ptr hlprs, typeassignment_entity_ptr self) {
+            if(hlprs){
+                if (helpers_chk.find(*hlprs)==helpers_chk.end()){
+                    helpers.push_back(*hlprs);
+                    helpers_chk.insert(*hlprs);
+                    basic_entity_ptr scp;
+                    stream << "\n";
+                    stream << tabformat(scp, 3);     
+                    stream << "//  find helper name:   "  << hlprs->name  << "  type: "   <<  (int)hlprs->type;
+                    stream << "\n";                    
+                }
+            }
+        }    
+      
     }
 }

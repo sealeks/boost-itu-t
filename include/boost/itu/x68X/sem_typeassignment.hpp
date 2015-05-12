@@ -266,6 +266,11 @@ namespace x680 {
         typeassignment_entity_ptr from() const {
             return from_;
         }        
+        
+        template<typename CriteriaTP>
+        type_atom_ptr criteria_type(){
+            return CriteriaTP::calculate(as_type());
+        }              
 
         // canonical tag
         canonical_tag_ptr cncl_tag();
@@ -639,6 +644,11 @@ namespace x680 {
             type_atom_ptr tmptype = type();
             return tmptype ? tmptype->root_builtin() : t_NODEF;
         }
+        
+        template<typename CriteriaTP>
+        typeassignment_entity_ptr criteria_typeassignment(){
+            return CriteriaTP::calculate(as_typeassigment());
+        }        
 
         tagged_ptr tag() const {
             type_atom_ptr tmptype = type();

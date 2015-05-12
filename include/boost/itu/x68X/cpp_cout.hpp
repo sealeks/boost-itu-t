@@ -28,7 +28,7 @@ namespace x680 {
         std::string nameupper(std::string name);
         std::string namelower(std::string name);
         std::string type_str(typeassignment_entity_ptr self, bool native = false);
-        std::string fulltype_str(basic_entity_ptr self, bool withns = false);
+        std::string fulltype_str(basic_entity_ptr self, bool withns = false, const std::string& delim="::");
         std::string fullpathtype_str(typeassignment_entity_ptr self, typeassignment_entity_ptr root, std::string tp);
         std::string fromtype_str(typeassignment_entity_ptr self);
         std::string fromtype_str(type_atom_ptr self);
@@ -248,7 +248,7 @@ namespace x680 {
                 stream << "\n";
             }
 
-
+          
 
 
 
@@ -455,6 +455,48 @@ namespace x680 {
         class per_cpp_out : public base_arch_out {
 
         public:
+            
+            enum per_helper_type {
+                pht_none,
+                pht_enumerated,
+                pht_structof_int,
+                pht_structof_enum,         
+                pht_char8_alhabet,
+                pht_char16_alhabet,
+                pht_char32_alhabet
+            };
+            
+            struct helper {
+                
+                helper(const std::string& nm , per_helper_type tp, typeassignment_entity_ptr ta):
+                name(nm), type(tp), ts(ta){}             
+                
+                std::string name;
+                per_helper_type type;
+                typeassignment_entity_ptr ts;       
+                
+                friend bool operator==(const helper& ls, const helper& rs){
+                    return (ls.name == rs.name);
+                }
+
+                friend bool operator<(const helper& ls, const helper& rs){
+                    return (ls.name < rs.name);
+                }
+                
+            };
+            
+            typedef std::set<helper> helper_set;
+            typedef std::vector<helper> helper_vct;
+            typedef boost::shared_ptr<helper> helper_ptr;            
+            
+
+            struct per_helper_finder {
+                static helper_ptr check(typeassignment_entity_ptr tpas);
+            };
+
+
+
+///////////////////////////////////////////////////            
 
             per_cpp_out(const char* path, module_entity_ptr mod, const compile_option& opt) :
             base_arch_out(path, mod, opt) {
@@ -477,7 +519,30 @@ namespace x680 {
 
             std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name);            
             void execute_archive_member(namedtypeassignment_entity_ptr self, bool opt = false, std::size_t optnum=0);
+            
+            
+            template<typename CriteriaT>
+            void find_typeassignments(basic_entity_ptr self) {
+                find_typeassignments<CriteriaT>(self->childs().begin(), self->childs().end());
+            }                       
+            
+            template<typename CriteriaT>
+            void find_typeassignments(basic_entity_vector::const_iterator beg, basic_entity_vector::const_iterator end) {
+                for (basic_entity_vector::const_iterator it = beg; it != end; ++it) {
+                    typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                    add_helpers(CriteriaT::check(tpas),tpas);
+                    if (tpas)
+                        find_typeassignments<CriteriaT>(tpas);
+                }
+            }
 
+            void add_helpers(helper_ptr hlprs, typeassignment_entity_ptr self);
+           
+        private:
+
+            
+            helper_set helpers_chk;  
+            helper_vct helpers;
         };
 
 

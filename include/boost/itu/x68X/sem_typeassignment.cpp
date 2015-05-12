@@ -906,10 +906,8 @@ namespace x680 {
     defined_type type_atom::root_builtin() {
         if (builtin() != t_Reference)
             return builtin();
-        if (reff() && (reff()->as_typeassigment())) {
-            if (reff()->as_typeassigment()->type())
-                return reff()->as_typeassigment()->type()->root_builtin();
-        }
+        if (reff() && (reff()->extract_type()))
+            return reff()->extract_type()->root_builtin();
         return t_NODEF;
     }
 
@@ -921,10 +919,8 @@ namespace x680 {
             switch (builtin()) {
                 case t_Reference:
                 {
-                    if (reff() && (reff()->as_typeassigment())) {
-                        if (reff()->as_typeassigment()->type())
-                            return reff()->as_typeassigment()->type()->cncl_tag();
-                    }
+                    if (reff() && (reff()->extract_type()))
+                        return reff()->extract_type()->cncl_tag();
                     break;
                 }
                 default:
@@ -958,9 +954,8 @@ namespace x680 {
     type_atom_ptr type_atom::textualy_type() {
         if (!tag()) {
             if (isrefferrence()) {
-                if (reff() && (reff()->as_typeassigment())) {
-                    if (reff()->as_typeassigment()->type())
-                        return reff()->as_typeassigment()->type()->textualy_type();
+                if (reff() && (reff()->extract_type())) {
+                    return reff()->extract_type()->textualy_type();
                 } else {
                     return type_atom_ptr();
                 }
@@ -1178,11 +1173,11 @@ namespace x680 {
 
     typeassignment_entity_ptr type_atom::valuestructure() {
         if (isvaluestructure()) {
-            if ((reff()) && (reff()->as_typeassigment()) && (reff()->as_typeassigment()->type())) {
-                if ((reff()->as_typeassigment()->type()->builtin() == t_SEQUENCE) || (reff()->as_typeassigment()->type()->builtin() == t_SET))
+            if ((reff()) && (reff()->extract_type())) {
+                if ((reff()->extract_type()->builtin() == t_SEQUENCE) || (reff()->extract_type()->builtin() == t_SET))
                     return reff()->as_typeassigment();
-                return reff()->as_typeassigment()->type()->valuestructure();
-            } else if ((scope()) && (scope()->as_typeassigment()) && (scope()->as_typeassigment()->type())) {
+                return reff()->extract_type()->valuestructure();
+            } else if ((scope()) && (scope()->extract_type())) {
                 switch (builtin()) {
                         //case t_EXTERNAL:
                         //case t_REAL:
@@ -1211,9 +1206,8 @@ namespace x680 {
             return false;
         /// if (reff())
         //    reff()-> resolve();
-        if (reff() && (reff()->as_typeassigment())) {
-            if (reff()->as_typeassigment()->type())
-                return reff()->as_typeassigment()->type()->istextualy_choice();
+        if (reff() && (reff()->extract_type())) {
+            return reff()->extract_type()->istextualy_choice();
         }
         return false;
     }
@@ -1560,9 +1554,8 @@ namespace x680 {
             assignment_entity_ptr tmpasmt = type()->reff()->as_assigment();
             if (tmpasmt) {
                 assignment_entity_ptr fnd = tmpasmt->find_component(nidentifier_);
-                if (fnd && (fnd->as_typeassigment())) {
-                    if (fnd->as_typeassigment()->type())
-                        fnd->as_typeassigment()->type()->resolve_substitute();
+                if (fnd && (fnd->extract_type())) {
+                    fnd->extract_type()->resolve_substitute();
                     reff(fnd);
                     from_ = fnd->as_typeassigment();
                 }
@@ -1738,6 +1731,8 @@ namespace x680 {
                     rslt.push_back(rsltel);
             }
         }
+        if (builtin() == t_SET)
+            canonical_sort(rslt);
         return rslt;
     }
 
@@ -1752,7 +1747,7 @@ namespace x680 {
         }
         return rslt;
     }
-    
+
     namedtypeassignment_entity_vct typeassignment_entity::extentions() {
         namedtypeassignment_entity_vct rslt;
         for (basic_entity_vector::iterator it = first_extention(); it != second_extention(); ++it) {
@@ -1763,8 +1758,8 @@ namespace x680 {
             }
         }
         return rslt;
-    }    
-    
+    }
+
     void typeassignment_entity::resolve(basic_atom_ptr holder) {
         unicalelerror_throw(childs());
         assignment_entity::resolve(holder);
@@ -1823,7 +1818,6 @@ namespace x680 {
         resolve_extention();
     }
 
-    
     void typeassignment_entity::post_resolve_apply_componentsof() {
         if (shadow())
             return;
