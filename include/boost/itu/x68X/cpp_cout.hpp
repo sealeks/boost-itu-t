@@ -28,7 +28,8 @@ namespace x680 {
         std::string nameupper(std::string name);
         std::string namelower(std::string name);
         std::string type_str(typeassignment_entity_ptr self, bool native = false);
-        std::string fulltype_str(basic_entity_ptr self, bool withns = false, const std::string& delim="::");
+        std::string fulltype_str(basic_entity_ptr self, bool withns = false);
+        std::string fulltype_str_ext(basic_entity_ptr self, bool withns = false, const std::string& delim="::");        
         std::string fullpathtype_str(typeassignment_entity_ptr self, typeassignment_entity_ptr root, std::string tp);
         std::string fromtype_str(typeassignment_entity_ptr self);
         std::string fromtype_str(type_atom_ptr self);
@@ -462,8 +463,8 @@ namespace x680 {
                 pht_structof_int,
                 pht_structof_enum,         
                 pht_char8_alhabet,
-                pht_char16_alhabet,
-                pht_char32_alhabet
+                pht_tuple_alhabet,
+                pht_utf_alhabet
             };
             
             struct helper {
