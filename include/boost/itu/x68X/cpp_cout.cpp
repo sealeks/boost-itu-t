@@ -1125,10 +1125,10 @@ namespace x680 {
 
                 if (tmp->tuple_constraint())
                     stream << "  //   Tc " << (*(tmp->tuple_constraint())).to_alphabet_per() << " ";
-                if (typeassignment_entity_ptr root = self->root_typeassignment()){
-                    if ((root->isstruct_of()) && (!root->childs().empty()) 
-                            && (root->childs().front()->as_typeassigment())  &&
-                            (root->childs().front()->as_typeassigment()->can_per_constraints())){
+                if (typeassignment_entity_ptr root = self->root_typeassignment()) {
+                    if ((root->isstruct_of()) && (!root->childs().empty())
+                            && (root->childs().front()->as_typeassigment()) &&
+                            (root->childs().front()->as_typeassigment()->can_per_constraints())) {
                         stream << "  //  struct of ->  ";
                         mark_constraints(root->childs().front()->as_typeassigment());
                     }
@@ -2415,7 +2415,7 @@ namespace x680 {
             stream << "\n";
             find_typeassignments<per_helper_finder>(module_);
             stream << "\n";
-            
+
             print_helpers();
 
             if (option_reverse_decl())
@@ -2932,6 +2932,7 @@ namespace x680 {
                     if (fnd && (!fnd->childs().empty())) {
                         typeassignment_entity_ptr cpas = fnd->childs().front()->as_typeassigment();
                         if (cpas->root_builtin() == t_ENUMERATED) {
+                            fnd = cpas->criteria_typeassignment<find_simple_ta_criteria>();
                             return helper_ptr(new helper(get_per_helper_name(fnd), pht_structof_enum, fnd));
                         } else if ((cpas->type()) && (cpas->type()->integer_constraint())) {
                             fnd = cpas->criteria_typeassignment<find_int_per_ta_criteria>();
@@ -2987,22 +2988,101 @@ namespace x680 {
         }
 
         void per_cpp_out::print_helper(helper_ptr hlpr) {
-             print_helpers_header(hlpr);
-        }      
-        
+            print_helpers_header(hlpr);
+        }
+
+        void per_cpp_out::print_enumeraded_helper(const std::string& name, predefined_ptr predef) {
+            basic_entity_ptr scp;
+            if (predef) {
+                stream << tabformat(scp, 2);
+                stream << "ITU_T_PER_ENUMCODER_";
+                if (predef->extended())
+                    stream << "EXT";
+                stream << "(" << name << "__helper, ITU_T_ARRAY(";
+                bool fst = true;
+                for (basic_entity_vector::const_iterator it = predef->values().begin(); it != predef->values().end(); ++it) {
+                    if ((*it)->as_valueassigment()) {
+                        if (!fst)
+                            stream << ", ";
+                        else
+                            fst = false;
+                        if ((*it)->extract_value())
+                            stream << value_int_str((*it)->extract_value());
+                        else
+                            stream << " ??? ";
+                    } else {
+                        stream << "), ITU_T_ARRAY(";
+                        fst = true;
+                    }
+                }
+                stream << "));";
+                stream << "\n";
+            } //else
+            //stream << "#error ";
+        }
+
+        void per_cpp_out::print_struct_int_helper(helper_ptr hlpr) {
+            basic_entity_ptr scp;
+            if ((hlpr->ts) && (hlpr->ts->type()) && (hlpr->ts->type()->integer_constraint())) {
+                stream << tabformat(scp, 2);
+                integer_constraints::range_type main_int_cnstr = hlpr->ts->type()->integer_constraint()->to_per().main();
+                std::string name = hlpr->name + "__shelper";
+                bool ext_int_cnstr = hlpr->ts->type()->integer_constraint()->to_per().has_extention();
+                if (main_int_cnstr.single())
+                    stream << "ITU_T_REGISTRATE_NUM_SNGLCON" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
+                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) << ")";
+                else if (main_int_cnstr.right_semi())
+                    stream << "ITU_T_REGISTRATE_NUM_SIMICON" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
+                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) << ")";
+                else
+                    stream << "ITU_T_REGISTRATE_NUM_CONSTR" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
+                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) << ", " <<
+                    std::string(main_int_cnstr.right_ptr() ? to_string(main_int_cnstr.right()) : std::string(" ??? ")) << ")";
+            } //else
+            //stream << "#error ";
+        }
+
+        void per_cpp_out::print_struct_enum_helper(helper_ptr hlpr) {
+            basic_entity_ptr scp;
+            if (hlpr->ts) {
+                stream << tabformat(scp, 2);                
+                stream << "ITU_T_REGISTRATE_ENUM_CONSTRS(" << hlpr->name << "__shelper, " << hlpr->name << "__helper);";
+            } //else
+            //stream << "#error ";
+        }
+
+        void per_cpp_out::print_struct_alphabet_helper(helper_ptr hlpr) {
+
+        }
+
         void per_cpp_out::print_helpers() {
             for (helper_vct::iterator it = helpers.begin(); it != helpers.end(); ++it) {
                 if ((*it)->type == pht_enumerated)
                     print_helper(*it);
-                if (((*it)->ts)/* && (predefined_ptr predef = (*it)->ts->predefined())*/) {
-                    
-                }
+                if (((*it)->ts))
+                    print_enumeraded_helper((*it)->name, (*it)->ts->predefined());
             }
             for (helper_vct::iterator it = helpers.begin(); it != helpers.end(); ++it) {
-                if ((*it)->type != pht_enumerated)
+                if ((*it)->type != pht_enumerated) {
                     print_helper(*it);
-            }            
-        }         
+                    switch ((*it)->type) {
+                        case pht_enumerated:;
+                            break;
+                        case pht_structof_int: print_struct_int_helper(*it);
+                            break;
+                        case pht_structof_enum: print_struct_enum_helper(*it);
+                            break;
+                        case pht_char8_alhabet:
+                        case pht_tuple_alhabet:
+                        case pht_utf_alhabet: print_struct_alphabet_helper(*it);
+                            break;
+                        default:
+                        {
+                        }
+                    }
+                }
+            }
+        }
 
     }
 }

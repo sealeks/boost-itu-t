@@ -29,7 +29,7 @@ namespace x680 {
         std::string namelower(std::string name);
         std::string type_str(typeassignment_entity_ptr self, bool native = false);
         std::string fulltype_str(basic_entity_ptr self, bool withns = false);
-        std::string fulltype_str_ext(basic_entity_ptr self, bool withns = false, const std::string& delim="::");        
+        std::string fulltype_str_ext(basic_entity_ptr self, bool withns = false, const std::string& delim = "::");
         std::string fullpathtype_str(typeassignment_entity_ptr self, typeassignment_entity_ptr root, std::string tp);
         std::string fromtype_str(typeassignment_entity_ptr self);
         std::string fromtype_str(type_atom_ptr self);
@@ -62,7 +62,7 @@ namespace x680 {
         std::string seqof_str(typeassignment_entity_ptr self, const std::string& name);
         std::string choice_enum_str(typeassignment_entity_ptr self, basic_entity_ptr sub);
         std::string tagged_str(tagged_ptr self);
-        std::string tagged_class_str(tagged_ptr self);      
+        std::string tagged_class_str(tagged_ptr self);
         std::string struct_meth_str(typeassignment_entity_ptr self, const std::string& tp);
         std::string nested_init_str(type_atom_ptr self, const std::string& nm, bool ext = false);
 
@@ -249,7 +249,7 @@ namespace x680 {
                 stream << "\n";
             }
 
-          
+
 
 
 
@@ -363,7 +363,7 @@ namespace x680 {
             virtual void execute_archive_struct_output(typeassignment_entity_ptr self);
             virtual void execute_archive_struct_input(typeassignment_entity_ptr self);
 
-            std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext = false);            
+            std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext = false);
             void execute_archive_member(namedtypeassignment_entity_ptr self, bool afterext);
             void execute_archive_choice_input_helper(typeassignment_entity_ptr self, tagclass_type cls, bool notag);
             void execute_archive_choice_output_helper(typeassignment_entity_ptr self);
@@ -439,7 +439,7 @@ namespace x680 {
 
             virtual void execute_valueassignment(valueassignment_entity_ptr self) {
             };
-            
+
             virtual void execute_typeassignment(typeassignment_entity_ptr tpas);
 
         };
@@ -456,48 +456,50 @@ namespace x680 {
         class per_cpp_out : public base_arch_out {
 
         public:
-            
+
             enum per_helper_type {
+
                 pht_none,
                 pht_enumerated,
                 pht_structof_int,
-                pht_structof_enum,         
+                pht_structof_enum,
                 pht_char8_alhabet,
                 pht_tuple_alhabet,
                 pht_utf_alhabet
             };
-            
+
             struct helper {
-                
-                helper(const std::string& nm , per_helper_type tp, typeassignment_entity_ptr ta):
-                name(nm), type(tp), ts(ta){}             
-                
+
+                helper(const std::string& nm, per_helper_type tp, typeassignment_entity_ptr ta) :
+                name(nm), type(tp), ts(ta) {
+                }
+
                 std::string name;
                 per_helper_type type;
-                mutable typeassignment_entity_ptr ts;       
-                
-                friend bool operator==(const helper& ls, const helper& rs){
-                    return (ls.name == rs.name);
+                mutable typeassignment_entity_ptr ts;
+
+                friend bool operator==(const helper& ls, const helper& rs) {
+                    return ((ls.name == rs.name) && (ls.type == rs.type));
                 }
 
-                friend bool operator<(const helper& ls, const helper& rs){
-                    return (ls.name < rs.name);
+                friend bool operator<(const helper& ls, const helper& rs) {
+                    return (ls.type == rs.type) ? (ls.name < rs.name) : ((int) ls.type < (int) rs.type);
                 }
-                
+
             };
-            
+
             typedef std::set<helper> helper_set;
-            typedef boost::shared_ptr<helper> helper_ptr;              
-            typedef std::vector<helper_ptr> helper_vct;          
-            
+            typedef boost::shared_ptr<helper> helper_ptr;
+            typedef std::vector<helper_ptr> helper_vct;
 
             struct per_helper_finder {
+
                 static helper_ptr check(typeassignment_entity_ptr tpas);
             };
 
 
 
-///////////////////////////////////////////////////            
+            ///////////////////////////////////////////////////            
 
             per_cpp_out(const char* path, module_entity_ptr mod, const compile_option& opt) :
             base_arch_out(path, mod, opt) {
@@ -509,7 +511,7 @@ namespace x680 {
 
             virtual void execute_valueassignment(valueassignment_entity_ptr self) {
             };
-            
+
             virtual void execute_typeassignment(typeassignment_entity_ptr tpas);
 
 
@@ -518,15 +520,14 @@ namespace x680 {
             virtual void execute_archive_struct_output(typeassignment_entity_ptr self);
             virtual void execute_archive_struct_input(typeassignment_entity_ptr self);
 
-            std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name);            
-            void execute_archive_member(namedtypeassignment_entity_ptr self, bool opt = false, std::size_t optnum=0);
-            
-            
+            std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name);
+            void execute_archive_member(namedtypeassignment_entity_ptr self, bool opt = false, std::size_t optnum = 0);
+
             template<typename CriteriaT>
             void find_typeassignments(basic_entity_ptr self) {
                 find_typeassignments<CriteriaT>(self->childs().begin(), self->childs().end());
-            }                       
-            
+            }
+
             template<typename CriteriaT>
             void find_typeassignments(basic_entity_vector::const_iterator beg, basic_entity_vector::const_iterator end) {
                 for (basic_entity_vector::const_iterator it = beg; it != end; ++it) {
@@ -538,14 +539,18 @@ namespace x680 {
             }
 
             void add_helpers(helper_ptr hlpr);
-            void print_helpers_header(helper_ptr hlpr);        
-            void print_helper(helper_ptr hlpr);   
+            void print_helpers_header(helper_ptr hlpr);
+            void print_enumeraded_helper(const std::string& name, predefined_ptr predef);
+            void print_struct_int_helper(helper_ptr hlpr);
+            void print_struct_enum_helper(helper_ptr hlpr);
+            void print_struct_alphabet_helper(helper_ptr hlpr);
+            void print_helper(helper_ptr hlpr);
             void print_helpers();
-           
+
         private:
 
-            
-            helper_set helpers_chk;  
+
+            helper_set helpers_chk;
             helper_vct helpers;
         };
 
