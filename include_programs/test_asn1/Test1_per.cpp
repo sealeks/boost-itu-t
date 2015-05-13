@@ -17,7 +17,8 @@ namespace Test1 {
     struct Date__shelper {
 
         static void out(boost::asn1::x691::output_coder& stream, boost::asn1::visiblestring_type::value_type vl) {
-            stream.add_bitmap(boost::asn1::bitstring_type(static_cast<boost::asn1::octet_sequnce::value_type>(vl - '\x30'), 4));
+            stream.add_bitmap(boost::asn1::bitstring_type(boost::asn1::octet_sequnce(1,
+                    boost::asn1::octet_sequnce::value_type((vl - '\x30') << 4)), 4));
         }
 
         static boost::asn1::visiblestring_type::value_type in(boost::asn1::x691::input_coder& stream) {
@@ -30,62 +31,85 @@ namespace Test1 {
 
         static std::size_t bits_count(bool aligned) {
             return 4;
-                }
-
-        };
-
-
-        template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::output_coder& arch){
-
-            ITU_T_OPTIONAL_DECL_PER =  ITU_T_OPTIONAL_PER(children_);
-
-            ITU_T_OPTIONAL_SET_PER;
-
-            ITU_T_BIND_PER(*name_);
-            ITU_T_BIND_PER(*number_);
-            ITU_T_BIND_PER(*title_);
-            ITU_T_BIND_EXSIZE_SNGLCONSTRS( visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
-            ITU_T_BIND_PER(*nameOfSpouse_);
-            ITU_T_BIND_PER(children_);
         }
 
-        template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::input_coder& arch){
+    };
 
-            ITU_T_OPTIONAL_GET_PER(1 );
 
-            ITU_T_BIND_PER(*name_);
-            ITU_T_BIND_PER(*number_);
-            ITU_T_BIND_PER(*title_);
-            ITU_T_BIND_EXSIZE_SNGLCONSTRS( visiblestring_type, Date__shelper,  *(*dateOfHire_), 8);
-            ITU_T_BIND_PER(*nameOfSpouse_);
-            ITU_T_OPTIONAL_CHECK_PER(0)  ITU_T_BIND_PER(children_);
+    //  helper name:   NameString           type:  alphabet helper     //    Sc (  [ 1  ...   64 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+
+    struct NameString__shelper {
+
+        static void out(boost::asn1::x691::output_coder& stream, boost::asn1::visiblestring_type::value_type vl) {
+            stream.add_bitmap(bitstring_type(boost::asn1::octet_sequnce(1, stream.aligned() ?
+                    boost::asn1::octet_sequnce::value_type(vl) :
+                    boost::asn1::octet_sequnce::value_type(((vl < '\x60') ? (vl - '\x3F') : (vl - '\x61' + '\x1C')) << 2)),
+                    stream.aligned() ? 0 : 2));
         }
 
-
-        template<> void ChildInformation::serialize(boost::asn1::x691::output_coder& arch){
-            ITU_T_BIND_PER(*name_);
-            ITU_T_BIND_EXSIZE_SNGLCONSTRS( visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+        static boost::asn1::visiblestring_type::value_type in(boost::asn1::x691::input_coder& stream) {
+            boost::asn1::bitstring_type vl = stream.get_pop_bmp(stream.aligned() ? 8 : 6);
+            boost::asn1::octet_sequnce tmp = vl.as_octet_sequnce();
+            if (!tmp.empty())
+                return stream.aligned() ? tmp[0] : ((tmp[0] >> 2) & '\x3F') + '\x3F';
+            return 0;
         }
 
-        template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch){
-            ITU_T_BIND_PER(*name_);
-            ITU_T_BIND_EXSIZE_SNGLCONSTRS( visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+        static std::size_t bits_count(bool aligned) {
+            return aligned ? 8 : 6;
         }
 
+    };
 
-        template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch){
-            ITU_T_BIND_PER(*givenName_);
-            ITU_T_BIND_SIZE_SNGLCONSTRS( *initial_, 1);
-            ITU_T_BIND_PER(*familyName_);
-        }
+    template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        template<> void Name_impl::serialize(boost::asn1::x691::input_coder& arch){
-            ITU_T_BIND_PER(*givenName_);
-            ITU_T_BIND_SIZE_SNGLCONSTRS( *initial_, 1);
-            ITU_T_BIND_PER(*familyName_);
-        }
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(children_);
 
-} 
+        ITU_T_OPTIONAL_SET_PER;
+
+        ITU_T_BIND_PER(*name_);
+        ITU_T_BIND_PER(*number_);
+        ITU_T_BIND_PER(*title_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
+        ITU_T_BIND_PER(*nameOfSpouse_);
+        ITU_T_BIND_PER(children_);
+    }
+
+    template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::input_coder& arch) {
+
+        ITU_T_OPTIONAL_GET_PER(1);
+
+        ITU_T_BIND_PER(*name_);
+        ITU_T_BIND_PER(*number_);
+        ITU_T_BIND_PER(*title_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
+        ITU_T_BIND_PER(*nameOfSpouse_);
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(children_);
+    }
+
+    template<> void ChildInformation::serialize(boost::asn1::x691::output_coder& arch) {
+        ITU_T_BIND_PER(*name_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+    }
+
+    template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch) {
+        ITU_T_BIND_PER(*name_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+    }
+
+    template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch) {
+        ITU_T_BIND_EXSIZE_CONSTRS(visiblestring_type, NameString__shelper, *givenName_, 1, 64);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, NameString__shelper, *initial_, 1);
+        ITU_T_BIND_EXSIZE_CONSTRS(visiblestring_type, NameString__shelper, *familyName_, 1, 64);
+    }
+
+    template<> void Name_impl::serialize(boost::asn1::x691::input_coder& arch) {
+        ITU_T_BIND_EXSIZE_CONSTRS(visiblestring_type, NameString__shelper, *givenName_, 1, 64);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, NameString__shelper, *initial_, 1);
+        ITU_T_BIND_EXSIZE_CONSTRS(visiblestring_type, NameString__shelper, *familyName_, 1, 64);
+    }
+
+}
 
 
 #ifdef _MSC_VER

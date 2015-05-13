@@ -120,39 +120,39 @@ namespace Test1 {
 
     Name_impl::Name_impl() : givenName_(), initial_(), familyName_() {}; 
  
-    Name_impl::Name_impl(const visiblestring_type&  arg__givenName,
-        const visiblestring_type&  arg__initial,
-        const visiblestring_type&  arg__familyName) : 
+    Name_impl::Name_impl(const NameString&  arg__givenName,
+        const NameString&  arg__initial,
+        const NameString&  arg__familyName) : 
         givenName_(arg__givenName),
         initial_(arg__initial),
         familyName_(arg__familyName) {}; 
  
 
-        visiblestring_type& Name_impl::givenName(){ return *givenName_ ;}
+        NameString& Name_impl::givenName(){ return *givenName_ ;}
 
-        const visiblestring_type& Name_impl::givenName() const { return *givenName_ ;}
+        const NameString& Name_impl::givenName() const { return *givenName_ ;}
 
-        void Name_impl::givenName( const visiblestring_type& vl){ givenName_ =vl ;}
+        void Name_impl::givenName( const NameString& vl){ givenName_ =vl ;}
 
-        void Name_impl::givenName( boost::shared_ptr< visiblestring_type>  vl){ givenName_ =vl ;}
-
-
-        visiblestring_type& Name_impl::initial(){ return *initial_ ;}
-
-        const visiblestring_type& Name_impl::initial() const { return *initial_ ;}
-
-        void Name_impl::initial( const visiblestring_type& vl){ initial_ =vl ;}
-
-        void Name_impl::initial( boost::shared_ptr< visiblestring_type>  vl){ initial_ =vl ;}
+        void Name_impl::givenName( boost::shared_ptr< NameString>  vl){ givenName_ =vl ;}
 
 
-        visiblestring_type& Name_impl::familyName(){ return *familyName_ ;}
+        NameString& Name_impl::initial(){ return *initial_ ;}
 
-        const visiblestring_type& Name_impl::familyName() const { return *familyName_ ;}
+        const NameString& Name_impl::initial() const { return *initial_ ;}
 
-        void Name_impl::familyName( const visiblestring_type& vl){ familyName_ =vl ;}
+        void Name_impl::initial( const NameString& vl){ initial_ =vl ;}
 
-        void Name_impl::familyName( boost::shared_ptr< visiblestring_type>  vl){ familyName_ =vl ;}
+        void Name_impl::initial( boost::shared_ptr< NameString>  vl){ initial_ =vl ;}
+
+
+        NameString& Name_impl::familyName(){ return *familyName_ ;}
+
+        const NameString& Name_impl::familyName() const { return *familyName_ ;}
+
+        void Name_impl::familyName( const NameString& vl){ familyName_ =vl ;}
+
+        void Name_impl::familyName( boost::shared_ptr< NameString>  vl){ familyName_ =vl ;}
 
  
 } 

@@ -22,6 +22,7 @@ namespace Test1 {
         struct Name_impl;
 
 
+        typedef visiblestring_type NameString;  //    Sc (  [ 1  ...   64 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
         ITU_T_IMPLICIT_TYPEDEF( EmployeeNumber, int, 2, APPLICATION_CLASS);
         ITU_T_IMPLICIT_TYPEDEF( Date, visiblestring_type, 3, APPLICATION_CLASS);  //    Sc (  [ 8 ]     //    c8C (  [ 0  ...   9 ]   
 
@@ -89,13 +90,13 @@ namespace Test1 {
 
             Name_impl(); 
 
-            Name_impl(const visiblestring_type&  arg__givenName,
-                 const visiblestring_type&  arg__initial,
-                 const visiblestring_type&  arg__familyName);
+            Name_impl(const NameString&  arg__givenName,
+                 const NameString&  arg__initial,
+                 const NameString&  arg__familyName);
 
-            ITU_T_HOLDERH_DECL(givenName, visiblestring_type);
-            ITU_T_HOLDERH_DECL(initial, visiblestring_type);  //    Sc (  [ 1 ]   
-            ITU_T_HOLDERH_DECL(familyName, visiblestring_type);
+            ITU_T_HOLDERH_DECL(givenName, NameString);  //    Sc (  [ 1  ...   64 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+            ITU_T_HOLDERH_DECL(initial, NameString);  //    Sc (  [ 1 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+            ITU_T_HOLDERH_DECL(familyName, NameString);  //    Sc (  [ 1  ...   64 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
