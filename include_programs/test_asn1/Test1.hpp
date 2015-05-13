@@ -23,7 +23,7 @@ namespace Test1 {
 
 
         ITU_T_IMPLICIT_TYPEDEF( EmployeeNumber, int, 2, APPLICATION_CLASS);
-        ITU_T_IMPLICIT_TYPEDEF( Date, visiblestring_type, 3, APPLICATION_CLASS);
+        ITU_T_IMPLICIT_TYPEDEF( Date, visiblestring_type, 3, APPLICATION_CLASS);  //    Sc (  [ 8 ]     //    c8C (  [ 0  ...   9 ]   
 
         ITU_T_IMPLICIT_TYPEDEF( PersonnelRecord, PersonnelRecord_impl, 0, APPLICATION_CLASS);
         ITU_T_IMPLICIT_TYPEDEF( Name, Name_impl, 1, APPLICATION_CLASS);
@@ -61,7 +61,7 @@ namespace Test1 {
             ITU_T_HOLDERH_DECL(name, Name);
             ITU_T_HOLDERH_DECL(title, visiblestring_type);
             ITU_T_HOLDERH_DECL(number, EmployeeNumber);
-            ITU_T_HOLDERH_DECL(dateOfHire, Date);
+            ITU_T_HOLDERH_DECL(dateOfHire, Date);  //    Sc (  [ 8 ]     //    c8C (  [ 0  ...   9 ]   
             ITU_T_HOLDERH_DECL(nameOfSpouse, Name);
             ITU_T_OPTIONAL_DECL(children, Children_type);
 
@@ -78,7 +78,7 @@ namespace Test1 {
                  const Date&  arg__dateOfBirth);
 
             ITU_T_HOLDERH_DECL(name, Name);
-            ITU_T_HOLDERH_DECL(dateOfBirth, Date);
+            ITU_T_HOLDERH_DECL(dateOfBirth, Date);  //    Sc (  [ 8 ]     //    c8C (  [ 0  ...   9 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -94,7 +94,7 @@ namespace Test1 {
                  const visiblestring_type&  arg__familyName);
 
             ITU_T_HOLDERH_DECL(givenName, visiblestring_type);
-            ITU_T_HOLDERH_DECL(initial, visiblestring_type);
+            ITU_T_HOLDERH_DECL(initial, visiblestring_type);  //    Sc (  [ 1 ]   
             ITU_T_HOLDERH_DECL(familyName, visiblestring_type);
 
             ITU_T_ARCHIVE_FUNC;
