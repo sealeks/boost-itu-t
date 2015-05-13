@@ -2964,8 +2964,8 @@ namespace x680 {
         void per_cpp_out::print_helpers_header(helper_ptr hlpr) {
             basic_entity_ptr scp;
             stream << "\n\n";
-            stream << tabformat(scp, 3);
-            stream << "//  find helper name:   " << hlpr->name << "  type: ";
+            stream << tabformat(scp, 2);
+            stream << "//  helper name:   " << hlpr->name << "           type: ";
             switch (hlpr->type) {
                 case pht_enumerated: stream << " enumerated helper ";
                     break;
@@ -2994,6 +2994,9 @@ namespace x680 {
             for (helper_vct::iterator it = helpers.begin(); it != helpers.end(); ++it) {
                 if ((*it)->type == pht_enumerated)
                     print_helper(*it);
+                if (((*it)->ts)/* && (predefined_ptr predef = (*it)->ts->predefined())*/) {
+                    
+                }
             }
             for (helper_vct::iterator it = helpers.begin(); it != helpers.end(); ++it) {
                 if ((*it)->type != pht_enumerated)
