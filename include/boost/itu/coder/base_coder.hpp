@@ -507,6 +507,8 @@ namespace boost {
             }
 
             encoding_rule rule_;
+            
+            
             std::size_t unuse_;
             const_sequences_ptr listbuffers_;
             vect_octet_sequnce_ptr rows_vect;
@@ -617,6 +619,7 @@ namespace boost {
             }
 
             encoding_rule rule_;
+            
             std::size_t unuse_;
             mutable_sequences_ptr listbuffers_;
             vect_octet_sequnce_ptr rows_vect;
