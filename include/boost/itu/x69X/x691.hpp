@@ -682,6 +682,10 @@ namespace boost {
                 }
 
                 void add_nsn_small(std::size_t indx);
+                       
+                void start_open();             
+                
+                void end_open();                 
 
                 template<typename T>
                 void operator&(const T& vl) {

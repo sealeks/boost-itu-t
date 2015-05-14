@@ -791,6 +791,7 @@ namespace boost {
         base_output_coder::data_state base_output_coder::datastate_pop() {
             if (!state_stack_.empty()) {
                 data_state ds = state_stack_.top();
+                ds.swap(*this);
                 state_stack_.pop();
                 return ds;
             }
@@ -849,6 +850,7 @@ namespace boost {
         base_input_coder::data_state base_input_coder::datastate_pop() {
             if (!state_stack_.empty()) {
                 data_state ds = state_stack_.top();
+                ds.swap(*this);
                 state_stack_.pop();
                 return ds;
             }

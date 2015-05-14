@@ -163,6 +163,16 @@ namespace boost {
             void output_coder::add_nsn_small(std::size_t indx) {
                 *this << small_nn_wnumber <std::size_t>(indx);
             }
+            
+             void output_coder::start_open() {
+                 datastate_push();
+            }           
+             
+             void output_coder::end_open() {
+                 if (has_datastate()){
+                     data_state ds = datastate_pop();
+                 }
+            }                     
 
 
 
