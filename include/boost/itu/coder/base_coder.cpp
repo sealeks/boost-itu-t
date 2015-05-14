@@ -68,8 +68,6 @@ namespace boost {
         boost::itu::containers::vector<oidindx_type>(vl, vl + size) {
         }
 
-
-
         std::ostream& operator<<(std::ostream& stream, const oid_type& vl) {
             for (oid_type::const_iterator it = vl.begin(); it != vl.end(); ++it)
                 if (it == vl.begin())
@@ -408,10 +406,10 @@ namespace boost {
                 case BER_ENCODING: return boost::asn1::BASIC_ENCODING_OID;
                 case CER_ENCODING: return boost::asn1::CANONICAL_ENCODING_OID;
                 case DER_ENCODING: return boost::asn1::DISTINGUISH_ENCODING_OID;
-                case PER_ALIGNED_ENCODING: return boost::asn1::PER_ALIGNED_ENCODING_OID; 
-                case PER_UNALIGNED_ENCODING: return boost::asn1::PER_UNALIGNED_ENCODING_OID;        
-                case CPER_ALIGNED_ENCODING: return boost::asn1::CPER_ALIGNED_ENCODING_OID; 
-                case CPER_UNALIGNED_ENCODING: return boost::asn1::CPER_UNALIGNED_ENCODING_OID;                 
+                case PER_ALIGNED_ENCODING: return boost::asn1::PER_ALIGNED_ENCODING_OID;
+                case PER_UNALIGNED_ENCODING: return boost::asn1::PER_UNALIGNED_ENCODING_OID;
+                case CPER_ALIGNED_ENCODING: return boost::asn1::CPER_ALIGNED_ENCODING_OID;
+                case CPER_UNALIGNED_ENCODING: return boost::asn1::CPER_UNALIGNED_ENCODING_OID;
                 default:
                 {
                 }
@@ -427,13 +425,13 @@ namespace boost {
             if (val == boost::asn1::DISTINGUISH_ENCODING_OID)
                 return DER_ENCODING;
             if (val == boost::asn1::PER_ALIGNED_ENCODING_OID)
-                return PER_ALIGNED_ENCODING;      
+                return PER_ALIGNED_ENCODING;
             if (val == boost::asn1::PER_UNALIGNED_ENCODING_OID)
-                return PER_UNALIGNED_ENCODING;  
+                return PER_UNALIGNED_ENCODING;
             if (val == boost::asn1::CPER_ALIGNED_ENCODING_OID)
-                return CPER_ALIGNED_ENCODING;      
+                return CPER_ALIGNED_ENCODING;
             if (val == boost::asn1::CPER_UNALIGNED_ENCODING_OID)
-                return CPER_UNALIGNED_ENCODING;                
+                return CPER_UNALIGNED_ENCODING;
             return NULL_ENCODING;
         }
 
@@ -538,16 +536,16 @@ namespace boost {
             return std::string(static_cast<const char*> (&hex_char_array_const[((vl >> 4) & 0xF)]), 1) +
                     std::string(static_cast<const char*> (&hex_char_array_const[((vl) & 0xF)]), 1);
         }
-        
+
         std::string binary_to_hexsequence_debug(const std::string& vl, std::size_t group) {
             std::string rslt = "";
-            for (std::string::size_type it = 0; it < vl.size(); ++it) {               
-                if ((group>0) && it && !(it%group))
-                     rslt = rslt + "  ";
+            for (std::string::size_type it = 0; it < vl.size(); ++it) {
+                if ((group > 0) && it && !(it % group))
+                    rslt = rslt + "  ";
                 rslt = rslt + num8t_to_hexstr(vl.at(it));
             }
             return rslt;
-        }        
+        }
 
         std::size_t pop_frontlist(mutable_sequences& val, std::size_t start) {
             std::size_t rslt = 0;
@@ -784,6 +782,25 @@ namespace boost {
             return true;
         }
 
+        void base_output_coder::datastate_push() {
+            data_state ds;
+            ds.swap(*this);
+            state_stack_.push(ds);
+        }
+
+        base_output_coder::data_state base_output_coder::datastate_pop() {
+            if (!state_stack_.empty()) {
+                data_state ds = state_stack_.top();
+                state_stack_.pop();
+                return ds;
+            }
+            return data_state();
+        }
+
+        bool base_output_coder::has_datastate() const {
+            return !state_stack_.empty();
+        }
+
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////      
@@ -811,6 +828,9 @@ namespace boost {
 
         void base_input_coder::clear() {
             listbuffers_->clear();
+            rows_vect.clear();   //                                           ???
+            while (!state_stack_.empty())
+                state_stack_.pop();
             size_ = 0;
         }
 
@@ -820,7 +840,24 @@ namespace boost {
             return true;
         }
 
+        void base_input_coder::datastate_push() {
+            data_state ds;
+            ds.swap(*this);
+            state_stack_.push(ds);
+        }
 
+        base_input_coder::data_state base_input_coder::datastate_pop() {
+            if (!state_stack_.empty()) {
+                data_state ds = state_stack_.top();
+                state_stack_.pop();
+                return ds;
+            }
+            return data_state();
+        }
+
+        bool base_input_coder::has_datastate() const {
+            return !state_stack_.empty();
+        }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////  

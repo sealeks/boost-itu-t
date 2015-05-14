@@ -398,7 +398,35 @@ namespace boost {
         class base_output_coder {
 
         public:
+            
+            
+            /////////////////////////////////////////////////////            
 
+            struct data_state {
+              
+                data_state() : unuse_(0), size_(0) {                    
+                }
+                ~data_state(){                    
+                }
+                
+                void swap(base_output_coder& rt){
+                    std::swap(unuse_, rt.unuse_);
+                    std::swap(listbuffers_, rt.listbuffers_);    
+                    std::swap(rows_vect, rt.rows_vect);
+                    std::swap(size_, rt.size_);                      
+                }
+                
+                std::size_t unuse_;
+                const_sequences_ptr listbuffers_;
+                vect_octet_sequnce_ptr rows_vect;
+                std::size_t size_;
+            };
+            
+            typedef std::stack<data_state> state_stack_type;     
+            
+            /////////////////////////////////////////////////////
+            
+            
 
             typedef const_sequences::iterator iterator_type;
 
@@ -452,6 +480,8 @@ namespace boost {
             virtual void clear() {
                 listbuffers_->clear();
                 rows_vect.clear();
+                while(!state_stack_.empty())
+                    state_stack_.pop();
                 size_ = 0;
             }
 
@@ -499,20 +529,31 @@ namespace boost {
                 if (unusebits())
                     unusebits(0);
             }
-
+            
         protected:
+            
+            void datastate_push();
+
+            data_state datastate_pop();
+            
+            bool has_datastate() const;
 
             std::size_t unusebits(std::size_t vl) {
                 return unuse_ = vl % 8;
             }
 
             encoding_rule rule_;
-            
+                        
+            /////////////////////////////////////////////////////            
             
             std::size_t unuse_;
             const_sequences_ptr listbuffers_;
             vect_octet_sequnce_ptr rows_vect;
             std::size_t size_;
+            
+            /////////////////////////////////////////////////////            
+            
+            state_stack_type state_stack_;
 
         };
 
@@ -524,6 +565,32 @@ namespace boost {
         class base_input_coder {
 
         public:
+            
+            ///////////////////////////////////////////////////////
+            
+            struct data_state {
+              
+                data_state() : unuse_(0), size_(0) {                    
+                }
+                ~data_state(){                    
+                }
+                
+                void swap(base_input_coder& rt){
+                    std::swap(unuse_, rt.unuse_);
+                    std::swap(listbuffers_, rt.listbuffers_);    
+                    std::swap(rows_vect, rt.rows_vect);
+                    std::swap(size_, rt.size_);                      
+                }
+                
+                std::size_t unuse_;
+                mutable_sequences_ptr listbuffers_;
+                vect_octet_sequnce_ptr rows_vect;
+                std::size_t size_;
+            };
+            
+            typedef std::stack<data_state> state_stack_type;  
+            
+            /////////////////////////////////////////////////////
 
             typedef mutable_sequences::iterator iterator_type;
 
@@ -615,15 +682,26 @@ namespace boost {
 
             void decsize(std::size_t sz) {
                 size_ = size_ < sz ? 0 : (size_ - sz);
-                //std::cout << "decsize IARCHVE size:"  << size_  << std::endl;
             }
+            
+            void datastate_push();
+
+            data_state datastate_pop();
+            
+            bool has_datastate() const;         
 
             encoding_rule rule_;
+            
+            /////////////////////////////////////////////////////             
             
             std::size_t unuse_;
             mutable_sequences_ptr listbuffers_;
             vect_octet_sequnce_ptr rows_vect;
             std::size_t size_;
+            
+            /////////////////////////////////////////////////////         
+            
+            state_stack_type state_stack_;            
 
         };
 
