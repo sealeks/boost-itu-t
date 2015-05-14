@@ -520,6 +520,8 @@ namespace x680 {
             virtual void execute_archive_struct_output(typeassignment_entity_ptr self);
             virtual void execute_archive_struct_input(typeassignment_entity_ptr self);
 
+            std::string archive_member_per_constr(helper_ptr hlpr, const std::string& name, tagmarker_type dfltopt,
+                    size_constraints_ptr sizeconst, integer_constraints_ptr intconstr, bool alpha);
             std::string archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name);
             void execute_archive_member(namedtypeassignment_entity_ptr self, bool opt = false, std::size_t optnum = 0);
 

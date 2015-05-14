@@ -2742,14 +2742,27 @@ namespace x680 {
             stream << "\n";
         }
 
-        static std::string archive_member_per_constr(const std::string& name, tagmarker_type dfltopt, size_constraints_ptr sizeconst, integer_constraints_ptr intconstr, bool alpha) {
+        std::string per_cpp_out::archive_member_per_constr(helper_ptr hlpr, const std::string& name, tagmarker_type dfltopt, size_constraints_ptr sizeconst, integer_constraints_ptr intconstr, bool alpha) {
             if (sizeconst) {
                 size_constraints::range_type main_size_cnstr = sizeconst->to_per().main();
                 bool ext_size_cnstr = sizeconst->to_per().has_extention();
-                if (intconstr) {
-
-                } else if (alpha) {
-
+                if (intconstr || alpha) {
+                    if (hlpr && (hlpr->ts)) {
+                        if (main_size_cnstr.single())
+                            return "ITU_T_BIND_EXSIZE_SNGLCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + 
+                                    fromtype_str(hlpr->ts) + ", "+ hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ", " +
+                                    std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
+                        else if (main_size_cnstr.right_semi())
+                            return "ITU_T_BIND_EXSIZE_SEMICONSTR" + std::string(ext_size_cnstr ? "E" : "S")  + "( " +
+                                    fromtype_str(hlpr->ts) + ", "+ hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ", " +
+                            std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
+                        else
+                            return "ITU_T_BIND_EXSIZE_CONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " +
+                                    fromtype_str(hlpr->ts) + ", "+ hlpr->name + "__shelper, "  + name_arch(name, dfltopt) + ", " +
+                            std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ", " +
+                            std::string(main_size_cnstr.right_ptr() ? to_string(main_size_cnstr.right()) : std::string(" ??? ")) + ")";
+                    }
+                    else  return "#error Per binding";
                 } else {
                     if (main_size_cnstr.single())
                         return "ITU_T_BIND_SIZE_SNGLCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
@@ -2775,6 +2788,11 @@ namespace x680 {
                     return "ITU_T_BIND_NUM_CONSTR" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
                     std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) + ", " +
                     std::string(main_int_cnstr.right_ptr() ? to_string(main_int_cnstr.right()) : std::string(" ??? ")) + ")";
+            } else if (alpha) {
+                if (hlpr && (hlpr->ts))
+                    return "ITU_T_BIND_EX_CONSTRS(" + fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ")";
+                else
+                    return "#error Per binding";
             }
             return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
         }
@@ -2783,12 +2801,22 @@ namespace x680 {
             tagmarker_type dfltopt = self->marker();
             if ((dfltopt == mk_default) && (self->isstruct_of()))
                 dfltopt = mk_optional;
-            if ((self->type()) && (self->type()->can_per_constraints())) {
-                type_atom_ptr tmp = self->type();
-                size_constraints_ptr szconstr = tmp->size_constraint() ? tmp->size_constraint() : size_constraints_ptr();
-                integer_constraints_ptr intconstr = tmp->integer_constraint() ? tmp->integer_constraint() : integer_constraints_ptr();
-                bool alpha = (((tmp->char8_constraint())) || (tmp->tuple_constraint()) || (tmp->quadruple_constraint()));
-                return archive_member_per_constr(name, dfltopt, szconstr, intconstr, alpha);
+            helper_ptr helper = per_helper_finder::check(self);
+            if (self->type()) {
+                if (self->type()->can_per_constraints()) {
+                    type_atom_ptr tmp = self->type();
+                    size_constraints_ptr szconstr = tmp->size_constraint() ? tmp->size_constraint() : size_constraints_ptr();
+                    integer_constraints_ptr intconstr = tmp->integer_constraint() ? tmp->integer_constraint() : integer_constraints_ptr();
+                    bool alpha = (((tmp->char8_constraint())) || (tmp->tuple_constraint()) || (tmp->quadruple_constraint()));
+                    return archive_member_per_constr(helper, name, dfltopt, szconstr, intconstr, alpha);
+                }
+                else if (helper) {
+                    if (helper->type==pht_enumerated){
+                        return "ITU_T_BIND_PER_ENUM(" + name_arch(name, dfltopt) + ", " +  helper->name + "__helper)";
+                    } else if ((helper->type==pht_structof_enum) || (helper->type==pht_structof_int)) {
+                       return "ITU_T_BIND_EX_CONSTRS(" +  fromtype_str(self) + ", " +  helper->name + "__shelper, "+ name_arch(name, dfltopt) +")";                        
+                    }                   
+                }
             }
             return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
         }
@@ -3052,15 +3080,41 @@ namespace x680 {
         }
 
         void per_cpp_out::print_struct_alphabet_helper(helper_ptr hlpr) {
-
+            basic_entity_ptr scp;
+            if (hlpr->ts) {
+                 std::string typenm = builtin_str(hlpr->ts->root_builtin());
+                stream << tabformat(scp, 2);
+                stream << "struct " << hlpr->name << "__shelper" << " {\n";
+                stream << tabformat(scp, 3);
+                stream << "static void out(boost::asn1::x691::output_coder& stream, boost::asn1::" << typenm << "::value_type vl){\n";
+                stream << tabformat(scp, 4);
+                stream << "??? Manualy_mplementation_required \n";
+                stream << tabformat(scp, 4);
+                stream << "}\n\n";
+                stream << tabformat(scp, 3);
+                stream << "static " << typenm << "::value_type in(boost::asn1::x691::input_coder& stream){\n";
+                stream << tabformat(scp, 4);
+                stream << "??? Manualy_mplementation_required \n";
+                stream << tabformat(scp, 4);
+                stream << "}\n\n";
+                stream << tabformat(scp, 3);                
+                stream << "static std::size_t bits_count(bool aligned){\n";
+                stream << tabformat(scp, 4);
+                stream << "??? Manualy_mplementation_required \n";
+                stream << tabformat(scp, 4);
+                stream << "}\n\n";
+                stream << tabformat(scp, 2);
+                stream << "};\n";
+            }
         }
 
         void per_cpp_out::print_helpers() {
             for (helper_vct::iterator it = helpers.begin(); it != helpers.end(); ++it) {
-                if ((*it)->type == pht_enumerated)
+                if ((*it)->type == pht_enumerated) {
                     print_helper(*it);
-                if (((*it)->ts))
-                    print_enumeraded_helper((*it)->name, (*it)->ts->predefined());
+                    if (((*it)->ts))
+                        print_enumeraded_helper((*it)->name, (*it)->ts->predefined());
+                }
             }
             for (helper_vct::iterator it = helpers.begin(); it != helpers.end(); ++it) {
                 if ((*it)->type != pht_enumerated) {
