@@ -35,6 +35,10 @@
 #define ITU_T_GET_NSN_SMALL_INDX std::size_t __indx__ = arch.get_nsn_small();
 
 
+#define ITU_T_PER_START_OPEN  arch.start_open();
+#define ITU_T_PER_END_OPEN  arch.end_open();
+#define ITU_T_PER_PARSE_OPEN  arch.end_open();
+
 //   main bind and bind per enum
 #define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
 #define ITU_T_BIND_PER_ENUM(var, nm) boost::asn1::bind_per_enum< nm ## __coder >(arch, var);
@@ -1323,6 +1327,8 @@ namespace boost {
                 }
 
                 std::size_t get_nsn_small();
+                
+                void parse_open();                            
 
                 template<typename T>
                 void operator&(const T& vl) {

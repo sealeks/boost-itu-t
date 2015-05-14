@@ -53,7 +53,7 @@ namespace boost {
             // element constrainter
 
             void numericstring_ec::out(boost::asn1::x691::output_coder& stream, numericstring_type::value_type vl) {
-                stream.add_bitmap(bitstring_type(octet_sequnce(1, octet_sequnce::value_type((vl-'\x20') << 4)), 4));
+                stream.add_bitmap(bitstring_type(octet_sequnce(1, octet_sequnce::value_type((vl - '\x20') << 4)), 4));
             }
 
             numericstring_type::value_type numericstring_ec::in(boost::asn1::x691::input_coder& stream) {
@@ -163,16 +163,24 @@ namespace boost {
             void output_coder::add_nsn_small(std::size_t indx) {
                 *this << small_nn_wnumber <std::size_t>(indx);
             }
-            
-             void output_coder::start_open() {
-                 datastate_push();
-            }           
-             
-             void output_coder::end_open() {
-                 if (has_datastate()){
-                     data_state ds = datastate_pop();
-                 }
-            }                     
+
+            void output_coder::start_open() {
+                datastate_push();
+            }
+
+            void output_coder::end_open() {
+                if (has_datastate()) {
+                    data_state ds = datastate_pop();
+                    octet_sequnce data;
+                    for (boost::itu::const_sequences::const_iterator it = ds.listbuffers_->begin(); it != ds.listbuffers_->end(); ++it) {
+                        data.insert(data.end(), boost::asio::buffer_cast<const octet_type*>(*it),
+                                boost::asio::buffer_cast<const octet_type*>(*it) + boost::asio::buffer_size(*it));
+                    }
+                    if (data.empty())
+                        data.push_back(0);
+                    octet_writer_undefsz(*this, data);
+                }
+            }
 
 
 
@@ -542,9 +550,9 @@ namespace boost {
             }
 
             octet_sequnce input_coder::get_pop_octs(std::size_t sz, bool alighn) {
-                octet_sequnce tmp;
-                get_pop_octets(sz, tmp, alighn);
-                return tmp;
+                octet_sequnce data;
+                get_pop_octets(sz, data, alighn);
+                return data;
             }
 
             std::size_t input_coder::get_nsn_small() {
@@ -552,6 +560,12 @@ namespace boost {
                 small_nn_wnumber <std::size_t> vl(rslt);
                 *this >> vl;
                 return rslt;
+            }
+
+            void input_coder::parse_open() {
+                octet_sequnce data;
+                octet_reader_undefsz(*this, data);
+                add_front(data);
             }
 
 
