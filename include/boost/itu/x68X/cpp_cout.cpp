@@ -752,6 +752,7 @@ namespace x680 {
 
         static std::string name_arch(const std::string& nm, tagmarker_type mkr) {
             switch (mkr) {
+                case mk_exception: return "*(*" + nm + ")";                
                 case mk_default: return nm + ".get_shared()";
                 case mk_none: return "*" + nm;
                 default:
@@ -2762,7 +2763,7 @@ namespace x680 {
                             std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ", " +
                             std::string(main_size_cnstr.right_ptr() ? to_string(main_size_cnstr.right()) : std::string(" ??? ")) + ")";
                     }
-                    else  return "#error Per binding";
+                    else  return "??? Per binding";
                 } else {
                     if (main_size_cnstr.single())
                         return "ITU_T_BIND_SIZE_SNGLCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
@@ -2792,7 +2793,7 @@ namespace x680 {
                 if (hlpr && (hlpr->ts))
                     return "ITU_T_BIND_EX_CONSTRS(" + fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ")";
                 else
-                    return "#error Per binding";
+                    return "??? Per binding";
             }
             return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
         }
@@ -2801,6 +2802,8 @@ namespace x680 {
             tagmarker_type dfltopt = self->marker();
             if ((dfltopt == mk_default) && (self->isstruct_of()))
                 dfltopt = mk_optional;
+            if (self->prefixed_typeassignment())
+                dfltopt = mk_exception;
             helper_ptr helper = per_helper_finder::check(self);
             if (self->type()) {
                 if (self->type()->can_per_constraints()) {

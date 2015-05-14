@@ -647,6 +647,8 @@ namespace x680 {
 
         typeassignment_entity_ptr root_typeassignment();
 
+        typeassignment_entity_ptr prefixed_typeassignment();    
+
         template<typename CriteriaTP>
         typeassignment_entity_ptr criteria_typeassignment() {
             return CriteriaTP::calculate(as_typeassigment());

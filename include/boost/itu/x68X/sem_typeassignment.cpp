@@ -1197,7 +1197,7 @@ namespace x680 {
 
     bool type_atom::can_integer_constraints() {
         return (root_builtin() == t_INTEGER);
-        }      
+    }
 
     bool type_atom::istextualy_choice() {
         if (builtin() == t_CHOICE)
@@ -1609,9 +1609,33 @@ namespace x680 {
 
     typeassignment_entity_ptr typeassignment_entity::root_typeassignment() {
         return criteria_typeassignment<find_builtin_ta_criteria>();
-    } 
-    
-    
+    }
+
+    struct find_prefixed_ta_criteria {
+
+        static typeassignment_entity_ptr calculate(typeassignment_entity_ptr vl) {
+            if (vl && (vl->as_named()) && (vl->extract_type())) {
+                if ((vl->extract_type()->isrefferrence()) && (vl->extract_type()->reff()) &&
+                        (vl->extract_type()->reff()->as_typeassigment()))
+                    return calculate(vl->extract_type()->reff()->as_typeassigment());
+                return typeassignment_entity_ptr();
+            }
+            if (vl && (!vl->as_named()) && (vl->extract_type())) {
+                if (vl->tag())
+                    return vl;
+                if ((vl->extract_type()->isrefferrence()) && (vl->extract_type()->reff()) &&
+                        (vl->extract_type()->reff()->as_typeassigment()))
+                    return calculate(vl->extract_type()->reff()->as_typeassigment());
+            }
+            return typeassignment_entity_ptr();
+        }
+    };
+
+    typeassignment_entity_ptr typeassignment_entity::prefixed_typeassignment() {
+        return criteria_typeassignment<find_prefixed_ta_criteria>();
+    }
+
+
     ////////
 
     basic_entity_ptr typeassignment_entity::find_by_name(const std::string& nm, search_marker sch) {
