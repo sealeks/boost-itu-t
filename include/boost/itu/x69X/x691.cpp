@@ -53,7 +53,7 @@ namespace boost {
             // element constrainter
 
             void numericstring_ec::out(boost::asn1::x691::output_coder& stream, numericstring_type::value_type vl) {
-                stream.add_bitmap(bitstring_type(vl - '\x20', 4));
+                stream.add_bitmap(bitstring_type(octet_sequnce(1, octet_sequnce::value_type((vl-'\x20') << 4)), 4));
             }
 
             numericstring_type::value_type numericstring_ec::in(boost::asn1::x691::input_coder& stream) {
