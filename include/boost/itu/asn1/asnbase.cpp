@@ -67,6 +67,12 @@ namespace boost {
 
 
 
+        // null_type
+
+        std::ostream& operator<<(std::ostream& stream, const null_type& vl) {
+            return stream << "NULL TYPE" << std::endl;
+        }
+
 
         // relative oid type
 
@@ -80,12 +86,8 @@ namespace boost {
                     stream << *it;
                 else
                     stream << "." << *it;
-            //stream << std::endl;
             return stream;
         }
-
-
-
 
 
 
@@ -95,6 +97,22 @@ namespace boost {
             stream << std::string(vl.begin(), vl.end());
             return stream;
         }
+
+
+        // universalstring_type
+
+        std::ostream& operator<<(std::ostream& stream, const universalstring_type& vl) {
+            return stream << vl.operator std::string();
+        }
+
+
+
+        // bmpstring_type       
+
+        std::ostream& operator<<(std::ostream& stream, const bmpstring_type& vl) {
+            return stream << vl.operator std::string();
+        }
+
 
 
         // time types      
@@ -265,6 +283,17 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const gentime_type& vl) {
             return stream << vl.value();
         }
+
+
+
+
+
+        //  explicit_value   
+
+        std::ostream& operator<<(std::ostream& stream, const tag& vl) {
+            return stream << "TAG: " << vl.id() << " mask:" << vl.mask() << '\n';
+        }
+
 
 
         // external 

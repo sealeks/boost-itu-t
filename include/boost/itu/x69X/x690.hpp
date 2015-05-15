@@ -91,9 +91,7 @@ namespace boost {
 
             };
 
-            inline std::ostream& operator<<(std::ostream& stream, const size_class& vl) {
-                return vl.undefsize() ? (stream << "SIZE:  undef" << '\n') : (stream << "SIZE:  " << vl.size() << '\n');
-            }
+            std::ostream& operator<<(std::ostream& stream, const size_class& vl);
 
 
             ///////////////////

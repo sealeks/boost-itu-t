@@ -108,7 +108,7 @@ namespace boost {\
             } ;\
             
 
-    #define ITU_T_USE_UNIVESAL_DECL using boost::asn1::null_type;\
+#define ITU_T_USE_UNIVESAL_DECL using boost::asn1::null_type;\
     using boost::asn1::enumerated_type;\
     using boost::asn1::bitstring_type;\
     using boost::asn1::octetstring_type;\
@@ -258,6 +258,26 @@ namespace boost {
 
 
 
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // null_type
+        //////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+        class null_type {
+
+        public:
+
+            null_type() {
+            }
+        };
+
+        std::ostream& operator<<(std::ostream& stream, const null_type& vl);
+
+
+
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // enumerated_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -278,10 +298,6 @@ namespace boost {
             enum_base_type value() const {
                 return value_;
             }
-
-            /*operator enum_base_type() const {
-                return value_;
-            }*/
 
             enum_base_type as_base() const {
                 return value_;
@@ -309,6 +325,8 @@ namespace boost {
 
 
 
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // reloid_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -328,26 +346,6 @@ namespace boost {
 
         std::ostream& operator<<(std::ostream& stream, const reloid_type& vl);
 
-
-
-
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // null_type
-        //////////////////////////////////////////////////////////////////////////////////////////////////// 
-
-        class null_type {
-
-        public:
-
-            null_type() {
-            }
-        };
-
-        inline std::ostream& operator<<(std::ostream& stream, const null_type& vl) {
-            return stream << "NULL TYPE" << std::endl;
-        }
 
 
 
@@ -567,9 +565,7 @@ namespace boost {
 
         };
 
-        inline std::ostream& operator<<(std::ostream& stream, const universalstring_type& vl) {
-            return stream << vl.operator std::string();
-        }
+        std::ostream& operator<<(std::ostream& stream, const universalstring_type& vl);
 
 
 
@@ -653,9 +649,7 @@ namespace boost {
 
         };
 
-        inline std::ostream& operator<<(std::ostream& stream, const bmpstring_type& vl) {
-            return stream << vl.operator std::string();
-        }
+        std::ostream& operator<<(std::ostream& stream, const bmpstring_type& vl);
 
 
 
@@ -929,9 +923,7 @@ namespace boost {
             octet_type mask_;
         };
 
-        inline std::ostream& operator<<(std::ostream& stream, const tag& vl) {
-            return stream << "TAG: " << vl.id() << " mask:" << vl.mask() << '\n';
-        }
+        std::ostream& operator<<(std::ostream& stream, const tag& vl);
 
 
 
@@ -1591,10 +1583,10 @@ namespace boost {
                     return*internal_;
                 return DT;
             }
-            
+
             operator bool() const {
                 return ((internal_) || (* internal_ != DT));
-            }            
+            }
 
             const T& operator=(const T & vl) {
                 internal_ = (vl != DT) ? boost::shared_ptr<T > (new T(vl)) : boost::shared_ptr<T>();

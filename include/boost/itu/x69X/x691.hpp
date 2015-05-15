@@ -288,9 +288,7 @@ namespace boost {
                 size_type size_;
             };
 
-            inline std::ostream& operator<<(std::ostream& stream, const size_class& vl) {
-                return stream << "SIZE:  " << vl.size() << '\n';
-            }
+            std::ostream& operator<<(std::ostream& stream, const size_class& vl);
 
 
             ///////////////////////////////////////////////////////////////////////////////////
