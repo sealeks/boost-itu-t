@@ -156,7 +156,7 @@ namespace boost {\
                                                                              boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
                                                                              boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
 
-#define ITU_T_CHOICES_DEFN(fullnm, nm  ,tp ,enm) void fullnm (const tp & vl){ set< tp >(new tp (vl), enm );}
+#define ITU_T_CHOICES_DEFN(fullnm, memb  ,tp ,enm) void fullnm (const tp & vl){ set< tp >(new tp (vl), enm );}
 
 // choice
 #define ITU_T_CHOICEC_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);};\
@@ -164,7 +164,7 @@ namespace boost {\
                                                                              boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
                                                                              boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
         
-#define ITU_T_CHOICEC_DEFN(fullnm, nm  ,tp ,enm);        
+#define ITU_T_CHOICEC_DEFN(fullnm, memb  ,tp ,enm);        
 
 
 /////////////////////////////////
