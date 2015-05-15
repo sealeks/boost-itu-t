@@ -156,7 +156,7 @@ namespace boost {\
                                                                              boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
                                                                              boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
 
-#define ITU_T_CHOICES_DEFN(fullnm, memb  ,tp ,enm) void fullnm (const tp & vl){ set< tp >(new tp (vl), enm );}
+#define ITU_T_CHOICES_DEFN(fullnm, nm  ,tp ,enm) void fullnm (const tp & vl){ set< tp >(new tp (vl), enm );}
 
 // choice
 #define ITU_T_CHOICEC_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);};\
@@ -164,17 +164,11 @@ namespace boost {\
                                                                              boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
                                                                              boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
         
-#define ITU_T_CHOICEC_DEFN(fullnm, memb  ,tp ,enm);        
+#define ITU_T_CHOICEC_DEFN(fullnm, nm  ,tp ,enm);        
 
 
 /////////////////////////////////
 
-
-// value simple 
-#define ITU_T_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl);\
-                                                                       tp & nm ();\
-                                                                       const tp & nm  () const; \
-                                                                       private:  tp  nm ## _ ; public: 
 
 // value with holder
 #define ITU_T_HOLDERH_DECL(nm ,tp )  void nm ( const tp & vl);\
@@ -182,6 +176,13 @@ namespace boost {\
                                                                        const tp & nm () const ;\
                                                                        void nm  (boost::shared_ptr< tp > vl);\
                                                                        private: boost::asn1::value_holder< tp > nm ## _ ; public:
+
+// value simple 
+#define ITU_T_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl);\
+                                                                       tp & nm ();\
+                                                                       const tp & nm  () const; \
+                                                                       private:  tp  nm ## _ ; public: 
+
 
 
 //#define ITU_T_HOLDERH_DEFN(fullnm, nm  ,tp );
