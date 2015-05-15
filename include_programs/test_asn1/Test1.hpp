@@ -17,105 +17,114 @@ namespace Test1 {
     ITU_T_USE_UNIVESAL_DECL;
 
 
-        struct PersonnelRecord_impl;
-        struct ChildInformation;
-        struct Name_impl;
+    struct PersonnelRecord_impl;
+    struct ChildInformation;
+    struct Name_impl;
 
 
-        typedef visiblestring_type NameString;  //    Sc (  [ 1  ...   64 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
-        ITU_T_IMPLICIT_TYPEDEF( EmployeeNumber, int, 2, APPLICATION_CLASS);
-        ITU_T_IMPLICIT_TYPEDEF( Date, visiblestring_type, 3, APPLICATION_CLASS);  //    Sc (  [ 8 ]     //    c8C (  [ 0  ...   9 ]   
+    typedef visiblestring_type NameString; //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+    ITU_T_IMPLICIT_TYPEDEF(EmployeeNumber, int, 2, APPLICATION_CLASS); //   Ic(  [ 0  ...   9999 ]   ...ext...) 
+    ITU_T_IMPLICIT_TYPEDEF(Date, visiblestring_type, 3, APPLICATION_CLASS); //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
 
-        ITU_T_IMPLICIT_TYPEDEF( PersonnelRecord, PersonnelRecord_impl, 0, APPLICATION_CLASS);
-        ITU_T_IMPLICIT_TYPEDEF( Name, Name_impl, 1, APPLICATION_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(PersonnelRecord, PersonnelRecord_impl, 0, APPLICATION_CLASS);
+    ITU_T_IMPLICIT_TYPEDEF(Name, Name_impl, 1, APPLICATION_CLASS);
 
 
-} 
+}
 
 
 namespace Test1 {
 
 
-        // set PersonnelRecord
-        struct PersonnelRecord_impl{
+    // set PersonnelRecord
+
+    struct PersonnelRecord_impl {
+
+        typedef std::vector< ChildInformation > Children_type; //    Sc (  [ 2 ]   ...ext...) 
 
 
+        PersonnelRecord_impl();
 
-                typedef std::vector< ChildInformation > Children_type;
+        PersonnelRecord_impl(const Name& arg__name,
+                const visiblestring_type& arg__title,
+                const EmployeeNumber& arg__number,
+                const Date& arg__dateOfHire,
+                const Name& arg__nameOfSpouse);
 
+        PersonnelRecord_impl(boost::shared_ptr< Name> arg__name,
+                boost::shared_ptr< visiblestring_type> arg__title,
+                boost::shared_ptr< EmployeeNumber> arg__number,
+                boost::shared_ptr< Date> arg__dateOfHire,
+                boost::shared_ptr< Name> arg__nameOfSpouse,
+                boost::shared_ptr< Children_type> arg__children);
 
-            PersonnelRecord_impl(); 
+        ITU_T_HOLDERH_DECL(name, Name);
+        ITU_T_HOLDERH_DECL(title, visiblestring_type);
+        ITU_T_HOLDERH_DECL(number, EmployeeNumber); //   Ic(  [ 0  ...   9999 ]   ...ext...) 
+        ITU_T_HOLDERH_DECL(dateOfHire, Date); //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
+        ITU_T_HOLDERH_DECL(nameOfSpouse, Name);
+        ITU_T_OPTIONAL_DECL(children, Children_type); //    Sc (  [ 2 ]   ...ext...) 
 
-            PersonnelRecord_impl(const Name&  arg__name,
-                 const visiblestring_type&  arg__title,
-                 const EmployeeNumber&  arg__number,
-                 const Date&  arg__dateOfHire,
-                 const Name&  arg__nameOfSpouse);
+        ITU_T_ARCHIVE_FUNC;
+    };
 
-            PersonnelRecord_impl(boost::shared_ptr< Name>  arg__name,
-                 boost::shared_ptr< visiblestring_type>  arg__title,
-                 boost::shared_ptr< EmployeeNumber>  arg__number,
-                 boost::shared_ptr< Date>  arg__dateOfHire,
-                 boost::shared_ptr< Name>  arg__nameOfSpouse,
-                 boost::shared_ptr< Children_type>  arg__children);
+    // set ChildInformation
 
-            ITU_T_HOLDERH_DECL(name, Name);
-            ITU_T_HOLDERH_DECL(title, visiblestring_type);
-            ITU_T_HOLDERH_DECL(number, EmployeeNumber);
-            ITU_T_HOLDERH_DECL(dateOfHire, Date);  //    Sc (  [ 8 ]     //    c8C (  [ 0  ...   9 ]   
-            ITU_T_HOLDERH_DECL(nameOfSpouse, Name);
-            ITU_T_OPTIONAL_DECL(children, Children_type);
+    struct ChildInformation {
 
-            ITU_T_ARCHIVE_FUNC;
-        };
- 
-        // set ChildInformation
-        struct ChildInformation{
-
-
-            ChildInformation(); 
-
-            ChildInformation(const Name&  arg__name,
-                 const Date&  arg__dateOfBirth);
-
-            ITU_T_HOLDERH_DECL(name, Name);
-            ITU_T_HOLDERH_DECL(dateOfBirth, Date);  //    Sc (  [ 8 ]     //    c8C (  [ 0  ...   9 ]   
-
-            ITU_T_ARCHIVE_FUNC;
-        };
- 
-        // sequence Name
-        struct Name_impl{
+        static const enumerated_type sex_male;
+        static const enumerated_type sex_female;
+        static const enumerated_type sex_unknown;
 
 
-            Name_impl(); 
+        ChildInformation();
 
-            Name_impl(const NameString&  arg__givenName,
-                 const NameString&  arg__initial,
-                 const NameString&  arg__familyName);
+        ChildInformation(const Name& arg__name,
+                const Date& arg__dateOfBirth);
 
-            ITU_T_HOLDERH_DECL(givenName, NameString);  //    Sc (  [ 1  ...   64 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
-            ITU_T_HOLDERH_DECL(initial, NameString);  //    Sc (  [ 1 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
-            ITU_T_HOLDERH_DECL(familyName, NameString);  //    Sc (  [ 1  ...   64 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+        ChildInformation(boost::shared_ptr< Name> arg__name,
+                boost::shared_ptr< Date> arg__dateOfBirth,
+                boost::shared_ptr< enumerated_type> arg__sex = boost::shared_ptr< enumerated_type>());
 
-            ITU_T_ARCHIVE_FUNC;
-        };
- 
-        template<> void PersonnelRecord_impl::serialize(boost::asn1::x690::output_coder& arch);
-        template<> void PersonnelRecord_impl::serialize(boost::asn1::x690::input_coder& arch);
-        template<> void ChildInformation::serialize(boost::asn1::x690::output_coder& arch);
-        template<> void ChildInformation::serialize(boost::asn1::x690::input_coder& arch);
-        template<> void Name_impl::serialize(boost::asn1::x690::output_coder& arch);
-        template<> void Name_impl::serialize(boost::asn1::x690::input_coder& arch);
+        ITU_T_HOLDERH_DECL(name, Name);
+        ITU_T_HOLDERH_DECL(dateOfBirth, Date); //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
+        ITU_T_OPTIONAL_DECL(sex, enumerated_type);
 
-        template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::output_coder& arch);
-        template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::input_coder& arch);
-        template<> void ChildInformation::serialize(boost::asn1::x691::output_coder& arch);
-        template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch);
-        template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch);
-        template<> void Name_impl::serialize(boost::asn1::x691::input_coder& arch);
+        ITU_T_ARCHIVE_FUNC;
+    };
 
-} 
+    // sequence Name
+
+    struct Name_impl {
+
+        Name_impl();
+
+        Name_impl(const NameString& arg__givenName,
+                const NameString& arg__initial,
+                const NameString& arg__familyName);
+
+        ITU_T_HOLDERH_DECL(givenName, NameString); //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+        ITU_T_HOLDERH_DECL(initial, NameString); //    Sc (  [ 1 ]     //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+        ITU_T_HOLDERH_DECL(familyName, NameString); //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+
+        ITU_T_ARCHIVE_FUNC;
+    };
+
+    template<> void PersonnelRecord_impl::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void PersonnelRecord_impl::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void ChildInformation::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void ChildInformation::serialize(boost::asn1::x690::input_coder& arch);
+    template<> void Name_impl::serialize(boost::asn1::x690::output_coder& arch);
+    template<> void Name_impl::serialize(boost::asn1::x690::input_coder& arch);
+
+    template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::output_coder& arch);
+    template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::input_coder& arch);
+    template<> void ChildInformation::serialize(boost::asn1::x691::output_coder& arch);
+    template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch);
+    template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch);
+    template<> void Name_impl::serialize(boost::asn1::x691::input_coder& arch);
+
+}
 
 ITU_T_SET_REGESTRATE(Test1::PersonnelRecord_impl)
 ITU_T_SET_REGESTRATE(Test1::ChildInformation)

@@ -12,7 +12,11 @@ namespace Test1 {
 
 
 
-        //  helper name:   Date           type:  alphabet helper     //    Sc (  [ 8 ]     //    c8C (  [ 0  ...   9 ]   
+        //  helper name:   ChildInformation__enumerated_type           type:  enumerated helper    
+        ITU_T_PER_ENUMCODER(ChildInformation__enumerated_type__helper, ITU_T_ARRAY(1, 2, 3));
+
+
+                //  helper name:   Date           type:  alphabet helper     //    Sc (  [ 8 ]     //    c8C (  [ 0  ...   9 ]   
 
         struct Date__shelper {
 
@@ -64,52 +68,66 @@ namespace Test1 {
 
         template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::output_coder& arch){
 
+            ITU_T_EXTENTION_SET_PER;
+
             ITU_T_OPTIONAL_DECL_PER =  ITU_T_OPTIONAL_PER(children_);
 
             ITU_T_OPTIONAL_SET_PER;
 
             ITU_T_BIND_PER(*(*name_));
-            ITU_T_BIND_PER(*(*number_));
-            ITU_T_BIND_PER(title_);
-            ITU_T_BIND_EXSIZE_SNGLCONSTRS( visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
+            ITU_T_BIND_NUM_CONSTRE( *(*number_), 0, 9999);
+            ITU_T_BIND_PER(*title_);
+            ITU_T_BIND_EXSIZE_SNGLCONSTRE( visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
             ITU_T_BIND_PER(*(*nameOfSpouse_));
-            ITU_T_BIND_PER(children_);
+            ITU_T_BIND_SIZE_SNGLCONSTRE( children_, 2);
         }
 
         template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::input_coder& arch){
 
+            ITU_T_EXTENTION_GET_PER;
+
             ITU_T_OPTIONAL_GET_PER(1 );
 
             ITU_T_BIND_PER(*(*name_));
-            ITU_T_BIND_PER(*(*number_));
-            ITU_T_BIND_PER(title_);
-            ITU_T_BIND_EXSIZE_SNGLCONSTRS( visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
+            ITU_T_BIND_NUM_CONSTRE( *(*number_), 0, 9999);
+            ITU_T_BIND_PER(*title_);
+            ITU_T_BIND_EXSIZE_SNGLCONSTRE( visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
             ITU_T_BIND_PER(*(*nameOfSpouse_));
-            ITU_T_OPTIONAL_CHECK_PER(0)  ITU_T_BIND_PER(children_);
+            ITU_T_OPTIONAL_CHECK_PER(0)  ITU_T_BIND_SIZE_SNGLCONSTRE( children_, 2);
         }
 
 
         template<> void ChildInformation::serialize(boost::asn1::x691::output_coder& arch){
+
+            ITU_T_EXTENTION_SET_PER;
             ITU_T_BIND_PER(*(*name_));
-            ITU_T_BIND_EXSIZE_SNGLCONSTRS( visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+            ITU_T_BIND_EXSIZE_SNGLCONSTRE( visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+            
         }
 
         template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch){
+
+            ITU_T_EXTENTION_GET_PER;
             ITU_T_BIND_PER(*(*name_));
-            ITU_T_BIND_EXSIZE_SNGLCONSTRS( visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+            ITU_T_BIND_EXSIZE_SNGLCONSTRE( visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+            
         }
 
 
         template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch){
-            ITU_T_BIND_EXSIZE_CONSTRS( visiblestring_type, NameString__shelper, *givenName_, 1, 64);
+
+            ITU_T_EXTENTION_SET_PER;
+            ITU_T_BIND_EXSIZE_CONSTRE( visiblestring_type, NameString__shelper, *givenName_, 1, 64);
             ITU_T_BIND_EXSIZE_SNGLCONSTRS( visiblestring_type, NameString__shelper, *initial_, 1);
-            ITU_T_BIND_EXSIZE_CONSTRS( visiblestring_type, NameString__shelper, *familyName_, 1, 64);
+            ITU_T_BIND_EXSIZE_CONSTRE( visiblestring_type, NameString__shelper, *familyName_, 1, 64);
         }
 
         template<> void Name_impl::serialize(boost::asn1::x691::input_coder& arch){
-            ITU_T_BIND_EXSIZE_CONSTRS( visiblestring_type, NameString__shelper, *givenName_, 1, 64);
+
+            ITU_T_EXTENTION_GET_PER;
+            ITU_T_BIND_EXSIZE_CONSTRE( visiblestring_type, NameString__shelper, *givenName_, 1, 64);
             ITU_T_BIND_EXSIZE_SNGLCONSTRS( visiblestring_type, NameString__shelper, *initial_, 1);
-            ITU_T_BIND_EXSIZE_CONSTRS( visiblestring_type, NameString__shelper, *familyName_, 1, 64);
+            ITU_T_BIND_EXSIZE_CONSTRE( visiblestring_type, NameString__shelper, *familyName_, 1, 64);
         }
 
 } 

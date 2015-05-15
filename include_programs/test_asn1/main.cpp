@@ -198,6 +198,7 @@ int main(int argc, char* argv[]) {
     PersonnelRecord_impl::Children_type& chlds = *(PRt->children__new());
     chlds.push_back(ChildInformation(Name(Name_impl(std::string("Ralph"), std::string("T"), std::string("Smith"))), Date("19571111")));
     chlds.push_back(ChildInformation(Name(Name_impl(std::string("Susan"), std::string("B"), std::string("Jones"))), Date("19590717")));
+    chlds.back().sex(boost::shared_ptr< enumerated_type>( new enumerated_type(ChildInformation::sex_female)));
 
     PersonnelRecord iPRt;
 
