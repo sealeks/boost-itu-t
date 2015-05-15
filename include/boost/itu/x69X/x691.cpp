@@ -132,11 +132,11 @@ namespace boost {
             void output_coder::add_bitmap(const bitstring_type & vl, bool alighn) {
                 if (unusebits()) {
                     //const_sequences::reverse_iterator it = listbuffers_->rbegin();
-                    boost::itu::vect_octet_sequnce_ptr::reverse_iterator dit = rows_vect.rbegin();
+                    boost::itu::octet_sequnce_ptr_vect::reverse_iterator dit = rows_vect().rbegin();
                     boost::itu::octet_sequnce_ptr lstdata_ptr = *dit;
                     octet_sequnce& lstdata = *lstdata_ptr;
                     unusebits(boost::itu::split_bits_in_octets(lstdata, alighn ? 0 : unusebits(), vl.as_octet_sequnce(), vl.unusebits()));
-                    listbuffers_->back() = const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
+                    listbuffers_->back() = const_buffer(&(rows_vect().back()->operator[](0)), rows_vect().back()->size());
                 } else {
                     add(vl.as_octet_sequnce());
                     unusebits(vl.unusebits());
@@ -146,11 +146,11 @@ namespace boost {
             void output_coder::add_octets(const octet_sequnce& vl, bool alighn) {
                 if ((!alighn) && (unusebits())) {
                     //const_sequences::reverse_iterator it = listbuffers_->rbegin();
-                    boost::itu::vect_octet_sequnce_ptr::reverse_iterator dit = rows_vect.rbegin();
+                    boost::itu::octet_sequnce_ptr_vect::reverse_iterator dit = rows_vect().rbegin();
                     boost::itu::octet_sequnce_ptr lstdata_ptr = *dit;
                     octet_sequnce& lstdata = *lstdata_ptr;
                     boost::itu::split_bits_in_octets(lstdata, alighn ? 0 : unusebits(), vl);
-                    listbuffers_->back() = const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size());
+                    listbuffers_->back() = const_buffer(&(rows_vect().back()->operator[](0)), rows_vect().back()->size());
                 } else {
                     add(vl);
                 }

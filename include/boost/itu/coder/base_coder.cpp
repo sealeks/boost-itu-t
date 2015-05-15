@@ -729,19 +729,19 @@ namespace boost {
         base_output_coder::iterator_type base_output_coder::add(const octet_sequnce& vl) {
             if (vl.empty()) return
                 listbuffers_->end();
-            rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl)));
+            rows_vect().push_back(octet_sequnce_ptr(new octet_sequnce(vl)));
             size_ += vl.size();
             unuse_ = 0;
-            return listbuffers_->insert(listbuffers_->end(), const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size()));
+            return listbuffers_->insert(listbuffers_->end(), const_buffer(&(rows_vect().back()->operator[](0)), rows_vect().back()->size()));
         }
 
         base_output_coder::iterator_type base_output_coder::add(const octet_sequnce& vl, iterator_type it) {
             if (vl.empty()) return
                 listbuffers_->end();
-            rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl)));
+            rows_vect().push_back(octet_sequnce_ptr(new octet_sequnce(vl)));
             size_ += vl.size();
             unuse_ = 0;
-            return listbuffers_->insert(it, const_buffer(&(rows_vect.back()->operator[](0)), rows_vect.back()->size()));
+            return listbuffers_->insert(it, const_buffer(&(rows_vect().back()->operator[](0)), rows_vect().back()->size()));
         }
 
         void base_output_coder::add(const mutable_sequences& vl) {
@@ -807,9 +807,9 @@ namespace boost {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////      
 
         void base_input_coder::add(const octet_sequnce& vl) {
-            rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl.begin(), vl.end())));
+            rows_vect().push_back(octet_sequnce_ptr(new octet_sequnce(vl.begin(), vl.end())));
             size_ += vl.size();
-            listbuffers_->push_back(mutable_buffer(&rows_vect.back()->operator[](0), rows_vect.back()->size()));
+            listbuffers_->push_back(mutable_buffer(&rows_vect().back()->operator[](0), rows_vect().back()->size()));
         }
 
         void base_input_coder::add(const const_sequences& vl) {
@@ -818,10 +818,10 @@ namespace boost {
         }
 
         void base_input_coder::add_front(const octet_sequnce& vl) {
-            rows_vect.push_back(octet_sequnce_ptr(new octet_sequnce(vl.begin(), vl.end())));
+            rows_vect().push_back(octet_sequnce_ptr(new octet_sequnce(vl.begin(), vl.end())));
             size_ += vl.size();
-            listbuffers_->push_front(mutable_buffer(&rows_vect.back()->operator[](0), rows_vect.back()->size()));            
-        }         
+            listbuffers_->push_front(mutable_buffer(&rows_vect().back()->operator[](0), rows_vect().back()->size()));
+        }
 
         bool base_input_coder::is_endof(std::size_t beg) const {
             octet_sequnce data;
@@ -835,9 +835,7 @@ namespace boost {
 
         void base_input_coder::clear() {
             listbuffers_->clear();
-            rows_vect.clear();   //                                           ???
-            /*while (!state_stack_.empty())
-                state_stack_.pop();*/
+            rows_vect().clear(); //                                           ???
             size_ = 0;
         }
 
@@ -846,26 +844,6 @@ namespace boost {
             add(vl);
             return true;
         }
-
-        /*void base_input_coder::datastate_push() {
-            data_state ds;
-            ds.swap(*this);
-            state_stack_.push(ds);
-        }
-
-        base_input_coder::data_state base_input_coder::datastate_pop() {
-            if (!state_stack_.empty()) {
-                data_state ds = state_stack_.top();
-                ds.swap(*this);
-                state_stack_.pop();
-                return ds;
-            }
-            return data_state();
-        }
-
-        bool base_input_coder::has_datastate() const {
-            return !state_stack_.empty();
-        }*/
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////  

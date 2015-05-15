@@ -122,7 +122,8 @@ namespace boost {
         typedef int8_t octet_type;
         typedef std::vector<octet_type> octet_sequnce;
         typedef boost::shared_ptr<octet_sequnce> octet_sequnce_ptr;
-        typedef std::vector<octet_sequnce_ptr> vect_octet_sequnce_ptr;
+        typedef std::vector<octet_sequnce_ptr> octet_sequnce_ptr_vect;
+        typedef boost::shared_ptr<octet_sequnce_ptr_vect> octet_sequnce_ptr_vect_ptr;
 
         typedef std::list<mutable_buffer> mutable_sequences;
         typedef boost::shared_ptr<mutable_sequences> mutable_sequences_ptr;
@@ -412,14 +413,14 @@ namespace boost {
 
                 void swap(base_output_coder& rt) {
                     std::swap(unuse_, rt.unuse_);
-                    std::swap(listbuffers_, rt.listbuffers_);
-                    std::swap(rows_vect, rt.rows_vect);
+                    listbuffers_.swap(rt.listbuffers_);
+                    rows_vect_.swap(rt.rows_vect_);
                     std::swap(size_, rt.size_);
                 }
 
                 std::size_t unuse_;
                 const_sequences_ptr listbuffers_;
-                vect_octet_sequnce_ptr rows_vect;
+                octet_sequnce_ptr_vect_ptr rows_vect_;
                 std::size_t size_;
             };
 
@@ -436,7 +437,8 @@ namespace boost {
             }
 
             base_output_coder(encoding_rule rl = NULL_ENCODING) :
-            rule_(rl), unuse_(0), listbuffers_(new const_sequences()), size_(0) {
+            rule_(rl), unuse_(0), listbuffers_(new const_sequences()),
+            rows_vect_(new octet_sequnce_ptr_vect()), size_(0) {
             }
 
             virtual ~base_output_coder() {
@@ -480,7 +482,7 @@ namespace boost {
 
             virtual void clear() {
                 listbuffers_->clear();
-                rows_vect.clear();
+                rows_vect().clear();
                 while (!state_stack_.empty())
                     state_stack_.pop();
                 size_ = 0;
@@ -496,7 +498,7 @@ namespace boost {
 
             std::size_t move_from(boost::shared_ptr<base_output_coder> source) {
                 listbuffers_->insert(listbuffers_->end(), source->buffers().begin(), source->buffers().end());
-                rows_vect.insert(rows_vect.begin(), source->rows_vect.begin(), source->rows_vect.end());
+                rows_vect().insert(rows_vect().begin(), source->rows_vect().begin(), source->rows_vect().end());
                 std::size_t rslt = source->size();
                 size_ += source->size();
                 source->clear();
@@ -543,13 +545,21 @@ namespace boost {
                 return unuse_ = vl % 8;
             }
 
+            octet_sequnce_ptr_vect& rows_vect() {
+                return *rows_vect_;
+            }
+
+            const octet_sequnce_ptr_vect& rows_vect() const {
+                return *rows_vect_;
+            }
+
             encoding_rule rule_;
 
             /////////////////////////////////////////////////////            
 
             std::size_t unuse_;
             const_sequences_ptr listbuffers_;
-            vect_octet_sequnce_ptr rows_vect;
+            octet_sequnce_ptr_vect_ptr rows_vect_;
             std::size_t size_;
 
             /////////////////////////////////////////////////////            
@@ -567,32 +577,6 @@ namespace boost {
 
         public:
 
-            ///////////////////////////////////////////////////////
-
-            /*struct data_state {
-              
-                data_state() : unuse_(0), size_(0) {                    
-                }
-                ~data_state(){                    
-                }
-                
-                void swap(base_input_coder& rt){
-                    std::swap(unuse_, rt.unuse_);
-                    std::swap(listbuffers_, rt.listbuffers_);    
-                    std::swap(rows_vect, rt.rows_vect);
-                    std::swap(size_, rt.size_);                      
-                }
-                
-                std::size_t unuse_;
-                mutable_sequences_ptr listbuffers_;
-                vect_octet_sequnce_ptr rows_vect;
-                std::size_t size_;
-            };
-            
-            typedef std::stack<data_state> state_stack_type; */
-
-            /////////////////////////////////////////////////////
-
             typedef mutable_sequences::iterator iterator_type;
 
             static bool __input__() {
@@ -600,7 +584,8 @@ namespace boost {
             }
 
             base_input_coder(encoding_rule rl = NULL_ENCODING) :
-            rule_(rl), unuse_(0), listbuffers_(new mutable_sequences()), size_(0) {
+            rule_(rl), unuse_(0), listbuffers_(new mutable_sequences()),
+            rows_vect_(new octet_sequnce_ptr_vect()), size_(0) {
             }
 
             encoding_rule rule() const {
@@ -687,11 +672,13 @@ namespace boost {
                 size_ = size_ < sz ? 0 : (size_ - sz);
             }
 
-            /*void datastate_push();
+            octet_sequnce_ptr_vect& rows_vect() {
+                return *rows_vect_;
+            }
 
-            data_state datastate_pop();
-            
-            bool has_datastate() const;*/
+            const octet_sequnce_ptr_vect& rows_vect() const {
+                return *rows_vect_;
+            }
 
             encoding_rule rule_;
 
@@ -699,7 +686,7 @@ namespace boost {
 
             std::size_t unuse_;
             mutable_sequences_ptr listbuffers_;
-            vect_octet_sequnce_ptr rows_vect;
+            octet_sequnce_ptr_vect_ptr rows_vect_;
             std::size_t size_;
 
             /////////////////////////////////////////////////////         
