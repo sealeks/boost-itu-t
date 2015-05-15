@@ -147,25 +147,69 @@ namespace boost {\
 #define ITU_T_CHOICE(enm)  boost::asn1::___asn__choice__base__< enm> 
 #define ITU_T_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
 
-#define ITU_T_CHOICES_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; void nm ( const tp&  vl); \
-                         boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);}; boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
+////////////////////////////////
 
-#define ITU_T_CHOICEC_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);}; void nm ( tp * vl) { set( vl, enm );} ; \
-                         boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);}; boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
+// primitive choice
+#define ITU_T_CHOICES_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);};\
+                                                                             void nm ( tp * vl) { set( vl, enm );} ;\
+                                                                             void nm ( const tp&  vl); \
+                                                                             boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
+                                                                             boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
 
-#define ITU_T_OPTIONAL_DECL(nm ,tp )  boost::shared_ptr< tp >& nm () { return nm ## _; };  const boost::shared_ptr< tp >& nm () const { return nm ## _; } \
-                         void nm  (boost::shared_ptr< tp > vl) {nm ## _ = vl;}; void nm  ( tp *  vl) {nm ## _ = boost::shared_ptr< tp >(vl);}; void nm ( const tp & vl); \
-                         boost::shared_ptr< tp> nm ## __new  (); void nm ## __free  () {nm ## _ = boost::shared_ptr< tp>();}; \
-                         private: boost::shared_ptr< tp > nm ## _ ; public:                         
+#define ITU_T_CHOICES_DEFN(fullnm, nm  ,tp ,enm) void fullnm (const tp & vl){ set< tp >(new tp (vl), enm );}
 
-#define ITU_T_HOLDERH_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
-                         private: boost::asn1::value_holder< tp > nm ## _ ; public: 
+// choice
+#define ITU_T_CHOICEC_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);};\
+                                                                             void nm ( tp * vl) { set( vl, enm );} ;\
+                                                                             boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
+                                                                             boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
+        
+#define ITU_T_CHOICEC_DEFN(fullnm, nm  ,tp ,enm);        
 
-#define ITU_T_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl); tp & nm ();  const tp & nm  () const; \
-                         private:  tp  nm ## _ ; public: 
 
-#define ITU_T_DEFAULTH_DECL(nm ,tp, dflt )    void nm ( const tp & vl);  const tp & nm () const ; void nm  (boost::shared_ptr< tp > vl); \
-                         private: boost::asn1::default_holder<tp  , dflt> nm ## _ ; public: 
+/////////////////////////////////
+
+
+// value simple 
+#define ITU_T_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl);\
+                                                                       tp & nm ();\
+                                                                       const tp & nm  () const; \
+                                                                       private:  tp  nm ## _ ; public: 
+
+// value with holder
+#define ITU_T_HOLDERH_DECL(nm ,tp )  void nm ( const tp & vl);\
+                                                                       tp & nm ();\
+                                                                       const tp & nm () const ;\
+                                                                       void nm  (boost::shared_ptr< tp > vl);\
+                                                                       private: boost::asn1::value_holder< tp > nm ## _ ; public:
+
+
+//#define ITU_T_HOLDERH_DEFN(fullnm, nm  ,tp );
+
+
+/////////////////////////////////
+
+// optional value
+#define ITU_T_OPTIONAL_DECL(nm ,tp )  boost::shared_ptr< tp >& nm () { return nm ## _; };\
+                                                                        const boost::shared_ptr< tp >& nm () const { return nm ## _; } \
+                                                                        void nm  (boost::shared_ptr< tp > vl) {nm ## _ = vl;};\
+                                                                        void nm  ( tp *  vl) {nm ## _ = boost::shared_ptr< tp >(vl);}; \
+                                                                        void nm ## __free  () {nm ## _ = boost::shared_ptr< tp>();};\
+                                                                        void nm ( const tp & vl); \
+                                                                        boost::shared_ptr< tp> nm ## __new  ();\
+                                                                        private: boost::shared_ptr< tp > nm ## _ ; public:                         
+
+/////////////////////////////////
+
+// default value
+#define ITU_T_DEFAULTH_DECL(nm ,tp, dflt )    void nm ( const tp & vl);\
+                                                                                  const tp & nm () const ;\
+                                                                                  void nm  (boost::shared_ptr< tp > vl); \
+                                                                                  private: boost::asn1::default_holder<tp  , dflt> nm ## _ ; public: 
+                                                                             
+                                                                             
+                                                                             
+                                                                             
 
 #define ITU_T_EXTENDED_DECL()  void extended ( bool vl ) {__extended__ = vl  ? boost::shared_ptr<bool>( new bool(vl)) : boost::shared_ptr<bool>(); } ; bool extended ()  const { return static_cast<bool>(__extended__);}; \
                          private: boost::shared_ptr<bool>  __extended__ ; public: 
@@ -173,8 +217,11 @@ namespace boost {\
 
 #define ITU_T_ARCHIVE_FUNC    template<typename Archive> void serialize(Archive& arch){};
 
+#define ITU_T_ARCHIVE_X690_DECL(nm)     template<> void nm  ::serialize(boost::asn1::x690::output_coder& arch);\
+    template<> void nm  ::serialize(boost::asn1::x690::input_coder& arch);
 
-
+#define ITU_T_ARCHIVE_X691_DECL(nm)     template<> void nm  ::serialize(boost::asn1::x691::output_coder& arch);\
+    template<> void nm  ::serialize(boost::asn1::x691::input_coder& arch);
 
 namespace boost {
     namespace asn1 {

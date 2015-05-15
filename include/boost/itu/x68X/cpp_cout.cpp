@@ -1212,10 +1212,10 @@ namespace x680 {
             else
                 execute_typeassignments<basic_entity_vector::const_iterator>(module_->childs().begin(), module_->childs().end());
 
-            if (execute_struct_meth_hpp(module_, "x690"))
+            if (execute_struct_meth_hpp(module_, "X690"))
                 stream << "\n";
 
-            if (execute_struct_meth_hpp(module_, "x691"))
+            if (execute_struct_meth_hpp(module_, "X691"))
                 stream << "\n";
 
             execute_stop_ns();
@@ -1727,8 +1727,9 @@ namespace x680 {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if (tpas && (tpas->isstructure()) && (tpas->is_cpp_expressed())) {
                     if (tpas->isstruct()) {
-                        stream << struct_meth_str(tpas, "boost::asn1::" + ctp + "::output_coder") << ";";
-                        stream << struct_meth_str(tpas, "boost::asn1::" + ctp + "::input_coder") << ";";
+                        /*stream << struct_meth_str(tpas, "boost::asn1::" + ctp + "::output_coder") << ";";
+                        stream << struct_meth_str(tpas, "boost::asn1::" + ctp + "::input_coder") << ";";*/                        
+                        stream << "\n"  << tabformat(basic_entity_ptr(), 1) << "ITU_T_ARCHIVE_" << ctp << "_DECL(" <<  fulltype_str(tpas, false) << ");";
                         cnt++;
                     }
                     cnt += execute_struct_meth_hpp(tpas, ctp);
@@ -2142,6 +2143,22 @@ namespace x680 {
                                     it->typenam << "(vl), " << choice_enum_str(self, it->typ) << ") ;}\n";
                         }
                     }
+                    /*  NEW
+                stream << "\n";
+                for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                  if ((it->typ)) {
+                        tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
+                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                            stream << "\n" << tabformat(scp, 2);
+                            if (it->typ->isprimitive())
+                                stream << "ITU_T_CHOICES_DEFN( ";
+                            else
+                                stream << "ITU_T_CHOICEC_DEFN( ";      
+                            stream << fulltype_str(self, false) << "::" << it->name << ", ";
+                            stream << it->typenam << ", " << choice_enum_str(self, it->typ) << ");";                           
+                        }
+                    }
+                }*/
                 }
             } else {
                 for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
