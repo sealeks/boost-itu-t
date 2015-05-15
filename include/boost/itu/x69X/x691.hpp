@@ -37,7 +37,7 @@
 
 #define ITU_T_PER_START_OPEN  arch.start_open();
 #define ITU_T_PER_END_OPEN  arch.end_open();
-#define ITU_T_PER_PARSE_OPEN  arch.end_open();
+#define ITU_T_PER_PARSE_OPEN  arch.parse_open();
 
 //   main bind and bind per enum
 #define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
