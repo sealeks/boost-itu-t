@@ -177,6 +177,11 @@ namespace boost {\
                                                                        void nm  (boost::shared_ptr< tp > vl);\
                                                                        private: boost::asn1::value_holder< tp > nm ## _ ; public:
 
+#define ITU_T_HOLDERH_DEFN(fullnm, nm ,tp )  tp & fullnm () {return *  nm ## _; }\
+                                                                                    const tp & fullnm () const {return *  nm ## _;}\
+                                                                                    void fullnm (const tp & vl) {  nm ## _ = vl; } \
+                                                                                    void fullnm (boost::shared_ptr< tp> vl) { nm ## _ = vl; }
+
 // value simple 
 #define ITU_T_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl);\
                                                                        tp & nm ();\
@@ -185,7 +190,9 @@ namespace boost {\
 
 
 
-//#define ITU_T_HOLDERH_DEFN(fullnm, nm  ,tp );
+#define ITU_T_HOLDERN_DEFN(fullnm, nm ,tp )  tp & fullnm () {return  nm ## _; }\
+                                                                                    const tp & fullnm () const {return  nm ## _;}\
+                                                                                    void fullnm (const tp & vl) { nm ## _ = vl; } 
 
 
 /////////////////////////////////
@@ -198,7 +205,12 @@ namespace boost {\
                                                                         void nm ## __free  () {nm ## _ = boost::shared_ptr< tp>();};\
                                                                         void nm ( const tp & vl); \
                                                                         boost::shared_ptr< tp> nm ## __new  ();\
-                                                                        private: boost::shared_ptr< tp > nm ## _ ; public:                         
+                                                                        private: boost::shared_ptr< tp > nm ## _ ; public:            
+
+#define ITU_T_OPTIONAL_DEFN(fullnm, nm ,tp )  boost::shared_ptr< tp > fullnm ## __new() { return  nm ## _ = boost::shared_ptr< tp >(new  tp ());}\
+                                                                                     void fullnm(const tp & vl) {  nm ## _ = boost::shared_ptr< tp >(new tp (vl));}
+
+
 
 /////////////////////////////////
 
@@ -209,7 +221,12 @@ namespace boost {\
                                                                                   private: boost::asn1::default_holder<tp  , dflt> nm ## _ ; public: 
                                                                              
                                                                              
-                                                                             
+#define ITU_T_DEFAULTH_DEFN(fullnm, nm ,tp )    const tp & fullnm () const { return * nm ##  _; }\
+                                                                                  void fullnm (const tp & vl) { nm ##  _ = vl;}\
+                                                                                  void fullnm (boost::shared_ptr<  tp > vl) { nm ##  _ = vl;}                          
+
+
+
                                                                              
 
 #define ITU_T_EXTENDED_DECL()  void extended ( bool vl ) {__extended__ = vl  ? boost::shared_ptr<bool>( new bool(vl)) : boost::shared_ptr<bool>(); } ; bool extended ()  const { return static_cast<bool>(__extended__);}; \
