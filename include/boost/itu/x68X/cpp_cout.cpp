@@ -3026,9 +3026,9 @@ namespace x680 {
             basic_entity_ptr scp;
             if (predef) {
                 stream << tabformat(scp, 2);
-                stream << "ITU_T_PER_ENUMCODER_";
+                stream << "ITU_T_PER_ENUMCODER";
                 if (predef->extended())
-                    stream << "EXT";
+                    stream << "_EXT";
                 stream << "(" << name << "__helper, ITU_T_ARRAY(";
                 bool fst = true;
                 for (basic_entity_vector::const_iterator it = predef->values().begin(); it != predef->values().end(); ++it) {
