@@ -28,7 +28,7 @@ namespace boost {
 
             typedef std::pair<std::string, std::size_t> globaloid_pair;
             typedef std::map<std::string, std::size_t> globaloid_map;
-            typedef boost::shared_ptr<globaloid_map> globaloid_map_ptr;
+            typedef shared_ptr<globaloid_map> globaloid_map_ptr;
 
             const std::string GLOBAL_OID_COMPONENT_ISO = "iso";
             const std::string GLOBAL_OID_COMPONENT_ITU_T = "itu-t";

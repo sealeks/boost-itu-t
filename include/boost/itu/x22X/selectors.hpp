@@ -274,8 +274,8 @@ namespace boost {
             typedef octet_sequnce ae_qualifier1_type;
             typedef std::size_t ae_qualifier2_type;
             typedef int32_t invoke_id_type;
-            typedef boost::shared_ptr<ae_qualifier2_type> ae_qualifier2_type_ptr;
-            typedef boost::shared_ptr<invoke_id_type> invoke_id_type_ptr;
+            typedef shared_ptr<ae_qualifier2_type> ae_qualifier2_type_ptr;
+            typedef shared_ptr<invoke_id_type> invoke_id_type_ptr;
 
             enum form_type {
                 form1,

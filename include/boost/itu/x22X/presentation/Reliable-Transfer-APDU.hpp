@@ -41,6 +41,7 @@ namespace Reliable_Transfer_APDU {
     using boost::asn1::any_type;
     using boost::asn1::value_holder;
     using boost::asn1::default_holder;
+    using boost::shared_ptr;
 
 
     struct RTSE_apdus;
@@ -64,7 +65,7 @@ namespace Reliable_Transfer_APDU {
 
 }
 
-#include "Remote-Operations-Information-Objects.hpp"
+//#include "Remote-Operations-Information-Objects.hpp"
 
 namespace Reliable_Transfer_APDU {
 

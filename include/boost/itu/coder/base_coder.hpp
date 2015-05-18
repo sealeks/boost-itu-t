@@ -121,14 +121,14 @@ namespace boost {
         typedef int contex_id_type;
         typedef int8_t octet_type;
         typedef std::vector<octet_type> octet_sequnce;
-        typedef boost::shared_ptr<octet_sequnce> octet_sequnce_ptr;
+        typedef shared_ptr<octet_sequnce> octet_sequnce_ptr;
         typedef std::vector<octet_sequnce_ptr> octet_sequnce_ptr_vect;
-        typedef boost::shared_ptr<octet_sequnce_ptr_vect> octet_sequnce_ptr_vect_ptr;
+        typedef shared_ptr<octet_sequnce_ptr_vect> octet_sequnce_ptr_vect_ptr;
 
         typedef std::list<mutable_buffer> mutable_sequences;
-        typedef boost::shared_ptr<mutable_sequences> mutable_sequences_ptr;
+        typedef shared_ptr<mutable_sequences> mutable_sequences_ptr;
         typedef std::list<const_buffer> const_sequences;
-        typedef boost::shared_ptr<const_sequences> const_sequences_ptr;
+        typedef shared_ptr<const_sequences> const_sequences_ptr;
 
 
         const octet_sequnce NULL_OCTET_SEQUENCE = octet_sequnce();
@@ -494,13 +494,13 @@ namespace boost {
 
             bool bind(octet_sequnce& vl);
 
-            std::size_t tie(boost::shared_ptr<base_output_coder> source) {
+            std::size_t tie(shared_ptr<base_output_coder> source) {
                 listbuffers_->insert(listbuffers_->end(), source->buffers().begin(), source->buffers().end());
                 size_ += source->size();
                 return source->size();
             }
 
-            std::size_t move_from(boost::shared_ptr<base_output_coder> source) {
+            std::size_t move_from(shared_ptr<base_output_coder> source) {
                 listbuffers_->insert(listbuffers_->end(), source->buffers().begin(), source->buffers().end());
                 rows_vect().insert(rows_vect().begin(), source->rows_vect().begin(), source->rows_vect().end());
                 std::size_t rslt = source->size();
@@ -709,8 +709,8 @@ namespace boost {
 
         public:
 
-            typedef boost::shared_ptr<base_input_coder> input_coder_ptr;
-            typedef boost::shared_ptr<base_output_coder> output_coder_ptr;
+            typedef shared_ptr<base_input_coder> input_coder_ptr;
+            typedef shared_ptr<base_output_coder> output_coder_ptr;
 
             basic_coder(base_input_coder* in, base_output_coder* out) : input_(in), output_(out) {
             }
@@ -784,7 +784,7 @@ namespace boost {
 
 
 
-        typedef boost::shared_ptr<basic_coder> asn_coder_ptr;
+        typedef shared_ptr<basic_coder> asn_coder_ptr;
 
         template<typename INPUT_TYPE = base_input_coder, typename OUTPUT_TYPE = base_output_coder>
         class asn_coder_templ : public basic_coder {
@@ -913,7 +913,7 @@ namespace boost {
         };
 
 
-        typedef boost::shared_ptr<basic_sender_sequences> sender_sequnces_ptr;
+        typedef shared_ptr<basic_sender_sequences> sender_sequnces_ptr;
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -965,7 +965,7 @@ namespace boost {
             mutable const_sequences_ptr limitedbuff_;
         };
 
-        typedef boost::shared_ptr<basic_itu_sequences> basic_itu_sequences_ptr;
+        typedef shared_ptr<basic_itu_sequences> basic_itu_sequences_ptr;
 
 
     }

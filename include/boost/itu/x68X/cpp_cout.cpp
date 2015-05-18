@@ -541,7 +541,7 @@ namespace x680 {
                                 namedvalue_initer_set::iterator fid = values->find(namedvalue_initer(subtpassmt->name()));
                                 if (fid != values->end())
                                     subelmt = " new " + valueassmnt_str(subtpassmt->type(), fid->val, fid->str, true) + "";
-                                rslt += ("boost::shared_ptr<" + fromtype_str((*it)->as_typeassigment()->type()) +
+                                rslt += ("shared_ptr<" + fromtype_str((*it)->as_typeassigment()->type()) +
                                         " >(" + subelmt + ")");
                             }
                         }
@@ -702,7 +702,7 @@ namespace x680 {
                 }
                 case mk_optional:
                 {
-                    return "boost::shared_ptr<" + str + ">";
+                    return "shared_ptr<" + str + ">";
                 }
                 default:
                 {
@@ -1600,18 +1600,20 @@ namespace x680 {
                 switch (self->builtin()) {
                     case t_CHOICE:
                     {
-                        stream << "\n";
+                        /* OLD stream << "\n";
                         stream << "\n" << tabformat(self, 1) << type_str(self) << "()";
                         stream << " : " << " ITU_T_CHOICE(" << type_str(self) << "_enum) () {} \n";
 
                         stream << "\n" << tabformat(self, 1) << "template<typename T> ";
-                        stream << type_str(self) << "(boost::shared_ptr< T> vl, " << type_str(self) << "_enum enm) : \n";
+                        stream << type_str(self) << "(shared_ptr< T> vl, " << type_str(self) << "_enum enm) : \n";
                         stream << tabformat(self, 2) << " ITU_T_CHOICE(" << type_str(self) << "_enum) (vl, static_cast<int>(enm)) {} \n";
 
                         stream << "\n" << tabformat(self, 1) << "template<typename T> ";
                         stream << type_str(self) << "(const T& vl, " << type_str(self) << "_enum enm) : \n";
-                        stream << tabformat(self, 2) << " ITU_T_CHOICE(" << type_str(self) << "_enum) ( new T(vl), static_cast<int>(enm)) {} \n";
-
+                        stream << tabformat(self, 2) << " ITU_T_CHOICE(" << type_str(self) << "_enum) ( new T(vl), static_cast<int>(enm)) {} \n";*/
+                        
+                        stream << "\n";
+                        stream << "\n" << tabformat(self, 1) << "ITU_T_CHOICE_CTORS(" << type_str(self) << ");\n";
                         break;
                     }
                     case t_SET:
@@ -1641,7 +1643,7 @@ namespace x680 {
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
                                 if (it != nooblig.begin())
                                     stream << ",\n " << tabformat(self, 2);
-                                stream << "boost::shared_ptr< " << it->typenam << ">  " << argumentname(it->name);
+                                stream << "shared_ptr< " << it->typenam << ">  " << argumentname(it->name);
                                 if (it->afterextention)
                                     stream << " = boost::shared_ptr< " << it->typenam << ">()";
                             }
@@ -2132,6 +2134,60 @@ namespace x680 {
             member_vect mmbr;
             load_member(mmbr, self);
             if (self->builtin() == t_CHOICE) {
+                stream << "\n";
+                for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                    if ((it->typ)) {
+                        tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
+                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                            stream << "\n" << tabformat(scp, 2);
+                            if (it->typ->isprimitive())
+                                stream << "ITU_T_CHOICES_DEFN( ";
+                            else
+                                stream << "ITU_T_CHOICEC_DEFN( ";
+                            stream << fulltype_str(self, false) << "::" << it->name << ", " << it->name << ", ";
+                            stream << /*it->typenam*/ fullpathtype_str(it->typ, self, it->typenam) << ", " << choice_enum_str(self, it->typ) << ");";
+                        }
+                    }
+                }
+            } else {
+                stream << "\n";
+                for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                    tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
+                    if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                        stream << "\n" << tabformat(scp, 2);
+                        switch (mkr) {
+                            case mk_none:
+                            {
+                                if (!option_no_holder())
+                                    stream << "ITU_T_HOLDERH_DEFN( ";
+                                else
+                                    stream << "ITU_T_HOLDERN_DEFN( ";
+                                break;
+                            };
+                            case mk_optional:
+                                stream << "ITU_T_OPTIONAL_DEFN( ";
+                                break;
+                            case mk_default:
+                                stream << "ITU_T_DEFAULTH_DEFN( ";
+                                break;
+                            default:
+                            {
+                                stream << "?( ";
+                            }
+                        }
+                        stream << fulltype_str(self, false) << "::" << it->name << ", " << it->name << ", ";
+                        stream << fullpathtype_str(it->typ, self, it->typenam) << ");";
+                    }
+                }
+            }
+        }
+
+ /* OLD void maincpp_out::execute_access_member_cpp(typeassignment_entity_ptr self) {
+
+            basic_entity_ptr scp;
+            member_vect mmbr;
+            load_member(mmbr, self);
+            if (self->builtin() == t_CHOICE) {
                 for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
 
                     if ((it->typ) && (it->typ->isprimitive())) {
@@ -2143,22 +2199,6 @@ namespace x680 {
                                     it->typenam << "(vl), " << choice_enum_str(self, it->typ) << ") ;}\n";
                         }
                     }
-                    /*  NEW
-                stream << "\n";
-                for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
-                  if ((it->typ)) {
-                        tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
-                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
-                            stream << "\n" << tabformat(scp, 2);
-                            if (it->typ->isprimitive())
-                                stream << "ITU_T_CHOICES_DEFN( ";
-                            else
-                                stream << "ITU_T_CHOICEC_DEFN( ";      
-                            stream << fulltype_str(self, false) << "::" << it->name << ", ";
-                            stream << it->typenam << ", " << choice_enum_str(self, it->typ) << ");";                           
-                        }
-                    }
-                }*/
                 }
             } else {
                 for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
@@ -2175,15 +2215,15 @@ namespace x680 {
                                         "( const " << it->typenam << "& vl){ " << it->name << "_ =vl ;}\n";
                                 if (!option_no_holder()) {
                                     stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
-                                            "( boost::shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
+                                            "( shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
                                 }
                                 break;
                             case mk_optional:
-                                stream << "\n" << tabformat(scp, 2) << "boost::shared_ptr<" << fullpathtype_str(it->typ, self, it->typenam) << "> " <<
-                                        fulltype_str(self, false) << "::" << it->name << "__new (){ return " << it->name << "_ = boost::shared_ptr<" <<
+                                stream << "\n" << tabformat(scp, 2) << "shared_ptr<" << fullpathtype_str(it->typ, self, it->typenam) << "> " <<
+                                        fulltype_str(self, false) << "::" << it->name << "__new (){ return " << it->name << "_ = shared_ptr<" <<
                                         it->typenam << ">(new " << it->typenam << "()) ;}\n";
                                 stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" <<
-                                        it->name << "( const " << it->typenam << "& vl){ " << it->name << "_ = boost::shared_ptr<" <<
+                                        it->name << "( const " << it->typenam << "& vl){ " << it->name << "_ = shared_ptr<" <<
                                         it->typenam << ">(new " << it->typenam << "(vl)) ;}\n";
                                 break;
                             case mk_default:
@@ -2192,7 +2232,7 @@ namespace x680 {
                                 stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
                                         "( const " << it->typenam << "& vl){ " << it->name << "_ =vl ;}\n";
                                 stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
-                                        "( boost::shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
+                                        "( shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
                                 break;
                             default:
                             {
@@ -2201,7 +2241,7 @@ namespace x680 {
                     }
                 }
             }
-        }
+        }*/
 
         void maincpp_out::execute_declare_cpp(typeassignment_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
@@ -2327,7 +2367,7 @@ namespace x680 {
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
                                 if (it != nooblig.begin())
                                     stream << ",\n" << tabformat(scp, 2);
-                                stream << "boost::shared_ptr< " << it->typenam << ">  " << argumentname(it->name);
+                                stream << "shared_ptr< " << it->typenam << ">  " << argumentname(it->name);
                             }
                             stream << ") : \n";
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {

@@ -117,7 +117,7 @@ namespace boost {
             static void build_userdata(defined_context_set_ptr dcs, boost::shared_ptr<User_data>& data) {
                 if (dcs->contexts().empty())
                     return;
-                data = boost::shared_ptr<User_data>(new User_data());
+                data = shared_ptr<User_data>(new User_data());
                 if (dcs->is_simple_encoding()) {
                     data->simply_encoded_data__new();
                 } else {
@@ -134,7 +134,7 @@ namespace boost {
                 }
             }
 
-            static void parse_userdata(defined_context_set_ptr dcs, const boost::shared_ptr<User_data>& data) {
+            static void parse_userdata(defined_context_set_ptr dcs, const shared_ptr<User_data>& data) {
                 if (!data)
                     return;
                 try {
@@ -233,7 +233,7 @@ namespace boost {
 
             error_code presentation_socket::build_DT_type() {
                 try {
-                    boost::shared_ptr<User_data> udt;
+                    shared_ptr<User_data> udt;
                     build_userdata(dcs(), udt);
                     if (udt)
                         udt->serialize(coder()->output());
@@ -414,7 +414,7 @@ namespace boost {
                     switch (check_response()) {
                         case dt_ppdu:
                         {
-                            boost::shared_ptr<User_data> data(new User_data());
+                            shared_ptr<User_data> data(new User_data());
                             data->serialize(coder()->input());
                             parse_userdata(dcs(), data);
                             return error_code();

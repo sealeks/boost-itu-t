@@ -278,7 +278,7 @@ namespace boost {
 
 
 
-            typedef boost::shared_ptr<defined_context> defined_context_ptr;
+            typedef shared_ptr<defined_context> defined_context_ptr;
 
             inline bool operator<(defined_context_ptr ls, defined_context_ptr rs) {
                 if (ls && rs)
@@ -451,7 +451,7 @@ namespace boost {
 
             };
 
-            typedef boost::shared_ptr<defined_context_set> defined_context_set_ptr;
+            typedef shared_ptr<defined_context_set> defined_context_set_ptr;
 
 
             enum ppdu_enum {
@@ -487,7 +487,7 @@ namespace boost {
                 typedef boost::itu::x225impl::itu_socket super_type;
 
                 typedef x690_coder_type presentation_coder_type;
-                typedef boost::shared_ptr<presentation_coder_type> presentation_asn_coder_ptr;
+                typedef shared_ptr<presentation_coder_type> presentation_asn_coder_ptr;
 
 
             public:

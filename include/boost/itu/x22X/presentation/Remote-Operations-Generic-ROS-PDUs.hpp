@@ -41,7 +41,7 @@ namespace Remote_Operations_Generic_ROS_PDUs {
     using boost::asn1::any_type;
     using boost::asn1::value_holder;
     using boost::asn1::default_holder;
-
+    using boost::shared_ptr;
 
     struct Reject;
     struct InvokeId;

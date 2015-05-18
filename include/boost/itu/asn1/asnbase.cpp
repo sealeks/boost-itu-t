@@ -305,10 +305,10 @@ namespace boost {
         encoding_(arg__encoding) {
         };
 
-        external_type::external_type(boost::shared_ptr< oid_type> arg__direct_reference,
-                boost::shared_ptr< int> arg__indirect_reference,
-                boost::shared_ptr< objectdescriptor_type> arg__data_value_descriptor,
-                boost::shared_ptr< Encoding_type> arg__encoding) :
+        external_type::external_type(shared_ptr< oid_type> arg__direct_reference,
+                shared_ptr< int> arg__indirect_reference,
+                shared_ptr< objectdescriptor_type> arg__data_value_descriptor,
+                shared_ptr< Encoding_type> arg__encoding) :
         direct_reference_(arg__direct_reference),
         indirect_reference_(arg__indirect_reference),
         data_value_descriptor_(arg__data_value_descriptor),
@@ -327,28 +327,28 @@ namespace boost {
             set<bitstring_type>(new bitstring_type(vl), Encoding_type_arbitrary);
         }
 
-        boost::shared_ptr<oid_type> external_type::direct_reference__new() {
-            return direct_reference_ = boost::shared_ptr<oid_type>(new oid_type());
+        shared_ptr<oid_type> external_type::direct_reference__new() {
+            return direct_reference_ = shared_ptr<oid_type>(new oid_type());
         }
 
         void external_type::direct_reference(const oid_type& vl) {
-            direct_reference_ = boost::shared_ptr<oid_type>(new oid_type(vl));
+            direct_reference_ = shared_ptr<oid_type>(new oid_type(vl));
         }
 
-        boost::shared_ptr<int> external_type::indirect_reference__new() {
-            return indirect_reference_ = boost::shared_ptr<int>(new int());
+        shared_ptr<int> external_type::indirect_reference__new() {
+            return indirect_reference_ = shared_ptr<int>(new int());
         }
 
         void external_type::indirect_reference(const int& vl) {
-            indirect_reference_ = boost::shared_ptr<int>(new int(vl));
+            indirect_reference_ = shared_ptr<int>(new int(vl));
         }
 
-        boost::shared_ptr<objectdescriptor_type> external_type::data_value_descriptor__new() {
-            return data_value_descriptor_ = boost::shared_ptr<objectdescriptor_type>(new objectdescriptor_type());
+        shared_ptr<objectdescriptor_type> external_type::data_value_descriptor__new() {
+            return data_value_descriptor_ = shared_ptr<objectdescriptor_type>(new objectdescriptor_type());
         }
 
         void external_type::data_value_descriptor(const objectdescriptor_type& vl) {
-            data_value_descriptor_ = boost::shared_ptr<objectdescriptor_type>(new objectdescriptor_type(vl));
+            data_value_descriptor_ = shared_ptr<objectdescriptor_type>(new objectdescriptor_type(vl));
         }
 
         external_type::Encoding_type& external_type::encoding() {
@@ -363,7 +363,7 @@ namespace boost {
             encoding_ = vl;
         }
 
-        void external_type::encoding(boost::shared_ptr< Encoding_type> vl) {
+        void external_type::encoding(shared_ptr< Encoding_type> vl) {
             encoding_ = vl;
         }
 
@@ -402,7 +402,7 @@ namespace boost {
             abstract_ = vl;
         }
 
-        void embeded_type::Identification_type::Syntaxes_type::abstract(boost::shared_ptr< oid_type> vl) {
+        void embeded_type::Identification_type::Syntaxes_type::abstract(shared_ptr< oid_type> vl) {
             abstract_ = vl;
         }
 
@@ -418,7 +418,7 @@ namespace boost {
             transfer_ = vl;
         }
 
-        void embeded_type::Identification_type::Syntaxes_type::transfer(boost::shared_ptr< oid_type> vl) {
+        void embeded_type::Identification_type::Syntaxes_type::transfer(shared_ptr< oid_type> vl) {
             transfer_ = vl;
         }
 
@@ -443,7 +443,7 @@ namespace boost {
             presentation_context_id_ = vl;
         }
 
-        void embeded_type::Identification_type::Context_negotiation_type::presentation_context_id(boost::shared_ptr< int> vl) {
+        void embeded_type::Identification_type::Context_negotiation_type::presentation_context_id(shared_ptr< int> vl) {
             presentation_context_id_ = vl;
         }
 
@@ -459,7 +459,7 @@ namespace boost {
             transfer_syntax_ = vl;
         }
 
-        void embeded_type::Identification_type::Context_negotiation_type::transfer_syntax(boost::shared_ptr< oid_type> vl) {
+        void embeded_type::Identification_type::Context_negotiation_type::transfer_syntax(shared_ptr< oid_type> vl) {
             transfer_syntax_ = vl;
         }
 
@@ -491,7 +491,7 @@ namespace boost {
             identification_ = vl;
         }
 
-        void embeded_type::identification(boost::shared_ptr< Identification_type> vl) {
+        void embeded_type::identification(shared_ptr< Identification_type> vl) {
             identification_ = vl;
         }
 
@@ -507,7 +507,7 @@ namespace boost {
             data_value_ = vl;
         }
 
-        void embeded_type::data_value(boost::shared_ptr< octetstring_type> vl) {
+        void embeded_type::data_value(shared_ptr< octetstring_type> vl) {
             data_value_ = vl;
         }
 
@@ -544,7 +544,7 @@ namespace boost {
             abstract_ = vl;
         }
 
-        void characterstring_type::Identification_type::Syntaxes_type::abstract(boost::shared_ptr< oid_type> vl) {
+        void characterstring_type::Identification_type::Syntaxes_type::abstract(shared_ptr< oid_type> vl) {
             abstract_ = vl;
         }
 
@@ -560,7 +560,7 @@ namespace boost {
             transfer_ = vl;
         }
 
-        void characterstring_type::Identification_type::Syntaxes_type::transfer(boost::shared_ptr< oid_type> vl) {
+        void characterstring_type::Identification_type::Syntaxes_type::transfer(shared_ptr< oid_type> vl) {
             transfer_ = vl;
         }
 
@@ -585,7 +585,7 @@ namespace boost {
             presentation_context_id_ = vl;
         }
 
-        void characterstring_type::Identification_type::Context_negotiation_type::presentation_context_id(boost::shared_ptr< int> vl) {
+        void characterstring_type::Identification_type::Context_negotiation_type::presentation_context_id(shared_ptr< int> vl) {
             presentation_context_id_ = vl;
         }
 
@@ -601,7 +601,7 @@ namespace boost {
             transfer_syntax_ = vl;
         }
 
-        void characterstring_type::Identification_type::Context_negotiation_type::transfer_syntax(boost::shared_ptr< oid_type> vl) {
+        void characterstring_type::Identification_type::Context_negotiation_type::transfer_syntax(shared_ptr< oid_type> vl) {
             transfer_syntax_ = vl;
         }
 
@@ -633,7 +633,7 @@ namespace boost {
             identification_ = vl;
         }
 
-        void characterstring_type::identification(boost::shared_ptr< Identification_type> vl) {
+        void characterstring_type::identification(shared_ptr< Identification_type> vl) {
             identification_ = vl;
         }
 
@@ -649,7 +649,7 @@ namespace boost {
             string_value_ = vl;
         }
 
-        void characterstring_type::string_value(boost::shared_ptr< octetstring_type> vl) {
+        void characterstring_type::string_value(shared_ptr< octetstring_type> vl) {
             string_value_ = vl;
         }
 

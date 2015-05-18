@@ -339,7 +339,7 @@ namespace boost {
 
             public:
 
-                typedef boost::shared_ptr< protocol_options > protocol_options_ptr;
+                typedef shared_ptr< protocol_options > protocol_options_ptr;
 
                 enum operation_state {
 
@@ -436,8 +436,8 @@ namespace boost {
 
             class itu_socket : protected boost::asio::basic_stream_socket<boost::asio::ip::tcp > {
 
-                typedef boost::shared_ptr<receiver> receiver_ptr;
-                typedef boost::shared_ptr<sender> sender_ptr;
+                typedef shared_ptr<receiver> receiver_ptr;
+                typedef shared_ptr<sender> sender_ptr;
                 typedef boost::asio::basic_stream_socket<boost::asio::ip::tcp > super_type;
 
                 friend class socket_acceptor;

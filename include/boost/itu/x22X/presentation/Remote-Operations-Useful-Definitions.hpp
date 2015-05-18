@@ -41,6 +41,7 @@ namespace Remote_Operations_Useful_Definitions {
     using boost::asn1::any_type;
     using boost::asn1::value_holder;
     using boost::asn1::default_holder;
+    using boost::shared_ptr;
 
 
 

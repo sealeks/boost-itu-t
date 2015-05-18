@@ -136,6 +136,7 @@ namespace boost {\
     using boost::asn1::any_type;\
     using boost::asn1::value_holder;\
     using boost::asn1::default_holder;\
+    using boost::shared_ptr;\
 
 
 #define ITU_T_TYPEDEF(regtype, type , id, cl)  typedef type  regtype;
@@ -145,24 +146,33 @@ namespace boost {\
 #define ITU_T_EXTENTION   arch.resetextention();
 
 #define ITU_T_CHOICE(enm)  boost::asn1::___asn__choice__base__< enm> 
+
+#define ITU_T_CHOICE_CTORS(nm)          nm() : boost::asn1::___asn__choice__base__< nm ## _enum >() {};\
+                                                                              template<typename T > nm (shared_ptr< T> vl, nm ## _enum enm) :  boost::asn1::___asn__choice__base__< nm ## _enum > (vl, static_cast<int> (enm)) {};\
+                                                                              template<typename T > nm (const T& vl, nm ## _enum enm) : boost::asn1::___asn__choice__base__< nm ## _enum > (new T(vl), static_cast<int> (enm)) {};
+
+
+
+//boost::asn1::___asn__choice__base__< enm>
+
 #define ITU_T_CHOICE_CHECK(enm) ( arch.__input__()) || (check( enm ))
 
 ////////////////////////////////
 
 // primitive choice
-#define ITU_T_CHOICES_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);};\
+#define ITU_T_CHOICES_DECL(nm ,tp ,enm) shared_ptr< tp > nm () const {return get< tp >(enm);};\
                                                                              void nm ( tp * vl) { set( vl, enm );} ;\
                                                                              void nm ( const tp&  vl); \
-                                                                             boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
-                                                                             boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
+                                                                             shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
+                                                                             shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
 
 #define ITU_T_CHOICES_DEFN(fullnm, nm  ,tp ,enm) void fullnm (const tp & vl){ set< tp >(new tp (vl), enm );}
 
 // choice
-#define ITU_T_CHOICEC_DECL(nm ,tp ,enm) boost::shared_ptr< tp > nm () const {return get< tp >(enm);};\
+#define ITU_T_CHOICEC_DECL(nm ,tp ,enm) shared_ptr< tp > nm () const {return get< tp >(enm);};\
                                                                              void nm ( tp * vl) { set( vl, enm );} ;\
-                                                                             boost::shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
-                                                                             boost::shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
+                                                                             shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
+                                                                             shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
         
 #define ITU_T_CHOICEC_DEFN(fullnm, nm  ,tp ,enm);        
 
@@ -174,13 +184,13 @@ namespace boost {\
 #define ITU_T_HOLDERH_DECL(nm ,tp )  void nm ( const tp & vl);\
                                                                        tp & nm ();\
                                                                        const tp & nm () const ;\
-                                                                       void nm  (boost::shared_ptr< tp > vl);\
+                                                                       void nm  (shared_ptr< tp > vl);\
                                                                        private: boost::asn1::value_holder< tp > nm ## _ ; public:
 
 #define ITU_T_HOLDERH_DEFN(fullnm, nm ,tp )  tp & fullnm () {return *  nm ## _; }\
                                                                                     const tp & fullnm () const {return *  nm ## _;}\
                                                                                     void fullnm (const tp & vl) {  nm ## _ = vl; } \
-                                                                                    void fullnm (boost::shared_ptr< tp> vl) { nm ## _ = vl; }
+                                                                                    void fullnm (shared_ptr< tp> vl) { nm ## _ = vl; }
 
 // value simple 
 #define ITU_T_HOLDERN_DECL(nm ,tp )  void nm ( const tp & vl);\
@@ -198,17 +208,17 @@ namespace boost {\
 /////////////////////////////////
 
 // optional value
-#define ITU_T_OPTIONAL_DECL(nm ,tp )  boost::shared_ptr< tp >& nm () { return nm ## _; };\
-                                                                        const boost::shared_ptr< tp >& nm () const { return nm ## _; } \
-                                                                        void nm  (boost::shared_ptr< tp > vl) {nm ## _ = vl;};\
-                                                                        void nm  ( tp *  vl) {nm ## _ = boost::shared_ptr< tp >(vl);}; \
-                                                                        void nm ## __free  () {nm ## _ = boost::shared_ptr< tp>();};\
+#define ITU_T_OPTIONAL_DECL(nm ,tp )  shared_ptr< tp >& nm () { return nm ## _; };\
+                                                                        const shared_ptr< tp >& nm () const { return nm ## _; } \
+                                                                        void nm  (shared_ptr< tp > vl) {nm ## _ = vl;};\
+                                                                        void nm  ( tp *  vl) {nm ## _ = shared_ptr< tp >(vl);}; \
+                                                                        void nm ## __free  () {nm ## _ = shared_ptr< tp>();};\
                                                                         void nm ( const tp & vl); \
-                                                                        boost::shared_ptr< tp> nm ## __new  ();\
-                                                                        private: boost::shared_ptr< tp > nm ## _ ; public:            
+                                                                        shared_ptr< tp> nm ## __new  ();\
+                                                                        private: shared_ptr< tp > nm ## _ ; public:            
 
-#define ITU_T_OPTIONAL_DEFN(fullnm, nm ,tp )  boost::shared_ptr< tp > fullnm ## __new() { return  nm ## _ = boost::shared_ptr< tp >(new  tp ());}\
-                                                                                     void fullnm(const tp & vl) {  nm ## _ = boost::shared_ptr< tp >(new tp (vl));}
+#define ITU_T_OPTIONAL_DEFN(fullnm, nm ,tp )  shared_ptr< tp > fullnm ## __new() { return  nm ## _ = shared_ptr< tp >(new  tp ());}\
+                                                                                     void fullnm(const tp & vl) {  nm ## _ = shared_ptr< tp >(new tp (vl));}
 
 
 
@@ -217,20 +227,20 @@ namespace boost {\
 // default value
 #define ITU_T_DEFAULTH_DECL(nm ,tp, dflt )    void nm ( const tp & vl);\
                                                                                   const tp & nm () const ;\
-                                                                                  void nm  (boost::shared_ptr< tp > vl); \
+                                                                                  void nm  (shared_ptr< tp > vl); \
                                                                                   private: boost::asn1::default_holder<tp  , dflt> nm ## _ ; public: 
                                                                              
                                                                              
 #define ITU_T_DEFAULTH_DEFN(fullnm, nm ,tp )    const tp & fullnm () const { return * nm ##  _; }\
                                                                                   void fullnm (const tp & vl) { nm ##  _ = vl;}\
-                                                                                  void fullnm (boost::shared_ptr<  tp > vl) { nm ##  _ = vl;}                          
+                                                                                  void fullnm (shared_ptr<  tp > vl) { nm ##  _ = vl;}                          
 
 
 
                                                                              
 
-#define ITU_T_EXTENDED_DECL()  void extended ( bool vl ) {__extended__ = vl  ? boost::shared_ptr<bool>( new bool(vl)) : boost::shared_ptr<bool>(); } ; bool extended ()  const { return static_cast<bool>(__extended__);}; \
-                         private: boost::shared_ptr<bool>  __extended__ ; public: 
+#define ITU_T_EXTENDED_DECL()  void extended ( bool vl ) {__extended__ = vl  ? shared_ptr<bool>( new bool(vl)) : shared_ptr<bool>(); } ; bool extended ()  const { return static_cast<bool>(__extended__);}; \
+                         private: shared_ptr<bool>  __extended__ ; public: 
 
 
 #define ITU_T_ARCHIVE_FUNC    template<typename Archive> void serialize(Archive& arch){};
@@ -264,8 +274,8 @@ namespace boost {
         using boost::itu::asn_coder_ptr;
 
         template<typename T>
-        inline boost::shared_ptr< T> simple_build_type() {
-            return boost::shared_ptr< T > (new T());
+        inline shared_ptr< T> simple_build_type() {
+            return shared_ptr< T > (new T());
         }
 
         typedef std::size_t id_type;
@@ -1141,7 +1151,7 @@ namespace boost {
 
         public:
 
-            typedef boost::shared_ptr<S> T;
+            typedef shared_ptr<S> T;
             typedef S root_type;
 
             explicit optional_explicit_value(T& vl, id_type id, const class_type& type = CONTEXT_CLASS) : id_(id), val_(vl), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
@@ -1203,7 +1213,7 @@ namespace boost {
 
         public:
 
-            typedef boost::shared_ptr<S> T;
+            typedef shared_ptr<S> T;
             typedef S root_type;
 
             explicit optional_implicit_value(T& vl, id_type id, const class_type& type) :
@@ -1316,11 +1326,11 @@ namespace boost {
                 return value_.get();
             }
 
-            const boost::shared_ptr<T>& shared_value() const {
+            const shared_ptr<T>& shared_value() const {
                 return value_;
             }
 
-            boost::shared_ptr<T>& shared_value() {
+            shared_ptr<T>& shared_value() {
                 return value_;
             }
 
@@ -1342,7 +1352,7 @@ namespace boost {
 
 
         private:
-            boost::shared_ptr<T> value_;
+            shared_ptr<T> value_;
         };
 
 
@@ -1396,11 +1406,11 @@ namespace boost {
                 return *value_.get();
             }
 
-            const boost::shared_ptr<T>& shared_value() const {
+            const shared_ptr<T>& shared_value() const {
                 return value_;
             }
 
-            boost::shared_ptr<T>& shared_value() {
+            shared_ptr<T>& shared_value() {
                 return value_;
             }
 
@@ -1421,7 +1431,7 @@ namespace boost {
             }
 
         private:
-            boost::shared_ptr<T> value_;
+            shared_ptr<T> value_;
         };
 
 
@@ -1471,20 +1481,20 @@ namespace boost {
 
             public:
 
-                choice_holder() : base_choice_holder(static_cast<int> (0)), val_(boost::shared_ptr<T>()) {
+                choice_holder() : base_choice_holder(static_cast<int> (0)), val_(shared_ptr<T>()) {
                 }
 
-                choice_holder(T* vl, int ID = 0) : base_choice_holder(static_cast<int> (ID)), val_(boost::shared_ptr<T>(vl)) {
+                choice_holder(T* vl, int ID = 0) : base_choice_holder(static_cast<int> (ID)), val_(shared_ptr<T>(vl)) {
                 }
 
-                choice_holder(boost::shared_ptr<T> vl, int ID = 0) : base_choice_holder(static_cast<int> (ID)), val_(vl) {
+                choice_holder(shared_ptr<T> vl, int ID = 0) : base_choice_holder(static_cast<int> (ID)), val_(vl) {
                 }
 
-                boost::shared_ptr<T>& value() {
+                shared_ptr<T>& value() {
                     return val_;
                 }
 
-                const boost::shared_ptr<T>& value() const {
+                const shared_ptr<T>& value() const {
                     return val_;
                 }
 
@@ -1493,11 +1503,11 @@ namespace boost {
                 }
 
             private:
-                boost::shared_ptr<T> val_;
+                shared_ptr<T> val_;
             };
 
 
-            typedef boost::shared_ptr<base_choice_holder> type_ptr;
+            typedef shared_ptr<base_choice_holder> type_ptr;
 
         public:
 
@@ -1529,7 +1539,7 @@ namespace boost {
             }
 
             template<typename T>
-            boost::shared_ptr<T>& value(bool isinput, E tp) {
+            shared_ptr<T>& value(bool isinput, E tp) {
                 typedef choice_holder<T> choice_holder_type;
                 if (isinput)
                     set(new T(), tp);
@@ -1537,11 +1547,11 @@ namespace boost {
             }
 
             template<typename T>
-            boost::shared_ptr<T> get(E ID) const {
+            shared_ptr<T> get(E ID) const {
                 typedef choice_holder<T> choice_holder_type;
                 return (type() == ID) ?
                         boost::static_pointer_cast< choice_holder_type > (val_)->value() :
-                        boost::shared_ptr<T > ();
+                        shared_ptr<T > ();
             }
 
             template<typename T>
@@ -1550,7 +1560,7 @@ namespace boost {
             }
 
             template<typename T>
-            void set(boost::shared_ptr<T> vl, E ID) {
+            void set(shared_ptr<T> vl, E ID) {
                 val_ = type_ptr(new choice_holder<T > (vl, static_cast<int> (ID)));
             }
 
@@ -1588,8 +1598,8 @@ namespace boost {
             internal_(new T(vl)) {
             }
 
-            explicit value_holder(boost::shared_ptr<T> vl) :
-            internal_(vl ? vl : boost::shared_ptr<T>(new T())) {
+            explicit value_holder(shared_ptr<T> vl) :
+            internal_(vl ? vl : shared_ptr<T>(new T())) {
             }
 
             T& operator*() const {
@@ -1597,17 +1607,17 @@ namespace boost {
             }
 
             T& operator=(const T & vl) {
-                internal_ = boost::shared_ptr<T > (new T(vl));
+                internal_ = shared_ptr<T > (new T(vl));
                 return *internal_;
             }
 
-            T& operator=(boost::shared_ptr<T> vl) {
+            T& operator=(shared_ptr<T> vl) {
                 if (vl)
                     internal_ = vl;
                 return *internal_;
             }
 
-            boost::shared_ptr<T>& get_shared() {
+            shared_ptr<T>& get_shared() {
                 return internal_;
             }
 
@@ -1618,7 +1628,7 @@ namespace boost {
 
         private:
 
-            boost::shared_ptr<T> internal_;
+            shared_ptr<T> internal_;
         };
 
 
@@ -1636,11 +1646,11 @@ namespace boost {
             }
 
             explicit default_holder(const T & vl) :
-            internal_(vl != DT ? new T(vl) : boost::shared_ptr<T>()) {
+            internal_(vl != DT ? new T(vl) : shared_ptr<T>()) {
             }
 
-            explicit default_holder(boost::shared_ptr<T> vl) :
-            internal_(vl ? (((*vl) != DT) ? vl : boost::shared_ptr<T>()) : vl) {
+            explicit default_holder(shared_ptr<T> vl) :
+            internal_(vl ? (((*vl) != DT) ? vl : shared_ptr<T>()) : vl) {
             }
 
             const T& operator*() const {
@@ -1654,20 +1664,20 @@ namespace boost {
             }
 
             const T& operator=(const T & vl) {
-                internal_ = (vl != DT) ? boost::shared_ptr<T > (new T(vl)) : boost::shared_ptr<T>();
+                internal_ = (vl != DT) ? shared_ptr<T > (new T(vl)) : shared_ptr<T>();
                 if (internal_)
                     return*internal_;
                 return DT;
             }
 
-            const T& operator=(boost::shared_ptr<T> vl) {
+            const T& operator=(shared_ptr<T> vl) {
                 internal_ = vl;
                 if (internal_)
                     return*internal_;
                 return DT;
             }
 
-            boost::shared_ptr<T>& get_shared() {
+            shared_ptr<T>& get_shared() {
                 return internal_;
             }
 
@@ -1682,7 +1692,7 @@ namespace boost {
 
         private:
 
-            boost::shared_ptr<T> internal_;
+            shared_ptr<T> internal_;
 
         };
 
@@ -1703,7 +1713,7 @@ namespace boost {
             value_(*vl), MIN(mn), MAX(mx), EXT(ext), SEMI(false) {
             }
 
-            num_constrainter(boost::shared_ptr<T>& vl, const T& mn, const T& mx, bool ext) :
+            num_constrainter(shared_ptr<T>& vl, const T& mn, const T& mx, bool ext) :
             value_(*vl), MIN(mn), MAX(mx), EXT(ext), SEMI(false) {
             }
 
@@ -1730,7 +1740,7 @@ namespace boost {
             value_(*vl), MIN(mn), MAX(), EXT(ext), SEMI(true) {
             }
 
-            num_constrainter(boost::shared_ptr<T>& vl, const T& mn, bool ext) :
+            num_constrainter(shared_ptr<T>& vl, const T& mn, bool ext) :
             value_(*vl), MIN(mn), MAX(), EXT(ext), SEMI(true) {
             }
 
@@ -1971,7 +1981,7 @@ namespace boost {
                 Encoding_type() : ITU_T_CHOICE(Encoding_type_enum) () {
                 }
 
-                template<typename T > Encoding_type(boost::shared_ptr< T> vl, Encoding_type_enum enm) :
+                template<typename T > Encoding_type(shared_ptr< T> vl, Encoding_type_enum enm) :
                         ITU_T_CHOICE(Encoding_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
@@ -1987,10 +1997,10 @@ namespace boost {
 
             external_type(const Encoding_type& arg__encoding);
 
-            external_type(boost::shared_ptr< oid_type> arg__direct_reference,
-                    boost::shared_ptr< int> arg__indirect_reference,
-                    boost::shared_ptr< objectdescriptor_type> arg__data_value_descriptor,
-                    boost::shared_ptr< Encoding_type> arg__encoding);
+            external_type(shared_ptr< oid_type> arg__direct_reference,
+                    shared_ptr< int> arg__indirect_reference,
+                    shared_ptr< objectdescriptor_type> arg__data_value_descriptor,
+                    shared_ptr< Encoding_type> arg__encoding);
 
             ITU_T_OPTIONAL_DECL(direct_reference, oid_type);
             ITU_T_OPTIONAL_DECL(indirect_reference, int);
@@ -2056,7 +2066,7 @@ namespace boost {
                 Identification_type() : ITU_T_CHOICE(Identification_type_enum) () {
                 }
 
-                template<typename T > Identification_type(boost::shared_ptr< T> vl, Identification_type_enum enm) :
+                template<typename T > Identification_type(shared_ptr< T> vl, Identification_type_enum enm) :
                         ITU_T_CHOICE(Identification_type_enum) (vl, static_cast<int> (enm)) {
                 }
 
@@ -2139,7 +2149,7 @@ namespace boost {
                 Identification_type() : ITU_T_CHOICE(Identification_type_enum) () {
                 }
 
-                template<typename T > Identification_type(boost::shared_ptr< T> vl, Identification_type_enum enm) :
+                template<typename T > Identification_type(shared_ptr< T> vl, Identification_type_enum enm) :
                         ITU_T_CHOICE(Identification_type_enum) (vl, static_cast<int> (enm)) {
                 }
 

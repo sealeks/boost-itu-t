@@ -274,7 +274,7 @@ namespace boost {
 
             class spdudata {
 
-                typedef boost::shared_ptr<spdudata_type> spdudata_type_ptr;
+                typedef shared_ptr<spdudata_type> spdudata_type_ptr;
 
             public:
 
@@ -379,7 +379,7 @@ namespace boost {
 
             struct protocol_options {
 
-                typedef boost::shared_ptr<spdudata> spdudata_ptr;
+                typedef shared_ptr<spdudata> spdudata_ptr;
 
                 protocol_options() : vars_(new spdudata()) {
                 }
@@ -714,7 +714,7 @@ namespace boost {
 
             public:
 
-                typedef boost::shared_ptr< protocol_options > protocol_options_ptr;
+                typedef shared_ptr< protocol_options > protocol_options_ptr;
 
                 enum operation_state {
 
@@ -831,8 +831,8 @@ namespace boost {
                 typedef boost::itu::rfc1006::socket super_type;
                 typedef boost::itu::asn_coder_templ<> default_coder_type;
 
-                typedef boost::shared_ptr<receiver> receiver_ptr;
-                typedef boost::shared_ptr<sender> sender_ptr;
+                typedef shared_ptr<receiver> receiver_ptr;
+                typedef shared_ptr<sender> sender_ptr;
 
                 friend class socket_acceptor;
 
