@@ -32,6 +32,8 @@
             <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1.asn</itemPath>
             <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1.cpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1.hpp</itemPath>
+            <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1_ber.cpp</itemPath>
+            <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1_per.cpp</itemPath>
           </logicalFolder>
           <logicalFolder name="presentation"
                          displayName="presentation"
@@ -206,6 +208,16 @@
       <item path="../../../include/boost/itu/x22X/acse/ACSE-1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1_per.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
@@ -448,6 +460,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1_per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
             ex="false"
             tool="3"
@@ -687,6 +709,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1_per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
             ex="false"
             tool="3"
@@ -922,6 +954,16 @@
       <item path="../../../include/boost/itu/x22X/acse/ACSE-1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1_per.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
