@@ -3,6 +3,7 @@
 
 #include <boost/itu/asn1/asnbase.hpp>
 #include <boost/itu/x69X/x690.hpp>
+#include <boost/itu/x69X/x691.hpp>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -13,35 +14,7 @@
 
 namespace MMS_Environment_1 {
 
-    using boost::asn1::null_type;
-    using boost::asn1::enumerated_type;
-    using boost::asn1::bitstring_type;
-    using boost::asn1::octetstring_type;
-    using boost::asn1::oid_type;
-    using boost::asn1::reloid_type;
-    using boost::asn1::utctime_type;
-    using boost::asn1::gentime_type;
-    using boost::asn1::ia5string_type;
-    using boost::asn1::printablestring_type;
-    using boost::asn1::visiblestring_type;
-    using boost::asn1::visiblestring_type;
-    using boost::asn1::numericstring_type;
-    using boost::asn1::universalstring_type;
-    using boost::asn1::bmpstring_type;
-    using boost::asn1::utf8string_type;
-    using boost::asn1::generalstring_type;
-    using boost::asn1::graphicstring_type;
-    using boost::asn1::t61string_type;
-    using boost::asn1::t61string_type;
-    using boost::asn1::videotexstring_type;
-    using boost::asn1::objectdescriptor_type;
-    using boost::asn1::external_type;
-    using boost::asn1::embeded_type;
-    using boost::asn1::characterstring_type;
-    using boost::asn1::any_type;
-    using boost::asn1::value_holder;
-    using boost::asn1::default_holder;
-    using boost::shared_ptr;
+    ITU_T_USE_UNIVESAL_DECL;
 
 
     struct ApplicationReference;
@@ -64,10 +37,10 @@ namespace MMS_Environment_1 {
 
         ApplicationReference();
 
-        ApplicationReference(boost::shared_ptr< ACSE_1::AP_title> arg__ap_title,
-                boost::shared_ptr< ACSE_1::AP_invocation_identifier> arg__ap_invocation_id,
-                boost::shared_ptr< ACSE_1::AE_qualifier> arg__ae_qualifier,
-                boost::shared_ptr< ACSE_1::AE_invocation_identifier> arg__ae_invocation_id);
+        ApplicationReference(shared_ptr< ACSE_1::AP_title> arg__ap_title,
+                shared_ptr< ACSE_1::AP_invocation_identifier> arg__ap_invocation_id,
+                shared_ptr< ACSE_1::AE_qualifier> arg__ae_qualifier,
+                shared_ptr< ACSE_1::AE_invocation_identifier> arg__ae_invocation_id);
 
         ITU_T_OPTIONAL_DECL(ap_title, ACSE_1::AP_title);
         ITU_T_OPTIONAL_DECL(ap_invocation_id, ACSE_1::AP_invocation_identifier);
@@ -77,8 +50,10 @@ namespace MMS_Environment_1 {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    template<> void ApplicationReference::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ApplicationReference::serialize(boost::asn1::x690::input_coder& arch);
+    ITU_T_ARCHIVE_X690_DECL(ApplicationReference);
+
+    ITU_T_ARCHIVE_X691_DECL(ApplicationReference);
+
 }
 
 

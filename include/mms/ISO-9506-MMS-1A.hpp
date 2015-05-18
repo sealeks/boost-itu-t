@@ -3,6 +3,7 @@
 
 #include <boost/itu/asn1/asnbase.hpp>
 #include <boost/itu/x69X/x690.hpp>
+#include <boost/itu/x69X/x691.hpp>
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -13,35 +14,7 @@
 
 namespace ISO_9506_MMS_1A {
 
-    using boost::asn1::null_type;
-    using boost::asn1::enumerated_type;
-    using boost::asn1::bitstring_type;
-    using boost::asn1::octetstring_type;
-    using boost::asn1::oid_type;
-    using boost::asn1::reloid_type;
-    using boost::asn1::utctime_type;
-    using boost::asn1::gentime_type;
-    using boost::asn1::ia5string_type;
-    using boost::asn1::printablestring_type;
-    using boost::asn1::visiblestring_type;
-    using boost::asn1::visiblestring_type;
-    using boost::asn1::numericstring_type;
-    using boost::asn1::universalstring_type;
-    using boost::asn1::bmpstring_type;
-    using boost::asn1::utf8string_type;
-    using boost::asn1::generalstring_type;
-    using boost::asn1::graphicstring_type;
-    using boost::asn1::t61string_type;
-    using boost::asn1::t61string_type;
-    using boost::asn1::videotexstring_type;
-    using boost::asn1::objectdescriptor_type;
-    using boost::asn1::external_type;
-    using boost::asn1::embeded_type;
-    using boost::asn1::characterstring_type;
-    using boost::asn1::any_type;
-    using boost::asn1::value_holder;
-    using boost::asn1::default_holder;
-    using boost::shared_ptr;
+    ITU_T_USE_UNIVESAL_DECL;
 
 
     struct ObtainFile_Request;
@@ -106,9 +79,9 @@ namespace ISO_9506_MMS_1A {
         ObtainFile_Request(const ISO_9506_MMS_1::FileName& arg__sourceFile,
                 const ISO_9506_MMS_1::FileName& arg__destinationFile);
 
-        ObtainFile_Request(boost::shared_ptr< MMS_Environment_1::ApplicationReference> arg__sourceFileServer,
-                boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__sourceFile,
-                boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__destinationFile);
+        ObtainFile_Request(shared_ptr< MMS_Environment_1::ApplicationReference> arg__sourceFileServer,
+                shared_ptr< ISO_9506_MMS_1::FileName> arg__sourceFile,
+                shared_ptr< ISO_9506_MMS_1::FileName> arg__destinationFile);
 
         ITU_T_OPTIONAL_DECL(sourceFileServer, MMS_Environment_1::ApplicationReference);
         ITU_T_HOLDERH_DECL(sourceFile, ISO_9506_MMS_1::FileName);
@@ -117,8 +90,8 @@ namespace ISO_9506_MMS_1A {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const ObtainFile_Error obtainFile_Error_source_file;
-    extern const ObtainFile_Error obtainFile_Error_destination_file;
+    const ObtainFile_Error obtainFile_Error_source_file = 0;
+    const ObtainFile_Error obtainFile_Error_destination_file = 1;
 
     // sequence FileOpen-Request
 
@@ -160,8 +133,8 @@ namespace ISO_9506_MMS_1A {
 
         FileRead_Response(const octetstring_type& arg__fileData);
 
-        FileRead_Response(boost::shared_ptr< octetstring_type> arg__fileData,
-                boost::shared_ptr< bool> arg__moreFollows);
+        FileRead_Response(shared_ptr< octetstring_type> arg__fileData,
+                shared_ptr< bool> arg__moreFollows);
 
         ITU_T_HOLDERH_DECL(fileData, octetstring_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
@@ -184,8 +157,8 @@ namespace ISO_9506_MMS_1A {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    extern const FileRename_Error fileRename_Error_source_file;
-    extern const FileRename_Error fileRename_Error_destination_file;
+    const FileRename_Error fileRename_Error_source_file = 0;
+    const FileRename_Error fileRename_Error_destination_file = 1;
 
     // sequence FileDirectory-Request
 
@@ -193,8 +166,8 @@ namespace ISO_9506_MMS_1A {
 
         FileDirectory_Request();
 
-        FileDirectory_Request(boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__fileSpecification,
-                boost::shared_ptr< ISO_9506_MMS_1::FileName> arg__continueAfter);
+        FileDirectory_Request(shared_ptr< ISO_9506_MMS_1::FileName> arg__fileSpecification,
+                shared_ptr< ISO_9506_MMS_1::FileName> arg__continueAfter);
 
         ITU_T_OPTIONAL_DECL(fileSpecification, ISO_9506_MMS_1::FileName);
         ITU_T_OPTIONAL_DECL(continueAfter, ISO_9506_MMS_1::FileName);
@@ -214,8 +187,8 @@ namespace ISO_9506_MMS_1A {
 
         FileDirectory_Response(const ListOfDirectoryEntry_type& arg__listOfDirectoryEntry);
 
-        FileDirectory_Response(boost::shared_ptr< ListOfDirectoryEntry_type> arg__listOfDirectoryEntry,
-                boost::shared_ptr< bool> arg__moreFollows);
+        FileDirectory_Response(shared_ptr< ListOfDirectoryEntry_type> arg__listOfDirectoryEntry,
+                shared_ptr< bool> arg__moreFollows);
 
         ITU_T_HOLDERH_DECL(listOfDirectoryEntry, ListOfDirectoryEntry_type);
         ITU_T_DEFAULTH_DECL(moreFollows, bool, moreFollows__default);
@@ -246,8 +219,8 @@ namespace ISO_9506_MMS_1A {
 
         FileAttributes(const ISO_9506_MMS_1::Unsigned32& arg__sizeOfFile);
 
-        FileAttributes(boost::shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__sizeOfFile,
-                boost::shared_ptr< gentime_type> arg__lastModified);
+        FileAttributes(shared_ptr< ISO_9506_MMS_1::Unsigned32> arg__sizeOfFile,
+                shared_ptr< gentime_type> arg__lastModified);
 
         ITU_T_HOLDERH_DECL(sizeOfFile, ISO_9506_MMS_1::Unsigned32); //   Ic(  [ 0  ...   2147483647 ]   
         ITU_T_OPTIONAL_DECL(lastModified, gentime_type);
@@ -261,9 +234,9 @@ namespace ISO_9506_MMS_1A {
 
         ScatteredAccessDescription_sequence_of(const ISO_9506_MMS_1::VariableSpecification& arg__variableSpecification);
 
-        ScatteredAccessDescription_sequence_of(boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
-                boost::shared_ptr< ISO_9506_MMS_1::VariableSpecification> arg__variableSpecification,
-                boost::shared_ptr< ISO_9506_MMS_1::AlternateAccess> arg__alternateAccess);
+        ScatteredAccessDescription_sequence_of(shared_ptr< ISO_9506_MMS_1::Identifier> arg__componentName,
+                shared_ptr< ISO_9506_MMS_1::VariableSpecification> arg__variableSpecification,
+                shared_ptr< ISO_9506_MMS_1::AlternateAccess> arg__alternateAccess);
 
         ITU_T_OPTIONAL_DECL(componentName, ISO_9506_MMS_1::Identifier);
         ITU_T_HOLDERH_DECL(variableSpecification, ISO_9506_MMS_1::VariableSpecification);
@@ -296,9 +269,9 @@ namespace ISO_9506_MMS_1A {
         GetScatteredAccessAttributes_Response(const bool& arg__mmsDeletable,
                 const ScatteredAccessDescription& arg__scatteredAccessDescription);
 
-        GetScatteredAccessAttributes_Response(boost::shared_ptr< bool> arg__mmsDeletable,
-                boost::shared_ptr< ScatteredAccessDescription> arg__scatteredAccessDescription,
-                boost::shared_ptr< ISO_9506_MMS_1::Identifier> arg__accessControlList);
+        GetScatteredAccessAttributes_Response(shared_ptr< bool> arg__mmsDeletable,
+                shared_ptr< ScatteredAccessDescription> arg__scatteredAccessDescription,
+                shared_ptr< ISO_9506_MMS_1::Identifier> arg__accessControlList);
 
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
         ITU_T_HOLDERH_DECL(scatteredAccessDescription, ScatteredAccessDescription);
@@ -307,30 +280,32 @@ namespace ISO_9506_MMS_1A {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    template<> void ObtainFile_Request::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ObtainFile_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void FileOpen_Request::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void FileOpen_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void FileOpen_Response::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void FileOpen_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void FileRead_Response::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void FileRead_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void FileRename_Request::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void FileRename_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void FileDirectory_Request::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void FileDirectory_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void FileDirectory_Response::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void FileDirectory_Response::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void DirectoryEntry::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void DirectoryEntry::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void FileAttributes::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void FileAttributes::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ScatteredAccessDescription_sequence_of::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ScatteredAccessDescription_sequence_of::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void DefineScatteredAccess_Request::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void DefineScatteredAccess_Request::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void GetScatteredAccessAttributes_Response::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void GetScatteredAccessAttributes_Response::serialize(boost::asn1::x690::input_coder& arch);
+    ITU_T_ARCHIVE_X690_DECL(ObtainFile_Request);
+    ITU_T_ARCHIVE_X690_DECL(FileOpen_Request);
+    ITU_T_ARCHIVE_X690_DECL(FileOpen_Response);
+    ITU_T_ARCHIVE_X690_DECL(FileRead_Response);
+    ITU_T_ARCHIVE_X690_DECL(FileRename_Request);
+    ITU_T_ARCHIVE_X690_DECL(FileDirectory_Request);
+    ITU_T_ARCHIVE_X690_DECL(FileDirectory_Response);
+    ITU_T_ARCHIVE_X690_DECL(DirectoryEntry);
+    ITU_T_ARCHIVE_X690_DECL(FileAttributes);
+    ITU_T_ARCHIVE_X690_DECL(ScatteredAccessDescription_sequence_of);
+    ITU_T_ARCHIVE_X690_DECL(DefineScatteredAccess_Request);
+    ITU_T_ARCHIVE_X690_DECL(GetScatteredAccessAttributes_Response);
+
+    ITU_T_ARCHIVE_X691_DECL(ObtainFile_Request);
+    ITU_T_ARCHIVE_X691_DECL(FileOpen_Request);
+    ITU_T_ARCHIVE_X691_DECL(FileOpen_Response);
+    ITU_T_ARCHIVE_X691_DECL(FileRead_Response);
+    ITU_T_ARCHIVE_X691_DECL(FileRename_Request);
+    ITU_T_ARCHIVE_X691_DECL(FileDirectory_Request);
+    ITU_T_ARCHIVE_X691_DECL(FileDirectory_Response);
+    ITU_T_ARCHIVE_X691_DECL(DirectoryEntry);
+    ITU_T_ARCHIVE_X691_DECL(FileAttributes);
+    ITU_T_ARCHIVE_X691_DECL(ScatteredAccessDescription_sequence_of);
+    ITU_T_ARCHIVE_X691_DECL(DefineScatteredAccess_Request);
+    ITU_T_ARCHIVE_X691_DECL(GetScatteredAccessAttributes_Response);
+
 }
 
 
