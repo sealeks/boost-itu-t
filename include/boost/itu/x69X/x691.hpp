@@ -2117,28 +2117,28 @@ namespace boost {
         }
 
         template<typename T>
-        inline bool bind_constraints(boost::asn1::x691::output_coder & arch, boost::shared_ptr<T>& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
+        inline bool bind_constraints(boost::asn1::x691::output_coder & arch, boost::shared_ptr<T>& vl, const T& MIN, const T& MAX, bool ext) {
             if (static_cast<bool> (vl))
                 return bind_constraints(arch, *vl, MIN, MAX, ext);
             return false;
         }
 
         template<typename T>
-        inline bool bind_constraints(boost::asn1::x691::input_coder & arch, boost::shared_ptr<T>& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
+        inline bool bind_constraints(boost::asn1::x691::input_coder & arch, boost::shared_ptr<T>& vl, const T& MIN, const T& MAX, bool ext) {
             if (!static_cast<bool> (vl))
                 vl = boost::shared_ptr<T>(new T());
             return bind_constraints(arch, *vl, MIN, MAX, ext);
         }
 
         template<typename T, const T& DT>
-        inline bool bind_constraints(boost::asn1::x691::output_coder & arch, default_holder<T, DT>& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
+        inline bool bind_constraints(boost::asn1::x691::output_coder & arch, default_holder<T, DT>& vl, const T& MIN, const T& MAX, bool ext) {
             if (!vl.isdefault())
                 return bind_constraints(arch, vl.get_shared(), MIN, MAX, ext);
             return false;
         }
 
         template<typename T, const T& DT>
-        inline bool bind_constraints(boost::asn1::x691::input_coder & arch, default_holder<T, DT>& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
+        inline bool bind_constraints(boost::asn1::x691::input_coder & arch, default_holder<T, DT>& vl, const T& MIN, const T& MAX, bool ext) {
             return bind_constraints(arch, vl.get_shared(), MIN, MAX, ext);
         }
 

@@ -2723,7 +2723,7 @@ namespace x680 {
                 for (namedtypeassignment_entity_vct::iterator it = optels.begin(); it != optels.end(); ++it) {
                     if (it != optels.begin())
                         stream << " + ";
-                    stream << " ITU_T_OPTIONAL_PER(" << (*it)->name() << "_)";
+                    stream << " ITU_T_OPTIONAL_PER(" << nameconvert((*it)->name()) << "_)";
                 }
                 stream << ";\n";
                 stream << "\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_SET_PER;";
