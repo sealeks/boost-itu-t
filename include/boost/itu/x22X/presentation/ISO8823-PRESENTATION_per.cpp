@@ -42,9 +42,9 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_PER(checkpointSize_.get_shared());
-        ITU_T_BIND_PER(windowSize_.get_shared());
-        ITU_T_BIND_PER(dialogueMode_.get_shared());
+        ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_BIND_PER(windowSize_);
+        ITU_T_BIND_PER(dialogueMode_);
         ITU_T_BIND_PER(*connectionDataRQ_);
         ITU_T_BIND_PER(applicationProtocol_);
     }
@@ -53,9 +53,9 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_GET_PER(4);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_.get_shared());
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_.get_shared());
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(dialogueMode_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_);
+        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(dialogueMode_);
         ITU_T_BIND_PER(*connectionDataRQ_);
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(applicationProtocol_);
     }
@@ -66,14 +66,14 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_PER(protocol_version_.get_shared());
+        ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_SIZE_CONSTRE(calling_presentation_selector_, 1, 4);
         ITU_T_BIND_SIZE_CONSTRE(called_presentation_selector_, 1, 4);
         ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_list_, 0, 7);
         ITU_T_BIND_PER(default_context_name_);
         ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_BIND_PER(user_session_requirements_);
-        ITU_T_BIND_PER(protocol_options_.get_shared());
+        ITU_T_BIND_PER(protocol_options_);
         ITU_T_BIND_NUM_CONSTRE(initiators_nominated_context_, 1, 127);
         ITU_T_BIND_PER(extensions_);
         ITU_T_BIND_PER(user_data_);
@@ -83,14 +83,14 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_GET_PER(11);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_SIZE_CONSTRE(calling_presentation_selector_, 1, 4);
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_SIZE_CONSTRE(called_presentation_selector_, 1, 4);
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(default_context_name_);
         ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(user_session_requirements_);
-        ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(protocol_options_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(protocol_options_);
         ITU_T_OPTIONAL_CHECK_PER(8) ITU_T_BIND_NUM_CONSTRE(initiators_nominated_context_, 1, 127);
         ITU_T_OPTIONAL_CHECK_PER(9) ITU_T_BIND_PER(extensions_);
         ITU_T_OPTIONAL_CHECK_PER(10) ITU_T_BIND_PER(user_data_);
@@ -132,8 +132,8 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_PER(checkpointSize_.get_shared());
-        ITU_T_BIND_PER(windowSize_.get_shared());
+        ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_BIND_PER(windowSize_);
         ITU_T_BIND_PER(*connectionDataAC_);
     }
 
@@ -141,8 +141,8 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_GET_PER(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_.get_shared());
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_);
         ITU_T_BIND_PER(*connectionDataAC_);
     }
 
@@ -152,12 +152,12 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_PER(protocol_version_.get_shared());
+        ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
         ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
         ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_BIND_PER(user_session_requirements_);
-        ITU_T_BIND_PER(protocol_options_.get_shared());
+        ITU_T_BIND_PER(protocol_options_);
         ITU_T_BIND_NUM_CONSTRE(responders_nominated_context_, 1, 127);
         ITU_T_BIND_PER(user_data_);
     }
@@ -166,12 +166,12 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_GET_PER(8);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(user_session_requirements_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(protocol_options_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(protocol_options_);
         ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_NUM_CONSTRE(responders_nominated_context_, 1, 127);
         ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(user_data_);
     }
@@ -241,7 +241,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_PER(protocol_version_.get_shared());
+        ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
         ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
         ITU_T_BIND_PER(default_context_result_);
@@ -253,7 +253,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_GET_PER(6);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(default_context_result_);

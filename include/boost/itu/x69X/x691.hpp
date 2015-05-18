@@ -2019,8 +2019,8 @@ namespace boost {
                 return bind_per(arch, vl.get_shared());
             return false;
         }
-
-        template<typename T, const enumerated_type& DT>
+ 
+        template<typename T, const T& DT>
         inline bool bind_per(boost::asn1::x691::input_coder & arch, default_holder<T, DT>& vl) {
             return bind_per(arch, vl.get_shared());
         }

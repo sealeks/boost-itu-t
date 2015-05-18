@@ -753,7 +753,7 @@ namespace x680 {
         static std::string name_arch(const std::string& nm, tagmarker_type mkr) {
             switch (mkr) {
                 case mk_exception: return "*(*" + nm + ")";                
-                case mk_default: return nm + ".get_shared()";
+                case mk_default: return nm /*+ ".get_shared()"*/;
                 case mk_none: return "*" + nm;
                 default:
                 {

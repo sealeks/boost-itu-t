@@ -117,30 +117,30 @@ namespace Reliable_Transfer_APDU {
     }
 
     template<> void RTORQapdu::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
-        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
-        ITU_T_IMPLICIT_TAG(dialogueMode_.get_shared(), 2);
+        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
+        ITU_T_IMPLICIT_TAG(windowSize_, 1);
+        ITU_T_IMPLICIT_TAG(dialogueMode_, 2);
         ITU_T_CHOICE_TAG(*connectionDataRQ_, 3);
         ITU_T_IMPLICIT_TAG(applicationProtocol_, 4);
     }
 
     template<> void RTORQapdu::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
-        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
-        ITU_T_IMPLICIT_TAG(dialogueMode_.get_shared(), 2);
+        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
+        ITU_T_IMPLICIT_TAG(windowSize_, 1);
+        ITU_T_IMPLICIT_TAG(dialogueMode_, 2);
         ITU_T_CHOICE_TAG(*connectionDataRQ_, 3);
         ITU_T_IMPLICIT_TAG(applicationProtocol_, 4);
     }
 
     template<> void RTOACapdu::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
-        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
+        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
+        ITU_T_IMPLICIT_TAG(windowSize_, 1);
         ITU_T_CHOICE_TAG(*connectionDataAC_, 2);
     }
 
     template<> void RTOACapdu::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
-        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
+        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
+        ITU_T_IMPLICIT_TAG(windowSize_, 1);
         ITU_T_CHOICE_TAG(*connectionDataAC_, 2);
     }
 

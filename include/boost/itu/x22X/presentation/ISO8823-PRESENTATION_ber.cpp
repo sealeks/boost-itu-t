@@ -22,44 +22,44 @@ namespace ISO8823_PRESENTATION {
     }
 
     template<> void CP_type::X410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
-        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
-        ITU_T_IMPLICIT_TAG(dialogueMode_.get_shared(), 2);
+        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
+        ITU_T_IMPLICIT_TAG(windowSize_, 1);
+        ITU_T_IMPLICIT_TAG(dialogueMode_, 2);
         ITU_T_EXPLICIT_TAG(*connectionDataRQ_, 3);
         ITU_T_IMPLICIT_TAG(applicationProtocol_, 4);
     }
 
     template<> void CP_type::X410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
-        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
-        ITU_T_IMPLICIT_TAG(dialogueMode_.get_shared(), 2);
+        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
+        ITU_T_IMPLICIT_TAG(windowSize_, 1);
+        ITU_T_IMPLICIT_TAG(dialogueMode_, 2);
         ITU_T_EXPLICIT_TAG(*connectionDataRQ_, 3);
         ITU_T_IMPLICIT_TAG(applicationProtocol_, 4);
     }
 
     template<> void CP_type::Normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_IMPLICIT_TAG(calling_presentation_selector_, 1);
         ITU_T_IMPLICIT_TAG(called_presentation_selector_, 2);
         ITU_T_IMPLICIT_TAG(presentation_context_definition_list_, 4);
         ITU_T_IMPLICIT_TAG(default_context_name_, 6);
         ITU_T_IMPLICIT_TAG(presentation_requirements_, 8);
         ITU_T_IMPLICIT_TAG(user_session_requirements_, 9);
-        ITU_T_EXPLICIT_TAG(protocol_options_.get_shared(), 11);
+        ITU_T_EXPLICIT_TAG(protocol_options_, 11);
         ITU_T_EXPLICIT_TAG(initiators_nominated_context_, 12);
         ITU_T_EXPLICIT_TAG(extensions_, 14);
         ITU_T_BIND_CHOICE(user_data_);
     }
 
     template<> void CP_type::Normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_IMPLICIT_TAG(calling_presentation_selector_, 1);
         ITU_T_IMPLICIT_TAG(called_presentation_selector_, 2);
         ITU_T_IMPLICIT_TAG(presentation_context_definition_list_, 4);
         ITU_T_IMPLICIT_TAG(default_context_name_, 6);
         ITU_T_IMPLICIT_TAG(presentation_requirements_, 8);
         ITU_T_IMPLICIT_TAG(user_session_requirements_, 9);
-        ITU_T_EXPLICIT_TAG(protocol_options_.get_shared(), 11);
+        ITU_T_EXPLICIT_TAG(protocol_options_, 11);
         ITU_T_EXPLICIT_TAG(initiators_nominated_context_, 12);
         ITU_T_EXPLICIT_TAG(extensions_, 14);
         ITU_T_BIND_CHOICE(user_data_);
@@ -86,35 +86,35 @@ namespace ISO8823_PRESENTATION {
     }
 
     template<> void CPA_PPDU::X410_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
-        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
+        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
+        ITU_T_IMPLICIT_TAG(windowSize_, 1);
         ITU_T_EXPLICIT_TAG(*connectionDataAC_, 2);
     }
 
     template<> void CPA_PPDU::X410_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(checkpointSize_.get_shared(), 0);
-        ITU_T_IMPLICIT_TAG(windowSize_.get_shared(), 1);
+        ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
+        ITU_T_IMPLICIT_TAG(windowSize_, 1);
         ITU_T_EXPLICIT_TAG(*connectionDataAC_, 2);
     }
 
     template<> void CPA_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_IMPLICIT_TAG(responding_presentation_selector_, 3);
         ITU_T_IMPLICIT_TAG(presentation_context_definition_result_list_, 5);
         ITU_T_IMPLICIT_TAG(presentation_requirements_, 8);
         ITU_T_IMPLICIT_TAG(user_session_requirements_, 9);
-        ITU_T_EXPLICIT_TAG(protocol_options_.get_shared(), 11);
+        ITU_T_EXPLICIT_TAG(protocol_options_, 11);
         ITU_T_EXPLICIT_TAG(responders_nominated_context_, 13);
         ITU_T_BIND_CHOICE(user_data_);
     }
 
     template<> void CPA_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_IMPLICIT_TAG(responding_presentation_selector_, 3);
         ITU_T_IMPLICIT_TAG(presentation_context_definition_result_list_, 5);
         ITU_T_IMPLICIT_TAG(presentation_requirements_, 8);
         ITU_T_IMPLICIT_TAG(user_session_requirements_, 9);
-        ITU_T_EXPLICIT_TAG(protocol_options_.get_shared(), 11);
+        ITU_T_EXPLICIT_TAG(protocol_options_, 11);
         ITU_T_EXPLICIT_TAG(responders_nominated_context_, 13);
         ITU_T_BIND_CHOICE(user_data_);
     }
@@ -193,7 +193,7 @@ namespace ISO8823_PRESENTATION {
     }
 
     template<> void CPR_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_IMPLICIT_TAG(responding_presentation_selector_, 3);
         ITU_T_IMPLICIT_TAG(presentation_context_definition_result_list_, 5);
         ITU_T_IMPLICIT_TAG(default_context_result_, 7);
@@ -202,7 +202,7 @@ namespace ISO8823_PRESENTATION {
     }
 
     template<> void CPR_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_IMPLICIT_TAG(responding_presentation_selector_, 3);
         ITU_T_IMPLICIT_TAG(presentation_context_definition_result_list_, 5);
         ITU_T_IMPLICIT_TAG(default_context_result_, 7);

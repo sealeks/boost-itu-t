@@ -128,7 +128,7 @@ namespace ACSE_1 {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_PER(protocol_version_.get_shared());
+        ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_PER(*aSO_context_name_);
         ITU_T_BIND_PER(called_AP_title_);
         ITU_T_BIND_PER(called_AE_qualifier_);
@@ -153,7 +153,7 @@ namespace ACSE_1 {
 
         ITU_T_OPTIONAL_GET_PER(18);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_PER(*aSO_context_name_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(called_AP_title_);
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(called_AE_qualifier_);
@@ -180,7 +180,7 @@ namespace ACSE_1 {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_PER(protocol_version_.get_shared());
+        ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_PER(*aSO_context_name_);
         ITU_T_BIND_NUM_CONSTRE(*result_, 0, 2);
         ITU_T_BIND_PER(*result_source_diagnostic_);
@@ -203,7 +203,7 @@ namespace ACSE_1 {
 
         ITU_T_OPTIONAL_GET_PER(14);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_PER(*aSO_context_name_);
         ITU_T_BIND_NUM_CONSTRE(*result_, 0, 2);
         ITU_T_BIND_PER(*result_source_diagnostic_);

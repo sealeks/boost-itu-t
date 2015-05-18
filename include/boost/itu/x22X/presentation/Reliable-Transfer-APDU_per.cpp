@@ -100,9 +100,9 @@ namespace Reliable_Transfer_APDU {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_PER(checkpointSize_.get_shared());
-        ITU_T_BIND_PER(windowSize_.get_shared());
-        ITU_T_BIND_PER(dialogueMode_.get_shared());
+        ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_BIND_PER(windowSize_);
+        ITU_T_BIND_PER(dialogueMode_);
         ITU_T_BIND_PER(*connectionDataRQ_);
         ITU_T_BIND_PER(applicationProtocol_);
     }
@@ -111,9 +111,9 @@ namespace Reliable_Transfer_APDU {
 
         ITU_T_OPTIONAL_GET_PER(4);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_.get_shared());
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_.get_shared());
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(dialogueMode_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_);
+        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(dialogueMode_);
         ITU_T_BIND_PER(*connectionDataRQ_);
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(applicationProtocol_);
     }
@@ -124,8 +124,8 @@ namespace Reliable_Transfer_APDU {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_PER(checkpointSize_.get_shared());
-        ITU_T_BIND_PER(windowSize_.get_shared());
+        ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_BIND_PER(windowSize_);
         ITU_T_BIND_PER(*connectionDataAC_);
     }
 
@@ -133,8 +133,8 @@ namespace Reliable_Transfer_APDU {
 
         ITU_T_OPTIONAL_GET_PER(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_.get_shared());
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_);
         ITU_T_BIND_PER(*connectionDataAC_);
     }
 

@@ -408,8 +408,8 @@ namespace boost {
 
             struct data_state {
 
-                data_state() : unuse_(0), rows_vect_(new octet_sequnce_ptr_vect()),
-                listbuffers_(new const_sequences()), size_(0) {
+                data_state() : unuse_(0), listbuffers_(new const_sequences()),
+                rows_vect_(new octet_sequnce_ptr_vect()),  size_(0) {
                 }
 
                 ~data_state() {

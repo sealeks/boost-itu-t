@@ -115,7 +115,7 @@ namespace ACSE_1 {
     }
 
     template<> void AARQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_EXPLICIT_TAG(*aSO_context_name_, 1);
         ITU_T_CHOICE_TAG(called_AP_title_, 2);
         ITU_T_CHOICE_TAG(called_AE_qualifier_, 3);
@@ -137,7 +137,7 @@ namespace ACSE_1 {
     }
 
     template<> void AARQ_apdu_impl::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_EXPLICIT_TAG(*aSO_context_name_, 1);
         ITU_T_CHOICE_TAG(called_AP_title_, 2);
         ITU_T_CHOICE_TAG(called_AE_qualifier_, 3);
@@ -159,7 +159,7 @@ namespace ACSE_1 {
     }
 
     template<> void AARE_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_EXPLICIT_TAG(*aSO_context_name_, 1);
         ITU_T_EXPLICIT_TAG(*result_, 2);
         ITU_T_CHOICE_TAG(*result_source_diagnostic_, 3);
@@ -179,7 +179,7 @@ namespace ACSE_1 {
     }
 
     template<> void AARE_apdu_impl::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(protocol_version_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_EXPLICIT_TAG(*aSO_context_name_, 1);
         ITU_T_EXPLICIT_TAG(*result_, 2);
         ITU_T_CHOICE_TAG(*result_source_diagnostic_, 3);
