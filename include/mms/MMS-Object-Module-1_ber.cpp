@@ -554,24 +554,24 @@ namespace MMS_Object_Module_1 {
     }
 
     template<> void TypeDescription::Array_type::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(packed_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(packed_, 0);
         ITU_T_IMPLICIT_TAG(*numberOfElements_, 1);
         ITU_T_CHOICE_TAG(*elementType_, 2);
     }
 
     template<> void TypeDescription::Array_type::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(packed_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(packed_, 0);
         ITU_T_IMPLICIT_TAG(*numberOfElements_, 1);
         ITU_T_CHOICE_TAG(*elementType_, 2);
     }
 
     template<> void TypeDescription::Structure_type::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_IMPLICIT_TAG(packed_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(packed_, 0);
         ITU_T_IMPLICIT_TAG(*components_, 1);
     }
 
     template<> void TypeDescription::Structure_type::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_IMPLICIT_TAG(packed_.get_shared(), 0);
+        ITU_T_IMPLICIT_TAG(packed_, 0);
         ITU_T_IMPLICIT_TAG(*components_, 1);
     }
 

@@ -29,12 +29,17 @@
     <itemPath>../../../include/mms/ISO-9506-MMS-1.hpp</itemPath>
     <itemPath>../../../include/mms/ISO-9506-MMS-1A.cpp</itemPath>
     <itemPath>../../../include/mms/ISO-9506-MMS-1A.hpp</itemPath>
+    <itemPath>../../../include/mms/ISO-9506-MMS-1A_ber.cpp</itemPath>
+    <itemPath>../../../include/mms/ISO-9506-MMS-1_ber.cpp</itemPath>
     <itemPath>../../../include/mms/MMS-Environment-1.cpp</itemPath>
     <itemPath>../../../include/mms/MMS-Environment-1.hpp</itemPath>
+    <itemPath>../../../include/mms/MMS-Environment-1_ber.cpp</itemPath>
     <itemPath>../../../include/mms/MMS-Object-Module-1.cpp</itemPath>
     <itemPath>../../../include/mms/MMS-Object-Module-1.hpp</itemPath>
+    <itemPath>../../../include/mms/MMS-Object-Module-1_ber.cpp</itemPath>
     <itemPath>../../../include/mms/MMS-SCI-Module-1.cpp</itemPath>
     <itemPath>../../../include/mms/MMS-SCI-Module-1.hpp</itemPath>
+    <itemPath>../../../include/mms/MMS-SCI-Module-1_ber.cpp</itemPath>
     <itemPath>../../../include/mms/mmsioclient.cpp</itemPath>
     <itemPath>../../../include/mms/mmsioclient.h</itemPath>
     <itemPath>../../../include/mms/mmsmodel.cpp</itemPath>
@@ -93,6 +98,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/mms/MMS-Environment-1.cpp"
             ex="false"
             tool="1"
@@ -101,6 +116,11 @@
       <item path="../../../include/mms/MMS-Environment-1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1_ber.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/mms/MMS-Object-Module-1.cpp"
@@ -113,6 +133,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/MMS-Object-Module-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/mms/MMS-SCI-Module-1.cpp"
             ex="false"
             tool="1"
@@ -121,6 +146,11 @@
       <item path="../../../include/mms/MMS-SCI-Module-1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1_ber.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/mms/mmsioclient.cpp"
@@ -183,6 +213,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/mms/MMS-Environment-1.cpp"
             ex="false"
             tool="1"
@@ -191,6 +231,11 @@
       <item path="../../../include/mms/MMS-Environment-1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1_ber.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/mms/MMS-Object-Module-1.cpp"
@@ -203,6 +248,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/MMS-Object-Module-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/mms/MMS-SCI-Module-1.cpp"
             ex="false"
             tool="1"
@@ -211,6 +261,11 @@
       <item path="../../../include/mms/MMS-SCI-Module-1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1_ber.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/mms/mmsioclient.cpp"
@@ -272,6 +327,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/mms/MMS-Environment-1.cpp"
             ex="false"
             tool="1"
@@ -280,6 +345,11 @@
       <item path="../../../include/mms/MMS-Environment-1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1_ber.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/mms/MMS-Object-Module-1.cpp"
@@ -292,6 +362,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/MMS-Object-Module-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/mms/MMS-SCI-Module-1.cpp"
             ex="false"
             tool="1"
@@ -300,6 +375,11 @@
       <item path="../../../include/mms/MMS-SCI-Module-1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1_ber.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/mms/mmsioclient.cpp"
@@ -359,6 +439,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1A_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/ISO-9506-MMS-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/mms/MMS-Environment-1.cpp"
             ex="false"
             tool="1"
@@ -367,6 +457,11 @@
       <item path="../../../include/mms/MMS-Environment-1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-Environment-1_ber.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/mms/MMS-Object-Module-1.cpp"
@@ -379,6 +474,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/mms/MMS-Object-Module-1_ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/mms/MMS-SCI-Module-1.cpp"
             ex="false"
             tool="1"
@@ -387,6 +487,11 @@
       <item path="../../../include/mms/MMS-SCI-Module-1.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/mms/MMS-SCI-Module-1_ber.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/mms/mmsioclient.cpp"

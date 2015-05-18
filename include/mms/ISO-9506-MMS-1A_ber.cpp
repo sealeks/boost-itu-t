@@ -43,12 +43,12 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileRead_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*fileData_, 0);
-        ITU_T_IMPLICIT_TAG(moreFollows_.get_shared(), 1);
+        ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
     template<> void FileRead_Response::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(*fileData_, 0);
-        ITU_T_IMPLICIT_TAG(moreFollows_.get_shared(), 1);
+        ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
     template<> void FileRename_Request::serialize(boost::asn1::x690::output_coder& arch) {
@@ -73,12 +73,12 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileDirectory_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_EXPLICIT_TAG(*listOfDirectoryEntry_, 0);
-        ITU_T_IMPLICIT_TAG(moreFollows_.get_shared(), 1);
+        ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
     template<> void FileDirectory_Response::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_EXPLICIT_TAG(*listOfDirectoryEntry_, 0);
-        ITU_T_IMPLICIT_TAG(moreFollows_.get_shared(), 1);
+        ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
     template<> void DirectoryEntry::serialize(boost::asn1::x690::output_coder& arch) {
