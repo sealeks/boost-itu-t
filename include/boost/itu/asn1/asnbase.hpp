@@ -137,6 +137,14 @@ namespace boost {\
     using boost::asn1::value_holder;\
     using boost::asn1::default_holder;\
     using boost::shared_ptr;\
+    using boost::int8_t;\
+    using boost::uint8_t;\
+    using boost::int16_t;\
+    using boost::uint16_t;\
+    using boost::int32_t;\
+    using boost::uint32_t;\
+    using boost::int64_t;\
+    using boost::uint64_t;
 
 
 #define ITU_T_TYPEDEF(regtype, type , id, cl)  typedef type  regtype;

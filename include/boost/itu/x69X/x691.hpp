@@ -1698,7 +1698,7 @@ namespace boost {
 
 
                 constrained_wnumber<T> tmp(vl.value(), vl.min(), vl.max());
-                boost::uint64_t semi = tmp.sendval();
+                //boost::uint64_t semi = tmp.sendval();
 
                 std::size_t octsz = 1;
                 constrained_wnumber<std::size_t> rng(octsz, 1, tmp.octetsize());

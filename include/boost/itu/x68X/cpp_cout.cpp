@@ -206,10 +206,39 @@ namespace x680 {
             return rslt;
         }
 
-        std::string builtin_str(defined_type tp) {
+        std::string builtin_int_str(integer_constraints_ptr intconstr) {
+            if (intconstr && (!intconstr->to_per().has_extention())) {
+                integer_constraints::range_type main_int_cnstr = intconstr->to_per().main();
+                if ((main_int_cnstr.left_ptr()) && (main_int_cnstr.right_ptr())) {
+                    bool negat = main_int_cnstr.left() < 0;
+                    if (negat) {
+                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int8_t>::min()) && (main_int_cnstr.right() <= std::numeric_limits<boost::int8_t>::max()))
+                            return "int8_t";
+                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int16_t>::min()) && (main_int_cnstr.right() <= std::numeric_limits<boost::int16_t>::max()))
+                            return "int16_t";
+                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int32_t>::min()) && (main_int_cnstr.right() <= std::numeric_limits<boost::int32_t>::max()))
+                            return "int32_t";
+                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int64_t>::min()) && (main_int_cnstr.right() <= std::numeric_limits<boost::int64_t>::max()))
+                            return "int64_t";
+                    } else {
+                        if (main_int_cnstr.right() <= std::numeric_limits<boost::uint8_t>::max())
+                            return "uint8_t";
+                        else if (main_int_cnstr.right() <= std::numeric_limits<boost::uint16_t>::max())
+                            return "uint16_t";
+                        else if (main_int_cnstr.right() <= std::numeric_limits<boost::uint32_t>::max())
+                            return "uint32_t";
+                        else if ((boost::uint64_t)main_int_cnstr.right() <= std::numeric_limits<boost::uint64_t>::max())
+                            return "uint64_t";
+                    }
+                }
+            }
+            return "int";
+        }
+
+        std::string builtin_str(defined_type tp, integer_constraints_ptr intconstr = integer_constraints_ptr()) {
             switch (tp) {
                 case t_BOOLEAN: return "bool";
-                case t_INTEGER: return "int";
+                case t_INTEGER: return builtin_int_str(intconstr); //"int";
                 case t_BIT_STRING: return "bitstring_type";
                 case t_OCTET_STRING: return "octetstring_type";
                 case t_NULL: return "null_type";
@@ -265,7 +294,8 @@ namespace x680 {
                     return nameupper(type_str(ppas)+(ppas->builtin() == t_SEQUENCE_OF ? "_sequence_of" : "_set_of"));
                 return nameupper(nameconvert(self->islocaldeclare() ? (self->name() + "_type") : self->name()) + postfix);
             } else
-                return self->islocaldefined() ? builtin_str(self->builtin()) : nameupper(nameconvert(self->name()));
+                return self->islocaldefined() ? builtin_str(self->builtin(), self->type() ?
+                    (self->type()->integer_constraint()) : integer_constraints_ptr()) : nameupper(nameconvert(self->name()));
             return "";
         }
 
@@ -602,7 +632,8 @@ namespace x680 {
             } else if (self->isstructure())
                 return type_str(self, true);
             else
-                return builtin_str(self->builtin());
+                return builtin_str(self->builtin(), self->type() ?
+                    (self->type()->integer_constraint()) : integer_constraints_ptr());
 
             return "???type???";
         }
@@ -617,7 +648,7 @@ namespace x680 {
                     return "???type???";
 
                 else
-                    return builtin_str(self->builtin());
+                    return builtin_str(self->builtin(), self->integer_constraint());
             }
             return "???type???";
         }
@@ -752,7 +783,7 @@ namespace x680 {
 
         static std::string name_arch(const std::string& nm, tagmarker_type mkr) {
             switch (mkr) {
-                case mk_exception: return "*(*" + nm + ")";                
+                case mk_exception: return "*(*" + nm + ")";
                 case mk_default: return nm /*+ ".get_shared()"*/;
                 case mk_none: return "*" + nm;
                 default:
@@ -1611,7 +1642,7 @@ namespace x680 {
                         stream << "\n" << tabformat(self, 1) << "template<typename T> ";
                         stream << type_str(self) << "(const T& vl, " << type_str(self) << "_enum enm) : \n";
                         stream << tabformat(self, 2) << " ITU_T_CHOICE(" << type_str(self) << "_enum) ( new T(vl), static_cast<int>(enm)) {} \n";*/
-                        
+
                         stream << "\n";
                         stream << "\n" << tabformat(self, 1) << "ITU_T_CHOICE_CTORS(" << type_str(self) << ");\n";
                         break;
@@ -1730,8 +1761,8 @@ namespace x680 {
                 if (tpas && (tpas->isstructure()) && (tpas->is_cpp_expressed())) {
                     if (tpas->isstruct()) {
                         /*stream << struct_meth_str(tpas, "boost::asn1::" + ctp + "::output_coder") << ";";
-                        stream << struct_meth_str(tpas, "boost::asn1::" + ctp + "::input_coder") << ";";*/                        
-                        stream << "\n"  << tabformat(basic_entity_ptr(), 1) << "ITU_T_ARCHIVE_" << ctp << "_DECL(" <<  fulltype_str(tpas, false) << ");";
+                        stream << struct_meth_str(tpas, "boost::asn1::" + ctp + "::input_coder") << ";";*/
+                        stream << "\n" << tabformat(basic_entity_ptr(), 1) << "ITU_T_ARCHIVE_" << ctp << "_DECL(" << fulltype_str(tpas, false) << ");";
                         cnt++;
                     }
                     cnt += execute_struct_meth_hpp(tpas, ctp);
@@ -2182,66 +2213,66 @@ namespace x680 {
             }
         }
 
- /* OLD void maincpp_out::execute_access_member_cpp(typeassignment_entity_ptr self) {
+        /* OLD void maincpp_out::execute_access_member_cpp(typeassignment_entity_ptr self) {
 
-            basic_entity_ptr scp;
-            member_vect mmbr;
-            load_member(mmbr, self);
-            if (self->builtin() == t_CHOICE) {
-                for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                   basic_entity_ptr scp;
+                   member_vect mmbr;
+                   load_member(mmbr, self);
+                   if (self->builtin() == t_CHOICE) {
+                       for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
 
-                    if ((it->typ) && (it->typ->isprimitive())) {
-                        tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
-                        stream << "\n";
-                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
-                            stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
-                                    "( const " << it->typenam << "& vl){ set<" << it->typenam << ">(" << "new " <<
-                                    it->typenam << "(vl), " << choice_enum_str(self, it->typ) << ") ;}\n";
-                        }
-                    }
-                }
-            } else {
-                for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
-                    tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
-                    if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
-                        stream << "\n";
-                        switch (mkr) {
-                            case mk_none:
-                                stream << "\n" << tabformat(scp, 2) << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
-                                        fulltype_str(self, false) << "::" << it->name << "(){ return " << (option_no_holder() ? "" : "*") << it->name << "_ ;}\n";
-                                stream << "\n" << tabformat(scp, 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
-                                        fulltype_str(self, false) << "::" << it->name << "() const { return " << (option_no_holder() ? "" : "*") << it->name << "_ ;}\n";
-                                stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
-                                        "( const " << it->typenam << "& vl){ " << it->name << "_ =vl ;}\n";
-                                if (!option_no_holder()) {
-                                    stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
-                                            "( shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
-                                }
-                                break;
-                            case mk_optional:
-                                stream << "\n" << tabformat(scp, 2) << "shared_ptr<" << fullpathtype_str(it->typ, self, it->typenam) << "> " <<
-                                        fulltype_str(self, false) << "::" << it->name << "__new (){ return " << it->name << "_ = shared_ptr<" <<
-                                        it->typenam << ">(new " << it->typenam << "()) ;}\n";
-                                stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" <<
-                                        it->name << "( const " << it->typenam << "& vl){ " << it->name << "_ = shared_ptr<" <<
-                                        it->typenam << ">(new " << it->typenam << "(vl)) ;}\n";
-                                break;
-                            case mk_default:
-                                stream << "\n" << tabformat(scp, 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
-                                        fulltype_str(self, false) << "::" << it->name << "() const { return *" << it->name << "_ ;}\n";
-                                stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
-                                        "( const " << it->typenam << "& vl){ " << it->name << "_ =vl ;}\n";
-                                stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
-                                        "( shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
-                                break;
-                            default:
-                            {
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
+                           if ((it->typ) && (it->typ->isprimitive())) {
+                               tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
+                               stream << "\n";
+                               if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                                   stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                                           "( const " << it->typenam << "& vl){ set<" << it->typenam << ">(" << "new " <<
+                                           it->typenam << "(vl), " << choice_enum_str(self, it->typ) << ") ;}\n";
+                               }
+                           }
+                       }
+                   } else {
+                       for (member_vect::const_iterator it = mmbr.begin(); it != mmbr.end(); ++it) {
+                           tagmarker_type mkr = (it->afterextention && (it->marker == mk_none)) ? mk_optional : it->marker;
+                           if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                               stream << "\n";
+                               switch (mkr) {
+                                   case mk_none:
+                                       stream << "\n" << tabformat(scp, 2) << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                                               fulltype_str(self, false) << "::" << it->name << "(){ return " << (option_no_holder() ? "" : "*") << it->name << "_ ;}\n";
+                                       stream << "\n" << tabformat(scp, 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                                               fulltype_str(self, false) << "::" << it->name << "() const { return " << (option_no_holder() ? "" : "*") << it->name << "_ ;}\n";
+                                       stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                                               "( const " << it->typenam << "& vl){ " << it->name << "_ =vl ;}\n";
+                                       if (!option_no_holder()) {
+                                           stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                                                   "( shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
+                                       }
+                                       break;
+                                   case mk_optional:
+                                       stream << "\n" << tabformat(scp, 2) << "shared_ptr<" << fullpathtype_str(it->typ, self, it->typenam) << "> " <<
+                                               fulltype_str(self, false) << "::" << it->name << "__new (){ return " << it->name << "_ = shared_ptr<" <<
+                                               it->typenam << ">(new " << it->typenam << "()) ;}\n";
+                                       stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" <<
+                                               it->name << "( const " << it->typenam << "& vl){ " << it->name << "_ = shared_ptr<" <<
+                                               it->typenam << ">(new " << it->typenam << "(vl)) ;}\n";
+                                       break;
+                                   case mk_default:
+                                       stream << "\n" << tabformat(scp, 2) << "const " << fullpathtype_str(it->typ, self, it->typenam) << "& " <<
+                                               fulltype_str(self, false) << "::" << it->name << "() const { return *" << it->name << "_ ;}\n";
+                                       stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                                               "( const " << it->typenam << "& vl){ " << it->name << "_ =vl ;}\n";
+                                       stream << "\n" << tabformat(scp, 2) << "void " << fulltype_str(self, false) << "::" << it->name <<
+                                               "( shared_ptr< " << it->typenam << ">  vl){ " << it->name << "_ =vl ;}\n";
+                                       break;
+                                   default:
+                                   {
+                                   }
+                               }
+                           }
+                       }
+                   }
+               }*/
 
         void maincpp_out::execute_declare_cpp(typeassignment_entity_ptr self) {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
@@ -2799,6 +2830,51 @@ namespace x680 {
             stream << tabformat(scp, 2) << "}";
             stream << "\n";
         }
+        
+
+        static std::string left_int_constr_str(integer_constraints_ptr intconstr) {
+            if (intconstr) {
+                std::string typestr = builtin_int_str(intconstr);
+                integer_constraints::range_type main_int_cnstr = intconstr->to_per().main();
+                if (main_int_cnstr.left_ptr()) {
+                    if (main_int_cnstr.left() >= std::numeric_limits<boost::int8_t>::min()) {
+                        return "(" + typestr + ")" + ((main_int_cnstr.left() == std::numeric_limits<boost::int8_t>::min()) ?
+                                ("(-" + to_string(std::numeric_limits<boost::int8_t>::max()) + "-1)") : ("(" + to_string(main_int_cnstr.left()) + ")"));
+                    } else if (main_int_cnstr.left() >= std::numeric_limits<boost::int16_t>::min()) {
+                        return "(" + typestr + ")" + ((main_int_cnstr.left() == std::numeric_limits<boost::int16_t>::min()) ?
+                                ("(-" + to_string(std::numeric_limits<boost::int16_t>::max()) + "-1)") : ("(" + to_string(main_int_cnstr.left()) + ")"));
+                    } else if (main_int_cnstr.left() >= std::numeric_limits<boost::int32_t>::min()) {
+                        return "(" + typestr + ")" + ((main_int_cnstr.left() == std::numeric_limits<boost::int32_t>::min()) ?
+                                ("(-" + to_string(std::numeric_limits<boost::int32_t>::max()) + "-1)") : ("(" + to_string(main_int_cnstr.left()) + ")"));
+                    } else if (main_int_cnstr.left() >= std::numeric_limits<boost::int64_t>::min()) {
+                        return "(" + typestr + ")" + ((main_int_cnstr.left() == std::numeric_limits<boost::int64_t>::min()) ?
+                                ("(-" + to_string(std::numeric_limits<boost::int64_t>::max()) + "L-1)") : ("(" + to_string(main_int_cnstr.left()) + "L)"));
+                    }
+                    return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.left()) + ")";
+                }
+            }
+            return "???";
+        }
+
+        static std::string right_int_constr_str(integer_constraints_ptr intconstr) {
+            if (intconstr) {
+                std::string typestr = builtin_int_str(intconstr);
+                integer_constraints::range_type main_int_cnstr = intconstr->to_per().main();
+                if (main_int_cnstr.right_ptr()) {
+                    if (main_int_cnstr.right() >= std::numeric_limits<boost::int8_t>::min()) {
+                        return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.right()) + ")";
+                    } else if (main_int_cnstr.right() >= std::numeric_limits<boost::int16_t>::min()) {
+                        return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.right()) + ")";
+                    } else if (main_int_cnstr.right() >= std::numeric_limits<boost::int32_t>::min()) {
+                        return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.right()) + ")";
+                    } else if (main_int_cnstr.right() >= std::numeric_limits<boost::int64_t>::min()) {
+                        return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.right()) + "L)";
+                    }
+                    return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.right()) + ")";
+                }
+            }
+            return "???";
+        }
 
         std::string per_cpp_out::archive_member_per_constr(helper_ptr hlpr, const std::string& name, tagmarker_type dfltopt, size_constraints_ptr sizeconst, integer_constraints_ptr intconstr, bool alpha) {
             if (sizeconst) {
@@ -2807,20 +2883,19 @@ namespace x680 {
                 if (intconstr || alpha) {
                     if (hlpr && (hlpr->ts)) {
                         if (main_size_cnstr.single())
-                            return "ITU_T_BIND_EXSIZE_SNGLCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + 
-                                    fromtype_str(hlpr->ts) + ", "+ hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ", " +
-                                    std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
+                            return "ITU_T_BIND_EXSIZE_SNGLCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " +
+                            fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ", " +
+                            std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
                         else if (main_size_cnstr.right_semi())
-                            return "ITU_T_BIND_EXSIZE_SEMICONSTR" + std::string(ext_size_cnstr ? "E" : "S")  + "( " +
-                                    fromtype_str(hlpr->ts) + ", "+ hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ", " +
+                            return "ITU_T_BIND_EXSIZE_SEMICONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " +
+                            fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ", " +
                             std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
                         else
                             return "ITU_T_BIND_EXSIZE_CONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " +
-                                    fromtype_str(hlpr->ts) + ", "+ hlpr->name + "__shelper, "  + name_arch(name, dfltopt) + ", " +
+                            fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ", " +
                             std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ", " +
                             std::string(main_size_cnstr.right_ptr() ? to_string(main_size_cnstr.right()) : std::string(" ??? ")) + ")";
-                    }
-                    else  return "??? Per binding";
+                    } else return "??? Per binding";
                 } else {
                     if (main_size_cnstr.single())
                         return "ITU_T_BIND_SIZE_SNGLCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
@@ -2838,14 +2913,14 @@ namespace x680 {
                 bool ext_int_cnstr = intconstr->to_per().has_extention();
                 if (main_int_cnstr.single())
                     return "ITU_T_BIND_NUM_SNGLCON" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) + ")";
+                    left_int_constr_str(intconstr) + ")";
                 else if (main_int_cnstr.right_semi())
                     return "ITU_T_BIND_NUM_SIMICON" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) + ")";
+                    left_int_constr_str(intconstr) + ")";
                 else
                     return "ITU_T_BIND_NUM_CONSTR" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) + ", " +
-                    std::string(main_int_cnstr.right_ptr() ? to_string(main_int_cnstr.right()) : std::string(" ??? ")) + ")";
+                    left_int_constr_str(intconstr) + ", " +
+                    right_int_constr_str(intconstr) + ")";
             } else if (alpha) {
                 if (hlpr && (hlpr->ts))
                     return "ITU_T_BIND_EX_CONSTRS(" + fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ")";
@@ -2869,13 +2944,12 @@ namespace x680 {
                     integer_constraints_ptr intconstr = tmp->integer_constraint() ? tmp->integer_constraint() : integer_constraints_ptr();
                     bool alpha = (((tmp->char8_constraint())) || (tmp->tuple_constraint()) || (tmp->quadruple_constraint()));
                     return archive_member_per_constr(helper, name, dfltopt, szconstr, intconstr, alpha);
-                }
-                else if (helper) {
-                    if (helper->type==pht_enumerated){
-                        return "ITU_T_BIND_PER_ENUM(" + name_arch(name, dfltopt) + ", " +  helper->name + "__helper)";
-                    } else if ((helper->type==pht_structof_enum) || (helper->type==pht_structof_int)) {
-                       return "ITU_T_BIND_EX_CONSTRS(" +  fromtype_str(self) + ", " +  helper->name + "__shelper, "+ name_arch(name, dfltopt) +")";                        
-                    }                   
+                } else if (helper) {
+                    if (helper->type == pht_enumerated) {
+                        return "ITU_T_BIND_PER_ENUM(" + name_arch(name, dfltopt) + ", " + helper->name + "__helper)";
+                    } else if ((helper->type == pht_structof_enum) || (helper->type == pht_structof_int)) {
+                        return "ITU_T_BIND_EX_CONSTRS(" + fromtype_str(self) + ", " + helper->name + "__shelper, " + name_arch(name, dfltopt) + ")";
+                    }
                 }
             }
             return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
@@ -3118,14 +3192,14 @@ namespace x680 {
                 bool ext_int_cnstr = hlpr->ts->type()->integer_constraint()->to_per().has_extention();
                 if (main_int_cnstr.single())
                     stream << "ITU_T_REGISTRATE_NUM_SNGLCON" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
-                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) << ")";
+                    left_int_constr_str(hlpr->ts->type()->integer_constraint()) << ")";
                 else if (main_int_cnstr.right_semi())
                     stream << "ITU_T_REGISTRATE_NUM_SIMICON" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
-                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) << ")";
+                    left_int_constr_str(hlpr->ts->type()->integer_constraint()) << ")";
                 else
                     stream << "ITU_T_REGISTRATE_NUM_CONSTR" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
-                    std::string(main_int_cnstr.left_ptr() ? to_string(main_int_cnstr.left()) : std::string(" ??? ")) << ", " <<
-                    std::string(main_int_cnstr.right_ptr() ? to_string(main_int_cnstr.right()) : std::string(" ??? ")) << ")";
+                    left_int_constr_str(hlpr->ts->type()->integer_constraint()) << ", " <<
+                    right_int_constr_str(hlpr->ts->type()->integer_constraint()) << ")";
             } //else
             //stream << "#error ";
         }
@@ -3133,7 +3207,7 @@ namespace x680 {
         void per_cpp_out::print_struct_enum_helper(helper_ptr hlpr) {
             basic_entity_ptr scp;
             if (hlpr->ts) {
-                stream << tabformat(scp, 2);                
+                stream << tabformat(scp, 2);
                 stream << "ITU_T_REGISTRATE_ENUM_CONSTRS(" << hlpr->name << "__shelper, " << hlpr->name << "__helper);";
             } //else
             //stream << "#error ";
@@ -3142,7 +3216,7 @@ namespace x680 {
         void per_cpp_out::print_struct_alphabet_helper(helper_ptr hlpr) {
             basic_entity_ptr scp;
             if (hlpr->ts) {
-                 std::string typenm = builtin_str(hlpr->ts->root_builtin());
+                std::string typenm = builtin_str(hlpr->ts->root_builtin());
                 stream << tabformat(scp, 2);
                 stream << "struct " << hlpr->name << "__shelper" << " {\n";
                 stream << tabformat(scp, 3);
@@ -3157,7 +3231,7 @@ namespace x680 {
                 stream << "??? Manualy_mplementation_required \n";
                 stream << tabformat(scp, 4);
                 stream << "}\n\n";
-                stream << tabformat(scp, 3);                
+                stream << tabformat(scp, 3);
                 stream << "static std::size_t bits_count(bool aligned){\n";
                 stream << tabformat(scp, 4);
                 stream << "??? Manualy_mplementation_required \n";
