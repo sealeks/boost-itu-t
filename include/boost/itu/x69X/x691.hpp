@@ -102,7 +102,7 @@
         return index_enumerated.find(vl)!= index_enumerated.end();}\
      static std::size_t rootsize() {\
         return index_enumerated.size();}};\
-     const boost::asn1::enum_base_type ARR[] = {arrmain};\
+     const boost::asn1::enum_base_type nm##  __ARR[] = {arrmain};\
       boost::asn1::indx_enumerated_map nm## __coder::index_enumerated = boost::asn1::create_indx_enumerated(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));\
       boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));
 
