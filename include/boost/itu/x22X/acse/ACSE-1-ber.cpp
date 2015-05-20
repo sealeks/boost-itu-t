@@ -9,6 +9,8 @@
 
 namespace ACSE_1 {
 
+    // choice ACSE-apdu
+
     template<> void ACSE_apdu::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case ACSE_apdu_aarq:
@@ -60,38 +62,6 @@ namespace ACSE_1 {
     template<> void ACSE_apdu::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x80:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<AARQ_apdu > (true, ACSE_apdu_aarq))) return;
@@ -113,6 +83,8 @@ namespace ACSE_1 {
             }
         }
     }
+
+    // sequence AARQ-apdu
 
     template<> void AARQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(protocol_version_, 0);
@@ -158,6 +130,8 @@ namespace ACSE_1 {
         ITU_T_IMPLICIT_TAG(user_information_, 30);
     }
 
+    // sequence AARE-apdu
+
     template<> void AARE_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(protocol_version_, 0);
         ITU_T_EXPLICIT_TAG(*aSO_context_name_, 1);
@@ -198,6 +172,8 @@ namespace ACSE_1 {
         ITU_T_IMPLICIT_TAG(user_information_, 30);
     }
 
+    // sequence RLRQ-apdu
+
     template<> void RLRQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(reason_, 0);
         ITU_T_CHOICE_TAG(aso_qualifier_, 13);
@@ -212,6 +188,8 @@ namespace ACSE_1 {
         ITU_T_IMPLICIT_TAG(user_information_, 30);
     }
 
+    // sequence RLRE-apdu
+
     template<> void RLRE_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(reason_, 0);
         ITU_T_CHOICE_TAG(aso_qualifier_, 13);
@@ -225,6 +203,8 @@ namespace ACSE_1 {
         ITU_T_IMPLICIT_TAG(asoi_identifier_, 14);
         ITU_T_IMPLICIT_TAG(user_information_, 30);
     }
+
+    // sequence ABRT-apdu
 
     template<> void ABRT_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*abort_source_, 0);
@@ -242,6 +222,8 @@ namespace ACSE_1 {
         ITU_T_IMPLICIT_TAG(user_information_, 30);
     }
 
+    // sequence A-DT-apdu
+
     template<> void A_DT_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(aso_qualifier_, 0);
         ITU_T_IMPLICIT_TAG(asoi_identifier_, 1);
@@ -253,6 +235,8 @@ namespace ACSE_1 {
         ITU_T_IMPLICIT_TAG(asoi_identifier_, 1);
         ITU_T_CHOICE_TAG(*a_user_data_, 30);
     }
+
+    // sequence ACRQ-apdu
 
     template<> void ACRQ_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(aso_qualifier_, 0);
@@ -272,6 +256,8 @@ namespace ACSE_1 {
         ITU_T_IMPLICIT_TAG(user_information_, 30);
     }
 
+    // sequence ACRP-apdu
+
     template<> void ACRP_apdu_impl::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(aso_qualifier_, 0);
         ITU_T_IMPLICIT_TAG(asoi_identifier_, 1);
@@ -287,6 +273,8 @@ namespace ACSE_1 {
         ITU_T_IMPLICIT_TAG(p_context_result_list_, 4);
         ITU_T_IMPLICIT_TAG(user_information_, 30);
     }
+
+    // choice AP-title
 
     template<> void AP_title::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -314,38 +302,6 @@ namespace ACSE_1 {
     template<> void AP_title::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x80:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<AP_title_form1 > (true, AP_title_ap_title_form1))) return;
@@ -357,6 +313,8 @@ namespace ACSE_1 {
             }
         }
     }
+
+    // choice ASO-qualifier
 
     template<> void ASO_qualifier::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -384,38 +342,6 @@ namespace ACSE_1 {
     template<> void ASO_qualifier::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x80:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<ASO_qualifier_form1 > (true, ASO_qualifier_aso_qualifier_form1))) return;
@@ -427,6 +353,8 @@ namespace ACSE_1 {
             }
         }
     }
+
+    // choice AE-title
 
     template<> void AE_title::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -449,38 +377,6 @@ namespace ACSE_1 {
     template<> void AE_title::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x80:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<AE_title_form1 > (true, AE_title_ae_title_form1))) return;
@@ -491,6 +387,8 @@ namespace ACSE_1 {
         }
     }
 
+    // sequence 
+
     template<> void ASOI_tag_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(qualifier_, 0);
         ITU_T_EXPLICIT_TAG(identifier_, 1);
@@ -500,6 +398,8 @@ namespace ACSE_1 {
         ITU_T_CHOICE_TAG(qualifier_, 0);
         ITU_T_EXPLICIT_TAG(identifier_, 1);
     }
+
+    // choice Syntactic-context-list
 
     template<> void Syntactic_context_list::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -522,22 +422,6 @@ namespace ACSE_1 {
     template<> void Syntactic_context_list::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -558,19 +442,13 @@ namespace ACSE_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence 
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(*pci_);
@@ -584,6 +462,8 @@ namespace ACSE_1 {
         ITU_T_BIND_TAG(*transfer_syntaxes_);
     }
 
+    // sequence 
+
     template<> void Default_Context_List_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(abstract_syntax_name_, 0);
         ITU_T_IMPLICIT_TAG(*transfer_syntax_name_, 1);
@@ -593,6 +473,8 @@ namespace ACSE_1 {
         ITU_T_IMPLICIT_TAG(abstract_syntax_name_, 0);
         ITU_T_IMPLICIT_TAG(*transfer_syntax_name_, 1);
     }
+
+    // sequence 
 
     template<> void P_context_result_list_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*result_, 0);
@@ -605,6 +487,8 @@ namespace ACSE_1 {
         ITU_T_IMPLICIT_TAG(concrete_syntax_name_, 1);
         ITU_T_IMPLICIT_TAG(provider_reason_, 2);
     }
+
+    // choice Associate-source-diagnostic
 
     template<> void Associate_source_diagnostic::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -627,22 +511,6 @@ namespace ACSE_1 {
     template<> void Associate_source_diagnostic::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -663,19 +531,13 @@ namespace ACSE_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice User-Data
 
     template<> void User_Data::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -703,22 +565,6 @@ namespace ACSE_1 {
     template<> void User_Data::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -728,14 +574,6 @@ namespace ACSE_1 {
                         else free();
                         break;
                     }
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
                     default:
                     {
                     }
@@ -751,6 +589,8 @@ namespace ACSE_1 {
         }
     }
 
+    // sequence PDV-list
+
     template<> void PDV_list::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(transfer_syntax_name_);
         ITU_T_BIND_TAG(*presentation_context_identifier_);
@@ -762,6 +602,8 @@ namespace ACSE_1 {
         ITU_T_BIND_TAG(*presentation_context_identifier_);
         ITU_T_BIND_CHOICE(*presentation_data_values_);
     }
+
+    // choice presentation-data-values
 
     template<> void PDV_list::Presentation_data_values_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -789,22 +631,6 @@ namespace ACSE_1 {
     template<> void PDV_list::Presentation_data_values_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -831,19 +657,13 @@ namespace ACSE_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice Authentication-value
 
     template<> void Authentication_value::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -876,22 +696,6 @@ namespace ACSE_1 {
     template<> void Authentication_value::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -924,19 +728,13 @@ namespace ACSE_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence other
 
     template<> void Authentication_value::Other_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(*other_mechanism_name_);

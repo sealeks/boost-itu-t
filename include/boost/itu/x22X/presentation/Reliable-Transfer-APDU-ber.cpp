@@ -9,6 +9,8 @@
 
 namespace Reliable_Transfer_APDU {
 
+    // choice RTSE-apdus
+
     template<> void RTSE_apdus::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case RTSE_apdus_rtorq_apdu:
@@ -50,22 +52,6 @@ namespace Reliable_Transfer_APDU {
     template<> void RTSE_apdus::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -98,14 +84,6 @@ namespace Reliable_Transfer_APDU {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<RTTPapdu > (true, RTSE_apdus_rttp_apdu))) return;
@@ -115,6 +93,8 @@ namespace Reliable_Transfer_APDU {
             }
         }
     }
+
+    // set  RTORQapdu
 
     template<> void RTORQapdu::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
@@ -132,6 +112,8 @@ namespace Reliable_Transfer_APDU {
         ITU_T_IMPLICIT_TAG(applicationProtocol_, 4);
     }
 
+    // set  RTOACapdu
+
     template<> void RTOACapdu::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(checkpointSize_, 0);
         ITU_T_IMPLICIT_TAG(windowSize_, 1);
@@ -144,6 +126,8 @@ namespace Reliable_Transfer_APDU {
         ITU_T_CHOICE_TAG(*connectionDataAC_, 2);
     }
 
+    // set  RTORJapdu
+
     template<> void RTORJapdu::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(refuseReason_, 0);
         ITU_T_EXPLICIT_TAG(userDataRJ_, 1);
@@ -153,6 +137,8 @@ namespace Reliable_Transfer_APDU {
         ITU_T_IMPLICIT_TAG(refuseReason_, 0);
         ITU_T_EXPLICIT_TAG(userDataRJ_, 1);
     }
+
+    // set  RTABapdu
 
     template<> void RTABapdu::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(abortReason_, 0);
@@ -165,6 +151,8 @@ namespace Reliable_Transfer_APDU {
         ITU_T_IMPLICIT_TAG(reflectedParameter_, 1);
         ITU_T_EXPLICIT_TAG(userdataAB_, 2);
     }
+
+    // choice ConnectionData
 
     template<> void ConnectionData::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -187,22 +175,6 @@ namespace Reliable_Transfer_APDU {
     template<> void ConnectionData::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -223,19 +195,13 @@ namespace Reliable_Transfer_APDU {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence SessionConnectionIdentifier
 
     template<> void SessionConnectionIdentifier::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*callingSSuserReference_);
@@ -248,6 +214,8 @@ namespace Reliable_Transfer_APDU {
         ITU_T_BIND_TAG(*commonReference_);
         ITU_T_IMPLICIT_TAG(additionalReferenceInformation_, 0);
     }
+
+    // choice CallingSSuserReference
 
     template<> void CallingSSuserReference::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -270,38 +238,6 @@ namespace Reliable_Transfer_APDU {
     template<> void CallingSSuserReference::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x80:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<t61string_type > (true, CallingSSuserReference_t61String))) return;

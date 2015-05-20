@@ -14,7 +14,8 @@ namespace ISO8823_PRESENTATION {
 
     //  helper name:   Presentation_context_identifier           type:  struct of constrained int helper     //   Ic(  [ 1  ...   127 ]   ...ext...) 
 
-    ITU_T_REGISTRATE_NUM_CONSTRE(Presentation_context_identifier__shelper, integer_type, (integer_type) (1), (integer_type) (127))
+    ITU_T_REGISTRATE_NUM_CONSTRE(Presentation_context_identifier__shelper, integer_type, static_cast<integer_type> (1), static_cast<integer_type> (127))
+    // set  CP-type
 
     template<> void CP_type::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -35,6 +36,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(x410_mode_parameters_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(normal_mode_parameters_);
     }
+
+    // set  x410-mode-parameters
 
     template<> void CP_type::X410_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -60,6 +63,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(applicationProtocol_);
     }
 
+    // sequence normal-mode-parameters
+
     template<> void CP_type::Normal_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(protocol_version_) + ITU_T_OPTIONAL_PER(calling_presentation_selector_) + ITU_T_OPTIONAL_PER(called_presentation_selector_) + ITU_T_OPTIONAL_PER(presentation_context_definition_list_) + ITU_T_OPTIONAL_PER(default_context_name_) + ITU_T_OPTIONAL_PER(presentation_requirements_) + ITU_T_OPTIONAL_PER(user_session_requirements_) + ITU_T_OPTIONAL_PER(protocol_options_) + ITU_T_OPTIONAL_PER(initiators_nominated_context_) + ITU_T_OPTIONAL_PER(extensions_) + ITU_T_OPTIONAL_PER(user_data_);
@@ -74,7 +79,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_BIND_PER(user_session_requirements_);
         ITU_T_BIND_PER(protocol_options_);
-        ITU_T_BIND_NUM_CONSTRE(initiators_nominated_context_, (integer_type) (1), (integer_type) (127));
+        ITU_T_BIND_NUM_CONSTRE(initiators_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(extensions_);
         ITU_T_BIND_PER(user_data_);
     }
@@ -91,10 +96,12 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(user_session_requirements_);
         ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(protocol_options_);
-        ITU_T_OPTIONAL_CHECK_PER(8) ITU_T_BIND_NUM_CONSTRE(initiators_nominated_context_, (integer_type) (1), (integer_type) (127));
+        ITU_T_OPTIONAL_CHECK_PER(8) ITU_T_BIND_NUM_CONSTRE(initiators_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_OPTIONAL_CHECK_PER(9) ITU_T_BIND_PER(extensions_);
         ITU_T_OPTIONAL_CHECK_PER(10) ITU_T_BIND_PER(user_data_);
     }
+
+    // sequence extensions
 
     template<> void CP_type::Normal_mode_parameters_type::Extensions_type::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -105,6 +112,8 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_EXTENTION_GET_PER;
     }
+
+    // set  CPA-PPDU
 
     template<> void CPA_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -126,6 +135,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(normal_mode_parameters_);
     }
 
+    // set  x410-mode-parameters
+
     template<> void CPA_PPDU::X410_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(checkpointSize_) + ITU_T_OPTIONAL_PER(windowSize_);
@@ -146,6 +157,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_BIND_PER(*connectionDataAC_);
     }
 
+    // sequence normal-mode-parameters
+
     template<> void CPA_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(protocol_version_) + ITU_T_OPTIONAL_PER(responding_presentation_selector_) + ITU_T_OPTIONAL_PER(presentation_context_definition_result_list_) + ITU_T_OPTIONAL_PER(presentation_requirements_) + ITU_T_OPTIONAL_PER(user_session_requirements_) + ITU_T_OPTIONAL_PER(protocol_options_) + ITU_T_OPTIONAL_PER(responders_nominated_context_) + ITU_T_OPTIONAL_PER(user_data_);
@@ -158,7 +171,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_BIND_PER(user_session_requirements_);
         ITU_T_BIND_PER(protocol_options_);
-        ITU_T_BIND_NUM_CONSTRE(responders_nominated_context_, (integer_type) (1), (integer_type) (127));
+        ITU_T_BIND_NUM_CONSTRE(responders_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(user_data_);
     }
 
@@ -172,9 +185,11 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(user_session_requirements_);
         ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(protocol_options_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_NUM_CONSTRE(responders_nominated_context_, (integer_type) (1), (integer_type) (127));
+        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_NUM_CONSTRE(responders_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(user_data_);
     }
+
+    // choice CPR-PPDU
 
     template<> void CPR_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -217,6 +232,8 @@ namespace ISO8823_PRESENTATION {
         }
     }
 
+    // set  x400-mode-parameters
+
     template<> void CPR_PPDU::X400_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(refuseReason_) + ITU_T_OPTIONAL_PER(userDataRJ_);
@@ -234,6 +251,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(refuseReason_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(userDataRJ_);
     }
+
+    // sequence normal-mode-parameters
 
     template<> void CPR_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -260,6 +279,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(provider_reason_);
         ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(user_data_);
     }
+
+    // choice Abort-type
 
     template<> void Abort_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -302,6 +323,8 @@ namespace ISO8823_PRESENTATION {
         }
     }
 
+    // choice ARU-PPDU
+
     template<> void ARU_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case ARU_PPDU_x400_mode_parameters:
@@ -343,6 +366,8 @@ namespace ISO8823_PRESENTATION {
         }
     }
 
+    // set  x400-mode-parameters
+
     template<> void ARU_PPDU::X400_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(abortReason_) + ITU_T_OPTIONAL_PER(reflectedParameter_) + ITU_T_OPTIONAL_PER(userdataAB_);
@@ -363,6 +388,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(userdataAB_);
     }
 
+    // sequence normal-mode-parameters
+
     template<> void ARU_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(presentation_context_identifier_list_) + ITU_T_OPTIONAL_PER(user_data_);
@@ -381,6 +408,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(user_data_);
     }
 
+    // sequence ARP-PPDU
+
     template<> void ARP_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(provider_reason_) + ITU_T_OPTIONAL_PER(event_identifier_);
@@ -398,6 +427,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(provider_reason_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(event_identifier_);
     }
+
+    // choice Typed-data-type
 
     template<> void Typed_data_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -451,6 +482,8 @@ namespace ISO8823_PRESENTATION {
         }
     }
 
+    // sequence AC-PPDU
+
     template<> void AC_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(presentation_context_addition_list_) + ITU_T_OPTIONAL_PER(presentation_context_deletion_list_) + ITU_T_OPTIONAL_PER(user_data_);
@@ -470,6 +503,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(user_data_);
     }
+
+    // sequence ACA-PPDU
 
     template<> void ACA_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -491,6 +526,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(user_data_);
     }
 
+    // sequence RS-PPDU
+
     template<> void RS_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(presentation_context_identifier_list_) + ITU_T_OPTIONAL_PER(user_data_);
@@ -508,6 +545,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(user_data_);
     }
+
+    // sequence RSA-PPDU
 
     template<> void RSA_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -527,17 +566,21 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(user_data_);
     }
 
+    // sequence 
+
     template<> void Context_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, (integer_type) (1), (integer_type) (127));
+        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*abstract_syntax_name_);
         ITU_T_BIND_PER(*transfer_syntax_name_list_);
     }
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, (integer_type) (1), (integer_type) (127));
+        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*abstract_syntax_name_);
         ITU_T_BIND_PER(*transfer_syntax_name_list_);
     }
+
+    // sequence Default-context-name
 
     template<> void Default_context_name::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*abstract_syntax_name_);
@@ -549,6 +592,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_BIND_PER(*transfer_syntax_name_);
     }
 
+    // set  Mode-selector
+
     template<> void Mode_selector::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*mode_value_);
     }
@@ -557,15 +602,19 @@ namespace ISO8823_PRESENTATION {
         ITU_T_BIND_PER(*mode_value_);
     }
 
+    // sequence 
+
     template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, (integer_type) (1), (integer_type) (127));
+        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*transfer_syntax_name_);
     }
 
     template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, (integer_type) (1), (integer_type) (127));
+        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*transfer_syntax_name_);
     }
+
+    // sequence 
 
     template<> void Result_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -586,6 +635,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(transfer_syntax_name_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(provider_reason_);
     }
+
+    // choice User-data
 
     template<> void User_data::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -632,6 +683,8 @@ namespace ISO8823_PRESENTATION {
         }
     }
 
+    // sequence PDV-list
+
     template<> void PDV_list::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(transfer_syntax_name_);
@@ -639,7 +692,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_SET_PER;
 
         ITU_T_BIND_PER(transfer_syntax_name_);
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, (integer_type) (1), (integer_type) (127));
+        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*presentation_data_values_);
     }
 
@@ -648,9 +701,11 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_GET_PER(1);
 
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(transfer_syntax_name_);
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, (integer_type) (1), (integer_type) (127));
+        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*presentation_data_values_);
     }
+
+    // choice presentation-data-values
 
     template<> void PDV_list::Presentation_data_values_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {

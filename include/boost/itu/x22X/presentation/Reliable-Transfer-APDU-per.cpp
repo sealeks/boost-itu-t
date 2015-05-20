@@ -9,6 +9,10 @@
 
 namespace Reliable_Transfer_APDU {
 
+
+
+    // choice RTSE-apdus
+
     template<> void RTSE_apdus::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case RTSE_apdus_rttp_apdu:
@@ -94,6 +98,8 @@ namespace Reliable_Transfer_APDU {
         }
     }
 
+    // set  RTORQapdu
+
     template<> void RTORQapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(checkpointSize_) + ITU_T_OPTIONAL_PER(windowSize_) + ITU_T_OPTIONAL_PER(dialogueMode_) + ITU_T_OPTIONAL_PER(applicationProtocol_);
@@ -118,6 +124,8 @@ namespace Reliable_Transfer_APDU {
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(applicationProtocol_);
     }
 
+    // set  RTOACapdu
+
     template<> void RTOACapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(checkpointSize_) + ITU_T_OPTIONAL_PER(windowSize_);
@@ -138,6 +146,8 @@ namespace Reliable_Transfer_APDU {
         ITU_T_BIND_PER(*connectionDataAC_);
     }
 
+    // set  RTORJapdu
+
     template<> void RTORJapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(refuseReason_) + ITU_T_OPTIONAL_PER(userDataRJ_);
@@ -155,6 +165,8 @@ namespace Reliable_Transfer_APDU {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(refuseReason_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(userDataRJ_);
     }
+
+    // set  RTABapdu
 
     template<> void RTABapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -175,6 +187,8 @@ namespace Reliable_Transfer_APDU {
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(reflectedParameter_);
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(userdataAB_);
     }
+
+    // choice ConnectionData
 
     template<> void ConnectionData::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -217,6 +231,8 @@ namespace Reliable_Transfer_APDU {
         }
     }
 
+    // sequence SessionConnectionIdentifier
+
     template<> void SessionConnectionIdentifier::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(additionalReferenceInformation_);
@@ -236,6 +252,8 @@ namespace Reliable_Transfer_APDU {
         ITU_T_BIND_PER(*commonReference_);
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(additionalReferenceInformation_);
     }
+
+    // choice CallingSSuserReference
 
     template<> void CallingSSuserReference::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {

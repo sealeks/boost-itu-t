@@ -15,6 +15,8 @@ namespace ACSE_1 {
     //  helper name:   ABRT_diagnostic           type:  enumerated helper    
     ITU_T_PER_ENUMCODER(ABRT_diagnostic__helper, true, ITU_T_ARRAY(1, 2, 3, 4, 5, 6));
 
+    // choice ACSE-apdu
+
     template<> void ACSE_apdu::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case ACSE_apdu_aarq:
@@ -122,6 +124,8 @@ namespace ACSE_1 {
         }
     }
 
+    // sequence AARQ-apdu
+
     template<> void AARQ_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(protocol_version_) + ITU_T_OPTIONAL_PER(called_AP_title_) + ITU_T_OPTIONAL_PER(called_AE_qualifier_) + ITU_T_OPTIONAL_PER(called_AP_invocation_identifier_) + ITU_T_OPTIONAL_PER(called_AE_invocation_identifier_) + ITU_T_OPTIONAL_PER(calling_AP_title_) + ITU_T_OPTIONAL_PER(calling_AE_qualifier_) + ITU_T_OPTIONAL_PER(calling_AP_invocation_identifier_) + ITU_T_OPTIONAL_PER(calling_AE_invocation_identifier_) + ITU_T_OPTIONAL_PER(sender_acse_requirements_) + ITU_T_OPTIONAL_PER(mechanism_name_) + ITU_T_OPTIONAL_PER(calling_authentication_value_) + ITU_T_OPTIONAL_PER(aSO_context_name_list_) + ITU_T_OPTIONAL_PER(implementation_information_) + ITU_T_OPTIONAL_PER(p_context_definition_list_) + ITU_T_OPTIONAL_PER(called_asoi_tag_) + ITU_T_OPTIONAL_PER(calling_asoi_tag_) + ITU_T_OPTIONAL_PER(user_information_);
@@ -174,6 +178,8 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_CHECK_PER(17) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
+    // sequence AARE-apdu
+
     template<> void AARE_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(protocol_version_) + ITU_T_OPTIONAL_PER(responding_AP_title_) + ITU_T_OPTIONAL_PER(responding_AE_qualifier_) + ITU_T_OPTIONAL_PER(responding_AP_invocation_identifier_) + ITU_T_OPTIONAL_PER(responding_AE_invocation_identifier_) + ITU_T_OPTIONAL_PER(responder_acse_requirements_) + ITU_T_OPTIONAL_PER(mechanism_name_) + ITU_T_OPTIONAL_PER(responding_authentication_value_) + ITU_T_OPTIONAL_PER(aSO_context_name_list_) + ITU_T_OPTIONAL_PER(implementation_information_) + ITU_T_OPTIONAL_PER(p_context_result_list_) + ITU_T_OPTIONAL_PER(called_asoi_tag_) + ITU_T_OPTIONAL_PER(calling_asoi_tag_) + ITU_T_OPTIONAL_PER(user_information_);
@@ -182,7 +188,7 @@ namespace ACSE_1 {
 
         ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_PER(*aSO_context_name_);
-        ITU_T_BIND_NUM_CONSTRE(*result_, (integer_type) (0), (integer_type) (2));
+        ITU_T_BIND_NUM_CONSTRE(*result_, static_cast<integer_type> (0), static_cast<integer_type> (2));
         ITU_T_BIND_PER(*result_source_diagnostic_);
         ITU_T_BIND_PER(responding_AP_title_);
         ITU_T_BIND_PER(responding_AE_qualifier_);
@@ -205,7 +211,7 @@ namespace ACSE_1 {
 
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_PER(*aSO_context_name_);
-        ITU_T_BIND_NUM_CONSTRE(*result_, (integer_type) (0), (integer_type) (2));
+        ITU_T_BIND_NUM_CONSTRE(*result_, static_cast<integer_type> (0), static_cast<integer_type> (2));
         ITU_T_BIND_PER(*result_source_diagnostic_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(responding_AP_title_);
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(responding_AE_qualifier_);
@@ -222,15 +228,17 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_CHECK_PER(13) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
+    // sequence RLRQ-apdu
+
     template<> void RLRQ_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(reason_) + ITU_T_OPTIONAL_PER(aso_qualifier_) + ITU_T_OPTIONAL_PER(asoi_identifier_) + ITU_T_OPTIONAL_PER(user_information_);
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_NUM_CONSTRE(reason_, (integer_type) (0), (integer_type) (30));
+        ITU_T_BIND_NUM_CONSTRE(reason_, static_cast<integer_type> (0), static_cast<integer_type> (30));
         ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
@@ -238,11 +246,13 @@ namespace ACSE_1 {
 
         ITU_T_OPTIONAL_GET_PER(4);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRE(reason_, (integer_type) (0), (integer_type) (30));
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRE(reason_, static_cast<integer_type> (0), static_cast<integer_type> (30));
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
+
+    // sequence RLRE-apdu
 
     template<> void RLRE_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -250,9 +260,9 @@ namespace ACSE_1 {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_NUM_CONSTRE(reason_, (integer_type) (0), (integer_type) (30));
+        ITU_T_BIND_NUM_CONSTRE(reason_, static_cast<integer_type> (0), static_cast<integer_type> (30));
         ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
@@ -260,11 +270,13 @@ namespace ACSE_1 {
 
         ITU_T_OPTIONAL_GET_PER(4);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRE(reason_, (integer_type) (0), (integer_type) (30));
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRE(reason_, static_cast<integer_type> (0), static_cast<integer_type> (30));
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
+
+    // sequence ABRT-apdu
 
     template<> void ABRT_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -272,10 +284,10 @@ namespace ACSE_1 {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_NUM_CONSTRE(*abort_source_, (integer_type) (0), (integer_type) (1));
+        ITU_T_BIND_NUM_CONSTRE(*abort_source_, static_cast<integer_type> (0), static_cast<integer_type> (1));
         ITU_T_BIND_PER_ENUM(abort_diagnostic_, ABRT_diagnostic__helper);
         ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
@@ -283,12 +295,14 @@ namespace ACSE_1 {
 
         ITU_T_OPTIONAL_GET_PER(4);
 
-        ITU_T_BIND_NUM_CONSTRE(*abort_source_, (integer_type) (0), (integer_type) (1));
+        ITU_T_BIND_NUM_CONSTRE(*abort_source_, static_cast<integer_type> (0), static_cast<integer_type> (1));
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER_ENUM(abort_diagnostic_, ABRT_diagnostic__helper);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
+
+    // sequence A-DT-apdu
 
     template<> void A_DT_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -297,7 +311,7 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_SET_PER;
 
         ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_BIND_PER(*a_user_data_);
     }
 
@@ -306,9 +320,11 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_GET_PER(2);
 
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_BIND_PER(*a_user_data_);
     }
+
+    // sequence ACRQ-apdu
 
     template<> void ACRQ_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -317,7 +333,7 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_SET_PER;
 
         ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_BIND_PER(aSO_context_name_);
         ITU_T_BIND_PER(aSO_context_name_list_);
         ITU_T_BIND_PER(p_context_definition_list_);
@@ -329,12 +345,14 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_GET_PER(6);
 
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(aSO_context_name_);
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(aSO_context_name_list_);
         ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(p_context_definition_list_);
         ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
+
+    // sequence ACRP-apdu
 
     template<> void ACRP_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -343,7 +361,7 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_SET_PER;
 
         ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_BIND_PER(aSO_context_name_);
         ITU_T_BIND_PER(p_context_result_list_);
         ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
@@ -354,11 +372,13 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_GET_PER(5);
 
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(aSO_context_name_);
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(p_context_result_list_);
         ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
+
+    // choice AP-title
 
     template<> void AP_title::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -412,6 +432,8 @@ namespace ACSE_1 {
         }
     }
 
+    // choice ASO-qualifier
+
     template<> void ASO_qualifier::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case ASO_qualifier_aso_qualifier_form2:
@@ -464,6 +486,8 @@ namespace ACSE_1 {
         }
     }
 
+    // choice AE-title
+
     template<> void AE_title::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case AE_title_ae_title_form1:
@@ -505,6 +529,8 @@ namespace ACSE_1 {
         }
     }
 
+    // sequence 
+
     template<> void ASOI_tag_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(qualifier_) + ITU_T_OPTIONAL_PER(identifier_);
@@ -512,7 +538,7 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_SET_PER;
 
         ITU_T_BIND_PER(qualifier_);
-        ITU_T_BIND_NUM_CONSTRE(identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_BIND_NUM_CONSTRE(identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
     }
 
     template<> void ASOI_tag_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
@@ -520,8 +546,10 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_GET_PER(2);
 
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(identifier_, (integer_type) (1), (integer_type) (128));
+        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
     }
+
+    // choice Syntactic-context-list
 
     template<> void Syntactic_context_list::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -564,6 +592,8 @@ namespace ACSE_1 {
         }
     }
 
+    // sequence 
+
     template<> void Context_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*pci_);
         ITU_T_BIND_PER(*abstract_syntax_);
@@ -575,6 +605,8 @@ namespace ACSE_1 {
         ITU_T_BIND_PER(*abstract_syntax_);
         ITU_T_BIND_PER(*transfer_syntaxes_);
     }
+
+    // sequence 
 
     template<> void Default_Context_List_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -593,6 +625,8 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(abstract_syntax_name_);
         ITU_T_BIND_PER(*transfer_syntax_name_);
     }
+
+    // sequence 
 
     template<> void P_context_result_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -614,18 +648,20 @@ namespace ACSE_1 {
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(provider_reason_);
     }
 
+    // choice Associate-source-diagnostic
+
     template<> void Associate_source_diagnostic::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case Associate_source_diagnostic_acse_service_user:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_NUM_CONSTRE(*value<integer_type > (false, Associate_source_diagnostic_acse_service_user), (integer_type) (0), (integer_type) (14));
+                ITU_T_BIND_NUM_CONSTRE(*value<integer_type > (false, Associate_source_diagnostic_acse_service_user), static_cast<integer_type> (0), static_cast<integer_type> (14));
                 break;
             }
             case Associate_source_diagnostic_acse_service_provider:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_NUM_CONSTRE(*value<integer_type > (false, Associate_source_diagnostic_acse_service_provider), (integer_type) (0), (integer_type) (2));
+                ITU_T_BIND_NUM_CONSTRE(*value<integer_type > (false, Associate_source_diagnostic_acse_service_provider), static_cast<integer_type> (0), static_cast<integer_type> (2));
                 break;
             }
             default:
@@ -641,12 +677,12 @@ namespace ACSE_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_NUM_CONSTRE(*value<integer_type > (true, Associate_source_diagnostic_acse_service_user), (integer_type) (0), (integer_type) (14));
+                ITU_T_BIND_NUM_CONSTRE(*value<integer_type > (true, Associate_source_diagnostic_acse_service_user), static_cast<integer_type> (0), static_cast<integer_type> (14));
                 break;
             }
             case 1:
             {
-                ITU_T_BIND_NUM_CONSTRE(*value<integer_type > (true, Associate_source_diagnostic_acse_service_provider), (integer_type) (0), (integer_type) (2));
+                ITU_T_BIND_NUM_CONSTRE(*value<integer_type > (true, Associate_source_diagnostic_acse_service_provider), static_cast<integer_type> (0), static_cast<integer_type> (2));
                 break;
             }
             default:
@@ -654,6 +690,8 @@ namespace ACSE_1 {
             }
         }
     }
+
+    // choice User-Data
 
     template<> void User_Data::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -707,6 +745,8 @@ namespace ACSE_1 {
         }
     }
 
+    // sequence PDV-list
+
     template<> void PDV_list::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(transfer_syntax_name_);
@@ -726,6 +766,8 @@ namespace ACSE_1 {
         ITU_T_BIND_PER(*presentation_context_identifier_);
         ITU_T_BIND_PER(*presentation_data_values_);
     }
+
+    // choice presentation-data-values
 
     template<> void PDV_list::Presentation_data_values_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -778,6 +820,8 @@ namespace ACSE_1 {
             }
         }
     }
+
+    // choice Authentication-value
 
     template<> void Authentication_value::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -841,6 +885,8 @@ namespace ACSE_1 {
             }
         }
     }
+
+    // sequence other
 
     template<> void Authentication_value::Other_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*other_mechanism_name_);

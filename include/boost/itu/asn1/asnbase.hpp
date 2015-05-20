@@ -29,6 +29,7 @@
 
 #include <boost/itu/coder/base_coder.hpp>
 #include <boost/itu/asn1/utf8.hpp>
+#include <limits>
 
 #if ((__WCHAR_MAX__) && (__WCHAR_MAX__ > 0x10000))
 typedef wchar_t universalchar_t; // 32 bit

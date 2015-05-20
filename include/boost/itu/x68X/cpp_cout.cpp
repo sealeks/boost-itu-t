@@ -1938,6 +1938,27 @@ namespace x680 {
 
         void base_ber_arch_out::execute_archive_choice_input_helper(typeassignment_entity_ptr self, tagclass_type cls, bool notag) {
             basic_entity_ptr scp;
+
+            bool hasmember = false;
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                    namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
+                    if (named->type()) {
+                        tagmarker_type mkr = named->marker();
+                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                            if (named->tag()) {
+                                if (cls == named->tag()->_class()) {
+                                    hasmember=true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (notag)
+                hasmember = true;
+            if (!hasmember)   
+                return;
             if (notag) {
                 stream << "\n" << tabformat(scp, 4) << "default: {";
             } else {
@@ -1956,10 +1977,8 @@ namespace x680 {
             if (!notag)
                 stream << "\n" << tabformat(scp, 5) << "switch(__tag_id__){";
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
-                if ((tpas) && (tpas->as_named())) {
-                    namedtypeassignment_entity_ptr named = tpas->as_named();
-
+                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                    namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
                     if (named->type()) {
                         tagmarker_type mkr = named->marker();
                         if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
@@ -2780,62 +2799,73 @@ namespace x680 {
             stream << tabformat(scp, 2) << "}";
             stream << "\n";
         }
-
-        template<typename T>
-        static std::string int_constr_str(T num) {
-            if (num <= std::numeric_limits<boost::int32_t>::min()) {
-                return ((num == std::numeric_limits<boost::int32_t>::min()) ?
-                        ("(std::numeric_limits<int32_t>::min())") : ("(" + to_string(num) + "L)"));
-            } else if (num <= std::numeric_limits<boost::int16_t>::min()) {
-                return ((num == std::numeric_limits<boost::int16_t>::min()) ?
-                        ("(std::numeric_limits<int16_t>::min())") : ("(" + to_string(num) + ")"));
-            } else if (num <= std::numeric_limits<boost::int16_t>::min()) {
-                return ((num == std::numeric_limits<boost::int8_t>::min()) ?
-                        ("(std::numeric_limits<int8_t>::min())") : ("(" + to_string(num) + ")"));
-            } else if (num <= std::numeric_limits<boost::int8_t>::max()) {
-                return "(" + ((num == std::numeric_limits<boost::int8_t>::max()) ?
-                        std::string("std::numeric_limits<int8_t>::max()") : to_string(num)) + ")";
-            } else if (num <= std::numeric_limits<boost::uint8_t>::max()) {
-                return "(" + ((num == std::numeric_limits<boost::uint8_t>::max()) ?
-                        std::string("std::numeric_limits<uint8_t>::max()") : to_string(num)) + ")";
-            } else if (num <= std::numeric_limits<boost::int16_t>::max()) {
-                return "(" + ((num == std::numeric_limits<boost::int16_t>::max()) ?
-                        std::string("std::numeric_limits<int8_t>::max()") : to_string(num)) + ")";
-            } else if (num <= std::numeric_limits<boost::uint16_t>::max()) {
-                return "(" + ((num == std::numeric_limits<boost::uint16_t>::max()) ?
-                        std::string("std::numeric_limits<uint16_t>::max()") : to_string(num)) + ")";
-            }
-            if (num <= std::numeric_limits<boost::int32_t>::max()) {
-                return "(" + ((num == std::numeric_limits<boost::int32_t>::max()) ?
-                        std::string("std::numeric_limits<int32_t>::max()") : to_string(num)) + ")";
-            } else if (num <= std::numeric_limits<boost::uint32_t>::max()) {
-                return "(" + ((num == std::numeric_limits<boost::uint32_t>::max()) ?
-                        std::string("std::numeric_limits<uint32_t>::max()") : to_string(num)) + ")";
-            } else if (num <= std::numeric_limits<boost::int64_t>::max()) {
-                return "(" + ((num == std::numeric_limits<boost::int64_t>::max()) ?
-                        std::string("std::numeric_limits<int64_t>::max()") : to_string(num)) + "L)";
-            } else if (num <= std::numeric_limits<boost::uint64_t>::max()) {
-                return "(" + ((num == std::numeric_limits<boost::uint64_t>::max()) ?
-                        std::string("std::numeric_limits<uint64_t>::max()") : to_string(num)) + "UL)";
+template<typename T>
+        static std::string int_constr_str(T num, bool for_strust = false) {
+            if (for_strust) {
+                if (num <= std::numeric_limits<boost::int32_t>::min()) {
+                    return (num == std::numeric_limits<boost::int32_t>::min()) ?
+                            (to_string(std::numeric_limits<int32_t>::max()) + "-1") : (to_string(num) + "L");
+                } else if (num <= std::numeric_limits<boost::int16_t>::min()) {
+                    return (num == std::numeric_limits<boost::int16_t>::min()) ?
+                            (to_string(std::numeric_limits<int16_t>::max()) + "-1") : (to_string(num));
+                } else if (num <= std::numeric_limits<boost::int16_t>::min()) {
+                    return (num == std::numeric_limits<boost::int8_t>::min()) ?
+                            (to_string(std::numeric_limits<int8_t>::max()) + "-1") : (to_string(num));
+                }
+            } else {
+                if (num <= std::numeric_limits<boost::int32_t>::min()) {
+                    return (num == std::numeric_limits<boost::int32_t>::min()) ?
+                            ("std::numeric_limits<int32_t>::min()") : (to_string(num) + "L");
+                } else if (num <= std::numeric_limits<boost::int16_t>::min()) {
+                    return (num == std::numeric_limits<boost::int16_t>::min()) ?
+                            ("std::numeric_limits<int16_t>::min()") : to_string(num);
+                } else if (num <= std::numeric_limits<boost::int16_t>::min()) {
+                    return (num == std::numeric_limits<boost::int8_t>::min()) ?
+                            ("std::numeric_limits<int8_t>::min()") : to_string(num);
+                } else if (num <= std::numeric_limits<boost::int8_t>::max()) {
+                    return (num == std::numeric_limits<boost::int8_t>::max()) ?
+                            std::string("std::numeric_limits<int8_t>::max()") : to_string(num);
+                } else if (num <= std::numeric_limits<boost::uint8_t>::max()) {
+                    return (num == std::numeric_limits<boost::uint8_t>::max()) ?
+                            std::string("std::numeric_limits<uint8_t>::max()") : to_string(num);
+                } else if (num <= std::numeric_limits<boost::int16_t>::max()) {
+                    return (num == std::numeric_limits<boost::int16_t>::max()) ?
+                            std::string("std::numeric_limits<int8_t>::max()") : to_string(num);
+                } else if (num <= std::numeric_limits<boost::uint16_t>::max()) {
+                    return (num == std::numeric_limits<boost::uint16_t>::max()) ?
+                            std::string("std::numeric_limits<uint16_t>::max()") : to_string(num);
+                } else if (num <= std::numeric_limits<boost::int32_t>::max()) {
+                    return (num == std::numeric_limits<boost::int32_t>::max()) ?
+                            std::string("std::numeric_limits<int32_t>::max()") : to_string(num);
+                } else if (num <= std::numeric_limits<boost::uint32_t>::max()) {
+                    return (num == std::numeric_limits<boost::uint32_t>::max()) ?
+                            std::string("std::numeric_limits<uint32_t>::max()") : to_string(num);
+                } else if (num <= std::numeric_limits<boost::int64_t>::max()) {
+                    return (num == std::numeric_limits<boost::int64_t>::max()) ?
+                            std::string("std::numeric_limits<int64_t>::max()") : (to_string(num) + "L");
+                } else if (num <= std::numeric_limits<boost::uint64_t>::max()) {
+                    return (num == std::numeric_limits<boost::uint64_t>::max()) ?
+                            std::string("std::numeric_limits<uint64_t>::max()") : (to_string(num) + "UL");
+                }
             }
             return to_string(num);
         }
 
-        static std::string left_int_constr_str(integer_constraints_ptr intconstr) {
+        static std::string left_int_constr_str(integer_constraints_ptr intconstr, bool for_strust = false) {
             if (intconstr) {
                 integer_constraints::range_type main_int_cnstr = intconstr->to_per().main();
                 if (main_int_cnstr.left_ptr()) {
-                    return "(" + builtin_int_str(intconstr) + ")" + int_constr_str(main_int_cnstr.left());
+                    return "static_cast<" + builtin_int_str(intconstr) + " >(" + int_constr_str(main_int_cnstr.left(), for_strust) + ")";
                 }
             }
             return "???";
         }
 
-        static std::string right_int_constr_str(integer_constraints_ptr intconstr) {
+        static std::string right_int_constr_str(integer_constraints_ptr intconstr, bool for_strust = false) {
             if (intconstr) {
                 integer_constraints::range_type main_int_cnstr = intconstr->to_per().main();
                 if (main_int_cnstr.right_ptr()) {
-                    return "(" + builtin_int_str(intconstr) + ")" + int_constr_str(main_int_cnstr.right());
+                    return "static_cast<" + builtin_int_str(intconstr) + " >(" + int_constr_str(main_int_cnstr.right(), for_strust) + ")";
                 }
             }
             return "???";
@@ -3164,14 +3194,14 @@ namespace x680 {
                 bool ext_int_cnstr = hlpr->ts->type()->integer_constraint()->to_per().has_extention();
                 if (main_int_cnstr.single())
                     stream << "ITU_T_REGISTRATE_NUM_SNGLCON" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
-                    left_int_constr_str(hlpr->ts->type()->integer_constraint()) << ")";
+                    left_int_constr_str(hlpr->ts->type()->integer_constraint(), true) << ")";
                 else if (main_int_cnstr.right_semi())
                     stream << "ITU_T_REGISTRATE_NUM_SIMICON" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
-                    left_int_constr_str(hlpr->ts->type()->integer_constraint()) << ")";
+                    left_int_constr_str(hlpr->ts->type()->integer_constraint(), true) << ")";
                 else
                     stream << "ITU_T_REGISTRATE_NUM_CONSTR" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
-                    left_int_constr_str(hlpr->ts->type()->integer_constraint()) << ", " <<
-                    right_int_constr_str(hlpr->ts->type()->integer_constraint()) << ")";
+                    left_int_constr_str(hlpr->ts->type()->integer_constraint(), true) << ", " <<
+                    right_int_constr_str(hlpr->ts->type()->integer_constraint(), true) << ")";
             } //else
             //stream << "#error ";
         }
