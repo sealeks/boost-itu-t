@@ -154,16 +154,11 @@ namespace ISO8823_PRESENTATION {
     }
 
     template<> void CPR_PPDU::serialize(boost::asn1::x690::input_coder& arch) {
-        int __tag_id__ = arch.test_id();
-        switch (arch.test_class()) {
-            default:
-            {
-                if (ITU_T_BIND_TAG(*value<X400_mode_parameters_type > (true, CPR_PPDU_x400_mode_parameters))) return;
-                else free();
-                if (ITU_T_BIND_TAG(*value<Normal_mode_parameters_type > (true, CPR_PPDU_normal_mode_parameters))) return;
-                else free();
-            }
-        }
+
+        if (ITU_T_BIND_TAG(*value<X400_mode_parameters_type > (true, CPR_PPDU_x400_mode_parameters))) return;
+        else free();
+        if (ITU_T_BIND_TAG(*value<Normal_mode_parameters_type > (true, CPR_PPDU_normal_mode_parameters))) return;
+        else free();
     }
 
     // set  x400-mode-parameters
@@ -219,16 +214,11 @@ namespace ISO8823_PRESENTATION {
     }
 
     template<> void Abort_type::serialize(boost::asn1::x690::input_coder& arch) {
-        int __tag_id__ = arch.test_id();
-        switch (arch.test_class()) {
-            default:
-            {
-                if (ITU_T_BIND_CHOICE(*value<ARU_PPDU > (true, Abort_type_aru_ppdu))) return;
-                else free();
-                if (ITU_T_BIND_TAG(*value<ARP_PPDU > (true, Abort_type_arp_ppdu))) return;
-                else free();
-            }
-        }
+
+        if (ITU_T_BIND_CHOICE(*value<ARU_PPDU > (true, Abort_type_aru_ppdu))) return;
+        else free();
+        if (ITU_T_BIND_TAG(*value<ARP_PPDU > (true, Abort_type_arp_ppdu))) return;
+        else free();
     }
 
     // choice ARU-PPDU

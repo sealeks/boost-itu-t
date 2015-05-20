@@ -367,6 +367,7 @@ namespace x680 {
 
             std::string archive_member_ber_str(namedtypeassignment_entity_ptr self, const std::string& name, bool afterext = false);
             void execute_archive_member(namedtypeassignment_entity_ptr self, bool afterext);
+            void execute_archive_choice_input_helper_mbr(typeassignment_entity_ptr self, tagclass_type cls, bool notag, std::size_t scpcnt = 6); 
             void execute_archive_choice_input_helper(typeassignment_entity_ptr self, tagclass_type cls, bool notag);
             void execute_archive_choice_output_helper(typeassignment_entity_ptr self);
 

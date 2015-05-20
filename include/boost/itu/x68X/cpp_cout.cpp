@@ -1844,17 +1844,37 @@ namespace x680 {
         void base_ber_arch_out::execute_archive_choice_input(typeassignment_entity_ptr self) {
 
             basic_entity_ptr scp;
-            stream << "\n" << tabformat(scp, 3) <<
-                    "int __tag_id__ =arch.test_id();";
-            stream << "\n" << tabformat(scp, 3) <<
-                    "switch(arch.test_class()){";
 
-            execute_archive_choice_input_helper(self, tcl_universal, false);
-            execute_archive_choice_input_helper(self, tcl_application, false);
-            execute_archive_choice_input_helper(self, tcl_context, false);
-            execute_archive_choice_input_helper(self, tcl_private, false);
-            execute_archive_choice_input_helper(self, tcl_universal, true);
-            stream << "\n" << tabformat(scp, 3) << "}";
+            bool alldefault = true;
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                    namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
+                    if (named->type()) {
+                        tagmarker_type mkr = named->marker();
+                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                            if (named->tag()) {
+                                alldefault = false;
+                            }
+                        }
+                    }
+                }
+            }
+            if (alldefault) {
+                stream << "\n";
+                execute_archive_choice_input_helper_mbr(self, tcl_universal, true, 4);
+            } else {
+                stream << "\n" << tabformat(scp, 3) <<
+                        "int __tag_id__ =arch.test_id();";
+                stream << "\n" << tabformat(scp, 3) <<
+                        "switch(arch.test_class()){";
+
+                execute_archive_choice_input_helper(self, tcl_universal, false);
+                execute_archive_choice_input_helper(self, tcl_application, false);
+                execute_archive_choice_input_helper(self, tcl_context, false);
+                execute_archive_choice_input_helper(self, tcl_private, false);
+                execute_archive_choice_input_helper(self, tcl_universal, true);
+                stream << "\n" << tabformat(scp, 3) << "}";
+            }
             stream << "\n";
             stream << tabformat(scp, 2) << "}";
             stream << "\n";
@@ -1936,6 +1956,36 @@ namespace x680 {
             }
         }
 
+        void base_ber_arch_out::execute_archive_choice_input_helper_mbr(typeassignment_entity_ptr self, tagclass_type cls, bool notag, std::size_t scpcnt) {
+            basic_entity_ptr scp;
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
+                    namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
+                    if (named->type()) {
+                        tagmarker_type mkr = named->marker();
+                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
+                            if (named->tag()) {
+                                if (cls == named->tag()->_class()) {
+                                    stream << "\n" << tabformat(scp, scpcnt) << "case ";
+                                    stream << tagged_str(named->tag()) << ":  { if (";
+                                    std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
+                                    stream << archive_member_ber_str(named, tmpval);
+                                    stream << ") return; else free(); break;}";
+                                }
+                            } else {
+                                if (notag) {
+                                    stream << "\n" << tabformat(scp, scpcnt) << " if (";
+                                    std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
+                                    stream << archive_member_ber_str(named, tmpval);
+                                    stream << ") return; else free();";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         void base_ber_arch_out::execute_archive_choice_input_helper(typeassignment_entity_ptr self, tagclass_type cls, bool notag) {
             basic_entity_ptr scp;
 
@@ -1948,7 +1998,7 @@ namespace x680 {
                         if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
                             if (named->tag()) {
                                 if (cls == named->tag()->_class()) {
-                                    hasmember=true;
+                                    hasmember = true;
                                 }
                             }
                         }
@@ -1957,7 +2007,7 @@ namespace x680 {
             }
             if (notag)
                 hasmember = true;
-            if (!hasmember)   
+            if (!hasmember)
                 return;
             if (notag) {
                 stream << "\n" << tabformat(scp, 4) << "default: {";
@@ -1976,32 +2026,7 @@ namespace x680 {
             }
             if (!notag)
                 stream << "\n" << tabformat(scp, 5) << "switch(__tag_id__){";
-            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
-                if (((*it)->as_typeassigment()) && ((*it)->as_typeassigment()->as_named())) {
-                    namedtypeassignment_entity_ptr named = (*it)->as_typeassigment()->as_named();
-                    if (named->type()) {
-                        tagmarker_type mkr = named->marker();
-                        if ((mkr == mk_none) || (mkr == mk_default) || (mkr == mk_optional)) {
-                            if (named->tag()) {
-                                if (cls == named->tag()->_class()) {
-                                    stream << "\n" << tabformat(scp, 6) << "case ";
-                                    stream << tagged_str(named->tag()) << ":  { if (";
-                                    std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
-                                    stream << archive_member_ber_str(named, tmpval);
-                                    stream << ") return; else free(); break;}";
-                                }
-                            } else {
-                                if (notag) {
-                                    stream << "\n" << tabformat(scp, 6) << " if (";
-                                    std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
-                                    stream << archive_member_ber_str(named, tmpval);
-                                    stream << ") return; else free();";
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            execute_archive_choice_input_helper_mbr(self, cls, notag, 6);
             if (!notag) {
 
                 stream << "\n" << tabformat(scp, 5) << "default:{}";
@@ -2686,7 +2711,7 @@ namespace x680 {
 
         }
 
-        static namedtypeassignment_entity_vct struct_optional_element(const namedtypeassignment_entity_vct& vl) {
+        static namedtypeassignment_entity_vct struct_optional_element(const namedtypeassignment_entity_vct & vl) {
             namedtypeassignment_entity_vct rslt;
             for (namedtypeassignment_entity_vct::const_iterator it = vl.begin(); it != vl.end(); ++it) {
                 if (((*it)->as_named_typeassigment()) &&
@@ -2696,7 +2721,7 @@ namespace x680 {
             return rslt;
         }
 
-        static std::size_t struct_optional_count(const namedtypeassignment_entity_vct& vl) {
+        static std::size_t struct_optional_count(const namedtypeassignment_entity_vct & vl) {
             std::size_t rslt = 0;
             for (namedtypeassignment_entity_vct::const_iterator it = vl.begin(); it != vl.end(); ++it) {
                 if (((*it)->as_named_typeassigment()) &&
@@ -2799,7 +2824,8 @@ namespace x680 {
             stream << tabformat(scp, 2) << "}";
             stream << "\n";
         }
-template<typename T>
+
+        template<typename T>
         static std::string int_constr_str(T num, bool for_strust = false) {
             if (for_strust) {
                 if (num <= std::numeric_limits<boost::int32_t>::min()) {
@@ -2925,7 +2951,7 @@ template<typename T>
             return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
         }
 
-        std::string per_cpp_out::archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string& name) {
+        std::string per_cpp_out::archive_member_per_str(namedtypeassignment_entity_ptr self, const std::string & name) {
             tagmarker_type dfltopt = self->marker();
             if ((dfltopt == mk_default) && (self->isstruct_of()))
                 dfltopt = mk_optional;
