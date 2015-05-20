@@ -32,10 +32,10 @@ namespace ISO_9506_MMS_1A {
 
 
     typedef null_type ObtainFile_Response;
-    typedef int ObtainFile_Error; //   Ic(  [ 0  ...   1 ]   
+    typedef uint8_t ObtainFile_Error; //   Ic(  [ 0  ...   1 ]   
     typedef null_type FileClose_Response;
     typedef null_type FileRename_Response;
-    typedef int FileRename_Error; //   Ic(  [ 0  ...   1 ]   
+    typedef uint8_t FileRename_Error; //   Ic(  [ 0  ...   1 ]   
     typedef null_type FileDelete_Response;
     typedef null_type DefineScatteredAccess_Response;
 

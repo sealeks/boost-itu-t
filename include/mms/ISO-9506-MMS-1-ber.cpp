@@ -3238,67 +3238,67 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case ErrorClass_type_vmd_state:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_vmd_state), 0);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_vmd_state), 0);
                 break;
             }
             case ErrorClass_type_application_reference:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_application_reference), 1);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_application_reference), 1);
                 break;
             }
             case ErrorClass_type_definition:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_definition), 2);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_definition), 2);
                 break;
             }
             case ErrorClass_type_resource:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_resource), 3);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_resource), 3);
                 break;
             }
             case ErrorClass_type_service:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_service), 4);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_service), 4);
                 break;
             }
             case ErrorClass_type_service_preempt:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_service_preempt), 5);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_service_preempt), 5);
                 break;
             }
             case ErrorClass_type_time_resolution:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_time_resolution), 6);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_time_resolution), 6);
                 break;
             }
             case ErrorClass_type_access:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_access), 7);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_access), 7);
                 break;
             }
             case ErrorClass_type_initiate:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_initiate), 8);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_initiate), 8);
                 break;
             }
             case ErrorClass_type_conclude:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_conclude), 9);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_conclude), 9);
                 break;
             }
             case ErrorClass_type_cancel:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_cancel), 10);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_cancel), 10);
                 break;
             }
             case ErrorClass_type_file:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_file), 11);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ErrorClass_type_file), 11);
                 break;
             }
             case ErrorClass_type_others:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ErrorClass_type_others), 12);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, ErrorClass_type_others), 12);
                 break;
             }
             default:
@@ -3331,79 +3331,79 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_vmd_state), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_vmd_state), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_application_reference), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_application_reference), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_definition), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_definition), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_resource), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_resource), 3)) return;
                         else free();
                         break;
                     }
                     case 4:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_service), 4)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_service), 4)) return;
                         else free();
                         break;
                     }
                     case 5:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_service_preempt), 5)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_service_preempt), 5)) return;
                         else free();
                         break;
                     }
                     case 6:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_time_resolution), 6)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_time_resolution), 6)) return;
                         else free();
                         break;
                     }
                     case 7:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_access), 7)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_access), 7)) return;
                         else free();
                         break;
                     }
                     case 8:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_initiate), 8)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_initiate), 8)) return;
                         else free();
                         break;
                     }
                     case 9:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_conclude), 9)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_conclude), 9)) return;
                         else free();
                         break;
                     }
                     case 10:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_cancel), 10)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_cancel), 10)) return;
                         else free();
                         break;
                     }
                     case 11:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_file), 11)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ErrorClass_type_file), 11)) return;
                         else free();
                         break;
                     }
                     case 12:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ErrorClass_type_others), 12)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, ErrorClass_type_others), 12)) return;
                         else free();
                         break;
                     }
@@ -3840,12 +3840,12 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case ObjectClass_basicObjectClass:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ObjectClass_basicObjectClass), 0);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ObjectClass_basicObjectClass), 0);
                 break;
             }
             case ObjectClass_csObjectClass:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ObjectClass_csObjectClass), 1);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, ObjectClass_csObjectClass), 1);
                 break;
             }
             default:
@@ -3878,13 +3878,13 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ObjectClass_basicObjectClass), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ObjectClass_basicObjectClass), 0)) return;
                         else free();
                         break;
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ObjectClass_csObjectClass), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, ObjectClass_csObjectClass), 1)) return;
                         else free();
                         break;
                     }
@@ -4003,57 +4003,57 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case RejectReason_type_confirmed_requestPDU:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_confirmed_requestPDU), 1);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, RejectReason_type_confirmed_requestPDU), 1);
                 break;
             }
             case RejectReason_type_confirmed_responsePDU:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_confirmed_responsePDU), 2);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, RejectReason_type_confirmed_responsePDU), 2);
                 break;
             }
             case RejectReason_type_confirmed_errorPDU:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_confirmed_errorPDU), 3);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, RejectReason_type_confirmed_errorPDU), 3);
                 break;
             }
             case RejectReason_type_unconfirmedPDU:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_unconfirmedPDU), 4);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, RejectReason_type_unconfirmedPDU), 4);
                 break;
             }
             case RejectReason_type_pdu_error:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_pdu_error), 5);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, RejectReason_type_pdu_error), 5);
                 break;
             }
             case RejectReason_type_cancel_requestPDU:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_cancel_requestPDU), 6);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, RejectReason_type_cancel_requestPDU), 6);
                 break;
             }
             case RejectReason_type_cancel_responsePDU:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_cancel_responsePDU), 7);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, RejectReason_type_cancel_responsePDU), 7);
                 break;
             }
             case RejectReason_type_cancel_errorPDU:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_cancel_errorPDU), 8);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, RejectReason_type_cancel_errorPDU), 8);
                 break;
             }
             case RejectReason_type_conclude_requestPDU:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_conclude_requestPDU), 9);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, RejectReason_type_conclude_requestPDU), 9);
                 break;
             }
             case RejectReason_type_conclude_responsePDU:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_conclude_responsePDU), 10);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, RejectReason_type_conclude_responsePDU), 10);
                 break;
             }
             case RejectReason_type_conclude_errorPDU:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RejectReason_type_conclude_errorPDU), 11);
+                ITU_T_IMPLICIT_TAG(*value<uint8_t > (false, RejectReason_type_conclude_errorPDU), 11);
                 break;
             }
             default:
@@ -4086,67 +4086,67 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_confirmed_requestPDU), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, RejectReason_type_confirmed_requestPDU), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_confirmed_responsePDU), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, RejectReason_type_confirmed_responsePDU), 2)) return;
                         else free();
                         break;
                     }
                     case 3:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_confirmed_errorPDU), 3)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, RejectReason_type_confirmed_errorPDU), 3)) return;
                         else free();
                         break;
                     }
                     case 4:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_unconfirmedPDU), 4)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, RejectReason_type_unconfirmedPDU), 4)) return;
                         else free();
                         break;
                     }
                     case 5:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_pdu_error), 5)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, RejectReason_type_pdu_error), 5)) return;
                         else free();
                         break;
                     }
                     case 6:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_cancel_requestPDU), 6)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, RejectReason_type_cancel_requestPDU), 6)) return;
                         else free();
                         break;
                     }
                     case 7:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_cancel_responsePDU), 7)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, RejectReason_type_cancel_responsePDU), 7)) return;
                         else free();
                         break;
                     }
                     case 8:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_cancel_errorPDU), 8)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, RejectReason_type_cancel_errorPDU), 8)) return;
                         else free();
                         break;
                     }
                     case 9:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_conclude_requestPDU), 9)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, RejectReason_type_conclude_requestPDU), 9)) return;
                         else free();
                         break;
                     }
                     case 10:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_conclude_responsePDU), 10)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, RejectReason_type_conclude_responsePDU), 10)) return;
                         else free();
                         break;
                     }
                     case 11:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RejectReason_type_conclude_errorPDU), 11)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<uint8_t > (true, RejectReason_type_conclude_errorPDU), 11)) return;
                         else free();
                         break;
                     }
@@ -5239,12 +5239,12 @@ namespace ISO_9506_MMS_1 {
             }
             case StartCount_cycleCount:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, StartCount_cycleCount), 1);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, StartCount_cycleCount), 1);
                 break;
             }
             case StartCount_stepCount:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, StartCount_stepCount), 2);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, StartCount_stepCount), 2);
                 break;
             }
             default:
@@ -5283,13 +5283,13 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, StartCount_cycleCount), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, StartCount_cycleCount), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, StartCount_stepCount), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, StartCount_stepCount), 2)) return;
                         else free();
                         break;
                     }
@@ -5769,12 +5769,12 @@ namespace ISO_9506_MMS_1 {
             }
             case RunningMode_type_cycleLimited:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RunningMode_type_cycleLimited), 1);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, RunningMode_type_cycleLimited), 1);
                 break;
             }
             case RunningMode_type_stepLimited:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, RunningMode_type_stepLimited), 2);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, RunningMode_type_stepLimited), 2);
                 break;
             }
             default:
@@ -5813,13 +5813,13 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RunningMode_type_cycleLimited), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, RunningMode_type_cycleLimited), 1)) return;
                         else free();
                         break;
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, RunningMode_type_stepLimited), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, RunningMode_type_stepLimited), 2)) return;
                         else free();
                         break;
                     }
@@ -6180,7 +6180,7 @@ namespace ISO_9506_MMS_1 {
             }
             case ContinueAfter_type_ulsmID:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ContinueAfter_type_ulsmID), 2);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, ContinueAfter_type_ulsmID), 2);
                 break;
             }
             case ContinueAfter_type_programInvocation:
@@ -6224,7 +6224,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ContinueAfter_type_ulsmID), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, ContinueAfter_type_ulsmID), 2)) return;
                         else free();
                         break;
                     }
@@ -6272,7 +6272,7 @@ namespace ISO_9506_MMS_1 {
             }
             case NextElement_type_ulsmID:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, NextElement_type_ulsmID), 2);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, NextElement_type_ulsmID), 2);
                 break;
             }
             case NextElement_type_programInvocation:
@@ -6316,7 +6316,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 2:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, NextElement_type_ulsmID), 2)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, NextElement_type_ulsmID), 2)) return;
                         else free();
                         break;
                     }
@@ -7190,12 +7190,12 @@ namespace ISO_9506_MMS_1 {
             }
             case Data_integer:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, Data_integer), 5);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, Data_integer), 5);
                 break;
             }
             case Data_unsignedV:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, Data_unsignedV), 6);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, Data_unsignedV), 6);
                 break;
             }
             case Data_floating_point:
@@ -7225,7 +7225,7 @@ namespace ISO_9506_MMS_1 {
             }
             case Data_bcd:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, Data_bcd), 13);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, Data_bcd), 13);
                 break;
             }
             case Data_booleanArray:
@@ -7297,13 +7297,13 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 5:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, Data_integer), 5)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, Data_integer), 5)) return;
                         else free();
                         break;
                     }
                     case 6:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, Data_unsignedV), 6)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, Data_unsignedV), 6)) return;
                         else free();
                         break;
                     }
@@ -7339,7 +7339,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 13:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, Data_bcd), 13)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, Data_bcd), 13)) return;
                         else free();
                         break;
                     }
@@ -8414,7 +8414,7 @@ namespace ISO_9506_MMS_1 {
             }
             case CS_EventNotification_impl_index:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, CS_EventNotification_impl_index), 1);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, CS_EventNotification_impl_index), 1);
                 break;
             }
             case CS_EventNotification_impl_noEnhancement:
@@ -8458,7 +8458,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, CS_EventNotification_impl_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, CS_EventNotification_impl_index), 1)) return;
                         else free();
                         break;
                     }
@@ -8560,7 +8560,7 @@ namespace ISO_9506_MMS_1 {
             }
             case EN_Additional_Detail_impl_index:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, EN_Additional_Detail_impl_index), 1);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, EN_Additional_Detail_impl_index), 1);
                 break;
             }
             case EN_Additional_Detail_impl_noEnhancement:
@@ -8604,7 +8604,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, EN_Additional_Detail_impl_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, EN_Additional_Detail_impl_index), 1)) return;
                         else free();
                         break;
                     }
@@ -8738,7 +8738,7 @@ namespace ISO_9506_MMS_1 {
             }
             case CS_DefineEventCondition_Request_impl_index:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, CS_DefineEventCondition_Request_impl_index), 1);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, CS_DefineEventCondition_Request_impl_index), 1);
                 break;
             }
             case CS_DefineEventCondition_Request_impl_noEnhancement:
@@ -8782,7 +8782,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, CS_DefineEventCondition_Request_impl_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, CS_DefineEventCondition_Request_impl_index), 1)) return;
                         else free();
                         break;
                     }
@@ -9085,7 +9085,7 @@ namespace ISO_9506_MMS_1 {
             }
             case DisplayEnhancement_type_index:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, DisplayEnhancement_type_index), 1);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, DisplayEnhancement_type_index), 1);
                 break;
             }
             case DisplayEnhancement_type_noEnhancement:
@@ -9129,7 +9129,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, DisplayEnhancement_type_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, DisplayEnhancement_type_index), 1)) return;
                         else free();
                         break;
                     }
@@ -9207,7 +9207,7 @@ namespace ISO_9506_MMS_1 {
             }
             case ChangeDisplay_type_index:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ChangeDisplay_type_index), 1);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, ChangeDisplay_type_index), 1);
                 break;
             }
             case ChangeDisplay_type_noEnhancement:
@@ -9251,7 +9251,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ChangeDisplay_type_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, ChangeDisplay_type_index), 1)) return;
                         else free();
                         break;
                     }
@@ -9430,7 +9430,7 @@ namespace ISO_9506_MMS_1 {
             }
             case CS_DefineEventEnrollment_Request_impl_index:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, CS_DefineEventEnrollment_Request_impl_index), 1);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, CS_DefineEventEnrollment_Request_impl_index), 1);
                 break;
             }
             case CS_DefineEventEnrollment_Request_impl_noEnhancement:
@@ -9474,7 +9474,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, CS_DefineEventEnrollment_Request_impl_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, CS_DefineEventEnrollment_Request_impl_index), 1)) return;
                         else free();
                         break;
                     }
@@ -9786,7 +9786,7 @@ namespace ISO_9506_MMS_1 {
             }
             case DisplayEnhancement_type_index:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, DisplayEnhancement_type_index), 1);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, DisplayEnhancement_type_index), 1);
                 break;
             }
             case DisplayEnhancement_type_noEnhancement:
@@ -9830,7 +9830,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, DisplayEnhancement_type_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, DisplayEnhancement_type_index), 1)) return;
                         else free();
                         break;
                     }
@@ -9981,7 +9981,7 @@ namespace ISO_9506_MMS_1 {
             }
             case ChangeDisplay_type_index:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, ChangeDisplay_type_index), 1);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, ChangeDisplay_type_index), 1);
                 break;
             }
             case ChangeDisplay_type_noEnhancement:
@@ -10025,7 +10025,7 @@ namespace ISO_9506_MMS_1 {
                     }
                     case 1:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, ChangeDisplay_type_index), 1)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, ChangeDisplay_type_index), 1)) return;
                         else free();
                         break;
                     }
@@ -10225,7 +10225,7 @@ namespace ISO_9506_MMS_1 {
         switch (type()) {
             case PriorityChange_type_priorityValue:
             {
-                ITU_T_IMPLICIT_TAG(*value<int > (false, PriorityChange_type_priorityValue), 0);
+                ITU_T_IMPLICIT_TAG(*value<integer_type > (false, PriorityChange_type_priorityValue), 0);
                 break;
             }
             case PriorityChange_type_priorityReset:
@@ -10263,7 +10263,7 @@ namespace ISO_9506_MMS_1 {
                 switch (__tag_id__) {
                     case 0:
                     {
-                        if (ITU_T_IMPLICIT_TAG(*value<int > (true, PriorityChange_type_priorityValue), 0)) return;
+                        if (ITU_T_IMPLICIT_TAG(*value<integer_type > (true, PriorityChange_type_priorityValue), 0)) return;
                         else free();
                         break;
                     }

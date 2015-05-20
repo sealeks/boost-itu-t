@@ -31,21 +31,21 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileOpen_Request::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*fileName_);
-       // ITU_T_BIND_NUM_CONSTRS(*initialPosition_, 0, 2147483647);
+        ITU_T_BIND_NUM_CONSTRS(*initialPosition_, (uint32_t) (0), (uint32_t) (2147483647));
     }
 
     template<> void FileOpen_Request::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*fileName_);
-        //ITU_T_BIND_NUM_CONSTRS(*initialPosition_, 0, 2147483647);
+        ITU_T_BIND_NUM_CONSTRS(*initialPosition_, (uint32_t) (0), (uint32_t) (2147483647));
     }
 
     template<> void FileOpen_Response::serialize(boost::asn1::x691::output_coder& arch) {
-        //ITU_T_BIND_NUM_CONSTRS(*frsmID_, -2147483648, 2147483647);
+        ITU_T_BIND_NUM_CONSTRS(*frsmID_, (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
         ITU_T_BIND_PER(*fileAttributes_);
     }
 
     template<> void FileOpen_Response::serialize(boost::asn1::x691::input_coder& arch) {
-        //ITU_T_BIND_NUM_CONSTRS(*frsmID_, -2147483648, 2147483647);
+        ITU_T_BIND_NUM_CONSTRS(*frsmID_, (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
         ITU_T_BIND_PER(*fileAttributes_);
     }
 
@@ -56,7 +56,7 @@ namespace ISO_9506_MMS_1A {
         ITU_T_OPTIONAL_SET_PER;
 
         ITU_T_BIND_PER(*fileData_);
-        ITU_T_BIND_PER(moreFollows_.get_shared());
+        ITU_T_BIND_PER(moreFollows_);
     }
 
     template<> void FileRead_Response::serialize(boost::asn1::x691::input_coder& arch) {
@@ -64,7 +64,7 @@ namespace ISO_9506_MMS_1A {
         ITU_T_OPTIONAL_GET_PER(1);
 
         ITU_T_BIND_PER(*fileData_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     template<> void FileRename_Request::serialize(boost::asn1::x691::output_coder& arch) {
@@ -102,7 +102,7 @@ namespace ISO_9506_MMS_1A {
         ITU_T_OPTIONAL_SET_PER;
 
         ITU_T_BIND_PER(*listOfDirectoryEntry_);
-        ITU_T_BIND_PER(moreFollows_.get_shared());
+        ITU_T_BIND_PER(moreFollows_);
     }
 
     template<> void FileDirectory_Response::serialize(boost::asn1::x691::input_coder& arch) {
@@ -110,7 +110,7 @@ namespace ISO_9506_MMS_1A {
         ITU_T_OPTIONAL_GET_PER(1);
 
         ITU_T_BIND_PER(*listOfDirectoryEntry_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_.get_shared());
+        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     template<> void DirectoryEntry::serialize(boost::asn1::x691::output_coder& arch) {
@@ -129,7 +129,7 @@ namespace ISO_9506_MMS_1A {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_NUM_CONSTRS(*sizeOfFile_, 0, 2147483647);
+        ITU_T_BIND_NUM_CONSTRS(*sizeOfFile_, (uint32_t) (0), (uint32_t) (2147483647));
         ITU_T_BIND_PER(lastModified_);
     }
 
@@ -137,7 +137,7 @@ namespace ISO_9506_MMS_1A {
 
         ITU_T_OPTIONAL_GET_PER(1);
 
-        ITU_T_BIND_NUM_CONSTRS(*sizeOfFile_, 0, 2147483647);
+        ITU_T_BIND_NUM_CONSTRS(*sizeOfFile_, (uint32_t) (0), (uint32_t) (2147483647));
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(lastModified_);
     }
 

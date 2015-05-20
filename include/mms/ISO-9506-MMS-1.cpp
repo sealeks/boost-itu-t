@@ -398,91 +398,91 @@ namespace ISO_9506_MMS_1 {
     };
 
 
-    const int ServiceError::ErrorClass_type::vmd_state_other = 0;
-    const int ServiceError::ErrorClass_type::vmd_state_vmd_state_conflict = 1;
-    const int ServiceError::ErrorClass_type::vmd_state_vmd_operational_problem = 2;
-    const int ServiceError::ErrorClass_type::vmd_state_domain_transfer_problem = 3;
-    const int ServiceError::ErrorClass_type::vmd_state_state_machine_id_invalid = 4;
+    const uint8_t ServiceError::ErrorClass_type::vmd_state_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::vmd_state_vmd_state_conflict = 1;
+    const uint8_t ServiceError::ErrorClass_type::vmd_state_vmd_operational_problem = 2;
+    const uint8_t ServiceError::ErrorClass_type::vmd_state_domain_transfer_problem = 3;
+    const uint8_t ServiceError::ErrorClass_type::vmd_state_state_machine_id_invalid = 4;
 
-    const int ServiceError::ErrorClass_type::application_reference_other = 0;
-    const int ServiceError::ErrorClass_type::application_reference_application_unreachable = 1;
-    const int ServiceError::ErrorClass_type::application_reference_connection_lost = 2;
-    const int ServiceError::ErrorClass_type::application_reference_application_reference_invalid = 3;
-    const int ServiceError::ErrorClass_type::application_reference_context_unsupported = 4;
+    const uint8_t ServiceError::ErrorClass_type::application_reference_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::application_reference_application_unreachable = 1;
+    const uint8_t ServiceError::ErrorClass_type::application_reference_connection_lost = 2;
+    const uint8_t ServiceError::ErrorClass_type::application_reference_application_reference_invalid = 3;
+    const uint8_t ServiceError::ErrorClass_type::application_reference_context_unsupported = 4;
 
-    const int ServiceError::ErrorClass_type::definition_other = 0;
-    const int ServiceError::ErrorClass_type::definition_object_undefined = 1;
-    const int ServiceError::ErrorClass_type::definition_invalid_address = 2;
-    const int ServiceError::ErrorClass_type::definition_type_unsupported = 3;
-    const int ServiceError::ErrorClass_type::definition_type_inconsistent = 4;
-    const int ServiceError::ErrorClass_type::definition_object_exists = 5;
-    const int ServiceError::ErrorClass_type::definition_object_attribute_inconsistent = 6;
+    const uint8_t ServiceError::ErrorClass_type::definition_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::definition_object_undefined = 1;
+    const uint8_t ServiceError::ErrorClass_type::definition_invalid_address = 2;
+    const uint8_t ServiceError::ErrorClass_type::definition_type_unsupported = 3;
+    const uint8_t ServiceError::ErrorClass_type::definition_type_inconsistent = 4;
+    const uint8_t ServiceError::ErrorClass_type::definition_object_exists = 5;
+    const uint8_t ServiceError::ErrorClass_type::definition_object_attribute_inconsistent = 6;
 
-    const int ServiceError::ErrorClass_type::resource_other = 0;
-    const int ServiceError::ErrorClass_type::resource_memory_unavailable = 1;
-    const int ServiceError::ErrorClass_type::resource_processor_resource_unavailable = 2;
-    const int ServiceError::ErrorClass_type::resource_mass_storage_unavailable = 3;
-    const int ServiceError::ErrorClass_type::resource_capability_unavailable = 4;
-    const int ServiceError::ErrorClass_type::resource_capability_unknown = 5;
+    const uint8_t ServiceError::ErrorClass_type::resource_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::resource_memory_unavailable = 1;
+    const uint8_t ServiceError::ErrorClass_type::resource_processor_resource_unavailable = 2;
+    const uint8_t ServiceError::ErrorClass_type::resource_mass_storage_unavailable = 3;
+    const uint8_t ServiceError::ErrorClass_type::resource_capability_unavailable = 4;
+    const uint8_t ServiceError::ErrorClass_type::resource_capability_unknown = 5;
 
-    const int ServiceError::ErrorClass_type::service_other = 0;
-    const int ServiceError::ErrorClass_type::service_primitives_out_of_sequence = 1;
-    const int ServiceError::ErrorClass_type::service_object_state_conflict = 2;
-    const int ServiceError::ErrorClass_type::service_continuation_invalid = 4;
-    const int ServiceError::ErrorClass_type::service_object_constraint_conflict = 5;
+    const uint8_t ServiceError::ErrorClass_type::service_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::service_primitives_out_of_sequence = 1;
+    const uint8_t ServiceError::ErrorClass_type::service_object_state_conflict = 2;
+    const uint8_t ServiceError::ErrorClass_type::service_continuation_invalid = 4;
+    const uint8_t ServiceError::ErrorClass_type::service_object_constraint_conflict = 5;
 
-    const int ServiceError::ErrorClass_type::service_preempt_other = 0;
-    const int ServiceError::ErrorClass_type::service_preempt_timeout = 1;
-    const int ServiceError::ErrorClass_type::service_preempt_deadlock = 2;
-    const int ServiceError::ErrorClass_type::service_preempt_cancel = 3;
+    const uint8_t ServiceError::ErrorClass_type::service_preempt_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::service_preempt_timeout = 1;
+    const uint8_t ServiceError::ErrorClass_type::service_preempt_deadlock = 2;
+    const uint8_t ServiceError::ErrorClass_type::service_preempt_cancel = 3;
 
-    const int ServiceError::ErrorClass_type::time_resolution_other = 0;
-    const int ServiceError::ErrorClass_type::time_resolution_unsupportable_time_resolution = 1;
+    const uint8_t ServiceError::ErrorClass_type::time_resolution_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::time_resolution_unsupportable_time_resolution = 1;
 
-    const int ServiceError::ErrorClass_type::access_other = 0;
-    const int ServiceError::ErrorClass_type::access_object_access_unsupported = 1;
-    const int ServiceError::ErrorClass_type::access_object_non_existent = 2;
-    const int ServiceError::ErrorClass_type::access_object_access_denied = 3;
-    const int ServiceError::ErrorClass_type::access_object_invalidated = 4;
+    const uint8_t ServiceError::ErrorClass_type::access_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::access_object_access_unsupported = 1;
+    const uint8_t ServiceError::ErrorClass_type::access_object_non_existent = 2;
+    const uint8_t ServiceError::ErrorClass_type::access_object_access_denied = 3;
+    const uint8_t ServiceError::ErrorClass_type::access_object_invalidated = 4;
 
-    const int ServiceError::ErrorClass_type::initiate_other = 0;
-    const int ServiceError::ErrorClass_type::initiate_max_services_outstanding_calling_insufficient = 3;
-    const int ServiceError::ErrorClass_type::initiate_max_services_outstanding_called_insufficient = 4;
-    const int ServiceError::ErrorClass_type::initiate_service_CBB_insufficient = 5;
-    const int ServiceError::ErrorClass_type::initiate_parameter_CBB_insufficient = 6;
-    const int ServiceError::ErrorClass_type::initiate_nesting_level_insufficient = 7;
+    const uint8_t ServiceError::ErrorClass_type::initiate_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::initiate_max_services_outstanding_calling_insufficient = 3;
+    const uint8_t ServiceError::ErrorClass_type::initiate_max_services_outstanding_called_insufficient = 4;
+    const uint8_t ServiceError::ErrorClass_type::initiate_service_CBB_insufficient = 5;
+    const uint8_t ServiceError::ErrorClass_type::initiate_parameter_CBB_insufficient = 6;
+    const uint8_t ServiceError::ErrorClass_type::initiate_nesting_level_insufficient = 7;
 
-    const int ServiceError::ErrorClass_type::conclude_other = 0;
-    const int ServiceError::ErrorClass_type::conclude_further_communication_required = 1;
+    const uint8_t ServiceError::ErrorClass_type::conclude_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::conclude_further_communication_required = 1;
 
-    const int ServiceError::ErrorClass_type::cancel_other = 0;
-    const int ServiceError::ErrorClass_type::cancel_invoke_id_unknown = 1;
-    const int ServiceError::ErrorClass_type::cancel_cancel_not_possible = 2;
+    const uint8_t ServiceError::ErrorClass_type::cancel_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::cancel_invoke_id_unknown = 1;
+    const uint8_t ServiceError::ErrorClass_type::cancel_cancel_not_possible = 2;
 
-    const int ServiceError::ErrorClass_type::file_other = 0;
-    const int ServiceError::ErrorClass_type::file_filename_ambiguous = 1;
-    const int ServiceError::ErrorClass_type::file_file_busy = 2;
-    const int ServiceError::ErrorClass_type::file_filename_syntax_error = 3;
-    const int ServiceError::ErrorClass_type::file_content_type_invalid = 4;
-    const int ServiceError::ErrorClass_type::file_position_invalid = 5;
-    const int ServiceError::ErrorClass_type::file_file_access_denied = 6;
-    const int ServiceError::ErrorClass_type::file_file_non_existent = 7;
-    const int ServiceError::ErrorClass_type::file_duplicate_filename = 8;
-    const int ServiceError::ErrorClass_type::file_insufficient_space_in_filestore = 9;
+    const uint8_t ServiceError::ErrorClass_type::file_other = 0;
+    const uint8_t ServiceError::ErrorClass_type::file_filename_ambiguous = 1;
+    const uint8_t ServiceError::ErrorClass_type::file_file_busy = 2;
+    const uint8_t ServiceError::ErrorClass_type::file_filename_syntax_error = 3;
+    const uint8_t ServiceError::ErrorClass_type::file_content_type_invalid = 4;
+    const uint8_t ServiceError::ErrorClass_type::file_position_invalid = 5;
+    const uint8_t ServiceError::ErrorClass_type::file_file_access_denied = 6;
+    const uint8_t ServiceError::ErrorClass_type::file_file_non_existent = 7;
+    const uint8_t ServiceError::ErrorClass_type::file_duplicate_filename = 8;
+    const uint8_t ServiceError::ErrorClass_type::file_insufficient_space_in_filestore = 9;
 
 
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::vmd_state, vmd_state, int, ErrorClass_type_vmd_state);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::application_reference, application_reference, int, ErrorClass_type_application_reference);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::definition, definition, int, ErrorClass_type_definition);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::resource, resource, int, ErrorClass_type_resource);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::service, service, int, ErrorClass_type_service);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::service_preempt, service_preempt, int, ErrorClass_type_service_preempt);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::time_resolution, time_resolution, int, ErrorClass_type_time_resolution);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::access, access, int, ErrorClass_type_access);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::initiate, initiate, int, ErrorClass_type_initiate);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::conclude, conclude, int, ErrorClass_type_conclude);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::cancel, cancel, int, ErrorClass_type_cancel);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::file, file, int, ErrorClass_type_file);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::vmd_state, vmd_state, uint8_t, ErrorClass_type_vmd_state);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::application_reference, application_reference, uint8_t, ErrorClass_type_application_reference);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::definition, definition, uint8_t, ErrorClass_type_definition);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::resource, resource, uint8_t, ErrorClass_type_resource);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::service, service, uint8_t, ErrorClass_type_service);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::service_preempt, service_preempt, uint8_t, ErrorClass_type_service_preempt);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::time_resolution, time_resolution, uint8_t, ErrorClass_type_time_resolution);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::access, access, uint8_t, ErrorClass_type_access);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::initiate, initiate, uint8_t, ErrorClass_type_initiate);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::conclude, conclude, uint8_t, ErrorClass_type_conclude);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::cancel, cancel, uint8_t, ErrorClass_type_cancel);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::file, file, uint8_t, ErrorClass_type_file);
     ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::others, others, int, ErrorClass_type_others);
 
 
@@ -538,27 +538,27 @@ namespace ISO_9506_MMS_1 {
     ITU_T_CHOICES_DEFN(ObjectName::aa_specific, aa_specific, Identifier, ObjectName_aa_specific);
 
     // choice ObjectClass
-    const int ObjectClass::basicObjectClass_namedVariable = 0;
-    const int ObjectClass::basicObjectClass_scatteredAccess = 1;
-    const int ObjectClass::basicObjectClass_namedVariableList = 2;
-    const int ObjectClass::basicObjectClass_namedType = 3;
-    const int ObjectClass::basicObjectClass_semaphore = 4;
-    const int ObjectClass::basicObjectClass_eventCondition = 5;
-    const int ObjectClass::basicObjectClass_eventAction = 6;
-    const int ObjectClass::basicObjectClass_eventEnrollment = 7;
-    const int ObjectClass::basicObjectClass_journal = 8;
-    const int ObjectClass::basicObjectClass_domain = 9;
-    const int ObjectClass::basicObjectClass_programInvocation = 10;
-    const int ObjectClass::basicObjectClass_operatorStation = 11;
-    const int ObjectClass::basicObjectClass_dataExchange = 12;
-    const int ObjectClass::basicObjectClass_accessControlList = 13;
+    const uint8_t ObjectClass::basicObjectClass_namedVariable = 0;
+    const uint8_t ObjectClass::basicObjectClass_scatteredAccess = 1;
+    const uint8_t ObjectClass::basicObjectClass_namedVariableList = 2;
+    const uint8_t ObjectClass::basicObjectClass_namedType = 3;
+    const uint8_t ObjectClass::basicObjectClass_semaphore = 4;
+    const uint8_t ObjectClass::basicObjectClass_eventCondition = 5;
+    const uint8_t ObjectClass::basicObjectClass_eventAction = 6;
+    const uint8_t ObjectClass::basicObjectClass_eventEnrollment = 7;
+    const uint8_t ObjectClass::basicObjectClass_journal = 8;
+    const uint8_t ObjectClass::basicObjectClass_domain = 9;
+    const uint8_t ObjectClass::basicObjectClass_programInvocation = 10;
+    const uint8_t ObjectClass::basicObjectClass_operatorStation = 11;
+    const uint8_t ObjectClass::basicObjectClass_dataExchange = 12;
+    const uint8_t ObjectClass::basicObjectClass_accessControlList = 13;
 
-    const int ObjectClass::csObjectClass_eventConditionList = 0;
-    const int ObjectClass::csObjectClass_unitControl = 1;
+    const uint8_t ObjectClass::csObjectClass_eventConditionList = 0;
+    const uint8_t ObjectClass::csObjectClass_unitControl = 1;
 
 
-    ITU_T_CHOICES_DEFN(ObjectClass::basicObjectClass, basicObjectClass, int, ObjectClass_basicObjectClass);
-    ITU_T_CHOICES_DEFN(ObjectClass::csObjectClass, csObjectClass, int, ObjectClass_csObjectClass);
+    ITU_T_CHOICES_DEFN(ObjectClass::basicObjectClass, basicObjectClass, uint8_t, ObjectClass_basicObjectClass);
+    ITU_T_CHOICES_DEFN(ObjectClass::csObjectClass, csObjectClass, uint8_t, ObjectClass_csObjectClass);
 
     // sequence Initiate-RequestPDU
 
@@ -721,72 +721,72 @@ namespace ISO_9506_MMS_1 {
     };
 
 
-    const int RejectPDU::RejectReason_type::confirmed_requestPDU_other = 0;
-    const int RejectPDU::RejectReason_type::confirmed_requestPDU_unrecognized_service = 1;
-    const int RejectPDU::RejectReason_type::confirmed_requestPDU_unrecognized_modifier = 2;
-    const int RejectPDU::RejectReason_type::confirmed_requestPDU_invalid_invokeID = 3;
-    const int RejectPDU::RejectReason_type::confirmed_requestPDU_invalid_argument = 4;
-    const int RejectPDU::RejectReason_type::confirmed_requestPDU_invalid_modifier = 5;
-    const int RejectPDU::RejectReason_type::confirmed_requestPDU_max_serv_outstanding_exceeded = 6;
-    const int RejectPDU::RejectReason_type::confirmed_requestPDU_max_recursion_exceeded = 8;
-    const int RejectPDU::RejectReason_type::confirmed_requestPDU_value_out_of_range = 9;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_requestPDU_other = 0;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_requestPDU_unrecognized_service = 1;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_requestPDU_unrecognized_modifier = 2;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_requestPDU_invalid_invokeID = 3;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_requestPDU_invalid_argument = 4;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_requestPDU_invalid_modifier = 5;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_requestPDU_max_serv_outstanding_exceeded = 6;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_requestPDU_max_recursion_exceeded = 8;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_requestPDU_value_out_of_range = 9;
 
-    const int RejectPDU::RejectReason_type::confirmed_responsePDU_other = 0;
-    const int RejectPDU::RejectReason_type::confirmed_responsePDU_unrecognized_service = 1;
-    const int RejectPDU::RejectReason_type::confirmed_responsePDU_invalid_invokeID = 2;
-    const int RejectPDU::RejectReason_type::confirmed_responsePDU_invalid_result = 3;
-    const int RejectPDU::RejectReason_type::confirmed_responsePDU_max_recursion_exceeded = 5;
-    const int RejectPDU::RejectReason_type::confirmed_responsePDU_value_out_of_range = 6;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_responsePDU_other = 0;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_responsePDU_unrecognized_service = 1;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_responsePDU_invalid_invokeID = 2;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_responsePDU_invalid_result = 3;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_responsePDU_max_recursion_exceeded = 5;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_responsePDU_value_out_of_range = 6;
 
-    const int RejectPDU::RejectReason_type::confirmed_errorPDU_other = 0;
-    const int RejectPDU::RejectReason_type::confirmed_errorPDU_unrecognized_service = 1;
-    const int RejectPDU::RejectReason_type::confirmed_errorPDU_invalid_invokeID = 2;
-    const int RejectPDU::RejectReason_type::confirmed_errorPDU_invalid_serviceError = 3;
-    const int RejectPDU::RejectReason_type::confirmed_errorPDU_value_out_of_range = 4;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_errorPDU_other = 0;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_errorPDU_unrecognized_service = 1;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_errorPDU_invalid_invokeID = 2;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_errorPDU_invalid_serviceError = 3;
+    const uint8_t RejectPDU::RejectReason_type::confirmed_errorPDU_value_out_of_range = 4;
 
-    const int RejectPDU::RejectReason_type::unconfirmedPDU_other = 0;
-    const int RejectPDU::RejectReason_type::unconfirmedPDU_unrecognized_service = 1;
-    const int RejectPDU::RejectReason_type::unconfirmedPDU_invalid_argument = 2;
-    const int RejectPDU::RejectReason_type::unconfirmedPDU_max_recursion_exceeded = 3;
-    const int RejectPDU::RejectReason_type::unconfirmedPDU_value_out_of_range = 4;
+    const uint8_t RejectPDU::RejectReason_type::unconfirmedPDU_other = 0;
+    const uint8_t RejectPDU::RejectReason_type::unconfirmedPDU_unrecognized_service = 1;
+    const uint8_t RejectPDU::RejectReason_type::unconfirmedPDU_invalid_argument = 2;
+    const uint8_t RejectPDU::RejectReason_type::unconfirmedPDU_max_recursion_exceeded = 3;
+    const uint8_t RejectPDU::RejectReason_type::unconfirmedPDU_value_out_of_range = 4;
 
     const int RejectPDU::RejectReason_type::pdu_error_unknown_pdu_type = 0;
     const int RejectPDU::RejectReason_type::pdu_error_invalid_pdu = 1;
     const int RejectPDU::RejectReason_type::pdu_error_illegal_acse_mapping = 2;
 
-    const int RejectPDU::RejectReason_type::cancel_requestPDU_other = 0;
-    const int RejectPDU::RejectReason_type::cancel_requestPDU_invalid_invokeID = 1;
+    const uint8_t RejectPDU::RejectReason_type::cancel_requestPDU_other = 0;
+    const uint8_t RejectPDU::RejectReason_type::cancel_requestPDU_invalid_invokeID = 1;
 
-    const int RejectPDU::RejectReason_type::cancel_responsePDU_other = 0;
-    const int RejectPDU::RejectReason_type::cancel_responsePDU_invalid_invokeID = 1;
+    const uint8_t RejectPDU::RejectReason_type::cancel_responsePDU_other = 0;
+    const uint8_t RejectPDU::RejectReason_type::cancel_responsePDU_invalid_invokeID = 1;
 
-    const int RejectPDU::RejectReason_type::cancel_errorPDU_other = 0;
-    const int RejectPDU::RejectReason_type::cancel_errorPDU_invalid_invokeID = 1;
-    const int RejectPDU::RejectReason_type::cancel_errorPDU_invalid_serviceError = 2;
-    const int RejectPDU::RejectReason_type::cancel_errorPDU_value_out_of_range = 3;
+    const uint8_t RejectPDU::RejectReason_type::cancel_errorPDU_other = 0;
+    const uint8_t RejectPDU::RejectReason_type::cancel_errorPDU_invalid_invokeID = 1;
+    const uint8_t RejectPDU::RejectReason_type::cancel_errorPDU_invalid_serviceError = 2;
+    const uint8_t RejectPDU::RejectReason_type::cancel_errorPDU_value_out_of_range = 3;
 
-    const int RejectPDU::RejectReason_type::conclude_requestPDU_other = 0;
-    const int RejectPDU::RejectReason_type::conclude_requestPDU_invalid_argument = 1;
+    const uint8_t RejectPDU::RejectReason_type::conclude_requestPDU_other = 0;
+    const uint8_t RejectPDU::RejectReason_type::conclude_requestPDU_invalid_argument = 1;
 
-    const int RejectPDU::RejectReason_type::conclude_responsePDU_other = 0;
-    const int RejectPDU::RejectReason_type::conclude_responsePDU_invalid_result = 1;
+    const uint8_t RejectPDU::RejectReason_type::conclude_responsePDU_other = 0;
+    const uint8_t RejectPDU::RejectReason_type::conclude_responsePDU_invalid_result = 1;
 
-    const int RejectPDU::RejectReason_type::conclude_errorPDU_other = 0;
-    const int RejectPDU::RejectReason_type::conclude_errorPDU_invalid_serviceError = 1;
-    const int RejectPDU::RejectReason_type::conclude_errorPDU_value_out_of_range = 2;
+    const uint8_t RejectPDU::RejectReason_type::conclude_errorPDU_other = 0;
+    const uint8_t RejectPDU::RejectReason_type::conclude_errorPDU_invalid_serviceError = 1;
+    const uint8_t RejectPDU::RejectReason_type::conclude_errorPDU_value_out_of_range = 2;
 
 
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::confirmed_requestPDU, confirmed_requestPDU, int, RejectReason_type_confirmed_requestPDU);
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::confirmed_responsePDU, confirmed_responsePDU, int, RejectReason_type_confirmed_responsePDU);
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::confirmed_errorPDU, confirmed_errorPDU, int, RejectReason_type_confirmed_errorPDU);
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::unconfirmedPDU, unconfirmedPDU, int, RejectReason_type_unconfirmedPDU);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::confirmed_requestPDU, confirmed_requestPDU, uint8_t, RejectReason_type_confirmed_requestPDU);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::confirmed_responsePDU, confirmed_responsePDU, uint8_t, RejectReason_type_confirmed_responsePDU);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::confirmed_errorPDU, confirmed_errorPDU, uint8_t, RejectReason_type_confirmed_errorPDU);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::unconfirmedPDU, unconfirmedPDU, uint8_t, RejectReason_type_unconfirmedPDU);
     ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::pdu_error, pdu_error, int, RejectReason_type_pdu_error);
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::cancel_requestPDU, cancel_requestPDU, int, RejectReason_type_cancel_requestPDU);
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::cancel_responsePDU, cancel_responsePDU, int, RejectReason_type_cancel_responsePDU);
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::cancel_errorPDU, cancel_errorPDU, int, RejectReason_type_cancel_errorPDU);
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::conclude_requestPDU, conclude_requestPDU, int, RejectReason_type_conclude_requestPDU);
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::conclude_responsePDU, conclude_responsePDU, int, RejectReason_type_conclude_responsePDU);
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::conclude_errorPDU, conclude_errorPDU, int, RejectReason_type_conclude_errorPDU);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::cancel_requestPDU, cancel_requestPDU, uint8_t, RejectReason_type_cancel_requestPDU);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::cancel_responsePDU, cancel_responsePDU, uint8_t, RejectReason_type_cancel_responsePDU);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::cancel_errorPDU, cancel_errorPDU, uint8_t, RejectReason_type_cancel_errorPDU);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::conclude_requestPDU, conclude_requestPDU, uint8_t, RejectReason_type_conclude_requestPDU);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::conclude_responsePDU, conclude_responsePDU, uint8_t, RejectReason_type_conclude_responsePDU);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::conclude_errorPDU, conclude_errorPDU, uint8_t, RejectReason_type_conclude_errorPDU);
 
 
     ITU_T_OPTIONAL_DEFN(RejectPDU::originalInvokeID, originalInvokeID, Unsigned32);
@@ -1030,27 +1030,27 @@ namespace ISO_9506_MMS_1 {
     ITU_T_HOLDERH_DEFN(ChangeAccessControl_Response::numberChanged, numberChanged, Unsigned32);
 
     // sequence StatusResponse
-    const int StatusResponse::vmdLogicalStatus_state_changes_allowed = 0;
-    const int StatusResponse::vmdLogicalStatus_no_state_changes_allowed = 1;
-    const int StatusResponse::vmdLogicalStatus_limited_services_permitted = 2;
-    const int StatusResponse::vmdLogicalStatus_support_services_allowed = 3;
+    const uint8_t StatusResponse::vmdLogicalStatus_state_changes_allowed = 0;
+    const uint8_t StatusResponse::vmdLogicalStatus_no_state_changes_allowed = 1;
+    const uint8_t StatusResponse::vmdLogicalStatus_limited_services_permitted = 2;
+    const uint8_t StatusResponse::vmdLogicalStatus_support_services_allowed = 3;
 
-    const int StatusResponse::vmdPhysicalStatus_operational = 0;
-    const int StatusResponse::vmdPhysicalStatus_partially_operational = 1;
-    const int StatusResponse::vmdPhysicalStatus_inoperable = 2;
-    const int StatusResponse::vmdPhysicalStatus_needs_commissioning = 3;
+    const uint8_t StatusResponse::vmdPhysicalStatus_operational = 0;
+    const uint8_t StatusResponse::vmdPhysicalStatus_partially_operational = 1;
+    const uint8_t StatusResponse::vmdPhysicalStatus_inoperable = 2;
+    const uint8_t StatusResponse::vmdPhysicalStatus_needs_commissioning = 3;
 
     StatusResponse::StatusResponse() : vmdLogicalStatus_(), vmdPhysicalStatus_() {
     };
 
-    StatusResponse::StatusResponse(const int& arg__vmdLogicalStatus,
-            const int& arg__vmdPhysicalStatus) :
+    StatusResponse::StatusResponse(const uint8_t& arg__vmdLogicalStatus,
+            const uint8_t& arg__vmdPhysicalStatus) :
     vmdLogicalStatus_(arg__vmdLogicalStatus),
     vmdPhysicalStatus_(arg__vmdPhysicalStatus) {
     };
 
-    StatusResponse::StatusResponse(shared_ptr< int> arg__vmdLogicalStatus,
-            shared_ptr< int> arg__vmdPhysicalStatus,
+    StatusResponse::StatusResponse(shared_ptr< uint8_t> arg__vmdLogicalStatus,
+            shared_ptr< uint8_t> arg__vmdPhysicalStatus,
             shared_ptr< bitstring_type> arg__localDetail) :
     vmdLogicalStatus_(arg__vmdLogicalStatus),
     vmdPhysicalStatus_(arg__vmdPhysicalStatus),
@@ -1058,8 +1058,8 @@ namespace ISO_9506_MMS_1 {
     };
 
 
-    ITU_T_HOLDERH_DEFN(StatusResponse::vmdLogicalStatus, vmdLogicalStatus, int);
-    ITU_T_HOLDERH_DEFN(StatusResponse::vmdPhysicalStatus, vmdPhysicalStatus, int);
+    ITU_T_HOLDERH_DEFN(StatusResponse::vmdLogicalStatus, vmdLogicalStatus, uint8_t);
+    ITU_T_HOLDERH_DEFN(StatusResponse::vmdPhysicalStatus, vmdPhysicalStatus, uint8_t);
     ITU_T_OPTIONAL_DEFN(StatusResponse::localDetail, localDetail, bitstring_type);
 
     // choice CS-Status-Response
@@ -2423,15 +2423,15 @@ namespace ISO_9506_MMS_1 {
     ITU_T_OPTIONAL_DEFN(DefineNamedVariable_Request::typeSpecification, typeSpecification, TypeSpecification);
 
     // sequence DeleteVariableAccess-Request
-    const int DeleteVariableAccess_Request::scopeOfDelete_specific = 0;
-    const int DeleteVariableAccess_Request::scopeOfDelete_aa_specific = 1;
-    const int DeleteVariableAccess_Request::scopeOfDelete_domain = 2;
-    const int DeleteVariableAccess_Request::scopeOfDelete_vmd = 3;
+    const uint8_t DeleteVariableAccess_Request::scopeOfDelete_specific = 0;
+    const uint8_t DeleteVariableAccess_Request::scopeOfDelete_aa_specific = 1;
+    const uint8_t DeleteVariableAccess_Request::scopeOfDelete_domain = 2;
+    const uint8_t DeleteVariableAccess_Request::scopeOfDelete_vmd = 3;
 
     DeleteVariableAccess_Request::DeleteVariableAccess_Request() {
     };
 
-    DeleteVariableAccess_Request::DeleteVariableAccess_Request(shared_ptr< int> arg__scopeOfDelete,
+    DeleteVariableAccess_Request::DeleteVariableAccess_Request(shared_ptr< uint8_t> arg__scopeOfDelete,
             shared_ptr< ListOfName_type> arg__listOfName,
             shared_ptr< Identifier> arg__domainName) :
     scopeOfDelete_(arg__scopeOfDelete),
@@ -2439,10 +2439,10 @@ namespace ISO_9506_MMS_1 {
     domainName_(arg__domainName) {
     };
 
-    const int DeleteVariableAccess_Request::scopeOfDelete__default = 0;
+    const uint8_t DeleteVariableAccess_Request::scopeOfDelete__default = 0;
 
 
-    ITU_T_DEFAULTH_DEFN(DeleteVariableAccess_Request::scopeOfDelete, scopeOfDelete, int);
+    ITU_T_DEFAULTH_DEFN(DeleteVariableAccess_Request::scopeOfDelete, scopeOfDelete, uint8_t);
     ITU_T_OPTIONAL_DEFN(DeleteVariableAccess_Request::listOfName, listOfName, DeleteVariableAccess_Request::ListOfName_type);
     ITU_T_OPTIONAL_DEFN(DeleteVariableAccess_Request::domainName, domainName, Identifier);
 
@@ -2535,15 +2535,15 @@ namespace ISO_9506_MMS_1 {
     ITU_T_OPTIONAL_DEFN(GetNamedVariableListAttributes_Response::accessControlList, accessControlList, Identifier);
 
     // sequence DeleteNamedVariableList-Request
-    const int DeleteNamedVariableList_Request::scopeOfDelete_specific = 0;
-    const int DeleteNamedVariableList_Request::scopeOfDelete_aa_specific = 1;
-    const int DeleteNamedVariableList_Request::scopeOfDelete_domain = 2;
-    const int DeleteNamedVariableList_Request::scopeOfDelete_vmd = 3;
+    const uint8_t DeleteNamedVariableList_Request::scopeOfDelete_specific = 0;
+    const uint8_t DeleteNamedVariableList_Request::scopeOfDelete_aa_specific = 1;
+    const uint8_t DeleteNamedVariableList_Request::scopeOfDelete_domain = 2;
+    const uint8_t DeleteNamedVariableList_Request::scopeOfDelete_vmd = 3;
 
     DeleteNamedVariableList_Request::DeleteNamedVariableList_Request() {
     };
 
-    DeleteNamedVariableList_Request::DeleteNamedVariableList_Request(shared_ptr< int> arg__scopeOfDelete,
+    DeleteNamedVariableList_Request::DeleteNamedVariableList_Request(shared_ptr< uint8_t> arg__scopeOfDelete,
             shared_ptr< ListOfVariableListName_type> arg__listOfVariableListName,
             shared_ptr< Identifier> arg__domainName) :
     scopeOfDelete_(arg__scopeOfDelete),
@@ -2551,10 +2551,10 @@ namespace ISO_9506_MMS_1 {
     domainName_(arg__domainName) {
     };
 
-    const int DeleteNamedVariableList_Request::scopeOfDelete__default = 0;
+    const uint8_t DeleteNamedVariableList_Request::scopeOfDelete__default = 0;
 
 
-    ITU_T_DEFAULTH_DEFN(DeleteNamedVariableList_Request::scopeOfDelete, scopeOfDelete, int);
+    ITU_T_DEFAULTH_DEFN(DeleteNamedVariableList_Request::scopeOfDelete, scopeOfDelete, uint8_t);
     ITU_T_OPTIONAL_DEFN(DeleteNamedVariableList_Request::listOfVariableListName, listOfVariableListName, DeleteNamedVariableList_Request::ListOfVariableListName_type);
     ITU_T_OPTIONAL_DEFN(DeleteNamedVariableList_Request::domainName, domainName, Identifier);
 
@@ -2616,15 +2616,15 @@ namespace ISO_9506_MMS_1 {
     ITU_T_OPTIONAL_DEFN(GetNamedTypeAttributes_Response::meaning, meaning, visiblestring_type);
 
     // sequence DeleteNamedType-Request
-    const int DeleteNamedType_Request::scopeOfDelete_specific = 0;
-    const int DeleteNamedType_Request::scopeOfDelete_aa_specific = 1;
-    const int DeleteNamedType_Request::scopeOfDelete_domain = 2;
-    const int DeleteNamedType_Request::scopeOfDelete_vmd = 3;
+    const uint8_t DeleteNamedType_Request::scopeOfDelete_specific = 0;
+    const uint8_t DeleteNamedType_Request::scopeOfDelete_aa_specific = 1;
+    const uint8_t DeleteNamedType_Request::scopeOfDelete_domain = 2;
+    const uint8_t DeleteNamedType_Request::scopeOfDelete_vmd = 3;
 
     DeleteNamedType_Request::DeleteNamedType_Request() {
     };
 
-    DeleteNamedType_Request::DeleteNamedType_Request(shared_ptr< int> arg__scopeOfDelete,
+    DeleteNamedType_Request::DeleteNamedType_Request(shared_ptr< uint8_t> arg__scopeOfDelete,
             shared_ptr< ListOfTypeName_type> arg__listOfTypeName,
             shared_ptr< Identifier> arg__domainName) :
     scopeOfDelete_(arg__scopeOfDelete),
@@ -2632,10 +2632,10 @@ namespace ISO_9506_MMS_1 {
     domainName_(arg__domainName) {
     };
 
-    const int DeleteNamedType_Request::scopeOfDelete__default = 0;
+    const uint8_t DeleteNamedType_Request::scopeOfDelete__default = 0;
 
 
-    ITU_T_DEFAULTH_DEFN(DeleteNamedType_Request::scopeOfDelete, scopeOfDelete, int);
+    ITU_T_DEFAULTH_DEFN(DeleteNamedType_Request::scopeOfDelete, scopeOfDelete, uint8_t);
     ITU_T_OPTIONAL_DEFN(DeleteNamedType_Request::listOfTypeName, listOfTypeName, DeleteNamedType_Request::ListOfTypeName_type);
     ITU_T_OPTIONAL_DEFN(DeleteNamedType_Request::domainName, domainName, Identifier);
 
@@ -2794,14 +2794,14 @@ namespace ISO_9506_MMS_1 {
     ITU_T_HOLDERH_DEFN(DefineSemaphore_Request::numberOfTokens, numberOfTokens, Unsigned16);
 
     // sequence ReportSemaphoreStatus-Response
-    const int ReportSemaphoreStatus_Response::classV_token = 0;
-    const int ReportSemaphoreStatus_Response::classV_pool = 1;
+    const uint8_t ReportSemaphoreStatus_Response::classV_token = 0;
+    const uint8_t ReportSemaphoreStatus_Response::classV_pool = 1;
 
     ReportSemaphoreStatus_Response::ReportSemaphoreStatus_Response() : mmsDeletable_(), classV_(), numberOfTokens_(), numberOfOwnedTokens_(), numberOfHungTokens_() {
     };
 
     ReportSemaphoreStatus_Response::ReportSemaphoreStatus_Response(const bool& arg__mmsDeletable,
-            const int& arg__classV,
+            const uint8_t& arg__classV,
             const Unsigned16& arg__numberOfTokens,
             const Unsigned16& arg__numberOfOwnedTokens,
             const Unsigned16& arg__numberOfHungTokens) :
@@ -2813,7 +2813,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     ReportSemaphoreStatus_Response::ReportSemaphoreStatus_Response(shared_ptr< bool> arg__mmsDeletable,
-            shared_ptr< int> arg__classV,
+            shared_ptr< uint8_t> arg__classV,
             shared_ptr< Unsigned16> arg__numberOfTokens,
             shared_ptr< Unsigned16> arg__numberOfOwnedTokens,
             shared_ptr< Unsigned16> arg__numberOfHungTokens,
@@ -2828,7 +2828,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_HOLDERH_DEFN(ReportSemaphoreStatus_Response::mmsDeletable, mmsDeletable, bool);
-    ITU_T_HOLDERH_DEFN(ReportSemaphoreStatus_Response::classV, classV, int);
+    ITU_T_HOLDERH_DEFN(ReportSemaphoreStatus_Response::classV, classV, uint8_t);
     ITU_T_HOLDERH_DEFN(ReportSemaphoreStatus_Response::numberOfTokens, numberOfTokens, Unsigned16);
     ITU_T_HOLDERH_DEFN(ReportSemaphoreStatus_Response::numberOfOwnedTokens, numberOfOwnedTokens, Unsigned16);
     ITU_T_HOLDERH_DEFN(ReportSemaphoreStatus_Response::numberOfHungTokens, numberOfHungTokens, Unsigned16);
@@ -2881,21 +2881,21 @@ namespace ISO_9506_MMS_1 {
     ITU_T_DEFAULTH_DEFN(ReportPoolSemaphoreStatus_Response::moreFollows, moreFollows, bool);
 
     // sequence ReportSemaphoreEntryStatus-Request
-    const int ReportSemaphoreEntryStatus_Request::state_queued = 0;
-    const int ReportSemaphoreEntryStatus_Request::state_owner = 1;
-    const int ReportSemaphoreEntryStatus_Request::state_hung = 2;
+    const uint8_t ReportSemaphoreEntryStatus_Request::state_queued = 0;
+    const uint8_t ReportSemaphoreEntryStatus_Request::state_owner = 1;
+    const uint8_t ReportSemaphoreEntryStatus_Request::state_hung = 2;
 
     ReportSemaphoreEntryStatus_Request::ReportSemaphoreEntryStatus_Request() : semaphoreName_(), state_() {
     };
 
     ReportSemaphoreEntryStatus_Request::ReportSemaphoreEntryStatus_Request(const ObjectName& arg__semaphoreName,
-            const int& arg__state) :
+            const uint8_t& arg__state) :
     semaphoreName_(arg__semaphoreName),
     state_(arg__state) {
     };
 
     ReportSemaphoreEntryStatus_Request::ReportSemaphoreEntryStatus_Request(shared_ptr< ObjectName> arg__semaphoreName,
-            shared_ptr< int> arg__state,
+            shared_ptr< uint8_t> arg__state,
             shared_ptr< octetstring_type> arg__entryIDToStartAfter) :
     semaphoreName_(arg__semaphoreName),
     state_(arg__state),
@@ -2904,7 +2904,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_HOLDERH_DEFN(ReportSemaphoreEntryStatus_Request::semaphoreName, semaphoreName, ObjectName);
-    ITU_T_HOLDERH_DEFN(ReportSemaphoreEntryStatus_Request::state, state, int);
+    ITU_T_HOLDERH_DEFN(ReportSemaphoreEntryStatus_Request::state, state, uint8_t);
     ITU_T_OPTIONAL_DEFN(ReportSemaphoreEntryStatus_Request::entryIDToStartAfter, entryIDToStartAfter, octetstring_type);
 
     // sequence ReportSemaphoreEntryStatus-Response
@@ -2929,14 +2929,14 @@ namespace ISO_9506_MMS_1 {
     ITU_T_DEFAULTH_DEFN(ReportSemaphoreEntryStatus_Response::moreFollows, moreFollows, bool);
 
     // sequence SemaphoreEntry
-    const int SemaphoreEntry::entryClass_simple = 0;
-    const int SemaphoreEntry::entryClass_modifier = 1;
+    const uint8_t SemaphoreEntry::entryClass_simple = 0;
+    const uint8_t SemaphoreEntry::entryClass_modifier = 1;
 
     SemaphoreEntry::SemaphoreEntry() : entryID_(), entryClass_(), applicationReference_() {
     };
 
     SemaphoreEntry::SemaphoreEntry(const octetstring_type& arg__entryID,
-            const int& arg__entryClass,
+            const uint8_t& arg__entryClass,
             const MMS_Environment_1::ApplicationReference& arg__applicationReference) :
     entryID_(arg__entryID),
     entryClass_(arg__entryClass),
@@ -2944,7 +2944,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     SemaphoreEntry::SemaphoreEntry(shared_ptr< octetstring_type> arg__entryID,
-            shared_ptr< int> arg__entryClass,
+            shared_ptr< uint8_t> arg__entryClass,
             shared_ptr< MMS_Environment_1::ApplicationReference> arg__applicationReference,
             shared_ptr< Identifier> arg__namedToken,
             shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
@@ -2967,7 +2967,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_HOLDERH_DEFN(SemaphoreEntry::entryID, entryID, octetstring_type);
-    ITU_T_HOLDERH_DEFN(SemaphoreEntry::entryClass, entryClass, int);
+    ITU_T_HOLDERH_DEFN(SemaphoreEntry::entryClass, entryClass, uint8_t);
     ITU_T_HOLDERH_DEFN(SemaphoreEntry::applicationReference, applicationReference, MMS_Environment_1::ApplicationReference);
     ITU_T_OPTIONAL_DEFN(SemaphoreEntry::namedToken, namedToken, Identifier);
     ITU_T_DEFAULTH_DEFN(SemaphoreEntry::priority, priority, MMS_Object_Module_1::Priority);
@@ -3195,16 +3195,16 @@ namespace ISO_9506_MMS_1 {
     ITU_T_HOLDERH_DEFN(AcknowledgeEventNotification_Request::timeOfAcknowledgedTransition, timeOfAcknowledgedTransition, MMS_Object_Module_1::EventTime);
 
     // sequence GetAlarmSummary-Request
-    const int GetAlarmSummary_Request::acknowledgementFilter_not_acked = 0;
-    const int GetAlarmSummary_Request::acknowledgementFilter_acked = 1;
-    const int GetAlarmSummary_Request::acknowledgementFilter_all = 2;
+    const uint8_t GetAlarmSummary_Request::acknowledgementFilter_not_acked = 0;
+    const uint8_t GetAlarmSummary_Request::acknowledgementFilter_acked = 1;
+    const uint8_t GetAlarmSummary_Request::acknowledgementFilter_all = 2;
 
     GetAlarmSummary_Request::GetAlarmSummary_Request() {
     };
 
     GetAlarmSummary_Request::GetAlarmSummary_Request(shared_ptr< bool> arg__enrollmentsOnly,
             shared_ptr< bool> arg__activeAlarmsOnly,
-            shared_ptr< int> arg__acknowledgementFilter,
+            shared_ptr< uint8_t> arg__acknowledgementFilter,
             shared_ptr< SeverityFilter_type> arg__severityFilter,
             shared_ptr< ObjectName> arg__continueAfter) :
     enrollmentsOnly_(arg__enrollmentsOnly),
@@ -3231,12 +3231,12 @@ namespace ISO_9506_MMS_1 {
 
     const bool GetAlarmSummary_Request::activeAlarmsOnly__default = true;
 
-    const int GetAlarmSummary_Request::acknowledgementFilter__default = 0;
+    const uint8_t GetAlarmSummary_Request::acknowledgementFilter__default = 0;
 
 
     ITU_T_DEFAULTH_DEFN(GetAlarmSummary_Request::enrollmentsOnly, enrollmentsOnly, bool);
     ITU_T_DEFAULTH_DEFN(GetAlarmSummary_Request::activeAlarmsOnly, activeAlarmsOnly, bool);
-    ITU_T_DEFAULTH_DEFN(GetAlarmSummary_Request::acknowledgementFilter, acknowledgementFilter, int);
+    ITU_T_DEFAULTH_DEFN(GetAlarmSummary_Request::acknowledgementFilter, acknowledgementFilter, uint8_t);
     ITU_T_OPTIONAL_DEFN(GetAlarmSummary_Request::severityFilter, severityFilter, GetAlarmSummary_Request::SeverityFilter_type);
     ITU_T_OPTIONAL_DEFN(GetAlarmSummary_Request::continueAfter, continueAfter, ObjectName);
 
@@ -3262,10 +3262,10 @@ namespace ISO_9506_MMS_1 {
     ITU_T_DEFAULTH_DEFN(GetAlarmSummary_Response::moreFollows, moreFollows, bool);
 
     // sequence AlarmSummary
-    const int AlarmSummary::unacknowledgedState_none = 0;
-    const int AlarmSummary::unacknowledgedState_active = 1;
-    const int AlarmSummary::unacknowledgedState_idle = 2;
-    const int AlarmSummary::unacknowledgedState_both = 3;
+    const uint8_t AlarmSummary::unacknowledgedState_none = 0;
+    const uint8_t AlarmSummary::unacknowledgedState_active = 1;
+    const uint8_t AlarmSummary::unacknowledgedState_idle = 2;
+    const uint8_t AlarmSummary::unacknowledgedState_both = 3;
 
     AlarmSummary::AlarmSummary() : eventConditionName_(), severity_(), currentState_(), unacknowledgedState_() {
     };
@@ -3273,7 +3273,7 @@ namespace ISO_9506_MMS_1 {
     AlarmSummary::AlarmSummary(const ObjectName& arg__eventConditionName,
             const Unsigned8& arg__severity,
             const MMS_Object_Module_1::EC_State& arg__currentState,
-            const int& arg__unacknowledgedState) :
+            const uint8_t& arg__unacknowledgedState) :
     eventConditionName_(arg__eventConditionName),
     severity_(arg__severity),
     currentState_(arg__currentState),
@@ -3283,7 +3283,7 @@ namespace ISO_9506_MMS_1 {
     AlarmSummary::AlarmSummary(shared_ptr< ObjectName> arg__eventConditionName,
             shared_ptr< Unsigned8> arg__severity,
             shared_ptr< MMS_Object_Module_1::EC_State> arg__currentState,
-            shared_ptr< int> arg__unacknowledgedState,
+            shared_ptr< uint8_t> arg__unacknowledgedState,
             shared_ptr< EN_Additional_Detail> arg__displayEnhancement,
             shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToActive,
             shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle) :
@@ -3300,7 +3300,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_HOLDERH_DEFN(AlarmSummary::eventConditionName, eventConditionName, ObjectName);
     ITU_T_HOLDERH_DEFN(AlarmSummary::severity, severity, Unsigned8);
     ITU_T_HOLDERH_DEFN(AlarmSummary::currentState, currentState, MMS_Object_Module_1::EC_State);
-    ITU_T_HOLDERH_DEFN(AlarmSummary::unacknowledgedState, unacknowledgedState, int);
+    ITU_T_HOLDERH_DEFN(AlarmSummary::unacknowledgedState, unacknowledgedState, uint8_t);
     ITU_T_OPTIONAL_DEFN(AlarmSummary::displayEnhancement, displayEnhancement, EN_Additional_Detail);
     ITU_T_OPTIONAL_DEFN(AlarmSummary::timeOfLastTransitionToActive, timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
     ITU_T_OPTIONAL_DEFN(AlarmSummary::timeOfLastTransitionToIdle, timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
@@ -3312,16 +3312,16 @@ namespace ISO_9506_MMS_1 {
     ITU_T_CHOICES_DEFN(EN_Additional_Detail_impl::noEnhancement, noEnhancement, null_type, EN_Additional_Detail_impl_noEnhancement);
 
     // sequence GetAlarmEnrollmentSummary-Request
-    const int GetAlarmEnrollmentSummary_Request::acknowledgementFilter_not_acked = 0;
-    const int GetAlarmEnrollmentSummary_Request::acknowledgementFilter_acked = 1;
-    const int GetAlarmEnrollmentSummary_Request::acknowledgementFilter_all = 2;
+    const uint8_t GetAlarmEnrollmentSummary_Request::acknowledgementFilter_not_acked = 0;
+    const uint8_t GetAlarmEnrollmentSummary_Request::acknowledgementFilter_acked = 1;
+    const uint8_t GetAlarmEnrollmentSummary_Request::acknowledgementFilter_all = 2;
 
     GetAlarmEnrollmentSummary_Request::GetAlarmEnrollmentSummary_Request() {
     };
 
     GetAlarmEnrollmentSummary_Request::GetAlarmEnrollmentSummary_Request(shared_ptr< bool> arg__enrollmentsOnly,
             shared_ptr< bool> arg__activeAlarmsOnly,
-            shared_ptr< int> arg__acknowledgementFilter,
+            shared_ptr< uint8_t> arg__acknowledgementFilter,
             shared_ptr< SeverityFilter_type> arg__severityFilter,
             shared_ptr< ObjectName> arg__continueAfter) :
     enrollmentsOnly_(arg__enrollmentsOnly),
@@ -3348,12 +3348,12 @@ namespace ISO_9506_MMS_1 {
 
     const bool GetAlarmEnrollmentSummary_Request::activeAlarmsOnly__default = true;
 
-    const int GetAlarmEnrollmentSummary_Request::acknowledgementFilter__default = 0;
+    const uint8_t GetAlarmEnrollmentSummary_Request::acknowledgementFilter__default = 0;
 
 
     ITU_T_DEFAULTH_DEFN(GetAlarmEnrollmentSummary_Request::enrollmentsOnly, enrollmentsOnly, bool);
     ITU_T_DEFAULTH_DEFN(GetAlarmEnrollmentSummary_Request::activeAlarmsOnly, activeAlarmsOnly, bool);
-    ITU_T_DEFAULTH_DEFN(GetAlarmEnrollmentSummary_Request::acknowledgementFilter, acknowledgementFilter, int);
+    ITU_T_DEFAULTH_DEFN(GetAlarmEnrollmentSummary_Request::acknowledgementFilter, acknowledgementFilter, uint8_t);
     ITU_T_OPTIONAL_DEFN(GetAlarmEnrollmentSummary_Request::severityFilter, severityFilter, GetAlarmEnrollmentSummary_Request::SeverityFilter_type);
     ITU_T_OPTIONAL_DEFN(GetAlarmEnrollmentSummary_Request::continueAfter, continueAfter, ObjectName);
 
@@ -3792,15 +3792,15 @@ namespace ISO_9506_MMS_1 {
     ITU_T_CHOICEC_DEFN(DeleteEventEnrollment_Request::ea, ea, ObjectName, DeleteEventEnrollment_Request_ea);
 
     // sequence GetEventEnrollmentAttributes-Request
-    const int GetEventEnrollmentAttributes_Request::scopeOfRequest_specific = 0;
-    const int GetEventEnrollmentAttributes_Request::scopeOfRequest_client = 1;
-    const int GetEventEnrollmentAttributes_Request::scopeOfRequest_ec = 2;
-    const int GetEventEnrollmentAttributes_Request::scopeOfRequest_ea = 3;
+    const uint8_t GetEventEnrollmentAttributes_Request::scopeOfRequest_specific = 0;
+    const uint8_t GetEventEnrollmentAttributes_Request::scopeOfRequest_client = 1;
+    const uint8_t GetEventEnrollmentAttributes_Request::scopeOfRequest_ec = 2;
+    const uint8_t GetEventEnrollmentAttributes_Request::scopeOfRequest_ea = 3;
 
     GetEventEnrollmentAttributes_Request::GetEventEnrollmentAttributes_Request() {
     };
 
-    GetEventEnrollmentAttributes_Request::GetEventEnrollmentAttributes_Request(shared_ptr< int> arg__scopeOfRequest,
+    GetEventEnrollmentAttributes_Request::GetEventEnrollmentAttributes_Request(shared_ptr< uint8_t> arg__scopeOfRequest,
             shared_ptr< EventEnrollmentNames_type> arg__eventEnrollmentNames,
             shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
             shared_ptr< ObjectName> arg__eventConditionName,
@@ -3814,10 +3814,10 @@ namespace ISO_9506_MMS_1 {
     continueAfter_(arg__continueAfter) {
     };
 
-    const int GetEventEnrollmentAttributes_Request::scopeOfRequest__default = 1;
+    const uint8_t GetEventEnrollmentAttributes_Request::scopeOfRequest__default = 1;
 
 
-    ITU_T_DEFAULTH_DEFN(GetEventEnrollmentAttributes_Request::scopeOfRequest, scopeOfRequest, int);
+    ITU_T_DEFAULTH_DEFN(GetEventEnrollmentAttributes_Request::scopeOfRequest, scopeOfRequest, uint8_t);
     ITU_T_OPTIONAL_DEFN(GetEventEnrollmentAttributes_Request::eventEnrollmentNames, eventEnrollmentNames, GetEventEnrollmentAttributes_Request::EventEnrollmentNames_type);
     ITU_T_OPTIONAL_DEFN(GetEventEnrollmentAttributes_Request::clientApplication, clientApplication, MMS_Environment_1::ApplicationReference);
     ITU_T_OPTIONAL_DEFN(GetEventEnrollmentAttributes_Request::eventConditionName, eventConditionName, ObjectName);

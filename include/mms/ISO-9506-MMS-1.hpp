@@ -190,19 +190,19 @@ namespace ISO_9506_MMS_1 {
 
     typedef octetstring_type TimeOfDay; //    Sc (  [ 4  ...   6 ]   
     typedef visiblestring_type Identifier;
-    typedef int Integer8; //   Ic(  [ -128  ...   127 ]   
-    typedef int Integer16; //   Ic(  [ -32768  ...   32767 ]   
-    typedef int Integer32; //   Ic(  [ -2147483648  ...   2147483647 ]   
-    typedef int Unsigned8; //   Ic(  [ 0  ...   127 ]   
-    typedef int Unsigned16; //   Ic(  [ 0  ...   32767 ]   
-    typedef int Unsigned32; //   Ic(  [ 0  ...   2147483647 ]   
+    typedef int8_t Integer8; //   Ic(  [ -128  ...   127 ]   
+    typedef int16_t Integer16; //   Ic(  [ -32768  ...   32767 ]   
+    typedef int32_t Integer32; //   Ic(  [ -2147483648  ...   2147483647 ]   
+    typedef uint8_t Unsigned8; //   Ic(  [ 0  ...   127 ]   
+    typedef uint16_t Unsigned16; //   Ic(  [ 0  ...   32767 ]   
+    typedef uint32_t Unsigned32; //   Ic(  [ 0  ...   2147483647 ]   
     typedef visiblestring_type MMSString;
     typedef visiblestring_type MMS255String;
     typedef null_type Conclude_RequestPDU;
     typedef null_type Conclude_ResponsePDU;
     typedef null_type DefineAccessControlList_Response;
     typedef null_type DeleteAccessControlList_Response;
-    typedef int OperationState; //   Ic(  [ 0  ...   5 ]   
+    typedef uint8_t OperationState; //   Ic(  [ 0  ...   5 ]   
     typedef bitstring_type ExtendedStatus; //    Sc (  [ 4 ]   
     typedef bool Status_Request;
     typedef null_type Identify_Request;
@@ -219,7 +219,7 @@ namespace ISO_9506_MMS_1 {
     typedef null_type StoreDomainContent_Response;
     typedef null_type DeleteDomain_Response;
     typedef null_type CreateProgramInvocation_Response;
-    typedef int CS_CreateProgramInvocation_Request; //   Ic(  [ 0  ...   2 ]   
+    typedef uint8_t CS_CreateProgramInvocation_Request; //   Ic(  [ 0  ...   2 ]   
     typedef null_type DeleteProgramInvocation_Response;
     typedef null_type Start_Response;
     typedef null_type Stop_Response;
@@ -239,7 +239,7 @@ namespace ISO_9506_MMS_1 {
     typedef null_type StoreUnitControlToFile_Response;
     typedef null_type DeleteUnitControl_Response;
     typedef octetstring_type FloatingPoint;
-    typedef int DataAccessError; //   Ic(  [ 0  ...   11 ]   
+    typedef uint8_t DataAccessError; //   Ic(  [ 0  ...   11 ]   
     typedef null_type DefineNamedVariable_Response;
     typedef null_type DefineNamedVariableList_Response;
     typedef null_type DefineNamedType_Response;
@@ -325,10 +325,10 @@ namespace ISO_9506_MMS_1 {
 
 }
 
-#include "MMS-Environment-1.hpp"
-#include "MMS-Environment-1.hpp"
-#include "ISO-9506-MMS-1A.hpp"
-#include "MMS-Object-Module-1.hpp"
+#include <mms/MMS-Environment-1.hpp>
+#include <mms/MMS-Environment-1.hpp>
+#include <mms/ISO-9506-MMS-1A.hpp>
+#include <mms/MMS-Object-Module-1.hpp>
 
 namespace ISO_9506_MMS_1 {
 
@@ -376,8 +376,6 @@ namespace ISO_9506_MMS_1 {
     typedef MMS_Object_Module_1::ProgramInvocationState Stop_Error; //   Ic(  [ 0  ...   8 ]   
     typedef MMS_Object_Module_1::ProgramInvocationState Resume_Error; //   Ic(  [ 0  ...   8 ]   
     typedef MMS_Object_Module_1::ProgramInvocationState Reset_Error; //   Ic(  [ 0  ...   8 ]   
-    
-    
     // choice MMSpdu
 
     enum MMSpdu_enum {
@@ -1126,93 +1124,93 @@ namespace ISO_9506_MMS_1 {
 
         struct ErrorClass_type : public ITU_T_CHOICE(ErrorClass_type_enum) {
 
-            static const int vmd_state_other;
-            static const int vmd_state_vmd_state_conflict;
-            static const int vmd_state_vmd_operational_problem;
-            static const int vmd_state_domain_transfer_problem;
-            static const int vmd_state_state_machine_id_invalid;
+            static const uint8_t vmd_state_other;
+            static const uint8_t vmd_state_vmd_state_conflict;
+            static const uint8_t vmd_state_vmd_operational_problem;
+            static const uint8_t vmd_state_domain_transfer_problem;
+            static const uint8_t vmd_state_state_machine_id_invalid;
 
-            static const int application_reference_other;
-            static const int application_reference_application_unreachable;
-            static const int application_reference_connection_lost;
-            static const int application_reference_application_reference_invalid;
-            static const int application_reference_context_unsupported;
+            static const uint8_t application_reference_other;
+            static const uint8_t application_reference_application_unreachable;
+            static const uint8_t application_reference_connection_lost;
+            static const uint8_t application_reference_application_reference_invalid;
+            static const uint8_t application_reference_context_unsupported;
 
-            static const int definition_other;
-            static const int definition_object_undefined;
-            static const int definition_invalid_address;
-            static const int definition_type_unsupported;
-            static const int definition_type_inconsistent;
-            static const int definition_object_exists;
-            static const int definition_object_attribute_inconsistent;
+            static const uint8_t definition_other;
+            static const uint8_t definition_object_undefined;
+            static const uint8_t definition_invalid_address;
+            static const uint8_t definition_type_unsupported;
+            static const uint8_t definition_type_inconsistent;
+            static const uint8_t definition_object_exists;
+            static const uint8_t definition_object_attribute_inconsistent;
 
-            static const int resource_other;
-            static const int resource_memory_unavailable;
-            static const int resource_processor_resource_unavailable;
-            static const int resource_mass_storage_unavailable;
-            static const int resource_capability_unavailable;
-            static const int resource_capability_unknown;
+            static const uint8_t resource_other;
+            static const uint8_t resource_memory_unavailable;
+            static const uint8_t resource_processor_resource_unavailable;
+            static const uint8_t resource_mass_storage_unavailable;
+            static const uint8_t resource_capability_unavailable;
+            static const uint8_t resource_capability_unknown;
 
-            static const int service_other;
-            static const int service_primitives_out_of_sequence;
-            static const int service_object_state_conflict;
-            static const int service_continuation_invalid;
-            static const int service_object_constraint_conflict;
+            static const uint8_t service_other;
+            static const uint8_t service_primitives_out_of_sequence;
+            static const uint8_t service_object_state_conflict;
+            static const uint8_t service_continuation_invalid;
+            static const uint8_t service_object_constraint_conflict;
 
-            static const int service_preempt_other;
-            static const int service_preempt_timeout;
-            static const int service_preempt_deadlock;
-            static const int service_preempt_cancel;
+            static const uint8_t service_preempt_other;
+            static const uint8_t service_preempt_timeout;
+            static const uint8_t service_preempt_deadlock;
+            static const uint8_t service_preempt_cancel;
 
-            static const int time_resolution_other;
-            static const int time_resolution_unsupportable_time_resolution;
+            static const uint8_t time_resolution_other;
+            static const uint8_t time_resolution_unsupportable_time_resolution;
 
-            static const int access_other;
-            static const int access_object_access_unsupported;
-            static const int access_object_non_existent;
-            static const int access_object_access_denied;
-            static const int access_object_invalidated;
+            static const uint8_t access_other;
+            static const uint8_t access_object_access_unsupported;
+            static const uint8_t access_object_non_existent;
+            static const uint8_t access_object_access_denied;
+            static const uint8_t access_object_invalidated;
 
-            static const int initiate_other;
-            static const int initiate_max_services_outstanding_calling_insufficient;
-            static const int initiate_max_services_outstanding_called_insufficient;
-            static const int initiate_service_CBB_insufficient;
-            static const int initiate_parameter_CBB_insufficient;
-            static const int initiate_nesting_level_insufficient;
+            static const uint8_t initiate_other;
+            static const uint8_t initiate_max_services_outstanding_calling_insufficient;
+            static const uint8_t initiate_max_services_outstanding_called_insufficient;
+            static const uint8_t initiate_service_CBB_insufficient;
+            static const uint8_t initiate_parameter_CBB_insufficient;
+            static const uint8_t initiate_nesting_level_insufficient;
 
-            static const int conclude_other;
-            static const int conclude_further_communication_required;
+            static const uint8_t conclude_other;
+            static const uint8_t conclude_further_communication_required;
 
-            static const int cancel_other;
-            static const int cancel_invoke_id_unknown;
-            static const int cancel_cancel_not_possible;
+            static const uint8_t cancel_other;
+            static const uint8_t cancel_invoke_id_unknown;
+            static const uint8_t cancel_cancel_not_possible;
 
-            static const int file_other;
-            static const int file_filename_ambiguous;
-            static const int file_file_busy;
-            static const int file_filename_syntax_error;
-            static const int file_content_type_invalid;
-            static const int file_position_invalid;
-            static const int file_file_access_denied;
-            static const int file_file_non_existent;
-            static const int file_duplicate_filename;
-            static const int file_insufficient_space_in_filestore;
+            static const uint8_t file_other;
+            static const uint8_t file_filename_ambiguous;
+            static const uint8_t file_file_busy;
+            static const uint8_t file_filename_syntax_error;
+            static const uint8_t file_content_type_invalid;
+            static const uint8_t file_position_invalid;
+            static const uint8_t file_file_access_denied;
+            static const uint8_t file_file_non_existent;
+            static const uint8_t file_duplicate_filename;
+            static const uint8_t file_insufficient_space_in_filestore;
 
 
             ITU_T_CHOICE_CTORS(ErrorClass_type);
 
-            ITU_T_CHOICES_DECL(vmd_state, int, ErrorClass_type_vmd_state); // primitive  //   Ic(  [ 0  ...   4 ]   
-            ITU_T_CHOICES_DECL(application_reference, int, ErrorClass_type_application_reference); // primitive  //   Ic(  [ 0  ...   4 ]   
-            ITU_T_CHOICES_DECL(definition, int, ErrorClass_type_definition); // primitive  //   Ic(  [ 0  ...   6 ]   
-            ITU_T_CHOICES_DECL(resource, int, ErrorClass_type_resource); // primitive  //   Ic(  [ 0  ...   5 ]   
-            ITU_T_CHOICES_DECL(service, int, ErrorClass_type_service); // primitive  //   Ic(  [ 0  ...   5 ]   
-            ITU_T_CHOICES_DECL(service_preempt, int, ErrorClass_type_service_preempt); // primitive  //   Ic(  [ 0  ...   3 ]   
-            ITU_T_CHOICES_DECL(time_resolution, int, ErrorClass_type_time_resolution); // primitive  //   Ic(  [ 0  ...   1 ]   
-            ITU_T_CHOICES_DECL(access, int, ErrorClass_type_access); // primitive  //   Ic(  [ 0  ...   4 ]   
-            ITU_T_CHOICES_DECL(initiate, int, ErrorClass_type_initiate); // primitive  //   Ic(  [ 0  ...   7 ]   
-            ITU_T_CHOICES_DECL(conclude, int, ErrorClass_type_conclude); // primitive  //   Ic(  [ 0  ...   1 ]   
-            ITU_T_CHOICES_DECL(cancel, int, ErrorClass_type_cancel); // primitive  //   Ic(  [ 0  ...   2 ]   
-            ITU_T_CHOICES_DECL(file, int, ErrorClass_type_file); // primitive  //   Ic(  [ 0  ...   9 ]   
+            ITU_T_CHOICES_DECL(vmd_state, uint8_t, ErrorClass_type_vmd_state); // primitive  //   Ic(  [ 0  ...   4 ]   
+            ITU_T_CHOICES_DECL(application_reference, uint8_t, ErrorClass_type_application_reference); // primitive  //   Ic(  [ 0  ...   4 ]   
+            ITU_T_CHOICES_DECL(definition, uint8_t, ErrorClass_type_definition); // primitive  //   Ic(  [ 0  ...   6 ]   
+            ITU_T_CHOICES_DECL(resource, uint8_t, ErrorClass_type_resource); // primitive  //   Ic(  [ 0  ...   5 ]   
+            ITU_T_CHOICES_DECL(service, uint8_t, ErrorClass_type_service); // primitive  //   Ic(  [ 0  ...   5 ]   
+            ITU_T_CHOICES_DECL(service_preempt, uint8_t, ErrorClass_type_service_preempt); // primitive  //   Ic(  [ 0  ...   3 ]   
+            ITU_T_CHOICES_DECL(time_resolution, uint8_t, ErrorClass_type_time_resolution); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(access, uint8_t, ErrorClass_type_access); // primitive  //   Ic(  [ 0  ...   4 ]   
+            ITU_T_CHOICES_DECL(initiate, uint8_t, ErrorClass_type_initiate); // primitive  //   Ic(  [ 0  ...   7 ]   
+            ITU_T_CHOICES_DECL(conclude, uint8_t, ErrorClass_type_conclude); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(cancel, uint8_t, ErrorClass_type_cancel); // primitive  //   Ic(  [ 0  ...   2 ]   
+            ITU_T_CHOICES_DECL(file, uint8_t, ErrorClass_type_file); // primitive  //   Ic(  [ 0  ...   9 ]   
             ITU_T_CHOICES_DECL(others, int, ErrorClass_type_others); // primitive
 
             ITU_T_ARCHIVE_FUNC;
@@ -1355,29 +1353,29 @@ namespace ISO_9506_MMS_1 {
 
     struct ObjectClass : public ITU_T_CHOICE(ObjectClass_enum) {
 
-        static const int basicObjectClass_namedVariable;
-        static const int basicObjectClass_scatteredAccess;
-        static const int basicObjectClass_namedVariableList;
-        static const int basicObjectClass_namedType;
-        static const int basicObjectClass_semaphore;
-        static const int basicObjectClass_eventCondition;
-        static const int basicObjectClass_eventAction;
-        static const int basicObjectClass_eventEnrollment;
-        static const int basicObjectClass_journal;
-        static const int basicObjectClass_domain;
-        static const int basicObjectClass_programInvocation;
-        static const int basicObjectClass_operatorStation;
-        static const int basicObjectClass_dataExchange;
-        static const int basicObjectClass_accessControlList;
+        static const uint8_t basicObjectClass_namedVariable;
+        static const uint8_t basicObjectClass_scatteredAccess;
+        static const uint8_t basicObjectClass_namedVariableList;
+        static const uint8_t basicObjectClass_namedType;
+        static const uint8_t basicObjectClass_semaphore;
+        static const uint8_t basicObjectClass_eventCondition;
+        static const uint8_t basicObjectClass_eventAction;
+        static const uint8_t basicObjectClass_eventEnrollment;
+        static const uint8_t basicObjectClass_journal;
+        static const uint8_t basicObjectClass_domain;
+        static const uint8_t basicObjectClass_programInvocation;
+        static const uint8_t basicObjectClass_operatorStation;
+        static const uint8_t basicObjectClass_dataExchange;
+        static const uint8_t basicObjectClass_accessControlList;
 
-        static const int csObjectClass_eventConditionList;
-        static const int csObjectClass_unitControl;
+        static const uint8_t csObjectClass_eventConditionList;
+        static const uint8_t csObjectClass_unitControl;
 
 
         ITU_T_CHOICE_CTORS(ObjectClass);
 
-        ITU_T_CHOICES_DECL(basicObjectClass, int, ObjectClass_basicObjectClass); // primitive  //   Ic(  [ 0  ...   13 ]   
-        ITU_T_CHOICES_DECL(csObjectClass, int, ObjectClass_csObjectClass); // primitive  //   Ic(  [ 0  ...   1 ]   
+        ITU_T_CHOICES_DECL(basicObjectClass, uint8_t, ObjectClass_basicObjectClass); // primitive  //   Ic(  [ 0  ...   13 ]   
+        ITU_T_CHOICES_DECL(csObjectClass, uint8_t, ObjectClass_csObjectClass); // primitive  //   Ic(  [ 0  ...   1 ]   
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -1527,74 +1525,74 @@ namespace ISO_9506_MMS_1 {
 
         struct RejectReason_type : public ITU_T_CHOICE(RejectReason_type_enum) {
 
-            static const int confirmed_requestPDU_other;
-            static const int confirmed_requestPDU_unrecognized_service;
-            static const int confirmed_requestPDU_unrecognized_modifier;
-            static const int confirmed_requestPDU_invalid_invokeID;
-            static const int confirmed_requestPDU_invalid_argument;
-            static const int confirmed_requestPDU_invalid_modifier;
-            static const int confirmed_requestPDU_max_serv_outstanding_exceeded;
-            static const int confirmed_requestPDU_max_recursion_exceeded;
-            static const int confirmed_requestPDU_value_out_of_range;
+            static const uint8_t confirmed_requestPDU_other;
+            static const uint8_t confirmed_requestPDU_unrecognized_service;
+            static const uint8_t confirmed_requestPDU_unrecognized_modifier;
+            static const uint8_t confirmed_requestPDU_invalid_invokeID;
+            static const uint8_t confirmed_requestPDU_invalid_argument;
+            static const uint8_t confirmed_requestPDU_invalid_modifier;
+            static const uint8_t confirmed_requestPDU_max_serv_outstanding_exceeded;
+            static const uint8_t confirmed_requestPDU_max_recursion_exceeded;
+            static const uint8_t confirmed_requestPDU_value_out_of_range;
 
-            static const int confirmed_responsePDU_other;
-            static const int confirmed_responsePDU_unrecognized_service;
-            static const int confirmed_responsePDU_invalid_invokeID;
-            static const int confirmed_responsePDU_invalid_result;
-            static const int confirmed_responsePDU_max_recursion_exceeded;
-            static const int confirmed_responsePDU_value_out_of_range;
+            static const uint8_t confirmed_responsePDU_other;
+            static const uint8_t confirmed_responsePDU_unrecognized_service;
+            static const uint8_t confirmed_responsePDU_invalid_invokeID;
+            static const uint8_t confirmed_responsePDU_invalid_result;
+            static const uint8_t confirmed_responsePDU_max_recursion_exceeded;
+            static const uint8_t confirmed_responsePDU_value_out_of_range;
 
-            static const int confirmed_errorPDU_other;
-            static const int confirmed_errorPDU_unrecognized_service;
-            static const int confirmed_errorPDU_invalid_invokeID;
-            static const int confirmed_errorPDU_invalid_serviceError;
-            static const int confirmed_errorPDU_value_out_of_range;
+            static const uint8_t confirmed_errorPDU_other;
+            static const uint8_t confirmed_errorPDU_unrecognized_service;
+            static const uint8_t confirmed_errorPDU_invalid_invokeID;
+            static const uint8_t confirmed_errorPDU_invalid_serviceError;
+            static const uint8_t confirmed_errorPDU_value_out_of_range;
 
-            static const int unconfirmedPDU_other;
-            static const int unconfirmedPDU_unrecognized_service;
-            static const int unconfirmedPDU_invalid_argument;
-            static const int unconfirmedPDU_max_recursion_exceeded;
-            static const int unconfirmedPDU_value_out_of_range;
+            static const uint8_t unconfirmedPDU_other;
+            static const uint8_t unconfirmedPDU_unrecognized_service;
+            static const uint8_t unconfirmedPDU_invalid_argument;
+            static const uint8_t unconfirmedPDU_max_recursion_exceeded;
+            static const uint8_t unconfirmedPDU_value_out_of_range;
 
             static const int pdu_error_unknown_pdu_type;
             static const int pdu_error_invalid_pdu;
             static const int pdu_error_illegal_acse_mapping;
 
-            static const int cancel_requestPDU_other;
-            static const int cancel_requestPDU_invalid_invokeID;
+            static const uint8_t cancel_requestPDU_other;
+            static const uint8_t cancel_requestPDU_invalid_invokeID;
 
-            static const int cancel_responsePDU_other;
-            static const int cancel_responsePDU_invalid_invokeID;
+            static const uint8_t cancel_responsePDU_other;
+            static const uint8_t cancel_responsePDU_invalid_invokeID;
 
-            static const int cancel_errorPDU_other;
-            static const int cancel_errorPDU_invalid_invokeID;
-            static const int cancel_errorPDU_invalid_serviceError;
-            static const int cancel_errorPDU_value_out_of_range;
+            static const uint8_t cancel_errorPDU_other;
+            static const uint8_t cancel_errorPDU_invalid_invokeID;
+            static const uint8_t cancel_errorPDU_invalid_serviceError;
+            static const uint8_t cancel_errorPDU_value_out_of_range;
 
-            static const int conclude_requestPDU_other;
-            static const int conclude_requestPDU_invalid_argument;
+            static const uint8_t conclude_requestPDU_other;
+            static const uint8_t conclude_requestPDU_invalid_argument;
 
-            static const int conclude_responsePDU_other;
-            static const int conclude_responsePDU_invalid_result;
+            static const uint8_t conclude_responsePDU_other;
+            static const uint8_t conclude_responsePDU_invalid_result;
 
-            static const int conclude_errorPDU_other;
-            static const int conclude_errorPDU_invalid_serviceError;
-            static const int conclude_errorPDU_value_out_of_range;
+            static const uint8_t conclude_errorPDU_other;
+            static const uint8_t conclude_errorPDU_invalid_serviceError;
+            static const uint8_t conclude_errorPDU_value_out_of_range;
 
 
             ITU_T_CHOICE_CTORS(RejectReason_type);
 
-            ITU_T_CHOICES_DECL(confirmed_requestPDU, int, RejectReason_type_confirmed_requestPDU); // primitive  //   Ic(  [ 0  ...   9 ]   
-            ITU_T_CHOICES_DECL(confirmed_responsePDU, int, RejectReason_type_confirmed_responsePDU); // primitive  //   Ic(  [ 0  ...   6 ]   
-            ITU_T_CHOICES_DECL(confirmed_errorPDU, int, RejectReason_type_confirmed_errorPDU); // primitive  //   Ic(  [ 0  ...   4 ]   
-            ITU_T_CHOICES_DECL(unconfirmedPDU, int, RejectReason_type_unconfirmedPDU); // primitive  //   Ic(  [ 0  ...   4 ]   
+            ITU_T_CHOICES_DECL(confirmed_requestPDU, uint8_t, RejectReason_type_confirmed_requestPDU); // primitive  //   Ic(  [ 0  ...   9 ]   
+            ITU_T_CHOICES_DECL(confirmed_responsePDU, uint8_t, RejectReason_type_confirmed_responsePDU); // primitive  //   Ic(  [ 0  ...   6 ]   
+            ITU_T_CHOICES_DECL(confirmed_errorPDU, uint8_t, RejectReason_type_confirmed_errorPDU); // primitive  //   Ic(  [ 0  ...   4 ]   
+            ITU_T_CHOICES_DECL(unconfirmedPDU, uint8_t, RejectReason_type_unconfirmedPDU); // primitive  //   Ic(  [ 0  ...   4 ]   
             ITU_T_CHOICES_DECL(pdu_error, int, RejectReason_type_pdu_error); // primitive
-            ITU_T_CHOICES_DECL(cancel_requestPDU, int, RejectReason_type_cancel_requestPDU); // primitive  //   Ic(  [ 0  ...   1 ]   
-            ITU_T_CHOICES_DECL(cancel_responsePDU, int, RejectReason_type_cancel_responsePDU); // primitive  //   Ic(  [ 0  ...   1 ]   
-            ITU_T_CHOICES_DECL(cancel_errorPDU, int, RejectReason_type_cancel_errorPDU); // primitive  //   Ic(  [ 0  ...   3 ]   
-            ITU_T_CHOICES_DECL(conclude_requestPDU, int, RejectReason_type_conclude_requestPDU); // primitive  //   Ic(  [ 0  ...   1 ]   
-            ITU_T_CHOICES_DECL(conclude_responsePDU, int, RejectReason_type_conclude_responsePDU); // primitive  //   Ic(  [ 0  ...   1 ]   
-            ITU_T_CHOICES_DECL(conclude_errorPDU, int, RejectReason_type_conclude_errorPDU); // primitive  //   Ic(  [ 0  ...   2 ]   
+            ITU_T_CHOICES_DECL(cancel_requestPDU, uint8_t, RejectReason_type_cancel_requestPDU); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(cancel_responsePDU, uint8_t, RejectReason_type_cancel_responsePDU); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(cancel_errorPDU, uint8_t, RejectReason_type_cancel_errorPDU); // primitive  //   Ic(  [ 0  ...   3 ]   
+            ITU_T_CHOICES_DECL(conclude_requestPDU, uint8_t, RejectReason_type_conclude_requestPDU); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(conclude_responsePDU, uint8_t, RejectReason_type_conclude_responsePDU); // primitive  //   Ic(  [ 0  ...   1 ]   
+            ITU_T_CHOICES_DECL(conclude_errorPDU, uint8_t, RejectReason_type_conclude_errorPDU); // primitive  //   Ic(  [ 0  ...   2 ]   
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1903,28 +1901,28 @@ namespace ISO_9506_MMS_1 {
 
     struct StatusResponse {
 
-        static const int vmdLogicalStatus_state_changes_allowed;
-        static const int vmdLogicalStatus_no_state_changes_allowed;
-        static const int vmdLogicalStatus_limited_services_permitted;
-        static const int vmdLogicalStatus_support_services_allowed;
+        static const uint8_t vmdLogicalStatus_state_changes_allowed;
+        static const uint8_t vmdLogicalStatus_no_state_changes_allowed;
+        static const uint8_t vmdLogicalStatus_limited_services_permitted;
+        static const uint8_t vmdLogicalStatus_support_services_allowed;
 
-        static const int vmdPhysicalStatus_operational;
-        static const int vmdPhysicalStatus_partially_operational;
-        static const int vmdPhysicalStatus_inoperable;
-        static const int vmdPhysicalStatus_needs_commissioning;
+        static const uint8_t vmdPhysicalStatus_operational;
+        static const uint8_t vmdPhysicalStatus_partially_operational;
+        static const uint8_t vmdPhysicalStatus_inoperable;
+        static const uint8_t vmdPhysicalStatus_needs_commissioning;
 
 
         StatusResponse();
 
-        StatusResponse(const int& arg__vmdLogicalStatus,
-                const int& arg__vmdPhysicalStatus);
+        StatusResponse(const uint8_t& arg__vmdLogicalStatus,
+                const uint8_t& arg__vmdPhysicalStatus);
 
-        StatusResponse(shared_ptr< int> arg__vmdLogicalStatus,
-                shared_ptr< int> arg__vmdPhysicalStatus,
+        StatusResponse(shared_ptr< uint8_t> arg__vmdLogicalStatus,
+                shared_ptr< uint8_t> arg__vmdPhysicalStatus,
                 shared_ptr< bitstring_type> arg__localDetail);
 
-        ITU_T_HOLDERH_DECL(vmdLogicalStatus, int); //   Ic(  [ 0  ...   3 ]   
-        ITU_T_HOLDERH_DECL(vmdPhysicalStatus, int); //   Ic(  [ 0  ...   3 ]   
+        ITU_T_HOLDERH_DECL(vmdLogicalStatus, uint8_t); //   Ic(  [ 0  ...   3 ]   
+        ITU_T_HOLDERH_DECL(vmdPhysicalStatus, uint8_t); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(localDetail, bitstring_type); //    Sc (  [ 0  ...   128 ]   
 
         ITU_T_ARCHIVE_FUNC;
@@ -3829,20 +3827,20 @@ namespace ISO_9506_MMS_1 {
 
         typedef std::vector< ObjectName > ListOfName_type;
 
-        static const int scopeOfDelete_specific;
-        static const int scopeOfDelete_aa_specific;
-        static const int scopeOfDelete_domain;
-        static const int scopeOfDelete_vmd;
+        static const uint8_t scopeOfDelete_specific;
+        static const uint8_t scopeOfDelete_aa_specific;
+        static const uint8_t scopeOfDelete_domain;
+        static const uint8_t scopeOfDelete_vmd;
 
-        static const int scopeOfDelete__default;
+        static const uint8_t scopeOfDelete__default;
 
         DeleteVariableAccess_Request();
 
-        DeleteVariableAccess_Request(shared_ptr< int> arg__scopeOfDelete,
+        DeleteVariableAccess_Request(shared_ptr< uint8_t> arg__scopeOfDelete,
                 shared_ptr< ListOfName_type> arg__listOfName,
                 shared_ptr< Identifier> arg__domainName);
 
-        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default); //   Ic(  [ 0  ...   3 ]   
+        ITU_T_DEFAULTH_DECL(scopeOfDelete, uint8_t, scopeOfDelete__default); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(listOfName, ListOfName_type);
         ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
@@ -3949,20 +3947,20 @@ namespace ISO_9506_MMS_1 {
 
         typedef std::vector< ObjectName > ListOfVariableListName_type;
 
-        static const int scopeOfDelete_specific;
-        static const int scopeOfDelete_aa_specific;
-        static const int scopeOfDelete_domain;
-        static const int scopeOfDelete_vmd;
+        static const uint8_t scopeOfDelete_specific;
+        static const uint8_t scopeOfDelete_aa_specific;
+        static const uint8_t scopeOfDelete_domain;
+        static const uint8_t scopeOfDelete_vmd;
 
-        static const int scopeOfDelete__default;
+        static const uint8_t scopeOfDelete__default;
 
         DeleteNamedVariableList_Request();
 
-        DeleteNamedVariableList_Request(shared_ptr< int> arg__scopeOfDelete,
+        DeleteNamedVariableList_Request(shared_ptr< uint8_t> arg__scopeOfDelete,
                 shared_ptr< ListOfVariableListName_type> arg__listOfVariableListName,
                 shared_ptr< Identifier> arg__domainName);
 
-        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default); //   Ic(  [ 0  ...   3 ]   
+        ITU_T_DEFAULTH_DECL(scopeOfDelete, uint8_t, scopeOfDelete__default); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(listOfVariableListName, ListOfVariableListName_type);
         ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
@@ -4027,20 +4025,20 @@ namespace ISO_9506_MMS_1 {
 
         typedef std::vector< ObjectName > ListOfTypeName_type;
 
-        static const int scopeOfDelete_specific;
-        static const int scopeOfDelete_aa_specific;
-        static const int scopeOfDelete_domain;
-        static const int scopeOfDelete_vmd;
+        static const uint8_t scopeOfDelete_specific;
+        static const uint8_t scopeOfDelete_aa_specific;
+        static const uint8_t scopeOfDelete_domain;
+        static const uint8_t scopeOfDelete_vmd;
 
-        static const int scopeOfDelete__default;
+        static const uint8_t scopeOfDelete__default;
 
         DeleteNamedType_Request();
 
-        DeleteNamedType_Request(shared_ptr< int> arg__scopeOfDelete,
+        DeleteNamedType_Request(shared_ptr< uint8_t> arg__scopeOfDelete,
                 shared_ptr< ListOfTypeName_type> arg__listOfTypeName,
                 shared_ptr< Identifier> arg__domainName);
 
-        ITU_T_DEFAULTH_DECL(scopeOfDelete, int, scopeOfDelete__default); //   Ic(  [ 0  ...   3 ]   
+        ITU_T_DEFAULTH_DECL(scopeOfDelete, uint8_t, scopeOfDelete__default); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(listOfTypeName, ListOfTypeName_type);
         ITU_T_OPTIONAL_DECL(domainName, Identifier);
 
@@ -4212,27 +4210,27 @@ namespace ISO_9506_MMS_1 {
 
     struct ReportSemaphoreStatus_Response {
 
-        static const int classV_token;
-        static const int classV_pool;
+        static const uint8_t classV_token;
+        static const uint8_t classV_pool;
 
 
         ReportSemaphoreStatus_Response();
 
         ReportSemaphoreStatus_Response(const bool& arg__mmsDeletable,
-                const int& arg__classV,
+                const uint8_t& arg__classV,
                 const Unsigned16& arg__numberOfTokens,
                 const Unsigned16& arg__numberOfOwnedTokens,
                 const Unsigned16& arg__numberOfHungTokens);
 
         ReportSemaphoreStatus_Response(shared_ptr< bool> arg__mmsDeletable,
-                shared_ptr< int> arg__classV,
+                shared_ptr< uint8_t> arg__classV,
                 shared_ptr< Unsigned16> arg__numberOfTokens,
                 shared_ptr< Unsigned16> arg__numberOfOwnedTokens,
                 shared_ptr< Unsigned16> arg__numberOfHungTokens,
                 shared_ptr< Identifier> arg__accessControlList);
 
         ITU_T_HOLDERH_DECL(mmsDeletable, bool);
-        ITU_T_HOLDERH_DECL(classV, int); //   Ic(  [ 0  ...   1 ]   
+        ITU_T_HOLDERH_DECL(classV, uint8_t); //   Ic(  [ 0  ...   1 ]   
         ITU_T_HOLDERH_DECL(numberOfTokens, Unsigned16); //   Ic(  [ 0  ...   32767 ]   
         ITU_T_HOLDERH_DECL(numberOfOwnedTokens, Unsigned16); //   Ic(  [ 0  ...   32767 ]   
         ITU_T_HOLDERH_DECL(numberOfHungTokens, Unsigned16); //   Ic(  [ 0  ...   32767 ]   
@@ -4307,22 +4305,22 @@ namespace ISO_9506_MMS_1 {
 
     struct ReportSemaphoreEntryStatus_Request {
 
-        static const int state_queued;
-        static const int state_owner;
-        static const int state_hung;
+        static const uint8_t state_queued;
+        static const uint8_t state_owner;
+        static const uint8_t state_hung;
 
 
         ReportSemaphoreEntryStatus_Request();
 
         ReportSemaphoreEntryStatus_Request(const ObjectName& arg__semaphoreName,
-                const int& arg__state);
+                const uint8_t& arg__state);
 
         ReportSemaphoreEntryStatus_Request(shared_ptr< ObjectName> arg__semaphoreName,
-                shared_ptr< int> arg__state,
+                shared_ptr< uint8_t> arg__state,
                 shared_ptr< octetstring_type> arg__entryIDToStartAfter);
 
         ITU_T_HOLDERH_DECL(semaphoreName, ObjectName);
-        ITU_T_HOLDERH_DECL(state, int); //   Ic(  [ 0  ...   2 ]   
+        ITU_T_HOLDERH_DECL(state, uint8_t); //   Ic(  [ 0  ...   2 ]   
         ITU_T_OPTIONAL_DECL(entryIDToStartAfter, octetstring_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -4353,8 +4351,8 @@ namespace ISO_9506_MMS_1 {
 
     struct SemaphoreEntry {
 
-        static const int entryClass_simple;
-        static const int entryClass_modifier;
+        static const uint8_t entryClass_simple;
+        static const uint8_t entryClass_modifier;
 
         static const MMS_Object_Module_1::Priority priority__default;
         static const bool relinquishIfConnectionLost__default;
@@ -4362,11 +4360,11 @@ namespace ISO_9506_MMS_1 {
         SemaphoreEntry();
 
         SemaphoreEntry(const octetstring_type& arg__entryID,
-                const int& arg__entryClass,
+                const uint8_t& arg__entryClass,
                 const MMS_Environment_1::ApplicationReference& arg__applicationReference);
 
         SemaphoreEntry(shared_ptr< octetstring_type> arg__entryID,
-                shared_ptr< int> arg__entryClass,
+                shared_ptr< uint8_t> arg__entryClass,
                 shared_ptr< MMS_Environment_1::ApplicationReference> arg__applicationReference,
                 shared_ptr< Identifier> arg__namedToken,
                 shared_ptr< MMS_Object_Module_1::Priority> arg__priority,
@@ -4375,7 +4373,7 @@ namespace ISO_9506_MMS_1 {
                 shared_ptr< bool> arg__relinquishIfConnectionLost);
 
         ITU_T_HOLDERH_DECL(entryID, octetstring_type);
-        ITU_T_HOLDERH_DECL(entryClass, int); //   Ic(  [ 0  ...   1 ]   
+        ITU_T_HOLDERH_DECL(entryClass, uint8_t); //   Ic(  [ 0  ...   1 ]   
         ITU_T_HOLDERH_DECL(applicationReference, MMS_Environment_1::ApplicationReference);
         ITU_T_OPTIONAL_DECL(namedToken, Identifier);
         ITU_T_DEFAULTH_DECL(priority, MMS_Object_Module_1::Priority, priority__default); //   Ic(  [ 0  ...   127 ]   
@@ -4638,25 +4636,25 @@ namespace ISO_9506_MMS_1 {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        static const int acknowledgementFilter_not_acked;
-        static const int acknowledgementFilter_acked;
-        static const int acknowledgementFilter_all;
+        static const uint8_t acknowledgementFilter_not_acked;
+        static const uint8_t acknowledgementFilter_acked;
+        static const uint8_t acknowledgementFilter_all;
 
         static const bool enrollmentsOnly__default;
         static const bool activeAlarmsOnly__default;
-        static const int acknowledgementFilter__default;
+        static const uint8_t acknowledgementFilter__default;
 
         GetAlarmSummary_Request();
 
         GetAlarmSummary_Request(shared_ptr< bool> arg__enrollmentsOnly,
                 shared_ptr< bool> arg__activeAlarmsOnly,
-                shared_ptr< int> arg__acknowledgementFilter,
+                shared_ptr< uint8_t> arg__acknowledgementFilter,
                 shared_ptr< SeverityFilter_type> arg__severityFilter,
                 shared_ptr< ObjectName> arg__continueAfter);
 
         ITU_T_DEFAULTH_DECL(enrollmentsOnly, bool, enrollmentsOnly__default);
         ITU_T_DEFAULTH_DECL(activeAlarmsOnly, bool, activeAlarmsOnly__default);
-        ITU_T_DEFAULTH_DECL(acknowledgementFilter, int, acknowledgementFilter__default); //   Ic(  [ 0  ...   2 ]   
+        ITU_T_DEFAULTH_DECL(acknowledgementFilter, uint8_t, acknowledgementFilter__default); //   Ic(  [ 0  ...   2 ]   
         ITU_T_OPTIONAL_DECL(severityFilter, SeverityFilter_type);
         ITU_T_OPTIONAL_DECL(continueAfter, ObjectName);
 
@@ -4688,10 +4686,10 @@ namespace ISO_9506_MMS_1 {
 
     struct AlarmSummary {
 
-        static const int unacknowledgedState_none;
-        static const int unacknowledgedState_active;
-        static const int unacknowledgedState_idle;
-        static const int unacknowledgedState_both;
+        static const uint8_t unacknowledgedState_none;
+        static const uint8_t unacknowledgedState_active;
+        static const uint8_t unacknowledgedState_idle;
+        static const uint8_t unacknowledgedState_both;
 
 
         AlarmSummary();
@@ -4699,12 +4697,12 @@ namespace ISO_9506_MMS_1 {
         AlarmSummary(const ObjectName& arg__eventConditionName,
                 const Unsigned8& arg__severity,
                 const MMS_Object_Module_1::EC_State& arg__currentState,
-                const int& arg__unacknowledgedState);
+                const uint8_t& arg__unacknowledgedState);
 
         AlarmSummary(shared_ptr< ObjectName> arg__eventConditionName,
                 shared_ptr< Unsigned8> arg__severity,
                 shared_ptr< MMS_Object_Module_1::EC_State> arg__currentState,
-                shared_ptr< int> arg__unacknowledgedState,
+                shared_ptr< uint8_t> arg__unacknowledgedState,
                 shared_ptr< EN_Additional_Detail> arg__displayEnhancement,
                 shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToActive,
                 shared_ptr< MMS_Object_Module_1::EventTime> arg__timeOfLastTransitionToIdle);
@@ -4712,7 +4710,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_HOLDERH_DECL(eventConditionName, ObjectName);
         ITU_T_HOLDERH_DECL(severity, Unsigned8); //   Ic(  [ 0  ...   127 ]   
         ITU_T_HOLDERH_DECL(currentState, MMS_Object_Module_1::EC_State); //   Ic(  [ 0  ...   2 ]   
-        ITU_T_HOLDERH_DECL(unacknowledgedState, int); //   Ic(  [ 0  ...   3 ]   
+        ITU_T_HOLDERH_DECL(unacknowledgedState, uint8_t); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(displayEnhancement, EN_Additional_Detail);
         ITU_T_OPTIONAL_DECL(timeOfLastTransitionToActive, MMS_Object_Module_1::EventTime);
         ITU_T_OPTIONAL_DECL(timeOfLastTransitionToIdle, MMS_Object_Module_1::EventTime);
@@ -4761,25 +4759,25 @@ namespace ISO_9506_MMS_1 {
             ITU_T_ARCHIVE_FUNC;
         };
 
-        static const int acknowledgementFilter_not_acked;
-        static const int acknowledgementFilter_acked;
-        static const int acknowledgementFilter_all;
+        static const uint8_t acknowledgementFilter_not_acked;
+        static const uint8_t acknowledgementFilter_acked;
+        static const uint8_t acknowledgementFilter_all;
 
         static const bool enrollmentsOnly__default;
         static const bool activeAlarmsOnly__default;
-        static const int acknowledgementFilter__default;
+        static const uint8_t acknowledgementFilter__default;
 
         GetAlarmEnrollmentSummary_Request();
 
         GetAlarmEnrollmentSummary_Request(shared_ptr< bool> arg__enrollmentsOnly,
                 shared_ptr< bool> arg__activeAlarmsOnly,
-                shared_ptr< int> arg__acknowledgementFilter,
+                shared_ptr< uint8_t> arg__acknowledgementFilter,
                 shared_ptr< SeverityFilter_type> arg__severityFilter,
                 shared_ptr< ObjectName> arg__continueAfter);
 
         ITU_T_DEFAULTH_DECL(enrollmentsOnly, bool, enrollmentsOnly__default);
         ITU_T_DEFAULTH_DECL(activeAlarmsOnly, bool, activeAlarmsOnly__default);
-        ITU_T_DEFAULTH_DECL(acknowledgementFilter, int, acknowledgementFilter__default); //   Ic(  [ 0  ...   2 ]   
+        ITU_T_DEFAULTH_DECL(acknowledgementFilter, uint8_t, acknowledgementFilter__default); //   Ic(  [ 0  ...   2 ]   
         ITU_T_OPTIONAL_DECL(severityFilter, SeverityFilter_type);
         ITU_T_OPTIONAL_DECL(continueAfter, ObjectName);
 
@@ -5316,23 +5314,23 @@ namespace ISO_9506_MMS_1 {
 
         typedef std::vector< ObjectName > EventEnrollmentNames_type;
 
-        static const int scopeOfRequest_specific;
-        static const int scopeOfRequest_client;
-        static const int scopeOfRequest_ec;
-        static const int scopeOfRequest_ea;
+        static const uint8_t scopeOfRequest_specific;
+        static const uint8_t scopeOfRequest_client;
+        static const uint8_t scopeOfRequest_ec;
+        static const uint8_t scopeOfRequest_ea;
 
-        static const int scopeOfRequest__default;
+        static const uint8_t scopeOfRequest__default;
 
         GetEventEnrollmentAttributes_Request();
 
-        GetEventEnrollmentAttributes_Request(shared_ptr< int> arg__scopeOfRequest,
+        GetEventEnrollmentAttributes_Request(shared_ptr< uint8_t> arg__scopeOfRequest,
                 shared_ptr< EventEnrollmentNames_type> arg__eventEnrollmentNames,
                 shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
                 shared_ptr< ObjectName> arg__eventConditionName,
                 shared_ptr< ObjectName> arg__eventActionName,
                 shared_ptr< ObjectName> arg__continueAfter);
 
-        ITU_T_DEFAULTH_DECL(scopeOfRequest, int, scopeOfRequest__default); //   Ic(  [ 0  ...   3 ]   
+        ITU_T_DEFAULTH_DECL(scopeOfRequest, uint8_t, scopeOfRequest__default); //   Ic(  [ 0  ...   3 ]   
         ITU_T_OPTIONAL_DECL(eventEnrollmentNames, EventEnrollmentNames_type);
         ITU_T_OPTIONAL_DECL(clientApplication, MMS_Environment_1::ApplicationReference);
         ITU_T_OPTIONAL_DECL(eventConditionName, ObjectName);
