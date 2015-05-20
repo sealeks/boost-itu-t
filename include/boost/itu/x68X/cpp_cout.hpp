@@ -212,6 +212,8 @@ namespace x680 {
 
             void mark_constraints(typeassignment_entity_ptr self);
             void execute_member(typeassignment_entity_ptr self);
+            
+            void print_name_type(typeassignment_entity_ptr tpas, basic_entity_ptr scp = basic_entity_ptr());
 
             virtual void execute_typeassignment(typeassignment_entity_ptr tpas) = 0;
             virtual void execute_valueassignment(valueassignment_entity_ptr self) = 0;
