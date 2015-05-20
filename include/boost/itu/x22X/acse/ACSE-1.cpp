@@ -376,10 +376,10 @@ namespace ACSE_1 {
     ITU_T_HOLDERH_DEFN(Default_Context_List_sequence_of::transfer_syntax_name, transfer_syntax_name, Transfer_syntax_name);
 
 
-    const int P_context_result_list_sequence_of::provider_reason_reason_not_specified = 0;
-    const int P_context_result_list_sequence_of::provider_reason_abstract_syntax_not_supported = 1;
-    const int P_context_result_list_sequence_of::provider_reason_proposed_transfer_syntaxes_not_supported = 2;
-    const int P_context_result_list_sequence_of::provider_reason_local_limit_on_DCS_exceeded = 3;
+    const integer_type P_context_result_list_sequence_of::provider_reason_reason_not_specified = 0;
+    const integer_type P_context_result_list_sequence_of::provider_reason_abstract_syntax_not_supported = 1;
+    const integer_type P_context_result_list_sequence_of::provider_reason_proposed_transfer_syntaxes_not_supported = 2;
+    const integer_type P_context_result_list_sequence_of::provider_reason_local_limit_on_DCS_exceeded = 3;
 
     P_context_result_list_sequence_of::P_context_result_list_sequence_of() : result_() {
     };
@@ -390,7 +390,7 @@ namespace ACSE_1 {
 
     P_context_result_list_sequence_of::P_context_result_list_sequence_of(shared_ptr< Result> arg__result,
             shared_ptr< Concrete_syntax_name> arg__concrete_syntax_name,
-            shared_ptr< int> arg__provider_reason) :
+            shared_ptr< integer_type> arg__provider_reason) :
     result_(arg__result),
     concrete_syntax_name_(arg__concrete_syntax_name),
     provider_reason_(arg__provider_reason) {
@@ -399,32 +399,32 @@ namespace ACSE_1 {
 
     ITU_T_HOLDERH_DEFN(P_context_result_list_sequence_of::result, result, Result);
     ITU_T_OPTIONAL_DEFN(P_context_result_list_sequence_of::concrete_syntax_name, concrete_syntax_name, Concrete_syntax_name);
-    ITU_T_OPTIONAL_DEFN(P_context_result_list_sequence_of::provider_reason, provider_reason, int);
+    ITU_T_OPTIONAL_DEFN(P_context_result_list_sequence_of::provider_reason, provider_reason, integer_type);
 
     // choice Associate-source-diagnostic
-    const int Associate_source_diagnostic::acse_service_user_null = 0;
-    const int Associate_source_diagnostic::acse_service_user_no_reason_given = 1;
-    const int Associate_source_diagnostic::acse_service_user_application_context_name_not_supported = 2;
-    const int Associate_source_diagnostic::acse_service_user_calling_AP_title_not_recognized = 3;
-    const int Associate_source_diagnostic::acse_service_user_calling_AP_invocation_identifier_not_recognized = 4;
-    const int Associate_source_diagnostic::acse_service_user_calling_AE_qualifier_not_recognized = 5;
-    const int Associate_source_diagnostic::acse_service_user_calling_AE_invocation_identifier_not_recognized = 6;
-    const int Associate_source_diagnostic::acse_service_user_called_AP_title_not_recognized = 7;
-    const int Associate_source_diagnostic::acse_service_user_called_AP_invocation_identifier_not_recognized = 8;
-    const int Associate_source_diagnostic::acse_service_user_called_AE_qualifier_not_recognized = 9;
-    const int Associate_source_diagnostic::acse_service_user_called_AE_invocation_identifier_not_recognized = 10;
-    const int Associate_source_diagnostic::acse_service_user_authentication_mechanism_name_not_recognized = 11;
-    const int Associate_source_diagnostic::acse_service_user_authentication_mechanism_name_required = 12;
-    const int Associate_source_diagnostic::acse_service_user_authentication_failure = 13;
-    const int Associate_source_diagnostic::acse_service_user_authentication_required = 14;
+    const integer_type Associate_source_diagnostic::acse_service_user_null = 0;
+    const integer_type Associate_source_diagnostic::acse_service_user_no_reason_given = 1;
+    const integer_type Associate_source_diagnostic::acse_service_user_application_context_name_not_supported = 2;
+    const integer_type Associate_source_diagnostic::acse_service_user_calling_AP_title_not_recognized = 3;
+    const integer_type Associate_source_diagnostic::acse_service_user_calling_AP_invocation_identifier_not_recognized = 4;
+    const integer_type Associate_source_diagnostic::acse_service_user_calling_AE_qualifier_not_recognized = 5;
+    const integer_type Associate_source_diagnostic::acse_service_user_calling_AE_invocation_identifier_not_recognized = 6;
+    const integer_type Associate_source_diagnostic::acse_service_user_called_AP_title_not_recognized = 7;
+    const integer_type Associate_source_diagnostic::acse_service_user_called_AP_invocation_identifier_not_recognized = 8;
+    const integer_type Associate_source_diagnostic::acse_service_user_called_AE_qualifier_not_recognized = 9;
+    const integer_type Associate_source_diagnostic::acse_service_user_called_AE_invocation_identifier_not_recognized = 10;
+    const integer_type Associate_source_diagnostic::acse_service_user_authentication_mechanism_name_not_recognized = 11;
+    const integer_type Associate_source_diagnostic::acse_service_user_authentication_mechanism_name_required = 12;
+    const integer_type Associate_source_diagnostic::acse_service_user_authentication_failure = 13;
+    const integer_type Associate_source_diagnostic::acse_service_user_authentication_required = 14;
 
-    const int Associate_source_diagnostic::acse_service_provider_null = 0;
-    const int Associate_source_diagnostic::acse_service_provider_no_reason_given = 1;
-    const int Associate_source_diagnostic::acse_service_provider_no_common_acse_version = 2;
+    const integer_type Associate_source_diagnostic::acse_service_provider_null = 0;
+    const integer_type Associate_source_diagnostic::acse_service_provider_no_reason_given = 1;
+    const integer_type Associate_source_diagnostic::acse_service_provider_no_common_acse_version = 2;
 
 
-    ITU_T_CHOICES_DEFN(Associate_source_diagnostic::acse_service_user, acse_service_user, int, Associate_source_diagnostic_acse_service_user);
-    ITU_T_CHOICES_DEFN(Associate_source_diagnostic::acse_service_provider, acse_service_provider, int, Associate_source_diagnostic_acse_service_provider);
+    ITU_T_CHOICES_DEFN(Associate_source_diagnostic::acse_service_user, acse_service_user, integer_type, Associate_source_diagnostic_acse_service_user);
+    ITU_T_CHOICES_DEFN(Associate_source_diagnostic::acse_service_provider, acse_service_provider, integer_type, Associate_source_diagnostic_acse_service_provider);
 
     // choice User-Data
 

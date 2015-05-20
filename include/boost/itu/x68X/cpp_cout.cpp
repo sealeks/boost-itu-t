@@ -2839,16 +2839,19 @@ namespace x680 {
                 if (main_int_cnstr.left_ptr()) {
                     if (main_int_cnstr.left() >= std::numeric_limits<boost::int8_t>::min()) {
                         return "(" + typestr + ")" + ((main_int_cnstr.left() == std::numeric_limits<boost::int8_t>::min()) ?
-                                ("(-" + to_string(std::numeric_limits<boost::int8_t>::max()) + "-1)") : ("(" + to_string(main_int_cnstr.left()) + ")"));
+                                ("(std::numeric_limits<int8_t>::min())") : ("(" + to_string(main_int_cnstr.left()) + ")"));
                     } else if (main_int_cnstr.left() >= std::numeric_limits<boost::int16_t>::min()) {
                         return "(" + typestr + ")" + ((main_int_cnstr.left() == std::numeric_limits<boost::int16_t>::min()) ?
-                                ("(-" + to_string(std::numeric_limits<boost::int16_t>::max()) + "-1)") : ("(" + to_string(main_int_cnstr.left()) + ")"));
+                                ("(std::numeric_limits<int16_t>::min())") : ("(" + to_string(main_int_cnstr.left()) + ")"));
                     } else if (main_int_cnstr.left() >= std::numeric_limits<boost::int32_t>::min()) {
                         return "(" + typestr + ")" + ((main_int_cnstr.left() == std::numeric_limits<boost::int32_t>::min()) ?
-                                ("(-" + to_string(std::numeric_limits<boost::int32_t>::max()) + "-1)") : ("(" + to_string(main_int_cnstr.left()) + ")"));
+                                ("(std::numeric_limits<int32_t>::min())") : ("(" + to_string(main_int_cnstr.left()) + ")"));
                     } else if (main_int_cnstr.left() >= std::numeric_limits<boost::int64_t>::min()) {
                         return "(" + typestr + ")" + ((main_int_cnstr.left() == std::numeric_limits<boost::int64_t>::min()) ?
-                                ("(-" + to_string(std::numeric_limits<boost::int64_t>::max()) + "L-1)") : ("(" + to_string(main_int_cnstr.left()) + "L)"));
+                                ("(std::numeric_limits<int64_t>::min())") : ("(" + to_string(main_int_cnstr.left()) + "L)"));
+                    } else if (main_int_cnstr.left() >= std::numeric_limits<boost::int64_t>::max()) {
+                        return "(" + typestr + ")" + ((main_int_cnstr.left() == std::numeric_limits<boost::int64_t>::min()) ?
+                                ("(std::numeric_limits<uint64_t>::min())") : ("(" + to_string(main_int_cnstr.left()) + "UL)"));
                     }
                     return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.left()) + ")";
                 }
@@ -2869,6 +2872,8 @@ namespace x680 {
                         return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.right()) + ")";
                     } else if (main_int_cnstr.right() >= std::numeric_limits<boost::int64_t>::min()) {
                         return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.right()) + "L)";
+                    } else if (main_int_cnstr.right() >= std::numeric_limits<boost::int64_t>::max()) {
+                        return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.right()) + "UL)";
                     }
                     return "(" + typestr + ")" + "(" + to_string(main_int_cnstr.right()) + ")";
                 }

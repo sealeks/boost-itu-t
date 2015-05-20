@@ -29,6 +29,8 @@
         </logicalFolder>
         <logicalFolder name="x22X" displayName="x22X" projectFiles="true">
           <logicalFolder name="acse" displayName="acse" projectFiles="true">
+            <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1-ber.cpp</itemPath>
+            <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1-per.cpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1.asn</itemPath>
             <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1.cpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/acse/ACSE-1.hpp</itemPath>
@@ -36,9 +38,13 @@
           <logicalFolder name="presentation"
                          displayName="presentation"
                          projectFiles="true">
+            <itemPath>../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-ber.cpp</itemPath>
+            <itemPath>../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-per.cpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.cpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp</itemPath>
+            <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-ber.cpp</itemPath>
+            <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-per.cpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.cpp</itemPath>
             <itemPath>../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.hpp</itemPath>
@@ -189,6 +195,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/acse/ACSE-1.asn"
             ex="false"
             tool="3"
@@ -204,6 +220,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
             ex="false"
             tool="3"
@@ -217,6 +243,16 @@
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-per.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
@@ -409,6 +445,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/acse/ACSE-1.asn"
             ex="false"
             tool="3"
@@ -424,6 +470,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
             ex="false"
             tool="3"
@@ -437,6 +493,16 @@
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-per.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
@@ -628,6 +694,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/acse/ACSE-1.asn"
             ex="false"
             tool="3"
@@ -643,6 +719,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
             ex="false"
             tool="3"
@@ -656,6 +742,16 @@
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-per.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"
@@ -845,6 +941,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/acse/ACSE-1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/acse/ACSE-1.asn"
             ex="false"
             tool="3"
@@ -860,6 +966,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.asn"
             ex="false"
             tool="3"
@@ -873,6 +989,16 @@
       <item path="../../../include/boost/itu/x22X/presentation/ISO8823-PRESENTATION.hpp"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU-per.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include/boost/itu/x22X/presentation/Reliable-Transfer-APDU.asn"

@@ -41,30 +41,30 @@ namespace ACSE_1 {
 
 
     typedef enumerated_type ABRT_diagnostic;
-    typedef int ABRT_source; //   Ic(  [ 0  ...   1 ]   ...ext...) 
+    typedef integer_type ABRT_source; //   Ic(  [ 0  ...   1 ]   ...ext...) 
     typedef bitstring_type ACSE_requirements;
     typedef oid_type ASO_context_name;
     typedef octetstring_type AP_title_form1;
     typedef octetstring_type ASO_qualifier_form1;
     typedef oid_type AP_title_form2;
-    typedef int ASO_qualifier_form2;
+    typedef integer_type ASO_qualifier_form2;
     typedef printablestring_type AP_title_form3;
     typedef printablestring_type ASO_qualifier_form3;
     typedef octetstring_type AE_title_form1;
     typedef oid_type AE_title_form2;
-    typedef int AE_invocation_identifier;
-    typedef int AP_invocation_identifier;
-    typedef int ASOI_identifier; //   Ic(  [ 1  ...   128 ]   ...ext...) 
+    typedef integer_type AE_invocation_identifier;
+    typedef integer_type AP_invocation_identifier;
+    typedef integer_type ASOI_identifier; //   Ic(  [ 1  ...   128 ]   ...ext...) 
     typedef oid_type Abstract_syntax_name;
-    typedef int Result;
+    typedef integer_type Result;
     typedef oid_type Transfer_syntax_name;
-    typedef int Associate_result; //   Ic(  [ 0  ...   2 ]   ...ext...) 
+    typedef integer_type Associate_result; //   Ic(  [ 0  ...   2 ]   ...ext...) 
     typedef octetstring_type Simply_encoded_data;
-    typedef int Presentation_context_identifier;
+    typedef integer_type Presentation_context_identifier;
     typedef graphicstring_type Implementation_data;
     typedef oid_type Mechanism_name;
-    typedef int Release_request_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
-    typedef int Release_response_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
+    typedef integer_type Release_request_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
+    typedef integer_type Release_response_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
     typedef std::vector< external_type > Association_data; //    Sc (  [ 1 ]   ...ext...) 
 
     ITU_T_IMPLICIT_TYPEDEF(AARQ_apdu, AARQ_apdu_impl, 0, APPLICATION_CLASS);
@@ -505,10 +505,10 @@ namespace ACSE_1 {
 
     struct P_context_result_list_sequence_of {
 
-        static const int provider_reason_reason_not_specified;
-        static const int provider_reason_abstract_syntax_not_supported;
-        static const int provider_reason_proposed_transfer_syntaxes_not_supported;
-        static const int provider_reason_local_limit_on_DCS_exceeded;
+        static const integer_type provider_reason_reason_not_specified;
+        static const integer_type provider_reason_abstract_syntax_not_supported;
+        static const integer_type provider_reason_proposed_transfer_syntaxes_not_supported;
+        static const integer_type provider_reason_local_limit_on_DCS_exceeded;
 
 
         P_context_result_list_sequence_of();
@@ -517,11 +517,11 @@ namespace ACSE_1 {
 
         P_context_result_list_sequence_of(shared_ptr< Result> arg__result,
                 shared_ptr< Concrete_syntax_name> arg__concrete_syntax_name,
-                shared_ptr< int> arg__provider_reason);
+                shared_ptr< integer_type> arg__provider_reason);
 
         ITU_T_HOLDERH_DECL(result, Result);
         ITU_T_OPTIONAL_DECL(concrete_syntax_name, Concrete_syntax_name);
-        ITU_T_OPTIONAL_DECL(provider_reason, int);
+        ITU_T_OPTIONAL_DECL(provider_reason, integer_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -545,31 +545,31 @@ namespace ACSE_1 {
 
     struct Associate_source_diagnostic : public ITU_T_CHOICE(Associate_source_diagnostic_enum) {
 
-        static const int acse_service_user_null;
-        static const int acse_service_user_no_reason_given;
-        static const int acse_service_user_application_context_name_not_supported;
-        static const int acse_service_user_calling_AP_title_not_recognized;
-        static const int acse_service_user_calling_AP_invocation_identifier_not_recognized;
-        static const int acse_service_user_calling_AE_qualifier_not_recognized;
-        static const int acse_service_user_calling_AE_invocation_identifier_not_recognized;
-        static const int acse_service_user_called_AP_title_not_recognized;
-        static const int acse_service_user_called_AP_invocation_identifier_not_recognized;
-        static const int acse_service_user_called_AE_qualifier_not_recognized;
-        static const int acse_service_user_called_AE_invocation_identifier_not_recognized;
-        static const int acse_service_user_authentication_mechanism_name_not_recognized;
-        static const int acse_service_user_authentication_mechanism_name_required;
-        static const int acse_service_user_authentication_failure;
-        static const int acse_service_user_authentication_required;
+        static const integer_type acse_service_user_null;
+        static const integer_type acse_service_user_no_reason_given;
+        static const integer_type acse_service_user_application_context_name_not_supported;
+        static const integer_type acse_service_user_calling_AP_title_not_recognized;
+        static const integer_type acse_service_user_calling_AP_invocation_identifier_not_recognized;
+        static const integer_type acse_service_user_calling_AE_qualifier_not_recognized;
+        static const integer_type acse_service_user_calling_AE_invocation_identifier_not_recognized;
+        static const integer_type acse_service_user_called_AP_title_not_recognized;
+        static const integer_type acse_service_user_called_AP_invocation_identifier_not_recognized;
+        static const integer_type acse_service_user_called_AE_qualifier_not_recognized;
+        static const integer_type acse_service_user_called_AE_invocation_identifier_not_recognized;
+        static const integer_type acse_service_user_authentication_mechanism_name_not_recognized;
+        static const integer_type acse_service_user_authentication_mechanism_name_required;
+        static const integer_type acse_service_user_authentication_failure;
+        static const integer_type acse_service_user_authentication_required;
 
-        static const int acse_service_provider_null;
-        static const int acse_service_provider_no_reason_given;
-        static const int acse_service_provider_no_common_acse_version;
+        static const integer_type acse_service_provider_null;
+        static const integer_type acse_service_provider_no_reason_given;
+        static const integer_type acse_service_provider_no_common_acse_version;
 
 
         ITU_T_CHOICE_CTORS(Associate_source_diagnostic);
 
-        ITU_T_CHOICES_DECL(acse_service_user, int, Associate_source_diagnostic_acse_service_user); // primitive  //   Ic(  [ 0  ...   14 ]   ...ext...) 
-        ITU_T_CHOICES_DECL(acse_service_provider, int, Associate_source_diagnostic_acse_service_provider); // primitive  //   Ic(  [ 0  ...   2 ]   ...ext...) 
+        ITU_T_CHOICES_DECL(acse_service_user, integer_type, Associate_source_diagnostic_acse_service_user); // primitive  //   Ic(  [ 0  ...   14 ]   ...ext...) 
+        ITU_T_CHOICES_DECL(acse_service_provider, integer_type, Associate_source_diagnostic_acse_service_provider); // primitive  //   Ic(  [ 0  ...   2 ]   ...ext...) 
 
         ITU_T_ARCHIVE_FUNC;
     };

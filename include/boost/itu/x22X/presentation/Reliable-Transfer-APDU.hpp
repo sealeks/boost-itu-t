@@ -27,12 +27,12 @@ namespace Reliable_Transfer_APDU {
     struct CallingSSuserReference;
 
 
-    typedef int RTTPapdu;
+    typedef integer_type RTTPapdu;
     typedef octetstring_type RTTRapdu;
-    typedef int RefuseReason;
+    typedef integer_type RefuseReason;
     typedef utctime_type CommonReference;
     typedef t61string_type AdditionalReferenceInformation;
-    typedef int AbortReason;
+    typedef integer_type AbortReason;
 
     ITU_T_OID(rTSE_abstract_syntax, ITU_T_VARRAY(2, 3, 2));
 
@@ -78,28 +78,28 @@ namespace Reliable_Transfer_APDU {
 
     struct RTORQapdu {
 
-        static const int dialogueMode_monologue;
-        static const int dialogueMode_twa;
+        static const integer_type dialogueMode_monologue;
+        static const integer_type dialogueMode_twa;
 
-        static const int checkpointSize__default;
-        static const int windowSize__default;
-        static const int dialogueMode__default;
+        static const integer_type checkpointSize__default;
+        static const integer_type windowSize__default;
+        static const integer_type dialogueMode__default;
 
         RTORQapdu();
 
         RTORQapdu(const ConnectionData& arg__connectionDataRQ);
 
-        RTORQapdu(shared_ptr< int> arg__checkpointSize,
-                shared_ptr< int> arg__windowSize,
-                shared_ptr< int> arg__dialogueMode,
+        RTORQapdu(shared_ptr< integer_type> arg__checkpointSize,
+                shared_ptr< integer_type> arg__windowSize,
+                shared_ptr< integer_type> arg__dialogueMode,
                 shared_ptr< ConnectionData> arg__connectionDataRQ,
-                shared_ptr< int> arg__applicationProtocol);
+                shared_ptr< integer_type> arg__applicationProtocol);
 
-        ITU_T_DEFAULTH_DECL(checkpointSize, int, checkpointSize__default);
-        ITU_T_DEFAULTH_DECL(windowSize, int, windowSize__default);
-        ITU_T_DEFAULTH_DECL(dialogueMode, int, dialogueMode__default);
+        ITU_T_DEFAULTH_DECL(checkpointSize, integer_type, checkpointSize__default);
+        ITU_T_DEFAULTH_DECL(windowSize, integer_type, windowSize__default);
+        ITU_T_DEFAULTH_DECL(dialogueMode, integer_type, dialogueMode__default);
         ITU_T_HOLDERH_DECL(connectionDataRQ, ConnectionData);
-        ITU_T_OPTIONAL_DECL(applicationProtocol, int);
+        ITU_T_OPTIONAL_DECL(applicationProtocol, integer_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -108,19 +108,19 @@ namespace Reliable_Transfer_APDU {
 
     struct RTOACapdu {
 
-        static const int checkpointSize__default;
-        static const int windowSize__default;
+        static const integer_type checkpointSize__default;
+        static const integer_type windowSize__default;
 
         RTOACapdu();
 
         RTOACapdu(const ConnectionData& arg__connectionDataAC);
 
-        RTOACapdu(shared_ptr< int> arg__checkpointSize,
-                shared_ptr< int> arg__windowSize,
+        RTOACapdu(shared_ptr< integer_type> arg__checkpointSize,
+                shared_ptr< integer_type> arg__windowSize,
                 shared_ptr< ConnectionData> arg__connectionDataAC);
 
-        ITU_T_DEFAULTH_DECL(checkpointSize, int, checkpointSize__default);
-        ITU_T_DEFAULTH_DECL(windowSize, int, windowSize__default);
+        ITU_T_DEFAULTH_DECL(checkpointSize, integer_type, checkpointSize__default);
+        ITU_T_DEFAULTH_DECL(windowSize, integer_type, windowSize__default);
         ITU_T_HOLDERH_DECL(connectionDataAC, ConnectionData);
 
         ITU_T_ARCHIVE_FUNC;

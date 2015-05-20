@@ -37,20 +37,20 @@ namespace ISO8823_PRESENTATION {
     struct Result_list_sequence_of;
 
 
-    typedef int Abort_reason;
+    typedef integer_type Abort_reason;
     typedef oid_type Abstract_syntax_name;
-    typedef int Event_identifier;
-    typedef int Presentation_context_identifier; //   Ic(  [ 1  ...   127 ]   ...ext...) 
+    typedef integer_type Event_identifier;
+    typedef integer_type Presentation_context_identifier; //   Ic(  [ 1  ...   127 ]   ...ext...) 
     typedef bitstring_type Presentation_requirements;
     typedef octetstring_type Presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
     typedef bitstring_type Protocol_options;
     typedef bitstring_type Protocol_version;
-    typedef int Provider_reason;
-    typedef int Result;
+    typedef integer_type Provider_reason;
+    typedef integer_type Result;
     typedef oid_type Transfer_syntax_name;
     typedef octetstring_type Simply_encoded_data;
     typedef bitstring_type User_session_requirements;
-    typedef std::vector< int > Presentation_context_deletion_result_list; //    Sc (  [ 0  ...   7 ]   ...ext...)   //  struct of ->  
+    typedef std::vector< integer_type > Presentation_context_deletion_result_list; //    Sc (  [ 0  ...   7 ]   ...ext...)   //  struct of ->  
 
     typedef User_data CPC_type;
     typedef Presentation_selector Called_presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
@@ -92,28 +92,28 @@ namespace ISO8823_PRESENTATION {
 
         struct X410_mode_parameters_type {
 
-            static const int dialogueMode_monologue;
-            static const int dialogueMode_twa;
+            static const integer_type dialogueMode_monologue;
+            static const integer_type dialogueMode_twa;
 
-            static const int checkpointSize__default;
-            static const int windowSize__default;
-            static const int dialogueMode__default;
+            static const integer_type checkpointSize__default;
+            static const integer_type windowSize__default;
+            static const integer_type dialogueMode__default;
 
             X410_mode_parameters_type();
 
             X410_mode_parameters_type(const Reliable_Transfer_APDU::ConnectionData& arg__connectionDataRQ);
 
-            X410_mode_parameters_type(shared_ptr< int> arg__checkpointSize,
-                    shared_ptr< int> arg__windowSize,
-                    shared_ptr< int> arg__dialogueMode,
+            X410_mode_parameters_type(shared_ptr< integer_type> arg__checkpointSize,
+                    shared_ptr< integer_type> arg__windowSize,
+                    shared_ptr< integer_type> arg__dialogueMode,
                     shared_ptr< Reliable_Transfer_APDU::ConnectionData> arg__connectionDataRQ,
-                    shared_ptr< int> arg__applicationProtocol);
+                    shared_ptr< integer_type> arg__applicationProtocol);
 
-            ITU_T_DEFAULTH_DECL(checkpointSize, int, checkpointSize__default);
-            ITU_T_DEFAULTH_DECL(windowSize, int, windowSize__default);
-            ITU_T_DEFAULTH_DECL(dialogueMode, int, dialogueMode__default);
+            ITU_T_DEFAULTH_DECL(checkpointSize, integer_type, checkpointSize__default);
+            ITU_T_DEFAULTH_DECL(windowSize, integer_type, windowSize__default);
+            ITU_T_DEFAULTH_DECL(dialogueMode, integer_type, dialogueMode__default);
             ITU_T_HOLDERH_DECL(connectionDataRQ, Reliable_Transfer_APDU::ConnectionData);
-            ITU_T_OPTIONAL_DECL(applicationProtocol, int);
+            ITU_T_OPTIONAL_DECL(applicationProtocol, integer_type);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -187,19 +187,19 @@ namespace ISO8823_PRESENTATION {
 
         struct X410_mode_parameters_type {
 
-            static const int checkpointSize__default;
-            static const int windowSize__default;
+            static const integer_type checkpointSize__default;
+            static const integer_type windowSize__default;
 
             X410_mode_parameters_type();
 
             X410_mode_parameters_type(const Reliable_Transfer_APDU::ConnectionData& arg__connectionDataAC);
 
-            X410_mode_parameters_type(shared_ptr< int> arg__checkpointSize,
-                    shared_ptr< int> arg__windowSize,
+            X410_mode_parameters_type(shared_ptr< integer_type> arg__checkpointSize,
+                    shared_ptr< integer_type> arg__windowSize,
                     shared_ptr< Reliable_Transfer_APDU::ConnectionData> arg__connectionDataAC);
 
-            ITU_T_DEFAULTH_DECL(checkpointSize, int, checkpointSize__default);
-            ITU_T_DEFAULTH_DECL(windowSize, int, windowSize__default);
+            ITU_T_DEFAULTH_DECL(checkpointSize, integer_type, checkpointSize__default);
+            ITU_T_DEFAULTH_DECL(windowSize, integer_type, windowSize__default);
             ITU_T_HOLDERH_DECL(connectionDataAC, Reliable_Transfer_APDU::ConnectionData);
 
             ITU_T_ARCHIVE_FUNC;
@@ -561,15 +561,15 @@ namespace ISO8823_PRESENTATION {
 
     struct Mode_selector {
 
-        static const int mode_value_x410_1984_mode;
-        static const int mode_value_normal_mode;
+        static const integer_type mode_value_x410_1984_mode;
+        static const integer_type mode_value_normal_mode;
 
 
         Mode_selector();
 
-        Mode_selector(const int& arg__mode_value);
+        Mode_selector(const integer_type& arg__mode_value);
 
-        ITU_T_HOLDERH_DECL(mode_value, int);
+        ITU_T_HOLDERH_DECL(mode_value, integer_type);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -611,10 +611,10 @@ namespace ISO8823_PRESENTATION {
 
     struct Result_list_sequence_of {
 
-        static const int provider_reason_reason_not_specified;
-        static const int provider_reason_abstract_syntax_not_supported;
-        static const int provider_reason_proposed_transfer_syntaxes_not_supported;
-        static const int provider_reason_local_limit_on_DCS_exceeded;
+        static const integer_type provider_reason_reason_not_specified;
+        static const integer_type provider_reason_abstract_syntax_not_supported;
+        static const integer_type provider_reason_proposed_transfer_syntaxes_not_supported;
+        static const integer_type provider_reason_local_limit_on_DCS_exceeded;
 
 
         Result_list_sequence_of();
@@ -623,11 +623,11 @@ namespace ISO8823_PRESENTATION {
 
         Result_list_sequence_of(shared_ptr< Result> arg__result,
                 shared_ptr< Transfer_syntax_name> arg__transfer_syntax_name,
-                shared_ptr< int> arg__provider_reason);
+                shared_ptr< integer_type> arg__provider_reason);
 
         ITU_T_HOLDERH_DECL(result, Result);
         ITU_T_OPTIONAL_DECL(transfer_syntax_name, Transfer_syntax_name);
-        ITU_T_OPTIONAL_DECL(provider_reason, int);
+        ITU_T_OPTIONAL_DECL(provider_reason, integer_type);
 
         ITU_T_ARCHIVE_FUNC;
     };

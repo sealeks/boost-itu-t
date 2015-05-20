@@ -103,8 +103,8 @@
      static std::size_t rootsize() {\
         return index_enumerated.size();}};\
      const boost::asn1::enum_base_type nm##  __ARR[] = {arrmain};\
-      boost::asn1::indx_enumerated_map nm## __coder::index_enumerated = boost::asn1::create_indx_enumerated(nm##  __ARR[], sizeof(nm##  __ARR[])/ sizeof(boost::asn1::enum_base_type));\
-      boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(nm##  __ARR[], sizeof(nm##  __ARR[])/ sizeof(boost::asn1::enum_base_type));
+      boost::asn1::indx_enumerated_map nm## __coder::index_enumerated = boost::asn1::create_indx_enumerated(nm##  __ARR, sizeof(nm##  __ARR)/ sizeof(boost::asn1::enum_base_type));\
+      boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(nm##  __ARR, sizeof(nm##  __ARR)/ sizeof(boost::asn1::enum_base_type));
 
 
 #define  ITU_T_PER_ENUMCODER_EXT(nm  , arrmain, arrext ) struct nm ## __coder { \
