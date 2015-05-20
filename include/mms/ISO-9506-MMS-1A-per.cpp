@@ -9,6 +9,10 @@
 
 namespace ISO_9506_MMS_1A {
 
+
+
+    // sequence ObtainFile-Request
+
     template<> void ObtainFile_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(sourceFileServer_);
@@ -29,25 +33,31 @@ namespace ISO_9506_MMS_1A {
         ITU_T_BIND_PER(*destinationFile_);
     }
 
+    // sequence FileOpen-Request
+
     template<> void FileOpen_Request::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*fileName_);
-        ITU_T_BIND_NUM_CONSTRS(*initialPosition_, (uint32_t) (0), (uint32_t) (2147483647));
+        ITU_T_BIND_NUM_CONSTRS(*initialPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     template<> void FileOpen_Request::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*fileName_);
-        ITU_T_BIND_NUM_CONSTRS(*initialPosition_, (uint32_t) (0), (uint32_t) (2147483647));
+        ITU_T_BIND_NUM_CONSTRS(*initialPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
+    // sequence FileOpen-Response
+
     template<> void FileOpen_Response::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*frsmID_, (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
+        ITU_T_BIND_NUM_CONSTRS(*frsmID_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*fileAttributes_);
     }
 
     template<> void FileOpen_Response::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*frsmID_, (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
+        ITU_T_BIND_NUM_CONSTRS(*frsmID_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*fileAttributes_);
     }
+
+    // sequence FileRead-Response
 
     template<> void FileRead_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -67,6 +77,8 @@ namespace ISO_9506_MMS_1A {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
     }
 
+    // sequence FileRename-Request
+
     template<> void FileRename_Request::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*currentFileName_);
         ITU_T_BIND_PER(*newFileName_);
@@ -76,6 +88,8 @@ namespace ISO_9506_MMS_1A {
         ITU_T_BIND_PER(*currentFileName_);
         ITU_T_BIND_PER(*newFileName_);
     }
+
+    // sequence FileDirectory-Request
 
     template<> void FileDirectory_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -95,6 +109,8 @@ namespace ISO_9506_MMS_1A {
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(continueAfter_);
     }
 
+    // sequence FileDirectory-Response
+
     template<> void FileDirectory_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(moreFollows_);
@@ -113,6 +129,8 @@ namespace ISO_9506_MMS_1A {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
     }
 
+    // sequence DirectoryEntry
+
     template<> void DirectoryEntry::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*fileName_);
         ITU_T_BIND_PER(*fileAttributes_);
@@ -123,13 +141,15 @@ namespace ISO_9506_MMS_1A {
         ITU_T_BIND_PER(*fileAttributes_);
     }
 
+    // sequence FileAttributes
+
     template<> void FileAttributes::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(lastModified_);
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_NUM_CONSTRS(*sizeOfFile_, (uint32_t) (0), (uint32_t) (2147483647));
+        ITU_T_BIND_NUM_CONSTRS(*sizeOfFile_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(lastModified_);
     }
 
@@ -137,9 +157,11 @@ namespace ISO_9506_MMS_1A {
 
         ITU_T_OPTIONAL_GET_PER(1);
 
-        ITU_T_BIND_NUM_CONSTRS(*sizeOfFile_, (uint32_t) (0), (uint32_t) (2147483647));
+        ITU_T_BIND_NUM_CONSTRS(*sizeOfFile_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(lastModified_);
     }
+
+    // sequence 
 
     template<> void ScatteredAccessDescription_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -161,6 +183,8 @@ namespace ISO_9506_MMS_1A {
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(alternateAccess_);
     }
 
+    // sequence DefineScatteredAccess-Request
+
     template<> void DefineScatteredAccess_Request::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*scatteredAccessName_);
         ITU_T_BIND_PER(*scatteredAccessDescription_);
@@ -170,6 +194,8 @@ namespace ISO_9506_MMS_1A {
         ITU_T_BIND_PER(*scatteredAccessName_);
         ITU_T_BIND_PER(*scatteredAccessDescription_);
     }
+
+    // sequence GetScatteredAccessAttributes-Response
 
     template<> void GetScatteredAccessAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 

@@ -23,6 +23,8 @@ namespace MMS_SCI_Module_1 {
     //  helper name:   Journal_Entry_instance__enumerated_type           type:  enumerated helper    
     ITU_T_PER_ENUMCODER(Journal_Entry_instance__enumerated_type__helper, false, ITU_T_ARRAY(0, 1, 2));
 
+    // sequence SCI-Information
+
     template<> void SCI_Information::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*partOne_);
         ITU_T_BIND_PER(*partTwo_);
@@ -33,6 +35,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*partTwo_);
     }
 
+    // sequence VMD-File
+
     template<> void VMD_File::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_EXTENTION_SET_PER;
@@ -42,9 +46,9 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*revision_);
         ITU_T_BIND_PER(*abstractSyntaxes_);
         ITU_T_BIND_PER(*accessControl_);
-        ITU_T_BIND_NUM_CONSTRS(*(*logicalStatus_), (uint8_t) (0), (uint8_t) (3));
+        ITU_T_BIND_NUM_CONSTRS(*(*logicalStatus_), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(*capabilities_);
-        ITU_T_BIND_NUM_CONSTRS(*(*physicalStatus_), (uint8_t) (0), (uint8_t) (3));
+        ITU_T_BIND_NUM_CONSTRS(*(*physicalStatus_), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(*local_detail_);
         ITU_T_BIND_PER(*accessControlLists_);
         ITU_T_BIND_PER(*domains_);
@@ -73,9 +77,9 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*revision_);
         ITU_T_BIND_PER(*abstractSyntaxes_);
         ITU_T_BIND_PER(*accessControl_);
-        ITU_T_BIND_NUM_CONSTRS(*(*logicalStatus_), (uint8_t) (0), (uint8_t) (3));
+        ITU_T_BIND_NUM_CONSTRS(*(*logicalStatus_), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(*capabilities_);
-        ITU_T_BIND_NUM_CONSTRS(*(*physicalStatus_), (uint8_t) (0), (uint8_t) (3));
+        ITU_T_BIND_NUM_CONSTRS(*(*physicalStatus_), static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(*local_detail_);
         ITU_T_BIND_PER(*accessControlLists_);
         ITU_T_BIND_PER(*domains_);
@@ -94,6 +98,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*eventConditionLists_);
         ITU_T_BIND_PER(*journals_);
     }
+
+    // choice selected-Program-Invocation
 
     template<> void VMD_File::Selected_Program_Invocation_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -136,6 +142,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence Access-Control-List-instance
+
     template<> void Access_Control_List_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -145,6 +153,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Access_Control_List_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -186,6 +196,8 @@ namespace MMS_SCI_Module_1 {
             }
         }
     }
+
+    // sequence details
 
     template<> void Access_Control_List_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -251,6 +263,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*journals_);
     }
 
+    // sequence Domain-instance
+
     template<> void Domain_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -260,6 +274,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Domain_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -302,9 +318,11 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Domain_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*capabilities_);
-        ITU_T_BIND_NUM_CONSTRS(*state_, (uint8_t) (0), (uint8_t) (15));
+        ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (15));
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*sharable_);
         ITU_T_BIND_PER(*programInvocations_);
@@ -319,7 +337,7 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Domain_instance::Definition_type::Details_type::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*capabilities_);
-        ITU_T_BIND_NUM_CONSTRS(*state_, (uint8_t) (0), (uint8_t) (15));
+        ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (15));
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*sharable_);
         ITU_T_BIND_PER(*programInvocations_);
@@ -332,6 +350,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*eventConditionLists_);
     }
 
+    // sequence Program-Invocation-instance
+
     template<> void Program_Invocation_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -341,6 +361,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Program_Invocation_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -383,6 +405,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Program_Invocation_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_EXTENTION_SET_PER;
@@ -391,7 +415,7 @@ namespace MMS_SCI_Module_1 {
 
         ITU_T_OPTIONAL_SET_PER;
 
-        ITU_T_BIND_NUM_CONSTRS(*programInvocationState_, (uint8_t) (0), (uint8_t) (8));
+        ITU_T_BIND_NUM_CONSTRS(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
         ITU_T_BIND_PER(*domains_);
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*reusable_);
@@ -408,7 +432,7 @@ namespace MMS_SCI_Module_1 {
 
         ITU_T_OPTIONAL_GET_PER(3);
 
-        ITU_T_BIND_NUM_CONSTRS(*programInvocationState_, (uint8_t) (0), (uint8_t) (8));
+        ITU_T_BIND_NUM_CONSTRS(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
         ITU_T_BIND_PER(*domains_);
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*reusable_);
@@ -419,6 +443,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*executionArgument_);
     }
 
+    // sequence Unit-Control-instance
+
     template<> void Unit_Control_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -428,6 +454,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Unit_Control_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -470,6 +498,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Unit_Control_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*domains_);
@@ -481,6 +511,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*domains_);
         ITU_T_BIND_PER(*programInvocations_);
     }
+
+    // sequence Unnamed-Variable-instance
 
     template<> void Unnamed_Variable_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*address_);
@@ -494,6 +526,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*typeDescription_);
     }
 
+    // sequence Named-Variable-instance
+
     template<> void Named_Variable_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -503,6 +537,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Named_Variable_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -545,6 +581,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Named_Variable_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(address_) + ITU_T_OPTIONAL_PER(meaning_);
@@ -567,6 +605,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(meaning_);
     }
 
+    // sequence Named-Variable-List-instance
+
     template<> void Named_Variable_List_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -576,6 +616,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Named_Variable_List_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -618,6 +660,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Named_Variable_List_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*listOfVariables_);
@@ -627,6 +671,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*listOfVariables_);
     }
+
+    // sequence Variable-List-Item-instance
 
     template<> void Variable_List_Item_instance::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -648,6 +694,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(alternateAccess_);
     }
 
+    // sequence Named-Type-instance
+
     template<> void Named_Type_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -657,6 +705,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Named_Type_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -699,6 +749,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Named_Type_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(meaning_);
@@ -719,6 +771,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(meaning_);
     }
 
+    // sequence Data-Exchange-instance
+
     template<> void Data_Exchange_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -728,6 +782,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Data_Exchange_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -770,6 +826,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Data_Exchange_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(programInvocation_);
@@ -794,6 +852,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(programInvocation_);
     }
 
+    // sequence Semaphore-instance
+
     template<> void Semaphore_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -803,6 +863,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Semaphore_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -845,6 +907,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Semaphore_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(numberOfTokens_) + ITU_T_OPTIONAL_PER(namedTokens_);
@@ -869,6 +933,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*eventCondition_);
     }
 
+    // sequence Operator-Station-instance
+
     template<> void Operator_Station_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -878,6 +944,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Operator_Station_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -920,6 +988,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Operator_Station_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER_ENUM(*stationType_, Operator_Station_instance__Definition_type__Details_type__enumerated_type__helper);
@@ -930,6 +1000,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER_ENUM(*stationType_, Operator_Station_instance__Definition_type__Details_type__enumerated_type__helper);
     }
 
+    // sequence Event-Condition-instance
+
     template<> void Event_Condition_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -939,6 +1011,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Event_Condition_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -981,6 +1055,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Event_Condition_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_EXTENTION_SET_PER;
@@ -990,10 +1066,10 @@ namespace MMS_SCI_Module_1 {
         ITU_T_OPTIONAL_SET_PER;
 
         ITU_T_BIND_PER(*accessControl_);
-        ITU_T_BIND_NUM_CONSTRS(*ecClass_, (uint8_t) (0), (uint8_t) (1));
-        ITU_T_BIND_NUM_CONSTRS(*ecState_, (uint8_t) (0), (uint8_t) (2));
-        ITU_T_BIND_NUM_CONSTRS(*priority_, (uint8_t) (0), (uint8_t) (127));
-        ITU_T_BIND_NUM_CONSTRS(*severity_, (uint8_t) (0), (uint8_t) (127));
+        ITU_T_BIND_NUM_CONSTRS(*ecClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRS(*ecState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRS(*priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*eventEnrollments_);
         ITU_T_BIND_PER(enabled_);
         ITU_T_BIND_PER(alarmSummaryReports_);
@@ -1008,16 +1084,18 @@ namespace MMS_SCI_Module_1 {
         ITU_T_OPTIONAL_GET_PER(4);
 
         ITU_T_BIND_PER(*accessControl_);
-        ITU_T_BIND_NUM_CONSTRS(*ecClass_, (uint8_t) (0), (uint8_t) (1));
-        ITU_T_BIND_NUM_CONSTRS(*ecState_, (uint8_t) (0), (uint8_t) (2));
-        ITU_T_BIND_NUM_CONSTRS(*priority_, (uint8_t) (0), (uint8_t) (127));
-        ITU_T_BIND_NUM_CONSTRS(*severity_, (uint8_t) (0), (uint8_t) (127));
+        ITU_T_BIND_NUM_CONSTRS(*ecClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_BIND_NUM_CONSTRS(*ecState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_BIND_NUM_CONSTRS(*priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*eventEnrollments_);
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(enabled_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(alarmSummaryReports_);
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(monitoredVariable_);
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(evaluationInterval_);
     }
+
+    // choice monitoredVariable
 
     template<> void Event_Condition_instance::Definition_type::Details_type::MonitoredVariable_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -1071,6 +1149,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // choice displayEnhancement
+
     template<> void Event_Condition_instance::Definition_type::Details_type::DisplayEnhancement_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case DisplayEnhancement_type_text:
@@ -1123,12 +1203,14 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // choice group-Priority-Override
+
     template<> void Event_Condition_instance::Definition_type::Details_type::Group_Priority_Override_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case Group_Priority_Override_type_priority:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 1);
-                ITU_T_BIND_NUM_CONSTRS(*value<MMS_Object_Module_1::Priority > (false, Group_Priority_Override_type_priority), (uint8_t) (0), (uint8_t) (127));
+                ITU_T_BIND_NUM_CONSTRS(*value<MMS_Object_Module_1::Priority > (false, Group_Priority_Override_type_priority), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
                 break;
             }
             case Group_Priority_Override_type_undefined:
@@ -1150,7 +1232,7 @@ namespace MMS_SCI_Module_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<MMS_Object_Module_1::Priority > (true, Group_Priority_Override_type_priority), (uint8_t) (0), (uint8_t) (127));
+                ITU_T_BIND_NUM_CONSTRS(*value<MMS_Object_Module_1::Priority > (true, Group_Priority_Override_type_priority), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
                 break;
             }
             case 1:
@@ -1164,6 +1246,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence Event-Action-instance
+
     template<> void Event_Action_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -1173,6 +1257,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Event_Action_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -1215,6 +1301,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Event_Action_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*confirmedServiceRequest_);
@@ -1229,6 +1317,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*eventEnrollments_);
     }
 
+    // sequence Event-Enrollment-instance
+
     template<> void Event_Enrollment_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -1238,6 +1328,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Event_Enrollment_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -1280,6 +1372,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Event_Enrollment_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_EXTENTION_SET_PER;
@@ -1289,14 +1383,14 @@ namespace MMS_SCI_Module_1 {
         ITU_T_OPTIONAL_SET_PER;
 
         ITU_T_BIND_PER(*accessControl_);
-        ITU_T_BIND_NUM_CONSTRS(*eeClass_, (uint8_t) (0), (uint8_t) (1));
+        ITU_T_BIND_NUM_CONSTRS(*eeClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
         ITU_T_BIND_PER(*eventCondition_);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*ecTransitions_, 7);
         ITU_T_BIND_PER(remainingDelay_);
         ITU_T_BIND_PER(eventAction_);
-        ITU_T_BIND_NUM_CONSTRS(duration_, (uint8_t) (0), (uint8_t) (1));
+        ITU_T_BIND_NUM_CONSTRS(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
         ITU_T_BIND_PER(clientApplication_);
-        ITU_T_BIND_NUM_CONSTRS(aaRule_, (uint8_t) (0), (uint8_t) (3));
+        ITU_T_BIND_NUM_CONSTRS(aaRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
     }
 
     template<> void Event_Enrollment_instance::Definition_type::Details_type::serialize(boost::asn1::x691::input_coder& arch) {
@@ -1306,15 +1400,17 @@ namespace MMS_SCI_Module_1 {
         ITU_T_OPTIONAL_GET_PER(5);
 
         ITU_T_BIND_PER(*accessControl_);
-        ITU_T_BIND_NUM_CONSTRS(*eeClass_, (uint8_t) (0), (uint8_t) (1));
+        ITU_T_BIND_NUM_CONSTRS(*eeClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
         ITU_T_BIND_PER(*eventCondition_);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*ecTransitions_, 7);
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(remainingDelay_);
         ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(eventAction_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(duration_, (uint8_t) (0), (uint8_t) (1));
+        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
         ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(clientApplication_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_NUM_CONSTRS(aaRule_, (uint8_t) (0), (uint8_t) (3));
+        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_NUM_CONSTRS(aaRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
     }
+
+    // choice remainingDelay
 
     template<> void Event_Enrollment_instance::Definition_type::Details_type::RemainingDelay_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -1356,6 +1452,8 @@ namespace MMS_SCI_Module_1 {
             }
         }
     }
+
+    // choice displayEnhancement
 
     template<> void Event_Enrollment_instance::Definition_type::Details_type::DisplayEnhancement_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -1409,6 +1507,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence Event-Condition-List-instance
+
     template<> void Event_Condition_List_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -1418,6 +1518,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Event_Condition_List_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -1460,6 +1562,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Event_Condition_List_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*eventConditions_);
@@ -1474,6 +1578,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*referencingEventConditionLists_);
     }
 
+    // sequence Journal-instance
+
     template<> void Journal_instance::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
@@ -1483,6 +1589,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*definition_);
     }
+
+    // choice definition
 
     template<> void Journal_instance::Definition_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -1525,6 +1633,8 @@ namespace MMS_SCI_Module_1 {
         }
     }
 
+    // sequence details
+
     template<> void Journal_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*entries_);
@@ -1534,6 +1644,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*entries_);
     }
+
+    // sequence Journal-Entry-instance
 
     template<> void Journal_Entry_instance::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -1567,15 +1679,19 @@ namespace MMS_SCI_Module_1 {
         ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(journalVariables_);
     }
 
+    // sequence eventTransitionRecord
+
     template<> void Journal_Entry_instance::EventTransitionRecord_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*name_);
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, (uint8_t) (0), (uint8_t) (2));
+        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
     }
 
     template<> void Journal_Entry_instance::EventTransitionRecord_type::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*name_);
-        ITU_T_BIND_NUM_CONSTRS(*currentState_, (uint8_t) (0), (uint8_t) (2));
+        ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
     }
+
+    // sequence 
 
     template<> void Journal_Entry_instance::JournalVariables_type_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*variableTag_);
@@ -1586,6 +1702,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*variableTag_);
         ITU_T_BIND_PER(*valueSpecification_);
     }
+
+    // sequence Service-and-Parameter-CBBs
 
     template<> void Service_and_Parameter_CBBs::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_SIZE_SNGLCONSTRS(*services_Client_, 93);
@@ -1627,6 +1745,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*fileManagement_);
     }
 
+    // sequence GeneralManagementParameters
+
     template<> void GeneralManagementParameters::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*localDetail_);
         ITU_T_BIND_PER(*supportForTime_);
@@ -1639,6 +1759,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*granularityOfTime_);
     }
 
+    // sequence supportForTime
+
     template<> void GeneralManagementParameters::SupportForTime_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*timeOfDay_);
         ITU_T_BIND_PER(*timeSequence_);
@@ -1649,6 +1771,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*timeSequence_);
     }
 
+    // sequence VMDSupportParameters
+
     template<> void VMDSupportParameters::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*localDetail_);
         ITU_T_BIND_PER(*extendedDerivation_);
@@ -1658,6 +1782,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*localDetail_);
         ITU_T_BIND_PER(*extendedDerivation_);
     }
+
+    // sequence DomainManagementParameters
 
     template<> void DomainManagementParameters::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*loadDataOctet_);
@@ -1670,6 +1796,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*loadDataSyntax_);
         ITU_T_BIND_PER(*maxUploads_);
     }
+
+    // sequence ProgramInvocationManagementParameters
 
     template<> void ProgramInvocationManagementParameters::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*executionArgMaxSize_);
@@ -1687,6 +1815,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*stepMode_);
     }
 
+    // sequence VariableAccessParameters
+
     template<> void VariableAccessParameters::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*uninterruptibleAccess_);
         ITU_T_BIND_PER(*singleMode_);
@@ -1698,6 +1828,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*singleMode_);
         ITU_T_BIND_PER(*unnamedMode_);
     }
+
+    // sequence DataParameters
 
     template<> void DataParameters::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -1731,6 +1863,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_OPTIONAL_CHECK_PER(8) ITU_T_BIND_PER(mmsString_);
     }
 
+    // sequence floating-point
+
     template<> void DataParameters::Floating_point_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*total_);
         ITU_T_BIND_PER(*exponent_);
@@ -1741,6 +1875,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*exponent_);
     }
 
+    // sequence SemaphoreManagementParameters
+
     template<> void SemaphoreManagementParameters::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*algorithm_);
     }
@@ -1749,6 +1885,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*algorithm_);
     }
 
+    // sequence OperatorCommunicationParameters
+
     template<> void OperatorCommunicationParameters::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*input_time_out_);
     }
@@ -1756,6 +1894,8 @@ namespace MMS_SCI_Module_1 {
     template<> void OperatorCommunicationParameters::serialize(boost::asn1::x691::input_coder& arch) {
         ITU_T_BIND_PER(*input_time_out_);
     }
+
+    // sequence ErrorParameters
 
     template<> void ErrorParameters::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*additionalCode_);
@@ -1767,6 +1907,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*additionalDetial_);
     }
 
+    // sequence additionalDetial
+
     template<> void ErrorParameters::AdditionalDetial_type::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*size_);
         ITU_T_BIND_PER(*syntax_);
@@ -1776,6 +1918,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*size_);
         ITU_T_BIND_PER(*syntax_);
     }
+
+    // sequence FileManagementParameters
 
     template<> void FileManagementParameters::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*fileName_);

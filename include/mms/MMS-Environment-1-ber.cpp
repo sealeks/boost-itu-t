@@ -9,6 +9,8 @@
 
 namespace MMS_Environment_1 {
 
+    // sequence ApplicationReference
+
     template<> void ApplicationReference::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(ap_title_, 0);
         ITU_T_EXPLICIT_TAG(ap_invocation_id_, 1);

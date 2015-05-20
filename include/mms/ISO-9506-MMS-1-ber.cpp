@@ -9,6 +9,8 @@
 
 namespace ISO_9506_MMS_1 {
 
+    // choice MMSpdu
+
     template<> void MMSpdu::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case MMSpdu_confirmed_RequestPDU:
@@ -90,22 +92,6 @@ namespace ISO_9506_MMS_1 {
     template<> void MMSpdu::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -198,19 +184,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence Confirmed-RequestPDU
 
     template<> void Confirmed_RequestPDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(*invokeID_);
@@ -227,6 +207,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_EXTENTION;
         ITU_T_CHOICE_TAG(service_ext_, 79);
     }
+
+    // choice ConfirmedServiceRequest
 
     template<> void ConfirmedServiceRequest::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -669,22 +651,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ConfirmedServiceRequest::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1209,19 +1175,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice AdditionalService-Request
 
     template<> void AdditionalService_Request::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1349,22 +1309,6 @@ namespace ISO_9506_MMS_1 {
     template<> void AdditionalService_Request::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1511,19 +1455,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice Request-Detail
 
     template<> void Request_Detail::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1576,22 +1514,6 @@ namespace ISO_9506_MMS_1 {
     template<> void Request_Detail::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1642,14 +1564,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<null_type > (true, Request_Detail_otherRequests))) return;
@@ -1657,6 +1571,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // sequence Unconfirmed-PDU
 
     template<> void Unconfirmed_PDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*service_);
@@ -1669,6 +1585,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_EXTENTION;
         ITU_T_CHOICE_TAG(service_ext_, 79);
     }
+
+    // choice UnconfirmedService
 
     template<> void UnconfirmedService::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1696,22 +1614,6 @@ namespace ISO_9506_MMS_1 {
     template<> void UnconfirmedService::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1738,19 +1640,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice Unconfirmed-Detail
 
     template<> void Unconfirmed_Detail::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1773,22 +1669,6 @@ namespace ISO_9506_MMS_1 {
     template<> void Unconfirmed_Detail::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1803,14 +1683,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<null_type > (true, Unconfirmed_Detail_otherRequests))) return;
@@ -1818,6 +1690,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // sequence Confirmed-ResponsePDU
 
     template<> void Confirmed_ResponsePDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(*invokeID_);
@@ -1832,6 +1706,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_EXTENTION;
         ITU_T_CHOICE_TAG(service_ext_, 79);
     }
+
+    // choice ConfirmedServiceResponse
 
     template<> void ConfirmedServiceResponse::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -2269,22 +2145,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ConfirmedServiceResponse::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -2803,19 +2663,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice AdditionalService-Response
 
     template<> void AdditionalService_Response::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -2943,22 +2797,6 @@ namespace ISO_9506_MMS_1 {
     template<> void AdditionalService_Response::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -3105,19 +2943,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice Response-Detail
 
     template<> void Response_Detail::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -3150,22 +2982,6 @@ namespace ISO_9506_MMS_1 {
     template<> void Response_Detail::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -3192,14 +3008,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<null_type > (true, Response_Detail_otherRequests))) return;
@@ -3207,6 +3015,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // sequence Confirmed-ErrorPDU
 
     template<> void Confirmed_ErrorPDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*invokeID_, 0);
@@ -3219,6 +3029,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(modifierPosition_, 1);
         ITU_T_IMPLICIT_TAG(*serviceError_, 2);
     }
+
+    // sequence ServiceError
 
     template<> void ServiceError::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*errorClass_, 0);
@@ -3233,6 +3045,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(additionalDescription_, 2);
         ITU_T_CHOICE_TAG(serviceSpecificInfo_, 3);
     }
+
+    // choice errorClass
 
     template<> void ServiceError::ErrorClass_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -3310,22 +3124,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ServiceError::ErrorClass_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -3412,19 +3210,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice serviceSpecificInfo
 
     template<> void ServiceError::ServiceSpecificInfo_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -3497,22 +3289,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ServiceError::ServiceSpecificInfo_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -3593,19 +3369,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice AdditionalService-Error
 
     template<> void AdditionalService_Error::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -3658,22 +3428,6 @@ namespace ISO_9506_MMS_1 {
     template<> void AdditionalService_Error::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -3730,19 +3484,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice ObjectName
 
     template<> void ObjectName::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -3770,22 +3518,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ObjectName::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -3812,19 +3544,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence domain-specific
 
     template<> void ObjectName::Domain_specific_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(*domainID_);
@@ -3835,6 +3561,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_TAG(*domainID_);
         ITU_T_BIND_TAG(*itemID_);
     }
+
+    // choice ObjectClass
 
     template<> void ObjectClass::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -3857,22 +3585,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ObjectClass::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -3893,19 +3605,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence Initiate-RequestPDU
 
     template<> void Initiate_RequestPDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(localDetailCalling_, 0);
@@ -3922,6 +3628,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(proposedDataStructureNestingLevel_, 3);
         ITU_T_IMPLICIT_TAG(*initRequestDetail_, 4);
     }
+
+    // sequence initRequestDetail
 
     template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*proposedVersionNumber_, 0);
@@ -3943,6 +3651,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalling_, 5);
     }
 
+    // sequence Initiate-ResponsePDU
+
     template<> void Initiate_ResponsePDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(localDetailCalled_, 0);
         ITU_T_IMPLICIT_TAG(*negotiatedMaxServOutstandingCalling_, 1);
@@ -3958,6 +3668,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(negotiatedDataStructureNestingLevel_, 3);
         ITU_T_IMPLICIT_TAG(*initResponseDetail_, 4);
     }
+
+    // sequence initResponseDetail
 
     template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*negotiatedVersionNumber_, 0);
@@ -3979,6 +3691,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalled_, 5);
     }
 
+    // sequence Cancel-ErrorPDU
+
     template<> void Cancel_ErrorPDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*originalInvokeID_, 0);
         ITU_T_IMPLICIT_TAG(*serviceError_, 1);
@@ -3989,6 +3703,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*serviceError_, 1);
     }
 
+    // sequence RejectPDU
+
     template<> void RejectPDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(originalInvokeID_, 0);
         ITU_T_BIND_CHOICE(*rejectReason_);
@@ -3998,6 +3714,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(originalInvokeID_, 0);
         ITU_T_BIND_CHOICE(*rejectReason_);
     }
+
+    // choice rejectReason
 
     template<> void RejectPDU::RejectReason_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -4065,22 +3783,6 @@ namespace ISO_9506_MMS_1 {
     template<> void RejectPDU::RejectReason_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -4155,19 +3857,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence DefineAccessControlList-Request
 
     template<> void DefineAccessControlList_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControlListName_, 0);
@@ -4178,6 +3874,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*accessControlListName_, 0);
         ITU_T_IMPLICIT_TAG(*accessControlListElements_, 1);
     }
+
+    // sequence accessControlListElements
 
     template<> void DefineAccessControlList_Request::AccessControlListElements_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(readAccessCondition_, 0);
@@ -4198,6 +3896,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(deleteAccessCondition_, 5);
         ITU_T_CHOICE_TAG(editAccessCondition_, 6);
     }
+
+    // choice GetAccessControlListAttributes-Request
 
     template<> void GetAccessControlListAttributes_Request::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -4225,22 +3925,6 @@ namespace ISO_9506_MMS_1 {
     template<> void GetAccessControlListAttributes_Request::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -4267,19 +3951,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence namedObject
 
     template<> void GetAccessControlListAttributes_Request::NamedObject_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*objectClass_, 0);
@@ -4290,6 +3968,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*objectClass_, 0);
         ITU_T_CHOICE_TAG(*objectName_, 1);
     }
+
+    // sequence GetAccessControlListAttributes-Response
 
     template<> void GetAccessControlListAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_EXPLICIT_TAG(*name_, 0);
@@ -4306,6 +3986,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*references_, 3);
         ITU_T_IMPLICIT_TAG(accessControlList_, 4);
     }
+
+    // sequence accessControlListElements
 
     template<> void GetAccessControlListAttributes_Response::AccessControlListElements_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(readAccessCondition_, 0);
@@ -4327,6 +4009,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(editAccessCondition_, 6);
     }
 
+    // sequence 
+
     template<> void GetAccessControlListAttributes_Response::References_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*objectClass_, 0);
         ITU_T_IMPLICIT_TAG(*objectCount_, 1);
@@ -4336,6 +4020,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*objectClass_, 0);
         ITU_T_IMPLICIT_TAG(*objectCount_, 1);
     }
+
+    // sequence ReportAccessControlledObjects-Request
 
     template<> void ReportAccessControlledObjects_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControlList_, 0);
@@ -4349,6 +4035,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(continueAfter_, 2);
     }
 
+    // sequence ReportAccessControlledObjects-Response
+
     template<> void ReportAccessControlledObjects_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfNames_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
@@ -4359,6 +4047,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
+    // sequence ChangeAccessControl-Request
+
     template<> void ChangeAccessControl_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*scopeOfChange_);
         ITU_T_IMPLICIT_TAG(*accessControlListName_, 2);
@@ -4368,6 +4058,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*scopeOfChange_);
         ITU_T_IMPLICIT_TAG(*accessControlListName_, 2);
     }
+
+    // choice scopeOfChange
 
     template<> void ChangeAccessControl_Request::ScopeOfChange_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -4390,22 +4082,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ChangeAccessControl_Request::ScopeOfChange_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -4426,19 +4102,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence listOfObjects
 
     template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*objectClass_, 0);
@@ -4449,6 +4119,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*objectClass_, 0);
         ITU_T_CHOICE_TAG(*objectScope_, 1);
     }
+
+    // choice objectScope
 
     template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -4481,22 +4153,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ChangeAccessControl_Request::ScopeOfChange_type::ListOfObjects_type::ObjectScope_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -4529,19 +4185,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence ChangeAccessControl-Response
 
     template<> void ChangeAccessControl_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*numberMatched_, 0);
@@ -4552,6 +4202,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*numberMatched_, 0);
         ITU_T_IMPLICIT_TAG(*numberChanged_, 1);
     }
+
+    // sequence StatusResponse
 
     template<> void StatusResponse::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*vmdLogicalStatus_, 0);
@@ -4564,6 +4216,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*vmdPhysicalStatus_, 1);
         ITU_T_IMPLICIT_TAG(localDetail_, 2);
     }
+
+    // choice CS-Status-Response
 
     template<> void CS_Status_Response::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -4584,49 +4238,14 @@ namespace ISO_9506_MMS_1 {
     }
 
     template<> void CS_Status_Response::serialize(boost::asn1::x690::input_coder& arch) {
-        int __tag_id__ = arch.test_id();
-        switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x80:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            default:
-            {
-                if (ITU_T_BIND_TAG(*value<FullResponse_type > (true, CS_Status_Response_fullResponse))) return;
-                else free();
-                if (ITU_T_BIND_TAG(*value<null_type > (true, CS_Status_Response_noExtraResponse))) return;
-                else free();
-            }
-        }
+
+        if (ITU_T_BIND_TAG(*value<FullResponse_type > (true, CS_Status_Response_fullResponse))) return;
+        else free();
+        if (ITU_T_BIND_TAG(*value<null_type > (true, CS_Status_Response_noExtraResponse))) return;
+        else free();
     }
+
+    // sequence fullResponse
 
     template<> void CS_Status_Response::FullResponse_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*operationState_, 0);
@@ -4641,6 +4260,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(extendedStatusMask_, 2);
         ITU_T_BIND_CHOICE(*selectedProgramInvocation_);
     }
+
+    // choice selectedProgramInvocation
 
     template<> void CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -4663,22 +4284,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_Status_Response::FullResponse_type::SelectedProgramInvocation_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -4699,19 +4304,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence GetNameList-Request
 
     template<> void GetNameList_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*objectClass_, 0);
@@ -4724,6 +4323,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*objectScope_, 1);
         ITU_T_IMPLICIT_TAG(continueAfter_, 2);
     }
+
+    // choice objectScope
 
     template<> void GetNameList_Request::ObjectScope_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -4751,22 +4352,6 @@ namespace ISO_9506_MMS_1 {
     template<> void GetNameList_Request::ObjectScope_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -4793,19 +4378,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence GetNameList-Response
 
     template<> void GetNameList_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfIdentifier_, 0);
@@ -4816,6 +4395,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfIdentifier_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
+
+    // sequence Identify-Response
 
     template<> void Identify_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*vendorName_, 0);
@@ -4831,6 +4412,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(listOfAbstractSyntaxes_, 3);
     }
 
+    // sequence Rename-Request
+
     template<> void Rename_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*objectClass_, 0);
         ITU_T_CHOICE_TAG(*currentName_, 1);
@@ -4843,6 +4426,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*newIdentifier_, 2);
     }
 
+    // sequence GetCapabilityList-Request
+
     template<> void GetCapabilityList_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(continueAfter_);
     }
@@ -4850,6 +4435,8 @@ namespace ISO_9506_MMS_1 {
     template<> void GetCapabilityList_Request::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_TAG(continueAfter_);
     }
+
+    // sequence GetCapabilityList-Response
 
     template<> void GetCapabilityList_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfCapabilities_, 0);
@@ -4860,6 +4447,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfCapabilities_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
+
+    // sequence InitiateDownloadSequence-Request
 
     template<> void InitiateDownloadSequence_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*domainName_, 0);
@@ -4873,6 +4462,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*sharable_, 2);
     }
 
+    // sequence DownloadSegment-Response
+
     template<> void DownloadSegment_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*loadData_);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
@@ -4882,6 +4473,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*loadData_);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
+
+    // choice LoadData
 
     template<> void LoadData::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -4909,22 +4502,6 @@ namespace ISO_9506_MMS_1 {
     template<> void LoadData::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -4934,14 +4511,6 @@ namespace ISO_9506_MMS_1 {
                         else free();
                         break;
                     }
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
                     default:
                     {
                     }
@@ -4957,6 +4526,8 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
+    // sequence TerminateDownloadSequence-Request
+
     template<> void TerminateDownloadSequence_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*domainName_, 0);
         ITU_T_IMPLICIT_TAG(discard_, 1);
@@ -4966,6 +4537,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*domainName_, 0);
         ITU_T_IMPLICIT_TAG(discard_, 1);
     }
+
+    // sequence InitiateUploadSequence-Response
 
     template<> void InitiateUploadSequence_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*ulsmID_, 0);
@@ -4977,6 +4550,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfCapabilities_, 1);
     }
 
+    // sequence UploadSegment-Response
+
     template<> void UploadSegment_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*loadData_);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
@@ -4986,6 +4561,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*loadData_);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
+
+    // sequence RequestDomainDownload-Request
 
     template<> void RequestDomainDownload_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*domainName_, 0);
@@ -5001,6 +4578,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*fileName_, 4);
     }
 
+    // sequence RequestDomainUpload-Request
+
     template<> void RequestDomainUpload_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*domainName_, 0);
         ITU_T_IMPLICIT_TAG(*fileName_, 1);
@@ -5010,6 +4589,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*domainName_, 0);
         ITU_T_IMPLICIT_TAG(*fileName_, 1);
     }
+
+    // sequence LoadDomainContent-Request
 
     template<> void LoadDomainContent_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*domainName_, 0);
@@ -5027,6 +4608,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(thirdParty_, 5);
     }
 
+    // sequence StoreDomainContent-Request
+
     template<> void StoreDomainContent_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*domainName_, 0);
         ITU_T_IMPLICIT_TAG(*fileName_, 1);
@@ -5038,6 +4621,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*fileName_, 1);
         ITU_T_IMPLICIT_TAG(thirdParty_, 2);
     }
+
+    // sequence GetDomainAttributes-Response
 
     template<> void GetDomainAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfCapabilities_, 0);
@@ -5059,6 +4644,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(accessControlList_, 6);
     }
 
+    // sequence CreateProgramInvocation-Request
+
     template<> void CreateProgramInvocation_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
         ITU_T_IMPLICIT_TAG(*listOfDomainNames_, 1);
@@ -5073,6 +4660,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(monitorType_, 3);
     }
 
+    // sequence Start-Request
+
     template<> void Start_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
         ITU_T_BIND_CHOICE(executionArgument_);
@@ -5082,6 +4671,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
         ITU_T_BIND_CHOICE(executionArgument_);
     }
+
+    // choice executionArgument
 
     template<> void Start_Request::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5109,22 +4700,6 @@ namespace ISO_9506_MMS_1 {
     template<> void Start_Request::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -5139,14 +4714,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<external_type > (true, ExecutionArgument_type_encodedString))) return;
@@ -5156,6 +4723,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // choice CS-Start-Request
 
     template<> void CS_Start_Request_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5176,49 +4745,14 @@ namespace ISO_9506_MMS_1 {
     }
 
     template<> void CS_Start_Request_impl::serialize(boost::asn1::x690::input_coder& arch) {
-        int __tag_id__ = arch.test_id();
-        switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x80:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            default:
-            {
-                if (ITU_T_BIND_TAG(*value<null_type > (true, CS_Start_Request_impl_normal))) return;
-                else free();
-                if (ITU_T_BIND_TAG(*value<Controlling_type > (true, CS_Start_Request_impl_controlling))) return;
-                else free();
-            }
-        }
+
+        if (ITU_T_BIND_TAG(*value<null_type > (true, CS_Start_Request_impl_normal))) return;
+        else free();
+        if (ITU_T_BIND_TAG(*value<Controlling_type > (true, CS_Start_Request_impl_controlling))) return;
+        else free();
     }
+
+    // sequence controlling
 
     template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(startLocation_, 0);
@@ -5229,6 +4763,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(startLocation_, 0);
         ITU_T_CHOICE_TAG(startCount_, 1);
     }
+
+    // choice StartCount
 
     template<> void StartCount::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5256,22 +4792,6 @@ namespace ISO_9506_MMS_1 {
     template<> void StartCount::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -5298,19 +4818,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence Stop-Request
 
     template<> void Stop_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
@@ -5319,6 +4833,8 @@ namespace ISO_9506_MMS_1 {
     template<> void Stop_Request::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
     }
+
+    // sequence Resume-Request
 
     template<> void Resume_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
@@ -5329,6 +4845,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
         ITU_T_BIND_CHOICE(executionArgument_);
     }
+
+    // choice executionArgument
 
     template<> void Resume_Request::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5356,22 +4874,6 @@ namespace ISO_9506_MMS_1 {
     template<> void Resume_Request::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -5386,14 +4888,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<external_type > (true, ExecutionArgument_type_encodedString))) return;
@@ -5403,6 +4897,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // choice CS-Resume-Request
 
     template<> void CS_Resume_Request_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5423,49 +4919,14 @@ namespace ISO_9506_MMS_1 {
     }
 
     template<> void CS_Resume_Request_impl::serialize(boost::asn1::x690::input_coder& arch) {
-        int __tag_id__ = arch.test_id();
-        switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x80:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            default:
-            {
-                if (ITU_T_BIND_TAG(*value<null_type > (true, CS_Resume_Request_impl_normal))) return;
-                else free();
-                if (ITU_T_BIND_TAG(*value<Controlling_type > (true, CS_Resume_Request_impl_controlling))) return;
-                else free();
-            }
-        }
+
+        if (ITU_T_BIND_TAG(*value<null_type > (true, CS_Resume_Request_impl_normal))) return;
+        else free();
+        if (ITU_T_BIND_TAG(*value<Controlling_type > (true, CS_Resume_Request_impl_controlling))) return;
+        else free();
     }
+
+    // sequence controlling
 
     template<> void CS_Resume_Request_impl::Controlling_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*modeType_);
@@ -5474,6 +4935,8 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_Resume_Request_impl::Controlling_type::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(*modeType_);
     }
+
+    // choice modeType
 
     template<> void CS_Resume_Request_impl::Controlling_type::ModeType_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5496,22 +4959,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_Resume_Request_impl::Controlling_type::ModeType_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -5532,19 +4979,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence Reset-Request
 
     template<> void Reset_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
@@ -5554,6 +4995,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
     }
 
+    // sequence Kill-Request
+
     template<> void Kill_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
     }
@@ -5561,6 +5004,8 @@ namespace ISO_9506_MMS_1 {
     template<> void Kill_Request::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
     }
+
+    // sequence GetProgramInvocationAttributes-Response
 
     template<> void GetProgramInvocationAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*state_, 0);
@@ -5581,6 +5026,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*executionArgument_);
         ITU_T_IMPLICIT_TAG(accessControlList_, 6);
     }
+
+    // choice executionArgument
 
     template<> void GetProgramInvocationAttributes_Response::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5608,22 +5055,6 @@ namespace ISO_9506_MMS_1 {
     template<> void GetProgramInvocationAttributes_Response::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -5633,14 +5064,6 @@ namespace ISO_9506_MMS_1 {
                         else free();
                         break;
                     }
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
                     default:
                     {
                     }
@@ -5656,6 +5079,8 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
+    // sequence CS-GetProgramInvocationAttributes-Response
+
     template<> void CS_GetProgramInvocationAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*errorCode_, 0);
         ITU_T_CHOICE_TAG(*control_, 1);
@@ -5665,6 +5090,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*errorCode_, 0);
         ITU_T_CHOICE_TAG(*control_, 1);
     }
+
+    // choice control
 
     template<> void CS_GetProgramInvocationAttributes_Response::Control_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5692,22 +5119,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_GetProgramInvocationAttributes_Response::Control_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -5734,19 +5145,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence controlling
 
     template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*controlledPI_, 0);
@@ -5759,6 +5164,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(programLocation_, 1);
         ITU_T_CHOICE_TAG(*runningMode_, 2);
     }
+
+    // choice runningMode
 
     template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5786,22 +5193,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -5828,19 +5219,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice controlled
 
     template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlled_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5863,22 +5248,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlled_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -5899,19 +5268,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence Select-Request
 
     template<> void Select_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(controlling_, 0);
@@ -5923,6 +5286,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(controlled_, 1);
     }
 
+    // sequence AlterProgramInvocationAttributes-Request
+
     template<> void AlterProgramInvocationAttributes_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocation_, 0);
         ITU_T_CHOICE_TAG(startCount_, 1);
@@ -5932,6 +5297,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*programInvocation_, 0);
         ITU_T_CHOICE_TAG(startCount_, 1);
     }
+
+    // sequence ReconfigureProgramInvocation-Request
 
     template<> void ReconfigureProgramInvocation_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*oldProgramInvocationName_, 0);
@@ -5946,6 +5313,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*domainsToAdd_, 2);
         ITU_T_IMPLICIT_TAG(*domainsToRemove_, 3);
     }
+
+    // choice ControlElement
 
     template<> void ControlElement::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -5978,22 +5347,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ControlElement::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6026,19 +5379,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence beginDomainDef
 
     template<> void ControlElement::BeginDomainDef_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*domainName_, 1);
@@ -6054,6 +5401,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(loadData_, 4);
     }
 
+    // sequence continueDomainDef
+
     template<> void ControlElement::ContinueDomainDef_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*domainName_, 1);
         ITU_T_CHOICE_TAG(*loadData_, 3);
@@ -6063,6 +5412,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*domainName_, 1);
         ITU_T_CHOICE_TAG(*loadData_, 3);
     }
+
+    // sequence piDefinition
 
     template<> void ControlElement::PiDefinition_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*piName_, 0);
@@ -6079,6 +5430,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(monitorType_, 3);
         ITU_T_IMPLICIT_TAG(pIState_, 4);
     }
+
+    // choice InitiateUnitControl-Error
 
     template<> void InitiateUnitControl_Error::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -6101,22 +5454,6 @@ namespace ISO_9506_MMS_1 {
     template<> void InitiateUnitControl_Error::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6137,19 +5474,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence UnitControlLoadSegment-Response
 
     template<> void UnitControlLoadSegment_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*controlElements_, 0);
@@ -6161,6 +5492,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
 
+    // sequence UnitControlUpload-Request
+
     template<> void UnitControlUpload_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*unitControlName_, 0);
         ITU_T_BIND_CHOICE(continueAfter_);
@@ -6170,6 +5503,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*unitControlName_, 0);
         ITU_T_BIND_CHOICE(continueAfter_);
     }
+
+    // choice continueAfter
 
     template<> void UnitControlUpload_Request::ContinueAfter_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -6197,22 +5532,6 @@ namespace ISO_9506_MMS_1 {
     template<> void UnitControlUpload_Request::ContinueAfter_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6239,19 +5558,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence UnitControlUpload-Response
 
     template<> void UnitControlUpload_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*controlElements_, 0);
@@ -6262,6 +5575,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*controlElements_, 0);
         ITU_T_BIND_CHOICE(nextElement_);
     }
+
+    // choice nextElement
 
     template<> void UnitControlUpload_Response::NextElement_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -6289,22 +5604,6 @@ namespace ISO_9506_MMS_1 {
     template<> void UnitControlUpload_Response::NextElement_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6331,19 +5630,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence StartUnitControl-Request
 
     template<> void StartUnitControl_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*unitControlName_, 0);
@@ -6354,6 +5647,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*unitControlName_, 0);
         ITU_T_BIND_CHOICE(executionArgument_);
     }
+
+    // choice executionArgument
 
     template<> void StartUnitControl_Request::ExecutionArgument_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -6381,22 +5676,6 @@ namespace ISO_9506_MMS_1 {
     template<> void StartUnitControl_Request::ExecutionArgument_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6406,14 +5685,6 @@ namespace ISO_9506_MMS_1 {
                         else free();
                         break;
                     }
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
                     default:
                     {
                     }
@@ -6429,6 +5700,8 @@ namespace ISO_9506_MMS_1 {
         }
     }
 
+    // sequence StartUnitControl-Error
+
     template<> void StartUnitControl_Error::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
         ITU_T_IMPLICIT_TAG(*programInvocationState_, 1);
@@ -6439,6 +5712,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*programInvocationState_, 1);
     }
 
+    // sequence StopUnitControl-Error
+
     template<> void StopUnitControl_Error::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
         ITU_T_IMPLICIT_TAG(*programInvocationState_, 1);
@@ -6448,6 +5723,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*programInvocationName_, 0);
         ITU_T_IMPLICIT_TAG(*programInvocationState_, 1);
     }
+
+    // sequence CreateUnitControl-Request
 
     template<> void CreateUnitControl_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*unitControl_, 0);
@@ -6461,6 +5738,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*programInvocations_, 2);
     }
 
+    // sequence AddToUnitControl-Request
+
     template<> void AddToUnitControl_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*unitControl_, 0);
         ITU_T_IMPLICIT_TAG(*domains_, 1);
@@ -6472,6 +5751,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*domains_, 1);
         ITU_T_IMPLICIT_TAG(*programInvocations_, 2);
     }
+
+    // sequence RemoveFromUnitControl-Request
 
     template<> void RemoveFromUnitControl_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*unitControl_, 0);
@@ -6485,6 +5766,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*programInvocations_, 2);
     }
 
+    // sequence GetUnitControlAttributes-Response
+
     template<> void GetUnitControlAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*domains_, 0);
         ITU_T_IMPLICIT_TAG(*programInvocations_, 1);
@@ -6494,6 +5777,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*domains_, 0);
         ITU_T_IMPLICIT_TAG(*programInvocations_, 1);
     }
+
+    // sequence LoadUnitControlFromFile-Request
 
     template<> void LoadUnitControlFromFile_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*unitControlName_, 0);
@@ -6506,6 +5791,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*fileName_, 1);
         ITU_T_IMPLICIT_TAG(thirdParty_, 2);
     }
+
+    // choice LoadUnitControlFromFile-Error
 
     template<> void LoadUnitControlFromFile_Error::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -6533,22 +5820,6 @@ namespace ISO_9506_MMS_1 {
     template<> void LoadUnitControlFromFile_Error::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6575,19 +5846,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence StoreUnitControlToFile-Request
 
     template<> void StoreUnitControlToFile_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*unitControlName_, 0);
@@ -6600,6 +5865,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*fileName_, 1);
         ITU_T_IMPLICIT_TAG(thirdParty_, 2);
     }
+
+    // choice DeleteUnitControl-Error
 
     template<> void DeleteUnitControl_Error::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -6622,22 +5889,6 @@ namespace ISO_9506_MMS_1 {
     template<> void DeleteUnitControl_Error::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6658,19 +5909,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice TypeSpecification
 
     template<> void TypeSpecification::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -6693,22 +5938,6 @@ namespace ISO_9506_MMS_1 {
     template<> void TypeSpecification::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6723,14 +5952,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_CHOICE(*value<MMS_Object_Module_1::TypeDescription > (true, TypeSpecification_typeDescription))) return;
@@ -6738,6 +5959,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // choice 
 
     template<> void AlternateAccess_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -6760,22 +5983,6 @@ namespace ISO_9506_MMS_1 {
     template<> void AlternateAccess_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6790,14 +5997,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_CHOICE(*value<AlternateAccessSelection > (true, AlternateAccess_sequence_of_unnamed))) return;
@@ -6805,6 +6004,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // sequence named
 
     template<> void AlternateAccess_sequence_of::Named_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*componentName_, 0);
@@ -6815,6 +6016,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*componentName_, 0);
         ITU_T_BIND_CHOICE(*access_);
     }
+
+    // choice AlternateAccessSelection
 
     template<> void AlternateAccessSelection::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -6837,22 +6040,6 @@ namespace ISO_9506_MMS_1 {
     template<> void AlternateAccessSelection::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6867,14 +6054,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_CHOICE(*value<SelectAccess_type > (true, AlternateAccessSelection_selectAccess))) return;
@@ -6882,6 +6061,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // sequence selectAlternateAccess
 
     template<> void AlternateAccessSelection::SelectAlternateAccess_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*accessSelection_);
@@ -6892,6 +6073,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*accessSelection_);
         ITU_T_BIND_TAG(*alternateAccess_);
     }
+
+    // choice accessSelection
 
     template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -6924,22 +6107,6 @@ namespace ISO_9506_MMS_1 {
     template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -6972,19 +6139,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence indexRange
 
     template<> void AlternateAccessSelection::SelectAlternateAccess_type::AccessSelection_type::IndexRange_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*lowIndex_, 0);
@@ -6995,6 +6156,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*lowIndex_, 0);
         ITU_T_IMPLICIT_TAG(*numberOfElements_, 1);
     }
+
+    // choice selectAccess
 
     template<> void AlternateAccessSelection::SelectAccess_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -7027,22 +6190,6 @@ namespace ISO_9506_MMS_1 {
     template<> void AlternateAccessSelection::SelectAccess_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -7075,19 +6222,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence indexRange
 
     template<> void AlternateAccessSelection::SelectAccess_type::IndexRange_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*lowIndex_, 0);
@@ -7098,6 +6239,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*lowIndex_, 0);
         ITU_T_IMPLICIT_TAG(*numberOfElements_, 1);
     }
+
+    // choice AccessResult
 
     template<> void AccessResult::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -7120,22 +6263,6 @@ namespace ISO_9506_MMS_1 {
     template<> void AccessResult::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -7150,14 +6277,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_CHOICE(*value<Data > (true, AccessResult_success))) return;
@@ -7165,6 +6284,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // choice Data
 
     template<> void Data::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -7252,22 +6373,6 @@ namespace ISO_9506_MMS_1 {
     template<> void Data::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -7366,19 +6471,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice VariableAccessSpecification
 
     template<> void VariableAccessSpecification::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -7401,22 +6500,6 @@ namespace ISO_9506_MMS_1 {
     template<> void VariableAccessSpecification::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -7437,19 +6520,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence 
 
     template<> void VariableAccessSpecification::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*variableSpecification_);
@@ -7460,6 +6537,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
     }
+
+    // choice VariableSpecification
 
     template<> void VariableSpecification::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -7497,22 +6576,6 @@ namespace ISO_9506_MMS_1 {
     template<> void VariableSpecification::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -7551,19 +6614,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence variableDescription
 
     template<> void VariableSpecification::VariableDescription_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*address_);
@@ -7575,6 +6632,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*typeSpecification_);
     }
 
+    // sequence Read-Request
+
     template<> void Read_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(specificationWithResult_, 0);
         ITU_T_CHOICE_TAG(*variableAccessSpecification_, 1);
@@ -7584,6 +6643,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(specificationWithResult_, 0);
         ITU_T_CHOICE_TAG(*variableAccessSpecification_, 1);
     }
+
+    // sequence Read-Response
 
     template<> void Read_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(variableAccessSpecification_, 0);
@@ -7595,6 +6656,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfAccessResult_, 1);
     }
 
+    // sequence Write-Request
+
     template<> void Write_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*variableAccessSpecification_);
         ITU_T_IMPLICIT_TAG(*listOfData_, 0);
@@ -7604,6 +6667,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*variableAccessSpecification_);
         ITU_T_IMPLICIT_TAG(*listOfData_, 0);
     }
+
+    // choice 
 
     template<> void Write_Response_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -7626,22 +6691,6 @@ namespace ISO_9506_MMS_1 {
     template<> void Write_Response_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -7662,19 +6711,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence InformationReport
 
     template<> void InformationReport::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*variableAccessSpecification_);
@@ -7685,6 +6728,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*variableAccessSpecification_);
         ITU_T_IMPLICIT_TAG(*listOfAccessResult_, 0);
     }
+
+    // choice GetVariableAccessAttributes-Request
 
     template<> void GetVariableAccessAttributes_Request::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -7707,22 +6752,6 @@ namespace ISO_9506_MMS_1 {
     template<> void GetVariableAccessAttributes_Request::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -7743,19 +6772,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence GetVariableAccessAttributes-Response
 
     template<> void GetVariableAccessAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*mmsDeletable_, 0);
@@ -7773,6 +6796,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(meaning_, 4);
     }
 
+    // sequence DefineNamedVariable-Request
+
     template<> void DefineNamedVariable_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*variableName_, 0);
         ITU_T_CHOICE_TAG(*address_, 1);
@@ -7784,6 +6809,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*address_, 1);
         ITU_T_CHOICE_TAG(typeSpecification_, 2);
     }
+
+    // sequence DeleteVariableAccess-Request
 
     template<> void DeleteVariableAccess_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(scopeOfDelete_, 0);
@@ -7797,6 +6824,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(domainName_, 2);
     }
 
+    // sequence DeleteVariableAccess-Response
+
     template<> void DeleteVariableAccess_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*numberMatched_, 0);
         ITU_T_IMPLICIT_TAG(*numberDeleted_, 1);
@@ -7806,6 +6835,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*numberMatched_, 0);
         ITU_T_IMPLICIT_TAG(*numberDeleted_, 1);
     }
+
+    // sequence DefineNamedVariableList-Request
 
     template<> void DefineNamedVariableList_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*variableListName_);
@@ -7817,6 +6848,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfVariable_, 0);
     }
 
+    // sequence 
+
     template<> void DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
@@ -7826,6 +6859,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
     }
+
+    // sequence GetNamedVariableListAttributes-Response
 
     template<> void GetNamedVariableListAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*mmsDeletable_, 0);
@@ -7839,6 +6874,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(accessControlList_, 2);
     }
 
+    // sequence 
+
     template<> void GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
@@ -7848,6 +6885,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*variableSpecification_);
         ITU_T_IMPLICIT_TAG(alternateAccess_, 5);
     }
+
+    // sequence DeleteNamedVariableList-Request
 
     template<> void DeleteNamedVariableList_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(scopeOfDelete_, 0);
@@ -7861,6 +6900,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(domainName_, 2);
     }
 
+    // sequence DeleteNamedVariableList-Response
+
     template<> void DeleteNamedVariableList_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*numberMatched_, 0);
         ITU_T_IMPLICIT_TAG(*numberDeleted_, 1);
@@ -7871,6 +6912,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*numberDeleted_, 1);
     }
 
+    // sequence DefineNamedType-Request
+
     template<> void DefineNamedType_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*typeName_);
         ITU_T_BIND_CHOICE(*typeSpecification_);
@@ -7880,6 +6923,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*typeName_);
         ITU_T_BIND_CHOICE(*typeSpecification_);
     }
+
+    // sequence GetNamedTypeAttributes-Response
 
     template<> void GetNamedTypeAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*mmsDeletable_, 0);
@@ -7895,6 +6940,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(meaning_, 4);
     }
 
+    // sequence DeleteNamedType-Request
+
     template<> void DeleteNamedType_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(scopeOfDelete_, 0);
         ITU_T_IMPLICIT_TAG(listOfTypeName_, 1);
@@ -7907,6 +6954,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(domainName_, 2);
     }
 
+    // sequence DeleteNamedType-Response
+
     template<> void DeleteNamedType_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*numberMatched_, 0);
         ITU_T_IMPLICIT_TAG(*numberDeleted_, 1);
@@ -7916,6 +6965,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*numberMatched_, 0);
         ITU_T_IMPLICIT_TAG(*numberDeleted_, 1);
     }
+
+    // sequence ExchangeData-Request
 
     template<> void ExchangeData_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*dataExchangeName_, 0);
@@ -7927,6 +6978,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfRequestData_, 1);
     }
 
+    // sequence ExchangeData-Response
+
     template<> void ExchangeData_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfResponseData_, 0);
     }
@@ -7934,6 +6987,8 @@ namespace ISO_9506_MMS_1 {
     template<> void ExchangeData_Response::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfResponseData_, 0);
     }
+
+    // sequence GetDataExchangeAttributes-Response
 
     template<> void GetDataExchangeAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*inUse_, 0);
@@ -7950,6 +7005,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(programInvocation_, 3);
         ITU_T_IMPLICIT_TAG(accessControlList_, 4);
     }
+
+    // sequence TakeControl-Request
 
     template<> void TakeControl_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*semaphoreName_, 0);
@@ -7973,6 +7030,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(applicationToPreempt_, 7);
     }
 
+    // choice TakeControl-Response
+
     template<> void TakeControl_Response::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case TakeControl_Response_noResult:
@@ -7994,22 +7053,6 @@ namespace ISO_9506_MMS_1 {
     template<> void TakeControl_Response::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -8030,19 +7073,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence RelinquishControl-Request
 
     template<> void RelinquishControl_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*semaphoreName_, 0);
@@ -8054,6 +7091,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(namedToken_, 1);
     }
 
+    // sequence DefineSemaphore-Request
+
     template<> void DefineSemaphore_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*semaphoreName_, 0);
         ITU_T_IMPLICIT_TAG(*numberOfTokens_, 1);
@@ -8063,6 +7102,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*semaphoreName_, 0);
         ITU_T_IMPLICIT_TAG(*numberOfTokens_, 1);
     }
+
+    // sequence ReportSemaphoreStatus-Response
 
     template<> void ReportSemaphoreStatus_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*mmsDeletable_, 0);
@@ -8082,6 +7123,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(accessControlList_, 5);
     }
 
+    // sequence ReportPoolSemaphoreStatus-Request
+
     template<> void ReportPoolSemaphoreStatus_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*semaphoreName_, 0);
         ITU_T_IMPLICIT_TAG(nameToStartAfter_, 1);
@@ -8092,6 +7135,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(nameToStartAfter_, 1);
     }
 
+    // sequence ReportPoolSemaphoreStatus-Response
+
     template<> void ReportPoolSemaphoreStatus_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfNamedTokens_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
@@ -8101,6 +7146,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfNamedTokens_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
+
+    // choice 
 
     template<> void ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -8128,22 +7175,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ReportPoolSemaphoreStatus_Response::ListOfNamedTokens_type_sequence_of::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -8170,19 +7201,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence ReportSemaphoreEntryStatus-Request
 
     template<> void ReportSemaphoreEntryStatus_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*semaphoreName_, 0);
@@ -8196,6 +7221,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(entryIDToStartAfter_, 2);
     }
 
+    // sequence ReportSemaphoreEntryStatus-Response
+
     template<> void ReportSemaphoreEntryStatus_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfSemaphoreEntry_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
@@ -8205,6 +7232,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfSemaphoreEntry_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
+
+    // sequence SemaphoreEntry
 
     template<> void SemaphoreEntry::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*entryID_, 0);
@@ -8228,6 +7257,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(relinquishIfConnectionLost_, 7);
     }
 
+    // sequence AttachToSemaphore
+
     template<> void AttachToSemaphore::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*semaphoreName_, 0);
         ITU_T_IMPLICIT_TAG(namedToken_, 1);
@@ -8248,6 +7279,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(relinquishIfConnectionLost_, 6);
     }
 
+    // sequence Input-Request
+
     template<> void Input_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*operatorStationName_, 0);
         ITU_T_IMPLICIT_TAG(echo_, 1);
@@ -8262,6 +7295,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(inputTimeOut_, 3);
     }
 
+    // sequence Output-Request
+
     template<> void Output_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*operatorStationName_, 0);
         ITU_T_IMPLICIT_TAG(*listOfOutputData_, 1);
@@ -8272,6 +7307,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfOutputData_, 1);
     }
 
+    // sequence TriggerEvent-Request
+
     template<> void TriggerEvent_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionName_, 0);
         ITU_T_IMPLICIT_TAG(priority_, 1);
@@ -8281,6 +7318,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*eventConditionName_, 0);
         ITU_T_IMPLICIT_TAG(priority_, 1);
     }
+
+    // sequence EventNotification
 
     template<> void EventNotification::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventEnrollmentName_, 0);
@@ -8304,6 +7343,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(actionResult_, 8);
     }
 
+    // sequence actionResult
+
     template<> void EventNotification::ActionResult_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*eventActionName_);
         ITU_T_BIND_CHOICE(*successOrFailure_);
@@ -8313,6 +7354,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_CHOICE(*eventActionName_);
         ITU_T_BIND_CHOICE(*successOrFailure_);
     }
+
+    // choice successOrFailure
 
     template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -8335,22 +7378,6 @@ namespace ISO_9506_MMS_1 {
     template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -8371,19 +7398,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence success
 
     template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*confirmedServiceResponse_);
@@ -8395,6 +7416,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(cs_Response_Detail_, 79);
     }
 
+    // sequence failure
+
     template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(modifierPosition_, 0);
         ITU_T_IMPLICIT_TAG(*serviceError_, 1);
@@ -8404,6 +7427,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(modifierPosition_, 0);
         ITU_T_IMPLICIT_TAG(*serviceError_, 1);
     }
+
+    // choice CS-EventNotification
 
     template<> void CS_EventNotification_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -8431,22 +7456,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_EventNotification_impl::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -8467,14 +7476,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<null_type > (true, CS_EventNotification_impl_noEnhancement))) return;
@@ -8482,6 +7483,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // sequence AcknowledgeEventNotification-Request
 
     template<> void AcknowledgeEventNotification_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventEnrollmentName_, 0);
@@ -8494,6 +7497,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*acknowledgedState_, 2);
         ITU_T_CHOICE_TAG(*timeOfAcknowledgedTransition_, 3);
     }
+
+    // sequence GetAlarmSummary-Request
 
     template<> void GetAlarmSummary_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(enrollmentsOnly_, 0);
@@ -8511,6 +7516,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(continueAfter_, 5);
     }
 
+    // sequence severityFilter
+
     template<> void GetAlarmSummary_Request::SeverityFilter_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*mostSevere_, 0);
         ITU_T_IMPLICIT_TAG(*leastSevere_, 1);
@@ -8521,6 +7528,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*leastSevere_, 1);
     }
 
+    // sequence GetAlarmSummary-Response
+
     template<> void GetAlarmSummary_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfAlarmSummary_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
@@ -8530,6 +7539,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfAlarmSummary_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
+
+    // sequence AlarmSummary
 
     template<> void AlarmSummary::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionName_, 0);
@@ -8550,6 +7561,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(timeOfLastTransitionToActive_, 5);
         ITU_T_CHOICE_TAG(timeOfLastTransitionToIdle_, 6);
     }
+
+    // choice EN-Additional-Detail
 
     template<> void EN_Additional_Detail_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -8577,22 +7590,6 @@ namespace ISO_9506_MMS_1 {
     template<> void EN_Additional_Detail_impl::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -8613,14 +7610,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<null_type > (true, EN_Additional_Detail_impl_noEnhancement))) return;
@@ -8628,6 +7617,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // sequence GetAlarmEnrollmentSummary-Request
 
     template<> void GetAlarmEnrollmentSummary_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(enrollmentsOnly_, 0);
@@ -8645,6 +7636,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(continueAfter_, 5);
     }
 
+    // sequence severityFilter
+
     template<> void GetAlarmEnrollmentSummary_Request::SeverityFilter_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*mostSevere_, 0);
         ITU_T_IMPLICIT_TAG(*leastSevere_, 1);
@@ -8655,6 +7648,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*leastSevere_, 1);
     }
 
+    // sequence GetAlarmEnrollmentSummary-Response
+
     template<> void GetAlarmEnrollmentSummary_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfAlarmEnrollmentSummary_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
@@ -8664,6 +7659,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfAlarmEnrollmentSummary_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
+
+    // sequence AlarmEnrollmentSummary
 
     template<> void AlarmEnrollmentSummary::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventEnrollmentName_, 0);
@@ -8695,6 +7692,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(timeIdleAcknowledged_, 12);
     }
 
+    // sequence AttachToEventCondition
+
     template<> void AttachToEventCondition::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventEnrollmentName_, 0);
         ITU_T_CHOICE_TAG(*eventConditionName_, 1);
@@ -8708,6 +7707,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*causingTransitions_, 2);
         ITU_T_IMPLICIT_TAG(acceptableDelay_, 3);
     }
+
+    // sequence DefineEventCondition-Request
 
     template<> void DefineEventCondition_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionName_, 0);
@@ -8728,6 +7729,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(monitoredVariable_, 6);
         ITU_T_IMPLICIT_TAG(evaluationInterval_, 7);
     }
+
+    // choice CS-DefineEventCondition-Request
 
     template<> void CS_DefineEventCondition_Request_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -8755,22 +7758,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_DefineEventCondition_Request_impl::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -8791,14 +7778,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<null_type > (true, CS_DefineEventCondition_Request_impl_noEnhancement))) return;
@@ -8806,6 +7785,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // choice DeleteEventCondition-Request
 
     template<> void DeleteEventCondition_Request::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -8838,22 +7819,6 @@ namespace ISO_9506_MMS_1 {
     template<> void DeleteEventCondition_Request::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -8886,19 +7851,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence GetEventConditionAttributes-Response
 
     template<> void GetEventConditionAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(mmsDeletable_, 0);
@@ -8922,6 +7881,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(accessControlList_, 8);
     }
 
+    // choice monitoredVariable
+
     template<> void GetEventConditionAttributes_Response::MonitoredVariable_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case MonitoredVariable_type_variableReference:
@@ -8943,22 +7904,6 @@ namespace ISO_9506_MMS_1 {
     template<> void GetEventConditionAttributes_Response::MonitoredVariable_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -8979,19 +7924,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence CS-GetEventConditionAttributes-Response
 
     template<> void CS_GetEventConditionAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(groupPriorityOverride_, 0);
@@ -9004,6 +7943,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(listOfReferencingECL_, 1);
         ITU_T_CHOICE_TAG(*displayEnhancement_, 2);
     }
+
+    // choice groupPriorityOverride
 
     template<> void CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9026,22 +7967,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_GetEventConditionAttributes_Response::GroupPriorityOverride_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -9062,19 +7987,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice displayEnhancement
 
     template<> void CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9102,22 +8021,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -9144,19 +8047,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence ReportEventConditionStatus-Response
 
     template<> void ReportEventConditionStatus_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*currentState_, 0);
@@ -9174,6 +8071,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(timeOfLastTransitionToIdle_, 4);
     }
 
+    // sequence AlterEventConditionMonitoring-Request
+
     template<> void AlterEventConditionMonitoring_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionName_, 0);
         ITU_T_IMPLICIT_TAG(enabled_, 1);
@@ -9190,6 +8089,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(evaluationInterval_, 4);
     }
 
+    // sequence CS-AlterEventConditionMonitoring-Request
+
     template<> void CS_AlterEventConditionMonitoring_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(changeDisplay_);
     }
@@ -9197,6 +8098,8 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_AlterEventConditionMonitoring_Request::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(changeDisplay_);
     }
+
+    // choice changeDisplay
 
     template<> void CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9224,22 +8127,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -9266,19 +8153,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence DefineEventAction-Request
 
     template<> void DefineEventAction_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventActionName_, 0);
@@ -9293,6 +8174,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*confirmedServiceRequest_, 2);
         ITU_T_CHOICE_TAG(cs_extension_, 79);
     }
+
+    // choice DeleteEventAction-Request
 
     template<> void DeleteEventAction_Request::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9325,22 +8208,6 @@ namespace ISO_9506_MMS_1 {
     template<> void DeleteEventAction_Request::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -9373,19 +8240,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence GetEventActionAttributes-Response
 
     template<> void GetEventActionAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(mmsDeletable_, 0);
@@ -9402,6 +8263,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(cs_extension_, 79);
         ITU_T_IMPLICIT_TAG(accessControlList_, 3);
     }
+
+    // sequence DefineEventEnrollment-Request
 
     template<> void DefineEventEnrollment_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventEnrollmentName_, 0);
@@ -9420,6 +8283,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(eventActionName_, 4);
         ITU_T_EXPLICIT_TAG(clientApplication_, 5);
     }
+
+    // choice CS-DefineEventEnrollment-Request
 
     template<> void CS_DefineEventEnrollment_Request_impl::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9447,22 +8312,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_DefineEventEnrollment_Request_impl::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -9483,14 +8332,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<null_type > (true, CS_DefineEventEnrollment_Request_impl_noEnhancement))) return;
@@ -9498,6 +8339,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // choice DeleteEventEnrollment-Request
 
     template<> void DeleteEventEnrollment_Request::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9525,22 +8368,6 @@ namespace ISO_9506_MMS_1 {
     template<> void DeleteEventEnrollment_Request::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -9567,19 +8394,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence GetEventEnrollmentAttributes-Request
 
     template<> void GetEventEnrollmentAttributes_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(scopeOfRequest_, 0);
@@ -9599,6 +8420,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(continueAfter_, 5);
     }
 
+    // sequence GetEventEnrollmentAttributes-Response
+
     template<> void GetEventEnrollmentAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfEEAttributes_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
@@ -9608,6 +8431,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfEEAttributes_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
+
+    // sequence EEAttributes
 
     template<> void EEAttributes::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventEnrollmentName_, 0);
@@ -9635,6 +8460,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*displayEnhancement_, 9);
     }
 
+    // choice eventConditionName
+
     template<> void EEAttributes::EventConditionName_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case EventConditionName_type_eventCondition:
@@ -9656,22 +8483,6 @@ namespace ISO_9506_MMS_1 {
     template<> void EEAttributes::EventConditionName_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -9692,19 +8503,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice eventActionName
 
     template<> void EEAttributes::EventActionName_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9727,22 +8532,6 @@ namespace ISO_9506_MMS_1 {
     template<> void EEAttributes::EventActionName_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -9763,19 +8552,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice displayEnhancement
 
     template<> void EEAttributes::DisplayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9803,22 +8586,6 @@ namespace ISO_9506_MMS_1 {
     template<> void EEAttributes::DisplayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -9839,14 +8606,6 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
                 if (ITU_T_BIND_TAG(*value<null_type > (true, DisplayEnhancement_type_noEnhancement))) return;
@@ -9854,6 +8613,8 @@ namespace ISO_9506_MMS_1 {
             }
         }
     }
+
+    // sequence ReportEventEnrollmentStatus-Response
 
     template<> void ReportEventEnrollmentStatus_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*eventConditionTransitions_, 0);
@@ -9871,6 +8632,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*currentState_, 4);
     }
 
+    // sequence AlterEventEnrollment-Request
+
     template<> void AlterEventEnrollment_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventEnrollmentName_, 0);
         ITU_T_IMPLICIT_TAG(eventConditionTransitions_, 1);
@@ -9883,6 +8646,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(alarmAcknowledgmentRule_, 2);
     }
 
+    // sequence AlterEventEnrollment-Response
+
     template<> void AlterEventEnrollment_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*currentState_, 0);
         ITU_T_CHOICE_TAG(*transitionTime_, 1);
@@ -9892,6 +8657,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*currentState_, 0);
         ITU_T_CHOICE_TAG(*transitionTime_, 1);
     }
+
+    // choice currentState
 
     template<> void AlterEventEnrollment_Response::CurrentState_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9914,22 +8681,6 @@ namespace ISO_9506_MMS_1 {
     template<> void AlterEventEnrollment_Response::CurrentState_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -9950,19 +8701,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence CS-AlterEventEnrollment-Request
 
     template<> void CS_AlterEventEnrollment_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(changeDisplay_);
@@ -9971,6 +8716,8 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_AlterEventEnrollment_Request::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(changeDisplay_);
     }
+
+    // choice changeDisplay
 
     template<> void CS_AlterEventEnrollment_Request::ChangeDisplay_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -9998,22 +8745,6 @@ namespace ISO_9506_MMS_1 {
     template<> void CS_AlterEventEnrollment_Request::ChangeDisplay_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -10040,19 +8771,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence DefineEventConditionList-Request
 
     template<> void DefineEventConditionList_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionListName_, 0);
@@ -10066,6 +8791,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(listOfEventConditionListName_, 2);
     }
 
+    // sequence AddEventConditionListReference-Request
+
     template<> void AddEventConditionListReference_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionListName_, 0);
         ITU_T_IMPLICIT_TAG(*listOfEventConditionName_, 1);
@@ -10078,6 +8805,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(listOfEventConditionListName_, 2);
     }
 
+    // sequence RemoveEventConditionListReference-Request
+
     template<> void RemoveEventConditionListReference_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionListName_, 0);
         ITU_T_IMPLICIT_TAG(*listOfEventConditionName_, 1);
@@ -10089,6 +8818,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfEventConditionName_, 1);
         ITU_T_IMPLICIT_TAG(*listOfEventConditionListName_, 2);
     }
+
+    // choice RemoveEventConditionListReference-Error
 
     template<> void RemoveEventConditionListReference_Error::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -10111,22 +8842,6 @@ namespace ISO_9506_MMS_1 {
     template<> void RemoveEventConditionListReference_Error::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -10147,19 +8862,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence GetEventConditionListAttributes-Response
 
     template<> void GetEventConditionListAttributes_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfEventConditionName_, 1);
@@ -10171,6 +8880,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(listOfEventConditionListName_, 2);
     }
 
+    // sequence ReportEventConditionListStatus-Request
+
     template<> void ReportEventConditionListStatus_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionListName_, 0);
         ITU_T_IMPLICIT_TAG(continueAfter_, 1);
@@ -10181,6 +8892,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(continueAfter_, 1);
     }
 
+    // sequence ReportEventConditionListStatus-Response
+
     template<> void ReportEventConditionListStatus_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfEventConditionStatus_, 1);
         ITU_T_IMPLICIT_TAG(moreFollows_, 2);
@@ -10190,6 +8903,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfEventConditionStatus_, 1);
         ITU_T_IMPLICIT_TAG(moreFollows_, 2);
     }
+
+    // sequence EventConditionStatus
 
     template<> void EventConditionStatus::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionName_, 0);
@@ -10209,6 +8924,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(timeOfLastTransitionToIdle_, 5);
     }
 
+    // sequence AlterEventConditionListMonitoring-Request
+
     template<> void AlterEventConditionListMonitoring_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionListName_, 0);
         ITU_T_IMPLICIT_TAG(*enabled_, 1);
@@ -10220,6 +8937,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*enabled_, 1);
         ITU_T_CHOICE_TAG(priorityChange_, 2);
     }
+
+    // choice priorityChange
 
     template<> void AlterEventConditionListMonitoring_Request::PriorityChange_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -10242,22 +8961,6 @@ namespace ISO_9506_MMS_1 {
     template<> void AlterEventConditionListMonitoring_Request::PriorityChange_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -10278,19 +8981,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence ReadJournal-Request
 
     template<> void ReadJournal_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*journalName_, 0);
@@ -10307,6 +9004,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(listOfVariables_, 4);
         ITU_T_IMPLICIT_TAG(entryToStartAfter_, 5);
     }
+
+    // choice rangeStartSpecification
 
     template<> void ReadJournal_Request::RangeStartSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -10329,22 +9028,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ReadJournal_Request::RangeStartSpecification_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -10365,19 +9048,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice rangeStopSpecification
 
     template<> void ReadJournal_Request::RangeStopSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -10400,22 +9077,6 @@ namespace ISO_9506_MMS_1 {
     template<> void ReadJournal_Request::RangeStopSpecification_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -10436,19 +9097,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence entryToStartAfter
 
     template<> void ReadJournal_Request::EntryToStartAfter_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*timeSpecification_, 0);
@@ -10460,6 +9115,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*entrySpecification_, 1);
     }
 
+    // sequence ReadJournal-Response
+
     template<> void ReadJournal_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*listOfJournalEntry_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
@@ -10469,6 +9126,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*listOfJournalEntry_, 0);
         ITU_T_IMPLICIT_TAG(moreFollows_, 1);
     }
+
+    // sequence JournalEntry
 
     template<> void JournalEntry::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*entryIdentifier_, 0);
@@ -10482,6 +9141,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*entryContent_, 2);
     }
 
+    // sequence WriteJournal-Request
+
     template<> void WriteJournal_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*journalName_, 0);
         ITU_T_IMPLICIT_TAG(*listOfJournalEntry_, 1);
@@ -10491,6 +9152,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*journalName_, 0);
         ITU_T_IMPLICIT_TAG(*listOfJournalEntry_, 1);
     }
+
+    // sequence InitializeJournal-Request
 
     template<> void InitializeJournal_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*journalName_, 0);
@@ -10502,6 +9165,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(limitSpecification_, 1);
     }
 
+    // sequence limitSpecification
+
     template<> void InitializeJournal_Request::LimitSpecification_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*limitingTime_, 0);
         ITU_T_IMPLICIT_TAG(limitingEntry_, 1);
@@ -10511,6 +9176,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*limitingTime_, 0);
         ITU_T_IMPLICIT_TAG(limitingEntry_, 1);
     }
+
+    // sequence ReportJournalStatus-Response
 
     template<> void ReportJournalStatus_Response::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*currentEntries_, 0);
@@ -10524,6 +9191,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(accessControlList_, 2);
     }
 
+    // sequence CreateJournal-Request
+
     template<> void CreateJournal_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*journalName_, 0);
     }
@@ -10532,6 +9201,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_TAG(*journalName_, 0);
     }
 
+    // sequence DeleteJournal-Request
+
     template<> void DeleteJournal_Request::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*journalName_, 0);
     }
@@ -10539,6 +9210,8 @@ namespace ISO_9506_MMS_1 {
     template<> void DeleteJournal_Request::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_CHOICE_TAG(*journalName_, 0);
     }
+
+    // sequence EntryContent
 
     template<> void EntryContent::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*occurrenceTime_, 0);
@@ -10549,6 +9222,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*occurrenceTime_, 0);
         ITU_T_BIND_CHOICE(*entryForm_);
     }
+
+    // choice entryForm
 
     template<> void EntryContent::EntryForm_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -10571,22 +9246,6 @@ namespace ISO_9506_MMS_1 {
     template<> void EntryContent::EntryForm_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -10607,19 +9266,13 @@ namespace ISO_9506_MMS_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence data
 
     template<> void EntryContent::EntryForm_type::Data_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(event_, 0);
@@ -10630,6 +9283,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(event_, 0);
         ITU_T_IMPLICIT_TAG(listOfVariables_, 1);
     }
+
+    // sequence event
 
     template<> void EntryContent::EntryForm_type::Data_type::Event_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*eventConditionName_, 0);

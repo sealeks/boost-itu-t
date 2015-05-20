@@ -9,6 +9,10 @@
 
 namespace MMS_Environment_1 {
 
+
+
+    // sequence ApplicationReference
+
     template<> void ApplicationReference::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(ap_title_) + ITU_T_OPTIONAL_PER(ap_invocation_id_) + ITU_T_OPTIONAL_PER(ae_qualifier_) + ITU_T_OPTIONAL_PER(ae_invocation_id_);

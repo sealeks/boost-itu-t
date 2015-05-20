@@ -9,6 +9,8 @@
 
 namespace MMS_SCI_Module_1 {
 
+    // sequence SCI-Information
+
     template<> void SCI_Information::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*partOne_, 0);
         ITU_T_IMPLICIT_TAG(*partTwo_, 1);
@@ -18,6 +20,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*partOne_, 0);
         ITU_T_IMPLICIT_TAG(*partTwo_, 1);
     }
+
+    // sequence VMD-File
 
     template<> void VMD_File::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*executiveFunction_, 0);
@@ -81,6 +85,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_CHOICE(selected_Program_Invocation_);
     }
 
+    // choice selected-Program-Invocation
+
     template<> void VMD_File::Selected_Program_Invocation_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case Selected_Program_Invocation_type_selectedProgram:
@@ -102,22 +108,6 @@ namespace MMS_SCI_Module_1 {
     template<> void VMD_File::Selected_Program_Invocation_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -138,19 +128,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence Access-Control-List-instance
 
     template<> void Access_Control_List_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*name_, 0);
@@ -161,6 +145,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Access_Control_List_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -183,22 +169,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Access_Control_List_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -219,19 +189,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Access_Control_List_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -289,6 +253,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(eventConditionLists_, 26);
     }
 
+    // sequence Domain-instance
+
     template<> void Domain_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -298,6 +264,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Domain_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -320,22 +288,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Domain_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -356,19 +308,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Domain_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*capabilities_, 3);
@@ -400,6 +346,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventConditionLists_, 14);
     }
 
+    // sequence Program-Invocation-instance
+
     template<> void Program_Invocation_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -409,6 +357,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Program_Invocation_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -431,22 +381,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Program_Invocation_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -467,19 +401,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Program_Invocation_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*programInvocationState_, 3);
@@ -513,6 +441,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(controlled_Program_Invocations_, 14);
     }
 
+    // sequence Unit-Control-instance
+
     template<> void Unit_Control_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -522,6 +452,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Unit_Control_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -544,22 +476,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Unit_Control_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -580,19 +496,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Unit_Control_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -606,6 +516,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*programInvocations_, 5);
     }
 
+    // sequence Unnamed-Variable-instance
+
     template<> void Unnamed_Variable_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*address_, 0);
         ITU_T_IMPLICIT_TAG(*accessControl_, 1);
@@ -618,6 +530,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_CHOICE_TAG(*typeDescription_, 2);
     }
 
+    // sequence Named-Variable-instance
+
     template<> void Named_Variable_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -627,6 +541,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Named_Variable_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -649,22 +565,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Named_Variable_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -685,19 +585,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Named_Variable_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -713,6 +607,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(meaning_, 6);
     }
 
+    // sequence Named-Variable-List-instance
+
     template<> void Named_Variable_List_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -722,6 +618,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Named_Variable_List_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -744,22 +642,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Named_Variable_List_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -780,19 +662,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Named_Variable_List_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -803,6 +679,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
         ITU_T_IMPLICIT_TAG(*listOfVariables_, 4);
     }
+
+    // sequence Variable-List-Item-instance
 
     template<> void Variable_List_Item_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(unnamedItem_, 0);
@@ -816,6 +694,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(alternateAccess_, 2);
     }
 
+    // sequence Named-Type-instance
+
     template<> void Named_Type_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -825,6 +705,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Named_Type_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -847,22 +729,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Named_Type_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -883,19 +749,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Named_Type_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -909,6 +769,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(meaning_, 5);
     }
 
+    // sequence Data-Exchange-instance
+
     template<> void Data_Exchange_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -918,6 +780,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Data_Exchange_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -940,22 +804,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Data_Exchange_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -976,19 +824,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Data_Exchange_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -1006,6 +848,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(programInvocation_, 7);
     }
 
+    // sequence Semaphore-instance
+
     template<> void Semaphore_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -1015,6 +859,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Semaphore_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1037,22 +883,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Semaphore_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1073,19 +903,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Semaphore_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -1103,6 +927,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventCondition_, 7);
     }
 
+    // sequence Operator-Station-instance
+
     template<> void Operator_Station_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -1112,6 +938,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Operator_Station_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1134,22 +962,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Operator_Station_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1170,19 +982,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Operator_Station_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -1194,6 +1000,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*stationType_, 4);
     }
 
+    // sequence Event-Condition-instance
+
     template<> void Event_Condition_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -1203,6 +1011,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Event_Condition_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1225,22 +1035,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Event_Condition_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1261,19 +1055,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Event_Condition_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -1309,6 +1097,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(referencingEventConditionLists_, 20);
     }
 
+    // choice monitoredVariable
+
     template<> void Event_Condition_instance::Definition_type::Details_type::MonitoredVariable_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case MonitoredVariable_type_named:
@@ -1335,22 +1125,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Event_Condition_instance::Definition_type::Details_type::MonitoredVariable_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1377,19 +1151,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice displayEnhancement
 
     template<> void Event_Condition_instance::Definition_type::Details_type::DisplayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1417,22 +1185,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Event_Condition_instance::Definition_type::Details_type::DisplayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1459,19 +1211,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice group-Priority-Override
 
     template<> void Event_Condition_instance::Definition_type::Details_type::Group_Priority_Override_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1494,22 +1240,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Event_Condition_instance::Definition_type::Details_type::Group_Priority_Override_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1530,19 +1260,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence Event-Action-instance
 
     template<> void Event_Action_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*name_, 0);
@@ -1553,6 +1277,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Event_Action_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1575,22 +1301,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Event_Action_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1611,19 +1321,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Event_Action_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -1639,6 +1343,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventEnrollments_, 6);
     }
 
+    // sequence Event-Enrollment-instance
+
     template<> void Event_Enrollment_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -1648,6 +1354,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Event_Enrollment_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1670,22 +1378,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Event_Enrollment_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1706,19 +1398,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Event_Enrollment_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -1748,6 +1434,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_CHOICE(displayEnhancement_);
     }
 
+    // choice remainingDelay
+
     template<> void Event_Enrollment_instance::Definition_type::Details_type::RemainingDelay_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
             case RemainingDelay_type_time:
@@ -1769,22 +1457,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Event_Enrollment_instance::Definition_type::Details_type::RemainingDelay_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1805,19 +1477,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice displayEnhancement
 
     template<> void Event_Enrollment_instance::Definition_type::Details_type::DisplayEnhancement_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1845,22 +1511,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Event_Enrollment_instance::Definition_type::Details_type::DisplayEnhancement_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1887,19 +1537,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence Event-Condition-List-instance
 
     template<> void Event_Condition_List_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*name_, 0);
@@ -1910,6 +1554,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Event_Condition_List_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -1932,22 +1578,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Event_Condition_List_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -1968,19 +1598,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Event_Condition_List_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -1996,6 +1620,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*referencingEventConditionLists_, 6);
     }
 
+    // sequence Journal-instance
+
     template<> void Journal_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
@@ -2005,6 +1631,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_CHOICE_TAG(*name_, 0);
         ITU_T_BIND_CHOICE(*definition_);
     }
+
+    // choice definition
 
     template<> void Journal_instance::Definition_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -2027,22 +1655,6 @@ namespace MMS_SCI_Module_1 {
     template<> void Journal_instance::Definition_type::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -2063,19 +1675,13 @@ namespace MMS_SCI_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence details
 
     template<> void Journal_instance::Definition_type::Details_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
@@ -2086,6 +1692,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*accessControl_, 3);
         ITU_T_IMPLICIT_TAG(*entries_, 4);
     }
+
+    // sequence Journal-Entry-instance
 
     template<> void Journal_Entry_instance::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*journal_, 0);
@@ -2111,6 +1719,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(journalVariables_, 10);
     }
 
+    // sequence eventTransitionRecord
+
     template<> void Journal_Entry_instance::EventTransitionRecord_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_CHOICE_TAG(*name_, 8);
         ITU_T_IMPLICIT_TAG(*currentState_, 9);
@@ -2121,6 +1731,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*currentState_, 9);
     }
 
+    // sequence 
+
     template<> void Journal_Entry_instance::JournalVariables_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_EXPLICIT_TAG(*variableTag_, 11);
         ITU_T_CHOICE_TAG(*valueSpecification_, 12);
@@ -2130,6 +1742,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_EXPLICIT_TAG(*variableTag_, 11);
         ITU_T_CHOICE_TAG(*valueSpecification_, 12);
     }
+
+    // sequence Service-and-Parameter-CBBs
 
     template<> void Service_and_Parameter_CBBs::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*services_Client_, 0);
@@ -2171,6 +1785,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*fileManagement_, 16);
     }
 
+    // sequence GeneralManagementParameters
+
     template<> void GeneralManagementParameters::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_EXPLICIT_TAG(*localDetail_, 0);
         ITU_T_IMPLICIT_TAG(*supportForTime_, 1);
@@ -2183,6 +1799,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*granularityOfTime_, 4);
     }
 
+    // sequence supportForTime
+
     template<> void GeneralManagementParameters::SupportForTime_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*timeOfDay_, 2);
         ITU_T_IMPLICIT_TAG(*timeSequence_, 3);
@@ -2193,6 +1811,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*timeSequence_, 3);
     }
 
+    // sequence VMDSupportParameters
+
     template<> void VMDSupportParameters::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_EXPLICIT_TAG(*localDetail_, 0);
         ITU_T_EXPLICIT_TAG(*extendedDerivation_, 1);
@@ -2202,6 +1822,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_EXPLICIT_TAG(*localDetail_, 0);
         ITU_T_EXPLICIT_TAG(*extendedDerivation_, 1);
     }
+
+    // sequence DomainManagementParameters
 
     template<> void DomainManagementParameters::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_EXPLICIT_TAG(*loadDataOctet_, 0);
@@ -2214,6 +1836,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*loadDataSyntax_, 1);
         ITU_T_IMPLICIT_TAG(*maxUploads_, 2);
     }
+
+    // sequence ProgramInvocationManagementParameters
 
     template<> void ProgramInvocationManagementParameters::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*executionArgMaxSize_, 0);
@@ -2231,6 +1855,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*stepMode_, 4);
     }
 
+    // sequence VariableAccessParameters
+
     template<> void VariableAccessParameters::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_EXPLICIT_TAG(*uninterruptibleAccess_, 0);
         ITU_T_IMPLICIT_TAG(*singleMode_, 1);
@@ -2242,6 +1868,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*singleMode_, 1);
         ITU_T_IMPLICIT_TAG(*unnamedMode_, 2);
     }
+
+    // sequence DataParameters
 
     template<> void DataParameters::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(bit_string_, 0);
@@ -2267,6 +1895,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(mmsString_, 14);
     }
 
+    // sequence floating-point
+
     template<> void DataParameters::Floating_point_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*total_, 4);
         ITU_T_IMPLICIT_TAG(*exponent_, 5);
@@ -2277,6 +1907,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*exponent_, 5);
     }
 
+    // sequence SemaphoreManagementParameters
+
     template<> void SemaphoreManagementParameters::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*algorithm_, 0);
     }
@@ -2285,6 +1917,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*algorithm_, 0);
     }
 
+    // sequence OperatorCommunicationParameters
+
     template<> void OperatorCommunicationParameters::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*input_time_out_, 0);
     }
@@ -2292,6 +1926,8 @@ namespace MMS_SCI_Module_1 {
     template<> void OperatorCommunicationParameters::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_IMPLICIT_TAG(*input_time_out_, 0);
     }
+
+    // sequence ErrorParameters
 
     template<> void ErrorParameters::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_EXPLICIT_TAG(*additionalCode_, 0);
@@ -2303,6 +1939,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*additionalDetial_, 1);
     }
 
+    // sequence additionalDetial
+
     template<> void ErrorParameters::AdditionalDetial_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(*size_, 2);
         ITU_T_EXPLICIT_TAG(*syntax_, 3);
@@ -2312,6 +1950,8 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*size_, 2);
         ITU_T_EXPLICIT_TAG(*syntax_, 3);
     }
+
+    // sequence FileManagementParameters
 
     template<> void FileManagementParameters::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_EXPLICIT_TAG(*fileName_, 0);

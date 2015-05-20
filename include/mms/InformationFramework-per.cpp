@@ -15,6 +15,7 @@ namespace InformationFramework {
         //  helper name:   AttributeUsage           type:  enumerated helper    
         ITU_T_PER_ENUMCODER(AttributeUsage__helper, false, ITU_T_ARRAY(0, 1, 2, 3));
 
+    // choice Name
 
         template<> void Name::serialize(boost::asn1::x691::output_coder& arch){ITU_T_BIND_PER(*value<RDNSequence > (false , Name_rdnSequence))
         }
@@ -22,6 +23,7 @@ namespace InformationFramework {
         template<> void Name::serialize(boost::asn1::x691::input_coder& arch){ITU_T_BIND_PER(*value<RDNSequence > (true , Name_rdnSequence))
         }
 
+    // sequence AttributeTypeAndDistinguishedValue
 
         template<> void AttributeTypeAndDistinguishedValue::serialize(boost::asn1::x691::output_coder& arch){
 
@@ -45,6 +47,7 @@ namespace InformationFramework {
             ITU_T_OPTIONAL_CHECK_PER(1)  ITU_T_BIND_SIZE_SEMICONSTRS( valuesWithContext_, 1);
         }
 
+    // sequence 
 
         template<> void AttributeTypeAndDistinguishedValue::ValuesWithContext_type_set_of::serialize(boost::asn1::x691::output_coder& arch){
 
@@ -64,6 +67,7 @@ namespace InformationFramework {
             ITU_T_BIND_SIZE_SEMICONSTRS( *contextList_, 1);
         }
 
+    // sequence Context
 
         template<> void Context::serialize(boost::asn1::x691::output_coder& arch){
 

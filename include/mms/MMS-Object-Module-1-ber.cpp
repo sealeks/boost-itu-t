@@ -9,6 +9,8 @@
 
 namespace MMS_Object_Module_1 {
 
+    // sequence ModifierStep
+
     template<> void ModifierStep::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(*modifierID_);
         ITU_T_BIND_CHOICE(*modifier_);
@@ -18,6 +20,8 @@ namespace MMS_Object_Module_1 {
         ITU_T_BIND_TAG(*modifierID_);
         ITU_T_BIND_CHOICE(*modifier_);
     }
+
+    // choice Modifier
 
     template<> void Modifier::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -40,22 +44,6 @@ namespace MMS_Object_Module_1 {
     template<> void Modifier::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -76,19 +64,13 @@ namespace MMS_Object_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice AccessCondition
 
     template<> void AccessCondition::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -131,22 +113,6 @@ namespace MMS_Object_Module_1 {
     template<> void AccessCondition::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -191,19 +157,13 @@ namespace MMS_Object_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice user
 
     template<> void AccessCondition::User_type::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -224,49 +184,14 @@ namespace MMS_Object_Module_1 {
     }
 
     template<> void AccessCondition::User_type::serialize(boost::asn1::x690::input_coder& arch) {
-        int __tag_id__ = arch.test_id();
-        switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x80:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            default:
-            {
-                if (ITU_T_BIND_TAG(*value<MMS_Environment_1::ApplicationReference > (true, User_type_association))) return;
-                else free();
-                if (ITU_T_BIND_TAG(*value<null_type > (true, User_type_none))) return;
-                else free();
-            }
-        }
+
+        if (ITU_T_BIND_TAG(*value<MMS_Environment_1::ApplicationReference > (true, User_type_association))) return;
+        else free();
+        if (ITU_T_BIND_TAG(*value<null_type > (true, User_type_none))) return;
+        else free();
     }
+
+    // choice Address
 
     template<> void Address::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -294,22 +219,6 @@ namespace MMS_Object_Module_1 {
     template<> void Address::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -336,19 +245,13 @@ namespace MMS_Object_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // choice TypeDescription
 
     template<> void TypeDescription::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -431,22 +334,6 @@ namespace MMS_Object_Module_1 {
     template<> void TypeDescription::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -539,19 +426,13 @@ namespace MMS_Object_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence array
 
     template<> void TypeDescription::Array_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(packed_, 0);
@@ -565,6 +446,8 @@ namespace MMS_Object_Module_1 {
         ITU_T_CHOICE_TAG(*elementType_, 2);
     }
 
+    // sequence structure
+
     template<> void TypeDescription::Structure_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(packed_, 0);
         ITU_T_IMPLICIT_TAG(*components_, 1);
@@ -574,6 +457,8 @@ namespace MMS_Object_Module_1 {
         ITU_T_IMPLICIT_TAG(packed_, 0);
         ITU_T_IMPLICIT_TAG(*components_, 1);
     }
+
+    // sequence 
 
     template<> void TypeDescription::Structure_type::Components_type_sequence_of::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_IMPLICIT_TAG(componentName_, 0);
@@ -585,6 +470,8 @@ namespace MMS_Object_Module_1 {
         ITU_T_CHOICE_TAG(*componentType_, 1);
     }
 
+    // sequence floating-point
+
     template<> void TypeDescription::Floating_point_type::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(*format_width_);
         ITU_T_BIND_TAG(*exponent_width_);
@@ -594,6 +481,8 @@ namespace MMS_Object_Module_1 {
         ITU_T_BIND_TAG(*format_width_);
         ITU_T_BIND_TAG(*exponent_width_);
     }
+
+    // choice EventTime
 
     template<> void EventTime::serialize(boost::asn1::x690::output_coder& arch) {
         switch (type()) {
@@ -621,22 +510,6 @@ namespace MMS_Object_Module_1 {
     template<> void EventTime::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
-            case 0x0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
-            case 0x40:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -663,19 +536,13 @@ namespace MMS_Object_Module_1 {
                     }
                 }
             }
-            case 0xC0:
-            {
-                switch (__tag_id__) {
-                    default:
-                    {
-                    }
-                }
-            }
             default:
             {
             }
         }
     }
+
+    // sequence Journal-Variable
 
     template<> void Journal_Variable::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(*variableTag_);

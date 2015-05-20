@@ -9,6 +9,10 @@
 
 namespace MMS_Object_Module_1 {
 
+
+
+    // sequence ModifierStep
+
     template<> void ModifierStep::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*modifierID_);
         ITU_T_BIND_PER(*modifier_);
@@ -18,6 +22,8 @@ namespace MMS_Object_Module_1 {
         ITU_T_BIND_PER(*modifierID_);
         ITU_T_BIND_PER(*modifier_);
     }
+
+    // choice Modifier
 
     template<> void Modifier::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -59,6 +65,8 @@ namespace MMS_Object_Module_1 {
             }
         }
     }
+
+    // choice AccessCondition
 
     template<> void AccessCondition::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -145,6 +153,8 @@ namespace MMS_Object_Module_1 {
         }
     }
 
+    // choice user
+
     template<> void AccessCondition::User_type::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case User_type_none:
@@ -186,12 +196,14 @@ namespace MMS_Object_Module_1 {
         }
     }
 
+    // choice Address
+
     template<> void Address::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
             case Address_numericAddress:
             {
                 ITU_T_SET_CONSTAINED_INDX(0, 2);
-                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned32 > (false, Address_numericAddress), (uint32_t) (0), (uint32_t) (2147483647));
+                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned32 > (false, Address_numericAddress), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case Address_symbolicAddress:
@@ -219,7 +231,7 @@ namespace MMS_Object_Module_1 {
         switch (__indx__) {
             case 0:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned32 > (true, Address_numericAddress), (uint32_t) (0), (uint32_t) (2147483647));
+                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned32 > (true, Address_numericAddress), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case 1:
@@ -237,6 +249,8 @@ namespace MMS_Object_Module_1 {
             }
         }
     }
+
+    // choice TypeDescription
 
     template<> void TypeDescription::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -265,19 +279,19 @@ namespace MMS_Object_Module_1 {
                 case TypeDescription_bit_string:
                 {
                     ITU_T_SET_CONSTAINED_INDX(3, 12);
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_bit_string), (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_bit_string), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case TypeDescription_integer:
                 {
                     ITU_T_SET_CONSTAINED_INDX(4, 12);
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (false, TypeDescription_integer), (uint8_t) (0), (uint8_t) (127));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (false, TypeDescription_integer), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
                     break;
                 }
                 case TypeDescription_unsignedV:
                 {
                     ITU_T_SET_CONSTAINED_INDX(5, 12);
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (false, TypeDescription_unsignedV), (uint8_t) (0), (uint8_t) (127));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (false, TypeDescription_unsignedV), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
                     break;
                 }
                 case TypeDescription_floating_point:
@@ -289,13 +303,13 @@ namespace MMS_Object_Module_1 {
                 case TypeDescription_octet_string:
                 {
                     ITU_T_SET_CONSTAINED_INDX(7, 12);
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_octet_string), (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_octet_string), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case TypeDescription_visible_string:
                 {
                     ITU_T_SET_CONSTAINED_INDX(8, 12);
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_visible_string), (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_visible_string), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case TypeDescription_generalized_time:
@@ -313,7 +327,7 @@ namespace MMS_Object_Module_1 {
                 case TypeDescription_bcd:
                 {
                     ITU_T_SET_CONSTAINED_INDX(11, 12);
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (false, TypeDescription_bcd), (uint8_t) (0), (uint8_t) (127));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (false, TypeDescription_bcd), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
                     break;
                 }
                 case TypeDescription_objId:
@@ -332,7 +346,7 @@ namespace MMS_Object_Module_1 {
                 case TypeDescription_mMSString:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(0);
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_mMSString), (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_mMSString), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 default:
@@ -368,17 +382,17 @@ namespace MMS_Object_Module_1 {
                 }
                 case 3:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_bit_string), (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_bit_string), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 4:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (true, TypeDescription_integer), (uint8_t) (0), (uint8_t) (127));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (true, TypeDescription_integer), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
                     break;
                 }
                 case 5:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (true, TypeDescription_unsignedV), (uint8_t) (0), (uint8_t) (127));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (true, TypeDescription_unsignedV), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
                     break;
                 }
                 case 6:
@@ -388,12 +402,12 @@ namespace MMS_Object_Module_1 {
                 }
                 case 7:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_octet_string), (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_octet_string), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 8:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_visible_string), (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (true, TypeDescription_visible_string), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 case 9:
@@ -408,7 +422,7 @@ namespace MMS_Object_Module_1 {
                 }
                 case 11:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (true, TypeDescription_bcd), (uint8_t) (0), (uint8_t) (127));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned8 > (true, TypeDescription_bcd), static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
                     break;
                 }
                 case 12:
@@ -428,7 +442,7 @@ namespace MMS_Object_Module_1 {
             switch (__indx__) {
                 case 0:
                 {
-                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_mMSString), (int32_t) (std::numeric_limits<int32_t>::min()), (int32_t) (2147483647));
+                    ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_mMSString), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
                     break;
                 }
                 default:
@@ -438,6 +452,8 @@ namespace MMS_Object_Module_1 {
         }
     }
 
+    // sequence array
+
     template<> void TypeDescription::Array_type::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(packed_);
@@ -445,7 +461,7 @@ namespace MMS_Object_Module_1 {
         ITU_T_OPTIONAL_SET_PER;
 
         ITU_T_BIND_PER(packed_);
-        ITU_T_BIND_NUM_CONSTRS(*numberOfElements_, (uint32_t) (0), (uint32_t) (2147483647));
+        ITU_T_BIND_NUM_CONSTRS(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*elementType_);
     }
 
@@ -454,9 +470,11 @@ namespace MMS_Object_Module_1 {
         ITU_T_OPTIONAL_GET_PER(1);
 
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(packed_);
-        ITU_T_BIND_NUM_CONSTRS(*numberOfElements_, (uint32_t) (0), (uint32_t) (2147483647));
+        ITU_T_BIND_NUM_CONSTRS(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*elementType_);
     }
+
+    // sequence structure
 
     template<> void TypeDescription::Structure_type::serialize(boost::asn1::x691::output_coder& arch) {
 
@@ -476,6 +494,8 @@ namespace MMS_Object_Module_1 {
         ITU_T_BIND_PER(*components_);
     }
 
+    // sequence 
+
     template<> void TypeDescription::Structure_type::Components_type_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(componentName_);
@@ -494,15 +514,19 @@ namespace MMS_Object_Module_1 {
         ITU_T_BIND_PER(*componentType_);
     }
 
+    // sequence floating-point
+
     template<> void TypeDescription::Floating_point_type::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*format_width_, (uint8_t) (0), (uint8_t) (127));
-        ITU_T_BIND_NUM_CONSTRS(*exponent_width_, (uint8_t) (0), (uint8_t) (127));
+        ITU_T_BIND_NUM_CONSTRS(*format_width_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRS(*exponent_width_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
     }
 
     template<> void TypeDescription::Floating_point_type::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRS(*format_width_, (uint8_t) (0), (uint8_t) (127));
-        ITU_T_BIND_NUM_CONSTRS(*exponent_width_, (uint8_t) (0), (uint8_t) (127));
+        ITU_T_BIND_NUM_CONSTRS(*format_width_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRS(*exponent_width_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
     }
+
+    // choice EventTime
 
     template<> void EventTime::serialize(boost::asn1::x691::output_coder& arch) {
         switch (type()) {
@@ -515,7 +539,7 @@ namespace MMS_Object_Module_1 {
             case EventTime_timeSequenceIdentifier:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 2);
-                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned32 > (false, EventTime_timeSequenceIdentifier), (uint32_t) (0), (uint32_t) (2147483647));
+                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned32 > (false, EventTime_timeSequenceIdentifier), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case EventTime_undefined:
@@ -542,7 +566,7 @@ namespace MMS_Object_Module_1 {
             }
             case 1:
             {
-                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned32 > (true, EventTime_timeSequenceIdentifier), (uint32_t) (0), (uint32_t) (2147483647));
+                ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Unsigned32 > (true, EventTime_timeSequenceIdentifier), static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
                 break;
             }
             case 2:
@@ -555,6 +579,8 @@ namespace MMS_Object_Module_1 {
             }
         }
     }
+
+    // sequence Journal-Variable
 
     template<> void Journal_Variable::serialize(boost::asn1::x691::output_coder& arch) {
         ITU_T_BIND_PER(*variableTag_);
