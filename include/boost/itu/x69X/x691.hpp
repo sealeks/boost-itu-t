@@ -79,13 +79,13 @@
 //  enumerated complex case
 #define ITU_T_REGISTRATE_ENUM_CONSTRS(var, tp) typedef boost::asn1::___enumerated_tmpl_ec___<tp>  var;
 
-#define  ITU_T_PER_ENUMCODER(nm  , arrmain ) struct nm ## __coder { \
+#define  ITU_T_PER_ENUMCODER(nm  , extbool , arrmain ) struct nm ## __coder { \
     static boost::asn1::indx_enumerated_map index_enumerated;\
     static boost::asn1::enumerated_indx_map enumerated_index;\
     static bool is_root(const boost::asn1::enumerated_type& vl) {\
         return true;}\
      static  bool ext() {\
-        return false;}\
+        return extbool;}\
      static enumerated_type to_root(std::size_t vl) {\
          boost::asn1::indx_enumerated_map::const_iterator fit=index_enumerated.find(vl);\
         return fit != index_enumerated.end() ? fit->second : enumerated_type(0);}\
@@ -103,8 +103,8 @@
      static std::size_t rootsize() {\
         return index_enumerated.size();}};\
      const boost::asn1::enum_base_type nm##  __ARR[] = {arrmain};\
-      boost::asn1::indx_enumerated_map nm## __coder::index_enumerated = boost::asn1::create_indx_enumerated(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));\
-      boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));
+      boost::asn1::indx_enumerated_map nm## __coder::index_enumerated = boost::asn1::create_indx_enumerated(nm##  __ARR[], sizeof(nm##  __ARR[])/ sizeof(boost::asn1::enum_base_type));\
+      boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(nm##  __ARR[], sizeof(nm##  __ARR[])/ sizeof(boost::asn1::enum_base_type));
 
 
 #define  ITU_T_PER_ENUMCODER_EXT(nm  , arrmain, arrext ) struct nm ## __coder { \
@@ -134,12 +134,12 @@
         return ext ? (index_enumerated_ext.find(vl)!= index_enumerated_ext.end()) :  (index_enumerated.find(vl)!= index_enumerated.end());}\
      static std::size_t rootsize() {\
         return index_enumerated.size();}};\
-     const boost::asn1::enum_base_type ARR[] = {arrmain};\
-     const boost::asn1::enum_base_type EARR[] = {arrext};\
-      boost::asn1::indx_enumerated_map nm## __coder::index_enumerated = boost::asn1::create_indx_enumerated(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));\
-      boost::asn1::indx_enumerated_map  nm ## __coder::index_enumerated_ext = boost::asn1::create_indx_enumerated(EARR, sizeof(EARR)/ sizeof(boost::asn1::enum_base_type));\
-      boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(ARR, sizeof(ARR)/ sizeof(boost::asn1::enum_base_type));\
-      boost::asn1::enumerated_indx_map  nm ## __coder::enumerated_index_ext = boost::asn1::create_enumerated_indx(EARR, sizeof(EARR)/ sizeof(boost::asn1::enum_base_type));
+     const boost::asn1::enum_base_type nm##  __ARR[] = {arrmain};\
+     const boost::asn1::enum_base_type nm##  __EARR[] = {arrext};\
+      boost::asn1::indx_enumerated_map nm## __coder::index_enumerated = boost::asn1::create_indx_enumerated(nm##  __ARR, sizeof(nm##  __ARR)/ sizeof(boost::asn1::enum_base_type));\
+      boost::asn1::indx_enumerated_map  nm ## __coder::index_enumerated_ext = boost::asn1::create_indx_enumerated(nm##  __EARR, sizeof(nm##  __EARR)/ sizeof(boost::asn1::enum_base_type));\
+      boost::asn1::enumerated_indx_map nm## __coder::enumerated_index = boost::asn1::create_enumerated_indx(nm##  __ARR, sizeof(nm##  __ARR)/ sizeof(boost::asn1::enum_base_type));\
+      boost::asn1::enumerated_indx_map  nm ## __coder::enumerated_index_ext = boost::asn1::create_enumerated_indx(nm##  __EARR, sizeof(nm##  __EARR)/ sizeof(boost::asn1::enum_base_type));
 
 
 

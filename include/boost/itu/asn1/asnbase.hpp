@@ -136,6 +136,7 @@ namespace boost {\
     using boost::asn1::any_type;\
     using boost::asn1::value_holder;\
     using boost::asn1::default_holder;\
+    using boost::asn1::integer_type;\    
     using boost::shared_ptr;\
     using boost::int8_t;\
     using boost::uint8_t;\
@@ -356,9 +357,13 @@ namespace boost {
         };
 
         std::ostream& operator<<(std::ostream& stream, const null_type& vl);
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // integer_type
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
+        typedef int32_t integer_type;
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

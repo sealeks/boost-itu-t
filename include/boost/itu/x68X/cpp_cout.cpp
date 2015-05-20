@@ -232,7 +232,7 @@ namespace x680 {
                     }
                 }
             }
-            return "int";
+            return "integer_type";
         }
 
         std::string builtin_str(defined_type tp, integer_constraints_ptr intconstr = integer_constraints_ptr()) {
@@ -894,10 +894,10 @@ namespace x680 {
                     moduleout_ptr cpp = generate<maincpp_out>((*it)->as_module(), "", "cpp");
                     cpp->execute();
                     if (!opt_.ber_in_main) {
-                        moduleout_ptr ber = generate<ber_cpp_out>((*it)->as_module(), "_ber", "cpp");
+                        moduleout_ptr ber = generate<ber_cpp_out>((*it)->as_module(), "-ber", "cpp");
                         ber->execute();
                     }
-                    moduleout_ptr per = generate<per_cpp_out>((*it)->as_module(), "_per", "cpp");
+                    moduleout_ptr per = generate<per_cpp_out>((*it)->as_module(), "-per", "cpp");
                     per->execute();
                     //execute_module((*it)->as_module());
                 }
@@ -3158,9 +3158,14 @@ namespace x680 {
             if (predef) {
                 stream << tabformat(scp, 2);
                 stream << "ITU_T_PER_ENUMCODER";
-                if (predef->extended())
+                bool ext  =((predef->extended()) && (predef->values().back()) &&
+                          (predef->values().back()->as_valueassigment())); // extend and has ext;
+                if (ext)
                     stream << "_EXT";
-                stream << "(" << name << "__helper, ITU_T_ARRAY(";
+                stream << "(" << name << "__helper, ";
+                if (!ext)
+                    stream << std::string(predef->extended() ? "true, " :  "false, ");            
+                stream << "ITU_T_ARRAY(";
                 bool fst = true;
                 for (basic_entity_vector::const_iterator it = predef->values().begin(); it != predef->values().end(); ++it) {
                     if ((*it)->as_valueassigment()) {
@@ -3173,6 +3178,8 @@ namespace x680 {
                         else
                             stream << " ??? ";
                     } else {
+                        if (!ext)
+                            break;
                         stream << "), ITU_T_ARRAY(";
                         fst = true;
                     }
