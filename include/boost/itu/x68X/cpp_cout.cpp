@@ -2736,12 +2736,42 @@ namespace x680 {
             namedtypeassignment_entity_vct root1 = self->child_root_1();
             namedtypeassignment_entity_vct root2 = self->child_root_2();
             namedtypeassignment_entity_vct root = root1;
+            namedtypeassignment_entity_vct extention= self->extentions();
             root.insert(root.end(), root2.begin(), root2.end());
             std::size_t opt_count = struct_optional_count(root);
-            //std::size_t opt_it = 0;
+
             if ((self->type()) && (self->type()->has_extention())) {
-                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_SET_PER;";
+                if ((!extention.empty()) && (self->extention_count())) {
+                    std::size_t extnum = 0;
+                    bool needopr = false;
+                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GROUP_BMP_PER( " << to_string(extnum) << " ) = ";
+                    for (namedtypeassignment_entity_vct::iterator it = extention.begin(); it != extention.end(); ++it) {
+                        if ((*it)->extentionnum()) {
+                            if (extnum != (*(*it)->extentionnum())) {
+                                extnum = *((*it)->extentionnum());
+                                needopr = false;
+                                stream << ";\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GROUP_BMP_PER( " << to_string(extnum) << " ) = ";
+                            }
+                            if (needopr)
+                                stream << " + ";
+                            else
+                                needopr = true;
+                            stream << " ITU_T_OPTIONAL_PER(" << nameconvert((*it)->name()) << "_)";
+                        }
+                    }
+                    stream << ";\n";
+                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GROUPS_BMP_PER = ";
+                    for (std::size_t i = 0; i<=extnum; ++i) {
+                        if (i)
+                            stream << " + ";
+                        stream << "ITU_T_EXTENTION_GROUP_CHECK_PER( " << to_string(i) << ")";
+                    }
+                    stream << ";\n";
+                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_SET_PER;";
+                } else
+                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_NULL_SET_PER;";
             }
+                      
             if (opt_count) {
                 namedtypeassignment_entity_vct optels = struct_optional_element(root);
                 stream << "\n\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_DECL_PER = ";
@@ -2765,6 +2795,8 @@ namespace x680 {
                 }
             }
             ///  Some for extention
+            
+
 
             if (!root2.empty()) {
                 for (namedtypeassignment_entity_vct::iterator it = root2.begin(); it != root2.end(); ++it) {
