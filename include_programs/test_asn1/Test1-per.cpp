@@ -65,13 +65,15 @@ namespace Test1 {
 
     };
 
+
     // set  PersonnelRecord
 
     template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_EXTENTION_NULL_SET_PER;
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(children_);
+
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(children_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -95,26 +97,54 @@ namespace Test1 {
         ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
         ITU_T_BIND_PER(*(*nameOfSpouse_));
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_SNGLCONSTRE(children_, 2);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_GET_PER;
+
+        };
+
     }
 
     // set  ChildInformation
 
     template<> void ChildInformation::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_GROUP_BMP_PER(0) = ITU_T_OPTIONAL_PER(sex_);
+        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(sex_);
 
         ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0);
 
         ITU_T_EXTENTION_SET_PER;
+
         ITU_T_BIND_PER(*(*name_));
         ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_SET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                    ITU_T_PER_START_OPEN;
+                    ITU_T_BIND_PER_ENUM(sex_, ChildInformation__enumerated_type__helper);
+                    ITU_T_PER_END_OPEN;
+                }
+
+        };
+
     }
 
     template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_GET_PER;
-        ITU_T_BIND_PER(*(*name_));
-        ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+                ITU_T_BIND_PER(*(*name_));
+                ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_GET_PER;
+
+        };
+
     }
 
     // sequence Name
@@ -122,48 +152,77 @@ namespace Test1 {
     template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
         ITU_T_EXTENTION_NULL_SET_PER;
-        ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *givenName_, 1, 64);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, NameString__shelper, *initial_, 1);
-        ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *familyName_, 1, 64);
+
+                ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *givenName_, 1, 64);
+                ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, NameString__shelper, *initial_, 1);
+                ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *familyName_, 1, 64);
     }
 
     template<> void Name_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_GET_PER;
-        ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *givenName_, 1, 64);
-        ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, NameString__shelper, *initial_, 1);
-        ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *familyName_, 1, 64);
+                ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *givenName_, 1, 64);
+                ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, NameString__shelper, *initial_, 1);
+                ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *familyName_, 1, 64);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_GET_PER;
+
+        };
+
     }
 
     // sequence A
 
     template<> void A::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_GROUP_BMP_PER(0) = ITU_T_OPTIONAL_PER(b_) + ITU_T_OPTIONAL_PER(c_);
-        ITU_T_EXTENTION_GROUP_BMP_PER(1) = ITU_T_OPTIONAL_PER(d_) + ITU_T_OPTIONAL_PER(e_);
+        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(b_) || ITU_T_EXISTS_BOOL(c_);
+                ITU_T_EXTENTION_GROUP_BOOL_PER(1) = ITU_T_EXISTS_BOOL(d_) || ITU_T_EXISTS_BOOL(e_);
 
-        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0) + ITU_T_EXTENTION_GROUP_PER(1);
+                ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0) + ITU_T_EXTENTION_GROUP_PER(1);
 
-        ITU_T_EXTENTION_SET_PER;
-        ITU_T_BIND_PER(*a_);
-        
+                ITU_T_EXTENTION_SET_PER;
+
+                ITU_T_BIND_PER(*a_);
+
         if (ITU_T_EXTENTION_CHECK_PER) {
+
             ITU_T_EXTENTION_GROUPS_SET_PER;
-            if (ITU_T_EXTENTION_GROUP_BOOL_PER(0)) {
-                ITU_T_PER_START_OPEN;
-                ITU_T_PER_END_OPEN;
-            }
-            if (ITU_T_EXTENTION_GROUP_BOOL_PER(1)) {
-                ITU_T_PER_START_OPEN;
-                ITU_T_PER_END_OPEN;                
-            }            
-        }
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                    ITU_T_PER_START_OPEN;
+                    ITU_T_EXTENTION_GROUP_BMP_PER = ITU_T_EXISTS_BMP(b_) + ITU_T_EXISTS_BMP(c_);
+                    ITU_T_EXTENTION_GROUP_SET_PER;
+                    ITU_T_BIND_PER(b_);
+                    ITU_T_BIND_PER(c_);
+                    ITU_T_PER_END_OPEN;
+                }
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+                    ITU_T_PER_START_OPEN;
+                    ITU_T_EXTENTION_GROUP_BMP_PER = ITU_T_EXISTS_BMP(e_);
+                    ITU_T_EXTENTION_GROUP_SET_PER;
+                    ITU_T_BIND_PER(*d_);
+                    ITU_T_BIND_PER(e_);
+                    ITU_T_PER_END_OPEN;
+                }
+
+        };
+
     }
 
     template<> void A::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_GET_PER;
-        ITU_T_BIND_PER(*a_);
+                ITU_T_BIND_PER(*a_);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_GET_PER;
+
+        };
+
     }
 
 }
