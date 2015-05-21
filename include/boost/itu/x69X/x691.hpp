@@ -34,8 +34,6 @@
 #define ITU_T_OPTIONAL_GET_PER(sz)  boost::asn1::bitstring_type __optional_bmp__ =  arch.get_pop_bmp(sz);
 #define ITU_T_OPTIONAL_CHECK_PER(num)   if (__optional_bmp__.bit( num ))
 #define ITU_T_OPTIONAL_DECL_PER  boost::asn1::bitstring_type __optional_bmp__ 
-#define ITU_T_OPTIONAL_PER(name)  boost::asn1::bitstring_type(static_cast<bool>(name))
-#define ITU_T_OPTIONAL_BOOL_PER(name)  static_cast<bool>(name))
 #define ITU_T_OPTIONAL_SET_PER arch.add_bitmap(__optional_bmp__);
 
 #define ITU_T_SET_CONSTAINED_INDX(indx, max) arch.add_constrained<std::size_t >(indx, 0, max);

@@ -2756,7 +2756,7 @@ namespace x680 {
                                 stream << " || ";
                             else
                                 needopr = true;
-                            stream << " ITU_T_OPTIONAL_BOOL_PER(" << nameconvert((*it)->name()) << "_)";
+                            stream << " ITU_T_EXISTS_BOOL(" << nameconvert((*it)->name()) << "_)";
                         }
                     }
                     stream << ";\n";
@@ -2778,7 +2778,7 @@ namespace x680 {
                 for (namedtypeassignment_entity_vct::iterator it = optels.begin(); it != optels.end(); ++it) {
                     if (it != optels.begin())
                         stream << " + ";
-                    stream << " ITU_T_OPTIONAL_PER(" << nameconvert((*it)->name()) << "_)";
+                    stream << " ITU_T_EXISTS_BMP(" << nameconvert((*it)->name()) << "_)";
                 }
                 stream << ";\n";
                 stream << "\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_SET_PER;";
@@ -2817,7 +2817,7 @@ namespace x680 {
                                         is_first=false;
                                     else
                                         stream << " + ";
-                                    stream << "ITU_T_OPTIONAL_PER(" << nameconvert((*it)->name()) << "_)";
+                                    stream << "ITU_T_EXISTS_BMP(" << nameconvert((*it)->name()) << "_)";
                                 }
                             }
                             stream << "\n" << tabformat(scp, 6) << "ITU_T_EXTENTION_GROUP_SET_PER;";
