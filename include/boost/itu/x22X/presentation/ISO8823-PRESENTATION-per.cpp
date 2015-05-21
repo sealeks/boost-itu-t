@@ -105,7 +105,7 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CP_type::Normal_mode_parameters_type::Extensions_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_NULL_SET_PER;
     }
 
     template<> void CP_type::Normal_mode_parameters_type::Extensions_type::serialize(boost::asn1::x691::input_coder& arch) {
@@ -640,7 +640,7 @@ namespace ISO8823_PRESENTATION {
 
     template<> void User_data::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_NULL_SET_PER;
         switch (type()) {
             case User_data_simply_encoded_data:
             {
