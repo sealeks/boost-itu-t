@@ -49,6 +49,7 @@
 #define ITU_T_PER_START_PARSE_OPEN  arch.start_parse_open();
 #define ITU_T_PER_END_PARSE_OPEN  arch.end_parse_open();
 #define ITU_T_PER_CLEAR_EXTENTIONS( num )  arch.clear_extentions(__ext_optional_groups_bmp__, num);
+#define ITU_T_PER_CLEAR_EXTENTION  arch.clear_extention();
 
 //   main bind and bind per enum
 #define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
@@ -1345,7 +1346,9 @@ namespace boost {
 
                 void get_extentions_marker(bitstring_type& vl);
                 
-                void clear_extentions(const bitstring_type& exbmp, std::size_t cnt);                
+                void clear_extentions(const bitstring_type& exbmp, std::size_t cnt);          
+                
+                void clear_extention();                   
 
                 template<typename T>
                 void operator&(const T& vl) {

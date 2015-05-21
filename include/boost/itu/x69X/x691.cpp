@@ -600,7 +600,10 @@ namespace boost {
                 }
             }
 
-
+            void input_coder::clear_extention() {
+                octet_sequnce data;
+                octet_reader_undefsz(*this, data);
+            }
 
 
 
