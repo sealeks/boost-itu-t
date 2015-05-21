@@ -572,15 +572,32 @@ namespace boost {
                 return rslt;
             }
 
-            void input_coder::parse_open() {
+            void input_coder::start_parse_open() {
                 octet_sequnce data;
                 octet_reader_undefsz(*this, data);
+                if ((data.size()==1) && (!data[0]))
+                    return;
                 add_front(data);
             }
+            
+            void input_coder::end_parse_open() {
+                if (unusebits())
+                    get_pop_bmp(usebits());
+            }            
 
             void input_coder::get_extentions_marker(bitstring_type& vl) {
                 std::size_t rslt = get_nsn_small() + 1;
                 vl = get_pop_bmp(rslt);
+            }
+
+            void input_coder::clear_extentions(const bitstring_type& exbmp, std::size_t cnt) {
+                if(exbmp.sizebits()>cnt){
+                    std::size_t clear_cnt=exbmp.sizebits()-cnt;
+                    while(clear_cnt--) {
+                        octet_sequnce data;
+                        octet_reader_undefsz(*this, data);                        
+                    }
+                }
             }
 
 

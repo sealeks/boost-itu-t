@@ -25,7 +25,7 @@
 
 #define ITU_T_EXTENTION_GROUP_BMP_PER  boost::asn1::bitstring_type __ext_optional_bmp__
 #define ITU_T_EXTENTION_GROUP_BOOL_PER( num )  bool __is_ext_optional_ ## num
-#define ITU_T_EXTENTION_GROUP_CHECK_PER( num )  __is_ext_optional_ ## num
+#define ITU_T_EXTENTION_GROUP_CHECK_PER( num )  __ext_optional_groups_bmp__.bit( num )
 #define ITU_T_EXTENTION_GROUP_PER( num )  boost::asn1::bitstring_type(__is_ext_optional_ ## num )
 #define ITU_T_EXTENTION_GROUP_SET_PER  arch.add_bitmap(__ext_optional_bmp__);
 #define ITU_T_EXTENTION_GROUPS_BMP_PER  boost::asn1::bitstring_type __ext_optional_groups_bmp__
@@ -46,7 +46,9 @@
 
 #define ITU_T_PER_START_OPEN  arch.start_open();
 #define ITU_T_PER_END_OPEN  arch.end_open();
-#define ITU_T_PER_PARSE_OPEN  arch.parse_open();
+#define ITU_T_PER_START_PARSE_OPEN  arch.start_parse_open();
+#define ITU_T_PER_END_PARSE_OPEN  arch.end_parse_open();
+#define ITU_T_PER_CLEAR_EXTENTIONS( num )  arch.clear_extentions(__ext_optional_groups_bmp__, num);
 
 //   main bind and bind per enum
 #define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
@@ -1337,9 +1339,13 @@ namespace boost {
 
                 std::size_t get_nsn_small();
 
-                void parse_open();
+                void start_parse_open();
+                
+                void end_parse_open();
 
                 void get_extentions_marker(bitstring_type& vl);
+                
+                void clear_extentions(const bitstring_type& exbmp, std::size_t cnt);                
 
                 template<typename T>
                 void operator&(const T& vl) {
