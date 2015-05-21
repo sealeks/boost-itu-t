@@ -2767,9 +2767,9 @@ namespace x680 {
                         stream << "ITU_T_EXTENTION_GROUP_PER( " << to_string(i) << ")";
                     }
                     stream << ";\n";
-                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_SET_PER;";
+                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_SET_PER;\n";
                 } else
-                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_NULL_SET_PER;";
+                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_NULL_SET_PER;\n";
             }
 
             if (opt_count) {
@@ -2800,42 +2800,41 @@ namespace x680 {
                 stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION_CHECK_PER) {\n";
                 stream << "\n" << tabformat(scp, 4) << "ITU_T_EXTENTION_GROUPS_SET_PER;\n";
                 for (std::size_t i = 0; i < self->extention_count(); ++i) {
-                    stream << "\n" << tabformat(scp, 5) << "if (ITU_T_EXTENTION_GROUP_BOOL_PER(" << to_string(i) << "){";
+                    stream << "\n" << tabformat(scp, 5) << "if (ITU_T_EXTENTION_GROUP_CHECK_PER(" << to_string(i) << ")) {";
                     namedtypeassignment_entity_vct extention = self->extention_group(i);
                     if (extention.size() > 1) {
-                        bool has_optional=false;
+                        bool has_optional = false;
                         for (namedtypeassignment_entity_vct::iterator it = extention.begin(); it != extention.end(); ++it) {
                             if ((is_optional_or_default((*it)->marker())))
                                 has_optional = true;
                         }
+                        stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_START_OPEN;";
                         if (has_optional) {
                             stream << "\n" << tabformat(scp, 6) << "ITU_T_EXTENTION_GROUP_BMP_PER = ";
-                            bool is_first=true;
+                            bool is_first = true;
                             for (namedtypeassignment_entity_vct::iterator it = extention.begin(); it != extention.end(); ++it) {
                                 if ((is_optional_or_default((*it)->marker()))) {
                                     if (is_first)
-                                        is_first=false;
+                                        is_first = false;
                                     else
                                         stream << " + ";
                                     stream << "ITU_T_EXISTS_BMP(" << nameconvert((*it)->name()) << "_)";
                                 }
                             }
-                            stream << "\n" << tabformat(scp, 6) << "ITU_T_EXTENTION_GROUP_SET_PER;";
+                            stream << ";\n" << tabformat(scp, 6) << "ITU_T_EXTENTION_GROUP_SET_PER;";
                         }
-                        stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_START_OPEN;";
-                        for (namedtypeassignment_entity_vct::iterator it = extention.begin(); it != extention.end(); ++it) {
-                            execute_archive_member(*it, false, 0, 4 );
-                        }
+                        for (namedtypeassignment_entity_vct::iterator it = extention.begin(); it != extention.end(); ++it)
+                            execute_archive_member(*it, false, 0, 4);
                         stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_END_OPEN;";
                     } else {
                         if (!extention.empty()) {
                             stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_START_OPEN;";
-                            execute_archive_member(extention.front() , false, 0, 4 );
+                            execute_archive_member(extention.front(), false, 0, 4);
                             stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_END_OPEN;";
                         } else
                             stream << "\n????";
                     }
-                    stream << "\n" << tabformat(scp, 5) << "}\n";                    
+                    stream << "\n" << tabformat(scp, 5) << "}\n";
                 }
                 stream << "\n" << tabformat(scp, 3) << "};\n";
             }
@@ -2886,7 +2885,7 @@ namespace x680 {
             if ((self->type()) && (self->type()->has_extention())) {
                 stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION_CHECK_PER) {\n";
                 stream << "\n" << tabformat(scp, 4) << "ITU_T_EXTENTION_GROUPS_GET_PER;\n";
-                stream << "\n" << tabformat(scp, 3) << "};\n";                
+                stream << "\n" << tabformat(scp, 3) << "};\n";
             }
 
             if (!root2.empty()) {

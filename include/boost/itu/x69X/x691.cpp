@@ -186,8 +186,10 @@ namespace boost {
             }
 
             void output_coder::set_extentions_marker(const bitstring_type & vl) {
-                add_nsn_small(vl.sizebits());
-                add_bitmap(vl);
+                if (vl.sizebits()) {
+                    add_nsn_small(vl.sizebits() - 1);
+                    add_bitmap(vl);
+                }
             }
 
 
@@ -577,7 +579,7 @@ namespace boost {
             }
 
             void input_coder::get_extentions_marker(bitstring_type& vl) {
-                std::size_t rslt = get_nsn_small();
+                std::size_t rslt = get_nsn_small() + 1;
                 vl = get_pop_bmp(rslt);
             }
 

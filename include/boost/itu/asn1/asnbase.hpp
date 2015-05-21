@@ -150,7 +150,7 @@ namespace boost {\
 
 
 #define ITU_T_EXISTS_BMP(name)  boost::asn1::bitstring_type(static_cast<bool>(name))
-#define ITU_T_EXISTS_BOOL(name)  static_cast<bool>(name))
+#define ITU_T_EXISTS_BOOL(name)  static_cast<bool>(name)
 
 #define ITU_T_TYPEDEF(regtype, type , id, cl)  typedef type  regtype;
 #define ITU_T_IMPLICIT_TYPEDEF(regtype, type , id, cl)  typedef boost::asn1::implicit_typedef< type, class _____TAGTYPE___##regtype ,  id , boost::asn1:: cl>  regtype;

@@ -24,12 +24,13 @@
 #define ITU_T_EXTENTION_CHECK_PER  __is_extention__
 
 #define ITU_T_EXTENTION_GROUP_BMP_PER  boost::asn1::bitstring_type __ext_optional_bmp__
-#define ITU_T_EXTENTION_GROUP_BOOL_PER( num )  bool __is_ext_optional_ ## num 
+#define ITU_T_EXTENTION_GROUP_BOOL_PER( num )  bool __is_ext_optional_ ## num
+#define ITU_T_EXTENTION_GROUP_CHECK_PER( num )  __is_ext_optional_ ## num
 #define ITU_T_EXTENTION_GROUP_PER( num )  boost::asn1::bitstring_type(__is_ext_optional_ ## num )
 #define ITU_T_EXTENTION_GROUP_SET_PER  arch.add_bitmap(__ext_optional_bmp__);
 #define ITU_T_EXTENTION_GROUPS_BMP_PER  boost::asn1::bitstring_type __ext_optional_groups_bmp__
 #define ITU_T_EXTENTION_GROUPS_SET_PER  arch.set_extentions_marker(__ext_optional_groups_bmp__);
-#define ITU_T_EXTENTION_GROUPS_GET_PER  boost::asn1::bitstring_type __ext_optional_groups_bmp__, arch.get_extentions_marker(__ext_optional_groups_bmp__);
+#define ITU_T_EXTENTION_GROUPS_GET_PER  boost::asn1::bitstring_type __ext_optional_groups_bmp__; arch.get_extentions_marker(__ext_optional_groups_bmp__);
 
 #define ITU_T_OPTIONAL_GET_PER(sz)  boost::asn1::bitstring_type __optional_bmp__ =  arch.get_pop_bmp(sz);
 #define ITU_T_OPTIONAL_CHECK_PER(num)   if (__optional_bmp__.bit( num ))
