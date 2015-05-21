@@ -4,10 +4,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы "
                    projectFiles="true">
+      <itemPath>../../../include_programs/test_asn1/Test1-ber.cpp</itemPath>
+      <itemPath>../../../include_programs/test_asn1/Test1-per.cpp</itemPath>
       <itemPath>../../../include_programs/test_asn1/Test1.cpp</itemPath>
       <itemPath>../../../include_programs/test_asn1/Test1.hpp</itemPath>
-      <itemPath>../../../include_programs/test_asn1/Test1_ber.cpp</itemPath>
-      <itemPath>../../../include_programs/test_asn1/Test1_per.cpp</itemPath>
       <itemPath>../../../include_programs/test_asn1/main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -79,6 +79,16 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../../../include_programs/test_asn1/Test1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include_programs/test_asn1/Test1.cpp"
             ex="false"
             tool="1"
@@ -87,16 +97,6 @@
       <item path="../../../include_programs/test_asn1/Test1.hpp"
             ex="false"
             tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_asn1/Test1_ber.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_asn1/Test1_per.cpp"
-            ex="false"
-            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include_programs/test_asn1/main.cpp"
@@ -143,6 +143,16 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../../../include_programs/test_asn1/Test1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include_programs/test_asn1/Test1.cpp"
             ex="false"
             tool="1"
@@ -151,16 +161,6 @@
       <item path="../../../include_programs/test_asn1/Test1.hpp"
             ex="false"
             tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_asn1/Test1_ber.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_asn1/Test1_per.cpp"
-            ex="false"
-            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include_programs/test_asn1/main.cpp"
@@ -200,6 +200,16 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../../../include_programs/test_asn1/Test1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include_programs/test_asn1/Test1.cpp"
             ex="false"
             tool="1"
@@ -208,16 +218,6 @@
       <item path="../../../include_programs/test_asn1/Test1.hpp"
             ex="false"
             tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_asn1/Test1_ber.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_asn1/Test1_per.cpp"
-            ex="false"
-            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include_programs/test_asn1/main.cpp"
@@ -257,6 +257,16 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../../../include_programs/test_asn1/Test1-ber.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../include_programs/test_asn1/Test1-per.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="../../../include_programs/test_asn1/Test1.cpp"
             ex="false"
             tool="1"
@@ -265,16 +275,6 @@
       <item path="../../../include_programs/test_asn1/Test1.hpp"
             ex="false"
             tool="3"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_asn1/Test1_ber.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="../../../include_programs/test_asn1/Test1_per.cpp"
-            ex="false"
-            tool="1"
             flavor2="0">
       </item>
       <item path="../../../include_programs/test_asn1/main.cpp"

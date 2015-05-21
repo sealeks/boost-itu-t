@@ -9,7 +9,7 @@
 
 namespace Test1 {
 
-    // set PersonnelRecord
+    // set  PersonnelRecord
 
     PersonnelRecord_impl::PersonnelRecord_impl() : name_(), title_(), number_(), dateOfHire_(), nameOfSpouse_() {
     };
@@ -26,12 +26,12 @@ namespace Test1 {
     nameOfSpouse_(arg__nameOfSpouse) {
     };
 
-    PersonnelRecord_impl::PersonnelRecord_impl(boost::shared_ptr< Name> arg__name,
-            boost::shared_ptr< visiblestring_type> arg__title,
-            boost::shared_ptr< EmployeeNumber> arg__number,
-            boost::shared_ptr< Date> arg__dateOfHire,
-            boost::shared_ptr< Name> arg__nameOfSpouse,
-            boost::shared_ptr< Children_type> arg__children) :
+    PersonnelRecord_impl::PersonnelRecord_impl(shared_ptr< Name> arg__name,
+            shared_ptr< visiblestring_type> arg__title,
+            shared_ptr< EmployeeNumber> arg__number,
+            shared_ptr< Date> arg__dateOfHire,
+            shared_ptr< Name> arg__nameOfSpouse,
+            shared_ptr< Children_type> arg__children) :
     name_(arg__name),
     title_(arg__title),
     number_(arg__number),
@@ -40,96 +40,15 @@ namespace Test1 {
     children_(arg__children) {
     };
 
-    Name& PersonnelRecord_impl::name() {
-        return *name_;
-    }
 
-    const Name& PersonnelRecord_impl::name() const {
-        return *name_;
-    }
+    ITU_T_HOLDERH_DEFN(PersonnelRecord_impl::name, name, Name);
+    ITU_T_HOLDERH_DEFN(PersonnelRecord_impl::title, title, visiblestring_type);
+    ITU_T_HOLDERH_DEFN(PersonnelRecord_impl::number, number, EmployeeNumber);
+    ITU_T_HOLDERH_DEFN(PersonnelRecord_impl::dateOfHire, dateOfHire, Date);
+    ITU_T_HOLDERH_DEFN(PersonnelRecord_impl::nameOfSpouse, nameOfSpouse, Name);
+    ITU_T_OPTIONAL_DEFN(PersonnelRecord_impl::children, children, PersonnelRecord_impl::Children_type);
 
-    void PersonnelRecord_impl::name(const Name& vl) {
-        name_ = vl;
-    }
-
-    void PersonnelRecord_impl::name(boost::shared_ptr< Name> vl) {
-        name_ = vl;
-    }
-
-    visiblestring_type& PersonnelRecord_impl::title() {
-        return *title_;
-    }
-
-    const visiblestring_type& PersonnelRecord_impl::title() const {
-        return *title_;
-    }
-
-    void PersonnelRecord_impl::title(const visiblestring_type& vl) {
-        title_ = vl;
-    }
-
-    void PersonnelRecord_impl::title(boost::shared_ptr< visiblestring_type> vl) {
-        title_ = vl;
-    }
-
-    EmployeeNumber& PersonnelRecord_impl::number() {
-        return *number_;
-    }
-
-    const EmployeeNumber& PersonnelRecord_impl::number() const {
-        return *number_;
-    }
-
-    void PersonnelRecord_impl::number(const EmployeeNumber& vl) {
-        number_ = vl;
-    }
-
-    void PersonnelRecord_impl::number(boost::shared_ptr< EmployeeNumber> vl) {
-        number_ = vl;
-    }
-
-    Date& PersonnelRecord_impl::dateOfHire() {
-        return *dateOfHire_;
-    }
-
-    const Date& PersonnelRecord_impl::dateOfHire() const {
-        return *dateOfHire_;
-    }
-
-    void PersonnelRecord_impl::dateOfHire(const Date& vl) {
-        dateOfHire_ = vl;
-    }
-
-    void PersonnelRecord_impl::dateOfHire(boost::shared_ptr< Date> vl) {
-        dateOfHire_ = vl;
-    }
-
-    Name& PersonnelRecord_impl::nameOfSpouse() {
-        return *nameOfSpouse_;
-    }
-
-    const Name& PersonnelRecord_impl::nameOfSpouse() const {
-        return *nameOfSpouse_;
-    }
-
-    void PersonnelRecord_impl::nameOfSpouse(const Name& vl) {
-        nameOfSpouse_ = vl;
-    }
-
-    void PersonnelRecord_impl::nameOfSpouse(boost::shared_ptr< Name> vl) {
-        nameOfSpouse_ = vl;
-    }
-
-    boost::shared_ptr<PersonnelRecord_impl::Children_type> PersonnelRecord_impl::children__new() {
-        return children_ = boost::shared_ptr<Children_type>(new Children_type());
-    }
-
-    void PersonnelRecord_impl::children(const Children_type& vl) {
-        children_ = boost::shared_ptr<Children_type>(new Children_type(vl));
-    }
-
-
-    // set ChildInformation
+    // set  ChildInformation
     const enumerated_type ChildInformation::sex_male = 1;
     const enumerated_type ChildInformation::sex_female = 2;
     const enumerated_type ChildInformation::sex_unknown = 3;
@@ -143,54 +62,18 @@ namespace Test1 {
     dateOfBirth_(arg__dateOfBirth) {
     };
 
-    ChildInformation::ChildInformation(boost::shared_ptr< Name> arg__name,
-            boost::shared_ptr< Date> arg__dateOfBirth,
-            boost::shared_ptr< enumerated_type> arg__sex) :
+    ChildInformation::ChildInformation(shared_ptr< Name> arg__name,
+            shared_ptr< Date> arg__dateOfBirth,
+            shared_ptr< enumerated_type> arg__sex) :
     name_(arg__name),
     dateOfBirth_(arg__dateOfBirth),
     sex_(arg__sex) {
     };
 
-    Name& ChildInformation::name() {
-        return *name_;
-    }
 
-    const Name& ChildInformation::name() const {
-        return *name_;
-    }
-
-    void ChildInformation::name(const Name& vl) {
-        name_ = vl;
-    }
-
-    void ChildInformation::name(boost::shared_ptr< Name> vl) {
-        name_ = vl;
-    }
-
-    Date& ChildInformation::dateOfBirth() {
-        return *dateOfBirth_;
-    }
-
-    const Date& ChildInformation::dateOfBirth() const {
-        return *dateOfBirth_;
-    }
-
-    void ChildInformation::dateOfBirth(const Date& vl) {
-        dateOfBirth_ = vl;
-    }
-
-    void ChildInformation::dateOfBirth(boost::shared_ptr< Date> vl) {
-        dateOfBirth_ = vl;
-    }
-
-    boost::shared_ptr<enumerated_type> ChildInformation::sex__new() {
-        return sex_ = boost::shared_ptr<enumerated_type>(new enumerated_type());
-    }
-
-    void ChildInformation::sex(const enumerated_type& vl) {
-        sex_ = boost::shared_ptr<enumerated_type>(new enumerated_type(vl));
-    }
-
+    ITU_T_HOLDERH_DEFN(ChildInformation::name, name, Name);
+    ITU_T_HOLDERH_DEFN(ChildInformation::dateOfBirth, dateOfBirth, Date);
+    ITU_T_OPTIONAL_DEFN(ChildInformation::sex, sex, enumerated_type);
 
     // sequence Name
 
@@ -205,54 +88,38 @@ namespace Test1 {
     familyName_(arg__familyName) {
     };
 
-    NameString& Name_impl::givenName() {
-        return *givenName_;
-    }
 
-    const NameString& Name_impl::givenName() const {
-        return *givenName_;
-    }
+    ITU_T_HOLDERH_DEFN(Name_impl::givenName, givenName, NameString);
+    ITU_T_HOLDERH_DEFN(Name_impl::initial, initial, NameString);
+    ITU_T_HOLDERH_DEFN(Name_impl::familyName, familyName, NameString);
 
-    void Name_impl::givenName(const NameString& vl) {
-        givenName_ = vl;
-    }
+    // sequence A
 
-    void Name_impl::givenName(boost::shared_ptr< NameString> vl) {
-        givenName_ = vl;
-    }
+    A::A() : a_() {
+    };
 
-    NameString& Name_impl::initial() {
-        return *initial_;
-    }
+    A::A(const integer_type& arg__a) :
+    a_(arg__a) {
+    };
 
-    const NameString& Name_impl::initial() const {
-        return *initial_;
-    }
+    A::A(shared_ptr< integer_type> arg__a,
+            shared_ptr< bool> arg__b,
+            shared_ptr< bool> arg__c,
+            shared_ptr< bool> arg__d,
+            shared_ptr< bool> arg__e) :
+    a_(arg__a),
+    b_(arg__b),
+    c_(arg__c),
+    d_(arg__d),
+    e_(arg__e) {
+    };
 
-    void Name_impl::initial(const NameString& vl) {
-        initial_ = vl;
-    }
 
-    void Name_impl::initial(boost::shared_ptr< NameString> vl) {
-        initial_ = vl;
-    }
-
-    NameString& Name_impl::familyName() {
-        return *familyName_;
-    }
-
-    const NameString& Name_impl::familyName() const {
-        return *familyName_;
-    }
-
-    void Name_impl::familyName(const NameString& vl) {
-        familyName_ = vl;
-    }
-
-    void Name_impl::familyName(boost::shared_ptr< NameString> vl) {
-        familyName_ = vl;
-    }
-
+    ITU_T_HOLDERH_DEFN(A::a, a, integer_type);
+    ITU_T_OPTIONAL_DEFN(A::b, b, bool);
+    ITU_T_OPTIONAL_DEFN(A::c, c, bool);
+    ITU_T_OPTIONAL_DEFN(A::d, d, bool);
+    ITU_T_OPTIONAL_DEFN(A::e, e, bool);
 
 }
 

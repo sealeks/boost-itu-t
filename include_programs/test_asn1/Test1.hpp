@@ -20,10 +20,11 @@ namespace Test1 {
     struct PersonnelRecord_impl;
     struct ChildInformation;
     struct Name_impl;
+    struct A;
 
 
     typedef visiblestring_type NameString; //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
-    ITU_T_IMPLICIT_TYPEDEF(EmployeeNumber, int, 2, APPLICATION_CLASS); //   Ic(  [ 0  ...   9999 ]   ...ext...) 
+    ITU_T_IMPLICIT_TYPEDEF(EmployeeNumber, integer_type, 2, APPLICATION_CLASS); //   Ic(  [ 0  ...   9999 ]   ...ext...) 
     ITU_T_IMPLICIT_TYPEDEF(Date, visiblestring_type, 3, APPLICATION_CLASS); //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
 
     ITU_T_IMPLICIT_TYPEDEF(PersonnelRecord, PersonnelRecord_impl, 0, APPLICATION_CLASS);
@@ -36,7 +37,7 @@ namespace Test1 {
 namespace Test1 {
 
 
-    // set PersonnelRecord
+    // set  PersonnelRecord
 
     struct PersonnelRecord_impl {
 
@@ -51,12 +52,12 @@ namespace Test1 {
                 const Date& arg__dateOfHire,
                 const Name& arg__nameOfSpouse);
 
-        PersonnelRecord_impl(boost::shared_ptr< Name> arg__name,
-                boost::shared_ptr< visiblestring_type> arg__title,
-                boost::shared_ptr< EmployeeNumber> arg__number,
-                boost::shared_ptr< Date> arg__dateOfHire,
-                boost::shared_ptr< Name> arg__nameOfSpouse,
-                boost::shared_ptr< Children_type> arg__children);
+        PersonnelRecord_impl(shared_ptr< Name> arg__name,
+                shared_ptr< visiblestring_type> arg__title,
+                shared_ptr< EmployeeNumber> arg__number,
+                shared_ptr< Date> arg__dateOfHire,
+                shared_ptr< Name> arg__nameOfSpouse,
+                shared_ptr< Children_type> arg__children);
 
         ITU_T_HOLDERH_DECL(name, Name);
         ITU_T_HOLDERH_DECL(title, visiblestring_type);
@@ -68,7 +69,7 @@ namespace Test1 {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    // set ChildInformation
+    // set  ChildInformation
 
     struct ChildInformation {
 
@@ -82,9 +83,9 @@ namespace Test1 {
         ChildInformation(const Name& arg__name,
                 const Date& arg__dateOfBirth);
 
-        ChildInformation(boost::shared_ptr< Name> arg__name,
-                boost::shared_ptr< Date> arg__dateOfBirth,
-                boost::shared_ptr< enumerated_type> arg__sex = boost::shared_ptr< enumerated_type>());
+        ChildInformation(shared_ptr< Name> arg__name,
+                shared_ptr< Date> arg__dateOfBirth,
+                shared_ptr< enumerated_type> arg__sex = boost::shared_ptr< enumerated_type>());
 
         ITU_T_HOLDERH_DECL(name, Name);
         ITU_T_HOLDERH_DECL(dateOfBirth, Date); //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
@@ -110,19 +111,38 @@ namespace Test1 {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    template<> void PersonnelRecord_impl::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void PersonnelRecord_impl::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void ChildInformation::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void ChildInformation::serialize(boost::asn1::x690::input_coder& arch);
-    template<> void Name_impl::serialize(boost::asn1::x690::output_coder& arch);
-    template<> void Name_impl::serialize(boost::asn1::x690::input_coder& arch);
+    // sequence A
 
-    template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::output_coder& arch);
-    template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::input_coder& arch);
-    template<> void ChildInformation::serialize(boost::asn1::x691::output_coder& arch);
-    template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch);
-    template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch);
-    template<> void Name_impl::serialize(boost::asn1::x691::input_coder& arch);
+    struct A {
+
+        A();
+
+        A(const integer_type& arg__a);
+
+        A(shared_ptr< integer_type> arg__a,
+                shared_ptr< bool> arg__b = boost::shared_ptr< bool>(),
+                shared_ptr< bool> arg__c = boost::shared_ptr< bool>(),
+                shared_ptr< bool> arg__d = boost::shared_ptr< bool>(),
+                shared_ptr< bool> arg__e = boost::shared_ptr< bool>());
+
+        ITU_T_HOLDERH_DECL(a, integer_type);
+        ITU_T_OPTIONAL_DECL(b, bool);
+        ITU_T_OPTIONAL_DECL(c, bool);
+        ITU_T_OPTIONAL_DECL(d, bool);
+        ITU_T_OPTIONAL_DECL(e, bool);
+
+        ITU_T_ARCHIVE_FUNC;
+    };
+
+    ITU_T_ARCHIVE_X690_DECL(PersonnelRecord_impl);
+    ITU_T_ARCHIVE_X690_DECL(ChildInformation);
+    ITU_T_ARCHIVE_X690_DECL(Name_impl);
+    ITU_T_ARCHIVE_X690_DECL(A);
+
+    ITU_T_ARCHIVE_X691_DECL(PersonnelRecord_impl);
+    ITU_T_ARCHIVE_X691_DECL(ChildInformation);
+    ITU_T_ARCHIVE_X691_DECL(Name_impl);
+    ITU_T_ARCHIVE_X691_DECL(A);
 
 }
 

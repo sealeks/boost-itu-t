@@ -17,6 +17,7 @@
 #include <boost/itu/coder/base_coder.hpp>
 #include <boost/itu/asn1/asnbase.hpp>
 #include <set>
+#include <limits>
 
 #define ASN1TST
 #define X961_TEST
@@ -227,6 +228,7 @@ int main(int argc, char* argv[]) {
 
     asn1_adaptor adaptor(std::cin, std::cout);
 
+    std::cout << "limits : " << std::numeric_limits<int>::min()  << " : "  << std::numeric_limits<int>::max()  << std::endl;
 
     adaptor << PRt;
 
