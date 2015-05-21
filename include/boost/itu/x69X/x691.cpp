@@ -11,12 +11,11 @@ namespace boost {
     namespace asn1 {
         namespace x691 {
 
-
             std::ostream& operator<<(std::ostream& stream, const size_class& vl) {
                 return stream << "SIZE:  " << vl.size() << '\n';
             }
-            
-            
+
+
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             /*OUTPUT STREAM                                                                                                                                                      */
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////               
@@ -184,6 +183,11 @@ namespace boost {
                         data.push_back(0);
                     octet_writer_undefsz(*this, data);
                 }
+            }
+
+            void output_coder::set_extentions_marker(const bitstring_type & vl) {
+                add_nsn_small(vl.sizebits());
+                add_bitmap(vl);
             }
 
 
@@ -570,6 +574,11 @@ namespace boost {
                 octet_sequnce data;
                 octet_reader_undefsz(*this, data);
                 add_front(data);
+            }
+
+            void input_coder::get_extentions_marker(bitstring_type& vl) {
+                std::size_t rslt = get_nsn_small();
+                vl = get_pop_bmp(rslt);
             }
 
 

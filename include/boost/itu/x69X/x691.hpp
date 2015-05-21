@@ -23,13 +23,17 @@
 #define ITU_T_EXTENTION_SET_PER  bool __is_extention__ = static_cast<bool>( __ext_optional_groups_bmp__);boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
 #define ITU_T_EXTENTION_CHECK_PER  __is_extention__
 
+#define ITU_T_EXTENTION_GROUP_BMP_PER( num )  boost::asn1::bitstring_type __ext_optional_bmp__## num
+#define ITU_T_EXTENTION_GROUP_BOOL_PER( num )  static_cast<bool>(__ext_optional_bmp__ ## num ) 
+#define ITU_T_EXTENTION_GROUP_PER( num )  boost::asn1::bitstring_type(static_cast<bool>(__ext_optional_bmp__ ## num ) )
+#define ITU_T_EXTENTION_GROUP_SET_PER( num )  arch.add_bitmap(__ext_optional_bmp__ ## num);
+#define ITU_T_EXTENTION_GROUPS_BMP_PER  boost::asn1::bitstring_type __ext_optional_groups_bmp__
+#define ITU_T_EXTENTION_GROUPS_SET_PER  arch.set_extentions_marker(__ext_optional_groups_bmp__);
+#define ITU_T_EXTENTION_GROUPS_GET_PER  boost::asn1::bitstring_type __ext_optional_groups_bmp__, arch.get_extentions_marker(__ext_optional_groups_bmp__);
 
 #define ITU_T_OPTIONAL_GET_PER(sz)  boost::asn1::bitstring_type __optional_bmp__ =  arch.get_pop_bmp(sz);
 #define ITU_T_OPTIONAL_CHECK_PER(num)   if (__optional_bmp__.bit( num ))
 #define ITU_T_OPTIONAL_DECL_PER  boost::asn1::bitstring_type __optional_bmp__ 
-#define ITU_T_EXTENTION_GROUP_BMP_PER( num )  boost::asn1::bitstring_type __ext_optional_bmp__## num
-#define ITU_T_EXTENTION_GROUP_CHECK_PER( num )  boost::asn1::bitstring_type(static_cast<bool>(__ext_optional_bmp__ ## num ) )
-#define ITU_T_EXTENTION_GROUPS_BMP_PER  boost::asn1::bitstring_type __ext_optional_groups_bmp__
 #define ITU_T_OPTIONAL_PER(name)  boost::asn1::bitstring_type(static_cast<bool>(name))
 #define ITU_T_OPTIONAL_SET_PER arch.add_bitmap(__optional_bmp__);
 
@@ -689,10 +693,12 @@ namespace boost {
                 }
 
                 void add_nsn_small(std::size_t indx);
-                       
-                void start_open();             
-                
-                void end_open();                 
+
+                void start_open();
+
+                void end_open();
+
+                void set_extentions_marker(const bitstring_type & vl);
 
                 template<typename T>
                 void operator&(const T& vl) {
@@ -1330,8 +1336,10 @@ namespace boost {
                 }
 
                 std::size_t get_nsn_small();
-                
-                void parse_open();                            
+
+                void parse_open();
+
+                void get_extentions_marker(bitstring_type& vl);
 
                 template<typename T>
                 void operator&(const T& vl) {
@@ -2024,7 +2032,7 @@ namespace boost {
                 return bind_per(arch, vl.get_shared());
             return false;
         }
- 
+
         template<typename T, const T& DT>
         inline bool bind_per(boost::asn1::x691::input_coder & arch, default_holder<T, DT>& vl) {
             return bind_per(arch, vl.get_shared());
