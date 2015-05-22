@@ -713,21 +713,35 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_EXTENTION_READ;
 
-        ITU_T_GET_CONSTAINED_INDX(1);
+        if (ITU_T_EXTENTION) {
 
-        switch (__indx__) {
-            case 0:
-            {
-                ITU_T_BIND_PER(*value<Simply_encoded_data > (true, User_data_simply_encoded_data));
-                break;
+            ITU_T_GET_CONSTAINED_INDX(1);
+
+            switch (__indx__) {
+                case 0:
+                {
+                    ITU_T_BIND_PER(*value<Simply_encoded_data > (true, User_data_simply_encoded_data));
+                    break;
+                }
+                case 1:
+                {
+                    ITU_T_BIND_SIZE_SNGLCONSTRE(*value<Fully_encoded_data > (true, User_data_fully_encoded_data), 1);
+                    break;
+                }
+                default:
+                {
+                }
             }
-            case 1:
-            {
-                ITU_T_BIND_SIZE_SNGLCONSTRE(*value<Fully_encoded_data > (true, User_data_fully_encoded_data), 1);
-                break;
-            }
-            default:
-            {
+        }
+        else {
+
+            ITU_T_GET_NSN_SMALL_INDX;
+
+            switch (__indx__) {
+                default:
+                {
+                    ITU_T_PER_CLEAR_EXTENTION;
+                }
             }
         }
     }

@@ -2636,11 +2636,10 @@ namespace x680 {
             namedtypeassignment_entity_vct root = self->canonicalorder_root();
             namedtypeassignment_entity_vct extentions = self->extentions();
 
-            bool can_extention = ((extentions.size()) && (has_extention));
 
             std::size_t scppad = 0;
 
-            if (can_extention) {
+            if (has_extention) {
                 scppad++;
                 stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION) { ";
             }
@@ -2681,7 +2680,7 @@ namespace x680 {
             }
 
 
-            if (can_extention) {
+            if (has_extention) {
                 std::size_t extention_it = 0;
                 stream << tabformat(scp, 3) << "} ";
                 stream << "\n" << tabformat(scp, 3) << "else { ";
