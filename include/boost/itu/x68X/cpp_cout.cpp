@@ -1893,13 +1893,13 @@ namespace x680 {
                             execute_archive_member(named, afterext);
                     } else if (mkr == mk_extention) {
                         afterext = !afterext;
-                        stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";
+                        stream << "\n" << tabformat(scp, 3) << "ITU_T_RESET_EXTENTION" << ";";
                     }
                 }
 
                 if ((*it)->as_extention()) {
                     afterext = !afterext;
-                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION" << ";";
+                    stream << "\n" << tabformat(scp, 3) << "ITU_T_RESET_EXTENTION" << ";";
                 }
             }
             stream << "\n";
@@ -2533,10 +2533,10 @@ namespace x680 {
 
             if (has_extention) {
                 if (extentions.empty()) {
-                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_NULL_SET_PER;";
+                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_WRITE_NULL;";
                 }
                 else{
-                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_CHOICE_SET_PER( " << 
+                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_WRITE_CHOICE( " << 
                             choice_enum_str(self, extentions.front()) << ",  " << choice_enum_str(self, extentions.back()) << ");"; 
                 }
             }
@@ -2550,7 +2550,7 @@ namespace x680 {
 
             if (can_extention) {
                 scppad++;
-                stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION_CHECK_PER) { ";
+                stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION) { ";
             }
 
             if (root.size()) {
@@ -2630,7 +2630,7 @@ namespace x680 {
             bool has_extention = ((self->type()) && (self->type()->has_extention()));
 
             if (has_extention) {
-                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GET_PER;";
+                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_READ;";
             }
 
             namedtypeassignment_entity_vct root = self->canonicalorder_root();
@@ -2642,7 +2642,7 @@ namespace x680 {
 
             if (can_extention) {
                 scppad++;
-                stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION_CHECK_PER) { ";
+                stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION) { ";
             }
 
 
@@ -2753,13 +2753,13 @@ namespace x680 {
                 if ((!extentions.empty()) && (self->extention_count())) {
                     std::size_t extnum = 0;
                     bool needopr = false;
-                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GROUP_BOOL_PER(  " << to_string(extnum) << " ) = ";
+                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GROUP_BOOL(  " << to_string(extnum) << " ) = ";
                     for (namedtypeassignment_entity_vct::iterator it = extentions.begin(); it != extentions.end(); ++it) {
                         if ((*it)->extentionnum()) {
                             if (extnum != (*(*it)->extentionnum())) {
                                 extnum = *((*it)->extentionnum());
                                 needopr = false;
-                                stream << ";\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GROUP_BOOL_PER(  " << to_string(extnum) << " ) = ";
+                                stream << ";\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GROUP_BOOL(  " << to_string(extnum) << " ) = ";
                             }
                             if (needopr)
                                 stream << " || ";
@@ -2769,16 +2769,16 @@ namespace x680 {
                         }
                     }
                     stream << ";\n";
-                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GROUPS_BMP_PER = ";
+                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GROUPS_BMP = ";
                     for (std::size_t i = 0; i <= extnum; ++i) {
                         if (i)
                             stream << " + ";
-                        stream << "ITU_T_EXTENTION_GROUP_PER( " << to_string(i) << ")";
+                        stream << "ITU_T_EXTENTION_GROUP_AS_BMP( " << to_string(i) << ")";
                     }
                     stream << ";\n";
-                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_SET_PER;\n";
+                    stream << "\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_WRITE;\n";
                 } else
-                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_NULL_SET_PER;\n";
+                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_WRITE_NULL;\n";
             }
 
             if (opt_count) {
@@ -2790,7 +2790,7 @@ namespace x680 {
                     stream << " ITU_T_EXISTS_BMP(" << nameconvert((*it)->name()) << "_)";
                 }
                 stream << ";\n";
-                stream << "\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_SET_PER;";
+                stream << "\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_WRITE;";
                 stream << "\n";
             }
             for (namedtypeassignment_entity_vct::iterator it = root1.begin(); it != root1.end(); ++it) {
@@ -2806,10 +2806,10 @@ namespace x680 {
             ///  Some for extention
 
             if ((!extentions.empty()) && (self->extention_count())) {
-                stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION_CHECK_PER) {\n";
-                stream << "\n" << tabformat(scp, 4) << "ITU_T_EXTENTION_GROUPS_SET_PER;\n";
+                stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION) {\n";
+                stream << "\n" << tabformat(scp, 4) << "ITU_T_EXTENTION_GROUPS_WRITE;\n";
                 for (std::size_t i = 0; i < self->extention_count(); ++i) {
-                    stream << "\n" << tabformat(scp, 5) << "if (ITU_T_EXTENTION_GROUP_CHECK_PER(" << to_string(i) << ")) {";
+                    stream << "\n" << tabformat(scp, 5) << "if (ITU_T_EXTENTION_GROUPS_CHECK(" << to_string(i) << ")) {";
                     namedtypeassignment_entity_vct extention = self->extention_group(i);
                     if (extention.size() > 1) {
                         bool has_optional = false;
@@ -2819,7 +2819,7 @@ namespace x680 {
                         }
                         stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_START_OPEN;";
                         if (has_optional) {
-                            stream << "\n" << tabformat(scp, 6) << "ITU_T_EXTENTION_GROUP_BMP_PER = ";
+                            stream << "\n" << tabformat(scp, 6) << "ITU_T_OPTIONAL_BMP = ";
                             bool is_first = true;
                             for (namedtypeassignment_entity_vct::iterator it = extention.begin(); it != extention.end(); ++it) {
                                 if ((is_optional_or_default((*it)->marker()))) {
@@ -2830,7 +2830,7 @@ namespace x680 {
                                     stream << "ITU_T_EXISTS_BMP(" << nameconvert((*it)->name()) << "_)";
                                 }
                             }
-                            stream << ";\n" << tabformat(scp, 6) << "ITU_T_EXTENTION_GROUP_SET_PER;";
+                            stream << ";\n" << tabformat(scp, 6) << "ITU_T_OPTIONAL_WRITE;";
                         }
                         for (namedtypeassignment_entity_vct::iterator it = extention.begin(); it != extention.end(); ++it)
                             execute_archive_member(*it, false, 0, 4);
@@ -2878,10 +2878,10 @@ namespace x680 {
             std::size_t opt_count = struct_optional_count(root);
             std::size_t opt_it = 0;
             if ((self->type()) && (self->type()->has_extention())) {
-                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GET_PER;";
+                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_READ;";
             }
             if (opt_count)
-                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_GET_PER(" << to_string(opt_count) << " );\n";
+                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_READ(" << to_string(opt_count) << " );\n";
             for (namedtypeassignment_entity_vct::iterator it = root1.begin(); it != root1.end(); ++it) {
                 if ((*it)->type()) {
                     if (is_named((*it)->marker())) {
@@ -2897,11 +2897,11 @@ namespace x680 {
             ///  Some for extention
 
             if ((self->type()) && (self->type()->has_extention())) {
-                stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION_CHECK_PER) {\n";
-                stream << "\n" << tabformat(scp, 4) << "ITU_T_EXTENTION_GROUPS_GET_PER;\n";
+                stream << "\n\n" << tabformat(scp, 3) << "if (ITU_T_EXTENTION) {\n";
+                stream << "\n" << tabformat(scp, 4) << "ITU_T_EXTENTION_GROUPS_READ;\n";
 
                 for (std::size_t i = 0; i < self->extention_count(); ++i) {
-                    stream << "\n" << tabformat(scp, 5) << "if (ITU_T_EXTENTION_GROUP_CHECK_PER(" << to_string(i) << ")) {";
+                    stream << "\n" << tabformat(scp, 5) << "if (ITU_T_EXTENTION_GROUPS_CHECK(" << to_string(i) << ")) {";
                     stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_START_PARSE_OPEN;";
 
                     namedtypeassignment_entity_vct extention = self->extention_group(i);
@@ -2913,7 +2913,7 @@ namespace x680 {
                         }
                         std::size_t opt_it = 0;
                         if (opt_count)
-                            stream << "\n" << tabformat(scp, 6) << "ITU_T_OPTIONAL_GET_PER(" << to_string(opt_count) << " );\n";
+                            stream << "\n" << tabformat(scp, 6) << "ITU_T_OPTIONAL_READ(" << to_string(opt_count) << " );\n";
 
                         for (namedtypeassignment_entity_vct::iterator it = extention.begin(); it != extention.end(); ++it) {
                             if ((*it)->type()) {
@@ -3111,7 +3111,7 @@ namespace x680 {
                 stream << "\n";
                 stream << tabformat(scp, 3 + scpnum);
                 if (opt)
-                    stream << "ITU_T_OPTIONAL_CHECK_PER(" << to_string(optnum) << ")  ";
+                    stream << "ITU_T_OPTIONAL_CHECK(" << to_string(optnum) << ")  ";
                 stream << archive_member_per_str(self, nameconvert(self->name()) + "_") << ";";
             }
         }

@@ -19,9 +19,9 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CP_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(x410_mode_parameters_) + ITU_T_EXISTS_BMP(normal_mode_parameters_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(x410_mode_parameters_) + ITU_T_EXISTS_BMP(normal_mode_parameters_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*mode_selector_);
         ITU_T_BIND_PER(x410_mode_parameters_);
@@ -30,20 +30,20 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CP_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*mode_selector_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(x410_mode_parameters_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(normal_mode_parameters_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(x410_mode_parameters_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(normal_mode_parameters_);
     }
 
     // set  x410-mode-parameters
 
     template<> void CP_type::X410_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(checkpointSize_) + ITU_T_EXISTS_BMP(windowSize_) + ITU_T_EXISTS_BMP(dialogueMode_) + ITU_T_EXISTS_BMP(applicationProtocol_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(checkpointSize_) + ITU_T_EXISTS_BMP(windowSize_) + ITU_T_EXISTS_BMP(dialogueMode_) + ITU_T_EXISTS_BMP(applicationProtocol_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(checkpointSize_);
         ITU_T_BIND_PER(windowSize_);
@@ -54,22 +54,22 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CP_type::X410_mode_parameters_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(4);
+        ITU_T_OPTIONAL_READ(4);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(dialogueMode_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(windowSize_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(dialogueMode_);
         ITU_T_BIND_PER(*connectionDataRQ_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(applicationProtocol_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(applicationProtocol_);
     }
 
     // sequence normal-mode-parameters
 
     template<> void CP_type::Normal_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(calling_presentation_selector_) + ITU_T_EXISTS_BMP(called_presentation_selector_) + ITU_T_EXISTS_BMP(presentation_context_definition_list_) + ITU_T_EXISTS_BMP(default_context_name_) + ITU_T_EXISTS_BMP(presentation_requirements_) + ITU_T_EXISTS_BMP(user_session_requirements_) + ITU_T_EXISTS_BMP(protocol_options_) + ITU_T_EXISTS_BMP(initiators_nominated_context_) + ITU_T_EXISTS_BMP(extensions_) + ITU_T_EXISTS_BMP(user_data_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(calling_presentation_selector_) + ITU_T_EXISTS_BMP(called_presentation_selector_) + ITU_T_EXISTS_BMP(presentation_context_definition_list_) + ITU_T_EXISTS_BMP(default_context_name_) + ITU_T_EXISTS_BMP(presentation_requirements_) + ITU_T_EXISTS_BMP(user_session_requirements_) + ITU_T_EXISTS_BMP(protocol_options_) + ITU_T_EXISTS_BMP(initiators_nominated_context_) + ITU_T_EXISTS_BMP(extensions_) + ITU_T_EXISTS_BMP(user_data_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_SIZE_CONSTRE(calling_presentation_selector_, 1, 4);
@@ -86,40 +86,40 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CP_type::Normal_mode_parameters_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(11);
+        ITU_T_OPTIONAL_READ(11);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_SIZE_CONSTRE(calling_presentation_selector_, 1, 4);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_SIZE_CONSTRE(called_presentation_selector_, 1, 4);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(default_context_name_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(presentation_requirements_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(user_session_requirements_);
-        ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(protocol_options_);
-        ITU_T_OPTIONAL_CHECK_PER(8) ITU_T_BIND_NUM_CONSTRE(initiators_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(9) ITU_T_BIND_PER(extensions_);
-        ITU_T_OPTIONAL_CHECK_PER(10) ITU_T_BIND_PER(user_data_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(protocol_version_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRE(calling_presentation_selector_, 1, 4);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_SIZE_CONSTRE(called_presentation_selector_, 1, 4);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(default_context_name_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(presentation_requirements_);
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(user_session_requirements_);
+        ITU_T_OPTIONAL_CHECK(7) ITU_T_BIND_PER(protocol_options_);
+        ITU_T_OPTIONAL_CHECK(8) ITU_T_BIND_NUM_CONSTRE(initiators_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(9) ITU_T_BIND_PER(extensions_);
+        ITU_T_OPTIONAL_CHECK(10) ITU_T_BIND_PER(user_data_);
     }
 
     // sequence extensions
 
     template<> void CP_type::Normal_mode_parameters_type::Extensions_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_NULL_SET_PER;
+        ITU_T_EXTENTION_WRITE_NULL;
     }
 
     template<> void CP_type::Normal_mode_parameters_type::Extensions_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
     }
 
     // set  CPA-PPDU
 
     template<> void CPA_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(x410_mode_parameters_) + ITU_T_EXISTS_BMP(normal_mode_parameters_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(x410_mode_parameters_) + ITU_T_EXISTS_BMP(normal_mode_parameters_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*mode_selector_);
         ITU_T_BIND_PER(x410_mode_parameters_);
@@ -128,20 +128,20 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CPA_PPDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*mode_selector_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(x410_mode_parameters_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(normal_mode_parameters_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(x410_mode_parameters_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(normal_mode_parameters_);
     }
 
     // set  x410-mode-parameters
 
     template<> void CPA_PPDU::X410_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(checkpointSize_) + ITU_T_EXISTS_BMP(windowSize_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(checkpointSize_) + ITU_T_EXISTS_BMP(windowSize_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(checkpointSize_);
         ITU_T_BIND_PER(windowSize_);
@@ -150,10 +150,10 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CPA_PPDU::X410_mode_parameters_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(windowSize_);
         ITU_T_BIND_PER(*connectionDataAC_);
     }
 
@@ -161,9 +161,9 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CPA_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(responding_presentation_selector_) + ITU_T_EXISTS_BMP(presentation_context_definition_result_list_) + ITU_T_EXISTS_BMP(presentation_requirements_) + ITU_T_EXISTS_BMP(user_session_requirements_) + ITU_T_EXISTS_BMP(protocol_options_) + ITU_T_EXISTS_BMP(responders_nominated_context_) + ITU_T_EXISTS_BMP(user_data_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(responding_presentation_selector_) + ITU_T_EXISTS_BMP(presentation_context_definition_result_list_) + ITU_T_EXISTS_BMP(presentation_requirements_) + ITU_T_EXISTS_BMP(user_session_requirements_) + ITU_T_EXISTS_BMP(protocol_options_) + ITU_T_EXISTS_BMP(responders_nominated_context_) + ITU_T_EXISTS_BMP(user_data_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
@@ -177,16 +177,16 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CPA_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(8);
+        ITU_T_OPTIONAL_READ(8);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(presentation_requirements_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(user_session_requirements_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(protocol_options_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_NUM_CONSTRE(responders_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(user_data_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(protocol_version_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(presentation_requirements_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(user_session_requirements_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(protocol_options_);
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_NUM_CONSTRE(responders_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(7) ITU_T_BIND_PER(user_data_);
     }
 
     // choice CPR-PPDU
@@ -236,9 +236,9 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CPR_PPDU::X400_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(refuseReason_) + ITU_T_EXISTS_BMP(userDataRJ_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(refuseReason_) + ITU_T_EXISTS_BMP(userDataRJ_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(refuseReason_);
         ITU_T_BIND_PER(userDataRJ_);
@@ -246,19 +246,19 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CPR_PPDU::X400_mode_parameters_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(refuseReason_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(userDataRJ_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(refuseReason_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(userDataRJ_);
     }
 
     // sequence normal-mode-parameters
 
     template<> void CPR_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(responding_presentation_selector_) + ITU_T_EXISTS_BMP(presentation_context_definition_result_list_) + ITU_T_EXISTS_BMP(default_context_result_) + ITU_T_EXISTS_BMP(provider_reason_) + ITU_T_EXISTS_BMP(user_data_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(responding_presentation_selector_) + ITU_T_EXISTS_BMP(presentation_context_definition_result_list_) + ITU_T_EXISTS_BMP(default_context_result_) + ITU_T_EXISTS_BMP(provider_reason_) + ITU_T_EXISTS_BMP(user_data_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
@@ -270,14 +270,14 @@ namespace ISO8823_PRESENTATION {
 
     template<> void CPR_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(6);
+        ITU_T_OPTIONAL_READ(6);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(default_context_result_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(provider_reason_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(user_data_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(protocol_version_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(default_context_result_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(provider_reason_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(user_data_);
     }
 
     // choice Abort-type
@@ -370,9 +370,9 @@ namespace ISO8823_PRESENTATION {
 
     template<> void ARU_PPDU::X400_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(abortReason_) + ITU_T_EXISTS_BMP(reflectedParameter_) + ITU_T_EXISTS_BMP(userdataAB_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(abortReason_) + ITU_T_EXISTS_BMP(reflectedParameter_) + ITU_T_EXISTS_BMP(userdataAB_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(abortReason_);
         ITU_T_BIND_PER(reflectedParameter_);
@@ -381,20 +381,20 @@ namespace ISO8823_PRESENTATION {
 
     template<> void ARU_PPDU::X400_mode_parameters_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(abortReason_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(reflectedParameter_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(userdataAB_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(abortReason_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(reflectedParameter_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(userdataAB_);
     }
 
     // sequence normal-mode-parameters
 
     template<> void ARU_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(presentation_context_identifier_list_) + ITU_T_EXISTS_BMP(user_data_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(presentation_context_identifier_list_) + ITU_T_EXISTS_BMP(user_data_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
         ITU_T_BIND_PER(user_data_);
@@ -402,19 +402,19 @@ namespace ISO8823_PRESENTATION {
 
     template<> void ARU_PPDU::Normal_mode_parameters_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(user_data_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(user_data_);
     }
 
     // sequence ARP-PPDU
 
     template<> void ARP_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(provider_reason_) + ITU_T_EXISTS_BMP(event_identifier_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(provider_reason_) + ITU_T_EXISTS_BMP(event_identifier_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(provider_reason_);
         ITU_T_BIND_PER(event_identifier_);
@@ -422,10 +422,10 @@ namespace ISO8823_PRESENTATION {
 
     template<> void ARP_PPDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(provider_reason_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(event_identifier_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(provider_reason_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(event_identifier_);
     }
 
     // choice Typed-data-type
@@ -486,9 +486,9 @@ namespace ISO8823_PRESENTATION {
 
     template<> void AC_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(presentation_context_addition_list_) + ITU_T_EXISTS_BMP(presentation_context_deletion_list_) + ITU_T_EXISTS_BMP(user_data_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(presentation_context_addition_list_) + ITU_T_EXISTS_BMP(presentation_context_deletion_list_) + ITU_T_EXISTS_BMP(user_data_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_SIZE_CONSTRE(presentation_context_addition_list_, 0, 7);
         ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_list_, 0, 7);
@@ -497,20 +497,20 @@ namespace ISO8823_PRESENTATION {
 
     template<> void AC_PPDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_addition_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(user_data_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_addition_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(user_data_);
     }
 
     // sequence ACA-PPDU
 
     template<> void ACA_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(presentation_context_addition_result_list_) + ITU_T_EXISTS_BMP(presentation_context_deletion_result_list_) + ITU_T_EXISTS_BMP(user_data_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(presentation_context_addition_result_list_) + ITU_T_EXISTS_BMP(presentation_context_deletion_result_list_) + ITU_T_EXISTS_BMP(user_data_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_SIZE_CONSTRE(presentation_context_addition_result_list_, 0, 7);
         ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_result_list_, 0, 7);
@@ -519,20 +519,20 @@ namespace ISO8823_PRESENTATION {
 
     template<> void ACA_PPDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_addition_result_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_result_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(user_data_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_addition_result_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_result_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(user_data_);
     }
 
     // sequence RS-PPDU
 
     template<> void RS_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(presentation_context_identifier_list_) + ITU_T_EXISTS_BMP(user_data_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(presentation_context_identifier_list_) + ITU_T_EXISTS_BMP(user_data_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
         ITU_T_BIND_PER(user_data_);
@@ -540,19 +540,19 @@ namespace ISO8823_PRESENTATION {
 
     template<> void RS_PPDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(user_data_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(user_data_);
     }
 
     // sequence RSA-PPDU
 
     template<> void RSA_PPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(presentation_context_identifier_list_) + ITU_T_EXISTS_BMP(user_data_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(presentation_context_identifier_list_) + ITU_T_EXISTS_BMP(user_data_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
         ITU_T_BIND_PER(user_data_);
@@ -560,10 +560,10 @@ namespace ISO8823_PRESENTATION {
 
     template<> void RSA_PPDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(user_data_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(user_data_);
     }
 
     // sequence 
@@ -618,9 +618,9 @@ namespace ISO8823_PRESENTATION {
 
     template<> void Result_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(transfer_syntax_name_) + ITU_T_EXISTS_BMP(provider_reason_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(transfer_syntax_name_) + ITU_T_EXISTS_BMP(provider_reason_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*result_);
         ITU_T_BIND_PER(transfer_syntax_name_);
@@ -629,18 +629,18 @@ namespace ISO8823_PRESENTATION {
 
     template<> void Result_list_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*result_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(transfer_syntax_name_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(provider_reason_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(transfer_syntax_name_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(provider_reason_);
     }
 
     // choice User-data
 
     template<> void User_data::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_NULL_SET_PER;
+        ITU_T_EXTENTION_WRITE_NULL;
         switch (type()) {
             case User_data_simply_encoded_data:
             {
@@ -662,7 +662,7 @@ namespace ISO8823_PRESENTATION {
 
     template<> void User_data::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
         ITU_T_GET_CONSTAINED_INDX(1);
 
@@ -687,9 +687,9 @@ namespace ISO8823_PRESENTATION {
 
     template<> void PDV_list::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(transfer_syntax_name_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(transfer_syntax_name_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(transfer_syntax_name_);
         ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
@@ -698,9 +698,9 @@ namespace ISO8823_PRESENTATION {
 
     template<> void PDV_list::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(transfer_syntax_name_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(transfer_syntax_name_);
         ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*presentation_data_values_);
     }

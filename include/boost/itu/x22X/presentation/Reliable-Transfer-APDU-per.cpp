@@ -102,9 +102,9 @@ namespace Reliable_Transfer_APDU {
 
     template<> void RTORQapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(checkpointSize_) + ITU_T_EXISTS_BMP(windowSize_) + ITU_T_EXISTS_BMP(dialogueMode_) + ITU_T_EXISTS_BMP(applicationProtocol_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(checkpointSize_) + ITU_T_EXISTS_BMP(windowSize_) + ITU_T_EXISTS_BMP(dialogueMode_) + ITU_T_EXISTS_BMP(applicationProtocol_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(checkpointSize_);
         ITU_T_BIND_PER(windowSize_);
@@ -115,22 +115,22 @@ namespace Reliable_Transfer_APDU {
 
     template<> void RTORQapdu::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(4);
+        ITU_T_OPTIONAL_READ(4);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(dialogueMode_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(windowSize_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(dialogueMode_);
         ITU_T_BIND_PER(*connectionDataRQ_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(applicationProtocol_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(applicationProtocol_);
     }
 
     // set  RTOACapdu
 
     template<> void RTOACapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(checkpointSize_) + ITU_T_EXISTS_BMP(windowSize_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(checkpointSize_) + ITU_T_EXISTS_BMP(windowSize_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(checkpointSize_);
         ITU_T_BIND_PER(windowSize_);
@@ -139,10 +139,10 @@ namespace Reliable_Transfer_APDU {
 
     template<> void RTOACapdu::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(checkpointSize_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(windowSize_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(checkpointSize_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(windowSize_);
         ITU_T_BIND_PER(*connectionDataAC_);
     }
 
@@ -150,9 +150,9 @@ namespace Reliable_Transfer_APDU {
 
     template<> void RTORJapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(refuseReason_) + ITU_T_EXISTS_BMP(userDataRJ_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(refuseReason_) + ITU_T_EXISTS_BMP(userDataRJ_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(refuseReason_);
         ITU_T_BIND_PER(userDataRJ_);
@@ -160,19 +160,19 @@ namespace Reliable_Transfer_APDU {
 
     template<> void RTORJapdu::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(refuseReason_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(userDataRJ_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(refuseReason_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(userDataRJ_);
     }
 
     // set  RTABapdu
 
     template<> void RTABapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(abortReason_) + ITU_T_EXISTS_BMP(reflectedParameter_) + ITU_T_EXISTS_BMP(userdataAB_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(abortReason_) + ITU_T_EXISTS_BMP(reflectedParameter_) + ITU_T_EXISTS_BMP(userdataAB_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(abortReason_);
         ITU_T_BIND_PER(reflectedParameter_);
@@ -181,11 +181,11 @@ namespace Reliable_Transfer_APDU {
 
     template<> void RTABapdu::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(abortReason_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(reflectedParameter_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(userdataAB_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(abortReason_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(reflectedParameter_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(userdataAB_);
     }
 
     // choice ConnectionData
@@ -235,9 +235,9 @@ namespace Reliable_Transfer_APDU {
 
     template<> void SessionConnectionIdentifier::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(additionalReferenceInformation_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(additionalReferenceInformation_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*callingSSuserReference_);
         ITU_T_BIND_PER(*commonReference_);
@@ -246,11 +246,11 @@ namespace Reliable_Transfer_APDU {
 
     template<> void SessionConnectionIdentifier::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*callingSSuserReference_);
         ITU_T_BIND_PER(*commonReference_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(additionalReferenceInformation_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(additionalReferenceInformation_);
     }
 
     // choice CallingSSuserReference

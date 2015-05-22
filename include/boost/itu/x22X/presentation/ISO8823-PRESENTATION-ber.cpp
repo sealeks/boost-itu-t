@@ -74,11 +74,11 @@ namespace ISO8823_PRESENTATION {
     // sequence extensions
 
     template<> void CP_type::Normal_mode_parameters_type::Extensions_type::serialize(boost::asn1::x690::output_coder& arch) {
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
     }
 
     template<> void CP_type::Normal_mode_parameters_type::Extensions_type::serialize(boost::asn1::x690::input_coder& arch) {
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
     }
 
     // set  CPA-PPDU

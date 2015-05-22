@@ -128,9 +128,9 @@ namespace ACSE_1 {
 
     template<> void AARQ_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(called_AP_title_) + ITU_T_EXISTS_BMP(called_AE_qualifier_) + ITU_T_EXISTS_BMP(called_AP_invocation_identifier_) + ITU_T_EXISTS_BMP(called_AE_invocation_identifier_) + ITU_T_EXISTS_BMP(calling_AP_title_) + ITU_T_EXISTS_BMP(calling_AE_qualifier_) + ITU_T_EXISTS_BMP(calling_AP_invocation_identifier_) + ITU_T_EXISTS_BMP(calling_AE_invocation_identifier_) + ITU_T_EXISTS_BMP(sender_acse_requirements_) + ITU_T_EXISTS_BMP(mechanism_name_) + ITU_T_EXISTS_BMP(calling_authentication_value_) + ITU_T_EXISTS_BMP(aSO_context_name_list_) + ITU_T_EXISTS_BMP(implementation_information_) + ITU_T_EXISTS_BMP(p_context_definition_list_) + ITU_T_EXISTS_BMP(called_asoi_tag_) + ITU_T_EXISTS_BMP(calling_asoi_tag_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(called_AP_title_) + ITU_T_EXISTS_BMP(called_AE_qualifier_) + ITU_T_EXISTS_BMP(called_AP_invocation_identifier_) + ITU_T_EXISTS_BMP(called_AE_invocation_identifier_) + ITU_T_EXISTS_BMP(calling_AP_title_) + ITU_T_EXISTS_BMP(calling_AE_qualifier_) + ITU_T_EXISTS_BMP(calling_AP_invocation_identifier_) + ITU_T_EXISTS_BMP(calling_AE_invocation_identifier_) + ITU_T_EXISTS_BMP(sender_acse_requirements_) + ITU_T_EXISTS_BMP(mechanism_name_) + ITU_T_EXISTS_BMP(calling_authentication_value_) + ITU_T_EXISTS_BMP(aSO_context_name_list_) + ITU_T_EXISTS_BMP(implementation_information_) + ITU_T_EXISTS_BMP(p_context_definition_list_) + ITU_T_EXISTS_BMP(called_asoi_tag_) + ITU_T_EXISTS_BMP(calling_asoi_tag_) + ITU_T_EXISTS_BMP(user_information_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_PER(*aSO_context_name_);
@@ -155,36 +155,36 @@ namespace ACSE_1 {
 
     template<> void AARQ_apdu_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(18);
+        ITU_T_OPTIONAL_READ(18);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_PER(*aSO_context_name_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(called_AP_title_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(called_AE_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(called_AP_invocation_identifier_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(called_AE_invocation_identifier_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(calling_AP_title_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(calling_AE_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(calling_AP_invocation_identifier_);
-        ITU_T_OPTIONAL_CHECK_PER(8) ITU_T_BIND_PER(calling_AE_invocation_identifier_);
-        ITU_T_OPTIONAL_CHECK_PER(9) ITU_T_BIND_PER(sender_acse_requirements_);
-        ITU_T_OPTIONAL_CHECK_PER(10) ITU_T_BIND_PER(mechanism_name_);
-        ITU_T_OPTIONAL_CHECK_PER(11) ITU_T_BIND_PER(calling_authentication_value_);
-        ITU_T_OPTIONAL_CHECK_PER(12) ITU_T_BIND_PER(aSO_context_name_list_);
-        ITU_T_OPTIONAL_CHECK_PER(13) ITU_T_BIND_PER(implementation_information_);
-        ITU_T_OPTIONAL_CHECK_PER(14) ITU_T_BIND_PER(p_context_definition_list_);
-        ITU_T_OPTIONAL_CHECK_PER(15) ITU_T_BIND_SIZE_CONSTRE(called_asoi_tag_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(16) ITU_T_BIND_SIZE_CONSTRE(calling_asoi_tag_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(17) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(called_AP_title_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(called_AE_qualifier_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(called_AP_invocation_identifier_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(called_AE_invocation_identifier_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(calling_AP_title_);
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(calling_AE_qualifier_);
+        ITU_T_OPTIONAL_CHECK(7) ITU_T_BIND_PER(calling_AP_invocation_identifier_);
+        ITU_T_OPTIONAL_CHECK(8) ITU_T_BIND_PER(calling_AE_invocation_identifier_);
+        ITU_T_OPTIONAL_CHECK(9) ITU_T_BIND_PER(sender_acse_requirements_);
+        ITU_T_OPTIONAL_CHECK(10) ITU_T_BIND_PER(mechanism_name_);
+        ITU_T_OPTIONAL_CHECK(11) ITU_T_BIND_PER(calling_authentication_value_);
+        ITU_T_OPTIONAL_CHECK(12) ITU_T_BIND_PER(aSO_context_name_list_);
+        ITU_T_OPTIONAL_CHECK(13) ITU_T_BIND_PER(implementation_information_);
+        ITU_T_OPTIONAL_CHECK(14) ITU_T_BIND_PER(p_context_definition_list_);
+        ITU_T_OPTIONAL_CHECK(15) ITU_T_BIND_SIZE_CONSTRE(called_asoi_tag_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(16) ITU_T_BIND_SIZE_CONSTRE(calling_asoi_tag_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(17) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
     // sequence AARE-apdu
 
     template<> void AARE_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(responding_AP_title_) + ITU_T_EXISTS_BMP(responding_AE_qualifier_) + ITU_T_EXISTS_BMP(responding_AP_invocation_identifier_) + ITU_T_EXISTS_BMP(responding_AE_invocation_identifier_) + ITU_T_EXISTS_BMP(responder_acse_requirements_) + ITU_T_EXISTS_BMP(mechanism_name_) + ITU_T_EXISTS_BMP(responding_authentication_value_) + ITU_T_EXISTS_BMP(aSO_context_name_list_) + ITU_T_EXISTS_BMP(implementation_information_) + ITU_T_EXISTS_BMP(p_context_result_list_) + ITU_T_EXISTS_BMP(called_asoi_tag_) + ITU_T_EXISTS_BMP(calling_asoi_tag_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(responding_AP_title_) + ITU_T_EXISTS_BMP(responding_AE_qualifier_) + ITU_T_EXISTS_BMP(responding_AP_invocation_identifier_) + ITU_T_EXISTS_BMP(responding_AE_invocation_identifier_) + ITU_T_EXISTS_BMP(responder_acse_requirements_) + ITU_T_EXISTS_BMP(mechanism_name_) + ITU_T_EXISTS_BMP(responding_authentication_value_) + ITU_T_EXISTS_BMP(aSO_context_name_list_) + ITU_T_EXISTS_BMP(implementation_information_) + ITU_T_EXISTS_BMP(p_context_result_list_) + ITU_T_EXISTS_BMP(called_asoi_tag_) + ITU_T_EXISTS_BMP(calling_asoi_tag_) + ITU_T_EXISTS_BMP(user_information_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_PER(*aSO_context_name_);
@@ -207,34 +207,34 @@ namespace ACSE_1 {
 
     template<> void AARE_apdu_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(14);
+        ITU_T_OPTIONAL_READ(14);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(protocol_version_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(protocol_version_);
         ITU_T_BIND_PER(*aSO_context_name_);
         ITU_T_BIND_NUM_CONSTRE(*result_, static_cast<integer_type> (0), static_cast<integer_type> (2));
         ITU_T_BIND_PER(*result_source_diagnostic_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(responding_AP_title_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(responding_AE_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(responding_AP_invocation_identifier_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(responding_AE_invocation_identifier_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(responder_acse_requirements_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(mechanism_name_);
-        ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(responding_authentication_value_);
-        ITU_T_OPTIONAL_CHECK_PER(8) ITU_T_BIND_PER(aSO_context_name_list_);
-        ITU_T_OPTIONAL_CHECK_PER(9) ITU_T_BIND_PER(implementation_information_);
-        ITU_T_OPTIONAL_CHECK_PER(10) ITU_T_BIND_PER(p_context_result_list_);
-        ITU_T_OPTIONAL_CHECK_PER(11) ITU_T_BIND_SIZE_CONSTRE(called_asoi_tag_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(12) ITU_T_BIND_SIZE_CONSTRE(calling_asoi_tag_, 0, 7);
-        ITU_T_OPTIONAL_CHECK_PER(13) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(responding_AP_title_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(responding_AE_qualifier_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(responding_AP_invocation_identifier_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(responding_AE_invocation_identifier_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(responder_acse_requirements_);
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(mechanism_name_);
+        ITU_T_OPTIONAL_CHECK(7) ITU_T_BIND_PER(responding_authentication_value_);
+        ITU_T_OPTIONAL_CHECK(8) ITU_T_BIND_PER(aSO_context_name_list_);
+        ITU_T_OPTIONAL_CHECK(9) ITU_T_BIND_PER(implementation_information_);
+        ITU_T_OPTIONAL_CHECK(10) ITU_T_BIND_PER(p_context_result_list_);
+        ITU_T_OPTIONAL_CHECK(11) ITU_T_BIND_SIZE_CONSTRE(called_asoi_tag_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(12) ITU_T_BIND_SIZE_CONSTRE(calling_asoi_tag_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(13) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
     // sequence RLRQ-apdu
 
     template<> void RLRQ_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(reason_) + ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(reason_) + ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(user_information_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRE(reason_, static_cast<integer_type> (0), static_cast<integer_type> (30));
         ITU_T_BIND_PER(aso_qualifier_);
@@ -244,21 +244,21 @@ namespace ACSE_1 {
 
     template<> void RLRQ_apdu_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(4);
+        ITU_T_OPTIONAL_READ(4);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRE(reason_, static_cast<integer_type> (0), static_cast<integer_type> (30));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRE(reason_, static_cast<integer_type> (0), static_cast<integer_type> (30));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(aso_qualifier_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
     // sequence RLRE-apdu
 
     template<> void RLRE_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(reason_) + ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(reason_) + ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(user_information_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRE(reason_, static_cast<integer_type> (0), static_cast<integer_type> (30));
         ITU_T_BIND_PER(aso_qualifier_);
@@ -268,21 +268,21 @@ namespace ACSE_1 {
 
     template<> void RLRE_apdu_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(4);
+        ITU_T_OPTIONAL_READ(4);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRE(reason_, static_cast<integer_type> (0), static_cast<integer_type> (30));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRE(reason_, static_cast<integer_type> (0), static_cast<integer_type> (30));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(aso_qualifier_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
     // sequence ABRT-apdu
 
     template<> void ABRT_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(abort_diagnostic_) + ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(abort_diagnostic_) + ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(user_information_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRE(*abort_source_, static_cast<integer_type> (0), static_cast<integer_type> (1));
         ITU_T_BIND_PER_ENUM(abort_diagnostic_, ABRT_diagnostic__helper);
@@ -293,22 +293,22 @@ namespace ACSE_1 {
 
     template<> void ABRT_apdu_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(4);
+        ITU_T_OPTIONAL_READ(4);
 
         ITU_T_BIND_NUM_CONSTRE(*abort_source_, static_cast<integer_type> (0), static_cast<integer_type> (1));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER_ENUM(abort_diagnostic_, ABRT_diagnostic__helper);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER_ENUM(abort_diagnostic_, ABRT_diagnostic__helper);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(aso_qualifier_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
     // sequence A-DT-apdu
 
     template<> void A_DT_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(aso_qualifier_);
         ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
@@ -317,10 +317,10 @@ namespace ACSE_1 {
 
     template<> void A_DT_apdu_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(aso_qualifier_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
         ITU_T_BIND_PER(*a_user_data_);
     }
 
@@ -328,9 +328,9 @@ namespace ACSE_1 {
 
     template<> void ACRQ_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(aSO_context_name_) + ITU_T_EXISTS_BMP(aSO_context_name_list_) + ITU_T_EXISTS_BMP(p_context_definition_list_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(aSO_context_name_) + ITU_T_EXISTS_BMP(aSO_context_name_list_) + ITU_T_EXISTS_BMP(p_context_definition_list_) + ITU_T_EXISTS_BMP(user_information_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(aso_qualifier_);
         ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
@@ -342,23 +342,23 @@ namespace ACSE_1 {
 
     template<> void ACRQ_apdu_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(6);
+        ITU_T_OPTIONAL_READ(6);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(aSO_context_name_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(aSO_context_name_list_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(p_context_definition_list_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(aso_qualifier_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(aSO_context_name_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(aSO_context_name_list_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(p_context_definition_list_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
     // sequence ACRP-apdu
 
     template<> void ACRP_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(aSO_context_name_) + ITU_T_EXISTS_BMP(p_context_result_list_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(aSO_context_name_) + ITU_T_EXISTS_BMP(p_context_result_list_) + ITU_T_EXISTS_BMP(user_information_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(aso_qualifier_);
         ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
@@ -369,13 +369,13 @@ namespace ACSE_1 {
 
     template<> void ACRP_apdu_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(5);
+        ITU_T_OPTIONAL_READ(5);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(aso_qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(aSO_context_name_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(p_context_result_list_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(aso_qualifier_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRE(asoi_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(aSO_context_name_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(p_context_result_list_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_SIZE_SNGLCONSTRE(user_information_, 1);
     }
 
     // choice AP-title
@@ -533,9 +533,9 @@ namespace ACSE_1 {
 
     template<> void ASOI_tag_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(qualifier_) + ITU_T_EXISTS_BMP(identifier_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(qualifier_) + ITU_T_EXISTS_BMP(identifier_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(qualifier_);
         ITU_T_BIND_NUM_CONSTRE(identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
@@ -543,10 +543,10 @@ namespace ACSE_1 {
 
     template<> void ASOI_tag_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(qualifier_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRE(identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(qualifier_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRE(identifier_, static_cast<integer_type> (1), static_cast<integer_type> (128));
     }
 
     // choice Syntactic-context-list
@@ -610,9 +610,9 @@ namespace ACSE_1 {
 
     template<> void Default_Context_List_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(abstract_syntax_name_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(abstract_syntax_name_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(abstract_syntax_name_);
         ITU_T_BIND_PER(*transfer_syntax_name_);
@@ -620,9 +620,9 @@ namespace ACSE_1 {
 
     template<> void Default_Context_List_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(abstract_syntax_name_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(abstract_syntax_name_);
         ITU_T_BIND_PER(*transfer_syntax_name_);
     }
 
@@ -630,9 +630,9 @@ namespace ACSE_1 {
 
     template<> void P_context_result_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(concrete_syntax_name_) + ITU_T_EXISTS_BMP(provider_reason_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(concrete_syntax_name_) + ITU_T_EXISTS_BMP(provider_reason_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*result_);
         ITU_T_BIND_PER(concrete_syntax_name_);
@@ -641,11 +641,11 @@ namespace ACSE_1 {
 
     template<> void P_context_result_list_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*result_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(concrete_syntax_name_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(provider_reason_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(concrete_syntax_name_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(provider_reason_);
     }
 
     // choice Associate-source-diagnostic
@@ -749,9 +749,9 @@ namespace ACSE_1 {
 
     template<> void PDV_list::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(transfer_syntax_name_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(transfer_syntax_name_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(transfer_syntax_name_);
         ITU_T_BIND_PER(*presentation_context_identifier_);
@@ -760,9 +760,9 @@ namespace ACSE_1 {
 
     template<> void PDV_list::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(transfer_syntax_name_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(transfer_syntax_name_);
         ITU_T_BIND_PER(*presentation_context_identifier_);
         ITU_T_BIND_PER(*presentation_data_values_);
     }

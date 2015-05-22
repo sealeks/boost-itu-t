@@ -148,6 +148,26 @@ namespace boost {\
     using boost::int64_t;\
     using boost::uint64_t;
 
+#define ITU_T_EXTENTION_READ  bool __is_extention__ =  arch.get_pop_bmp(1).bit(0);
+#define ITU_T_EXTENTION_WRITE_NULL  bool __is_extention__ = false;boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
+#define ITU_T_EXTENTION_WRITE_CHOICE( x0, xn)  bool __is_extention__ = ((static_cast<int>(type())>=static_cast<int>(x0 )) && (static_cast<int>(type())<=static_cast<int>(xn )));boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
+#define ITU_T_EXTENTION_WRITE  bool __is_extention__ = static_cast<bool>( __ext_optional_groups_bmp__);boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
+#define ITU_T_EXTENTION  __is_extention__
+
+#define ITU_T_EXTENTION_GROUP_BOOL( num )  bool __is_ext_optional_ ## num
+#define ITU_T_EXTENTION_GROUP_AS_BMP( num )  boost::asn1::bitstring_type(__is_ext_optional_ ## num )
+
+#define ITU_T_EXTENTION_GROUPS_BMP  boost::asn1::bitstring_type __ext_optional_groups_bmp__
+#define ITU_T_EXTENTION_GROUPS_CHECK( num )  __ext_optional_groups_bmp__.bit( num )
+#define ITU_T_EXTENTION_GROUPS_WRITE  arch.set_extentions_marker(__ext_optional_groups_bmp__);
+#define ITU_T_EXTENTION_GROUPS_READ  boost::asn1::bitstring_type __ext_optional_groups_bmp__; arch.get_extentions_marker(__ext_optional_groups_bmp__);
+
+
+#define ITU_T_OPTIONAL_READ(sz)  boost::asn1::bitstring_type __optional_bmp__ =  arch.get_pop_bmp(sz);
+#define ITU_T_OPTIONAL_WRITE arch.add_bitmap(__optional_bmp__);
+#define ITU_T_OPTIONAL_CHECK(num)   if (__optional_bmp__.bit( num ))
+#define ITU_T_OPTIONAL_BMP  boost::asn1::bitstring_type __optional_bmp__ 
+
 
 #define ITU_T_EXISTS_BMP(name)  boost::asn1::bitstring_type(static_cast<bool>(name))
 #define ITU_T_EXISTS_BOOL(name)  static_cast<bool>(name)
@@ -156,7 +176,7 @@ namespace boost {\
 #define ITU_T_IMPLICIT_TYPEDEF(regtype, type , id, cl)  typedef boost::asn1::implicit_typedef< type, class _____TAGTYPE___##regtype ,  id , boost::asn1:: cl>  regtype;
 #define ITU_T_EXPLICIT_TYPEDEF(regtype, type , id, cl)  typedef boost::asn1::explicit_typedef< type,  class _____TAGTYPE___##regtype , id , boost::asn1:: cl>   regtype;      
 
-#define ITU_T_EXTENTION   arch.resetextention();
+#define ITU_T_RESET_EXTENTION   arch.resetextention();
 
 #define ITU_T_CHOICE(enm)  boost::asn1::___asn__choice__base__< enm> 
 
