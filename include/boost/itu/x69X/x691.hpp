@@ -839,7 +839,7 @@ namespace boost {
 
             template<typename T, typename EC>
             bool spec_check_alighn(const size_constrainter<T, EC >& vl) {
-                return (!(vl.is_single()) || ((vl.is_single()) && ((vl.value().size() * EC::bits_count(true)) > MIN_NOT_ALIGN_BITSIZE)));
+                return (!(vl.is_single()) || ((vl.is_single()) && ((vl.max() * EC::bits_count(true)) > MIN_NOT_ALIGN_BITSIZE)));
             }
 
 
