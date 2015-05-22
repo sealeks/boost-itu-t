@@ -48,7 +48,7 @@ public:
     typedef OUTPUT_TYPE output_stream_type;
     typedef asn1_stream_adaptor<INPUT_TYPE, OUTPUT_TYPE> self_type;
 
-    asn1_stream_adaptor(input_stream_type& in_, output_stream_type& out_, boost::itu::encoding_rule rl=boost::itu::PER_UNALIGNED_ENCODING)
+    asn1_stream_adaptor(input_stream_type& in_, output_stream_type& out_, boost::itu::encoding_rule rl=boost::itu::PER_ALIGNED_ENCODING)
     : in(in_), out(out_), coder(rl) {
     }
 

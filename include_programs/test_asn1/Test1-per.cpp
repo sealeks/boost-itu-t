@@ -28,8 +28,11 @@ namespace Test1 {
         static boost::asn1::visiblestring_type::value_type in(boost::asn1::x691::input_coder& stream) {
             boost::asn1::bitstring_type vl = stream.get_pop_bmp(4);
             boost::asn1::octet_sequnce tmp = vl.as_octet_sequnce();
-            if (!tmp.empty())
-                return ((tmp[0] >> 4) & '\x7F') + '\x30';
+            if (!tmp.empty()) {
+                tmp[0] >>= 4;
+                tmp[0] &= '\xF';
+                return (tmp[0] + '\x30');
+            }
             return 0;
         }
 
@@ -54,11 +57,22 @@ namespace Test1 {
         static boost::asn1::visiblestring_type::value_type in(boost::asn1::x691::input_coder& stream) {
             boost::asn1::bitstring_type vl = stream.get_pop_bmp(stream.aligned() ? 8 : 6);
             boost::asn1::octet_sequnce tmp = vl.as_octet_sequnce();
-            if (!tmp.empty())
-                return stream.aligned() ? tmp[0] : ((tmp[0] >> 2) & '\x3F') + '\x3F';
+            if (!tmp.empty()) {
+                if (!stream.aligned()) {
+                    tmp[0] >>= 2;
+                    tmp[0] &= '\x3F';
+                    if (tmp[0] > 27)
+                        return (tmp[0] - 28) + 97;
+                    else if (tmp[0] > 1)
+                        return (tmp[0] - 2) + 65;
+                    return tmp[0] + 45;
+                }
+                return tmp[0];
+            }
             return 0;
         }
 
+        
         static std::size_t bits_count(bool aligned) {
             return aligned ? 8 : 6;
         }
