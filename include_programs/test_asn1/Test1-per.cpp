@@ -69,12 +69,12 @@ namespace Test1 {
 
     template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_NULL_SET_PER;
+        ITU_T_EXTENTION_WRITE_NULL;
 
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(children_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(children_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*(*name_));
         ITU_T_BIND_NUM_CONSTRE(*(*number_), static_cast<integer_type> (0), static_cast<integer_type> (9999));
@@ -86,20 +86,20 @@ namespace Test1 {
 
     template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*(*name_));
         ITU_T_BIND_NUM_CONSTRE(*(*number_), static_cast<integer_type> (0), static_cast<integer_type> (9999));
         ITU_T_BIND_PER(*title_);
         ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
         ITU_T_BIND_PER(*(*nameOfSpouse_));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_SNGLCONSTRE(children_, 2);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_SNGLCONSTRE(children_, 2);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_GET_PER;
+            ITU_T_EXTENTION_GROUPS_READ;
 
             ITU_T_PER_CLEAR_EXTENTIONS(0);
         };
@@ -110,20 +110,20 @@ namespace Test1 {
 
     template<> void ChildInformation::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(sex_);
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(sex_);
 
-        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0);
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_WRITE;
 
         ITU_T_BIND_PER(*(*name_));
         ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_SET_PER;
+            ITU_T_EXTENTION_GROUPS_WRITE;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_OPEN;
                 ITU_T_BIND_PER_ENUM(sex_, ChildInformation__enumerated_type__helper);
                 ITU_T_PER_END_OPEN;
@@ -135,15 +135,15 @@ namespace Test1 {
 
     template<> void ChildInformation::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
         ITU_T_BIND_PER(*(*name_));
         ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_GET_PER;
+            ITU_T_EXTENTION_GROUPS_READ;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_BIND_PER_ENUM(sex_, ChildInformation__enumerated_type__helper);
                 ITU_T_PER_END_PARSE_OPEN;
@@ -158,7 +158,7 @@ namespace Test1 {
 
     template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_NULL_SET_PER;
+        ITU_T_EXTENTION_WRITE_NULL;
 
         ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *givenName_, 1, 64);
         ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, NameString__shelper, *initial_, 1);
@@ -167,14 +167,14 @@ namespace Test1 {
 
     template<> void Name_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
         ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *givenName_, 1, 64);
         ITU_T_BIND_EXSIZE_SNGLCONSTRS(visiblestring_type, NameString__shelper, *initial_, 1);
         ITU_T_BIND_EXSIZE_CONSTRE(visiblestring_type, NameString__shelper, *familyName_, 1, 64);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_GET_PER;
+            ITU_T_EXTENTION_GROUPS_READ;
 
             ITU_T_PER_CLEAR_EXTENTIONS(0);
         };
@@ -185,32 +185,32 @@ namespace Test1 {
 
     template<> void A::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(b_) || ITU_T_EXISTS_BOOL(c_);
-        ITU_T_EXTENTION_GROUP_BOOL_PER(1) = ITU_T_EXISTS_BOOL(d_) || ITU_T_EXISTS_BOOL(e_);
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(b_) || ITU_T_EXISTS_BOOL(c_);
+        ITU_T_EXTENTION_GROUP_BOOL(1) = ITU_T_EXISTS_BOOL(d_) || ITU_T_EXISTS_BOOL(e_);
 
-        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0) + ITU_T_EXTENTION_GROUP_PER(1);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0) + ITU_T_EXTENTION_GROUP_AS_BMP(1);
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_WRITE;
 
         ITU_T_BIND_PER(*a_);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_SET_PER;
+            ITU_T_EXTENTION_GROUPS_WRITE;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_OPEN;
-                ITU_T_EXTENTION_GROUP_BMP_PER = ITU_T_EXISTS_BMP(b_) + ITU_T_EXISTS_BMP(c_);
-                ITU_T_EXTENTION_GROUP_SET_PER;
+                ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(b_) + ITU_T_EXISTS_BMP(c_);
+                ITU_T_OPTIONAL_WRITE;
                 ITU_T_BIND_PER(b_);
                 ITU_T_BIND_PER(c_);
                 ITU_T_PER_END_OPEN;
             }
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
                 ITU_T_PER_START_OPEN;
-                ITU_T_EXTENTION_GROUP_BMP_PER = ITU_T_EXISTS_BMP(e_);
-                ITU_T_EXTENTION_GROUP_SET_PER;
+                ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(e_);
+                ITU_T_OPTIONAL_WRITE;
                 ITU_T_BIND_PER(*d_);
                 ITU_T_BIND_PER(e_);
                 ITU_T_PER_END_OPEN;
@@ -222,28 +222,28 @@ namespace Test1 {
 
     template<> void A::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
         ITU_T_BIND_PER(*a_);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_GET_PER;
+            ITU_T_EXTENTION_GROUPS_READ;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_PARSE_OPEN;
-                ITU_T_OPTIONAL_GET_PER(2);
+                ITU_T_OPTIONAL_READ(2);
 
-                ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(b_);
-                ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(c_);
+                ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(b_);
+                ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(c_);
                 ITU_T_PER_END_PARSE_OPEN;
             }
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
                 ITU_T_PER_START_PARSE_OPEN;
-                ITU_T_OPTIONAL_GET_PER(1);
+                ITU_T_OPTIONAL_READ(1);
 
                 ITU_T_BIND_PER(*d_);
-                ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(e_);
+                ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(e_);
                 ITU_T_PER_END_PARSE_OPEN;
             }
 
