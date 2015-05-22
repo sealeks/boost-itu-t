@@ -196,7 +196,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_TAG(*invokeID_);
         ITU_T_BIND_TAG(listOfModifiers_);
         ITU_T_BIND_CHOICE(*service_);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_CHOICE_TAG(service_ext_, 79);
     }
 
@@ -204,7 +204,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_TAG(*invokeID_);
         ITU_T_BIND_TAG(listOfModifiers_);
         ITU_T_BIND_CHOICE(*service_);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_CHOICE_TAG(service_ext_, 79);
     }
 
@@ -1576,13 +1576,13 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Unconfirmed_PDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_CHOICE(*service_);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_CHOICE_TAG(service_ext_, 79);
     }
 
     template<> void Unconfirmed_PDU::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_CHOICE(*service_);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_CHOICE_TAG(service_ext_, 79);
     }
 
@@ -1696,14 +1696,14 @@ namespace ISO_9506_MMS_1 {
     template<> void Confirmed_ResponsePDU::serialize(boost::asn1::x690::output_coder& arch) {
         ITU_T_BIND_TAG(*invokeID_);
         ITU_T_BIND_CHOICE(*service_);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_CHOICE_TAG(service_ext_, 79);
     }
 
     template<> void Confirmed_ResponsePDU::serialize(boost::asn1::x690::input_coder& arch) {
         ITU_T_BIND_TAG(*invokeID_);
         ITU_T_BIND_CHOICE(*service_);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_CHOICE_TAG(service_ext_, 79);
     }
 
@@ -3635,7 +3635,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*proposedVersionNumber_, 0);
         ITU_T_IMPLICIT_TAG(*proposedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(*servicesSupportedCalling_, 2);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_IMPLICIT_TAG(additionalSupportedCalling_, 3);
         ITU_T_IMPLICIT_TAG(additionalCbbSupportedCalling_, 4);
         ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalling_, 5);
@@ -3645,7 +3645,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*proposedVersionNumber_, 0);
         ITU_T_IMPLICIT_TAG(*proposedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(*servicesSupportedCalling_, 2);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_IMPLICIT_TAG(additionalSupportedCalling_, 3);
         ITU_T_IMPLICIT_TAG(additionalCbbSupportedCalling_, 4);
         ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalling_, 5);
@@ -3675,7 +3675,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*negotiatedVersionNumber_, 0);
         ITU_T_IMPLICIT_TAG(*negotiatedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(*servicesSupportedCalled_, 2);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_IMPLICIT_TAG(additionalSupportedCalled_, 3);
         ITU_T_IMPLICIT_TAG(additionalCbbSupportedCalled_, 4);
         ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalled_, 5);
@@ -3685,7 +3685,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_IMPLICIT_TAG(*negotiatedVersionNumber_, 0);
         ITU_T_IMPLICIT_TAG(*negotiatedParameterCBB_, 1);
         ITU_T_IMPLICIT_TAG(*servicesSupportedCalled_, 2);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_IMPLICIT_TAG(additionalSupportedCalled_, 3);
         ITU_T_IMPLICIT_TAG(additionalCbbSupportedCalled_, 4);
         ITU_T_IMPLICIT_TAG(privilegeClassIdentityCalled_, 5);

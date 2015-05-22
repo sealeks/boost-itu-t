@@ -114,10 +114,10 @@ namespace MMS_Object_Module_1 {
 
         ModifierStep();
 
-        ModifierStep(const int& arg__modifierID,
+        ModifierStep(const integer_type& arg__modifierID,
                 const Modifier& arg__modifier);
 
-        ITU_T_HOLDERH_DECL(modifierID, int);
+        ITU_T_HOLDERH_DECL(modifierID, integer_type);
         ITU_T_HOLDERH_DECL(modifier, Modifier);
 
         ITU_T_ARCHIVE_FUNC;

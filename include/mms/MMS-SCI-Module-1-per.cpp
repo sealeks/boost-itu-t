@@ -39,7 +39,12 @@ namespace MMS_SCI_Module_1 {
 
     template<> void VMD_File::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(selected_Program_Invocation_);
+
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0);
+
+        ITU_T_EXTENTION_WRITE;
+
         ITU_T_BIND_PER(*executiveFunction_);
         ITU_T_BIND_PER(*vendorName_);
         ITU_T_BIND_PER(*modelName_);
@@ -66,11 +71,24 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*eventEnrollments_);
         ITU_T_BIND_PER(*eventConditionLists_);
         ITU_T_BIND_PER(*journals_);
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_WRITE;
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(*selected_Program_Invocation_);
+                ITU_T_PER_END_OPEN;
+            }
+
+        };
+
     }
 
     template<> void VMD_File::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
         ITU_T_BIND_PER(*executiveFunction_);
         ITU_T_BIND_PER(*vendorName_);
         ITU_T_BIND_PER(*modelName_);
@@ -97,6 +115,20 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*eventEnrollments_);
         ITU_T_BIND_PER(*eventConditionLists_);
         ITU_T_BIND_PER(*journals_);
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_READ;
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(*selected_Program_Invocation_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            ITU_T_PER_CLEAR_EXTENTIONS(1);
+        };
+
     }
 
     // choice selected-Program-Invocation
@@ -201,11 +233,22 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Access_Control_List_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(eventConditionLists_);
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(readAccessCondition_) + ITU_T_EXISTS_BMP(storeAccessCondition_) + ITU_T_EXISTS_BMP(writeAccessCondition_) + ITU_T_EXISTS_BMP(loadAccessCondition_) + ITU_T_EXISTS_BMP(executeAccessCondition_) + ITU_T_EXISTS_BMP(deleteAccessCondition_) + ITU_T_EXISTS_BMP(editAccessCondition_);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_EXTENTION_WRITE;
+
+
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(readAccessCondition_) +
+                ITU_T_EXISTS_BMP(storeAccessCondition_) +
+                ITU_T_EXISTS_BMP(writeAccessCondition_) +
+                ITU_T_EXISTS_BMP(loadAccessCondition_) +
+                ITU_T_EXISTS_BMP(executeAccessCondition_) +
+                ITU_T_EXISTS_BMP(deleteAccessCondition_) +
+                ITU_T_EXISTS_BMP(editAccessCondition_);
+
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(readAccessCondition_);
@@ -230,22 +273,35 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*eventActions_);
         ITU_T_BIND_PER(*eventEnrollments_);
         ITU_T_BIND_PER(*journals_);
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_WRITE;
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(*eventConditionLists_);
+                ITU_T_PER_END_OPEN;
+            }
+
+        };
+
     }
 
     template<> void Access_Control_List_instance::Definition_type::Details_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        ITU_T_OPTIONAL_GET_PER(7);
+        ITU_T_OPTIONAL_READ(7);
 
         ITU_T_BIND_PER(*accessControl_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(readAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(storeAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(writeAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(loadAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(executeAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(deleteAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(editAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(readAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(storeAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(writeAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(loadAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(executeAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(deleteAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(editAccessCondition_);
         ITU_T_BIND_PER(*accessControlLists_);
         ITU_T_BIND_PER(*domains_);
         ITU_T_BIND_PER(*programInvocations_);
@@ -261,6 +317,20 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(*eventActions_);
         ITU_T_BIND_PER(*eventEnrollments_);
         ITU_T_BIND_PER(*journals_);
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_READ;
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(*eventConditionLists_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            ITU_T_PER_CLEAR_EXTENTIONS(1);
+        };
+
     }
 
     // sequence Domain-instance
@@ -409,11 +479,20 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Program_Invocation_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(control_);
+        ITU_T_EXTENTION_GROUP_BOOL(1) = ITU_T_EXISTS_BOOL(controlling_Program_Invocation_);
+        ITU_T_EXTENTION_GROUP_BOOL(2) = ITU_T_EXISTS_BOOL(controlled_Program_Invocations_);
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(eventCondition_) + ITU_T_EXISTS_BMP(eventAction_) + ITU_T_EXISTS_BMP(eventEnrollment_);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0) + ITU_T_EXTENTION_GROUP_AS_BMP(1) + ITU_T_EXTENTION_GROUP_AS_BMP(2);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_EXTENTION_WRITE;
+
+
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(eventCondition_) +
+                ITU_T_EXISTS_BMP(eventAction_) +
+                ITU_T_EXISTS_BMP(eventEnrollment_);
+
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
         ITU_T_BIND_PER(*domains_);
@@ -424,23 +503,74 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(eventAction_);
         ITU_T_BIND_PER(eventEnrollment_);
         ITU_T_BIND_PER(*executionArgument_);
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_WRITE;
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_NUM_CONSTRS(*control_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+                ITU_T_PER_END_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(*controlling_Program_Invocation_);
+                ITU_T_PER_END_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(controlled_Program_Invocations_);
+                ITU_T_PER_END_OPEN;
+            }
+
+        };
+
     }
 
     template<> void Program_Invocation_instance::Definition_type::Details_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_NUM_CONSTRS(*programInvocationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
         ITU_T_BIND_PER(*domains_);
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*reusable_);
         ITU_T_BIND_PER(*monitor_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(eventCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(eventAction_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(eventEnrollment_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(eventCondition_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(eventAction_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(eventEnrollment_);
         ITU_T_BIND_PER(*executionArgument_);
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_READ;
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_NUM_CONSTRS(*control_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(*controlling_Program_Invocation_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(controlled_Program_Invocations_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            ITU_T_PER_CLEAR_EXTENTIONS(3);
+        };
+
     }
 
     // sequence Unit-Control-instance
@@ -585,9 +715,10 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Named_Variable_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(address_) + ITU_T_EXISTS_BMP(meaning_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(address_) +
+                ITU_T_EXISTS_BMP(meaning_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*typeDescription_);
@@ -597,12 +728,12 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Named_Variable_instance::Definition_type::Details_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*typeDescription_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(address_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(meaning_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(address_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(meaning_);
     }
 
     // sequence Named-Variable-List-instance
@@ -676,9 +807,11 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Variable_List_Item_instance::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(unnamedItem_) + ITU_T_EXISTS_BMP(namedItem_) + ITU_T_EXISTS_BMP(alternateAccess_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(unnamedItem_) +
+                ITU_T_EXISTS_BMP(namedItem_) +
+                ITU_T_EXISTS_BMP(alternateAccess_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(unnamedItem_);
         ITU_T_BIND_PER(namedItem_);
@@ -687,11 +820,11 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Variable_List_Item_instance::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(unnamedItem_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(namedItem_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(alternateAccess_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(unnamedItem_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(namedItem_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(alternateAccess_);
     }
 
     // sequence Named-Type-instance
@@ -753,9 +886,9 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Named_Type_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(meaning_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(meaning_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*typeDescription_);
@@ -764,11 +897,11 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Named_Type_instance::Definition_type::Details_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*typeDescription_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(meaning_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(meaning_);
     }
 
     // sequence Data-Exchange-instance
@@ -830,9 +963,9 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Data_Exchange_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(programInvocation_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(programInvocation_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*request_);
@@ -843,13 +976,13 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Data_Exchange_instance::Definition_type::Details_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER(*request_);
         ITU_T_BIND_PER(*response_);
         ITU_T_BIND_PER(*linked_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(programInvocation_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(programInvocation_);
     }
 
     // sequence Semaphore-instance
@@ -911,9 +1044,10 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Semaphore_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(numberOfTokens_) + ITU_T_EXISTS_BMP(namedTokens_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(numberOfTokens_) +
+                ITU_T_EXISTS_BMP(namedTokens_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER_ENUM(*classV_, Semaphore_instance__Definition_type__Details_type__enumerated_type__helper);
@@ -924,12 +1058,12 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Semaphore_instance::Definition_type::Details_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_PER_ENUM(*classV_, Semaphore_instance__Definition_type__Details_type__enumerated_type__helper);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(numberOfTokens_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(namedTokens_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(numberOfTokens_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(namedTokens_);
         ITU_T_BIND_PER(*eventCondition_);
     }
 
@@ -1059,11 +1193,21 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Event_Condition_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(displayEnhancement_);
+        ITU_T_EXTENTION_GROUP_BOOL(1) = ITU_T_EXISTS_BOOL(group_Priority_Override_);
+        ITU_T_EXTENTION_GROUP_BOOL(2) = ITU_T_EXISTS_BOOL(referencingEventConditionLists_);
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(enabled_) + ITU_T_EXISTS_BMP(alarmSummaryReports_) + ITU_T_EXISTS_BMP(monitoredVariable_) + ITU_T_EXISTS_BMP(evaluationInterval_);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0) + ITU_T_EXTENTION_GROUP_AS_BMP(1) + ITU_T_EXTENTION_GROUP_AS_BMP(2);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_EXTENTION_WRITE;
+
+
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(enabled_) +
+                ITU_T_EXISTS_BMP(alarmSummaryReports_) +
+                ITU_T_EXISTS_BMP(monitoredVariable_) +
+                ITU_T_EXISTS_BMP(evaluationInterval_);
+
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_NUM_CONSTRS(*ecClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
@@ -1075,13 +1219,38 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_PER(alarmSummaryReports_);
         ITU_T_BIND_PER(monitoredVariable_);
         ITU_T_BIND_PER(evaluationInterval_);
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_WRITE;
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(*displayEnhancement_);
+                ITU_T_PER_END_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(group_Priority_Override_);
+                ITU_T_PER_END_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(*referencingEventConditionLists_);
+                ITU_T_PER_END_OPEN;
+            }
+
+        };
+
     }
 
     template<> void Event_Condition_instance::Definition_type::Details_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        ITU_T_OPTIONAL_GET_PER(4);
+        ITU_T_OPTIONAL_READ(4);
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_NUM_CONSTRS(*ecClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
@@ -1089,10 +1258,36 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_NUM_CONSTRS(*priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*eventEnrollments_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(enabled_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(alarmSummaryReports_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(monitoredVariable_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(evaluationInterval_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enabled_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(alarmSummaryReports_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(monitoredVariable_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(evaluationInterval_);
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_READ;
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(*displayEnhancement_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(group_Priority_Override_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(*referencingEventConditionLists_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            ITU_T_PER_CLEAR_EXTENTIONS(3);
+        };
+
     }
 
     // choice monitoredVariable
@@ -1376,11 +1571,20 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Event_Enrollment_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(displayEnhancement_);
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(remainingDelay_) + ITU_T_EXISTS_BMP(eventAction_) + ITU_T_EXISTS_BMP(duration_) + ITU_T_EXISTS_BMP(clientApplication_) + ITU_T_EXISTS_BMP(aaRule_);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_EXTENTION_WRITE;
+
+
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(remainingDelay_) +
+                ITU_T_EXISTS_BMP(eventAction_) +
+                ITU_T_EXISTS_BMP(duration_) +
+                ITU_T_EXISTS_BMP(clientApplication_) +
+                ITU_T_EXISTS_BMP(aaRule_);
+
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_NUM_CONSTRS(*eeClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
@@ -1391,23 +1595,50 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_NUM_CONSTRS(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
         ITU_T_BIND_PER(clientApplication_);
         ITU_T_BIND_NUM_CONSTRS(aaRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_WRITE;
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(*displayEnhancement_);
+                ITU_T_PER_END_OPEN;
+            }
+
+        };
+
     }
 
     template<> void Event_Enrollment_instance::Definition_type::Details_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        ITU_T_OPTIONAL_GET_PER(5);
+        ITU_T_OPTIONAL_READ(5);
 
         ITU_T_BIND_PER(*accessControl_);
         ITU_T_BIND_NUM_CONSTRS(*eeClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
         ITU_T_BIND_PER(*eventCondition_);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*ecTransitions_, 7);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(remainingDelay_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(eventAction_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(clientApplication_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_NUM_CONSTRS(aaRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(remainingDelay_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(eventAction_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(clientApplication_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_NUM_CONSTRS(aaRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_READ;
+
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(*displayEnhancement_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            ITU_T_PER_CLEAR_EXTENTIONS(1);
+        };
+
     }
 
     // choice remainingDelay
@@ -1649,9 +1880,11 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Journal_Entry_instance::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(textComment_) + ITU_T_EXISTS_BMP(eventTransitionRecord_) + ITU_T_EXISTS_BMP(journalVariables_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(textComment_) +
+                ITU_T_EXISTS_BMP(eventTransitionRecord_) +
+                ITU_T_EXISTS_BMP(journalVariables_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*journal_);
         ITU_T_BIND_PER(*entry_);
@@ -1666,7 +1899,7 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Journal_Entry_instance::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_PER(*journal_);
         ITU_T_BIND_PER(*entry_);
@@ -1674,9 +1907,9 @@ namespace MMS_SCI_Module_1 {
         ITU_T_BIND_SIZE_CONSTRS(*timeStamp_, 4, 6);
         ITU_T_BIND_PER(*orderOfReceipt_);
         ITU_T_BIND_PER_ENUM(*informationType_, Journal_Entry_instance__enumerated_type__helper);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(textComment_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(eventTransitionRecord_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(journalVariables_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(textComment_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(eventTransitionRecord_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(journalVariables_);
     }
 
     // sequence eventTransitionRecord
@@ -1833,9 +2066,17 @@ namespace MMS_SCI_Module_1 {
 
     template<> void DataParameters::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(bit_string_) + ITU_T_EXISTS_BMP(integer_) + ITU_T_EXISTS_BMP(unsignedV_) + ITU_T_EXISTS_BMP(floating_point_) + ITU_T_EXISTS_BMP(octet_string_) + ITU_T_EXISTS_BMP(visible_string_) + ITU_T_EXISTS_BMP(binary_time_) + ITU_T_EXISTS_BMP(bcd_) + ITU_T_EXISTS_BMP(mmsString_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(bit_string_) +
+                ITU_T_EXISTS_BMP(integer_) +
+                ITU_T_EXISTS_BMP(unsignedV_) +
+                ITU_T_EXISTS_BMP(floating_point_) +
+                ITU_T_EXISTS_BMP(octet_string_) +
+                ITU_T_EXISTS_BMP(visible_string_) +
+                ITU_T_EXISTS_BMP(binary_time_) +
+                ITU_T_EXISTS_BMP(bcd_) +
+                ITU_T_EXISTS_BMP(mmsString_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(bit_string_);
         ITU_T_BIND_PER(integer_);
@@ -1850,17 +2091,17 @@ namespace MMS_SCI_Module_1 {
 
     template<> void DataParameters::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(9);
+        ITU_T_OPTIONAL_READ(9);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(bit_string_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(integer_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(unsignedV_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(floating_point_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(octet_string_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(visible_string_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(binary_time_);
-        ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(bcd_);
-        ITU_T_OPTIONAL_CHECK_PER(8) ITU_T_BIND_PER(mmsString_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(bit_string_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(integer_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(unsignedV_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(floating_point_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(octet_string_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(visible_string_);
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(binary_time_);
+        ITU_T_OPTIONAL_CHECK(7) ITU_T_BIND_PER(bcd_);
+        ITU_T_OPTIONAL_CHECK(8) ITU_T_BIND_PER(mmsString_);
     }
 
     // sequence floating-point

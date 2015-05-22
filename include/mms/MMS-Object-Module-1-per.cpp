@@ -254,9 +254,9 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_WRITE_CHOICE(TypeDescription_mMSString, TypeDescription_mMSString);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
             switch (type()) {
                 case TypeDescription_array:
                 {
@@ -346,7 +346,9 @@ namespace MMS_Object_Module_1 {
                 case TypeDescription_mMSString:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(0);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_mMSString), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 default:
@@ -358,9 +360,9 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
             ITU_T_GET_CONSTAINED_INDX(12);
 
@@ -442,11 +444,14 @@ namespace MMS_Object_Module_1 {
             switch (__indx__) {
                 case 0:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_NUM_CONSTRS(*value<ISO_9506_MMS_1::Integer32 > (false, TypeDescription_mMSString), static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 default:
                 {
+                    ITU_T_PER_CLEAR_EXTENTION;
                 }
             }
         }
@@ -456,9 +461,9 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::Array_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(packed_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(packed_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(packed_);
         ITU_T_BIND_NUM_CONSTRS(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
@@ -467,9 +472,9 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::Array_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(packed_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(packed_);
         ITU_T_BIND_NUM_CONSTRS(*numberOfElements_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*elementType_);
     }
@@ -478,9 +483,9 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::Structure_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(packed_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(packed_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(packed_);
         ITU_T_BIND_PER(*components_);
@@ -488,9 +493,9 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::Structure_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(packed_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(packed_);
         ITU_T_BIND_PER(*components_);
     }
 
@@ -498,9 +503,9 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::Structure_type::Components_type_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(componentName_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(componentName_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(componentName_);
         ITU_T_BIND_PER(*componentType_);
@@ -508,9 +513,9 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::Structure_type::Components_type_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(componentName_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(componentName_);
         ITU_T_BIND_PER(*componentType_);
     }
 

@@ -15,9 +15,9 @@ namespace ISO_9506_MMS_1A {
 
     template<> void ObtainFile_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(sourceFileServer_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(sourceFileServer_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(sourceFileServer_);
         ITU_T_BIND_PER(*sourceFile_);
@@ -26,9 +26,9 @@ namespace ISO_9506_MMS_1A {
 
     template<> void ObtainFile_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(sourceFileServer_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(sourceFileServer_);
         ITU_T_BIND_PER(*sourceFile_);
         ITU_T_BIND_PER(*destinationFile_);
     }
@@ -61,9 +61,9 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileRead_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*fileData_);
         ITU_T_BIND_PER(moreFollows_);
@@ -71,10 +71,10 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileRead_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*fileData_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence FileRename-Request
@@ -93,9 +93,10 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileDirectory_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(fileSpecification_) + ITU_T_EXISTS_BMP(continueAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(fileSpecification_) +
+                ITU_T_EXISTS_BMP(continueAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(fileSpecification_);
         ITU_T_BIND_PER(continueAfter_);
@@ -103,19 +104,19 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileDirectory_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(fileSpecification_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(continueAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(fileSpecification_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(continueAfter_);
     }
 
     // sequence FileDirectory-Response
 
     template<> void FileDirectory_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfDirectoryEntry_);
         ITU_T_BIND_PER(moreFollows_);
@@ -123,10 +124,10 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileDirectory_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfDirectoryEntry_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence DirectoryEntry
@@ -145,9 +146,9 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileAttributes::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(lastModified_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(lastModified_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*sizeOfFile_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(lastModified_);
@@ -155,19 +156,20 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileAttributes::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_NUM_CONSTRS(*sizeOfFile_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(lastModified_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(lastModified_);
     }
 
     // sequence 
 
     template<> void ScatteredAccessDescription_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(componentName_) + ITU_T_EXISTS_BMP(alternateAccess_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(componentName_) +
+                ITU_T_EXISTS_BMP(alternateAccess_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(componentName_);
         ITU_T_BIND_PER(*variableSpecification_);
@@ -176,11 +178,11 @@ namespace ISO_9506_MMS_1A {
 
     template<> void ScatteredAccessDescription_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(componentName_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(componentName_);
         ITU_T_BIND_PER(*variableSpecification_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(alternateAccess_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(alternateAccess_);
     }
 
     // sequence DefineScatteredAccess-Request
@@ -199,9 +201,9 @@ namespace ISO_9506_MMS_1A {
 
     template<> void GetScatteredAccessAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(accessControlList_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(accessControlList_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(*scatteredAccessDescription_);
@@ -210,11 +212,11 @@ namespace ISO_9506_MMS_1A {
 
     template<> void GetScatteredAccessAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(*scatteredAccessDescription_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
     }
 
 }

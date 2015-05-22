@@ -711,7 +711,7 @@ namespace MMS_SCI_Module_1 {
 
     Semaphore_instance::Definition_type::Details_type::Details_type(shared_ptr< Access_Control_List_instance> arg__accessControl,
             shared_ptr< enumerated_type> arg__classV,
-            shared_ptr< int> arg__numberOfTokens,
+            shared_ptr< integer_type> arg__numberOfTokens,
             shared_ptr< NamedTokens_type> arg__namedTokens,
             shared_ptr< Event_Condition_instance> arg__eventCondition) :
     accessControl_(arg__accessControl),
@@ -724,7 +724,7 @@ namespace MMS_SCI_Module_1 {
 
     ITU_T_HOLDERH_DEFN(Semaphore_instance::Definition_type::Details_type::accessControl, accessControl, Access_Control_List_instance);
     ITU_T_HOLDERH_DEFN(Semaphore_instance::Definition_type::Details_type::classV, classV, enumerated_type);
-    ITU_T_OPTIONAL_DEFN(Semaphore_instance::Definition_type::Details_type::numberOfTokens, numberOfTokens, int);
+    ITU_T_OPTIONAL_DEFN(Semaphore_instance::Definition_type::Details_type::numberOfTokens, numberOfTokens, integer_type);
     ITU_T_OPTIONAL_DEFN(Semaphore_instance::Definition_type::Details_type::namedTokens, namedTokens, Semaphore_instance::Definition_type::Details_type::NamedTokens_type);
     ITU_T_HOLDERH_DEFN(Semaphore_instance::Definition_type::Details_type::eventCondition, eventCondition, Event_Condition_instance);
 
@@ -811,7 +811,7 @@ namespace MMS_SCI_Module_1 {
             shared_ptr< bool> arg__enabled,
             shared_ptr< bool> arg__alarmSummaryReports,
             shared_ptr< MonitoredVariable_type> arg__monitoredVariable,
-            shared_ptr< int> arg__evaluationInterval,
+            shared_ptr< integer_type> arg__evaluationInterval,
             shared_ptr< DisplayEnhancement_type> arg__displayEnhancement,
             shared_ptr< Group_Priority_Override_type> arg__group_Priority_Override,
             shared_ptr< ReferencingEventConditionLists_type> arg__referencingEventConditionLists) :
@@ -839,7 +839,7 @@ namespace MMS_SCI_Module_1 {
 
 
     ITU_T_CHOICES_DEFN(Event_Condition_instance::Definition_type::Details_type::DisplayEnhancement_type::text, text, ISO_9506_MMS_1::MMSString, DisplayEnhancement_type_text);
-    ITU_T_CHOICES_DEFN(Event_Condition_instance::Definition_type::Details_type::DisplayEnhancement_type::number, number, int, DisplayEnhancement_type_number);
+    ITU_T_CHOICES_DEFN(Event_Condition_instance::Definition_type::Details_type::DisplayEnhancement_type::number, number, integer_type, DisplayEnhancement_type_number);
     ITU_T_CHOICES_DEFN(Event_Condition_instance::Definition_type::Details_type::DisplayEnhancement_type::none, none, null_type, DisplayEnhancement_type_none);
 
 
@@ -857,7 +857,7 @@ namespace MMS_SCI_Module_1 {
     ITU_T_OPTIONAL_DEFN(Event_Condition_instance::Definition_type::Details_type::enabled, enabled, bool);
     ITU_T_OPTIONAL_DEFN(Event_Condition_instance::Definition_type::Details_type::alarmSummaryReports, alarmSummaryReports, bool);
     ITU_T_OPTIONAL_DEFN(Event_Condition_instance::Definition_type::Details_type::monitoredVariable, monitoredVariable, Event_Condition_instance::Definition_type::Details_type::MonitoredVariable_type);
-    ITU_T_OPTIONAL_DEFN(Event_Condition_instance::Definition_type::Details_type::evaluationInterval, evaluationInterval, int);
+    ITU_T_OPTIONAL_DEFN(Event_Condition_instance::Definition_type::Details_type::evaluationInterval, evaluationInterval, integer_type);
     ITU_T_OPTIONAL_DEFN(Event_Condition_instance::Definition_type::Details_type::displayEnhancement, displayEnhancement, Event_Condition_instance::Definition_type::Details_type::DisplayEnhancement_type);
     ITU_T_OPTIONAL_DEFN(Event_Condition_instance::Definition_type::Details_type::group_Priority_Override, group_Priority_Override, Event_Condition_instance::Definition_type::Details_type::Group_Priority_Override_type);
     ITU_T_OPTIONAL_DEFN(Event_Condition_instance::Definition_type::Details_type::referencingEventConditionLists, referencingEventConditionLists, Event_Condition_instance::Definition_type::Details_type::ReferencingEventConditionLists_type);
@@ -956,13 +956,13 @@ namespace MMS_SCI_Module_1 {
 
 
 
-    ITU_T_CHOICES_DEFN(Event_Enrollment_instance::Definition_type::Details_type::RemainingDelay_type::time, time, int, RemainingDelay_type_time);
+    ITU_T_CHOICES_DEFN(Event_Enrollment_instance::Definition_type::Details_type::RemainingDelay_type::time, time, integer_type, RemainingDelay_type_time);
     ITU_T_CHOICES_DEFN(Event_Enrollment_instance::Definition_type::Details_type::RemainingDelay_type::forever, forever, null_type, RemainingDelay_type_forever);
 
 
 
     ITU_T_CHOICES_DEFN(Event_Enrollment_instance::Definition_type::Details_type::DisplayEnhancement_type::text, text, ISO_9506_MMS_1::MMSString, DisplayEnhancement_type_text);
-    ITU_T_CHOICES_DEFN(Event_Enrollment_instance::Definition_type::Details_type::DisplayEnhancement_type::number, number, int, DisplayEnhancement_type_number);
+    ITU_T_CHOICES_DEFN(Event_Enrollment_instance::Definition_type::Details_type::DisplayEnhancement_type::number, number, integer_type, DisplayEnhancement_type_number);
     ITU_T_CHOICES_DEFN(Event_Enrollment_instance::Definition_type::Details_type::DisplayEnhancement_type::none, none, null_type, DisplayEnhancement_type_none);
 
 
@@ -1067,7 +1067,7 @@ namespace MMS_SCI_Module_1 {
             const octetstring_type& arg__entry,
             const MMS_Environment_1::ApplicationReference& arg__clientApplication,
             const ISO_9506_MMS_1::TimeOfDay& arg__timeStamp,
-            const int& arg__orderOfReceipt,
+            const integer_type& arg__orderOfReceipt,
             const enumerated_type& arg__informationType) :
     journal_(arg__journal),
     entry_(arg__entry),
@@ -1081,7 +1081,7 @@ namespace MMS_SCI_Module_1 {
             shared_ptr< octetstring_type> arg__entry,
             shared_ptr< MMS_Environment_1::ApplicationReference> arg__clientApplication,
             shared_ptr< ISO_9506_MMS_1::TimeOfDay> arg__timeStamp,
-            shared_ptr< int> arg__orderOfReceipt,
+            shared_ptr< integer_type> arg__orderOfReceipt,
             shared_ptr< enumerated_type> arg__informationType,
             shared_ptr< ISO_9506_MMS_1::MMS255String> arg__textComment,
             shared_ptr< EventTransitionRecord_type> arg__eventTransitionRecord,
@@ -1128,7 +1128,7 @@ namespace MMS_SCI_Module_1 {
     ITU_T_HOLDERH_DEFN(Journal_Entry_instance::entry, entry, octetstring_type);
     ITU_T_HOLDERH_DEFN(Journal_Entry_instance::clientApplication, clientApplication, MMS_Environment_1::ApplicationReference);
     ITU_T_HOLDERH_DEFN(Journal_Entry_instance::timeStamp, timeStamp, ISO_9506_MMS_1::TimeOfDay);
-    ITU_T_HOLDERH_DEFN(Journal_Entry_instance::orderOfReceipt, orderOfReceipt, int);
+    ITU_T_HOLDERH_DEFN(Journal_Entry_instance::orderOfReceipt, orderOfReceipt, integer_type);
     ITU_T_HOLDERH_DEFN(Journal_Entry_instance::informationType, informationType, enumerated_type);
     ITU_T_OPTIONAL_DEFN(Journal_Entry_instance::textComment, textComment, ISO_9506_MMS_1::MMS255String);
     ITU_T_OPTIONAL_DEFN(Journal_Entry_instance::eventTransitionRecord, eventTransitionRecord, Journal_Entry_instance::EventTransitionRecord_type);
@@ -1142,7 +1142,7 @@ namespace MMS_SCI_Module_1 {
     Service_and_Parameter_CBBs::Service_and_Parameter_CBBs(const MMS_Object_Module_1::ServiceSupportOptions& arg__services_Client,
             const MMS_Object_Module_1::ServiceSupportOptions& arg__services_Server,
             const MMS_Object_Module_1::ParameterSupportOptions& arg__parameters,
-            const int& arg__nest,
+            const integer_type& arg__nest,
             const MMS_Object_Module_1::AdditionalSupportOptions& arg__extendedServices_Client,
             const MMS_Object_Module_1::AdditionalSupportOptions& arg__extendedServices_Server,
             const MMS_Object_Module_1::AdditionalCBBOptions& arg__extendedParameters,
@@ -1179,7 +1179,7 @@ namespace MMS_SCI_Module_1 {
     ITU_T_HOLDERH_DEFN(Service_and_Parameter_CBBs::services_Client, services_Client, MMS_Object_Module_1::ServiceSupportOptions);
     ITU_T_HOLDERH_DEFN(Service_and_Parameter_CBBs::services_Server, services_Server, MMS_Object_Module_1::ServiceSupportOptions);
     ITU_T_HOLDERH_DEFN(Service_and_Parameter_CBBs::parameters, parameters, MMS_Object_Module_1::ParameterSupportOptions);
-    ITU_T_HOLDERH_DEFN(Service_and_Parameter_CBBs::nest, nest, int);
+    ITU_T_HOLDERH_DEFN(Service_and_Parameter_CBBs::nest, nest, integer_type);
     ITU_T_HOLDERH_DEFN(Service_and_Parameter_CBBs::extendedServices_Client, extendedServices_Client, MMS_Object_Module_1::AdditionalSupportOptions);
     ITU_T_HOLDERH_DEFN(Service_and_Parameter_CBBs::extendedServices_Server, extendedServices_Server, MMS_Object_Module_1::AdditionalSupportOptions);
     ITU_T_HOLDERH_DEFN(Service_and_Parameter_CBBs::extendedParameters, extendedParameters, MMS_Object_Module_1::AdditionalCBBOptions);
@@ -1201,7 +1201,7 @@ namespace MMS_SCI_Module_1 {
 
     GeneralManagementParameters::GeneralManagementParameters(const ISO_9506_MMS_1::MMSString& arg__localDetail,
             const SupportForTime_type& arg__supportForTime,
-            const int& arg__granularityOfTime) :
+            const integer_type& arg__granularityOfTime) :
     localDetail_(arg__localDetail),
     supportForTime_(arg__supportForTime),
     granularityOfTime_(arg__granularityOfTime) {
@@ -1223,7 +1223,7 @@ namespace MMS_SCI_Module_1 {
 
     ITU_T_HOLDERH_DEFN(GeneralManagementParameters::localDetail, localDetail, ISO_9506_MMS_1::MMSString);
     ITU_T_HOLDERH_DEFN(GeneralManagementParameters::supportForTime, supportForTime, GeneralManagementParameters::SupportForTime_type);
-    ITU_T_HOLDERH_DEFN(GeneralManagementParameters::granularityOfTime, granularityOfTime, int);
+    ITU_T_HOLDERH_DEFN(GeneralManagementParameters::granularityOfTime, granularityOfTime, integer_type);
 
     // sequence VMDSupportParameters
 
@@ -1247,7 +1247,7 @@ namespace MMS_SCI_Module_1 {
 
     DomainManagementParameters::DomainManagementParameters(const ISO_9506_MMS_1::MMSString& arg__loadDataOctet,
             const LoadDataSyntax_type& arg__loadDataSyntax,
-            const int& arg__maxUploads) :
+            const integer_type& arg__maxUploads) :
     loadDataOctet_(arg__loadDataOctet),
     loadDataSyntax_(arg__loadDataSyntax),
     maxUploads_(arg__maxUploads) {
@@ -1256,14 +1256,14 @@ namespace MMS_SCI_Module_1 {
 
     ITU_T_HOLDERH_DEFN(DomainManagementParameters::loadDataOctet, loadDataOctet, ISO_9506_MMS_1::MMSString);
     ITU_T_HOLDERH_DEFN(DomainManagementParameters::loadDataSyntax, loadDataSyntax, DomainManagementParameters::LoadDataSyntax_type);
-    ITU_T_HOLDERH_DEFN(DomainManagementParameters::maxUploads, maxUploads, int);
+    ITU_T_HOLDERH_DEFN(DomainManagementParameters::maxUploads, maxUploads, integer_type);
 
     // sequence ProgramInvocationManagementParameters
 
     ProgramInvocationManagementParameters::ProgramInvocationManagementParameters() : executionArgMaxSize_(), executionArgParseRules_(), executionArgSyntaxes_(), programLoction_(), stepMode_() {
     };
 
-    ProgramInvocationManagementParameters::ProgramInvocationManagementParameters(const int& arg__executionArgMaxSize,
+    ProgramInvocationManagementParameters::ProgramInvocationManagementParameters(const integer_type& arg__executionArgMaxSize,
             const ISO_9506_MMS_1::MMSString& arg__executionArgParseRules,
             const ExecutionArgSyntaxes_type& arg__executionArgSyntaxes,
             const ISO_9506_MMS_1::MMSString& arg__programLoction,
@@ -1276,7 +1276,7 @@ namespace MMS_SCI_Module_1 {
     };
 
 
-    ITU_T_HOLDERH_DEFN(ProgramInvocationManagementParameters::executionArgMaxSize, executionArgMaxSize, int);
+    ITU_T_HOLDERH_DEFN(ProgramInvocationManagementParameters::executionArgMaxSize, executionArgMaxSize, integer_type);
     ITU_T_HOLDERH_DEFN(ProgramInvocationManagementParameters::executionArgParseRules, executionArgParseRules, ISO_9506_MMS_1::MMSString);
     ITU_T_HOLDERH_DEFN(ProgramInvocationManagementParameters::executionArgSyntaxes, executionArgSyntaxes, ProgramInvocationManagementParameters::ExecutionArgSyntaxes_type);
     ITU_T_HOLDERH_DEFN(ProgramInvocationManagementParameters::programLoction, programLoction, ISO_9506_MMS_1::MMSString);
@@ -1305,15 +1305,15 @@ namespace MMS_SCI_Module_1 {
     DataParameters::DataParameters() {
     };
 
-    DataParameters::DataParameters(shared_ptr< int> arg__bit_string,
-            shared_ptr< int> arg__integer,
-            shared_ptr< int> arg__unsignedV,
+    DataParameters::DataParameters(shared_ptr< integer_type> arg__bit_string,
+            shared_ptr< integer_type> arg__integer,
+            shared_ptr< integer_type> arg__unsignedV,
             shared_ptr< Floating_point_type> arg__floating_point,
-            shared_ptr< int> arg__octet_string,
-            shared_ptr< int> arg__visible_string,
+            shared_ptr< integer_type> arg__octet_string,
+            shared_ptr< integer_type> arg__visible_string,
             shared_ptr< bool> arg__binary_time,
-            shared_ptr< int> arg__bcd,
-            shared_ptr< int> arg__mmsString) :
+            shared_ptr< integer_type> arg__bcd,
+            shared_ptr< integer_type> arg__mmsString) :
     bit_string_(arg__bit_string),
     integer_(arg__integer),
     unsignedV_(arg__unsignedV),
@@ -1328,26 +1328,26 @@ namespace MMS_SCI_Module_1 {
     DataParameters::Floating_point_type::Floating_point_type() : total_(), exponent_() {
     };
 
-    DataParameters::Floating_point_type::Floating_point_type(const int& arg__total,
-            const int& arg__exponent) :
+    DataParameters::Floating_point_type::Floating_point_type(const integer_type& arg__total,
+            const integer_type& arg__exponent) :
     total_(arg__total),
     exponent_(arg__exponent) {
     };
 
 
-    ITU_T_HOLDERH_DEFN(DataParameters::Floating_point_type::total, total, int);
-    ITU_T_HOLDERH_DEFN(DataParameters::Floating_point_type::exponent, exponent, int);
+    ITU_T_HOLDERH_DEFN(DataParameters::Floating_point_type::total, total, integer_type);
+    ITU_T_HOLDERH_DEFN(DataParameters::Floating_point_type::exponent, exponent, integer_type);
 
 
-    ITU_T_OPTIONAL_DEFN(DataParameters::bit_string, bit_string, int);
-    ITU_T_OPTIONAL_DEFN(DataParameters::integer, integer, int);
-    ITU_T_OPTIONAL_DEFN(DataParameters::unsignedV, unsignedV, int);
+    ITU_T_OPTIONAL_DEFN(DataParameters::bit_string, bit_string, integer_type);
+    ITU_T_OPTIONAL_DEFN(DataParameters::integer, integer, integer_type);
+    ITU_T_OPTIONAL_DEFN(DataParameters::unsignedV, unsignedV, integer_type);
     ITU_T_OPTIONAL_DEFN(DataParameters::floating_point, floating_point, DataParameters::Floating_point_type);
-    ITU_T_OPTIONAL_DEFN(DataParameters::octet_string, octet_string, int);
-    ITU_T_OPTIONAL_DEFN(DataParameters::visible_string, visible_string, int);
+    ITU_T_OPTIONAL_DEFN(DataParameters::octet_string, octet_string, integer_type);
+    ITU_T_OPTIONAL_DEFN(DataParameters::visible_string, visible_string, integer_type);
     ITU_T_OPTIONAL_DEFN(DataParameters::binary_time, binary_time, bool);
-    ITU_T_OPTIONAL_DEFN(DataParameters::bcd, bcd, int);
-    ITU_T_OPTIONAL_DEFN(DataParameters::mmsString, mmsString, int);
+    ITU_T_OPTIONAL_DEFN(DataParameters::bcd, bcd, integer_type);
+    ITU_T_OPTIONAL_DEFN(DataParameters::mmsString, mmsString, integer_type);
 
     // sequence SemaphoreManagementParameters
 
@@ -1366,12 +1366,12 @@ namespace MMS_SCI_Module_1 {
     OperatorCommunicationParameters::OperatorCommunicationParameters() : input_time_out_() {
     };
 
-    OperatorCommunicationParameters::OperatorCommunicationParameters(const int& arg__input_time_out) :
+    OperatorCommunicationParameters::OperatorCommunicationParameters(const integer_type& arg__input_time_out) :
     input_time_out_(arg__input_time_out) {
     };
 
 
-    ITU_T_HOLDERH_DEFN(OperatorCommunicationParameters::input_time_out, input_time_out, int);
+    ITU_T_HOLDERH_DEFN(OperatorCommunicationParameters::input_time_out, input_time_out, integer_type);
 
     // sequence ErrorParameters
 
@@ -1387,14 +1387,14 @@ namespace MMS_SCI_Module_1 {
     ErrorParameters::AdditionalDetial_type::AdditionalDetial_type() : size_(), syntax_() {
     };
 
-    ErrorParameters::AdditionalDetial_type::AdditionalDetial_type(const int& arg__size,
+    ErrorParameters::AdditionalDetial_type::AdditionalDetial_type(const integer_type& arg__size,
             const ISO_9506_MMS_1::MMSString& arg__syntax) :
     size_(arg__size),
     syntax_(arg__syntax) {
     };
 
 
-    ITU_T_HOLDERH_DEFN(ErrorParameters::AdditionalDetial_type::size, size, int);
+    ITU_T_HOLDERH_DEFN(ErrorParameters::AdditionalDetial_type::size, size, integer_type);
     ITU_T_HOLDERH_DEFN(ErrorParameters::AdditionalDetial_type::syntax, syntax, ISO_9506_MMS_1::MMSString);
 
 

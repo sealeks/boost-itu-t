@@ -27,9 +27,10 @@ namespace InformationFramework {
 
         template<> void AttributeTypeAndDistinguishedValue::serialize(boost::asn1::x691::output_coder& arch){
 
-            ITU_T_OPTIONAL_DECL_PER =  ITU_T_OPTIONAL_PER(primaryDistinguished_) +  ITU_T_OPTIONAL_PER(valuesWithContext_);
+            ITU_T_OPTIONAL_BMP =  ITU_T_EXISTS_BMP(primaryDistinguished_) + 
+                         ITU_T_EXISTS_BMP(valuesWithContext_);
 
-            ITU_T_OPTIONAL_SET_PER;
+            ITU_T_OPTIONAL_WRITE;
 
             ITU_T_BIND_PER(*type_);
             ITU_T_BIND_PER(*value_);
@@ -39,21 +40,21 @@ namespace InformationFramework {
 
         template<> void AttributeTypeAndDistinguishedValue::serialize(boost::asn1::x691::input_coder& arch){
 
-            ITU_T_OPTIONAL_GET_PER(2 );
+            ITU_T_OPTIONAL_READ(2 );
 
             ITU_T_BIND_PER(*type_);
             ITU_T_BIND_PER(*value_);
-            ITU_T_OPTIONAL_CHECK_PER(0)  ITU_T_BIND_PER(primaryDistinguished_);
-            ITU_T_OPTIONAL_CHECK_PER(1)  ITU_T_BIND_SIZE_SEMICONSTRS( valuesWithContext_, 1);
+            ITU_T_OPTIONAL_CHECK(0)  ITU_T_BIND_PER(primaryDistinguished_);
+            ITU_T_OPTIONAL_CHECK(1)  ITU_T_BIND_SIZE_SEMICONSTRS( valuesWithContext_, 1);
         }
 
     // sequence 
 
         template<> void AttributeTypeAndDistinguishedValue::ValuesWithContext_type_set_of::serialize(boost::asn1::x691::output_coder& arch){
 
-            ITU_T_OPTIONAL_DECL_PER =  ITU_T_OPTIONAL_PER(distingAttrValue_);
+            ITU_T_OPTIONAL_BMP =  ITU_T_EXISTS_BMP(distingAttrValue_);
 
-            ITU_T_OPTIONAL_SET_PER;
+            ITU_T_OPTIONAL_WRITE;
 
             ITU_T_BIND_PER(distingAttrValue_);
             ITU_T_BIND_SIZE_SEMICONSTRS( *contextList_, 1);
@@ -61,9 +62,9 @@ namespace InformationFramework {
 
         template<> void AttributeTypeAndDistinguishedValue::ValuesWithContext_type_set_of::serialize(boost::asn1::x691::input_coder& arch){
 
-            ITU_T_OPTIONAL_GET_PER(1 );
+            ITU_T_OPTIONAL_READ(1 );
 
-            ITU_T_OPTIONAL_CHECK_PER(0)  ITU_T_BIND_PER(distingAttrValue_);
+            ITU_T_OPTIONAL_CHECK(0)  ITU_T_BIND_PER(distingAttrValue_);
             ITU_T_BIND_SIZE_SEMICONSTRS( *contextList_, 1);
         }
 
@@ -71,9 +72,9 @@ namespace InformationFramework {
 
         template<> void Context::serialize(boost::asn1::x691::output_coder& arch){
 
-            ITU_T_OPTIONAL_DECL_PER =  ITU_T_OPTIONAL_PER(fallback_);
+            ITU_T_OPTIONAL_BMP =  ITU_T_EXISTS_BMP(fallback_);
 
-            ITU_T_OPTIONAL_SET_PER;
+            ITU_T_OPTIONAL_WRITE;
 
             ITU_T_BIND_PER(*contextType_);
             ITU_T_BIND_SIZE_SEMICONSTRS( *contextValues_, 1);
@@ -82,11 +83,11 @@ namespace InformationFramework {
 
         template<> void Context::serialize(boost::asn1::x691::input_coder& arch){
 
-            ITU_T_OPTIONAL_GET_PER(1 );
+            ITU_T_OPTIONAL_READ(1 );
 
             ITU_T_BIND_PER(*contextType_);
             ITU_T_BIND_SIZE_SEMICONSTRS( *contextValues_, 1);
-            ITU_T_OPTIONAL_CHECK_PER(0)  ITU_T_BIND_PER(fallback_);
+            ITU_T_OPTIONAL_CHECK(0)  ITU_T_BIND_PER(fallback_);
         }
 
 } 

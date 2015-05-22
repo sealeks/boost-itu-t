@@ -388,7 +388,7 @@ namespace ISO_9506_MMS_1 {
     };
 
     ServiceError::ServiceError(shared_ptr< ErrorClass_type> arg__errorClass,
-            shared_ptr< int> arg__additionalCode,
+            shared_ptr< integer_type> arg__additionalCode,
             shared_ptr< visiblestring_type> arg__additionalDescription,
             shared_ptr< ServiceSpecificInfo_type> arg__serviceSpecificInfo) :
     errorClass_(arg__errorClass),
@@ -483,7 +483,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::conclude, conclude, uint8_t, ErrorClass_type_conclude);
     ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::cancel, cancel, uint8_t, ErrorClass_type_cancel);
     ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::file, file, uint8_t, ErrorClass_type_file);
-    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::others, others, int, ErrorClass_type_others);
+    ITU_T_CHOICES_DEFN(ServiceError::ErrorClass_type::others, others, integer_type, ErrorClass_type_others);
 
 
 
@@ -502,7 +502,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_HOLDERH_DEFN(ServiceError::errorClass, errorClass, ServiceError::ErrorClass_type);
-    ITU_T_OPTIONAL_DEFN(ServiceError::additionalCode, additionalCode, int);
+    ITU_T_OPTIONAL_DEFN(ServiceError::additionalCode, additionalCode, integer_type);
     ITU_T_OPTIONAL_DEFN(ServiceError::additionalDescription, additionalDescription, visiblestring_type);
     ITU_T_OPTIONAL_DEFN(ServiceError::serviceSpecificInfo, serviceSpecificInfo, ServiceError::ServiceSpecificInfo_type);
 
@@ -750,9 +750,9 @@ namespace ISO_9506_MMS_1 {
     const uint8_t RejectPDU::RejectReason_type::unconfirmedPDU_max_recursion_exceeded = 3;
     const uint8_t RejectPDU::RejectReason_type::unconfirmedPDU_value_out_of_range = 4;
 
-    const int RejectPDU::RejectReason_type::pdu_error_unknown_pdu_type = 0;
-    const int RejectPDU::RejectReason_type::pdu_error_invalid_pdu = 1;
-    const int RejectPDU::RejectReason_type::pdu_error_illegal_acse_mapping = 2;
+    const integer_type RejectPDU::RejectReason_type::pdu_error_unknown_pdu_type = 0;
+    const integer_type RejectPDU::RejectReason_type::pdu_error_invalid_pdu = 1;
+    const integer_type RejectPDU::RejectReason_type::pdu_error_illegal_acse_mapping = 2;
 
     const uint8_t RejectPDU::RejectReason_type::cancel_requestPDU_other = 0;
     const uint8_t RejectPDU::RejectReason_type::cancel_requestPDU_invalid_invokeID = 1;
@@ -780,7 +780,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::confirmed_responsePDU, confirmed_responsePDU, uint8_t, RejectReason_type_confirmed_responsePDU);
     ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::confirmed_errorPDU, confirmed_errorPDU, uint8_t, RejectReason_type_confirmed_errorPDU);
     ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::unconfirmedPDU, unconfirmedPDU, uint8_t, RejectReason_type_unconfirmedPDU);
-    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::pdu_error, pdu_error, int, RejectReason_type_pdu_error);
+    ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::pdu_error, pdu_error, integer_type, RejectReason_type_pdu_error);
     ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::cancel_requestPDU, cancel_requestPDU, uint8_t, RejectReason_type_cancel_requestPDU);
     ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::cancel_responsePDU, cancel_responsePDU, uint8_t, RejectReason_type_cancel_responsePDU);
     ITU_T_CHOICES_DEFN(RejectPDU::RejectReason_type::cancel_errorPDU, cancel_errorPDU, uint8_t, RejectReason_type_cancel_errorPDU);
@@ -914,14 +914,14 @@ namespace ISO_9506_MMS_1 {
     };
 
     GetAccessControlListAttributes_Response::References_type_sequence_of::References_type_sequence_of(const ObjectClass& arg__objectClass,
-            const int& arg__objectCount) :
+            const integer_type& arg__objectCount) :
     objectClass_(arg__objectClass),
     objectCount_(arg__objectCount) {
     };
 
 
     ITU_T_HOLDERH_DEFN(GetAccessControlListAttributes_Response::References_type_sequence_of::objectClass, objectClass, ObjectClass);
-    ITU_T_HOLDERH_DEFN(GetAccessControlListAttributes_Response::References_type_sequence_of::objectCount, objectCount, int);
+    ITU_T_HOLDERH_DEFN(GetAccessControlListAttributes_Response::References_type_sequence_of::objectCount, objectCount, integer_type);
 
 
     ITU_T_HOLDERH_DEFN(GetAccessControlListAttributes_Response::name, name, Identifier);
@@ -1553,8 +1553,8 @@ namespace ISO_9506_MMS_1 {
     // choice StartCount
 
     ITU_T_CHOICES_DEFN(StartCount::noLimit, noLimit, null_type, StartCount_noLimit);
-    ITU_T_CHOICES_DEFN(StartCount::cycleCount, cycleCount, int, StartCount_cycleCount);
-    ITU_T_CHOICES_DEFN(StartCount::stepCount, stepCount, int, StartCount_stepCount);
+    ITU_T_CHOICES_DEFN(StartCount::cycleCount, cycleCount, integer_type, StartCount_cycleCount);
+    ITU_T_CHOICES_DEFN(StartCount::stepCount, stepCount, integer_type, StartCount_stepCount);
 
     // sequence Stop-Request
 
@@ -1693,7 +1693,7 @@ namespace ISO_9506_MMS_1 {
     CS_GetProgramInvocationAttributes_Response::CS_GetProgramInvocationAttributes_Response() : errorCode_(), control_() {
     };
 
-    CS_GetProgramInvocationAttributes_Response::CS_GetProgramInvocationAttributes_Response(const int& arg__errorCode,
+    CS_GetProgramInvocationAttributes_Response::CS_GetProgramInvocationAttributes_Response(const integer_type& arg__errorCode,
             const Control_type& arg__control) :
     errorCode_(arg__errorCode),
     control_(arg__control) {
@@ -1719,8 +1719,8 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_CHOICES_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::freeRunning, freeRunning, null_type, RunningMode_type_freeRunning);
-    ITU_T_CHOICES_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::cycleLimited, cycleLimited, int, RunningMode_type_cycleLimited);
-    ITU_T_CHOICES_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::stepLimited, stepLimited, int, RunningMode_type_stepLimited);
+    ITU_T_CHOICES_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::cycleLimited, cycleLimited, integer_type, RunningMode_type_cycleLimited);
+    ITU_T_CHOICES_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::RunningMode_type::stepLimited, stepLimited, integer_type, RunningMode_type_stepLimited);
 
 
     ITU_T_HOLDERH_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::controlledPI, controlledPI, CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::ControlledPI_type);
@@ -1738,7 +1738,7 @@ namespace ISO_9506_MMS_1 {
     ITU_T_CHOICES_DEFN(CS_GetProgramInvocationAttributes_Response::Control_type::normal, normal, null_type, Control_type_normal);
 
 
-    ITU_T_HOLDERH_DEFN(CS_GetProgramInvocationAttributes_Response::errorCode, errorCode, int);
+    ITU_T_HOLDERH_DEFN(CS_GetProgramInvocationAttributes_Response::errorCode, errorCode, integer_type);
     ITU_T_HOLDERH_DEFN(CS_GetProgramInvocationAttributes_Response::control, control, CS_GetProgramInvocationAttributes_Response::Control_type);
 
     // sequence Select-Request
@@ -1926,7 +1926,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_CHOICES_DEFN(UnitControlUpload_Request::ContinueAfter_type::domain, domain, Identifier, ContinueAfter_type_domain);
-    ITU_T_CHOICES_DEFN(UnitControlUpload_Request::ContinueAfter_type::ulsmID, ulsmID, int, ContinueAfter_type_ulsmID);
+    ITU_T_CHOICES_DEFN(UnitControlUpload_Request::ContinueAfter_type::ulsmID, ulsmID, integer_type, ContinueAfter_type_ulsmID);
     ITU_T_CHOICES_DEFN(UnitControlUpload_Request::ContinueAfter_type::programInvocation, programInvocation, Identifier, ContinueAfter_type_programInvocation);
 
 
@@ -1951,7 +1951,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_CHOICES_DEFN(UnitControlUpload_Response::NextElement_type::domain, domain, Identifier, NextElement_type_domain);
-    ITU_T_CHOICES_DEFN(UnitControlUpload_Response::NextElement_type::ulsmID, ulsmID, int, NextElement_type_ulsmID);
+    ITU_T_CHOICES_DEFN(UnitControlUpload_Response::NextElement_type::ulsmID, ulsmID, integer_type, NextElement_type_ulsmID);
     ITU_T_CHOICES_DEFN(UnitControlUpload_Response::NextElement_type::programInvocation, programInvocation, Identifier, NextElement_type_programInvocation);
 
 
@@ -2231,14 +2231,14 @@ namespace ISO_9506_MMS_1 {
     ITU_T_CHOICEC_DEFN(Data::structure, structure, Data::Structure_type, Data_structure);
     ITU_T_CHOICES_DEFN(Data::boolean, boolean, bool, Data_boolean);
     ITU_T_CHOICES_DEFN(Data::bit_string, bit_string, bitstring_type, Data_bit_string);
-    ITU_T_CHOICES_DEFN(Data::integer, integer, int, Data_integer);
-    ITU_T_CHOICES_DEFN(Data::unsignedV, unsignedV, int, Data_unsignedV);
+    ITU_T_CHOICES_DEFN(Data::integer, integer, integer_type, Data_integer);
+    ITU_T_CHOICES_DEFN(Data::unsignedV, unsignedV, integer_type, Data_unsignedV);
     ITU_T_CHOICES_DEFN(Data::floating_point, floating_point, FloatingPoint, Data_floating_point);
     ITU_T_CHOICES_DEFN(Data::octet_string, octet_string, octetstring_type, Data_octet_string);
     ITU_T_CHOICES_DEFN(Data::visible_string, visible_string, visiblestring_type, Data_visible_string);
     ITU_T_CHOICES_DEFN(Data::generalized_time, generalized_time, gentime_type, Data_generalized_time);
     ITU_T_CHOICES_DEFN(Data::binary_time, binary_time, TimeOfDay, Data_binary_time);
-    ITU_T_CHOICES_DEFN(Data::bcd, bcd, int, Data_bcd);
+    ITU_T_CHOICES_DEFN(Data::bcd, bcd, integer_type, Data_bcd);
     ITU_T_CHOICES_DEFN(Data::booleanArray, booleanArray, bitstring_type, Data_booleanArray);
     ITU_T_CHOICES_DEFN(Data::objId, objId, oid_type, Data_objId);
     ITU_T_CHOICES_DEFN(Data::mMSString, mMSString, MMSString, Data_mMSString);
@@ -3173,7 +3173,7 @@ namespace ISO_9506_MMS_1 {
     // choice CS-EventNotification
 
     ITU_T_CHOICES_DEFN(CS_EventNotification_impl::string, string, visiblestring_type, CS_EventNotification_impl_string);
-    ITU_T_CHOICES_DEFN(CS_EventNotification_impl::index, index, int, CS_EventNotification_impl_index);
+    ITU_T_CHOICES_DEFN(CS_EventNotification_impl::index, index, integer_type, CS_EventNotification_impl_index);
     ITU_T_CHOICES_DEFN(CS_EventNotification_impl::noEnhancement, noEnhancement, null_type, CS_EventNotification_impl_noEnhancement);
 
     // sequence AcknowledgeEventNotification-Request
@@ -3308,7 +3308,7 @@ namespace ISO_9506_MMS_1 {
     // choice EN-Additional-Detail
 
     ITU_T_CHOICES_DEFN(EN_Additional_Detail_impl::string, string, visiblestring_type, EN_Additional_Detail_impl_string);
-    ITU_T_CHOICES_DEFN(EN_Additional_Detail_impl::index, index, int, EN_Additional_Detail_impl_index);
+    ITU_T_CHOICES_DEFN(EN_Additional_Detail_impl::index, index, integer_type, EN_Additional_Detail_impl_index);
     ITU_T_CHOICES_DEFN(EN_Additional_Detail_impl::noEnhancement, noEnhancement, null_type, EN_Additional_Detail_impl_noEnhancement);
 
     // sequence GetAlarmEnrollmentSummary-Request
@@ -3507,7 +3507,7 @@ namespace ISO_9506_MMS_1 {
     // choice CS-DefineEventCondition-Request
 
     ITU_T_CHOICES_DEFN(CS_DefineEventCondition_Request_impl::string, string, visiblestring_type, CS_DefineEventCondition_Request_impl_string);
-    ITU_T_CHOICES_DEFN(CS_DefineEventCondition_Request_impl::index, index, int, CS_DefineEventCondition_Request_impl_index);
+    ITU_T_CHOICES_DEFN(CS_DefineEventCondition_Request_impl::index, index, integer_type, CS_DefineEventCondition_Request_impl_index);
     ITU_T_CHOICES_DEFN(CS_DefineEventCondition_Request_impl::noEnhancement, noEnhancement, null_type, CS_DefineEventCondition_Request_impl_noEnhancement);
 
     // choice DeleteEventCondition-Request
@@ -3592,7 +3592,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_CHOICES_DEFN(CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::string, string, visiblestring_type, DisplayEnhancement_type_string);
-    ITU_T_CHOICES_DEFN(CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::index, index, int, DisplayEnhancement_type_index);
+    ITU_T_CHOICES_DEFN(CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::index, index, integer_type, DisplayEnhancement_type_index);
     ITU_T_CHOICES_DEFN(CS_GetEventConditionAttributes_Response::DisplayEnhancement_type::noEnhancement, noEnhancement, null_type, DisplayEnhancement_type_noEnhancement);
 
 
@@ -3670,7 +3670,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_CHOICES_DEFN(CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::string, string, visiblestring_type, ChangeDisplay_type_string);
-    ITU_T_CHOICES_DEFN(CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::index, index, int, ChangeDisplay_type_index);
+    ITU_T_CHOICES_DEFN(CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::index, index, integer_type, ChangeDisplay_type_index);
     ITU_T_CHOICES_DEFN(CS_AlterEventConditionMonitoring_Request::ChangeDisplay_type::noEnhancement, noEnhancement, null_type, ChangeDisplay_type_noEnhancement);
 
 
@@ -3782,7 +3782,7 @@ namespace ISO_9506_MMS_1 {
     // choice CS-DefineEventEnrollment-Request
 
     ITU_T_CHOICES_DEFN(CS_DefineEventEnrollment_Request_impl::string, string, visiblestring_type, CS_DefineEventEnrollment_Request_impl_string);
-    ITU_T_CHOICES_DEFN(CS_DefineEventEnrollment_Request_impl::index, index, int, CS_DefineEventEnrollment_Request_impl_index);
+    ITU_T_CHOICES_DEFN(CS_DefineEventEnrollment_Request_impl::index, index, integer_type, CS_DefineEventEnrollment_Request_impl_index);
     ITU_T_CHOICES_DEFN(CS_DefineEventEnrollment_Request_impl::noEnhancement, noEnhancement, null_type, CS_DefineEventEnrollment_Request_impl_noEnhancement);
 
     // choice DeleteEventEnrollment-Request
@@ -3895,7 +3895,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_CHOICES_DEFN(EEAttributes::DisplayEnhancement_type::string, string, visiblestring_type, DisplayEnhancement_type_string);
-    ITU_T_CHOICES_DEFN(EEAttributes::DisplayEnhancement_type::index, index, int, DisplayEnhancement_type_index);
+    ITU_T_CHOICES_DEFN(EEAttributes::DisplayEnhancement_type::index, index, integer_type, DisplayEnhancement_type_index);
     ITU_T_CHOICES_DEFN(EEAttributes::DisplayEnhancement_type::noEnhancement, noEnhancement, null_type, DisplayEnhancement_type_noEnhancement);
 
     const bool EEAttributes::mmsDeletable__default = false;
@@ -4002,7 +4002,7 @@ namespace ISO_9506_MMS_1 {
 
 
     ITU_T_CHOICES_DEFN(CS_AlterEventEnrollment_Request::ChangeDisplay_type::string, string, visiblestring_type, ChangeDisplay_type_string);
-    ITU_T_CHOICES_DEFN(CS_AlterEventEnrollment_Request::ChangeDisplay_type::index, index, int, ChangeDisplay_type_index);
+    ITU_T_CHOICES_DEFN(CS_AlterEventEnrollment_Request::ChangeDisplay_type::index, index, integer_type, ChangeDisplay_type_index);
     ITU_T_CHOICES_DEFN(CS_AlterEventEnrollment_Request::ChangeDisplay_type::noEnhancement, noEnhancement, null_type, ChangeDisplay_type_noEnhancement);
 
 
@@ -4194,7 +4194,7 @@ namespace ISO_9506_MMS_1 {
 
 
 
-    ITU_T_CHOICES_DEFN(AlterEventConditionListMonitoring_Request::PriorityChange_type::priorityValue, priorityValue, int, PriorityChange_type_priorityValue);
+    ITU_T_CHOICES_DEFN(AlterEventConditionListMonitoring_Request::PriorityChange_type::priorityValue, priorityValue, integer_type, PriorityChange_type_priorityValue);
     ITU_T_CHOICES_DEFN(AlterEventConditionListMonitoring_Request::PriorityChange_type::priorityReset, priorityReset, null_type, PriorityChange_type_priorityReset);
 
 

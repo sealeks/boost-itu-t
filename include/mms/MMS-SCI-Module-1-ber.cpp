@@ -50,7 +50,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventEnrollments_, 23);
         ITU_T_IMPLICIT_TAG(*eventConditionLists_, 24);
         ITU_T_IMPLICIT_TAG(*journals_, 25);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_BIND_CHOICE(selected_Program_Invocation_);
     }
 
@@ -81,7 +81,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventEnrollments_, 23);
         ITU_T_IMPLICIT_TAG(*eventConditionLists_, 24);
         ITU_T_IMPLICIT_TAG(*journals_, 25);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_BIND_CHOICE(selected_Program_Invocation_);
     }
 
@@ -221,7 +221,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventActions_, 23);
         ITU_T_IMPLICIT_TAG(*eventEnrollments_, 24);
         ITU_T_IMPLICIT_TAG(*journals_, 25);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_IMPLICIT_TAG(eventConditionLists_, 26);
     }
 
@@ -249,7 +249,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(*eventActions_, 23);
         ITU_T_IMPLICIT_TAG(*eventEnrollments_, 24);
         ITU_T_IMPLICIT_TAG(*journals_, 25);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_IMPLICIT_TAG(eventConditionLists_, 26);
     }
 
@@ -419,7 +419,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(eventAction_, 9);
         ITU_T_IMPLICIT_TAG(eventEnrollment_, 10);
         ITU_T_EXPLICIT_TAG(*executionArgument_, 11);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_IMPLICIT_TAG(control_, 12);
         ITU_T_IMPLICIT_TAG(controlling_Program_Invocation_, 13);
         ITU_T_IMPLICIT_TAG(controlled_Program_Invocations_, 14);
@@ -435,7 +435,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(eventAction_, 9);
         ITU_T_IMPLICIT_TAG(eventEnrollment_, 10);
         ITU_T_EXPLICIT_TAG(*executionArgument_, 11);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_IMPLICIT_TAG(control_, 12);
         ITU_T_IMPLICIT_TAG(controlling_Program_Invocation_, 13);
         ITU_T_IMPLICIT_TAG(controlled_Program_Invocations_, 14);
@@ -1074,7 +1074,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(alarmSummaryReports_, 10);
         ITU_T_BIND_CHOICE(monitoredVariable_);
         ITU_T_IMPLICIT_TAG(evaluationInterval_, 14);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_BIND_CHOICE(displayEnhancement_);
         ITU_T_BIND_CHOICE(group_Priority_Override_);
         ITU_T_IMPLICIT_TAG(referencingEventConditionLists_, 20);
@@ -1091,7 +1091,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(alarmSummaryReports_, 10);
         ITU_T_BIND_CHOICE(monitoredVariable_);
         ITU_T_IMPLICIT_TAG(evaluationInterval_, 14);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_BIND_CHOICE(displayEnhancement_);
         ITU_T_BIND_CHOICE(group_Priority_Override_);
         ITU_T_IMPLICIT_TAG(referencingEventConditionLists_, 20);
@@ -1416,7 +1416,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(duration_, 10);
         ITU_T_IMPLICIT_TAG(clientApplication_, 11);
         ITU_T_IMPLICIT_TAG(aaRule_, 12);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_BIND_CHOICE(displayEnhancement_);
     }
 
@@ -1430,7 +1430,7 @@ namespace MMS_SCI_Module_1 {
         ITU_T_IMPLICIT_TAG(duration_, 10);
         ITU_T_IMPLICIT_TAG(clientApplication_, 11);
         ITU_T_IMPLICIT_TAG(aaRule_, 12);
-        ITU_T_EXTENTION;
+        ITU_T_RESET_EXTENTION;
         ITU_T_BIND_CHOICE(displayEnhancement_);
     }
 

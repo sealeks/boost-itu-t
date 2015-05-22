@@ -14,14 +14,14 @@ namespace MMS_Object_Module_1 {
     ModifierStep::ModifierStep() : modifierID_(), modifier_() {
     };
 
-    ModifierStep::ModifierStep(const int& arg__modifierID,
+    ModifierStep::ModifierStep(const integer_type& arg__modifierID,
             const Modifier& arg__modifier) :
     modifierID_(arg__modifierID),
     modifier_(arg__modifier) {
     };
 
 
-    ITU_T_HOLDERH_DEFN(ModifierStep::modifierID, modifierID, int);
+    ITU_T_HOLDERH_DEFN(ModifierStep::modifierID, modifierID, integer_type);
     ITU_T_HOLDERH_DEFN(ModifierStep::modifier, modifier, Modifier);
 
     // choice Modifier

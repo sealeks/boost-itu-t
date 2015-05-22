@@ -190,26 +190,26 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Confirmed_RequestPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(service_ext_);
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(service_ext_);
 
-        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0);
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_WRITE;
 
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(listOfModifiers_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(listOfModifiers_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(listOfModifiers_);
         ITU_T_BIND_PER(*service_);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_SET_PER;
+            ITU_T_EXTENTION_GROUPS_WRITE;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_OPEN;
                 ITU_T_BIND_PER(service_ext_);
                 ITU_T_PER_END_OPEN;
@@ -221,19 +221,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Confirmed_RequestPDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(listOfModifiers_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(listOfModifiers_);
         ITU_T_BIND_PER(*service_);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_GET_PER;
+            ITU_T_EXTENTION_GROUPS_READ;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_BIND_PER(service_ext_);
                 ITU_T_PER_END_PARSE_OPEN;
@@ -248,9 +248,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ConfirmedServiceRequest::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_CHOICE_SET_PER(ConfirmedServiceRequest_additionalService, ConfirmedServiceRequest_changeAccessControl);
+        ITU_T_EXTENTION_WRITE_CHOICE(ConfirmedServiceRequest_additionalService, ConfirmedServiceRequest_changeAccessControl);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
             switch (type()) {
                 case ConfirmedServiceRequest_status:
                 {
@@ -800,9 +800,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ConfirmedServiceRequest::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
             ITU_T_GET_CONSTAINED_INDX(77);
 
@@ -1658,19 +1658,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Unconfirmed_PDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(service_ext_);
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(service_ext_);
 
-        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0);
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_WRITE;
 
         ITU_T_BIND_PER(*service_);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_SET_PER;
+            ITU_T_EXTENTION_GROUPS_WRITE;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_OPEN;
                 ITU_T_BIND_PER(service_ext_);
                 ITU_T_PER_END_OPEN;
@@ -1682,14 +1682,14 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Unconfirmed_PDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
         ITU_T_BIND_PER(*service_);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_GET_PER;
+            ITU_T_EXTENTION_GROUPS_READ;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_BIND_PER(service_ext_);
                 ITU_T_PER_END_PARSE_OPEN;
@@ -1801,20 +1801,20 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Confirmed_ResponsePDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(service_ext_);
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(service_ext_);
 
-        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0);
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*service_);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_SET_PER;
+            ITU_T_EXTENTION_GROUPS_WRITE;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_OPEN;
                 ITU_T_BIND_PER(service_ext_);
                 ITU_T_PER_END_OPEN;
@@ -1826,15 +1826,15 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Confirmed_ResponsePDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
         ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*service_);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_GET_PER;
+            ITU_T_EXTENTION_GROUPS_READ;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_BIND_PER(service_ext_);
                 ITU_T_PER_END_PARSE_OPEN;
@@ -1849,9 +1849,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ConfirmedServiceResponse::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_CHOICE_SET_PER(ConfirmedServiceResponse_additionalService, ConfirmedServiceResponse_changeAccessControl);
+        ITU_T_EXTENTION_WRITE_CHOICE(ConfirmedServiceResponse_additionalService, ConfirmedServiceResponse_changeAccessControl);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
             switch (type()) {
                 case ConfirmedServiceResponse_status:
                 {
@@ -2395,9 +2395,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ConfirmedServiceResponse::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
             ITU_T_GET_CONSTAINED_INDX(76);
 
@@ -3204,9 +3204,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Confirmed_ErrorPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(modifierPosition_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(modifierPosition_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
@@ -3215,10 +3215,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Confirmed_ErrorPDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*serviceError_);
     }
 
@@ -3226,9 +3226,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ServiceError::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(additionalCode_) + ITU_T_EXISTS_BMP(additionalDescription_) + ITU_T_EXISTS_BMP(serviceSpecificInfo_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(additionalCode_) +
+                ITU_T_EXISTS_BMP(additionalDescription_) +
+                ITU_T_EXISTS_BMP(serviceSpecificInfo_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*errorClass_);
         ITU_T_BIND_PER(additionalCode_);
@@ -3238,12 +3240,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ServiceError::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_PER(*errorClass_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(additionalCode_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(additionalDescription_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(serviceSpecificInfo_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(additionalCode_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(additionalDescription_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(serviceSpecificInfo_);
     }
 
     // choice errorClass
@@ -3742,9 +3744,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ObjectClass::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_CHOICE_SET_PER(ObjectClass_csObjectClass, ObjectClass_csObjectClass);
+        ITU_T_EXTENTION_WRITE_CHOICE(ObjectClass_csObjectClass, ObjectClass_csObjectClass);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
             ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ObjectClass_basicObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (13))
         }
         else {
@@ -3766,9 +3768,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ObjectClass::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
             ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ObjectClass_basicObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (13))
         }
         else {
@@ -3795,9 +3797,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Initiate_RequestPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(localDetailCalling_) + ITU_T_EXISTS_BMP(proposedDataStructureNestingLevel_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(localDetailCalling_) +
+                ITU_T_EXISTS_BMP(proposedDataStructureNestingLevel_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(localDetailCalling_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*proposedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
@@ -3808,12 +3811,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Initiate_RequestPDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(localDetailCalling_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(localDetailCalling_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*proposedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*proposedMaxServOutstandingCalled_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRS(proposedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(proposedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*initRequestDetail_);
     }
 
@@ -3821,35 +3824,35 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(additionalSupportedCalling_);
-        ITU_T_EXTENTION_GROUP_BOOL_PER(1) = ITU_T_EXISTS_BOOL(additionalCbbSupportedCalling_);
-        ITU_T_EXTENTION_GROUP_BOOL_PER(2) = ITU_T_EXISTS_BOOL(privilegeClassIdentityCalling_);
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(additionalSupportedCalling_);
+        ITU_T_EXTENTION_GROUP_BOOL(1) = ITU_T_EXISTS_BOOL(additionalCbbSupportedCalling_);
+        ITU_T_EXTENTION_GROUP_BOOL(2) = ITU_T_EXISTS_BOOL(privilegeClassIdentityCalling_);
 
-        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0) + ITU_T_EXTENTION_GROUP_PER(1) + ITU_T_EXTENTION_GROUP_PER(2);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0) + ITU_T_EXTENTION_GROUP_AS_BMP(1) + ITU_T_EXTENTION_GROUP_AS_BMP(2);
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*proposedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_SIZE_SNGLCONSTRS(*proposedParameterCBB_, 18);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalling_, 93);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_SET_PER;
+            ITU_T_EXTENTION_GROUPS_WRITE;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_OPEN;
                 ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalling_, 23);
                 ITU_T_PER_END_OPEN;
             }
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
                 ITU_T_PER_START_OPEN;
                 ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalling_, 3);
                 ITU_T_PER_END_OPEN;
             }
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(2)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
                 ITU_T_PER_START_OPEN;
                 ITU_T_BIND_PER(*privilegeClassIdentityCalling_);
                 ITU_T_PER_END_OPEN;
@@ -3861,28 +3864,28 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
         ITU_T_BIND_NUM_CONSTRS(*proposedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_SIZE_SNGLCONSTRS(*proposedParameterCBB_, 18);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalling_, 93);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_GET_PER;
+            ITU_T_EXTENTION_GROUPS_READ;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalling_, 23);
                 ITU_T_PER_END_PARSE_OPEN;
             }
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
                 ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalling_, 3);
                 ITU_T_PER_END_PARSE_OPEN;
             }
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(2)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
                 ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_BIND_PER(*privilegeClassIdentityCalling_);
                 ITU_T_PER_END_PARSE_OPEN;
@@ -3897,9 +3900,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Initiate_ResponsePDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(localDetailCalled_) + ITU_T_EXISTS_BMP(negotiatedDataStructureNestingLevel_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(localDetailCalled_) +
+                ITU_T_EXISTS_BMP(negotiatedDataStructureNestingLevel_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(localDetailCalled_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*negotiatedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
@@ -3910,12 +3914,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Initiate_ResponsePDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(localDetailCalled_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(localDetailCalled_, static_cast<int32_t> (std::numeric_limits<int32_t>::min()), static_cast<int32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*negotiatedMaxServOutstandingCalling_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*negotiatedMaxServOutstandingCalled_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRS(negotiatedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(negotiatedDataStructureNestingLevel_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*initResponseDetail_);
     }
 
@@ -3923,35 +3927,35 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(additionalSupportedCalled_);
-        ITU_T_EXTENTION_GROUP_BOOL_PER(1) = ITU_T_EXISTS_BOOL(additionalCbbSupportedCalled_);
-        ITU_T_EXTENTION_GROUP_BOOL_PER(2) = ITU_T_EXISTS_BOOL(privilegeClassIdentityCalled_);
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(additionalSupportedCalled_);
+        ITU_T_EXTENTION_GROUP_BOOL(1) = ITU_T_EXISTS_BOOL(additionalCbbSupportedCalled_);
+        ITU_T_EXTENTION_GROUP_BOOL(2) = ITU_T_EXISTS_BOOL(privilegeClassIdentityCalled_);
 
-        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0) + ITU_T_EXTENTION_GROUP_PER(1) + ITU_T_EXTENTION_GROUP_PER(2);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0) + ITU_T_EXTENTION_GROUP_AS_BMP(1) + ITU_T_EXTENTION_GROUP_AS_BMP(2);
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*negotiatedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_SIZE_SNGLCONSTRS(*negotiatedParameterCBB_, 18);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalled_, 93);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_SET_PER;
+            ITU_T_EXTENTION_GROUPS_WRITE;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_OPEN;
                 ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalled_, 23);
                 ITU_T_PER_END_OPEN;
             }
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
                 ITU_T_PER_START_OPEN;
                 ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalled_, 3);
                 ITU_T_PER_END_OPEN;
             }
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(2)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
                 ITU_T_PER_START_OPEN;
                 ITU_T_BIND_PER(*privilegeClassIdentityCalled_);
                 ITU_T_PER_END_OPEN;
@@ -3963,28 +3967,28 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
         ITU_T_BIND_NUM_CONSTRS(*negotiatedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_SIZE_SNGLCONSTRS(*negotiatedParameterCBB_, 18);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalled_, 93);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
-            ITU_T_EXTENTION_GROUPS_GET_PER;
+            ITU_T_EXTENTION_GROUPS_READ;
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalled_, 23);
                 ITU_T_PER_END_PARSE_OPEN;
             }
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
                 ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalled_, 3);
                 ITU_T_PER_END_PARSE_OPEN;
             }
 
-            if (ITU_T_EXTENTION_GROUP_CHECK_PER(2)) {
+            if (ITU_T_EXTENTION_GROUPS_CHECK(2)) {
                 ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_BIND_PER(*privilegeClassIdentityCalled_);
                 ITU_T_PER_END_PARSE_OPEN;
@@ -4011,9 +4015,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void RejectPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(originalInvokeID_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(originalInvokeID_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*rejectReason_);
@@ -4021,9 +4025,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void RejectPDU::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(originalInvokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*rejectReason_);
     }
 
@@ -4185,9 +4189,15 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineAccessControlList_Request::AccessControlListElements_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(readAccessCondition_) + ITU_T_EXISTS_BMP(storeAccessCondition_) + ITU_T_EXISTS_BMP(writeAccessCondition_) + ITU_T_EXISTS_BMP(loadAccessCondition_) + ITU_T_EXISTS_BMP(executeAccessCondition_) + ITU_T_EXISTS_BMP(deleteAccessCondition_) + ITU_T_EXISTS_BMP(editAccessCondition_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(readAccessCondition_) +
+                ITU_T_EXISTS_BMP(storeAccessCondition_) +
+                ITU_T_EXISTS_BMP(writeAccessCondition_) +
+                ITU_T_EXISTS_BMP(loadAccessCondition_) +
+                ITU_T_EXISTS_BMP(executeAccessCondition_) +
+                ITU_T_EXISTS_BMP(deleteAccessCondition_) +
+                ITU_T_EXISTS_BMP(editAccessCondition_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(readAccessCondition_);
         ITU_T_BIND_PER(storeAccessCondition_);
@@ -4200,15 +4210,15 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineAccessControlList_Request::AccessControlListElements_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(7);
+        ITU_T_OPTIONAL_READ(7);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(readAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(storeAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(writeAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(loadAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(executeAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(deleteAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(editAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(readAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(storeAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(writeAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(loadAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(executeAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(deleteAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(editAccessCondition_);
     }
 
     // choice GetAccessControlListAttributes-Request
@@ -4281,9 +4291,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAccessControlListAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(accessControlList_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(accessControlList_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*accessControlListElements_);
@@ -4294,22 +4304,28 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAccessControlListAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*name_);
         ITU_T_BIND_PER(*accessControlListElements_);
         ITU_T_BIND_PER(*vMDuse_);
         ITU_T_BIND_PER(*references_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
     }
 
     // sequence accessControlListElements
 
     template<> void GetAccessControlListAttributes_Response::AccessControlListElements_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(readAccessCondition_) + ITU_T_EXISTS_BMP(storeAccessCondition_) + ITU_T_EXISTS_BMP(writeAccessCondition_) + ITU_T_EXISTS_BMP(loadAccessCondition_) + ITU_T_EXISTS_BMP(executeAccessCondition_) + ITU_T_EXISTS_BMP(deleteAccessCondition_) + ITU_T_EXISTS_BMP(editAccessCondition_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(readAccessCondition_) +
+                ITU_T_EXISTS_BMP(storeAccessCondition_) +
+                ITU_T_EXISTS_BMP(writeAccessCondition_) +
+                ITU_T_EXISTS_BMP(loadAccessCondition_) +
+                ITU_T_EXISTS_BMP(executeAccessCondition_) +
+                ITU_T_EXISTS_BMP(deleteAccessCondition_) +
+                ITU_T_EXISTS_BMP(editAccessCondition_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(readAccessCondition_);
         ITU_T_BIND_PER(storeAccessCondition_);
@@ -4322,15 +4338,15 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAccessControlListAttributes_Response::AccessControlListElements_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(7);
+        ITU_T_OPTIONAL_READ(7);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(readAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(storeAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(writeAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(loadAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(executeAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(deleteAccessCondition_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(editAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(readAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(storeAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(writeAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(loadAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(executeAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(deleteAccessCondition_);
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(editAccessCondition_);
     }
 
     // sequence 
@@ -4349,9 +4365,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportAccessControlledObjects_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(continueAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(continueAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*accessControlList_);
         ITU_T_BIND_PER(*objectClass_);
@@ -4360,20 +4376,20 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportAccessControlledObjects_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*accessControlList_);
         ITU_T_BIND_PER(*objectClass_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(continueAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(continueAfter_);
     }
 
     // sequence ReportAccessControlledObjects-Response
 
     template<> void ReportAccessControlledObjects_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfNames_);
         ITU_T_BIND_PER(moreFollows_);
@@ -4381,10 +4397,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportAccessControlledObjects_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfNames_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence ChangeAccessControl-Request
@@ -4535,9 +4551,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void StatusResponse::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(localDetail_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(localDetail_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*vmdLogicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_NUM_CONSTRS(*vmdPhysicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
@@ -4546,11 +4562,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void StatusResponse::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_NUM_CONSTRS(*vmdLogicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_NUM_CONSTRS(*vmdPhysicalStatus_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_CONSTRS(localDetail_, 0, 128);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRS(localDetail_, 0, 128);
     }
 
     // choice CS-Status-Response
@@ -4600,9 +4616,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CS_Status_Response::FullResponse_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(extendedStatusMask_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(extendedStatusMask_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*operationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (5));
         ITU_T_BIND_SIZE_SNGLCONSTRS(*extendedStatus_, 4);
@@ -4612,11 +4628,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CS_Status_Response::FullResponse_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_NUM_CONSTRS(*operationState_, static_cast<uint8_t> (0), static_cast<uint8_t> (5));
         ITU_T_BIND_SIZE_SNGLCONSTRS(*extendedStatus_, 4);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_SNGLCONSTRS(extendedStatusMask_, 4);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_SNGLCONSTRS(extendedStatusMask_, 4);
         ITU_T_BIND_PER(*selectedProgramInvocation_);
     }
 
@@ -4667,9 +4683,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetNameList_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(continueAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(continueAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*objectClass_);
         ITU_T_BIND_PER(*objectScope_);
@@ -4678,11 +4694,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetNameList_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*objectClass_);
         ITU_T_BIND_PER(*objectScope_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(continueAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(continueAfter_);
     }
 
     // choice objectScope
@@ -4743,9 +4759,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetNameList_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfIdentifier_);
         ITU_T_BIND_PER(moreFollows_);
@@ -4753,19 +4769,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetNameList_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfIdentifier_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence Identify-Response
 
     template<> void Identify_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(listOfAbstractSyntaxes_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(listOfAbstractSyntaxes_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*vendorName_);
         ITU_T_BIND_PER(*modelName_);
@@ -4775,12 +4791,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Identify_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*vendorName_);
         ITU_T_BIND_PER(*modelName_);
         ITU_T_BIND_PER(*revision_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(listOfAbstractSyntaxes_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(listOfAbstractSyntaxes_);
     }
 
     // sequence Rename-Request
@@ -4801,27 +4817,27 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetCapabilityList_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(continueAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(continueAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(continueAfter_);
     }
 
     template<> void GetCapabilityList_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(continueAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(continueAfter_);
     }
 
     // sequence GetCapabilityList-Response
 
     template<> void GetCapabilityList_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfCapabilities_);
         ITU_T_BIND_PER(moreFollows_);
@@ -4829,10 +4845,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetCapabilityList_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfCapabilities_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence InitiateDownloadSequence-Request
@@ -4853,9 +4869,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DownloadSegment_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*loadData_);
         ITU_T_BIND_PER(moreFollows_);
@@ -4863,10 +4879,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DownloadSegment_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*loadData_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // choice LoadData
@@ -4927,9 +4943,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void TerminateDownloadSequence_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(discard_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(discard_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*domainName_);
         ITU_T_BIND_PER(discard_);
@@ -4937,10 +4953,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void TerminateDownloadSequence_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*domainName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(discard_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(discard_);
     }
 
     // sequence InitiateUploadSequence-Response
@@ -4959,9 +4975,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void UploadSegment_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*loadData_);
         ITU_T_BIND_PER(moreFollows_);
@@ -4969,19 +4985,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void UploadSegment_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*loadData_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence RequestDomainDownload-Request
 
     template<> void RequestDomainDownload_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(listOfCapabilities_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(listOfCapabilities_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*domainName_);
         ITU_T_BIND_PER(listOfCapabilities_);
@@ -4991,10 +5007,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void RequestDomainDownload_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*domainName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(listOfCapabilities_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(listOfCapabilities_);
         ITU_T_BIND_PER(*sharable_);
         ITU_T_BIND_PER(*fileName_);
     }
@@ -5015,9 +5031,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void LoadDomainContent_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(listOfCapabilities_) + ITU_T_EXISTS_BMP(thirdParty_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(listOfCapabilities_) +
+                ITU_T_EXISTS_BMP(thirdParty_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*domainName_);
         ITU_T_BIND_PER(listOfCapabilities_);
@@ -5028,22 +5045,22 @@ namespace ISO_9506_MMS_1 {
 
     template<> void LoadDomainContent_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*domainName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(listOfCapabilities_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(listOfCapabilities_);
         ITU_T_BIND_PER(*sharable_);
         ITU_T_BIND_PER(*fileName_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(thirdParty_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(thirdParty_);
     }
 
     // sequence StoreDomainContent-Request
 
     template<> void StoreDomainContent_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(thirdParty_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(thirdParty_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*domainName_);
         ITU_T_BIND_PER(*fileName_);
@@ -5052,20 +5069,20 @@ namespace ISO_9506_MMS_1 {
 
     template<> void StoreDomainContent_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*domainName_);
         ITU_T_BIND_PER(*fileName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(thirdParty_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(thirdParty_);
     }
 
     // sequence GetDomainAttributes-Response
 
     template<> void GetDomainAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(accessControlList_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(accessControlList_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfCapabilities_);
         ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (15));
@@ -5078,7 +5095,7 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetDomainAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfCapabilities_);
         ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (15));
@@ -5086,16 +5103,17 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_PER(*sharable_);
         ITU_T_BIND_PER(*listOfProgramInvocations_);
         ITU_T_BIND_NUM_CONSTRS(*uploadInProgress_, static_cast<int8_t> (-128), static_cast<int8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
     }
 
     // sequence CreateProgramInvocation-Request
 
     template<> void CreateProgramInvocation_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(reusable_) + ITU_T_EXISTS_BMP(monitorType_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(reusable_) +
+                ITU_T_EXISTS_BMP(monitorType_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*programInvocationName_);
         ITU_T_BIND_PER(*listOfDomainNames_);
@@ -5105,21 +5123,21 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CreateProgramInvocation_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*programInvocationName_);
         ITU_T_BIND_PER(*listOfDomainNames_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(reusable_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(monitorType_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(reusable_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(monitorType_);
     }
 
     // sequence Start-Request
 
     template<> void Start_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(executionArgument_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(executionArgument_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*programInvocationName_);
         ITU_T_BIND_PER(executionArgument_);
@@ -5127,10 +5145,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Start_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*programInvocationName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(executionArgument_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(executionArgument_);
     }
 
     // choice executionArgument
@@ -5234,9 +5252,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(startLocation_) + ITU_T_EXISTS_BMP(startCount_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(startLocation_) +
+                ITU_T_EXISTS_BMP(startCount_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(startLocation_);
         ITU_T_BIND_PER(startCount_);
@@ -5244,10 +5263,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CS_Start_Request_impl::Controlling_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(startLocation_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(startCount_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(startLocation_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(startCount_);
     }
 
     // choice StartCount
@@ -5318,9 +5337,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Resume_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(executionArgument_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(executionArgument_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*programInvocationName_);
         ITU_T_BIND_PER(executionArgument_);
@@ -5328,10 +5347,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Resume_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*programInvocationName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(executionArgument_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(executionArgument_);
     }
 
     // choice executionArgument
@@ -5508,9 +5527,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetProgramInvocationAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(accessControlList_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(accessControlList_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
         ITU_T_BIND_PER(*listOfDomainNames_);
@@ -5523,7 +5542,7 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetProgramInvocationAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
         ITU_T_BIND_PER(*listOfDomainNames_);
@@ -5531,7 +5550,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_PER(*reusable_);
         ITU_T_BIND_PER(*monitor_);
         ITU_T_BIND_PER(*executionArgument_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
     }
 
     // choice executionArgument
@@ -5658,9 +5677,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(programLocation_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(programLocation_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*controlledPI_);
         ITU_T_BIND_PER(programLocation_);
@@ -5669,10 +5688,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CS_GetProgramInvocationAttributes_Response::Control_type::Controlling_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*controlledPI_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(programLocation_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(programLocation_);
         ITU_T_BIND_PER(*runningMode_);
     }
 
@@ -5777,9 +5796,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Select_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(controlling_) + ITU_T_EXISTS_BMP(controlled_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(controlling_) +
+                ITU_T_EXISTS_BMP(controlled_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(controlling_);
         ITU_T_BIND_PER(controlled_);
@@ -5787,19 +5807,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Select_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(controlling_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(controlled_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(controlling_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(controlled_);
     }
 
     // sequence AlterProgramInvocationAttributes-Request
 
     template<> void AlterProgramInvocationAttributes_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(startCount_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(startCount_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*programInvocation_);
         ITU_T_BIND_PER(startCount_);
@@ -5807,19 +5827,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AlterProgramInvocationAttributes_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*programInvocation_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(startCount_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(startCount_);
     }
 
     // sequence ReconfigureProgramInvocation-Request
 
     template<> void ReconfigureProgramInvocation_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(newProgramInvocationName_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(newProgramInvocationName_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*oldProgramInvocationName_);
         ITU_T_BIND_PER(newProgramInvocationName_);
@@ -5829,10 +5849,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReconfigureProgramInvocation_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*oldProgramInvocationName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(newProgramInvocationName_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(newProgramInvocationName_);
         ITU_T_BIND_PER(*domainsToAdd_);
         ITU_T_BIND_PER(*domainsToRemove_);
     }
@@ -5906,9 +5926,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ControlElement::BeginDomainDef_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(loadData_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(loadData_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*domainName_);
         ITU_T_BIND_PER(*capabilities_);
@@ -5918,12 +5938,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ControlElement::BeginDomainDef_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*domainName_);
         ITU_T_BIND_PER(*capabilities_);
         ITU_T_BIND_PER(*sharable_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(loadData_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(loadData_);
     }
 
     // sequence continueDomainDef
@@ -5942,9 +5962,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ControlElement::PiDefinition_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(reusable_) + ITU_T_EXISTS_BMP(monitorType_) + ITU_T_EXISTS_BMP(pIState_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(reusable_) +
+                ITU_T_EXISTS_BMP(monitorType_) +
+                ITU_T_EXISTS_BMP(pIState_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*piName_);
         ITU_T_BIND_PER(*listOfDomains_);
@@ -5955,13 +5977,13 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ControlElement::PiDefinition_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_PER(*piName_);
         ITU_T_BIND_PER(*listOfDomains_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(reusable_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(monitorType_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(pIState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(reusable_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(monitorType_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(pIState_, static_cast<uint8_t> (0), static_cast<uint8_t> (8));
     }
 
     // choice InitiateUnitControl-Error
@@ -6011,9 +6033,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void UnitControlLoadSegment_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*controlElements_);
         ITU_T_BIND_PER(moreFollows_);
@@ -6021,19 +6043,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void UnitControlLoadSegment_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*controlElements_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence UnitControlUpload-Request
 
     template<> void UnitControlUpload_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(continueAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(continueAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*unitControlName_);
         ITU_T_BIND_PER(continueAfter_);
@@ -6041,10 +6063,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void UnitControlUpload_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*unitControlName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(continueAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(continueAfter_);
     }
 
     // choice continueAfter
@@ -6105,9 +6127,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void UnitControlUpload_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(nextElement_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(nextElement_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*controlElements_);
         ITU_T_BIND_PER(nextElement_);
@@ -6115,10 +6137,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void UnitControlUpload_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*controlElements_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(nextElement_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(nextElement_);
     }
 
     // choice nextElement
@@ -6179,9 +6201,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void StartUnitControl_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(executionArgument_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(executionArgument_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*unitControlName_);
         ITU_T_BIND_PER(executionArgument_);
@@ -6189,10 +6211,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void StartUnitControl_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*unitControlName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(executionArgument_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(executionArgument_);
     }
 
     // choice executionArgument
@@ -6331,9 +6353,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void LoadUnitControlFromFile_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(thirdParty_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(thirdParty_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*unitControlName_);
         ITU_T_BIND_PER(*fileName_);
@@ -6342,11 +6364,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void LoadUnitControlFromFile_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*unitControlName_);
         ITU_T_BIND_PER(*fileName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(thirdParty_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(thirdParty_);
     }
 
     // choice LoadUnitControlFromFile-Error
@@ -6407,9 +6429,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void StoreUnitControlToFile_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(thirdParty_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(thirdParty_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*unitControlName_);
         ITU_T_BIND_PER(*fileName_);
@@ -6418,11 +6440,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void StoreUnitControlToFile_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*unitControlName_);
         ITU_T_BIND_PER(*fileName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(thirdParty_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(thirdParty_);
     }
 
     // choice DeleteUnitControl-Error
@@ -6822,9 +6844,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Data::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_CHOICE_SET_PER(Data_mMSString, Data_mMSString);
+        ITU_T_EXTENTION_WRITE_CHOICE(Data_mMSString, Data_mMSString);
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
             switch (type()) {
                 case Data_array:
                 {
@@ -6934,9 +6956,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Data::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_EXTENTION_GET_PER;
+        ITU_T_EXTENTION_READ;
 
-        if (ITU_T_EXTENTION_CHECK_PER) {
+        if (ITU_T_EXTENTION) {
 
             ITU_T_GET_CONSTAINED_INDX(13);
 
@@ -7083,9 +7105,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void VariableAccessSpecification::ListOfVariable_type_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(alternateAccess_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(alternateAccess_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*variableSpecification_);
         ITU_T_BIND_PER(alternateAccess_);
@@ -7093,10 +7115,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void VariableAccessSpecification::ListOfVariable_type_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*variableSpecification_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(alternateAccess_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(alternateAccess_);
     }
 
     // choice VariableSpecification
@@ -7191,9 +7213,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Read_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(specificationWithResult_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(specificationWithResult_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(specificationWithResult_);
         ITU_T_BIND_PER(*variableAccessSpecification_);
@@ -7201,9 +7223,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Read_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(specificationWithResult_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(specificationWithResult_);
         ITU_T_BIND_PER(*variableAccessSpecification_);
     }
 
@@ -7211,9 +7233,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Read_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(variableAccessSpecification_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(variableAccessSpecification_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(variableAccessSpecification_);
         ITU_T_BIND_PER(*listOfAccessResult_);
@@ -7221,9 +7243,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Read_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(variableAccessSpecification_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(variableAccessSpecification_);
         ITU_T_BIND_PER(*listOfAccessResult_);
     }
 
@@ -7341,9 +7363,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetVariableAccessAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(address_) + ITU_T_EXISTS_BMP(accessControlList_) + ITU_T_EXISTS_BMP(meaning_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(address_) +
+                ITU_T_EXISTS_BMP(accessControlList_) +
+                ITU_T_EXISTS_BMP(meaning_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(address_);
@@ -7354,22 +7378,22 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetVariableAccessAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_PER(*mmsDeletable_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(address_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(address_);
         ITU_T_BIND_PER(*typeDescription_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(accessControlList_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(meaning_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(meaning_);
     }
 
     // sequence DefineNamedVariable-Request
 
     template<> void DefineNamedVariable_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(typeSpecification_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(typeSpecification_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*variableName_);
         ITU_T_BIND_PER(*address_);
@@ -7378,20 +7402,22 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineNamedVariable_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*variableName_);
         ITU_T_BIND_PER(*address_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(typeSpecification_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(typeSpecification_);
     }
 
     // sequence DeleteVariableAccess-Request
 
     template<> void DeleteVariableAccess_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(scopeOfDelete_) + ITU_T_EXISTS_BMP(listOfName_) + ITU_T_EXISTS_BMP(domainName_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(scopeOfDelete_) +
+                ITU_T_EXISTS_BMP(listOfName_) +
+                ITU_T_EXISTS_BMP(domainName_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(listOfName_);
@@ -7400,11 +7426,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DeleteVariableAccess_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(listOfName_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(domainName_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(listOfName_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(domainName_);
     }
 
     // sequence DeleteVariableAccess-Response
@@ -7435,9 +7461,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(alternateAccess_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(alternateAccess_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*variableSpecification_);
         ITU_T_BIND_PER(alternateAccess_);
@@ -7445,19 +7471,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineNamedVariableList_Request::ListOfVariable_type_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*variableSpecification_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(alternateAccess_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(alternateAccess_);
     }
 
     // sequence GetNamedVariableListAttributes-Response
 
     template<> void GetNamedVariableListAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(accessControlList_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(accessControlList_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(*listOfVariable_);
@@ -7466,20 +7492,20 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetNamedVariableListAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(*listOfVariable_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
     }
 
     // sequence 
 
     template<> void GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(alternateAccess_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(alternateAccess_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*variableSpecification_);
         ITU_T_BIND_PER(alternateAccess_);
@@ -7487,19 +7513,21 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetNamedVariableListAttributes_Response::ListOfVariable_type_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*variableSpecification_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(alternateAccess_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(alternateAccess_);
     }
 
     // sequence DeleteNamedVariableList-Request
 
     template<> void DeleteNamedVariableList_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(scopeOfDelete_) + ITU_T_EXISTS_BMP(listOfVariableListName_) + ITU_T_EXISTS_BMP(domainName_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(scopeOfDelete_) +
+                ITU_T_EXISTS_BMP(listOfVariableListName_) +
+                ITU_T_EXISTS_BMP(domainName_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(listOfVariableListName_);
@@ -7508,11 +7536,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DeleteNamedVariableList_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(listOfVariableListName_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(domainName_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(listOfVariableListName_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(domainName_);
     }
 
     // sequence DeleteNamedVariableList-Response
@@ -7543,9 +7571,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetNamedTypeAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(accessControlList_) + ITU_T_EXISTS_BMP(meaning_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(accessControlList_) +
+                ITU_T_EXISTS_BMP(meaning_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(*typeSpecification_);
@@ -7555,21 +7584,23 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetNamedTypeAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_PER(*typeSpecification_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(accessControlList_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(meaning_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(meaning_);
     }
 
     // sequence DeleteNamedType-Request
 
     template<> void DeleteNamedType_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(scopeOfDelete_) + ITU_T_EXISTS_BMP(listOfTypeName_) + ITU_T_EXISTS_BMP(domainName_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(scopeOfDelete_) +
+                ITU_T_EXISTS_BMP(listOfTypeName_) +
+                ITU_T_EXISTS_BMP(domainName_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(listOfTypeName_);
@@ -7578,11 +7609,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DeleteNamedType_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(listOfTypeName_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(domainName_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(scopeOfDelete_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(listOfTypeName_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(domainName_);
     }
 
     // sequence DeleteNamedType-Response
@@ -7623,9 +7654,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetDataExchangeAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(programInvocation_) + ITU_T_EXISTS_BMP(accessControlList_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(programInvocation_) +
+                ITU_T_EXISTS_BMP(accessControlList_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*inUse_);
         ITU_T_BIND_PER(*listOfRequestTypeDescriptions_);
@@ -7636,22 +7668,28 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetDataExchangeAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*inUse_);
         ITU_T_BIND_PER(*listOfRequestTypeDescriptions_);
         ITU_T_BIND_PER(*listOfResponseTypeDescriptions_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(programInvocation_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(programInvocation_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(accessControlList_);
     }
 
     // sequence TakeControl-Request
 
     template<> void TakeControl_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(namedToken_) + ITU_T_EXISTS_BMP(priority_) + ITU_T_EXISTS_BMP(acceptableDelay_) + ITU_T_EXISTS_BMP(controlTimeOut_) + ITU_T_EXISTS_BMP(abortOnTimeOut_) + ITU_T_EXISTS_BMP(relinquishIfConnectionLost_) + ITU_T_EXISTS_BMP(applicationToPreempt_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(namedToken_) +
+                ITU_T_EXISTS_BMP(priority_) +
+                ITU_T_EXISTS_BMP(acceptableDelay_) +
+                ITU_T_EXISTS_BMP(controlTimeOut_) +
+                ITU_T_EXISTS_BMP(abortOnTimeOut_) +
+                ITU_T_EXISTS_BMP(relinquishIfConnectionLost_) +
+                ITU_T_EXISTS_BMP(applicationToPreempt_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*semaphoreName_);
         ITU_T_BIND_PER(namedToken_);
@@ -7665,16 +7703,16 @@ namespace ISO_9506_MMS_1 {
 
     template<> void TakeControl_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(7);
+        ITU_T_OPTIONAL_READ(7);
 
         ITU_T_BIND_PER(*semaphoreName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(namedToken_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_NUM_CONSTRS(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(abortOnTimeOut_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(relinquishIfConnectionLost_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(applicationToPreempt_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(namedToken_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRS(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(abortOnTimeOut_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(relinquishIfConnectionLost_);
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(applicationToPreempt_);
     }
 
     // choice TakeControl-Response
@@ -7724,9 +7762,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void RelinquishControl_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(namedToken_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(namedToken_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*semaphoreName_);
         ITU_T_BIND_PER(namedToken_);
@@ -7734,10 +7772,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void RelinquishControl_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*semaphoreName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(namedToken_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(namedToken_);
     }
 
     // sequence DefineSemaphore-Request
@@ -7756,9 +7794,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportSemaphoreStatus_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(accessControlList_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(accessControlList_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
@@ -7770,23 +7808,23 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportSemaphoreStatus_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*mmsDeletable_);
         ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
         ITU_T_BIND_NUM_CONSTRS(*numberOfTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*numberOfOwnedTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*numberOfHungTokens_, static_cast<uint16_t> (0), static_cast<uint16_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
     }
 
     // sequence ReportPoolSemaphoreStatus-Request
 
     template<> void ReportPoolSemaphoreStatus_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(nameToStartAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(nameToStartAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*semaphoreName_);
         ITU_T_BIND_PER(nameToStartAfter_);
@@ -7794,19 +7832,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportPoolSemaphoreStatus_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*semaphoreName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(nameToStartAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(nameToStartAfter_);
     }
 
     // sequence ReportPoolSemaphoreStatus-Response
 
     template<> void ReportPoolSemaphoreStatus_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfNamedTokens_);
         ITU_T_BIND_PER(moreFollows_);
@@ -7814,10 +7852,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportPoolSemaphoreStatus_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfNamedTokens_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // choice 
@@ -7878,9 +7916,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportSemaphoreEntryStatus_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(entryIDToStartAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(entryIDToStartAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*semaphoreName_);
         ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
@@ -7889,20 +7927,20 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportSemaphoreEntryStatus_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*semaphoreName_);
         ITU_T_BIND_NUM_CONSTRS(*state_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(entryIDToStartAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(entryIDToStartAfter_);
     }
 
     // sequence ReportSemaphoreEntryStatus-Response
 
     template<> void ReportSemaphoreEntryStatus_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfSemaphoreEntry_);
         ITU_T_BIND_PER(moreFollows_);
@@ -7910,19 +7948,23 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportSemaphoreEntryStatus_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfSemaphoreEntry_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence SemaphoreEntry
 
     template<> void SemaphoreEntry::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(namedToken_) + ITU_T_EXISTS_BMP(priority_) + ITU_T_EXISTS_BMP(remainingTimeOut_) + ITU_T_EXISTS_BMP(abortOnTimeOut_) + ITU_T_EXISTS_BMP(relinquishIfConnectionLost_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(namedToken_) +
+                ITU_T_EXISTS_BMP(priority_) +
+                ITU_T_EXISTS_BMP(remainingTimeOut_) +
+                ITU_T_EXISTS_BMP(abortOnTimeOut_) +
+                ITU_T_EXISTS_BMP(relinquishIfConnectionLost_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*entryID_);
         ITU_T_BIND_NUM_CONSTRS(*entryClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
@@ -7936,25 +7978,30 @@ namespace ISO_9506_MMS_1 {
 
     template<> void SemaphoreEntry::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(5);
+        ITU_T_OPTIONAL_READ(5);
 
         ITU_T_BIND_PER(*entryID_);
         ITU_T_BIND_NUM_CONSTRS(*entryClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
         ITU_T_BIND_PER(*applicationReference_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(namedToken_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(remainingTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(abortOnTimeOut_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(relinquishIfConnectionLost_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(namedToken_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(remainingTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(abortOnTimeOut_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(relinquishIfConnectionLost_);
     }
 
     // sequence AttachToSemaphore
 
     template<> void AttachToSemaphore::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(namedToken_) + ITU_T_EXISTS_BMP(priority_) + ITU_T_EXISTS_BMP(acceptableDelay_) + ITU_T_EXISTS_BMP(controlTimeOut_) + ITU_T_EXISTS_BMP(abortOnTimeOut_) + ITU_T_EXISTS_BMP(relinquishIfConnectionLost_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(namedToken_) +
+                ITU_T_EXISTS_BMP(priority_) +
+                ITU_T_EXISTS_BMP(acceptableDelay_) +
+                ITU_T_EXISTS_BMP(controlTimeOut_) +
+                ITU_T_EXISTS_BMP(abortOnTimeOut_) +
+                ITU_T_EXISTS_BMP(relinquishIfConnectionLost_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*semaphoreName_);
         ITU_T_BIND_PER(namedToken_);
@@ -7967,24 +8014,26 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AttachToSemaphore::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(6);
+        ITU_T_OPTIONAL_READ(6);
 
         ITU_T_BIND_PER(*semaphoreName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(namedToken_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_NUM_CONSTRS(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(abortOnTimeOut_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(relinquishIfConnectionLost_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(namedToken_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRS(controlTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(abortOnTimeOut_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(relinquishIfConnectionLost_);
     }
 
     // sequence Input-Request
 
     template<> void Input_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(echo_) + ITU_T_EXISTS_BMP(listOfPromptData_) + ITU_T_EXISTS_BMP(inputTimeOut_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(echo_) +
+                ITU_T_EXISTS_BMP(listOfPromptData_) +
+                ITU_T_EXISTS_BMP(inputTimeOut_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*operatorStationName_);
         ITU_T_BIND_PER(echo_);
@@ -7994,12 +8043,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Input_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_PER(*operatorStationName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(echo_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(listOfPromptData_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(inputTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(echo_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(listOfPromptData_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(inputTimeOut_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // sequence Output-Request
@@ -8018,9 +8067,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void TriggerEvent_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(priority_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(priority_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
@@ -8028,19 +8077,22 @@ namespace ISO_9506_MMS_1 {
 
     template<> void TriggerEvent_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
     }
 
     // sequence EventNotification
 
     template<> void EventNotification::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(currentState_) + ITU_T_EXISTS_BMP(notificationLost_) + ITU_T_EXISTS_BMP(alarmAcknowledgmentRule_) + ITU_T_EXISTS_BMP(actionResult_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(currentState_) +
+                ITU_T_EXISTS_BMP(notificationLost_) +
+                ITU_T_EXISTS_BMP(alarmAcknowledgmentRule_) +
+                ITU_T_EXISTS_BMP(actionResult_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
@@ -8054,16 +8106,16 @@ namespace ISO_9506_MMS_1 {
 
     template<> void EventNotification::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(4);
+        ITU_T_OPTIONAL_READ(4);
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_PER(*transitionTime_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(notificationLost_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(actionResult_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(notificationLost_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(actionResult_);
     }
 
     // sequence actionResult
@@ -8125,9 +8177,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(cs_Response_Detail_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(cs_Response_Detail_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*confirmedServiceResponse_);
         ITU_T_BIND_PER(cs_Response_Detail_);
@@ -8135,19 +8187,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Success_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*confirmedServiceResponse_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(cs_Response_Detail_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(cs_Response_Detail_);
     }
 
     // sequence failure
 
     template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(modifierPosition_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(modifierPosition_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*serviceError_);
@@ -8155,9 +8207,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void EventNotification::ActionResult_type::SuccessOrFailure_type::Failure_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(modifierPosition_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*serviceError_);
     }
 
@@ -8233,9 +8285,13 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAlarmSummary_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(enrollmentsOnly_) + ITU_T_EXISTS_BMP(activeAlarmsOnly_) + ITU_T_EXISTS_BMP(acknowledgementFilter_) + ITU_T_EXISTS_BMP(severityFilter_) + ITU_T_EXISTS_BMP(continueAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(enrollmentsOnly_) +
+                ITU_T_EXISTS_BMP(activeAlarmsOnly_) +
+                ITU_T_EXISTS_BMP(acknowledgementFilter_) +
+                ITU_T_EXISTS_BMP(severityFilter_) +
+                ITU_T_EXISTS_BMP(continueAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(enrollmentsOnly_);
         ITU_T_BIND_PER(activeAlarmsOnly_);
@@ -8246,13 +8302,13 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAlarmSummary_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(5);
+        ITU_T_OPTIONAL_READ(5);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(enrollmentsOnly_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(activeAlarmsOnly_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(severityFilter_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(continueAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enrollmentsOnly_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(activeAlarmsOnly_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(severityFilter_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(continueAfter_);
     }
 
     // sequence severityFilter
@@ -8271,9 +8327,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAlarmSummary_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfAlarmSummary_);
         ITU_T_BIND_PER(moreFollows_);
@@ -8281,19 +8337,21 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAlarmSummary_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfAlarmSummary_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence AlarmSummary
 
     template<> void AlarmSummary::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(displayEnhancement_) + ITU_T_EXISTS_BMP(timeOfLastTransitionToActive_) + ITU_T_EXISTS_BMP(timeOfLastTransitionToIdle_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(displayEnhancement_) +
+                ITU_T_EXISTS_BMP(timeOfLastTransitionToActive_) +
+                ITU_T_EXISTS_BMP(timeOfLastTransitionToIdle_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
@@ -8306,15 +8364,15 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AlarmSummary::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_NUM_CONSTRS(*unacknowledgedState_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(*(*displayEnhancement_));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(*(*displayEnhancement_));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
     }
 
     // choice EN-Additional-Detail
@@ -8375,9 +8433,13 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAlarmEnrollmentSummary_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(enrollmentsOnly_) + ITU_T_EXISTS_BMP(activeAlarmsOnly_) + ITU_T_EXISTS_BMP(acknowledgementFilter_) + ITU_T_EXISTS_BMP(severityFilter_) + ITU_T_EXISTS_BMP(continueAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(enrollmentsOnly_) +
+                ITU_T_EXISTS_BMP(activeAlarmsOnly_) +
+                ITU_T_EXISTS_BMP(acknowledgementFilter_) +
+                ITU_T_EXISTS_BMP(severityFilter_) +
+                ITU_T_EXISTS_BMP(continueAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(enrollmentsOnly_);
         ITU_T_BIND_PER(activeAlarmsOnly_);
@@ -8388,13 +8450,13 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAlarmEnrollmentSummary_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(5);
+        ITU_T_OPTIONAL_READ(5);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(enrollmentsOnly_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(activeAlarmsOnly_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(severityFilter_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(continueAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enrollmentsOnly_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(activeAlarmsOnly_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(acknowledgementFilter_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(severityFilter_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(continueAfter_);
     }
 
     // sequence severityFilter
@@ -8413,9 +8475,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAlarmEnrollmentSummary_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfAlarmEnrollmentSummary_);
         ITU_T_BIND_PER(moreFollows_);
@@ -8423,19 +8485,26 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetAlarmEnrollmentSummary_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfAlarmEnrollmentSummary_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence AlarmEnrollmentSummary
 
     template<> void AlarmEnrollmentSummary::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(clientApplication_) + ITU_T_EXISTS_BMP(displayEnhancement_) + ITU_T_EXISTS_BMP(notificationLost_) + ITU_T_EXISTS_BMP(enrollmentState_) + ITU_T_EXISTS_BMP(timeOfLastTransitionToActive_) + ITU_T_EXISTS_BMP(timeActiveAcknowledged_) + ITU_T_EXISTS_BMP(timeOfLastTransitionToIdle_) + ITU_T_EXISTS_BMP(timeIdleAcknowledged_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(clientApplication_) +
+                ITU_T_EXISTS_BMP(displayEnhancement_) +
+                ITU_T_EXISTS_BMP(notificationLost_) +
+                ITU_T_EXISTS_BMP(enrollmentState_) +
+                ITU_T_EXISTS_BMP(timeOfLastTransitionToActive_) +
+                ITU_T_EXISTS_BMP(timeActiveAcknowledged_) +
+                ITU_T_EXISTS_BMP(timeOfLastTransitionToIdle_) +
+                ITU_T_EXISTS_BMP(timeIdleAcknowledged_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(clientApplication_);
@@ -8453,29 +8522,29 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AlarmEnrollmentSummary::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(8);
+        ITU_T_OPTIONAL_READ(8);
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(clientApplication_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(clientApplication_);
         ITU_T_BIND_NUM_CONSTRS(*severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(*(*displayEnhancement_));
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(notificationLost_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(*(*displayEnhancement_));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(notificationLost_);
         ITU_T_BIND_NUM_CONSTRS(*alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(enrollmentState_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(timeActiveAcknowledged_);
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
-        ITU_T_OPTIONAL_CHECK_PER(7) ITU_T_BIND_PER(timeIdleAcknowledged_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(enrollmentState_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(timeActiveAcknowledged_);
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
+        ITU_T_OPTIONAL_CHECK(7) ITU_T_BIND_PER(timeIdleAcknowledged_);
     }
 
     // sequence AttachToEventCondition
 
     template<> void AttachToEventCondition::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(acceptableDelay_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(acceptableDelay_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
@@ -8485,21 +8554,25 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AttachToEventCondition::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*causingTransitions_, 7);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(acceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // sequence DefineEventCondition-Request
 
     template<> void DefineEventCondition_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(priority_) + ITU_T_EXISTS_BMP(severity_) + ITU_T_EXISTS_BMP(alarmSummaryReports_) + ITU_T_EXISTS_BMP(monitoredVariable_) + ITU_T_EXISTS_BMP(evaluationInterval_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(priority_) +
+                ITU_T_EXISTS_BMP(severity_) +
+                ITU_T_EXISTS_BMP(alarmSummaryReports_) +
+                ITU_T_EXISTS_BMP(monitoredVariable_) +
+                ITU_T_EXISTS_BMP(evaluationInterval_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
@@ -8512,15 +8585,15 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineEventCondition_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(5);
+        ITU_T_OPTIONAL_READ(5);
 
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRS(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(alarmSummaryReports_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(monitoredVariable_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(alarmSummaryReports_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(monitoredVariable_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // choice CS-DefineEventCondition-Request
@@ -8646,9 +8719,15 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetEventConditionAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(mmsDeletable_) + ITU_T_EXISTS_BMP(priority_) + ITU_T_EXISTS_BMP(severity_) + ITU_T_EXISTS_BMP(alarmSummaryReports_) + ITU_T_EXISTS_BMP(monitoredVariable_) + ITU_T_EXISTS_BMP(evaluationInterval_) + ITU_T_EXISTS_BMP(accessControlList_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(mmsDeletable_) +
+                ITU_T_EXISTS_BMP(priority_) +
+                ITU_T_EXISTS_BMP(severity_) +
+                ITU_T_EXISTS_BMP(alarmSummaryReports_) +
+                ITU_T_EXISTS_BMP(monitoredVariable_) +
+                ITU_T_EXISTS_BMP(evaluationInterval_) +
+                ITU_T_EXISTS_BMP(accessControlList_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(mmsDeletable_);
         ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
@@ -8662,16 +8741,16 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetEventConditionAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(7);
+        ITU_T_OPTIONAL_READ(7);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(mmsDeletable_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(mmsDeletable_);
         ITU_T_BIND_NUM_CONSTRS(*classV_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_NUM_CONSTRS(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(alarmSummaryReports_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(monitoredVariable_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(6) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_NUM_CONSTRS(severity_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(alarmSummaryReports_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(monitoredVariable_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(accessControlList_);
     }
 
     // choice monitoredVariable
@@ -8721,9 +8800,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CS_GetEventConditionAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(groupPriorityOverride_) + ITU_T_EXISTS_BMP(listOfReferencingECL_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(groupPriorityOverride_) +
+                ITU_T_EXISTS_BMP(listOfReferencingECL_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(groupPriorityOverride_);
         ITU_T_BIND_PER(listOfReferencingECL_);
@@ -8732,10 +8812,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CS_GetEventConditionAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(groupPriorityOverride_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(listOfReferencingECL_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(groupPriorityOverride_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(listOfReferencingECL_);
         ITU_T_BIND_PER(*displayEnhancement_);
     }
 
@@ -8840,9 +8920,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportEventConditionStatus_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(enabled_) + ITU_T_EXISTS_BMP(timeOfLastTransitionToActive_) + ITU_T_EXISTS_BMP(timeOfLastTransitionToIdle_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(enabled_) +
+                ITU_T_EXISTS_BMP(timeOfLastTransitionToActive_) +
+                ITU_T_EXISTS_BMP(timeOfLastTransitionToIdle_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_NUM_CONSTRS(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
@@ -8853,22 +8935,25 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportEventConditionStatus_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_NUM_CONSTRS(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(enabled_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enabled_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
     }
 
     // sequence AlterEventConditionMonitoring-Request
 
     template<> void AlterEventConditionMonitoring_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(enabled_) + ITU_T_EXISTS_BMP(priority_) + ITU_T_EXISTS_BMP(alarmSummaryReports_) + ITU_T_EXISTS_BMP(evaluationInterval_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(enabled_) +
+                ITU_T_EXISTS_BMP(priority_) +
+                ITU_T_EXISTS_BMP(alarmSummaryReports_) +
+                ITU_T_EXISTS_BMP(evaluationInterval_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_PER(enabled_);
@@ -8879,31 +8964,31 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AlterEventConditionMonitoring_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(4);
+        ITU_T_OPTIONAL_READ(4);
 
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(enabled_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(alarmSummaryReports_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enabled_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(priority_, static_cast<uint8_t> (0), static_cast<uint8_t> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(alarmSummaryReports_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRS(evaluationInterval_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
     }
 
     // sequence CS-AlterEventConditionMonitoring-Request
 
     template<> void CS_AlterEventConditionMonitoring_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(changeDisplay_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(changeDisplay_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(changeDisplay_);
     }
 
     template<> void CS_AlterEventConditionMonitoring_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(changeDisplay_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(changeDisplay_);
     }
 
     // choice changeDisplay
@@ -8964,9 +9049,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineEventAction_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(listOfModifier_) + ITU_T_EXISTS_BMP(cs_extension_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(listOfModifier_) +
+                ITU_T_EXISTS_BMP(cs_extension_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventActionName_);
         ITU_T_BIND_PER(listOfModifier_);
@@ -8976,12 +9062,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineEventAction_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*eventActionName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(listOfModifier_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(listOfModifier_);
         ITU_T_BIND_PER(*confirmedServiceRequest_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(cs_extension_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(cs_extension_);
     }
 
     // choice DeleteEventAction-Request
@@ -9053,9 +9139,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetEventActionAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(mmsDeletable_) + ITU_T_EXISTS_BMP(cs_extension_) + ITU_T_EXISTS_BMP(accessControlList_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(mmsDeletable_) +
+                ITU_T_EXISTS_BMP(cs_extension_) +
+                ITU_T_EXISTS_BMP(accessControlList_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(mmsDeletable_);
         ITU_T_BIND_PER(*listOfModifier_);
@@ -9066,22 +9154,23 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetEventActionAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(mmsDeletable_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(mmsDeletable_);
         ITU_T_BIND_PER(*listOfModifier_);
         ITU_T_BIND_PER(*confirmedServiceRequest_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(cs_extension_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(cs_extension_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(accessControlList_);
     }
 
     // sequence DefineEventEnrollment-Request
 
     template<> void DefineEventEnrollment_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(eventActionName_) + ITU_T_EXISTS_BMP(clientApplication_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(eventActionName_) +
+                ITU_T_EXISTS_BMP(clientApplication_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
@@ -9093,14 +9182,14 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineEventEnrollment_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*eventConditionTransitions_, 7);
         ITU_T_BIND_NUM_CONSTRS(*alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(eventActionName_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(clientApplication_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(eventActionName_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(clientApplication_);
     }
 
     // choice CS-DefineEventEnrollment-Request
@@ -9215,9 +9304,14 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetEventEnrollmentAttributes_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(scopeOfRequest_) + ITU_T_EXISTS_BMP(eventEnrollmentNames_) + ITU_T_EXISTS_BMP(clientApplication_) + ITU_T_EXISTS_BMP(eventConditionName_) + ITU_T_EXISTS_BMP(eventActionName_) + ITU_T_EXISTS_BMP(continueAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(scopeOfRequest_) +
+                ITU_T_EXISTS_BMP(eventEnrollmentNames_) +
+                ITU_T_EXISTS_BMP(clientApplication_) +
+                ITU_T_EXISTS_BMP(eventConditionName_) +
+                ITU_T_EXISTS_BMP(eventActionName_) +
+                ITU_T_EXISTS_BMP(continueAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(scopeOfRequest_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(eventEnrollmentNames_);
@@ -9229,23 +9323,23 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetEventEnrollmentAttributes_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(6);
+        ITU_T_OPTIONAL_READ(6);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_NUM_CONSTRS(scopeOfRequest_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(eventEnrollmentNames_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(clientApplication_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(eventConditionName_);
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_PER(eventActionName_);
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_PER(continueAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_NUM_CONSTRS(scopeOfRequest_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(eventEnrollmentNames_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(clientApplication_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(eventConditionName_);
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(eventActionName_);
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(continueAfter_);
     }
 
     // sequence GetEventEnrollmentAttributes-Response
 
     template<> void GetEventEnrollmentAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfEEAttributes_);
         ITU_T_BIND_PER(moreFollows_);
@@ -9253,19 +9347,24 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetEventEnrollmentAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfEEAttributes_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence EEAttributes
 
     template<> void EEAttributes::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(eventActionName_) + ITU_T_EXISTS_BMP(clientApplication_) + ITU_T_EXISTS_BMP(mmsDeletable_) + ITU_T_EXISTS_BMP(duration_) + ITU_T_EXISTS_BMP(invokeID_) + ITU_T_EXISTS_BMP(remainingAcceptableDelay_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(eventActionName_) +
+                ITU_T_EXISTS_BMP(clientApplication_) +
+                ITU_T_EXISTS_BMP(mmsDeletable_) +
+                ITU_T_EXISTS_BMP(duration_) +
+                ITU_T_EXISTS_BMP(invokeID_) +
+                ITU_T_EXISTS_BMP(remainingAcceptableDelay_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
@@ -9281,17 +9380,17 @@ namespace ISO_9506_MMS_1 {
 
     template<> void EEAttributes::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(6);
+        ITU_T_OPTIONAL_READ(6);
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_PER(*eventConditionName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(eventActionName_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(clientApplication_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(mmsDeletable_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(eventActionName_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(clientApplication_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(mmsDeletable_);
         ITU_T_BIND_NUM_CONSTRS(*enrollmentClass_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_NUM_CONSTRS(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK_PER(4) ITU_T_BIND_NUM_CONSTRS(invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(5) ITU_T_BIND_NUM_CONSTRS(remainingAcceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_NUM_CONSTRS(duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+        ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_NUM_CONSTRS(invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
+        ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_NUM_CONSTRS(remainingAcceptableDelay_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*displayEnhancement_);
     }
 
@@ -9439,9 +9538,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportEventEnrollmentStatus_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(notificationLost_) + ITU_T_EXISTS_BMP(alarmAcknowledgmentRule_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(notificationLost_) +
+                ITU_T_EXISTS_BMP(alarmAcknowledgmentRule_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_SIZE_SNGLCONSTRS(*eventConditionTransitions_, 7);
         ITU_T_BIND_PER(notificationLost_);
@@ -9452,12 +9552,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportEventEnrollmentStatus_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_SIZE_SNGLCONSTRS(*eventConditionTransitions_, 7);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(notificationLost_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(notificationLost_);
         ITU_T_BIND_NUM_CONSTRS(*duration_, static_cast<uint8_t> (0), static_cast<uint8_t> (1));
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
         ITU_T_BIND_PER(*currentState_);
     }
 
@@ -9465,9 +9565,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AlterEventEnrollment_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(eventConditionTransitions_) + ITU_T_EXISTS_BMP(alarmAcknowledgmentRule_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(eventConditionTransitions_) +
+                ITU_T_EXISTS_BMP(alarmAcknowledgmentRule_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
         ITU_T_BIND_SIZE_SNGLCONSTRS(eventConditionTransitions_, 7);
@@ -9476,11 +9577,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AlterEventEnrollment_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
         ITU_T_BIND_PER(*eventEnrollmentName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_SIZE_SNGLCONSTRS(eventConditionTransitions_, 7);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_SNGLCONSTRS(eventConditionTransitions_, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_NUM_CONSTRS(alarmAcknowledgmentRule_, static_cast<uint8_t> (0), static_cast<uint8_t> (3));
     }
 
     // sequence AlterEventEnrollment-Response
@@ -9542,18 +9643,18 @@ namespace ISO_9506_MMS_1 {
 
     template<> void CS_AlterEventEnrollment_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(changeDisplay_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(changeDisplay_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(changeDisplay_);
     }
 
     template<> void CS_AlterEventEnrollment_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(changeDisplay_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(changeDisplay_);
     }
 
     // choice changeDisplay
@@ -9614,9 +9715,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineEventConditionList_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(listOfEventConditionListName_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(listOfEventConditionListName_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionListName_);
         ITU_T_BIND_PER(*listOfEventConditionName_);
@@ -9625,20 +9726,20 @@ namespace ISO_9506_MMS_1 {
 
     template<> void DefineEventConditionList_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*eventConditionListName_);
         ITU_T_BIND_PER(*listOfEventConditionName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(listOfEventConditionListName_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(listOfEventConditionListName_);
     }
 
     // sequence AddEventConditionListReference-Request
 
     template<> void AddEventConditionListReference_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(listOfEventConditionListName_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(listOfEventConditionListName_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionListName_);
         ITU_T_BIND_PER(*listOfEventConditionName_);
@@ -9647,11 +9748,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AddEventConditionListReference_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*eventConditionListName_);
         ITU_T_BIND_PER(*listOfEventConditionName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(listOfEventConditionListName_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(listOfEventConditionListName_);
     }
 
     // sequence RemoveEventConditionListReference-Request
@@ -9715,9 +9816,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetEventConditionListAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(listOfEventConditionListName_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(listOfEventConditionListName_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfEventConditionName_);
         ITU_T_BIND_PER(listOfEventConditionListName_);
@@ -9725,19 +9826,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void GetEventConditionListAttributes_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfEventConditionName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(listOfEventConditionListName_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(listOfEventConditionListName_);
     }
 
     // sequence ReportEventConditionListStatus-Request
 
     template<> void ReportEventConditionListStatus_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(continueAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(continueAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionListName_);
         ITU_T_BIND_PER(continueAfter_);
@@ -9745,19 +9846,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportEventConditionListStatus_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*eventConditionListName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(continueAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(continueAfter_);
     }
 
     // sequence ReportEventConditionListStatus-Response
 
     template<> void ReportEventConditionListStatus_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfEventConditionStatus_);
         ITU_T_BIND_PER(moreFollows_);
@@ -9765,19 +9866,21 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportEventConditionListStatus_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfEventConditionStatus_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence EventConditionStatus
 
     template<> void EventConditionStatus::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(enabled_) + ITU_T_EXISTS_BMP(timeOfLastTransitionToActive_) + ITU_T_EXISTS_BMP(timeOfLastTransitionToIdle_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(enabled_) +
+                ITU_T_EXISTS_BMP(timeOfLastTransitionToActive_) +
+                ITU_T_EXISTS_BMP(timeOfLastTransitionToIdle_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
@@ -9789,23 +9892,23 @@ namespace ISO_9506_MMS_1 {
 
     template<> void EventConditionStatus::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(3);
+        ITU_T_OPTIONAL_READ(3);
 
         ITU_T_BIND_PER(*eventConditionName_);
         ITU_T_BIND_NUM_CONSTRS(*currentState_, static_cast<uint8_t> (0), static_cast<uint8_t> (2));
         ITU_T_BIND_NUM_CONSTRS(*numberOfEventEnrollments_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(enabled_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(enabled_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(timeOfLastTransitionToActive_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(timeOfLastTransitionToIdle_);
     }
 
     // sequence AlterEventConditionListMonitoring-Request
 
     template<> void AlterEventConditionListMonitoring_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(priorityChange_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(priorityChange_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*eventConditionListName_);
         ITU_T_BIND_PER(*enabled_);
@@ -9814,11 +9917,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void AlterEventConditionListMonitoring_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*eventConditionListName_);
         ITU_T_BIND_PER(*enabled_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(priorityChange_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(priorityChange_);
     }
 
     // choice priorityChange
@@ -9868,9 +9971,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReadJournal_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(rangeStartSpecification_) + ITU_T_EXISTS_BMP(rangeStopSpecification_) + ITU_T_EXISTS_BMP(listOfVariables_) + ITU_T_EXISTS_BMP(entryToStartAfter_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(rangeStartSpecification_) +
+                ITU_T_EXISTS_BMP(rangeStopSpecification_) +
+                ITU_T_EXISTS_BMP(listOfVariables_) +
+                ITU_T_EXISTS_BMP(entryToStartAfter_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*journalName_);
         ITU_T_BIND_PER(rangeStartSpecification_);
@@ -9881,13 +9987,13 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReadJournal_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(4);
+        ITU_T_OPTIONAL_READ(4);
 
         ITU_T_BIND_PER(*journalName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(rangeStartSpecification_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(rangeStopSpecification_);
-        ITU_T_OPTIONAL_CHECK_PER(2) ITU_T_BIND_PER(listOfVariables_);
-        ITU_T_OPTIONAL_CHECK_PER(3) ITU_T_BIND_PER(entryToStartAfter_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(rangeStartSpecification_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(rangeStopSpecification_);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(listOfVariables_);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(entryToStartAfter_);
     }
 
     // choice rangeStartSpecification
@@ -9992,9 +10098,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReadJournal_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(moreFollows_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*listOfJournalEntry_);
         ITU_T_BIND_PER(moreFollows_);
@@ -10002,10 +10108,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReadJournal_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*listOfJournalEntry_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(moreFollows_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(moreFollows_);
     }
 
     // sequence JournalEntry
@@ -10038,9 +10144,9 @@ namespace ISO_9506_MMS_1 {
 
     template<> void InitializeJournal_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(limitSpecification_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(limitSpecification_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(*journalName_);
         ITU_T_BIND_PER(limitSpecification_);
@@ -10048,19 +10154,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void InitializeJournal_Request::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_PER(*journalName_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(limitSpecification_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(limitSpecification_);
     }
 
     // sequence limitSpecification
 
     template<> void InitializeJournal_Request::LimitSpecification_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(limitingEntry_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(limitingEntry_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_SIZE_CONSTRS(*limitingTime_, 4, 6);
         ITU_T_BIND_PER(limitingEntry_);
@@ -10068,19 +10174,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void InitializeJournal_Request::LimitSpecification_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_SIZE_CONSTRS(*limitingTime_, 4, 6);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(limitingEntry_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(limitingEntry_);
     }
 
     // sequence ReportJournalStatus-Response
 
     template<> void ReportJournalStatus_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(accessControlList_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(accessControlList_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_NUM_CONSTRS(*currentEntries_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*mmsDeletable_);
@@ -10089,11 +10195,11 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ReportJournalStatus_Response::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(1);
+        ITU_T_OPTIONAL_READ(1);
 
         ITU_T_BIND_NUM_CONSTRS(*currentEntries_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*mmsDeletable_);
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(accessControlList_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(accessControlList_);
     }
 
     // sequence CreateJournal-Request
@@ -10175,9 +10281,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void EntryContent::EntryForm_type::Data_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(event_) + ITU_T_EXISTS_BMP(listOfVariables_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(event_) +
+                ITU_T_EXISTS_BMP(listOfVariables_);
 
-        ITU_T_OPTIONAL_SET_PER;
+        ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(event_);
         ITU_T_BIND_PER(listOfVariables_);
@@ -10185,10 +10292,10 @@ namespace ISO_9506_MMS_1 {
 
     template<> void EntryContent::EntryForm_type::Data_type::serialize(boost::asn1::x691::input_coder& arch) {
 
-        ITU_T_OPTIONAL_GET_PER(2);
+        ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(event_);
-        ITU_T_OPTIONAL_CHECK_PER(1) ITU_T_BIND_PER(listOfVariables_);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(event_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(listOfVariables_);
     }
 
     // sequence event

@@ -253,7 +253,7 @@ namespace ISO_9506_MMS_1 {
     typedef null_type AlterEventConditionMonitoring_Response;
     typedef null_type DefineEventAction_Response;
     typedef null_type DefineEventEnrollment_Response;
-    typedef int EE_State;
+    typedef integer_type EE_State;
     typedef null_type DefineEventConditionList_Response;
     typedef null_type DeleteEventConditionList_Response;
     typedef null_type AddEventConditionListReference_Response;
@@ -320,7 +320,7 @@ namespace ISO_9506_MMS_1 {
     typedef std::vector< AlternateAccess_sequence_of > AlternateAccess;
     typedef std::vector< Write_Response_sequence_of > Write_Response;
 
-    const int maxIdentifier = 32;
+    const integer_type maxIdentifier = 32;
 
 
 }
@@ -1211,7 +1211,7 @@ namespace ISO_9506_MMS_1 {
             ITU_T_CHOICES_DECL(conclude, uint8_t, ErrorClass_type_conclude); // primitive  //   Ic(  [ 0  ...   1 ]   
             ITU_T_CHOICES_DECL(cancel, uint8_t, ErrorClass_type_cancel); // primitive  //   Ic(  [ 0  ...   2 ]   
             ITU_T_CHOICES_DECL(file, uint8_t, ErrorClass_type_file); // primitive  //   Ic(  [ 0  ...   9 ]   
-            ITU_T_CHOICES_DECL(others, int, ErrorClass_type_others); // primitive
+            ITU_T_CHOICES_DECL(others, integer_type, ErrorClass_type_others); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -1260,12 +1260,12 @@ namespace ISO_9506_MMS_1 {
         ServiceError(const ErrorClass_type& arg__errorClass);
 
         ServiceError(shared_ptr< ErrorClass_type> arg__errorClass,
-                shared_ptr< int> arg__additionalCode,
+                shared_ptr< integer_type> arg__additionalCode,
                 shared_ptr< visiblestring_type> arg__additionalDescription,
                 shared_ptr< ServiceSpecificInfo_type> arg__serviceSpecificInfo);
 
         ITU_T_HOLDERH_DECL(errorClass, ErrorClass_type);
-        ITU_T_OPTIONAL_DECL(additionalCode, int);
+        ITU_T_OPTIONAL_DECL(additionalCode, integer_type);
         ITU_T_OPTIONAL_DECL(additionalDescription, visiblestring_type);
         ITU_T_OPTIONAL_DECL(serviceSpecificInfo, ServiceSpecificInfo_type);
 
@@ -1554,9 +1554,9 @@ namespace ISO_9506_MMS_1 {
             static const uint8_t unconfirmedPDU_max_recursion_exceeded;
             static const uint8_t unconfirmedPDU_value_out_of_range;
 
-            static const int pdu_error_unknown_pdu_type;
-            static const int pdu_error_invalid_pdu;
-            static const int pdu_error_illegal_acse_mapping;
+            static const integer_type pdu_error_unknown_pdu_type;
+            static const integer_type pdu_error_invalid_pdu;
+            static const integer_type pdu_error_illegal_acse_mapping;
 
             static const uint8_t cancel_requestPDU_other;
             static const uint8_t cancel_requestPDU_invalid_invokeID;
@@ -1586,7 +1586,7 @@ namespace ISO_9506_MMS_1 {
             ITU_T_CHOICES_DECL(confirmed_responsePDU, uint8_t, RejectReason_type_confirmed_responsePDU); // primitive  //   Ic(  [ 0  ...   6 ]   
             ITU_T_CHOICES_DECL(confirmed_errorPDU, uint8_t, RejectReason_type_confirmed_errorPDU); // primitive  //   Ic(  [ 0  ...   4 ]   
             ITU_T_CHOICES_DECL(unconfirmedPDU, uint8_t, RejectReason_type_unconfirmedPDU); // primitive  //   Ic(  [ 0  ...   4 ]   
-            ITU_T_CHOICES_DECL(pdu_error, int, RejectReason_type_pdu_error); // primitive
+            ITU_T_CHOICES_DECL(pdu_error, integer_type, RejectReason_type_pdu_error); // primitive
             ITU_T_CHOICES_DECL(cancel_requestPDU, uint8_t, RejectReason_type_cancel_requestPDU); // primitive  //   Ic(  [ 0  ...   1 ]   
             ITU_T_CHOICES_DECL(cancel_responsePDU, uint8_t, RejectReason_type_cancel_responsePDU); // primitive  //   Ic(  [ 0  ...   1 ]   
             ITU_T_CHOICES_DECL(cancel_errorPDU, uint8_t, RejectReason_type_cancel_errorPDU); // primitive  //   Ic(  [ 0  ...   3 ]   
@@ -1725,10 +1725,10 @@ namespace ISO_9506_MMS_1 {
             References_type_sequence_of();
 
             References_type_sequence_of(const ObjectClass& arg__objectClass,
-                    const int& arg__objectCount);
+                    const integer_type& arg__objectCount);
 
             ITU_T_HOLDERH_DECL(objectClass, ObjectClass);
-            ITU_T_HOLDERH_DECL(objectCount, int);
+            ITU_T_HOLDERH_DECL(objectCount, integer_type);
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -2509,8 +2509,8 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_CTORS(StartCount);
 
         ITU_T_CHOICES_DECL(noLimit, null_type, StartCount_noLimit); // primitive
-        ITU_T_CHOICES_DECL(cycleCount, int, StartCount_cycleCount); // primitive
-        ITU_T_CHOICES_DECL(stepCount, int, StartCount_stepCount); // primitive
+        ITU_T_CHOICES_DECL(cycleCount, integer_type, StartCount_cycleCount); // primitive
+        ITU_T_CHOICES_DECL(stepCount, integer_type, StartCount_stepCount); // primitive
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -2746,8 +2746,8 @@ namespace ISO_9506_MMS_1 {
                     ITU_T_CHOICE_CTORS(RunningMode_type);
 
                     ITU_T_CHOICES_DECL(freeRunning, null_type, RunningMode_type_freeRunning); // primitive
-                    ITU_T_CHOICES_DECL(cycleLimited, int, RunningMode_type_cycleLimited); // primitive
-                    ITU_T_CHOICES_DECL(stepLimited, int, RunningMode_type_stepLimited); // primitive
+                    ITU_T_CHOICES_DECL(cycleLimited, integer_type, RunningMode_type_cycleLimited); // primitive
+                    ITU_T_CHOICES_DECL(stepLimited, integer_type, RunningMode_type_stepLimited); // primitive
 
                     ITU_T_ARCHIVE_FUNC;
                 };
@@ -2804,10 +2804,10 @@ namespace ISO_9506_MMS_1 {
 
         CS_GetProgramInvocationAttributes_Response();
 
-        CS_GetProgramInvocationAttributes_Response(const int& arg__errorCode,
+        CS_GetProgramInvocationAttributes_Response(const integer_type& arg__errorCode,
                 const Control_type& arg__control);
 
-        ITU_T_HOLDERH_DECL(errorCode, int);
+        ITU_T_HOLDERH_DECL(errorCode, integer_type);
         ITU_T_HOLDERH_DECL(control, Control_type);
 
         ITU_T_ARCHIVE_FUNC;
@@ -3028,7 +3028,7 @@ namespace ISO_9506_MMS_1 {
             ITU_T_CHOICE_CTORS(ContinueAfter_type);
 
             ITU_T_CHOICES_DECL(domain, Identifier, ContinueAfter_type_domain); // primitive
-            ITU_T_CHOICES_DECL(ulsmID, int, ContinueAfter_type_ulsmID); // primitive
+            ITU_T_CHOICES_DECL(ulsmID, integer_type, ContinueAfter_type_ulsmID); // primitive
             ITU_T_CHOICES_DECL(programInvocation, Identifier, ContinueAfter_type_programInvocation); // primitive
 
             ITU_T_ARCHIVE_FUNC;
@@ -3068,7 +3068,7 @@ namespace ISO_9506_MMS_1 {
             ITU_T_CHOICE_CTORS(NextElement_type);
 
             ITU_T_CHOICES_DECL(domain, Identifier, NextElement_type_domain); // primitive
-            ITU_T_CHOICES_DECL(ulsmID, int, NextElement_type_ulsmID); // primitive
+            ITU_T_CHOICES_DECL(ulsmID, integer_type, NextElement_type_ulsmID); // primitive
             ITU_T_CHOICES_DECL(programInvocation, Identifier, NextElement_type_programInvocation); // primitive
 
             ITU_T_ARCHIVE_FUNC;
@@ -3552,14 +3552,14 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICEC_DECL(structure, Structure_type, Data_structure);
         ITU_T_CHOICES_DECL(boolean, bool, Data_boolean); // primitive
         ITU_T_CHOICES_DECL(bit_string, bitstring_type, Data_bit_string); // primitive
-        ITU_T_CHOICES_DECL(integer, int, Data_integer); // primitive
-        ITU_T_CHOICES_DECL(unsignedV, int, Data_unsignedV); // primitive
+        ITU_T_CHOICES_DECL(integer, integer_type, Data_integer); // primitive
+        ITU_T_CHOICES_DECL(unsignedV, integer_type, Data_unsignedV); // primitive
         ITU_T_CHOICES_DECL(floating_point, FloatingPoint, Data_floating_point); // primitive
         ITU_T_CHOICES_DECL(octet_string, octetstring_type, Data_octet_string); // primitive
         ITU_T_CHOICES_DECL(visible_string, visiblestring_type, Data_visible_string); // primitive
         ITU_T_CHOICES_DECL(generalized_time, gentime_type, Data_generalized_time); // primitive
         ITU_T_CHOICES_DECL(binary_time, TimeOfDay, Data_binary_time); // primitive  //    Sc (  [ 4  ...   6 ]   
-        ITU_T_CHOICES_DECL(bcd, int, Data_bcd); // primitive
+        ITU_T_CHOICES_DECL(bcd, integer_type, Data_bcd); // primitive
         ITU_T_CHOICES_DECL(booleanArray, bitstring_type, Data_booleanArray); // primitive
         ITU_T_CHOICES_DECL(objId, oid_type, Data_objId); // primitive
         ITU_T_CHOICES_DECL(mMSString, MMSString, Data_mMSString); // primitive
@@ -4594,7 +4594,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_CTORS(CS_EventNotification_impl);
 
         ITU_T_CHOICES_DECL(string, visiblestring_type, CS_EventNotification_impl_string); // primitive
-        ITU_T_CHOICES_DECL(index, int, CS_EventNotification_impl_index); // primitive
+        ITU_T_CHOICES_DECL(index, integer_type, CS_EventNotification_impl_index); // primitive
         ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_EventNotification_impl_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
@@ -4734,7 +4734,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_CTORS(EN_Additional_Detail_impl);
 
         ITU_T_CHOICES_DECL(string, visiblestring_type, EN_Additional_Detail_impl_string); // primitive
-        ITU_T_CHOICES_DECL(index, int, EN_Additional_Detail_impl_index); // primitive
+        ITU_T_CHOICES_DECL(index, integer_type, EN_Additional_Detail_impl_index); // primitive
         ITU_T_CHOICES_DECL(noEnhancement, null_type, EN_Additional_Detail_impl_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
@@ -4917,7 +4917,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_CTORS(CS_DefineEventCondition_Request_impl);
 
         ITU_T_CHOICES_DECL(string, visiblestring_type, CS_DefineEventCondition_Request_impl_string); // primitive
-        ITU_T_CHOICES_DECL(index, int, CS_DefineEventCondition_Request_impl_index); // primitive
+        ITU_T_CHOICES_DECL(index, integer_type, CS_DefineEventCondition_Request_impl_index); // primitive
         ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_DefineEventCondition_Request_impl_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
@@ -5044,7 +5044,7 @@ namespace ISO_9506_MMS_1 {
             ITU_T_CHOICE_CTORS(DisplayEnhancement_type);
 
             ITU_T_CHOICES_DECL(string, visiblestring_type, DisplayEnhancement_type_string); // primitive
-            ITU_T_CHOICES_DECL(index, int, DisplayEnhancement_type_index); // primitive
+            ITU_T_CHOICES_DECL(index, integer_type, DisplayEnhancement_type_index); // primitive
             ITU_T_CHOICES_DECL(noEnhancement, null_type, DisplayEnhancement_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
@@ -5137,7 +5137,7 @@ namespace ISO_9506_MMS_1 {
             ITU_T_CHOICE_CTORS(ChangeDisplay_type);
 
             ITU_T_CHOICES_DECL(string, visiblestring_type, ChangeDisplay_type_string); // primitive
-            ITU_T_CHOICES_DECL(index, int, ChangeDisplay_type_index); // primitive
+            ITU_T_CHOICES_DECL(index, integer_type, ChangeDisplay_type_index); // primitive
             ITU_T_CHOICES_DECL(noEnhancement, null_type, ChangeDisplay_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
@@ -5276,7 +5276,7 @@ namespace ISO_9506_MMS_1 {
         ITU_T_CHOICE_CTORS(CS_DefineEventEnrollment_Request_impl);
 
         ITU_T_CHOICES_DECL(string, visiblestring_type, CS_DefineEventEnrollment_Request_impl_string); // primitive
-        ITU_T_CHOICES_DECL(index, int, CS_DefineEventEnrollment_Request_impl_index); // primitive
+        ITU_T_CHOICES_DECL(index, integer_type, CS_DefineEventEnrollment_Request_impl_index); // primitive
         ITU_T_CHOICES_DECL(noEnhancement, null_type, CS_DefineEventEnrollment_Request_impl_noEnhancement); // primitive
 
         ITU_T_ARCHIVE_FUNC;
@@ -5419,7 +5419,7 @@ namespace ISO_9506_MMS_1 {
             ITU_T_CHOICE_CTORS(DisplayEnhancement_type);
 
             ITU_T_CHOICES_DECL(string, visiblestring_type, DisplayEnhancement_type_string); // primitive
-            ITU_T_CHOICES_DECL(index, int, DisplayEnhancement_type_index); // primitive
+            ITU_T_CHOICES_DECL(index, integer_type, DisplayEnhancement_type_index); // primitive
             ITU_T_CHOICES_DECL(noEnhancement, null_type, DisplayEnhancement_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
@@ -5562,7 +5562,7 @@ namespace ISO_9506_MMS_1 {
             ITU_T_CHOICE_CTORS(ChangeDisplay_type);
 
             ITU_T_CHOICES_DECL(string, visiblestring_type, ChangeDisplay_type_string); // primitive
-            ITU_T_CHOICES_DECL(index, int, ChangeDisplay_type_index); // primitive
+            ITU_T_CHOICES_DECL(index, integer_type, ChangeDisplay_type_index); // primitive
             ITU_T_CHOICES_DECL(noEnhancement, null_type, ChangeDisplay_type_noEnhancement); // primitive
 
             ITU_T_ARCHIVE_FUNC;
@@ -5781,7 +5781,7 @@ namespace ISO_9506_MMS_1 {
 
             ITU_T_CHOICE_CTORS(PriorityChange_type);
 
-            ITU_T_CHOICES_DECL(priorityValue, int, PriorityChange_type_priorityValue); // primitive
+            ITU_T_CHOICES_DECL(priorityValue, integer_type, PriorityChange_type_priorityValue); // primitive
             ITU_T_CHOICES_DECL(priorityReset, null_type, PriorityChange_type_priorityReset); // primitive
 
             ITU_T_ARCHIVE_FUNC;
