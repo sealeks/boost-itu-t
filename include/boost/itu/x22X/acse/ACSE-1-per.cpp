@@ -128,7 +128,24 @@ namespace ACSE_1 {
 
     template<> void AARQ_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(called_AP_title_) + ITU_T_EXISTS_BMP(called_AE_qualifier_) + ITU_T_EXISTS_BMP(called_AP_invocation_identifier_) + ITU_T_EXISTS_BMP(called_AE_invocation_identifier_) + ITU_T_EXISTS_BMP(calling_AP_title_) + ITU_T_EXISTS_BMP(calling_AE_qualifier_) + ITU_T_EXISTS_BMP(calling_AP_invocation_identifier_) + ITU_T_EXISTS_BMP(calling_AE_invocation_identifier_) + ITU_T_EXISTS_BMP(sender_acse_requirements_) + ITU_T_EXISTS_BMP(mechanism_name_) + ITU_T_EXISTS_BMP(calling_authentication_value_) + ITU_T_EXISTS_BMP(aSO_context_name_list_) + ITU_T_EXISTS_BMP(implementation_information_) + ITU_T_EXISTS_BMP(p_context_definition_list_) + ITU_T_EXISTS_BMP(called_asoi_tag_) + ITU_T_EXISTS_BMP(calling_asoi_tag_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(protocol_version_) +
+                ITU_T_EXISTS_BMP(called_AP_title_) +
+                ITU_T_EXISTS_BMP(called_AE_qualifier_) +
+                ITU_T_EXISTS_BMP(called_AP_invocation_identifier_) +
+                ITU_T_EXISTS_BMP(called_AE_invocation_identifier_) +
+                ITU_T_EXISTS_BMP(calling_AP_title_) +
+                ITU_T_EXISTS_BMP(calling_AE_qualifier_) +
+                ITU_T_EXISTS_BMP(calling_AP_invocation_identifier_) +
+                ITU_T_EXISTS_BMP(calling_AE_invocation_identifier_) +
+                ITU_T_EXISTS_BMP(sender_acse_requirements_) +
+                ITU_T_EXISTS_BMP(mechanism_name_) +
+                ITU_T_EXISTS_BMP(calling_authentication_value_) +
+                ITU_T_EXISTS_BMP(aSO_context_name_list_) +
+                ITU_T_EXISTS_BMP(implementation_information_) +
+                ITU_T_EXISTS_BMP(p_context_definition_list_) +
+                ITU_T_EXISTS_BMP(called_asoi_tag_) +
+                ITU_T_EXISTS_BMP(calling_asoi_tag_) +
+                ITU_T_EXISTS_BMP(user_information_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -182,7 +199,20 @@ namespace ACSE_1 {
 
     template<> void AARE_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(protocol_version_) + ITU_T_EXISTS_BMP(responding_AP_title_) + ITU_T_EXISTS_BMP(responding_AE_qualifier_) + ITU_T_EXISTS_BMP(responding_AP_invocation_identifier_) + ITU_T_EXISTS_BMP(responding_AE_invocation_identifier_) + ITU_T_EXISTS_BMP(responder_acse_requirements_) + ITU_T_EXISTS_BMP(mechanism_name_) + ITU_T_EXISTS_BMP(responding_authentication_value_) + ITU_T_EXISTS_BMP(aSO_context_name_list_) + ITU_T_EXISTS_BMP(implementation_information_) + ITU_T_EXISTS_BMP(p_context_result_list_) + ITU_T_EXISTS_BMP(called_asoi_tag_) + ITU_T_EXISTS_BMP(calling_asoi_tag_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(protocol_version_) +
+                ITU_T_EXISTS_BMP(responding_AP_title_) +
+                ITU_T_EXISTS_BMP(responding_AE_qualifier_) +
+                ITU_T_EXISTS_BMP(responding_AP_invocation_identifier_) +
+                ITU_T_EXISTS_BMP(responding_AE_invocation_identifier_) +
+                ITU_T_EXISTS_BMP(responder_acse_requirements_) +
+                ITU_T_EXISTS_BMP(mechanism_name_) +
+                ITU_T_EXISTS_BMP(responding_authentication_value_) +
+                ITU_T_EXISTS_BMP(aSO_context_name_list_) +
+                ITU_T_EXISTS_BMP(implementation_information_) +
+                ITU_T_EXISTS_BMP(p_context_result_list_) +
+                ITU_T_EXISTS_BMP(called_asoi_tag_) +
+                ITU_T_EXISTS_BMP(calling_asoi_tag_) +
+                ITU_T_EXISTS_BMP(user_information_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -232,7 +262,10 @@ namespace ACSE_1 {
 
     template<> void RLRQ_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(reason_) + ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(reason_) +
+                ITU_T_EXISTS_BMP(aso_qualifier_) +
+                ITU_T_EXISTS_BMP(asoi_identifier_) +
+                ITU_T_EXISTS_BMP(user_information_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -256,7 +289,10 @@ namespace ACSE_1 {
 
     template<> void RLRE_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(reason_) + ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(reason_) +
+                ITU_T_EXISTS_BMP(aso_qualifier_) +
+                ITU_T_EXISTS_BMP(asoi_identifier_) +
+                ITU_T_EXISTS_BMP(user_information_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -280,7 +316,10 @@ namespace ACSE_1 {
 
     template<> void ABRT_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(abort_diagnostic_) + ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(abort_diagnostic_) +
+                ITU_T_EXISTS_BMP(aso_qualifier_) +
+                ITU_T_EXISTS_BMP(asoi_identifier_) +
+                ITU_T_EXISTS_BMP(user_information_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -306,7 +345,8 @@ namespace ACSE_1 {
 
     template<> void A_DT_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(aso_qualifier_) +
+                ITU_T_EXISTS_BMP(asoi_identifier_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -328,7 +368,12 @@ namespace ACSE_1 {
 
     template<> void ACRQ_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(aSO_context_name_) + ITU_T_EXISTS_BMP(aSO_context_name_list_) + ITU_T_EXISTS_BMP(p_context_definition_list_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(aso_qualifier_) +
+                ITU_T_EXISTS_BMP(asoi_identifier_) +
+                ITU_T_EXISTS_BMP(aSO_context_name_) +
+                ITU_T_EXISTS_BMP(aSO_context_name_list_) +
+                ITU_T_EXISTS_BMP(p_context_definition_list_) +
+                ITU_T_EXISTS_BMP(user_information_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -356,7 +401,11 @@ namespace ACSE_1 {
 
     template<> void ACRP_apdu_impl::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(aso_qualifier_) + ITU_T_EXISTS_BMP(asoi_identifier_) + ITU_T_EXISTS_BMP(aSO_context_name_) + ITU_T_EXISTS_BMP(p_context_result_list_) + ITU_T_EXISTS_BMP(user_information_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(aso_qualifier_) +
+                ITU_T_EXISTS_BMP(asoi_identifier_) +
+                ITU_T_EXISTS_BMP(aSO_context_name_) +
+                ITU_T_EXISTS_BMP(p_context_result_list_) +
+                ITU_T_EXISTS_BMP(user_information_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -533,7 +582,8 @@ namespace ACSE_1 {
 
     template<> void ASOI_tag_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(qualifier_) + ITU_T_EXISTS_BMP(identifier_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(qualifier_) +
+                ITU_T_EXISTS_BMP(identifier_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -630,7 +680,8 @@ namespace ACSE_1 {
 
     template<> void P_context_result_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(concrete_syntax_name_) + ITU_T_EXISTS_BMP(provider_reason_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(concrete_syntax_name_) +
+                ITU_T_EXISTS_BMP(provider_reason_);
 
         ITU_T_OPTIONAL_WRITE;
 

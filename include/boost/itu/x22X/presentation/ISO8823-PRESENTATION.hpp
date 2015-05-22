@@ -83,7 +83,7 @@ namespace ISO8823_PRESENTATION {
 
 
 
-    // set CP-type
+    // set  CP-type
 
     struct CP_type {
 
@@ -178,7 +178,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    // set CPA-PPDU
+    // set  CPA-PPDU
 
     struct CPA_PPDU {
 
@@ -557,7 +557,7 @@ namespace ISO8823_PRESENTATION {
     const Event_identifier event_identifier_s_activity_end_indication = 31;
     const Event_identifier event_identifier_s_activity_end_confirm = 32;
 
-    // set Mode-selector
+    // set  Mode-selector
 
     struct Mode_selector {
 

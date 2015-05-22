@@ -102,7 +102,10 @@ namespace Reliable_Transfer_APDU {
 
     template<> void RTORQapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(checkpointSize_) + ITU_T_EXISTS_BMP(windowSize_) + ITU_T_EXISTS_BMP(dialogueMode_) + ITU_T_EXISTS_BMP(applicationProtocol_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(checkpointSize_) +
+                ITU_T_EXISTS_BMP(windowSize_) +
+                ITU_T_EXISTS_BMP(dialogueMode_) +
+                ITU_T_EXISTS_BMP(applicationProtocol_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -128,7 +131,8 @@ namespace Reliable_Transfer_APDU {
 
     template<> void RTOACapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(checkpointSize_) + ITU_T_EXISTS_BMP(windowSize_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(checkpointSize_) +
+                ITU_T_EXISTS_BMP(windowSize_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -150,7 +154,8 @@ namespace Reliable_Transfer_APDU {
 
     template<> void RTORJapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(refuseReason_) + ITU_T_EXISTS_BMP(userDataRJ_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(refuseReason_) +
+                ITU_T_EXISTS_BMP(userDataRJ_);
 
         ITU_T_OPTIONAL_WRITE;
 
@@ -170,7 +175,9 @@ namespace Reliable_Transfer_APDU {
 
     template<> void RTABapdu::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(abortReason_) + ITU_T_EXISTS_BMP(reflectedParameter_) + ITU_T_EXISTS_BMP(userdataAB_);
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(abortReason_) +
+                ITU_T_EXISTS_BMP(reflectedParameter_) +
+                ITU_T_EXISTS_BMP(userdataAB_);
 
         ITU_T_OPTIONAL_WRITE;
 

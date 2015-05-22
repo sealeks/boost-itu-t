@@ -2762,7 +2762,7 @@ namespace x680 {
                                 stream << ";\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_GROUP_BOOL(  " << to_string(extnum) << " ) = ";
                             }
                             if (needopr)
-                                stream << " || ";
+                                stream << " || " << "\n" << tabformat(scp, 6);
                             else
                                 needopr = true;
                             stream << " ITU_T_EXISTS_BOOL(" << nameconvert((*it)->name()) << "_)";
@@ -2783,10 +2783,10 @@ namespace x680 {
 
             if (opt_count) {
                 namedtypeassignment_entity_vct optels = struct_optional_element(root);
-                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_DECL_PER = ";
+                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_OPTIONAL_BMP = ";
                 for (namedtypeassignment_entity_vct::iterator it = optels.begin(); it != optels.end(); ++it) {
                     if (it != optels.begin())
-                        stream << " + ";
+                        stream << " + "  << "\n" << tabformat(scp, 6);
                     stream << " ITU_T_EXISTS_BMP(" << nameconvert((*it)->name()) << "_)";
                 }
                 stream << ";\n";
@@ -2794,15 +2794,11 @@ namespace x680 {
                 stream << "\n";
             }
             for (namedtypeassignment_entity_vct::iterator it = root1.begin(); it != root1.end(); ++it) {
-                if ((*it)->type()) {
-                    if (is_named((*it)->marker())) {
-                        //bool is_opt = is_optional_or_default((*it)->marker());
-                        execute_archive_member(*it/*, is_opt, is_opt ?  opt_it : 0*/);
-                        /*if (is_opt)
-                            opt_it++;*/
-                    }
-                }
+                if ((*it)->type())
+                    if (is_named((*it)->marker()))
+                        execute_archive_member(*it);
             }
+            
             ///  Some for extention
 
             if ((!extentions.empty()) && (self->extention_count())) {
@@ -2826,7 +2822,7 @@ namespace x680 {
                                     if (is_first)
                                         is_first = false;
                                     else
-                                        stream << " + ";
+                                        stream << " + "  << "\n" << tabformat(scp,9);
                                     stream << "ITU_T_EXISTS_BMP(" << nameconvert((*it)->name()) << "_)";
                                 }
                             }
@@ -2851,16 +2847,12 @@ namespace x680 {
 
             if (!root2.empty()) {
                 for (namedtypeassignment_entity_vct::iterator it = root2.begin(); it != root2.end(); ++it) {
-                    if ((*it)->type()) {
-                        if (is_named((*it)->marker())) {
-                            //bool is_opt = is_optional_or_default((*it)->marker());
-                            execute_archive_member(*it/*, is_opt, is_opt ? opt_it : 0*/);
-                            /*if (is_opt)
-                                opt_it++;*/
-                        }
-                    }
+                    if ((*it)->type()) 
+                        if (is_named((*it)->marker())) 
+                            execute_archive_member(*it);
                 }
             }
+            
             stream << "\n";
             stream << tabformat(scp, 2) << "}";
             stream << "\n";

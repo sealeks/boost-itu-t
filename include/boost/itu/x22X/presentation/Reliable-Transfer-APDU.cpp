@@ -18,7 +18,7 @@ namespace Reliable_Transfer_APDU {
     ITU_T_CHOICES_DEFN(RTSE_apdus::rttr_apdu, rttr_apdu, RTTRapdu, RTSE_apdus_rttr_apdu);
     ITU_T_CHOICEC_DEFN(RTSE_apdus::rtab_apdu, rtab_apdu, RTABapdu, RTSE_apdus_rtab_apdu);
 
-    // set RTORQapdu
+    // set  RTORQapdu
     const integer_type RTORQapdu::dialogueMode_monologue = 0;
     const integer_type RTORQapdu::dialogueMode_twa = 1;
 
@@ -54,7 +54,7 @@ namespace Reliable_Transfer_APDU {
     ITU_T_HOLDERH_DEFN(RTORQapdu::connectionDataRQ, connectionDataRQ, ConnectionData);
     ITU_T_OPTIONAL_DEFN(RTORQapdu::applicationProtocol, applicationProtocol, integer_type);
 
-    // set RTOACapdu
+    // set  RTOACapdu
 
     RTOACapdu::RTOACapdu() : connectionDataAC_() {
     };
@@ -80,7 +80,7 @@ namespace Reliable_Transfer_APDU {
     ITU_T_DEFAULTH_DEFN(RTOACapdu::windowSize, windowSize, integer_type);
     ITU_T_HOLDERH_DEFN(RTOACapdu::connectionDataAC, connectionDataAC, ConnectionData);
 
-    // set RTORJapdu
+    // set  RTORJapdu
 
     RTORJapdu::RTORJapdu() {
     };
@@ -95,7 +95,7 @@ namespace Reliable_Transfer_APDU {
     ITU_T_OPTIONAL_DEFN(RTORJapdu::refuseReason, refuseReason, RefuseReason);
     ITU_T_OPTIONAL_DEFN(RTORJapdu::userDataRJ, userDataRJ, any_type);
 
-    // set RTABapdu
+    // set  RTABapdu
 
     RTABapdu::RTABapdu() {
     };

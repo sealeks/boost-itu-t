@@ -74,7 +74,7 @@ namespace Reliable_Transfer_APDU {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    // set RTORQapdu
+    // set  RTORQapdu
 
     struct RTORQapdu {
 
@@ -104,7 +104,7 @@ namespace Reliable_Transfer_APDU {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    // set RTOACapdu
+    // set  RTOACapdu
 
     struct RTOACapdu {
 
@@ -126,7 +126,7 @@ namespace Reliable_Transfer_APDU {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    // set RTORJapdu
+    // set  RTORJapdu
 
     struct RTORJapdu {
 
@@ -141,7 +141,7 @@ namespace Reliable_Transfer_APDU {
         ITU_T_ARCHIVE_FUNC;
     };
 
-    // set RTABapdu
+    // set  RTABapdu
 
     struct RTABapdu {
 
