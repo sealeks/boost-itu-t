@@ -203,7 +203,7 @@ namespace MMS_SCI_Module_1 {
 
         ITU_T_EXTENTION_SET_PER;
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(readAccessCondition_) + ITU_T_OPTIONAL_PER(storeAccessCondition_) + ITU_T_OPTIONAL_PER(writeAccessCondition_) + ITU_T_OPTIONAL_PER(loadAccessCondition_) + ITU_T_OPTIONAL_PER(executeAccessCondition_) + ITU_T_OPTIONAL_PER(deleteAccessCondition_) + ITU_T_OPTIONAL_PER(editAccessCondition_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(readAccessCondition_) + ITU_T_EXISTS_BMP(storeAccessCondition_) + ITU_T_EXISTS_BMP(writeAccessCondition_) + ITU_T_EXISTS_BMP(loadAccessCondition_) + ITU_T_EXISTS_BMP(executeAccessCondition_) + ITU_T_EXISTS_BMP(deleteAccessCondition_) + ITU_T_EXISTS_BMP(editAccessCondition_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -411,7 +411,7 @@ namespace MMS_SCI_Module_1 {
 
         ITU_T_EXTENTION_SET_PER;
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(eventCondition_) + ITU_T_OPTIONAL_PER(eventAction_) + ITU_T_OPTIONAL_PER(eventEnrollment_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(eventCondition_) + ITU_T_EXISTS_BMP(eventAction_) + ITU_T_EXISTS_BMP(eventEnrollment_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -585,7 +585,7 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Named_Variable_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(address_) + ITU_T_OPTIONAL_PER(meaning_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(address_) + ITU_T_EXISTS_BMP(meaning_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -676,7 +676,7 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Variable_List_Item_instance::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(unnamedItem_) + ITU_T_OPTIONAL_PER(namedItem_) + ITU_T_OPTIONAL_PER(alternateAccess_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(unnamedItem_) + ITU_T_EXISTS_BMP(namedItem_) + ITU_T_EXISTS_BMP(alternateAccess_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -753,7 +753,7 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Named_Type_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(meaning_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(meaning_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -830,7 +830,7 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Data_Exchange_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(programInvocation_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(programInvocation_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -911,7 +911,7 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Semaphore_instance::Definition_type::Details_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(numberOfTokens_) + ITU_T_OPTIONAL_PER(namedTokens_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(numberOfTokens_) + ITU_T_EXISTS_BMP(namedTokens_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -1061,7 +1061,7 @@ namespace MMS_SCI_Module_1 {
 
         ITU_T_EXTENTION_SET_PER;
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(enabled_) + ITU_T_OPTIONAL_PER(alarmSummaryReports_) + ITU_T_OPTIONAL_PER(monitoredVariable_) + ITU_T_OPTIONAL_PER(evaluationInterval_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(enabled_) + ITU_T_EXISTS_BMP(alarmSummaryReports_) + ITU_T_EXISTS_BMP(monitoredVariable_) + ITU_T_EXISTS_BMP(evaluationInterval_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -1378,7 +1378,7 @@ namespace MMS_SCI_Module_1 {
 
         ITU_T_EXTENTION_SET_PER;
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(remainingDelay_) + ITU_T_OPTIONAL_PER(eventAction_) + ITU_T_OPTIONAL_PER(duration_) + ITU_T_OPTIONAL_PER(clientApplication_) + ITU_T_OPTIONAL_PER(aaRule_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(remainingDelay_) + ITU_T_EXISTS_BMP(eventAction_) + ITU_T_EXISTS_BMP(duration_) + ITU_T_EXISTS_BMP(clientApplication_) + ITU_T_EXISTS_BMP(aaRule_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -1649,7 +1649,7 @@ namespace MMS_SCI_Module_1 {
 
     template<> void Journal_Entry_instance::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(textComment_) + ITU_T_OPTIONAL_PER(eventTransitionRecord_) + ITU_T_OPTIONAL_PER(journalVariables_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(textComment_) + ITU_T_EXISTS_BMP(eventTransitionRecord_) + ITU_T_EXISTS_BMP(journalVariables_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -1833,7 +1833,7 @@ namespace MMS_SCI_Module_1 {
 
     template<> void DataParameters::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(bit_string_) + ITU_T_OPTIONAL_PER(integer_) + ITU_T_OPTIONAL_PER(unsignedV_) + ITU_T_OPTIONAL_PER(floating_point_) + ITU_T_OPTIONAL_PER(octet_string_) + ITU_T_OPTIONAL_PER(visible_string_) + ITU_T_OPTIONAL_PER(binary_time_) + ITU_T_OPTIONAL_PER(bcd_) + ITU_T_OPTIONAL_PER(mmsString_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(bit_string_) + ITU_T_EXISTS_BMP(integer_) + ITU_T_EXISTS_BMP(unsignedV_) + ITU_T_EXISTS_BMP(floating_point_) + ITU_T_EXISTS_BMP(octet_string_) + ITU_T_EXISTS_BMP(visible_string_) + ITU_T_EXISTS_BMP(binary_time_) + ITU_T_EXISTS_BMP(bcd_) + ITU_T_EXISTS_BMP(mmsString_);
 
         ITU_T_OPTIONAL_SET_PER;
 

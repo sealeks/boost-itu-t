@@ -15,7 +15,7 @@ namespace ISO_9506_MMS_1A {
 
     template<> void ObtainFile_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(sourceFileServer_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(sourceFileServer_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -61,7 +61,7 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileRead_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(moreFollows_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -93,7 +93,7 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileDirectory_Request::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(fileSpecification_) + ITU_T_OPTIONAL_PER(continueAfter_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(fileSpecification_) + ITU_T_EXISTS_BMP(continueAfter_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -113,7 +113,7 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileDirectory_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(moreFollows_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(moreFollows_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -145,7 +145,7 @@ namespace ISO_9506_MMS_1A {
 
     template<> void FileAttributes::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(lastModified_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(lastModified_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -165,7 +165,7 @@ namespace ISO_9506_MMS_1A {
 
     template<> void ScatteredAccessDescription_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(componentName_) + ITU_T_OPTIONAL_PER(alternateAccess_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(componentName_) + ITU_T_EXISTS_BMP(alternateAccess_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -199,7 +199,7 @@ namespace ISO_9506_MMS_1A {
 
     template<> void GetScatteredAccessAttributes_Response::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(accessControlList_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(accessControlList_);
 
         ITU_T_OPTIONAL_SET_PER;
 

@@ -456,7 +456,7 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::Array_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(packed_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(packed_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -478,7 +478,7 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::Structure_type::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(packed_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(packed_);
 
         ITU_T_OPTIONAL_SET_PER;
 
@@ -498,7 +498,7 @@ namespace MMS_Object_Module_1 {
 
     template<> void TypeDescription::Structure_type::Components_type_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_OPTIONAL_DECL_PER = ITU_T_OPTIONAL_PER(componentName_);
+        ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(componentName_);
 
         ITU_T_OPTIONAL_SET_PER;
 

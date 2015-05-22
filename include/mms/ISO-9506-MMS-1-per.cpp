@@ -190,7 +190,12 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Confirmed_RequestPDU::serialize(boost::asn1::x691::output_coder& arch) {
 
+        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(service_ext_);
+
+        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0);
+
         ITU_T_EXTENTION_SET_PER;
+
 
         ITU_T_OPTIONAL_DECL_PER = ITU_T_EXISTS_BMP(listOfModifiers_);
 
@@ -199,6 +204,19 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(listOfModifiers_);
         ITU_T_BIND_PER(*service_);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_SET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(service_ext_);
+                ITU_T_PER_END_OPEN;
+            }
+
+        };
+
     }
 
     template<> void Confirmed_RequestPDU::serialize(boost::asn1::x691::input_coder& arch) {
@@ -210,13 +228,27 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_OPTIONAL_CHECK_PER(0) ITU_T_BIND_PER(listOfModifiers_);
         ITU_T_BIND_PER(*service_);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_GET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(service_ext_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            ITU_T_PER_CLEAR_EXTENTIONS(1);
+        };
+
     }
 
     // choice ConfirmedServiceRequest
 
     template<> void ConfirmedServiceRequest::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_CHOICE_SET_PER(ConfirmedServiceRequest_additionalService, ConfirmedServiceRequest_changeAccessControl);
 
         if (ITU_T_EXTENTION_CHECK_PER) {
             switch (type()) {
@@ -692,54 +724,71 @@ namespace ISO_9506_MMS_1 {
                 {
                 }
             }
-        } else {
+        }
+        else {
             switch (type()) {
                 case ConfirmedServiceRequest_additionalService:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(0);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<AdditionalService_Request > (false, ConfirmedServiceRequest_additionalService));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_getDataExchangeAttributes:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(1);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<GetDataExchangeAttributes_Request > (false, ConfirmedServiceRequest_getDataExchangeAttributes));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_exchangeData:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(2);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<ExchangeData_Request > (false, ConfirmedServiceRequest_exchangeData));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_defineAccessControlList:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(3);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<DefineAccessControlList_Request > (false, ConfirmedServiceRequest_defineAccessControlList));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_getAccessControlListAttributes:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(4);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<GetAccessControlListAttributes_Request > (false, ConfirmedServiceRequest_getAccessControlListAttributes));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_reportAccessControlledObjects:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(5);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<ReportAccessControlledObjects_Request > (false, ConfirmedServiceRequest_reportAccessControlledObjects));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_deleteAccessControlList:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(6);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<DeleteAccessControlList_Request > (false, ConfirmedServiceRequest_deleteAccessControlList));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceRequest_changeAccessControl:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(7);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<ChangeAccessControl_Request > (false, ConfirmedServiceRequest_changeAccessControl));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 default:
@@ -1152,53 +1201,71 @@ namespace ISO_9506_MMS_1 {
                 {
                 }
             }
-        } else {
+        }
+        else {
 
             ITU_T_GET_NSN_SMALL_INDX;
 
             switch (__indx__) {
                 case 0:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<AdditionalService_Request > (false, ConfirmedServiceRequest_additionalService));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 1:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<GetDataExchangeAttributes_Request > (false, ConfirmedServiceRequest_getDataExchangeAttributes));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 2:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<ExchangeData_Request > (false, ConfirmedServiceRequest_exchangeData));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 3:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<DefineAccessControlList_Request > (false, ConfirmedServiceRequest_defineAccessControlList));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 4:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<GetAccessControlListAttributes_Request > (false, ConfirmedServiceRequest_getAccessControlListAttributes));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 5:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<ReportAccessControlledObjects_Request > (false, ConfirmedServiceRequest_reportAccessControlledObjects));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 6:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<DeleteAccessControlList_Request > (false, ConfirmedServiceRequest_deleteAccessControlList));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 7:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<ChangeAccessControl_Request > (false, ConfirmedServiceRequest_changeAccessControl));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 default:
                 {
+                    ITU_T_PER_CLEAR_EXTENTION;
                 }
             }
         }
@@ -1591,14 +1658,46 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Unconfirmed_PDU::serialize(boost::asn1::x691::output_coder& arch) {
 
+        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(service_ext_);
+
+        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0);
+
         ITU_T_EXTENTION_SET_PER;
+
         ITU_T_BIND_PER(*service_);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_SET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(service_ext_);
+                ITU_T_PER_END_OPEN;
+            }
+
+        };
+
     }
 
     template<> void Unconfirmed_PDU::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_GET_PER;
         ITU_T_BIND_PER(*service_);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_GET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(service_ext_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            ITU_T_PER_CLEAR_EXTENTIONS(1);
+        };
+
     }
 
     // choice UnconfirmedService
@@ -1702,9 +1801,27 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Confirmed_ResponsePDU::serialize(boost::asn1::x691::output_coder& arch) {
 
+        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(service_ext_);
+
+        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0);
+
         ITU_T_EXTENTION_SET_PER;
+
         ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*service_);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_SET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(service_ext_);
+                ITU_T_PER_END_OPEN;
+            }
+
+        };
+
     }
 
     template<> void Confirmed_ResponsePDU::serialize(boost::asn1::x691::input_coder& arch) {
@@ -1712,13 +1829,27 @@ namespace ISO_9506_MMS_1 {
         ITU_T_EXTENTION_GET_PER;
         ITU_T_BIND_NUM_CONSTRS(*invokeID_, static_cast<uint32_t> (0), static_cast<uint32_t> (std::numeric_limits<int32_t>::max()));
         ITU_T_BIND_PER(*service_);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_GET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(service_ext_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            ITU_T_PER_CLEAR_EXTENTIONS(1);
+        };
+
     }
 
     // choice ConfirmedServiceResponse
 
     template<> void ConfirmedServiceResponse::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_CHOICE_SET_PER(ConfirmedServiceResponse_additionalService, ConfirmedServiceResponse_changeAccessControl);
 
         if (ITU_T_EXTENTION_CHECK_PER) {
             switch (type()) {
@@ -2188,54 +2319,71 @@ namespace ISO_9506_MMS_1 {
                 {
                 }
             }
-        } else {
+        }
+        else {
             switch (type()) {
                 case ConfirmedServiceResponse_additionalService:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(0);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<AdditionalService_Response > (false, ConfirmedServiceResponse_additionalService));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_getDataExchangeAttributes:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(1);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<GetDataExchangeAttributes_Response > (false, ConfirmedServiceResponse_getDataExchangeAttributes));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_exchangeData:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(2);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<ExchangeData_Response > (false, ConfirmedServiceResponse_exchangeData));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_defineAccessControlList:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(3);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<DefineAccessControlList_Response > (false, ConfirmedServiceResponse_defineAccessControlList));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_getAccessControlListAttributes:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(4);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<GetAccessControlListAttributes_Response > (false, ConfirmedServiceResponse_getAccessControlListAttributes));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_reportAccessControlledObjects:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(5);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<ReportAccessControlledObjects_Response > (false, ConfirmedServiceResponse_reportAccessControlledObjects));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_deleteAccessControlList:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(6);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<DeleteAccessControlList_Response > (false, ConfirmedServiceResponse_deleteAccessControlList));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 case ConfirmedServiceResponse_changeAccessControl:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(7);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<ChangeAccessControl_Response > (false, ConfirmedServiceResponse_changeAccessControl));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 default:
@@ -2643,53 +2791,71 @@ namespace ISO_9506_MMS_1 {
                 {
                 }
             }
-        } else {
+        }
+        else {
 
             ITU_T_GET_NSN_SMALL_INDX;
 
             switch (__indx__) {
                 case 0:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<AdditionalService_Response > (false, ConfirmedServiceResponse_additionalService));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 1:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<GetDataExchangeAttributes_Response > (false, ConfirmedServiceResponse_getDataExchangeAttributes));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 2:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<ExchangeData_Response > (false, ConfirmedServiceResponse_exchangeData));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 3:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<DefineAccessControlList_Response > (false, ConfirmedServiceResponse_defineAccessControlList));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 4:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<GetAccessControlListAttributes_Response > (false, ConfirmedServiceResponse_getAccessControlListAttributes));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 5:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<ReportAccessControlledObjects_Response > (false, ConfirmedServiceResponse_reportAccessControlledObjects));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 6:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<DeleteAccessControlList_Response > (false, ConfirmedServiceResponse_deleteAccessControlList));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 case 7:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<ChangeAccessControl_Response > (false, ConfirmedServiceResponse_changeAccessControl));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 default:
                 {
+                    ITU_T_PER_CLEAR_EXTENTION;
                 }
             }
         }
@@ -3576,16 +3742,19 @@ namespace ISO_9506_MMS_1 {
 
     template<> void ObjectClass::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_CHOICE_SET_PER(ObjectClass_csObjectClass, ObjectClass_csObjectClass);
 
         if (ITU_T_EXTENTION_CHECK_PER) {
             ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ObjectClass_basicObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (13))
-        } else {
+        }
+        else {
             switch (type()) {
                 case ObjectClass_csObjectClass:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(0);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ObjectClass_csObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 default:
@@ -3601,18 +3770,22 @@ namespace ISO_9506_MMS_1 {
 
         if (ITU_T_EXTENTION_CHECK_PER) {
             ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (true, ObjectClass_basicObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (13))
-        } else {
+        }
+        else {
 
             ITU_T_GET_NSN_SMALL_INDX;
 
             switch (__indx__) {
                 case 0:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_NUM_CONSTRS(*value<uint8_t > (false, ObjectClass_csObjectClass), static_cast<uint8_t> (0), static_cast<uint8_t> (1));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 default:
                 {
+                    ITU_T_PER_CLEAR_EXTENTION;
                 }
             }
         }
@@ -3648,10 +3821,42 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x691::output_coder& arch) {
 
+        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(additionalSupportedCalling_);
+        ITU_T_EXTENTION_GROUP_BOOL_PER(1) = ITU_T_EXISTS_BOOL(additionalCbbSupportedCalling_);
+        ITU_T_EXTENTION_GROUP_BOOL_PER(2) = ITU_T_EXISTS_BOOL(privilegeClassIdentityCalling_);
+
+        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0) + ITU_T_EXTENTION_GROUP_PER(1) + ITU_T_EXTENTION_GROUP_PER(2);
+
         ITU_T_EXTENTION_SET_PER;
+
         ITU_T_BIND_NUM_CONSTRS(*proposedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_SIZE_SNGLCONSTRS(*proposedParameterCBB_, 18);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalling_, 93);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_SET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalling_, 23);
+                ITU_T_PER_END_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalling_, 3);
+                ITU_T_PER_END_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(2)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(*privilegeClassIdentityCalling_);
+                ITU_T_PER_END_OPEN;
+            }
+
+        };
+
     }
 
     template<> void Initiate_RequestPDU::InitRequestDetail_type::serialize(boost::asn1::x691::input_coder& arch) {
@@ -3660,6 +3865,32 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_NUM_CONSTRS(*proposedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_SIZE_SNGLCONSTRS(*proposedParameterCBB_, 18);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalling_, 93);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_GET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalling_, 23);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalling_, 3);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(2)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(*privilegeClassIdentityCalling_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            ITU_T_PER_CLEAR_EXTENTIONS(3);
+        };
+
     }
 
     // sequence Initiate-ResponsePDU
@@ -3692,10 +3923,42 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x691::output_coder& arch) {
 
+        ITU_T_EXTENTION_GROUP_BOOL_PER(0) = ITU_T_EXISTS_BOOL(additionalSupportedCalled_);
+        ITU_T_EXTENTION_GROUP_BOOL_PER(1) = ITU_T_EXISTS_BOOL(additionalCbbSupportedCalled_);
+        ITU_T_EXTENTION_GROUP_BOOL_PER(2) = ITU_T_EXISTS_BOOL(privilegeClassIdentityCalled_);
+
+        ITU_T_EXTENTION_GROUPS_BMP_PER = ITU_T_EXTENTION_GROUP_PER(0) + ITU_T_EXTENTION_GROUP_PER(1) + ITU_T_EXTENTION_GROUP_PER(2);
+
         ITU_T_EXTENTION_SET_PER;
+
         ITU_T_BIND_NUM_CONSTRS(*negotiatedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_SIZE_SNGLCONSTRS(*negotiatedParameterCBB_, 18);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalled_, 93);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_SET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalled_, 23);
+                ITU_T_PER_END_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalled_, 3);
+                ITU_T_PER_END_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(2)) {
+                ITU_T_PER_START_OPEN;
+                ITU_T_BIND_PER(*privilegeClassIdentityCalled_);
+                ITU_T_PER_END_OPEN;
+            }
+
+        };
+
     }
 
     template<> void Initiate_ResponsePDU::InitResponseDetail_type::serialize(boost::asn1::x691::input_coder& arch) {
@@ -3704,6 +3967,32 @@ namespace ISO_9506_MMS_1 {
         ITU_T_BIND_NUM_CONSTRS(*negotiatedVersionNumber_, static_cast<int16_t> (std::numeric_limits<int16_t>::min()), static_cast<int16_t> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_SIZE_SNGLCONSTRS(*negotiatedParameterCBB_, 18);
         ITU_T_BIND_SIZE_SNGLCONSTRS(*servicesSupportedCalled_, 93);
+
+        if (ITU_T_EXTENTION_CHECK_PER) {
+
+            ITU_T_EXTENTION_GROUPS_GET_PER;
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(0)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalSupportedCalled_, 23);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(1)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_SIZE_SNGLCONSTRS(*additionalCbbSupportedCalled_, 3);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            if (ITU_T_EXTENTION_GROUP_CHECK_PER(2)) {
+                ITU_T_PER_START_PARSE_OPEN;
+                ITU_T_BIND_PER(*privilegeClassIdentityCalled_);
+                ITU_T_PER_END_PARSE_OPEN;
+            }
+
+            ITU_T_PER_CLEAR_EXTENTIONS(3);
+        };
+
     }
 
     // sequence Cancel-ErrorPDU
@@ -6533,7 +6822,7 @@ namespace ISO_9506_MMS_1 {
 
     template<> void Data::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_SET_PER;
+        ITU_T_EXTENTION_CHOICE_SET_PER(Data_mMSString, Data_mMSString);
 
         if (ITU_T_EXTENTION_CHECK_PER) {
             switch (type()) {
@@ -6625,12 +6914,15 @@ namespace ISO_9506_MMS_1 {
                 {
                 }
             }
-        } else {
+        }
+        else {
             switch (type()) {
                 case Data_mMSString:
                 {
                     ITU_T_SET_NSN_SMALL_INDX(0);
+                    ITU_T_PER_START_OPEN;
                     ITU_T_BIND_PER(*value<MMSString > (false, Data_mMSString));
+                    ITU_T_PER_END_OPEN;
                     break;
                 }
                 default:
@@ -6723,18 +7015,22 @@ namespace ISO_9506_MMS_1 {
                 {
                 }
             }
-        } else {
+        }
+        else {
 
             ITU_T_GET_NSN_SMALL_INDX;
 
             switch (__indx__) {
                 case 0:
                 {
+                    ITU_T_PER_START_PARSE_OPEN;
                     ITU_T_BIND_PER(*value<MMSString > (false, Data_mMSString));
+                    ITU_T_PER_END_PARSE_OPEN;
                     break;
                 }
                 default:
                 {
+                    ITU_T_PER_CLEAR_EXTENTION;
                 }
             }
         }
