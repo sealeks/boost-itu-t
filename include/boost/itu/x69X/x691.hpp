@@ -20,6 +20,7 @@
 
 #define ITU_T_EXTENTION_GET_PER  bool __is_extention__ =  arch.get_pop_bmp(1).bit(0);
 #define ITU_T_EXTENTION_NULL_SET_PER  bool __is_extention__ = false;boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
+#define ITU_T_EXTENTION_CHOICE_SET_PER( x0, xn)  bool __is_extention__ = ((static_cast<int>(type())>=static_cast<int>(x0 )) && (static_cast<int>(type())<=static_cast<int>(xn ));boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
 #define ITU_T_EXTENTION_SET_PER  bool __is_extention__ = static_cast<bool>( __ext_optional_groups_bmp__);boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
 #define ITU_T_EXTENTION_CHECK_PER  __is_extention__
 

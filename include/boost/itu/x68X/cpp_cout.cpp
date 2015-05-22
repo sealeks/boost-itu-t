@@ -2529,14 +2529,20 @@ namespace x680 {
             basic_entity_ptr scp;
 
             bool has_extention = ((self->type()) && (self->type()->has_extention()));
+            namedtypeassignment_entity_vct extentions = self->extentions();
 
             if (has_extention) {
-                stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_SET_PER;";
+                if (extentions.empty()) {
+                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_NULL_SET_PER;";
+                }
+                else{
+                    stream << "\n\n" << tabformat(scp, 3) << "ITU_T_EXTENTION_CHOICE_SET_PER( " << 
+                            choice_enum_str(self, extentions.front()) << ",  " << choice_enum_str(self, extentions.back()) << ");"; 
+                }
             }
 
 
             namedtypeassignment_entity_vct root = self->canonicalorder_root();
-            namedtypeassignment_entity_vct extentions = self->extentions();
 
             bool can_extention = ((extentions.size()) && (has_extention));
 
@@ -2598,10 +2604,10 @@ namespace x680 {
                         if (named->type()) {
                             stream << "\n" << tabformat(scp, 4 + scppad) << "case ";
                             stream << choice_enum_str(self, (*it)) << ":  {";
-                            stream << " ITU_T_SET_NSN_SMALL_INDX(" << to_string(extention_it++) << "); ";
+                            stream << " ITU_T_SET_NSN_SMALL_INDX(" << to_string(extention_it++) << "); ITU_T_PER_START_OPEN; ";
                             std::string tmpval = "value<" + fromtype_str(named) + " > (false , " + choice_enum_str(self, named) + ")";
                             stream << archive_member_per_str(named, tmpval);
-                            stream << "; break; }";
+                            stream << ";ITU_T_PER_END_OPEN; break; }";
                         }
                     }
                 }
@@ -2690,15 +2696,15 @@ namespace x680 {
                         namedtypeassignment_entity_ptr named = (*it)->as_named();
                         if (named->type()) {
                             stream << "\n" << tabformat(scp, 4 + scppad) << "case ";
-                            stream << to_string(extention_it++) << ":  {";
+                            stream << to_string(extention_it++) << ":  { ITU_T_PER_START_PARSE_OPEN;";
                             std::string tmpval = "value<" + fromtype_str(named) + " > (false , " + choice_enum_str(self, named) + ")";
                             stream << archive_member_per_str(named, tmpval);
-                            stream << "; break; }";
+                            stream << "; ITU_T_PER_END_PARSE_OPEN; break; }";
                         }
                     }
                 }
 
-                stream << "\n" << tabformat(scp, 4 + scppad) << "default:{}";
+                stream << "\n" << tabformat(scp, 4 + scppad) << "default:{ ITU_T_PER_CLEAR_EXTENTION;}";
                 stream << "\n" << tabformat(scp, 3 + scppad) << "}";
 
                 stream << "\n" << tabformat(scp, 3) << "}\n";
