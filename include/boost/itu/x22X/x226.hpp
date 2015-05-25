@@ -23,7 +23,7 @@ namespace boost {
             //   x226 utill   //
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 
-            const encoding_set DEFAULT_ENCODINGS = BER_ENCODING | CER_ENCODING | DER_ENCODING;// PER_ALIGNED_ENCODING;
+            const encoding_set DEFAULT_ENCODINGS = BER_ENCODING | CER_ENCODING | DER_ENCODING; // PER_ALIGNED_ENCODING;
 
 
             // presentation_context
@@ -248,6 +248,14 @@ namespace boost {
                                 data.serialize(boost::static_pointer_cast<x690_coder_type, basic_coder > (coder_)->output());
                                 return true;
                             };
+                            case PER_ALIGNED_ENCODING:
+                            case PER_UNALIGNED_ENCODING:
+                            case CPER_ALIGNED_ENCODING:
+                            case CPER_UNALIGNED_ENCODING:
+                            {
+                                data.serialize(boost::static_pointer_cast<x691_coder_type, basic_coder > (coder_)->output());
+                                return true;
+                            };
                             default:
                             {
                             }
@@ -264,6 +272,14 @@ namespace boost {
                             case CER_ENCODING:
                             {
                                 data.serialize(boost::static_pointer_cast<x690_coder_type, basic_coder > (coder_)->input());
+                                return true;
+                            };
+                            case PER_ALIGNED_ENCODING:
+                            case PER_UNALIGNED_ENCODING:
+                            case CPER_ALIGNED_ENCODING:
+                            case CPER_UNALIGNED_ENCODING:
+                            {
+                                data.serialize(boost::static_pointer_cast<x691_coder_type, basic_coder > (coder_)->input());
                                 return true;
                             };
                             default:
