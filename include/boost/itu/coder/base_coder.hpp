@@ -326,9 +326,9 @@ namespace boost {
 
 
 
-    
-    
-    
+
+
+
 
     namespace itu {
 
@@ -409,7 +409,7 @@ namespace boost {
             struct data_state {
 
                 data_state() : unuse_(0), listbuffers_(new const_sequences()),
-                rows_vect_(new octet_sequnce_ptr_vect()),  size_(0) {
+                rows_vect_(new octet_sequnce_ptr_vect()), size_(0) {
                 }
 
                 ~data_state() {
@@ -581,6 +581,34 @@ namespace boost {
 
         public:
 
+            /////////////////////////////////////////////////////            
+
+            struct data_state {
+
+                data_state() : unuse_(0), listbuffers_(new mutable_sequences()),
+                rows_vect_(new octet_sequnce_ptr_vect()), size_(0) {
+                }
+
+                ~data_state() {
+                }
+
+                void swap(base_input_coder& rt) {
+                    std::swap(unuse_, rt.unuse_);
+                    listbuffers_.swap(rt.listbuffers_);
+                    rows_vect_.swap(rt.rows_vect_);
+                    std::swap(size_, rt.size_);
+                }
+
+                std::size_t unuse_;
+                mutable_sequences_ptr listbuffers_;
+                octet_sequnce_ptr_vect_ptr rows_vect_;
+                std::size_t size_;
+            };
+
+            typedef std::stack<data_state> state_stack_type;
+
+            /////////////////////////////////////////////////////            
+
             typedef mutable_sequences::iterator iterator_type;
 
             static bool __input__() {
@@ -668,6 +696,12 @@ namespace boost {
 
         protected:
 
+            void datastate_push();
+
+            data_state datastate_pop();
+
+            bool has_datastate() const;
+
             std::size_t unusebits(std::size_t vl) {
                 return unuse_ = vl % 8;
             }
@@ -695,7 +729,7 @@ namespace boost {
 
             /////////////////////////////////////////////////////         
 
-            //state_stack_type state_stack_;            
+            state_stack_type state_stack_;
 
         };
 

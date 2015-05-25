@@ -845,6 +845,26 @@ namespace boost {
             return true;
         }
 
+        void base_input_coder::datastate_push() {
+            data_state ds;
+            ds.swap(*this);
+            state_stack_.push(ds);
+        }
+
+        base_input_coder::data_state base_input_coder::datastate_pop() {
+            if (!state_stack_.empty()) {
+                data_state ds = state_stack_.top();
+                ds.swap(*this);
+                state_stack_.pop();
+                return ds;
+            }
+            return data_state();
+        }
+
+        bool base_input_coder::has_datastate() const {
+            return !state_stack_.empty();
+        }
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////  
 

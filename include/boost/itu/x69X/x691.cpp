@@ -56,14 +56,17 @@ namespace boost {
             // element constrainter
 
             void numericstring_ec::out(boost::asn1::x691::output_coder& stream, numericstring_type::value_type vl) {
-                stream.add_bitmap(bitstring_type(octet_sequnce(1, octet_sequnce::value_type((vl - '\x20') << 4)), 4));
+                stream.add_bitmap(bitstring_type(octet_sequnce(1, octet_sequnce::value_type((vl != '\x20') ? ((vl - '\x2F') << 4) : 0)), 4));
             }
 
             numericstring_type::value_type numericstring_ec::in(boost::asn1::x691::input_coder& stream) {
                 bitstring_type vl = stream.get_pop_bmp(4);
                 octet_sequnce tmp = vl.as_octet_sequnce();
-                if (!tmp.empty())
-                    return ((tmp[0] >> 4) & '\x7F') + '\x20';
+                if (!tmp.empty()) {
+                    tmp[0] >>= 4;
+                    tmp[0] &= '\xF';
+                    return tmp[0] ? (tmp[0] + '\x2F') : ('\x20');
+                }
                 return 0;
             }
 
@@ -572,18 +575,16 @@ namespace boost {
                 return rslt;
             }
 
-            void input_coder::start_parse_open() {
+            void input_coder::start_open() {
                 octet_sequnce data;
                 octet_reader_undefsz(*this, data);
-                if ((data.size()==1) && (!data[0]))
-                    return;
-                add_front(data);
+                datastate_push();
+                add(data);
             }
-            
-            void input_coder::end_parse_open() {
-                if (unusebits())
-                    get_pop_bmp(usebits());
-            }            
+
+            void input_coder::end_open() {
+                datastate_pop();
+            }
 
             void input_coder::get_extentions_marker(bitstring_type& vl) {
                 std::size_t rslt = get_nsn_small() + 1;
@@ -591,11 +592,11 @@ namespace boost {
             }
 
             void input_coder::clear_extentions(const bitstring_type& exbmp, std::size_t cnt) {
-                if(exbmp.sizebits()>cnt){
-                    std::size_t clear_cnt=exbmp.sizebits()-cnt;
-                    while(clear_cnt--) {
+                if (exbmp.sizebits() > cnt) {
+                    std::size_t clear_cnt = exbmp.sizebits() - cnt;
+                    while (clear_cnt--) {
                         octet_sequnce data;
-                        octet_reader_undefsz(*this, data);                        
+                        octet_reader_undefsz(*this, data);
                     }
                 }
             }
