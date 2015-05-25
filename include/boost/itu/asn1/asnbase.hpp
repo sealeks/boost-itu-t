@@ -176,6 +176,11 @@ namespace boost {\
 #define ITU_T_IMPLICIT_TYPEDEF(regtype, type , id, cl)  typedef boost::asn1::implicit_typedef< type, class _____TAGTYPE___##regtype ,  id , boost::asn1:: cl>  regtype;
 #define ITU_T_EXPLICIT_TYPEDEF(regtype, type , id, cl)  typedef boost::asn1::explicit_typedef< type,  class _____TAGTYPE___##regtype , id , boost::asn1:: cl>   regtype;      
 
+#define ITU_T_START_OPEN  arch.start_open();
+#define ITU_T_END_OPEN  arch.end_open();
+#define ITU_T_CLEAR_EXTENTIONS( num )  arch.clear_extentions(__ext_optional_groups_bmp__, num);
+#define ITU_T_CLEAR_EXTENTION  arch.clear_extention();
+
 #define ITU_T_RESET_EXTENTION   arch.resetextention();
 
 #define ITU_T_CHOICE(enm)  boost::asn1::___asn__choice__base__< enm> 

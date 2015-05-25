@@ -26,12 +26,6 @@
 #define ITU_T_SET_NSN_SMALL_INDX(indx) arch.add_nsn_small(indx);
 #define ITU_T_GET_NSN_SMALL_INDX std::size_t __indx__ = arch.get_nsn_small();
 
-
-#define ITU_T_PER_START_OPEN  arch.start_open();
-#define ITU_T_PER_END_OPEN  arch.end_open();
-#define ITU_T_PER_CLEAR_EXTENTIONS( num )  arch.clear_extentions(__ext_optional_groups_bmp__, num);
-#define ITU_T_PER_CLEAR_EXTENTION  arch.clear_extention();
-
 //   main bind and bind per enum
 #define ITU_T_BIND_PER(var) boost::asn1::bind_per(arch, var)
 #define ITU_T_BIND_PER_ENUM(var, nm) boost::asn1::bind_per_enum< nm ## __coder >(arch, var);

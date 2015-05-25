@@ -131,7 +131,7 @@ namespace ISO8823_PRESENTATION {
 
             ITU_T_EXTENTION_GROUPS_READ;
 
-            ITU_T_PER_CLEAR_EXTENTIONS(0);
+            ITU_T_CLEAR_EXTENTIONS(0);
         };
 
     }
@@ -740,7 +740,7 @@ namespace ISO8823_PRESENTATION {
             switch (__indx__) {
                 default:
                 {
-                    ITU_T_PER_CLEAR_EXTENTION;
+                    ITU_T_CLEAR_EXTENTION;
                 }
             }
         }

@@ -2602,7 +2602,7 @@ namespace x680 {
                         if (named->type()) {
                             stream << "\n" << tabformat(scp, 4 + scppad) << "case ";
                             stream << choice_enum_str(self, (*it)) << ":  {";
-                            stream << " ITU_T_SET_NSN_SMALL_INDX(" << to_string(extention_it++) << "); ITU_T_PER_START_OPEN; ";
+                            stream << " ITU_T_SET_NSN_SMALL_INDX(" << to_string(extention_it++) << "); ITU_T_START_OPEN; ";
                             std::string tmpval = "value<" + fromtype_str(named) + " > (false , " + choice_enum_str(self, named) + ")";
                             stream << archive_member_per_str(named, tmpval);
                             stream << ";ITU_T_PER_END_OPEN; break; }";
@@ -2693,15 +2693,15 @@ namespace x680 {
                         namedtypeassignment_entity_ptr named = (*it)->as_named();
                         if (named->type()) {
                             stream << "\n" << tabformat(scp, 4 + scppad) << "case ";
-                            stream << to_string(extention_it++) << ":  { ITU_T_PER_START_OPEN;";
+                            stream << to_string(extention_it++) << ":  { ITU_T_START_OPEN;";
                             std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, named) + ")";
                             stream << archive_member_per_str(named, tmpval);
-                            stream << "; ITU_T_PER_END_OPEN; break; }";
+                            stream << "; ITU_T_END_OPEN; break; }";
                         }
                     }
                 }
 
-                stream << "\n" << tabformat(scp, 4 + scppad) << "default:{ ITU_T_PER_CLEAR_EXTENTION;}";
+                stream << "\n" << tabformat(scp, 4 + scppad) << "default:{ ITU_T_CLEAR_EXTENTION;}";
                 stream << "\n" << tabformat(scp, 3 + scppad) << "}";
 
                 stream << "\n" << tabformat(scp, 3) << "}\n";
@@ -2810,7 +2810,7 @@ namespace x680 {
                             if ((is_optional_or_default((*it)->marker())))
                                 has_optional = true;
                         }
-                        stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_START_OPEN;";
+                        stream << "\n" << tabformat(scp, 6) << "ITU_T_START_OPEN;";
                         if (has_optional) {
                             stream << "\n" << tabformat(scp, 6) << "ITU_T_OPTIONAL_BMP = ";
                             bool is_first = true;
@@ -2830,7 +2830,7 @@ namespace x680 {
                         stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_END_OPEN;";
                     } else {
                         if (!extention.empty()) {
-                            stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_START_OPEN;";
+                            stream << "\n" << tabformat(scp, 6) << "ITU_T_START_OPEN;";
                             execute_archive_member(extention.front(), false, 0, 4);
                             stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_END_OPEN;";
                         } else
@@ -2891,7 +2891,7 @@ namespace x680 {
 
                 for (std::size_t i = 0; i < self->extention_count(); ++i) {
                     stream << "\n" << tabformat(scp, 5) << "if (ITU_T_EXTENTION_GROUPS_CHECK(" << to_string(i) << ")) {";
-                    stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_START_OPEN;";
+                    stream << "\n" << tabformat(scp, 6) << "ITU_T_START_OPEN;";
 
                     namedtypeassignment_entity_vct extention = self->extention_group(i);
                     if (extention.size() > 1) {
@@ -2920,7 +2920,7 @@ namespace x680 {
                     stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_END_OPEN;";
                     stream << "\n" << tabformat(scp, 5) << "}\n";
                 }
-                stream << "\n" << tabformat(scp, 4) << "ITU_T_PER_CLEAR_EXTENTIONS(" << to_string(self->extention_count()) << ");";
+                stream << "\n" << tabformat(scp, 4) << "ITU_T_CLEAR_EXTENTIONS(" << to_string(self->extention_count()) << ");";
                 stream << "\n" << tabformat(scp, 3) << "};\n";
             }
 
