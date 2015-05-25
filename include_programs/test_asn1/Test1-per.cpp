@@ -72,7 +72,6 @@ namespace Test1 {
             return 0;
         }
 
-        
         static std::size_t bits_count(bool aligned) {
             return aligned ? 8 : 6;
         }
@@ -99,6 +98,47 @@ namespace Test1 {
     }
 
     template<> void PersonnelRecord_impl::serialize(boost::asn1::x691::input_coder& arch) {
+
+        ITU_T_EXTENTION_READ;
+
+        ITU_T_OPTIONAL_READ(1);
+
+        ITU_T_BIND_PER(*(*name_));
+        ITU_T_BIND_NUM_CONSTRE(*(*number_), static_cast<integer_type> (0), static_cast<integer_type> (9999));
+        ITU_T_BIND_PER(*title_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
+        ITU_T_BIND_PER(*(*nameOfSpouse_));
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_SNGLCONSTRE(children_, 2);
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_READ;
+
+            ITU_T_PER_CLEAR_EXTENTIONS(0);
+        };
+
+    }
+
+    // set  PersonnelRecord-s
+
+    template<> void PersonnelRecord_s_impl::serialize(boost::asn1::x691::output_coder& arch) {
+
+        ITU_T_EXTENTION_WRITE_NULL;
+
+
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(children_);
+
+        ITU_T_OPTIONAL_WRITE;
+
+        ITU_T_BIND_PER(*(*name_));
+        ITU_T_BIND_NUM_CONSTRE(*(*number_), static_cast<integer_type> (0), static_cast<integer_type> (9999));
+        ITU_T_BIND_PER(*title_);
+        ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfHire_), 8);
+        ITU_T_BIND_PER(*(*nameOfSpouse_));
+        ITU_T_BIND_SIZE_SNGLCONSTRE(children_, 2);
+    }
+
+    template<> void PersonnelRecord_s_impl::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_READ;
 
@@ -168,6 +208,31 @@ namespace Test1 {
 
     }
 
+    // set  ChildInformation-s
+
+    template<> void ChildInformation_s::serialize(boost::asn1::x691::output_coder& arch) {
+
+        ITU_T_EXTENTION_WRITE_NULL;
+
+        ITU_T_BIND_PER(*(*name_));
+        ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+    }
+
+    template<> void ChildInformation_s::serialize(boost::asn1::x691::input_coder& arch) {
+
+        ITU_T_EXTENTION_READ;
+        ITU_T_BIND_PER(*(*name_));
+        ITU_T_BIND_EXSIZE_SNGLCONSTRE(visiblestring_type, Date__shelper, *(*dateOfBirth_), 8);
+
+        if (ITU_T_EXTENTION) {
+
+            ITU_T_EXTENTION_GROUPS_READ;
+
+            ITU_T_PER_CLEAR_EXTENTIONS(0);
+        };
+
+    }
+
     // sequence Name
 
     template<> void Name_impl::serialize(boost::asn1::x691::output_coder& arch) {
@@ -195,18 +260,26 @@ namespace Test1 {
 
     }
 
-    // sequence A
+    // sequence Ax
 
-    template<> void A::serialize(boost::asn1::x691::output_coder& arch) {
+    template<> void Ax::serialize(boost::asn1::x691::output_coder& arch) {
 
-        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(b_) || ITU_T_EXISTS_BOOL(c_);
-        ITU_T_EXTENTION_GROUP_BOOL(1) = ITU_T_EXISTS_BOOL(d_) || ITU_T_EXISTS_BOOL(e_);
+        ITU_T_EXTENTION_GROUP_BOOL(0) = ITU_T_EXISTS_BOOL(g_) ||
+                ITU_T_EXISTS_BOOL(h_);
 
-        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0) + ITU_T_EXTENTION_GROUP_AS_BMP(1);
+        ITU_T_EXTENTION_GROUPS_BMP = ITU_T_EXTENTION_GROUP_AS_BMP(0);
 
         ITU_T_EXTENTION_WRITE;
 
-        ITU_T_BIND_PER(*a_);
+
+        ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(i_) +
+                ITU_T_EXISTS_BMP(j_);
+
+        ITU_T_OPTIONAL_WRITE;
+
+        ITU_T_BIND_NUM_CONSTRS(*a_, static_cast<uint8_t> (250), static_cast<uint8_t> (253));
+        ITU_T_BIND_PER(*b_);
+        ITU_T_BIND_PER(*c_);
 
         if (ITU_T_EXTENTION) {
 
@@ -214,30 +287,28 @@ namespace Test1 {
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_OPEN;
-                ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(b_) + ITU_T_EXISTS_BMP(c_);
+                ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(h_);
                 ITU_T_OPTIONAL_WRITE;
-                ITU_T_BIND_PER(b_);
-                ITU_T_BIND_PER(c_);
-                ITU_T_PER_END_OPEN;
-            }
-
-            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
-                ITU_T_PER_START_OPEN;
-                ITU_T_OPTIONAL_BMP = ITU_T_EXISTS_BMP(e_);
-                ITU_T_OPTIONAL_WRITE;
-                ITU_T_BIND_PER(*d_);
-                ITU_T_BIND_PER(e_);
+                ITU_T_BIND_SIZE_SNGLCONSTRS(*g_, 3);
+                ITU_T_BIND_PER(h_);
                 ITU_T_PER_END_OPEN;
             }
 
         };
 
+        ITU_T_BIND_PER(i_);
+        ITU_T_BIND_PER(j_);
     }
 
-    template<> void A::serialize(boost::asn1::x691::input_coder& arch) {
+    template<> void Ax::serialize(boost::asn1::x691::input_coder& arch) {
 
         ITU_T_EXTENTION_READ;
-        ITU_T_BIND_PER(*a_);
+
+        ITU_T_OPTIONAL_READ(2);
+
+        ITU_T_BIND_NUM_CONSTRS(*a_, static_cast<uint8_t> (250), static_cast<uint8_t> (253));
+        ITU_T_BIND_PER(*b_);
+        ITU_T_BIND_PER(*c_);
 
         if (ITU_T_EXTENTION) {
 
@@ -245,25 +316,84 @@ namespace Test1 {
 
             if (ITU_T_EXTENTION_GROUPS_CHECK(0)) {
                 ITU_T_PER_START_PARSE_OPEN;
-                ITU_T_OPTIONAL_READ(2);
-
-                ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(b_);
-                ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(c_);
-                ITU_T_PER_END_PARSE_OPEN;
-            }
-
-            if (ITU_T_EXTENTION_GROUPS_CHECK(1)) {
-                ITU_T_PER_START_PARSE_OPEN;
                 ITU_T_OPTIONAL_READ(1);
 
-                ITU_T_BIND_PER(*d_);
-                ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(e_);
+                ITU_T_BIND_SIZE_SNGLCONSTRS(*g_, 3);
+                ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(h_);
                 ITU_T_PER_END_PARSE_OPEN;
             }
 
-            ITU_T_PER_CLEAR_EXTENTIONS(2);
+            ITU_T_PER_CLEAR_EXTENTIONS(1);
         };
 
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(i_);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(j_);
+    }
+
+    // choice c
+
+    template<> void Ax::C_type::serialize(boost::asn1::x691::output_coder& arch) {
+
+        ITU_T_EXTENTION_WRITE_CHOICE(C_type_e, C_type_f);
+
+        if (ITU_T_EXTENTION) {
+            ITU_T_BIND_PER(*value<integer_type > (false, C_type_d));
+        } else {
+            switch (type()) {
+                case C_type_e:
+                {
+                    ITU_T_SET_NSN_SMALL_INDX(0);
+                    ITU_T_PER_START_OPEN;
+                    ITU_T_BIND_PER(*value<bool > (false, C_type_e));
+                    ITU_T_PER_END_OPEN;
+                    break;
+                }
+                case C_type_f:
+                {
+                    ITU_T_SET_NSN_SMALL_INDX(1);
+                    ITU_T_PER_START_OPEN;
+                    ITU_T_BIND_PER(*value<ia5string_type > (false, C_type_f));
+                    ITU_T_PER_END_OPEN;
+                    break;
+                }
+                default:
+                {
+                }
+            }
+        }
+    }
+
+    template<> void Ax::C_type::serialize(boost::asn1::x691::input_coder& arch) {
+
+        ITU_T_EXTENTION_READ;
+
+        if (ITU_T_EXTENTION) {
+            ITU_T_BIND_PER(*value<integer_type > (true, C_type_d));
+        } else {
+
+            ITU_T_GET_NSN_SMALL_INDX;
+
+            switch (__indx__) {
+                case 0:
+                {
+                    ITU_T_PER_START_PARSE_OPEN;
+                    ITU_T_BIND_PER(*value<bool > (false, C_type_e));
+                    ITU_T_PER_END_PARSE_OPEN;
+                    break;
+                }
+                case 1:
+                {
+                    ITU_T_PER_START_PARSE_OPEN;
+                    ITU_T_BIND_PER(*value<ia5string_type > (false, C_type_f));
+                    ITU_T_PER_END_PARSE_OPEN;
+                    break;
+                }
+                default:
+                {
+                    ITU_T_PER_CLEAR_EXTENTION;
+                }
+            }
+        }
     }
 
 }

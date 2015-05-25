@@ -201,7 +201,7 @@ int main(int argc, char* argv[]) {
     chlds.push_back(ChildInformation(Name(Name_impl(std::string("Susan"), std::string("B"), std::string("Jones"))), Date("19590717")));
     chlds.back().sex(boost::shared_ptr< enumerated_type>( new enumerated_type(ChildInformation::sex_female)));
 
-    PersonnelRecord iPRt;
+    PersonnelRecord_s iPRt;
 
 
     testoctet tst1(octet_sequnce({'\xAA', '\xA0'}), 5);
