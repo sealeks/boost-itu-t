@@ -155,9 +155,9 @@ namespace boost {
             public:
 
                 output_coder(encoding_rule rul = boost::itu::BER_ENCODING) :
-                boost::itu::base_output_coder(rul)  {
+                boost::itu::base_output_coder(rul) {
+                    canonical_ = (rule_ == boost::itu::CER_ENCODING);
                 }
-
 
                 template<typename T>
                 void operator&(const T& vl) {
@@ -199,10 +199,6 @@ namespace boost {
                 void pop_stack();
 
                 virtual void clear();
-
-                bool canonical() const {
-                    return rule_ == boost::itu::CER_ENCODING;
-                }
 
             private:
 
@@ -558,7 +554,7 @@ namespace boost {
 
             public:
 
-                input_coder(encoding_rule rul = boost::itu::BER_ENCODING) : 
+                input_coder(encoding_rule rul = boost::itu::BER_ENCODING) :
                 boost::itu::base_input_coder(rul) {
                 }
 

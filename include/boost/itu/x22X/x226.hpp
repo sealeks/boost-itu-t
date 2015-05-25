@@ -9,7 +9,7 @@
 
 #include <boost/itu/x22X/x225.hpp>
 #include <boost/itu/x69X/x690.hpp>
-
+#include <boost/itu/x69X/x691.hpp>
 
 namespace boost {
     namespace itu {
@@ -23,12 +23,13 @@ namespace boost {
             //   x226 utill   //
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 
-            const encoding_set DEFAULT_ENCODINGS = BER_ENCODING | CER_ENCODING | DER_ENCODING;
+            const encoding_set DEFAULT_ENCODINGS = BER_ENCODING | CER_ENCODING | DER_ENCODING;// PER_ALIGNED_ENCODING;
 
 
             // presentation_context
 
             class presentation_context {
+
             public:
 
                 presentation_context(const abstract_syntax_type& asyntax, encoding_set encing = DEFAULT_ENCODINGS) :
@@ -86,12 +87,11 @@ namespace boost {
             const presentation_req_type PRSNT_CONTEXT_MREQ = boost::asn1::bitstring_type(true, 0);
             const presentation_req_type PRSNT_REST_MREQ = boost::asn1::bitstring_type(true, 1);
             const presentation_req_type PRSNT_NULL_MREQ = boost::asn1::bitstring_type((int8_t) 0, 6);
-            
-            typedef int context_id_type;            
-            
-            
+
+            typedef int context_id_type;
 
             class protocol_option {
+
             public:
 
                 protocol_option(const presentation_context_set& cntexts, const presentation_selector& psel,
@@ -196,6 +196,10 @@ namespace boost {
             typedef boost::asn1::x690::output_coder x690_output_coder_type;
             typedef boost::itu::asn_coder_templ<x690_input_coder_type, x690_output_coder_type> x690_coder_type;
 
+            typedef boost::asn1::x691::input_coder x691_input_coder_type;
+            typedef boost::asn1::x691::output_coder x691_output_coder_type;
+            typedef boost::itu::asn_coder_templ<x691_input_coder_type, x691_output_coder_type> x691_coder_type;
+
 
 
 
@@ -207,6 +211,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                   
 
             class defined_context {
+
             public:
 
                 defined_context(const presentation_context& context);
@@ -226,7 +231,7 @@ namespace boost {
                 bool encoding(encoding_rule val);
 
                 bool valid() {
-                    return static_cast<bool>(coder_);
+                    return static_cast<bool> (coder_);
                 }
 
                 asn_coder_ptr coder() {
@@ -297,6 +302,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////               
 
             class defined_context_set {
+
             public:
 
                 defined_context_set() :
@@ -453,8 +459,8 @@ namespace boost {
 
             typedef shared_ptr<defined_context_set> defined_context_set_ptr;
 
-
             enum ppdu_enum {
+
                 null_ppdu,
                 error_ppdu,
                 cp_ppdu,
@@ -468,12 +474,13 @@ namespace boost {
             };
 
             enum negotiate_rslt_enum {
+
                 error_negotiate,
                 accept_negotiate,
                 reject_negotiate
             };
 
-            
+
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -482,6 +489,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 
             class presentation_socket : protected boost::itu::x225impl::itu_socket {
+
                 friend class socket_acceptor;
 
                 typedef boost::itu::x225impl::itu_socket super_type;
@@ -545,9 +553,9 @@ namespace boost {
                 //  Constructors  //
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                         
 
-                explicit presentation_socket(boost::asio::io_service& io_service, 
-                         const presentation_context_set& cntexts,
-                         const presentation_selector& psel = NULL_PRESENTATION_SELECTOR)
+                explicit presentation_socket(boost::asio::io_service& io_service,
+                        const presentation_context_set& cntexts,
+                        const presentation_selector& psel = NULL_PRESENTATION_SELECTOR)
                 : super_type(io_service, psel.sselector(), asn_coder_ptr(new presentation_coder_type())),
                 option_(cntexts, psel), dcs_(new defined_context_set(option_)), contexts_(cntexts) {
                 }
@@ -556,7 +564,7 @@ namespace boost {
                         const endpoint_type& endpoint, const presentation_context_set& cntexts,
                         const presentation_selector& psel = NULL_PRESENTATION_SELECTOR)
                 : super_type(io_service, endpoint, psel.sselector(), asn_coder_ptr(new presentation_coder_type())),
-                option_(cntexts, psel),  dcs_(new defined_context_set(option_)), contexts_(cntexts) {
+                option_(cntexts, psel), dcs_(new defined_context_set(option_)), contexts_(cntexts) {
                 }
 
 
@@ -587,6 +595,7 @@ namespace boost {
 
                 template <typename ConnectHandler>
                 class connect_operation {
+
                 public:
 
                     connect_operation(presentation_socket& sock, ConnectHandler handlr) : socket(sock), handler(handlr) {
@@ -629,7 +638,7 @@ namespace boost {
 
                     typedef connect_operation<ConnectHandler> connect_operation_type;
 
-                    super_type::async_connect(peer_endpoint, boost::bind(&connect_operation_type::operator (),
+                    super_type::async_connect(peer_endpoint, boost::bind(&connect_operation_type::operator(),
                             connect_operation_type(*this, handler), boost::asio::placeholders::error));
                 }
 
@@ -661,6 +670,7 @@ namespace boost {
 
                 template <typename RequestHandler>
                 class request_operation {
+
                 public:
 
                     request_operation(presentation_socket& sock, RequestHandler handlr) :
@@ -695,7 +705,7 @@ namespace boost {
                     if (error_code erreslt = build_DT_type())
                         handler(erreslt);
 
-                    super_type::async_request(boost::bind(&request_operation_type::operator (),
+                    super_type::async_request(boost::bind(&request_operation_type::operator(),
                             request_operation_type(*this, handler), boost::asio::placeholders::error));
                 }
 
@@ -728,6 +738,7 @@ namespace boost {
 
                 template <typename ResponseHandler>
                 class response_operation {
+
                 public:
 
                     response_operation(presentation_socket& sock, ResponseHandler handlr) :
@@ -768,7 +779,7 @@ namespace boost {
                     clear_input();
 
                     super_type::async_response(
-                            boost::bind(&response_operation_type::operator (),
+                            boost::bind(&response_operation_type::operator(),
                             response_operation_type(*this, handler), boost::asio::placeholders::error));
                 }
 
@@ -802,6 +813,7 @@ namespace boost {
 
                 template <typename ConversationHandler>
                 class conversation_operation {
+
                 public:
 
                     conversation_operation(presentation_socket& sock, ConversationHandler handlr) :
@@ -844,7 +856,7 @@ namespace boost {
                     clear_input();
 
                     super_type::async_response(
-                            boost::bind(&conversation_operation_type::operator (),
+                            boost::bind(&conversation_operation_type::operator(),
                             conversation_operation_type(*this, handler), boost::asio::placeholders::error));
                 }
 
@@ -861,8 +873,8 @@ namespace boost {
 
                 presentation_asn_coder_ptr coder() const {
                     return boost::static_pointer_cast<presentation_coder_type, basic_coder > (super_type::rootcoder());
-                }       
-                
+                }
+
                 void clear_input() {
                     if (dcs())
                         dcs()->clear_input();
@@ -871,7 +883,7 @@ namespace boost {
                 void clear_output() {
                     if (dcs())
                         dcs()->clear_output();
-                }                
+                }
 
                 defined_context_set_ptr dcs() {
                     return dcs_;
@@ -884,11 +896,10 @@ namespace boost {
                 const presentation_context_set& presentation_contexts() const {
                     return contexts_;
                 }
-                
 
                 virtual bool negotiate_presentation_accept() {
                     return true;
-                }                
+                }
 
             private:
 
@@ -956,6 +967,7 @@ namespace boost {
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             class socket_acceptor : public boost::itu::x225impl::socket_acceptor {
+
                 typedef boost::itu::x225impl::socket_acceptor super_type;
 
                 friend class presentation_socket;
@@ -1103,6 +1115,7 @@ namespace boost {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                  
 
         class x226 {
+
         public:
 
             typedef boost::asio::ip::basic_endpoint<boost::asio::ip::tcp> endpoint;

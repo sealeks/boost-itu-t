@@ -647,7 +647,8 @@ namespace boost {
             public:
 
                 output_coder(encoding_rule rul = boost::itu::PER_ALIGNED_ENCODING) :
-                boost::itu::base_output_coder(rul), unaligned_(rul == boost::itu::PER_UNALIGNED_ENCODING) {
+                boost::itu::base_output_coder(rul), unaligned_((rul == boost::itu::PER_UNALIGNED_ENCODING) || (rul == boost::itu::CPER_UNALIGNED_ENCODING)) {
+                    canonical_ = ((rul == boost::itu::CPER_ALIGNED_ENCODING) || (rul == boost::itu::CPER_UNALIGNED_ENCODING));
                 }
 
                 bool aligned() const {
@@ -657,7 +658,6 @@ namespace boost {
                 bool unaligned() const {
                     return unaligned_;
                 }
-
 
                 void add_bitmap(const bitstring_type & vl, bool alighn = false);
 
@@ -714,13 +714,10 @@ namespace boost {
                     *this & vl.value();
                 }
 
-                bool canonical() const {
-                    return rule_ == boost::itu::CER_ENCODING;
-                }
-
             private:
 
                 bool unaligned_;
+                bool canonical_;
 
             };
 
@@ -1278,7 +1275,7 @@ namespace boost {
             public:
 
                 input_coder(encoding_rule rul = boost::itu::PER_ALIGNED_ENCODING) :
-                boost::itu::base_input_coder(rul), unaligned_(rul == boost::itu::PER_UNALIGNED_ENCODING) {
+                boost::itu::base_input_coder(rul), unaligned_((rul == boost::itu::PER_UNALIGNED_ENCODING) || (rul == boost::itu::CPER_UNALIGNED_ENCODING)) {
                 }
 
                 bool aligned() const {
@@ -1316,14 +1313,14 @@ namespace boost {
                 std::size_t get_nsn_small();
 
                 void start_open();
-                
+
                 void end_open();
 
                 void get_extentions_marker(bitstring_type& vl);
-                
-                void clear_extentions(const bitstring_type& exbmp, std::size_t cnt);          
-                
-                void clear_extention();                   
+
+                void clear_extentions(const bitstring_type& exbmp, std::size_t cnt);
+
+                void clear_extention();
 
                 template<typename T>
                 void operator&(const T& vl) {

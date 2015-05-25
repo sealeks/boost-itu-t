@@ -442,7 +442,7 @@ namespace boost {
 
             base_output_coder(encoding_rule rl = NULL_ENCODING) :
             rule_(rl), unuse_(0), listbuffers_(new const_sequences()),
-            rows_vect_(new octet_sequnce_ptr_vect()), size_(0) {
+            rows_vect_(new octet_sequnce_ptr_vect()), size_(0), canonical_(false) {
             }
 
             virtual ~base_output_coder() {
@@ -537,6 +537,10 @@ namespace boost {
                     unusebits(0);
             }
 
+            bool canonical() const {
+                return canonical_;
+            }
+
         protected:
 
             void datastate_push();
@@ -569,6 +573,7 @@ namespace boost {
             /////////////////////////////////////////////////////            
 
             state_stack_type state_stack_;
+            bool canonical_;
 
         };
 

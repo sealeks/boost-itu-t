@@ -37,6 +37,10 @@ namespace boost {
                     case BER_ENCODING:
                     case DER_ENCODING:
                     case CER_ENCODING: return asn_coder_ptr(new x690_coder_type(context.abstract_syntax(), context.encoding()));
+                    case PER_ALIGNED_ENCODING:
+                    case PER_UNALIGNED_ENCODING:
+                    case CPER_ALIGNED_ENCODING:
+                    case CPER_UNALIGNED_ENCODING:  return asn_coder_ptr(new x691_coder_type(context.abstract_syntax(), context.encoding()));                    
                     default:
                     {
                     }
