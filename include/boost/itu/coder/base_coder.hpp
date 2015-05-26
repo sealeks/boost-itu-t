@@ -37,6 +37,7 @@ namespace boost {
 
         typedef std::size_t oidindx_type;
 
+        
 
         //// OID_TYPE
 
