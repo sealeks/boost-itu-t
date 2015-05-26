@@ -375,6 +375,34 @@ namespace boost {
             template<>
             void x690_string_to_stream_cast(const universalstring_type& val, output_coder& stream, octet_type lentype);
 
+            template<>
+            void x690_string_to_stream_cast(const numericstring_type& val, output_coder& stream, octet_type lentype);
+
+            template<>
+            void x690_string_to_stream_cast(const printablestring_type& val, output_coder& stream, octet_type lentype);
+
+            template<>
+            void x690_string_to_stream_cast(const t61string_type & val, output_coder& stream, octet_type lentype);
+            
+            template<>
+            void x690_string_to_stream_cast(const videotexstring_type& val, output_coder& stream, octet_type lentype);
+
+            template<>
+            void x690_string_to_stream_cast(const ia5string_type& val, output_coder& stream, octet_type lentype);
+
+            template<>
+            void x690_string_to_stream_cast(const graphicstring_type& val, output_coder& stream, octet_type lentype);
+            
+            template<>
+            void x690_string_to_stream_cast(const objectdescriptor_type & val, output_coder& stream, octet_type lentype);
+
+            template<>
+            void x690_string_to_stream_cast(const visiblestring_type& val, output_coder& stream, octet_type lentype);
+
+            template<>
+            void x690_string_to_stream_cast(const generalstring_type& val, output_coder& stream, octet_type lentype);             
+
+
             template<typename T>
             output_coder& stringtype_writer(output_coder& stream, const T& vl, id_type id, octet_type mask) {
 

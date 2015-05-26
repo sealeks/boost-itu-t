@@ -12,15 +12,14 @@ namespace boost {
     namespace asn1 {
         namespace x690 {
 
-
             std::ostream& operator<<(std::ostream& stream, const size_class& vl) {
                 return vl.undefsize() ? (stream << "SIZE:  undef" << '\n') : (stream << "SIZE:  " << vl.size() << '\n');
-            }            
-            
+            }
+
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////     
             /*OUTPUT STREAM                                                                                                                                                                                               */
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////               
-            
+
 
 
             ///////////////////////////////////////////////////////////////////////////////////
@@ -98,6 +97,51 @@ namespace boost {
             template<>
             void x690_string_to_stream_cast(const universalstring_type& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(val.as_octets(), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const numericstring_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const printablestring_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const t61string_type & val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const videotexstring_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const ia5string_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const graphicstring_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const objectdescriptor_type & val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const visiblestring_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
+            }
+
+            template<>
+            void x690_string_to_stream_cast(const generalstring_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(as_octet_sequnce(val), stream, lentype);
             }
 
             template<>

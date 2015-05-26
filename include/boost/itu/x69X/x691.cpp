@@ -382,7 +382,7 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const t61string_type& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce());
+                return octet_writer_undefsz(stream, as_octet_sequnce(vl));
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<t61string_type>& vl) {
@@ -390,7 +390,7 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const videotexstring_type& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce());
+                return octet_writer_undefsz(stream, as_octet_sequnce(vl));
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<videotexstring_type>& vl) {
@@ -406,7 +406,7 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const graphicstring_type& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce());
+                return octet_writer_undefsz(stream, as_octet_sequnce(vl));
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<graphicstring_type>& vl) {
@@ -414,7 +414,7 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const objectdescriptor_type& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce());
+                return octet_writer_undefsz(stream, as_octet_sequnce(vl));
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<objectdescriptor_type>& vl) {
@@ -430,7 +430,7 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const generalstring_type& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce());
+                return octet_writer_undefsz(stream, as_octet_sequnce(vl));
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<generalstring_type>& vl) {

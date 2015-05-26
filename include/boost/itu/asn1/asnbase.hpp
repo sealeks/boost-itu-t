@@ -51,6 +51,8 @@ BOOST_STATIC_ASSERT(sizeof (wchar_t) == 2);
 
 #define ITU_T_ARRAY(...) __VA_ARGS__
 
+#define ITU_T_SIMPLE_STRING_TRAITS( name) struct name : public std::string::traits_type{};
+
 #define ITU_T_SET_REGESTRATE(regtype) \
 namespace boost {\
         namespace asn1 {\
@@ -522,82 +524,68 @@ namespace boost {
         //  SIMLE STRING TYPE
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        template<id_type TAGID>
-        class simplestring_type : public std::string {
 
-        public:
+        ITU_T_SIMPLE_STRING_TRAITS(numericstring_traits); // known-multi 1 oct
+        ITU_T_SIMPLE_STRING_TRAITS(printablestring_traits); // known-multi 1 oct
+        ITU_T_SIMPLE_STRING_TRAITS(t61string_traits);
+        ITU_T_SIMPLE_STRING_TRAITS(videotexstring_traits);
+        //ITU_T_SIMPLE_STRING_TRAITS(ia5string_traits); // known-multi 1 oct
+        ITU_T_SIMPLE_STRING_TRAITS(graphicstring_traits);
+        ITU_T_SIMPLE_STRING_TRAITS(objectdescriptor_traits);
+        ITU_T_SIMPLE_STRING_TRAITS(visiblestring_traits); // known-multi 1 oct
+        ITU_T_SIMPLE_STRING_TRAITS(generalstring_traits);
+        
+        typedef std::string::value_type main_char_type;
 
-            simplestring_type() : std::string() {
-            }
-
-            explicit simplestring_type(const octet_sequnce& vl) : std::string(vl.begin(), vl.end()) {
-            }
-
-            simplestring_type(const std::string& vl) : std::string(vl) {
-            }
-
-            simplestring_type(const std::string::value_type* vl) : std::string(vl) {
-            }
-
-            operator octet_sequnce() const {
-                return octet_sequnce(begin(), end());
-            }
-
-            octet_sequnce as_octet_sequnce() const {
-                return octet_sequnce(begin(), end());
-            }
-
-            operator std::string() const {
-                return *this;
-            }
-
-            static id_type tagid() {
-                return TAGID;
-            }
-
-        };
-
-
-        typedef simplestring_type<TYPE_NUMERICSTRING> numericstring_type; // known-multi 1 oct
-        typedef simplestring_type<TYPE_PRINTABLESTRING> printablestring_type; // known-multi 1 oct
-        typedef simplestring_type<TYPE_T61STRING> t61string_type;
-        typedef simplestring_type<TYPE_VIDEOTEXSTRING> videotexstring_type;
-        typedef simplestring_type<TYPE_IA5STRING> ia5string_type; // known-multi 1 oct
-        typedef simplestring_type<TYPE_GRAPHICSTRING> graphicstring_type;
-        typedef simplestring_type<TYPE_OBJECT_DESCRIPTOR> objectdescriptor_type;
-        typedef simplestring_type<TYPE_VISIBLESTRING> visiblestring_type; // known-multi 1 oct
-        typedef simplestring_type<TYPE_GENERALSTRING> generalstring_type;
-
+        typedef std::basic_string<main_char_type, numericstring_traits > numericstring_type; // known-multi 1 oct
+        typedef std::basic_string<main_char_type, printablestring_traits > printablestring_type; // known-multi 1 oct
+        typedef std::basic_string<main_char_type, t61string_traits > t61string_type;
+        typedef std::basic_string<main_char_type, videotexstring_traits > videotexstring_type;
+        //typedef std::basic_string<main_char_type, ia5string_traits > ia5string_type; // known-multi 1 oct
+        typedef std::string ia5string_type; // known-multi 1 oct
+        typedef std::basic_string<main_char_type, graphicstring_traits > graphicstring_type;
+        typedef std::basic_string<main_char_type, objectdescriptor_traits > objectdescriptor_type;
+        typedef std::basic_string<main_char_type, visiblestring_traits > visiblestring_type; // known-multi 1 oct
+        typedef std::basic_string<main_char_type, generalstring_traits > generalstring_type;
+     
+        
+        template<typename T>
+        octet_sequnce as_octet_sequnce(const T& vl) {
+            return octet_sequnce(vl.begin(), vl.end());
+        }       
+        
+        
         inline std::ostream& operator<<(std::ostream& stream, const numericstring_type& vl) {
-            return stream << vl.operator std::string();
+            return stream << std::string(vl.begin(), vl.end());
         }
 
         inline std::ostream& operator<<(std::ostream& stream, const printablestring_type& vl) {
-            return stream << vl.operator std::string();
+            return stream << std::string(vl.begin(), vl.end());
         }
 
         inline std::ostream& operator<<(std::ostream& stream, const t61string_type& vl) {
-            return stream << vl.operator std::string();
+            return stream << std::string(vl.begin(), vl.end());
         }
 
         inline std::ostream& operator<<(std::ostream& stream, const videotexstring_type& vl) {
-            return stream << vl.operator std::string();
+            return stream << std::string(vl.begin(), vl.end());
         }
 
         inline std::ostream& operator<<(std::ostream& stream, const ia5string_type& vl) {
-            return stream << vl.operator std::string();
+            //return stream << std::string(vl.begin(), vl.end());
+            return stream << vl;            
         }
 
         inline std::ostream& operator<<(std::ostream& stream, const graphicstring_type& vl) {
-            return stream << vl.operator std::string();
+            return stream << std::string(vl.begin(), vl.end());
         }
 
         inline std::ostream& operator<<(std::ostream& stream, const visiblestring_type& vl) {
-            return stream << vl.operator std::string();
+            return stream << std::string(vl.begin(), vl.end());
         }
 
         inline std::ostream& operator<<(std::ostream& stream, const generalstring_type& vl) {
-            return stream << vl.operator std::string();
+            return stream << std::string(vl.begin(), vl.end());
         }
 
 
