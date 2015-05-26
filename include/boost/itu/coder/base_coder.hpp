@@ -82,8 +82,6 @@ namespace boost {
         const encoding_rule CPER_ALIGNED_ENCODING = 0x12;
         const encoding_rule CPER_UNALIGNED_ENCODING = 0x14;
 
-        const std::size_t ENCODING_RULE_MAX_BIT = 3;
-
         typedef oid_type transfer_syntax_type;
         typedef oid_type abstract_syntax_type;
         typedef std::set<transfer_syntax_type> transfer_syntax_set;
@@ -96,15 +94,7 @@ namespace boost {
 
         // with encoding priority 
 
-        inline static encoding_rule to_encoding_rule(encoding_set val) {
-            std::size_t rslt = 0;
-            while (rslt <= ENCODING_RULE_MAX_BIT) {
-                if ((1 << rslt) & val)
-                    return (1 << rslt);
-                rslt++;
-            }
-            return NULL_ENCODING;
-        }
+        encoding_rule to_encoding_rule(encoding_set val);
 
 
 

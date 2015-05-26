@@ -1702,7 +1702,7 @@ namespace boost {
             }
 
             operator bool() const {
-                return ((internal_) || (* internal_ != DT));
+                return ((internal_) && (* internal_ != DT));
             }
 
             const T& operator=(const T & vl) {

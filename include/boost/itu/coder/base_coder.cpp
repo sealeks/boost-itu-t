@@ -401,6 +401,20 @@ namespace boost {
 
     namespace itu {
 
+
+        const std::size_t ENCODING_RULE_MAX_BIT = 7;
+
+        encoding_rule to_encoding_rule(encoding_set val) {
+            std::size_t rslt = 0;
+            while (rslt <= ENCODING_RULE_MAX_BIT) {
+                if ((1 << rslt) & val)
+                    return (1 << rslt);
+                rslt++;
+            }
+            return NULL_ENCODING;
+        }
+        
+
         const transfer_syntax_type& to_transfer_syntax(encoding_rule rule) {
             switch (rule) {
                 case BER_ENCODING: return boost::asn1::BASIC_ENCODING_OID;
@@ -438,7 +452,7 @@ namespace boost {
         transfer_syntax_set to_transfer_syntax_set(encoding_set rules) {
             transfer_syntax_set rslt;
             for (std::size_t it = 0; it <= ENCODING_RULE_MAX_BIT; ++it) {
-                if (rules && (1 << it)) {
+                if (rules & (1 << it)) {
                     if (to_transfer_syntax(1 << it) != boost::asn1::NULL_ENCODING_OID)
                         rslt.insert(to_transfer_syntax((1 << it)));
                 }
