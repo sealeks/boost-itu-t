@@ -37,7 +37,28 @@ namespace boost {
 
         typedef std::size_t oidindx_type;
 
+        /*template<typename _Tp>
+        class allocator : public std::allocator<_Tp> {
+
+        public:
+
+            allocator() throw () {
+            }
+
+            allocator(const allocator& __a) throw ()
+            : std::allocator<_Tp>(__a) {
+            }
+
+            template<typename _Tp1>
+            allocator(const allocator<_Tp1>&) throw () {
+            }
+
+            ~allocator() throw () {
+            }
+
+        };
         
+        typedef std::vector<oidindx_type, boost::asn1::allocator<oidindx_type> > oid_type;*/        
 
         //// OID_TYPE
 
@@ -55,7 +76,7 @@ namespace boost {
             explicit oid_type(const oidindx_type * vl, std::size_t size);
 
         };
-
+        
         const oid_type NULL_OID = oid_type();
 
 
