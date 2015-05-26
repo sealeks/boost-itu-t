@@ -1323,39 +1323,39 @@ namespace boost {
                 void clear_extention();
 
                 template<typename T>
-                void operator&(const T& vl) {
-                    *this >> const_cast<T&> (vl);
+                void operator&(T& vl) {
+                    *this >> vl;
                 }
 
                 template<typename T>
-                void operator&(const boost::shared_ptr<T >& vl) {
+                void operator&(boost::shared_ptr<T >& vl) {
                     if (!static_cast<bool> (vl))
-                        const_cast<boost::shared_ptr<T >&> (vl) = boost::shared_ptr<T >(new T());
+                        vl = boost::shared_ptr<T >(new T());
                     * this & (*vl);
                 }
 
                 template<typename T>
-                void operator&(const per_enumerated_holder<T >& vl) {
-                    *this >> const_cast<per_enumerated_holder<T >&> (vl);
+                void operator&(per_enumerated_holder<T >& vl) {
+                    *this >> vl;
                 }
 
                 template<typename T>
-                void operator&(const explicit_value<T >& vl) {
+                void operator&(explicit_value<T >& vl) {
                     *this & vl.value();
                 }
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
-                void operator&(const explicit_typedef <T, Tag, ID, TYPE>& vl) {
+                void operator&(explicit_typedef <T, Tag, ID, TYPE>& vl) {
                     *this & vl.value();
                 }
 
                 template<typename T>
-                void operator&(const implicit_value<T >& vl) {
+                void operator&(implicit_value<T >& vl) {
                     *this & vl.value();
                 }
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
-                void operator&(const implicit_typedef <T, Tag, ID, TYPE>& vl) {
+                void operator&(implicit_typedef <T, Tag, ID, TYPE>& vl) {
                     *this & vl.value();
                 }
 
@@ -2042,7 +2042,8 @@ namespace boost {
 
         template<typename T>
         inline bool bind_per_enum(boost::asn1::x691::input_coder & arch, enumerated_type& vl) {
-            arch & per_enumerated_holder<T>(vl);
+            per_enumerated_holder<T> tmpvl(vl);
+            arch & tmpvl;
             return true;
         }
 
@@ -2101,7 +2102,8 @@ namespace boost {
         template<typename Archive, typename T>
         inline bool bind_constraints(Archive & arch, T& vl, const T& MIN, const T& MAX, bool ext) {
             std::size_t tst = arch.size();
-            arch & num_constrainter<T> (vl, MIN, MAX, ext);
+            num_constrainter<T> tmpvl(vl, MIN, MAX, ext);
+            arch & tmpvl;
             return (arch.size() != tst);
         }
 
@@ -2156,7 +2158,8 @@ namespace boost {
 
         template<typename Archive, typename T>
         inline bool bind_sizeconstraints(Archive & arch, T& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
-            arch & size_constrainter<T> (vl, MIN, MAX, ext);
+            size_constrainter<T> tmpvl(vl, MIN, MAX, ext);
+            arch & tmpvl;
             return true;
         }
 
@@ -2208,7 +2211,8 @@ namespace boost {
 
         template<typename T, typename E>
         inline bool bind_sizeconstraints_ext(boost::asn1::x691::output_coder & arch, T& vl, const std::size_t& MIN, const std::size_t& MAX, bool ext) {
-            arch & size_constrainter<T, E> (vl, MIN, MAX, ext);
+            size_constrainter<T, E> tmpvl(vl, MIN, MAX, ext);
+            arch & tmpvl;
             return true;
         }
 

@@ -447,91 +447,91 @@ namespace boost {
             ////////////////////////////////////////////
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<int8_t>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<int8_t>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<uint8_t>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<uint8_t>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<int16_t>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<int16_t>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<uint16_t>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<uint16_t>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<int32_t>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<int32_t>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<uint32_t>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<uint32_t>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<int64_t>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<int64_t>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<uint64_t>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<uint64_t>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<enumerated_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<enumerated_type>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<float>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<float>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<double>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<double>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<long double>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<long double>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<bool>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<bool>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<null_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<null_type>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<oid_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<oid_type>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<reloid_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<reloid_type>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<any_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<any_type>& vl) {
                 std::size_t sz = stream.stack_size();
                 octet_sequnce data;
                 if (boost::itu::row_cast(stream.buffers(), stream.buffers().begin(), data, 0, sz)) {
-                    if (from_x690_cast(*const_cast<any_type*> (&vl.value()), data)) {
+                    if (from_x690_cast(vl.value(), data)) {
                         // stream.pop_stack();
                     }
                 }
@@ -540,110 +540,96 @@ namespace boost {
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<bitstring_type>& vl) {
-                //const_cast<bitstring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<bitstring_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<bitstring_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<octetstring_type>& vl) {
-                //const_cast<octetstring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<octetstring_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<octetstring_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<utf8string_type>& vl) {
-                //const_cast<utf8string_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<utf8string_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<utf8string_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<numericstring_type>& vl) {
-                //const_cast<numericstring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<numericstring_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<numericstring_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<printablestring_type>& vl) {
-                //const_cast<printablestring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<printablestring_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<printablestring_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<t61string_type>& vl) {
-                //const_cast<t61string_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<t61string_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<t61string_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<videotexstring_type>& vl) {
-                //const_cast<videotexstring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<videotexstring_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<videotexstring_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<ia5string_type>& vl) {
-                //const_cast<ia5string_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<ia5string_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<ia5string_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<graphicstring_type>& vl) {
-                //const_cast<graphicstring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<graphicstring_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<graphicstring_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<objectdescriptor_type>& vl) {
-                //const_cast<objectdescriptor_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<objectdescriptor_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<objectdescriptor_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<visiblestring_type>& vl) {
-                //const_cast<visiblestring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<visiblestring_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<visiblestring_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<generalstring_type>& vl) {
-                //const_cast<generalstring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<generalstring_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<generalstring_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<universalstring_type>& vl) {
-                //const_cast<universalstring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<universalstring_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<universalstring_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<bmpstring_type>& vl) {
-                //const_cast<bmpstring_type*> (&(vl.value()))->clear();
-                stringtype_reader(stream, *const_cast<bmpstring_type*> (&(vl.value())), vl.id(), vl.mask());
+            input_coder& operator>>(input_coder& stream, implicit_value<bmpstring_type>& vl) {
+                stringtype_reader(stream, vl.value(), vl.id(), vl.mask());
                 return stream;
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<utctime_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<utctime_type>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
             template<>
-            input_coder& operator>>(input_coder& stream, const implicit_value<gentime_type>& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value<gentime_type>& vl) {
                 return primitive_deserialize(stream, vl);
             }
 
