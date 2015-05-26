@@ -575,10 +575,10 @@ namespace boost {
             return stream << std::string(vl.begin(), vl.end());
         }
 
-        inline std::ostream& operator<<(std::ostream& stream, const ia5string_type& vl) {
-            //return stream << std::string(vl.begin(), vl.end());
-            return stream << vl;            
-        }
+        /*inline std::ostream& operator<<(std::ostream& stream, const ia5string_type& vl) {
+            return stream << std::string(vl.begin(), vl.end());
+            //return stream << vl;            
+        }*/
 
         inline std::ostream& operator<<(std::ostream& stream, const graphicstring_type& vl) {
             return stream << std::string(vl.begin(), vl.end());
