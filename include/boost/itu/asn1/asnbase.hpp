@@ -554,6 +554,10 @@ namespace boost {
             return octet_sequnce(vl.begin(), vl.end());
         }       
         
+        template<typename T>
+        std::string as_std_string(const T& vl) {
+            return std::string(vl.begin(), vl.end());
+        }                  
         
         inline std::ostream& operator<<(std::ostream& stream, const numericstring_type& vl) {
             return stream << std::string(vl.begin(), vl.end());

@@ -684,7 +684,6 @@ namespace boost {
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, optional_explicit_value<T>& vl) {
-                typedef boost::shared_ptr<T> shared_type;
                 if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
                     vl.value() = boost::shared_ptr<T > (new T());
                     explicit_value<T > tmpvl(*vl.value(), vl.id(), vl.type());
@@ -696,7 +695,6 @@ namespace boost {
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, optional_explicit_value< std::vector<T> >& vl) {
-                typedef boost::shared_ptr< std::vector<T> > shared_type;
                 if (stream.parse_tl(vl, false, true)) {
                     vl.value() = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
                     explicit_value<std::vector<T> > tmpvl(*vl.value(), vl.id(), vl.type());
@@ -708,7 +706,6 @@ namespace boost {
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, optional_explicit_value< std::deque<T> >& vl) {
-                typedef boost::shared_ptr< std::deque<T> > shared_type;
                 if (stream.parse_tl(vl, false, true)) {
                     vl.value() = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
                     explicit_value<std::deque<T> > tmpvl(*vl.value(), vl.id(), vl.type());
@@ -731,7 +728,6 @@ namespace boost {
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, optional_implicit_value<T>& vl) {
-                typedef boost::shared_ptr<T> shared_type;
                 if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
                     vl.value() = boost::shared_ptr<T > (new T());
                     implicit_value<T > tmpvl(*vl.value(), vl.id(), vl.type());
@@ -743,7 +739,6 @@ namespace boost {
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, optional_implicit_value< std::vector<T> >& vl) {
-                typedef boost::shared_ptr< std::vector<T> > shared_type;
                 if (stream.parse_tl(vl, false, true)) {
                     vl.value() = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
                     implicit_value<std::vector<T> > tmpvl(*vl.value(), vl.id(), vl.type());
@@ -755,7 +750,6 @@ namespace boost {
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, optional_implicit_value< std::deque<T> >& vl) {
-                typedef boost::shared_ptr< std::deque<T> > shared_type;
                 if (stream.parse_tl(vl, false, true)) {
                     vl.value() = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
                     implicit_value<std::deque<T> > tmpvl(*vl.value(), vl.id(), vl.type());
