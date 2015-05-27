@@ -1015,14 +1015,17 @@ namespace boost {
             }
 
             friend bool operator<(const tag& ls, const tag& rs) {
-                if (static_cast<uint8_t> (ls.type() | CONSTRUCTED_ENCODING) == static_cast<uint8_t> (rs.type() | CONSTRUCTED_ENCODING))
+                if (static_cast<uint8_t> (ls.type() | CONSTRUCTED_ENCODING) ==
+                        static_cast<uint8_t> (rs.type() | CONSTRUCTED_ENCODING))
                     return ls.id() < rs.id();
                 else
-                    return static_cast<uint8_t> (ls.type() | CONSTRUCTED_ENCODING) < static_cast<uint8_t> (rs.type() | CONSTRUCTED_ENCODING);
+                    return static_cast<uint8_t> (ls.type() | CONSTRUCTED_ENCODING) <
+                            static_cast<uint8_t> (rs.type() | CONSTRUCTED_ENCODING);
             }
 
             friend bool operator==(const tag& ls, const tag& rs) {
-                if (static_cast<uint8_t> (ls.type() | CONSTRUCTED_ENCODING) == static_cast<uint8_t> (rs.type() | CONSTRUCTED_ENCODING))
+                if (static_cast<uint8_t> (ls.type() | CONSTRUCTED_ENCODING) ==
+                        static_cast<uint8_t> (rs.type() | CONSTRUCTED_ENCODING))
                     return ls.id() == rs.id();
                 return false;
             }
@@ -1050,10 +1053,12 @@ namespace boost {
 
             typedef T base_type;
 
-            explicit explicit_value(T& vl, id_type id, const class_type& type = CONTEXT_CLASS) : id_(id), val_(vl), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
+            explicit explicit_value(T& vl, id_type id, const class_type& type = CONTEXT_CLASS) :
+            id_(id), val_(vl), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
             }
 
-            explicit explicit_value(const T& vl, id_type id, const class_type& type = CONTEXT_CLASS) : id_(id), val_(const_cast<T&> (vl)), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
+            explicit explicit_value(const T& vl, id_type id, const class_type& type = CONTEXT_CLASS) :
+            id_(id), val_(const_cast<T&> (vl)), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
             }
 
             const T& value() const {
@@ -1156,7 +1161,8 @@ namespace boost {
             }
 
             bool operator==(const tag& rs) const {
-                return (id() == rs.id() && (mask() | CONSTRUCTED_ENCODING) == (rs.mask() | CONSTRUCTED_ENCODING));
+                return (id() == rs.id() && (mask() | CONSTRUCTED_ENCODING) ==
+                        (rs.mask() | CONSTRUCTED_ENCODING));
             }
 
             operator tag() const {
@@ -1188,10 +1194,12 @@ namespace boost {
             typedef shared_ptr<S> T;
             typedef S root_type;
 
-            explicit optional_explicit_value(T& vl, id_type id, const class_type& type = CONTEXT_CLASS) : id_(id), val_(vl), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
+            explicit optional_explicit_value(T& vl, id_type id, const class_type& type = CONTEXT_CLASS) :
+            id_(id), val_(vl), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
             }
 
-            explicit optional_explicit_value(const T& vl, id_type id, const class_type& type = CONTEXT_CLASS) : id_(id), val_(const_cast<T&> (vl)), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
+            explicit optional_explicit_value(const T& vl, id_type id, const class_type& type = CONTEXT_CLASS) :
+            id_(id), val_(const_cast<T&> (vl)), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
             }
 
             const T& value() const {
@@ -1295,7 +1303,8 @@ namespace boost {
             }
 
             bool operator==(const tag& rs) const {
-                return (id() == rs.id() && (mask() | CONSTRUCTED_ENCODING) == (rs.mask() | CONSTRUCTED_ENCODING));
+                return (id() == rs.id() && (mask() | CONSTRUCTED_ENCODING) ==
+                        (rs.mask() | CONSTRUCTED_ENCODING));
             }
 
             operator tag() const {
@@ -1456,11 +1465,13 @@ namespace boost {
                 return TYPE;
             }
 
-            friend bool operator==(const explicit_typedef<T, Tag, ID, TYPE>& ls, const explicit_typedef<T, Tag, ID, TYPE>& rs) {
+            friend bool operator==(const explicit_typedef<T, Tag, ID, TYPE>& ls, 
+            const explicit_typedef<T, Tag, ID, TYPE>& rs) {
                 return (ls.value_ == rs.value_);
             }
 
-            friend bool operator!=(const explicit_typedef<T, Tag, ID, TYPE>& ls, const explicit_typedef<T, Tag, ID, TYPE>& rs) {
+            friend bool operator!=(const explicit_typedef<T, Tag, ID, TYPE>& ls, 
+            const explicit_typedef<T, Tag, ID, TYPE>& rs) {
                 return (ls.value_ != rs.value_);
             }
 
