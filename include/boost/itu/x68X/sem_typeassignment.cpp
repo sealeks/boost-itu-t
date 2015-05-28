@@ -913,25 +913,26 @@ namespace x680 {
     }
 
     tagged_vct type_atom::true_tags_sequence() {
-        tagged_vct rslt = tags_sequence();
-        if (rslt.size() > 1) {
-            tagged_vct::iterator fit = rslt.begin() + 1;
-            while ((rslt.size() > 1) && (fit != rslt.end())) {
-                for (tagged_vct::iterator it = fit; it != rslt.end(); ++it) {
-                    if ((((*it)->rule() == implicit_tags)) && ((*(it - 1))->rule() == implicit_tags)) {
-                        fit = rslt.erase(it - 1);
-                        break;
-                    } else
-                        ++fit;
-                }
+        tagged_vct frslt = tags_sequence();
+        if (frslt.size() > 1) {
+            tagged_vct rslt;
+            for (tagged_vct::const_iterator it = frslt.begin(); it != frslt.end(); ++it) {
+                if (((*it)->rule() == implicit_tags) && (!rslt.empty())) {
+                    tagged_ptr delel = rslt.back();
+                    rslt.back() = tagged_ptr(new tagged(*(*it)));
+                    if (delel->rule() != implicit_tags)
+                        rslt.back()->rule(delel->rule());
+                } else
+                    rslt.push_back(*it);
             }
+            return rslt;
         }
-        return rslt;
+        return frslt;
     }
 
     bool type_atom::untagged() {
         return tags_sequence().empty();
-    }   
+    }
 
     defined_type type_atom::root_builtin() {
         if (builtin() != t_Reference)
