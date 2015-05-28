@@ -212,13 +212,17 @@ namespace x680 {
                 if ((main_int_cnstr.left_ptr()) && (main_int_cnstr.right_ptr())) {
                     bool negat = main_int_cnstr.left() < 0;
                     if (negat) {
-                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int8_t>::min()) && (main_int_cnstr.right() <= std::numeric_limits<boost::int8_t>::max()))
+                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int8_t>::min()) &&
+                                (main_int_cnstr.right() <= std::numeric_limits<boost::int8_t>::max()))
                             return "int8_t";
-                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int16_t>::min()) && (main_int_cnstr.right() <= std::numeric_limits<boost::int16_t>::max()))
+                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int16_t>::min()) &&
+                                (main_int_cnstr.right() <= std::numeric_limits<boost::int16_t>::max()))
                             return "int16_t";
-                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int32_t>::min()) && (main_int_cnstr.right() <= std::numeric_limits<boost::int32_t>::max()))
+                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int32_t>::min()) &&
+                                (main_int_cnstr.right() <= std::numeric_limits<boost::int32_t>::max()))
                             return "int32_t";
-                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int64_t>::min()) && (main_int_cnstr.right() <= std::numeric_limits<boost::int64_t>::max()))
+                        if ((main_int_cnstr.left() >= std::numeric_limits<boost::int64_t>::min()) &&
+                                (main_int_cnstr.right() <= std::numeric_limits<boost::int64_t>::max()))
                             return "int64_t";
                     } else {
                         if (main_int_cnstr.right() <= std::numeric_limits<boost::uint8_t>::max())
@@ -338,10 +342,8 @@ namespace x680 {
         }
 
         std::string fullpathtype_str(typeassignment_entity_ptr self, typeassignment_entity_ptr root, std::string tp) {
-            if (self->islocaldeclare()) {
-                return fulltype_str(root, false) + "::" + tp;
-            } else
-                return fromtype_str(self);
+            return (self->islocaldeclare()) ?
+                    (fulltype_str(root, false) + "::" + tp) : fromtype_str(self);
         }
 
         std::string value_int_str(value_atom_ptr self) {
@@ -349,7 +351,6 @@ namespace x680 {
                 try {
                     return boost::lexical_cast<std::string > (*(self->get_value<int64_t>()));
                 } catch (boost::bad_lexical_cast) {
-                    return "???num???";
                 }
             }
             return "???num???";
@@ -642,7 +643,8 @@ namespace x680 {
             if (self) {
                 if ((self->reff()) && (self->reff()->as_typeassigment()) && (self->isrefferrence())) {
                     module_entity_ptr fmd = self->reff()->as_typeassigment()->moduleref();
-                    return (fmd && (fmd != self->moduleref())) ? (nameconvert(fmd->name()) + "::" + nameupper(nameconvert(self->reff()->name())))
+                    return (fmd && (fmd != self->moduleref())) ?
+                            (nameconvert(fmd->name()) + "::" + nameupper(nameconvert(self->reff()->name())))
                             : nameupper(nameconvert(self->reff()->name()));
                 } else if (self->isstructure())
                     return "???type???";
@@ -680,7 +682,6 @@ namespace x680 {
                         declare_vect::iterator fit = find_remote_reff(vct, it->from_type, vct.begin());
                         if (fit != vct.end()) {
                             if (fit->remote_) {
-
                                 it->remote_ = true;
                                 fnd = true;
                             }
@@ -702,7 +703,6 @@ namespace x680 {
                             break;
                         }
                         if ((it + 1) == vct.end())
-
                             return false;
                     }
                 }
@@ -712,7 +712,6 @@ namespace x680 {
 
         bool default_supported(typeassignment_entity_ptr self) {
             switch (self->root_builtin()) {
-
                 case t_INTEGER:
                 case t_BOOLEAN:
                 case t_REAL:
@@ -737,7 +736,6 @@ namespace x680 {
                 }
                 default:
                 {
-
                     return simple ? str : ("value_holder<" + str + ">");
                 }
             }
@@ -747,7 +745,6 @@ namespace x680 {
         std::string seqof_str(typeassignment_entity_ptr self, const std::string& name) {
             if (self->builtin() == t_SEQUENCE_OF)
                 return "typedef std::vector< " + name + "> ";
-
             else
                 return "typedef std::deque< " + name + "> ";
         }
@@ -1026,7 +1023,6 @@ namespace x680 {
             for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
                 typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
                 if (tpas && (tpas->is_cpp_expressed())) {
-
                     if ((tpas->isstruct_of()) && (!tpas->childs().empty()))
                         load_typedef_structof_impl(vct, tpas);
                 }
@@ -1299,6 +1295,25 @@ namespace x680 {
             }
         }
 
+        static std::string execute_prefixed_static(const declare_atom& vl, basic_entity_ptr scp) {
+            std::string rslt;
+            if (type_atom_ptr tmptp = vl.typ->type()) {
+                tagged_vct tags = tmptp->true_tags_sequence();
+                if (!tags.empty()) {
+                    bool isexplicit = (tags.back()->rule() == explicit_tags);
+                    rslt += ("ITU_T_PREFIXED_DECLARE( " + vl.typenam + ", ITU_T_ARRAY(");
+                    for (tagged_vct::const_iterator it = tags.begin(); it != tags.end(); ++it) {
+                        if (it != tags.begin())
+                            rslt += ", ";
+                        rslt += ("{" + tagged_str(*it) + ", " + tagged_class_str(*it) + "}");
+                    }
+                    rslt += (" ), " + std::string(isexplicit ? "true" : "false") + ");");
+                    rslt += (" //  initial =" + std::string(isexplicit ? "explicit" : "implicit"));
+                }
+            }
+            return rslt;
+        }
+
         void mainhpp_out::execute_typedef(const declare_vect& vct, bool remote, basic_entity_ptr scp) {
             if (!vct.empty())
                 stream << "\n";
@@ -1313,9 +1328,11 @@ namespace x680 {
                             break;
                         case declare_explicit: stream << "\n" << tabformat(scp, 2) << "ITU_T_EXPLICIT_TYPEDEF( "
                                     << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";
+                            stream << "\n" << tabformat(scp, 2) << execute_prefixed_static(*it, scp);
                             break;
                         case declare_implicit: stream << "\n" << tabformat(scp, 2) << "ITU_T_IMPLICIT_TYPEDEF( "
                                     << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";
+                            stream << "\n" << tabformat(scp, 2) << execute_prefixed_static(*it, scp);
                             break;
                         default:
                         {
@@ -1684,7 +1701,7 @@ namespace x680 {
                         }
 
                         if (!nooblig.empty() && (nooblig.size() > oblig.size())) {
-                            bool aftext =false;
+                            bool aftext = false;
                             stream << "\n" << tabformat(self, 1) << type_str(self) << "(";
                             for (member_vect::const_iterator it = nooblig.begin(); it != nooblig.end(); ++it) {
                                 if (it != nooblig.begin())
@@ -1910,7 +1927,7 @@ namespace x680 {
             for (namedtypeassignment_entity_vct::iterator it = root2.begin(); it != root2.end(); ++it) {
                 if (((*it)->type()) && (is_named((*it)->marker())))
                     execute_archive_member((*it), false);
-            }            
+            }
 
             stream << "\n";
             stream << tabformat(scp, 2) << "}";
