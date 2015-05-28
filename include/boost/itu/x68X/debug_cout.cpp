@@ -419,6 +419,19 @@ namespace x680 {
         return stream;
     }
 
+    std::ostream& operator<<(std::ostream& stream, const tagged_vct& self) {
+        if (!self.empty()) {
+            stream << " [{ taggad [ ";
+            for (tagged_vct::const_iterator it = self.begin(); it != self.end(); ++it) {
+                if (it != self.begin())
+                    stream << ", ";
+                stream << *(*it);
+            }
+            stream << " ]}]";
+        }
+        return stream;
+    }
+
     std::ostream& operator<<(std::ostream& stream, type_atom_ptr self) {
         /*if (self->cncl_tag()) 
             stream << self->cncl_tag();        
@@ -435,6 +448,9 @@ namespace x680 {
             dummymarker(stream, self);
         if (self->tag())
             stream << *(self->tag());
+        if (self->true_tags_sequence().size()>0){
+            stream << self->true_tags_sequence();
+        }
         switch (self->builtin()) {
             case t_Reference:
             {

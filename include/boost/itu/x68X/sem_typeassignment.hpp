@@ -262,6 +262,12 @@ namespace x680 {
         void tag(tagged_ptr vl) {
             tag_ = vl;
         }
+        
+        tagged_vct tags_sequence();
+        
+        tagged_vct true_tags_sequence();        
+        
+        bool untagged();        
 
         typeassignment_entity_ptr from() const {
             return from_;

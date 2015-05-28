@@ -903,6 +903,36 @@ namespace x680 {
         return tag_;
     }
 
+    tagged_vct type_atom::tags_sequence() {
+        tagged_vct rslt;
+        if ((isrefferrence()) && (reff()) && (reff()->extract_type()))
+            rslt = reff()->extract_type()->tags_sequence();
+        if (tag())
+            rslt.push_back(tag());
+        return rslt;
+    }
+
+    tagged_vct type_atom::true_tags_sequence() {
+        tagged_vct rslt = tags_sequence();
+        if (rslt.size() > 1) {
+            tagged_vct::iterator fit = rslt.begin() + 1;
+            while ((rslt.size() > 1) && (fit != rslt.end())) {
+                for (tagged_vct::iterator it = fit; it != rslt.end(); ++it) {
+                    if ((((*it)->rule() == implicit_tags)) && ((*(it - 1))->rule() == implicit_tags)) {
+                        fit = rslt.erase(it - 1);
+                        break;
+                    } else
+                        ++fit;
+                }
+            }
+        }
+        return rslt;
+    }
+
+    bool type_atom::untagged() {
+        return tags_sequence().empty();
+    }   
+
     defined_type type_atom::root_builtin() {
         if (builtin() != t_Reference)
             return builtin();

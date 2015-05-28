@@ -53,6 +53,12 @@ BOOST_STATIC_ASSERT(sizeof (wchar_t) == 2);
 
 #define ITU_T_SIMPLE_STRING_TRAITS( name) struct name : public std::string::traits_type{};
 
+
+#define ITU_T_PREFIXED( nm ) nm ## __prefixed__helper
+#define ITU_T_PREFIXED_DECLARE( nm, arr, expl ) const boost::asn1::prefixed_type nm ## __prefixed__helper__arr__[] ={ arr };\
+                                                                             const boost::asn1::prefixed_vect nm ## __prefixed__helper_vect(nm ## __prefixed__helper__arr__ , nm ## __prefixed__helper__arr__ + (sizeof(nm ## __prefixed__helper__arr__) / sizeof(boost::asn1::prefixed_type)));\
+                                                                             const boost::asn1::prefixed_helper nm ## __prefixed__helper(nm ## __prefixed__helper_vect, expl);
+
 #define ITU_T_SET_REGESTRATE(regtype) \
 namespace boost {\
         namespace asn1 {\
@@ -148,7 +154,11 @@ namespace boost {\
     using boost::int32_t;\
     using boost::uint32_t;\
     using boost::int64_t;\
-    using boost::uint64_t;
+    using boost::uint64_t;\
+    using boost::asn1::UNIVERSAL_CLASS;\
+    using boost::asn1::APPLICATION_CLASS;\
+    using boost::asn1::CONTEXT_CLASS;\
+    using boost::asn1::PRIVATE_CLASS;
 
 #define ITU_T_EXTENTION_READ  bool __is_extention__ =  arch.get_pop_bmp(1).bit(0);
 #define ITU_T_EXTENTION_WRITE_NULL  bool __is_extention__ = false;boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
@@ -367,11 +377,7 @@ namespace boost {
         // eoc_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        struct eoc_type {
-
-        };
-
-
+        struct eoc_type {};
 
 
 
@@ -1036,11 +1042,26 @@ namespace boost {
         };
 
         std::ostream& operator<<(std::ostream& stream, const tag& vl);
+        
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  prefixed_value
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
+        typedef std::pair<id_type , class_type>  prefixed_type;
+        typedef std::vector<prefixed_type>  prefixed_vect;        
+        
+        struct prefixed_helper {
+            prefixed_helper(const prefixed_vect& vct,  bool explct = true) : 
+            vect(vct), init_explicit( explct) {};
+            
+            const prefixed_vect& vect;
+            bool init_explicit;
+        };
+        
+        std::ostream& operator<<(std::ostream& stream, const prefixed_type& vl);       
+        std::ostream& operator<<(std::ostream& stream, const prefixed_vect& vl);
+        std::ostream& operator<<(std::ostream& stream, const prefixed_helper& vl);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  explicit_value
@@ -1173,16 +1194,16 @@ namespace boost {
         private:
             id_type id_;
             T& val_;
-            mutable octet_type mask_;
+            mutable octet_type mask_;            
         };
+        
+   
 
 
 
 
 
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+       ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  optional_explicit_value
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1238,7 +1259,7 @@ namespace boost {
         private:
             id_type id_;
             T& val_;
-            octet_type mask_;
+            octet_type mask_;            
         };
 
 
@@ -1315,7 +1336,7 @@ namespace boost {
         private:
             id_type id_;
             T& val_;
-            octet_type mask_;
+            octet_type mask_;            
         };
 
 

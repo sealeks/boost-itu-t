@@ -296,7 +296,52 @@ namespace boost {
             return stream << "TAG: " << vl.id() << " mask:" << vl.mask() << '\n';
         }
 
+       // prefixed
 
+        std::ostream& operator<<(std::ostream& stream, const prefixed_type& vl) {
+            stream << "[ " << vl.first << "]";
+            switch (vl.second) {
+                case APPLICATION_CLASS:
+                {
+                    stream << " APPLICATION";
+                    break;
+                }
+                case CONTEXT_CLASS:
+                {
+                    stream << " CONTEXT";
+                    break;
+                }
+                case PRIVATE_CLASS:
+                {
+                    stream << " PRIVATE";
+                    break;
+                }
+                default:
+                {
+                    stream << " UNIVERSAL";
+                }
+            }
+            return stream;
+        }
+
+        std::ostream& operator<<(std::ostream& stream, const prefixed_vect& vl) {
+            stream << "{ ";
+            for (prefixed_vect::const_iterator it = vl.begin(); it != vl.end(); ++it) {
+                if (it != vl.begin())
+                    stream << ", ";
+                stream << "{" << (*it) << "}";
+            }
+            return stream << " }";
+        }  
+        
+        std::ostream& operator<<(std::ostream& stream, const prefixed_helper& vl) {
+            stream << "prefix:  initial ";
+            if (vl.init_explicit) 
+                stream << " explicit  -> " << vl.vect;
+            else
+                stream << " implicit  -> " << vl.vect;            
+            return stream << " ";
+        }
 
         // external 
 
