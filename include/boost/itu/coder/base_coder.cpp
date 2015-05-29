@@ -65,7 +65,7 @@ namespace boost {
         }
 
         oid_type::oid_type(const oidindx_type * vl, std::size_t size) :
-        boost::itu::containers::vector<oidindx_type>(vl, vl + size) {
+        boost::itu::vector<oidindx_type>(vl, vl + size) {
         }
 
         std::ostream& operator<<(std::ostream& stream, const oid_type& vl) {

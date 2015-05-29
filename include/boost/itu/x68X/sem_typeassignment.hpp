@@ -267,7 +267,9 @@ namespace x680 {
         
         tagged_vct true_tags_sequence();        
         
-        bool untagged();        
+        bool isuntagged();        
+        
+        bool ismultipe_tagged(); 
 
         typeassignment_entity_ptr from() const {
             return from_;

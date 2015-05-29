@@ -64,11 +64,11 @@ namespace boost {
 
         std::vector<oidindx_type> oid_from_string(const std::string val);
 
-        class oid_type : public boost::itu::containers::vector<oidindx_type> {
+        class oid_type : public boost::itu::vector<oidindx_type> {
 
         public:
 
-            oid_type() : boost::itu::containers::vector<oidindx_type>() {
+            oid_type() : boost::itu::vector<oidindx_type>() {
             }
 
             oid_type(const std::string& vl);

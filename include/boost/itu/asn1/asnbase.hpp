@@ -391,6 +391,9 @@ namespace boost {
 
             null_type() {
             }
+            
+            ~null_type() {
+            }
         };
 
         std::ostream& operator<<(std::ostream& stream, const null_type& vl);
@@ -456,11 +459,11 @@ namespace boost {
         // reloid_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        class reloid_type : public boost::itu::containers::vector<oidindx_type> {
+        class reloid_type : public boost::itu::vector<oidindx_type> {
 
         public:
 
-            reloid_type() : boost::itu::containers::vector<oidindx_type>() {
+            reloid_type() : boost::itu::vector<oidindx_type>() {
             }
 
             reloid_type(const oidindx_type * vl, std::size_t size);
