@@ -249,6 +249,11 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const explicit_value< std::deque<T> >& vl) {
                 return stream << implicit_value<std::deque<T> >(vl.value(), vl.id(), vl.type());
             }
+            
+            template<typename T>
+            output_coder& operator<<(output_coder& stream, const prefixed_value<T>& vl) {
+                return stream;
+            }            
 
             template<typename T>
             output_coder& operator<<(output_coder& stream, const implicit_value<T>& vl) {
@@ -622,7 +627,18 @@ namespace boost {
                 void operator&(optional_implicit_value<T >& vl) {
                     *this >> vl;
                 }
+                
+                template<typename T>
+                void operator&(prefixed_value<T >& vl) {
+                    //*this >> vl;
+                }             
+                
+                template<typename T>
+                void operator&(optional_prefixed_value<T >& vl) {
+                    //*this >> vl;
+                }                        
 
+                
                 template<typename T>
                 void operator&(std::vector<T >& vl) {
                     *this >> vl;
@@ -681,6 +697,18 @@ namespace boost {
                 }
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
+            
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, explicit_value< std::vector<T> >& vl) {
+                implicit_value<std::vector<T> > tmpvl(vl.value(), vl.id(), vl.type());
+                return stream >> tmpvl;
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, explicit_value< std::deque<T> >& vl) {
+                implicit_value< std::deque<T> > tmpvl(vl.value(), vl.id(), vl.type());
+                return stream >> tmpvl;
+            }            
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, optional_explicit_value<T>& vl) {
@@ -714,6 +742,7 @@ namespace boost {
                 }
                 return stream;
             }
+            
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, implicit_value<T>& vl) {
@@ -725,52 +754,7 @@ namespace boost {
                 }
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, optional_implicit_value<T>& vl) {
-                if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
-                    vl.value() = boost::shared_ptr<T > (new T());
-                    implicit_value<T > tmpvl(*vl.value(), vl.id(), vl.type());
-                    stream & tmpvl;
-                    //stream.pop_stack();
-                }
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, optional_implicit_value< std::vector<T> >& vl) {
-                if (stream.parse_tl(vl, false, true)) {
-                    vl.value() = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
-                    implicit_value<std::vector<T> > tmpvl(*vl.value(), vl.id(), vl.type());
-                    stream >> tmpvl;
-                    //stream.pop_stack();
-                }
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, optional_implicit_value< std::deque<T> >& vl) {
-                if (stream.parse_tl(vl, false, true)) {
-                    vl.value() = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
-                    implicit_value<std::deque<T> > tmpvl(*vl.value(), vl.id(), vl.type());
-                    stream >> tmpvl;
-                    //stream.pop_stack();
-                }
-                return stream;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, explicit_value< std::vector<T> >& vl) {
-                implicit_value<std::vector<T> > tmpvl(vl.value(), vl.id(), vl.type());
-                return stream >> tmpvl;
-            }
-
-            template<typename T>
-            input_coder& operator>>(input_coder& stream, explicit_value< std::deque<T> >& vl) {
-                implicit_value< std::deque<T> > tmpvl(vl.value(), vl.id(), vl.type());
-                return stream >> tmpvl;
-            }
-
+            
             template<typename T>
             input_coder& operator>>(input_coder& stream, implicit_value< std::vector<T> >& vl) {
                 size_class tmpsize;
@@ -817,7 +801,42 @@ namespace boost {
                     stream.pop_stack();
                 }
                 return stream;
+            }            
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, optional_implicit_value<T>& vl) {
+                if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET, true)) {
+                    vl.value() = boost::shared_ptr<T > (new T());
+                    implicit_value<T > tmpvl(*vl.value(), vl.id(), vl.type());
+                    stream & tmpvl;
+                    //stream.pop_stack();
+                }
+                return stream;
             }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, optional_implicit_value< std::vector<T> >& vl) {
+                if (stream.parse_tl(vl, false, true)) {
+                    vl.value() = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
+                    implicit_value<std::vector<T> > tmpvl(*vl.value(), vl.id(), vl.type());
+                    stream >> tmpvl;
+                    //stream.pop_stack();
+                }
+                return stream;
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, optional_implicit_value< std::deque<T> >& vl) {
+                if (stream.parse_tl(vl, false, true)) {
+                    vl.value() = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
+                    implicit_value<std::deque<T> > tmpvl(*vl.value(), vl.id(), vl.type());
+                    stream >> tmpvl;
+                    //stream.pop_stack();
+                }
+                return stream;
+            }
+
+
 
 
             //////////////////////////////////////////////////////////////////////////////////
@@ -1092,12 +1111,6 @@ namespace boost {
             return bind_explicit(*vl, id, type);
         }
 
-        /*template<typename Archive, typename T>
-        inline bool bind_explicit(Archive & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-            std::size_t tst = arch.size();
-            arch & optional_explicit_value<T > (vl, id, type);
-            return (arch.size() != tst);
-        }*/
 
         template<typename T>
         inline bool bind_explicit(boost::asn1::x690::output_coder & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
@@ -1155,12 +1168,6 @@ namespace boost {
             return bind_implicit(*vl, id, type);
         }
 
-        /*template<typename Archive, typename T>
-        inline bool bind_implicit(Archive & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
-            std::size_t tst = arch.size();
-            arch & optional_implicit_value<T > (vl, id, type);
-            return (arch.size() != tst);
-        }*/
 
         template<typename T>
         inline bool bind_implicit(boost::asn1::x690::output_coder & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
@@ -1204,6 +1211,48 @@ namespace boost {
             arch & tmpvl;
             return (arch.size() != tst);
         }
+        
+        template<typename Archive, typename T>
+        inline bool bind_prefixed(Archive & arch, T& vl, const prefixed_helper& hlper) {
+            std::size_t tst = arch.size();
+            prefixed_value<T > tmpvl(vl, hlper);
+            arch & tmpvl;
+            return (arch.size() != tst);
+        }
+
+        template<typename Archive, typename T>
+        inline bool bind_prefixed(Archive & arch, value_holder<T>& vl, const prefixed_helper& hlper) {
+            return bind_prefixed(arch, *vl, hlper);
+        }
+
+
+        template<typename T>
+        inline bool bind_prefixed(boost::asn1::x690::output_coder & arch, boost::shared_ptr<T>& vl, const prefixed_helper& hlper) {
+            if (static_cast<bool> (vl))
+                return bind_prefixed(arch, *vl, hlper);
+            return false;
+        }
+
+        template<typename T>
+        inline bool bind_prefixed(boost::asn1::x690::input_coder & arch, boost::shared_ptr<T>& vl, const prefixed_helper& hlper) {
+            std::size_t tst = arch.size();
+            optional_prefixed_value<T > tmpvl(vl, hlper);
+            arch & tmpvl;
+            return (arch.size() != tst);
+        }
+
+        template<typename T, const T& DT>
+        inline bool bind_prefixed(boost::asn1::x690::output_coder & arch, default_holder<T, DT>& vl, const prefixed_helper& hlper) {
+            if (!vl.isdefault())
+                return bind_prefixed(arch, vl.get_shared(), hlper);
+            return false;
+        }
+
+        template<typename T, const T& DT>
+        inline bool bind_prefixed(boost::asn1::x690::input_coder & arch, default_holder<T, DT>& vl,  const prefixed_helper& hlper) {
+            return bind_prefixed(arch, vl.get_shared(), hlper);
+        }        
+        
 
         template<typename Archive, typename T>
         inline bool bind_choice(Archive & arch, T& vl) {
@@ -1219,19 +1268,6 @@ namespace boost {
             return (arch.size() != tst);
         }
 
-        /*template<typename Archive, typename T>
-         inline bool bind_choice(Archive & arch, boost::shared_ptr< T >& vl) {
-             if (!vl) {
-                 if (arch.__input__())
-                     vl = boost::shared_ptr< T > (new T());
-                 else
-                     return false;
-             }
-             if (bind_choice(arch, *vl))
-                 return true;
-             vl.reset();
-             return false;
-         };*/
 
         template<typename T>
         inline bool bind_choice(boost::asn1::x690::output_coder & arch, boost::shared_ptr< T >& vl) {

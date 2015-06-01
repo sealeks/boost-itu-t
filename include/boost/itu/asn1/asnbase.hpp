@@ -223,7 +223,7 @@ namespace boost {\
                                                                              void nm ( tp * vl) { set( vl, enm );} ;\
                                                                              shared_ptr< tp > nm ## __new () { set<tp>( enm ); return get< tp >(enm);};\
                                                                              shared_ptr< tp >  nm ## __new ( tp * vl) { set<tp>( vl, enm ); return get< tp >(enm);};
-        
+
 #define ITU_T_CHOICEC_DEFN(fullnm, nm  ,tp ,enm);        
 
 
@@ -279,15 +279,15 @@ namespace boost {\
                                                                                   const tp & nm () const ;\
                                                                                   void nm  (shared_ptr< tp > vl); \
                                                                                   private: boost::asn1::default_holder<tp  , dflt> nm ## _ ; public: 
-                                                                             
-                                                                             
+
+
 #define ITU_T_DEFAULTH_DEFN(fullnm, nm ,tp )    const tp & fullnm () const { return * nm ##  _; }\
                                                                                   void fullnm (const tp & vl) { nm ##  _ = vl;}\
                                                                                   void fullnm (shared_ptr<  tp > vl) { nm ##  _ = vl;}                          
 
 
 
-                                                                             
+
 
 #define ITU_T_EXTENDED_DECL()  void extended ( bool vl ) {__extended__ = vl  ? shared_ptr<bool>( new bool(vl)) : shared_ptr<bool>(); } ; bool extended ()  const { return static_cast<bool>(__extended__);}; \
                          private: shared_ptr<bool>  __extended__ ; public: 
@@ -377,7 +377,9 @@ namespace boost {
         // eoc_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        struct eoc_type {};
+        struct eoc_type {
+
+        };
 
 
 
@@ -391,14 +393,14 @@ namespace boost {
 
             null_type() {
             }
-            
+
             ~null_type() {
             }
         };
 
         std::ostream& operator<<(std::ostream& stream, const null_type& vl);
-        
-        
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // integer_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -543,7 +545,7 @@ namespace boost {
         ITU_T_SIMPLE_STRING_TRAITS(objectdescriptor_traits);
         ITU_T_SIMPLE_STRING_TRAITS(visiblestring_traits); // known-multi 1 oct
         ITU_T_SIMPLE_STRING_TRAITS(generalstring_traits);
-        
+
         typedef std::string::value_type main_char_type;
 
         typedef std::basic_string<main_char_type, numericstring_traits > numericstring_type; // known-multi 1 oct
@@ -556,18 +558,17 @@ namespace boost {
         typedef std::basic_string<main_char_type, objectdescriptor_traits > objectdescriptor_type;
         typedef std::basic_string<main_char_type, visiblestring_traits > visiblestring_type; // known-multi 1 oct
         typedef std::basic_string<main_char_type, generalstring_traits > generalstring_type;
-     
-        
+
         template<typename T>
         octet_sequnce as_octet_sequnce(const T& vl) {
             return octet_sequnce(vl.begin(), vl.end());
-        }       
-        
+        }
+
         template<typename T>
         std::string as_std_string(const T& vl) {
             return std::string(vl.begin(), vl.end());
-        }                  
-        
+        }
+
         inline std::ostream& operator<<(std::ostream& stream, const numericstring_type& vl) {
             return stream << std::string(vl.begin(), vl.end());
         }
@@ -1029,7 +1030,7 @@ namespace boost {
                     return ls.id() < rs.id();
                 else
                     return static_cast<uint8_t> (ls.type() | CONSTRUCTED_ENCODING) <
-                            static_cast<uint8_t> (rs.type() | CONSTRUCTED_ENCODING);
+                    static_cast<uint8_t> (rs.type() | CONSTRUCTED_ENCODING);
             }
 
             friend bool operator==(const tag& ls, const tag& rs) {
@@ -1045,24 +1046,26 @@ namespace boost {
         };
 
         std::ostream& operator<<(std::ostream& stream, const tag& vl);
-        
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         //  prefixed_value
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        typedef std::pair<id_type , class_type>  prefixed_type;
-        typedef std::vector<prefixed_type>  prefixed_vect;        
-        
+        typedef std::pair<id_type, class_type> prefixed_type;
+        typedef std::vector<prefixed_type> prefixed_vect;
+
         struct prefixed_helper {
-            prefixed_helper(const prefixed_vect& vct,  bool explct = true) : 
-            vect(vct), init_explicit( explct) {};
-            
+
+            prefixed_helper(const prefixed_vect& vct, bool explct = true) :
+            vect(vct), init_explicit(explct) {
+            };
+
             const prefixed_vect& vect;
             bool init_explicit;
         };
-        
-        std::ostream& operator<<(std::ostream& stream, const prefixed_type& vl);       
+
+        std::ostream& operator<<(std::ostream& stream, const prefixed_type& vl);
         std::ostream& operator<<(std::ostream& stream, const prefixed_vect& vl);
         std::ostream& operator<<(std::ostream& stream, const prefixed_helper& vl);
 
@@ -1197,33 +1200,29 @@ namespace boost {
         private:
             id_type id_;
             T& val_;
-            mutable octet_type mask_;            
+            mutable octet_type mask_;
         };
-        
-   
 
 
 
 
-
-       ////////////////////////////////////////////////////////////////////////////////////////////////////
-        //  optional_explicit_value
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  prefixed_value
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        template<typename S>
-        class optional_explicit_value {
+        template<typename T>
+        class prefixed_value {
 
         public:
 
-            typedef shared_ptr<S> T;
-            typedef S root_type;
+            typedef T base_type;
 
-            explicit optional_explicit_value(T& vl, id_type id, const class_type& type = CONTEXT_CLASS) :
-            id_(id), val_(vl), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
+            explicit prefixed_value(T& vl, const prefixed_helper& hlper) :
+            val_(vl), helper_(hlper) {
             }
 
-            explicit optional_explicit_value(const T& vl, id_type id, const class_type& type = CONTEXT_CLASS) :
-            id_(id), val_(const_cast<T&> (vl)), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
+            explicit prefixed_value(const T& vl, const prefixed_helper& hlper) :
+            val_(const_cast<T&> (vl)), helper_(hlper) {
             }
 
             const T& value() const {
@@ -1234,38 +1233,23 @@ namespace boost {
                 return val_;
             }
 
-            id_type id() const {
-                return id_;
+            bool is_implicit() const {
+                return !helper_.init_explicit;
             }
 
-            class_type type() const {
-                return to_class_type(mask_);
+            bool is_explicit() const {
+                return helper_.init_explicit;
             }
 
-            octet_type mask() const {
-                return mask_;
+            const prefixed_helper& helper() const {
+                return helper_;
             }
-
-            static bool primitive() {
-                return false;
-            }
-
-            bool operator==(const tag& rs) const {
-                return (id() == rs.id() && mask() == rs.mask());
-            }
-
-            operator tag() const {
-                return tag(id_, mask_);
-            }
-
 
         private:
-            id_type id_;
+
             T& val_;
-            octet_type mask_;            
+            const prefixed_helper& helper_;
         };
-
-
 
 
 
@@ -1339,8 +1323,120 @@ namespace boost {
         private:
             id_type id_;
             T& val_;
-            octet_type mask_;            
+            octet_type mask_;
         };
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  optional_explicit_value
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        template<typename S>
+        class optional_explicit_value {
+
+        public:
+
+            typedef shared_ptr<S> T;
+            typedef S root_type;
+
+            explicit optional_explicit_value(T& vl, id_type id, const class_type& type = CONTEXT_CLASS) :
+            id_(id), val_(vl), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
+            }
+
+            explicit optional_explicit_value(const T& vl, id_type id, const class_type& type = CONTEXT_CLASS) :
+            id_(id), val_(const_cast<T&> (vl)), mask_(from_cast(type) | CONSTRUCTED_ENCODING) {
+            }
+
+            const T& value() const {
+                return val_;
+            }
+
+            T& value() {
+                return val_;
+            }
+
+            id_type id() const {
+                return id_;
+            }
+
+            class_type type() const {
+                return to_class_type(mask_);
+            }
+
+            octet_type mask() const {
+                return mask_;
+            }
+
+            static bool primitive() {
+                return false;
+            }
+
+            bool operator==(const tag& rs) const {
+                return (id() == rs.id() && mask() == rs.mask());
+            }
+
+            operator tag() const {
+                return tag(id_, mask_);
+            }
+
+
+        private:
+            id_type id_;
+            T& val_;
+            octet_type mask_;
+        };
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  optional_prefixed_value
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        template<typename S>
+        class optional_prefixed_value {
+
+        public:
+
+            typedef shared_ptr<S> T;
+            typedef S root_type;
+
+            explicit optional_prefixed_value(T& vl, id_type id, const prefixed_helper& hlper) :
+            val_(vl), helper_(hlper) {
+            }
+
+            explicit optional_prefixed_value(const T& vl, id_type id, const prefixed_helper& hlper) :
+            val_(const_cast<T&> (vl)), helper_(hlper) {
+            }
+
+            const T& value() const {
+                return val_;
+            }
+
+            T& value() {
+                return val_;
+            }
+
+            bool is_implicit() const {
+                return !helper_.init_explicit;
+            }
+
+            bool is_explicit() const {
+                return helper_.init_explicit;
+            }
+
+            const prefixed_helper& helper() const {
+                return helper_;
+            }
+
+        private:
+
+            T& val_;
+            const prefixed_helper& helper_;
+        };
+
+
 
 
 
@@ -1489,13 +1585,13 @@ namespace boost {
                 return TYPE;
             }
 
-            friend bool operator==(const explicit_typedef<T, Tag, ID, TYPE>& ls, 
-            const explicit_typedef<T, Tag, ID, TYPE>& rs) {
+            friend bool operator==(const explicit_typedef<T, Tag, ID, TYPE>& ls,
+                    const explicit_typedef<T, Tag, ID, TYPE>& rs) {
                 return (ls.value_ == rs.value_);
             }
 
-            friend bool operator!=(const explicit_typedef<T, Tag, ID, TYPE>& ls, 
-            const explicit_typedef<T, Tag, ID, TYPE>& rs) {
+            friend bool operator!=(const explicit_typedef<T, Tag, ID, TYPE>& ls,
+                    const explicit_typedef<T, Tag, ID, TYPE>& rs) {
                 return (ls.value_ != rs.value_);
             }
 
