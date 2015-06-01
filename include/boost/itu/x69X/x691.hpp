@@ -693,15 +693,21 @@ namespace boost {
                 void operator&(const explicit_value<T >& vl) {
                     *this & vl.value();
                 }
+                
+                template<typename T>
+                void operator&(const implicit_value<T >& vl) {
+                    *this & vl.value();
+                }
+
+                template<typename T>
+                void operator&(const prefixed_value<T >& vl) {
+                    *this & vl.value();
+                }
+                
 
                 template<typename T>
                 void operator&(const per_enumerated_holder<T >& vl) {
                     *this << vl;
-                }
-
-                template<typename T>
-                void operator&(const implicit_value<T >& vl) {
-                    *this & vl.value();
                 }
 
                 template<typename T, class Tag, id_type ID, class_type TYPE >
@@ -1343,14 +1349,19 @@ namespace boost {
                 void operator&(explicit_value<T >& vl) {
                     *this & vl.value();
                 }
-
-                template<typename T, class Tag, id_type ID, class_type TYPE >
-                void operator&(explicit_typedef <T, Tag, ID, TYPE>& vl) {
+                
+                template<typename T>
+                void operator&(implicit_value<T >& vl) {
                     *this & vl.value();
                 }
 
                 template<typename T>
-                void operator&(implicit_value<T >& vl) {
+                void operator&(prefixed_value<T >& vl) {
+                    *this & vl.value();
+                }
+                                
+                template<typename T, class Tag, id_type ID, class_type TYPE >
+                void operator&(explicit_typedef <T, Tag, ID, TYPE>& vl) {
                     *this & vl.value();
                 }
 
