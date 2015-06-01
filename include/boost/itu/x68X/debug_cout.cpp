@@ -448,8 +448,8 @@ namespace x680 {
             dummymarker(stream, self);
         if (self->tag())
             stream << *(self->tag());
-        if (self->true_tags_sequence().size()>0){
-            stream << self->true_tags_sequence();
+        if (self->ismultipe_tagged()){
+            stream << "[ <- is multiple tagged " << self->true_tags_sequence()  << " ]";
         }
         switch (self->builtin()) {
             case t_Reference:
