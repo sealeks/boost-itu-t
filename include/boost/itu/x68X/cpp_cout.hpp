@@ -431,6 +431,12 @@ namespace x680 {
         class ber_cpp_out : public base_ber_arch_out {
 
         public:
+            
+            struct ber_helper_finder {
+
+                static namedtypeassignment_entity_ptr check(typeassignment_entity_ptr tpas);
+            };            
+            
 
             ber_cpp_out(const char* path, module_entity_ptr mod, const compile_option& opt) :
             base_ber_arch_out(path, mod, opt) {
@@ -439,6 +445,23 @@ namespace x680 {
             virtual void execute();
 
         protected:
+
+            void add_helpers(namedtypeassignment_entity_ptr tpas);
+            
+            template<typename CriteriaT>
+            void find_typeassignments(basic_entity_ptr self) {
+                find_typeassignments<CriteriaT>(self->childs().begin(), self->childs().end());
+            }
+
+            template<typename CriteriaT>
+            void find_typeassignments(basic_entity_vector::const_iterator beg, basic_entity_vector::const_iterator end) {
+                for (basic_entity_vector::const_iterator it = beg; it != end; ++it) {
+                    typeassignment_entity_ptr tpas = (*it)->as_typeassigment();
+                    add_helpers(CriteriaT::check(tpas));
+                    if (tpas)
+                        find_typeassignments<CriteriaT>(tpas);
+                }
+            }            
 
             virtual void execute_valueassignment(valueassignment_entity_ptr self) {
             };

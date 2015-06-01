@@ -845,6 +845,34 @@ namespace x680 {
             return rslt;
         }
 
+        static std::string execute_prefixed_static(const declare_atom& vl, basic_entity_ptr scp) {
+            std::string rslt;
+            if (type_atom_ptr tmptp = vl.typ->type()) {
+                tagged_vct tags = tmptp->true_tags_sequence();
+                if (!tags.empty()) {
+                    bool isexplicit = (tags.front()->rule() == explicit_tags);
+                    rslt += ("ITU_T_PREFIXED_DECLARE( " + vl.typenam + ", ITU_T_ARRAY(");
+                    for (tagged_vct::const_iterator it = tags.begin(); it != tags.end(); ++it) {
+                        if (it != tags.begin())
+                            rslt += ", ";
+                        rslt += ("{" + tagged_str(*it) + ", " + tagged_class_str(*it) + "}");
+                    }
+                    rslt += (" ), " + std::string(isexplicit ? "true" : "false") + ");");
+                    rslt += (" //  initial =" + std::string(isexplicit ? "explicit" : "implicit"));
+                }
+            }
+            return rslt;
+        }
+
+        static std::string get_ber_helper_name(typeassignment_entity_ptr tp) {
+            return fulltype_str_ext(tp, false, "__");
+        }
+
+        static std::string get_per_helper_name(typeassignment_entity_ptr tp) {
+            return fulltype_str_ext(tp, false, "__");
+        }
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////         
         //  BaseModuleOUT
@@ -1293,25 +1321,6 @@ namespace x680 {
                     stream << "\n" << tabformat(self, (self->as_typeassigment() ? 1 : 2)) << "struct " << *it << ";";
                 stream << "\n";
             }
-        }
-
-        static std::string execute_prefixed_static(const declare_atom& vl, basic_entity_ptr scp) {
-            std::string rslt;
-            if (type_atom_ptr tmptp = vl.typ->type()) {
-                tagged_vct tags = tmptp->true_tags_sequence();
-                if (!tags.empty()) {
-                    bool isexplicit = (tags.back()->rule() == explicit_tags);
-                    rslt += ("ITU_T_PREFIXED_DECLARE( " + vl.typenam + ", ITU_T_ARRAY(");
-                    for (tagged_vct::const_iterator it = tags.begin(); it != tags.end(); ++it) {
-                        if (it != tags.begin())
-                            rslt += ", ";
-                        rslt += ("{" + tagged_str(*it) + ", " + tagged_class_str(*it) + "}");
-                    }
-                    rslt += (" ), " + std::string(isexplicit ? "true" : "false") + ");");
-                    rslt += (" //  initial =" + std::string(isexplicit ? "explicit" : "implicit"));
-                }
-            }
-            return rslt;
         }
 
         void mainhpp_out::execute_typedef(const declare_vect& vct, bool remote, basic_entity_ptr scp) {
@@ -1942,35 +1951,39 @@ namespace x680 {
             tagmarker_type dfltopt = afterext ? mk_optional : self->marker();
             if ((dfltopt == mk_default) && (self->isstruct_of()))
                 dfltopt = mk_optional;
-            if ((self->isdefined_choice())) {
-                if (self->tag()) {
-                    switch (self->tag()->_class()) {
-                        case tcl_application: return "ITU_T_CHOICE_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        case tcl_universal: return "ITU_T_CHOICE_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        case tcl_private: return "ITU_T_CHOICE_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        default: return "ITU_T_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                    }
-                } else
-                    return "ITU_T_BIND_CHOICE(" + name_arch(name, dfltopt) + ")";
+            if (self->type() && self->type()->ismultipe_tagged()) {
+                return "ITU_T_BIND_PREFIXED(" + name_arch(name, dfltopt) + ", " + get_ber_helper_name(self) + ")";
             } else {
-                if (self->tag()) {
-                    if (self->tag()->rule() == implicit_tags) {
+                if ((self->isdefined_choice())) {
+                    if (self->tag()) {
                         switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_T_IMPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_T_IMPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_T_IMPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_T_IMPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_application: return "ITU_T_CHOICE_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_universal: return "ITU_T_CHOICE_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            case tcl_private: return "ITU_T_CHOICE_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            default: return "ITU_T_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
                         }
-                    } else {
-                        switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_T_EXPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_T_EXPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_T_EXPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_T_EXPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                    } else
+                        return "ITU_T_BIND_CHOICE(" + name_arch(name, dfltopt) + ")";
+                } else {
+                    if (self->tag()) {
+                        if (self->tag()->rule() == implicit_tags) {
+                            switch (self->tag()->_class()) {
+                                case tcl_application: return "ITU_T_IMPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                                case tcl_universal: return "ITU_T_IMPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                                case tcl_private: return "ITU_T_IMPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                                default: return "ITU_T_IMPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            }
+                        } else {
+                            switch (self->tag()->_class()) {
+                                case tcl_application: return "ITU_T_EXPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                                case tcl_universal: return "ITU_T_EXPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                                case tcl_private: return "ITU_T_EXPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                                default: return "ITU_T_EXPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
+                            }
                         }
-                    }
-                } else
-                    return "ITU_T_BIND_TAG(" + name_arch(name, dfltopt) + ")";
+                    } else
+                        return "ITU_T_BIND_TAG(" + name_arch(name, dfltopt) + ")";
+                }
             }
             return "";
         }
@@ -2461,11 +2474,21 @@ namespace x680 {
         //  ber_cpp_out
         //////////////////////////////////////////////////////
 
+        namedtypeassignment_entity_ptr ber_cpp_out::ber_helper_finder::check(typeassignment_entity_ptr tpas) {
+            return (tpas && tpas->as_named() && tpas->type() && tpas->type()->ismultipe_tagged()) ?
+                    tpas->as_named() : namedtypeassignment_entity_ptr();
+        }
+
         void ber_cpp_out::execute() {
             execute_include(module_->name());
 
             stream << CHHEADER << "\n";
             execute_start_ns();
+
+            stream << "\n";
+            find_typeassignments<ber_helper_finder>(module_);
+            stream << "\n";
+
 
             if (option_reverse_decl())
                 execute_typeassignments<basic_entity_vector::const_reverse_iterator>(module_->childs().rbegin(), module_->childs().rend());
@@ -2475,6 +2498,15 @@ namespace x680 {
 
             execute_stop_ns();
             stream << CHBOTTOM << "\n";
+        }
+
+        void ber_cpp_out::add_helpers(namedtypeassignment_entity_ptr tpas) {
+
+            basic_entity_ptr scp;
+            if (tpas && tpas->type() && tpas->type()->ismultipe_tagged()) {
+                stream << "\n" << tabformat(scp, 2) << execute_prefixed_static(declare_atom(declare_typedef, tpas, get_ber_helper_name(tpas), get_ber_helper_name(tpas)), scp);
+            }
+
         }
 
         void ber_cpp_out::execute_typeassignment(typeassignment_entity_ptr self) {
@@ -3122,9 +3154,7 @@ namespace x680 {
             }
         }
 
-        static std::string get_per_helper_name(typeassignment_entity_ptr tp) {
-            return fulltype_str_ext(tp, false, "__");
-        }
+
 
 
 

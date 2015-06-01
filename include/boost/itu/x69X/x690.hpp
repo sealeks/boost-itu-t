@@ -33,6 +33,7 @@
 #define ITU_T_CHOICE_APPLICATION_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
 #define ITU_T_CHOICE_PRIVATE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
 #define ITU_T_CHOICE_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
+#define ITU_T_BIND_PREFIXED(var, hlpr) inline bool bind_prefixed(arch, var, hlpr)
 
 #define ITU_T_CHOICE_REGESTRATE(regtype)\
 namespace boost {\
@@ -169,6 +170,11 @@ namespace boost {
                     *this << vl;
                 }
 
+                template<typename T>
+                void operator&(const prefixed_value<T >& vl) {
+                    *this << vl;
+                }
+
                 template<typename T, class Tag, id_type ID, class_type TYPE >
                 void operator&(const explicit_typedef <T, Tag, ID, TYPE>& vl) {
                     *this << explicit_value<T > (vl.value(), ID, TYPE);
@@ -249,11 +255,46 @@ namespace boost {
             output_coder& operator<<(output_coder& stream, const explicit_value< std::deque<T> >& vl) {
                 return stream << implicit_value<std::deque<T> >(vl.value(), vl.id(), vl.type());
             }
-            
+
+            template<typename T>
+            void write_prexed(output_coder& stream, const prefixed_value<T>& vl, std::size_t nestlvl) {
+                if (!nestlvl) {
+                    if (vl.is_explicit())
+                        stream << explicit_value<T>(vl.value(), vl.helper().vect.front().first, vl.helper().vect.front().second);
+                    else
+                        stream << implicit_value<T>(vl.value(), vl.helper().vect.front().first, vl.helper().vect.front().second);
+                } else {
+
+                    stream.addtag(tag(vl.helper().vect[nestlvl].first, from_cast(vl.helper().vect[nestlvl].second) | CONSTRUCTED_ENCODING),
+                            (tag_traits<T>::number() == TYPE_SET));
+
+                    const_sequences::iterator it = stream.last();
+
+                    std::size_t sz = stream.size();
+
+                    write_prexed(stream, vl, nestlvl - 1);
+
+                    sz = stream.size(sz);
+                    ++it;
+
+                    if ((stream.canonical())) {
+                        stream.add(tosize_x690_cast(size_class()), it);
+                        stream.add(octet_sequnce(2, 0));
+                    } else
+                        stream.add(tosize_x690_cast(size_class(sz)), it);
+
+                    stream.pop_stack();
+                }
+            }
+
             template<typename T>
             output_coder& operator<<(output_coder& stream, const prefixed_value<T>& vl) {
+                if (!vl.helper().vect.empty())
+                    write_prexed(stream, vl, vl.helper().vect.size() - 1);
+                else
+                    stream << implicit_value<T>(vl.value());
                 return stream;
-            }            
+            }
 
             template<typename T>
             output_coder& operator<<(output_coder& stream, const implicit_value<T>& vl) {
@@ -627,18 +668,17 @@ namespace boost {
                 void operator&(optional_implicit_value<T >& vl) {
                     *this >> vl;
                 }
-                
+
                 template<typename T>
                 void operator&(prefixed_value<T >& vl) {
-                    //*this >> vl;
-                }             
-                
+                    *this >> vl;
+                }
+
                 template<typename T>
                 void operator&(optional_prefixed_value<T >& vl) {
-                    //*this >> vl;
-                }                        
+                    *this >> vl;
+                }
 
-                
                 template<typename T>
                 void operator&(std::vector<T >& vl) {
                     *this >> vl;
@@ -697,7 +737,7 @@ namespace boost {
                 }
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
-            
+
             template<typename T>
             input_coder& operator>>(input_coder& stream, explicit_value< std::vector<T> >& vl) {
                 implicit_value<std::vector<T> > tmpvl(vl.value(), vl.id(), vl.type());
@@ -708,7 +748,7 @@ namespace boost {
             input_coder& operator>>(input_coder& stream, explicit_value< std::deque<T> >& vl) {
                 implicit_value< std::deque<T> > tmpvl(vl.value(), vl.id(), vl.type());
                 return stream >> tmpvl;
-            }            
+            }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, optional_explicit_value<T>& vl) {
@@ -742,7 +782,6 @@ namespace boost {
                 }
                 return stream;
             }
-            
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, implicit_value<T>& vl) {
@@ -754,7 +793,7 @@ namespace boost {
                 }
                 throw boost::system::system_error(boost::itu::ER_BEDSEQ);
             }
-            
+
             template<typename T>
             input_coder& operator>>(input_coder& stream, implicit_value< std::vector<T> >& vl) {
                 size_class tmpsize;
@@ -801,7 +840,7 @@ namespace boost {
                     stream.pop_stack();
                 }
                 return stream;
-            }            
+            }
 
             template<typename T>
             input_coder& operator>>(input_coder& stream, optional_implicit_value<T>& vl) {
@@ -836,6 +875,66 @@ namespace boost {
                 return stream;
             }
 
+            template<typename T>
+            void read_prefixed(input_coder& stream, prefixed_value<T>& vl, std::size_t nestlvl) {
+                if (!nestlvl) {
+                    if (vl.is_explicit()) {
+                        explicit_value<T> tmpvl(vl.value(), vl.helper().vect.front().first, vl.helper().vect.front().second);
+                        stream >> tmpvl;
+                    } else {
+                        implicit_value<T> tmpvl(vl.value(), vl.helper().vect.front().first, vl.helper().vect.front().second);
+                        stream >> tmpvl;
+                    }
+                } else {
+                    if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET)) {
+                        read_prefixed(stream, vl, nestlvl - 1);
+                        stream.pop_stack();
+                    }
+                }
+                //throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, prefixed_value<T>& vl) {
+                if (!vl.helper().vect.empty())
+                    read_prexed(stream, vl, vl.helper().vect.size() - 1);
+                else {
+                    implicit_value<T> tmpvl(vl.value());
+                    stream >> tmpvl;
+                }
+                return stream;
+            }
+
+            template<typename T>
+            void read_optional_prefixed(input_coder& stream, optional_prefixed_value<T>& vl, std::size_t nestlvl) {
+                if (!nestlvl) {
+                    if (vl.is_explicit()) {
+                        optional_explicit_value<T> tmpvl(vl.value(), vl.helper().vect.front().first, vl.helper().vect.front().second);
+                        stream >> tmpvl;
+                    } else {
+                        optional_implicit_value<T> tmpvl(vl.value(), vl.helper().vect.front().first, vl.helper().vect.front().second);
+                        stream >> tmpvl;
+                    }
+                } else {
+                    if (stream.parse_tl(vl, true)) {
+                        prefixed_value<T> tmpvl(vl.value(), vl.helper());
+                        read_prefixed(stream, tmpvl, nestlvl - 1);
+                        stream.pop_stack();
+                    }
+                }
+                //throw boost::system::system_error(boost::itu::ER_BEDSEQ);
+            }
+
+            template<typename T>
+            input_coder& operator>>(input_coder& stream, optional_prefixed_value<T>& vl) {
+                if (!vl.helper().vect.empty())
+                    read_optional_prexed(stream, vl, vl.helper().vect.size() - 1);
+                else {
+                    optional_implicit_value<T> tmpvl(vl.value());
+                    stream >> tmpvl;
+                }
+                return stream;
+            }
 
 
 
@@ -1111,7 +1210,6 @@ namespace boost {
             return bind_explicit(*vl, id, type);
         }
 
-
         template<typename T>
         inline bool bind_explicit(boost::asn1::x690::output_coder & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
             if (static_cast<bool> (vl))
@@ -1168,7 +1266,6 @@ namespace boost {
             return bind_implicit(*vl, id, type);
         }
 
-
         template<typename T>
         inline bool bind_implicit(boost::asn1::x690::output_coder & arch, boost::shared_ptr<T>& vl, const id_type& id, const class_type& type = CONTEXT_CLASS) {
             if (static_cast<bool> (vl))
@@ -1211,7 +1308,7 @@ namespace boost {
             arch & tmpvl;
             return (arch.size() != tst);
         }
-        
+
         template<typename Archive, typename T>
         inline bool bind_prefixed(Archive & arch, T& vl, const prefixed_helper& hlper) {
             std::size_t tst = arch.size();
@@ -1224,7 +1321,6 @@ namespace boost {
         inline bool bind_prefixed(Archive & arch, value_holder<T>& vl, const prefixed_helper& hlper) {
             return bind_prefixed(arch, *vl, hlper);
         }
-
 
         template<typename T>
         inline bool bind_prefixed(boost::asn1::x690::output_coder & arch, boost::shared_ptr<T>& vl, const prefixed_helper& hlper) {
@@ -1249,10 +1345,9 @@ namespace boost {
         }
 
         template<typename T, const T& DT>
-        inline bool bind_prefixed(boost::asn1::x690::input_coder & arch, default_holder<T, DT>& vl,  const prefixed_helper& hlper) {
+        inline bool bind_prefixed(boost::asn1::x690::input_coder & arch, default_holder<T, DT>& vl, const prefixed_helper& hlper) {
             return bind_prefixed(arch, vl.get_shared(), hlper);
-        }        
-        
+        }
 
         template<typename Archive, typename T>
         inline bool bind_choice(Archive & arch, T& vl) {
@@ -1267,7 +1362,6 @@ namespace boost {
             const_cast<T*> (&(vl))->serialize(arch);
             return (arch.size() != tst);
         }
-
 
         template<typename T>
         inline bool bind_choice(boost::asn1::x690::output_coder & arch, boost::shared_ptr< T >& vl) {
