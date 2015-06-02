@@ -24,15 +24,18 @@
 #define ITU_T_IMPLICIT_APPLICATION_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
 #define ITU_T_IMPLICIT_PRIVATE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
 #define ITU_T_IMPLICIT_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::UNIVERSAL_CLASS) 
+#define ITU_T_BIND_IMPLICIT(var, tag, cls)    boost::asn1::bind_implicit(arch, var, tag, cls) 
 #define ITU_T_EXPLICIT_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::CONTEXT_CLASS)
 #define ITU_T_EXPLICIT_APPLICATION_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)  
 #define ITU_T_EXPLICIT_PRIVATE_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
 #define ITU_T_EXPLICIT_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_explicit(arch, var, tag, boost::asn1::UNIVERSAL_CLASS)
+#define ITU_T_BIND_EXPLICIT(var, tag, cls)    boost::asn1::bind_explicit(arch, var, tag, cls)
 #define ITU_T_BIND_CHOICE(var)    boost::asn1::bind_choice(arch, var)
 #define ITU_T_CHOICE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::CONTEXT_CLASS)
 #define ITU_T_CHOICE_APPLICATION_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
 #define ITU_T_CHOICE_PRIVATE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
 #define ITU_T_CHOICE_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
+#define ITU_T_BIND_CHOICE_TAG(var, tag, cls)    boost::asn1::bind_implicit(arch, var, tag, cls)
 #define ITU_T_BIND_PREFIXED(var, hlpr) boost::asn1::bind_prefixed(arch, var, hlpr ## __prefixed__helper)
 
 #define ITU_T_CHOICE_REGESTRATE(regtype)\

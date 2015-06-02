@@ -1936,32 +1936,16 @@ namespace x680 {
                 return "ITU_T_BIND_PREFIXED(" + name_arch(name, dfltopt) + ", " + get_ber_helper_name(self) + ")";
             } else {
                 if ((self->isdefined_choice())) {
-                    if (self->tag()) {
-                        switch (self->tag()->_class()) {
-                            case tcl_application: return "ITU_T_CHOICE_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_universal: return "ITU_T_CHOICE_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            case tcl_private: return "ITU_T_CHOICE_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            default: return "ITU_T_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                        }
-                    } else
+                    if (self->tag())
+                        return "ITU_T_BIND_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ", " + tagged_class_str(self->tag()) + ")";
+                    else
                         return "ITU_T_BIND_CHOICE(" + name_arch(name, dfltopt) + ")";
                 } else {
                     if (self->tag()) {
-                        if (self->tag()->rule() == implicit_tags) {
-                            switch (self->tag()->_class()) {
-                                case tcl_application: return "ITU_T_IMPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                                case tcl_universal: return "ITU_T_IMPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                                case tcl_private: return "ITU_T_IMPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                                default: return "ITU_T_IMPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            }
-                        } else {
-                            switch (self->tag()->_class()) {
-                                case tcl_application: return "ITU_T_EXPLICIT_APPLICATION_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                                case tcl_universal: return "ITU_T_EXPLICIT_UNIVERSAL_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                                case tcl_private: return "ITU_T_EXPLICIT_PRIVATE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                                default: return "ITU_T_EXPLICIT_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ")";
-                            }
-                        }
+                        if (self->tag()->rule() == implicit_tags)
+                            return "ITU_T_BIND_IMPLICIT(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ", " + tagged_class_str(self->tag()) + ")";
+                        else
+                            return "ITU_T_BIND_EXPLICIT(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ", " + tagged_class_str(self->tag()) + ")";
                     } else
                         return "ITU_T_BIND_TAG(" + name_arch(name, dfltopt) + ")";
                 }
