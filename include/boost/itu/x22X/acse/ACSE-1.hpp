@@ -18,14 +18,14 @@ namespace ACSE_1 {
 
 
     struct ACSE_apdu;
-    struct AARQ_apdu_impl;
-    struct AARE_apdu_impl;
-    struct RLRQ_apdu_impl;
-    struct RLRE_apdu_impl;
-    struct ABRT_apdu_impl;
-    struct A_DT_apdu_impl;
-    struct ACRQ_apdu_impl;
-    struct ACRP_apdu_impl;
+    struct AARQ_apdu;
+    struct AARE_apdu;
+    struct RLRQ_apdu;
+    struct RLRE_apdu;
+    struct ABRT_apdu;
+    struct A_DT_apdu;
+    struct ACRQ_apdu;
+    struct ACRP_apdu;
     struct AP_title;
     struct ASO_qualifier;
     struct AE_title;
@@ -67,14 +67,6 @@ namespace ACSE_1 {
     typedef integer_type Release_response_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
     typedef std::vector< external_type > Association_data; //    Sc (  [ 1 ]   ...ext...) 
 
-    ITU_T_IMPLICIT_TYPEDEF(AARQ_apdu, AARQ_apdu_impl, 0, APPLICATION_CLASS);
-    ITU_T_IMPLICIT_TYPEDEF(AARE_apdu, AARE_apdu_impl, 1, APPLICATION_CLASS);
-    ITU_T_IMPLICIT_TYPEDEF(RLRQ_apdu, RLRQ_apdu_impl, 2, APPLICATION_CLASS);
-    ITU_T_IMPLICIT_TYPEDEF(RLRE_apdu, RLRE_apdu_impl, 3, APPLICATION_CLASS);
-    ITU_T_IMPLICIT_TYPEDEF(ABRT_apdu, ABRT_apdu_impl, 4, APPLICATION_CLASS);
-    ITU_T_IMPLICIT_TYPEDEF(A_DT_apdu, A_DT_apdu_impl, 5, APPLICATION_CLASS);
-    ITU_T_IMPLICIT_TYPEDEF(ACRQ_apdu, ACRQ_apdu_impl, 6, APPLICATION_CLASS);
-    ITU_T_IMPLICIT_TYPEDEF(ACRP_apdu, ACRP_apdu_impl, 7, APPLICATION_CLASS);
     typedef ASO_context_name Application_context_name;
     typedef ASO_qualifier AE_qualifier;
     typedef Transfer_syntax_name Concrete_syntax_name;
@@ -84,6 +76,14 @@ namespace ACSE_1 {
     typedef std::vector< Context_list_sequence_of > Context_list;
     typedef std::vector< Default_Context_List_sequence_of > Default_Context_List;
     typedef std::vector< P_context_result_list_sequence_of > P_context_result_list;
+    ITU_T_PREFIXED_DECLARE(AARE_apdu, ITU_T_ARRAY(prefixed_type(1, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_PREFIXED_DECLARE(RLRQ_apdu, ITU_T_ARRAY(prefixed_type(2, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_PREFIXED_DECLARE(RLRE_apdu, ITU_T_ARRAY(prefixed_type(3, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_PREFIXED_DECLARE(ABRT_apdu, ITU_T_ARRAY(prefixed_type(4, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_PREFIXED_DECLARE(A_DT_apdu, ITU_T_ARRAY(prefixed_type(5, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_PREFIXED_DECLARE(ACRQ_apdu, ITU_T_ARRAY(prefixed_type(6, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_PREFIXED_DECLARE(ACRP_apdu, ITU_T_ARRAY(prefixed_type(7, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_PREFIXED_DECLARE(AARQ_apdu, ITU_T_ARRAY(prefixed_type(0, APPLICATION_CLASS)), false); //  initial =implicit
 
     ITU_T_OID(acse_as_id, ITU_T_VARRAY(2, 2, 1, 0, 1));
     ITU_T_OID(aCSE_id, ITU_T_VARRAY(2, 2, 3, 1, 1));
@@ -128,17 +128,17 @@ namespace ACSE_1 {
 
     // sequence AARQ-apdu
 
-    struct AARQ_apdu_impl {
+    struct AARQ_apdu {
 
         static const bitstring_type protocol_version_version1;
 
         static const bitstring_type protocol_version__default;
 
-        AARQ_apdu_impl();
+        AARQ_apdu();
 
-        AARQ_apdu_impl(const ASO_context_name& arg__aSO_context_name);
+        AARQ_apdu(const ASO_context_name& arg__aSO_context_name);
 
-        AARQ_apdu_impl(shared_ptr< bitstring_type> arg__protocol_version,
+        AARQ_apdu(shared_ptr< bitstring_type> arg__protocol_version,
                 shared_ptr< ASO_context_name> arg__aSO_context_name,
                 shared_ptr< AP_title> arg__called_AP_title,
                 shared_ptr< AE_qualifier> arg__called_AE_qualifier,
@@ -183,19 +183,19 @@ namespace ACSE_1 {
 
     // sequence AARE-apdu
 
-    struct AARE_apdu_impl {
+    struct AARE_apdu {
 
         static const bitstring_type protocol_version_version1;
 
         static const bitstring_type protocol_version__default;
 
-        AARE_apdu_impl();
+        AARE_apdu();
 
-        AARE_apdu_impl(const ASO_context_name& arg__aSO_context_name,
+        AARE_apdu(const ASO_context_name& arg__aSO_context_name,
                 const Associate_result& arg__result,
                 const Associate_source_diagnostic& arg__result_source_diagnostic);
 
-        AARE_apdu_impl(shared_ptr< bitstring_type> arg__protocol_version,
+        AARE_apdu(shared_ptr< bitstring_type> arg__protocol_version,
                 shared_ptr< ASO_context_name> arg__aSO_context_name,
                 shared_ptr< Associate_result> arg__result,
                 shared_ptr< Associate_source_diagnostic> arg__result_source_diagnostic,
@@ -236,11 +236,11 @@ namespace ACSE_1 {
 
     // sequence RLRQ-apdu
 
-    struct RLRQ_apdu_impl {
+    struct RLRQ_apdu {
 
-        RLRQ_apdu_impl();
+        RLRQ_apdu();
 
-        RLRQ_apdu_impl(shared_ptr< Release_request_reason> arg__reason,
+        RLRQ_apdu(shared_ptr< Release_request_reason> arg__reason,
                 shared_ptr< ASO_qualifier> arg__aso_qualifier,
                 shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 shared_ptr< Association_data> arg__user_information);
@@ -255,11 +255,11 @@ namespace ACSE_1 {
 
     // sequence RLRE-apdu
 
-    struct RLRE_apdu_impl {
+    struct RLRE_apdu {
 
-        RLRE_apdu_impl();
+        RLRE_apdu();
 
-        RLRE_apdu_impl(shared_ptr< Release_response_reason> arg__reason,
+        RLRE_apdu(shared_ptr< Release_response_reason> arg__reason,
                 shared_ptr< ASO_qualifier> arg__aso_qualifier,
                 shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 shared_ptr< Association_data> arg__user_information);
@@ -274,13 +274,13 @@ namespace ACSE_1 {
 
     // sequence ABRT-apdu
 
-    struct ABRT_apdu_impl {
+    struct ABRT_apdu {
 
-        ABRT_apdu_impl();
+        ABRT_apdu();
 
-        ABRT_apdu_impl(const ABRT_source& arg__abort_source);
+        ABRT_apdu(const ABRT_source& arg__abort_source);
 
-        ABRT_apdu_impl(shared_ptr< ABRT_source> arg__abort_source,
+        ABRT_apdu(shared_ptr< ABRT_source> arg__abort_source,
                 shared_ptr< ABRT_diagnostic> arg__abort_diagnostic,
                 shared_ptr< ASO_qualifier> arg__aso_qualifier,
                 shared_ptr< ASOI_identifier> arg__asoi_identifier,
@@ -297,13 +297,13 @@ namespace ACSE_1 {
 
     // sequence A-DT-apdu
 
-    struct A_DT_apdu_impl {
+    struct A_DT_apdu {
 
-        A_DT_apdu_impl();
+        A_DT_apdu();
 
-        A_DT_apdu_impl(const User_Data& arg__a_user_data);
+        A_DT_apdu(const User_Data& arg__a_user_data);
 
-        A_DT_apdu_impl(shared_ptr< ASO_qualifier> arg__aso_qualifier,
+        A_DT_apdu(shared_ptr< ASO_qualifier> arg__aso_qualifier,
                 shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 shared_ptr< User_Data> arg__a_user_data);
 
@@ -316,11 +316,11 @@ namespace ACSE_1 {
 
     // sequence ACRQ-apdu
 
-    struct ACRQ_apdu_impl {
+    struct ACRQ_apdu {
 
-        ACRQ_apdu_impl();
+        ACRQ_apdu();
 
-        ACRQ_apdu_impl(shared_ptr< ASO_qualifier> arg__aso_qualifier,
+        ACRQ_apdu(shared_ptr< ASO_qualifier> arg__aso_qualifier,
                 shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 shared_ptr< ASO_context_name> arg__aSO_context_name,
                 shared_ptr< ASO_context_name_list> arg__aSO_context_name_list,
@@ -339,11 +339,11 @@ namespace ACSE_1 {
 
     // sequence ACRP-apdu
 
-    struct ACRP_apdu_impl {
+    struct ACRP_apdu {
 
-        ACRP_apdu_impl();
+        ACRP_apdu();
 
-        ACRP_apdu_impl(shared_ptr< ASO_qualifier> arg__aso_qualifier,
+        ACRP_apdu(shared_ptr< ASO_qualifier> arg__aso_qualifier,
                 shared_ptr< ASOI_identifier> arg__asoi_identifier,
                 shared_ptr< ASO_context_name_list> arg__aSO_context_name,
                 shared_ptr< P_context_result_list> arg__p_context_result_list,
@@ -688,14 +688,14 @@ namespace ACSE_1 {
     const Release_response_reason release_response_reason_user_defined = 30;
 
     ITU_T_ARCHIVE_X690_DECL(ACSE_apdu);
-    ITU_T_ARCHIVE_X690_DECL(AARQ_apdu_impl);
-    ITU_T_ARCHIVE_X690_DECL(AARE_apdu_impl);
-    ITU_T_ARCHIVE_X690_DECL(RLRQ_apdu_impl);
-    ITU_T_ARCHIVE_X690_DECL(RLRE_apdu_impl);
-    ITU_T_ARCHIVE_X690_DECL(ABRT_apdu_impl);
-    ITU_T_ARCHIVE_X690_DECL(A_DT_apdu_impl);
-    ITU_T_ARCHIVE_X690_DECL(ACRQ_apdu_impl);
-    ITU_T_ARCHIVE_X690_DECL(ACRP_apdu_impl);
+    ITU_T_ARCHIVE_X690_DECL(AARQ_apdu);
+    ITU_T_ARCHIVE_X690_DECL(AARE_apdu);
+    ITU_T_ARCHIVE_X690_DECL(RLRQ_apdu);
+    ITU_T_ARCHIVE_X690_DECL(RLRE_apdu);
+    ITU_T_ARCHIVE_X690_DECL(ABRT_apdu);
+    ITU_T_ARCHIVE_X690_DECL(A_DT_apdu);
+    ITU_T_ARCHIVE_X690_DECL(ACRQ_apdu);
+    ITU_T_ARCHIVE_X690_DECL(ACRP_apdu);
     ITU_T_ARCHIVE_X690_DECL(AP_title);
     ITU_T_ARCHIVE_X690_DECL(ASO_qualifier);
     ITU_T_ARCHIVE_X690_DECL(AE_title);
@@ -712,14 +712,14 @@ namespace ACSE_1 {
     ITU_T_ARCHIVE_X690_DECL(Authentication_value::Other_type);
 
     ITU_T_ARCHIVE_X691_DECL(ACSE_apdu);
-    ITU_T_ARCHIVE_X691_DECL(AARQ_apdu_impl);
-    ITU_T_ARCHIVE_X691_DECL(AARE_apdu_impl);
-    ITU_T_ARCHIVE_X691_DECL(RLRQ_apdu_impl);
-    ITU_T_ARCHIVE_X691_DECL(RLRE_apdu_impl);
-    ITU_T_ARCHIVE_X691_DECL(ABRT_apdu_impl);
-    ITU_T_ARCHIVE_X691_DECL(A_DT_apdu_impl);
-    ITU_T_ARCHIVE_X691_DECL(ACRQ_apdu_impl);
-    ITU_T_ARCHIVE_X691_DECL(ACRP_apdu_impl);
+    ITU_T_ARCHIVE_X691_DECL(AARQ_apdu);
+    ITU_T_ARCHIVE_X691_DECL(AARE_apdu);
+    ITU_T_ARCHIVE_X691_DECL(RLRQ_apdu);
+    ITU_T_ARCHIVE_X691_DECL(RLRE_apdu);
+    ITU_T_ARCHIVE_X691_DECL(ABRT_apdu);
+    ITU_T_ARCHIVE_X691_DECL(A_DT_apdu);
+    ITU_T_ARCHIVE_X691_DECL(ACRQ_apdu);
+    ITU_T_ARCHIVE_X691_DECL(ACRP_apdu);
     ITU_T_ARCHIVE_X691_DECL(AP_title);
     ITU_T_ARCHIVE_X691_DECL(ASO_qualifier);
     ITU_T_ARCHIVE_X691_DECL(AE_title);

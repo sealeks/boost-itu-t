@@ -31,40 +31,40 @@
 #define ITU_T_BIND_PER_ENUM(var, nm) boost::asn1::bind_per_enum< nm ## __coder >(arch, var);
 
 // Integer constrant term ..S( not extended ) or ..E ( extended )  main, simiconstrained, single value
-#define ITU_T_BIND_NUM_CONSTRS(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx, false);
-#define ITU_T_BIND_NUM_CONSTRE(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx, true);
-#define ITU_T_BIND_NUM_SIMICONS(var, mn) boost::asn1::bind_constraints(arch, var, mn, 0, false);
-#define ITU_T_BIND_NUM_SIMICONE(var, mn) boost::asn1::bind_constraints(arch, var, mn, 0, true);
-#define ITU_T_BIND_NUM_SNGLCONS(var, mn) boost::asn1::bind_constraints(arch, var, mn, mn, false);
-#define ITU_T_BIND_NUM_SNGLCONE(var, mn) boost::asn1::bind_constraints(arch, var, mn, mn, true);
+#define ITU_T_BIND_NUM_CONSTRAINT(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx, false);
+#define ITU_T_BIND_NUM_CONSTRAINT_EXT(var, mn, mx) boost::asn1::bind_constraints(arch, var, mn, mx, true);
+#define ITU_T_BIND_NUM_SIMICONSTRAINT(var, mn) boost::asn1::bind_constraints(arch, var, mn, 0, false);
+#define ITU_T_BIND_NUM_SIMICONSTRAINT_EXT(var, mn) boost::asn1::bind_constraints(arch, var, mn, 0, true);
+#define ITU_T_BIND_NUM_SNGLCONSTRAINT(var, mn) boost::asn1::bind_constraints(arch, var, mn, mn, false);
+#define ITU_T_BIND_NUM_SNGLCONSTRAINT_EXT(var, mn) boost::asn1::bind_constraints(arch, var, mn, mn, true);
 
 // Integer constrant helper for comlex case .   term ..S( not extended ) or ..E ( extended )
-#define ITU_T_REGISTRATE_NUM_CONSTRS(var, tp, mn, mx) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mx , false>  var;
-#define ITU_T_REGISTRATE_NUM_CONSTRE(var, tp, mn, mx) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mx , true>  var;
-#define ITU_T_REGISTRATE_NUM_SIMICONS(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , 0 , false>  var;
-#define ITU_T_REGISTRATE_NUM_SIMICONE(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , 0 , true>  var;
-#define ITU_T_REGISTRATE_NUM_SNGLCONS(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mn , false>  var;
-#define ITU_T_REGISTRATE_NUM_SNGLCONE(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mn , true>  var;
+#define ITU_T_REGISTRATE_NUM_CONSTRAINT(var, tp, mn, mx) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mx , false>  var;
+#define ITU_T_REGISTRATE_NUM_CONSTRAINT_EXT(var, tp, mn, mx) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mx , true>  var;
+#define ITU_T_REGISTRATE_NUM_SEMICONSTRAINT(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , 0 , false>  var;
+#define ITU_T_REGISTRATE_NUM_SEMICONSTRAINT_EXT(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , 0 , true>  var;
+#define ITU_T_REGISTRATE_NUM_SNGLCONSTRAINT(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mn , false>  var;
+#define ITU_T_REGISTRATE_NUM_SNGLCONSTRAINT_EXT(var, tp, mn) typedef boost::asn1::___integer_tmpl_ec___<tp , mn , mn , true>  var;
 
 // Size constrant term ..S( not extended ) or ..E ( extended ) main, simiconstrained, single value
-#define ITU_T_BIND_SIZE_CONSTRS(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx, false);
-#define ITU_T_BIND_SIZE_CONSTRE(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx, true);
-#define ITU_T_BIND_SIZE_SEMICONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0, false);
-#define ITU_T_BIND_SIZE_SEMICONSTRE(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0, true);
-#define ITU_T_BIND_SIZE_SNGLCONSTRS(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn, false);
-#define ITU_T_BIND_SIZE_SNGLCONSTRE(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn, true);
+#define ITU_T_BIND_SIZE_CONSTRAINT(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx, false);
+#define ITU_T_BIND_SIZE_CONSTRAINT_EXT(var, mn, mx) boost::asn1::bind_sizeconstraints(arch, var, mn, mx, true);
+#define ITU_T_BIND_SIZE_SEMICONSTRAINT(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0, false);
+#define ITU_T_BIND_SIZE_SEMICONSTRAINT_EXT(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, 0, true);
+#define ITU_T_BIND_SIZE_SNGLCONSTRAINT(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn, false);
+#define ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(var, mn) boost::asn1::bind_sizeconstraints(arch, var, mn, mn, true);
 
 // Size constrant complex, term ..S( not extended ) or ..E ( extended ) nosize onle elements, main, simiconstrained, single value
-#define ITU_T_BIND_EX_CONSTRS(tp, el, var) boost::asn1::bind_sizeconstraints_ext< tp, el > (arch, var, 0, 0, false);
-#define ITU_T_BIND_EXSIZE_CONSTRS(tp, el, var, mn, mx) boost::asn1::bind_sizeconstraints_ext< tp, el > (arch, var, mn, mx, false);
-#define ITU_T_BIND_EXSIZE_CONSTRE(tp, el, var, mn, mx) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, mx, true);
-#define ITU_T_BIND_EXSIZE_SEMICONSTRS(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, 0, false);
-#define ITU_T_BIND_EXSIZE_SEMICONSTRE(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, 0, true);
-#define ITU_T_BIND_EXSIZE_SNGLCONSTRS(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, mn, false);
-#define ITU_T_BIND_EXSIZE_SNGLCONSTRE(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, mn, true);
+#define ITU_T_BIND_EX_CONSTRAINT(tp, el, var) boost::asn1::bind_sizeconstraints_ext< tp, el > (arch, var, 0, 0, false);
+#define ITU_T_BIND_EXSIZE_CONSTRAINT(tp, el, var, mn, mx) boost::asn1::bind_sizeconstraints_ext< tp, el > (arch, var, mn, mx, false);
+#define ITU_T_BIND_EXSIZE_CONSTRAINT_EXT(tp, el, var, mn, mx) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, mx, true);
+#define ITU_T_BIND_EXSIZE_SEMICONSTRAINT(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, 0, false);
+#define ITU_T_BIND_EXSIZE_SEMICONSTRAINT_EXT(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, 0, true);
+#define ITU_T_BIND_EXSIZE_SNGLCONSTRAINT(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, mn, false);
+#define ITU_T_BIND_EXSIZE_SNGLCONSTRAINT_EXT(tp, el, var, mn) boost::asn1::bind_sizeconstraints_ext< tp, el >(arch, var, mn, mn, true);
 
 //  enumerated complex case
-#define ITU_T_REGISTRATE_ENUM_CONSTRS(var, tp) typedef boost::asn1::___enumerated_tmpl_ec___<tp>  var;
+#define ITU_T_REGISTRATE_ENUM_CONSTRAINT(var, tp) typedef boost::asn1::___enumerated_tmpl_ec___<tp>  var;
 
 #define  ITU_T_PER_ENUMCODER(nm  , extbool , arrmain ) struct nm ## __coder { \
     static boost::asn1::indx_enumerated_map index_enumerated;\
@@ -144,11 +144,11 @@
  *                                             static ***string_type::value_type in(boost::asn1::x691::input_coder& stream); // char from stream
  *                                             static std::size_t bits_count(bool aligned);  //  chars size in bits
  *                         };
- *                       and use   ITU_T_BIND_EX_CONSTRS( type, helper_name, member);   NB: The type is member type               
+ *                       and use   ITU_T_BIND_EX_CONSTRAINT( type, helper_name, member);   NB: The type is member type               
  * 
  *      2) Comlex case: (size constraint + )
  *              a)  enumerated_type  ( same helper 1.a + )
- *                       ITU_T_REGISTRATE_ENUM_CONSTRS(helper_name_cplx , helper_name)
+ *                       ITU_T_REGISTRATE_ENUM_CONSTRAINT(helper_name_cplx , helper_name)
  *                       and use ITU_T_BIND_EXSIZE_*****(type, helper_name_cplx,  .....) NB: The type is member type 
  *              b) effective alphabet constraint ( same  helper 1.b) and 
  *                       and use ITU_T_BIND_EXSIZE_*****(type, helper_name,  .....) NB: The type is member type

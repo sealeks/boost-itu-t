@@ -839,7 +839,7 @@ namespace x680 {
                     for (tagged_vct::const_iterator it = tags.begin(); it != tags.end(); ++it) {
                         if (it != tags.begin())
                             rslt += ", ";
-                        rslt += ("{" + tagged_str(*it) + ", " + tagged_class_str(*it) + "}");
+                        rslt += ("prefixed_type(" + tagged_str(*it) + ", " + tagged_class_str(*it) + ")");
                     }
                     rslt += (" ), " + std::string(isexplicit ? "true" : "false") + ");");
                     rslt += (" //  initial =" + std::string(isexplicit ? "explicit" : "implicit"));
@@ -3017,7 +3017,7 @@ namespace x680 {
                     return "static_cast<" + builtin_int_str(intconstr) + " >(" + int_constr_str(main_int_cnstr.left(), for_strust) + ")";
                 }
             }
-            return "???";
+            return "?num?";
         }
 
         static std::string right_int_constr_str(integer_constraints_ptr intconstr, bool for_strust = false) {
@@ -3027,7 +3027,7 @@ namespace x680 {
                     return "static_cast<" + builtin_int_str(intconstr) + " >(" + int_constr_str(main_int_cnstr.right(), for_strust) + ")";
                 }
             }
-            return "???";
+            return "?num?";
         }
 
         std::string per_cpp_out::archive_member_per_constr(helper_ptr hlpr, const std::string& name, tagmarker_type dfltopt, size_constraints_ptr sizeconst, integer_constraints_ptr intconstr, bool alpha) {
@@ -3037,49 +3037,49 @@ namespace x680 {
                 if (intconstr || alpha) {
                     if (hlpr && (hlpr->ts)) {
                         if (main_size_cnstr.single())
-                            return "ITU_T_BIND_EXSIZE_SNGLCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " +
+                            return "ITU_T_BIND_EXSIZE_SNGLCONSTRAINT" + std::string(ext_size_cnstr ? "_EXT" : "") + "( " +
                             fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ", " +
-                            std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
+                            std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ?num? ")) + ")";
                         else if (main_size_cnstr.right_semi())
-                            return "ITU_T_BIND_EXSIZE_SEMICONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " +
+                            return "ITU_T_BIND_EXSIZE_SEMICONSTRAINT" + std::string(ext_size_cnstr ? "_EXT" : "") + "( " +
                             fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ", " +
-                            std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
+                            std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ?num? ")) + ")";
                         else
-                            return "ITU_T_BIND_EXSIZE_CONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " +
+                            return "ITU_T_BIND_EXSIZE_CONSTRAINT" + std::string(ext_size_cnstr ? "_EXT" : "") + "( " +
                             fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ", " +
-                            std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ", " +
-                            std::string(main_size_cnstr.right_ptr() ? to_string(main_size_cnstr.right()) : std::string(" ??? ")) + ")";
+                            std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ?num? ")) + ", " +
+                            std::string(main_size_cnstr.right_ptr() ? to_string(main_size_cnstr.right()) : std::string(" ?num? ")) + ")";
                     } else return "??? Per binding";
                 } else {
                     if (main_size_cnstr.single())
-                        return "ITU_T_BIND_SIZE_SNGLCONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
+                        return "ITU_T_BIND_SIZE_SNGLCONSTRAINT" + std::string(ext_size_cnstr ? "_EXT" : "") + "( " + name_arch(name, dfltopt) + ", " +
+                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ?num? ")) + ")";
                     else if (main_size_cnstr.right_semi())
-                        return "ITU_T_BIND_SIZE_SEMICONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ")";
+                        return "ITU_T_BIND_SIZE_SEMICONSTRAINT" + std::string(ext_size_cnstr ? "_EXT" : "") + "( " + name_arch(name, dfltopt) + ", " +
+                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ?num? ")) + ")";
                     else
-                        return "ITU_T_BIND_SIZE_CONSTR" + std::string(ext_size_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
-                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ??? ")) + ", " +
-                        std::string(main_size_cnstr.right_ptr() ? to_string(main_size_cnstr.right()) : std::string(" ??? ")) + ")";
+                        return "ITU_T_BIND_SIZE_CONSTRAINT" + std::string(ext_size_cnstr ? "_EXT" : "") + "( " + name_arch(name, dfltopt) + ", " +
+                        std::string(main_size_cnstr.left_ptr() ? to_string(main_size_cnstr.left()) : std::string(" ?num? ")) + ", " +
+                        std::string(main_size_cnstr.right_ptr() ? to_string(main_size_cnstr.right()) : std::string(" ?num? ")) + ")";
                 }
             } else if (intconstr) {
                 integer_constraints::range_type main_int_cnstr = intconstr->to_per().main();
                 bool ext_int_cnstr = intconstr->to_per().has_extention();
                 if (main_int_cnstr.single())
-                    return "ITU_T_BIND_NUM_SNGLCON" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
+                    return "ITU_T_BIND_NUM_SNGLCONSTRAINT" + std::string(ext_int_cnstr ? "_EXT" : "") + "( " + name_arch(name, dfltopt) + ", " +
                     left_int_constr_str(intconstr) + ")";
                 else if (main_int_cnstr.right_semi())
-                    return "ITU_T_BIND_NUM_SIMICON" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
+                    return "ITU_T_BIND_NUM_SIMICONSTRAINT" + std::string(ext_int_cnstr ? "_EXT" : "") + "( " + name_arch(name, dfltopt) + ", " +
                     left_int_constr_str(intconstr) + ")";
                 else
-                    return "ITU_T_BIND_NUM_CONSTR" + std::string(ext_int_cnstr ? "E" : "S") + "( " + name_arch(name, dfltopt) + ", " +
+                    return "ITU_T_BIND_NUM_CONSTRAINT" + std::string(ext_int_cnstr ? "_EXT" : "") + "( " + name_arch(name, dfltopt) + ", " +
                     left_int_constr_str(intconstr) + ", " +
                     right_int_constr_str(intconstr) + ")";
             } else if (alpha) {
                 if (hlpr && (hlpr->ts))
-                    return "ITU_T_BIND_EX_CONSTRS(" + fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ")";
+                    return "ITU_T_BIND_EX_CONSTRAINT(" + fromtype_str(hlpr->ts) + ", " + hlpr->name + "__shelper, " + name_arch(name, dfltopt) + ")";
                 else
-                    return "??? Per binding";
+                    return "?Per binding?";
             }
             return "ITU_T_BIND_PER(" + name_arch(name, dfltopt) + ")";
         }
@@ -3102,7 +3102,7 @@ namespace x680 {
                     if (helper->type == pht_enumerated) {
                         return "ITU_T_BIND_PER_ENUM(" + name_arch(name, dfltopt) + ", " + helper->name + "__helper)";
                     } else if ((helper->type == pht_structof_enum) || (helper->type == pht_structof_int)) {
-                        return "ITU_T_BIND_EX_CONSTRS(" + fromtype_str(self) + ", " + helper->name + "__shelper, " + name_arch(name, dfltopt) + ")";
+                        return "ITU_T_BIND_EX_CONSTRAINT(" + fromtype_str(self) + ", " + helper->name + "__shelper, " + name_arch(name, dfltopt) + ")";
                     }
                 }
             }
@@ -3350,26 +3350,24 @@ namespace x680 {
                 std::string name = hlpr->name + "__shelper";
                 bool ext_int_cnstr = hlpr->ts->type()->integer_constraint()->to_per().has_extention();
                 if (main_int_cnstr.single())
-                    stream << "ITU_T_REGISTRATE_NUM_SNGLCON" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
+                    stream << "ITU_T_REGISTRATE_NUM_SNGLCONSTRAINT" << std::string(ext_int_cnstr ? "_EXT" : "") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
                     left_int_constr_str(hlpr->ts->type()->integer_constraint(), true) << ")";
                 else if (main_int_cnstr.right_semi())
-                    stream << "ITU_T_REGISTRATE_NUM_SIMICON" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
+                    stream << "ITU_T_REGISTRATE_NUM_SEMICONSTRAINTTRAINT" << std::string(ext_int_cnstr ? "_EXT" : "") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
                     left_int_constr_str(hlpr->ts->type()->integer_constraint(), true) << ")";
                 else
-                    stream << "ITU_T_REGISTRATE_NUM_CONSTR" << std::string(ext_int_cnstr ? "E" : "S") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
+                    stream << "ITU_T_REGISTRATE_NUM_CONSTRAINT" << std::string(ext_int_cnstr ? "_EXT" : "") << "( " << name << ", " << fromtype_str(hlpr->ts) << ", " <<
                     left_int_constr_str(hlpr->ts->type()->integer_constraint(), true) << ", " <<
                     right_int_constr_str(hlpr->ts->type()->integer_constraint(), true) << ")";
-            } //else
-            //stream << "#error ";
+            }
         }
 
         void per_cpp_out::print_struct_enum_helper(helper_ptr hlpr) {
             basic_entity_ptr scp;
             if (hlpr->ts) {
                 stream << tabformat(scp, 2);
-                stream << "ITU_T_REGISTRATE_ENUM_CONSTRS(" << hlpr->name << "__shelper, " << hlpr->name << "__helper);";
-            } //else
-            //stream << "#error ";
+                stream << "ITU_T_REGISTRATE_ENUM_CONSTRAINT(" << hlpr->name << "__shelper, " << hlpr->name << "__helper);";
+            }
         }
 
         void per_cpp_out::print_struct_alphabet_helper(helper_ptr hlpr) {

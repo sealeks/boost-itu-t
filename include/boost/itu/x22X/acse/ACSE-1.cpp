@@ -21,16 +21,16 @@ namespace ACSE_1 {
     ITU_T_CHOICEC_DEFN(ACSE_apdu::acrp, acrp, ACRP_apdu, ACSE_apdu_acrp);
 
     // sequence AARQ-apdu
-    const bitstring_type AARQ_apdu_impl::protocol_version_version1 = bitstring_type(true, 0);
+    const bitstring_type AARQ_apdu::protocol_version_version1 = bitstring_type(true, 0);
 
-    AARQ_apdu_impl::AARQ_apdu_impl() : aSO_context_name_() {
+    AARQ_apdu::AARQ_apdu() : aSO_context_name_() {
     };
 
-    AARQ_apdu_impl::AARQ_apdu_impl(const ASO_context_name& arg__aSO_context_name) :
+    AARQ_apdu::AARQ_apdu(const ASO_context_name& arg__aSO_context_name) :
     aSO_context_name_(arg__aSO_context_name) {
     };
 
-    AARQ_apdu_impl::AARQ_apdu_impl(shared_ptr< bitstring_type> arg__protocol_version,
+    AARQ_apdu::AARQ_apdu(shared_ptr< bitstring_type> arg__protocol_version,
             shared_ptr< ASO_context_name> arg__aSO_context_name,
             shared_ptr< AP_title> arg__called_AP_title,
             shared_ptr< AE_qualifier> arg__called_AE_qualifier,
@@ -70,36 +70,36 @@ namespace ACSE_1 {
     user_information_(arg__user_information) {
     };
 
-    const bitstring_type AARQ_apdu_impl::protocol_version__default = protocol_version_version1;
+    const bitstring_type AARQ_apdu::protocol_version__default = protocol_version_version1;
 
 
-    ITU_T_DEFAULTH_DEFN(AARQ_apdu_impl::protocol_version, protocol_version, bitstring_type);
-    ITU_T_HOLDERH_DEFN(AARQ_apdu_impl::aSO_context_name, aSO_context_name, ASO_context_name);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::called_AP_title, called_AP_title, AP_title);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::called_AE_qualifier, called_AE_qualifier, AE_qualifier);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::called_AP_invocation_identifier, called_AP_invocation_identifier, AP_invocation_identifier);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::called_AE_invocation_identifier, called_AE_invocation_identifier, AE_invocation_identifier);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::calling_AP_title, calling_AP_title, AP_title);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::calling_AE_qualifier, calling_AE_qualifier, AE_qualifier);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::calling_AP_invocation_identifier, calling_AP_invocation_identifier, AP_invocation_identifier);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::calling_AE_invocation_identifier, calling_AE_invocation_identifier, AE_invocation_identifier);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::sender_acse_requirements, sender_acse_requirements, ACSE_requirements);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::mechanism_name, mechanism_name, Mechanism_name);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::calling_authentication_value, calling_authentication_value, Authentication_value);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::aSO_context_name_list, aSO_context_name_list, ASO_context_name_list);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::implementation_information, implementation_information, Implementation_data);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::p_context_definition_list, p_context_definition_list, Syntactic_context_list);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::called_asoi_tag, called_asoi_tag, ASOI_tag);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::calling_asoi_tag, calling_asoi_tag, ASOI_tag);
-    ITU_T_OPTIONAL_DEFN(AARQ_apdu_impl::user_information, user_information, Association_data);
+    ITU_T_DEFAULTH_DEFN(AARQ_apdu::protocol_version, protocol_version, bitstring_type);
+    ITU_T_HOLDERH_DEFN(AARQ_apdu::aSO_context_name, aSO_context_name, ASO_context_name);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::called_AP_title, called_AP_title, AP_title);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::called_AE_qualifier, called_AE_qualifier, AE_qualifier);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::called_AP_invocation_identifier, called_AP_invocation_identifier, AP_invocation_identifier);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::called_AE_invocation_identifier, called_AE_invocation_identifier, AE_invocation_identifier);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::calling_AP_title, calling_AP_title, AP_title);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::calling_AE_qualifier, calling_AE_qualifier, AE_qualifier);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::calling_AP_invocation_identifier, calling_AP_invocation_identifier, AP_invocation_identifier);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::calling_AE_invocation_identifier, calling_AE_invocation_identifier, AE_invocation_identifier);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::sender_acse_requirements, sender_acse_requirements, ACSE_requirements);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::mechanism_name, mechanism_name, Mechanism_name);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::calling_authentication_value, calling_authentication_value, Authentication_value);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::aSO_context_name_list, aSO_context_name_list, ASO_context_name_list);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::implementation_information, implementation_information, Implementation_data);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::p_context_definition_list, p_context_definition_list, Syntactic_context_list);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::called_asoi_tag, called_asoi_tag, ASOI_tag);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::calling_asoi_tag, calling_asoi_tag, ASOI_tag);
+    ITU_T_OPTIONAL_DEFN(AARQ_apdu::user_information, user_information, Association_data);
 
     // sequence AARE-apdu
-    const bitstring_type AARE_apdu_impl::protocol_version_version1 = bitstring_type(true, 0);
+    const bitstring_type AARE_apdu::protocol_version_version1 = bitstring_type(true, 0);
 
-    AARE_apdu_impl::AARE_apdu_impl() : aSO_context_name_(), result_(), result_source_diagnostic_() {
+    AARE_apdu::AARE_apdu() : aSO_context_name_(), result_(), result_source_diagnostic_() {
     };
 
-    AARE_apdu_impl::AARE_apdu_impl(const ASO_context_name& arg__aSO_context_name,
+    AARE_apdu::AARE_apdu(const ASO_context_name& arg__aSO_context_name,
             const Associate_result& arg__result,
             const Associate_source_diagnostic& arg__result_source_diagnostic) :
     aSO_context_name_(arg__aSO_context_name),
@@ -107,7 +107,7 @@ namespace ACSE_1 {
     result_source_diagnostic_(arg__result_source_diagnostic) {
     };
 
-    AARE_apdu_impl::AARE_apdu_impl(shared_ptr< bitstring_type> arg__protocol_version,
+    AARE_apdu::AARE_apdu(shared_ptr< bitstring_type> arg__protocol_version,
             shared_ptr< ASO_context_name> arg__aSO_context_name,
             shared_ptr< Associate_result> arg__result,
             shared_ptr< Associate_source_diagnostic> arg__result_source_diagnostic,
@@ -143,33 +143,33 @@ namespace ACSE_1 {
     user_information_(arg__user_information) {
     };
 
-    const bitstring_type AARE_apdu_impl::protocol_version__default = protocol_version_version1;
+    const bitstring_type AARE_apdu::protocol_version__default = protocol_version_version1;
 
 
-    ITU_T_DEFAULTH_DEFN(AARE_apdu_impl::protocol_version, protocol_version, bitstring_type);
-    ITU_T_HOLDERH_DEFN(AARE_apdu_impl::aSO_context_name, aSO_context_name, ASO_context_name);
-    ITU_T_HOLDERH_DEFN(AARE_apdu_impl::result, result, Associate_result);
-    ITU_T_HOLDERH_DEFN(AARE_apdu_impl::result_source_diagnostic, result_source_diagnostic, Associate_source_diagnostic);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::responding_AP_title, responding_AP_title, AP_title);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::responding_AE_qualifier, responding_AE_qualifier, AE_qualifier);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::responding_AP_invocation_identifier, responding_AP_invocation_identifier, AP_invocation_identifier);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::responding_AE_invocation_identifier, responding_AE_invocation_identifier, AE_invocation_identifier);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::responder_acse_requirements, responder_acse_requirements, ACSE_requirements);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::mechanism_name, mechanism_name, Mechanism_name);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::responding_authentication_value, responding_authentication_value, Authentication_value);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::aSO_context_name_list, aSO_context_name_list, ASO_context_name_list);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::implementation_information, implementation_information, Implementation_data);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::p_context_result_list, p_context_result_list, P_context_result_list);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::called_asoi_tag, called_asoi_tag, ASOI_tag);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::calling_asoi_tag, calling_asoi_tag, ASOI_tag);
-    ITU_T_OPTIONAL_DEFN(AARE_apdu_impl::user_information, user_information, Association_data);
+    ITU_T_DEFAULTH_DEFN(AARE_apdu::protocol_version, protocol_version, bitstring_type);
+    ITU_T_HOLDERH_DEFN(AARE_apdu::aSO_context_name, aSO_context_name, ASO_context_name);
+    ITU_T_HOLDERH_DEFN(AARE_apdu::result, result, Associate_result);
+    ITU_T_HOLDERH_DEFN(AARE_apdu::result_source_diagnostic, result_source_diagnostic, Associate_source_diagnostic);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::responding_AP_title, responding_AP_title, AP_title);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::responding_AE_qualifier, responding_AE_qualifier, AE_qualifier);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::responding_AP_invocation_identifier, responding_AP_invocation_identifier, AP_invocation_identifier);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::responding_AE_invocation_identifier, responding_AE_invocation_identifier, AE_invocation_identifier);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::responder_acse_requirements, responder_acse_requirements, ACSE_requirements);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::mechanism_name, mechanism_name, Mechanism_name);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::responding_authentication_value, responding_authentication_value, Authentication_value);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::aSO_context_name_list, aSO_context_name_list, ASO_context_name_list);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::implementation_information, implementation_information, Implementation_data);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::p_context_result_list, p_context_result_list, P_context_result_list);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::called_asoi_tag, called_asoi_tag, ASOI_tag);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::calling_asoi_tag, calling_asoi_tag, ASOI_tag);
+    ITU_T_OPTIONAL_DEFN(AARE_apdu::user_information, user_information, Association_data);
 
     // sequence RLRQ-apdu
 
-    RLRQ_apdu_impl::RLRQ_apdu_impl() {
+    RLRQ_apdu::RLRQ_apdu() {
     };
 
-    RLRQ_apdu_impl::RLRQ_apdu_impl(shared_ptr< Release_request_reason> arg__reason,
+    RLRQ_apdu::RLRQ_apdu(shared_ptr< Release_request_reason> arg__reason,
             shared_ptr< ASO_qualifier> arg__aso_qualifier,
             shared_ptr< ASOI_identifier> arg__asoi_identifier,
             shared_ptr< Association_data> arg__user_information) :
@@ -180,17 +180,17 @@ namespace ACSE_1 {
     };
 
 
-    ITU_T_OPTIONAL_DEFN(RLRQ_apdu_impl::reason, reason, Release_request_reason);
-    ITU_T_OPTIONAL_DEFN(RLRQ_apdu_impl::aso_qualifier, aso_qualifier, ASO_qualifier);
-    ITU_T_OPTIONAL_DEFN(RLRQ_apdu_impl::asoi_identifier, asoi_identifier, ASOI_identifier);
-    ITU_T_OPTIONAL_DEFN(RLRQ_apdu_impl::user_information, user_information, Association_data);
+    ITU_T_OPTIONAL_DEFN(RLRQ_apdu::reason, reason, Release_request_reason);
+    ITU_T_OPTIONAL_DEFN(RLRQ_apdu::aso_qualifier, aso_qualifier, ASO_qualifier);
+    ITU_T_OPTIONAL_DEFN(RLRQ_apdu::asoi_identifier, asoi_identifier, ASOI_identifier);
+    ITU_T_OPTIONAL_DEFN(RLRQ_apdu::user_information, user_information, Association_data);
 
     // sequence RLRE-apdu
 
-    RLRE_apdu_impl::RLRE_apdu_impl() {
+    RLRE_apdu::RLRE_apdu() {
     };
 
-    RLRE_apdu_impl::RLRE_apdu_impl(shared_ptr< Release_response_reason> arg__reason,
+    RLRE_apdu::RLRE_apdu(shared_ptr< Release_response_reason> arg__reason,
             shared_ptr< ASO_qualifier> arg__aso_qualifier,
             shared_ptr< ASOI_identifier> arg__asoi_identifier,
             shared_ptr< Association_data> arg__user_information) :
@@ -201,21 +201,21 @@ namespace ACSE_1 {
     };
 
 
-    ITU_T_OPTIONAL_DEFN(RLRE_apdu_impl::reason, reason, Release_response_reason);
-    ITU_T_OPTIONAL_DEFN(RLRE_apdu_impl::aso_qualifier, aso_qualifier, ASO_qualifier);
-    ITU_T_OPTIONAL_DEFN(RLRE_apdu_impl::asoi_identifier, asoi_identifier, ASOI_identifier);
-    ITU_T_OPTIONAL_DEFN(RLRE_apdu_impl::user_information, user_information, Association_data);
+    ITU_T_OPTIONAL_DEFN(RLRE_apdu::reason, reason, Release_response_reason);
+    ITU_T_OPTIONAL_DEFN(RLRE_apdu::aso_qualifier, aso_qualifier, ASO_qualifier);
+    ITU_T_OPTIONAL_DEFN(RLRE_apdu::asoi_identifier, asoi_identifier, ASOI_identifier);
+    ITU_T_OPTIONAL_DEFN(RLRE_apdu::user_information, user_information, Association_data);
 
     // sequence ABRT-apdu
 
-    ABRT_apdu_impl::ABRT_apdu_impl() : abort_source_() {
+    ABRT_apdu::ABRT_apdu() : abort_source_() {
     };
 
-    ABRT_apdu_impl::ABRT_apdu_impl(const ABRT_source& arg__abort_source) :
+    ABRT_apdu::ABRT_apdu(const ABRT_source& arg__abort_source) :
     abort_source_(arg__abort_source) {
     };
 
-    ABRT_apdu_impl::ABRT_apdu_impl(shared_ptr< ABRT_source> arg__abort_source,
+    ABRT_apdu::ABRT_apdu(shared_ptr< ABRT_source> arg__abort_source,
             shared_ptr< ABRT_diagnostic> arg__abort_diagnostic,
             shared_ptr< ASO_qualifier> arg__aso_qualifier,
             shared_ptr< ASOI_identifier> arg__asoi_identifier,
@@ -228,22 +228,22 @@ namespace ACSE_1 {
     };
 
 
-    ITU_T_HOLDERH_DEFN(ABRT_apdu_impl::abort_source, abort_source, ABRT_source);
-    ITU_T_OPTIONAL_DEFN(ABRT_apdu_impl::abort_diagnostic, abort_diagnostic, ABRT_diagnostic);
-    ITU_T_OPTIONAL_DEFN(ABRT_apdu_impl::aso_qualifier, aso_qualifier, ASO_qualifier);
-    ITU_T_OPTIONAL_DEFN(ABRT_apdu_impl::asoi_identifier, asoi_identifier, ASOI_identifier);
-    ITU_T_OPTIONAL_DEFN(ABRT_apdu_impl::user_information, user_information, Association_data);
+    ITU_T_HOLDERH_DEFN(ABRT_apdu::abort_source, abort_source, ABRT_source);
+    ITU_T_OPTIONAL_DEFN(ABRT_apdu::abort_diagnostic, abort_diagnostic, ABRT_diagnostic);
+    ITU_T_OPTIONAL_DEFN(ABRT_apdu::aso_qualifier, aso_qualifier, ASO_qualifier);
+    ITU_T_OPTIONAL_DEFN(ABRT_apdu::asoi_identifier, asoi_identifier, ASOI_identifier);
+    ITU_T_OPTIONAL_DEFN(ABRT_apdu::user_information, user_information, Association_data);
 
     // sequence A-DT-apdu
 
-    A_DT_apdu_impl::A_DT_apdu_impl() : a_user_data_() {
+    A_DT_apdu::A_DT_apdu() : a_user_data_() {
     };
 
-    A_DT_apdu_impl::A_DT_apdu_impl(const User_Data& arg__a_user_data) :
+    A_DT_apdu::A_DT_apdu(const User_Data& arg__a_user_data) :
     a_user_data_(arg__a_user_data) {
     };
 
-    A_DT_apdu_impl::A_DT_apdu_impl(shared_ptr< ASO_qualifier> arg__aso_qualifier,
+    A_DT_apdu::A_DT_apdu(shared_ptr< ASO_qualifier> arg__aso_qualifier,
             shared_ptr< ASOI_identifier> arg__asoi_identifier,
             shared_ptr< User_Data> arg__a_user_data) :
     aso_qualifier_(arg__aso_qualifier),
@@ -252,16 +252,16 @@ namespace ACSE_1 {
     };
 
 
-    ITU_T_OPTIONAL_DEFN(A_DT_apdu_impl::aso_qualifier, aso_qualifier, ASO_qualifier);
-    ITU_T_OPTIONAL_DEFN(A_DT_apdu_impl::asoi_identifier, asoi_identifier, ASOI_identifier);
-    ITU_T_HOLDERH_DEFN(A_DT_apdu_impl::a_user_data, a_user_data, User_Data);
+    ITU_T_OPTIONAL_DEFN(A_DT_apdu::aso_qualifier, aso_qualifier, ASO_qualifier);
+    ITU_T_OPTIONAL_DEFN(A_DT_apdu::asoi_identifier, asoi_identifier, ASOI_identifier);
+    ITU_T_HOLDERH_DEFN(A_DT_apdu::a_user_data, a_user_data, User_Data);
 
     // sequence ACRQ-apdu
 
-    ACRQ_apdu_impl::ACRQ_apdu_impl() {
+    ACRQ_apdu::ACRQ_apdu() {
     };
 
-    ACRQ_apdu_impl::ACRQ_apdu_impl(shared_ptr< ASO_qualifier> arg__aso_qualifier,
+    ACRQ_apdu::ACRQ_apdu(shared_ptr< ASO_qualifier> arg__aso_qualifier,
             shared_ptr< ASOI_identifier> arg__asoi_identifier,
             shared_ptr< ASO_context_name> arg__aSO_context_name,
             shared_ptr< ASO_context_name_list> arg__aSO_context_name_list,
@@ -276,19 +276,19 @@ namespace ACSE_1 {
     };
 
 
-    ITU_T_OPTIONAL_DEFN(ACRQ_apdu_impl::aso_qualifier, aso_qualifier, ASO_qualifier);
-    ITU_T_OPTIONAL_DEFN(ACRQ_apdu_impl::asoi_identifier, asoi_identifier, ASOI_identifier);
-    ITU_T_OPTIONAL_DEFN(ACRQ_apdu_impl::aSO_context_name, aSO_context_name, ASO_context_name);
-    ITU_T_OPTIONAL_DEFN(ACRQ_apdu_impl::aSO_context_name_list, aSO_context_name_list, ASO_context_name_list);
-    ITU_T_OPTIONAL_DEFN(ACRQ_apdu_impl::p_context_definition_list, p_context_definition_list, Syntactic_context_list);
-    ITU_T_OPTIONAL_DEFN(ACRQ_apdu_impl::user_information, user_information, User_information);
+    ITU_T_OPTIONAL_DEFN(ACRQ_apdu::aso_qualifier, aso_qualifier, ASO_qualifier);
+    ITU_T_OPTIONAL_DEFN(ACRQ_apdu::asoi_identifier, asoi_identifier, ASOI_identifier);
+    ITU_T_OPTIONAL_DEFN(ACRQ_apdu::aSO_context_name, aSO_context_name, ASO_context_name);
+    ITU_T_OPTIONAL_DEFN(ACRQ_apdu::aSO_context_name_list, aSO_context_name_list, ASO_context_name_list);
+    ITU_T_OPTIONAL_DEFN(ACRQ_apdu::p_context_definition_list, p_context_definition_list, Syntactic_context_list);
+    ITU_T_OPTIONAL_DEFN(ACRQ_apdu::user_information, user_information, User_information);
 
     // sequence ACRP-apdu
 
-    ACRP_apdu_impl::ACRP_apdu_impl() {
+    ACRP_apdu::ACRP_apdu() {
     };
 
-    ACRP_apdu_impl::ACRP_apdu_impl(shared_ptr< ASO_qualifier> arg__aso_qualifier,
+    ACRP_apdu::ACRP_apdu(shared_ptr< ASO_qualifier> arg__aso_qualifier,
             shared_ptr< ASOI_identifier> arg__asoi_identifier,
             shared_ptr< ASO_context_name_list> arg__aSO_context_name,
             shared_ptr< P_context_result_list> arg__p_context_result_list,
@@ -301,11 +301,11 @@ namespace ACSE_1 {
     };
 
 
-    ITU_T_OPTIONAL_DEFN(ACRP_apdu_impl::aso_qualifier, aso_qualifier, ASO_qualifier);
-    ITU_T_OPTIONAL_DEFN(ACRP_apdu_impl::asoi_identifier, asoi_identifier, ASOI_identifier);
-    ITU_T_OPTIONAL_DEFN(ACRP_apdu_impl::aSO_context_name, aSO_context_name, ASO_context_name_list);
-    ITU_T_OPTIONAL_DEFN(ACRP_apdu_impl::p_context_result_list, p_context_result_list, P_context_result_list);
-    ITU_T_OPTIONAL_DEFN(ACRP_apdu_impl::user_information, user_information, User_information);
+    ITU_T_OPTIONAL_DEFN(ACRP_apdu::aso_qualifier, aso_qualifier, ASO_qualifier);
+    ITU_T_OPTIONAL_DEFN(ACRP_apdu::asoi_identifier, asoi_identifier, ASOI_identifier);
+    ITU_T_OPTIONAL_DEFN(ACRP_apdu::aSO_context_name, aSO_context_name, ASO_context_name_list);
+    ITU_T_OPTIONAL_DEFN(ACRP_apdu::p_context_result_list, p_context_result_list, P_context_result_list);
+    ITU_T_OPTIONAL_DEFN(ACRP_apdu::user_information, user_information, User_information);
 
     // choice AP-title
 

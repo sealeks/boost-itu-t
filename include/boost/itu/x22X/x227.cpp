@@ -24,32 +24,32 @@ namespace boost {
                 ACSE::AARQ_apdu areq;
 
                 //areq->protocol_version__assign( new application_ver_type(DEFAULT_APPLICATION_VER));
-                areq->aSO_context_name(ACSE::ASO_context_name(this->application_contexts().context()));
+                areq.aSO_context_name(ACSE::ASO_context_name(this->application_contexts().context()));
 
                 if (option().called()) {
                     switch (option().called().form()) {
                         case boost::itu::acse_selectorvalue_type::form1:
                         {
                             if (!option().called().ap_title1().empty())
-                                areq->called_AP_title__new()->ap_title_form1(new ACSE::AP_title_form1(option().called().ap_title1()));
+                                areq.called_AP_title__new()->ap_title_form1(new ACSE::AP_title_form1(option().called().ap_title1()));
                             if (!option().called().ae_qualifier1().empty())
-                                areq->called_AE_qualifier__new()->aso_qualifier_form1(new ACSE::ASO_qualifier_form1(option().called().ae_qualifier1()));
+                                areq.called_AE_qualifier__new()->aso_qualifier_form1(new ACSE::ASO_qualifier_form1(option().called().ae_qualifier1()));
                             if (option().called().ap_invoke_id())
-                                areq->called_AP_invocation_identifier(new ACSE::AP_invocation_identifier(*(option().called().ap_invoke_id())));
+                                areq.called_AP_invocation_identifier(new ACSE::AP_invocation_identifier(*(option().called().ap_invoke_id())));
                             if (option().called().ae_invoke_id())
-                                areq->called_AE_invocation_identifier(new ACSE::AE_invocation_identifier(*(option().called().ae_invoke_id())));
+                                areq.called_AE_invocation_identifier(new ACSE::AE_invocation_identifier(*(option().called().ae_invoke_id())));
                             break;
                         }
                         case boost::itu::acse_selectorvalue_type::form2:
                         {
                             if (!option().called().ap_title2().empty())
-                                areq->called_AP_title__new()->ap_title_form2(new ACSE::AP_title_form2(option().called().ap_title2()));
+                                areq.called_AP_title__new()->ap_title_form2(new ACSE::AP_title_form2(option().called().ap_title2()));
                             if (option().called().ae_qualifier2())
-                                areq->called_AE_qualifier__new()->aso_qualifier_form2(new ACSE::ASO_qualifier_form2(*(option().called().ae_qualifier2())));
+                                areq.called_AE_qualifier__new()->aso_qualifier_form2(new ACSE::ASO_qualifier_form2(*(option().called().ae_qualifier2())));
                             if (option().called().ap_invoke_id())
-                                areq->called_AP_invocation_identifier(new ACSE::AP_invocation_identifier(*(option().called().ap_invoke_id())));
+                                areq.called_AP_invocation_identifier(new ACSE::AP_invocation_identifier(*(option().called().ap_invoke_id())));
                             if (option().called().ae_invoke_id())
-                                areq->called_AE_invocation_identifier(new ACSE::AE_invocation_identifier(*(option().called().ae_invoke_id())));
+                                areq.called_AE_invocation_identifier(new ACSE::AE_invocation_identifier(*(option().called().ae_invoke_id())));
                             break;
                         }
                         default:
@@ -64,25 +64,25 @@ namespace boost {
                         case boost::itu::acse_selectorvalue_type::form1:
                         {
                             if (!option().calling().ap_title1().empty())
-                                areq->calling_AP_title__new()->ap_title_form1(new ACSE::AP_title_form1(option().calling().ap_title1()));
+                                areq.calling_AP_title__new()->ap_title_form1(new ACSE::AP_title_form1(option().calling().ap_title1()));
                             if (!option().calling().ae_qualifier1().empty())
-                                areq->calling_AE_qualifier__new()->aso_qualifier_form1(new ACSE::ASO_qualifier_form1(option().calling().ae_qualifier1()));
+                                areq.calling_AE_qualifier__new()->aso_qualifier_form1(new ACSE::ASO_qualifier_form1(option().calling().ae_qualifier1()));
                             if (option().calling().ap_invoke_id())
-                                areq->calling_AP_invocation_identifier(new ACSE::AP_invocation_identifier(*(option().calling().ap_invoke_id())));
+                                areq.calling_AP_invocation_identifier(new ACSE::AP_invocation_identifier(*(option().calling().ap_invoke_id())));
                             if (option().calling().ae_invoke_id())
-                                areq->calling_AE_invocation_identifier(new ACSE::AE_invocation_identifier(*(option().calling().ae_invoke_id())));
+                                areq.calling_AE_invocation_identifier(new ACSE::AE_invocation_identifier(*(option().calling().ae_invoke_id())));
                             break;
                         }
                         case boost::itu::acse_selectorvalue_type::form2:
                         {
                             if (!option().calling().ap_title2().empty())
-                                areq->calling_AP_title__new()->ap_title_form2(new ACSE::AP_title_form2(option().calling().ap_title2()));
+                                areq.calling_AP_title__new()->ap_title_form2(new ACSE::AP_title_form2(option().calling().ap_title2()));
                             if (option().calling().ae_qualifier2())
-                                areq->calling_AE_qualifier__new()->aso_qualifier_form2(new ACSE::ASO_qualifier_form2(*(option().calling().ae_qualifier2())));
+                                areq.calling_AE_qualifier__new()->aso_qualifier_form2(new ACSE::ASO_qualifier_form2(*(option().calling().ae_qualifier2())));
                             if (option().calling().ap_invoke_id())
-                                areq->calling_AP_invocation_identifier(new ACSE::AP_invocation_identifier(*(option().calling().ap_invoke_id())));
+                                areq.calling_AP_invocation_identifier(new ACSE::AP_invocation_identifier(*(option().calling().ap_invoke_id())));
                             if (option().calling().ae_invoke_id())
-                                areq->calling_AE_invocation_identifier(new ACSE::AE_invocation_identifier(*(option().calling().ae_invoke_id())));
+                                areq.calling_AE_invocation_identifier(new ACSE::AE_invocation_identifier(*(option().calling().ae_invoke_id())));
                             break;
                         }
                         default:
@@ -100,9 +100,9 @@ namespace boost {
                         userdata.encoding().single_ASN1_type__new();
                         userdata.encoding().single_ASN1_type()->bind(*(it->second->coder()->out()));
                         it->second->coder()->clear();
-                        if (!areq->user_information())
-                            areq->user_information__new();
-                        areq->user_information()->push_back(userdata);
+                        if (!areq.user_information())
+                            areq.user_information__new();
+                        areq.user_information()->push_back(userdata);
                     }
                 }
 
@@ -125,12 +125,12 @@ namespace boost {
                         case ACSE::ACSE_apdu_aare:
                         {
                             const ACSE::AARE_apdu& aresp = *apdu.aare();
-                            if (aresp->user_information()) {
-                                if (aresp->user_information()->size()) {
+                            if (aresp.user_information()) {
+                                if (aresp.user_information()->size()) {
                                     std::size_t cntxt_cnt = 0;
                                     for (defined_context_map::iterator it = dcs()->contexts().begin(); it != dcs()->contexts().end(); ++it) {
-                                        if ((it->second->abstract_syntax() != ACSE_OID) && (cntxt_cnt < aresp->user_information()->size())) {
-                                            boost::asn1::external_type& ext = aresp->user_information()->operator [](cntxt_cnt);
+                                        if ((it->second->abstract_syntax() != ACSE_OID) && (cntxt_cnt < aresp.user_information()->size())) {
+                                            boost::asn1::external_type& ext = aresp.user_information()->operator [](cntxt_cnt);
                                             ext.encoding().single_ASN1_type()->bind(*(it->second->coder()->in()));
                                         }
                                     }

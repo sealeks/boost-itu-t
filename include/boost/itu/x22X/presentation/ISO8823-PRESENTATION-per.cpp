@@ -14,7 +14,7 @@ namespace ISO8823_PRESENTATION {
 
     //  helper name:   Presentation_context_identifier           type:  struct of constrained int helper     //   Ic(  [ 1  ...   127 ]   ...ext...) 
 
-    ITU_T_REGISTRATE_NUM_CONSTRE(Presentation_context_identifier__shelper, integer_type, static_cast<integer_type> (1), static_cast<integer_type> (127))
+    ITU_T_REGISTRATE_NUM_CONSTRAINT_EXT(Presentation_context_identifier__shelper, integer_type, static_cast<integer_type> (1), static_cast<integer_type> (127))
     // set  CP-type
 
     template<> void CP_type::serialize(boost::asn1::x691::output_coder& arch) {
@@ -86,14 +86,14 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(protocol_version_);
-        ITU_T_BIND_SIZE_CONSTRE(calling_presentation_selector_, 1, 4);
-        ITU_T_BIND_SIZE_CONSTRE(called_presentation_selector_, 1, 4);
-        ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_list_, 0, 7);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(calling_presentation_selector_, 1, 4);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(called_presentation_selector_, 1, 4);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_definition_list_, 0, 7);
         ITU_T_BIND_PER(default_context_name_);
         ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_BIND_PER(user_session_requirements_);
         ITU_T_BIND_PER(protocol_options_);
-        ITU_T_BIND_NUM_CONSTRE(initiators_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(initiators_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(extensions_);
         ITU_T_BIND_PER(user_data_);
     }
@@ -103,14 +103,14 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_READ(11);
 
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(protocol_version_);
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRE(calling_presentation_selector_, 1, 4);
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_SIZE_CONSTRE(called_presentation_selector_, 1, 4);
-        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRAINT_EXT(calling_presentation_selector_, 1, 4);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_SIZE_CONSTRAINT_EXT(called_presentation_selector_, 1, 4);
+        ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_definition_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(default_context_name_);
         ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_PER(user_session_requirements_);
         ITU_T_OPTIONAL_CHECK(7) ITU_T_BIND_PER(protocol_options_);
-        ITU_T_OPTIONAL_CHECK(8) ITU_T_BIND_NUM_CONSTRE(initiators_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(8) ITU_T_BIND_NUM_CONSTRAINT_EXT(initiators_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_OPTIONAL_CHECK(9) ITU_T_BIND_PER(extensions_);
         ITU_T_OPTIONAL_CHECK(10) ITU_T_BIND_PER(user_data_);
     }
@@ -198,12 +198,12 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(protocol_version_);
-        ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
-        ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(responding_presentation_selector_, 1, 4);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_definition_result_list_, 0, 7);
         ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_BIND_PER(user_session_requirements_);
         ITU_T_BIND_PER(protocol_options_);
-        ITU_T_BIND_NUM_CONSTRE(responders_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(responders_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(user_data_);
     }
 
@@ -212,12 +212,12 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_READ(8);
 
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(protocol_version_);
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRAINT_EXT(responding_presentation_selector_, 1, 4);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_definition_result_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(presentation_requirements_);
         ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(user_session_requirements_);
         ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(protocol_options_);
-        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_NUM_CONSTRE(responders_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_OPTIONAL_CHECK(6) ITU_T_BIND_NUM_CONSTRAINT_EXT(responders_nominated_context_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_OPTIONAL_CHECK(7) ITU_T_BIND_PER(user_data_);
     }
 
@@ -299,8 +299,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(protocol_version_);
-        ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
-        ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(responding_presentation_selector_, 1, 4);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_definition_result_list_, 0, 7);
         ITU_T_BIND_PER(default_context_result_);
         ITU_T_BIND_PER(provider_reason_);
         ITU_T_BIND_PER(user_data_);
@@ -311,8 +311,8 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_READ(6);
 
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(protocol_version_);
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRE(responding_presentation_selector_, 1, 4);
-        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_SIZE_CONSTRE(presentation_context_definition_result_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRAINT_EXT(responding_presentation_selector_, 1, 4);
+        ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_definition_result_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK(3) ITU_T_BIND_PER(default_context_result_);
         ITU_T_OPTIONAL_CHECK(4) ITU_T_BIND_PER(provider_reason_);
         ITU_T_OPTIONAL_CHECK(5) ITU_T_BIND_PER(user_data_);
@@ -437,7 +437,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_identifier_list_, 0, 7);
         ITU_T_BIND_PER(user_data_);
     }
 
@@ -445,7 +445,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_identifier_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(user_data_);
     }
 
@@ -534,8 +534,8 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_SIZE_CONSTRE(presentation_context_addition_list_, 0, 7);
-        ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_list_, 0, 7);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_addition_list_, 0, 7);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_deletion_list_, 0, 7);
         ITU_T_BIND_PER(user_data_);
     }
 
@@ -543,8 +543,8 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_addition_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_addition_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_deletion_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(user_data_);
     }
 
@@ -558,8 +558,8 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_SIZE_CONSTRE(presentation_context_addition_result_list_, 0, 7);
-        ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_result_list_, 0, 7);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_addition_result_list_, 0, 7);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_deletion_result_list_, 0, 7);
         ITU_T_BIND_PER(user_data_);
     }
 
@@ -567,8 +567,8 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_READ(3);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_addition_result_list_, 0, 7);
-        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRE(presentation_context_deletion_result_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_addition_result_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_deletion_result_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK(2) ITU_T_BIND_PER(user_data_);
     }
 
@@ -581,7 +581,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_identifier_list_, 0, 7);
         ITU_T_BIND_PER(user_data_);
     }
 
@@ -589,7 +589,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_identifier_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(user_data_);
     }
 
@@ -602,7 +602,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_WRITE;
 
-        ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
+        ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_identifier_list_, 0, 7);
         ITU_T_BIND_PER(user_data_);
     }
 
@@ -610,20 +610,20 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_OPTIONAL_READ(2);
 
-        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRE(presentation_context_identifier_list_, 0, 7);
+        ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_SIZE_CONSTRAINT_EXT(presentation_context_identifier_list_, 0, 7);
         ITU_T_OPTIONAL_CHECK(1) ITU_T_BIND_PER(user_data_);
     }
 
     // sequence 
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*abstract_syntax_name_);
         ITU_T_BIND_PER(*transfer_syntax_name_list_);
     }
 
     template<> void Context_list_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*abstract_syntax_name_);
         ITU_T_BIND_PER(*transfer_syntax_name_list_);
     }
@@ -653,12 +653,12 @@ namespace ISO8823_PRESENTATION {
     // sequence 
 
     template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x691::output_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*transfer_syntax_name_);
     }
 
     template<> void Presentation_context_identifier_list_sequence_of::serialize(boost::asn1::x691::input_coder& arch) {
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*transfer_syntax_name_);
     }
 
@@ -700,7 +700,7 @@ namespace ISO8823_PRESENTATION {
             case User_data_fully_encoded_data:
             {
                 ITU_T_SET_CONSTAINED_INDX(1, 1);
-                ITU_T_BIND_SIZE_SNGLCONSTRE(*value<Fully_encoded_data > (false, User_data_fully_encoded_data), 1);
+                ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(*value<Fully_encoded_data > (false, User_data_fully_encoded_data), 1);
                 break;
             }
             default:
@@ -713,7 +713,7 @@ namespace ISO8823_PRESENTATION {
 
         ITU_T_EXTENTION_READ;
 
-        if (ITU_T_EXTENTION) {
+        if (!ITU_T_EXTENTION) {
 
             ITU_T_GET_CONSTAINED_INDX(1);
 
@@ -725,7 +725,7 @@ namespace ISO8823_PRESENTATION {
                 }
                 case 1:
                 {
-                    ITU_T_BIND_SIZE_SNGLCONSTRE(*value<Fully_encoded_data > (true, User_data_fully_encoded_data), 1);
+                    ITU_T_BIND_SIZE_SNGLCONSTRAINT_EXT(*value<Fully_encoded_data > (true, User_data_fully_encoded_data), 1);
                     break;
                 }
                 default:
@@ -755,7 +755,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_WRITE;
 
         ITU_T_BIND_PER(transfer_syntax_name_);
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*presentation_data_values_);
     }
 
@@ -764,7 +764,7 @@ namespace ISO8823_PRESENTATION {
         ITU_T_OPTIONAL_READ(1);
 
         ITU_T_OPTIONAL_CHECK(0) ITU_T_BIND_PER(transfer_syntax_name_);
-        ITU_T_BIND_NUM_CONSTRE(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
+        ITU_T_BIND_NUM_CONSTRAINT_EXT(*presentation_context_identifier_, static_cast<integer_type> (1), static_cast<integer_type> (std::numeric_limits<int8_t>::max()));
         ITU_T_BIND_PER(*presentation_data_values_);
     }
 

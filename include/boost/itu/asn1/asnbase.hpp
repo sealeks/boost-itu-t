@@ -158,7 +158,8 @@ namespace boost {\
     using boost::asn1::UNIVERSAL_CLASS;\
     using boost::asn1::APPLICATION_CLASS;\
     using boost::asn1::CONTEXT_CLASS;\
-    using boost::asn1::PRIVATE_CLASS;
+    using boost::asn1::PRIVATE_CLASS;\
+    using boost::asn1::prefixed_type;
 
 #define ITU_T_EXTENTION_READ  bool __is_extention__ =  arch.get_pop_bmp(1).bit(0);
 #define ITU_T_EXTENTION_WRITE_NULL  bool __is_extention__ = false;boost::asn1::bitstring_type __extention_bmp__ =  boost::asn1::bitstring_type(__is_extention__); arch.add_bitmap(__extention_bmp__);
