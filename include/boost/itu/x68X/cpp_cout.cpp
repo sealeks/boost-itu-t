@@ -19,6 +19,14 @@ namespace x680 {
             return "???";
         }
 
+        
+        
+        
+        
+        //////////////////////////////////////////////////////
+        //  declare_atom
+        //////////////////////////////////////////////////////        
+        
         enum declare_type {
             declare_typedef,
             declare_seq,
@@ -27,18 +35,22 @@ namespace x680 {
             declare_implicit
         };
 
+
+
         struct declare_atom {
 
             declare_atom() :
-            decl(declare_typedef), remote_(false) {
+                                      decl(declare_typedef), remote_(false) {
             };
 
-            declare_atom(declare_type decl_, typeassignment_entity_ptr tp, const std::string& typenam_, const std::string& from_type_, bool rem = false) :
-            decl(decl_), typ(tp), typenam(typenam_), from_type(from_type_), remote_(rem) {
+            declare_atom(declare_type decl_, typeassignment_entity_ptr tp, const std::string& typenam_,
+                                       const std::string& from_type_, bool rem = false) :
+                                       decl(decl_), typ(tp), typenam(typenam_), from_type(from_type_), remote_(rem) {
             };
 
-            declare_atom(declare_type decl_, typeassignment_entity_ptr tp, const std::string& typenam_, const std::string& from_type_, const std::string& tag_, const std::string& _class_, bool rem = false) :
-            decl(decl_), typ(tp), typenam(typenam_), from_type(from_type_), tag(tag_), class_(_class_), remote_(rem) {
+            declare_atom(declare_type decl_, typeassignment_entity_ptr tp, const std::string& typenam_, 
+                                      const std::string& from_type_, const std::string& tag_, const std::string& _class_, bool rem = false) :
+                                      decl(decl_), typ(tp), typenam(typenam_), from_type(from_type_), tag(tag_), class_(_class_), remote_(rem) {
             };
 
             declare_type decl;
@@ -50,6 +62,13 @@ namespace x680 {
             bool remote_;
 
         };
+        
+        
+        
+        
+        //////////////////////////////////////////////////////
+        //  member_atom
+        //////////////////////////////////////////////////////              
 
         struct member_atom {
 
@@ -63,8 +82,6 @@ namespace x680 {
             };
 
 
-
-
             tagmarker_type marker;
             std::string name;
             std::string typenam;
@@ -74,6 +91,14 @@ namespace x680 {
             bool afterextention;
 
         };
+        
+        
+        
+        
+        
+        //////////////////////////////////////////////////////
+        //  main func
+        //////////////////////////////////////////////////////        
 
         void test_out(std::ofstream& stream, const member_vect& vct) {
             stream << "\n";
@@ -293,7 +318,7 @@ namespace x680 {
             else if (self->isstructure()) {
                 typeassignment_entity_ptr ppas = self->scope() ?
                         self->scope()->as_typeassigment() : typeassignment_entity_ptr();
-                std::string postfix = (ppas || native || (!self->tag())) ? "" : "_impl";
+                std::string postfix = "";//(ppas || native || (!self->tag())) ? "" : "_impl";
                 if (ppas && (ppas->isstruct_of()))
                     return nameupper(type_str(ppas)+(ppas->builtin() == t_SEQUENCE_OF ? "_sequence_of" : "_set_of"));
                 return nameupper(nameconvert(self->islocaldeclare() ? (self->name() + "_type") : self->name()) + postfix);
@@ -816,8 +841,7 @@ namespace x680 {
                 } else if (tas->as_valueassigment()) {
                     return !tas->as_valueassigment()->has_arguments();
                 } else if (tas->as_valuesetassigment()) {
-
-                    return false; // !tas->as_valueassigment()->has_arguments();
+                    return false; 
                 }
             }
             return false;
@@ -827,7 +851,6 @@ namespace x680 {
             member_vect rslt;
             for (member_vect::const_iterator it = vct.begin(); it != vct.end(); ++it) {
                 if (!is_extention(it->marker)) {
-
                     if ((obligate && ((it->marker == mk_none) && !(it->afterextention))) || (!obligate))
                         rslt.push_back(*it);
                 }
@@ -838,7 +861,6 @@ namespace x680 {
         member_vect parse_default_membervct(const member_vect& vct) {
             member_vect rslt;
             for (member_vect::const_iterator it = vct.begin(); it != vct.end(); ++it) {
-
                 if (it->marker == mk_default)
                     rslt.push_back(*it);
             }
@@ -924,7 +946,6 @@ namespace x680 {
                     }
                     moduleout_ptr per = generate<per_cpp_out>((*it)->as_module(), "-per", "cpp");
                     per->execute();
-                    //execute_module((*it)->as_module());
                 }
             }
         }
@@ -970,8 +991,6 @@ namespace x680 {
                 if (tpas && (tpas->is_cpp_expressed())) {
                     if (tpas->isstruct())
                         rslt.push_back(type_str(tpas));
-                    //if (tpas->tag())
-                    //     stream << tabformat() << "struct " << type_str(tpas, true) + "; " << " \n";
                 }
             }
             return rslt.size();
@@ -1253,8 +1272,6 @@ namespace x680 {
 
 
 
-
-
         //////////////////////////////////////////////////////
         //  mainhpp_out
         //////////////////////////////////////////////////////
@@ -1335,12 +1352,14 @@ namespace x680 {
                             break;
                         case declare_set: stream << "\n" << tabformat(scp, 2) << "typedef std::deque< " << it->from_type << " > " << it->typenam << ";";
                             break;
-                        case declare_explicit: stream << "\n" << tabformat(scp, 2) << "ITU_T_EXPLICIT_TYPEDEF( "
-                                    << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";
+                        case declare_explicit: /*stream << "\n" << tabformat(scp, 2) << "ITU_T_EXPLICIT_TYPEDEF( " << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";*/
+                            if (it->from_type!=it->typenam)
+                                stream << "\n" << tabformat(scp, 2) << "typedef " << " " << it->from_type << " " <<  it->typenam << ";";                            
                             stream << "\n" << tabformat(scp, 2) << execute_prefixed_static(*it, scp);
                             break;
-                        case declare_implicit: stream << "\n" << tabformat(scp, 2) << "ITU_T_IMPLICIT_TYPEDEF( "
-                                    << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";
+                        case declare_implicit: /*stream << "\n" << tabformat(scp, 2) << "ITU_T_IMPLICIT_TYPEDEF( " << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";*/
+                            if (it->from_type!=it->typenam)
+                                stream << "\n" << tabformat(scp, 2) << "typedef " << " " << it->from_type << " " <<  it->typenam << ";";
                             stream << "\n" << tabformat(scp, 2) << execute_prefixed_static(*it, scp);
                             break;
                         default:
@@ -2504,7 +2523,8 @@ namespace x680 {
 
             basic_entity_ptr scp;
             if (tpas && tpas->type() && tpas->type()->ismultipe_tagged()) {
-                stream << "\n" << tabformat(scp, 2) << execute_prefixed_static(declare_atom(declare_typedef, tpas, get_ber_helper_name(tpas), get_ber_helper_name(tpas)), scp);
+                stream << "\n" << tabformat(scp, 2) << execute_prefixed_static(declare_atom(declare_typedef, tpas, 
+                        get_ber_helper_name(tpas), get_ber_helper_name(tpas)), scp);
             }
 
         }
@@ -2654,7 +2674,7 @@ namespace x680 {
                             stream << " ITU_T_SET_NSN_SMALL_INDX(" << to_string(extention_it++) << "); ITU_T_START_OPEN; ";
                             std::string tmpval = "value<" + fromtype_str(named) + " > (false , " + choice_enum_str(self, named) + ")";
                             stream << archive_member_per_str(named, tmpval);
-                            stream << ";ITU_T_PER_END_OPEN; break; }";
+                            stream << ";ITU_T_END_OPEN; break; }";
                         }
                     }
                 }
@@ -2876,12 +2896,12 @@ namespace x680 {
                         }
                         for (namedtypeassignment_entity_vct::iterator it = extention.begin(); it != extention.end(); ++it)
                             execute_archive_member(*it, false, 0, 4);
-                        stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_END_OPEN;";
+                        stream << "\n" << tabformat(scp, 6) << "ITU_T_END_OPEN;";
                     } else {
                         if (!extention.empty()) {
                             stream << "\n" << tabformat(scp, 6) << "ITU_T_START_OPEN;";
                             execute_archive_member(extention.front(), false, 0, 4);
-                            stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_END_OPEN;";
+                            stream << "\n" << tabformat(scp, 6) << "ITU_T_END_OPEN;";
                         } else
                             stream << "\n????";
                     }
@@ -2966,7 +2986,7 @@ namespace x680 {
                     } else {
                         execute_archive_member(extention.front(), false, 0, 3);
                     }
-                    stream << "\n" << tabformat(scp, 6) << "ITU_T_PER_END_OPEN;";
+                    stream << "\n" << tabformat(scp, 6) << "ITU_T_END_OPEN;";
                     stream << "\n" << tabformat(scp, 5) << "}\n";
                 }
                 stream << "\n" << tabformat(scp, 4) << "ITU_T_CLEAR_EXTENTIONS(" << to_string(self->extention_count()) << ");";
@@ -3122,8 +3142,8 @@ namespace x680 {
             tagmarker_type dfltopt = self->extentionnum() ? mk_optional : self->marker();
             if ((dfltopt == mk_default) && (self->isstruct_of()))
                 dfltopt = mk_optional;
-            if (self->prefixed_typeassignment())
-                dfltopt = mk_exception;
+            //if (self->prefixed_typeassignment())
+                //dfltopt = mk_exception;
             helper_ptr helper = per_helper_finder::check(self);
             if (self->type()) {
                 if (self->type()->can_per_constraints()) {

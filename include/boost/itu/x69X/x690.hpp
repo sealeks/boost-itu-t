@@ -33,7 +33,7 @@
 #define ITU_T_CHOICE_APPLICATION_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
 #define ITU_T_CHOICE_PRIVATE_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::PRIVATE_CLASS)
 #define ITU_T_CHOICE_UNIVERSAL_TAG(var, tag)    boost::asn1::bind_implicit(arch, var, tag, boost::asn1::APPLICATION_CLASS)
-#define ITU_T_BIND_PREFIXED(var, hlpr) inline bool bind_prefixed(arch, var, hlpr)
+#define ITU_T_BIND_PREFIXED(var, hlpr) boost::asn1::bind_prefixed(arch, var, hlpr ## __prefixed__helper)
 
 #define ITU_T_CHOICE_REGESTRATE(regtype)\
 namespace boost {\
@@ -886,7 +886,8 @@ namespace boost {
                         stream >> tmpvl;
                     }
                 } else {
-                    if (stream.parse_tl(vl, tag_traits<T>::number() == TYPE_SET)) {
+                    if (stream.parse_tl(tag(vl.helper().vect[nestlvl].first, from_cast(vl.helper().vect[nestlvl].second) | CONSTRUCTED_ENCODING),
+                            tag_traits<T>::number() == TYPE_SET)) {
                         read_prefixed(stream, vl, nestlvl - 1);
                         stream.pop_stack();
                     }
@@ -897,7 +898,7 @@ namespace boost {
             template<typename T>
             input_coder& operator>>(input_coder& stream, prefixed_value<T>& vl) {
                 if (!vl.helper().vect.empty())
-                    read_prexed(stream, vl, vl.helper().vect.size() - 1);
+                    read_prefixed(stream, vl, vl.helper().vect.size() - 1);
                 else {
                     implicit_value<T> tmpvl(vl.value());
                     stream >> tmpvl;
