@@ -62,23 +62,68 @@ namespace ACSE_1 {
     }
 
     template<> void ACSE_apdu::serialize(boost::asn1::x690::input_coder& arch) {
-
-        if (ITU_T_BIND_IMPLICIT(*value<AARQ_apdu > (true, ACSE_apdu_aarq), 0, APPLICATION_CLASS)) return;
-        else free();
-        if (ITU_T_BIND_IMPLICIT(*value<AARE_apdu > (true, ACSE_apdu_aare), 1, APPLICATION_CLASS)) return;
-        else free();
-        if (ITU_T_BIND_IMPLICIT(*value<RLRQ_apdu > (true, ACSE_apdu_rlrq), 2, APPLICATION_CLASS)) return;
-        else free();
-        if (ITU_T_BIND_IMPLICIT(*value<RLRE_apdu > (true, ACSE_apdu_rlre), 3, APPLICATION_CLASS)) return;
-        else free();
-        if (ITU_T_BIND_IMPLICIT(*value<ABRT_apdu > (true, ACSE_apdu_abrt), 4, APPLICATION_CLASS)) return;
-        else free();
-        if (ITU_T_BIND_IMPLICIT(*value<A_DT_apdu > (true, ACSE_apdu_adt), 5, APPLICATION_CLASS)) return;
-        else free();
-        if (ITU_T_BIND_IMPLICIT(*value<ACRQ_apdu > (true, ACSE_apdu_acrq), 6, APPLICATION_CLASS)) return;
-        else free();
-        if (ITU_T_BIND_IMPLICIT(*value<ACRP_apdu > (true, ACSE_apdu_acrp), 7, APPLICATION_CLASS)) return;
-        else free();
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x40:
+            {
+                switch (__tag_id__) {
+                    case 0:
+                    {
+                        if (ITU_T_BIND_IMPLICIT(*value<AARQ_apdu > (true, ACSE_apdu_aarq), 0, APPLICATION_CLASS)) return;
+                        else free();
+                        break;
+                    }
+                    case 1:
+                    {
+                        if (ITU_T_BIND_IMPLICIT(*value<AARE_apdu > (true, ACSE_apdu_aare), 1, APPLICATION_CLASS)) return;
+                        else free();
+                        break;
+                    }
+                    case 2:
+                    {
+                        if (ITU_T_BIND_IMPLICIT(*value<RLRQ_apdu > (true, ACSE_apdu_rlrq), 2, APPLICATION_CLASS)) return;
+                        else free();
+                        break;
+                    }
+                    case 3:
+                    {
+                        if (ITU_T_BIND_IMPLICIT(*value<RLRE_apdu > (true, ACSE_apdu_rlre), 3, APPLICATION_CLASS)) return;
+                        else free();
+                        break;
+                    }
+                    case 4:
+                    {
+                        if (ITU_T_BIND_IMPLICIT(*value<ABRT_apdu > (true, ACSE_apdu_abrt), 4, APPLICATION_CLASS)) return;
+                        else free();
+                        break;
+                    }
+                    case 5:
+                    {
+                        if (ITU_T_BIND_IMPLICIT(*value<A_DT_apdu > (true, ACSE_apdu_adt), 5, APPLICATION_CLASS)) return;
+                        else free();
+                        break;
+                    }
+                    case 6:
+                    {
+                        if (ITU_T_BIND_IMPLICIT(*value<ACRQ_apdu > (true, ACSE_apdu_acrq), 6, APPLICATION_CLASS)) return;
+                        else free();
+                        break;
+                    }
+                    case 7:
+                    {
+                        if (ITU_T_BIND_IMPLICIT(*value<ACRP_apdu > (true, ACSE_apdu_acrp), 7, APPLICATION_CLASS)) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+            }
+        }
     }
 
     // sequence AARQ-apdu
@@ -297,13 +342,38 @@ namespace ACSE_1 {
     }
 
     template<> void AP_title::serialize(boost::asn1::x690::input_coder& arch) {
-
-        if (ITU_T_BIND_TAG(*value<AP_title_form1 > (true, AP_title_ap_title_form1))) return;
-        else free();
-        if (ITU_T_BIND_TAG(*value<AP_title_form2 > (true, AP_title_ap_title_form2))) return;
-        else free();
-        if (ITU_T_BIND_TAG(*value<AP_title_form3 > (true, AP_title_ap_title_form3))) return;
-        else free();
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    case 4:
+                    {
+                        if (ITU_T_BIND_TAG(*value<AP_title_form1 > (true, AP_title_ap_title_form1))) return;
+                        else free();
+                        break;
+                    }
+                    case 6:
+                    {
+                        if (ITU_T_BIND_TAG(*value<AP_title_form2 > (true, AP_title_ap_title_form2))) return;
+                        else free();
+                        break;
+                    }
+                    case 19:
+                    {
+                        if (ITU_T_BIND_TAG(*value<AP_title_form3 > (true, AP_title_ap_title_form3))) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+            }
+        }
     }
 
     // choice ASO-qualifier
@@ -332,13 +402,38 @@ namespace ACSE_1 {
     }
 
     template<> void ASO_qualifier::serialize(boost::asn1::x690::input_coder& arch) {
-
-        if (ITU_T_BIND_TAG(*value<ASO_qualifier_form1 > (true, ASO_qualifier_aso_qualifier_form1))) return;
-        else free();
-        if (ITU_T_BIND_TAG(*value<ASO_qualifier_form2 > (true, ASO_qualifier_aso_qualifier_form2))) return;
-        else free();
-        if (ITU_T_BIND_TAG(*value<ASO_qualifier_form3 > (true, ASO_qualifier_aso_qualifier_form3))) return;
-        else free();
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    case 4:
+                    {
+                        if (ITU_T_BIND_TAG(*value<ASO_qualifier_form1 > (true, ASO_qualifier_aso_qualifier_form1))) return;
+                        else free();
+                        break;
+                    }
+                    case 2:
+                    {
+                        if (ITU_T_BIND_TAG(*value<ASO_qualifier_form2 > (true, ASO_qualifier_aso_qualifier_form2))) return;
+                        else free();
+                        break;
+                    }
+                    case 19:
+                    {
+                        if (ITU_T_BIND_TAG(*value<ASO_qualifier_form3 > (true, ASO_qualifier_aso_qualifier_form3))) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+            }
+        }
     }
 
     // choice AE-title
@@ -362,11 +457,32 @@ namespace ACSE_1 {
     }
 
     template<> void AE_title::serialize(boost::asn1::x690::input_coder& arch) {
-
-        if (ITU_T_BIND_TAG(*value<AE_title_form1 > (true, AE_title_ae_title_form1))) return;
-        else free();
-        if (ITU_T_BIND_TAG(*value<AE_title_form2 > (true, AE_title_ae_title_form2))) return;
-        else free();
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    case 4:
+                    {
+                        if (ITU_T_BIND_TAG(*value<AE_title_form1 > (true, AE_title_ae_title_form1))) return;
+                        else free();
+                        break;
+                    }
+                    case 6:
+                    {
+                        if (ITU_T_BIND_TAG(*value<AE_title_form2 > (true, AE_title_ae_title_form2))) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+            }
+        }
     }
 
     // sequence 
@@ -547,6 +663,26 @@ namespace ACSE_1 {
     template<> void User_Data::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    case 16:
+                    {
+                        if (ITU_T_BIND_TAG(*value<User_information > (true, User_Data_user_information))) return;
+                        else free();
+                        break;
+                    }
+                    case 4:
+                    {
+                        if (ITU_T_BIND_TAG(*value<Simply_encoded_data > (true, User_Data_simply_encoded_data))) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -563,10 +699,6 @@ namespace ACSE_1 {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(*value<User_information > (true, User_Data_user_information))) return;
-                else free();
-                if (ITU_T_BIND_TAG(*value<Simply_encoded_data > (true, User_Data_simply_encoded_data))) return;
-                else free();
             }
         }
     }

@@ -54,6 +54,26 @@ namespace Reliable_Transfer_APDU {
     template<> void RTSE_apdus::serialize(boost::asn1::x690::input_coder& arch) {
         int __tag_id__ = arch.test_id();
         switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    case 2:
+                    {
+                        if (ITU_T_BIND_TAG(*value<RTTPapdu > (true, RTSE_apdus_rttp_apdu))) return;
+                        else free();
+                        break;
+                    }
+                    case 4:
+                    {
+                        if (ITU_T_BIND_TAG(*value<RTTRapdu > (true, RTSE_apdus_rttr_apdu))) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
             case 0x80:
             {
                 switch (__tag_id__) {
@@ -88,10 +108,6 @@ namespace Reliable_Transfer_APDU {
             }
             default:
             {
-                if (ITU_T_BIND_TAG(*value<RTTPapdu > (true, RTSE_apdus_rttp_apdu))) return;
-                else free();
-                if (ITU_T_BIND_TAG(*value<RTTRapdu > (true, RTSE_apdus_rttr_apdu))) return;
-                else free();
             }
         }
     }
@@ -238,11 +254,32 @@ namespace Reliable_Transfer_APDU {
     }
 
     template<> void CallingSSuserReference::serialize(boost::asn1::x690::input_coder& arch) {
-
-        if (ITU_T_BIND_TAG(*value<t61string_type > (true, CallingSSuserReference_t61String))) return;
-        else free();
-        if (ITU_T_BIND_TAG(*value<octetstring_type > (true, CallingSSuserReference_octetString))) return;
-        else free();
+        int __tag_id__ = arch.test_id();
+        switch (arch.test_class()) {
+            case 0x0:
+            {
+                switch (__tag_id__) {
+                    case 20:
+                    {
+                        if (ITU_T_BIND_TAG(*value<t61string_type > (true, CallingSSuserReference_t61String))) return;
+                        else free();
+                        break;
+                    }
+                    case 4:
+                    {
+                        if (ITU_T_BIND_TAG(*value<octetstring_type > (true, CallingSSuserReference_octetString))) return;
+                        else free();
+                        break;
+                    }
+                    default:
+                    {
+                    }
+                }
+            }
+            default:
+            {
+            }
+        }
     }
 
 }

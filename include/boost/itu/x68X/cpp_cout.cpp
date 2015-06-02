@@ -1975,26 +1975,28 @@ namespace x680 {
                     if (named->type() && is_named(named->marker())) {
                         canonical_tag_ptr ctag = named->cncl_tag();
                         canonical_tag_vct ctags = named->cncl_tags();
-                        if (!ctags.empty()) {
-                            for (canonical_tag_vct::iterator tit = ctags.begin(); tit != ctags.end(); ++tit) {
-                                if (cls == (*tit)->_class()) {
+                        if (!notag) {
+                            if (!ctags.empty()) {
+                                for (canonical_tag_vct::iterator tit = ctags.begin(); tit != ctags.end(); ++tit) {
+                                    if (cls == (*tit)->_class()) {
+                                        stream << "\n" << tabformat(scp, scpcnt) << "case ";
+                                        stream << tagged_str(*tit) << ":  { if (";
+                                        std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
+                                        stream << archive_member_ber_str(named, tmpval);
+                                        stream << ") return; else free(); break;}";
+                                    }
+                                }
+                            } else if (ctag) {
+                                if (cls == ctag->_class()) {
                                     stream << "\n" << tabformat(scp, scpcnt) << "case ";
-                                    stream << tagged_str(*tit) << ":  { if (";
+                                    stream << tagged_str(ctag) << ":  { if (";
                                     std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
                                     stream << archive_member_ber_str(named, tmpval);
                                     stream << ") return; else free(); break;}";
                                 }
                             }
-                        } else if (ctag) {
-                            if (cls == ctag->_class()) {
-                                stream << "\n" << tabformat(scp, scpcnt) << "case ";
-                                stream << tagged_str(ctag) << ":  { if (";
-                                std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
-                                stream << archive_member_ber_str(named, tmpval);
-                                stream << ") return; else free(); break;}";
-                            }
                         } else {
-                            if (notag) {
+                            if (!ctag && ctags.empty()) {
                                 stream << "\n" << tabformat(scp, scpcnt) << " if (";
                                 std::string tmpval = "value<" + fromtype_str(named) + " > (true , " + choice_enum_str(self, (*it)) + ")";
                                 stream << archive_member_ber_str(named, tmpval);
@@ -2003,36 +2005,59 @@ namespace x680 {
                         }
                     }
                 }
-            }
+                }
         }
 
         void base_ber_arch_out::execute_archive_choice_input_helper(typeassignment_entity_ptr self, tagclass_type cls, bool notag) {
+            
             basic_entity_ptr scp;
 
-            if (notag) {
-                stream << "\n" << tabformat(scp, 4) << "default: {";
-            } else {
-                stream << "\n" << tabformat(scp, 4) << "case ";
-                switch (cls) {
-                    case tcl_universal: stream << "0x0: {";
-                        break;
-                    case tcl_application: stream << "0x40: {";
-                        break;
-                    case tcl_context: stream << "0x80: {";
-                        break;
-                    case tcl_private: stream << "0xC0: {";
-                        break;
+            bool fnd = false;
+            for (basic_entity_vector::iterator it = self->childs().begin(); it != self->childs().end(); ++it) {
+                if (namedtypeassignment_entity_ptr named = (*it)->as_named_typeassigment()) {
+                    if (named->type() && is_named(named->marker())) {
+                        canonical_tag_ptr ctag = named->cncl_tag();
+                        canonical_tag_vct ctags = named->cncl_tags();
+                        if (!ctags.empty()) {
+                            for (canonical_tag_vct::iterator tit = ctags.begin(); tit != ctags.end(); ++tit)
+                                if (cls == (*tit)->_class()) {
+                                    fnd = true;
+                                    break;
+                                }
+                        } else if (ctag) {
+                            if (cls == ctag->_class()) {
+                                fnd = true;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
-            if (!notag)
-                stream << "\n" << tabformat(scp, 5) << "switch(__tag_id__){";
-            execute_archive_choice_input_helper_mbr(self, cls, notag, 6);
-            if (!notag) {
-
-                stream << "\n" << tabformat(scp, 5) << "default:{}";
-                stream << "\n" << tabformat(scp, 5) << "}";
+            
+            if (notag) {
+                stream << "\n" << tabformat(scp, 4) << "default: {";
+                execute_archive_choice_input_helper_mbr(self, cls, notag, 6);
+                stream << "\n" << tabformat(scp, 4) << "}";
+            } else {
+                if (fnd) {
+                    stream << "\n" << tabformat(scp, 4) << "case ";
+                    switch (cls) {
+                        case tcl_universal: stream << "0x0: {";
+                            break;
+                        case tcl_application: stream << "0x40: {";
+                            break;
+                        case tcl_context: stream << "0x80: {";
+                            break;
+                        case tcl_private: stream << "0xC0: {";
+                            break;
+                    }
+                    stream << "\n" << tabformat(scp, 5) << "switch(__tag_id__){";
+                    execute_archive_choice_input_helper_mbr(self, cls, notag, 6);
+                    stream << "\n" << tabformat(scp, 5) << "default:{}";
+                    stream << "\n" << tabformat(scp, 5) << "}";
+                    stream << "\n" << tabformat(scp, 4) << "}";
+                }
             }
-            stream << "\n" << tabformat(scp, 4) << "}";
         }
 
         void base_ber_arch_out::execute_archive_choice_output_helper(typeassignment_entity_ptr self) {
