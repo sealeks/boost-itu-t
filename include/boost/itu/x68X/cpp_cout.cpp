@@ -141,8 +141,7 @@ namespace x680 {
         }
 
 
-
-
+        
         namespace fsnsp = boost::filesystem;
 
         bool dir_exists(const std::string& path) {
@@ -162,35 +161,6 @@ namespace x680 {
         const std::string FHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n\n#endif";
         const std::string CHHEADER = "\n#ifdef _MSC_VER\n#pragma warning(push)\n#pragma warning(disable: 4065)\n#endif\n\n";
         const std::string CHBOTTOM = "\n\n#ifdef _MSC_VER\n#pragma warning(pop)\n#endif\n";
-        const std::string MNDCL_OLD = "    using  boost::asn1::null_type;\n"
-                "    using  boost::asn1::enumerated_type;\n"
-                "    using  boost::asn1::bitstring_type;\n"
-                "    using  boost::asn1::octetstring_type;\n"
-                "    using  boost::asn1::oid_type;\n"
-                "    using  boost::asn1::reloid_type;\n"
-                "    using  boost::asn1::utctime_type;\n"
-                "    using  boost::asn1::gentime_type;\n"
-                "    using  boost::asn1::ia5string_type;\n"
-                "    using  boost::asn1::printablestring_type;\n"
-                "    using  boost::asn1::visiblestring_type;\n"
-                "    using  boost::asn1::visiblestring_type;\n"
-                "    using  boost::asn1::numericstring_type;\n"
-                "    using  boost::asn1::universalstring_type;\n"
-                "    using  boost::asn1::bmpstring_type;\n"
-                "    using  boost::asn1::utf8string_type;\n"
-                "    using  boost::asn1::generalstring_type;\n"
-                "    using  boost::asn1::graphicstring_type;\n"
-                "    using  boost::asn1::t61string_type;\n"
-                "    using  boost::asn1::t61string_type;\n"
-                "    using  boost::asn1::videotexstring_type;\n"
-                "    using  boost::asn1::objectdescriptor_type;\n"
-                "    using  boost::asn1::external_type;\n"
-                "    using  boost::asn1::embeded_type;\n"
-                "    using  boost::asn1::characterstring_type;\n"
-                "    using  boost::asn1::any_type;\n"
-                "    using  boost::asn1::value_holder;\n"
-                "    using  boost::asn1::default_holder;\n";
-
         const std::string MNDCL = "    ITU_T_USE_UNIVESAL_DECL;\n";
 
         std::string correct_name(std::string vl) {
@@ -230,6 +200,10 @@ namespace x680 {
             }
             return rslt;
         }
+        
+        
+                
+        /* type in string*/
 
         std::string builtin_int_str(integer_constraints_ptr intconstr) {
             if (intconstr && (!intconstr->to_per().has_extention()) && (!intconstr->to_per().semi())) {
@@ -300,16 +274,11 @@ namespace x680 {
                 case t_OID_IRI: return "null_type";
                 case t_ANY: return "any_type";
                 case t_ClassField: return "any_type";
-                    //case t_Selection: return "null_type";
-                    //case t_Instance_Of: return "null_type";
-                    //case t_RELATIVE_OID_IRI: return "null_type";                
-                    //case t_TypeFromObject: return "null_type";
-                    //case t_ValueSetFromObjects: return "null_type";
                 default:
                 {
                 }
             }
-            return "";
+            return "?type?";
         }
 
         std::string type_str(typeassignment_entity_ptr self, bool native) {
@@ -370,6 +339,57 @@ namespace x680 {
             return (self->islocaldeclare()) ?
                     (fulltype_str(root, false) + "::" + tp) : fromtype_str(self);
         }
+        
+        
+        std::string fromtype_str(typeassignment_entity_ptr self) {
+            if (self->isrefferrence()) {
+                typeassignment_entity_ptr frtp = ((self->type()->reff()) && (self->type()->reff()->as_typeassigment())) ?
+                        self->type()->reff()->as_typeassigment() : typeassignment_entity_ptr();
+                if ((self->shadow_for())
+                        && (self->shadow_for()->moduleref() != self->moduleref())
+                        && (self->shadow_for()->as_typeassigment()))
+                    frtp = self->shadow_for()->as_typeassigment();
+                module_entity_ptr extmod = (frtp && (frtp->moduleref() != self->moduleref())) ? frtp->moduleref() : module_entity_ptr();
+                std::string pref = extmod ? (nameconvert(extmod->name()) + "::") : "";
+                return (pref + nameupper(nameconvert(self->type()->reff()->name())));
+            } else if (self->isstructure())
+                return type_str(self, true);
+            else
+                return builtin_str(self->builtin(), self->type() ?
+                    (self->type()->integer_constraint()) : integer_constraints_ptr());
+
+            return "?type?";
+        }
+
+        std::string fromtype_str(type_atom_ptr self) {
+            if (self) {
+                if ((self->reff()) && (self->reff()->as_typeassigment()) && (self->isrefferrence())) {
+                    module_entity_ptr fmd = self->reff()->as_typeassigment()->moduleref();
+                    return (fmd && (fmd != self->moduleref())) ?
+                            (nameconvert(fmd->name()) + "::" + nameupper(nameconvert(self->reff()->name())))
+                            : nameupper(nameconvert(self->reff()->name()));
+                } else if (self->isstructure())
+                    return "?type?";
+
+                else
+                    return builtin_str(self->builtin(), self->integer_constraint());
+            }
+            return "?type?";
+        }
+
+        bool fromtype_remote(typeassignment_entity_ptr self) {
+            if (self->isrefferrence()) {
+                typeassignment_entity_ptr frtp = ((self->type()->reff()) && (self->type()->reff()->as_typeassigment())) ?
+                        self->type()->reff()->as_typeassigment() : typeassignment_entity_ptr();
+
+                return ((frtp) && (frtp->moduleref() != self->moduleref()));
+            }
+            return false;
+        }        
+        
+        
+        
+        /* value in string*/
 
         std::string value_int_str(value_atom_ptr self) {
             if (self && (self->get_value<int64_t>())) {
@@ -378,20 +398,20 @@ namespace x680 {
                 } catch (boost::bad_lexical_cast) {
                 }
             }
-            return "???num???";
+            return "?num?";
         }
 
         std::string value_null_str(value_atom_ptr self) {
             if (self && (self->get_value<null_initer>())) {
                 return "boost::asn1::null_type()";
             }
-            return "???null???";
+            return "?null?";
         }
 
         std::string value_bool_str(value_atom_ptr self) {
             if (self && (self->get_value<bool>()))
                 return *(self->get_value<bool>()) ? "true" : "false";
-            return "???bool???";
+            return "?bool?";
         }
 
         std::string value_real_str(value_atom_ptr self) {
@@ -405,7 +425,7 @@ namespace x680 {
                     return " - std::numeric_limits<double>::infinity()";
                 return boost::lexical_cast<std::string > (*(self->get_value<double>()));
             }
-            return "???real???";
+            return "?real?";
         }
 
         std::string value_reff_str(defined_value_atom_ptr self) {
@@ -413,11 +433,11 @@ namespace x680 {
                 std::string rslt;
                 typeassignment_entity_ptr tp = self->reff()->as_valueassigment()->scope() ?
                         self->reff()->as_valueassigment()->scope()->as_typeassigment() : typeassignment_entity_ptr();
-                if (tp /*&& (!tp->islocaldefined())*/)
+                if (tp)
                     rslt = namelower(nameconvert(tp->name())) + "_";
                 return rslt + nameconvert(self->reff()->as_valueassigment()->name());
             }
-            return "???reff???";
+            return "?reff?";
         }
 
         template <typename T>
@@ -441,19 +461,17 @@ namespace x680 {
 
         static std::string string_to_literal(const std::string& vl) {
             std::string rslt;
-            if (!vl.empty()) {
+            if (!vl.empty()) 
                 for (std::string::const_iterator it = vl.begin(); it != vl.end(); ++it)
                     rslt += ("\\x" + (num_to_hex<std::string::value_type>(*it)));
-            }
             return rslt;
         }
 
         static std::string string_to_literal(const std::wstring& vl) {
             std::string rslt;
-            if (!vl.empty()) {
+            if (!vl.empty()) 
                 for (std::wstring::const_iterator it = vl.begin(); it != vl.end(); ++it)
                     rslt += ("\\x" + (num_to_hex<std::wstring::value_type>(*it)));
-            }
             return rslt;
         }
 
@@ -469,7 +487,7 @@ namespace x680 {
                     if ((*it)->as_defined())
                         rslt += value_reff_str((*it)->as_defined());
                     else
-                        rslt += "???expr???";
+                        rslt += "?bitsting?";
                 }
                 return rslt;
             } else if (self->as_cstr()) {
@@ -484,7 +502,7 @@ namespace x680 {
                 }
             } else if (self->as_assign())
                 return nameconvert(self->as_assign()->name());
-            return "???bitnum???";
+            return "?bitsting?";
         }
 
         std::string value_os_str(value_atom_ptr self) {
@@ -496,7 +514,7 @@ namespace x680 {
                 else
                     return "boost::asn1::octetstring_type()";
             };
-            return "???0str???";
+            return "?octetsting?";
         }
 
         std::string value_chars8_str(value_atom_ptr self, bool cantuple) {
@@ -510,7 +528,7 @@ namespace x680 {
                 *(self->get_value<std::string>()) +
                         "\")";
             }
-            return "???str???";
+            return "?str?";
         }
 
         std::string value_chars16_str(value_atom_ptr self) {
@@ -520,15 +538,14 @@ namespace x680 {
                 string_to_literal(std::wstring(1, std::wstring::value_type(static_cast<std::wstring::value_type> (tmp->row * 256 + tmp->cell)))) +
                         "\')";
             }
-            return "???wstr???";
+            return "?wstr?";
         }
 
         std::string value_utfchar_str(const quadruple& self) {
             uint32_t tmp = 128 * self.group + 256 * self.plane + 256 * self.row + self.cell;
             std::string rslt;
-            if (boost::asn1::quadrople_to_str(tmp, rslt)) {
+            if (boost::asn1::quadrople_to_str(tmp, rslt)) 
                 return rslt;
-            }
             return "";
         }
 
@@ -543,13 +560,13 @@ namespace x680 {
                 else
                     return "std::string()";
             }
-            return "???wstr???";
+            return "?wstr?";
         }
 
         std::string value_enum_str(type_atom_ptr tp, value_atom_ptr self) {
             if (tp && self && (self->as_defined()) && (self->as_defined()->reff()))
                 return namelower(fromtype_str(tp)) + "_" + nameconvert(self->as_defined()->reff()->name());
-            return "???enum???";
+            return "?enum?";
         }
 
         value_atom_ptr value_skip_defined(value_atom_ptr self) {
@@ -569,8 +586,8 @@ namespace x680 {
                 if (!lst->empty()) {
                     for (unum_vector::const_iterator it = lst->begin(); it != lst->end(); ++it)
                         rslt.push_back(boost::lexical_cast<std::string >(*it));
-                } else rslt.push_back("???");
-            } else rslt.push_back("???");
+                } else rslt.push_back("?oid?");
+            } else rslt.push_back("?oid?");
             return !rslt.empty();
         }
 
@@ -640,61 +657,13 @@ namespace x680 {
                 {
                 }
             }
-
             return "";
-        }
-
-        std::string fromtype_str(typeassignment_entity_ptr self) {
-            if (self->isrefferrence()) {
-                typeassignment_entity_ptr frtp = ((self->type()->reff()) && (self->type()->reff()->as_typeassigment())) ?
-                        self->type()->reff()->as_typeassigment() : typeassignment_entity_ptr();
-                if ((self->shadow_for())
-                        && (self->shadow_for()->moduleref() != self->moduleref())
-                        && (self->shadow_for()->as_typeassigment()))
-                    frtp = self->shadow_for()->as_typeassigment();
-                module_entity_ptr extmod = (frtp && (frtp->moduleref() != self->moduleref())) ? frtp->moduleref() : module_entity_ptr();
-                std::string pref = extmod ? (nameconvert(extmod->name()) + "::") : "";
-                return (pref + nameupper(nameconvert(self->type()->reff()->name())));
-            } else if (self->isstructure())
-                return type_str(self, true);
-            else
-                return builtin_str(self->builtin(), self->type() ?
-                    (self->type()->integer_constraint()) : integer_constraints_ptr());
-
-            return "???type???";
-        }
-
-        std::string fromtype_str(type_atom_ptr self) {
-            if (self) {
-                if ((self->reff()) && (self->reff()->as_typeassigment()) && (self->isrefferrence())) {
-                    module_entity_ptr fmd = self->reff()->as_typeassigment()->moduleref();
-                    return (fmd && (fmd != self->moduleref())) ?
-                            (nameconvert(fmd->name()) + "::" + nameupper(nameconvert(self->reff()->name())))
-                            : nameupper(nameconvert(self->reff()->name()));
-                } else if (self->isstructure())
-                    return "???type???";
-
-                else
-                    return builtin_str(self->builtin(), self->integer_constraint());
-            }
-            return "???type???";
-        }
-
-        bool fromtype_remote(typeassignment_entity_ptr self) {
-            if (self->isrefferrence()) {
-                typeassignment_entity_ptr frtp = ((self->type()->reff()) && (self->type()->reff()->as_typeassigment())) ?
-                        self->type()->reff()->as_typeassigment() : typeassignment_entity_ptr();
-
-                return ((frtp) && (frtp->moduleref() != self->moduleref()));
-            }
-            return false;
         }
 
         declare_vect::iterator find_remote_reff(declare_vect& vct, const std::string& nm, declare_vect::iterator from) {
             for (declare_vect::iterator it = from; it != vct.end(); ++it)
                 if (it->typenam == nm)
                     return it;
-
             return vct.end();
         }
 
@@ -752,39 +721,37 @@ namespace x680 {
         std::string member_marker_str(const std::string& str, tagmarker_type self, const std::string& dflt, bool simple) {
             switch (self) {
                 case mk_default:
-                {
                     return "default_holder<" + str + ", " + dflt + ">";
-                }
                 case mk_optional:
-                {
                     return "shared_ptr<" + str + ">";
-                }
                 default:
-                {
                     return simple ? str : ("value_holder<" + str + ">");
-                }
             }
             return str;
         }
 
+        std::string struct_of_str(bool igsequence){
+            return igsequence ? "std::vector" : "std::deque";
+        }
+        
         std::string seqof_str(typeassignment_entity_ptr self, const std::string& name) {
             if (self->builtin() == t_SEQUENCE_OF)
-                return "typedef std::vector< " + name + "> ";
+                return "typedef "+ struct_of_str(true) +"< " + name + "> ";
             else
-                return "typedef std::deque< " + name + "> ";
+                return "typedef "+ struct_of_str(false) +"< " + name + "> ";
         }
+        
 
         std::string choice_enum_str(typeassignment_entity_ptr self, basic_entity_ptr sub) {
-
             return type_str(self) + "_" + nameconvert(sub ? sub->name() : "");
         }
+        
 
         std::string tagged_str(tagged_ptr self) {
             if ((self->number()) && (self->number()->as_number()))
                 try {
                     return boost::lexical_cast<std::string > (self->number()->as_number()->value());
                 } catch (boost::bad_lexical_cast) {
-
                     return "";
                 }
             return "";
@@ -799,7 +766,6 @@ namespace x680 {
                 {
                 }
             }
-
             return "CONTEXT_CLASS";
         }
 
@@ -816,7 +782,6 @@ namespace x680 {
         }
 
         std::string struct_meth_str(typeassignment_entity_ptr self, const std::string& tp) {
-
             return "\n" + tabformat(basic_entity_ptr(), 2) + "template<> void " +
                     fulltype_str(self, false) + "::serialize(" +
                     tp + "& arch)";
@@ -834,15 +799,13 @@ namespace x680 {
         }
 
         bool expressed_import(module_entity_ptr self, const std::string& name) {
-            basic_entity_ptr tas = self->find_by_name(name);
-            if (tas) {
-                if (tas->as_typeassigment()) {
+            if (basic_entity_ptr tas = self->find_by_name(name)) {
+                if (tas->as_typeassigment()) 
                     return tas->as_typeassigment()->is_cpp_expressed();
-                } else if (tas->as_valueassigment()) {
+                else if (tas->as_valueassigment()) 
                     return !tas->as_valueassigment()->has_arguments();
-                } else if (tas->as_valuesetassigment()) {
+                else if (tas->as_valuesetassigment()) 
                     return false; 
-                }
             }
             return false;
         }
@@ -860,10 +823,9 @@ namespace x680 {
 
         member_vect parse_default_membervct(const member_vect& vct) {
             member_vect rslt;
-            for (member_vect::const_iterator it = vct.begin(); it != vct.end(); ++it) {
+            for (member_vect::const_iterator it = vct.begin(); it != vct.end(); ++it) 
                 if (it->marker == mk_default)
                     rslt.push_back(*it);
-            }
             return rslt;
         }
 
@@ -1348,9 +1310,9 @@ namespace x680 {
                     switch (it->decl) {
                         case declare_typedef: stream << "\n" << tabformat(scp, 2) << "typedef " << it->from_type << " " << it->typenam << ";";
                             break;
-                        case declare_seq: stream << "\n" << tabformat(scp, 2) << "typedef std::vector< " << it->from_type << " > " << it->typenam << ";";
+                        case declare_seq: stream << "\n" << tabformat(scp, 2) << "typedef " <<  struct_of_str(true)  << "< " << it->from_type << " > " << it->typenam << ";";
                             break;
-                        case declare_set: stream << "\n" << tabformat(scp, 2) << "typedef std::deque< " << it->from_type << " > " << it->typenam << ";";
+                        case declare_set: stream << "\n" << tabformat(scp, 2) << "typedef " <<   struct_of_str(false)  << "< " << it->from_type << " > " << it->typenam << ";";
                             break;
                         case declare_explicit: /*stream << "\n" << tabformat(scp, 2) << "ITU_T_EXPLICIT_TYPEDEF( " << it->typenam << ", " << it->from_type << ", " << it->tag << ", " << it->class_ << ");";*/
                             if (it->from_type!=it->typenam)

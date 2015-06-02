@@ -38,6 +38,7 @@ namespace x680 {
         void resolve_remote_reff(declare_vect& vct);
         bool sort_reff(declare_vect& vct);
         bool default_supported(typeassignment_entity_ptr self);
+        
         value_atom_ptr value_skip_defined(value_atom_ptr self);
         std::string value_int_str(value_atom_ptr self);
         std::string value_null_str(value_atom_ptr self);
@@ -55,10 +56,12 @@ namespace x680 {
         std::string valueassmnt_str(valueassignment_entity_ptr self);
         std::string valueassmnt_str(type_atom_ptr val, value_atom_ptr vl, const std::string& nm = "", bool ext = false);
         std::string value_struct_str(value_atom_ptr vl, type_atom_ptr tp);
+        
         std::string nameconvert(std::string name);
         std::string argumentname(std::string name);
         std::string tabformat(basic_entity_ptr selft = basic_entity_ptr(), std::size_t delt = 0, const std::string& tab = "    ");
         std::string member_marker_str(const std::string& str, tagmarker_type self, const std::string& dflt = "", bool simple = false);
+        std::string struct_of_str(bool igsequence);
         std::string seqof_str(typeassignment_entity_ptr self, const std::string& name);
         std::string choice_enum_str(typeassignment_entity_ptr self, basic_entity_ptr sub);
         std::string tagged_str(tagged_ptr self);
