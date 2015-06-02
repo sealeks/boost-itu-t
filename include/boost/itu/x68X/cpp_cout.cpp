@@ -1936,16 +1936,19 @@ namespace x680 {
                 return "ITU_T_BIND_PREFIXED(" + name_arch(name, dfltopt) + ", " + get_ber_helper_name(self) + ")";
             } else {
                 if ((self->isdefined_choice())) {
-                    if (self->tag())
-                        return "ITU_T_BIND_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ", " + tagged_class_str(self->tag()) + ")";
+                    if (self->tag() || (self->type() && !self->type()->isuntagged())) {
+                        tagged_ptr tgtmp = self->tag() ? self->tag() : self->type()->true_tags_sequence().front();
+                        return "ITU_T_BIND_CHOICE_TAG(" + name_arch(name, dfltopt) + ", " + tagged_str(tgtmp) + ", " + tagged_class_str(tgtmp) + ")";
+                    }
                     else
                         return "ITU_T_BIND_CHOICE(" + name_arch(name, dfltopt) + ")";
                 } else {
-                    if (self->tag()) {
-                        if (self->tag()->rule() == implicit_tags)
-                            return "ITU_T_BIND_IMPLICIT(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ", " + tagged_class_str(self->tag()) + ")";
+                    if (self->tag() || (self->type() && !self->type()->isuntagged())) {
+                        tagged_ptr tgtmp = self->tag() ? self->tag() : self->type()->true_tags_sequence().front();
+                        if (tgtmp->rule() == implicit_tags)
+                            return "ITU_T_BIND_IMPLICIT(" + name_arch(name, dfltopt) + ", " + tagged_str(tgtmp) + ", " + tagged_class_str(tgtmp) + ")";
                         else
-                            return "ITU_T_BIND_EXPLICIT(" + name_arch(name, dfltopt) + ", " + tagged_str(self->tag()) + ", " + tagged_class_str(self->tag()) + ")";
+                            return "ITU_T_BIND_EXPLICIT(" + name_arch(name, dfltopt) + ", " + tagged_str(tgtmp) + ", " + tagged_class_str(tgtmp) + ")";
                     } else
                         return "ITU_T_BIND_TAG(" + name_arch(name, dfltopt) + ")";
                 }

@@ -17,42 +17,42 @@ namespace ACSE_1 {
         switch (type()) {
             case ACSE_apdu_aarq:
             {
-                ITU_T_BIND_TAG(*value<AARQ_apdu > (false, ACSE_apdu_aarq));
+                ITU_T_BIND_IMPLICIT(*value<AARQ_apdu > (false, ACSE_apdu_aarq), 0, APPLICATION_CLASS);
                 break;
             }
             case ACSE_apdu_aare:
             {
-                ITU_T_BIND_TAG(*value<AARE_apdu > (false, ACSE_apdu_aare));
+                ITU_T_BIND_IMPLICIT(*value<AARE_apdu > (false, ACSE_apdu_aare), 1, APPLICATION_CLASS);
                 break;
             }
             case ACSE_apdu_rlrq:
             {
-                ITU_T_BIND_TAG(*value<RLRQ_apdu > (false, ACSE_apdu_rlrq));
+                ITU_T_BIND_IMPLICIT(*value<RLRQ_apdu > (false, ACSE_apdu_rlrq), 2, APPLICATION_CLASS);
                 break;
             }
             case ACSE_apdu_rlre:
             {
-                ITU_T_BIND_TAG(*value<RLRE_apdu > (false, ACSE_apdu_rlre));
+                ITU_T_BIND_IMPLICIT(*value<RLRE_apdu > (false, ACSE_apdu_rlre), 3, APPLICATION_CLASS);
                 break;
             }
             case ACSE_apdu_abrt:
             {
-                ITU_T_BIND_TAG(*value<ABRT_apdu > (false, ACSE_apdu_abrt));
+                ITU_T_BIND_IMPLICIT(*value<ABRT_apdu > (false, ACSE_apdu_abrt), 4, APPLICATION_CLASS);
                 break;
             }
             case ACSE_apdu_adt:
             {
-                ITU_T_BIND_TAG(*value<A_DT_apdu > (false, ACSE_apdu_adt));
+                ITU_T_BIND_IMPLICIT(*value<A_DT_apdu > (false, ACSE_apdu_adt), 5, APPLICATION_CLASS);
                 break;
             }
             case ACSE_apdu_acrq:
             {
-                ITU_T_BIND_TAG(*value<ACRQ_apdu > (false, ACSE_apdu_acrq));
+                ITU_T_BIND_IMPLICIT(*value<ACRQ_apdu > (false, ACSE_apdu_acrq), 6, APPLICATION_CLASS);
                 break;
             }
             case ACSE_apdu_acrp:
             {
-                ITU_T_BIND_TAG(*value<ACRP_apdu > (false, ACSE_apdu_acrp));
+                ITU_T_BIND_IMPLICIT(*value<ACRP_apdu > (false, ACSE_apdu_acrp), 7, APPLICATION_CLASS);
                 break;
             }
             default:
@@ -63,21 +63,21 @@ namespace ACSE_1 {
 
     template<> void ACSE_apdu::serialize(boost::asn1::x690::input_coder& arch) {
 
-        if (ITU_T_BIND_TAG(*value<AARQ_apdu > (true, ACSE_apdu_aarq))) return;
+        if (ITU_T_BIND_IMPLICIT(*value<AARQ_apdu > (true, ACSE_apdu_aarq), 0, APPLICATION_CLASS)) return;
         else free();
-        if (ITU_T_BIND_TAG(*value<AARE_apdu > (true, ACSE_apdu_aare))) return;
+        if (ITU_T_BIND_IMPLICIT(*value<AARE_apdu > (true, ACSE_apdu_aare), 1, APPLICATION_CLASS)) return;
         else free();
-        if (ITU_T_BIND_TAG(*value<RLRQ_apdu > (true, ACSE_apdu_rlrq))) return;
+        if (ITU_T_BIND_IMPLICIT(*value<RLRQ_apdu > (true, ACSE_apdu_rlrq), 2, APPLICATION_CLASS)) return;
         else free();
-        if (ITU_T_BIND_TAG(*value<RLRE_apdu > (true, ACSE_apdu_rlre))) return;
+        if (ITU_T_BIND_IMPLICIT(*value<RLRE_apdu > (true, ACSE_apdu_rlre), 3, APPLICATION_CLASS)) return;
         else free();
-        if (ITU_T_BIND_TAG(*value<ABRT_apdu > (true, ACSE_apdu_abrt))) return;
+        if (ITU_T_BIND_IMPLICIT(*value<ABRT_apdu > (true, ACSE_apdu_abrt), 4, APPLICATION_CLASS)) return;
         else free();
-        if (ITU_T_BIND_TAG(*value<A_DT_apdu > (true, ACSE_apdu_adt))) return;
+        if (ITU_T_BIND_IMPLICIT(*value<A_DT_apdu > (true, ACSE_apdu_adt), 5, APPLICATION_CLASS)) return;
         else free();
-        if (ITU_T_BIND_TAG(*value<ACRQ_apdu > (true, ACSE_apdu_acrq))) return;
+        if (ITU_T_BIND_IMPLICIT(*value<ACRQ_apdu > (true, ACSE_apdu_acrq), 6, APPLICATION_CLASS)) return;
         else free();
-        if (ITU_T_BIND_TAG(*value<ACRP_apdu > (true, ACSE_apdu_acrp))) return;
+        if (ITU_T_BIND_IMPLICIT(*value<ACRP_apdu > (true, ACSE_apdu_acrp), 7, APPLICATION_CLASS)) return;
         else free();
     }
 
