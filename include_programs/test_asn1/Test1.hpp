@@ -17,21 +17,23 @@ namespace Test1 {
     ITU_T_USE_UNIVESAL_DECL;
 
 
-    struct PersonnelRecord_impl;
-    struct PersonnelRecord_s_impl;
+    struct PersonnelRecord;
+    struct PersonnelRecord_s;
     struct ChildInformation;
     struct ChildInformation_s;
-    struct Name_impl;
+    struct Name;
     struct Ax;
 
 
-    typedef visiblestring_type NameString; //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
-    ITU_T_IMPLICIT_TYPEDEF(EmployeeNumber, integer_type, 2, APPLICATION_CLASS); //   Ic(  [ 0  ...   9999 ]   ...ext...) 
-    ITU_T_IMPLICIT_TYPEDEF(Date, visiblestring_type, 3, APPLICATION_CLASS); //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
+    typedef visible_string NameString; //    Sc (  [ 1  ...   64 ]   ...ext...)   //    c8C (  [ - ]   [ A  ...   Z ]   [ a  ...   z ]   
+    typedef integer_type EmployeeNumber;
+    ITU_T_PREFIXED_DECLARE(EmployeeNumber, ITU_T_ARRAY(prefixed_type(2, APPLICATION_CLASS)), false); //  initial =implicit  //   Ic(  [ 0  ...   9999 ]   ...ext...) 
+    typedef visible_string Date;
+    ITU_T_PREFIXED_DECLARE(Date, ITU_T_ARRAY(prefixed_type(3, APPLICATION_CLASS)), false); //  initial =implicit  //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
 
-    ITU_T_IMPLICIT_TYPEDEF(PersonnelRecord, PersonnelRecord_impl, 0, APPLICATION_CLASS);
-    ITU_T_IMPLICIT_TYPEDEF(PersonnelRecord_s, PersonnelRecord_s_impl, 0, APPLICATION_CLASS);
-    ITU_T_IMPLICIT_TYPEDEF(Name, Name_impl, 1, APPLICATION_CLASS);
+    ITU_T_PREFIXED_DECLARE(PersonnelRecord, ITU_T_ARRAY(prefixed_type(0, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_PREFIXED_DECLARE(PersonnelRecord_s, ITU_T_ARRAY(prefixed_type(0, APPLICATION_CLASS)), false); //  initial =implicit
+    ITU_T_PREFIXED_DECLARE(Name, ITU_T_ARRAY(prefixed_type(1, APPLICATION_CLASS)), false); //  initial =implicit
 
 
 }
@@ -42,28 +44,28 @@ namespace Test1 {
 
     // set  PersonnelRecord
 
-    struct PersonnelRecord_impl {
+    struct PersonnelRecord {
 
-        typedef std::vector< ChildInformation > Children_type; //    Sc (  [ 2 ]   ...ext...) 
+        typedef sequence_of< ChildInformation > Children_type; //    Sc (  [ 2 ]   ...ext...) 
 
 
-        PersonnelRecord_impl();
+        PersonnelRecord();
 
-        PersonnelRecord_impl(const Name& arg__name,
-                const visiblestring_type& arg__title,
+        PersonnelRecord(const Name& arg__name,
+                const visible_string& arg__title,
                 const EmployeeNumber& arg__number,
                 const Date& arg__dateOfHire,
                 const Name& arg__nameOfSpouse);
 
-        PersonnelRecord_impl(shared_ptr< Name> arg__name,
-                shared_ptr< visiblestring_type> arg__title,
+        PersonnelRecord(shared_ptr< Name> arg__name,
+                shared_ptr< visible_string> arg__title,
                 shared_ptr< EmployeeNumber> arg__number,
                 shared_ptr< Date> arg__dateOfHire,
                 shared_ptr< Name> arg__nameOfSpouse,
                 shared_ptr< Children_type> arg__children);
 
         ITU_T_HOLDERH_DECL(name, Name);
-        ITU_T_HOLDERH_DECL(title, visiblestring_type);
+        ITU_T_HOLDERH_DECL(title, visible_string);
         ITU_T_HOLDERH_DECL(number, EmployeeNumber); //   Ic(  [ 0  ...   9999 ]   ...ext...) 
         ITU_T_HOLDERH_DECL(dateOfHire, Date); //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
         ITU_T_HOLDERH_DECL(nameOfSpouse, Name);
@@ -74,28 +76,28 @@ namespace Test1 {
 
     // set  PersonnelRecord-s
 
-    struct PersonnelRecord_s_impl {
+    struct PersonnelRecord_s {
 
-        typedef std::vector< ChildInformation_s > Children_type; //    Sc (  [ 2 ]   ...ext...) 
+        typedef sequence_of< ChildInformation_s > Children_type; //    Sc (  [ 2 ]   ...ext...) 
 
 
-        PersonnelRecord_s_impl();
+        PersonnelRecord_s();
 
-        PersonnelRecord_s_impl(const Name& arg__name,
-                const visiblestring_type& arg__title,
+        PersonnelRecord_s(const Name& arg__name,
+                const visible_string& arg__title,
                 const EmployeeNumber& arg__number,
                 const Date& arg__dateOfHire,
                 const Name& arg__nameOfSpouse);
 
-        PersonnelRecord_s_impl(shared_ptr< Name> arg__name,
-                shared_ptr< visiblestring_type> arg__title,
+        PersonnelRecord_s(shared_ptr< Name> arg__name,
+                shared_ptr< visible_string> arg__title,
                 shared_ptr< EmployeeNumber> arg__number,
                 shared_ptr< Date> arg__dateOfHire,
                 shared_ptr< Name> arg__nameOfSpouse,
                 shared_ptr< Children_type> arg__children);
 
         ITU_T_HOLDERH_DECL(name, Name);
-        ITU_T_HOLDERH_DECL(title, visiblestring_type);
+        ITU_T_HOLDERH_DECL(title, visible_string);
         ITU_T_HOLDERH_DECL(number, EmployeeNumber); //   Ic(  [ 0  ...   9999 ]   ...ext...) 
         ITU_T_HOLDERH_DECL(dateOfHire, Date); //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
         ITU_T_HOLDERH_DECL(nameOfSpouse, Name);
@@ -108,9 +110,9 @@ namespace Test1 {
 
     struct ChildInformation {
 
-        static const enumerated_type sex_male;
-        static const enumerated_type sex_female;
-        static const enumerated_type sex_unknown;
+        static const enumerated sex_male;
+        static const enumerated sex_female;
+        static const enumerated sex_unknown;
 
 
         ChildInformation();
@@ -120,11 +122,11 @@ namespace Test1 {
 
         ChildInformation(shared_ptr< Name> arg__name,
                 shared_ptr< Date> arg__dateOfBirth,
-                shared_ptr< enumerated_type> arg__sex = shared_ptr< enumerated_type>());
+                shared_ptr< enumerated> arg__sex = shared_ptr< enumerated>());
 
         ITU_T_HOLDERH_DECL(name, Name);
         ITU_T_HOLDERH_DECL(dateOfBirth, Date); //    Sc (  [ 8 ]   ...ext...)   //    c8C (  [ 0  ...   9 ]   
-        ITU_T_OPTIONAL_DECL(sex, enumerated_type);
+        ITU_T_OPTIONAL_DECL(sex, enumerated);
 
         ITU_T_ARCHIVE_FUNC;
     };
@@ -146,11 +148,11 @@ namespace Test1 {
 
     // sequence Name
 
-    struct Name_impl {
+    struct Name {
 
-        Name_impl();
+        Name();
 
-        Name_impl(const NameString& arg__givenName,
+        Name(const NameString& arg__givenName,
                 const NameString& arg__initial,
                 const NameString& arg__familyName);
 
@@ -182,7 +184,7 @@ namespace Test1 {
 
             ITU_T_CHOICES_DECL(d, integer_type, C_type_d); // primitive
             ITU_T_CHOICES_DECL(e, bool, C_type_e); // primitive
-            ITU_T_CHOICES_DECL(f, ia5string_type, C_type_f); // primitive
+            ITU_T_CHOICES_DECL(f, ia5_string, C_type_f); // primitive
 
             ITU_T_ARCHIVE_FUNC;
         };
@@ -197,42 +199,42 @@ namespace Test1 {
         Ax(shared_ptr< uint8_t> arg__a,
                 shared_ptr< bool> arg__b,
                 shared_ptr< C_type> arg__c,
-                shared_ptr< numericstring_type> arg__g = shared_ptr< numericstring_type>(),
+                shared_ptr< numeric_string> arg__g = shared_ptr< numeric_string>(),
                 shared_ptr< bool> arg__h = shared_ptr< bool>(),
-                shared_ptr< bmpstring_type> arg__i = shared_ptr< bmpstring_type>(),
-                shared_ptr< printablestring_type> arg__j = shared_ptr< printablestring_type>());
+                shared_ptr< bmp_string> arg__i = shared_ptr< bmp_string>(),
+                shared_ptr< printable_string> arg__j = shared_ptr< printable_string>());
 
         ITU_T_HOLDERH_DECL(a, uint8_t); //   Ic(  [ 250  ...   253 ]   
         ITU_T_HOLDERH_DECL(b, bool);
         ITU_T_HOLDERH_DECL(c, C_type);
-        ITU_T_OPTIONAL_DECL(g, numericstring_type); //    Sc (  [ 3 ]   
+        ITU_T_OPTIONAL_DECL(g, numeric_string); //    Sc (  [ 3 ]   
         ITU_T_OPTIONAL_DECL(h, bool);
-        ITU_T_OPTIONAL_DECL(i, bmpstring_type);
-        ITU_T_OPTIONAL_DECL(j, printablestring_type);
+        ITU_T_OPTIONAL_DECL(i, bmp_string);
+        ITU_T_OPTIONAL_DECL(j, printable_string);
 
         ITU_T_ARCHIVE_FUNC;
     };
 
-    ITU_T_ARCHIVE_X690_DECL(PersonnelRecord_impl);
-    ITU_T_ARCHIVE_X690_DECL(PersonnelRecord_s_impl);
+    ITU_T_ARCHIVE_X690_DECL(PersonnelRecord);
+    ITU_T_ARCHIVE_X690_DECL(PersonnelRecord_s);
     ITU_T_ARCHIVE_X690_DECL(ChildInformation);
     ITU_T_ARCHIVE_X690_DECL(ChildInformation_s);
-    ITU_T_ARCHIVE_X690_DECL(Name_impl);
+    ITU_T_ARCHIVE_X690_DECL(Name);
     ITU_T_ARCHIVE_X690_DECL(Ax);
     ITU_T_ARCHIVE_X690_DECL(Ax::C_type);
 
-    ITU_T_ARCHIVE_X691_DECL(PersonnelRecord_impl);
-    ITU_T_ARCHIVE_X691_DECL(PersonnelRecord_s_impl);
+    ITU_T_ARCHIVE_X691_DECL(PersonnelRecord);
+    ITU_T_ARCHIVE_X691_DECL(PersonnelRecord_s);
     ITU_T_ARCHIVE_X691_DECL(ChildInformation);
     ITU_T_ARCHIVE_X691_DECL(ChildInformation_s);
-    ITU_T_ARCHIVE_X691_DECL(Name_impl);
+    ITU_T_ARCHIVE_X691_DECL(Name);
     ITU_T_ARCHIVE_X691_DECL(Ax);
     ITU_T_ARCHIVE_X691_DECL(Ax::C_type);
 
 }
 
-ITU_T_SET_REGESTRATE(Test1::PersonnelRecord_impl)
-ITU_T_SET_REGESTRATE(Test1::PersonnelRecord_s_impl)
+ITU_T_SET_REGESTRATE(Test1::PersonnelRecord)
+ITU_T_SET_REGESTRATE(Test1::PersonnelRecord_s)
 ITU_T_SET_REGESTRATE(Test1::ChildInformation)
 ITU_T_SET_REGESTRATE(Test1::ChildInformation_s)
 

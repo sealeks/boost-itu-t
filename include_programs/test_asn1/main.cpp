@@ -68,7 +68,7 @@ public:
             std::string tmp1(boost::asio::buffer_cast<const char*>(seq.back()), boost::asio::buffer_size(seq.back()));
             if (!tmp1.empty()) {
                 std::string tmp(tmp1.rbegin(), tmp1.rbegin() + 1);
-                stream.out << " {" << boost::asn1::bitstring_type(tmp, stream.coder.output().unusebits()) << " unus =" << stream.coder.output().unusebits() << "}";
+                stream.out << " {" << boost::asn1::bit_string(tmp, stream.coder.output().unusebits()) << " unus =" << stream.coder.output().unusebits() << "}";
             }
         };
         //stream.out << seq;
@@ -85,7 +85,7 @@ public:
         if ((stream.coder.input().unusebits()) && (!seq.empty()) && (boost::asio::buffer_size(seq.front()))) {
             std::string tmp(boost::asio::buffer_cast<const char*>(seq.front()), boost::asio::buffer_size(seq.front()));
             boost::uint8_t frnt = tmp.at(0);
-            stream.out << " {" << boost::asn1::bitstring_type(frnt, stream.coder.input().unusebits()) << " unus =" << stream.coder.input().unusebits() << "}";
+            stream.out << " {" << boost::asn1::bit_string(frnt, stream.coder.input().unusebits()) << " unus =" << stream.coder.input().unusebits() << "}";
         };
 
         for (boost::itu::mutable_sequences::const_iterator it = seq.begin(); it != seq.end(); ++it) {
@@ -95,7 +95,7 @@ public:
     }
 
     template<typename T>
-    friend self_type& operator>>(self_type& stream, const T& vl) {
+    friend self_type& operator>>(self_type& stream, T& vl) {
 
         stream.out << "\nbefore: ";
         print_input(stream);
@@ -131,7 +131,7 @@ struct testoctet {
 void print(const octet_sequnce& vl, std::size_t unuse = 0) {
     std::cout << "  [" << boost::itu::binary_to_hexsequence_debug(std::string((const char*) vl.data(), vl.size()));
     if (unuse) {
-        std::cout << " { " << boost::asn1::bitstring_type(octet_sequnce(1, vl.back()), unuse) << " unus =" << unuse << " } ";
+        std::cout << " { " << boost::asn1::bit_string(octet_sequnce(1, vl.back()), unuse) << " unus =" << unuse << " } ";
     }
     std::cout << "  sz =" << vl.size() << "  ]";
 }
@@ -152,7 +152,7 @@ void print_in(boost::asn1::x691::input_coder& stream) {
         if (szx)
             frnts <<= szx;
         octet_sequnce frnt(1, frnts);
-        std::cout << " {" << boost::asn1::bitstring_type(frnt, stream.unusebits()) << " unus =" << stream.unusebits() << "}";
+        std::cout << " {" << boost::asn1::bit_string(frnt, stream.unusebits()) << " unus =" << stream.unusebits() << "}";
     };
 
     for (boost::itu::mutable_sequences::const_iterator it = seq.begin(); it != seq.end(); ++it) {
@@ -171,7 +171,7 @@ testoctet split_bits_in_octets(const testoctet& f1, const testoctet& f2) {
 #else
 
 #define DEBUG_BS(a)  std::cout << #a" = "  << a  << "    bitcnt=" <<  a.sizebits()   << "  unuse="  << a.unusebits()  << " to int="   <<  a.operator uint64_t()<<  std::endl;
-typedef boost::asn1::bitstring_type bitstring_type;
+typedef boost::asn1::bit_string bit_string;
 
 #endif
 
@@ -190,19 +190,24 @@ int main(int argc, char* argv[]) {
 
     //PersonnelRecord_impl::Tst_type tstvect({0x120, 0x140, 0x60, 0x121, 0x141, 0x61});
 
-    PersonnelRecord PRt(PersonnelRecord_impl(/*enum1_red, tstvect, */Name(Name_impl(std::string("John"), std::string("P"), std::string("Smith"))),
+    PersonnelRecord PRt(/*enum1_red, tstvect, */Name("John", "P", "Smith"),
             "Director",
             EmployeeNumber(51),
             Date("19710917"),
-            Name(Name_impl(std::string("Mary"), std::string("T"), std::string("Smith")))));
+            Name("Mary", "T", "Smith"));
 
-    PersonnelRecord_impl::Children_type& chlds = *(PRt->children__new());
-    chlds.push_back(ChildInformation(Name(Name_impl(std::string("Ralph"), std::string("T"), std::string("Smith"))), Date("19571111")));
-    chlds.push_back(ChildInformation(Name(Name_impl(std::string("Susan"), std::string("B"), std::string("Jones"))), Date("19590717")));
-    chlds.back().sex(boost::shared_ptr< enumerated_type>( new enumerated_type(ChildInformation::sex_female)));
+    PersonnelRecord::Children_type& chlds = *(PRt.children__new());
+    chlds.push_back(ChildInformation(Name("Ralph", "T", "Smith"), Date("19571111")));
+    chlds.push_back(ChildInformation(Name("Susan", "B", "Jones"), Date("19590717")));
+    chlds.back().sex(boost::shared_ptr< enumerated>( new enumerated(ChildInformation::sex_female)));
 
     PersonnelRecord_s iPRt;
 
+    Ax TstA(253, true, Ax::C_type(true, Ax::C_type_e));
+    TstA.g("123");
+    TstA.h(true);
+
+    Ax iTstA;
 
     testoctet tst1(octet_sequnce({'\xAA', '\xA0'}), 5);
     testoctet tst2(octet_sequnce(1, '\x80'), 7);
@@ -211,6 +216,13 @@ int main(int argc, char* argv[]) {
 
     //std::size_t rsltunuse = boost::itu::split_bits_in_octets(f1,7,f2,4);
 
+    
+    //const boost::asn1::prefixed_type tds__prefixed__helper_arr[] ={ { 1, CONTEXT_CLASS } , { 2, CONTEXT_CLASS } };
+    //const boost::asn1::prefixed_vect tds__prefixed__vct(tds__prefixed__helper_arr, tds__prefixed__helper_arr + (sizeof(tds__prefixed__helper_arr) / sizeof(boost::asn1::prefixed_type)));
+    
+    ITU_T_PREFIXED_DECLARE( tds, ITU_T_ARRAY( { 1, CONTEXT_CLASS } , { 2, CONTEXT_CLASS } ), true );
+    
+    std::cout << ITU_T_PREFIXED( tds ) << std::endl;
 
     //print(f1, rsltunuse );
 
@@ -228,13 +240,11 @@ int main(int argc, char* argv[]) {
 
     asn1_adaptor adaptor(std::cin, std::cout);
 
-    std::cout << "limits : " << std::numeric_limits<int>::min()  << " : "  << std::numeric_limits<int>::max()  << std::endl;
+   adaptor << PRt;
+   adaptor >> iPRt;
 
-    adaptor << PRt;
-
-    adaptor >> iPRt;
-
-
+    //adaptor << TstA;
+    //adaptor >> iTstA;
 
 
 
@@ -247,7 +257,7 @@ int main(int argc, char* argv[]) {
      std::cout << "\nbefore: ";
      print_in(incoder);
     
-     bitstring_type tmp1 = incoder.get_pop_bmp(1);
+     bit_string tmp1 = incoder.get_pop_bmp(1);
     
     
      std::cout << "\n   tmp 1: " << tmp1;    
@@ -256,7 +266,7 @@ int main(int argc, char* argv[]) {
      print_in(incoder);        
     
     
-     bitstring_type tmp2 = incoder.get_pop_bmp(2);
+     bit_string tmp2 = incoder.get_pop_bmp(2);
     
     
      std::cout << "\n   tmp 2: " << tmp2;    
@@ -265,7 +275,7 @@ int main(int argc, char* argv[]) {
      print_in(incoder);        
 
             
-     bitstring_type tmp3 = incoder.get_pop_bmp(3);
+     bit_string tmp3 = incoder.get_pop_bmp(3);
     
     
      std::cout << "\n   tmp 3: " << tmp3;    
@@ -273,7 +283,7 @@ int main(int argc, char* argv[]) {
      std::cout << "\n   after 3: ";
      print_in(incoder);    
     
-     bitstring_type tmp4 = incoder.get_pop_bmp(5);
+     bit_string tmp4 = incoder.get_pop_bmp(5);
     
     
      std::cout << "\n   tmp 4: " << tmp4;    
@@ -292,7 +302,7 @@ int main(int argc, char* argv[]) {
      print_in(incoder);    */
 
     /*boost::asn1::x691::small_nn_wnumber<std::size_t> SMszr = 63;
-    bitstring_type rbmp = boost::asn1::x691::to_x691_cast(SMszr);
+    bit_string rbmp = boost::asn1::x691::to_x691_cast(SMszr);
     std::cout << "\n small_nn_wnumber bs = " << SMszr.bitsize() << " bvalue= " << rbmp   << std::endl;
     
     boost::asn1::x691::constrained_wnumber<int> CMn(PRp, 0, 1578900444);
@@ -307,16 +317,16 @@ int main(int argc, char* argv[]) {
 #else    
 
     //bool a[] ={true, false, true, false};
-    bitstring_type tV0 = bitstring_type(true) + bitstring_type(false) + bitstring_type(true);
-    bitstring_type tV1(static_cast<boost::int8_t> ('\xFF'), 4);
-    bitstring_type tV2 = bitstring_type::create_from_string("0111010101011101010101011101010");
-    bitstring_type tV2n = ~tV2;
-    bitstring_type tV3 = bitstring_type::create_from_string("10101010101010101010101010101010");
-    bitstring_type tV4 = bitstring_type::create_from_string("010101010101010101010101010101010");
-    bitstring_type tV0_1 = tV0 ^ tV1;
-    bitstring_type tV1_0 = tV1 ^ tV0;
-    bitstring_type tV2_3 = tV2 ^ tV3;
-    bitstring_type tV3_4 = tV3 ^ tV4;
+    bit_string tV0 = bit_string(true) + bit_string(false) + bit_string(true);
+    bit_string tV1(static_cast<boost::int8_t> ('\xFF'), 4);
+    bit_string tV2 = bit_string::create_from_string("0111010101011101010101011101010");
+    bit_string tV2n = ~tV2;
+    bit_string tV3 = bit_string::create_from_string("10101010101010101010101010101010");
+    bit_string tV4 = bit_string::create_from_string("010101010101010101010101010101010");
+    bit_string tV0_1 = tV0 ^ tV1;
+    bit_string tV1_0 = tV1 ^ tV0;
+    bit_string tV2_3 = tV2 ^ tV3;
+    bit_string tV3_4 = tV3 ^ tV4;
 
 
     DEBUG_BS(tV0)
