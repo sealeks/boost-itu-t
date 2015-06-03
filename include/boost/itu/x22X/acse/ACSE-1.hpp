@@ -65,17 +65,17 @@ namespace ACSE_1 {
     typedef oid_type Mechanism_name;
     typedef integer_type Release_request_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
     typedef integer_type Release_response_reason; //   Ic(  [ 0  ...   30 ]   ...ext...) 
-    typedef std::vector< external_type > Association_data; //    Sc (  [ 1 ]   ...ext...) 
+    typedef sequence_of< external_type > Association_data; //    Sc (  [ 1 ]   ...ext...) 
 
     typedef ASO_context_name Application_context_name;
     typedef ASO_qualifier AE_qualifier;
     typedef Transfer_syntax_name Concrete_syntax_name;
     typedef Association_data User_information; //    Sc (  [ 1 ]   ...ext...) 
-    typedef std::vector< ASOI_tag_sequence_of > ASOI_tag; //    Sc (  [ 0  ...   7 ]   ...ext...) 
-    typedef std::vector< ASO_context_name > ASO_context_name_list;
-    typedef std::vector< Context_list_sequence_of > Context_list;
-    typedef std::vector< Default_Context_List_sequence_of > Default_Context_List;
-    typedef std::vector< P_context_result_list_sequence_of > P_context_result_list;
+    typedef sequence_of< ASOI_tag_sequence_of > ASOI_tag; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef sequence_of< ASO_context_name > ASO_context_name_list;
+    typedef sequence_of< Context_list_sequence_of > Context_list;
+    typedef sequence_of< Default_Context_List_sequence_of > Default_Context_List;
+    typedef sequence_of< P_context_result_list_sequence_of > P_context_result_list;
     ITU_T_PREFIXED_DECLARE(AARE_apdu, ITU_T_ARRAY(prefixed_type(1, APPLICATION_CLASS)), false); //  initial =implicit
     ITU_T_PREFIXED_DECLARE(RLRQ_apdu, ITU_T_ARRAY(prefixed_type(2, APPLICATION_CLASS)), false); //  initial =implicit
     ITU_T_PREFIXED_DECLARE(RLRE_apdu, ITU_T_ARRAY(prefixed_type(3, APPLICATION_CLASS)), false); //  initial =implicit
@@ -472,7 +472,7 @@ namespace ACSE_1 {
 
     struct Context_list_sequence_of {
 
-        typedef std::vector< Transfer_syntax_name > Transfer_syntaxes_type;
+        typedef sequence_of< Transfer_syntax_name > Transfer_syntaxes_type;
 
 
         Context_list_sequence_of();

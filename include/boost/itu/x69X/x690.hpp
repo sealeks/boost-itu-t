@@ -194,12 +194,12 @@ namespace boost {
                 }
 
                 template<typename T>
-                void operator&(const std::vector<T >& vl) {
+                void operator&(const sequence_of<T >& vl) {
                     *this << vl;
                 }
 
                 template<typename T>
-                void operator&(const std::deque<T >& vl) {
+                void operator&(const set_of<T >& vl) {
                     *this << vl;
                 }
 
@@ -250,13 +250,13 @@ namespace boost {
             }
 
             template<typename T>
-            output_coder& operator<<(output_coder& stream, const explicit_value< std::vector<T> >& vl) {
-                return stream << implicit_value<std::vector<T> >(vl.value(), vl.id(), vl.type());
+            output_coder& operator<<(output_coder& stream, const explicit_value< sequence_of<T> >& vl) {
+                return stream << implicit_value<sequence_of<T> >(vl.value(), vl.id(), vl.type());
             }
 
             template<typename T>
-            output_coder& operator<<(output_coder& stream, const explicit_value< std::deque<T> >& vl) {
-                return stream << implicit_value<std::deque<T> >(vl.value(), vl.id(), vl.type());
+            output_coder& operator<<(output_coder& stream, const explicit_value< set_of<T> >& vl) {
+                return stream << implicit_value<set_of<T> >(vl.value(), vl.id(), vl.type());
             }
 
             template<typename T>
@@ -321,13 +321,13 @@ namespace boost {
             }
 
             template<typename T>
-            output_coder& operator<<(output_coder& stream, const implicit_value<std::vector<T> >& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<sequence_of<T> >& vl) {
 
                 stream.addtag(tag(vl.id(), vl.mask() | CONSTRUCTED_ENCODING), false);
                 const_sequences::iterator it = stream.last();
 
                 std::size_t sz = stream.size();
-                typedef typename std::vector<T>::const_iterator vect_type_iterator;
+                typedef typename sequence_of<T>::const_iterator vect_type_iterator;
                 for (vect_type_iterator itr = vl.value().begin(); itr != vl.value().end(); ++itr)
                     boost::asn1::bind_element<T>::op(stream, (*itr));
                 sz = stream.size(sz);
@@ -343,13 +343,13 @@ namespace boost {
             }
 
             template<typename T>
-            output_coder& operator<<(output_coder& stream, const implicit_value<std::deque<T> >& vl) {
+            output_coder& operator<<(output_coder& stream, const implicit_value<set_of<T> >& vl) {
 
                 stream.addtag(tag(vl.id(), vl.mask() | CONSTRUCTED_ENCODING), false);
                 const_sequences::iterator it = stream.last();
 
                 std::size_t sz = stream.size();
-                typedef typename std::deque<T>::const_iterator vect_type_iterator;
+                typedef typename set_of<T>::const_iterator vect_type_iterator;
                 for (vect_type_iterator itr = vl.value().begin(); itr != vl.value().end(); ++itr)
                     boost::asn1::bind_element<T>::op(stream, (*itr));
                 sz = stream.size(sz);
@@ -686,12 +686,12 @@ namespace boost {
                 }
 
                 template<typename T>
-                void operator&(std::vector<T >& vl) {
+                void operator&(sequence_of<T >& vl) {
                     *this >> vl;
                 }
 
                 template<typename T>
-                void operator&(std::deque<T >& vl) {
+                void operator&(set_of<T >& vl) {
                     *this >> vl;
                 }
 
@@ -745,14 +745,14 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, explicit_value< std::vector<T> >& vl) {
-                implicit_value<std::vector<T> > tmpvl(vl.value(), vl.id(), vl.type());
+            input_coder& operator>>(input_coder& stream, explicit_value< sequence_of<T> >& vl) {
+                implicit_value<sequence_of<T> > tmpvl(vl.value(), vl.id(), vl.type());
                 return stream >> tmpvl;
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, explicit_value< std::deque<T> >& vl) {
-                implicit_value< std::deque<T> > tmpvl(vl.value(), vl.id(), vl.type());
+            input_coder& operator>>(input_coder& stream, explicit_value< set_of<T> >& vl) {
+                implicit_value< set_of<T> > tmpvl(vl.value(), vl.id(), vl.type());
                 return stream >> tmpvl;
             }
 
@@ -768,10 +768,10 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, optional_explicit_value< std::vector<T> >& vl) {
+            input_coder& operator>>(input_coder& stream, optional_explicit_value< sequence_of<T> >& vl) {
                 if (stream.parse_tl(vl, false, true)) {
-                    vl.value() = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
-                    explicit_value<std::vector<T> > tmpvl(*vl.value(), vl.id(), vl.type());
+                    vl.value() = boost::shared_ptr< sequence_of<T> > (new sequence_of<T > ());
+                    explicit_value<sequence_of<T> > tmpvl(*vl.value(), vl.id(), vl.type());
                     stream >> tmpvl;
                     //stream.pop_stack();
                 }
@@ -779,10 +779,10 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, optional_explicit_value< std::deque<T> >& vl) {
+            input_coder& operator>>(input_coder& stream, optional_explicit_value< set_of<T> >& vl) {
                 if (stream.parse_tl(vl, false, true)) {
-                    vl.value() = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
-                    explicit_value<std::deque<T> > tmpvl(*vl.value(), vl.id(), vl.type());
+                    vl.value() = boost::shared_ptr< set_of<T> > (new set_of<T > ());
+                    explicit_value<set_of<T> > tmpvl(*vl.value(), vl.id(), vl.type());
                     stream >> tmpvl;
                     //stream.pop_stack();
                 }
@@ -801,7 +801,7 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, implicit_value< std::vector<T> >& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value< sequence_of<T> >& vl) {
                 size_class tmpsize;
                 if (stream.parse_tl(vl, tmpsize, false)) {
                     std::size_t beg = stream.size();
@@ -825,7 +825,7 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, implicit_value< std::deque<T> >& vl) {
+            input_coder& operator>>(input_coder& stream, implicit_value< set_of<T> >& vl) {
                 size_class tmpsize;
                 if (stream.parse_tl(vl, tmpsize, false)) {
                     std::size_t beg = stream.size();
@@ -860,10 +860,10 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, optional_implicit_value< std::vector<T> >& vl) {
+            input_coder& operator>>(input_coder& stream, optional_implicit_value< sequence_of<T> >& vl) {
                 if (stream.parse_tl(vl, false, true)) {
-                    vl.value() = boost::shared_ptr< std::vector<T> > (new std::vector<T > ());
-                    implicit_value<std::vector<T> > tmpvl(*vl.value(), vl.id(), vl.type());
+                    vl.value() = boost::shared_ptr< sequence_of<T> > (new sequence_of<T > ());
+                    implicit_value<sequence_of<T> > tmpvl(*vl.value(), vl.id(), vl.type());
                     stream >> tmpvl;
                     //stream.pop_stack();
                 }
@@ -871,10 +871,10 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, optional_implicit_value< std::deque<T> >& vl) {
+            input_coder& operator>>(input_coder& stream, optional_implicit_value< set_of<T> >& vl) {
                 if (stream.parse_tl(vl, false, true)) {
-                    vl.value() = boost::shared_ptr< std::deque<T> > (new std::deque<T > ());
-                    implicit_value<std::deque<T> > tmpvl(*vl.value(), vl.id(), vl.type());
+                    vl.value() = boost::shared_ptr< set_of<T> > (new set_of<T > ());
+                    implicit_value<set_of<T> > tmpvl(*vl.value(), vl.id(), vl.type());
                     stream >> tmpvl;
                     //stream.pop_stack();
                 }

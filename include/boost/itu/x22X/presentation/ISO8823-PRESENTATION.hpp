@@ -50,22 +50,22 @@ namespace ISO8823_PRESENTATION {
     typedef oid_type Transfer_syntax_name;
     typedef octetstring_type Simply_encoded_data;
     typedef bitstring_type User_session_requirements;
-    typedef std::vector< integer_type > Presentation_context_deletion_result_list; //    Sc (  [ 0  ...   7 ]   ...ext...)   //  struct of ->  
+    typedef sequence_of< integer_type > Presentation_context_deletion_result_list; //    Sc (  [ 0  ...   7 ]   ...ext...)   //  struct of ->  
 
     typedef User_data CPC_type;
     typedef Presentation_selector Called_presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
     typedef Presentation_selector Calling_presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
     typedef Result Default_context_result;
     typedef Presentation_selector Responding_presentation_selector; //    Sc (  [ 1  ...   4 ]   ...ext...) 
-    typedef std::vector< Context_list_sequence_of > Context_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef sequence_of< Context_list_sequence_of > Context_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
     typedef Context_list Presentation_context_definition_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
     typedef Context_list Presentation_context_addition_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
-    typedef std::vector< Presentation_context_identifier > Presentation_context_deletion_list; //    Sc (  [ 0  ...   7 ]   ...ext...)   //  struct of ->    //   Ic(  [ 1  ...   127 ]   ...ext...) 
-    typedef std::vector< Presentation_context_identifier_list_sequence_of > Presentation_context_identifier_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
-    typedef std::vector< Result_list_sequence_of > Result_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef sequence_of< Presentation_context_identifier > Presentation_context_deletion_list; //    Sc (  [ 0  ...   7 ]   ...ext...)   //  struct of ->    //   Ic(  [ 1  ...   127 ]   ...ext...) 
+    typedef sequence_of< Presentation_context_identifier_list_sequence_of > Presentation_context_identifier_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
+    typedef sequence_of< Result_list_sequence_of > Result_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
     typedef Result_list Presentation_context_addition_result_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
     typedef Result_list Presentation_context_definition_result_list; //    Sc (  [ 0  ...   7 ]   ...ext...) 
-    typedef std::vector< PDV_list > Fully_encoded_data; //    Sc (  [ 1 ]   ...ext...) 
+    typedef sequence_of< PDV_list > Fully_encoded_data; //    Sc (  [ 1 ]   ...ext...) 
 
 
 }
@@ -492,7 +492,7 @@ namespace ISO8823_PRESENTATION {
 
     struct Context_list_sequence_of {
 
-        typedef std::vector< Transfer_syntax_name > Transfer_syntax_name_list_type;
+        typedef sequence_of< Transfer_syntax_name > Transfer_syntax_name_list_type;
 
 
         Context_list_sequence_of();

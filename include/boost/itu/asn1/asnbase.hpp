@@ -926,7 +926,7 @@ namespace boost {
         };
 
         template<typename T >
-        struct tag_traits< std::deque<T> > {
+        struct tag_traits< set_of<T> > {
 
             static id_type number() {
                 return TYPE_SET;

@@ -24,7 +24,7 @@ namespace boost {
         oid_type oid_from_string(const std::string vl) {
             std::string val = boost::algorithm::trim_copy(vl);
             if (val.size() < 3)
-                return std::vector<oidindx_type > ();
+                return NULL_OID;
             if ((val[0] == '{') && (val[val.size() - 1] == '}')) {
                 val = val.substr(1, val.size() - 2);
                 std::string::size_type digpos = val.find_first_of(",");
@@ -33,12 +33,12 @@ namespace boost {
                 while (digpos != std::string::npos) {
                     std::string dig = val.substr(0, digpos);
                     if (dig.empty())
-                        return std::vector<oidindx_type > ();
+                        return NULL_OID;
                     if (boost::itu::string_to(dig, un)) {
                         rslt.push_back(un);
                     } else {
                         if (!boost::itu::oid_component_by_name(dig, un))
-                            return std::vector<oidindx_type > ();
+                            return NULL_OID;
                         else
                             rslt.push_back(un);
                     }
@@ -50,12 +50,12 @@ namespace boost {
                     return rslt;
                 } else {
                     if (!boost::itu::oid_component_by_name(val, un))
-                        return std::vector<oidindx_type > ();
+                        return NULL_OID;
                     else
                         rslt.push_back(un);
                 }
             }
-            return oid_type();
+            return NULL_OID;
         }
 
         

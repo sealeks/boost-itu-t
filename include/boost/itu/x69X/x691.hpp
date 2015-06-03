@@ -1077,12 +1077,12 @@ namespace boost {
             ////////////////////////////////////////////////////////////////////
 
             template<typename T>
-            output_coder& operator<<(output_coder& stream, const std::vector<T>& vl) {
+            output_coder& operator<<(output_coder& stream, const sequence_of<T>& vl) {
                 return element_writer_undefsz(stream, vl);
             }
 
             template<typename T>
-            output_coder& operator<<(output_coder& stream, const std::deque<T>& vl) {
+            output_coder& operator<<(output_coder& stream, const set_of<T>& vl) {
                 return element_writer_undefsz(stream, vl);
             }
 
@@ -1773,13 +1773,13 @@ namespace boost {
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, std::vector<T>& vl) {
+            input_coder& operator>>(input_coder& stream, sequence_of<T>& vl) {
                 element_reader_undefsz(stream, vl);
                 return stream;
             }
 
             template<typename T>
-            input_coder& operator>>(input_coder& stream, std::deque<T>& vl) {
+            input_coder& operator>>(input_coder& stream, set_of<T>& vl) {
                 element_reader_undefsz(stream, vl);
                 return stream;
             }
