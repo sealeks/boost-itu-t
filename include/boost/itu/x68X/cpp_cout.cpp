@@ -157,6 +157,8 @@ namespace x680 {
                 base_.insert("universal_string");
                 base_.insert("character_string");
                 base_.insert("bmp_string");                
+                base_.insert("sequence_of");
+                base_.insert("set_of");                
             }
             return base_;
         }
