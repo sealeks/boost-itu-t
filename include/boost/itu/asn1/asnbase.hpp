@@ -461,19 +461,8 @@ namespace boost {
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         // reloid_type
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        class reloid_type : public boost::itu::vector<oidindx_type> {
-
-        public:
-
-            reloid_type() : boost::itu::vector<oidindx_type>() {
-            }
-
-            reloid_type(const oidindx_type * vl, std::size_t size);
-
-        };
-
-
+        
+        typedef boost::itu::vector<oidindx_type, TYPE_RELATIVE_OID> reloid_type;
 
         std::ostream& operator<<(std::ostream& stream, const reloid_type& vl);
 

@@ -320,7 +320,7 @@ namespace boost {
                                         }
                                     }
                                     if (accept_parameters.responding_presentation_selector()) {
-                                        option().called(*(accept_parameters.responding_presentation_selector()));
+                                        option().called(accept_parameters.responding_presentation_selector()->as_base());
                                     }
                                     if (accept_parameters.presentation_requirements()) {
                                         dcs()->p_requirements(dcs()->p_requirements() &
@@ -363,14 +363,14 @@ namespace boost {
                         CP_type::Normal_mode_parameters_type& respond_parameters = *respond_pdu.normal_mode_parameters();
 
                         option().called(respond_parameters.called_presentation_selector() ?
-                                *(respond_parameters.called_presentation_selector()) : octet_sequnce());
+                                respond_parameters.called_presentation_selector()->as_base() : octet_sequnce());
                         if (respond_parameters.called_presentation_selector()) {
                             accept_parameters.responding_presentation_selector(respond_parameters.called_presentation_selector());
                             reject_parameters.responding_presentation_selector(respond_parameters.called_presentation_selector());
                         }
 
                         option().calling(respond_parameters.calling_presentation_selector() ?
-                                *(respond_parameters.calling_presentation_selector()) : octet_sequnce());
+                                respond_parameters.calling_presentation_selector()->as_base() : octet_sequnce());
 
                         if (!respond_parameters.presentation_context_definition_list())
                             return error_negotiate;

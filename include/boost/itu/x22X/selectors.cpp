@@ -17,8 +17,7 @@ namespace boost {
                     int64_t rslt = 0;
                     try {
                         rslt = boost::lexical_cast<int64_t > (tmp);
-                    }
-                    catch (...) {
+                    }                    catch (...) {
                         return false;
                     }
                     if (rslt) {
@@ -102,7 +101,8 @@ namespace boost {
                     std::string::size_type ppos = val.find_first_of(",", oidpos == std::string::npos ? 0 : oidpos);
                     if (ppos != std::string::npos) {
                         if (oidpos != std::string::npos)
-                            self.ap_title2_ = app_title2_type(val.substr(0, oidpos == std::string::npos ? ppos : (oidpos + 1)));
+                            self.ap_title2_ = app_title2_type(boost::asn1::oid_from_string(val.substr(0,
+                                oidpos == std::string::npos ? ppos : (oidpos + 1))));
                         val = val.substr(ppos + 1);
 
                         if (!val.empty()) {
@@ -126,21 +126,18 @@ namespace boost {
                                             if (string_to(val, api))
                                                 self.ae_invoke_id_ = invoke_id_type_ptr(new invoke_id_type(api));
                                         }
-                                    }
-                                    else {
+                                    } else {
                                         if (string_to(val, api))
                                             self.ap_invoke_id_ = invoke_id_type_ptr(new invoke_id_type(api));
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 if (string_to(val, aeq))
                                     self.ae_qualifier2_ = ae_qualifier2_type_ptr(new ae_qualifier2_type(aeq));
                             }
                         }
-                    }
-                    else
-                        self.ap_title2_ = app_title2_type(val);
+                    } else
+                        self.ap_title2_ = app_title2_type(boost::asn1::oid_from_string(val));
                 }
             }
             self.form_ = (!self.ap_title2_.empty() || self.ae_qualifier2_ || self.ap_invoke_id_ || self.ae_invoke_id_) ? form2 : null;
@@ -158,9 +155,9 @@ namespace boost {
             }
         }
 
-        
-        
-        
+
+
+
 
 #if defined(ITUX200_DEBUG) 
 

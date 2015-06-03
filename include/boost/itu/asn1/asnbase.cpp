@@ -76,20 +76,6 @@ namespace boost {
 
         // relative oid type
 
-        reloid_type::reloid_type(const oidindx_type * vl, std::size_t size) :
-        boost::itu::vector<oidindx_type>(vl, vl + size) {
-        }
-
-        std::ostream& operator<<(std::ostream& stream, const reloid_type& vl) {
-            for (reloid_type::const_iterator it = vl.begin(); it != vl.end(); ++it)
-                if (it == vl.begin())
-                    stream << *it;
-                else
-                    stream << "." << *it;
-            return stream;
-        }
-
-
 
         // utf8string_type
 

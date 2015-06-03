@@ -18,16 +18,17 @@
 
 namespace boost {
     namespace asn1 {
+        
         // oid type
 
-        std::vector<oidindx_type> oid_from_string(const std::string vl) {
+        oid_type oid_from_string(const std::string vl) {
             std::string val = boost::algorithm::trim_copy(vl);
             if (val.size() < 3)
                 return std::vector<oidindx_type > ();
             if ((val[0] == '{') && (val[val.size() - 1] == '}')) {
                 val = val.substr(1, val.size() - 2);
                 std::string::size_type digpos = val.find_first_of(",");
-                std::vector<oidindx_type> rslt;
+                oid_type rslt;
                 oidindx_type un = 0;
                 while (digpos != std::string::npos) {
                     std::string dig = val.substr(0, digpos);
@@ -54,20 +55,11 @@ namespace boost {
                         rslt.push_back(un);
                 }
             }
-            return std::vector<oidindx_type > ();
+            return oid_type();
         }
 
-        oid_type::oid_type(const std::string& vl) : 
-        boost::itu::vector<oidindx_type>() {
-            std::vector<oidindx_type> tmp = oid_from_string(vl);
-            if (!tmp.empty()) {
-                insert(begin(), tmp.begin(), tmp.end());
-            }
-        }
-
-        oid_type::oid_type(const oidindx_type * vl, std::size_t size) :
-        boost::itu::vector<oidindx_type>(vl, vl + size) {
-        }
+        
+        // oid_type
 
         std::ostream& operator<<(std::ostream& stream, const oid_type& vl) {
             for (oid_type::const_iterator it = vl.begin(); it != vl.end(); ++it)
@@ -348,7 +340,7 @@ namespace boost {
         }
 
         void bitstring_type::append(const octetstring_type& vl) {
-            itu::split_bits_in_octets(*this, unusebits(), vl, 0);
+            itu::split_bits_in_octets(*this, unusebits(), vl.as_base(), 0);
         }
 
         void bitstring_type::construct(const std::vector<bool>& vl) {
@@ -383,7 +375,7 @@ namespace boost {
 
         // octetstring_type
 
-        octetstring_type::operator octet_sequnce() const {
+        /*octetstring_type::operator octet_sequnce() const {
             return octet_sequnce(begin(), end());
         }
 
@@ -394,7 +386,7 @@ namespace boost {
         std::ostream& operator<<(std::ostream& stream, const octetstring_type& vl) {
             stream << boost::itu::binary_to_hexsequence_debug(std::string(vl.begin(), vl.end()));
             return stream;
-        }
+        }*/
 
 
     }

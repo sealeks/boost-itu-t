@@ -417,6 +417,9 @@ namespace boost {
 
             template<>
             void x690_string_to_stream_cast(const bitstring_type& val, output_coder& stream, octet_type lentype);
+            
+            template<>
+            void x690_string_to_stream_cast(const octetstring_type& val, output_coder& stream, octet_type lentype);            
 
             template<>
             void x690_string_to_stream_cast(const bmpstring_type& val, output_coder& stream, octet_type lentype);

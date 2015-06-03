@@ -16,8 +16,14 @@
 namespace boost {
     namespace itu {
 
-        template<typename T, typename Alloc = std::allocator<T > >
+        template<typename T, std::size_t ID = 0, typename Alloc = std::allocator<T > >
         class vector : protected std::vector<T, Alloc> {
+
+        private:
+
+            static std::size_t get__id() {
+                return ID;
+            }
 
         public:
 
@@ -45,34 +51,35 @@ namespace boost {
             Base(a) {
             }
 
-#if __cplusplus < 201103L
+            template<typename InputIterator>
+            vector(InputIterator first, InputIterator last,
+                    const allocator_type& a = allocator_type()) : Base(first, last, a) {
+            }
+
+            vector(const vector& x) : Base(static_cast<const Base&> (x)) {
+            }
+
+            vector(const Base& x) : Base(x) {
+            }
 
             explicit
             vector(size_type n, const value_type& value = value_type(), const allocator_type& a = allocator_type()) :
             Base(n, value, a) {
             }
 
-            vector(const vector& x) : Base(static_cast<const Base&> (x)) {
+#if __cplusplus >= 201103L
+
+            vector(vector&& x)
+            : Base(static_cast<Base&&> (x)) {
             }
 
-            template<typename InputIterator>
-            vector(InputIterator first, InputIterator last,
-                    const allocator_type& a = allocator_type()) : Base(first, last, a) {
+            vector(Base&& x)
+            : Base(x) {
             }
-
-#else
 
             explicit
-            vector(size_type n, const allocator_type& a = allocator_type()) :
+            vector(size_type n, const allocator_type& a) :
             Base(n, a) {
-            }
-
-            vector(size_type n, const value_type& value, const allocator_type& a = allocator_type()) :
-            Base(n, value, a) {
-            }
-
-            vector(vector&& x) noexcept
-            : Base(static_cast<Base&&> (x)) {
             }
 
             vector(const vector& x, const allocator_type& a) :
@@ -83,43 +90,49 @@ namespace boost {
             : Base(static_cast<Base&&> (rv), m) {
             }
 
-            vector(initializer_list<value_type> l,
+            vector(std::initializer_list<value_type> l,
                     const allocator_type& a = allocator_type())
             : Base(l, a) {
             }
 
-            template<typename InputIterator>
-            vector(_InputIterator first, _InputIterator last,
-                    const allocator_type& a = allocator_type())
-            : _Base(first, last, a) {
-            }
-
-
 #endif            
 
             vector& operator=(const vector& x) {
-                return static_cast<vector&> (Base::operator=(static_cast<const Base&> (x)));
+                Base::operator=(static_cast<const Base&> (x));
+                return *this;
             }
+
+            /*vector& operator=(const Base& x) {
+                Base::operator=(x);
+                return *this;
+            }*/
 
 #if __cplusplus >= 201103L
 
             vector& operator=(vector&& x) {
-                return static_cast<vector&> (Base::operator=(static_cast<Base&&> (x)));
+                Base::operator=(static_cast<Base&&> (x));
+                return *this;
             }
 
-            vector& operator=(initializer_list<value_type> l) {
-                return static_cast<vector&> (Base::operator=(l));
+            /*vector& operator=(Base&& x) {
+                Base::operator=(x);
+                return *this;
+            }*/
+
+            vector& operator=(std::initializer_list<value_type> l) {
+                Base::operator=(l);
+                return *this;
             }
 #endif            
 
             ~vector() {
             }
 
-            operator Base&() {
+            Base& as_base() {
                 return static_cast<Base&> (*this);
             }
 
-            operator const Base&() const {
+            const Base& as_base() const {
                 return static_cast<const Base&> (*this);
             }
 
@@ -178,8 +191,6 @@ namespace boost {
     namespace asn1 {
 
 
-
-
         ///////////////////////////////////////////////////////////////////////
         //  sequence_of
         ///////////////////////////////////////////////////////////////////////
@@ -213,34 +224,35 @@ namespace boost {
             Base(a) {
             }
 
-#if __cplusplus < 201103L
+            template<typename InputIterator>
+            sequence_of(InputIterator first, InputIterator last,
+                    const allocator_type& a = allocator_type()) : Base(first, last, a) {
+            }
+
+            sequence_of(const sequence_of& x) : Base(static_cast<const Base&> (x)) {
+            }
+
+            /*sequence_of(const Base& x) : Base(x) {
+            }*/
 
             explicit
             sequence_of(size_type n, const value_type& value = value_type(), const allocator_type& a = allocator_type()) :
             Base(n, value, a) {
             }
 
-            sequence_of(const sequence_of& x) : Base(static_cast<const Base&> (x)) {
+#if __cplusplus >= 201103L
+
+            sequence_of(sequence_of&& x)
+            : Base(static_cast<Base&&> (x)) {
             }
 
-            template<typename InputIterator>
-            sequence_of(InputIterator first, InputIterator last,
-                    const allocator_type& a = allocator_type()) : Base(first, last, a) {
-            }
-
-#else
+            /*sequence_of(Base&& x)
+            : Base(x) {
+            }*/
 
             explicit
-            sequence_of(size_type n, const allocator_type& a = allocator_type()) :
+            sequence_of(size_type n, const allocator_type& a) :
             Base(n, a) {
-            }
-
-            sequence_of(size_type n, const value_type& value, const allocator_type& a = allocator_type()) :
-            Base(n, value, a) {
-            }
-
-            sequence_of(sequence_of&& x) noexcept
-            : Base(static_cast<Base&&> (x)) {
             }
 
             sequence_of(const sequence_of& x, const allocator_type& a) :
@@ -251,45 +263,42 @@ namespace boost {
             : Base(static_cast<Base&&> (rv), m) {
             }
 
-            sequence_of(initializer_list<value_type> l,
+            sequence_of(std::initializer_list<value_type> l,
                     const allocator_type& a = allocator_type())
             : Base(l, a) {
             }
 
-            template<typename InputIterator>
-            sequence_of(_InputIterator first, _InputIterator last,
-                    const allocator_type& a = allocator_type())
-            : _Base(first, last, a) {
-            }
-
-
 #endif            
 
             sequence_of& operator=(const sequence_of& x) {
-                return static_cast<sequence_of&> (Base::operator=(static_cast<const Base&> (x)));
+                Base::operator=(static_cast<const Base&> (x));
+                return *this;
             }
+
+            /*sequence_of& operator=(const Base& x) {
+                Base::operator=(x);
+                return *this;
+            }*/
 
 #if __cplusplus >= 201103L
 
             sequence_of& operator=(sequence_of&& x) {
-                return static_cast<sequence_of&> (Base::operator=(static_cast<Base&&> (x)));
+                Base::operator=(static_cast<Base&&> (x));
+                return *this;
             }
 
-            sequence_of& operator=(initializer_list<value_type> l) {
-                return static_cast<sequence_of&> (Base::operator=(l));
-            }
+            /*sequence_of& operator=(Base&& x) {
+                Base::operator=(x);
+                return *this;
+            }*/
 
-#endif                
+            sequence_of& operator=(std::initializer_list<value_type> l) {
+                Base::operator=(l);
+                return *this;
+            }
+#endif            
 
             ~sequence_of() {
-            }
-
-            operator Base&() {
-                return static_cast<Base&> (*this);
-            }
-
-            operator const Base&() const {
-                return static_cast<const Base&> (*this);
             }
 
             using Base::assign;
@@ -379,34 +388,35 @@ namespace boost {
             Base(a) {
             }
 
-#if __cplusplus < 201103L
+            template<typename InputIterator>
+            set_of(InputIterator first, InputIterator last,
+                    const allocator_type& a = allocator_type()) : Base(first, last, a) {
+            }
+
+            set_of(const set_of& x) : Base(static_cast<const Base&> (x)) {
+            }
+
+            /*set_of(const Base& x) : Base(x) {
+            }*/
 
             explicit
             set_of(size_type n, const value_type& value = value_type(), const allocator_type& a = allocator_type()) :
             Base(n, value, a) {
             }
 
-            set_of(const set_of& x) : Base(static_cast<const Base&> (x)) {
+#if __cplusplus >= 201103L
+
+            set_of(set_of&& x)
+            : Base(static_cast<Base&&> (x)) {
             }
 
-            template<typename InputIterator>
-            set_of(InputIterator first, InputIterator last,
-                    const allocator_type& a = allocator_type()) : Base(first, last, a) {
-            }
-
-#else
+            /*set_of(Base&& x)
+            : Base(x) {
+            }*/
 
             explicit
-            set_of(size_type n, const allocator_type& a = allocator_type()) :
+            set_of(size_type n, const allocator_type& a) :
             Base(n, a) {
-            }
-
-            set_of(size_type n, const value_type& value, const allocator_type& a = allocator_type()) :
-            Base(n, value, a) {
-            }
-
-            set_of(set_of&& x) noexcept
-            : Base(static_cast<Base&&> (x)) {
             }
 
             set_of(const set_of& x, const allocator_type& a) :
@@ -417,45 +427,42 @@ namespace boost {
             : Base(static_cast<Base&&> (rv), m) {
             }
 
-            set_of(initializer_list<value_type> l,
+            set_of(std::initializer_list<value_type> l,
                     const allocator_type& a = allocator_type())
             : Base(l, a) {
             }
 
-            template<typename InputIterator>
-            set_of(_InputIterator first, _InputIterator last,
-                    const allocator_type& a = allocator_type())
-            : _Base(first, last, a) {
-            }
-
-
 #endif            
 
             set_of& operator=(const set_of& x) {
-                return static_cast<set_of&> (Base::operator=(static_cast<const Base&> (x)));
+                Base::operator=(static_cast<const Base&> (x));
+                return *this;
             }
+
+            /*set_of& operator=(const Base& x) {
+                Base::operator=(x);
+                return *this;
+            }*/
 
 #if __cplusplus >= 201103L
 
             set_of& operator=(set_of&& x) {
-                return static_cast<set_of&> (Base::operator=(static_cast<Base&&> (x)));
+                Base::operator=(static_cast<Base&&> (x));
+                return *this;
             }
 
-            set_of& operator=(initializer_list<value_type> l) {
-                return Base::operator=(l);
-            }
+            /*set_of& operator=(Base&& x) {
+                Base::operator=(x);
+                return *this;
+            }*/
 
-#endif             
+            set_of& operator=(std::initializer_list<value_type> l) {
+                Base::operator=(l);
+                return *this;
+            }
+#endif            
 
             ~set_of() {
-            }
-
-            operator Base&() {
-                return static_cast<Base&> (*this);
-            }
-
-            operator const Base&() const {
-                return static_cast<const Base&> (*this);
             }
 
             using Base::assign;
@@ -508,20 +515,20 @@ namespace boost {
         };
 
 
-
         ///////////////////////////////////////////////////////////////////////
         //  smpl_string
         ///////////////////////////////////////////////////////////////////////        
 
-        //template<std::size_t ID = 0 >
-
+        template<std::size_t ID = 0 >
         class smpl_string : protected std::string {
 
-        public:
+        private:
 
-            /*static std::size_t get__id() {
+            static std::size_t get__id() {
                 return ID;
-            }*/
+            }
+
+        public:
 
             typedef std::string Base;
 
@@ -587,11 +594,15 @@ namespace boost {
 
 #if __cplusplus >= 201103L            
 
-            smpl_string(smpl_string&& str) noexcept
+            smpl_string(smpl_string&& str)
             : Base(static_cast<Base&&> (str)) {
             }
 
-            smpl_string(initializer_list<value_type l, const allocator_type& a = allocator_type())
+            smpl_string(Base&& str)
+            : Base(str) {
+            }
+
+            smpl_string(std::initializer_list<value_type> l, const allocator_type& a = allocator_type())
             : Base(l, a) {
             }
 
@@ -601,39 +612,54 @@ namespace boost {
             }
 
             smpl_string& operator=(const smpl_string& str) {
-                return static_cast<smpl_string&> (Base::operator=(static_cast<const Base&> (str)));
+                Base::operator=(static_cast<const Base&> (str));
+                return *this;
+            }
+
+            smpl_string& operator=(const Base& str) {
+                Base::operator=(str);
+                return *this;
             }
 
             smpl_string& operator=(const value_type* s) {
-                return static_cast<smpl_string&> (Base::operator=(s));
+                Base::operator=(s);
+                return *this;
             }
 
             smpl_string& operator=(value_type c) {
-                return static_cast<smpl_string&> (Base::operator=(c));
+                Base::operator=(c);
+                return *this;
             }
 
 #if __cplusplus >= 201103L
 
             smpl_string& operator=(smpl_string&& str) {
-                return static_cast<smpl_string&> (Base::operator=Base(static_cast<Base&&> (str)));
+                Base::operator=(static_cast<Base&&> (str));
+                return *this;
             }
 
-            basic_string& operator=(initializer_list<_CharT> l) {
-                return static_cast<smpl_string&> (Base::operator=Base(l));
+            smpl_string& operator=(Base&& str) {
+                Base::operator=(str);
+                return *this;
+            }
+
+            basic_string& operator=(std::initializer_list<value_type> l) {
+                Base::operator=(l);
+                return *this;
             }
 
 #endif        
 
-            operator Base&() {
+            Base& as_base() {
                 return static_cast<Base&> (*this);
             }
 
-            operator const Base&() const {
+            const Base& as_base() const {
                 return static_cast<const Base&> (*this);
             }
 
             using Base::npos;
-            
+
             using Base::append;
             using Base::assign;
             using Base::at;
@@ -656,6 +682,7 @@ namespace boost {
             using Base::insert;
             using Base::length;
             using Base::max_size;
+            using Base::operator[];
             using Base::push_back;
             using Base::rbegin;
             using Base::rend;

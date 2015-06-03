@@ -27,59 +27,23 @@
 
 #define ITU_T_VARRAY(...) __VA_ARGS__
 #define ITU_T_OID(nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
-        const boost::asn1::oid_type  nm  = boost::asn1::oid_type(nm ## ___ARR, sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
+        const boost::asn1::oid_type  nm  = boost::asn1::oid_type(nm ## ___ARR, nm ## ___ARR + sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
 #define ITU_T_RELOID(nm  , arr )  const boost::asn1::oidindx_type nm ## ___ARR[] ={ arr } ; \
-        const boost::asn1::reloid_type  nm  = boost::asn1::reloid_type(nm ## ___ARR, sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
+        const boost::asn1::reloid_type  nm  = boost::asn1::reloid_type(nm ## ___ARR, nm ## ___ARR+ sizeof( nm ## ___ARR ) / sizeof(boost::asn1::oidindx_type));
 
 
 namespace boost {
     namespace asn1 {
 
-        typedef std::size_t oidindx_type;
-
-        /*template<typename _Tp>
-        class allocator : public std::allocator<_Tp> {
-
-        public:
-
-            allocator() throw () {
-            }
-
-            allocator(const allocator& __a) throw ()
-            : std::allocator<_Tp>(__a) {
-            }
-
-            template<typename _Tp1>
-            allocator(const allocator<_Tp1>&) throw () {
-            }
-
-            ~allocator() throw () {
-            }
-
-        };
-        
-        typedef std::vector<oidindx_type, boost::asn1::allocator<oidindx_type> > oid_type;*/        
+        typedef std::size_t oidindx_type;     
 
         //// OID_TYPE
 
-        std::vector<oidindx_type> oid_from_string(const std::string val);
-
-        class oid_type : public boost::itu::vector<oidindx_type> {
-
-        public:
-
-            oid_type() : boost::itu::vector<oidindx_type>() {
-            }
-
-            oid_type(const std::string& vl);
-
-            explicit oid_type(const oidindx_type * vl, std::size_t size);
-
-        };
+        typedef boost::itu::vector<oidindx_type, 6> oid_type;
         
+        oid_type oid_from_string(const std::string val);        
+               
         const oid_type NULL_OID = oid_type();
-
-
 
         std::ostream& operator<<(std::ostream& stream, const oid_type& vl);
 
@@ -156,13 +120,20 @@ namespace boost {
 
     namespace asn1 {
 
-        ///  BITSTRING TYPE
 
         using itu::octet_type;
         using itu::octet_sequnce;
+   
+        
+        ///  OCTETSTRING TYPE        
 
-        class octetstring_type;
+        typedef boost::itu::vector<octet_type, 4> octetstring_type;
+        
+        std::ostream& operator<<(std::ostream& stream, const octetstring_type& vl);        
+        
 
+         ///  BITSTRING TYPE       
+        
         class bitstring_type : public itu::octet_sequnce {
 
         public:
@@ -312,7 +283,7 @@ namespace boost {
 
         ///  OCTETSTRING TYPE           
 
-        class octetstring_type : public itu::octet_sequnce {
+        /*class octetstring_type : public itu::octet_sequnce {
 
         public:
 
@@ -328,12 +299,9 @@ namespace boost {
             operator octet_sequnce() const;
 
             octet_sequnce as_octet_sequnce() const;
-            //operator octet_sequnce() const{
-            //     return  *this;}   
-        };
+        };*/
 
-
-        std::ostream& operator<<(std::ostream& stream, const octetstring_type& vl);
+        
     }
 
 

@@ -164,7 +164,7 @@ namespace boost {
             }
 
             void output_coder::add_octets(const octetstring_type & vl, bool alighn) {
-                add_octets(vl.as_octet_sequnce(), alighn);
+                add_octets(vl.as_base(), alighn);
             }
 
             void output_coder::add_nsn_small(std::size_t indx) {
@@ -350,7 +350,7 @@ namespace boost {
             }
 
             output_coder& operator<<(output_coder& stream, const octetstring_type& vl) {
-                return octet_writer_undefsz(stream, vl.as_octet_sequnce());
+                return octet_writer_undefsz(stream, vl.as_base());
             }
 
             output_coder& operator<<(output_coder& stream, const size_constrainter<octetstring_type>& vl) {

@@ -89,6 +89,11 @@ namespace boost {
                 }
             }
 
+            template<>            
+            void x690_string_to_stream_cast(const octetstring_type& val, output_coder& stream, octet_type lentype) {
+                x690_string_to_stream_cast(val.as_base(), stream, lentype);
+            }
+            
             template<>
             void x690_string_to_stream_cast(const bmpstring_type& val, output_coder& stream, octet_type lentype) {
                 x690_string_to_stream_cast(val.as_octets(), stream, lentype);
