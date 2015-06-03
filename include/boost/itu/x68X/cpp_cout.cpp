@@ -134,6 +134,29 @@ namespace x680 {
                 base_.insert("try");
                 base_.insert("catch");
                 base_.insert("void");
+                base_.insert("bit_string");
+                base_.insert("octet_string");
+                base_.insert("null_type");
+                base_.insert("oid_type");
+                base_.insert("object_descriptor");
+                base_.insert("external_type");
+                base_.insert("double");
+                base_.insert("enumerated");
+                base_.insert("embeded_pdv");
+                base_.insert("reloid_type");
+                base_.insert("numeric_string");
+                base_.insert("printable_string");
+                base_.insert("t61_string");
+                base_.insert("videotex_string");
+                base_.insert("ia5_string");
+                base_.insert("utctime");
+                base_.insert("gentime");
+                base_.insert("graphic_string");
+                base_.insert("visible_string");
+                base_.insert("general_string");
+                base_.insert("universal_string");
+                base_.insert("character_string");
+                base_.insert("bmp_string");                
             }
             return base_;
         }

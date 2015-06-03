@@ -1403,11 +1403,11 @@ namespace boost {
             typedef shared_ptr<S> T;
             typedef S root_type;
 
-            explicit optional_prefixed_value(T& vl, id_type id, const prefixed_helper& hlper) :
+            explicit optional_prefixed_value(T& vl, const prefixed_helper& hlper) :
             val_(vl), helper_(hlper) {
             }
 
-            explicit optional_prefixed_value(const T& vl, id_type id, const prefixed_helper& hlper) :
+            explicit optional_prefixed_value(const T& vl, const prefixed_helper& hlper) :
             val_(const_cast<T&> (vl)), helper_(hlper) {
             }
 

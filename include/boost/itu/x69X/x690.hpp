@@ -923,8 +923,9 @@ namespace boost {
                         stream >> tmpvl;
                     }
                 } else {
-                    if (stream.parse_tl(vl, true)) {
-                        prefixed_value<T> tmpvl(vl.value(), vl.helper());
+                    if (stream.parse_tl(tag(vl.helper().vect[nestlvl].first, from_cast(vl.helper().vect[nestlvl].second) | CONSTRUCTED_ENCODING), true)) {
+                        vl.value()=shared_ptr<T>(new T());
+                        prefixed_value<T> tmpvl(*(vl.value()), vl.helper());
                         read_prefixed(stream, tmpvl, nestlvl - 1);
                         stream.pop_stack();
                     }
@@ -935,7 +936,7 @@ namespace boost {
             template<typename T>
             input_coder& operator>>(input_coder& stream, optional_prefixed_value<T>& vl) {
                 if (!vl.helper().vect.empty())
-                    read_optional_prexed(stream, vl, vl.helper().vect.size() - 1);
+                    read_optional_prefixed(stream, vl, vl.helper().vect.size() - 1);
                 else {
                     optional_implicit_value<T> tmpvl(vl.value());
                     stream >> tmpvl;
