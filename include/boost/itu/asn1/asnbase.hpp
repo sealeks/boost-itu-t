@@ -155,6 +155,8 @@ namespace boost {\
     using boost::uint32_t;\
     using boost::int64_t;\
     using boost::uint64_t;\
+    using boost::asn1::sequence_of;\
+    using boost::asn1::set_of;\
     using boost::asn1::UNIVERSAL_CLASS;\
     using boost::asn1::APPLICATION_CLASS;\
     using boost::asn1::CONTEXT_CLASS;\

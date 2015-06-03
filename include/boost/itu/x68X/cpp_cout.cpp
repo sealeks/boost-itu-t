@@ -724,7 +724,7 @@ namespace x680 {
         }
 
         std::string struct_of_str(bool igsequence) {
-            return igsequence ? "std::vector" : "std::deque";
+            return igsequence ? "sequence_of" : "set_of";
         }
 
         std::string seqof_str(typeassignment_entity_ptr self, const std::string& name) {

@@ -360,7 +360,6 @@
       <compileType>
         <ccTool>
           <developmentMode>5</developmentMode>
-          <standard>8</standard>
           <commandlineTool>g++</commandlineTool>
           <incDir>
             <pElem>../../../include</pElem>
